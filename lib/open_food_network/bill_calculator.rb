@@ -12,9 +12,8 @@ module OpenFoodNetwork
 
     def bill
       bill = fixed + (turnover * rate)
-      bill = bill * (1 + tax_rate)
-      return bill unless cap > 0
-      [bill, cap].min
+      bill = cap > 0 ? [bill, cap].min : bill
+      bill * (1 + tax_rate)
     end
   end
 end

@@ -130,14 +130,16 @@ describe BillablePeriod, type: :model do
           before { Spree::Config.set(:account_invoices_monthly_rate, 0.5) }
 
           context "when the bill is capped" do
-            context "at a level higher than the fixed charge plus the product of the rate and turnover plus tax" do
-              before { Spree::Config.set(:account_invoices_monthly_cap, 67) }
+            context "at a level higher than the fixed charge plus the product of the rate and turnover" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 61) }
               it { expect(subject.bill).to eq 66 }
             end
 
-            context "at a level lower than the fixed charge plus the product of the rate and turnover plus tax" do
-              before { Spree::Config.set(:account_invoices_monthly_cap, 65) }
-              it { expect(subject.bill).to eq 65 }
+            context "at a level lower than the fixed charge plus the product of the rate and turnover" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 59) }
+              it {
+                expect(subject.bill.to_f).to eq 64.9
+              }
             end
           end
 
@@ -151,14 +153,14 @@ describe BillablePeriod, type: :model do
           before { Spree::Config.set(:account_invoices_monthly_rate, 0) }
 
           context "when the bill is capped" do
-            context "at a level higher than the fixed charge plus tax" do
-              before { Spree::Config.set(:account_invoices_monthly_cap, 12) }
+            context "at a level higher than the fixed charge" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 11) }
               it { expect(subject.bill).to eq 11 }
             end
 
-            context "at a level lower than the fixed charge plus tax" do
-              before { Spree::Config.set(:account_invoices_monthly_cap, 10) }
-              it { expect(subject.bill).to eq 10 }
+            context "at a level lower than the fixed charge" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 9) }
+              it { expect(subject.bill.to_f).to eq 9.9 }
             end
           end
 
@@ -176,14 +178,14 @@ describe BillablePeriod, type: :model do
           before { Spree::Config.set(:account_invoices_monthly_rate, 0.5) }
 
           context "when the bill is capped" do
-            context "at a level higher than the product of the rate and turnover plus tax" do
-              before { Spree::Config.set(:account_invoices_monthly_cap, 56) }
+            context "at a level higher than the product of the rate and turnover" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 51) }
               it { expect(subject.bill).to eq 55 }
             end
 
-            context "at a level lower than the product of the rate and turnover plus_tax" do
-              before { Spree::Config.set(:account_invoices_monthly_cap, 54) }
-              it { expect(subject.bill).to eq 54 }
+            context "at a level lower than the product of the rate and turnover" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 49) }
+              it { expect(subject.bill.to_f).to eq 53.9 }
             end
           end
 
