@@ -333,24 +333,34 @@ describe 'OrderCycle services', ->
         Enterprise = $injector.get('Enterprise')
         $httpBackend = _$httpBackend_
         $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json?').respond [
-          {id: 1, name: 'One', supplied_products: [1, 2]}
+          {id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true}
           {id: 2, name: 'Two', supplied_products: [3, 4]}
-          {id: 3, name: 'Three', supplied_products: [5, 6]}
+          {id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'}
           ]
 
     it 'loads enterprises as a hash', ->
       enterprises = Enterprise.index()
       $httpBackend.flush()
       expect(enterprises).toEqual
-        1: new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2]})
+        1: new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true})
         2: new Enterprise.Enterprise({id: 2, name: 'Two', supplied_products: [3, 4]})
-        3: new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6]})
+        3: new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'})
 
     it 'reports its loadedness', ->
       expect(Enterprise.loaded).toBe(false)
       Enterprise.index()
       $httpBackend.flush()
       expect(Enterprise.loaded).toBe(true)
+
+    it 'loads producers as an array', ->
+      Enterprise.index()
+      $httpBackend.flush()
+      expect(Enterprise.producer_enterprises).toEqual [new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true})]
+
+    it 'loads hubs as an array', ->
+      Enterprise.index()
+      $httpBackend.flush()
+      expect(Enterprise.hub_enterprises).toEqual [new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'})]
 
     it 'collates all supplied products', ->
       enterprises = Enterprise.index()
