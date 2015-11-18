@@ -7,7 +7,7 @@ Spree::LineItem.class_eval do
   attr_accessible :max_quantity, :final_weight_volume
   attr_accessible :final_weight_volume, :price, :as => :api
 
-  before_create :inherit_units_from_variant
+  before_save :calculate_final_weight_volume, unless: :final_weight_volume_changed?
   after_save :update_units
 
   delegate :unit_description, to: :variant
@@ -83,9 +83,13 @@ Spree::LineItem.class_eval do
 
   private
 
-  def inherit_units_from_variant
-    if final_weight_volume || variant.andand.unit_value
-      self.final_weight_volume = final_weight_volume || ((variant.andand.unit_value) * quantity)
+  def calculate_final_weight_volume
+    if quantity_changed?
+      if final_weight_volume.present?
+        self.final_weight_volume = final_weight_volume * quantity / quantity_was
+      elsif variant.andand.unit_value
+        self.final_weight_volume = ((variant.andand.unit_value) * quantity)
+      end
     end
   end
 end

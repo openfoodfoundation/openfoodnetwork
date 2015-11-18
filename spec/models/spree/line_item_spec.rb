@@ -97,23 +97,98 @@ module Spree
         let!(:v) { p.variants.first }
         let!(:o) { create(:order) }
 
-        describe "when no final_weight_volume is set" do
-          let(:li) { build(:line_item, order: o, variant: v, quantity: 3) }
+        context "on create" do
+          context "when no final_weight_volume is set" do
+            let(:li) { build(:line_item, order: o, variant: v, quantity: 3) }
 
-          it "initializes final_weight_volume from the variant's unit_value on create" do
-            expect(li.final_weight_volume).to be nil
-            li.save
-            expect(li.final_weight_volume).to eq 3000
+            it "initializes final_weight_volume from the variant's unit_value" do
+              expect(li.final_weight_volume).to be nil
+              li.save
+              expect(li.final_weight_volume).to eq 3000
+            end
+          end
+
+          context "when a final_weight_volume has been set" do
+            let(:li) { build(:line_item, order: o, variant: v, quantity: 3, final_weight_volume: 2000) }
+
+            it "uses the changed value" do
+              expect(li.final_weight_volume).to eq 2000
+              li.save
+              expect(li.final_weight_volume).to eq 2000
+            end
           end
         end
 
-        describe "when a final_weight_volume has been set" do
-          let(:li) { build(:line_item, order: o, variant: v, quantity: 3, final_weight_volume: 2000) }
+        context "on save" do
+          let!(:li) { create(:line_item, order: o, variant: v, quantity: 3) }
 
-          it "uses the existing value" do
-            expect(li.final_weight_volume).to eq 2000
-            li.save
-            expect(li.final_weight_volume).to eq 2000
+          before do
+            expect(li.final_weight_volume).to eq 3000
+          end
+
+          context "when final_weight_volume is changed" do
+            let(:attrs) { { final_weight_volume: 2000 } }
+
+            context "and quantity is not changed" do
+              before do
+                li.update_attributes(attrs)
+              end
+
+              it "uses the value given" do
+                expect(li.final_weight_volume).to eq 2000
+              end
+            end
+
+            context "and quantity is changed" do
+              before do
+                attrs.merge!( quantity: 4 )
+                li.update_attributes(attrs)
+              end
+
+              it "uses the value given" do
+                expect(li.final_weight_volume).to eq 2000
+              end
+            end
+          end
+
+          context "when final_weight_volume is not changed" do
+            let(:attrs) { { price: 3.00 } }
+
+            context "and quantity is not changed" do
+              before do
+                li.update_attributes(attrs)
+              end
+
+              it "does not change final_weight_volume" do
+                expect(li.final_weight_volume).to eq 3000
+              end
+            end
+
+            context "and quantity is changed" do
+              context "and a final_weight_volume has been set" do
+                before do
+                  expect(expect(li.final_weight_volume).to eq 3000)
+                  attrs.merge!( quantity: 4 )
+                  li.update_attributes(attrs)
+                end
+
+                it "calculates a final_weight_volume from the variants unit_value" do
+                  expect(li.final_weight_volume).to eq 4000
+                end
+              end
+
+              context "and a final_weight_volume has not been set" do
+                before do
+                  li.update_attributes(final_weight_volume: nil)
+                  attrs.merge!( quantity: 1 )
+                  li.update_attributes(attrs)
+                end
+
+                it "calculates a final_weight_volume from the variants unit_value" do
+                  expect(li.final_weight_volume).to eq 1000
+                end
+              end
+            end
           end
         end
       end

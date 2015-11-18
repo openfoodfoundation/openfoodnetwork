@@ -23,9 +23,10 @@ module Spree
           li.should be
           li.quantity.should == 1
           li.max_quantity.should == 2
+          li.final_weight_volume.should == 1.0
         end
 
-        it "updates a variant's quantity and max quantity" do
+        it "updates a variant's quantity, max quantity and final_weight_volume" do
           order.add_variant v, 1, 2
 
           op.populate({variants: {v.id.to_s => {quantity: '2', max_quantity: '3'}}}, true)
@@ -33,6 +34,7 @@ module Spree
           li.should be
           li.quantity.should == 2
           li.max_quantity.should == 3
+          li.final_weight_volume.should == 2.0
         end
 
         it "removes a variant" do
