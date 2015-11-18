@@ -31,87 +31,180 @@ describe BillablePeriod, type: :model do
   describe "calculating monthly bills for enterprises" do
     let!(:subject) { create(:billable_period, turnover: 100) }
 
-    context "when a fixed cost is included" do
-      before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
+    context "when no tax is charged" do
+      before { Spree::Config.set(:account_invoices_tax_rate, 0) }
 
-      context "when a percentage of turnover is included" do
-        before { Spree::Config.set(:account_invoices_monthly_rate, 0.5) }
+      context "when a fixed cost is included" do
+        before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
 
-        context "when the bill is capped" do
-          context "at a level higher than the fixed charge plus the product of the rate and turnover" do
-            before { Spree::Config.set(:account_invoices_monthly_cap, 65) }
-            it { expect(subject.bill).to eq 60 }
+        context "when a percentage of turnover is included" do
+          before { Spree::Config.set(:account_invoices_monthly_rate, 0.5) }
+
+          context "when the bill is capped" do
+            context "at a level higher than the fixed charge plus the product of the rate and turnover" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 65) }
+              it { expect(subject.bill).to eq 60 }
+            end
+
+            context "at a level lower than the fixed charge plus the product of the rate and turnover" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 55) }
+              it { expect(subject.bill).to eq 55 }
+            end
           end
 
-          context "at a level lower than the fixed charge plus the product of the rate and turnover" do
-            before { Spree::Config.set(:account_invoices_monthly_cap, 55) }
-            it { expect(subject.bill).to eq 55 }
+          context "when the bill is not capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
+            it { expect(subject.bill).to eq 60 }
           end
         end
 
-        context "when the bill is not capped" do
-          before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
-          it { expect(subject.bill).to eq 60 }
+        context "when a percentage of turnover is not included" do
+          before { Spree::Config.set(:account_invoices_monthly_rate, 0) }
+
+          context "when the bill is capped" do
+            context "at a level higher than the fixed charge" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 15) }
+              it { expect(subject.bill).to eq 10 }
+            end
+
+            context "at a level lower than the fixed charge" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 5) }
+              it { expect(subject.bill).to eq 5 }
+            end
+          end
+
+          context "when the bill is not capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
+            it { expect(subject.bill).to eq 10 }
+          end
         end
       end
 
-      context "when a percentage of turnover is not included" do
-        before { Spree::Config.set(:account_invoices_monthly_rate, 0) }
+      context "when a fixed cost is not included" do
+        before { Spree::Config.set(:account_invoices_monthly_fixed, 0) }
 
-        context "when the bill is capped" do
-          context "at a level higher than the fixed charge" do
-            before { Spree::Config.set(:account_invoices_monthly_cap, 15) }
-            it { expect(subject.bill).to eq 10 }
+        context "when a percentage of turnover is included" do
+          before { Spree::Config.set(:account_invoices_monthly_rate, 0.5) }
+
+          context "when the bill is capped" do
+            context "at a level higher than the product of the rate and turnover" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 55) }
+              it { expect(subject.bill).to eq 50 }
+            end
+
+            context "at a level lower than the product of the rate and turnover" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 45) }
+              it { expect(subject.bill).to eq 45 }
+            end
           end
 
-          context "at a level lower than the fixed charge" do
-            before { Spree::Config.set(:account_invoices_monthly_cap, 5) }
-            it { expect(subject.bill).to eq 5 }
+          context "when the bill is not capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
+            it { expect(subject.bill).to eq 50 }
           end
         end
 
-        context "when the bill is not capped" do
-          before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
-          it { expect(subject.bill).to eq 10 }
+        context "when a percentage of turnover is not included" do
+          before { Spree::Config.set(:account_invoices_monthly_rate, 0) }
+
+          context "when the bill is capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 20) }
+            it { expect(subject.bill).to eq 0 }
+          end
+
+          context "when the bill is not capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
+            it { expect(subject.bill).to eq 0 }
+          end
         end
       end
     end
 
-    context "when a fixed cost is not included" do
-      before { Spree::Config.set(:account_invoices_monthly_fixed, 0) }
+    context "when tax is charged" do
+      before { Spree::Config.set(:account_invoices_tax_rate, 0.1) }
 
-      context "when a percentage of turnover is included" do
-        before { Spree::Config.set(:account_invoices_monthly_rate, 0.5) }
+      context "when a fixed cost is included" do
+        before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
 
-        context "when the bill is capped" do
-          context "at a level higher than the product of the rate and turnover" do
-            before { Spree::Config.set(:account_invoices_monthly_cap, 55) }
-            it { expect(subject.bill).to eq 50 }
+        context "when a percentage of turnover is included" do
+          before { Spree::Config.set(:account_invoices_monthly_rate, 0.5) }
+
+          context "when the bill is capped" do
+            context "at a level higher than the fixed charge plus the product of the rate and turnover plus tax" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 67) }
+              it { expect(subject.bill).to eq 66 }
+            end
+
+            context "at a level lower than the fixed charge plus the product of the rate and turnover plus tax" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 65) }
+              it { expect(subject.bill).to eq 65 }
+            end
           end
 
-          context "at a level lower than the product of the rate and turnover" do
-            before { Spree::Config.set(:account_invoices_monthly_cap, 45) }
-            it { expect(subject.bill).to eq 45 }
+          context "when the bill is not capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
+            it { expect(subject.bill).to eq 66 }
           end
         end
 
-        context "when the bill is not capped" do
-          before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
-          it { expect(subject.bill).to eq 50 }
+        context "when a percentage of turnover is not included" do
+          before { Spree::Config.set(:account_invoices_monthly_rate, 0) }
+
+          context "when the bill is capped" do
+            context "at a level higher than the fixed charge plus tax" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 12) }
+              it { expect(subject.bill).to eq 11 }
+            end
+
+            context "at a level lower than the fixed charge plus tax" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 10) }
+              it { expect(subject.bill).to eq 10 }
+            end
+          end
+
+          context "when the bill is not capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
+            it { expect(subject.bill).to eq 11 }
+          end
         end
       end
 
-      context "when a percentage of turnover is not included" do
-        before { Spree::Config.set(:account_invoices_monthly_rate, 0) }
+      context "when a fixed cost is not included" do
+        before { Spree::Config.set(:account_invoices_monthly_fixed, 0) }
 
-        context "when the bill is capped" do
-          before { Spree::Config.set(:account_invoices_monthly_cap, 20) }
-          it { expect(subject.bill).to eq 0 }
+        context "when a percentage of turnover is included" do
+          before { Spree::Config.set(:account_invoices_monthly_rate, 0.5) }
+
+          context "when the bill is capped" do
+            context "at a level higher than the product of the rate and turnover plus tax" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 56) }
+              it { expect(subject.bill).to eq 55 }
+            end
+
+            context "at a level lower than the product of the rate and turnover plus_tax" do
+              before { Spree::Config.set(:account_invoices_monthly_cap, 54) }
+              it { expect(subject.bill).to eq 54 }
+            end
+          end
+
+          context "when the bill is not capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
+            it { expect(subject.bill).to eq 55 }
+          end
         end
 
-        context "when the bill is not capped" do
-          before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
-          it { expect(subject.bill).to eq 0 }
+        context "when a percentage of turnover is not included" do
+          before { Spree::Config.set(:account_invoices_monthly_rate, 0) }
+
+          context "when the bill is capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 20) }
+            it { expect(subject.bill).to eq 0 }
+          end
+
+          context "when the bill is not capped" do
+            before { Spree::Config.set(:account_invoices_monthly_cap, 0) }
+            it { expect(subject.bill).to eq 0 }
+          end
         end
       end
     end

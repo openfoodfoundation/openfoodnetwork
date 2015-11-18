@@ -1,3 +1,5 @@
+require 'open_food_network/bill_calculator'
+
 class BillablePeriod < ActiveRecord::Base
   belongs_to :enterprise
   belongs_to :owner, class_name: 'Spree::User'
