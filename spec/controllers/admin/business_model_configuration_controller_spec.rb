@@ -8,7 +8,8 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
     Spree::Config.set({
       account_invoices_monthly_fixed: 5,
       account_invoices_monthly_rate: 0.02,
-      account_invoices_monthly_cap: 50
+      account_invoices_monthly_cap: 50,
+      account_invoices_tax_rate: 0.1
     })
   end
 
@@ -51,6 +52,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           params[:settings][:account_invoices_monthly_fixed] = ''
           params[:settings][:account_invoices_monthly_rate] = '2'
           params[:settings][:account_invoices_monthly_cap] = '-1'
+          params[:settings][:account_invoices_tax_rate] = '4'
           spree_get :update, params
         end
 
@@ -60,6 +62,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           expect(Spree::Config.account_invoices_monthly_fixed).to eq 5
           expect(Spree::Config.account_invoices_monthly_rate).to eq 0.02
           expect(Spree::Config.account_invoices_monthly_cap).to eq 50
+          expect(Spree::Config.account_invoices_tax_rate).to eq 0.1
         end
       end
 
@@ -68,6 +71,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           params[:settings][:account_invoices_monthly_fixed] = '10'
           params[:settings][:account_invoices_monthly_rate] = '0.05'
           params[:settings][:account_invoices_monthly_cap] = '30'
+          params[:settings][:account_invoices_tax_rate] = '0.15'
         end
 
         it "sets global config to the specified values" do
@@ -76,6 +80,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           expect(Spree::Config.account_invoices_monthly_fixed).to eq 10
           expect(Spree::Config.account_invoices_monthly_rate).to eq 0.05
           expect(Spree::Config.account_invoices_monthly_cap).to eq 30
+          expect(Spree::Config.account_invoices_tax_rate).to eq 0.15
         end
       end
     end

@@ -15,16 +15,9 @@ class BillablePeriod < ActiveRecord::Base
   end
 
   def bill
-    fixed = Spree::Config[:account_invoices_monthly_fixed]
-    rate = Spree::Config[:account_invoices_monthly_rate]
-    cap = Spree::Config[:account_invoices_monthly_cap]
-
     return 0 if trial?
     return 0 unless ['own', 'any'].include?(sells)
-
-    bill = fixed + (turnover * rate).round(2)
-    return bill unless cap > 0
-    [bill, cap].min
+    OpenFoodNetwork::BillCalculator.new(turnover: turnover).bill
   end
 
   def label
@@ -54,8 +47,8 @@ class BillablePeriod < ActiveRecord::Base
       self.adjustment = invoice.adjustments.new( adjustment_attrs, :without_protection => true )
     end
 
-    if Spree::Config.account_bill_inc_tax
-      adjustment.set_included_tax! Spree::Config.account_bill_tax_rate
+    if Spree::Config.account_invoices_tax_rate > 0
+      adjustment.set_included_tax! Spree::Config.account_invoices_tax_rate
     else
       adjustment.set_included_tax! 0
     end

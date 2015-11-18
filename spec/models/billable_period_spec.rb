@@ -13,8 +13,7 @@ describe BillablePeriod, type: :model do
     before do
       allow(subject).to receive(:bill) { 99 }
       allow(subject).to receive(:adjustment_label) { "Label for adjustment" }
-      Spree::Config.set({ account_bill_inc_tax: true })
-      Spree::Config.set({ account_bill_tax_rate: 0.1 })
+      Spree::Config.set({ account_invoices_tax_rate: 0.1 })
     end
 
     context "when no adjustment currently exists" do

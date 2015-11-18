@@ -32,10 +32,12 @@ en:
   must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
   invoice: "Invoice"
   percentage_of_sales: "%{percentage} of sales"
-  capped_at: "capped at"
+  percentage_of_turnover: "Percentage of turnover"
+  monthly_cap_excl_tax: "monthly cap (excl. GST)"
   capped_at_cap: "capped at %{cap}"
   per_month: "per month"
   free: "free"
+  plus_tax: "plus GST"
 
   sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
 
