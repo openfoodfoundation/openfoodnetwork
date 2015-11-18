@@ -24,9 +24,7 @@
       = render 'exchange_supplied_products_form'
 
 - if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
-  = select_tag :new_supplier_id, options_for_select(permitted_producer_enterprise_options_for(@order_cycle)), {'ng-model' => 'new_supplier_id'}
-
-  = f.submit 'Add supplier', 'ng-click' => 'addSupplier($event)'
+  = render 'add_exchange_form', f: f, type: 'supplier'
 
 %h2 Outgoing
 %table.exchanges
@@ -49,8 +47,7 @@
       = render 'exchange_distributed_products_form'
 
 - if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
-  = select_tag :new_distributor_id, options_for_select(permitted_hub_enterprise_options_for(@order_cycle)), {'ng-model' => 'new_distributor_id'}
-  = f.submit 'Add distributor', 'ng-click' => 'addDistributor($event)'
+  = render 'add_exchange_form', f: f, type: 'distributor'
 
 .actions
   - if @order_cycle.new_record?
