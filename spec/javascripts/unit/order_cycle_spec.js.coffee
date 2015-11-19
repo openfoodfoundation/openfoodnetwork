@@ -489,19 +489,29 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.exchangeIds('incoming')).toEqual [1, 2]
 
     describe "checking for novel enterprises", ->
-      it "detects novel suppliers", ->
-        e1 = {id: 1}
-        e2 = {id: 2}
+      e1 = {id: 1}
+      e2 = {id: 2}
+
+      beforeEach ->
         OrderCycle.order_cycle.incoming_exchanges = [{enterprise_id: 1}]
+        OrderCycle.order_cycle.outgoing_exchanges = [{enterprise_id: 1}]
+
+      it "detects novel suppliers", ->
         expect(OrderCycle.novelSupplier(e1)).toBe false
         expect(OrderCycle.novelSupplier(e2)).toBe true
 
+      it "detects novel suppliers with enterprise as string id", ->
+        expect(OrderCycle.novelSupplier('1')).toBe false
+        expect(OrderCycle.novelSupplier('2')).toBe true
+
       it "detects novel distributors", ->
-        e1 = {id: 1}
-        e2 = {id: 2}
-        OrderCycle.order_cycle.outgoing_exchanges = [{enterprise_id: 1}]
         expect(OrderCycle.novelDistributor(e1)).toBe false
         expect(OrderCycle.novelDistributor(e2)).toBe true
+
+      it "detects novel distributors with enterprise as string id", ->
+        expect(OrderCycle.novelDistributor('1')).toBe false
+        expect(OrderCycle.novelDistributor('2')).toBe true
+
 
     describe 'fetching the direction for an exchange', ->
       it 'returns "incoming" for incoming exchanges', ->

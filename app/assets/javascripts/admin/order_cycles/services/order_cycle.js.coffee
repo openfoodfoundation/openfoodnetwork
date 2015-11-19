@@ -15,10 +15,12 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
       parseInt(exchange.enterprise_id) for exchange in @exchangesByDirection(direction)
 
     novelSupplier: (enterprise) =>
-      @exchangeIds('incoming').indexOf(enterprise.id) == -1
+      id = enterprise?.id || parseInt(enterprise)
+      @exchangeIds('incoming').indexOf(id) == -1
 
     novelDistributor: (enterprise) =>
-      @exchangeIds('outgoing').indexOf(enterprise.id) == -1
+      id = enterprise?.id || parseInt(enterprise)
+      @exchangeIds('outgoing').indexOf(id) == -1
 
     exchangeSelectedVariants: (exchange) ->
       numActiveVariants = 0

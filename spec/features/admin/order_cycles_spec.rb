@@ -108,6 +108,8 @@ feature %q{
 
     # I should not be able to re-add the supplier
     page.should_not have_select 'new_supplier_id', with_options: ['My supplier']
+    page.should have_button 'Add supplier', disabled: true
+    page.all("td.supplier_name").map(&:text).should == ['My supplier']
 
     # And I add a supplier fee
     within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
