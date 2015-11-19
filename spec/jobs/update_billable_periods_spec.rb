@@ -524,6 +524,8 @@ describe UpdateBillablePeriods do
       let!(:bp6) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july - 10.days, ends_at: start_of_july - 5.days ) }
       # Updated before start but ends at start_date (ie. not after start_date, so should be ignored) EDGE CASE
       let!(:bp7) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july - 5.days, ends_at: start_of_july ) }
+      # Updated before start, but order is already complete, so should not be deleted
+      let!(:bp8) { create(:billable_period, enterprise: enterprise, updated_at: job_start_time - 5.seconds, begins_at: start_of_july, ends_at: start_of_july + 10.days, account_invoice: create(:account_invoice, order: create(:order, state: 'complete', completed_at: 5.minutes.ago))) }
 
       before do
         allow(Bugsnag).to receive(:notify)
@@ -540,6 +542,7 @@ describe UpdateBillablePeriods do
         expect(bp5.reload.deleted_at).to be_nil
         expect(bp6.reload.deleted_at).to be_nil
         expect(bp7.reload.deleted_at).to be_nil
+        expect(bp8.reload.deleted_at).to be_nil
       end
 
       it "notifies bugsnag" do
