@@ -1,7 +1,7 @@
 module OpenFoodNetwork
   class XeroInvoicesReport
-    def initialize(orders, opts={})
-      @orders = orders
+    def initialize(user, opts={})
+      @user = user
 
       @opts = opts.
               reject { |k, v| v.blank? }.
@@ -15,10 +15,19 @@ module OpenFoodNetwork
       %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
     end
 
+    def search
+      permissions = OpenFoodNetwork::Permissions.new(@user)
+      permissions.editable_orders.complete.not_state(:canceled).search(@opts[:q])
+    end
+
+    def orders
+      search.result.reorder('id DESC')
+    end
+
     def table
       rows = []
 
-      @orders.each_with_index do |order, i|
+      orders.each_with_index do |order, i|
         invoice_number = invoice_number_for(order, i)
         rows += detail_rows_for_order(order, invoice_number, @opts) if detail?
         rows += summary_rows_for_order(order, invoice_number, @opts)
