@@ -106,6 +106,9 @@ feature %q{
     check "order_cycle_incoming_exchange_0_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_0_variants_#{v2.id}"
 
+    # I should not be able to re-add the supplier
+    page.should_not have_select 'new_supplier_id', with_options: ['My supplier']
+
     # And I add a supplier fee
     within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
     select 'My supplier',  from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id'

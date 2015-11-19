@@ -1,11 +1,11 @@
 angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $timeout) ->
-  OrderCycle = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
+  OrderCycleResource = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
     'new'   : { method: 'GET', params: { action_name: "new" } }
 		'create': { method: 'POST'}
 		'update': { method: 'PUT'}}
 
-  {
+  new class OrderCycle
     order_cycle: {incoming_exchanges: [], outgoing_exchanges: []}
     showProducts: {incoming: false, outgoing: false}
 
@@ -14,10 +14,10 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
     exchangeIds: (direction) ->
       parseInt(exchange.enterprise_id) for exchange in @exchangesByDirection(direction)
 
-    novelSupplier: (enterprise) ->
+    novelSupplier: (enterprise) =>
       @exchangeIds('incoming').indexOf(enterprise.id) == -1
 
-    novelDistributor: (enterprise) ->
+    novelDistributor: (enterprise) =>
       @exchangeIds('outgoing').indexOf(enterprise.id) == -1
 
     exchangeSelectedVariants: (exchange) ->
@@ -105,7 +105,7 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
         exchange.variants[variant_id] = false
 
     new: (params, callback=null) ->
-      OrderCycle.new params, (oc) =>
+      OrderCycleResource.new params, (oc) =>
         delete oc.$promise
         delete oc.$resolved
         angular.extend(@order_cycle, oc)
@@ -120,7 +120,7 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
 
     load: (order_cycle_id, callback=null) ->
       service = this
-      OrderCycle.get {order_cycle_id: order_cycle_id}, (oc) ->
+      OrderCycleResource.get {order_cycle_id: order_cycle_id}, (oc) ->
         delete oc.$promise
         delete oc.$resolved
         angular.extend(service.order_cycle, oc)
@@ -144,7 +144,7 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
       this.order_cycle
 
     create: (destination) ->
-    	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
+    	oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
     	oc.$create (data) ->
     	  if data['success']
   	      $window.location = destination
@@ -152,7 +152,7 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
           console.log('Failed to create order cycle')
 
     update: (destination) ->
-    	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
+    	oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
     	oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
     	  if data['success']
           if destination?
@@ -229,5 +229,3 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
       $timeout =>
         this.message = null
       , 5000
-
-  })
