@@ -145,6 +145,7 @@ describe UpdateAccountInvoices do
         context "where the order is not complete" do
           before do
             allow(invoice_order).to receive(:complete?) { false }
+            old_billable_period.enterprise.update_attributes(contact: "Firstname Lastname Something Else", phone: '12345')
             updater.update(june_account_invoice)
           end
 
@@ -158,8 +159,13 @@ describe UpdateAccountInvoices do
           it "assigns a addresses to the order" do
             expect(invoice_order.billing_address).to be_a Spree::Address
             expect(invoice_order.shipping_address).to be_a Spree::Address
-            expect(invoice_order.billing_address).to eq old_billable_period.enterprise.address
-            expect(invoice_order.shipping_address).to eq old_billable_period.enterprise.address
+            expect(invoice_order.shipping_address).to eq invoice_order.billing_address
+            [:address1, :address2, :city, :zipcode, :state_id, :country_id].each do |attr|
+              expect(invoice_order.billing_address[attr]).to eq old_billable_period.enterprise.address[attr]
+            end
+            expect(invoice_order.billing_address.firstname).to eq "Firstname"
+            expect(invoice_order.billing_address.lastname).to eq "Lastname Something Else"
+            expect(invoice_order.billing_address.phone).to eq "12345"
           end
 
           it "saves the order" do
@@ -336,6 +342,7 @@ describe UpdateAccountInvoices do
 
     before do
       Spree::Config.set({ accounts_distributor_id: accounts_distributor.id })
+      billable_period2.enterprise.update_attributes(contact: 'Anna Karenina', phone: '3433523')
     end
 
     context "when no invoice_order currently exists" do
@@ -354,8 +361,13 @@ describe UpdateAccountInvoices do
           expect(invoice_order.state).to eq 'cart'
           expect(invoice_order.bill_address).to be_a Spree::Address
           expect(invoice_order.ship_address).to be_a Spree::Address
-          expect(invoice_order.bill_address).to eq billable_period2.enterprise.address
-          expect(invoice_order.ship_address).to eq billable_period2.enterprise.address
+          expect(invoice_order.shipping_address).to eq invoice_order.billing_address
+          [:address1, :address2, :city, :zipcode, :state_id, :country_id].each do |attr|
+            expect(invoice_order.billing_address[attr]).to eq billable_period2.enterprise.address[attr]
+          end
+          expect(invoice_order.billing_address.firstname).to eq "Anna"
+          expect(invoice_order.billing_address.lastname).to eq "Karenina"
+          expect(invoice_order.billing_address.phone).to eq "3433523"
         end
       end
 
@@ -393,8 +405,13 @@ describe UpdateAccountInvoices do
           expect(invoice_order.state).to eq 'cart'
           expect(invoice_order.bill_address).to be_a Spree::Address
           expect(invoice_order.ship_address).to be_a Spree::Address
-          expect(invoice_order.bill_address).to eq billable_period2.enterprise.address
-          expect(invoice_order.ship_address).to eq billable_period2.enterprise.address
+          expect(invoice_order.shipping_address).to eq invoice_order.billing_address
+          [:address1, :address2, :city, :zipcode, :state_id, :country_id].each do |attr|
+            expect(invoice_order.billing_address[attr]).to eq billable_period2.enterprise.address[attr]
+          end
+          expect(invoice_order.billing_address.firstname).to eq "Anna"
+          expect(invoice_order.billing_address.lastname).to eq "Karenina"
+          expect(invoice_order.billing_address.phone).to eq "3433523"
         end
       end
 
