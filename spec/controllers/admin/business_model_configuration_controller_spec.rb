@@ -58,7 +58,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
 
         it "does not allow them to be set" do
           expect(response).to render_template :edit
-          expect(assigns(:settings).errors.count).to be 4
+          expect(assigns(:settings).errors.count).to be 5
           expect(Spree::Config.account_invoices_monthly_fixed).to eq 5
           expect(Spree::Config.account_invoices_monthly_rate).to eq 0.02
           expect(Spree::Config.account_invoices_monthly_cap).to eq 50

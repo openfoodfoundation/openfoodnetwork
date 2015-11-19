@@ -200,9 +200,9 @@ describe FinalizeAccountInvoices do
         invoice.reload
 
         expect(invoice.completed_at).to_not be_nil
-        expect(invoice.total).to eq billable_period1.bill
+        expect(invoice.total).to eq billable_period1.bill.round(2)
         expect(invoice.payments.count).to eq 1
-        expect(invoice.payments.first.amount).to eq billable_period1.bill
+        expect(invoice.payments.first.amount).to eq billable_period1.bill.round(2)
         expect(invoice.state).to eq 'complete'
       end
     end

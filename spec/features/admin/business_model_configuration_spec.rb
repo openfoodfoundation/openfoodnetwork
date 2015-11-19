@@ -11,7 +11,7 @@ feature 'Business Model Configuration' do
       Spree::Config.set({
         account_invoices_monthly_fixed: 5,
         account_invoices_monthly_rate: 0.02,
-        account_invoices_monthly_cap: 50
+        account_invoices_monthly_cap: 50,
         account_invoices_tax_rate: 0.1
       })
     end
@@ -45,7 +45,7 @@ feature 'Business Model Configuration' do
         expect(Spree::Config.account_invoices_monthly_fixed).to eq 10
         expect(Spree::Config.account_invoices_monthly_rate).to eq 0.05
         expect(Spree::Config.account_invoices_monthly_cap).to eq 30
-        expect(Spree::Config.settings_account_invoices_tax_rate).to eq 0.15
+        expect(Spree::Config.account_invoices_tax_rate).to eq 0.15
       end
     end
   end
