@@ -158,12 +158,10 @@ Spree::Admin::ReportsController.class_eval do
 
   def sales_tax
     prepare_date_params params
-
-    @search = Spree::Order.complete.not_state(:canceled).managed_by(spree_current_user).search(params[:q])
-    orders = @search.result
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
 
-    @report = OpenFoodNetwork::SalesTaxReport.new orders
+    @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, params
+
     unless params[:csv]
       render :html => @report
     else
