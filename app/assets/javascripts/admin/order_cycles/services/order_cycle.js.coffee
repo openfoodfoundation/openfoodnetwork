@@ -6,10 +6,19 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
 		'update': { method: 'PUT'}}
 
   {
-    order_cycle: {}
+    order_cycle: {incoming_exchanges: [], outgoing_exchanges: []}
     showProducts: {incoming: false, outgoing: false}
 
     loaded: false
+
+    exchangeIds: (direction) ->
+      parseInt(exchange.enterprise_id) for exchange in @exchangesByDirection(direction)
+
+    novelSupplier: (enterprise) ->
+      @exchangeIds('incoming').indexOf(enterprise.id) == -1
+
+    novelDistributor: (enterprise) ->
+      @exchangeIds('outgoing').indexOf(enterprise.id) == -1
 
     exchangeSelectedVariants: (exchange) ->
       numActiveVariants = 0

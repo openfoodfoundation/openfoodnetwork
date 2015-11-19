@@ -470,11 +470,38 @@ describe 'OrderCycle services', ->
           exchanges: []
 
     it 'initialises order cycle', ->
-      expect(OrderCycle.order_cycle).toEqual {}
+      expect(OrderCycle.order_cycle).toEqual {incoming_exchanges: [], outgoing_exchanges: []}
 
     it 'counts selected variants in an exchange', ->
       result = OrderCycle.exchangeSelectedVariants({variants: {1: true, 2: false, 3: true}})
       expect(result).toEqual(2)
+
+    describe "fetching exchange ids", ->
+      it "gets enterprise ids as ints", ->
+        OrderCycle.order_cycle.incoming_exchanges = [
+          {enterprise_id: 1}
+          {enterprise_id: '2'}
+        ]
+        OrderCycle.order_cycle.outgoing_exchanges = [
+          {enterprise_id: 3}
+          {enterprise_id: '4'}
+        ]
+        expect(OrderCycle.exchangeIds('incoming')).toEqual [1, 2]
+
+    describe "checking for novel enterprises", ->
+      it "detects novel suppliers", ->
+        e1 = {id: 1}
+        e2 = {id: 2}
+        OrderCycle.order_cycle.incoming_exchanges = [{enterprise_id: 1}]
+        expect(OrderCycle.novelSupplier(e1)).toBe false
+        expect(OrderCycle.novelSupplier(e2)).toBe true
+
+      it "detects novel distributors", ->
+        e1 = {id: 1}
+        e2 = {id: 2}
+        OrderCycle.order_cycle.outgoing_exchanges = [{enterprise_id: 1}]
+        expect(OrderCycle.novelDistributor(e1)).toBe false
+        expect(OrderCycle.novelDistributor(e2)).toBe true
 
     describe 'fetching the direction for an exchange', ->
       it 'returns "incoming" for incoming exchanges', ->
