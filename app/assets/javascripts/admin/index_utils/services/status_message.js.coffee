@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "StatusMessage", ($timeout) ->
+angular.module("admin.indexUtils").factory "StatusMessage", ($timeout) ->
   new class StatusMessage
     types:
       progress: {timeout: false, style: {color: '#ff9906'}}

@@ -7,7 +7,7 @@ describe "VariantOverrides service", ->
   ]
 
   beforeEach ->
-    module "ofn.admin"
+    module "admin.variantOverrides"
     module ($provide) ->
       $provide.value "variantOverrides", variantOverrides
       null

@@ -9,7 +9,7 @@ describe "VariantOverridesCtrl", ->
   variantOverrides = {}
 
   beforeEach ->
-    module 'ofn.admin'
+    module 'admin.variantOverrides'
     module ($provide) ->
       $provide.value 'SpreeApiKey', 'API_KEY'
       $provide.value 'variantOverrides', variantOverrides

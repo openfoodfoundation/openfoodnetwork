@@ -1,4 +1,4 @@
-angular.module("ofn.admin").directive "ofnTrackVariantOverride", (DirtyVariantOverrides) ->
+angular.module("admin.variantOverrides").directive "ofnTrackVariantOverride", (DirtyVariantOverrides) ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     ngModel.$parsers.push (viewValue) ->

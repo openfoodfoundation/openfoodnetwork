@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "VariantOverrides", (variantOverrides, Indexer) ->
+angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOverrides) ->
   new class VariantOverrides
     variantOverrides: {}
 
