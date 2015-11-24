@@ -167,13 +167,27 @@ module OpenFoodNetwork
       sender = @order_cycle.coordinator
       receiver = exchange.andand.receiver || Enterprise.find(attrs[:enterprise_id])
       permitted = editable_variant_ids_for_outgoing_exchange_between(sender, receiver)
+      incoming = incoming_variant_ids
 
       # Only change visibility for variants I have permission to edit
       attrs[:variants].each do |variant_id, value|
-        variants[variant_id.to_i] = value  if permitted.include?(variant_id.to_i)
+        variant_id = variant_id.to_i
+
+        if !incoming.include? variant_id
+          # When a variant has been removed from incoming but remains
+          # in outgoing, remove it from outgoing too
+          variants[variant_id] = false
+
+        elsif permitted.include? variant_id
+          variants[variant_id] = value
+        end
       end
 
-      variants.select { |k, v| v }.keys.map { |k| k.to_i }.sort
+      variants.select { |k, v| v }.keys.map(&:to_i).sort
+    end
+
+    def incoming_variant_ids
+      @order_cycle.supplied_variants.map &:id
     end
   end
 end
