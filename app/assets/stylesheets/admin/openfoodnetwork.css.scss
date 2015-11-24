@@ -113,10 +113,6 @@ form.order_cycle {
     margin-top: 3em;
   }
 
-  .message {
-    font-weight: bold;
-  }
-
   /* This styling makes it easier to read the debug info at the same time as working with the
    * interface, but it breaks the tests. Enable when you need it.
   #order-cycles-debug {

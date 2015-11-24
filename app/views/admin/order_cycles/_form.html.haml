@@ -59,7 +59,7 @@
     or
     = link_to 'Cancel', main_app.admin_order_cycles_path
   %span{'ng-hide' => 'loaded()'} Loading...
-  %h6.message {{ OrderCycle.message }}
+  = render 'spree/admin/shared/status_message'
 
 
 - unless Rails.env.production?

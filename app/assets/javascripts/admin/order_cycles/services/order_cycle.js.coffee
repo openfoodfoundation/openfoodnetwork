@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $timeout) ->
+angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, StatusMessage) ->
   OrderCycleResource = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
     'new'   : { method: 'GET', params: { action_name: "new" } }
@@ -160,7 +160,7 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
           if destination?
     	      $window.location = destination
           else
-            this.displayMessage 'Your order cycle has been updated.'
+            StatusMessage.display 'success', 'Your order cycle has been updated.'
     	  else
           console.log('Failed to update order cycle')
 
@@ -225,9 +225,3 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window, $
 
       for id, active of incoming.variants
         outgoing.variants[id] = active
-
-    displayMessage: (message) ->
-      this.message = message
-      $timeout =>
-        this.message = null
-      , 5000
