@@ -246,6 +246,20 @@ describe Exchange do
 
       Exchange.with_product(p).should == [ex]
     end
+
+    describe "sorting exchanges by primary enterprise name" do
+      let(:e1) { create(:supplier_enterprise,    name: 'ZZZ') }
+      let(:e2) { create(:distributor_enterprise, name: 'AAA') }
+      let(:e3) { create(:supplier_enterprise,    name: 'CCC') }
+
+      let!(:ex1) { create(:exchange, sender:   e1, incoming: true) }
+      let!(:ex2) { create(:exchange, receiver: e2, incoming: false) }
+      let!(:ex3) { create(:exchange, sender:   e3, incoming: true) }
+
+      it "sorts" do
+        Exchange.by_enterprise_name.should == [ex2, ex3, ex1]
+      end
+    end
   end
 
   it "clones itself" do

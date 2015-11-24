@@ -19,7 +19,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
   end
 
   def exchanges
-    scoped_exchanges = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object).visible_exchanges.order('id ASC')
+    scoped_exchanges = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object).visible_exchanges.by_enterprise_name
     ActiveModel::ArraySerializer.new(scoped_exchanges, {each_serializer: Api::Admin::ExchangeSerializer, current_user: options[:current_user] })
   end
 

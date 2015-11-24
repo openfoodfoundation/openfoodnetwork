@@ -167,6 +167,10 @@ feature %q{
   scenario "editing an order cycle" do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
+    oc.suppliers.first.update_attribute :name, 'AAA'
+    oc.suppliers.last.update_attribute :name, 'ZZZ'
+    oc.distributors.first.update_attribute :name, 'AAAA'
+    oc.distributors.last.update_attribute :name, 'ZZZZ'
 
     # When I edit it
     login_to_admin_section
