@@ -224,6 +224,10 @@ class OrderCycle < ActiveRecord::Base
     exchanges.supplying_to(order.distributor).with_any_variant(order.variants)
   end
 
+  def coordinated_by?(user)
+    coordinator.users.include? user
+  end
+
 
   private
 

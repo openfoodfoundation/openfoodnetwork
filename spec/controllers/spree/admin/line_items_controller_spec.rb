@@ -90,7 +90,6 @@ describe Spree::Admin::LineItemsController do
       let!(:line_item3) { FactoryGirl.create(:line_item, order: order2, product: FactoryGirl.create(:product, supplier: supplier)) }
 
       context "producer enterprise" do
-
         before do
           controller.stub spree_current_user: supplier.owner
           spree_get :index, :format => :json
@@ -122,6 +121,57 @@ describe Spree::Admin::LineItemsController do
         it "retrieves a list of line_items" do
           keys = json_response.first.keys.map{ |key| key.to_sym }
           line_item_attributes.all?{ |attr| keys.include? attr }.should == true
+        end
+      end
+    end
+  end
+
+  describe "#update" do
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:distributor1) { create(:distributor_enterprise) }
+    let(:coordinator) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
+    let!(:order1) { FactoryGirl.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.now, distributor: distributor1, billing_address: FactoryGirl.create(:address) ) }
+    let!(:line_item1) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: supplier)) }
+    let(:params) { { format: :json, id: line_item1.id, order_id: order1.number, line_item: { quantity: 3, final_weight_volume: 3000, price: 3.00 } } }
+
+    context "as an enterprise user" do
+      context "producer enterprise" do
+        before do
+          controller.stub spree_current_user: supplier.owner
+          spree_put :update, params
+        end
+
+        it "does not allow access" do
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+
+      context "coordinator enterprise" do
+        before do
+          controller.stub spree_current_user: coordinator.owner
+          spree_put :update, params
+        end
+
+        it "updates the line_item" do
+          line_item1.reload
+          expect(line_item1.quantity).to eq 3
+          expect(line_item1.final_weight_volume).to eq 3000
+          expect(line_item1.price).to eq 3.00
+        end
+      end
+
+      context "hub enterprise" do
+        before do
+          controller.stub spree_current_user: distributor1.owner
+          spree_put :update, params
+        end
+
+        it "retrieves a list of line_items" do
+          line_item1.reload
+          expect(line_item1.quantity).to eq 3
+          expect(line_item1.final_weight_volume).to eq 3000
+          expect(line_item1.price).to eq 3.00
         end
       end
     end

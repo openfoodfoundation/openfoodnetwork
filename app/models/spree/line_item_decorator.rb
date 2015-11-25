@@ -4,7 +4,7 @@ Spree::LineItem.class_eval do
   include OpenFoodNetwork::VariantAndLineItemNaming
   has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items', class_name: 'Spree::OptionValue'
 
-  attr_accessible :max_quantity, :final_weight_volume
+  attr_accessible :max_quantity, :final_weight_volume, :price
   attr_accessible :final_weight_volume, :price, :as => :api
 
   before_save :calculate_final_weight_volume, unless: :final_weight_volume_changed?

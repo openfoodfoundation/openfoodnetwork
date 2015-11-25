@@ -6,7 +6,7 @@ angular.module("admin.lineItems").factory 'LineItemResource', ($resource) ->
     'update':
       method: 'PUT'
       transformRequest: (data, headersGetter) =>
-        requestData = {}
-        requestData[attr] = data[attr] for attr in ["price", "quantity", "final_weight_volume"]
-        angular.toJson(requestData)
+        line_item = {}
+        line_item[attr] = data[attr] for attr in ["price", "quantity", "final_weight_volume"]
+        angular.toJson(line_item: line_item)
   })

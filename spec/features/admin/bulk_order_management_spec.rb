@@ -151,7 +151,9 @@ feature %q{
     let!(:p1) { FactoryGirl.create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [FactoryGirl.create(:variant, unit_value: 1000)] ) }
     let!(:v1) { p1.variants.first }
     let!(:o1) { FactoryGirl.create(:order_with_distributor, state: 'complete', completed_at: Time.now ) }
-    let!(:li1) { FactoryGirl.create(:line_item, order: o1, variant: v1, :quantity => 5, :final_weight_volume => 1000 ) }
+    let!(:li1) { FactoryGirl.create(:line_item, order: o1, variant: v1, :quantity => 5, :final_weight_volume => 1000, price: 10.00 ) }
+
+    before { v1.update_attribute(:on_hand, 100)}
 
     context "modifying the weight/volume of a line item" do
       it "price is altered" do
@@ -160,10 +162,15 @@ feature %q{
         first("div#columns_dropdown div.menu div.menu_item", text: "Weight/Volume").click
         first("div#columns_dropdown div.menu div.menu_item", text: "Price").click
         within "tr#li_#{li1.id}" do
-          expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * li1.quantity)}"
-          fill_in "final_weight_volume", :with => li1.final_weight_volume * 2
-          expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * li1.quantity * 2)}"
+          expect(page).to have_field "price", with: "$50.00"
+          fill_in "final_weight_volume", :with => 2000
+          expect(page).to have_field "price", with: "$100.00"
         end
+        click_button "Save Changes"
+        expect(page).to_not have_selector "#save-bar"
+        li1.reload
+        expect(li1.final_weight_volume).to eq 2000
+        expect(li1.price).to eq 20.00
       end
     end
 
