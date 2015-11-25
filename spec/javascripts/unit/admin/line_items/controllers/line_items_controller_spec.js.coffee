@@ -19,7 +19,9 @@ describe "LineItemsCtrl", ->
     LineItems = _LineItems_
     OrderCycles = _OrderCycles_
     VariantUnitManager = _VariantUnitManager_
+    spyOn(window, "daysFromToday").andReturn "SomeDate"
     spyOn(window, "formatDate").andReturn "SomeDate"
+    spyOn(window, "parseDate").andReturn "SomeDate"
 
     supplier = { id: 1, name: "Supplier" }
     distributor = { id: 5, name: "Distributor" }

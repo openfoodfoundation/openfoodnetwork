@@ -39,12 +39,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       $scope.startDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].first_order
       $scope.endDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].last_order
 
-    RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{$scope.startDate}", "q[completed_at_lt]": "#{$scope.endDate}")
-    RequestMonitor.load $scope.lineItems = LineItems.index("q[order][state_not_eq]": "canceled", "q[order][completed_at_not_null]": "true", "q[order][completed_at_gt]": "#{$scope.startDate}", "q[order][completed_at_lt]": "#{$scope.endDate}")
+    RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{parseDate($scope.startDate)}", "q[completed_at_lt]": "#{parseDate($scope.endDate)}")
+    RequestMonitor.load $scope.lineItems = LineItems.index("q[order][state_not_eq]": "canceled", "q[order][completed_at_not_null]": "true", "q[order][completed_at_gt]": "#{parseDate($scope.startDate)}", "q[order][completed_at_lt]": "#{parseDate($scope.endDate)}")
 
     unless $scope.initialized
       RequestMonitor.load $scope.distributors = Enterprises.index(includeBlank: true, action: "for_line_items", ams_prefix: "basic", "q[sells_in][]": ["own", "any"])
-      RequestMonitor.load $scope.orderCycles = OrderCycles.index(includeBlank: true, ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{formatDate(daysFromToday(-90))}")
+      RequestMonitor.load $scope.orderCycles = OrderCycles.index(includeBlank: true, ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{daysFromToday(-90)}")
       RequestMonitor.load $scope.suppliers = Enterprises.index(includeBlank: true, action: "for_line_items", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
     RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise]).then ->
@@ -171,6 +171,9 @@ formatTime = (date) ->
   mins = twoDigitNumber date.getMinutes()
   secs = twoDigitNumber date.getSeconds()
   return hours + ":" + mins + ":" + secs
+
+parseDate = (dateString) ->
+  new Date(Date.parse(dateString))
 
 twoDigitNumber = (number) ->
   twoDigits =  "" + number
