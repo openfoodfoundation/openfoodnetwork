@@ -145,13 +145,13 @@ class AbilityDecorator
     can [:read, :update, :fire, :resend, :invoice, :print], Spree::Order do |order|
       # We allow editing orders with a nil distributor as this state occurs
       # during the order creation process from the admin backend
-      order.distributor.nil? || user.enterprises.include?(order.distributor) || order.order_cycle.coordinated_by?(user)
+      order.distributor.nil? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
     can [:admin, :bulk_management, :managed], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
     can [:admin , :for_line_items], Enterprise
     can [:admin, :index, :create], Spree::LineItem
     can [:destroy, :update], Spree::LineItem do |item|
-      user.admin? || user.enterprises.include?(order.distributor) || order.order_cycle.coordinated_by?(user)
+      user.admin? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
 
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
@@ -164,10 +164,10 @@ class AbilityDecorator
         true
       elsif adjustment.adjustable.instance_of? Spree::Order
         order = adjustment.adjustable
-        user.enterprises.include?(order.distributor) || order.order_cycle.coordinated_by?(user)
+        user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
       elsif adjustment.adjustable.instance_of? Spree::LineItem
         order = adjustment.adjustable.order
-        user.enterprises.include?(order.distributor) || order.order_cycle.coordinated_by?(user)
+        user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
       end
     end
 
