@@ -740,41 +740,6 @@ describe Enterprise do
     end
   end
 
-  describe "geo search" do
-    before(:each) do
-      Enterprise.delete_all
-
-      state_id_vic = Spree::State.where(abbr: "Vic").first.id
-      state_id_nsw = Spree::State.where(abbr: "NSW").first.id
-
-      @suburb_in_vic = Suburb.create(name: "Camberwell", postcode: 3124, latitude: -37.824818, longitude: 145.057957, state_id: state_id_vic)
-      @suburb_in_nsw = Suburb.create(name: "Cabramatta", postcode: 2166, latitude: -33.89507, longitude: 150.935889, state_id: state_id_nsw)
-
-      address_vic1 = FactoryGirl.create(:address, state_id: state_id_vic, city: "Hawthorn", zipcode: "3123")
-      address_vic1.update_column(:latitude, -37.842105)
-      address_vic1.update_column(:longitude, 145.045951)
-
-      address_vic2 = FactoryGirl.create(:address, state_id: state_id_vic, city: "Richmond", zipcode: "3121")
-      address_vic2.update_column(:latitude, -37.826869)
-      address_vic2.update_column(:longitude, 145.007098)
-
-      FactoryGirl.create(:distributor_enterprise, address: address_vic1)
-      FactoryGirl.create(:distributor_enterprise, address: address_vic2)
-    end
-
-    it "should find nearby hubs if there are any" do
-      Enterprise.find_near(@suburb_in_vic).count.should eql(2)
-    end
-
-    it "should not have nils in the result" do
-      Enterprise.find_near(@suburb_in_vic).should_not include(nil)
-    end
-
-    it "should not find hubs if not nearby " do
-      Enterprise.find_near(@suburb_in_nsw).count.should eql(0)
-    end
-  end
-
   describe "taxons" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:supplier) { create(:supplier_enterprise) }
