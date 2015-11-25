@@ -146,22 +146,22 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
       this.order_cycle
 
     create: (destination) ->
-    	oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
-    	oc.$create (data) ->
-    	  if data['success']
-  	      $window.location = destination
-    	  else
+      oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
+      oc.$create (data) ->
+        if data['success']
+          $window.location = destination
+        else
           console.log('Failed to create order cycle')
 
     update: (destination) ->
-    	oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
-    	oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
-    	  if data['success']
+      oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
+      oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
+        if data['success']
           if destination?
-    	      $window.location = destination
+            $window.location = destination
           else
             StatusMessage.display 'success', 'Your order cycle has been updated.'
-    	  else
+        else
           console.log('Failed to update order cycle')
 
     dataForSubmit: ->
