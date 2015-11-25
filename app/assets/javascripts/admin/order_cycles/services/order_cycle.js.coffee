@@ -146,6 +146,7 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
       this.order_cycle
 
     create: (destination) ->
+      return unless @confirmNoDistributors()
       oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
       oc.$create (data) ->
         if data['success']
@@ -154,6 +155,7 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
           console.log('Failed to create order cycle')
 
     update: (destination) ->
+      return unless @confirmNoDistributors()
       oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
       oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
         if data['success']
@@ -163,6 +165,12 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
             StatusMessage.display 'success', 'Your order cycle has been updated.'
         else
           console.log('Failed to update order cycle')
+
+    confirmNoDistributors: ->
+      if @order_cycle.outgoing_exchanges.length == 0
+        confirm 'There are no distributors in this order cycle. This order cycle will not be visible to customers until you add one. Would you like to continue saving this order cycle?'
+      else
+        true
 
     dataForSubmit: ->
       data = this.deepCopy()

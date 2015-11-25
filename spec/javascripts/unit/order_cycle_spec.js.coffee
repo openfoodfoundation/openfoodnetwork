@@ -805,6 +805,9 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.order_cycle.exchanges).toBeUndefined()
 
     describe 'creating an order cycle', ->
+      beforeEach ->
+        spyOn(OrderCycle, 'confirmNoDistributors').andReturn true
+
       it 'redirects to the destination page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
@@ -828,6 +831,9 @@ describe 'OrderCycle services', ->
         expect($window.location).toEqual(undefined)
 
     describe 'updating an order cycle', ->
+      beforeEach ->
+        spyOn(OrderCycle, 'confirmNoDistributors').andReturn true
+
       it 'redirects to the destination page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
@@ -943,3 +949,30 @@ describe 'OrderCycle services', ->
           expect(order_cycle.outgoing_exchanges[0].enterprise_fees).toEqual [{id: 3}, {id: 4}]
           expect(order_cycle.incoming_exchanges[0].enterprise_fee_ids).toBeUndefined()
           expect(order_cycle.outgoing_exchanges[0].enterprise_fee_ids).toBeUndefined()
+
+    describe "confirming when there are no distributors", ->
+      order_cycle_with_exchanges = order_cycle_without_exchanges = null
+
+      beforeEach ->
+        order_cycle_with_exchanges =
+          outgoing_exchanges: [{}]
+        order_cycle_without_exchanges =
+          outgoing_exchanges: []
+
+      it "returns true when there are distributors", ->
+        spyOn window, 'confirm'
+        OrderCycle.order_cycle = order_cycle_with_exchanges
+        expect(OrderCycle.confirmNoDistributors()).toBe true
+        expect(window.confirm).not.toHaveBeenCalled()
+
+      it "returns true when there are no distributors but the user confirms", ->
+        spyOn(window, 'confirm').andReturn true
+        OrderCycle.order_cycle = order_cycle_without_exchanges
+        expect(OrderCycle.confirmNoDistributors()).toBe true
+        expect(window.confirm).toHaveBeenCalled()
+
+      it "returns false when there are no distributors and the user does not confirm", ->
+        spyOn(window, 'confirm').andReturn false
+        OrderCycle.order_cycle = order_cycle_without_exchanges
+        expect(OrderCycle.confirmNoDistributors()).toBe false
+        expect(window.confirm).toHaveBeenCalled()
