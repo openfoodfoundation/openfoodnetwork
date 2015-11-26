@@ -1,10 +1,10 @@
 %tr.variant{ id: "v_{{variant.id}}", ng: {repeat: 'variant in product.variants'}}
-  %td
-  %td
+  %td.producer{ ng: { show: 'columns.producer.visible' } }
+  %td.product{ ng: { show: 'columns.product.visible' } }
     %span{ bo: { bind: 'variant.display_name || ""'} }
     .variant-override-unit{ bo: { bind: 'variant.unit_to_display'} }
-  %td
+  %td.price{ ng: { show: 'columns.price.visible' } }
     %input{name: 'variant-overrides-{{ variant.id }}-price', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].price'}, placeholder: '{{ variant.price }}', 'ofn-track-variant-override' => 'price'}
 
-  %td
+  %td.on_hand{ ng: { show: 'columns.on_hand.visible' } }
     %input{name: 'variant-overrides-{{ variant.id }}-count-on-hand', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}', 'ofn-track-variant-override' => 'price'}

@@ -1,10 +1,10 @@
 %table.index.bulk{ ng: {show: 'hub'}}
   %thead
-    %tr
-      %th Producer
-      %th Product
-      %th Price
-      %th On hand
+    %tr{ ng: { controller: "ColumnsCtrl" } }
+      %th.producer{ ng: { show: 'columns.producer.visible' } } Producer
+      %th.product{ ng: { show: 'columns.product.visible' } } Product
+      %th.price{ ng: { show: 'columns.price.visible' } } Price
+      %th.on_hand{ ng: { show: 'columns.on_hand.visible' } } On hand
   %tbody{bindonce: true, ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id | attrFilter:{producer_id:producerFilter} | filter:query' } }
     = render 'admin/variant_overrides/products_product'
     = render 'admin/variant_overrides/products_variants'

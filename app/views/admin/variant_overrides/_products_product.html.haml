@@ -1,5 +1,5 @@
 %tr.product.even
-  %td{ bo: { bind: 'producersByID[product.producer_id].name'} }
-  %td{ bo: { bind: 'product.name'} }
-  %td
-  %td
+  %td.producer{ ng: { show: 'columns.producer.visible' }, bo: { bind: 'producersByID[product.producer_id].name'} }
+  %td.product{ ng: { show: 'columns.product.visible' }, bo: { bind: 'product.name'} }
+  %td.price{ ng: { show: 'columns.price.visible' } }
+  %td.on_hand{ ng: { show: 'columns.on_hand.visible' } }

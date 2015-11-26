@@ -3,6 +3,10 @@
 
 %div{ ng: { app: 'admin.variantOverrides', controller: 'AdminVariantOverridesCtrl', init: 'initialise()' } }
   = render 'admin/variant_overrides/filters'
+  %hr.divider.sixteen.columns.alpha.omega
+  .controls.sixteen.columns.alpha.omega
+    %div.thirteen.columns.alpha &nbsp;
+    = render 'admin/shared/columns_dropdown'
 
   %form{ name: 'variant_overrides_form' }
     %save-bar{ save: "update()", form: "variant_overrides_form" }
