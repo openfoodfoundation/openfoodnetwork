@@ -1,13 +1,10 @@
 Dear #{@producer.name},
 \
-We now have all the consumer orders for next food drop.
-
+We now have all the consumer orders for the next food drop.
+\
 - if @receival_instructions
-  Extra instructions: #{@receival_instructions}
-
-Please deliver to #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode} during the regular delivery time. If this is not convenient then please call #{@coordinator.phone}.
-
-Note: If you have to arrange a different delivery day and time, it is requested that you do not come on site during drop off/pick up times.
+  Stock pickup/delivery instructions:
+  = @receival_instructions
 
 \
 Orders summary
@@ -17,17 +14,9 @@ Here is a summary of the orders for your products:
 \
 - @line_items.each_pair do |variant, line_item|
   #{variant.sku} - #{raw(variant.product.supplier.name)} - #{raw(variant.product_and_variant_name)} (QTY: #{line_item.quantity}) @ #{line_item.single_money} = #{line_item.display_amount}
-
 \
-Details
-=========
-\
-For a detailed orders breakdown, please log into your account.
-
-Please confirm that you have received this email.
-
-Please send me an invoice for this amount so we can send you payment.
-
-If you need to phone on the day please call #{@coordinator.phone}.
-\
-Thanks and best wishes - #{@coordinator.name}
+Thanks and best wishes,
+#{@coordinator.name}
+#{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
+#{@coordinator.phone}
+#{@coordinator.email}
