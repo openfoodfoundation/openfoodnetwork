@@ -4,8 +4,6 @@
 %div{ ng: { app: 'admin.variantOverrides', controller: 'AdminVariantOverridesCtrl', init: 'initialise()' } }
   = render 'admin/variant_overrides/filters'
 
-  %div{ng: {show: 'hub'}}
-    %h2 {{ hub.name }}
-    = render 'admin/variant_overrides/actions'
-
-  = render 'admin/variant_overrides/products'
+  %form{ name: 'variant_overrides_form' }
+    %save-bar{ save: "update()", form: "variant_overrides_form" }
+    = render 'admin/variant_overrides/products'

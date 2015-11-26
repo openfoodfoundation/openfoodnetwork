@@ -11,6 +11,9 @@ angular.module("admin.indexUtils").factory "StatusMessage", ($timeout) ->
       text: ""
       style: {}
 
+    active: ->
+      @statusMessage.text != ''
+
     display: (type, text) ->
       @statusMessage.text = text
       @statusMessage.style = @types[type].style
@@ -20,6 +23,7 @@ angular.module("admin.indexUtils").factory "StatusMessage", ($timeout) ->
         @statusMessage.timeout = $timeout =>
           @clear()
         , timeout, true
+      null # So we don't return weird timeouts
 
     clear: ->
       @statusMessage.text = ''

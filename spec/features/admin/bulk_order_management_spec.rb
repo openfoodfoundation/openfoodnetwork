@@ -119,10 +119,9 @@ feature %q{
           expect(page).to_not have_selector "#save-bar"
           fill_in "quantity", :with => 2
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
-          expect(page).to have_selector "#save-bar"
-          expect(page).to have_button "Save Changes"
+          expect(page).to have_selector "#save-bar", text: "You have unsaved changes"
           click_button "Save Changes"
-          expect(page).to_not have_selector "#save-bar"
+          expect(page).to have_selector "#save-bar", text: "All changes saved"
           expect(page).to_not have_selector "input[name='quantity'].ng-dirty"
         end
       end
@@ -132,10 +131,9 @@ feature %q{
           expect(page).to_not have_selector "#save-bar"
           fill_in "quantity", :with => li1.variant.on_hand + li1.quantity + 10
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
-          expect(page).to have_selector "#save-bar"
-          expect(page).to have_button "Save Changes"
+          expect(page).to have_selector "#save-bar", text: "You have unsaved changes"
           click_button "Save Changes"
-          expect(page).to have_selector "#save-bar"
+          expect(page).to have_selector "#save-bar", text: "Fields with red borders contain errors."
           expect(page).to have_selector "input[name='quantity'].ng-dirty.update-error"
           expect(page).to have_content "exceeds available stock. Please ensure line items have a valid quantity."
         end

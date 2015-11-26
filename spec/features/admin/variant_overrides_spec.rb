@@ -26,13 +26,6 @@ feature %q{
 
         page.should have_select2 'hub_id', options: ['', hub.name, hub2.name]
       end
-
-      it "displays the hub" do
-        visit '/admin/variant_overrides'
-        select2_select hub.name, from: 'hub_id'
-
-        page.should have_selector 'h2', text: hub.name
-      end
     end
 
     context "when a hub is selected" do

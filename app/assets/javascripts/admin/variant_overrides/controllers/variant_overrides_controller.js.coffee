@@ -1,4 +1,4 @@
-angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $timeout, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
+angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = Indexer.index hubs
   $scope.hub = null
   $scope.products = []
@@ -52,9 +52,10 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
       .success (updatedVos) ->
         DirtyVariantOverrides.clear()
         VariantOverrides.updateIds updatedVos
-        $timeout -> StatusMessage.display 'success', 'Changes saved.'
+        StatusMessage.display 'success', 'Changes saved.'
+        $scope.variant_overrides_form.$setPristine()
       .error (data, status) ->
-        $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)
+        StatusMessage.display 'failure', $scope.updateError(data, status)
 
 
   $scope.updateError = (data, status) ->
