@@ -70,27 +70,19 @@
     %div{ :class => "eight columns alpha", 'ng-hide' => 'allFinalWeightVolumesPresent()' }
       %span{ :class => "eight columns alpha", style: 'color:red' }
         WARNING: Some variants do not have a unit value
-  %hr{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px" }
-  %div{ 'ng-hide' => 'RequestMonitor.loading || lineItems.length == 0' }
-    .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
-      %div{ :class => "three columns alpha" }
-        %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-      %div{ :class => "three columns" }
-        %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "bulk_actions_dropdown", 'ofn-drop-down' => true }
-          %span{ :class => 'icon-check' } &nbsp; Actions
-          %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
-          %div.menu{ 'ng-show' => "expanded" }
-            %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'ofn-close-on-click' => true }
-              %span{ :class => 'three columns omega' } {{action.name }}
-      %div{ :class => "seven columns" } &nbsp;
-      %div{ :class => "three columns omega" }
-        %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
-          %span{ :class => 'icon-reorder' } &nbsp; Columns
-          %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
-          %div.menu{ 'ng-show' => "expanded" }
-            %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
-              %span{ :class => 'one column alpha', :style => 'text-align: center'} {{ column.visible && "&#10003;" || !column.visible && "&nbsp;" }}
-              %span{ :class => 'two columns omega' } {{column.name }}
+  %hr.divider.sixteen.columns.alpha.omega
+  .controls.sixteen.columns.alpha.omega{ ng: { hide: 'RequestMonitor.loading || lineItems.length == 0' } }
+    %div{ :class => "three columns alpha" }
+      %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
+    %div{ :class => "three columns" }
+      %div.ofn-drop-down#bulk-actions-dropdown{ 'ng-controller' => "DropDownCtrl" }
+        %span{ :class => 'icon-check' } &nbsp; Actions
+        %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+        %div.menu{ 'ng-show' => "expanded" }
+          %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'ofn-close-on-click' => true }
+            %span{ :class => 'three columns omega' } {{action.name }}
+    %div{ :class => "seven columns" } &nbsp;
+    = render 'admin/shared/columns_dropdown'
   %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
     %img.spinner{ src: "/assets/spinning-circles.svg" }
     %h1 LOADING ORDERS
