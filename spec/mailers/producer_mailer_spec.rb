@@ -11,7 +11,7 @@ describe ProducerMailer do
   let(:p2) { create(:product, price: 23.45, supplier: s2) }
   let(:p3) { create(:product, price: 34.56, supplier: s1) }
   let(:order_cycle) { create(:simple_order_cycle) }
-  let!(:incoming_exchange) { order_cycle.exchanges.create! sender: s1, receiver: d1, incoming: true, receival_time: '10am Saturday', receival_instructions: 'Outside shed.' }
+  let!(:incoming_exchange) { order_cycle.exchanges.create! sender: s1, receiver: d1, incoming: true, receival_instructions: 'Outside shed.' }
 
   let!(:order) do
     order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
@@ -41,10 +41,6 @@ describe ProducerMailer do
 
   it "sets a reply-to of the enterprise email" do
     mail.reply_to.should == [s1.email]
-  end
-
-  it "includes receival time" do
-    mail.body.should include '10am Saturday'
   end
 
   it "includes receival instructions" do

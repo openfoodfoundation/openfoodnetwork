@@ -16,10 +16,10 @@ FactoryGirl.define do
       # Incoming Exchanges
       ex1 = create(:exchange, :order_cycle => oc, :incoming => true,
                    :sender => supplier1, :receiver => oc.coordinator,
-                   :receival_time => 'time 0', :receival_instructions => 'instructions 0')
+                   :receival_instructions => 'instructions 0')
       ex2 = create(:exchange, :order_cycle => oc, :incoming => true,
                    :sender => supplier2, :receiver => oc.coordinator,
-                   :receival_time => 'time 1', :receival_instructions => 'instructions 1')
+                   :receival_instructions => 'instructions 1')
       ExchangeFee.create!(exchange: ex1,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
       ExchangeFee.create!(exchange: ex2,
@@ -73,7 +73,7 @@ FactoryGirl.define do
 
     after(:create) do |oc, proxy|
       proxy.suppliers.each do |supplier|
-        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :incoming => true, :receival_time => 'time', :receival_instructions => 'instructions')
+        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :incoming => true, :receival_instructions => 'instructions')
         proxy.variants.each { |v| ex.variants << v }
       end
 

@@ -200,10 +200,6 @@ class OrderCycle < ActiveRecord::Base
     exchanges.incoming.from_enterprises([supplier]).first
   end
 
-  def receival_time_for(supplier)
-    exchange_for_supplier(supplier).andand.receival_time
-  end
-
   def receival_instructions_for(supplier)
     exchange_for_supplier(supplier).andand.receival_instructions
   end

@@ -9,8 +9,6 @@
   selected
 - if type == 'supplier'
   %td.receival-details
-    = text_field_tag 'order_cycle_incoming_exchange_{{ $index }}_receival_time', '', 'id' => 'order_cycle_incoming_exchange_{{ $index }}_receival_time', 'placeholder' => 'Receive at (ie. Date / Time)', 'ng-model' => 'exchange.receival_time'
-    %br/
     = text_field_tag 'order_cycle_incoming_exchange_{{ $index }}_receival_instructions', '', 'id' => 'order_cycle_incoming_exchange_{{ $index }}_receival_instructions', 'placeholder' => 'Receival instructions', 'ng-model' => 'exchange.receival_instructions'
 - if type == 'distributor'
   %td.collection-details

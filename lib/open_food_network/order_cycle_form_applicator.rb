@@ -24,12 +24,10 @@ module OpenFoodNetwork
         if exchange_exists?(exchange[:enterprise_id], @order_cycle.coordinator_id, true)
           update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, true,
                           {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
-                           receival_time: exchange[:receival_time],
                            receival_instructions: exchange[:receival_instructions]})
         else
           add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, true,
                        {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
-                        receival_time: exchange[:receival_time],
                         receival_instructions: exchange[:receival_instructions],})
         end
       end

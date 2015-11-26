@@ -277,7 +277,7 @@ describe Exchange do
         'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids.sort,
         'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
         'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
-        'receival_time' => exchange.receival_time, 'receival_instructions' => exchange.receival_instructions,
+        'receival_instructions' => exchange.receival_instructions,
         'created_at' => exchange.created_at, 'updated_at' => exchange.updated_at}
     end
 
@@ -288,7 +288,7 @@ describe Exchange do
          'payment_enterprise_id' => exchange.payment_enterprise_id, 'variant_ids' => exchange.variant_ids.sort,
          'enterprise_fee_ids' => exchange.enterprise_fee_ids.sort,
          'pickup_time' => exchange.pickup_time, 'pickup_instructions' => exchange.pickup_instructions,
-         'receival_time' => exchange.receival_time, 'receival_instructions' => exchange.receival_instructions}
+         'receival_instructions' => exchange.receival_instructions}
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151002020537) do
+ActiveRecord::Schema.define(:version => 20151125051510) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -386,7 +386,6 @@ ActiveRecord::Schema.define(:version => 20151002020537) do
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
     t.boolean  "incoming",              :default => false, :null => false
-    t.string   "receival_time"
     t.string   "receival_instructions"
   end
 
@@ -671,9 +670,9 @@ ActiveRecord::Schema.define(:version => 20151002020537) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end
