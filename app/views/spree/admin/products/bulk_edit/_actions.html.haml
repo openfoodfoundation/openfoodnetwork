@@ -1,6 +1,6 @@
-%div.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0', style: "margin-bottom: 10px" }
-  %div.four.columns.alpha
+.controls.sixteen.columns.alpha{ 'ng-hide' => 'loading || products.length == 0' }
+  .four.columns.alpha
     %input.four.columns.alpha{ :type => 'button', :value => 'Save Changes', 'ng-click' => 'submitProducts()'}
-  %div.nine.columns
+  .nine.columns
     = render 'spree/admin/shared/status_message'
   = render 'admin/shared/columns_dropdown'

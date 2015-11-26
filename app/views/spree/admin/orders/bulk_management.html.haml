@@ -32,8 +32,8 @@
       %label{ :for => 'clear_all_filters' }
       %br
       %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear All", 'ng-click' => "resetSelectFilters()" }
-  %hr{ :class => "sixteen columns alpha", 'ng-show' => 'unitsVariantSelected()' }
-  %div#group_buy_calculation{ :class => "sixteen columns alpha", 'ng-show' => 'unitsVariantSelected()' }
+  %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'unitsVariantSelected()' } }
+  %div.sixteen.columns.alpha.omega#group_buy_calculation{ ng: { show: 'unitsVariantSelected()' } }
     %div.shared_resource{ :class => "four columns alpha" }
       %span{ :class => 'three columns alpha' }
         %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
@@ -72,16 +72,16 @@
         WARNING: Some variants do not have a unit value
   %hr.divider.sixteen.columns.alpha.omega
   .controls.sixteen.columns.alpha.omega{ ng: { hide: 'RequestMonitor.loading || lineItems.length == 0' } }
-    %div{ :class => "three columns alpha" }
-      %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-    %div{ :class => "three columns" }
+    %div.three.columns.alpha
+      %input.fullwidth{ :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
+    %div.three.columns
       %div.ofn-drop-down#bulk-actions-dropdown{ 'ng-controller' => "DropDownCtrl" }
         %span{ :class => 'icon-check' } &nbsp; Actions
         %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
         %div.menu{ 'ng-show' => "expanded" }
-          %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'ofn-close-on-click' => true }
-            %span{ :class => 'three columns omega' } {{action.name }}
-    %div{ :class => "seven columns" } &nbsp;
+          %div.three.columns.alpha.menu_item{ 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'ofn-close-on-click' => true }
+            %span.three.columns.omega {{action.name }}
+    %div.seven.columns &nbsp;
     = render 'admin/shared/columns_dropdown'
   %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
     %img.spinner{ src: "/assets/spinning-circles.svg" }
