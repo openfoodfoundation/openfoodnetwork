@@ -16,13 +16,17 @@ describe "VariantOverridesCtrl", ->
       null
     scope = {}
 
-    inject ($controller, Indexer, _VariantOverrides_) ->
+    inject ($controller, _VariantOverrides_) ->
       VariantOverrides = _VariantOverrides_
-      ctrl = $controller 'AdminVariantOverridesCtrl', {$scope: scope, Indexer: Indexer, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: _VariantOverrides_}
+      ctrl = $controller 'AdminVariantOverridesCtrl', {$scope: scope, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: _VariantOverrides_}
 
   it "initialises the hub list and the chosen hub", ->
-    expect(scope.hubs).toEqual hubs
+    expect(scope.hubs).toEqual { 1: {id: 1, name: 'Hub'} }
     expect(scope.hub).toBeNull()
+
+  it "initialises select filters", ->
+    expect(scope.producerFilter).toEqual 0
+    expect(scope.query).toEqual ''
 
   it "adds products", ->
     spyOn(VariantOverrides, "ensureDataFor")

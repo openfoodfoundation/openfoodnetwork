@@ -2,7 +2,7 @@
 = render 'admin/variant_overrides/data'
 
 %div{ ng: { app: 'admin.variantOverrides', controller: 'AdminVariantOverridesCtrl', init: 'initialise()' } }
-  = render 'admin/variant_overrides/hub_choice'
+  = render 'admin/variant_overrides/filters'
 
   %div{ng: {show: 'hub'}}
     %h2 {{ hub.name }}

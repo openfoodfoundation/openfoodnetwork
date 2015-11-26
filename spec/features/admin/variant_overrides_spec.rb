@@ -30,7 +30,6 @@ feature %q{
       it "displays the hub" do
         visit '/admin/variant_overrides'
         select2_select hub.name, from: 'hub_id'
-        click_button 'Go'
 
         page.should have_selector 'h2', text: hub.name
       end
@@ -59,7 +58,6 @@ feature %q{
         before do
           visit '/admin/variant_overrides'
           select2_select hub.name, from: 'hub_id'
-          click_button 'Go'
         end
 
         it "displays the list of products with variants" do
@@ -72,11 +70,37 @@ feature %q{
           page.should have_table_row [producer_related.name, product_related.name, '', '']
           page.should have_input "variant-overrides-#{variant_related.id}-price", placeholder: '2.34'
           page.should have_input "variant-overrides-#{variant_related.id}-count-on-hand", placeholder: '23'
-        end
 
-        it "filters the products to those the hub can override" do
+          # filters the products to those the hub can override
           page.should_not have_content producer_unrelated.name
           page.should_not have_content product_unrelated.name
+
+          # Filters based on the producer select filter
+          expect(page).to have_selector "#v_#{variant.id}"
+          expect(page).to have_selector "#v_#{variant_related.id}"
+          select2_select producer.name, from: 'producer_filter'
+          expect(page).to have_selector "#v_#{variant.id}"
+          expect(page).to_not have_selector "#v_#{variant_related.id}"
+          select2_select 'All', from: 'producer_filter'
+
+          # Filters based on the quick search box
+          expect(page).to have_selector "#v_#{variant.id}"
+          expect(page).to have_selector "#v_#{variant_related.id}"
+          fill_in 'query', with: product.name
+          expect(page).to have_selector "#v_#{variant.id}"
+          expect(page).to_not have_selector "#v_#{variant_related.id}"
+          fill_in 'query', with: ''
+
+          # Clears the filters
+          expect(page).to have_selector "#v_#{variant.id}"
+          expect(page).to have_selector "#v_#{variant_related.id}"
+          select2_select producer.name, from: 'producer_filter'
+          fill_in 'query', with: product_related.name
+          expect(page).to_not have_selector "#v_#{variant.id}"
+          expect(page).to_not have_selector "#v_#{variant_related.id}"
+          click_button 'Clear All'
+          expect(page).to have_selector "#v_#{variant.id}"
+          expect(page).to have_selector "#v_#{variant_related.id}"
         end
 
         it "creates new overrides" do
@@ -162,7 +186,6 @@ feature %q{
         before do
           visit '/admin/variant_overrides'
           select2_select hub.name, from: 'hub_id'
-          click_button 'Go'
         end
 
         it "product values are affected by overrides" do

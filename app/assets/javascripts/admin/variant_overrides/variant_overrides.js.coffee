@@ -1,1 +1,1 @@
-angular.module("admin.variantOverrides", ["admin.indexUtils"])
+angular.module("admin.variantOverrides", ["admin.indexUtils", "pasvaz.bindonce"])

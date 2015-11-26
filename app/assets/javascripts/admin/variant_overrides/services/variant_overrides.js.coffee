@@ -8,7 +8,7 @@ angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOve
         @variantOverrides[vo.hub_id][vo.variant_id] = vo
 
     ensureDataFor: (hubs, products) ->
-      for hub in hubs
+      for hub_id, hub of hubs
         @variantOverrides[hub.id] ||= {}
         for product in products
           for variant in product.variants

@@ -1,11 +1,18 @@
 angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $timeout, Indexer, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
-  $scope.hubs = hubs
+  $scope.hubs = Indexer.index hubs
   $scope.hub = null
   $scope.products = []
-  $scope.producers = Indexer.index producers
+  $scope.producers = producers
+  $scope.producersByID = Indexer.index producers
   $scope.hubPermissions = hubPermissions
   $scope.variantOverrides = VariantOverrides.variantOverrides
   $scope.StatusMessage = StatusMessage
+
+  $scope.resetSelectFilters = ->
+    $scope.producerFilter = 0
+    $scope.query = ''
+
+  $scope.resetSelectFilters()
 
   $scope.initialise = ->
     SpreeApiAuth.authorise()
@@ -27,8 +34,7 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
 
 
   $scope.selectHub = ->
-    $scope.hub = (hub for hub in hubs when hub.id == $scope.hub_id)[0]
-
+    $scope.hub = $scope.hubs[$scope.hub_id]
 
   $scope.displayDirty = ->
     if DirtyVariantOverrides.count() > 0
@@ -36,7 +42,6 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
       StatusMessage.display 'notice', "Changes to #{num} remain unsaved."
     else
       StatusMessage.clear()
-
 
   $scope.update = ->
     if DirtyVariantOverrides.count() == 0
