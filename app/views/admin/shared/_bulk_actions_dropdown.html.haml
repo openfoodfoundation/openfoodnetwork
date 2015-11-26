@@ -1,0 +1,7 @@
+.three.columns
+  .ofn-drop-down#bulk-actions-dropdown{ 'ng-controller' => "DropDownCtrl" }
+    %span.icon-check &nbsp; Actions
+    %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+    %div.menu{ 'ng-show' => "expanded" }
+      .three.columns.alpha.menu_item{ 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'ofn-close-on-click' => true }
+        %span.three.columns.omega {{action.name }}

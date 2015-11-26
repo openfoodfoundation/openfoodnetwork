@@ -32,7 +32,9 @@
       %label{ :for => 'clear_all_filters' }
       %br
       %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear All", 'ng-click' => "resetSelectFilters()" }
+
   %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'unitsVariantSelected()' } }
+
   %div.sixteen.columns.alpha.omega#group_buy_calculation{ ng: { show: 'unitsVariantSelected()' } }
     %div.shared_resource{ :class => "four columns alpha" }
       %span{ :class => 'three columns alpha' }
@@ -70,24 +72,23 @@
     %div{ :class => "eight columns alpha", 'ng-hide' => 'allFinalWeightVolumesPresent()' }
       %span{ :class => "eight columns alpha", style: 'color:red' }
         WARNING: Some variants do not have a unit value
+
   %hr.divider.sixteen.columns.alpha.omega
+
   .controls.sixteen.columns.alpha.omega{ ng: { hide: 'RequestMonitor.loading || lineItems.length == 0' } }
     %div.three.columns.alpha
       %input.fullwidth{ :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-    %div.three.columns
-      %div.ofn-drop-down#bulk-actions-dropdown{ 'ng-controller' => "DropDownCtrl" }
-        %span{ :class => 'icon-check' } &nbsp; Actions
-        %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
-        %div.menu{ 'ng-show' => "expanded" }
-          %div.three.columns.alpha.menu_item{ 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'ofn-close-on-click' => true }
-            %span.three.columns.omega {{action.name }}
+    = render 'admin/shared/bulk_actions_dropdown'
     %div.seven.columns &nbsp;
     = render 'admin/shared/columns_dropdown'
+
   %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
     %img.spinner{ src: "/assets/spinning-circles.svg" }
     %h1 LOADING ORDERS
+
   %div{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredLineItems.length == 0'}
     %h1#no_results No orders found.
+
   %div{ 'ng-hide' => 'RequestMonitor.loading || filteredLineItems.length == 0' }
     %form{ name: 'bulk_order_form' }
       %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
@@ -121,6 +122,7 @@
             %th.actions
               Ask?&nbsp;
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
+
         %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
           %td.bulk
             %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked', 'ignore-dirty' => true }
