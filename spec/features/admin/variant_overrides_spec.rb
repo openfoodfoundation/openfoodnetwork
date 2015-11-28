@@ -180,7 +180,7 @@ feature %q{
             page.should have_content "Changes saved."
           end.to change(VariantOverride, :count).by(0)
 
-          vo.reload
+          vo = VariantOverride.last
           vo.variant_id.should == variant.id
           vo.hub_id.should == hub.id
           vo.price.should == 22.22
@@ -201,10 +201,10 @@ feature %q{
           VariantOverride.where(id: vo.id).should be_empty
         end
 
-        # Failing due to authentication issue
         it "resets stock to defaults" do
           click_button 'Reset Stock to Defaults'
-          vo.reload
+          page.should have_content 'Stocks reset to defaults.'
+          vo = VariantOverride.last
           vo.count_on_hand.should == 1000
           page.should have_input "variant-overrides-#{variant.id}-count-on-hand", with: '1000', placeholder: '12'
         end
