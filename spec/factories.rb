@@ -93,7 +93,7 @@ FactoryGirl.define do
     price         77.77
     count_on_hand 11111
     default_stock 2000
-    enable_reset  false
+    resettable  false
   end
 
   factory :enterprise, :class => Enterprise do

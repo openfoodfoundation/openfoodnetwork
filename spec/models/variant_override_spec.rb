@@ -89,18 +89,18 @@ describe VariantOverride do
 
   describe "resetting stock levels" do
     it "resets the on hand level to the value in the default_stock field" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20, enable_reset: true)
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20, resettable: true)
       vo.reset_stock!
       vo.reload.count_on_hand.should == 20
     end
     it "silently logs an error if the variant override doesn't have a default stock level" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock:nil, enable_reset: true)
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock:nil, resettable: true)
       Bugsnag.should_receive(:notify)
       vo.reset_stock!
       vo.reload.count_on_hand.should == 12
     end
     it "doesn't reset the level if the behaviour is disabled" do
-      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 10, enable_reset: false)
+      vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 10, resettable: false)
       vo.reset_stock!
       vo.reload.count_on_hand.should == 12
     end

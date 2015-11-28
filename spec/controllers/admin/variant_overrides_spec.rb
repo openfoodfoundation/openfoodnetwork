@@ -6,8 +6,8 @@ module Admin
     let!(:hub_owner) { create :user, enterprise_limit: 2 }
     let!(:v1) { create(:variant) }
     let!(:v2) { create(:variant) }
-    let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: "6.0", count_on_hand: 5, default_stock: 7, enable_reset: true) }
-    let!(:vo2) { create(:variant_override, hub: hub, variant: v2, price: "6.0", count_on_hand: 2, default_stock: 1, enable_reset: false) }
+    let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: "6.0", count_on_hand: 5, default_stock: 7, resettable: true) }
+    let!(:vo2) { create(:variant_override, hub: hub, variant: v2, price: "6.0", count_on_hand: 2, default_stock: 1, resettable: false) }
 
     before do
       controller.stub spree_current_user: hub_owner

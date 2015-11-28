@@ -56,7 +56,7 @@ class VariantOverride < ActiveRecord::Base
   end
 
   def reset_stock!
-    if enable_reset
+    if resettable
       if default_stock?
         self.attributes = { count_on_hand: default_stock }
         self.save
