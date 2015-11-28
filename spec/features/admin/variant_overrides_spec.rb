@@ -183,7 +183,6 @@ feature %q{
       context "with overrides" do
         let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, enable_reset: true) }
         let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub3, price: 1, count_on_hand: 2) }
-        let!(:vo_no_) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, enable_reset: false) }
 
         before do
           visit '/admin/variant_overrides'
@@ -205,7 +204,7 @@ feature %q{
             page.should have_content "Changes saved."
           end.to change(VariantOverride, :count).by(0)
 
-          vo = VariantOverride.last
+          vo.reload
           vo.variant_id.should == variant.id
           vo.hub_id.should == hub.id
           vo.price.should == 22.22
@@ -215,7 +214,9 @@ feature %q{
         # This fails for me and can't find where this automatic deletion is implemented?
         it "deletes overrides when values are cleared" do
           fill_in "variant-overrides-#{variant.id}-price", with: ''
-          fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ''
+          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: ''
+          fill_in "variant-overrides-#{variant.id}-default-stock", with: ''
+          page.uncheck "variant-overrides-#{variant.id}-enable-reset"
           page.should have_content "Changes to one override remain unsaved."
 
           expect do
@@ -229,9 +230,9 @@ feature %q{
         it "resets stock to defaults" do
           click_button 'Reset Stock to Defaults'
           page.should have_content 'Stocks reset to defaults.'
-          vo = VariantOverride.last
-          vo.count_on_hand.should == 1000
+          vo.reload
           page.should have_input "variant-overrides-#{variant.id}-count-on-hand", with: '1000', placeholder: '12'
+          vo.count_on_hand.should == 1000
         end
 
         it "prompts to save changes before reset if any are pending" do
