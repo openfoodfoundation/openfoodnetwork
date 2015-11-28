@@ -7,7 +7,7 @@ class VariantOverrideSet < ModelSet
     attrs['price'].blank? &&
     attrs['count_on_hand'].blank? &&
     attrs['default_stock'].blank? &&
-    attrs['enable_reset'].blank? &&
+    attrs['resettable'].blank? &&
     attrs['sku'].nil? &&
     attrs['on_demand'].nil?
   end

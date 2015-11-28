@@ -181,9 +181,11 @@ feature %q{
       end
 
       context "with overrides" do
-        let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, enable_reset: true) }
+        let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, resettable: true) }
         let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub3, price: 1, count_on_hand: 2) }
-
+        let!(:product2) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
+        let!(:variant2) { create(:variant, product: product2, unit_value: 8, price: 1.00, on_hand: 12) }
+        let!(:vo_no_reset) { create(:variant_override, variant: variant2, hub: hub, price: 3.99, count_on_hand: 40, default_stock: 100, resettable: false) }
         before do
           visit '/admin/variant_overrides'
           select2_select hub.name, from: 'hub_id'
@@ -211,12 +213,12 @@ feature %q{
           vo.count_on_hand.should == 8888
         end
 
-        # This fails for me and can't find where this automatic deletion is implemented?
+        # Any new fields added to the VO model need to be added to this test
         it "deletes overrides when values are cleared" do
           fill_in "variant-overrides-#{variant.id}-price", with: ''
           fill_in "variant-overrides-#{variant.id}-count-on-hand", with: ''
           fill_in "variant-overrides-#{variant.id}-default-stock", with: ''
-          page.uncheck "variant-overrides-#{variant.id}-enable-reset"
+          page.uncheck "variant-overrides-#{variant.id}-resettable"
           page.should have_content "Changes to one override remain unsaved."
 
           expect do
@@ -234,6 +236,14 @@ feature %q{
           page.should have_input "variant-overrides-#{variant.id}-count-on-hand", with: '1000', placeholder: '12'
           vo.count_on_hand.should == 1000
         end
+
+        it "doesn't reset stock levels if the behaviour is disabled" do
+          click_button 'Reset Stock to Defaults'
+          vo_no_reset.reload
+          page.should have_input "variant-overrides-#{variant2.id}-count-on-hand", with: '40', placeholder: '12'
+          vo_no_reset.count_on_hand.should == 40
+        end
+
 
         it "prompts to save changes before reset if any are pending" do
           fill_in "variant-overrides-#{variant.id}-price", with: '200'
