@@ -22,15 +22,15 @@ module OpenFoodNetwork
     #     Bread - Spelt Sourdough, 1kg    # if display_name is "Spelt Sourdough, 1kg"
     #     Bread - 1kg Spelt Sourdough     # if unit_to_display is "1kg Spelt Sourdough"
     #     Bread - Spelt Sourdough (1kg)   # if display_name is "Spelt Sourdough" and unit_to_display is "1kg"
-    def full_name
-      return unit_to_display if !self.has_attribute?(:display_name) || display_name.blank?
+    def full_name 
+      return unit_to_display if display_name.blank?
       return display_name    if display_name.downcase.include? unit_to_display.downcase
       return unit_to_display if unit_to_display.downcase.include? display_name.downcase
       "#{display_name} (#{unit_to_display})"
     end
 
     def name_to_display
-      return product.name if !self.has_attribute?(:display_name) || display_name.blank?
+      return product.name if display_name.blank?
       display_name
     end
 

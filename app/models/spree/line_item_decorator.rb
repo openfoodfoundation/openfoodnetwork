@@ -76,6 +76,10 @@ Spree::LineItem.class_eval do
     Spree::Money.new(included_tax, { :currency => currency })
   end
 
+  def display_name
+    variant.display_name
+  end
+
   def unit_value
     return 0 if quantity == 0
     (final_weight_volume || 0) / quantity
