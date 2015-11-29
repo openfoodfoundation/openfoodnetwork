@@ -231,8 +231,8 @@ module Spree
 
         context "otherwise" do
           before do
-            li.stub(:unit_to_display) { 'Spelt Sourghdough' }
-            li.stub(:display_name) { '1 Loaf' }
+            li.stub(:unit_to_display) { '1 Loaf' }
+            li.stub(:display_name) { 'Spelt Sourdough' }
           end
         
           it "returns unit_to_display" do
