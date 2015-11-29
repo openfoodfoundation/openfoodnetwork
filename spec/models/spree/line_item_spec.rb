@@ -196,12 +196,48 @@ module Spree
       describe "generating the full name" do
         let(:li) { LineItem.new }
 
-        before do
-          li.stub(:unit_to_display) { 'unit_to_display' }
+	context "when display_name is blank" do
+          before do
+            li.stub(:unit_to_display) { 'unit_to_display' }
+            li.stub(:display_name) { '' }
+          end
+
+          it "returns unit_to_display" do
+            li.full_name.should == 'unit_to_display'
+          end
         end
 
-        it "returns unit_to_display" do
-          li.full_name.should == 'unit_to_display'
+        context "when unit_to_display contains display_name" do
+          before do
+            li.stub(:unit_to_display) { '1kg Jar' }
+            li.stub(:display_name) { '1kg' }
+          end
+
+          it "returns unit_to_display" do
+            li.full_name.should == '1kg Jar'
+          end
+        end
+
+        context "when display_name contains unit_to_display" do
+          before do
+            li.stub(:unit_to_display) { '10kg' }
+            li.stub(:display_name) { '10kg Box' }
+          end
+        
+          it "returns display_name" do
+            li.full_name.should == '10kg Box'
+          end
+        end
+
+        context "otherwise" do
+          before do
+            li.stub(:unit_to_display) { 'Spelt Sourghdough' }
+            li.stub(:display_name) { '1 Loaf' }
+          end
+        
+          it "returns unit_to_display" do
+            li.full_name.should == 'Spelt Sourdough (1 Loaf)'
+          end
         end
       end
 
