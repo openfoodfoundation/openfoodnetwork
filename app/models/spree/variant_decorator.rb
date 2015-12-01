@@ -2,7 +2,10 @@ require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/variant_and_line_item_naming'
 
 Spree::Variant.class_eval do
-  remove_method :options_text # Remove method From Spree, so method from the naming module is used instead
+  # Remove method From Spree, so method from the naming module is used instead
+  # This file may be double-loaded in delayed job environment, so we check before
+  # removing the Spree method to prevent error.
+  remove_method :options_text if instance_methods(false).include? :options_text
   include OpenFoodNetwork::VariantAndLineItemNaming
 
 
