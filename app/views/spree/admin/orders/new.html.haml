@@ -1,0 +1,22 @@
+- content_for :page_title do
+  = t(:new)
+
+- content_for :page_actions do
+  %li= button_link_to t(:back_to_orders_list), spree.admin_orders_path, :icon => 'icon-arrow-left'
+
+= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Order Details' }
+
+= csrf_meta_tags
+
+%div{"data-hook" => "admin_order_new_header"}
+  = render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
+
+= render :partial => 'add_product'
+
+- unless @order.line_items.any?
+  %div{"data-hook" => "admin_order_new_form"}
+    #order-form-wrapper
+      = render :partial => 'form'
+
+- content_for :head do
+  = javascript_tag 'var expand_variants = true;'
