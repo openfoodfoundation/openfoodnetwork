@@ -25,8 +25,8 @@ module Admin
       admin_inject_json_ams_array "admin.shipping_methods", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer
     end
 
-    def admin_inject_shops
-      admin_inject_json_ams_array "admin.customers", "shops", @shops, Api::Admin::IdNameSerializer
+    def admin_inject_shops(ngModule='admin.customers')
+      admin_inject_json_ams_array ngModule, "shops", @shops, Api::Admin::IdNameSerializer
     end
 
     def admin_inject_hubs
@@ -72,6 +72,10 @@ module Admin
 
     def admin_inject_order_cycle_instance
       render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.orderCycles', name: 'ocInstance', json: "{coordinator_id: '#{@order_cycle.coordinator.id}'}"}
+    end
+
+    def admin_inject_order_cycles
+      admin_inject_json_ams_array "admin.orders", "orderCycles", @order_cycles, Api::Admin::IdNameSerializer, current_user: spree_current_user
     end
 
     def admin_inject_spree_api_key
