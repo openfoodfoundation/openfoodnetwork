@@ -3,6 +3,14 @@ require 'open_food_network/option_value_namer'
 
 module Spree
   describe Variant do
+    describe "double loading" do
+      # app/models/spree/variant_decorator.rb  may be double-loaded in delayed job environment,
+      # so we need to be able to do so without error.
+      it "succeeds without error" do
+        load "#{Rails.root}/app/models/spree/variant_decorator.rb"
+      end
+    end
+
     describe "scopes" do
       it "finds non-deleted variants" do
         v_not_deleted = create(:variant)
