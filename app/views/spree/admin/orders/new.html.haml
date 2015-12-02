@@ -11,6 +11,8 @@
 %div{"data-hook" => "admin_order_new_header"}
   = render 'spree/shared/error_messages', :target => @order
 
+= render 'distribution_fields'
+
 = render 'add_product'
 
 - unless @order.line_items.any?

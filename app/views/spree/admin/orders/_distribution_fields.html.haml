@@ -1,0 +1,14 @@
+%fieldset.no-border-bottom
+  %legend{align: 'center'} Distribution
+
+  .alpha.six.columns
+    .field
+      %label{for: "distributor_id"} Distributor
+      %select{id: "distributor_id", 'ng-model' => "", 'ng-options' => ''}
+      -#= f.collection_select :distributor_id, Enterprise.is_distributor.managed_by(spree_current_user), :id, :name, include_blank: true
+
+  .omega.six.columns
+    .field
+      %label{for: "order_cycle_id"} Order Cycle
+      %select{id: "order_cycle_id", 'ng-model' => "", 'ng-options' => ''}
+      -#= f.collection_select :order_cycle_id, OrderCycle.managed_by(spree_current_user), :id, :name, include_blank: true
