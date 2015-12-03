@@ -14,14 +14,13 @@
 %div{"data-hook" => "admin_order_new_header"}
   = render 'spree/shared/error_messages', :target => @order
 
-= render 'distribution_fields'
+%div{"ng-app" => "admin.orders", "ng-controller" => "ordersCtrl"}
+  = render 'add_product'
 
-= render 'add_product'
-
-- unless @order.line_items.any?
-  %div{"data-hook" => "admin_order_new_form"}
-    #order-form-wrapper
-      = render 'form'
+  - unless @order.line_items.any?
+    %div{"data-hook" => "admin_order_new_form"}
+      #order-form-wrapper
+        = render 'form'
 
 - content_for :head do
   = javascript_tag 'var expand_variants = true;'

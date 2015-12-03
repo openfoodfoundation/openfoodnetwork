@@ -22,14 +22,17 @@ feature %q{
   end
 
   scenario "creating an order with distributor and order cycle", js: true, retry: 3 do
-    order_cycle = create(:order_cycle)
-    distributor = order_cycle.distributors.first
-    product = order_cycle.products.first
+    distributor = create(:distributor_enterprise)
+    product = create(:simple_product)
+    order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first])
 
     login_to_admin_section
 
     visit '/admin/orders'
     click_link 'New Order'
+
+    select distributor.name, from: 'order_distributor_id'
+    select order_cycle.name, from: 'order_order_cycle_id'
 
     page.should have_content 'ADD PRODUCT'
     targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
@@ -37,8 +40,6 @@ feature %q{
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     page.should have_selector 'td', text: product.name
 
-    select distributor.name, from: 'order_distributor_id'
-    select order_cycle.name, from: 'order_order_cycle_id'
     click_button 'Update'
 
     page.should have_selector 'h1', text: 'Customer Details'

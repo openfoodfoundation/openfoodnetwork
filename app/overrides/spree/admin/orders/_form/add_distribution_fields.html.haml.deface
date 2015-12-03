@@ -1,0 +1,29 @@
+/ insert_before "[data-hook='admin_order_form_buttons']"
+
+%fieldset.no-border-bottom
+  %legend{align: 'center'} Distribution
+
+  - if @order.complete?
+    .alpha.six.columns
+      %p
+        %b Distributor:
+        = f.object.distributor.andand.name || "None"
+        = f.hidden_field :distributor_id
+    .omega.six.columns
+      %p
+        %b Order cycle:
+        = f.object.order_cycle.andand.name || "None"
+        = f.hidden_field :order_cycle_id
+
+  - else
+    .alpha.six.columns
+      .field
+        %label{for: "order_distributor_id"} Distributor
+        %select{id: "order_distributor_id", name: "order[distributor_id]", 'ng-model' => 'distributor_id'}
+          %option{"ng-repeat" => "shop in shops", "ng-value" => "shop.id", "ng-selected" => "distributor_id == shop.id", "ng-bind" => "shop.name"}
+
+    .omega.six.columns
+      .field
+        %label{for: "order_order_cycle_id"} Order Cycle
+        %select{id: "order_order_cycle_id", name: "order[order_cycle_id]", 'ng-model' => 'order_cycle_id'}
+          %option{"ng-repeat" => "oc in orderCycles", "ng-value" => "oc.id", "ng-selected" => "order_cycle_id == oc.id", "ng-bind" => "oc.name"}
