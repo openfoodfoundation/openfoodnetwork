@@ -132,6 +132,9 @@ feature %q{
       visit '/admin/orders'
       click_link 'New Order'
 
+      select distributor1.name, from: 'order_distributor_id'
+      select order_cycle1.name, from: 'order_order_cycle_id'
+
       expect(page).to have_content 'ADD PRODUCT'
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
 
@@ -145,8 +148,6 @@ feature %q{
       expect(page).to have_select 'order_order_cycle_id', with_options: [order_cycle1.name]
       expect(page).to_not have_select 'order_order_cycle_id', with_options: [order_cycle2.name]
 
-      select distributor1.name, from: 'order_distributor_id'
-      select order_cycle1.name, from: 'order_order_cycle_id'
       click_button 'Update'
 
       expect(page).to have_selector 'h1', text: 'Customer Details'
