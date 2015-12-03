@@ -11,12 +11,9 @@ class EnterpriseMailer < Spree::BaseMailer
   def confirmation_instructions(record, token, opts={})
     @token = token
     find_enterprise(record)
-    opts = {
-      subject: "Please confirm your email for #{@enterprise.name}",
-      to: ( @enterprise.unconfirmed_email || @enterprise.email ),
-      from: from_address,
-    }
-    devise_mail(record, :confirmation_instructions, opts)
+    mail(subject: "Please confirm your email for #{@enterprise.name}",
+         to: ( @enterprise.unconfirmed_email || @enterprise.email ),
+         from: from_address)
   end
 
   private

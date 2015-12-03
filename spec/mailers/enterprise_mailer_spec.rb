@@ -14,6 +14,7 @@ describe EnterpriseMailer do
       mail = ActionMailer::Base.deliveries.first
       expect(mail.subject).to eq "Please confirm your email for #{enterprise.name}"
       expect(mail.to).to include enterprise.email
+      expect(mail.reply_to).to be_nil
     end
   end
 
