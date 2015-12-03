@@ -2,18 +2,19 @@
 
 - content_for :page_actions do
   %li= event_links
-  %li= button_link_to t(:resend), resend_admin_order_url(@order), :method => :post, :icon => 'icon-email'
-  %li= button_link_to t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
+  %li= button_link_to t(:resend), resend_admin_order_url(@order), method: :post, icon: 'icon-email'
+  %li= button_link_to t(:back_to_orders_list), admin_orders_path, icon: 'icon-arrow-left'
 
-= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Order Details' }
+= render 'spree/admin/shared/order_tabs', current: 'Order Details'
+
 %div{"data-hook" => "admin_order_edit_header"}
-  = render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
+  = render 'spree/shared/error_messages', target: @order
 
-= render :partial => 'add_product'
+= render 'add_product'
 
 %div{"data-hook" => "admin_order_edit_form"}
   #order-form-wrapper
-    = render :partial => 'form', :locals => { :order => @order }
+    = render 'form', order: @order
 
 - content_for :head do
   = javascript_tag 'var expand_variants = true;'
