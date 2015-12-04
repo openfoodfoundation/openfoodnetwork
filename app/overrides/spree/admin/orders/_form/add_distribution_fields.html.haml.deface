@@ -20,7 +20,7 @@
       .field
         %label{for: "order_distributor_id"} Distributor
         %select{id: "order_distributor_id", name: "order[distributor_id]", 'ng-model' => 'distributor_id'}
-          %option{"ng-repeat" => "shop in shops", "ng-value" => "shop.id", "ng-selected" => "distributor_id == shop.id", "ng-bind" => "shop.name"}
+          %option{"ng-repeat" => "shop in shops", "ng-value" => "shop.id", "ng-selected" => "distributor_id == shop.id", "ng-disabled" => "!distributorHasOrderCycles(shop)", "ng-bind" => "shop.name"}
 
     .omega.six.columns
       .field{"ng-show" => "distributor_id"}

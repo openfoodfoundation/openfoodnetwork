@@ -26,3 +26,12 @@ describe "ordersCtrl", ->
     it "returns false otherwise", ->
       scope.distributor_id = '2'
       expect(scope.validOrderCycle(order_cycle, 1, [order_cycle])).toBe false
+
+  describe "checking if a distributor has order cycles", ->
+    it "returns true when it does", ->
+      distributor = {id: 1}
+      expect(scope.distributorHasOrderCycles(distributor)).toBe true
+
+    it "returns false otherwise", ->
+      distributor = {id: 3}
+      expect(scope.distributorHasOrderCycles(distributor)).toBe false

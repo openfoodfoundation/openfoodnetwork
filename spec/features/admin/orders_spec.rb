@@ -22,12 +22,16 @@ feature %q{
   end
 
   scenario "creating an order with distributor and order cycle", js: true, retry: 3 do
+    distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
 
     login_to_admin_section
 
     visit '/admin/orders'
     click_link 'New Order'
+
+    # Distributors without an order cycle should be shown as disabled
+    page.should have_selector "option[value='#{distributor_disabled.id}'][disabled='disabled']"
 
     # When we select a distributor, it should limit order cycle selection to those for that distributor
     page.should_not have_select 'order_order_cycle_id'
