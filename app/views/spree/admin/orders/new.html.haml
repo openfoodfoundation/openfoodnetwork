@@ -15,7 +15,8 @@
   = render 'spree/shared/error_messages', :target => @order
 
 %div{"ng-app" => "admin.orders", "ng-controller" => "ordersCtrl"}
-  = render 'add_product'
+  %div{"ng-show" => "distributionChosen()"}
+    = render 'add_product'
 
   - unless @order.line_items.any?
     %div{"data-hook" => "admin_order_new_form"}

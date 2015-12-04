@@ -15,3 +15,6 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $compile, $attr
   $scope.orderCycleHasDistributor = (oc, distributor_id) ->
     distributor_ids = (d.id for d in oc.distributors)
     distributor_ids.indexOf(distributor_id) != -1
+
+  $scope.distributionChosen = ->
+    $scope.distributor_id && $scope.order_cycle_id
