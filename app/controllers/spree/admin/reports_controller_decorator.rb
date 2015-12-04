@@ -317,6 +317,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def timestamp
-    Time.now.strftime("%Y%m%d")
+    Time.zone.now.strftime("%Y%m%d")
   end
 end

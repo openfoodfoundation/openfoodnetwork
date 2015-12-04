@@ -10,7 +10,7 @@ module Spree
     end
 
     def self.make_simple_data!
-      let!(:order) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.now) }
+      let!(:order) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.zone.now) }
       let!(:line_item) { FactoryGirl.create(:line_item, order: order, final_weight_volume: 500) }
     end
 

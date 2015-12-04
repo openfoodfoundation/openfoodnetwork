@@ -7,7 +7,7 @@ class AddConfirmableToEnterprise < ActiveRecord::Migration
     add_index :enterprises, :confirmation_token, :unique => true
 
     # Existing enterprises are assumed to be confirmed
-    Enterprise.update_all(:confirmed_at => Time.now)
+    Enterprise.update_all(:confirmed_at => Time.zone.now)
   end
 
   def down

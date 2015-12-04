@@ -42,8 +42,8 @@ feature %q{
     end
 
     it "displays a date input for available_on for each product, formatted to yyyy-mm-dd hh:mm:ss" do
-      p1 = FactoryGirl.create(:product, available_on: Date.today)
-      p2 = FactoryGirl.create(:product, available_on: Date.today-1)
+      p1 = FactoryGirl.create(:product, available_on: Date.current)
+      p2 = FactoryGirl.create(:product, available_on: Date.current-1)
 
       visit '/admin/products/bulk_edit'
       first("div#columns_dropdown", :text => "COLUMNS").click
@@ -237,7 +237,7 @@ feature %q{
     s2 = FactoryGirl.create(:supplier_enterprise)
     t1 = FactoryGirl.create(:taxon)
     t2 = FactoryGirl.create(:taxon)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
 
     login_to_admin_section
 
@@ -305,7 +305,7 @@ feature %q{
   scenario "updating a product with variants" do
     s1 = FactoryGirl.create(:supplier_enterprise)
     s2 = FactoryGirl.create(:supplier_enterprise)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.today, variant_unit: 'volume', variant_unit_scale: 0.001,
+    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
       price: 3.0, on_hand: 9, unit_value: 0.25, unit_description: '(bottle)' )
     v = p.variants.first
 

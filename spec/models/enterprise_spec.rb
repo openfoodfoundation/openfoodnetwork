@@ -302,9 +302,9 @@ describe Enterprise do
     end
 
     describe "activated" do
-      let!(:inactive_enterprise1) { create(:enterprise, sells: "unspecified", confirmed_at: Time.now) ;}
+      let!(:inactive_enterprise1) { create(:enterprise, sells: "unspecified", confirmed_at: Time.zone.now) ;}
       let!(:inactive_enterprise2) { create(:enterprise, sells: "none", confirmed_at: nil) }
-      let!(:active_enterprise) { create(:enterprise, sells: "none", confirmed_at: Time.now) }
+      let!(:active_enterprise) { create(:enterprise, sells: "none", confirmed_at: Time.zone.now) }
 
       it "finds enterprises that have a sells property other than 'unspecified' and that are confirmed" do
         activated_enterprises = Enterprise.activated
@@ -419,7 +419,7 @@ describe Enterprise do
 
       it "doesn't show distributors of deleted products" do
         d = create(:distributor_enterprise)
-        create(:product, :distributors => [d], :deleted_at => Time.now)
+        create(:product, :distributors => [d], :deleted_at => Time.zone.now)
         Enterprise.active_distributors.should be_empty
       end
 

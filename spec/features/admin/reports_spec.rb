@@ -272,7 +272,7 @@ feature %q{
 
     it "handles order cycles with nil opening or closing times" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor], orders_open_at: Time.now, orders_close_at: nil)
+      oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor], orders_open_at: Time.zone.now, orders_close_at: nil)
       o = create(:order, order_cycle: oc, distributor: distributor)
 
       login_to_admin_section

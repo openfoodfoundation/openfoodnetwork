@@ -85,7 +85,7 @@ Spree::Variant.class_eval do
       false
     else
       transaction do
-        self.update_column(:deleted_at, Time.now)
+        self.update_column(:deleted_at, Time.zone.now)
         ExchangeVariant.where(variant_id: self).destroy_all
         self
       end

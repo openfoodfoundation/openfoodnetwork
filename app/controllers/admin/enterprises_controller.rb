@@ -60,7 +60,7 @@ module Admin
       attributes = { sells: params[:sells], visible: true }
 
       if ['own', 'any'].include? params[:sells]
-        attributes[:shop_trial_start_date] = @enterprise.shop_trial_start_date || Time.now
+        attributes[:shop_trial_start_date] = @enterprise.shop_trial_start_date || Time.zone.now
       end
 
       if @enterprise.update_attributes(attributes)

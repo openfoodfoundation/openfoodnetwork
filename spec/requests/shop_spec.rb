@@ -32,7 +32,7 @@ describe "Shop API" do
       v51.update_attribute(:count_on_hand, 1)
       v52.update_attribute(:count_on_hand, 0)
       v71.update_attribute(:count_on_hand, 1)
-      v71.update_attribute(:deleted_at, Time.now)
+      v71.update_attribute(:deleted_at, Time.zone.now)
       exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id)
       exchange.update_attribute :pickup_time, "frogs"
       exchange.variants << v61

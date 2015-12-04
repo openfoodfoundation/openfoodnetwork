@@ -41,7 +41,7 @@ class BillablePeriod < ActiveRecord::Base
   end
 
   def delete
-    self.update_column(:deleted_at, Time.now)
+    self.update_column(:deleted_at, Time.zone.now)
   end
 
   def ensure_correct_adjustment_for(invoice)

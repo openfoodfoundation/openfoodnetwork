@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Customer, type: :model do
   describe 'ensure_correct_adjustment' do
-    let!(:start_of_july) { Time.now.beginning_of_year + 6.months }
+    let!(:start_of_july) { Time.zone.now.beginning_of_year + 6.months }
     let!(:user) { create(:user) }
     let!(:invoice) { create(:order, user: user) }
     let!(:billable_period) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 12.days) }

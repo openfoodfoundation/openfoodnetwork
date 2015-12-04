@@ -5,14 +5,21 @@ bundler_args: --without development
 rvm:
   - "2.1.5"
 
+# Set the timezone for phantomjs with TZ
+# Set the timezone for karma with TIMEZONE
+#
 # The test cases are roughly split according to their test times.
 # It would be better to use https://github.com/ArturT/knapsack.
 env:
-  - TEST_CASES="./spec/features/admin"
-  - TEST_CASES="./spec/features/consumer ./spec/serializers ./spec/performance"
-  - TEST_CASES="./spec/models"
-  - TEST_CASES="./spec/controllers ./spec/views ./spec/jobs"
-  - TEST_CASES="./spec/requests ./spec/helpers ./spec/mailers ./spec/lib" KARMA="true" TIMEZONE="UTC"
+  global:
+    TZ="Australia/Melbourne"
+    TIMEZONE="Australia/Melbourne"
+  matrix:
+    - TEST_CASES="./spec/features/admin"
+    - TEST_CASES="./spec/features/consumer ./spec/serializers ./spec/performance"
+    - TEST_CASES="./spec/models"
+    - TEST_CASES="./spec/controllers ./spec/views ./spec/jobs"
+    - TEST_CASES="./spec/requests ./spec/helpers ./spec/mailers ./spec/lib" KARMA="true"
 
 before_script:
   - cp config/database.travis.yml config/database.yml
