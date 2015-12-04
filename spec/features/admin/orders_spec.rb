@@ -30,7 +30,7 @@ feature %q{
     click_link 'New Order'
 
     # When we select a distributor, it should limit order cycle selection to those for that distributor
-    page.should have_select 'order_order_cycle_id', options: ['']
+    page.should_not have_select 'order_order_cycle_id'
     select @distributor.name, from: 'order_distributor_id'
     page.should have_select 'order_order_cycle_id', options: ['', 'One']
     select @order_cycle.name, from: 'order_order_cycle_id'
