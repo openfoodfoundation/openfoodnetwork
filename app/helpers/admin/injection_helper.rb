@@ -75,7 +75,7 @@ module Admin
     end
 
     def admin_inject_order_cycles
-      admin_inject_json_ams_array "admin.orders", "orderCycles", @order_cycles, Api::Admin::IdNameSerializer, current_user: spree_current_user
+      admin_inject_json_ams_array "admin.orders", "orderCycles", @order_cycles, Api::Admin::BasicOrderCycleSerializer, current_user: spree_current_user
     end
 
     def admin_inject_spree_api_key

@@ -11,7 +11,7 @@ feature %q{
     @user = create(:user)
     @product = create(:simple_product)
     @distributor = create(:distributor_enterprise, charges_sales_tax: true)
-    @order_cycle = create(:simple_order_cycle, distributors: [@distributor], variants: [@product.variants.first])
+    @order_cycle = create(:simple_order_cycle, name: 'One', distributors: [@distributor], variants: [@product.variants.first])
 
     @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
 
@@ -22,30 +22,31 @@ feature %q{
   end
 
   scenario "creating an order with distributor and order cycle", js: true, retry: 3 do
-    distributor = create(:distributor_enterprise)
-    product = create(:simple_product)
-    order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first])
+    create(:simple_order_cycle, name: 'Two')
 
     login_to_admin_section
 
     visit '/admin/orders'
     click_link 'New Order'
 
-    select distributor.name, from: 'order_distributor_id'
-    select order_cycle.name, from: 'order_order_cycle_id'
+    # When we select a distributor, it should limit order cycle selection to those for that distributor
+    page.should have_select 'order_order_cycle_id', options: ['']
+    select @distributor.name, from: 'order_distributor_id'
+    page.should have_select 'order_order_cycle_id', options: ['', 'One']
+    select @order_cycle.name, from: 'order_order_cycle_id'
 
     page.should have_content 'ADD PRODUCT'
-    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
-    page.should have_selector 'td', text: product.name
+    page.should have_selector 'td', text: @product.name
 
     click_button 'Update'
 
     page.should have_selector 'h1', text: 'Customer Details'
     o = Spree::Order.last
-    o.distributor.should == distributor
-    o.order_cycle.should == order_cycle
+    o.distributor.should == @distributor
+    o.order_cycle.should == @order_cycle
   end
 
   scenario "can add a product to an existing order", js: true, retry: 3 do
