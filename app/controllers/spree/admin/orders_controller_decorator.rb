@@ -117,7 +117,7 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   def load_distribution_choices
-    @shops = Enterprise.is_distributor.managed_by(spree_current_user)
-    @order_cycles = OrderCycle.managed_by(spree_current_user)
+    @shops = Enterprise.is_distributor.managed_by(spree_current_user).by_name
+    @order_cycles = OrderCycle.managed_by(spree_current_user).by_name
   end
 end

@@ -24,6 +24,8 @@ class OrderCycle < ActiveRecord::Base
 
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
 
+  scope :by_name, order('name')
+
   scope :distributing_product, lambda { |product|
     joins(:exchanges).
     merge(Exchange.outgoing).
