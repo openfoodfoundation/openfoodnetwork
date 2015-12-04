@@ -67,6 +67,28 @@ feature %q{
     @order.line_items(true).map(&:product).should include @product
   end
 
+  scenario "displays error when incorrect distribution for products is chosen", js: true do
+    d = create(:distributor_enterprise)
+    oc = create(:simple_order_cycle, distributors: [d])
+
+    @order.state = 'cart'; @order.completed_at = nil; @order.save
+
+    login_to_admin_section
+    visit '/admin/orders'
+    uncheck 'Only show complete orders'
+    click_button 'Filter Results'
+
+    click_edit
+
+    select d.name, from: 'order_distributor_id'
+    select oc.name, from: 'order_order_cycle_id'
+
+    click_button 'Update And Recalculate Fees'
+
+    page.should have_content "Distributor or order cycle cannot supply the products in your cart"
+  end
+
+
   scenario "can't add products to an order outside the order's hub and order cycle", js: true do
     product = create(:simple_product)
 

@@ -10,7 +10,7 @@ Spree::Admin::OrdersController.class_eval do
   # in an auth failure as the @order object is nil for collection actions
   before_filter :check_authorization, except: [:bulk_management, :managed]
 
-  before_filter :load_distribution_choices, only: [:new, :edit]
+  before_filter :load_distribution_choices, only: [:new, :edit, :update]
 
   # After updating an order, the fees should be updated as well
   # Currently, adding or deleting line items does not trigger updating the
