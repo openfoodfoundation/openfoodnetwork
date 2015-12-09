@@ -89,7 +89,7 @@ module Admin
     end
 
     def collection_actions
-      [:index, :for_order_cycle]
+      [:index, :for_order_cycle, :bulk_update]
     end
 
     def current_enterprise

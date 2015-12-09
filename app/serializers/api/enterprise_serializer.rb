@@ -37,7 +37,6 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     object.andand.cache_key
   end
 
-
   attributes :name, :id, :description, :latitude, :longitude,
     :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,

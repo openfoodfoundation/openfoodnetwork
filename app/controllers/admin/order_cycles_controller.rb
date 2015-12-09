@@ -177,5 +177,9 @@ module Admin
     def ams_prefix_whitelist
       [:basic]
     end
+
+    def collection_actions
+      [:index, :bulk_update]
+    end
   end
 end

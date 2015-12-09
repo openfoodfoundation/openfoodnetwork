@@ -39,7 +39,7 @@ gem 'andand'
 gem 'truncate_html'
 gem 'representative_view'
 gem 'rabl'
-gem "active_model_serializers"
+gem "active_model_serializers", '~> 0.8.3'
 gem 'oj'
 gem 'deface', :github => 'spree/deface', :ref => '1110a13'
 gem 'paperclip'
@@ -92,7 +92,7 @@ group :test, :development do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
   gem 'fuubar'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.99.0'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', :require => false
   gem 'capybara'
@@ -102,7 +102,7 @@ group :test, :development do
   gem 'letter_opener'
   gem 'timecop'
   gem 'poltergeist'
-  gem 'rspec-retry'
+ # gem 'rspec-retry'
   gem 'json_spec'
   gem 'unicorn-rails'
   gem 'atomic'
