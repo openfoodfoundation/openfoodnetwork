@@ -241,9 +241,31 @@ module Spree
         end
       end
 
+      describe "generating the product and variant name" do
+        let(:li) { LineItem.new }
+        let(:p) { double(:product, name: 'product') }
+        before { allow(li).to receive(:product) { p } }
+
+        context "when full_name starts with the product name" do
+          before { allow(li).to receive(:full_name) { p.name + " - something" } }
+
+          it "does not show the product name twice" do
+            li.product_and_full_name.should == 'product - something'
+          end
+        end
+
+        context "when full_name does not start with the product name" do
+          before { allow(li).to receive(:full_name) { "display_name (unit)" } }
+
+          it "prepends the product name to the full name" do
+            li.product_and_full_name.should == 'product - display_name (unit)'
+          end
+        end
+      end
+
       describe "getting name for display" do
         it "returns product name" do
-          li = create(:variant, product: create(:product))
+          li = create(:line_item, product: create(:product))
           li.name_to_display.should == li.product.name
         end
       end

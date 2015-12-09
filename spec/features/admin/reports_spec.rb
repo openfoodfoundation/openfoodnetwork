@@ -516,7 +516,7 @@ feature %q{
 
     def xero_invoice_li_row(line_item, opts={})
       tax_type = line_item.has_tax? ? 'GST on Income' : 'GST Free Income'
-      xero_invoice_row line_item.product.sku, line_item.variant.product_and_variant_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
+      xero_invoice_row line_item.product.sku, line_item.product_and_full_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
     end
 
     def xero_invoice_adjustment_row(adjustment, opts={})

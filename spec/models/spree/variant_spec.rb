@@ -126,31 +126,22 @@ module Spree
     describe "generating the product and variant name" do
       let(:v) { Variant.new }
       let(:p) { double(:product, name: 'product') }
+      before { allow(v).to receive(:product) { p } }
 
-      before do
-        v.stub(:product) { p }
-        v.stub(:name_to_display) { p.name }
-        v.stub(:options_text) { nil }
+      context "when full_name starts with the product name" do
+        before { allow(v).to receive(:full_name) { p.name + " - something" } }
+
+        it "does not show the product name twice" do
+          v.product_and_full_name.should == 'product - something'
+        end
       end
 
-      it "returns the product name only when there's no extra info" do
-        v.product_and_variant_name.should == 'product'
-      end
+      context "when full_name does not start with the product name" do
+        before { allow(v).to receive(:full_name) { "display_name (unit)" } }
 
-      it "also shows the name to display when different to the product name" do
-        v.stub(:name_to_display) { 'NTD' }
-        v.product_and_variant_name.should == 'product - NTD'
-      end
-
-      it "shows the options text when present" do
-        v.stub(:options_text) { 'OT' }
-        v.product_and_variant_name.should == 'product (OT)'
-      end
-
-      it "displays all attributes" do
-        v.stub(:name_to_display) { 'NTD' }
-        v.stub(:options_text) { 'OT' }
-        v.product_and_variant_name.should == 'product - NTD (OT)'
+        it "prepends the product name to the full name" do
+          v.product_and_full_name.should == 'product - display_name (unit)'
+        end
       end
     end
 

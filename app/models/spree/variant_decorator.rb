@@ -66,16 +66,6 @@ Spree::Variant.class_eval do
     OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
   end
 
-  # TODO: Should this be moved into VariantAndLineItemNaming?
-  def product_and_variant_name
-    name = product.name
-
-    name += " - #{name_to_display}" if name_to_display != product.name
-    name += " (#{options_text})" if options_text
-
-    name
-  end
-
   def delete
     if product.variants == [self] # Only variant left on product
       errors.add :product, "must have at least one variant"
