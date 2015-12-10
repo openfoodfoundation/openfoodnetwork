@@ -19,11 +19,11 @@
     .alpha.six.columns
       .field
         %label{for: "order_distributor_id"} Distributor
-        %select{id: "order_distributor_id", name: "order[distributor_id]", 'ng-model' => 'distributor_id'}
+        %select.fullwidth{id: "order_distributor_id", name: "order[distributor_id]", 'ng-model' => 'distributor_id'}
           %option{"ng-repeat" => "shop in shops", "ng-value" => "shop.id", "ng-selected" => "distributor_id == shop.id", "ng-disabled" => "!distributorHasOrderCycles(shop)", "ng-bind" => "shop.name"}
 
     .omega.six.columns
       .field{"ng-show" => "distributor_id"}
         %label{for: "order_order_cycle_id"} Order Cycle
-        %select{id: "order_order_cycle_id", name: "order[order_cycle_id]", 'ng-model' => 'order_cycle_id'}
+        %select.select2.fullwidth{id: "order_order_cycle_id", name: "order[order_cycle_id]", 'ng-model' => 'order_cycle_id'}
           %option{"ng-repeat" => "oc in orderCycles | filter:validOrderCycle", "ng-value" => "oc.id", "ng-selected" => "order_cycle_id == oc.id", "ng-bind" => "oc.name"}

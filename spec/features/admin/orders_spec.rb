@@ -34,10 +34,10 @@ feature %q{
     page.should have_selector "option[value='#{distributor_disabled.id}'][disabled='disabled']"
 
     # When we select a distributor, it should limit order cycle selection to those for that distributor
-    page.should_not have_select 'order_order_cycle_id'
+    page.should_not have_select2 'order_order_cycle_id'
     select @distributor.name, from: 'order_distributor_id'
-    page.should have_select 'order_order_cycle_id', options: ['', 'One']
-    select @order_cycle.name, from: 'order_order_cycle_id'
+    page.should have_select2 'order_order_cycle_id', options: ['', 'One']
+    select2_select @order_cycle.name, from: 'order_order_cycle_id'
 
     page.should have_content 'ADD PRODUCT'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
@@ -81,7 +81,7 @@ feature %q{
     click_edit
 
     select d.name, from: 'order_distributor_id'
-    select oc.name, from: 'order_order_cycle_id'
+    select2_select oc.name, from: 'order_order_cycle_id'
 
     click_button 'Update And Recalculate Fees'
 
@@ -107,7 +107,7 @@ feature %q{
     page.find('td.actions a.icon-edit').click
 
     page.should have_no_select 'order_distributor_id'
-    page.should have_no_select 'order_order_cycle_id'
+    page.should_not have_select2 'order_order_cycle_id'
 
     page.should have_selector 'p', text: "Distributor: #{@order.distributor.name}"
     page.should have_selector 'p', text: "Order cycle: None"
@@ -160,7 +160,7 @@ feature %q{
       click_link 'New Order'
 
       select distributor1.name, from: 'order_distributor_id'
-      select order_cycle1.name, from: 'order_order_cycle_id'
+      select2_select order_cycle1.name, from: 'order_order_cycle_id'
 
       expect(page).to have_content 'ADD PRODUCT'
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
@@ -172,8 +172,8 @@ feature %q{
       expect(page).to have_select 'order_distributor_id', with_options: [distributor1.name]
       expect(page).to_not have_select 'order_distributor_id', with_options: [distributor2.name]
 
-      expect(page).to have_select 'order_order_cycle_id', with_options: [order_cycle1.name]
-      expect(page).to_not have_select 'order_order_cycle_id', with_options: [order_cycle2.name]
+      expect(page).to have_select2 'order_order_cycle_id', with_options: [order_cycle1.name]
+      expect(page).to_not have_select2 'order_order_cycle_id', with_options: [order_cycle2.name]
 
       click_button 'Update'
 

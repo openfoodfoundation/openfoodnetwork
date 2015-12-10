@@ -118,6 +118,11 @@ Spree::Admin::OrdersController.class_eval do
 
   def load_distribution_choices
     @shops = Enterprise.is_distributor.managed_by(spree_current_user).by_name
-    @order_cycles = OrderCycle.managed_by(spree_current_user).by_name
+
+    ocs = OrderCycle.managed_by(spree_current_user)
+    @order_cycles = ocs.soonest_closing +
+                    ocs.soonest_opening +
+                    ocs.closed +
+                    ocs.undated
   end
 end
