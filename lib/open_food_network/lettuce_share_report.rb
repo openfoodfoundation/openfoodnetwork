@@ -25,8 +25,8 @@ module OpenFoodNetwork
           '',
           OptionValueNamer.new(variant).value,
           OptionValueNamer.new(variant).unit,
-          variant.price - gst(variant),
           variant.price,
+          '',
           gst(variant),
           grower_and_method(variant),
           variant.product.primary_taxon.name
