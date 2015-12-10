@@ -17,6 +17,24 @@ Spree::Admin::LineItemsController.class_eval do
     end
   end
 
+  def create
+    variant = Spree::Variant.find(params[:line_item][:variant_id])
+    OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor).scope(variant)
+
+    @line_item = @order.add_variant(variant, params[:line_item][:quantity].to_i)
+
+    if @order.save
+      respond_with(@line_item) do |format|
+        format.html { render :partial => 'spree/admin/orders/form', :locals => { :order => @order.reload } }
+      end
+    else
+      respond_with(@line_item) do |format|
+        format.js { render :action => 'create', :locals => { :order => @order.reload } }
+      end
+    end
+  end
+
+
   private
 
   def load_order
