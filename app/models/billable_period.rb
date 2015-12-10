@@ -44,6 +44,7 @@ class BillablePeriod < ActiveRecord::Base
   def ensure_correct_adjustment_for(invoice)
     if adjustment
       # adjustment.originator = enterprise.package
+      adjustment.adjustable = invoice
       adjustment.update_attributes( label: adjustment_label, amount: bill )
     else
       self.adjustment = invoice.adjustments.new( adjustment_attrs, :without_protection => true )
