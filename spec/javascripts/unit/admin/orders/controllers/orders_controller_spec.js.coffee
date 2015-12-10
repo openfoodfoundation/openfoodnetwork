@@ -4,8 +4,8 @@ describe "ordersCtrl", ->
   attrs = {}
   shops = []
   orderCycles = [
-    {id: 10, distributors: [{id: 1, name: 'One'}]}
-    {id: 20, distributors: [{id: 2, name: 'Two'}]}
+    {id: 10, name: 'Ten', status: 'open', distributors: [{id: 1, name: 'One'}]}
+    {id: 20, name: 'Twenty', status: 'closed', distributors: [{id: 2, name: 'Two', status: 'closed'}]}
   ]
 
   beforeEach ->
@@ -15,6 +15,9 @@ describe "ordersCtrl", ->
     inject ($controller) ->
       ctrl = $controller 'ordersCtrl', {$scope: scope, $attrs: attrs, shops: shops, orderCycles: orderCycles}
 
+  it "initialises name_and_status", ->
+    expect(scope.orderCycles[0].name_and_status).toEqual "Ten (open)"
+    expect(scope.orderCycles[1].name_and_status).toEqual "Twenty (closed)"
 
   describe "finding valid order cycles for a distributor", ->
     order_cycle = {id: 10, distributors: [{id: 1, name: 'One'}]}

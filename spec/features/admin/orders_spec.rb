@@ -36,7 +36,7 @@ feature %q{
     # When we select a distributor, it should limit order cycle selection to those for that distributor
     page.should_not have_select2 'order_order_cycle_id'
     select @distributor.name, from: 'order_distributor_id'
-    page.should have_select2 'order_order_cycle_id', options: ['', 'One']
+    page.should have_select2 'order_order_cycle_id', options: ['', 'One (open)']
     select2_select @order_cycle.name, from: 'order_order_cycle_id'
 
     page.should have_content 'ADD PRODUCT'
@@ -172,8 +172,8 @@ feature %q{
       expect(page).to have_select 'order_distributor_id', with_options: [distributor1.name]
       expect(page).to_not have_select 'order_distributor_id', with_options: [distributor2.name]
 
-      expect(page).to have_select2 'order_order_cycle_id', with_options: [order_cycle1.name]
-      expect(page).to_not have_select2 'order_order_cycle_id', with_options: [order_cycle2.name]
+      expect(page).to have_select2 'order_order_cycle_id', with_options: ["#{order_cycle1.name} (open)"]
+      expect(page).to_not have_select2 'order_order_cycle_id', with_options: ["#{order_cycle2.name} (open)"]
 
       click_button 'Update'
 

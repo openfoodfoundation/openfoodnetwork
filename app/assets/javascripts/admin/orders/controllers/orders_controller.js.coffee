@@ -2,6 +2,8 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $compile, $attr
   $scope.$compile = $compile
   $scope.shops = shops
   $scope.orderCycles = orderCycles
+  for oc in $scope.orderCycles
+    oc.name_and_status = "#{oc.name} (#{oc.status})"
 
   $scope.distributor_id = $attrs.ofnDistributorId
   $scope.order_cycle_id = $attrs.ofnOrderCycleId
