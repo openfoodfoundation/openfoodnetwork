@@ -19,7 +19,13 @@ module OpenFoodNetwork
     end
 
     def table
-      variants.map do |variant|
+      if params[:distributor_id].to_i > 0
+        distributor = Enterprise.find(params[:distributor_id])
+        scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+        variants.each { |v| scoper.scope(v) }
+      end
+      variants.select { |v| v.count_on_hand > 0 }
+      .map do |variant|
         [
           variant.product.name,
           variant.full_name,

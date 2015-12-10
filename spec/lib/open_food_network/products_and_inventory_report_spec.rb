@@ -124,15 +124,16 @@ module OpenFoodNetwork
         it "filters to a specific distributor" do
           distributor = create(:distributor_enterprise)
           product1 = create(:simple_product, supplier: supplier)
-          product2 = create(:simple_product, supplier: supplier, distributors: [distributor])
+          product2 = create(:simple_product, supplier: supplier)
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product2.variants.first])
 
           subject.stub(:params).and_return(distributor_id: distributor.id)
           subject.filter(variants).should == [product2.variants.first]
         end
         it "filters to a specific order cycle" do
           distributor = create(:distributor_enterprise)
-          product1 = create(:simple_product, supplier: supplier, distributors: [distributor])
-          product2 = create(:simple_product, supplier: supplier, distributors: [distributor])
+          product1 = create(:simple_product, supplier: supplier)
+          product2 = create(:simple_product, supplier: supplier)
           order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product1.variants.first])
 
           subject.stub(:params).and_return(order_cycle_id: order_cycle.id)
@@ -141,8 +142,8 @@ module OpenFoodNetwork
 
         it "should do all the filters at once" do
           distributor = create(:distributor_enterprise)
-          product1 = create(:simple_product, supplier: supplier, distributors: [distributor])
-          product2 = create(:simple_product, supplier: supplier, distributors: [distributor])
+          product1 = create(:simple_product, supplier: supplier)
+          product2 = create(:simple_product, supplier: supplier)
           order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product1.variants.first])
 
           subject.stub(:params).and_return(
