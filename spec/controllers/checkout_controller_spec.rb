@@ -52,12 +52,6 @@ describe CheckoutController do
     response.should be_success
   end
 
-  it "doesn't copy the previous shipping address from a pickup order" do
-    old_order = create(:order, bill_address: create(:address), ship_address: create(:address))
-    Spree::Order.stub_chain(:order, :where, :where, :limit, :detect).and_return(old_order)
-    controller.send(:find_last_used_addresses, "email").last.should == nil
-  end
-
   describe "building the order" do
     before do
       controller.stub(:current_distributor).and_return(distributor)
