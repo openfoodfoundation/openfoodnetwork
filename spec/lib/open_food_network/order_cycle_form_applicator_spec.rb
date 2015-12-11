@@ -175,6 +175,7 @@ module OpenFoodNetwork
 
           before do
             applicator.stub(:find_outgoing_exchange) { nil }
+            applicator.stub(:incoming_variant_ids) { [1, 2, 3, 4] }
             expect(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between).
             with(coordinator_mock, enterprise_mock) { [1, 2, 3] }
           end
@@ -207,6 +208,7 @@ module OpenFoodNetwork
 
           before do
             applicator.stub(:find_outgoing_exchange) { exchange_mock }
+            applicator.stub(:incoming_variant_ids) { [1, 2, 3, 4] }
             expect(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between).
             with(coordinator_mock, enterprise_mock) { [1, 2, 3] }
           end
@@ -230,6 +232,14 @@ module OpenFoodNetwork
             expect(exchange_mock).to receive(:receiver) { enterprise_mock }
             ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}})
             expect(ids).to eq [1, 3]
+          end
+
+          it "removes variants which are not included in incoming exchanges" do
+            applicator.stub(:incoming_variant_ids) { [1, 2] }
+            applicator.stub(:persisted_variants_hash) { {3 => true} }
+            expect(exchange_mock).to receive(:receiver) { enterprise_mock }
+            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}})
+            expect(ids).to eq [1]
           end
         end
       end

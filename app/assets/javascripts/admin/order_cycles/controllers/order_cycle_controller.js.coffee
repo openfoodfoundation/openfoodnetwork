@@ -1,10 +1,15 @@
-angular.module('admin.orderCycles')
-  .controller('AdminCreateOrderCycleCtrl', ['$scope', '$filter', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'ocInstance', ($scope, $filter, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
+angular.module('admin.orderCycles', ['ngResource', 'admin.utils'])
+  .controller('AdminCreateOrderCycleCtrl', ['$scope', '$filter', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'ocInstance', 'StatusMessage', ($scope, $filter, OrderCycle, Enterprise, EnterpriseFee, ocInstance, StatusMessage) ->
     $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
+    $scope.supplier_enterprises = Enterprise.producer_enterprises
+    $scope.distributor_enterprises = Enterprise.hub_enterprises
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index(coordinator_id: ocInstance.coordinator_id)
 
+    $scope.OrderCycle = OrderCycle
     $scope.order_cycle = OrderCycle.new({ coordinator_id: ocInstance.coordinator_id})
+
+    $scope.StatusMessage = StatusMessage
 
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded
@@ -74,18 +79,22 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.submit = (event) ->
-      event.preventDefault()
-      OrderCycle.create()
+    $scope.submit = (destination) ->
+      OrderCycle.create(destination)
   ])
 
-  .controller('AdminEditOrderCycleCtrl', ['$scope', '$filter', '$location', 'OrderCycle', 'Enterprise', 'EnterpriseFee', ($scope, $filter, $location, OrderCycle, Enterprise, EnterpriseFee) ->
+  .controller('AdminEditOrderCycleCtrl', ['$scope', '$filter', '$location', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'StatusMessage', ($scope, $filter, $location, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
+    $scope.supplier_enterprises = Enterprise.producer_enterprises
+    $scope.distributor_enterprises = Enterprise.hub_enterprises
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: order_cycle_id)
 
+    $scope.OrderCycle = OrderCycle
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
+
+    $scope.StatusMessage = StatusMessage
 
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
@@ -155,9 +164,8 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.submit = (event) ->
-      event.preventDefault()
-      OrderCycle.update()
+    $scope.submit = (destination) ->
+      OrderCycle.update(destination)
   ])
 
   .config(['$httpProvider', ($httpProvider) ->

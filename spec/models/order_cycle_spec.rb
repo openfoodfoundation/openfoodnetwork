@@ -211,6 +211,10 @@ describe OrderCycle do
       @oc.variants.count.should == 4
     end
 
+    it "reports on the variants supplied" do
+      @oc.supplied_variants.should match_array [@p0.master]
+    end
+
     it "reports on the variants distributed" do
       @oc.distributed_variants.should match_array [@p1.master, @p2.master, @p2_v]
     end

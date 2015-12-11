@@ -1,14 +1,26 @@
-angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window) ->
-  OrderCycle = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
+angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, StatusMessage) ->
+  OrderCycleResource = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
     'new'   : { method: 'GET', params: { action_name: "new" } }
 		'create': { method: 'POST'}
 		'update': { method: 'PUT'}}
 
-  {
-    order_cycle: {}
+  new class OrderCycle
+    order_cycle: {incoming_exchanges: [], outgoing_exchanges: []}
+    showProducts: {incoming: false, outgoing: false}
 
     loaded: false
+
+    exchangeIds: (direction) ->
+      parseInt(exchange.enterprise_id) for exchange in @exchangesByDirection(direction)
+
+    novelSupplier: (enterprise) =>
+      id = enterprise?.id || parseInt(enterprise)
+      @exchangeIds('incoming').indexOf(id) == -1
+
+    novelDistributor: (enterprise) =>
+      id = enterprise?.id || parseInt(enterprise)
+      @exchangeIds('outgoing').indexOf(id) == -1
 
     exchangeSelectedVariants: (exchange) ->
       numActiveVariants = 0
@@ -20,6 +32,10 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window) -
 
     toggleProducts: (exchange) ->
     	exchange.showProducts = !exchange.showProducts
+
+    toggleAllProducts: (direction) ->
+      this.showProducts[direction] = !this.showProducts[direction]
+      exchange.showProducts = this.showProducts[direction] for exchange in this.exchangesByDirection(direction)
 
     setExchangeVariants: (exchange, variants, selected) ->
       direction = if exchange.incoming then "incoming" else "outgoing"
@@ -80,12 +96,18 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window) -
       distributors = (exchange.enterprise_id for exchange in this.order_cycle.outgoing_exchanges)
       jQuery.unique(suppliers.concat(distributors)).sort()
 
+    exchangesByDirection: (direction) ->
+      if direction == 'incoming'
+        this.order_cycle.incoming_exchanges
+      else
+        this.order_cycle.outgoing_exchanges
+
     removeDistributionOfVariant: (variant_id) ->
       for exchange in this.order_cycle.outgoing_exchanges
         exchange.variants[variant_id] = false
 
     new: (params, callback=null) ->
-      OrderCycle.new params, (oc) =>
+      OrderCycleResource.new params, (oc) =>
         delete oc.$promise
         delete oc.$resolved
         angular.extend(@order_cycle, oc)
@@ -100,7 +122,7 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window) -
 
     load: (order_cycle_id, callback=null) ->
       service = this
-      OrderCycle.get {order_cycle_id: order_cycle_id}, (oc) ->
+      OrderCycleResource.get {order_cycle_id: order_cycle_id}, (oc) ->
         delete oc.$promise
         delete oc.$resolved
         angular.extend(service.order_cycle, oc)
@@ -123,21 +145,32 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window) -
 
       this.order_cycle
 
-    create: ->
-    	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
-    	oc.$create (data) ->
-    	  if data['success']
-    	    $window.location = '/admin/order_cycles'
-    	  else
+    create: (destination) ->
+      return unless @confirmNoDistributors()
+      oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
+      oc.$create (data) ->
+        if data['success']
+          $window.location = destination
+        else
           console.log('Failed to create order cycle')
 
-    update: ->
-    	oc = new OrderCycle({order_cycle: this.dataForSubmit()})
-    	oc.$update {order_cycle_id: this.order_cycle.id}, (data) ->
-    	  if data['success']
-    	    $window.location = '/admin/order_cycles'
-    	  else
+    update: (destination) ->
+      return unless @confirmNoDistributors()
+      oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
+      oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
+        if data['success']
+          if destination?
+            $window.location = destination
+          else
+            StatusMessage.display 'success', 'Your order cycle has been updated.'
+        else
           console.log('Failed to update order cycle')
+
+    confirmNoDistributors: ->
+      if @order_cycle.outgoing_exchanges.length == 0
+        confirm 'There are no distributors in this order cycle. This order cycle will not be visible to customers until you add one. Would you like to continue saving this order cycle?'
+      else
+        true
 
     dataForSubmit: ->
       data = this.deepCopy()
@@ -200,4 +233,3 @@ angular.module('admin.orderCycles').factory('OrderCycle', ($resource, $window) -
 
       for id, active of incoming.variants
         outgoing.variants[id] = active
-  })

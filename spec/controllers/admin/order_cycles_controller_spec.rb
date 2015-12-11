@@ -92,6 +92,48 @@ module Admin
       end
     end
 
+    describe "update" do
+      let(:order_cycle) { create(:simple_order_cycle) }
+
+      before { login_as_admin }
+
+      it "sets flash message when page is reloading" do
+        spree_put :update, id: order_cycle.id, reloading: '1', order_cycle: {}
+        flash[:notice].should == 'Your order cycle has been updated.'
+      end
+
+      it "does not set flash message otherwise" do
+        spree_put :update, id: order_cycle.id, reloading: '0', order_cycle: {}
+        flash[:notice].should be_nil
+      end
+
+      context "as a producer supplying to an order cycle" do
+        let(:producer) { create(:supplier_enterprise) }
+        let(:coordinator) { order_cycle.coordinator }
+        let(:hub) { create(:distributor_enterprise) }
+
+        before { login_as_enterprise_user [producer] }
+
+        describe "removing a variant from incoming" do
+          let(:v) { create(:variant) }
+          let!(:ex_i) { create(:exchange, order_cycle: order_cycle, sender: producer, receiver: coordinator, incoming: true, variants: [v]) }
+          let!(:ex_o) { create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: hub, incoming: false, variants: [v]) }
+
+          let(:params) do
+            {order_cycle: {
+               incoming_exchanges: [{id: ex_i.id, enterprise_id: producer.id, sender_id: producer.id, variants: {v.id => false}}],
+               outgoing_exchanges: [{id: ex_o.id, enterprise_id: hub.id,      receiver_id: hub.id,    variants: {v.id => false}}] }
+            }
+          end
+
+          it "removes the variant from outgoing also" do
+            spree_put :update, {id: order_cycle.id}.merge(params)
+            Exchange.where(order_cycle_id: order_cycle).with_variant(v).should be_empty
+          end
+        end
+      end
+    end
+
     describe "bulk_update" do
       let(:oc) { create(:simple_order_cycle) }
       let!(:coordinator) { oc.coordinator }

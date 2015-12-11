@@ -1,0 +1,6 @@
+%select{id: "new_#{type}_id", name: "new_#{type}_id", 'ng-model' => "new_#{type}_id"}
+  %option{"ng-repeat" => "enterprise in #{type}_enterprises|filter:OrderCycle.novel#{type.capitalize}|orderBy:'name'", "value" => "{{ enterprise.id }}", "ng-disabled" => "enterprise.issues_summary_#{type}"}
+    {{ enterprise.name }}
+    = "{{ enterprise.issues_summary_#{type} ? '('+enterprise.issues_summary_#{type}+')' : '' }}"
+
+= f.submit "Add #{type}", 'ng-click' => "add#{type.capitalize}($event)", 'ng-disabled' => "!new_#{type}_id || !OrderCycle.novel#{type.capitalize}(new_#{type}_id)"

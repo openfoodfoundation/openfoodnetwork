@@ -1,4 +1,6 @@
-angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, OrderCycle, Enterprise, EnterpriseFee, ocInstance) ->
+angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, ocInstance) ->
+  $scope.StatusMessage = StatusMessage
+  $scope.OrderCycle = OrderCycle
   $scope.order_cycle = OrderCycle.new {coordinator_id: ocInstance.coordinator_id}, =>
     # TODO: make this a get method, which only fetches one enterprise
     $scope.enterprises = Enterprise.index {coordinator_id: ocInstance.coordinator_id}, (enterprises) =>
@@ -39,7 +41,6 @@ angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl"
   $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
     EnterpriseFee.forEnterprise(parseInt(enterprise_id))
 
-  $scope.submit = (event) ->
-    event.preventDefault()
+  $scope.submit = (destination) ->
     OrderCycle.mirrorIncomingToOutgoingProducts()
-    OrderCycle.create()
+    OrderCycle.create(destination)

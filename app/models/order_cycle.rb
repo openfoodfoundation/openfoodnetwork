@@ -135,6 +135,10 @@ class OrderCycle < ActiveRecord::Base
       to_a # http://stackoverflow.com/q/15110166
   end
 
+  def supplied_variants
+    self.exchanges.incoming.map(&:variants).flatten.uniq.reject(&:deleted?)
+  end
+
   def distributed_variants
     self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
