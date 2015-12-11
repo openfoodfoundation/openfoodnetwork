@@ -3,7 +3,7 @@ require "spec_helper"
 feature %q{
     As an administrator
     I want to manage orders
-} do
+}, js: true do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -21,7 +21,7 @@ feature %q{
     create :check_payment, order: @order, amount: @order.total
   end
 
-  scenario "creating an order with distributor and order cycle", js: true, retry: 3 do
+  scenario "creating an order with distributor and order cycle", retry: 3 do
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
 
@@ -53,7 +53,7 @@ feature %q{
     o.order_cycle.should == @order_cycle
   end
 
-  scenario "can add a product to an existing order", js: true, retry: 3 do
+  scenario "can add a product to an existing order", retry: 3 do
     login_to_admin_section
     visit '/admin/orders'
 
@@ -67,7 +67,7 @@ feature %q{
     @order.line_items(true).map(&:product).should include @product
   end
 
-  scenario "displays error when incorrect distribution for products is chosen", js: true do
+  scenario "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
 
@@ -89,7 +89,7 @@ feature %q{
   end
 
 
-  scenario "can't add products to an order outside the order's hub and order cycle", js: true do
+  scenario "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
     login_to_admin_section
@@ -155,7 +155,7 @@ feature %q{
       login_to_admin_as @enterprise_user
     end
 
-    scenario "creating an order with distributor and order cycle", js: true do
+    scenario "creating an order with distributor and order cycle" do
       visit '/admin/orders'
       click_link 'New Order'
 
