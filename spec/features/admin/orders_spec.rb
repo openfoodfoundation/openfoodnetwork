@@ -185,6 +185,25 @@ feature %q{
       login_to_admin_as @enterprise_user
     end
 
+    context "viewing the edit page" do
+      before { Rails.application.routes.default_url_options[:host] = "test.host" }
+      it "shows the dropdown menu" do
+        distributor1.update_attribute(:abn, '12345678')
+        order = create(:completed_order_with_totals, distributor: distributor1)
+        visit spree.admin_order_path(order)
+
+        find("#links-dropdown .ofn_drop_down").click
+        within "#links-dropdown" do
+          expect(page).to have_link "Edit", href: spree.edit_admin_order_path(order)
+          expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(order)
+          expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
+          expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
+          # expect(page).to have_link "Ship Order", href: spree.fire_admin_order_path(order, :e => 'ship')
+          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, :e => 'cancel')
+        end
+      end
+    end
+
     scenario "creating an order with distributor and order cycle" do
       visit '/admin/orders'
       click_link 'New Order'

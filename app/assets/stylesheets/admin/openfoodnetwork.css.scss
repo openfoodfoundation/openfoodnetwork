@@ -180,8 +180,16 @@ table#listing_enterprise_groups {
   }
 }
 
+#content-header .ofn_drop_down {
+  border: none;
+  background-color: #5498da;
+  color: #fff;
+  float: none;
+  margin-left: 3px;
+}
+
 .ofn_drop_down {
-	padding: 7px 15px;
+	padding: 6px 15px;
 	border-radius: 3px;
 	border: 1px solid #d4d4d4;
 	background-color: #f5f5f5;
@@ -198,6 +206,7 @@ table#listing_enterprise_groups {
 	text-align: center;
 
 	> span {
+    width: auto;
 		text-transform: uppercase;
 		font-size: 85%;
 		font-weight: 600;
@@ -213,6 +222,7 @@ table#listing_enterprise_groups {
 		border: 1px solid #adadad;
 		background-color: #ffffff;
 		box-shadow: 1px 3px 10px #888888;
+    z-index: 100;
 
 		.menu_item {
 			margin: 0px;

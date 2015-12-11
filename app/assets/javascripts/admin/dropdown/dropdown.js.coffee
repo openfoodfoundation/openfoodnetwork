@@ -1,1 +1,1 @@
-angular.module("admin.dropdown", [])
+angular.module("admin.dropdown", ['templates'])
