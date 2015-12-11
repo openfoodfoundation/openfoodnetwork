@@ -31,7 +31,7 @@
       %th= t(:description)
       %th= t(:charge)
     - if order = invoice.order
-      - invoice.billable_periods.select{ |bp| bp.bill > 0}.each do |billable_period|
+      - invoice.billable_periods.select{ |bp| bp.adjustment.andand.amount.andand > 0}.each do |billable_period|
         %tr
           %td.text-center= "#{billable_period.begins_at.strftime("%d/%m/%Y")}"
           %td= billable_period.label
