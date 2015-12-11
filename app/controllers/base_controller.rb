@@ -17,6 +17,7 @@ class BaseController < ApplicationController
 
   def set_order_cycles
     @order_cycles = OrderCycle.with_distributor(@distributor).active
+    .order(@distributor.preferred_shopfront_order_cycle_order)
 
     # And default to the only order cycle if there's only the one
     if @order_cycles.count == 1

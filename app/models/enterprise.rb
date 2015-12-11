@@ -6,6 +6,7 @@ class Enterprise < ActiveRecord::Base
   preference :shopfront_message, :text, default: ""
   preference :shopfront_closed_message, :text, default: ""
   preference :shopfront_taxon_order, :string, default: ""
+  preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
 
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
   handle_asynchronously :send_confirmation_instructions

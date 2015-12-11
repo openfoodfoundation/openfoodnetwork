@@ -6,8 +6,8 @@ describe EnterprisesController do
     before(:each) do
       @current_distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
       @distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
-      @order_cycle1 = create(:simple_order_cycle, distributors: [@distributor])
-      @order_cycle2 = create(:simple_order_cycle, distributors: [@distributor])
+      @order_cycle1 = create(:simple_order_cycle, distributors: [@distributor], orders_open_at: 2.days.ago, orders_close_at: 3.days.from_now )
+      @order_cycle2 = create(:simple_order_cycle, distributors: [@distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now )
       controller.current_order(true).distributor = @current_distributor
     end
 
@@ -16,6 +16,16 @@ describe EnterprisesController do
 
       controller.current_order.distributor.should == @distributor
       controller.current_order.order_cycle.should be_nil
+    end
+
+    it "sorts order cycles by the distributor's preferred ordering attr" do
+      @distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_close_at')
+      spree_get :shop, {id: @distributor}
+      assigns(:order_cycles).should == [@order_cycle1, @order_cycle2].sort_by(&:orders_close_at)
+
+      @distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_open_at')
+      spree_get :shop, {id: @distributor}
+      assigns(:order_cycles).should == [@order_cycle1, @order_cycle2].sort_by(&:orders_open_at)
     end
 
     it "empties an order that was set for a previous distributor, when shopping at a new distributor" do

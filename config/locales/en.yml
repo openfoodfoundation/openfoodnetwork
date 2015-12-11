@@ -31,6 +31,8 @@ en:
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
 
+  sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
+
   # Printable Invoice Columns
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
