@@ -644,7 +644,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (~> 0.8.3)
+  active_model_serializers
   acts-as-taggable-on (~> 3.4)
   andand
   angular-rails-templates (~> 0.2.0)
