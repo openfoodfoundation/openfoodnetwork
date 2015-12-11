@@ -113,6 +113,36 @@ feature %q{
     page.should have_selector 'p', text: "Order cycle: None"
   end
 
+  scenario "filling customer details" do
+    # Given a customer with an order, which includes their shipping and billing address
+    @order.ship_address = create(:address, lastname: 'Ship')
+    @order.bill_address = create(:address, lastname: 'Bill')
+    @order.shipping_method = create(:shipping_method, require_ship_address: true)
+    @order.save!
+
+    # When I create a new order
+    login_to_admin_section
+    visit '/admin/orders'
+    click_link 'New Order'
+    select @distributor.name, from: 'order_distributor_id'
+    select2_select @order_cycle.name, from: 'order_order_cycle_id'
+    targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    click_link 'Add'
+    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
+    click_button 'Update'
+    within('h1.page-title') { page.should have_content "Customer Details" }
+
+    # And I select that customer's email address and save the order
+    targetted_select2_search @order.user.email, from: '#customer_search', dropdown_css: '.select2-drop'
+    click_button 'Continue'
+    within('h1.page-title') { page.should have_content "Shipments" }
+
+    # Then their addresses should be associated with the order
+    order = Spree::Order.last
+    order.ship_address.lastname.should == 'Ship'
+    order.bill_address.lastname.should == 'Bill'
+  end
+
   scenario "capture multiple payments from the orders index page" do
     # d.cook: could also test for an order that has had payment voided, then a new check payment created but not yet captured. But it's not critical and I know it works anyway.
 
