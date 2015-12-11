@@ -19,6 +19,7 @@ module OpenFoodNetwork
     end
 
     def table
+      variants = variants()
       if params[:distributor_id].to_i > 0
         distributor = Enterprise.find(params[:distributor_id])
         scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
