@@ -25,7 +25,7 @@ module OpenFoodNetwork
         scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
         variants.each { |v| scoper.scope(v) }
       end
-      variants.select { |v| v.count_on_hand > 0 }
+      variants.select { |v| v.in_stock? }
       .map do |variant|
         [
           variant.product.name,

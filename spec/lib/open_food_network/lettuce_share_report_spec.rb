@@ -36,6 +36,7 @@ module OpenFoodNetwork
       describe "lists" do
         let(:v2) { create(:variant) }
         let(:v3) { create(:variant) }
+        let(:v4) { create(:variant, count_on_hand: 0, on_demand: true) }
         let(:hub_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
         let(:hub) { create(:distributor_enterprise, :address => hub_address) }
         let(:v2o) { create(:variant_override, hub: hub, variant: v2) }
@@ -47,9 +48,9 @@ module OpenFoodNetwork
         end
 
         it "only available items" do
-          report.stub(:variants) { [v, v2, v3] }
+          report.stub(:variants) { [v, v2, v3, v4] }
           v.count_on_hand = 0
-          report.send(:table).count.should eq 2
+          report.send(:table).count.should eq 3
         end
 
         it "only available items considering overrides" do
