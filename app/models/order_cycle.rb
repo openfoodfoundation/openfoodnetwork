@@ -24,6 +24,8 @@ class OrderCycle < ActiveRecord::Base
 
   scope :soonest_opening,      lambda { upcoming.order('order_cycles.orders_open_at ASC') }
 
+  scope :by_name, order('name')
+
   scope :distributing_product, lambda { |product|
     joins(:exchanges).
     merge(Exchange.outgoing).
@@ -133,6 +135,10 @@ class OrderCycle < ActiveRecord::Base
       not_deleted.
       select('DISTINCT spree_variants.*').
       to_a # http://stackoverflow.com/q/15110166
+  end
+
+  def supplied_variants
+    self.exchanges.incoming.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def distributed_variants

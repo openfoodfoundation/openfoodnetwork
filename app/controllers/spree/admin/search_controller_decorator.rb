@@ -12,7 +12,14 @@ Spree::Admin::SearchController.class_eval do
         :bill_address_lastname_start => params[:q]
         }).result.limit(10)
     end
-    render :users
 
+    render :users
   end
+
+
+  def users_with_ams
+    users_without_ams
+    render json: @users, each_serializer: Api::Admin::UserSerializer
+  end
+  alias_method_chain :users, :ams
 end

@@ -1,7 +1,3 @@
-require 'simplecov'
-SimpleCov.start
-
-
 require 'rubygems'
 
 # Require pry when we're not inside Travis-CI

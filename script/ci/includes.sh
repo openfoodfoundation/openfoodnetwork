@@ -42,7 +42,9 @@ function exit_unless_master_merged {
 }
 
 function succeed_if_master_merged {
-    master_merged && exit 0
+    if master_merged; then
+        exit 0
+    fi
 }
 
 function set_ofn_commit {

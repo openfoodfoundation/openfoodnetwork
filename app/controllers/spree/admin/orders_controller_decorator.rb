@@ -10,6 +10,8 @@ Spree::Admin::OrdersController.class_eval do
   # in an auth failure as the @order object is nil for collection actions
   before_filter :check_authorization, except: [:bulk_management, :managed]
 
+  before_filter :load_distribution_choices, only: [:new, :edit, :update]
+
   # After updating an order, the fees should be updated as well
   # Currently, adding or deleting line items does not trigger updating the
   # fees! This is a quick fix for that.
@@ -18,6 +20,7 @@ Spree::Admin::OrdersController.class_eval do
   after_filter :update_distribution_charge, :only => :update
 
   before_filter :require_distributor_abn, only: :invoice
+
 
   respond_to :html, :json
 
@@ -111,5 +114,15 @@ Spree::Admin::OrdersController.class_eval do
       flash[:error] = t(:must_have_valid_business_number, enterprise_name: @order.distributor.name)
       respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
     end
+  end
+
+  def load_distribution_choices
+    @shops = Enterprise.is_distributor.managed_by(spree_current_user).by_name
+
+    ocs = OrderCycle.managed_by(spree_current_user)
+    @order_cycles = ocs.soonest_closing +
+                    ocs.soonest_opening +
+                    ocs.closed +
+                    ocs.undated
   end
 end

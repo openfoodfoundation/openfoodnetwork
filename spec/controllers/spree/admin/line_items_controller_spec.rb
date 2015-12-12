@@ -126,6 +126,23 @@ describe Spree::Admin::LineItemsController do
     end
   end
 
+  describe "#create" do
+    let!(:variant) { create(:variant, price: 88) }
+    let!(:vo) { create(:variant_override, hub: distributor, variant: variant, price: 11.11) }
+    let!(:distributor) { create(:distributor_enterprise) }
+    let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
+    let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+    let(:params) { { order_id: order.number, line_item: { variant_id: variant.id, quantity: 1 } } }
+
+    before { login_as_admin }
+
+    it "takes variant overrides into account for price" do
+      spree_post :create, params
+
+      order.line_items(:reload).last.price.should == 11.11
+    end
+  end
+
   describe "#update" do
     let(:supplier) { create(:supplier_enterprise) }
     let(:distributor1) { create(:distributor_enterprise) }

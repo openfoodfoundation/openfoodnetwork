@@ -6,7 +6,7 @@
     .row
       .columns.small-12.fat
         %div{"bo-if" => "enterprise.name"}
-          %label{"bo-html" => "t('shop_for_products_html', {enterprise: enterprise.name})"}
+          %label{"bo-html" => "'shop_for_products_html' | t:{enterprise: enterprise.name}"}
         %div.show-for-medium-up{"bo-if" => "!enterprise.name"}
           &nbsp;
     .row.cta-container

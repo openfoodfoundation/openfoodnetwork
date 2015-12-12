@@ -95,12 +95,21 @@ feature %q{
     click_button 'Add coordinator fee'
     select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
 
+    # I should not be able to add a blank supplier
+    page.should have_select 'new_supplier_id', selected: ''
+    page.should have_button 'Add supplier', disabled: true
+
     # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
     page.find('table.exchanges tr.supplier td.products input').click
     check "order_cycle_incoming_exchange_0_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_0_variants_#{v2.id}"
+
+    # I should not be able to re-add the supplier
+    page.should_not have_select 'new_supplier_id', with_options: ['My supplier']
+    page.should have_button 'Add supplier', disabled: true
+    page.all("td.supplier_name").map(&:text).should == ['My supplier']
 
     # And I add a supplier fee
     within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
@@ -158,6 +167,10 @@ feature %q{
   scenario "editing an order cycle" do
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
+    oc.suppliers.first.update_attribute :name, 'AAA'
+    oc.suppliers.last.update_attribute :name, 'ZZZ'
+    oc.distributors.first.update_attribute :name, 'AAAA'
+    oc.distributors.last.update_attribute :name, 'ZZZZ'
 
     # When I edit it
     login_to_admin_section
@@ -339,7 +352,7 @@ feature %q{
     select 'Distributor fee 2', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
 
     # And I click Update
-    click_button 'Update'
+    click_button 'Update and Close'
 
     # Then my order cycle should have been updated
     page.should have_content 'Your order cycle has been updated.'
@@ -879,7 +892,10 @@ feature %q{
       click_button 'Add coordinator fee'
       select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
 
+      # When I update, or update and close, both work
       click_button 'Update'
+      page.should have_content 'Your order cycle has been updated.'
+      click_button 'Update and Close'
 
       # Then my order cycle should have been updated
       page.should have_content 'Your order cycle has been updated.'

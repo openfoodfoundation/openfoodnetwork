@@ -97,7 +97,6 @@ group :test, :development do
   gem 'factory_girl_rails', :require => false
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
-  gem 'simplecov', :require => false
   gem 'awesome_print'
   gem 'letter_opener'
   gem 'timecop'
