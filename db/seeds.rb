@@ -23,6 +23,6 @@ unless Spree::State.find_by_name 'Victoria'
    ['Victoria', 'Vic'],
    ['Western Australia', 'WA']
   ].each do |state|
-    Spree::State.create!({"name"=>state[0], "abbr"=>state[1], :country=>country}, :without_protection => true)
+    Spree::State.create!({"name"=>state[0], "abbr"=>state[1], country:country}, without_protection: true)
   end
 end

@@ -9,7 +9,7 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
 
   def update
     Spree::Config.set(params[:settings])
-    flash[:success] = t(:successfully_updated, :resource => t(:billing_and_account_settings))
+    flash[:success] = t(:successfully_updated, resource: t(:billing_and_account_settings))
     redirect_to_edit
   end
 

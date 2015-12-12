@@ -3,7 +3,7 @@ Spree.user_class.class_eval do
   # If handle_asynchronously is called twice, we get an infinite job loop.
   handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
 
-  has_many :enterprise_roles, :dependent => :destroy
+  has_many :enterprise_roles, dependent: :destroy
   has_many :enterprises, through: :enterprise_roles
   has_many :owned_enterprises, class_name: 'Enterprise', foreign_key: :owner_id, inverse_of: :owner
   has_many :owned_groups, class_name: 'EnterpriseGroup', foreign_key: :owner_id, inverse_of: :owner
@@ -12,7 +12,7 @@ Spree.user_class.class_eval do
   has_one :cart
   has_many :customers
 
-  accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
+  accepts_nested_attributes_for :enterprise_roles, allow_destroy: true
 
   attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit
   after_create :send_signup_confirmation
@@ -32,7 +32,7 @@ Spree.user_class.class_eval do
   def build_enterprise_roles
     Enterprise.all.each do |enterprise|
       unless self.enterprise_roles.find_by_enterprise_id enterprise.id
-        self.enterprise_roles.build(:enterprise => enterprise)
+        self.enterprise_roles.build(enterprise: enterprise)
       end
     end
   end

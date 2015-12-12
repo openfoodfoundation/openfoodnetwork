@@ -14,7 +14,7 @@ require 'paper_trail/frameworks/rspec'
 # Allow connections to phantomjs/selenium whilst raising errors
 # when connecting to external sites
 require 'webmock/rspec'
-WebMock.disable_net_connect!(:allow_localhost => true)
+WebMock.disable_net_connect!(allow_localhost: true)
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -66,7 +66,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   # Filters
-  config.filter_run_excluding :skip => true, :future => true, :to_figure_out => true
+  config.filter_run_excluding skip: true, future: true, to_figure_out: true
 
   # Retry
   config.verbose_retry = true
@@ -93,11 +93,11 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
   config.include Spree::CheckoutHelpers
-  config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
-  config.include Devise::TestHelpers, :type => :controller
-  config.extend  Spree::Api::TestingSupport::Setup, :type => :controller
-  config.include Spree::Api::TestingSupport::Helpers, :type => :controller
-  config.include OpenFoodNetwork::ControllerHelper, :type => :controller
+  config.include Spree::Core::TestingSupport::ControllerRequests, type: :controller
+  config.include Devise::TestHelpers, type: :controller
+  config.extend  Spree::Api::TestingSupport::Setup, type: :controller
+  config.include Spree::Api::TestingSupport::Helpers, type: :controller
+  config.include OpenFoodNetwork::ControllerHelper, type: :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::ProductsHelper

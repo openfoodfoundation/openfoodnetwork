@@ -1,9 +1,9 @@
 require 'spree/core/controller_helpers/order_decorator'
 
 Spree::OrdersController.class_eval do
-  after_filter  :populate_variant_attributes, :only => :populate
-  before_filter :update_distribution, :only => :update
-  before_filter :filter_order_params, :only => :update
+  after_filter  :populate_variant_attributes, only: :populate
+  before_filter :update_distribution, only: :update
+  before_filter :filter_order_params, only: :update
 
   prepend_before_filter :require_order_cycle, only: :edit
   prepend_before_filter :require_distributor_chosen, only: :edit
@@ -92,7 +92,7 @@ Spree::OrdersController.class_eval do
       params[:products].each do |product_id, variant_id|
         max_quantity = params[:max_quantity].to_i
         order.set_variant_attributes(Spree::Variant.find(variant_id),
-                                             {:max_quantity => max_quantity})
+                                             {max_quantity: max_quantity})
       end
     end
   end

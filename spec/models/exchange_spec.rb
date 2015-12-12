@@ -17,7 +17,7 @@ describe Exchange do
     e1 = create(:exchange)
 
     e2 = build(:exchange,
-               :order_cycle => e1.order_cycle, :sender => e1.sender, :receiver => e1.receiver, :incoming => e1.incoming)
+               order_cycle: e1.order_cycle, sender: e1.sender, receiver: e1.receiver, incoming: e1.incoming)
     e2.should_not be_valid
 
     e2.incoming = !e2.incoming
@@ -36,7 +36,7 @@ describe Exchange do
     e = create(:exchange)
     p = create(:product)
 
-    e.exchange_variants.create(:variant => p.master)
+    e.exchange_variants.create(variant: p.master)
     e.variants.count.should == 1
   end
 
@@ -44,7 +44,7 @@ describe Exchange do
     e = create(:exchange)
     f = create(:enterprise_fee)
 
-    e.exchange_fees.create(:enterprise_fee => f)
+    e.exchange_fees.create(enterprise_fee: f)
     e.enterprise_fees.count.should == 1
   end
 

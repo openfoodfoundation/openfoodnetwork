@@ -42,7 +42,7 @@ module EnterprisesHelper
     name = t(:delete)
     options = {}
     options[:class] = "delete-resource"
-    options[:data] = { :action => 'remove', :confirm => enterprise_confirm_delete_message(enterprise) }
+    options[:data] = { action: 'remove', confirm: enterprise_confirm_delete_message(enterprise) }
     link_to_with_icon 'icon-trash', name, url, options
   end
 

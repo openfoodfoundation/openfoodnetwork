@@ -9,16 +9,16 @@ def update_address(address, user)
 end
 
 def sanitize_data
-  canned_users = [ { :first_name => "Bob", :last_name => "jones", :email => "bob@jones.com", :phone => "0123456789" },
-   { :first_name => "cindy", :last_name => "rest", :email => "cindy@gmail.com", :phone => "0123456789" },
-   { :first_name => "Pete", :last_name => "smith", :email => "pete@gmail.com", :phone => "0123456789" },
-   { :first_name => "Tony", :last_name => "ballantyne", :email => "tony@gmail.com", :phone => "0123456789" },
-   { :first_name => "Ben", :last_name => "raven", :email => "ben@gmail.com", :phone => "0123456789" },
-   { :first_name => "Robyn", :last_name => "monster", :email => "robyn@gmail.com", :phone => "0123456789" },
-   { :first_name => "Nako", :last_name => "tolkein", :email => "nako@gmail.com", :phone => "0123456789" },
-   { :first_name => "Helen", :last_name => "mitcham", :email => "helen@gmail.com", :phone => "0123456789" },
-   { :first_name => "Emma", :last_name => "low", :email => "emma@gmail.com", :phone => "0123456789" },
-   { :first_name => "Mandy", :last_name => "Trust", :email => "Mandy@trust.com", :phone => "0123456789" } ]
+  canned_users = [ { first_name: "Bob", last_name: "jones", email: "bob@jones.com", phone: "0123456789" },
+   { first_name: "cindy", last_name: "rest", email: "cindy@gmail.com", phone: "0123456789" },
+   { first_name: "Pete", last_name: "smith", email: "pete@gmail.com", phone: "0123456789" },
+   { first_name: "Tony", last_name: "ballantyne", email: "tony@gmail.com", phone: "0123456789" },
+   { first_name: "Ben", last_name: "raven", email: "ben@gmail.com", phone: "0123456789" },
+   { first_name: "Robyn", last_name: "monster", email: "robyn@gmail.com", phone: "0123456789" },
+   { first_name: "Nako", last_name: "tolkein", email: "nako@gmail.com", phone: "0123456789" },
+   { first_name: "Helen", last_name: "mitcham", email: "helen@gmail.com", phone: "0123456789" },
+   { first_name: "Emma", last_name: "low", email: "emma@gmail.com", phone: "0123456789" },
+   { first_name: "Mandy", last_name: "Trust", email: "Mandy@trust.com", phone: "0123456789" } ]
 
    Spree::Order.all.each_with_index do |order, index|
     canned_user = canned_users[index%canned_users.size]

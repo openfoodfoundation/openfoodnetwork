@@ -249,7 +249,7 @@ describe OrderCycle do
       it "returns true when so" do
         master = double(:master)
         unassociated_variant = double(:variant)
-        product = double(:product, :has_variants? => true, :master => master, :variants => [])
+        product = double(:product, :has_variants? => true, master: master, variants: [])
         distributed_variants = [master, unassociated_variant]
 
         oc = OrderCycle.new
@@ -258,7 +258,7 @@ describe OrderCycle do
 
       it "returns false when the product doesn't have variants" do
         master = double(:master)
-        product = double(:product, :has_variants? => false, :master => master, :variants => [])
+        product = double(:product, :has_variants? => false, master: master, variants: [])
         distributed_variants = [master]
 
         oc = OrderCycle.new
@@ -267,7 +267,7 @@ describe OrderCycle do
 
       it "returns false when the master isn't distributed" do
         master = double(:master)
-        product = double(:product, :has_variants? => true, :master => master, :variants => [])
+        product = double(:product, :has_variants? => true, master: master, variants: [])
         distributed_variants = []
 
         oc = OrderCycle.new
@@ -277,7 +277,7 @@ describe OrderCycle do
       it "returns false when the product has other variants distributed" do
         master = double(:master)
         variant = double(:variant)
-        product = double(:product, :has_variants? => true, :master => master, :variants => [variant])
+        product = double(:product, :has_variants? => true, master: master, variants: [variant])
         distributed_variants = [master, variant]
 
         oc = OrderCycle.new

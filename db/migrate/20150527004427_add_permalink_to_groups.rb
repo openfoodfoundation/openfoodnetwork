@@ -17,7 +17,7 @@ class AddPermalinkToGroups < ActiveRecord::Migration
     end
 
     change_column :enterprise_groups, :permalink, :string, null: false
-    add_index :enterprise_groups, :permalink, :unique => true
+    add_index :enterprise_groups, :permalink, unique: true
   end
 
   def down

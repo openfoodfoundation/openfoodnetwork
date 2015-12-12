@@ -19,7 +19,7 @@ feature %q{
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
-      fill_in 'payment_method_name', :with => 'Cheque payment method'
+      fill_in 'payment_method_name', with: 'Cheque payment method'
 
       check "payment_method_distributor_ids_#{@distributors[0].id}"
       click_button 'Create'
@@ -36,7 +36,7 @@ feature %q{
 
       visit spree.edit_admin_payment_method_path pm
 
-      fill_in 'payment_method_name', :with => 'New PM Name'
+      fill_in 'payment_method_name', with: 'New PM Name'
 
       uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
       check "payment_method_distributor_ids_#{@distributors[1].id}"
@@ -80,7 +80,7 @@ feature %q{
 
     it "creates payment methods" do
       visit spree.new_admin_payment_method_path
-      fill_in 'payment_method_name', :with => 'Cheque payment method'
+      fill_in 'payment_method_name', with: 'Cheque payment method'
 
       check "payment_method_distributor_ids_#{distributor1.id}"
       click_button 'Create'

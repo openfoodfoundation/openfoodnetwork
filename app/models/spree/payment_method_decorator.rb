@@ -1,6 +1,6 @@
 Spree::PaymentMethod.class_eval do
   # See gateway_decorator.rb when modifying this association
-  has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
+  has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', class_name: 'Enterprise', association_foreign_key: 'distributor_id'
 
   attr_accessible :distributor_ids
 

@@ -4,8 +4,8 @@ class EnterpriseMailer < Spree::BaseMailer
 
   def welcome(enterprise)
     @enterprise = enterprise
-    mail(:to => enterprise.email, :from => from_address,
-         :subject => "#{enterprise.name} is now on #{Spree::Config[:site_name]}")
+    mail(to: enterprise.email, from: from_address,
+         subject: "#{enterprise.name} is now on #{Spree::Config[:site_name]}")
   end
 
   def confirmation_instructions(record, token, opts={})

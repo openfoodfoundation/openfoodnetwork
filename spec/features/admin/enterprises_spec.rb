@@ -37,7 +37,7 @@ feature %q{
     page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     # Filling in details
-    fill_in 'enterprise_name', :with => 'Eaterprises'
+    fill_in 'enterprise_name', with: 'Eaterprises'
 
     # This call intermittently fails to complete, leaving the select2 box open obscuring the
     # fields below it (which breaks the remainder of our specs). Calling it twice seems to
@@ -45,16 +45,16 @@ feature %q{
     select2_search admin.email, from: 'Owner'
     select2_search admin.email, from: 'Owner'
 
-    fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
-    fill_in 'enterprise_phone', :with => '0413 897 321'
-    fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
-    fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
+    fill_in 'enterprise_contact', with: 'Kirsten or Ren'
+    fill_in 'enterprise_phone', with: '0413 897 321'
+    fill_in 'enterprise_email', with: 'info@eaterprises.com.au'
+    fill_in 'enterprise_website', with: 'http://eaterprises.com.au'
 
-    fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
-    fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
-    fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select2_search 'Australia', :from => 'Country'
-    select2_search 'Victoria', :from => 'State'
+    fill_in 'enterprise_address_attributes_address1', with: '35 Ballantyne St'
+    fill_in 'enterprise_address_attributes_city', with: 'Thornbury'
+    fill_in 'enterprise_address_attributes_zipcode', with: '3072'
+    select2_search 'Australia', from: 'Country'
+    select2_search 'Victoria', from: 'State'
 
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
@@ -77,7 +77,7 @@ feature %q{
       all("a", text: 'Edit Profile').first.click
     end
 
-    fill_in 'enterprise_name', :with => 'Eaterprises'
+    fill_in 'enterprise_name', with: 'Eaterprises'
     fill_in 'enterprise_permalink', with: 'eaterprises-permalink'
     page.should have_selector '.available'
     choose 'Own'
@@ -86,7 +86,7 @@ feature %q{
     select2_search user.email, from: 'Owner'
 
     click_link "About"
-    fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
+    fill_in 'enterprise_description', with: 'Connecting farmers and eaters'
 
     # TODO: Directly altering the text in the contenteditable div like this started breaking with the upgrade
     # of Poltergeist from 1.5 to 1.7. Probably requires an upgrade of AngularJS and/or TextAngular
@@ -128,25 +128,25 @@ feature %q{
     check "enterprise_shipping_method_ids_#{shipping_method.id}"
 
     click_link "Contact"
-    fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
-    fill_in 'enterprise_phone', :with => '0413 897 321'
-    fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
-    fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
+    fill_in 'enterprise_contact', with: 'Kirsten or Ren'
+    fill_in 'enterprise_phone', with: '0413 897 321'
+    fill_in 'enterprise_email', with: 'info@eaterprises.com.au'
+    fill_in 'enterprise_website', with: 'http://eaterprises.com.au'
 
     click_link "Social"
-    fill_in 'enterprise_twitter', :with => '@eaterprises'
+    fill_in 'enterprise_twitter', with: '@eaterprises'
 
     click_link "Business Details"
-    fill_in 'enterprise_abn', :with => '09812309823'
-    fill_in 'enterprise_acn', :with => ''
+    fill_in 'enterprise_abn', with: '09812309823'
+    fill_in 'enterprise_acn', with: ''
     choose 'Yes' # enterprise_charges_sales_tax
 
     click_link "Address"
-    fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
-    fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
-    fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select2_search 'Australia', :from => 'Country'
-    select2_search 'Victoria', :from => 'State'
+    fill_in 'enterprise_address_attributes_address1', with: '35 Ballantyne St'
+    fill_in 'enterprise_address_attributes_city', with: 'Thornbury'
+    fill_in 'enterprise_address_attributes_zipcode', with: '3072'
+    select2_search 'Australia', from: 'Country'
+    select2_search 'Victoria', from: 'State'
 
     click_link "Shop Preferences"
     # TODO: Same as above
@@ -157,7 +157,7 @@ feature %q{
     click_button 'Update'
 
     flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
-    page.should have_field 'enterprise_name', :with => 'Eaterprises'
+    page.should have_field 'enterprise_name', with: 'Eaterprises'
     @enterprise.reload
     expect(@enterprise.owner).to eq user
 
@@ -320,7 +320,7 @@ feature %q{
       click_link 'Enterprises'
       within("tbody#e_#{distributor1.id}") { click_link 'Manage' }
 
-      fill_in 'enterprise_name', :with => 'Eaterprises'
+      fill_in 'enterprise_name', with: 'Eaterprises'
       click_button 'Update'
 
       flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
@@ -332,7 +332,7 @@ feature %q{
         click_link 'Enterprises'
         within("tbody#e_#{distributor3.id}") { click_link 'Manage' }
 
-        fill_in 'enterprise_name', :with => 'Eaterprises'
+        fill_in 'enterprise_name', with: 'Eaterprises'
         click_button 'Update'
 
         flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'

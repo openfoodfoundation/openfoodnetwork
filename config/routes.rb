@@ -1,5 +1,5 @@
 Openfoodnetwork::Application.routes.draw do
-  root :to => 'home#index'
+  root to: 'home#index'
 
   # Redirects from old URLs avoid server errors and helps search engines
   get "/enterprises", to: redirect("/")
@@ -40,8 +40,8 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
-  get '/checkout', :to => 'checkout#edit' , :as => :checkout
-  put '/checkout', :to => 'checkout#update' , :as => :update_checkout
+  get '/checkout', to: 'checkout#edit' , as: :checkout
+  put '/checkout', to: 'checkout#update' , as: :update_checkout
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
   resources :enterprises do
@@ -92,7 +92,7 @@ Openfoodnetwork::Application.routes.draw do
     resources :enterprise_fees do
       collection do
         get :for_order_cycle
-        post :bulk_update, :as => :bulk_update
+        post :bulk_update, as: :bulk_update
       end
     end
 
@@ -138,7 +138,7 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   # Mount Spree's routes
-  mount Spree::Core::Engine, :at => '/'
+  mount Spree::Core::Engine, at: '/'
 
 end
 
@@ -146,37 +146,37 @@ end
 # Overriding Devise routes to use our own controller
 Spree::Core::Engine.routes.draw do
   devise_for :spree_user,
-             :class_name => 'Spree::User',
-             :controllers => { :sessions => 'spree/user_sessions',
-                               :registrations => 'user_registrations',
-                               :passwords => 'user_passwords' },
-             :skip => [:unlocks, :omniauth_callbacks],
-             :path_names => { :sign_out => 'logout' },
-             :path_prefix => :user
+             class_name: 'Spree::User',
+             controllers: { sessions: 'spree/user_sessions',
+                               registrations: 'user_registrations',
+                               passwords: 'user_passwords' },
+             skip: [:unlocks, :omniauth_callbacks],
+             path_names: { sign_out: 'logout' },
+             path_prefix: :user
 end
 
 
 
 Spree::Core::Engine.routes.prepend do
-  match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/order_cycle_management' => 'admin/reports#order_cycle_management', :as => "order_cycle_management_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/packing' => 'admin/reports#packing', :as => "packing_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/group_buys' => 'admin/reports#group_buys', :as => "group_buys_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/bulk_coop' => 'admin/reports#bulk_coop', :as => "bulk_coop_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/payments' => 'admin/reports#payments', :as => "payments_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', :as => "orders_and_fulfillment_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/users_and_enterprises' => 'admin/reports#users_and_enterprises', :as => "users_and_enterprises_admin_reports",  :via => [:get, :post]
-  match '/admin/reports/sales_tax' => 'admin/reports#sales_tax', :as => "sales_tax_admin_reports",  :via  => [:get, :post]
-  match '/admin/products/bulk_edit' => 'admin/products#bulk_edit', :as => "bulk_edit_admin_products"
-  match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management"
-  match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]
-  match '/admin/reports/xero_invoices' => 'admin/reports#xero_invoices', :as => "xero_invoices_admin_reports",  :via  => [:get, :post]
-  match '/admin', :to => 'admin/overview#index', :as => :admin
-  match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
+  match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', as: "orders_and_distributors_admin_reports",  via: [:get, :post]
+  match '/admin/reports/order_cycle_management' => 'admin/reports#order_cycle_management', as: "order_cycle_management_admin_reports",  via: [:get, :post]
+  match '/admin/reports/packing' => 'admin/reports#packing', as: "packing_admin_reports",  via: [:get, :post]
+  match '/admin/reports/group_buys' => 'admin/reports#group_buys', as: "group_buys_admin_reports",  via: [:get, :post]
+  match '/admin/reports/bulk_coop' => 'admin/reports#bulk_coop', as: "bulk_coop_admin_reports",  via: [:get, :post]
+  match '/admin/reports/payments' => 'admin/reports#payments', as: "payments_admin_reports",  via: [:get, :post]
+  match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', as: "orders_and_fulfillment_admin_reports",  via: [:get, :post]
+  match '/admin/reports/users_and_enterprises' => 'admin/reports#users_and_enterprises', as: "users_and_enterprises_admin_reports",  via: [:get, :post]
+  match '/admin/reports/sales_tax' => 'admin/reports#sales_tax', as: "sales_tax_admin_reports",  via: [:get, :post]
+  match '/admin/products/bulk_edit' => 'admin/products#bulk_edit', as: "bulk_edit_admin_products"
+  match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', as: "admin_bulk_order_management"
+  match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', as: "products_and_inventory_admin_reports",  via: [:get, :post]
+  match '/admin/reports/customers' => 'admin/reports#customers', as: "customers_admin_reports",  via: [:get, :post]
+  match '/admin/reports/xero_invoices' => 'admin/reports#xero_invoices', as: "xero_invoices_admin_reports",  via: [:get, :post]
+  match '/admin', to: 'admin/overview#index', as: :admin
+  match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', via: :get
 
 
-  namespace :api, :defaults => { :format => 'json' } do
+  namespace :api, defaults: { format: 'json' } do
     resources :users do
       get :authorise_api, on: :collection
     end
@@ -200,12 +200,12 @@ Spree::Core::Engine.routes.prepend do
   end
 
   namespace :admin do
-    get '/search/known_users' => "search#known_users", :as => :search_known_users
+    get '/search/known_users' => "search#known_users", as: :search_known_users
 
     resources :products do
       get :product_distributions, on: :member
 
-      post :bulk_update, :on => :collection, :as => :bulk_update
+      post :bulk_update, on: :collection, as: :bulk_update
     end
 
     resources :orders do
@@ -218,8 +218,8 @@ Spree::Core::Engine.routes.prepend do
   end
 
   resources :orders do
-    get :clear, :on => :collection
-    get :order_cycle_expired, :on => :collection
+    get :clear, on: :collection
+    get :order_cycle_expired, on: :collection
   end
 
 end

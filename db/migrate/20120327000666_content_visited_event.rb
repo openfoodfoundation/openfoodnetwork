@@ -19,7 +19,7 @@ class ContentVisitedEvent < ActiveRecord::Migration
       promotion.event_name = 'spree.content.visited'
       promotion.path = promotion_rule.preferred_path
       promotion.promotion_rules.delete promotion_rule
-      promotion.save(:validate => false)
+      promotion.save(validate: false)
     end
   end
 

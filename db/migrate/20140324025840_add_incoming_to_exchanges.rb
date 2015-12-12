@@ -1,7 +1,7 @@
 class AddIncomingToExchanges < ActiveRecord::Migration
   class Exchange < ActiveRecord::Base
     belongs_to :order_cycle
-    belongs_to :receiver, :class_name => 'Enterprise'
+    belongs_to :receiver, class_name: 'Enterprise'
 
     def incoming?
       receiver == order_cycle.coordinator

@@ -18,8 +18,8 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
 
-      expect(page).to have_field "product_name", with: p1.name, :visible => true
-      expect(page).to have_field "product_name", with: p2.name, :visible => true
+      expect(page).to have_field "product_name", with: p1.name, visible: true
+      expect(page).to have_field "product_name", with: p2.name, visible: true
     end
 
     it "displays a message when number of products is zero" do
@@ -46,7 +46,7 @@ feature %q{
       p2 = FactoryGirl.create(:product, available_on: Date.today-1)
 
       visit '/admin/products/bulk_edit'
-      first("div#columns_dropdown", :text => "COLUMNS").click
+      first("div#columns_dropdown", text: "COLUMNS").click
       first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
 
       expect(page).to have_field "available_on", with: p1.available_on.strftime("%F %T")
@@ -173,11 +173,11 @@ feature %q{
     find("a", text: "NEW PRODUCT").click
     expect(page).to have_content 'NEW PRODUCT'
 
-    fill_in 'product_name', :with => 'Big Bag Of Apples'
-    select s.name, :from => 'product_supplier_id'
+    fill_in 'product_name', with: 'Big Bag Of Apples'
+    select s.name, from: 'product_supplier_id'
     select 'Weight (g)', from: 'product_variant_unit_with_scale'
     fill_in 'product_unit_value_with_description', with: '100'
-    fill_in 'product_price', :with => '10.00'
+    fill_in 'product_price', with: '10.00'
     select taxon.name, from: 'product_primary_taxon_id'
     click_button 'Create'
 
@@ -243,7 +243,7 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
-    first("div#columns_dropdown", :text => "COLUMNS").click
+    first("div#columns_dropdown", text: "COLUMNS").click
     first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
     first("div#columns_dropdown div.menu div.menu_item", text: "Category").click
     first("div#columns_dropdown div.menu div.menu_item", text: "Inherits Properties?").click
@@ -259,7 +259,7 @@ feature %q{
       expect(page).to have_field "product_sku", with: p.sku
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
-      select s2.name, :from => 'producer_id'
+      select s2.name, from: 'producer_id'
       fill_in "available_on", with: (3.days.ago.beginning_of_day).strftime("%F %T")
       select "Weight (kg)", from: "variant_unit_with_scale"
       select2_select t1.name, from: "p#{p.id}_category_id"
@@ -391,14 +391,14 @@ feature %q{
   end
 
   scenario "updating a product after cloning a product" do
-    p = FactoryGirl.create(:product, :name => "product 1")
+    p = FactoryGirl.create(:product, name: "product 1")
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
 
     first("a.clone-product").click
 
-    fill_in "product_name", :with => "new product name"
+    fill_in "product_name", with: "new product name"
 
     first(:button, 'Save Changes').click
     expect(page.find("#status-message")).to have_content "Changes saved."
@@ -408,7 +408,7 @@ feature %q{
 
   scenario "updating when no changes have been made" do
     Capybara.using_wait_time(2) do
-      FactoryGirl.create(:product, :name => "product 1")
+      FactoryGirl.create(:product, name: "product 1")
       login_to_admin_section
 
       visit '/admin/products/bulk_edit'
@@ -421,8 +421,8 @@ feature %q{
   scenario "updating when a filter has been applied" do
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
-    p1 = FactoryGirl.create(:simple_product, :name => "product1", supplier: s1)
-    p2 = FactoryGirl.create(:simple_product, :name => "product2", supplier: s2)
+    p1 = FactoryGirl.create(:simple_product, name: "product1", supplier: s1)
+    p2 = FactoryGirl.create(:simple_product, name: "product2", supplier: s2)
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
@@ -430,7 +430,7 @@ feature %q{
     select2_select s1.name, from: "producer_filter"
 
     expect(page).to have_no_field "product_name", with: p2.name
-    fill_in "product_name", :with => "new product1"
+    fill_in "product_name", with: "new product1"
 
     first(:button, 'Save Changes').click
     expect(page.find("#status-message")).to have_content "Changes saved."
@@ -453,36 +453,36 @@ feature %q{
       end
 
       it "shows a delete button for products, which deletes the appropriate product when clicked" do
-        expect(page).to have_selector "a.delete-product", :count => 2
+        expect(page).to have_selector "a.delete-product", count: 2
 
         within "tr#p_#{p1.id}" do
           first("a.delete-product").click
         end
 
-        expect(page).to have_selector "a.delete-product", :count => 1
+        expect(page).to have_selector "a.delete-product", count: 1
 
         visit '/admin/products/bulk_edit'
 
-        expect(page).to have_selector "a.delete-product", :count => 1
+        expect(page).to have_selector "a.delete-product", count: 1
       end
 
       it "shows a delete button for variants, which deletes the appropriate variant when clicked" do
         expect(page).to have_selector "a.view-variants"
         all("a.view-variants").each { |e| e.trigger('click') }
 
-        expect(page).to have_selector "a.delete-variant", :count => 3
+        expect(page).to have_selector "a.delete-variant", count: 3
 
         within "tr#v_#{v3.id}" do
           first("a.delete-variant").click
         end
 
-        expect(page).to have_selector "a.delete-variant", :count => 2
+        expect(page).to have_selector "a.delete-variant", count: 2
 
         visit '/admin/products/bulk_edit'
         expect(page).to have_selector "a.view-variants"
         all("a.view-variants").select { |e| e.visible? }.each { |e| e.trigger('click') }
 
-        expect(page).to have_selector "a.delete-variant", :count => 2
+        expect(page).to have_selector "a.delete-variant", count: 2
       end
     end
 
@@ -498,7 +498,7 @@ feature %q{
       end
 
       it "shows an edit button for products, which takes the user to the standard edit page for that product" do
-        expect(page).to have_selector "a.edit-product", :count => 2
+        expect(page).to have_selector "a.edit-product", count: 2
 
         within "tr#p_#{p1.id}" do
           first("a.edit-product").click
@@ -511,7 +511,7 @@ feature %q{
         expect(page).to have_selector "a.view-variants"
         all("a.view-variants").each { |e| e.trigger('click') }
 
-        expect(page).to have_selector "a.edit-variant", :count => 2
+        expect(page).to have_selector "a.edit-variant", count: 2
 
         within "tr#v_#{v1.id}" do
           first("a.edit-variant").click
@@ -523,25 +523,25 @@ feature %q{
 
     describe "using clone buttons" do
       it "shows a clone button for products, which duplicates the product and adds it to the page when clicked" do
-        p1 = FactoryGirl.create(:product, :name => "P1")
-        p2 = FactoryGirl.create(:product, :name => "P2")
-        p3 = FactoryGirl.create(:product, :name => "P3")
+        p1 = FactoryGirl.create(:product, name: "P1")
+        p2 = FactoryGirl.create(:product, name: "P2")
+        p3 = FactoryGirl.create(:product, name: "P3")
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
 
-        expect(page).to have_selector "a.clone-product", :count => 3
+        expect(page).to have_selector "a.clone-product", count: 3
 
         within "tr#p_#{p1.id}" do
           first("a.clone-product").click
         end
-        expect(page).to have_selector "a.clone-product", :count => 4
+        expect(page).to have_selector "a.clone-product", count: 4
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
         expect(page).to have_select "producer_id", selected: "#{p1.supplier.name}"
 
         visit '/admin/products/bulk_edit'
 
-        expect(page).to have_selector "a.clone-product", :count => 4
+        expect(page).to have_selector "a.clone-product", count: 4
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
         expect(page).to have_select "producer_id", selected: "#{p1.supplier.name}"
       end
@@ -556,22 +556,22 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
 
-        first("div#columns_dropdown", :text => "COLUMNS").click
+        first("div#columns_dropdown", text: "COLUMNS").click
         first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
 
-        expect(page).to have_selector "th", :text => "NAME"
-        expect(page).to have_selector "th", :text => "PRODUCER"
-        expect(page).to have_selector "th", :text => "PRICE"
-        expect(page).to have_selector "th", :text => "ON HAND"
-        expect(page).to have_selector "th", :text => "AV. ON"
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
+        expect(page).to have_selector "th", text: "AV. ON"
 
         first("div#columns_dropdown div.menu div.menu_item", text: /^.{0,1}Producer$/).click
 
-        expect(page).to have_no_selector "th", :text => "PRODUCER"
-        expect(page).to have_selector "th", :text => "NAME"
-        expect(page).to have_selector "th", :text => "PRICE"
-        expect(page).to have_selector "th", :text => "ON HAND"
-        expect(page).to have_selector "th", :text => "AV. ON"
+        expect(page).to have_no_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
+        expect(page).to have_selector "th", text: "AV. ON"
       end
     end
 
@@ -579,8 +579,8 @@ feature %q{
       it "displays basic filtering controls which filter the product list" do
         s1 = create(:supplier_enterprise)
         s2 = create(:supplier_enterprise)
-        p1 = FactoryGirl.create(:simple_product, :name => "product1", supplier: s1)
-        p2 = FactoryGirl.create(:simple_product, :name => "product2", supplier: s2)
+        p1 = FactoryGirl.create(:simple_product, name: "product1", supplier: s1)
+        p2 = FactoryGirl.create(:simple_product, name: "product2", supplier: s2)
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
@@ -688,7 +688,7 @@ feature %q{
       v = p.variants.first
 
       visit '/admin/products/bulk_edit'
-      first("div#columns_dropdown", :text => "COLUMNS").click
+      first("div#columns_dropdown", text: "COLUMNS").click
       first("div#columns_dropdown div.menu div.menu_item", text: "Available On").click
 
       within "tr#p_#{p.id}" do
@@ -697,7 +697,7 @@ feature %q{
         expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
 
         fill_in "product_name", with: "Big Bag Of Potatoes"
-        select supplier_managed2.name, :from => 'producer_id'
+        select supplier_managed2.name, from: 'producer_id'
         fill_in "available_on", with: (3.days.ago.beginning_of_day).strftime("%F %T")
         select "Weight (kg)", from: "variant_unit_with_scale"
 

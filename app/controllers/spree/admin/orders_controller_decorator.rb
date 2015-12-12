@@ -3,7 +3,7 @@ require 'open_food_network/spree_api_key_loader'
 Spree::Admin::OrdersController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   helper CheckoutHelper
-  before_filter :load_spree_api_key, :only => :bulk_management
+  before_filter :load_spree_api_key, only: :bulk_management
 
   # We need to add expections for collection actions other than :index here
   # because spree_auth_devise causes load_order to be called, which results
@@ -17,7 +17,7 @@ Spree::Admin::OrdersController.class_eval do
   # fees! This is a quick fix for that.
   # TODO: update fees when adding/removing line items
   # instead of the update_distribution_charge method.
-  after_filter :update_distribution_charge, :only => :update
+  after_filter :update_distribution_charge, only: :update
 
   before_filter :require_distributor_abn, only: :invoice
 

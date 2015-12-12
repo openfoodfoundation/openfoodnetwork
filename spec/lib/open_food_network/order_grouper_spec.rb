@@ -96,12 +96,12 @@ module OpenFoodNetwork
         rule1 = double(:rule1)
         rule2 = double(:rule2)
         @rules = [rule1, rule2]
-        @column1 = double(:col1, :call => "Column1")
-        @column2 = double(:col2, :call => "Column2")
+        @column1 = double(:col1, call: "Column1")
+        @column2 = double(:col2, call: "Column2")
         @columns = [@column1, @column2]
 
-        sumcol1 = double(:sumcol1, :call => "SumColumn1")
-        sumcol2 = double(:sumcol2, :call => "SumColumn2")
+        sumcol1 = double(:sumcol1, call: "SumColumn1")
+        sumcol2 = double(:sumcol2, call: "SumColumn2")
         @sumcols = [sumcol1, sumcol2]
 
         item1 = double(:item1)

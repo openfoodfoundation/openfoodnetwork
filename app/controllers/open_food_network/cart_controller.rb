@@ -2,12 +2,12 @@ module OpenFoodNetwork
   class CartController < ApplicationController
     respond_to :json
 
-    # before_filter :authorize_read!, :except => [:index, :search, :create]
+    # before_filter :authorize_read!, except: [:index, :search, :create]
 
     def new
       @cart = Cart.new(current_api_user)
       if @cart.save
-        respond_with(@cart, :status => 201)
+        respond_with(@cart, status: 201)
       else
         invalid_resource!(@cart)
       end

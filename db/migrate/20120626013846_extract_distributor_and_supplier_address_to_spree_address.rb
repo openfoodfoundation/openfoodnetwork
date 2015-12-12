@@ -10,14 +10,14 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
     Distributor.reset_column_information
 
     Distributor.all.each do |distributor|
-      pickup_address = Spree::Address.create!(:firstname => 'unused',
-                                              :lastname => 'unused',
-                                              :phone => 'unused',
-                                              :address1 => distributor[:pickup_address],
-                                              :city => distributor.city,
-                                              :zipcode => distributor.post_code,
-                                              :state_id => distributor.state_id,
-                                              :country_id => distributor.country_id)
+      pickup_address = Spree::Address.create!(firstname: 'unused',
+                                              lastname: 'unused',
+                                              phone: 'unused',
+                                              address1: distributor[:pickup_address],
+                                              city: distributor.city,
+                                              zipcode: distributor.post_code,
+                                              state_id: distributor.state_id,
+                                              country_id: distributor.country_id)
       distributor.pickup_address = pickup_address
       distributor.save!
     end
@@ -32,14 +32,14 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
     Supplier.reset_column_information
 
     Supplier.all.each do |supplier|
-      address = Spree::Address.create!(:firstname => 'unused',
-                                       :lastname => 'unused',
-                                       :phone => 'unused',
-                                       :address1 => supplier[:address],
-                                       :city => supplier.city,
-                                       :zipcode => supplier.postcode,
-                                       :state_id => supplier.state_id,
-                                       :country_id => supplier.country_id)
+      address = Spree::Address.create!(firstname: 'unused',
+                                       lastname: 'unused',
+                                       phone: 'unused',
+                                       address1: supplier[:address],
+                                       city: supplier.city,
+                                       zipcode: supplier.postcode,
+                                       state_id: supplier.state_id,
+                                       country_id: supplier.country_id)
       supplier.address = address
       supplier.save!
     end

@@ -13,7 +13,7 @@ module OpenFoodNetwork
 
       values.map! &:presentation    # This line changed
 
-      values.to_sentence({ :words_connector => ", ", :two_words_connector => ", " })
+      values.to_sentence({ words_connector: ", ", two_words_connector: ", " })
     end
 
     # Used like "product.name - full_name". If called like this, a product with

@@ -1,7 +1,7 @@
 class ConvertShippingMethodsDistributorsToHabtm < ActiveRecord::Migration
   class Spree::ShippingMethod < ActiveRecord::Base
     belongs_to :distributor, class_name: 'Enterprise'
-    has_and_belongs_to_many :distributors, join_table: 'distributors_shipping_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
+    has_and_belongs_to_many :distributors, join_table: 'distributors_shipping_methods', class_name: 'Enterprise', association_foreign_key: 'distributor_id'
   end
 
   def up

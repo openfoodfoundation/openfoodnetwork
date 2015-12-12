@@ -2,7 +2,7 @@ class AddUniqueIndexToEnterprisePermalink < ActiveRecord::Migration
   def change
     duplicates = Enterprise.group(:permalink).having('count(*) > 1').pluck(:permalink)
     duplicates.each { |p| resolve_permalink(p) };
-    add_index :enterprises, :permalink, :unique => true
+    add_index :enterprises, :permalink, unique: true
   end
 
   def resolve_permalink(permalink)

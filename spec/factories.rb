@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :classification, class: Spree::Classification do
   end
 
-  factory :order_cycle, :parent => :simple_order_cycle do
+  factory :order_cycle, parent: :simple_order_cycle do
     coordinator_fees { [create(:enterprise_fee, enterprise: coordinator)] }
 
     after(:create) do |oc|
@@ -14,12 +14,12 @@ FactoryGirl.define do
       supplier2 = create(:supplier_enterprise)
 
       # Incoming Exchanges
-      ex1 = create(:exchange, :order_cycle => oc, :incoming => true,
-                   :sender => supplier1, :receiver => oc.coordinator,
-                   :receival_instructions => 'instructions 0')
-      ex2 = create(:exchange, :order_cycle => oc, :incoming => true,
-                   :sender => supplier2, :receiver => oc.coordinator,
-                   :receival_instructions => 'instructions 1')
+      ex1 = create(:exchange, order_cycle: oc, incoming: true,
+                   sender: supplier1, receiver: oc.coordinator,
+                   receival_instructions: 'instructions 0')
+      ex2 = create(:exchange, order_cycle: oc, incoming: true,
+                   sender: supplier2, receiver: oc.coordinator,
+                   receival_instructions: 'instructions 1')
       ExchangeFee.create!(exchange: ex1,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
       ExchangeFee.create!(exchange: ex2,
@@ -30,12 +30,12 @@ FactoryGirl.define do
       distributor2 = create(:distributor_enterprise)
 
       # Outgoing Exchanges
-      ex3 = create(:exchange, :order_cycle => oc, :incoming => false,
-                   :sender => oc.coordinator, :receiver => distributor1,
-                   :pickup_time => 'time 0', :pickup_instructions => 'instructions 0')
-      ex4 = create(:exchange, :order_cycle => oc, :incoming => false,
-                   :sender => oc.coordinator, :receiver => distributor2,
-                   :pickup_time => 'time 1', :pickup_instructions => 'instructions 1')
+      ex3 = create(:exchange, order_cycle: oc, incoming: false,
+                   sender: oc.coordinator, receiver: distributor1,
+                   pickup_time: 'time 0', pickup_instructions: 'instructions 0')
+      ex4 = create(:exchange, order_cycle: oc, incoming: false,
+                   sender: oc.coordinator, receiver: distributor2,
+                   pickup_time: 'time 1', pickup_instructions: 'instructions 1')
       ExchangeFee.create!(exchange: ex3,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex3.receiver))
       ExchangeFee.create!(exchange: ex4,
@@ -45,7 +45,7 @@ FactoryGirl.define do
       [ex1, ex2].each do |exchange|
         product = create(:product, supplier: exchange.sender)
         image = File.open(File.expand_path('../../app/assets/images/logo-white.png', __FILE__))
-        Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
+        Spree::Image.create({viewable_id: product.master.id, viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1})
 
         exchange.variants << product.variants.first
       end
@@ -57,7 +57,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :simple_order_cycle, :class => OrderCycle do
+  factory :simple_order_cycle, class: OrderCycle do
     sequence(:name) { |n| "Order Cycle #{n}" }
 
     orders_open_at  { Time.zone.now - 1.day }
@@ -73,30 +73,30 @@ FactoryGirl.define do
 
     after(:create) do |oc, proxy|
       proxy.suppliers.each do |supplier|
-        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :incoming => true, :receival_instructions => 'instructions')
+        ex = create(:exchange, order_cycle: oc, sender: supplier, receiver: oc.coordinator, incoming: true, receival_instructions: 'instructions')
         proxy.variants.each { |v| ex.variants << v }
       end
 
       proxy.distributors.each do |distributor|
-        ex = create(:exchange, :order_cycle => oc, :sender => oc.coordinator, :receiver => distributor, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        ex = create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: distributor, incoming: false, pickup_time: 'time', pickup_instructions: 'instructions')
         proxy.variants.each { |v| ex.variants << v }
       end
     end
   end
 
-  factory :exchange, :class => Exchange do
+  factory :exchange, class: Exchange do
     order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
     sender      { FactoryGirl.create(:enterprise) }
     receiver    { FactoryGirl.create(:enterprise) }
     incoming    false
   end
 
-  factory :variant_override, :class => VariantOverride do
+  factory :variant_override, class: VariantOverride do
     price         77.77
     count_on_hand 11111
   end
 
-  factory :enterprise, :class => Enterprise do
+  factory :enterprise, class: Enterprise do
     owner { FactoryGirl.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
     sells 'any'
@@ -107,12 +107,12 @@ FactoryGirl.define do
     confirmed_at { Time.now }
   end
 
-  factory :supplier_enterprise, :parent => :enterprise do
+  factory :supplier_enterprise, parent: :enterprise do
     is_primary_producer true
     sells "none"
   end
 
-  factory :distributor_enterprise, :parent => :enterprise do
+  factory :distributor_enterprise, parent: :enterprise do
     is_primary_producer false
     sells "any"
 
@@ -134,7 +134,7 @@ FactoryGirl.define do
   factory :enterprise_role do
   end
 
-  factory :enterprise_group, :class => EnterpriseGroup do
+  factory :enterprise_group, class: EnterpriseGroup do
     name 'Enterprise group'
     sequence(:permalink) { |n| "group#{n}" }
     description 'this is a group'
@@ -143,7 +143,7 @@ FactoryGirl.define do
   end
 
   sequence(:calculator_amount)
-  factory :enterprise_fee, :class => EnterpriseFee do
+  factory :enterprise_fee, class: EnterpriseFee do
     ignore { amount nil }
 
     sequence(:name) { |n| "Enterprise fee #{n}" }
@@ -155,13 +155,13 @@ FactoryGirl.define do
     after(:create) { |ef| ef.calculator.save! }
   end
 
-  factory :product_distribution, :class => ProductDistribution do
+  factory :product_distribution, class: ProductDistribution do
     product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
     distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     enterprise_fee  { |pd| FactoryGirl.create(:enterprise_fee, enterprise: pd.distributor) }
   end
 
-  factory :adjustment_metadata, :class => AdjustmentMetadata do
+  factory :adjustment_metadata, class: AdjustmentMetadata do
     adjustment { FactoryGirl.create(:adjustment) }
     enterprise { FactoryGirl.create(:distributor_enterprise) }
     fee_name 'fee'
@@ -169,27 +169,27 @@ FactoryGirl.define do
     enterprise_role 'distributor'
   end
 
-  factory :weight_calculator, :class => OpenFoodNetwork::Calculator::Weight do
+  factory :weight_calculator, class: OpenFoodNetwork::Calculator::Weight do
     after(:build)  { |c| c.set_preference(:per_kg, 0.5) }
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
-  factory :order_with_totals_and_distribution, :parent => :order do #possibly called :order_with_line_items in newer Spree
+  factory :order_with_totals_and_distribution, parent: :order do #possibly called :order_with_line_items in newer Spree
     distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order|
-      p = create(:simple_product, :distributors => [order.distributor])
-      FactoryGirl.create(:line_item, :order => order, :product => p)
+      p = create(:simple_product, distributors: [order.distributor])
+      FactoryGirl.create(:line_item, order: order, product: p)
       order.reload
     end
   end
 
-  factory :order_with_distributor, :parent => :order do
+  factory :order_with_distributor, parent: :order do
     distributor { create(:distributor_enterprise) }
   end
 
-  factory :zone_with_member, :parent => :zone do
+  factory :zone_with_member, parent: :zone do
     default_tax true
 
     after(:create) do |zone|
@@ -197,7 +197,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :taxed_product, :parent => :product do
+  factory :taxed_product, parent: :product do
     ignore do
       tax_rate_amount 0
       zone nil
@@ -211,7 +211,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :customer, :class => Customer do
+  factory :customer, class: Customer do
     email { Faker::Internet.email }
     enterprise
     code { SecureRandom.base64(150) }
@@ -310,20 +310,20 @@ end
 
 # -- CMS
 FactoryGirl.define do
-  factory :cms_site, :class => Cms::Site do
+  factory :cms_site, class: Cms::Site do
     identifier 'open-food-network'
     label      'Open Food Network'
     hostname   'localhost'
   end
 
-  factory :cms_layout, :class => Cms::Layout do
+  factory :cms_layout, class: Cms::Layout do
     site { Cms::Site.first || create(:cms_site) }
     label 'layout'
     identifier 'layout'
     content '{{ cms:page:content:text }}'
   end
 
-  factory :cms_page, :class => Cms::Page do
+  factory :cms_page, class: Cms::Page do
     site { Cms::Site.first || create(:cms_site) }
     label 'page'
     sequence(:slug) { |n| "page-#{n}" }
@@ -336,7 +336,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :cms_block, :class => Cms::Block do
+  factory :cms_block, class: Cms::Block do
     page { Cms::Page.first || create(:cms_page) }
     identifier 'block'
     content 'hello, block'

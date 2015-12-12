@@ -18,7 +18,7 @@ class ModelSet
 
   def collection_attributes=(attributes)
     attributes.each do |k, attributes|
-      # attributes == {:id => 123, :next_collection_at => '...'}
+      # attributes == {id: 123, next_collection_at: '...'}
       e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
       if e.nil?
         @collection << @klass.new(attributes) unless @reject_if.andand.call(attributes)

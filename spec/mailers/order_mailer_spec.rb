@@ -11,13 +11,13 @@ describe Spree::OrderMailer do
     ActionMailer::Base.deliveries = []
 
     @bill_address = create(:address)
-    @distributor_address = create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234")
-    @distributor = create(:distributor_enterprise, :address => @distributor_address)
+    @distributor_address = create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
+    @distributor = create(:distributor_enterprise, address: @distributor_address)
     product = create(:product)
-    product_distribution = create(:product_distribution, :product => product, :distributor => @distributor)
+    product_distribution = create(:product_distribution, product: product, distributor: @distributor)
     @shipping_instructions = "pick up on thursday please!"
-    ship_address = create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234")
-    @order1 = create(:order, :distributor => @distributor, :bill_address => @bill_address, ship_address: ship_address, :special_instructions => @shipping_instructions)
+    ship_address = create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
+    @order1 = create(:order, distributor: @distributor, bill_address: @bill_address, ship_address: ship_address, special_instructions: @shipping_instructions)
     ActionMailer::Base.deliveries = []
   end
 

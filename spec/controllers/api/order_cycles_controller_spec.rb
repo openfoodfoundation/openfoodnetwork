@@ -15,14 +15,14 @@ module Api
 
       before do
         stub_authentication!
-        Spree.user_class.stub :find_by_spree_api_key => current_api_user
+        Spree.user_class.stub find_by_spree_api_key: current_api_user
       end
 
       context "as a normal user" do
         sign_in_as_user!
 
         it "should deny me access to managed order cycles" do
-          spree_get :managed, { :format => :json }
+          spree_get :managed, { format: :json }
           assert_unauthorized!
         end
       end
@@ -31,7 +31,7 @@ module Api
         sign_in_as_enterprise_user! [:coordinator]
 
         it "retrieves a list of variants with appropriate attributes" do
-          get :managed, { :format => :json }
+          get :managed, { format: :json }
           keys = json_response.first.keys.map{ |key| key.to_sym }
           attributes.all?{ |attr| keys.include? attr }.should == true
         end
@@ -41,7 +41,7 @@ module Api
         sign_in_as_admin!
 
         it "retrieves a list of variants with appropriate attributes" do
-          get :managed, { :format => :json }
+          get :managed, { format: :json }
           keys = json_response.first.keys.map{ |key| key.to_sym }
           attributes.all?{ |attr| keys.include? attr }.should == true
         end
@@ -79,8 +79,8 @@ module Api
         context "as the user of a supplier to an order cycle" do
           before :each do
             stub_authentication!
-            Spree.user_class.stub :find_by_spree_api_key => oc_supplier_user
-            spree_get :accessible, { :template => 'bulk_index', :format => :json }
+            Spree.user_class.stub find_by_spree_api_key: oc_supplier_user
+            spree_get :accessible, { template: 'bulk_index', format: :json }
           end
 
           it "gives me access" do
@@ -92,8 +92,8 @@ module Api
         context "as the user of some other supplier" do
           before :each do
             stub_authentication!
-            Spree.user_class.stub :find_by_spree_api_key => other_supplier_user
-            spree_get :accessible, { :template => 'bulk_index', :format => :json }
+            Spree.user_class.stub find_by_spree_api_key: other_supplier_user
+            spree_get :accessible, { template: 'bulk_index', format: :json }
           end
 
           it "does not give me access" do
@@ -104,8 +104,8 @@ module Api
         context "as the user of a hub for the order cycle" do
           before :each do
             stub_authentication!
-            Spree.user_class.stub :find_by_spree_api_key => oc_distributor_user
-            spree_get :accessible, { :template => 'bulk_index', :format => :json }
+            Spree.user_class.stub find_by_spree_api_key: oc_distributor_user
+            spree_get :accessible, { template: 'bulk_index', format: :json }
           end
 
           it "gives me access" do
@@ -126,7 +126,7 @@ module Api
 
         before do
           stub_authentication!
-          Spree.user_class.stub :find_by_spree_api_key => user
+          Spree.user_class.stub find_by_spree_api_key: user
         end
 
         context "as the manager of a supplier in an order cycle" do
@@ -174,7 +174,7 @@ module Api
 
         before do
           stub_authentication!
-          Spree.user_class.stub :find_by_spree_api_key => user
+          Spree.user_class.stub find_by_spree_api_key: user
         end
 
         context "as the manager of a producer in an order cycle" do

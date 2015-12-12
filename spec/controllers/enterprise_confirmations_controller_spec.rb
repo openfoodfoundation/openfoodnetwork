@@ -52,7 +52,7 @@ describe EnterpriseConfirmationsController do
         it "redirects to the user to reset their password" do
           expect(new_user).to receive(:send_reset_password_instructions_without_delay).and_call_original
           spree_get :show, confirmation_token: unconfirmed_enterprise.confirmation_token
-          expect(response).to redirect_to spree.edit_spree_user_password_path(new_user, :reset_password_token => "token", return_to: spree.admin_path)
+          expect(response).to redirect_to spree.edit_spree_user_password_path(new_user, reset_password_token: "token", return_to: spree.admin_path)
           expect(flash[:success]).to eq I18n.t('devise.enterprise_confirmations.enterprise.confirmed')
           expect(unconfirmed_enterprise.users(:reload)).to include new_user
         end

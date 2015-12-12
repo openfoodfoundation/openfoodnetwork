@@ -43,7 +43,7 @@ Openfoodnetwork::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  config.action_mailer.default_url_options = { :host => "test.host" }
+  config.action_mailer.default_url_options = { host: "test.host" }
 
   # To block requests before running the database cleaner
   require 'open_food_network/rack_request_blocker'

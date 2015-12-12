@@ -5,7 +5,7 @@ module Admin
   class OrderCyclesController < ResourceController
     include OrderCyclesHelper
 
-    prepend_before_filter :load_data_for_index, :only => :index
+    prepend_before_filter :load_data_for_index, only: :index
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
     before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
@@ -47,10 +47,10 @@ module Admin
 
           flash[:notice] = 'Your order cycle has been created.'
           format.html { redirect_to admin_order_cycles_path }
-          format.json { render :json => {:success => true} }
+          format.json { render json: {success: true} }
         else
           format.html
-          format.json { render :json => {:success => false} }
+          format.json { render json: {success: false} }
         end
       end
     end
@@ -62,9 +62,9 @@ module Admin
         if @order_cycle.update_attributes(params[:order_cycle])
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
           flash[:notice] = 'Your order cycle has been updated.' if params[:reloading] == '1'
-          format.json { render :json => {:success => true}  }
+          format.json { render json: {success: true}  }
         else
-          format.json { render :json => {:success => false} }
+          format.json { render json: {success: false} }
         end
       end
     end
@@ -72,7 +72,7 @@ module Admin
     def bulk_update
       @order_cycle_set = params[:order_cycle_set] && OrderCycleSet.new(params[:order_cycle_set])
       if @order_cycle_set.andand.save
-        redirect_to main_app.admin_order_cycles_path, :notice => 'Order cycles have been updated.'
+        redirect_to main_app.admin_order_cycles_path, notice: 'Order cycles have been updated.'
       else
         render :index
       end
@@ -81,14 +81,14 @@ module Admin
     def clone
       @order_cycle = OrderCycle.find params[:id]
       @order_cycle.clone!
-      redirect_to main_app.admin_order_cycles_path, :notice => "Your order cycle #{@order_cycle.name} has been cloned."
+      redirect_to main_app.admin_order_cycles_path, notice: "Your order cycle #{@order_cycle.name} has been cloned."
     end
 
     # Send notifications to all producers who are part of the order cycle
     def notify_producers
       Delayed::Job.enqueue OrderCycleNotificationJob.new(params[:id].to_i)
 
-      redirect_to main_app.admin_order_cycles_path, :notice => 'Emails to be sent to producers have been queued for sending.'
+      redirect_to main_app.admin_order_cycles_path, notice: 'Emails to be sent to producers have been queued for sending.'
     end
 
 
@@ -123,7 +123,7 @@ module Admin
           g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: 31.days.ago, orders_close_at_null: true } ]
         }
       end
-      @order_cycle_set = OrderCycleSet.new :collection => (@collection = collection)
+      @order_cycle_set = OrderCycleSet.new collection: (@collection = collection)
     end
 
     def require_coordinator

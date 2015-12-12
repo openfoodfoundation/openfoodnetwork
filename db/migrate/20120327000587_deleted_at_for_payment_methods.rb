@@ -1,7 +1,7 @@
 class DeletedAtForPaymentMethods < ActiveRecord::Migration
   def up
     change_table :payment_methods do |t|
-      t.timestamp :deleted_at, :default => nil
+      t.timestamp :deleted_at, default: nil
     end
   end
 
