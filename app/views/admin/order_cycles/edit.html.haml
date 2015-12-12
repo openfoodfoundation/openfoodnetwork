@@ -4,7 +4,8 @@
       = button_to "Notify producers", main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers', :confirm => 'Are you sure?'
 
 
-%h1 Edit Order Cycle
+%h1 
+	=t'edit_order_cycle'
 
 
 - ng_controller = order_cycles_simple_form ? 'AdminSimpleEditOrderCycleCtrl' : 'AdminEditOrderCycleCtrl'
