@@ -1,12 +1,14 @@
 - content_for :page_title do
-  %h1.page-title Customers
+  %h1.page-title  
+  =t :customers
 
 = admin_inject_shops
 
 %div{ ng: { app: 'admin.customers', controller: 'customersCtrl' } }
   .row{ ng: { hide: "loaded() && filteredCustomers.length > 0" } }
     .five.columns.alpha
-      %h3 Please select a Hub:
+      %h3 
+        =t :please_select_hub
     .four.columns
       %select.select2.fullwidth#shop_id{ 'ng-model' => 'shop.id', name: 'shop_id', 'ng-options' => 'shop.id as shop.name for shop in shops' }
     .seven.columns.omega &nbsp;
@@ -34,9 +36,11 @@
   .row{ 'ng-if' => 'shop && !loaded()' }
     .sixteen.columns.alpha#loading
       %img.spinner{ src: "/assets/spinning-circles.svg" }
-      %h1 LOADING CUSTOMERS
+      %h1
+        =t :loading_customers
   .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredCustomers.length == 0'}
-    %h1#no_results No customers found.
+    %h1#no_results 
+      =t :no_customers_found
 
 
   .row{ ng: { show: "loaded() && filteredCustomers.length > 0" } }
