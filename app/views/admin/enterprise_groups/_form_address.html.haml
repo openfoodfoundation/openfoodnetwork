@@ -1,11 +1,12 @@
 = f.fields_for :address do |af|
   %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Contact'" } }
-    %legend Contact
+    %legend 
+      = t 'admin_entreprise_groups_contact'
     .row
       .alpha.three.columns
         = af.label :phone
       .omega.eight.columns
-        = af.text_field :phone, { placeholder: "eg. 98 7654 3210"}
+        = af.text_field :phone, { placeholder: t(:admin_entreprise_groups_contact_phone_placeholder)}
     .row
       .alpha.three.columns
         = f.label :email
@@ -15,7 +16,7 @@
       .three.columns.alpha
         = af.label :address1
       .eight.columns.omega
-        = af.text_field :address1, { placeholder: "eg. 123 High Street"}
+        = af.text_field :address1, { placeholder: t(:admin_entreprise_groups_contact_address1_placeholder)}
     .row
       .alpha.three.columns
         = af.label :address2
@@ -23,18 +24,17 @@
         = af.text_field :address2
     .row
       .three.columns.alpha
-        = af.label :city, 'Suburb'
+        = af.label :city, t(:admin_entreprise_groups_contact_city)
         \/
-        = af.label :zipcode, 'Postcode'
+        = af.label :zipcode, t(:admin_entreprise_groups_contact_zipcode)
       .four.columns
-        = af.text_field :city, { placeholder: "eg. Northcote"}
+        = af.text_field :city, { placeholder: t(:admin_entreprise_groups_contact_city_placeholder)}
       .four.columns.omega
-        = af.text_field :zipcode, { placeholder: "eg. 3070"}
+        = af.text_field :zipcode, { placeholder: t(:admin_entreprise_groups_contact_zipcode_placeholder)}
     .row
       .three.columns.alpha
-        = af.label :state_id, 'State'
-        \/
-        = af.label :country_id, 'Country'
+        = af.label :state_id, t(:admin_entreprise_groups_contact_state_id)
+        = af.label :country_id, t(:admin_entreprise_groups_contact_country_id)
       .four.columns
         = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
       .four.columns.omega
