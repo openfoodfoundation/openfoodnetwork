@@ -101,83 +101,83 @@ es:
   ie_warning_other: "¿No puede actualizar su navegador? Pruebe Open Food Network en su teléfono :-)"
 
   footer_global_headline: "OFN Global"
-  footer_global_home: "Home"
-  footer_global_news: "News"
-  footer_global_about: "About"
-  footer_global_contact: "Contact"
+  footer_global_home: "Inicio"
+  footer_global_news: "Noticas"
+  footer_global_about: "Acerca de"
+  footer_global_contact: "Contacto"
 
-  footer_sites_headline: "OFN Sites"
-  footer_sites_developer: "Developer"
-  footer_sites_community: "Community"
-  footer_sites_userguide: "User Guide"
+  footer_sites_headline: "Sitios OFN"
+  footer_sites_developer: "Desarrollador"
+  footer_sites_community: "Comunidad"
+  footer_sites_userguide: "Guía de usuario"
 
-  footer_secure: "Secure and trusted."
-  footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
+  footer_secure: "Seguro y de confianza."
+  footer_secure_text: "Open Food Network usa cifrado SSL (RSA de 2048 bit) en todo lado para mantener privada la información de compras y pagos. Nuestros servidores no almacenan los detalles de tarjetas de créditos y los pagos son procesados por servicios que cumplen con PCI."
 
-  footer_contact_headline: "Keep in touch"
-  footer_contact_email: "Email us"
+  footer_contact_headline: "Mantenerse en contacto"
+  footer_contact_email: "Envíenos un correo"
 
-  footer_nav_headline: "Navigate"
-  footer_join_headline: "Join us"
-  footer_join_producers: "Producers sign-up"
-  footer_join_hubs: "Hubs sign-up"
-  footer_join_groups: "Groups sign-up"
-  footer_join_partners: "Food systems partners"
+  footer_nav_headline: "Navegar"
+  footer_join_headline: "Unirse"
+  footer_join_producers: "Registro de productores"
+  footer_join_hubs: "Registro de centros de acopio"
+5D  footer_join_groups: "Registro de grupos"
+  footer_join_partners: "Socios de sistemas de comida"
 
-  footer_legal_call: "Read our"
-  footer_legal_tos: "Terms & conditions"
-  footer_legal_visit: "Find us on"
-  footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+  footer_legal_call: "Leer nuestros"
+  footer_legal_tos: "Términos y condiciones"
+  footer_legal_visit: "Encuéntrenos en"
+  footer_legal_text_html: "Open Food Network es una plataforma libre y de código abierto. Nuestro contenido tiene una licencia %{content_license} y nuestro código %{code_license}."
 
-  home_shop: Shop Now
+  home_shop: Comprar ahora
 
-  brandstory_headline: "Food, unincorporated."
-  brandstory_intro: "Sometimes the best way to fix the system is to start a new one…"
-  brandstory_part1: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
-  brandstory_part2: "Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transaction into transformation every day."
-  brandstory_part3: "So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people start versions across the world."
-  brandstory_part4: "It works everywhere. It changes everything."
-  brandstory_part5_strong: "We call it Open Food Network."
-  brandstory_part6: "We all love food. Now we can love our food system too."
+  brandstory_headline: "Comida, no incorporada."
+  brandstory_intro: "A veces la mejor forma de arreglar el sistema es empezar uno nuevo…"
+  brandstory_part1: "Nosotros empezamos desde abajo. Con granjeros y productores listos para contar sus historias con orgullo y autenticidad. Con distribuidores listos para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden seriamente cambiar el mundo."
+  brandstory_part2: "Luego necesitamos una forma de hacerlo real. Una forma de empoderar a todos los que producen, venden y compran comida. Una forma de contar todas las historias, de manejar todas las logísticas. Una forma de convertir transacción en transformación todos los días."
+  brandstory_part3: "Entonces contruímos un mercado que nivela el campo de juego. Es transparente, de forma que crea relaciones reales. Es de código abierto, de forma que todos son los dueños."
+  brandstory_part4: "Funciona en todo lado. Cambia todo."
+  brandstory_part5_strong: "Le llamamos Open Food Network."
+  brandstory_part6: "Todos amamos la comida. Ahora podemos amar nuestro sistema de comida también."
 
-  system_headline: "Here's how it works."
-  system_step1: "1. Search"
-  system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
-  system_step2: "2. Shop"
-  system_step2_text: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
-  system_step3: "3. Pick-up / Delivery"
-  system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
+  system_headline: "Así es como funciona."
+  system_step1: "1. Buscar"
+  system_step1_text: "Busque comida local y de temporada en nuestras tiendas diversas e independientes. Busque por barrio o categoría de comida, o si prefiere servicio de entrega o recogerla."
+  system_step2: "2. Comprar"
+  system_step2_text: "Transforme sus transacciones con comida local y asequible de diversos productores y centros de acopio. ¡Conozca las historias detrásde su comida y la gente que la hace!"
+  system_step3: "3. Recoger / Servicio de entrega"
+  system_step3_text: "Espere su entrega, o visite a su productor o centro de acopio para una conexión más personal con su comida. Compra de comida tan diversa como la naturaleza lo previó."
 
-  cta_headline: "Shopping that makes the world a better place."
-  cta_label: "I'm Ready"
+  cta_headline: "Compras que hacen el mundo un mejor lugar."
+  cta_label: "Estoy listo"
 
-  stats_headline: "We're creating a new food system."
-  stats_producers: "food producers"
-  stats_shops: "food shops"
-  stats_shoppers: "food shoppers"
-  stats_orders: "food orders"
+  stats_headline: "Estamos creando un nuevo sistema de comida."
+  stats_producers: "productores de comida"
+  stats_shops: "tiendas de comida"
+  stats_shoppers: "compradores de comida"
+  stats_orders: "ordenes de comida"
 
-  checkout_title: Checkout
-  checkout_now: Checkout now
-  checkout_order_ready: Order ready for
-  checkout_hide: Hide
-  checkout_expand: Expand
-  checkout_headline: "Ok, ready to checkout?"
-  checkout_as_guest: "Checkout as guest"
-  checkout_details: "Your details"
-  checkout_billing: "Billing info"
-  checkout_shipping: Shipping info
-  checkout_method_free: Free
-  checkout_address_same: Shipping address same as billing address?
-  checkout_ready_for: "Ready for:"
-  checkout_instructions: "Any comments or special instructions?"
-  checkout_payment: Payment
-  checkout_send: Place order now
-  checkout_your_order: Your order
-  checkout_cart_total: Cart total
-  checkout_shipping_price: Shipping
+  checkout_title: Revisar el carrito
+  checkout_now: Revisare el carrito ahora
+  checkout_order_ready: Orden lista para
+  checkout_hide: Esconder
+  checkout_expand: Expandir
+  checkout_headline: "Esta bien, ¿listo para pagar?"
+  checkout_as_guest: "Pagar como invitado"
+  checkout_details: "Sus detalles"
+  checkout_billing: "Información de cobro"
+  checkout_shipping: Información de entrega
+  checkout_method_free: Gratis
+  checkout_address_same: ¿Dirección de entrega igual a la dirección de cobro?
+  checkout_ready_for: "Listo para:"
+  checkout_instructions: "¿Algún comentario o intrucciones especiales?"
+  checkout_payment: Pago
+  checkout_send: Realizar la orden ya
+  checkout_your_order: Su orden
+  checkout_cart_total: Total del carrito
+  checkout_shipping_price: Entrega
   checkout_total_price: Total
-  checkout_back_to_cart: "Back to Cart"
+  checkout_back_to_cart: "De vuelta al carrito"
 
   order_paid: PAID
   order_not_paid: NOT PAID
