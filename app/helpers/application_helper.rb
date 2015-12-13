@@ -16,6 +16,14 @@ module ApplicationHelper
   end
 
 
+  def app_version
+    begin
+      IO.popen("git describe --tags --abbrev=0 "){|v| v.readline.strip}
+    rescue
+      t(:version_not_found) 
+    end
+  end
+
   # Pass URL helper calls on to spree where applicable so that we don't need to use
   # spree.foo_path in any view rendered from non-spree-namespaced controllers.
   def method_missing(method, *args, &block)
