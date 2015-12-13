@@ -11,7 +11,7 @@ module OpenFoodNetwork
 
       it "uses defaults when blank params are passed" do
         report.instance_variable_get(:@opts).should == {invoice_date: Date.civil(2015, 5, 5),
-                                                        due_date: Date.civil(2015, 5, 19),
+                                                        due_date: Date.civil(2015, 6, 5),
                                                         account_code: 'food sales',
                                                         report_type: 'summary'}
       end

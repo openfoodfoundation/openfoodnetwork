@@ -6,8 +6,8 @@ module OpenFoodNetwork
       @opts = opts.
               reject { |k, v| v.blank? }.
               reverse_merge({report_type: 'summary',
-                             invoice_date: Date.today,
-                             due_date: 2.weeks.from_now.to_date,
+                             invoice_date: Time.zone.today,
+                             due_date: Time.zone.today + 1.month,
                              account_code: 'food sales'})
     end
 
