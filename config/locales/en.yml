@@ -221,6 +221,20 @@ en:
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
   order_hub_info: Hub Info
 
+  bom_no: "Order no."
+  bom_date: "Order date"
+  bom_cycle: "Order cycle"
+  bom_quantity: "Quantity"
+  bom_max: "Max"
+  bom_hub: "Hub"
+  bom_variant: "Variant"
+  bom_final_weigth_volume: "Weight/Volume"
+  bom_price: "Price"
+  bom_actions_delete: "Delete Selected"
+  bom_order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
+
+  unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
+
   products: "Products"
   products_in: "in %{oc}"
   products_at: "at %{distributor}"
@@ -430,6 +444,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   producers_signup_cta_headline: Join now!
   producers_signup_cta_action: Join now
   producers_signup_detail: Here's the detail.
+  producer: Producer
 
   products_item: Item
   products_description: Description
