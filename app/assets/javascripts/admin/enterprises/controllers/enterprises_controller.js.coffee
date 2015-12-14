@@ -11,3 +11,4 @@ angular.module("admin.enterprises").controller 'enterprisesCtrl', ($scope, $q, E
       package:  { name: "Package",  visible: true }
       status:   { name: "Status",   visible: true }
       manage:   { name: "Manage",   visible: true }
+

@@ -874,3 +874,5 @@ Please follow the instructions there to make your enterprise visible on the Open
   one_product: "one product"
   changes_to: "Changes to"
   remain_unsaved: "remain unsaced"
+  add_manager: "Add a manager"
+  is_already_manager: "is already a manager!"
