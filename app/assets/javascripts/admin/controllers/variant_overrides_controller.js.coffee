@@ -40,7 +40,7 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
 
   $scope.update = ->
     if DirtyVariantOverrides.count() == 0
-      StatusMessage.display 'alert', 'No changes to save.'
+      StatusMessage.display 'alert', 'No change to save '
     else
       StatusMessage.display 'progress', 'Saving...'
       DirtyVariantOverrides.save()
