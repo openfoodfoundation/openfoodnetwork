@@ -1,5 +1,18 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# English language file
+# ---------------------
+#
+# This is the source language file maintained by the Australian OFN team.
+# Visit Transifex to translate this file into other languages:
+#
+#   https://www.transifex.com/open-food-foundation/open-food-network/
+#
+# If you translate this file in a text editor, please share your results with us by
+#
+# - uploading the file to Transifex or
+# - opening a pull request at GitHub.
+#
+#
+# See http://community.openfoodnetwork.org/t/localisation-ofn-in-your-language/397
 
 en:
   devise:
