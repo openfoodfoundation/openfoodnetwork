@@ -9,7 +9,7 @@
             = @group.phone
       - if @group.email.present?
         %p
-          =link_to_service "", @group.email.reverse, mailto: true do
+          =link_to_service "", @group.email, mailto: true do
             = t :groups_contact_email
       - if @group.website.present?
         %p
