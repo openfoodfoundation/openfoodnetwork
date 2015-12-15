@@ -5,7 +5,7 @@ class Customer < ActiveRecord::Base
   belongs_to :user, :class_name => Spree.user_class
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_blank: true, allow_nil: true }
-  validates :email, presence: true, uniqueness: { scope: :enterprise_id, message: "is associated with an existing customer" }
+  validates :email, presence: true, uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer')  }
   validates :enterprise_id, presence: true
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
@@ -18,3 +18,4 @@ class Customer < ActiveRecord::Base
     self.user = user || Spree::User.find_by_email(email)
   end
 end
+
