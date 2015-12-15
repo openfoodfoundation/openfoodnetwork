@@ -1,7 +1,7 @@
 / insert_before "[data-hook='admin_order_form_buttons']"
 
 %fieldset.no-border-bottom
-  %legend{align => 'center'} Distribution
+  %legend{align: 'center'} Distribution
 
   - if @order.complete?
     .alpha.six.columns
@@ -18,9 +18,12 @@
   - else
     .alpha.six.columns
       .field
-        = f.label :distributor_id
-        = f.collection_select :distributor_id, Enterprise.is_distributor.managed_by(spree_current_user), :id, :name, include_blank: true
+        %label{for: "order_distributor_id"} Distributor
+        %select.fullwidth{id: "order_distributor_id", name: "order[distributor_id]", 'ng-model' => 'distributor_id'}
+          %option{"ng-repeat" => "shop in shops", "ng-value" => "shop.id", "ng-selected" => "distributor_id == shop.id", "ng-disabled" => "!distributorHasOrderCycles(shop)", "ng-bind" => "shop.name"}
+
     .omega.six.columns
-      .field
-        = f.label :order_cycle_id
-        = f.collection_select :order_cycle_id, OrderCycle.managed_by(spree_current_user), :id, :name, include_blank: true
+      .field{"ng-show" => "distributor_id"}
+        %label{for: "order_order_cycle_id"} Order Cycle
+        %select.select2.fullwidth{id: "order_order_cycle_id", name: "order[order_cycle_id]", 'ng-model' => 'order_cycle_id'}
+          %option{"ng-repeat" => "oc in orderCycles | filter:validOrderCycle", "ng-value" => "oc.id", "ng-selected" => "order_cycle_id == oc.id", "ng-bind" => "oc.name_and_status"}

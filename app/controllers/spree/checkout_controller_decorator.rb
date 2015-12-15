@@ -1,3 +1,5 @@
+require 'open_food_network/last_used_address'
+
 Spree::CheckoutController.class_eval do
 
   include CheckoutHelper
@@ -19,7 +21,10 @@ Spree::CheckoutController.class_eval do
   def before_address
     associate_user
 
-    last_used_bill_address, last_used_ship_address = find_last_used_addresses(@order.email)
+    lua = OpenFoodNetwork::LastUsedAddress.new(@order.email)
+    last_used_bill_address = lua.last_used_bill_address.andand.clone
+    last_used_ship_address = lua.last_used_ship_address.andand.clone
+
     preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user.respond_to?(:bill_address) && spree_current_user.respond_to?(:ship_address)
 
     @order.bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
@@ -28,15 +33,5 @@ Spree::CheckoutController.class_eval do
 
   def after_complete
     reset_order
-  end
-
-  def find_last_used_addresses(email)
-    past = Spree::Order.order("id desc").where(:email => email).where("state != 'cart'").limit(8)
-    if order = past.detect(&:bill_address)
-      bill_address = order.bill_address.clone if order.bill_address
-      ship_address = order.ship_address.clone if order.ship_address and order.shipping_method.andand.require_ship_address
-    end
-
-    [bill_address, ship_address]
   end
 end

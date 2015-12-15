@@ -1,0 +1,2 @@
+add_to_attributes "table.index, [data-hook='admin_order_form_buttons']"
+attributes "ng-show" => "distributionChosen()"

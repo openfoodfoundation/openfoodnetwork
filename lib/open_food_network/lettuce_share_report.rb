@@ -6,6 +6,7 @@ module OpenFoodNetwork
       [
         "PRODUCT",
         "Description",
+        "SKU",
         "Qty",
         "Pack Size",
         "Unit",
@@ -18,15 +19,23 @@ module OpenFoodNetwork
     end
 
     def table
-      variants.map do |variant|
+      variants = variants()
+      if params[:distributor_id].to_i > 0
+        distributor = Enterprise.find(params[:distributor_id])
+        scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+        variants.each { |v| scoper.scope(v) }
+      end
+      variants.select { |v| v.in_stock? }
+      .map do |variant|
         [
           variant.product.name,
           variant.full_name,
+          variant.sku,
           '',
           OptionValueNamer.new(variant).value,
           OptionValueNamer.new(variant).unit,
-          variant.price - gst(variant),
           variant.price,
+          '',
           gst(variant),
           grower_and_method(variant),
           variant.product.primary_taxon.name

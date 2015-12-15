@@ -1,0 +1,27 @@
+- content_for :page_title do
+  = t(:new)
+
+- content_for :page_actions do
+  %li= button_link_to t(:back_to_orders_list), spree.admin_orders_path, :icon => 'icon-arrow-left'
+
+= admin_inject_shops 'admin.orders'
+= admin_inject_order_cycles
+
+= render 'spree/admin/shared/order_tabs', :current => 'Order Details'
+
+= csrf_meta_tags
+
+%div{"data-hook" => "admin_order_new_header"}
+  = render 'spree/shared/error_messages', :target => @order
+
+%div{"ng-app" => "admin.orders", "ng-controller" => "ordersCtrl"}
+  %div{"ng-show" => "distributionChosen()"}
+    = render 'add_product'
+
+  - unless @order.line_items.any?
+    %div{"data-hook" => "admin_order_new_form"}
+      #order-form-wrapper
+        = render 'form'
+
+- content_for :head do
+  = javascript_tag 'var expand_variants = true;'

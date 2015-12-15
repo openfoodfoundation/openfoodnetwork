@@ -28,8 +28,6 @@ module OpenFoodNetwork
     end
 
     def filter(variants)
-      # NOTE: Ordering matters.
-      # filter_to_order_cycle and filter_to_distributor return arrays not relations
       filter_to_distributor filter_to_order_cycle filter_on_hand filter_to_supplier filter_not_deleted variants
     end
 
@@ -56,9 +54,7 @@ module OpenFoodNetwork
     def filter_to_distributor(variants)
       if params[:distributor_id].to_i > 0
         distributor = Enterprise.find params[:distributor_id]
-        variants.select do |v|
-          Enterprise.distributing_product(v.product_id).include? distributor
-        end
+        variants.in_distributor(distributor)
       else
         variants
       end
@@ -67,7 +63,7 @@ module OpenFoodNetwork
     def filter_to_order_cycle(variants)
       if params[:order_cycle_id].to_i > 0
         order_cycle = OrderCycle.find params[:order_cycle_id]
-        variants.select { |v| order_cycle.variants.include? v }
+        variants.where(id: order_cycle.variants)
       else
         variants
       end

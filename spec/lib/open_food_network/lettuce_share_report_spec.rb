@@ -27,5 +27,44 @@ module OpenFoodNetwork
         report.send(:gst, v).should == 0
       end
     end
+
+    describe "table" do
+      it "handles no items" do
+        report.send(:table).should eq []
+      end
+
+      describe "lists" do
+        let(:v2) { create(:variant) }
+        let(:v3) { create(:variant) }
+        let(:v4) { create(:variant, count_on_hand: 0, on_demand: true) }
+        let(:hub_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
+        let(:hub) { create(:distributor_enterprise, :address => hub_address) }
+        let(:v2o) { create(:variant_override, hub: hub, variant: v2) }
+        let(:v3o) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0) }
+
+        it "all items" do
+          report.stub(:variants) { [v, v2, v3] }
+          report.send(:table).count.should eq 3
+        end
+
+        it "only available items" do
+          report.stub(:variants) { [v, v2, v3, v4] }
+          v.count_on_hand = 0
+          report.send(:table).count.should eq 3
+        end
+
+        it "only available items considering overrides" do
+          # create the overrides
+          v2o
+          v3o
+          report.stub(:variants) { [v, v2, v3] }
+          report.stub(:params) { {distributor_id: hub.id} }
+          rows = report.send(:table)
+          rows.count.should eq 2
+          rows[1][0].should eq v2.product.name
+        end
+
+      end
+    end
   end
 end
