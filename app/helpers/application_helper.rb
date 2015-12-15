@@ -15,13 +15,8 @@ module ApplicationHelper
     form_for(name, *(args << options.merge(:builder => AngularFormBuilder)), &block)
   end
 
-
   def app_version
-    begin
-      IO.popen("git describe --tags --abbrev=0 "){|v| v.readline.strip}
-    rescue
-      t(:version_not_found) 
-    end
+    OpenFoodNetwork::VERSION
   end
 
   # Pass URL helper calls on to spree where applicable so that we don't need to use
