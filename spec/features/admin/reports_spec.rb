@@ -286,7 +286,7 @@ feature %q{
     let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
     let(:taxon)    { create(:taxon, name: 'Taxon Name') }
     let(:product1) { create(:simple_product, name: "Product Name", price: 100, supplier: supplier, primary_taxon: taxon) }
-    let(:product2) { create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight', variant_unit_scale: 1, unit_value: '100', supplier: supplier, primary_taxon: taxon) }
+    let(:product2) { create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight', variant_unit_scale: 1, unit_value: '100', supplier: supplier, primary_taxon: taxon, sku: "product_sku") }
     let(:variant1) { product1.variants.first }
     let(:variant2) { create(:variant, product: product1, price: 80.0) }
     let(:variant3) { product2.variants.first }
@@ -297,8 +297,11 @@ feature %q{
       product1.taxons = [taxon]
       product2.taxons = [taxon]
       variant1.update_column(:count_on_hand, 10)
+      variant1.update_column(:sku, "sku1")
       variant2.update_column(:count_on_hand, 20)
+      variant2.update_column(:sku, "sku2")
       variant3.update_column(:count_on_hand, 9)
+      variant3.update_column(:sku, "")
       variant1.option_values = [create(:option_value, :presentation => "Test")]
       variant2.option_values = [create(:option_value, :presentation => "Something")]
     end
@@ -312,10 +315,10 @@ feature %q{
       click_link 'Products & Inventory'
       page.should have_content "Supplier"
 
-      page.should have_table_row ["Supplier",              "Producer Suburb",               "Product",      "Product Properties",            "Taxons",                   "Variant Value",  "Price",  "Group Buy Unit Quantity",     "Amount"].map(&:upcase)
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, ""]
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,   "Something",       "80.0",   product1.group_buy_unit_size.to_s, ""]
-      page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,   "100g",           "99.0",   product1.group_buy_unit_size.to_s, ""]
+      page.should have_table_row ["Supplier",             "Producer Suburb",              "Product",      "Product Properties",                               "Taxons",                     "Variant Value",  "Price",  "Group Buy Unit Quantity",         "Amount", "SKU"].map(&:upcase)
+      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
+      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Something",      "80.0",   product1.group_buy_unit_size.to_s, "",       "sku2"]
+      page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,  "100g",           "99.0",   product1.group_buy_unit_size.to_s, "",       "product_sku"]
     end
 
     it "shows the LettuceShare report" do

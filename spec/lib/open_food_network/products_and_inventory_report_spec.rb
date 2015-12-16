@@ -22,7 +22,8 @@ module OpenFoodNetwork
           "Variant Value",
           "Price",
           "Group Buy Unit Quantity",
-          "Amount"
+          "Amount",
+          "SKU"
         ]
       end
 
@@ -48,7 +49,8 @@ module OpenFoodNetwork
           "Variant Name",
           100,
           21,
-          ""
+          "",
+          "sku"
           ]]
       end
 
@@ -68,9 +70,11 @@ module OpenFoodNetwork
         user.save!
         user
       end
+
       subject do
         ProductsAndInventoryReport.new enterprise_user
       end
+
       describe "fetching child variants" do
         it "returns some variants" do
           product1 = create(:simple_product, supplier: supplier)
@@ -152,6 +156,28 @@ module OpenFoodNetwork
             distributor_id: distributor.id,
             report_type: 'inventory')
           subject.filter(variants)
+        end
+      end
+
+      describe "fetching SKU for a variant" do
+        let(:variant) { create(:variant) }
+        let(:product) { variant.product }
+
+        before { product.update_attribute(:sku, "Product SKU") }
+
+        context "when the variant has an SKU set" do
+          before { variant.update_attribute(:sku, "Variant SKU") }
+          it "returns it" do
+            expect(subject.send(:sku_for, variant)).to eq "Variant SKU"
+          end
+        end
+
+        context "when the variant has bo SKU set" do
+          before { variant.update_attribute(:sku, "") }
+
+          it "returns the product's SKU" do
+            expect(subject.send(:sku_for, variant)).to eq "Product SKU"
+          end
         end
       end
     end
