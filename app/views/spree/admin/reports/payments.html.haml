@@ -3,15 +3,15 @@
 
   .row
     .four.columns.alpha
-      = label_tag nil, "Distributor: "
-      = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
-  = label_tag nil, "Report Type: "
+      = label_tag nil, t(:report_distributor)
+      = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => t(:report_all)}, {:class => "select2 fullwidth"})
+  = label_tag nil, t(:report_customers_type)
   %br
-  = select_tag(:report_type, options_for_select([['Payments By Type',:payments_by_payment_type],['Itemised Payment Totals',:itemised_payment_totals],['Payment Totals',:payment_totals]], @report_type))
+  = select_tag(:report_type, options_for_select([[t(:report_payment_by),:payments_by_payment_type],[t(:report_itemised_payment,:itemised_payment_totals],[t(:report_payment_totals,:payment_totals]], @report_type))
   %br
   %br
   = check_box_tag :csv
-  = label_tag :csv, "Download as csv"
+  = label_tag :csv, t(:report_customers_csv)
   %br
   %br
   = button t(:search)
@@ -19,7 +19,7 @@
 %br
 %table#listing_orders.index
   %thead
-    %tr{'data-hook' => "orders_header"}
+    %tr{'data-hook' => "orders_header" }
       - @report.header.each do |heading|
         %th=heading
   %tbody
