@@ -367,7 +367,7 @@ describe UpdateAccountInvoices do
           expect(invoice_order.completed_at).to be_nil
           billable_adjustments = invoice_order.adjustments.where('source_type = (?)', 'BillablePeriod')
           expect(billable_adjustments.map(&:amount)).to eq [july_billable_period2.bill.round(2), july_billable_period3.bill.round(2)]
-          expect(invoice_order.total).to eq (july_billable_period2.bill + july_billable_period3.bill).round(2)
+          expect(invoice_order.total).to eq july_billable_period2.bill.round(2) + july_billable_period3.bill.round(2)
           expect(invoice_order.payments.count).to eq 0
           expect(invoice_order.state).to eq 'cart'
           expect(invoice_order.bill_address).to be_a Spree::Address
@@ -411,7 +411,7 @@ describe UpdateAccountInvoices do
           billable_adjustments = invoice_order.adjustments.where('source_type = (?)', 'BillablePeriod')
           expect(billable_adjustments).to_not include billable_adjustment
           expect(billable_adjustments.map(&:amount)).to eq [july_billable_period2.bill.round(2), july_billable_period3.bill.round(2)]
-          expect(invoice_order.total).to eq (july_billable_period2.bill + july_billable_period3.bill).round(2)
+          expect(invoice_order.total).to eq july_billable_period2.bill.round(2) + july_billable_period3.bill.round(2)
           expect(invoice_order.payments.count).to eq 0
           expect(invoice_order.state).to eq 'cart'
           expect(invoice_order.bill_address).to be_a Spree::Address
