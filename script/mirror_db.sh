@@ -7,7 +7,7 @@ set -e
 if hash zeus 2>/dev/null && [ -e .zeus.sock ]; then
   RAILS_RUN='zeus r'
 else
-  RAILS_RUN='rails runner'
+  RAILS_RUN='bundle exec rails runner'
 fi
 
 
