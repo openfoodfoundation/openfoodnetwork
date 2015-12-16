@@ -6,7 +6,6 @@ module OpenFoodNetwork
       [
         "PRODUCT",
         "Description",
-        "SKU",
         "Qty",
         "Pack Size",
         "Unit",
@@ -30,7 +29,6 @@ module OpenFoodNetwork
         [
           variant.product.name,
           variant.full_name,
-          variant.sku,
           '',
           OptionValueNamer.new(variant).value,
           OptionValueNamer.new(variant).unit,
