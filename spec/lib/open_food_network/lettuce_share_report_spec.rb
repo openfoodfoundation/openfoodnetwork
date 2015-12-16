@@ -62,7 +62,7 @@ module OpenFoodNetwork
           report.stub(:params) { {distributor_id: hub.id} }
           rows = report.send(:table)
           rows.count.should eq 2
-          rows[1][0].should eq v2.product.name
+          rows.map{ |row| row[0] }.should include v.product.name, v2.product.name
         end
 
       end
