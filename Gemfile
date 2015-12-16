@@ -4,7 +4,8 @@ ruby "2.1.5"
 gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'i18n', '~> 0.6.11'
-
+gem "spree_social", :git => "git://github.com/spree/spree_social.git"
+gem  "spree_core, ~> 3.1.0.beta"
 gem 'nokogiri'
 
 gem 'pg'
