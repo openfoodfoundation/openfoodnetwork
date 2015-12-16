@@ -32,7 +32,7 @@ class UpdateAccountInvoices
         invoice_order: account_invoice.order.as_json
       })
     else
-      billable_periods = account_invoice.billable_periods.order(:enterprise_id, :begins_at).reject{ |bp| bp.turnover == 0 }
+      billable_periods = account_invoice.billable_periods.order(:enterprise_id, :begins_at).reject{ |bp| bp.bill == 0 }
 
       if billable_periods.any?
         oldest_enterprise = billable_periods.first.enterprise
