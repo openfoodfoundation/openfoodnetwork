@@ -1,7 +1,8 @@
 %div.sixteen.columns.alpha.list-item.red
-  %span.text.fifteen.columns.alpha You don't have any enterprises yet.
+  %span.text.fifteen.columns.alpha
+    = t "spree_admin_enterprises_none_text"
   %span.one.columns.omega
     %span.icon-remove-sign
 %a.sixteen.columns.alpha.button.bottom.red{ href: "#{main_app.new_admin_enterprise_path}" }
-  CREATE A NEW ENTERPRISE
+  = t "spree_admin_enterprises_none_create_a_new_enterprise"
   %span.icon-arrow-right

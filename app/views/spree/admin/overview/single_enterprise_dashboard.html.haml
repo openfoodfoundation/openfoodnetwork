@@ -19,7 +19,7 @@
     }
   #package_button
     %button#toggle_type{ onClick: 'toggleType()' }
-      Change Package
+      = t "change_package"
       %i.icon-chevron-down
 
 
@@ -29,17 +29,17 @@
 
 - if @enterprise.confirmed_at.nil?
   .alert-box
-    Please confirm the email address for
+    = t "spree_admin_single_enterprise_alert_mail_confirmation"
     %strong= "#{@enterprise.name}."
-    We've sent an email to
+    t(:spree_admin_single_enterprise_alert_mail_sent)
     %strong= "#{@enterprise.email}."
-    = link_to('Resend', main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } ), method: :post)
+    = link_to(t('resend'), main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } ), method: :post)
     %a.close{ href: "#" } ×
 - if !@enterprise.visible
   .alert-box
-    %strong Hint:
-    To allow people to find you, turn on your visibility under
-    %strong= "Manage #{@enterprise.name}."
+    %strong 
+      = t "spree_admin_single_enterprise_hint"
+    %strong= "#{t('manage')} #{@enterprise.name}."
     %a.close{ href: "#" } ×
 
 .row
@@ -47,14 +47,15 @@
     .header
       %h3
         %span.icon-map-marker
-        Your profile live
-      %p on the Open Food Network map
+          = t "your_profil_live"
+      %p
+        = t "on_ofn_map"
     .list
       /-# Can we pass an anchor here to zoom to our enterprise?
       %a.button.bottom{href: main_app.map_path, target: '_blank'}
-        See
+        = t "see"
         = @enterprise.name
-        live
+        = t "live"
         %span.icon-arrow-right
   .two.columns
     &nbsp;
@@ -63,11 +64,12 @@
     .header
       %h3
         %span.icon-edit
-        Edit profile details
-      %p Change your profile description, images, etc.
+          = t "edit_profile_details"
+      %p
+        = t "edit_profile_details_etc"
     .list
       %a.button.bottom{href: main_app.edit_admin_enterprise_path(@enterprise)}
-        Manage
+        = t "manage"
         = @enterprise.name
         %span.icon-arrow-right
 
@@ -77,10 +79,10 @@
       .header
         %h3
           %span.icon-th-large
-          Add &amp; manage products
+            = t 'add_and_manage_products'
       .list
         %a.button.bottom{href: bulk_edit_admin_products_path}
-          Manage products
+          = t 'manage_products'
           %span.icon-arrow-right
 
   .two.columns
@@ -91,8 +93,8 @@
       .header
         %h3
           %span.icon-shopping-cart
-          Add &amp; manage order cycles
+            = t 'add_and_manage_order_cycles'
       .list
         %a.button.bottom{href: main_app.admin_order_cycles_path}
-          Manage order cycles
+          = t 'manage_order_cycles'
           %span.icon-arrow-right
