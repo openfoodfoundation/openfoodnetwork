@@ -54,7 +54,8 @@ module OpenFoodNetwork
     def filter_to_distributor(variants)
       if params[:distributor_id].to_i > 0
         distributor = Enterprise.find params[:distributor_id]
-        variants.in_distributor(distributor)
+        scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+        variants.in_distributor(distributor).each { |v| scoper.scope(v) }
       else
         variants
       end

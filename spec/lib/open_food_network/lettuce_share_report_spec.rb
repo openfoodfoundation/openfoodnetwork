@@ -43,21 +43,22 @@ module OpenFoodNetwork
         let(:v3o) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0) }
 
         it "all items" do
-          report.stub(:variants) { [v, v2, v3] }
+          report.stub(:child_variants) { Spree::Variant.where(id: [v, v2, v3]) }
           report.send(:table).count.should eq 3
         end
 
         it "only available items" do
-          report.stub(:variants) { [v, v2, v3, v4] }
-          v.count_on_hand = 0
+          v.update_column(:count_on_hand, 0)
+          report.stub(:child_variants) { Spree::Variant.where(id: [v, v2, v3, v4]) }
           report.send(:table).count.should eq 3
         end
 
         it "only available items considering overrides" do
+          create(:exchange, incoming: false, receiver_id: hub.id, variants: [v, v2, v3])
           # create the overrides
           v2o
           v3o
-          report.stub(:variants) { [v, v2, v3] }
+          report.stub(:child_variants) { Spree::Variant.where(id: [v, v2, v3]) }
           report.stub(:params) { {distributor_id: hub.id} }
           rows = report.send(:table)
           rows.count.should eq 2
