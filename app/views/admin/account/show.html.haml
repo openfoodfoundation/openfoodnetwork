@@ -64,8 +64,8 @@
 -#         %th Bill
 -#       - enterprise.billable_periods.each do |billable_period|
 -#         %tr
--#           %td= billable_period.begins_at.localtime.strftime("%F %T")
--#           %td= billable_period.ends_at.localtime.strftime("%F %T")
+-#           %td= billable_period.begins_at.in_time_zone.strftime("%F %T")
+-#           %td= billable_period.ends_at.in_time_zone.strftime("%F %T")
 -#           %td= billable_period.sells
 -#           %td= billable_period.trial?
 -#           %td= billable_period.display_turnover

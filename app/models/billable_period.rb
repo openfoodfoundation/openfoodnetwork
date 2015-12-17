@@ -31,8 +31,8 @@ class BillablePeriod < ActiveRecord::Base
   end
 
   def adjustment_label
-    begins = begins_at.localtime.strftime("%d/%m/%y")
-    ends = ends_at.localtime.strftime("%d/%m/%y")
+    begins = begins_at.in_time_zone.strftime("%d/%m/%y")
+    ends = ends_at.in_time_zone.strftime("%d/%m/%y")
 
     "#{label} [#{begins} - #{ends}]"
   end

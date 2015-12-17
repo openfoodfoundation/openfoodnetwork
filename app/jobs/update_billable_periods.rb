@@ -118,7 +118,7 @@ class UpdateBillablePeriods
         job: "UpdateBillablePeriods",
         error: "end_date is in the future",
         data: {
-          end_date: end_date.localtime.strftime("%F %T"),
+          end_date: end_date.in_time_zone.strftime("%F %T"),
           now: Time.zone.now.strftime("%F %T")
         }
       })
