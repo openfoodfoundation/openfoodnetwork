@@ -23,6 +23,7 @@
 //= require_tree ../templates/admin
 //= require ./admin
 //= require ./accounts_and_billing_settings/accounts_and_billing_settings
+//= require ./business_model_configuration/business_model_configuration
 //= require ./customers/customers
 //= require ./dropdown/dropdown
 //= require ./enterprises/enterprises

@@ -32,10 +32,14 @@ class UpdateAccountInvoices
         invoice_order: account_invoice.order.as_json
       })
     else
-      billable_periods = account_invoice.billable_periods.order(:enterprise_id, :begins_at).reject{ |bp| bp.turnover == 0 }
+      billable_periods = account_invoice.billable_periods.order(:enterprise_id, :begins_at).reject{ |bp| bp.bill == 0 }
 
       if billable_periods.any?
-        address = billable_periods.first.enterprise.address
+        oldest_enterprise = billable_periods.first.enterprise
+        address = oldest_enterprise.address.dup
+        first, space, last = (oldest_enterprise.contact || "").partition(' ')
+        address.update_attributes(phone: oldest_enterprise.phone) if oldest_enterprise.phone.present?
+        address.update_attributes(firstname: first, lastname: last) if first.present? && last.present?
         account_invoice.order.update_attributes(bill_address: address, ship_address: address)
       end
 
@@ -81,7 +85,7 @@ class UpdateAccountInvoices
         job: "UpdateAccountInvoices",
         error: "end_date is in the future",
         data: {
-          end_date: end_date.localtime.strftime("%F %T"),
+          end_date: end_date.in_time_zone.strftime("%F %T"),
           now: Time.zone.now.strftime("%F %T")
         }
       })

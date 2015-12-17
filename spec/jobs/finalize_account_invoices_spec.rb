@@ -184,6 +184,11 @@ describe FinalizeAccountInvoices do
       Spree::Config.set({ accounts_distributor_id: accounts_distributor.id })
       Spree::Config.set({ default_accounts_payment_method_id: pm.id })
       Spree::Config.set({ default_accounts_shipping_method_id: sm.id })
+
+      # Make sure that bills are > 0
+      Spree::Config.set(:account_invoices_monthly_fixed, 5)
+      Spree::Config.set(:account_invoices_monthly_rate, 0.02)
+      Spree::Config.set(:account_invoices_monthly_cap, 50)
     end
 
     context "finalizing an invoice" do
@@ -200,9 +205,9 @@ describe FinalizeAccountInvoices do
         invoice.reload
 
         expect(invoice.completed_at).to_not be_nil
-        expect(invoice.total).to eq billable_period1.bill
+        expect(invoice.total).to eq billable_period1.bill.round(2)
         expect(invoice.payments.count).to eq 1
-        expect(invoice.payments.first.amount).to eq billable_period1.bill
+        expect(invoice.payments.first.amount).to eq billable_period1.bill.round(2)
         expect(invoice.state).to eq 'complete'
       end
     end

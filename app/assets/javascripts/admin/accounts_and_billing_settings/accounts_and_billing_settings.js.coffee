@@ -1,1 +1,1 @@
-angular.module("admin.accounts_and_billing_settings", [])
+angular.module("admin.accounts_and_billing_settings", ["admin.utils"])
