@@ -129,6 +129,11 @@ Openfoodnetwork::Application.routes.draw do
       get :managed, on: :collection
       get :accessible, on: :collection
     end
+
+    # api version 0 (leading up to v1 with spree 3)
+    namespace :v0 do
+      resources :enterprises
+    end
   end
 
   namespace :open_food_network do
