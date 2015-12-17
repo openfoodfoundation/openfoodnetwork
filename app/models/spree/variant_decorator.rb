@@ -29,12 +29,6 @@ Spree::Variant.class_eval do
 
   scope :not_deleted, where(deleted_at: nil)
   scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
-  scope :in_distributor, lambda { |distributor|
-    where(id: ExchangeVariant.select(:variant_id).
-              joins(:exchange).
-              where('exchanges.incoming = ? AND exchanges.receiver_id = ?', false, distributor)
-         )
-  }
   scope :in_order_cycle, lambda { |order_cycle|
     with_order_cycles_inner.
     merge(Exchange.outgoing).
@@ -46,6 +40,14 @@ Spree::Variant.class_eval do
     where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
   }
 
+  # Define sope as class method to allow chaining with other scopes filtering id.
+  # In Rails 3, merging two scopes on the same column will consider only the last scope.
+  def self.in_distributor(distributor)
+    where(id: ExchangeVariant.select(:variant_id).
+              joins(:exchange).
+              where('exchanges.incoming = ? AND exchanges.receiver_id = ?', false, distributor)
+         )
+  end
 
   def self.indexed
     Hash[
