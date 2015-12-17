@@ -7,8 +7,9 @@ module ApplicationHelper
       cms_page_content(:content, Cms::Page.find_by_full_path('/'))
     end
   end
-
-
+  def og_default_description
+      "#{t("brandstory_intro")}" + "#{t("brandstory_intro1")}" + "#{t("brandstory_intro2")}"
+  end
   def ng_form_for(name, *args, &block)
     options = args.extract_options!
 
