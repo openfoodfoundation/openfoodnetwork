@@ -151,8 +151,9 @@ Spree::Core::Engine.routes.draw do
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
                                :registrations => 'user_registrations',
-                               :passwords => 'user_passwords' },
-             :skip => [:unlocks, :omniauth_callbacks],
+                               :passwords => 'user_passwords',  
+                               :omniauth_callbacks => "user_omniauth_callbacks"},
+             :skip => [:unlocks],
              :path_names => { :sign_out => 'logout' },
              :path_prefix => :user
 end

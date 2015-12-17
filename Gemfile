@@ -4,9 +4,7 @@ ruby "2.1.5"
 gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'i18n', '~> 0.6.11'
-gem "spree_social", :git => "git://github.com/spree/spree_social.git"
-gem  "spree_core, ~> 3.1.0.beta"
-gem 'nokogiri'
+gem  'nokogiri'
 
 gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
@@ -25,7 +23,7 @@ gem 'comfortable_mexican_sofa'
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
 # When merged, revert to upstream gem
 gem 'simple_form', :github => 'RohanM/simple_form'
-
+gem 'omniauth-facebook'
 gem 'unicorn'
 gem 'angularjs-rails', '1.2.13'
 gem 'bugsnag'
