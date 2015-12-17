@@ -3,8 +3,10 @@
     %tr{ ng: { controller: "ColumnsCtrl" } }
       %th.producer{ ng: { show: 'columns.producer.visible' } } Producer
       %th.product{ ng: { show: 'columns.product.visible' } } Product
+      %th.sku{ ng: { show: 'columns.sku.visible' } } SKU
       %th.price{ ng: { show: 'columns.price.visible' } } Price
       %th.on_hand{ ng: { show: 'columns.on_hand.visible' } } On hand
+      %th.on_demand{ ng: { show: 'columns.on_demand.visible' } } On Demand?
   %tbody{bindonce: true, ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id | attrFilter:{producer_id:producerFilter} | filter:query' } }
     = render 'admin/variant_overrides/products_product'
     = render 'admin/variant_overrides/products_variants'

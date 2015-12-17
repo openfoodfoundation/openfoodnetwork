@@ -15,8 +15,10 @@ angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOve
             @variantOverrides[hub.id][variant.id] ||=
               variant_id: variant.id
               hub_id: hub.id
-              price: ''
-              count_on_hand: ''
+              sku: null
+              price: null
+              count_on_hand: null
+              on_demand: null
 
     updateIds: (updatedVos) ->
       for vo in updatedVos

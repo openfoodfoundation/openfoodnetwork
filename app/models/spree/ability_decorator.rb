@@ -112,6 +112,8 @@ class AbilityDecorator
     end
 
     can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
+      next false unless vo.hub.present? && vo.variant.andand.product.andand.supplier.present?
+
       hub_auth = OpenFoodNetwork::Permissions.new(user).
         variant_override_hubs.
         include? vo.hub

@@ -11,8 +11,10 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
   $scope.columns = Columns.setColumns
     producer:   { name: "Producer",   visible: true }
     product:    { name: "Product",    visible: true }
+    sku:        { name: "SKU",        visible: false }
     price:      { name: "Price",      visible: true }
     on_hand:    { name: "On Hand",    visible: true }
+    on_demand:  { name: "On Demand",  visible: false }
 
   $scope.resetSelectFilters = ->
     $scope.producerFilter = 0
