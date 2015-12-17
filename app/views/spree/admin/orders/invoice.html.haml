@@ -14,7 +14,7 @@
       %td{width: "10%" }
         &nbsp;
       %td{ :align => "right" }
-        %h4= @order.order_cycle.name
+        %h4= @order.order_cycle.andand.name
     %tr{ valign: "top" }
       %td{ :align => "left" }
         %strong= "From: #{@order.distributor.name}"
