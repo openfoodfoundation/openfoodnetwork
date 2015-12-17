@@ -12,10 +12,10 @@ rvm:
 # It would be better to use https://github.com/ArturT/knapsack.
 env:
   global:
-    TZ="Australia/Melbourne"
-    TIMEZONE="Australia/Melbourne"
+    - TZ="Australia/Melbourne"
+    - TIMEZONE="Australia/Melbourne"
   matrix:
-    - TEST_CASES="./spec/features/admin"
+    - TEST_CASES="./spec/features/admin" GITHUB_DEPLOY="true"
     - TEST_CASES="./spec/features/consumer ./spec/serializers ./spec/performance"
     - TEST_CASES="./spec/models"
     - TEST_CASES="./spec/controllers ./spec/views ./spec/jobs"
@@ -37,6 +37,20 @@ before_script:
 script:
   - '[ "$KARMA" = "true" ] && bundle exec rake karma:run || echo "Skipping karma run"'
   - "bundle exec rspec $TEST_CASES"
+
+after_success:
+  - >
+    if [ "$GITHUB_DEPLOY" = "true" -a "$TRAVIS_PULL_REQUEST" = "false" -a -n "$TRAVIS_BRANCH" -a -n "$GITHUB_API_SECRET" ]; then
+      description="`git show "$TRAVIS_BRANCH" -s --oneline --no-color`"
+      data="{
+        \"ref\":\"$TRAVIS_BRANCH\",
+        \"description\":\"$description\",
+        \"environment\":\"staging\",
+        \"required_contexts\":[]}"
+      curl -u "$GITHUB_API_SECRET" -d "$data" "https://api.github.com/repos/$TRAVIS_REPO_SLUG/deployments"
+    else
+      echo "Not deploying on this build."
+    fi
 
 notifications:
   email: false
