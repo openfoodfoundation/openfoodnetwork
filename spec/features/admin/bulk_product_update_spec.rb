@@ -308,6 +308,7 @@ feature %q{
     p = FactoryGirl.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
       price: 3.0, on_hand: 9, unit_value: 0.25, unit_description: '(bottle)' )
     v = p.variants.first
+    v.update_column(:sku, "VARIANTSKU")
 
     login_to_admin_section
 
@@ -315,12 +316,18 @@ feature %q{
     expect(page).to have_selector "a.view-variants"
     first("a.view-variants").trigger('click')
 
+    first("div#columns-dropdown", :text => "COLUMNS").click
+    first("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
+    first("div#columns-dropdown", :text => "COLUMNS").click
+
+    expect(page).to have_field "variant_sku", with: "VARIANTSKU"
     expect(page).to have_field "variant_price", with: "3.0"
     expect(page).to have_field "variant_unit_value_with_description", with: "250 (bottle)"
     expect(page).to have_field "variant_on_hand", with: "9"
     expect(page).to have_selector "span[name='on_hand']", "9"
 
     select "Volume (L)", from: "variant_unit_with_scale"
+    fill_in "variant_sku", with: "NEWSKU"
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
     fill_in "variant_unit_value_with_description", with: "2 (8x250 mL bottles)"
@@ -331,6 +338,7 @@ feature %q{
     expect(page.find("#status-message")).to have_content "Changes saved."
 
     v.reload
+    expect(v.sku).to eq "NEWSKU"
     expect(v.price).to eq 4.0
     expect(v.on_hand).to eq 10
     expect(v.unit_value).to eq 2 # 2L in L
