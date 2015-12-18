@@ -50,6 +50,15 @@ describe Admin::VariantOverridesController, type: :controller do
             expect(variant_override.sku).to eq "MySKU"
             expect(variant_override.on_demand).to eq false
           end
+
+          context "where params for a variant override are blank" do
+            let(:variant_override_params) { [ { id: variant_override.id, price: "", count_on_hand: "", sku: nil, on_demand: nil } ] }
+
+            it "destroys the variant override" do
+              spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+              expect(VariantOverride.find_by_id(variant_override.id)).to be_nil
+            end
+          end
         end
       end
     end

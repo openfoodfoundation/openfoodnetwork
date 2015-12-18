@@ -58,11 +58,11 @@ feature %q{
 
           page.should have_table_row [producer.name, product.name, '', '']
           page.should have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
-          page.should have_input "variant-overrides-#{variant.id}-count-on-hand", placeholder: '12'
+          page.should have_input "variant-overrides-#{variant.id}-count_on_hand", placeholder: '12'
 
           page.should have_table_row [producer_related.name, product_related.name, '', '']
           page.should have_input "variant-overrides-#{variant_related.id}-price", placeholder: '2.34'
-          page.should have_input "variant-overrides-#{variant_related.id}-count-on-hand", placeholder: '23'
+          page.should have_input "variant-overrides-#{variant_related.id}-count_on_hand", placeholder: '23'
 
           # filters the products to those the hub can override
           page.should_not have_content producer_unrelated.name
@@ -97,8 +97,15 @@ feature %q{
         end
 
         it "creates new overrides" do
+          first("div#columns-dropdown", :text => "COLUMNS").click
+          first("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
+          first("div#columns-dropdown div.menu div.menu_item", text: "On Demand").click
+          first("div#columns-dropdown", :text => "COLUMNS").click
+
+          fill_in "variant-overrides-#{variant.id}-sku", with: 'NEWSKU'
           fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
-          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
+          fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
+          check "variant-overrides-#{variant.id}-on_demand"
           page.should have_content "Changes to one override remain unsaved."
 
           expect do
@@ -109,15 +116,17 @@ feature %q{
           vo = VariantOverride.last
           vo.variant_id.should == variant.id
           vo.hub_id.should == hub.id
+          vo.sku.should == "NEWSKU"
           vo.price.should == 777.77
           vo.count_on_hand.should == 123
+          vo.on_demand.should == true
         end
 
         describe "creating and then updating the new override" do
           it "updates the same override instead of creating a duplicate" do
             # When I create a new override
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
-            fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
+            fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
             page.should have_content "Changes to one override remain unsaved."
 
             expect do
@@ -127,7 +136,7 @@ feature %q{
 
             # And I update its settings without reloading the page
             fill_in "variant-overrides-#{variant.id}-price", with: '111.11'
-            fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '111'
+            fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '111'
             page.should have_content "Changes to one override remain unsaved."
 
             # Then I shouldn't see a new override
@@ -147,7 +156,7 @@ feature %q{
 
         it "displays an error when unauthorised to access the page" do
           fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
-          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '123'
+          fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
           page.should have_content "Changes to one override remain unsaved."
 
           user.enterprises.clear
@@ -160,7 +169,7 @@ feature %q{
 
         it "displays an error when unauthorised to update a particular override" do
           fill_in "variant-overrides-#{variant_related.id}-price", with: '777.77'
-          fill_in "variant-overrides-#{variant_related.id}-count-on-hand", with: '123'
+          fill_in "variant-overrides-#{variant_related.id}-count_on_hand", with: '123'
           page.should have_content "Changes to one override remain unsaved."
 
           er2.destroy
@@ -183,12 +192,12 @@ feature %q{
 
         it "product values are affected by overrides" do
           page.should have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
-          page.should have_input "variant-overrides-#{variant.id}-count-on-hand", with: '11111', placeholder: '12'
+          page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '11111', placeholder: '12'
         end
 
         it "updates existing overrides" do
           fill_in "variant-overrides-#{variant.id}-price", with: '22.22'
-          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: '8888'
+          fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '8888'
           page.should have_content "Changes to one override remain unsaved."
 
           expect do
@@ -205,7 +214,7 @@ feature %q{
 
         it "deletes overrides when values are cleared" do
           fill_in "variant-overrides-#{variant.id}-price", with: ''
-          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: ''
+          fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ''
           page.should have_content "Changes to one override remain unsaved."
 
           expect do

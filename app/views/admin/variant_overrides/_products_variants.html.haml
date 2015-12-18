@@ -8,6 +8,6 @@
   %td.price{ ng: { show: 'columns.price.visible' } }
     %input{name: 'variant-overrides-{{ variant.id }}-price', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].price'}, placeholder: '{{ variant.price }}', 'ofn-track-variant-override' => 'price'}
   %td.on_hand{ ng: { show: 'columns.on_hand.visible' } }
-    %input{name: 'variant-overrides-{{ variant.id }}-count-on-hand', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}', 'ofn-track-variant-override' => 'price'}
+    %input{name: 'variant-overrides-{{ variant.id }}-count_on_hand', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}', 'ofn-track-variant-override' => 'price'}
   %td.on_demand{ ng: { show: 'columns.on_demand.visible' } }
     %input.field{ :type => 'checkbox', name: 'variant-overrides-{{ variant.id }}-on_demand', ng: { model: 'variantOverrides[hub.id][variant.id].on_demand' }, 'ofn-track-variant-override' => 'on_demand' }
