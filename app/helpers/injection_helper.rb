@@ -51,6 +51,10 @@ module InjectionHelper
     render partial: "json/injection_ams", locals: {name: 'enterpriseAttributes', json: "#{@enterprise_attributes.to_json}"}
   end
 
+  def inject_orders_for_user
+    inject_json_ams "orders", spree_current_user.orders, Api::OrderSerializer
+  end
+
   def inject_json(name, partial, opts = {})
     render partial: "json/injection", locals: {name: name, partial: partial}.merge(opts)
   end
