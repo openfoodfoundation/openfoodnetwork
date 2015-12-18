@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").directive "saveBar", (StatusMessage) ->
+angular.module("admin.utils").directive "saveBar", (StatusMessage) ->
   restrict: "E"
   scope:
     save: "&"
