@@ -73,7 +73,7 @@
 
     .six.columns.omega.step.text-center
       .form-buttons{"data-hook" => "buttons"}
-        =link_to_with_icon "icon-ok-sign", t(:finalise_user_invoice ),
+        =link_to_with_icon "icon-ok-sign", t(:finalise_user_invoices ),
           main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "finalize_account_invoices" }),
           class: "button fullwidth"
 

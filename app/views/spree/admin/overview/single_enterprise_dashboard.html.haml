@@ -31,7 +31,7 @@
   .alert-box
     = t "spree_admin_single_enterprise_alert_mail_confirmation"
     %strong= "#{@enterprise.name}."
-    t(:spree_admin_single_enterprise_alert_mail_sent)
+    = t(:spree_admin_single_enterprise_alert_mail_sent)
     %strong= "#{@enterprise.email}."
     = link_to(t('resend'), main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } ), method: :post)
     %a.close{ href: "#" } ×

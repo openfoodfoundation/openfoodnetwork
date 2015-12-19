@@ -1,10 +1,14 @@
 %table.index.bulk{ng: {show: 'hub'}}
   %thead
     %tr
-      %th t(:producer)
-      %th t(:product)
-      %th t(:price)
-      %th t(:on_hand)
+      %th
+        = t(:producer)
+      %th
+        = t(:product)
+      %th
+        = t(:price)
+      %th
+        = t(:on_hand)
   %tbody{ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id'}}
     = render 'admin/variant_overrides/products_product'
     = render 'admin/variant_overrides/products_variants'

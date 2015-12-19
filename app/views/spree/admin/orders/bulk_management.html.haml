@@ -164,7 +164,7 @@
           %td.variant{ 'ng-show' => 'columns.variant.visible' }
             %a{ :href => '#', 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.full_name }}
           %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
-            %input.show-dirty{ :type => 'number', :name => 'quantity', :id => 'quantity', ng: { model:  "line_item.quantity", change: "updateOnQuantity(line_item)", required: "true", class: '{"update-error": line_item.errors.quantity}' }, min: 1, t(:step): 1 }
+            %input.show-dirty{ :type => 'number', :name => 'quantity', :id => 'quantity', ng: { model:  "line_item.quantity", change: "updateOnQuantity(line_item)", required: "true", class: '{"update-error": line_item.errors.quantity}' }, min: 1, step: 1 }
             %span.error{ ng: { bind: 'line_item.errors.quantity' } }
           %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
           %td.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
