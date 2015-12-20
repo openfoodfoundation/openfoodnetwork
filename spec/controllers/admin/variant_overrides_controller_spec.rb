@@ -52,7 +52,7 @@ describe Admin::VariantOverridesController, type: :controller do
           end
 
           context "where params for a variant override are blank" do
-            let(:variant_override_params) { [ { id: variant_override.id, price: "", count_on_hand: "", sku: nil, on_demand: nil } ] }
+            let(:variant_override_params) { [ { id: variant_override.id, price: "", count_on_hand: "", default_stock: nil, resettable: nil, sku: nil, on_demand: nil } ] }
 
             it "destroys the variant override" do
               spree_put :bulk_update, format: format, variant_overrides: variant_override_params
