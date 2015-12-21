@@ -52,7 +52,8 @@ module InjectionHelper
   end
 
   def inject_orders_for_user
-    inject_json_ams "orders", spree_current_user.orders, Api::OrderSerializer
+    # Convert ActiveRecord::Relation to array for serialization
+    inject_json_ams "orders", spree_current_user.orders.where(state: :complete).to_a, Api::OrderSerializer
   end
 
   def inject_json(name, partial, opts = {})

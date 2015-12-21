@@ -14,9 +14,10 @@
       .row{bindonce: true}
         .small-12.columns
           .active_table
-            %distributor.active_table_node.row.animate-repeat{id: "{{distributor}}",
-            "ng-repeat" => "distributor in Orders.distributors",
+            %distributor.active_table_node.row.animate-repeat{"ng-repeat" => "(distributor_id, orders) in Orders.orders_by_distributor",
             "ng-controller" => "DistributorNodeCtrl",
-            "ng-class" => "{'closed' : !open(), 'open' : open()}"}
+            "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
+            id: "{{distributor_id}}"}
               .small-12.columns
                 = render partial: "spree/users/fat"
+                -# TODO: Skinny partial
