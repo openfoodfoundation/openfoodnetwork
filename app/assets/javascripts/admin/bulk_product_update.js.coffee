@@ -4,7 +4,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.StatusMessage = StatusMessage
 
     $scope.columns = Columns.setColumns
-      producer:             {name: t("label_producers"),                visible: true}
+      producer:             {name: t("products_producer"),              visible: true}
       sku:                  {name: t("products_sku"),                   visible: false}
       name:                 {name: t("products_name"),                  visible: true}
       unit:                 {name: t("products_unit"),                  visible: true}
