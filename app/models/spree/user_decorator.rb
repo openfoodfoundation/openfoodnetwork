@@ -49,6 +49,12 @@ Spree.user_class.class_eval do
     owned_enterprises(:reload).size < enterprise_limit
   end
 
+  # Returns Enterprise IDs for distributors that the user has shopped at
+  def enterprises_ordered_from
+    self.orders.where(state: :complete).map(&:distributor_id).uniq
+  end
+
+
   private
 
   def limit_owned_enterprises

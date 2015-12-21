@@ -56,6 +56,13 @@ module InjectionHelper
     inject_json_ams "orders", spree_current_user.orders.where(state: :complete).to_a, Api::OrderSerializer
   end
 
+  def inject_orders_by_distributor
+    #render partial: "json/injection_ams", locals: {name:"orders_by_distributor", json: spree_current_user.orders_by_distributor}
+    inject_json_ams "orders_by_distributor",
+    Enterprise.includes(:distributed_orders).where(id: spree_current_user.enterprises_ordered_from).to_a,
+    Api::OrdersByDistributorSerializer
+  end
+
   def inject_json(name, partial, opts = {})
     render partial: "json/injection", locals: {name: name, partial: partial}.merge(opts)
   end
