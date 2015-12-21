@@ -51,16 +51,11 @@ module InjectionHelper
     render partial: "json/injection_ams", locals: {name: 'enterpriseAttributes', json: "#{@enterprise_attributes.to_json}"}
   end
 
-  def inject_orders_for_user
-    # Convert ActiveRecord::Relation to array for serialization
-    inject_json_ams "orders", spree_current_user.orders.where(state: :complete).to_a, Api::OrderSerializer
-  end
-
   def inject_orders_by_distributor
-    #render partial: "json/injection_ams", locals: {name:"orders_by_distributor", json: spree_current_user.orders_by_distributor}
-    inject_json_ams "orders_by_distributor",
-    Enterprise.includes(:distributed_orders).where(id: spree_current_user.enterprises_ordered_from).to_a,
-    Api::OrdersByDistributorSerializer
+    # Convert ActiveRecord::Relation to array for serialization
+    data_array = Enterprise.includes(:distributed_orders).where(enterprises: {id: spree_current_user.enterprises_ordered_from }, spree_orders: {state: :complete, user_id: spree_current_user.id}).to_a
+    data_array.sort!{|a,b| b.distributed_orders.length <=> a.distributed_orders.length} # Better to do in SQL/Angular?
+    inject_json_ams "orders_by_distributor", data_array, Api::OrdersByDistributorSerializer
   end
 
   def inject_json(name, partial, opts = {})

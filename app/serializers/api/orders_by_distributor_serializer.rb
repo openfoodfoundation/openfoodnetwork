@@ -1,5 +1,5 @@
 class Api::OrdersByDistributorSerializer < ActiveModel::Serializer
-  attributes :name, :balance, :distributed_orders
+  attributes :name, :id, :balance, :distributed_orders
   has_many :distributed_orders, serializer: Api::OrderSerializer
 
   def balance

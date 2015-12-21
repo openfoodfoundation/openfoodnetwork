@@ -1,20 +1,17 @@
-.row.active_table_row{"ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open()}"}
-  .container{"bo-text" => "orders[0].distributor.name"}
-  %span {{orders[0].total_money.currency_symbol}}&nbsp{{Orders.distributor_names_by_id[distributor_id].balance}}
+.row.active_table_row{"ng-if" => "open()","ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
   .columns.small-12.medium-7.large-7.fat
     %table
-      %th
-        %tr
-          %td Transaction
-          %td Date
-          %td Payment Status
-          %td Shipping Status
-          %td Value
-          %td Balance
-      %tr{"ng-repeat" => "order in orders"}
-        %td {{order.id}}
-        %td {{order.completed_at}}
-        %td {{order.payment_state}}
-        %td {{order.shipment_state}}
+      %tr
+        %th Transaction
+        %th Date
+        %th Payment Status
+        %th Shipping Status
+        %th Value
+        %th Balance
+      %tr{"ng-repeat" => "order in distributor.distributed_orders"}
+        %td{"bo-text" => "order.id"}
+        %td{"bo-text" => "order.completed_at"}
+        %td{"bo-text" => "order.payment_state"}
+        %td{"bo-text" => "order.shipment_state"}
         %td {{order.total_money.currency_symbol}}&nbsp{{order.total_money.amount}}
-        %td {{order.balance_money.currency_symbol}}&nbsp{{order.balance_money.amount}}
+        %td{"ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}"} {{order.balance_money.currency_symbol}}&nbsp{{order.balance_money.amount}}

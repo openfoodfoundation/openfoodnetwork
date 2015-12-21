@@ -1,14 +1,10 @@
--# Add extra highlighting etc (credit/debit?) here
 .row.active_table_row{"ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open()}"}
   .columns.small-12.medium-4.large-4.skinny-head
     %span.margin-top
-      %strong{"bo-text" => "distributor"}
+      %strong{"bo-text" => "distributor.name"}
 
-  -#
-    .columns.small-6.medium-3.large-3
-      %span.margin-top{"bo-text" => "producer.address.city"}
-    .columns.small-4.medium-3.large-4
-      %span.margin-top{"bo-bind" => "producer.address.state_name | uppercase"}
-    .columns.small-2.medium-2.large-1.text-right
-      %span.margin-top
-        %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
+  .columns.small-6.medium-3.large-3
+    %span.margin-top{"bo-text" => "'Balance: ' + Orders.currency_symbol + ' ' + distributor.balance", "ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}"}
+  .columns.small-2.medium-2.large-1.text-right
+    %span.margin-top
+      %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}

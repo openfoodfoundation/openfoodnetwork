@@ -1,4 +1,3 @@
-= inject_orders_for_user
 = inject_orders_by_distributor
 
 .row.pad-top
@@ -10,15 +9,15 @@
         %dd
           = @user.email
           (#{link_to t(:edit), spree.edit_account_path})
-          -# Add back ng-cloak below
-    .orders{"ng-controller" => "OrdersCtrl"}
+    %h3 My Orders
+    .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
       .row{bindonce: true}
         .small-12.columns
           .active_table
-            %distributor.active_table_node.row.animate-repeat{"ng-repeat" => "(distributor_id, orders) in Orders.orders_by_distributor",
+            %distributor.active_table_node.row.animate-repeat{"ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
             "ng-controller" => "DistributorNodeCtrl",
             "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
-            id: "{{distributor_id}}"}
+            id: "{{distributor.id}}"}
               .small-12.columns
+                = render partial: "spree/users/skinny"
                 = render partial: "spree/users/fat"
-                -# TODO: Skinny partial
