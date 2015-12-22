@@ -1,23 +1,24 @@
-= inject_orders_by_distributor
+.darkswarm
+  = inject_orders_by_distributor
 
-.row.pad-top
-  .small-12.columns.pad-top
-    %h1= accurate_title
-    .account-summary{"data-hook" => "account_summary"}
-      %dl#user-info
-        %dt= t(:email)
-        %dd
-          = @user.email
-          (#{link_to t(:edit), spree.edit_account_path})
-    %h3 My Orders
-    .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
-      .row{bindonce: true}
-        .small-12.columns
-          .active_table
-            %distributor.active_table_node.row.animate-repeat{"ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
-            "ng-controller" => "DistributorNodeCtrl",
-            "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
-            id: "{{distributor.id}}"}
-              .small-12.columns
-                = render partial: "spree/users/skinny"
-                = render partial: "spree/users/fat"
+  .row.pad-top
+    .small-12.columns.pad-top
+      %h1= accurate_title
+      .account-summary{"data-hook" => "account_summary"}
+        %dl#user-info
+          %dt= t(:email)
+          %dd
+            = @user.email
+            (#{link_to t(:edit), spree.edit_account_path})
+      %h3 My Orders
+      .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
+        .row{bindonce: true}
+          .small-12.columns
+            .active_table
+              %distributor.active_table_node.row.animate-repeat{"ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
+              "ng-controller" => "DistributorNodeCtrl",
+              "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
+              id: "{{distributor.id}}"}
+                .small-12.columns
+                  = render partial: "spree/users/skinny"
+                  = render partial: "spree/users/fat"
