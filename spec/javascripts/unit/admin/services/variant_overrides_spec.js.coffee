@@ -1,9 +1,9 @@
 describe "VariantOverrides service", ->
   VariantOverrides = $httpBackend = null
   variantOverrides = [
-    {id: 1, hub_id: 10, variant_id: 100, price: 1, count_on_hand: 1, default_stock: '', resettable: false}
-    {id: 2, hub_id: 10, variant_id: 200, price: 2, count_on_hand: 2, default_stock: '', resettable: false}
-    {id: 3, hub_id: 20, variant_id: 300, price: 3, count_on_hand: 3, default_stock: '', resettable: false}
+    {id: 1, hub_id: 10, variant_id: 100, sku: "V100", price: 1, count_on_hand: 1, on_demand: null, default_stock: null, resettable: false }
+    {id: 2, hub_id: 10, variant_id: 200, sku: "V200", price: 2, count_on_hand: 2, on_demand: null, default_stock: null, resettable: false}
+    {id: 3, hub_id: 20, variant_id: 300, sku: "V300", price: 3, count_on_hand: 3, on_demand: null, default_stock: null, resettable: false}
   ]
 
   beforeEach ->
@@ -19,10 +19,10 @@ describe "VariantOverrides service", ->
   it "indexes variant overrides by hub_id -> variant_id", ->
     expect(VariantOverrides.variantOverrides).toEqual
       10:
-        100: {id: 1, hub_id: 10, variant_id: 100, price: 1, count_on_hand: 1, default_stock: '', resettable: false}
-        200: {id: 2, hub_id: 10, variant_id: 200, price: 2, count_on_hand: 2, default_stock: '', resettable: false}
+        100: {id: 1, hub_id: 10, variant_id: 100, sku: "V100", price: 1, count_on_hand: 1, on_demand: null, default_stock: null, resettable: false }
+        200: {id: 2, hub_id: 10, variant_id: 200, sku: "V200", price: 2, count_on_hand: 2, on_demand: null, default_stock: null, resettable: false }
       20:
-        300: {id: 3, hub_id: 20, variant_id: 300, price: 3, count_on_hand: 3, default_stock: '', resettable: false}
+        300: {id: 3, hub_id: 20, variant_id: 300, sku: "V300", price: 3, count_on_hand: 3, on_demand: null, default_stock: null, resettable: false }
 
   it "ensures blank data available for some products", ->
     hubs = [{id: 10}, {id: 20}, {id: 30}]
@@ -33,25 +33,24 @@ describe "VariantOverrides service", ->
       }
     ]
     VariantOverrides.ensureDataFor hubs, products
-    expect(VariantOverrides.variantOverrides).toEqual
-      10:
-        100: {id: 1, hub_id: 10, variant_id: 100, price: 1, count_on_hand: 1, default_stock: '', resettable: false}
-        200: {id: 2, hub_id: 10, variant_id: 200, price: 2, count_on_hand: 2, default_stock: '', resettable: false}
-        300: {       hub_id: 10, variant_id: 300, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        400: {       hub_id: 10, variant_id: 400, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        500: {       hub_id: 10, variant_id: 500, price: '', count_on_hand: '', default_stock: '', resettable: false}
-      20:
-        100: {       hub_id: 20, variant_id: 100, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        200: {       hub_id: 20, variant_id: 200, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        300: {id: 3, hub_id: 20, variant_id: 300, price: 3, count_on_hand: 3, default_stock: '', resettable: false}
-        400: {       hub_id: 20, variant_id: 400, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        500: {       hub_id: 20, variant_id: 500, price: '', count_on_hand: '', default_stock: '', resettable: false}
-      30:
-        100: {       hub_id: 30, variant_id: 100, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        200: {       hub_id: 30, variant_id: 200, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        300: {       hub_id: 30, variant_id: 300, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        400: {       hub_id: 30, variant_id: 400, price: '', count_on_hand: '', default_stock: '', resettable: false}
-        500: {       hub_id: 30, variant_id: 500, price: '', count_on_hand: '', default_stock: '', resettable: false}
+    expect(VariantOverrides.variantOverrides[10]).toEqual
+      100: { id: 1, hub_id: 10, variant_id: 100, sku: "V100", price: 1,    count_on_hand: 1,    on_demand: null, default_stock: null, resettable: false }
+      200: { id: 2, hub_id: 10, variant_id: 200, sku: "V200", price: 2,    count_on_hand: 2,    on_demand: null, default_stock: null, resettable: false }
+      300: {        hub_id: 10, variant_id: 300, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      400: {        hub_id: 10, variant_id: 400, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      500: {        hub_id: 10, variant_id: 500, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+    expect(VariantOverrides.variantOverrides[20]).toEqual
+      100: {        hub_id: 20, variant_id: 100, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      200: {        hub_id: 20, variant_id: 200, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      300: { id: 3, hub_id: 20, variant_id: 300, sku: "V300", price: 3,    count_on_hand: 3,    on_demand: null, default_stock: null, resettable: false }
+      400: {        hub_id: 20, variant_id: 400, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      500: {        hub_id: 20, variant_id: 500, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+    expect(VariantOverrides.variantOverrides[30]).toEqual
+      100: {        hub_id: 30, variant_id: 100, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      200: {        hub_id: 30, variant_id: 200, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      300: {        hub_id: 30, variant_id: 300, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      400: {        hub_id: 30, variant_id: 400, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
+      500: {        hub_id: 30, variant_id: 500, sku: null,   price: null, count_on_hand: null, on_demand: null, default_stock: null, resettable: false }
 
   it "updates the IDs of variant overrides", ->
     VariantOverrides.variantOverrides[2] = {}

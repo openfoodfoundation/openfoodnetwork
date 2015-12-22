@@ -12,15 +12,24 @@ angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOve
         @variantOverrides[hub.id] ||= {}
         for product in products
           for variant in product.variants
-            @variantOverrides[hub.id][variant.id] ||=
-              variant_id: variant.id
-              hub_id: hub.id
-              sku: null
-              price: null
-              count_on_hand: null
-              on_demand: null
-              default_stock: null
-              resettable: false
+            @inherit(hub.id, variant.id) unless @variantOverrides[hub.id][variant.id]
+
+    inherit: (hub_id, variant_id) ->
+      # This method is called from the trackInheritance directive, to reinstate inheritance
+      @variantOverrides[hub_id][variant_id] ||= {}
+      angular.extend @variantOverrides[hub_id][variant_id], @newFor hub_id, variant_id
+
+    newFor: (hub_id, variant_id) ->
+      # These properties need to match those checked in VariantOverrideSet.deletable?
+      hub_id: hub_id
+      variant_id: variant_id
+      sku: null
+      price: null
+      count_on_hand: null
+      on_demand: null
+      default_stock: null
+      resettable: false
+
 
     updateIds: (updatedVos) ->
       for vo in updatedVos

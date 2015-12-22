@@ -21,11 +21,11 @@ describe "VariantOverridesCtrl", ->
       null
     scope = {}
 
-    inject ($controller, Indexer, _VariantOverrides_, _DirtyVariantOverrides_, _StatusMessage_) ->
+    inject ($controller, _VariantOverrides_, _DirtyVariantOverrides_, _StatusMessage_) ->
       VariantOverrides = _VariantOverrides_
       DirtyVariantOverrides = _DirtyVariantOverrides_
       StatusMessage = _StatusMessage_
-      ctrl = $controller 'AdminVariantOverridesCtrl', {$scope: scope, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: _VariantOverrides_, DirtyVariantOverrides: _DirtyVariantOverrides_, StatusMessage: _StatusMessage_}
+      ctrl = $controller 'AdminVariantOverridesCtrl', { $scope: scope, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: VariantOverrides, DirtyVariantOverrides: DirtyVariantOverrides, StatusMessage: StatusMessage}
 
   it "initialises the hub list and the chosen hub", ->
     expect(scope.hubs).toEqual { 1: {id: 1, name: 'Hub'} }

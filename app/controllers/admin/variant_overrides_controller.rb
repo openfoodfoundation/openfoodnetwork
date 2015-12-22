@@ -54,6 +54,7 @@ module Admin
 
       @hub_permissions = OpenFoodNetwork::Permissions.new(spree_current_user).
         variant_override_enterprises_per_hub
+
       @variant_overrides = VariantOverride.for_hubs(@hubs)
     end
 

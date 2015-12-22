@@ -3,6 +3,8 @@ class VariantOverrideSet < ModelSet
     super(VariantOverride, collection, attributes, nil, proc { |attrs| deletable?(attrs) } )
   end
 
+  private
+
   def deletable?(attrs)
     attrs['price'].blank? &&
     attrs['count_on_hand'].blank? &&
