@@ -10,8 +10,6 @@ describe Api::OrderSerializer do
   end
 
   it "converts the total to currency and amount" do
-    puts order.inspect
-    puts serializer.serializable_hash.inspect
     expect(serializer.serializable_hash[:total_money].keys).to include :currency_symbol
     # Not sure what currency symbol is in test env
     expect(serializer.serializable_hash[:total_money].keys).to include :amount
