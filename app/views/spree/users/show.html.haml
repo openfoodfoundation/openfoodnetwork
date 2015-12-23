@@ -10,7 +10,7 @@
           %dd
             = @user.email
             (#{link_to t(:edit), spree.edit_account_path})
-      %h3 My Orders
+      %h3= t(:my_orders)
       .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
         .row{bindonce: true}
           .small-12.columns

@@ -4,7 +4,7 @@
       %strong{"bo-text" => "distributor.name"}
 
   .columns.small-6.medium-3.large-3
-    %span.margin-top{"bo-text" => "'Balance: ' + Orders.currency_symbol + ' ' + distributor.balance", "ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}"}
+    %span.margin-top{"bo-text" => "('balance' | t) + ': ' + Orders.currency_symbol + ' ' + distributor.balance", "ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}"}
   .columns.small-2.medium-2.large-1.text-right
     %span.margin-top
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
