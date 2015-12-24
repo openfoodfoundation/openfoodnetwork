@@ -209,7 +209,7 @@ fr:
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_summary: Résumé du paiement
-  email_order_summary_method: "Payé via:"
+  email_payment_method: "Payé via:"
   email_shipping_delivery_details: Détails de livraison
   email_shipping_delivery_time: "Livré le:"
   email_shipping_delivery_address: "Adresse de livraison:"

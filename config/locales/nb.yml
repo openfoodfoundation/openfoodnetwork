@@ -209,7 +209,7 @@ nb:
   email_payment_paid: BETALT
   email_payment_not_paid: IKKE BETALT
   email_payment_summary: Betalingssammendrag
-  email_order_summary_method: "Betaler via:"
+  email_payment_method: "Betaler via:"
   email_shipping_delivery_details: Leveringsdetaljer
   email_shipping_delivery_time: "Levering på:"
   email_shipping_delivery_address: "Leveringsadresse:"
