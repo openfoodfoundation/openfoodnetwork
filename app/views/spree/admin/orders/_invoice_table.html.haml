@@ -2,22 +2,22 @@
   %thead
     %tr
       %th{:align => "left"}
-        %h4 Item
+        %h4= t(:invoice_column_item)
       %th{:align => "right", :width => "15%"}
-        %h4 Qty
+        %h4= t(:invoice_column_qty)
       %th{:align => "right", :width => "15%"}
-        %h4 GST
+        %h4= @order.total_tax > 0 ? t(:invoice_column_tax) : ""
       %th{:align => "right", :width => "15%"}
-        %h4 Price
+        %h4= t(:invoice_column_price)
   %tbody
-    - @order.line_items.each do |item|
+    - @order.line_items.sort_by{ |li| li.product.name }.each do |item|
       %tr
         %td
           = render 'spree/shared/line_item_name', line_item: item
         %td{:align => "right"}
           = item.quantity
         %td{:align => "right"}
-          = item.display_included_tax
+          = item.included_tax > 0 ? item.display_included_tax : ""
         %td{:align => "right"}
           = item.display_amount_with_adjustments
     - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
@@ -27,7 +27,7 @@
         %td{:align => "right"}
           1
         %td{:align => "right"}
-          = adjustment.display_included_tax
+          = adjustment.included_tax > 0 ? adjustment.display_included_tax : ""
         %td{:align => "right"}
           = adjustment.display_amount
   %tfoot

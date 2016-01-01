@@ -7,34 +7,47 @@
   %h4= t(:no_invoices_to_display)
 
 - @invoices.order('year DESC, month DESC').each do |invoice|
-  - order = invoice.order
   .row.invoice_title
-    .eight.columns.alpha
-      %h4= "#{t(:abbr_month_names, :scope => :date)[invoice.month]} #{invoice.year}#{invoice.order.completed? ? "" : "*"}"
-    .eight.columns.omega.text-right
-      %h4.balance= invoice.order.display_total
+    .two.columns.alpha
+      %h4= invoice_description_for(invoice)
+    .two.columns.text-right
+      %h5
+        - if invoice.order.andand.complete?
+          %a{ href: print_admin_order_url(invoice.order), :target => "_blank"}
+            %i.icon-print
+            = t(:print)
+        - else
+          &nbsp;
+    .ten.columns
+      &nbsp;
+    .two.columns.omega.text-right
+      %h4.balance= invoice_total_for(invoice)
   %table.invoice_summary
-    %col{ width: '20%' }
-    %col{ width: '60%' }
-    %col{ width: '20%' }
+    %col{ width: '25%' }
+    %col{ width: '62.5%' }
+    %col{ width: '12.5%' }
     %thead
       %th Date
       %th= t(:description)
       %th= t(:charge)
-    - invoice.billable_periods.select{ |bp| bp.bill > 0}.each do |billable_period|
-      %tr
-        %td.text-center= "#{billable_period.begins_at.strftime("%d/%m/%Y")}"
-        %td= billable_period.label
-        %td.text-right= billable_period.display_bill
-    - order.adjustments.where('source_type <> (?)', "BillablePeriod").each do |adjustment|
-      %tr
-        %td.text-center &nbsp;
-        %td= adjustment.label
-        %td.text-right= adjustment.display_amount
+    - if order = invoice.order
+      - invoice.billable_periods.select{ |bp| bp.adjustment.andand.amount.andand > 0}.each do |billable_period|
+        %tr
+          %td.text-center= "#{billable_period.begins_at.strftime("%d/%m/%Y")}"
+          %td= billable_period.label
+          -# Using amount from the actual adjustment on the order here so that we avoid recalculating the bill
+          -# at a future date with different settings to those used at the time the invoice was finalized
+          %td.text-right= billable_period.adjustment.display_amount
+      - order.adjustments.where('source_type <> (?)', "BillablePeriod").reject{ |a| a.amount == 0 }.each do |adjustment|
+        %tr
+          %td.text-center &nbsp;
+          %td= adjustment.label
+          %td.text-right= adjustment.display_amount
     %tr.total
       %td.text-center &nbsp;
       %td= t(:total).upcase
-      %td.text-right= order.display_total
+      %td.text-right= invoice_total_for(invoice)
+
 
 -#   - if @enterprises.empty?
 -#     %h4 No enterprises to display
@@ -51,8 +64,8 @@
 -#         %th Bill
 -#       - enterprise.billable_periods.each do |billable_period|
 -#         %tr
--#           %td= billable_period.begins_at.localtime.strftime("%F %T")
--#           %td= billable_period.ends_at.localtime.strftime("%F %T")
+-#           %td= billable_period.begins_at.in_time_zone.strftime("%F %T")
+-#           %td= billable_period.ends_at.in_time_zone.strftime("%F %T")
 -#           %td= billable_period.sells
 -#           %td= billable_period.trial?
 -#           %td= billable_period.display_turnover

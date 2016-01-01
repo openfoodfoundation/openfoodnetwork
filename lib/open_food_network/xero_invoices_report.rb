@@ -1,13 +1,13 @@
 module OpenFoodNetwork
   class XeroInvoicesReport
-    def initialize(orders, opts={})
-      @orders = orders
+    def initialize(user, opts={})
+      @user = user
 
       @opts = opts.
               reject { |k, v| v.blank? }.
               reverse_merge({report_type: 'summary',
-                             invoice_date: Date.today,
-                             due_date: 2.weeks.from_now.to_date,
+                             invoice_date: Time.zone.today,
+                             due_date: Time.zone.today + 1.month,
                              account_code: 'food sales'})
     end
 
@@ -15,10 +15,19 @@ module OpenFoodNetwork
       %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
     end
 
+    def search
+      permissions = OpenFoodNetwork::Permissions.new(@user)
+      permissions.editable_orders.complete.not_state(:canceled).search(@opts[:q])
+    end
+
+    def orders
+      search.result.reorder('id DESC')
+    end
+
     def table
       rows = []
 
-      @orders.each_with_index do |order, i|
+      orders.each_with_index do |order, i|
         invoice_number = invoice_number_for(order, i)
         rows += detail_rows_for_order(order, invoice_number, @opts) if detail?
         rows += summary_rows_for_order(order, invoice_number, @opts)
@@ -48,7 +57,7 @@ module OpenFoodNetwork
     def line_item_detail_row(line_item, invoice_number, opts)
       row(line_item.order,
           line_item.product.sku,
-          line_item.variant.product_and_variant_name,
+          line_item.product_and_full_name,
           line_item.quantity.to_s,
           line_item.price.to_s,
           invoice_number,

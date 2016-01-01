@@ -15,7 +15,7 @@
             %table{:bgcolor => "#f2f2f2"}
               %tr
                 %td
-                  %img{:src => "#{ asset_path 'logo-color.png' }", :width => "144", :height => "50"}/
+                  %img{src: ContentConfig.footer_logo.url, width: "144", height: "50"}/
                 %td{:align => "right"}
                   %h6.collapse
                     = Spree::Config[:site_name]

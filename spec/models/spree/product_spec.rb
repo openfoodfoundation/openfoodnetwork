@@ -35,7 +35,7 @@ module Spree
       it "defaults available_on to now" do
         Timecop.freeze
         product = Product.new
-        product.available_on.should == Time.now
+        product.available_on.should == Time.zone.now
       end
 
       describe "tax category" do

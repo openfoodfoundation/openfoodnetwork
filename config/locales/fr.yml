@@ -187,7 +187,7 @@ fr:
   email_confirmation_profile_created: "Le profil pour %{name} a été créé avec succès! Pour activer votre Profil nous devons vérifier cette adresse email."
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
-  email_confirmation_help_html: "Après avoir confirmé votre adresse email vous pouvez accéder au compte d'administration de cette entreprise. Voir le %{link} pour en savoir plus sur les fonctionnalités de %{sitename} et commencer à utiliser votre profil ou votre boutique en ligne."
+  email_confirmation_help_html: "Après confirmation de votre email, vous pourrez accéder au compte d'administration de cette entreprise. Voir %{link} pour en savoir plus à propos de %{sitename} et commencer à utiliser votre profil et/ou boutique en ligne."
   email_confirmation_userguide: "Guide Utilisateur"
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
@@ -209,7 +209,7 @@ fr:
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_summary: Résumé du paiement
-  email_order_summary_method: "Payé via:"
+  email_payment_method: "Payé via:"
   email_shipping_delivery_details: Détails de livraison
   email_shipping_delivery_time: "Livré le:"
   email_shipping_delivery_address: "Adresse de livraison:"
@@ -574,3 +574,5 @@ fr:
   transport_fee: "Frais logistiques"
   fundraising_fee: "Frais recherche de financement"
   price_graph: "Légende détail du prix"
+  included_tax: "Inclut TVA"
+  remove_tax: "Afficher prix HT"

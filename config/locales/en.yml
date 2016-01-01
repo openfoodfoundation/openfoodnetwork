@@ -1,5 +1,18 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# English language file
+# ---------------------
+#
+# This is the source language file maintained by the Australian OFN team.
+# Visit Transifex to translate this file into other languages:
+#
+#   https://www.transifex.com/open-food-foundation/open-food-network/
+#
+# If you translate this file in a text editor, please share your results with us by
+#
+# - uploading the file to Transifex or
+# - opening a pull request at GitHub.
+#
+#
+# See http://community.openfoodnetwork.org/t/localisation-ofn-in-your-language/397
 
 en:
   devise:
@@ -20,9 +33,33 @@ en:
   producers: Aussie Producers
   producers_join: Australian producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
-  print: "Print"
+  print_invoice: "Print Invoice"
+  send_invoice: "Send Invoice"
+  resend_confirmation: "Resend Confirmation"
+  view_order: "View Order"
+  edit_order: "Edit Order"
+  ship_order: "Ship Order"
+  cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
+  confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
+  invoice: "Invoice"
+  percentage_of_sales: "%{percentage} of sales"
+  percentage_of_turnover: "Percentage of turnover"
+  monthly_cap_excl_tax: "monthly cap (excl. GST)"
+  capped_at_cap: "capped at %{cap}"
+  per_month: "per month"
+  free: "free"
+  plus_tax: "plus GST"
+  total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
+
+  sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
+
+  # Printable Invoice Columns
+  invoice_column_item: "Item"
+  invoice_column_qty: "Qty"
+  invoice_column_tax: "GST"
+  invoice_column_price: "Price"
 
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
@@ -40,7 +77,6 @@ en:
   footer_links_md: "Links"
   footer_about_url: "About URL"
   footer_tos_url: "Terms of Service URL"
-  invoice: "Invoice"
 
   name: Name
   first_name: First Name
@@ -241,7 +277,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
   email_payment_summary: Payment summary
-  email_order_summary_method: "Paying via:"
+  email_payment_method: "Paying via:"
   email_shipping_delivery_details: Delivery details
   email_shipping_delivery_time: "Delivery on:"
   email_shipping_delivery_address: "Delivery address:"
@@ -344,19 +380,19 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   login_invalid: "Invalid email or password"
 
   modal_hubs: "Food Hubs"
-  modal_hubs_abstract: Our food hubs are the point of contact between you and the people who make your food! 
-  modal_hubs_content1: You can search for a convenient hub by location or name. Some hubs have multiple points where you can pick-up your purchases, and some will also provide delivery options. Each food hub is a sales point with independent business operations and logistics - so variations between hubs are to be expected. 
+  modal_hubs_abstract: Our food hubs are the point of contact between you and the people who make your food!
+  modal_hubs_content1: You can search for a convenient hub by location or name. Some hubs have multiple points where you can pick-up your purchases, and some will also provide delivery options. Each food hub is a sales point with independent business operations and logistics - so variations between hubs are to be expected.
   modal_hubs_content2: You can only shop at one food hub at a time.
 
   modal_groups: "Groups / Regions"
-  modal_groups_content1: These are the organisations and relationships between hubs which make up the Open Food Network. 
-  modal_groups_content2: Some groups are clustered by location or council, others by non-geographic similarities. 
+  modal_groups_content1: These are the organisations and relationships between hubs which make up the Open Food Network.
+  modal_groups_content2: Some groups are clustered by location or council, others by non-geographic similarities.
 
   modal_how: "How it works"
   modal_how_shop: Shop the Open Food Network
   modal_how_shop_explained: Search for a food hub near you to start shopping! You can expand each food hub to see what kinds of goodies are available, and click through to start shopping. (You can only shop one food hub at a time.)
   modal_how_pickup: Pick-ups, delivery & shipping costs
-  modal_how_pickup_explained: Some food hubs deliver to your door, while others require you to pick-up your purchases. You can see which options are available on the homepage, and select which you'd like at the shopping and check-out pages. Delivery will cost more, and pricing differs from hub-to-hub. Each food hub is a sales point with independent business operations and logisitics - so variations between hubs are to be expected. 
+  modal_how_pickup_explained: Some food hubs deliver to your door, while others require you to pick-up your purchases. You can see which options are available on the homepage, and select which you'd like at the shopping and check-out pages. Delivery will cost more, and pricing differs from hub-to-hub. Each food hub is a sales point with independent business operations and logisitics - so variations between hubs are to be expected.
   modal_how_more: Learn more
   modal_how_more_explained: "If you want to learn more about the Open Food Network, how it works, and get involved, check out:"
 

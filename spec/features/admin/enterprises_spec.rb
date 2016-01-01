@@ -153,6 +153,8 @@ feature %q{
     # shopfront_message = find :css, "text-angular#enterprise_preferred_shopfront_message div.ta-scroll-window div.ta-bind"
     # shopfront_message.set 'This is my shopfront message.'
     page.first("input[name='enterprise\[preferred_shopfront_message\]']", visible: false).set('This is my shopfront message.')
+    page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
+    choose "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
 
     click_button 'Update'
 
@@ -178,6 +180,7 @@ feature %q{
 
     click_link "Shop Preferences"
     page.should have_content 'This is my shopfront message.'
+    page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
   end
 
   describe "producer properties" do

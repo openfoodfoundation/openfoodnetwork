@@ -1,3 +1,5 @@
+require 'open_food_network/bill_calculator'
+
 class BillablePeriod < ActiveRecord::Base
   belongs_to :enterprise
   belongs_to :owner, class_name: 'Spree::User'
@@ -15,14 +17,9 @@ class BillablePeriod < ActiveRecord::Base
   end
 
   def bill
-    # Will make this more sophisicated in the future in that it will use global config variables to calculate
     return 0 if trial?
-    if ['own', 'any'].include? sells
-      bill = (turnover * 0.02).round(2)
-      bill > 50 ? 50 : bill
-    else
-      0
-    end
+    return 0 unless ['own', 'any'].include?(sells)
+    OpenFoodNetwork::BillCalculator.new(turnover: turnover).bill
   end
 
   def label
@@ -34,26 +31,27 @@ class BillablePeriod < ActiveRecord::Base
   end
 
   def adjustment_label
-    begins = begins_at.localtime.strftime("%d/%m/%y")
-    ends = ends_at.localtime.strftime("%d/%m/%y")
+    begins = begins_at.in_time_zone.strftime("%d/%m/%y")
+    ends = ends_at.in_time_zone.strftime("%d/%m/%y")
 
     "#{label} [#{begins} - #{ends}]"
   end
 
   def delete
-    self.update_column(:deleted_at, Time.now)
+    self.update_column(:deleted_at, Time.zone.now)
   end
 
   def ensure_correct_adjustment_for(invoice)
     if adjustment
       # adjustment.originator = enterprise.package
+      adjustment.adjustable = invoice
       adjustment.update_attributes( label: adjustment_label, amount: bill )
     else
       self.adjustment = invoice.adjustments.new( adjustment_attrs, without_protection: true )
     end
 
-    if Spree::Config.account_bill_inc_tax
-      adjustment.set_included_tax! Spree::Config.account_bill_tax_rate
+    if Spree::Config.account_invoices_tax_rate > 0
+      adjustment.set_included_tax! Spree::Config.account_invoices_tax_rate
     else
       adjustment.set_included_tax! 0
     end

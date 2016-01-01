@@ -92,8 +92,8 @@ feature %q{
 
     let(:bill_address1) { create(:address, lastname: "Aman") }
     let(:bill_address2) { create(:address, lastname: "Bman") }
-    let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
-    let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
+    let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
+    let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
     let(:order1) { create(:order, distributor: distributor, bill_address: bill_address1) }
     let(:order2) { create(:order, distributor: distributor, bill_address: bill_address2) }
     let(:supplier) { create(:supplier_enterprise, name: "Supplier") }
@@ -239,20 +239,20 @@ feature %q{
 
     context "with two orders on the same day at different times" do
       let(:bill_address) { create(:address) }
-      let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
-      let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
+      let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
+      let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
       let(:product) { create(:product) }
-      let(:product_distribution) { create(:product_distribution, product: product, distributor: distributor) }
+      let(:product_distribution) { create(:product_distribution, :product => product, :distributor => distributor) }
       let(:shipping_instructions) { "pick up on thursday please!" }
-      let(:order1) { create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions) }
-      let(:order2) { create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions) }
+      let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
+      let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
 
       before do
         Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
         Timecop.travel(Time.zone.local(2013, 4, 25, 16, 0, 0)) { order2.finalize! }
 
-        create(:line_item, product: product, order: order1)
-        create(:line_item, product: product, order: order2)
+        create(:line_item, :product => product, :order => order1)
+        create(:line_item, :product => product, :order => order2)
       end
 
       it "is precise to time of day, not just date" do
@@ -272,7 +272,7 @@ feature %q{
 
     it "handles order cycles with nil opening or closing times" do
       distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor], orders_open_at: Time.now, orders_close_at: nil)
+      oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor], orders_open_at: Time.zone.now, orders_close_at: nil)
       o = create(:order, order_cycle: oc, distributor: distributor)
 
       login_to_admin_section
@@ -286,7 +286,7 @@ feature %q{
     let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
     let(:taxon)    { create(:taxon, name: 'Taxon Name') }
     let(:product1) { create(:simple_product, name: "Product Name", price: 100, supplier: supplier, primary_taxon: taxon) }
-    let(:product2) { create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight', variant_unit_scale: 1, unit_value: '100', supplier: supplier, primary_taxon: taxon) }
+    let(:product2) { create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight', variant_unit_scale: 1, unit_value: '100', supplier: supplier, primary_taxon: taxon, sku: "product_sku") }
     let(:variant1) { product1.variants.first }
     let(:variant2) { create(:variant, product: product1, price: 80.0) }
     let(:variant3) { product2.variants.first }
@@ -297,10 +297,13 @@ feature %q{
       product1.taxons = [taxon]
       product2.taxons = [taxon]
       variant1.update_column(:count_on_hand, 10)
+      variant1.update_column(:sku, "sku1")
       variant2.update_column(:count_on_hand, 20)
+      variant2.update_column(:sku, "sku2")
       variant3.update_column(:count_on_hand, 9)
-      variant1.option_values = [create(:option_value, presentation: "Test")]
-      variant2.option_values = [create(:option_value, presentation: "Something")]
+      variant3.update_column(:sku, "")
+      variant1.option_values = [create(:option_value, :presentation => "Test")]
+      variant2.option_values = [create(:option_value, :presentation => "Something")]
     end
 
     it "shows products and inventory report" do
@@ -312,10 +315,10 @@ feature %q{
       click_link 'Products & Inventory'
       page.should have_content "Supplier"
 
-      page.should have_table_row ["Supplier",              "Producer Suburb",               "Product",      "Product Properties",            "Taxons",                   "Variant Value",  "Price",  "Group Buy Unit Quantity",     "Amount"].map(&:upcase)
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, ""]
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,   "Something",       "80.0",   product1.group_buy_unit_size.to_s, ""]
-      page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,   "100g",           "99.0",   product1.group_buy_unit_size.to_s, ""]
+      page.should have_table_row ["Supplier",             "Producer Suburb",              "Product",      "Product Properties",                               "Taxons",                     "Variant Value",  "Price",  "Group Buy Unit Quantity",         "Amount", "SKU"].map(&:upcase)
+      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
+      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Something",      "80.0",   product1.group_buy_unit_size.to_s, "",       "sku2"]
+      page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,  "100g",           "99.0",   product1.group_buy_unit_size.to_s, "",       "product_sku"]
     end
 
     it "shows the LettuceShare report" do
@@ -324,7 +327,7 @@ feature %q{
       click_link 'LettuceShare'
 
       page.should have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit', 'Unit Price', 'Total', 'GST incl.', 'Grower and growing method', 'Taxon'].map(&:upcase)
-      page.should have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '99.0', '0', 'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
+      page.should have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0', 'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
     end
   end
 
@@ -516,7 +519,7 @@ feature %q{
 
     def xero_invoice_li_row(line_item, opts={})
       tax_type = line_item.has_tax? ? 'GST on Income' : 'GST Free Income'
-      xero_invoice_row line_item.product.sku, line_item.variant.product_and_variant_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
+      xero_invoice_row line_item.product.sku, line_item.product_and_full_name, line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
     end
 
     def xero_invoice_adjustment_row(adjustment, opts={})
@@ -530,7 +533,7 @@ feature %q{
     end
 
     def xero_invoice_row(sku, description, amount, quantity, tax_type, opts={})
-      opts.reverse_merge!({customer_name: 'Customer Name', address1: 'customer l1', city: 'customer city', state: 'Victoria', zipcode: '1234', country: country.name, invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-10', account_code: 'food sales'})
+      opts.reverse_merge!({customer_name: 'Customer Name', address1: 'customer l1', city: 'customer city', state: 'Victoria', zipcode: '1234', country: country.name, invoice_number: order1.number, order_number: order1.number, invoice_date: '2015-04-26', due_date: '2015-05-26', account_code: 'food sales'})
 
       [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '', opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number], opts[:order_number], opts[:invoice_date], opts[:due_date],
 

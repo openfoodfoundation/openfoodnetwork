@@ -194,7 +194,7 @@ Spree::Product.class_eval do
   private
 
   def set_available_on_to_now
-    self.available_on ||= Time.now
+    self.available_on ||= Time.zone.now
   end
 
   def update_units

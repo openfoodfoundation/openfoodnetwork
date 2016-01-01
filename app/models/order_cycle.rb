@@ -11,11 +11,11 @@ class OrderCycle < ActiveRecord::Base
 
   validates_presence_of :name, :coordinator_id
 
-  scope :active, lambda { where('order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?', Time.now, Time.now) }
-  scope :active_or_complete, lambda { where('order_cycles.orders_open_at <= ?', Time.now) }
-  scope :inactive, lambda { where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?', Time.now, Time.now) }
-  scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.now) }
-  scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.now).order("order_cycles.orders_close_at DESC") }
+  scope :active, lambda { where('order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?', Time.zone.now, Time.zone.now) }
+  scope :active_or_complete, lambda { where('order_cycles.orders_open_at <= ?', Time.zone.now) }
+  scope :inactive, lambda { where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?', Time.zone.now, Time.zone.now) }
+  scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.zone.now) }
+  scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.zone.now).order("order_cycles.orders_close_at DESC") }
   scope :undated, where(orders_open_at: nil, orders_close_at: nil)
 
   scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
@@ -186,16 +186,16 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def upcoming?
-    self.orders_open_at && Time.now < self.orders_open_at
+    self.orders_open_at && Time.zone.now < self.orders_open_at
   end
 
   def open?
     self.orders_open_at && self.orders_close_at &&
-      Time.now > self.orders_open_at && Time.now < self.orders_close_at
+      Time.zone.now > self.orders_open_at && Time.zone.now < self.orders_close_at
   end
 
   def closed?
-    self.orders_close_at && Time.now > self.orders_close_at
+    self.orders_close_at && Time.zone.now > self.orders_close_at
   end
 
   def exchange_for_distributor(distributor)

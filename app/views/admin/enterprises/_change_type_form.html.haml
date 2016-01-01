@@ -1,4 +1,5 @@
 = admin_inject_enterprise
+= admin_inject_monthly_bill_description
 
 = form_for @enterprise, url: main_app.register_admin_enterprise_path(@enterprise),
   html: { name: "change_type", id: "change_type", novalidate: true, "ng-app" => "admin.enterprises", "ng-controller"=> 'changeTypeFormCtrl' } do |change_type_form|
@@ -16,9 +17,6 @@
             .bottom ALWAYS FREE
           %p.description
             Add your products to Open Food Network, allowing hubs to stock your products in their stores.
-            %br
-            %br
-            Having a profile, and making connections within your local food system through the Open Food Network will always be free.
 
         .producer_shop.option.one-third.column
           %a.full-width.button.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
@@ -26,17 +24,13 @@
               %h3 Producer Shop
               %p Sell your own produce
             .bottom
-              \%2 OF SALES
-              %br
-              CAPPED AT $50 PER MONTH
+              %monthly-pricing-description{ joiner: "newline" }
+
           %p.description
             Sell your products directly to customers through your very own Open Food Network shopfront.
             %br
             %br
             A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
-            %br
-            %br
-            You will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
 
         .full_hub.option.one-third.column.omega
           %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
@@ -44,15 +38,10 @@
               %h3 Producer Hub
               %p Sell produce from self and others
             .bottom
-              \%2 OF SALES
-              %br
-              CAPPED AT $50 PER MONTH
+              %monthly-pricing-description{ joiner: "newline" }
+
           %p.description
             Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
-            %br
-            %br
-            You will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
-
 
           -# %p.description
           -#   Test out having your own shopfront with full access to all Shopfront features for 30 days.
@@ -69,9 +58,6 @@
             .bottom ALWAYS FREE
           %p.description
             People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
-            %br
-            %br
-            Having a profile, and making connections within your local food system through the Open Food Network will always be free.
 
         .full_hub.option.one-third.column
           %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
@@ -79,14 +65,10 @@
               %h3 Hub Shop
               %p Sell produce from others
             .bottom
-              \%2 OF SALES
-              %br
-              CAPPED AT $50 PER MONTH
+              %monthly-pricing-description{ joiner: "newline" }
+
           %p.description
             Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
-            %br
-            %br
-            You will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
 
 
   .row

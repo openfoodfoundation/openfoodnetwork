@@ -5,7 +5,7 @@
 
 = render 'spree/shared/error_messages', target: @settings
 
--# - month_options = (0...12).map { |i| Time.now.beginning_of_month - i.months }.map{ |t| [t.strftime("%b %Y"), t.strftime("%b %Y %z")]}
+-# - month_options = (0...12).map { |i| Time.zone.now.beginning_of_month - i.months }.map{ |t| [t.strftime("%b %Y"), t.strftime("%b %Y %z")]}
 
 %fieldset.no-border-bottom
   %legend Settings
@@ -50,7 +50,7 @@
 
       - if @update_account_invoices_job
         %p.text-center
-          - if @update_account_invoices_job.run_at < Time.now
+          - if @update_account_invoices_job.run_at < Time.zone.now
             %strong In Progress
             %br
             Started at:
@@ -74,7 +74,7 @@
 
       - if @finalize_account_invoices_job
         %p.text-center
-          - if @finalize_account_invoices_job.run_at < Time.now
+          - if @finalize_account_invoices_job.run_at < Time.zone.now
             %strong In Progress
             %br
             Started at:

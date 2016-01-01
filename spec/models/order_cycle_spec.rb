@@ -191,7 +191,7 @@ describe OrderCycle do
 
       @p0 = create(:simple_product)
       @p1 = create(:simple_product)
-      @p1_v_deleted = create(:variant, product: @p1, deleted_at: Time.now)
+      @p1_v_deleted = create(:variant, product: @p1, deleted_at: Time.zone.now)
       @p2 = create(:simple_product)
       @p2_v = create(:variant, product: @p2)
 

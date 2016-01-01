@@ -7,17 +7,28 @@ end
 describe UpdateAccountInvoices do
   let(:year) { Time.zone.now.year }
 
+  before do
+    # Make sure that bills are > 0
+    Spree::Config.set(:account_invoices_monthly_fixed, 5)
+    Spree::Config.set(:account_invoices_monthly_rate, 0.02)
+    Spree::Config.set(:account_invoices_monthly_cap, 50)
+  end
+
   describe "units specs" do
     let!(:start_of_july) { Time.zone.local(year, 7) }
 
     let!(:updater) { UpdateAccountInvoices.new }
 
     let!(:user) { create(:user) }
-    let!(:old_billable_period) { create(:billable_period, owner: user, begins_at: start_of_july - 1.month, ends_at: start_of_july) }
-    let!(:billable_period1) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 12.days) }
-    let!(:billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
-    let(:june_account_invoice) { old_billable_period.account_invoice }
-    let(:july_account_invoice) { billable_period1.account_invoice }
+    let!(:june_billable_period1) { create(:billable_period, owner: user, begins_at: start_of_july - 1.month, ends_at: start_of_july - 20.days) }
+    let!(:june_billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july - 20.days, ends_at: start_of_july - 10.days, turnover: 45, sells: "none" ) }
+    let!(:june_billable_period3) { create(:billable_period, owner: user, begins_at: start_of_july - 10.days, ends_at: start_of_july - 1.days, turnover: 0, sells: "any" ) }
+    let!(:july_billable_period1) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 12.days) }
+    let!(:july_billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
+    let!(:july_billable_period3) { create(:billable_period, owner: user, begins_at: start_of_july + 20.days, ends_at: start_of_july + 25.days, turnover: 45, sells: 'none') }
+    let!(:july_billable_period4) { create(:billable_period, owner: user, begins_at: start_of_july + 25.days, ends_at: start_of_july + 28.days, turnover: 0, sells: 'any') }
+    let(:june_account_invoice) { june_billable_period1.account_invoice }
+    let(:july_account_invoice) { july_billable_period1.account_invoice }
 
     describe "perform" do
       let(:accounts_distributor) { double(:accounts_distributor) }
@@ -145,21 +156,27 @@ describe UpdateAccountInvoices do
         context "where the order is not complete" do
           before do
             allow(invoice_order).to receive(:complete?) { false }
+            june_billable_period1.enterprise.update_attributes(contact: "Firstname Lastname Something Else", phone: '12345')
             updater.update(june_account_invoice)
           end
 
-          it "creates adjustments for each billing item" do
+          it "creates adjustments for each billing item where bill is not 0" do
             adjustments = invoice_order.adjustments
-            expect(adjustments.map(&:source_id)).to eq [old_billable_period.id]
-            expect(adjustments.map(&:amount)).to eq [old_billable_period.bill]
-            expect(adjustments.map(&:label)).to eq [old_billable_period.adjustment_label]
+            expect(adjustments.map(&:source_id)).to eq [june_billable_period1.id, june_billable_period3.id]
+            expect(adjustments.map(&:amount)).to eq [june_billable_period1.bill.round(2), june_billable_period3.bill.round(2)]
+            expect(adjustments.map(&:label)).to eq [june_billable_period1.adjustment_label, june_billable_period3.adjustment_label]
           end
 
           it "assigns a addresses to the order" do
             expect(invoice_order.billing_address).to be_a Spree::Address
             expect(invoice_order.shipping_address).to be_a Spree::Address
-            expect(invoice_order.billing_address).to eq old_billable_period.enterprise.address
-            expect(invoice_order.shipping_address).to eq old_billable_period.enterprise.address
+            expect(invoice_order.shipping_address).to eq invoice_order.billing_address
+            [:address1, :address2, :city, :zipcode, :state_id, :country_id].each do |attr|
+              expect(invoice_order.billing_address[attr]).to eq june_billable_period1.enterprise.address[attr]
+            end
+            expect(invoice_order.billing_address.firstname).to eq "Firstname"
+            expect(invoice_order.billing_address.lastname).to eq "Lastname Something Else"
+            expect(invoice_order.billing_address.phone).to eq "12345"
           end
 
           it "saves the order" do
@@ -180,11 +197,11 @@ describe UpdateAccountInvoices do
           updater.update(july_account_invoice)
         end
 
-        it "creates adjustments for each billing item" do
+        it "creates adjustments for each billing item where bill is not 0" do
           adjustments = july_account_invoice.order.adjustments
-          expect(adjustments.map(&:source_id)).to eq [billable_period1.id, billable_period2.id]
-          expect(adjustments.map(&:amount)).to eq [billable_period1.bill, billable_period2.bill]
-          expect(adjustments.map(&:label)).to eq [billable_period1.adjustment_label, billable_period2.adjustment_label]
+          expect(adjustments.map(&:source_id)).to eq [july_billable_period1.id, july_billable_period2.id,july_billable_period4.id]
+          expect(adjustments.map(&:amount)).to eq [july_billable_period1.bill.round(2), july_billable_period2.bill.round(2), july_billable_period4.bill.round(2)]
+          expect(adjustments.map(&:label)).to eq [july_billable_period1.adjustment_label, july_billable_period2.adjustment_label, july_billable_period4.adjustment_label]
         end
 
         it "saves the order" do
@@ -328,14 +345,15 @@ describe UpdateAccountInvoices do
     let!(:accounts_distributor) { create(:distributor_enterprise) }
 
     let!(:user) { create(:user) }
-    let!(:billable_period1) { create(:billable_period, sells: 'any', owner: user, begins_at: start_of_july - 1.month, ends_at: start_of_july) }
-    let!(:billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 10.days) }
-    let!(:billable_period3) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
-    let!(:july_account_invoice) { billable_period2.account_invoice }
+    let!(:july_billable_period1) { create(:billable_period, sells: 'any', owner: user, begins_at: start_of_july - 1.month, ends_at: start_of_july) }
+    let!(:july_billable_period2) { create(:billable_period, owner: user, begins_at: start_of_july, ends_at: start_of_july + 10.days) }
+    let!(:july_billable_period3) { create(:billable_period, owner: user, begins_at: start_of_july + 12.days, ends_at: start_of_july + 20.days) }
+    let!(:july_account_invoice) { july_billable_period2.account_invoice }
     let!(:august_account_invoice) { create(:account_invoice, user: user, year: july_account_invoice.year, month: 8)}
 
     before do
       Spree::Config.set({ accounts_distributor_id: accounts_distributor.id })
+      july_billable_period2.enterprise.update_attributes(contact: 'Anna Karenina', phone: '3433523')
     end
 
     context "when no invoice_order currently exists" do
@@ -348,14 +366,19 @@ describe UpdateAccountInvoices do
           expect(user.orders.first).to eq invoice_order
           expect(invoice_order.completed_at).to be_nil
           billable_adjustments = invoice_order.adjustments.where('source_type = (?)', 'BillablePeriod')
-          expect(billable_adjustments.map(&:amount)).to eq [billable_period2.bill, billable_period3.bill]
-          expect(invoice_order.total).to eq billable_period2.bill + billable_period3.bill
+          expect(billable_adjustments.map(&:amount)).to eq [july_billable_period2.bill.round(2), july_billable_period3.bill.round(2)]
+          expect(invoice_order.total).to eq july_billable_period2.bill.round(2) + july_billable_period3.bill.round(2)
           expect(invoice_order.payments.count).to eq 0
           expect(invoice_order.state).to eq 'cart'
           expect(invoice_order.bill_address).to be_a Spree::Address
           expect(invoice_order.ship_address).to be_a Spree::Address
-          expect(invoice_order.bill_address).to eq billable_period2.enterprise.address
-          expect(invoice_order.ship_address).to eq billable_period2.enterprise.address
+          expect(invoice_order.shipping_address).to eq invoice_order.billing_address
+          [:address1, :address2, :city, :zipcode, :state_id, :country_id].each do |attr|
+            expect(invoice_order.billing_address[attr]).to eq july_billable_period2.enterprise.address[attr]
+          end
+          expect(invoice_order.billing_address.firstname).to eq "Anna"
+          expect(invoice_order.billing_address.lastname).to eq "Karenina"
+          expect(invoice_order.billing_address.phone).to eq "3433523"
         end
       end
 
@@ -387,14 +410,19 @@ describe UpdateAccountInvoices do
           expect(invoice_order.completed_at).to be_nil
           billable_adjustments = invoice_order.adjustments.where('source_type = (?)', 'BillablePeriod')
           expect(billable_adjustments).to_not include billable_adjustment
-          expect(billable_adjustments.map(&:amount)).to eq [billable_period2.bill, billable_period3.bill]
-          expect(invoice_order.total).to eq billable_period2.bill + billable_period3.bill
+          expect(billable_adjustments.map(&:amount)).to eq [july_billable_period2.bill.round(2), july_billable_period3.bill.round(2)]
+          expect(invoice_order.total).to eq july_billable_period2.bill.round(2) + july_billable_period3.bill.round(2)
           expect(invoice_order.payments.count).to eq 0
           expect(invoice_order.state).to eq 'cart'
           expect(invoice_order.bill_address).to be_a Spree::Address
           expect(invoice_order.ship_address).to be_a Spree::Address
-          expect(invoice_order.bill_address).to eq billable_period2.enterprise.address
-          expect(invoice_order.ship_address).to eq billable_period2.enterprise.address
+          expect(invoice_order.shipping_address).to eq invoice_order.billing_address
+          [:address1, :address2, :city, :zipcode, :state_id, :country_id].each do |attr|
+            expect(invoice_order.billing_address[attr]).to eq july_billable_period2.enterprise.address[attr]
+          end
+          expect(invoice_order.billing_address.firstname).to eq "Anna"
+          expect(invoice_order.billing_address.lastname).to eq "Karenina"
+          expect(invoice_order.billing_address.phone).to eq "3433523"
         end
       end
 

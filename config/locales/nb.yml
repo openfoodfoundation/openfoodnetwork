@@ -187,7 +187,7 @@ nb:
   email_confirmation_profile_created: "En profil for %{name} har blitt opprettet! For å aktivere din profil må du bekrefte denne epostadressen."
   email_confirmation_click_link: "Trykk på linken under for å bekrefte din epost og for å fortsette oppsettet av din profil."
   email_confirmation_link_label: "Bekreft denne epostadressen »"
-  email_confirmation_help_html: "Etter du har bekreftet epostadressen får du tilgang til din administrasjonskonto for dette selskapet. Se linken %{link} for å finne ut mer om %{sitename}s funksjoner og for å begynne å bruke din profil eller nettbutikk."
+  email_confirmation_help_html: "Etter du har bekreftet epostadressen din får du tilgang til din administrasjonskonto for denne bedriften. Se linken %{link} for å finne ut mer om %{sitename}s funksjoner og for å begynne å bruke din profil eller nettbutikk."
   email_confirmation_userguide: "Brukerhåndbok"
   email_social: "Her finner du oss:"
   email_contact: "Send oss en epost:"
@@ -209,7 +209,7 @@ nb:
   email_payment_paid: BETALT
   email_payment_not_paid: IKKE BETALT
   email_payment_summary: Betalingssammendrag
-  email_order_summary_method: "Betaler via:"
+  email_payment_method: "Betaler via:"
   email_shipping_delivery_details: Leveringsdetaljer
   email_shipping_delivery_time: "Levering på:"
   email_shipping_delivery_address: "Leveringsadresse:"
@@ -574,3 +574,5 @@ nb:
   transport_fee: "Transportgebyr"
   fundraising_fee: "Pengeinnsamlingsgebyr"
   price_graph: "Prisgraf"
+  included_tax: "inkludert avgift"
+  remove_tax: "Fjern MVA"

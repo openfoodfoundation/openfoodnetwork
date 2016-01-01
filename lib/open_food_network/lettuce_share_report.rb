@@ -18,15 +18,16 @@ module OpenFoodNetwork
     end
 
     def table
-      variants.map do |variant|
+      variants.select { |v| v.in_stock? }
+      .map do |variant|
         [
           variant.product.name,
           variant.full_name,
           '',
           OptionValueNamer.new(variant).value,
           OptionValueNamer.new(variant).unit,
-          variant.price - gst(variant),
           variant.price,
+          '',
           gst(variant),
           grower_and_method(variant),
           variant.product.primary_taxon.name

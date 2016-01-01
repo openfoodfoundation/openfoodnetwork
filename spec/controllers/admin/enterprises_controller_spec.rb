@@ -315,7 +315,7 @@ module Admin
           end
 
           context "if the trial has not finished" do
-            let(:trial_start) { Date.today.to_time }
+            let(:trial_start) { Date.current.to_time }
 
             before do
               enterprise.update_attribute(:shop_trial_start_date, trial_start)
@@ -335,7 +335,7 @@ module Admin
               expect(response).to redirect_to spree.admin_path
               expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
               expect(enterprise.reload.sells).to eq 'own'
-              expect(enterprise.reload.shop_trial_start_date).to be > Time.now-(1.minute)
+              expect(enterprise.reload.shop_trial_start_date).to be > Time.zone.now-(1.minute)
             end
           end
         end
@@ -359,7 +359,7 @@ module Admin
           end
 
           context "if the trial has not finished" do
-            let(:trial_start) { Date.today.to_time }
+            let(:trial_start) { Date.current.to_time }
 
             before do
               enterprise.update_attribute(:shop_trial_start_date, trial_start)
@@ -379,7 +379,7 @@ module Admin
               expect(response).to redirect_to spree.admin_path
               expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
               expect(enterprise.reload.sells).to eq 'any'
-              expect(enterprise.reload.shop_trial_start_date).to be > Time.now-(1.minute)
+              expect(enterprise.reload.shop_trial_start_date).to be > Time.zone.now-(1.minute)
             end
           end
         end

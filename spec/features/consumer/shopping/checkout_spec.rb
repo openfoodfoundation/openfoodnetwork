@@ -198,7 +198,7 @@ feature "As a consumer I want to check out my cart", js: true do
               toggle_payment
               fill_in 'Card Number', with: "4111111111111111"
               select 'February', from: 'secrets.card_month'
-              select (Date.today.year+1).to_s, from: 'secrets.card_year'
+              select (Date.current.year+1).to_s, from: 'secrets.card_year'
               fill_in 'Security Code', with: '123'
 
               place_order
@@ -213,7 +213,7 @@ feature "As a consumer I want to check out my cart", js: true do
               toggle_payment
               fill_in 'Card Number', with: "9999999988887777"
               select 'February', from: 'secrets.card_month'
-              select (Date.today.year+1).to_s, from: 'secrets.card_year'
+              select (Date.current.year+1).to_s, from: 'secrets.card_year'
               fill_in 'Security Code', with: '123'
 
               place_order

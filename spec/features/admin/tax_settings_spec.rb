@@ -11,9 +11,7 @@ feature 'Account and Billing Settings' do
       Spree::Config.set({
         products_require_tax_category: false,
         shipment_inc_vat: false,
-        shipping_tax_rate: 0,
-        account_bill_inc_tax: false,
-        account_bill_tax_rate: 0
+        shipping_tax_rate: 0
       })
     end
 
@@ -30,8 +28,6 @@ feature 'Account and Billing Settings' do
         expect(page).to have_unchecked_field 'preferences_products_require_tax_category'
         expect(page).to have_unchecked_field 'preferences_shipment_inc_vat'
         expect(page).to have_field 'preferences_shipping_tax_rate'
-        expect(page).to have_unchecked_field 'preferences_account_bill_inc_tax'
-        expect(page).to have_field 'preferences_account_bill_tax_rate'
       end
 
       it "attributes can be changed" do
@@ -40,16 +36,12 @@ feature 'Account and Billing Settings' do
         check 'preferences_products_require_tax_category'
         check 'preferences_shipment_inc_vat'
         fill_in 'preferences_shipping_tax_rate', with: '0.12'
-        check 'preferences_account_bill_inc_tax'
-        fill_in 'preferences_account_bill_tax_rate', with: '0.05'
 
         click_button "Update"
 
         expect(Spree::Config.products_require_tax_category).to be true
         expect(Spree::Config.shipment_inc_vat).to be true
         expect(Spree::Config.shipping_tax_rate).to eq 0.12
-        expect(Spree::Config.account_bill_inc_tax).to be true
-        expect(Spree::Config.account_bill_tax_rate).to eq 0.05
       end
     end
   end

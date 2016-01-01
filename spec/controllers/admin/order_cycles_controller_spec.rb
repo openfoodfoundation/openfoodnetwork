@@ -144,13 +144,13 @@ module Admin
         it "updates order cycle properties" do
           spree_put :bulk_update, order_cycle_set: { collection_attributes: { '0' => {
             id: oc.id,
-            orders_open_at: Date.today - 21.days,
-            orders_close_at: Date.today + 21.days,
+            orders_open_at: Date.current - 21.days,
+            orders_close_at: Date.current + 21.days,
           } } }
 
           oc.reload
-          expect(oc.orders_open_at.to_date).to eq Date.today - 21.days
-          expect(oc.orders_close_at.to_date).to eq Date.today + 21.days
+          expect(oc.orders_open_at.to_date).to eq Date.current - 21.days
+          expect(oc.orders_close_at.to_date).to eq Date.current + 21.days
         end
 
         it "does nothing when no data is supplied" do
@@ -167,13 +167,13 @@ module Admin
         it "doesn't update order cycle properties" do
           spree_put :bulk_update, order_cycle_set: { collection_attributes: { '0' => {
             id: oc.id,
-            orders_open_at: Date.today - 21.days,
-            orders_close_at: Date.today + 21.days,
+            orders_open_at: Date.current - 21.days,
+            orders_close_at: Date.current + 21.days,
           } } }
 
           oc.reload
-          expect(oc.orders_open_at.to_date).to_not eq Date.today - 21.days
-          expect(oc.orders_close_at.to_date).to_not eq Date.today + 21.days
+          expect(oc.orders_open_at.to_date).to_not eq Date.current - 21.days
+          expect(oc.orders_close_at.to_date).to_not eq Date.current + 21.days
         end
       end
     end

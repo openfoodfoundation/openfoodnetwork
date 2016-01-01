@@ -1,0 +1,6 @@
+/ insert_after "code[erb-loud]:contains('button_link_to t(:resend)')"
+
+%li.links-dropdown#links-dropdown{ links: order_links(@order).to_json }
+
+:coffee
+  angular.bootstrap(document.getElementById("links-dropdown"),['admin.dropdown'])

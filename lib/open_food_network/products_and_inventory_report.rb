@@ -12,7 +12,8 @@ module OpenFoodNetwork
         "Variant Value",
         "Price",
         "Group Buy Unit Quantity",
-        "Amount"
+        "Amount",
+        "SKU"
       ]
     end
 
@@ -27,10 +28,15 @@ module OpenFoodNetwork
           variant.full_name,
           variant.price,
           variant.product.group_buy_unit_size,
-          ""
+          "",
+          sku_for(variant)
         ]
       end
     end
 
+    def sku_for(variant)
+      return variant.sku unless variant.sku.blank?
+      variant.product.sku
+    end
   end
 end

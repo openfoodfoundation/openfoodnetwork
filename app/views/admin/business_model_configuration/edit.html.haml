@@ -1,0 +1,84 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  %h1.page-title= t(:business_model_configuration)
+  %a.with-tip{ 'data-powertip' => "Configure the rate at which shops will be charged each month for use of the Open Food Network." } What's this?
+
+= render 'spree/shared/error_messages', target: @settings
+
+.row{ ng: { app: 'admin.businessModelConfiguration', controller: "BusinessModelConfigCtrl" } }
+  .five.columns.omega
+    %fieldset.no-border-bottom
+      %legend=t(:bill_calculation_settings)
+      %p
+        Adjust the amount that enterprises will be billed each month for use of the OFN.
+      %br
+      = form_for @settings, as: :settings, url: main_app.admin_business_model_configuration_path, :method => :put do |f|
+        .row
+          .three.columns.alpha
+            = f.label :account_invoices_monthly_fixed, t(:fixed_monthly_charge)
+            %span.with-tip.icon-question-sign{'data-powertip' => "A fixed monthly charge for ALL enterprises who are set up as a shop, regardless of how much produce they sell."}
+          .two.columns.omega
+            .input-symbol.before
+              %span= Spree::Money.currency_symbol
+              = f.number_field :account_invoices_monthly_fixed, min: 0.0, class: "fullwidth", 'watch-value-as' => 'fixed'
+        .row
+          .three.columns.alpha
+            = f.label :account_invoices_monthly_rate, t(:percentage_of_turnover)
+            %span.with-tip.icon-question-sign{'data-powertip' => "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."}
+          .two.columns.omega
+            = f.number_field :account_invoices_monthly_rate, min: 0.0, max: 1.0, step: 0.01, class: "fullwidth", 'watch-value-as' => 'rate'
+        .row
+          .three.columns.alpha
+            = f.label :account_invoices_monthly_cap, t(:monthly_cap_excl_tax)
+            %span.with-tip.icon-question-sign{'data-powertip' => "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."}
+          .two.columns.omega
+            .input-symbol.before
+              %span= Spree::Money.currency_symbol
+              = f.number_field :account_invoices_monthly_cap, min: 0.0, class: "fullwidth", 'watch-value-as' => 'cap'
+        .row
+          .three.columns.alpha
+            = f.label :account_invoices_tax_rate, t(:tax_rate)
+            %span.with-tip.icon-question-sign{'data-powertip' => "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."}
+          .two.columns.omega
+            = f.number_field :account_invoices_tax_rate, min: 0.0, max: 1.0, step: 0.01, class: "fullwidth", 'watch-value-as' => 'taxRate'
+
+        .row
+          .five.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
+            = button t(:update), 'icon-refresh', value: "update"
+
+  .two.columns
+    &nbsp;
+
+  .five.columns.alpha
+    %fieldset.no-border-bottom
+      %legend=t(:example_bill_calculator)
+      %p
+        Alter the example turnover to visualise the effect of the settings to the left.
+      %br
+      .row
+        .three.columns.alpha
+          = label_tag :turnover, t(:example_monthly_turnover)
+          %span.with-tip.icon-question-sign{'data-powertip' => "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."}
+        .two.columns.omega
+          .input-symbol.before
+            %span= Spree::Money.currency_symbol
+            %input.fullwidth{ id: 'turnover', type: "number", ng: { model: 'turnover' } }
+      .row
+        .three.columns.alpha
+          = label_tag :cap_reached, t(:cap_reached?)
+          %span.with-tip.icon-question-sign{'data-powertip' => "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."}
+        .two.columns.omega
+          %input.fullwidth{ id: 'cap_reached', type: "text", readonly: true, ng: { value: 'capReached()' } }
+      .row
+        .three.columns.alpha
+          = label_tag :included_tax, t(:included_tax)
+          %span.with-tip.icon-question-sign{'data-powertip' => "The total tax included in the example monthly bill, given the settings and the turnover provided."}
+        .two.columns.omega
+          %input.fullwidth{ id: 'included_tax', type: "text", readonly: true, ng: { value: 'includedTax() | currency' } }
+      .row
+        .three.columns.alpha
+          = label_tag :total_incl_tax, t(:total_monthly_bill_incl_tax)
+          %span.with-tip.icon-question-sign{'data-powertip' => "The example total monthly bill with tax included, given the settings and the turnover provided."}
+        .two.columns.omega
+          %input.fullwidth{ id: 'total_incl_tax', type: "text", readonly: true, ng: { value: 'total() | currency' } }

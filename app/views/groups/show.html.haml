@@ -110,7 +110,7 @@
       .small-12.columns.text-center.small
         %hr
         %p.text-small
-          = "Copyright #{Date.today.year} #{@group.name}"
+          = "Copyright #{Date.current.year} #{@group.name}"
         %h2
           =link_to_service "https://www.facebook.com/", @group.facebook, title: t(:groups_contact_facebook) do
             %i.ofn-i_044-facebook

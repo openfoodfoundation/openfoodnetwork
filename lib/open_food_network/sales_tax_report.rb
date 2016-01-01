@@ -1,9 +1,11 @@
 module OpenFoodNetwork
   class SalesTaxReport
     include Spree::ReportsHelper
+    attr_accessor :user, :params
 
-    def initialize orders
-      @orders = orders
+    def initialize(user, params)
+      @user = user
+      @params = params
     end
 
     def header
@@ -12,8 +14,17 @@ module OpenFoodNetwork
         "Total Tax (#{currency_symbol})", "Customer", "Distributor"]
     end
 
+    def search
+      permissions = OpenFoodNetwork::Permissions.new(user)
+      permissions.editable_orders.complete.not_state(:canceled).search(params[:q])
+    end
+
+    def orders
+      search.result
+    end
+
     def table
-      @orders.map do |order|
+      orders.map do |order|
         totals = totals_of order.line_items
         shipping_cost = shipping_cost_for order
 

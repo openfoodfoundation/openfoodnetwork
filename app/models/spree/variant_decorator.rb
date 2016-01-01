@@ -26,18 +26,9 @@ Spree::Variant.class_eval do
   after_save :update_units
 
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
-  scope :with_order_cycles_outer, joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = spree_variants.id)').
-                                  joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
-                                  joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
 
   scope :not_deleted, where(deleted_at: nil)
   scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
-  scope :in_distributor, lambda { |distributor|
-    with_order_cycles_outer.
-    where('o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?', false, distributor).
-    select('DISTINCT spree_variants.*')
-  }
-
   scope :in_order_cycle, lambda { |order_cycle|
     with_order_cycles_inner.
     merge(Exchange.outgoing).
@@ -49,6 +40,14 @@ Spree::Variant.class_eval do
     where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
   }
 
+  # Define sope as class method to allow chaining with other scopes filtering id.
+  # In Rails 3, merging two scopes on the same column will consider only the last scope.
+  def self.in_distributor(distributor)
+    where(id: ExchangeVariant.select(:variant_id).
+              joins(:exchange).
+              where('exchanges.incoming = ? AND exchanges.receiver_id = ?', false, distributor)
+         )
+  end
 
   def self.indexed
     Hash[
@@ -69,23 +68,13 @@ Spree::Variant.class_eval do
     OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
   end
 
-  # TODO: Should this be moved into VariantAndLineItemNaming?
-  def product_and_variant_name
-    name = product.name
-
-    name += " - #{name_to_display}" if name_to_display != product.name
-    name += " (#{options_text})" if options_text
-
-    name
-  end
-
   def delete
     if product.variants == [self] # Only variant left on product
       errors.add :product, "must have at least one variant"
       false
     else
       transaction do
-        self.update_column(:deleted_at, Time.now)
+        self.update_column(:deleted_at, Time.zone.now)
         ExchangeVariant.where(variant_id: self).destroy_all
         self
       end

@@ -16,13 +16,18 @@ module OpenFoodNetwork
       values.to_sentence({ words_connector: ", ", two_words_connector: ", " })
     end
 
-    # Used like "product.name - full_name". If called like this, a product with
-    # name "Bread" would be displayed as one of these:
+    def product_and_full_name
+      return "#{product.name} - #{full_name}" unless full_name.start_with? product.name
+      full_name
+    end
+
+    # Used like "product.name - full_name", preferably using product_and_full_name method above.
+    # This returns, for a product with name "Bread":
     #     Bread - 1kg                     # if display_name blank
     #     Bread - Spelt Sourdough, 1kg    # if display_name is "Spelt Sourdough, 1kg"
     #     Bread - 1kg Spelt Sourdough     # if unit_to_display is "1kg Spelt Sourdough"
     #     Bread - Spelt Sourdough (1kg)   # if display_name is "Spelt Sourdough" and unit_to_display is "1kg"
-    def full_name 
+    def full_name
       return unit_to_display if display_name.blank?
       return display_name    if display_name.downcase.include? unit_to_display.downcase
       return unit_to_display if unit_to_display.downcase.include? display_name.downcase

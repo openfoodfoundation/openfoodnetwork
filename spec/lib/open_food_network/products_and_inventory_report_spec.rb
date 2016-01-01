@@ -22,7 +22,8 @@ module OpenFoodNetwork
           "Variant Value",
           "Price",
           "Group Buy Unit Quantity",
-          "Amount"
+          "Amount",
+          "SKU"
         ]
       end
 
@@ -48,7 +49,8 @@ module OpenFoodNetwork
           "Variant Name",
           100,
           21,
-          ""
+          "",
+          "sku"
           ]]
       end
 
@@ -68,9 +70,11 @@ module OpenFoodNetwork
         user.save!
         user
       end
+
       subject do
         ProductsAndInventoryReport.new enterprise_user
       end
+
       describe "fetching child variants" do
         it "returns some variants" do
           product1 = create(:simple_product, supplier: supplier)
@@ -124,15 +128,16 @@ module OpenFoodNetwork
         it "filters to a specific distributor" do
           distributor = create(:distributor_enterprise)
           product1 = create(:simple_product, supplier: supplier)
-          product2 = create(:simple_product, supplier: supplier, distributors: [distributor])
+          product2 = create(:simple_product, supplier: supplier)
+          order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product2.variants.first])
 
           subject.stub(:params).and_return(distributor_id: distributor.id)
           subject.filter(variants).should == [product2.variants.first]
         end
         it "filters to a specific order cycle" do
           distributor = create(:distributor_enterprise)
-          product1 = create(:simple_product, supplier: supplier, distributors: [distributor])
-          product2 = create(:simple_product, supplier: supplier, distributors: [distributor])
+          product1 = create(:simple_product, supplier: supplier)
+          product2 = create(:simple_product, supplier: supplier)
           order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product1.variants.first])
 
           subject.stub(:params).and_return(order_cycle_id: order_cycle.id)
@@ -141,8 +146,8 @@ module OpenFoodNetwork
 
         it "should do all the filters at once" do
           distributor = create(:distributor_enterprise)
-          product1 = create(:simple_product, supplier: supplier, distributors: [distributor])
-          product2 = create(:simple_product, supplier: supplier, distributors: [distributor])
+          product1 = create(:simple_product, supplier: supplier)
+          product2 = create(:simple_product, supplier: supplier)
           order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], variants: [product1.variants.first])
 
           subject.stub(:params).and_return(
@@ -151,6 +156,28 @@ module OpenFoodNetwork
             distributor_id: distributor.id,
             report_type: 'inventory')
           subject.filter(variants)
+        end
+      end
+
+      describe "fetching SKU for a variant" do
+        let(:variant) { create(:variant) }
+        let(:product) { variant.product }
+
+        before { product.update_attribute(:sku, "Product SKU") }
+
+        context "when the variant has an SKU set" do
+          before { variant.update_attribute(:sku, "Variant SKU") }
+          it "returns it" do
+            expect(subject.send(:sku_for, variant)).to eq "Variant SKU"
+          end
+        end
+
+        context "when the variant has bo SKU set" do
+          before { variant.update_attribute(:sku, "") }
+
+          it "returns the product's SKU" do
+            expect(subject.send(:sku_for, variant)).to eq "Product SKU"
+          end
         end
       end
     end

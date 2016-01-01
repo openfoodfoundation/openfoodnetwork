@@ -92,6 +92,11 @@ class AbilityDecorator
     can [:admin, :known_users], :search
 
     can [:admin, :show], :account
+
+    # For printing own account invoice orders
+    can [:print], Spree::Order do |order|
+      order.user == user
+    end
   end
 
   def add_product_management_abilities(user)

@@ -165,27 +165,57 @@ module Spree
             end
 
             context "and quantity is changed" do
-              context "and a final_weight_volume has been set" do
-                before do
-                  expect(expect(li.final_weight_volume).to eq 3000)
-                  attrs.merge!( quantity: 4 )
-                  li.update_attributes(attrs)
+              context "from > 0" do
+                context "and a final_weight_volume has been set" do
+                  before do
+                    expect(li.final_weight_volume).to eq 3000
+                    attrs.merge!( quantity: 4 )
+                    li.update_attributes(attrs)
+                  end
+
+                  it "scales the final_weight_volume based on the change in quantity" do
+                    expect(li.final_weight_volume).to eq 4000
+                  end
                 end
 
-                it "calculates a final_weight_volume from the variants unit_value" do
-                  expect(li.final_weight_volume).to eq 4000
+                context "and a final_weight_volume has not been set" do
+                  before do
+                    li.update_attributes(final_weight_volume: nil)
+                    attrs.merge!( quantity: 1 )
+                    li.update_attributes(attrs)
+                  end
+
+                  it "calculates a final_weight_volume from the variants unit_value" do
+                    expect(li.final_weight_volume).to eq 1000
+                  end
                 end
               end
 
-              context "and a final_weight_volume has not been set" do
-                before do
-                  li.update_attributes(final_weight_volume: nil)
-                  attrs.merge!( quantity: 1 )
-                  li.update_attributes(attrs)
+              context "from 0" do
+                before { li.update_attributes(quantity: 0) }
+
+                context "and a final_weight_volume has been set" do
+                  before do
+                    expect(li.final_weight_volume).to eq 0
+                    attrs.merge!( quantity: 4 )
+                    li.update_attributes(attrs)
+                  end
+
+                  it "recalculates a final_weight_volume from the variants unit_value" do
+                    expect(li.final_weight_volume).to eq 4000
+                  end
                 end
 
-                it "calculates a final_weight_volume from the variants unit_value" do
-                  expect(li.final_weight_volume).to eq 1000
+                context "and a final_weight_volume has not been set" do
+                  before do
+                    li.update_attributes(final_weight_volume: nil)
+                    attrs.merge!( quantity: 1 )
+                    li.update_attributes(attrs)
+                  end
+
+                  it "calculates a final_weight_volume from the variants unit_value" do
+                    expect(li.final_weight_volume).to eq 1000
+                  end
                 end
               end
             end
@@ -196,7 +226,7 @@ module Spree
       describe "generating the full name" do
         let(:li) { LineItem.new }
 
-	context "when display_name is blank" do
+	      context "when display_name is blank" do
           before do
             li.stub(:unit_to_display) { 'unit_to_display' }
             li.stub(:display_name) { '' }
@@ -223,7 +253,7 @@ module Spree
             li.stub(:unit_to_display) { '10kg' }
             li.stub(:display_name) { '10kg Box' }
           end
-        
+
           it "returns display_name" do
             li.full_name.should == '10kg Box'
           end
@@ -234,16 +264,38 @@ module Spree
             li.stub(:unit_to_display) { '1 Loaf' }
             li.stub(:display_name) { 'Spelt Sourdough' }
           end
-        
+
           it "returns unit_to_display" do
             li.full_name.should == 'Spelt Sourdough (1 Loaf)'
           end
         end
       end
 
+      describe "generating the product and variant name" do
+        let(:li) { LineItem.new }
+        let(:p) { double(:product, name: 'product') }
+        before { allow(li).to receive(:product) { p } }
+
+        context "when full_name starts with the product name" do
+          before { allow(li).to receive(:full_name) { p.name + " - something" } }
+
+          it "does not show the product name twice" do
+            li.product_and_full_name.should == 'product - something'
+          end
+        end
+
+        context "when full_name does not start with the product name" do
+          before { allow(li).to receive(:full_name) { "display_name (unit)" } }
+
+          it "prepends the product name to the full name" do
+            li.product_and_full_name.should == 'product - display_name (unit)'
+          end
+        end
+      end
+
       describe "getting name for display" do
         it "returns product name" do
-          li = create(:variant, product: create(:product))
+          li = create(:line_item, product: create(:product))
           li.name_to_display.should == li.product.name
         end
       end
