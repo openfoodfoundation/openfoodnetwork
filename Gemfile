@@ -105,6 +105,8 @@ group :test, :development do
   gem 'json_spec'
   gem 'unicorn-rails'
   gem 'atomic'
+  gem 'rubocop',               require: false
+  gem 'rubocop-rspec',         '1.3.1'
 end
 
 group :test do
@@ -124,5 +126,4 @@ group :development do
   gem 'guard-zeus'
   gem 'guard-rspec'
   gem 'parallel_tests'
-  gem 'rubocop'
 end
