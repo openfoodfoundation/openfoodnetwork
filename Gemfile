@@ -124,4 +124,5 @@ group :development do
   gem 'guard-zeus'
   gem 'guard-rspec'
   gem 'parallel_tests'
+  gem 'rubocop'
 end
