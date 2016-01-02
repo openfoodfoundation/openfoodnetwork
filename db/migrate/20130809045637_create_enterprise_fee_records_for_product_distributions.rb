@@ -1,5 +1,4 @@
 class CreateEnterpriseFeeRecordsForProductDistributions < ActiveRecord::Migration
-
   class ProductDistribution < ActiveRecord::Base
     belongs_to :shipping_method, class_name: 'Spree::ShippingMethod'
     belongs_to :distributor, class_name: 'Enterprise'

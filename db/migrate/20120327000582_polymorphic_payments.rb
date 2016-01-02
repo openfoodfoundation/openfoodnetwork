@@ -1,6 +1,6 @@
 # Legacy table support
-class Checkout < ActiveRecord::Base; end;
-class Spree::Creditcard < ActiveRecord::Base; end;
+class Checkout < ActiveRecord::Base; end
+class Spree::Creditcard < ActiveRecord::Base; end
 
 class PolymorphicPayments < ActiveRecord::Migration
   def up
@@ -16,11 +16,10 @@ class PolymorphicPayments < ActiveRecord::Migration
     Spree::Creditcard.table_name = 'creditcards'
 
     Spree::Creditcard.all.each do |creditcard|
-      if checkout = Checkout.find_by_id(creditcard.checkout_id) and checkout.order
-        if payment = checkout.order.payments.first
-          execute "UPDATE payments SET source_type = 'Creditcard', source_id = #{creditcard.id} WHERE id = #{payment.id}"
-        end
-      end
+      next unless checkout = Checkout.find_by_id(creditcard.checkout_id) and checkout.order
+      if payment = checkout.order.payments.first
+        execute "UPDATE payments SET source_type = 'Creditcard', source_id = #{creditcard.id} WHERE id = #{payment.id}"
+              end
     end
 
     Spree::Creditcard.table_name = 'spree_creditcards'

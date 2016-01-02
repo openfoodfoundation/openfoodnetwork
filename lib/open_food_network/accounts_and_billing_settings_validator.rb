@@ -13,28 +13,28 @@ module OpenFoodNetwork
     validate :ensure_default_shipping_method_set
     # validate :ensure_billing_info_collected, unless: lambda { create_invoices_for_enterprise_users == '0' }
 
-    def initialize(attr, button=nil)
-      attr.each { |k,v| instance_variable_set("@#{k}", v) }
+    def initialize(attr, button = nil)
+      attr.each { |k, v| instance_variable_set("@#{k}", v) }
       @button = button
     end
 
     def ensure_accounts_distributor_set
       unless Enterprise.find_by_id(accounts_distributor_id)
-        errors.add(:accounts_distributor, "must be set if you wish to create invoices for enterprise users.")
+        errors.add(:accounts_distributor, 'must be set if you wish to create invoices for enterprise users.')
       end
     end
 
     def ensure_default_payment_method_set
       unless Enterprise.find_by_id(accounts_distributor_id) &&
-        Enterprise.find_by_id(accounts_distributor_id).payment_methods.find_by_id(default_accounts_payment_method_id)
-        errors.add(:default_payment_method, "must be set if you wish to create invoices for enterprise users.")
+             Enterprise.find_by_id(accounts_distributor_id).payment_methods.find_by_id(default_accounts_payment_method_id)
+        errors.add(:default_payment_method, 'must be set if you wish to create invoices for enterprise users.')
       end
     end
 
     def ensure_default_shipping_method_set
       unless Enterprise.find_by_id(accounts_distributor_id) &&
-        Enterprise.find_by_id(accounts_distributor_id).shipping_methods.find_by_id(default_accounts_shipping_method_id)
-        errors.add(:default_shipping_method, "must be set if you wish to create invoices for enterprise users.")
+             Enterprise.find_by_id(accounts_distributor_id).shipping_methods.find_by_id(default_accounts_shipping_method_id)
+        errors.add(:default_shipping_method, 'must be set if you wish to create invoices for enterprise users.')
       end
     end
   end

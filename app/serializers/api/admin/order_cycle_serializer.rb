@@ -22,7 +22,7 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
 
   def exchanges
     scoped_exchanges = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object).visible_exchanges.by_enterprise_name
-    ActiveModel::ArraySerializer.new(scoped_exchanges, {each_serializer: Api::Admin::ExchangeSerializer, current_user: options[:current_user] })
+    ActiveModel::ArraySerializer.new(scoped_exchanges, each_serializer: Api::Admin::ExchangeSerializer, current_user: options[:current_user])
   end
 
   def editable_variants_for_incoming_exchanges

@@ -4,35 +4,35 @@ Spree::PaymentMethod.class_eval do
 
   attr_accessible :distributor_ids
 
-  validates :distributors, presence: { message: "^At least one hub must be selected" }
+  validates :distributors, presence: { message: '^At least one hub must be selected' }
 
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
     else
-      joins(:distributors).
-      where('distributors_payment_methods.distributor_id IN (?)', user.enterprises).
-      select('DISTINCT spree_payment_methods.*')
+      joins(:distributors)
+        .where('distributors_payment_methods.distributor_id IN (?)', user.enterprises)
+        .select('DISTINCT spree_payment_methods.*')
     end
   }
 
   scope :for_distributor, lambda { |distributor|
-    joins(:distributors).
-    where('enterprises.id = ?', distributor)
+    joins(:distributors)
+      .where('enterprises.id = ?', distributor)
   }
 
   scope :by_name, order('spree_payment_methods.name ASC')
 
   # Rewrite Spree's ruby-land class method as a scope
-  scope :available, lambda { |display_on='both'|
-    where(active: true).
-    where('spree_payment_methods.display_on=? OR spree_payment_methods.display_on=? OR spree_payment_methods.display_on IS NULL', display_on, '').
-    where('spree_payment_methods.environment=? OR spree_payment_methods.environment=? OR spree_payment_methods.environment IS NULL', Rails.env, '')
+  scope :available, lambda { |display_on = 'both'|
+    where(active: true)
+      .where('spree_payment_methods.display_on=? OR spree_payment_methods.display_on=? OR spree_payment_methods.display_on IS NULL', display_on, '')
+      .where('spree_payment_methods.environment=? OR spree_payment_methods.environment=? OR spree_payment_methods.environment IS NULL', Rails.env, '')
   }
 
   def has_distributor?(distributor)
-    self.distributors.include?(distributor)
+    distributors.include?(distributor)
   end
 end
 
@@ -42,14 +42,14 @@ Spree::Gateway.providers.each do |p|
   p.instance_eval do
     def clean_name
       case name
-      when "Spree::PaymentMethod::Check"
-        "Cash/EFT/etc. (payments for which automatic validation is not required)"
-      when "Spree::Gateway::Migs"
-        "MasterCard Internet Gateway Service (MIGS)"
-      when "Spree::Gateway::Pin"
-        "Pin Payments"
-      when "Spree::Gateway::PayPalExpress"
-        "PayPal Express"
+      when 'Spree::PaymentMethod::Check'
+        'Cash/EFT/etc. (payments for which automatic validation is not required)'
+      when 'Spree::Gateway::Migs'
+        'MasterCard Internet Gateway Service (MIGS)'
+      when 'Spree::Gateway::Pin'
+        'Pin Payments'
+      when 'Spree::Gateway::PayPalExpress'
+        'PayPal Express'
       else
         i = name.rindex('::') + 2
         name[i..-1]

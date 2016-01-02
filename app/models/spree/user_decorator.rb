@@ -24,15 +24,15 @@ Spree.user_class.class_eval do
       Spree::User.scoped
     else
       Spree::User
-      .includes(:enterprises)
-      .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)", id)
+        .includes(:enterprises)
+        .where('enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)', id)
     end
   end
 
   def build_enterprise_roles
-    Enterprise.all.each do |enterprise|
-      unless self.enterprise_roles.find_by_enterprise_id enterprise.id
-        self.enterprise_roles.build(enterprise: enterprise)
+    Enterprise.all.find_each do |enterprise|
+      unless enterprise_roles.find_by_enterprise_id enterprise.id
+        enterprise_roles.build(enterprise: enterprise)
       end
     end
   end

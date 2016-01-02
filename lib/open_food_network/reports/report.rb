@@ -7,18 +7,18 @@ module OpenFoodNetwork::Reports
 
     # -- API
     def header
-      self._header
+      _header
     end
 
     def columns
-      self._columns.to_a
+      _columns.to_a
     end
 
     def rules
       # Flatten linked list and return as hashes
       rules = []
 
-      rule = self._rules_head
+      rule = _rules_head
       while rule
         rules << rule
         rule = rule.next
@@ -27,7 +27,6 @@ module OpenFoodNetwork::Reports
       rules.map &:to_h
     end
 
-
     # -- DSL
     def self.header(*columns)
       self._header = columns
@@ -35,12 +34,12 @@ module OpenFoodNetwork::Reports
 
     def self.columns(&block)
       self._columns = Row.new
-      Blockenspiel.invoke block, self._columns
+      Blockenspiel.invoke block, _columns
     end
 
     def self.organise(&block)
       self._rules_head = Rule.new
-      Blockenspiel.invoke block, self._rules_head
+      Blockenspiel.invoke block, _rules_head
     end
   end
 end

@@ -9,11 +9,10 @@ Openfoodnetwork::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
-  config.static_cache_control = "public, max-age=3600"
+  config.static_cache_control = 'public, max-age=3600'
 
   # Separate cache stores when running in parallel
-  config.cache_store = :file_store, Rails.root.join("tmp", "cache", "paralleltests#{ENV['TEST_ENV_NUMBER']}")
-
+  config.cache_store = :file_store, Rails.root.join('tmp', 'cache', "paralleltests#{ENV['TEST_ENV_NUMBER']}")
 
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
@@ -26,7 +25,7 @@ Openfoodnetwork::Application.configure do
   config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -34,7 +33,7 @@ Openfoodnetwork::Application.configure do
   config.action_mailer.delivery_method = :test
 
   # Tests assume English text on the site.
-  config.i18n.default_locale = "en"
+  config.i18n.default_locale = 'en'
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
@@ -43,7 +42,7 @@ Openfoodnetwork::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  config.action_mailer.default_url_options = { host: "test.host" }
+  config.action_mailer.default_url_options = { host: 'test.host' }
 
   # To block requests before running the database cleaner
   require 'open_food_network/rack_request_blocker'

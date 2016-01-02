@@ -11,8 +11,8 @@ module EnterprisesHelper
     Enterprise.managed_by(spree_current_user)
   end
 
-  def enterprises_options enterprises
-    enterprises.map { |enterprise| [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city, enterprise.id.to_i] }
+  def enterprises_options(enterprises)
+    enterprises.map { |enterprise| [enterprise.name + ': ' + enterprise.address.address1 + ', ' + enterprise.address.city, enterprise.id.to_i] }
   end
 
   def enterprises_to_names(enterprises)
@@ -23,7 +23,7 @@ module EnterprisesHelper
     if enterprise.sells == 'none'
       enterprise.producer_profile_only ? 'Profile' : 'Supplier Only'
     else
-      "Has Shopfront"
+      'Has Shopfront'
     end
   end
 
@@ -41,21 +41,21 @@ module EnterprisesHelper
     url = object_url(enterprise)
     name = t(:delete)
     options = {}
-    options[:class] = "delete-resource"
+    options[:class] = 'delete-resource'
     options[:data] = { action: 'remove', confirm: enterprise_confirm_delete_message(enterprise) }
     link_to_with_icon 'icon-trash', name, url, options
   end
 
   def shop_trial_in_progress?(enterprise)
     !!enterprise.shop_trial_start_date &&
-    (enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days > Time.zone.now) &&
-    %w(own any).include?(enterprise.sells)
+      (enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days > Time.zone.now) &&
+      %w(own any).include?(enterprise.sells)
   end
 
   def shop_trial_expired?(enterprise)
     !!enterprise.shop_trial_start_date &&
-    (enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days <= Time.zone.now) &&
-    %w(own any).include?(enterprise.sells)
+      (enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days <= Time.zone.now) &&
+      %w(own any).include?(enterprise.sells)
   end
 
   def remaining_trial_days(enterprise)

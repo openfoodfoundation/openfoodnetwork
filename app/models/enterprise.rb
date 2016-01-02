@@ -3,12 +3,12 @@ class Enterprise < ActiveRecord::Base
   SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
-  preference :shopfront_message, :text, default: ""
-  preference :shopfront_closed_message, :text, default: ""
-  preference :shopfront_taxon_order, :string, default: ""
-  preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
+  preference :shopfront_message, :text, default: ''
+  preference :shopfront_closed_message, :text, default: ''
+  preference :shopfront_taxon_order, :string, default: ''
+  preference :shopfront_order_cycle_order, :string, default: 'orders_close_at'
 
-  devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
+  devise :confirmable, reconfirmable: true, confirmation_keys: [:id, :email]
   handle_asynchronously :send_confirmation_instructions
   handle_asynchronously :send_on_create_confirmation_instructions
   has_paper_trail only: [:owner_id, :sells], on: [:update]
@@ -40,17 +40,17 @@ class Enterprise < ActiveRecord::Base
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
-  accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
+  accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: ->(pp) { pp[:property_name].blank? }
 
   has_attached_file :logo,
-    styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
-    url:  '/images/enterprises/logos/:id/:style/:basename.:extension',
-    path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
+                    styles: { medium: '300x300>', small: '180x180>', thumb: '100x100>' },
+                    url:  '/images/enterprises/logos/:id/:style/:basename.:extension',
+                    path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: { large: ["1200x260#", :jpg], medium: ["720x156#", :jpg],  thumb: ["100x100>", :jpg] },
-    url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
-    path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
+                    styles: { large: ['1200x260#', :jpg], medium: ['720x156#', :jpg], thumb: ['100x100>', :jpg] },
+                    url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
+                    path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
 
   validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
   validates_attachment_content_type :promo_image, content_type: /\Aimage\/.*\Z/
@@ -59,29 +59,28 @@ class Enterprise < ActiveRecord::Base
   supports_s3 :logo
   supports_s3 :promo_image
 
-
   validates :name, presence: true
   validate :name_is_unique
-  validates :sells, presence: true, inclusion: {in: SELLS}
+  validates :sells, presence: true, inclusion: { in: SELLS }
   validates :address, presence: true, associated: true
   validates :email, presence: true
   validates_presence_of :owner
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
-  validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validate :enforce_ownership_limit, if: -> { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, maximum: 255
 
-  before_save :confirmation_check, if: lambda { email_changed? }
+  before_save :confirmation_check, if: -> { email_changed? }
 
-  before_validation :initialize_permalink, if: lambda { permalink.nil? }
-  before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
+  before_validation :initialize_permalink, if: -> { permalink.nil? }
+  before_validation :ensure_owner_is_manager, if: -> { owner_id_changed? && !owner_id.nil? }
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
   after_create :relate_to_owners_enterprises
   # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
-  after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
-  after_create :send_welcome_email, if: lambda { email_is_known? }
+  after_update :welcome_after_confirm, if: -> { confirmation_token_changed? && confirmation_token.nil? }
+  after_create :send_welcome_email, if: -> { email_is_known? }
 
   after_rollback :restore_permalink
 
@@ -91,10 +90,10 @@ class Enterprise < ActiveRecord::Base
   scope :unconfirmed, where('confirmed_at IS NULL')
   scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
   scope :ready_for_checkout, lambda {
-    joins(:shipping_methods).
-    joins(:payment_methods).
-    merge(Spree::PaymentMethod.available).
-    select('DISTINCT enterprises.*')
+    joins(:shipping_methods)
+      .joins(:payment_methods)
+      .merge(Spree::PaymentMethod.available)
+      .select('DISTINCT enterprises.*')
   }
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, ActiveRecord generates the SQL:
@@ -109,7 +108,7 @@ class Enterprise < ActiveRecord::Base
   scope :is_primary_producer, where(is_primary_producer: true)
   scope :is_distributor, where('sells != ?', 'none')
   scope :is_hub, where(sells: 'any')
-  scope :supplying_variant_in, lambda { |variants| joins(supplied_products: :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
+  scope :supplying_variant_in, ->(variants) { joins(supplied_products: :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
       .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.zone.now)
@@ -122,50 +121,50 @@ class Enterprise < ActiveRecord::Base
   }
 
   scope :with_distributed_products_outer,
-    joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
-    joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
+        joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id')
+    .joins('LEFT OUTER JOIN spree_products ON spree_products.id = product_distributions.product_id')
   scope :with_order_cycles_as_supplier_outer,
-    joins("LEFT OUTER JOIN exchanges ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+        joins("LEFT OUTER JOIN exchanges ON (exchanges.sender_id = enterprises.id AND exchanges.incoming = 't')")
+    .joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
   scope :with_order_cycles_as_distributor_outer,
-    joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+        joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')")
+    .joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
   scope :with_order_cycles_outer,
-    joins("LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id OR exchanges.sender_id = enterprises.id)").
-    joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
+        joins('LEFT OUTER JOIN exchanges ON (exchanges.receiver_id = enterprises.id OR exchanges.sender_id = enterprises.id)')
+    .joins('LEFT OUTER JOIN order_cycles ON (order_cycles.id = exchanges.order_cycle_id)')
 
   scope :with_order_cycles_and_exchange_variants_outer,
-    with_order_cycles_as_distributor_outer.
-    joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
-    joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)')
+        with_order_cycles_as_distributor_outer
+    .joins('LEFT OUTER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)')
+    .joins('LEFT OUTER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)')
 
   scope :active_distributors, lambda {
-    with_distributed_products_outer.with_order_cycles_as_distributor_outer.
-    where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.zone.now, Time.zone.now, Time.zone.now).
-    select('DISTINCT enterprises.*')
+    with_distributed_products_outer.with_order_cycles_as_distributor_outer
+      .where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.zone.now, Time.zone.now, Time.zone.now)
+      .select('DISTINCT enterprises.*')
   }
 
   scope :distributors_with_active_order_cycles, lambda {
-    with_order_cycles_as_distributor_outer.
-    merge(OrderCycle.active).
-    select('DISTINCT enterprises.*')
+    with_order_cycles_as_distributor_outer
+      .merge(OrderCycle.active)
+      .select('DISTINCT enterprises.*')
   }
 
   scope :distributing_product, lambda { |product|
-    with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
-    where('product_distributions.product_id = ? OR spree_variants.product_id = ?', product, product).
-    select('DISTINCT enterprises.*')
+    with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer
+      .where('product_distributions.product_id = ? OR spree_variants.product_id = ?', product, product)
+      .select('DISTINCT enterprises.*')
   }
   scope :distributing_any_product_of, lambda { |products|
-    with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
-    where('product_distributions.product_id IN (?) OR spree_variants.product_id IN (?)', products, products).
-    select('DISTINCT enterprises.*')
+    with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer
+      .where('product_distributions.product_id IN (?) OR spree_variants.product_id IN (?)', products, products)
+      .select('DISTINCT enterprises.*')
   }
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
     else
-      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id).select("DISTINCT enterprises.*")
+      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id).select('DISTINCT enterprises.*')
     end
   }
 
@@ -199,15 +198,15 @@ class Enterprise < ActiveRecord::Base
   end
 
   def has_supplied_products_on_hand?
-    self.supplied_products.where('count_on_hand > 0').present?
+    supplied_products.where('count_on_hand > 0').present?
   end
 
   def supplied_and_active_products_on_hand
-    self.supplied_products.where('spree_products.count_on_hand > 0').active
+    supplied_products.where('spree_products.count_on_hand > 0').active
   end
 
   def active_products_in_order_cycles
-    self.supplied_and_active_products_on_hand.in_an_active_order_cycle
+    supplied_and_active_products_on_hand.in_an_active_order_cycle
   end
 
   def to_param
@@ -220,7 +219,7 @@ class Enterprise < ActiveRecord::Base
         (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
       OR enterprises.id IN
         (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
-    ", self.id, self.id)
+    ", id, id)
   end
 
   def relatives_including_self
@@ -228,23 +227,23 @@ class Enterprise < ActiveRecord::Base
   end
 
   def distributors
-    self.relatives_including_self.is_distributor
+    relatives_including_self.is_distributor
   end
 
   def suppliers
-    self.relatives_including_self.is_primary_producer
+    relatives_including_self.is_primary_producer
   end
 
   def website
-    strip_url read_attribute(:website)
+    strip_url self[:website]
   end
 
   def facebook
-    strip_url read_attribute(:facebook)
+    strip_url self[:facebook]
   end
 
   def linkedin
-    strip_url read_attribute(:linkedin)
+    strip_url self[:linkedin]
   end
 
   def distributed_variants
@@ -256,54 +255,54 @@ class Enterprise < ActiveRecord::Base
   end
 
   def available_variants
-    Spree::Variant.joins(product: :product_distributions).where('product_distributions.distributor_id=?', self.id)
+    Spree::Variant.joins(product: :product_distributions).where('product_distributions.distributor_id=?', id)
   end
 
   def is_distributor
-    self.sells != "none"
+    sells != 'none'
   end
 
   def is_hub
-    self.sells == 'any'
+    sells == 'any'
   end
 
   # Simplify enterprise categories for frontend logic and icons, and maybe other things.
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
-    cat = self.is_primary_producer ? "producer_" : "non_producer_"
-    cat << "sells_" + self.sells
+    cat = is_primary_producer ? 'producer_' : 'non_producer_'
+    cat << 'sells_' + sells
 
     # Map backend cases to front end cases.
     case cat
-      when "producer_sells_any"
-        :producer_hub # Producer hub who sells own and others produce and supplies other hubs.
-      when "producer_sells_own"
-        :producer_shop # Producer with shopfront and supplies other hubs.
-      when "producer_sells_none"
-        :producer # Producer only supplies through others.
-      when "non_producer_sells_any"
-        :hub # Hub selling others products in order cycles.
-      when "non_producer_sells_own"
-        :hub # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
-      when "non_producer_sells_none"
-        :hub_profile # Hub selling outside the system.
+    when 'producer_sells_any'
+      :producer_hub # Producer hub who sells own and others produce and supplies other hubs.
+    when 'producer_sells_own'
+      :producer_shop # Producer with shopfront and supplies other hubs.
+    when 'producer_sells_none'
+      :producer # Producer only supplies through others.
+    when 'non_producer_sells_any'
+      :hub # Hub selling others products in order cycles.
+    when 'non_producer_sells_own'
+      :hub # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
+    when 'non_producer_sells_none'
+      :hub_profile # Hub selling outside the system.
     end
   end
 
   # Return all taxons for all distributed products
   def distributed_taxons
-    Spree::Taxon.
-      joins(:products).
-      where('spree_products.id IN (?)', Spree::Product.in_distributor(self)).
-      select('DISTINCT spree_taxons.*')
+    Spree::Taxon
+      .joins(:products)
+      .where('spree_products.id IN (?)', Spree::Product.in_distributor(self))
+      .select('DISTINCT spree_taxons.*')
   end
 
   # Return all taxons for all supplied products
   def supplied_taxons
-    Spree::Taxon.
-      joins(:products).
-      where('spree_products.id IN (?)', Spree::Product.in_supplier(self)).
-      select('DISTINCT spree_taxons.*')
+    Spree::Taxon
+      .joins(:products)
+      .where('spree_products.id IN (?)', Spree::Product.in_supplier(self))
+      .select('DISTINCT spree_taxons.*')
   end
 
   def ready_for_checkout?
@@ -312,15 +311,15 @@ class Enterprise < ActiveRecord::Base
 
   def self.find_available_permalink(test_permalink)
     test_permalink = test_permalink.parameterize
-    test_permalink = "my-enterprise" if test_permalink.blank?
-    existing = Enterprise.select(:permalink).order(:permalink).where("permalink LIKE ?", "#{test_permalink}%").map(&:permalink)
+    test_permalink = 'my-enterprise' if test_permalink.blank?
+    existing = Enterprise.select(:permalink).order(:permalink).where('permalink LIKE ?', "#{test_permalink}%").map(&:permalink)
     unless existing.include?(test_permalink)
       test_permalink
     else
       used_indices = existing.map do |p|
         p.slice!(/^#{test_permalink}/)
         p.match(/^\d+$/).to_s.to_i
-      end.select{ |p| p }
+      end.select { |p| p }
       options = (1..existing.length).to_a - used_indices
       test_permalink + options.first.to_s
     end
@@ -362,9 +361,7 @@ class Enterprise < ActiveRecord::Base
 
   def confirmation_check
     # Skip confirmation/reconfirmation if the new email has already been confirmed
-    if email_is_known?
-      new_record? ? skip_confirmation! : skip_reconfirmation!
-    end
+    new_record? ? skip_confirmation! : skip_reconfirmation! if email_is_known?
   end
 
   def welcome_after_confirm
@@ -376,7 +373,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def send_welcome_email
-    Delayed::Job.enqueue WelcomeEnterpriseJob.new(self.id)
+    Delayed::Job.enqueue WelcomeEnterpriseJob.new(id)
   end
 
   def strip_url(url)
@@ -431,7 +428,7 @@ class Enterprise < ActiveRecord::Base
 
   def shopfront_taxons
     unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
-      errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
+      errors.add(:shopfront_category_ordering, 'must contain a list of taxons.')
     end
   end
 

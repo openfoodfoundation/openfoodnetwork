@@ -15,15 +15,14 @@ require 'open_food_network/payments_report'
 require 'open_food_network/orders_and_fulfillments_report'
 
 Spree::Admin::ReportsController.class_eval do
-
   include Spree::ReportsHelper
 
   REPORT_TYPES = {
     orders_and_fulfillment: [
-      ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
-      ['Order Cycle Supplier Totals by Distributor',:order_cycle_supplier_totals_by_distributor],
-      ['Order Cycle Distributor Totals by Supplier',:order_cycle_distributor_totals_by_supplier],
-      ['Order Cycle Customer Totals',:order_cycle_customer_totals]
+      ['Order Cycle Supplier Totals', :order_cycle_supplier_totals],
+      ['Order Cycle Supplier Totals by Distributor', :order_cycle_supplier_totals_by_distributor],
+      ['Order Cycle Distributor Totals by Supplier', :order_cycle_distributor_totals_by_supplier],
+      ['Order Cycle Customer Totals', :order_cycle_customer_totals]
     ],
     products_and_inventory: [
       ['All products', :all_products],
@@ -31,36 +30,35 @@ Spree::Admin::ReportsController.class_eval do
       ['LettuceShare', :lettuce_share]
     ],
     customers: [
-      ["Mailing List", :mailing_list],
-      ["Addresses", :addresses]
+      ['Mailing List', :mailing_list],
+      ['Addresses', :addresses]
     ],
     order_cycle_management: [
-      ["Payment Methods Report", :payment_methods],
-      ["Delivery Report", :delivery]
+      ['Payment Methods Report', :payment_methods],
+      ['Delivery Report', :delivery]
     ],
     packing: [
-      ["Pack By Customer", :pack_by_customer],
-      ["Pack By Supplier", :pack_by_supplier]
+      ['Pack By Customer', :pack_by_customer],
+      ['Pack By Supplier', :pack_by_supplier]
     ]
   }
 
   # Fetches user's distributors, suppliers and order_cycles
-  before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
+  before_action :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
   # Render a partial for orders and fulfillment description
-  respond_override index: { html: { success: lambda {
+  respond_override index: { html: { success: lambda do
     @reports[:orders_and_fulfillment][:description] =
-      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
+      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: { report_types: REPORT_TYPES[:orders_and_fulfillment] }).html_safe
     @reports[:products_and_inventory][:description] =
-      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
+      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: { report_types: REPORT_TYPES[:products_and_inventory] }).html_safe
     @reports[:customers][:description] =
-      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
+      render_to_string(partial: 'customers_description', layout: false, locals: { report_types: REPORT_TYPES[:customers] }).html_safe
     @reports[:order_cycle_management][:description] =
-      render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: REPORT_TYPES[:order_cycle_management]}).html_safe
+      render_to_string(partial: 'order_cycle_management_description', layout: false, locals: { report_types: REPORT_TYPES[:order_cycle_management] }).html_safe
     @reports[:packing][:description] =
-        render_to_string(partial: 'packing_description', layout: false, locals: {report_types: REPORT_TYPES[:packing]}).html_safe
-} } }
-
+        render_to_string(partial: 'packing_description', layout: false, locals: { report_types: REPORT_TYPES[:packing] }).html_safe
+  end } }
 
   # Overide spree reports list.
   def index
@@ -136,12 +134,12 @@ Spree::Admin::ReportsController.class_eval do
     orders_with_hidden_details =
       permissions.editable_orders.empty? ? orders : orders.where('id NOT IN (?)', permissions.editable_orders)
 
-    orders.select{ |order| orders_with_hidden_details.include? order }.each do |order|
-      # TODO We should really be hiding customer code here too, but until we
+    orders.select { |order| orders_with_hidden_details.include? order }.each do |order|
+      # TODO: We should really be hiding customer code here too, but until we
       # have an actual association between order and customer, it's a bit tricky
-      order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-      order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-      order.assign_attributes(email: "HIDDEN")
+      order.bill_address.andand.assign_attributes(firstname: 'HIDDEN', lastname: '', phone: '', address1: '', address2: '', city: '', zipcode: '', state: nil)
+      order.ship_address.andand.assign_attributes(firstname: 'HIDDEN', lastname: '', phone: '', address1: '', address2: '', city: '', zipcode: '', state: nil)
+      order.assign_attributes(email: 'HIDDEN')
     end
 
     @report = OpenFoodNetwork::OrderAndDistributorReport.new orders
@@ -169,7 +167,7 @@ Spree::Admin::ReportsController.class_eval do
         csv << @report.header
         @report.table.each { |row| csv << row }
       end
-      send_data csv_string, filename: "sales_tax.csv"
+      send_data csv_string, filename: 'sales_tax.csv'
     end
   end
 
@@ -218,8 +216,8 @@ Spree::Admin::ReportsController.class_eval do
     # My suppliers and any suppliers supplying products I distribute
     @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
-    @order_cycles = OrderCycle.active_or_complete.
-    involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
+    @order_cycles = OrderCycle.active_or_complete
+                    .involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
     @report_types = REPORT_TYPES[:orders_and_fulfillment]
     @report_type = params[:report_type]
@@ -233,7 +231,6 @@ Spree::Admin::ReportsController.class_eval do
     csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
 
     render_report(@report.header, @table, params[:csv], csv_file_name)
-
   end
 
   def products_and_inventory
@@ -266,14 +263,13 @@ Spree::Admin::ReportsController.class_eval do
     render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
   end
 
-
   def render_report(header, table, create_csv, csv_file_name)
     unless create_csv
       render html: table
     else
       csv_string = CSV.generate do |csv|
         csv << header
-       table.each { |row| csv << row }
+        table.each { |row| csv << row }
       end
       send_data csv_string, filename: csv_file_name
     end
@@ -287,12 +283,20 @@ Spree::Admin::ReportsController.class_eval do
     if params[:q][:completed_at_gt].blank?
       params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
     else
-      params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]) rescue Time.zone.now.beginning_of_month
+      params[:q][:completed_at_gt] = begin
+                                       Time.zone.parse(params[:q][:completed_at_gt])
+                                     rescue
+                                       Time.zone.now.beginning_of_month
+                                     end
     end
     if params[:q] && !params[:q][:completed_at_lt].blank?
-      params[:q][:completed_at_lt] = Time.zone.parse(params[:q][:completed_at_lt]) rescue ""
+      params[:q][:completed_at_lt] = begin
+                                       Time.zone.parse(params[:q][:completed_at_lt])
+                                     rescue
+                                       ''
+                                     end
     end
-    params[:q][:meta_sort] ||= "completed_at.desc"
+    params[:q][:meta_sort] ||= 'completed_at.desc'
   end
 
   def load_data
@@ -309,25 +313,25 @@ Spree::Admin::ReportsController.class_eval do
 
   def authorized_reports
     reports = {
-      orders_and_distributors: {name: "Orders And Distributors", description: "Orders with distributor details"},
-      bulk_coop: {name: "Bulk Co-Op", description: "Reports for Bulk Co-Op orders"},
-      payments: {name: "Payment Reports", description: "Reports for Payments"},
-      orders_and_fulfillment: {name: "Orders & Fulfillment Reports", description: ''},
-      customers: {name: "Customers", description: 'Customer details'},
-      products_and_inventory: {name: "Products & Inventory", description: ''},
-      sales_total: { name: "Sales Total", description: "Sales Total For All Orders" },
-      users_and_enterprises: { name: "Users & Enterprises", description: "Enterprise Ownership & Status" },
-      order_cycle_management: {name: "Order Cycle Management", description: ''},
-      sales_tax: { name: "Sales Tax", description: "Sales Tax For Orders" },
-      xero_invoices: { name: "Xero Invoices", description: 'Invoices for import into Xero' },
-      packing: { name: "Packing Reports", description: '' },
-      sales_tax: { name: "Sales Tax", description: "Sales Tax For Orders" }
+      orders_and_distributors: { name: 'Orders And Distributors', description: 'Orders with distributor details' },
+      bulk_coop: { name: 'Bulk Co-Op', description: 'Reports for Bulk Co-Op orders' },
+      payments: { name: 'Payment Reports', description: 'Reports for Payments' },
+      orders_and_fulfillment: { name: 'Orders & Fulfillment Reports', description: '' },
+      customers: { name: 'Customers', description: 'Customer details' },
+      products_and_inventory: { name: 'Products & Inventory', description: '' },
+      sales_total: { name: 'Sales Total', description: 'Sales Total For All Orders' },
+      users_and_enterprises: { name: 'Users & Enterprises', description: 'Enterprise Ownership & Status' },
+      order_cycle_management: { name: 'Order Cycle Management', description: '' },
+      sales_tax: { name: 'Sales Tax', description: 'Sales Tax For Orders' },
+      xero_invoices: { name: 'Xero Invoices', description: 'Invoices for import into Xero' },
+      packing: { name: 'Packing Reports', description: '' },
+      sales_tax: { name: 'Sales Tax', description: 'Sales Tax For Orders' }
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
   end
 
   def timestamp
-    Time.zone.now.strftime("%Y%m%d")
+    Time.zone.now.strftime('%Y%m%d')
   end
 end

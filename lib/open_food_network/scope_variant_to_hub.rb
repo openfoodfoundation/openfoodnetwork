@@ -1,6 +1,6 @@
 module OpenFoodNetwork
   class ScopeVariantToHub
-    def initialize(hub, variant_overrides=nil)
+    def initialize(hub, variant_overrides = nil)
       @hub = hub
       @variant_overrides = variant_overrides || VariantOverride.indexed(@hub)
     end
@@ -10,7 +10,6 @@ module OpenFoodNetwork
       variant.instance_variable_set :@hub, @hub
       variant.instance_variable_set :@variant_override, @variant_overrides[variant]
     end
-
 
     module ScopeVariantToHub
       def price
@@ -35,7 +34,7 @@ module OpenFoodNetwork
         end
       end
 
-      def decrement!(attribute, by=1)
+      def decrement!(attribute, by = 1)
         if attribute == :count_on_hand && @variant_override.andand.stock_overridden?
           @variant_override.decrement_stock! by
         else
@@ -43,6 +42,5 @@ module OpenFoodNetwork
         end
       end
     end
-
   end
 end

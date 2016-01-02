@@ -1,11 +1,11 @@
 require 'open_food_network/accounts_and_billing_settings_validator'
 
 class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
-  before_filter :load_distributors, only: [:edit, :update, :start_job]
-  before_filter :load_jobs, only: [:edit, :update, :start_job]
-  before_filter :load_settings, only: [:edit, :update, :start_job]
-  before_filter :require_valid_settings, only: [:update, :start_job]
-  before_filter :require_known_job, only: [:start_job]
+  before_action :load_distributors, only: [:edit, :update, :start_job]
+  before_action :load_jobs, only: [:edit, :update, :start_job]
+  before_action :load_settings, only: [:edit, :update, :start_job]
+  before_action :require_valid_settings, only: [:update, :start_job]
+  before_action :require_known_job, only: [:start_job]
 
   def update
     Spree::Config.set(params[:settings])
@@ -15,11 +15,11 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
 
   def start_job
     if @update_account_invoices_job || @finalize_account_invoices_job
-      flash[:error] = "A task is already running, please wait until it has finished"
+      flash[:error] = 'A task is already running, please wait until it has finished'
     else
       new_job = "#{params[:job][:name]}".camelize.constantize.new
       Delayed::Job.enqueue new_job
-      flash[:success] = "Task Queued"
+      flash[:success] = 'Task Queued'
     end
 
     redirect_to_edit
@@ -43,24 +43,24 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def known_jobs
-    ['update_account_invoices', 'finalize_account_invoices']
+    %w(update_account_invoices finalize_account_invoices)
   end
 
   def require_known_job
     unless known_jobs.include?(params[:job][:name])
-      flash[:error] = "Unknown Task: #{params[:job][:name].to_s}"
+      flash[:error] = "Unknown Task: #{params[:job][:name]}"
       redirect_to_edit
     end
   end
 
   def load_settings
     @settings = OpenFoodNetwork::AccountsAndBillingSettingsValidator.new(params[:settings] || {
-      accounts_distributor_id: Spree::Config[:accounts_distributor_id],
-      default_accounts_payment_method_id: Spree::Config[:default_accounts_payment_method_id],
-      default_accounts_shipping_method_id: Spree::Config[:default_accounts_shipping_method_id],
-      auto_update_invoices: Spree::Config[:auto_update_invoices],
-      auto_finalize_invoices: Spree::Config[:auto_finalize_invoices]
-    })
+                                                                           accounts_distributor_id: Spree::Config[:accounts_distributor_id],
+                                                                           default_accounts_payment_method_id: Spree::Config[:default_accounts_payment_method_id],
+                                                                           default_accounts_shipping_method_id: Spree::Config[:default_accounts_shipping_method_id],
+                                                                           auto_update_invoices: Spree::Config[:auto_update_invoices],
+                                                                           auto_finalize_invoices: Spree::Config[:auto_finalize_invoices]
+                                                                         })
   end
 
   def load_distributors
@@ -68,7 +68,7 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
   end
 
   def load_jobs
-    @update_account_invoices_job = Delayed::Job.where("handler LIKE (?)", "%UpdateAccountInvoices%").last
-    @finalize_account_invoices_job = Delayed::Job.where("handler LIKE (?)", "%FinalizeAccountInvoices%").last
+    @update_account_invoices_job = Delayed::Job.where('handler LIKE (?)', '%UpdateAccountInvoices%').last
+    @finalize_account_invoices_job = Delayed::Job.where('handler LIKE (?)', '%FinalizeAccountInvoices%').last
   end
 end

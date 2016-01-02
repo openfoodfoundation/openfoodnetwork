@@ -3,7 +3,6 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
   class Distributor < ActiveRecord::Base; end
   class Spree::Address < ActiveRecord::Base; end
 
-
   def up
     # -- Distributors
     add_column :distributors, :pickup_address_id, :integer
@@ -25,7 +24,6 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
     %w(pickup_address city post_code state_id country_id).each do |column|
       remove_column :distributors, column
     end
-
 
     # -- Suppliers
     add_column :suppliers, :address_id, :integer
@@ -68,7 +66,6 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
     end
 
     remove_column :distributors, :pickup_address_id
-
 
     # -- Suppliers
     add_column :suppliers, :address, :string

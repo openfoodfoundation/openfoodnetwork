@@ -5,7 +5,7 @@ Spree::OrderPopulator.class_eval do
     @distributor, @order_cycle = distributor_and_order_cycle
     # Refactor: We may not need this validation - we can't change distribution here, so
     # this validation probably can't fail
-    if !distribution_can_supply_products_in_cart(@distributor, @order_cycle)
+    unless distribution_can_supply_products_in_cart(@distributor, @order_cycle)
       errors.add(:base, "That distributor or order cycle can't supply all the products in your cart. Please choose another.")
     end
 
@@ -32,17 +32,17 @@ Spree::OrderPopulator.class_eval do
   end
 
   def read_products_hash(data)
-    (data[:products] || []).map do |product_id, variant_id|
-      {variant_id: variant_id, quantity: data[:quantity]}
+    (data[:products] || []).map do |_product_id, variant_id|
+      { variant_id: variant_id, quantity: data[:quantity] }
     end
   end
 
   def read_variants_hash(data)
     (data[:variants] || []).map do |variant_id, quantity|
       if quantity.is_a?(Hash)
-        {variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity]}
+        { variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity] }
       else
-        {variant_id: variant_id, quantity: quantity}
+        { variant_id: variant_id, quantity: quantity }
       end
     end
   end
@@ -53,8 +53,8 @@ Spree::OrderPopulator.class_eval do
     OpenFoodNetwork::ScopeVariantToHub.new(@distributor).scope(variant)
     if quantity > 0
       if check_stock_levels(variant, quantity) &&
-          check_order_cycle_provided_for(variant) &&
-          check_variant_available_under_distribution(variant)
+         check_order_cycle_provided_for(variant) &&
+         check_variant_available_under_distribution(variant)
         @order.add_variant(variant, quantity, max_quantity, currency)
       end
     end
@@ -64,7 +64,6 @@ Spree::OrderPopulator.class_eval do
     variant = Spree::Variant.find(variant_id)
     @order.remove_variant(variant)
   end
-
 
   private
 
@@ -80,7 +79,7 @@ Spree::OrderPopulator.class_eval do
     li = line_item_for_variant_id variant_data[:variant_id]
 
     li_added = li.nil? && (variant_data[:quantity].to_i > 0 || variant_data[:max_quantity].to_i > 0)
-    li_quantity_changed     = li.present? && li.quantity.to_i     != variant_data[:quantity].to_i
+    li_quantity_changed     = li.present? && li.quantity.to_i != variant_data[:quantity].to_i
     li_max_quantity_changed = li.present? && li.max_quantity.to_i != variant_data[:max_quantity].to_i
 
     li_added || li_quantity_changed || li_max_quantity_changed
@@ -94,7 +93,7 @@ Spree::OrderPopulator.class_eval do
 
   def check_order_cycle_provided_for(variant)
     order_cycle_provided = (!order_cycle_required_for(variant) || @order_cycle.present?)
-    errors.add(:base, "Please choose an order cycle for this order.") unless order_cycle_provided
+    errors.add(:base, 'Please choose an order cycle for this order.') unless order_cycle_provided
     order_cycle_provided
   end
 
@@ -102,7 +101,7 @@ Spree::OrderPopulator.class_eval do
     if DistributionChangeValidator.new(@order).variants_available_for_distribution(@distributor, @order_cycle).include? variant
       return true
     else
-      errors.add(:base, "That product is not available from the chosen distributor or order cycle.")
+      errors.add(:base, 'That product is not available from the chosen distributor or order cycle.')
       return false
     end
   end

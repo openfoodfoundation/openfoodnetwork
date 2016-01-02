@@ -6,14 +6,13 @@ module Spree
       actions = actions_without_pin_payment_adaptations
       if payment_method.is_a? Gateway::Pin
         actions << 'refund' if actions.include? 'credit'
-        actions.reject! { |a| ['credit', 'void'].include? a }
+        actions.reject! { |a| %w(credit void).include? a }
       end
       actions
     end
     alias_method_chain :actions, :pin_payment_adaptations
 
-
-    def refund!(refund_amount=nil)
+    def refund!(refund_amount = nil)
       protect_from_connection_error do
         check_environment
 
@@ -40,13 +39,11 @@ module Spree
       end
     end
 
-
     private
 
-    def calculate_refund_amount(refund_amount=nil)
+    def calculate_refund_amount(refund_amount = nil)
       refund_amount ||= credit_allowed >= order.outstanding_balance.abs ? order.outstanding_balance.abs : credit_allowed.abs
       refund_amount.to_f
     end
-
   end
 end

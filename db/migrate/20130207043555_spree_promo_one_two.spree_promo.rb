@@ -15,20 +15,20 @@ class SpreePromoOneTwo < ActiveRecord::Migration
     create_table :spree_promotion_action_line_items, force: true do |t|
       t.references :promotion_action
       t.references :variant
-      t.integer    :quantity,            default: 1
+      t.integer :quantity, default: 1
     end
 
     create_table :spree_promotion_actions, force: true do |t|
       t.references :activator
-      t.integer    :position
-      t.string     :type
+      t.integer :position
+      t.string :type
     end
 
     create_table :spree_promotion_rules, force: true do |t|
       t.references :activator
       t.references :user
       t.references :product_group
-      t.string     :type
+      t.string :type
       t.timestamps
     end
 

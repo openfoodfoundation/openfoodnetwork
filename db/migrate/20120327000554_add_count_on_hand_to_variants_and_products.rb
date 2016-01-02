@@ -37,7 +37,7 @@ class AddCountOnHandToVariantsAndProducts < ActiveRecord::Migration
   end
 
   def down
-   Spree::Variant.all.each do |v|
+    Spree::Variant.all.each do |v|
       v.count_on_hand.times do
         Spree::InventoryUnit.create(variant: variant, state: 'on_hand')
       end

@@ -15,5 +15,4 @@ class MakeOrderCycleCoordinatorFeesMtm < ActiveRecord::Migration
     add_column :order_cycles, :coordinator_admin_fee_id, :integer
     add_column :order_cycles, :coordinator_sales_fee_id, :integer
   end
-
 end

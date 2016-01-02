@@ -8,7 +8,6 @@ class AddIncomingToExchanges < ActiveRecord::Migration
     end
   end
 
-
   def up
     add_column :exchanges, :incoming, :boolean, null: false, default: false
 

@@ -1,7 +1,7 @@
 module Admin
   module BusinessModelConfigurationHelper
     def monthly_bill_description
-      plus = monthly_bill_includes_fixed? && monthly_bill_includes_rate? ? " + " : ""
+      plus = monthly_bill_includes_fixed? && monthly_bill_includes_rate? ? ' + ' : ''
 
       if fixed_description.empty? && rate_description.empty?
         t(:free).upcase
@@ -15,22 +15,22 @@ module Admin
     private
 
     def fixed_description
-      fixed_amount = Spree::Money.new(Spree::Config[:account_invoices_monthly_fixed], {currency: Spree::Config[:currency]} ).rounded
-      monthly_bill_includes_fixed? ? "#{fixed_amount}" : ""
+      fixed_amount = Spree::Money.new(Spree::Config[:account_invoices_monthly_fixed], currency: Spree::Config[:currency]).rounded
+      monthly_bill_includes_fixed? ? "#{fixed_amount}" : ''
     end
 
     def rate_description
-      percentage = (Spree::Config[:account_invoices_monthly_rate]*100).round(2)
-      monthly_bill_includes_rate? ? t(:percentage_of_sales, percentage: "#{percentage}%").upcase : ""
+      percentage = (Spree::Config[:account_invoices_monthly_rate] * 100).round(2)
+      monthly_bill_includes_rate? ? t(:percentage_of_sales, percentage: "#{percentage}%").upcase : ''
     end
 
     def cap_description
-      cap_amount = Spree::Money.new(Spree::Config[:account_invoices_monthly_cap], { currency: Spree::Config[:currency] }).rounded
-      monthly_bill_includes_cap? ? "#{t(:capped_at_cap, cap: cap_amount).upcase}" : ""
+      cap_amount = Spree::Money.new(Spree::Config[:account_invoices_monthly_cap], currency: Spree::Config[:currency]).rounded
+      monthly_bill_includes_cap? ? "#{t(:capped_at_cap, cap: cap_amount).upcase}" : ''
     end
 
     def tax_description
-      Spree::Config[:account_invoices_tax_rate] > 0 ? ", #{t(:plus_tax).upcase}" : ""
+      Spree::Config[:account_invoices_tax_rate] > 0 ? ", #{t(:plus_tax).upcase}" : ''
     end
 
     def monthly_bill_includes_fixed?

@@ -12,7 +12,7 @@ module Admin
       if @enterprise_relationship.save
         render text: Api::Admin::EnterpriseRelationshipSerializer.new(@enterprise_relationship).to_json
       else
-        render status: 400, json: {errors: @enterprise_relationship.errors.full_messages.join(', ')}
+        render status: 400, json: { errors: @enterprise_relationship.errors.full_messages.join(', ') }
       end
     end
 

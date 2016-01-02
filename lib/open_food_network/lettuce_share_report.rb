@@ -4,22 +4,22 @@ module OpenFoodNetwork
   class LettuceShareReport < ProductsAndInventoryReportBase
     def header
       [
-        "PRODUCT",
-        "Description",
-        "Qty",
-        "Pack Size",
-        "Unit",
-        "Unit Price",
-        "Total",
-        "GST incl.",
-        "Grower and growing method",
-        "Taxon"
+        'PRODUCT',
+        'Description',
+        'Qty',
+        'Pack Size',
+        'Unit',
+        'Unit Price',
+        'Total',
+        'GST incl.',
+        'Grower and growing method',
+        'Taxon'
       ]
     end
 
     def table
-      variants.select { |v| v.in_stock? }
-      .map do |variant|
+      variants.select(&:in_stock?)
+        .map do |variant|
         [
           variant.product.name,
           variant.full_name,
@@ -34,7 +34,6 @@ module OpenFoodNetwork
         ]
       end
     end
-
 
     private
 
@@ -74,6 +73,5 @@ module OpenFoodNetwork
         "#{p[:name]} - #{p[:value]}"
       end.join(', ')
     end
-
   end
 end

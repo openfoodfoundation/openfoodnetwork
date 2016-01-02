@@ -8,9 +8,9 @@ module OpenFoodNetwork
 
     def header
       if is_mailing_list?
-        ["Email", "First Name", "Last Name", "Suburb"]
+        ['Email', 'First Name', 'Last Name', 'Suburb']
       else
-        ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address", "Shipping Method"]
+        ['First Name', 'Last Name', 'Billing Address', 'Email', 'Phone', 'Hub', 'Hub Address', 'Shipping Method']
       end
     end
 
@@ -25,13 +25,13 @@ module OpenFoodNetwork
           ba = order.billing_address
           da = order.distributor.andand.address
           [ba.firstname,
-            ba.lastname,
-            [ba.address1, ba.address2, ba.city].join(" "),
-            order.email,
-            ba.phone,
-            order.distributor.andand.name,
-            [da.andand.address1, da.andand.address2, da.andand.city].join(" "),
-            order.shipping_method.andand.name 
+           ba.lastname,
+           [ba.address1, ba.address2, ba.city].join(' '),
+           order.email,
+           ba.phone,
+           order.distributor.andand.name,
+           [da.andand.address1, da.andand.address2, da.andand.city].join(' '),
+           order.shipping_method.andand.name
           ]
         end
       end
@@ -48,7 +48,7 @@ module OpenFoodNetwork
     def filter_to_supplier(orders)
       if params[:supplier_id].to_i > 0
         orders.select do |order|
-          order.line_items.includes(:product).where("spree_products.supplier_id = ?", params[:supplier_id].to_i).count > 0
+          order.line_items.includes(:product).where('spree_products.supplier_id = ?', params[:supplier_id].to_i).count > 0
         end
       else
         orders
@@ -74,8 +74,7 @@ module OpenFoodNetwork
     private
 
     def is_mailing_list?
-      params[:report_type] == "mailing_list"
+      params[:report_type] == 'mailing_list'
     end
   end
 end
-

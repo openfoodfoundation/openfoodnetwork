@@ -11,4 +11,3 @@ class CreateSkrillTransactions < ActiveRecord::Migration
     end
   end
 end
-

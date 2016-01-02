@@ -2,21 +2,21 @@ require 'open_food_network/referer_parser'
 
 module Admin
   class EnterprisesController < ResourceController
-    before_filter :load_enterprise_set, only: :index
-    before_filter :load_countries, except: [:index, :register, :check_permalink]
-    before_filter :load_methods_and_fees, only: [:new, :edit, :update, :create]
-    before_filter :load_groups, only: [:new, :edit, :update, :create]
-    before_filter :load_taxons, only: [:new, :edit, :update, :create]
-    before_filter :check_can_change_sells, only: :update
-    before_filter :check_can_change_bulk_sells, only: :bulk_update
-    before_filter :override_owner, only: :create
-    before_filter :override_sells, only: :create
-    before_filter :check_can_change_owner, only: :update
-    before_filter :check_can_change_bulk_owner, only: :bulk_update
-    before_filter :check_can_change_managers, only: :update
-    before_filter :strip_new_properties, only: [:create, :update]
-    before_filter :load_properties, only: [:edit, :update]
-    before_filter :setup_property, only: [:edit]
+    before_action :load_enterprise_set, only: :index
+    before_action :load_countries, except: [:index, :register, :check_permalink]
+    before_action :load_methods_and_fees, only: [:new, :edit, :update, :create]
+    before_action :load_groups, only: [:new, :edit, :update, :create]
+    before_action :load_taxons, only: [:new, :edit, :update, :create]
+    before_action :check_can_change_sells, only: :update
+    before_action :check_can_change_bulk_sells, only: :bulk_update
+    before_action :override_owner, only: :create
+    before_action :override_sells, only: :create
+    before_action :check_can_change_owner, only: :update
+    before_action :check_can_change_bulk_owner, only: :bulk_update
+    before_action :check_can_change_managers, only: :update
+    before_action :strip_new_properties, only: [:create, :update]
+    before_action :load_properties, only: [:edit, :update]
+    before_action :setup_property, only: [:edit]
 
     helper 'spree/products'
     include ActionView::Helpers::TextHelper
@@ -30,7 +30,7 @@ module Admin
     end
 
     def welcome
-      render layout: "spree/layouts/bare_admin"
+      render layout: 'spree/layouts/bare_admin'
     end
 
     def update
@@ -53,13 +53,13 @@ module Admin
 
     def register
       if params[:sells] == 'unspecified'
-        flash[:error] = "Please select a package"
-        return render :welcome, layout: "spree/layouts/bare_admin"
+        flash[:error] = 'Please select a package'
+        return render :welcome, layout: 'spree/layouts/bare_admin'
       end
 
       attributes = { sells: params[:sells], visible: true }
 
-      if ['own', 'any'].include? params[:sells]
+      if %w(own any).include? params[:sells]
         attributes[:shop_trial_start_date] = @enterprise.shop_trial_start_date || Time.zone.now
       end
 
@@ -68,7 +68,7 @@ module Admin
         redirect_to admin_path
       else
         flash[:error] = "Could not complete registration for #{@enterprise.name}"
-        render :welcome, layout: "spree/layouts/bare_admin"
+        render :welcome, layout: 'spree/layouts/bare_admin'
       end
     end
 
@@ -76,7 +76,7 @@ module Admin
       @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
       touched_enterprises = @enterprise_set.collection.select(&:changed?)
       if @enterprise_set.save
-        flash[:success] = "Enterprises updated successfully"
+        flash[:success] = 'Enterprises updated successfully'
 
         # 18-3-2015: It seems that the form for this action sometimes loads bogus values for
         # the 'sells' field, and submitting that form results in a bunch of enterprises with
@@ -144,21 +144,21 @@ module Admin
         return OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises
       when :index
         if spree_current_user.admin?
-          OpenFoodNetwork::Permissions.new(spree_current_user).
-            editable_enterprises.
-            order('is_primary_producer ASC, name')
+          OpenFoodNetwork::Permissions.new(spree_current_user)
+            .editable_enterprises
+            .order('is_primary_producer ASC, name')
         elsif json_request?
           OpenFoodNetwork::Permissions.new(spree_current_user).editable_enterprises.ransack(params[:q]).result
         else
-          Enterprise.where("1=0")
+          Enterprise.where('1=0')
         end
       when :for_line_items
         OpenFoodNetwork::Permissions.new(spree_current_user).visible_enterprises.ransack(params[:q]).result
       else
-        # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
-        OpenFoodNetwork::Permissions.new(spree_current_user).
-          editable_enterprises.
-          order('is_primary_producer ASC, name')
+        # TODO: was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
+        OpenFoodNetwork::Permissions.new(spree_current_user)
+          .editable_enterprises
+          .order('is_primary_producer ASC, name')
       end
     end
 
@@ -167,8 +167,8 @@ module Admin
     end
 
     def load_methods_and_fees
-      @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by!{ |pm| [(@enterprise.payment_methods.include? pm) ? 0 : 1, pm.name] }
-      @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by!{ |sm| [(@enterprise.shipping_methods.include? sm) ? 0 : 1, sm.name] }
+      @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).sort_by! { |pm| [(@enterprise.payment_methods.include? pm) ? 0 : 1, pm.name] }
+      @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user).sort_by! { |sm| [(@enterprise.shipping_methods.include? sm) ? 0 : 1, sm.name] }
       @enterprise_fees = EnterpriseFee.managed_by(spree_current_user).for_enterprise(@enterprise).order(:fee_type, :name).all
     end
 
@@ -182,7 +182,7 @@ module Admin
 
     def check_can_change_bulk_sells
       unless spree_current_user.admin?
-        params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
+        params[:enterprise_set][:collection_attributes].each do |_i, enterprise_params|
           enterprise_params.delete :sells unless spree_current_user == Enterprise.find_by_id(enterprise_params[:id]).owner
         end
       end
@@ -207,21 +207,21 @@ module Admin
     end
 
     def check_can_change_owner
-      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
+      unless (spree_current_user == @enterprise.owner) || spree_current_user.admin?
         params[:enterprise].delete :owner_id
       end
     end
 
     def check_can_change_bulk_owner
       unless spree_current_user.admin?
-        params[:enterprise_set][:collection_attributes].each do |i, enterprise_params|
+        params[:enterprise_set][:collection_attributes].each do |_i, enterprise_params|
           enterprise_params.delete :owner_id
         end
       end
     end
 
     def check_can_change_managers
-      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
+      unless (spree_current_user == @enterprise.owner) || spree_current_user.admin?
         params[:enterprise].delete :user_ids
       end
     end
@@ -245,7 +245,7 @@ module Admin
 
     # Overriding method on Spree's resource controller
     def location_after_save
-      referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
+      referer_path = OpenFoodNetwork::RefererParser.path(request.referer)
       refered_from_edit = referer_path =~ /\/edit$/
       if params[:enterprise].key?(:producer_properties_attributes) && !refered_from_edit
         main_app.admin_enterprises_path

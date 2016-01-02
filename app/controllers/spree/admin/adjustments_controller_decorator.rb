@@ -1,9 +1,8 @@
 module Spree
   module Admin
     AdjustmentsController.class_eval do
-      before_filter :set_included_tax, only: [:create, :update]
-      before_filter :set_default_tax_rate, only: :edit
-
+      before_action :set_included_tax, only: [:create, :update]
+      before_action :set_default_tax_rate, only: :edit
 
       private
 
@@ -17,17 +16,16 @@ module Spree
       def set_default_tax_rate
         if @adjustment.included_tax > 0
           trs = TaxRate.match(@order)
-          tr_yielding_matching_tax = trs.select { |tr| tr.compute_tax(@adjustment.amount) == @adjustment.included_tax }.first.andand.id
+          tr_yielding_matching_tax = trs.find { |tr| tr.compute_tax(@adjustment.amount) == @adjustment.included_tax }.andand.id
           tr_valid_for_order = TaxRate.match(@order).first.andand.id
 
           @tax_rate_id = tr_yielding_matching_tax || tr_valid_for_order
 
           if tr_yielding_matching_tax.nil?
-            @adjustment.errors.add :tax_rate_id, "^Please check that the tax rate for this adjustment is correct."
+            @adjustment.errors.add :tax_rate_id, '^Please check that the tax rate for this adjustment is correct.'
           end
         end
       end
-
 
       def set_included_tax
         if params[:tax_rate_id].present?

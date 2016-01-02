@@ -16,7 +16,7 @@ module PermalinkGenerator
   end
 
   def create_unique_permalink(requested)
-    existing = self.class.where('id != ?', id).where("permalink LIKE ?", "#{requested}%").pluck(:permalink)
+    existing = self.class.where('id != ?', id).where('permalink LIKE ?', "#{requested}%").pluck(:permalink)
     self.class.find_available_value(existing, requested)
   end
 end

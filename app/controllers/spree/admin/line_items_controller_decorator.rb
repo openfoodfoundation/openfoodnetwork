@@ -1,10 +1,10 @@
 Spree::Admin::LineItemsController.class_eval do
-  prepend_before_filter :load_order, except: :index
-  around_filter :apply_enterprise_fees_with_lock, only: :update
+  prepend_before_action :load_order, except: :index
+  around_action :apply_enterprise_fees_with_lock, only: :update
 
   respond_to :json
 
-  # TODO make updating line items faster by creating a bulk update method
+  # TODO: make updating line items faster by creating a bulk update method
 
   def index
     respond_to do |format|
@@ -33,7 +33,6 @@ Spree::Admin::LineItemsController.class_eval do
       end
     end
   end
-
 
   private
 

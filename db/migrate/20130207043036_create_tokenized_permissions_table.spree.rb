@@ -4,8 +4,8 @@ class CreateTokenizedPermissionsTable < ActiveRecord::Migration
     unless Spree::TokenizedPermission.table_exists?
       create_table :spree_tokenized_permissions do |t|
         t.integer :permissable_id
-        t.string  :permissable_type
-        t.string  :token
+        t.string :permissable_type
+        t.string :token
 
         t.timestamps
       end
@@ -14,4 +14,3 @@ class CreateTokenizedPermissionsTable < ActiveRecord::Migration
     end
   end
 end
-

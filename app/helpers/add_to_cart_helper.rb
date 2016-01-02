@@ -18,5 +18,4 @@ module AddToCartHelper
   def available_order_cycles_for(order, product)
     DistributionChangeValidator.new(order).available_order_cycles_for(product)
   end
-
 end

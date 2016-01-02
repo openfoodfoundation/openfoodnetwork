@@ -27,13 +27,13 @@ Spree::Product.class_eval do
   # validates_presence_of :variants, unless: :new_record?, message: "Product must have at least one variant"
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
-  validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: "Spree::Config.products_require_tax_category"
+  validates :tax_category_id, presence: { message: "^Tax Category can't be blank" }, if: 'Spree::Config.products_require_tax_category'
 
   validates_presence_of :variant_unit
   validates_presence_of :variant_unit_scale,
-                        if: -> p { %w(weight volume).include? p.variant_unit }
+                        if: -> (p) { %w(weight volume).include? p.variant_unit }
   validates_presence_of :variant_unit_name,
-                        if: -> p { p.variant_unit == 'items' }
+                        if: -> (p) { p.variant_unit == 'items' }
 
   after_save :ensure_standard_variant
   after_initialize :set_available_on_to_now, if: :new_record?
@@ -41,20 +41,18 @@ Spree::Product.class_eval do
   after_touch :touch_distributors
   before_save :add_primary_taxon_to_taxons
 
-
   # -- Joins
   scope :with_product_distributions_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id = spree_products.id')
 
-  scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
-                                  joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = o_spree_variants.id)').
-                                  joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
-                                  joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
+  scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)')
+    .joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = o_spree_variants.id)')
+    .joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)')
+    .joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
 
-  scope :with_order_cycles_inner, joins(variants_including_master: {exchanges: :order_cycle})
-
+  scope :with_order_cycles_inner, joins(variants_including_master: { exchanges: :order_cycle })
 
   # -- Scopes
-  scope :in_supplier, lambda { |supplier| where(supplier_id: supplier) }
+  scope :in_supplier, ->(supplier) { where(supplier_id: supplier) }
 
   scope :in_any_supplier, lambda { |suppliers|
     where('supplier_id IN (?)', suppliers.map(&:id))
@@ -64,37 +62,41 @@ Spree::Product.class_eval do
   scope :in_distributor, lambda { |distributor|
     distributor = distributor.respond_to?(:id) ? distributor.id : distributor.to_i
 
-    with_product_distributions_outer.with_order_cycles_outer.
-    where('product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', distributor, false, distributor).
-    select('distinct spree_products.*')
+    with_product_distributions_outer.with_order_cycles_outer
+      .where('product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', distributor, false, distributor)
+      .select('distinct spree_products.*')
   }
 
   scope :in_product_distribution_by, lambda { |distributor|
     distributor = distributor.respond_to?(:id) ? distributor.id : distributor.to_i
 
-    with_product_distributions_outer.
-    where('product_distributions.distributor_id = ?', distributor).
-    select('distinct spree_products.*')
+    with_product_distributions_outer
+      .where('product_distributions.distributor_id = ?', distributor)
+      .select('distinct spree_products.*')
   }
 
   # Find products that are supplied by a given enterprise or distributed via that enterprise EITHER through a product distribution OR through an order cycle
   scope :in_supplier_or_distributor, lambda { |enterprise|
     enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
 
-    with_product_distributions_outer.with_order_cycles_outer.
-    where('spree_products.supplier_id = ? OR product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', enterprise, enterprise, false, enterprise).
-    select('distinct spree_products.*')
+    with_product_distributions_outer.with_order_cycles_outer
+      .where('spree_products.supplier_id = ? OR product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', enterprise, enterprise, false, enterprise)
+      .select('distinct spree_products.*')
   }
 
   # Find products that are distributed by the given order cycle
-  scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
-                                                merge(Exchange.outgoing).
-                                                where('order_cycles.id = ?', order_cycle) }
+  scope :in_order_cycle, lambda { |order_cycle|
+    with_order_cycles_inner
+      .merge(Exchange.outgoing)
+      .where('order_cycles.id = ?', order_cycle)
+  }
 
-  scope :in_an_active_order_cycle, lambda { with_order_cycles_inner.
-                                                merge(OrderCycle.active).
-                                                merge(Exchange.outgoing).
-                                                where('order_cycles.id IS NOT NULL') }
+  scope :in_an_active_order_cycle, lambda {
+    with_order_cycles_inner
+      .merge(OrderCycle.active)
+      .merge(Exchange.outgoing)
+      .where('order_cycles.id IS NOT NULL')
+  }
 
   scope :by_producer, joins(:supplier).order('enterprises.name')
   scope :by_name, order('name')
@@ -107,13 +109,12 @@ Spree::Product.class_eval do
     end
   }
 
-
   # -- Methods
 
   # Called by Spree::Product::duplicate before saving.
-  def duplicate_extra(parent)
+  def duplicate_extra(_parent)
     # Spree sets the SKU to "COPY OF #{parent sku}".
-    self.master.sku = ''
+    master.sku = ''
   end
 
   def properties_including_inherited
@@ -128,9 +129,9 @@ Spree::Product.class_eval do
       end
     end
 
-    ps.
-      sort_by { |pp| pp.position }.
-      map { |pp| {id: pp.property.id, name: pp.property.presentation, value: pp.value} }
+    ps
+      .sort_by(&:position)
+      .map { |pp| { id: pp.property.id, name: pp.property.presentation, value: pp.value } }
   end
 
   def in_distributor?(distributor)
@@ -142,7 +143,7 @@ Spree::Product.class_eval do
   end
 
   def product_distribution_for(distributor)
-    self.product_distributions.find_by_distributor_id(distributor)
+    product_distributions.find_by_distributor_id(distributor)
   end
 
   # overriding to check self.on_demand as well
@@ -162,10 +163,10 @@ Spree::Product.class_eval do
   end
 
   # Build a product distribution for each distributor
-  def build_product_distributions_for_user user
+  def build_product_distributions_for_user(user)
     Enterprise.is_distributor.managed_by(user).each do |distributor|
-      unless self.product_distributions.find_by_distributor_id distributor.id
-        self.product_distributions.build(distributor: distributor)
+      unless product_distributions.find_by_distributor_id distributor.id
+        product_distributions.build(distributor: distributor)
       end
     end
   end
@@ -185,11 +186,10 @@ Spree::Product.class_eval do
     transaction do
       delete_without_delete_from_order_cycles
 
-      ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master_and_deleted).destroy_all
+      ExchangeVariant.where('exchange_variants.variant_id IN (?)', variants_including_master_and_deleted).destroy_all
     end
   end
   alias_method_chain :delete, :delete_from_order_cycles
-
 
   private
 
@@ -219,10 +219,10 @@ Spree::Product.class_eval do
 
   def ensure_standard_variant
     if master.valid? && variants.empty?
-      variant = self.master.dup
+      variant = master.dup
       variant.product = self
       variant.is_master = false
-      self.variants << variant
+      variants << variant
     end
   end
 
@@ -230,19 +230,17 @@ Spree::Product.class_eval do
   # This fixes any problems arising from failing master saves, without the need for a validates_associated on
   # master, while giving us more specific errors as to why saving failed
   def save_master
-    begin
-      if master && (master.changed? || master.new_record? || (master.default_price && (master.default_price.changed? || master.default_price.new_record?)))
-        master.save!
-      end
-
-    # If the master cannot be saved, the Product object will get its errors
-    # and will be destroyed
-    rescue ActiveRecord::RecordInvalid
-      master.errors.each do |att, error|
-        self.errors.add(att, error)
-      end
-      raise
+    if master && (master.changed? || master.new_record? || (master.default_price && (master.default_price.changed? || master.default_price.new_record?)))
+      master.save!
     end
+
+  # If the master cannot be saved, the Product object will get its errors
+  # and will be destroyed
+  rescue ActiveRecord::RecordInvalid
+    master.errors.each do |att, error|
+      errors.add(att, error)
+    end
+    raise
   end
 
   def sanitize_permalink

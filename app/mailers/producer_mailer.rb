@@ -1,5 +1,4 @@
 class ProducerMailer < Spree::BaseMailer
-
   def order_cycle_report(producer, order_cycle)
     @producer = producer
     @coordinator = order_cycle.coordinator
@@ -18,7 +17,6 @@ class ProducerMailer < Spree::BaseMailer
     end
   end
 
-
   private
 
   def has_orders?(order_cycle, producer)
@@ -30,11 +28,11 @@ class ProducerMailer < Spree::BaseMailer
   end
 
   def line_items_from(order_cycle, producer)
-    Spree::LineItem.
-      joins(order: :order_cycle, variant: :product).
-      where('order_cycles.id = ?', order_cycle).
-      merge(Spree::Product.in_supplier(producer)).
-      merge(Spree::Order.complete)
+    Spree::LineItem
+      .joins(order: :order_cycle, variant: :product)
+      .where('order_cycles.id = ?', order_cycle)
+      .merge(Spree::Product.in_supplier(producer))
+      .merge(Spree::Order.complete)
   end
 
   def aggregate_line_items(line_items)

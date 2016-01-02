@@ -24,8 +24,8 @@ module OpenFoodNetwork::Reports
     end
 
     def to_h
-      h = {group_by: @group, sort_by: @sort}
-      h.merge!({summary_columns: @summary_row.to_a}) if @summary_row
+      h = { group_by: @group, sort_by: @sort }
+      h.merge!(summary_columns: @summary_row.to_a) if @summary_row
       h
     end
   end

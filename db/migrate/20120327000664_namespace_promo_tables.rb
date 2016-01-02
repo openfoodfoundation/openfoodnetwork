@@ -1,7 +1,6 @@
 require 'spree/core/preference_rescue'
 
 class NamespacePromoTables < ActiveRecord::Migration
-
   def concat(str1, str2)
     dbtype = Rails.configuration.database_configuration[Rails.env]['adapter'].to_sym
 
@@ -18,7 +17,7 @@ class NamespacePromoTables < ActiveRecord::Migration
   def update_column_data(table_names, column_name)
     tables = Array.wrap(table_names)
     tables.each do |table|
-      execute "UPDATE #{table} SET #{column_name} = #{concat("'Spree::'", column_name)}" +
+      execute "UPDATE #{table} SET #{column_name} = #{concat("'Spree::'", column_name)}" \
         " where #{column_name} NOT LIKE 'Spree::%' AND #{column_name} IS NOT NULL"
     end
   end
@@ -26,7 +25,7 @@ class NamespacePromoTables < ActiveRecord::Migration
   def replace_column_data(table_names, column_name)
     tables = Array.wrap(table_names)
     tables.each do |table|
-      execute "UPDATE #{table} SET #{column_name} = REPLACE(#{column_name}, 'Spree::', '') " +
+      execute "UPDATE #{table} SET #{column_name} = REPLACE(#{column_name}, 'Spree::', '') " \
         " where #{column_name} LIKE 'Spree::%'"
     end
   end

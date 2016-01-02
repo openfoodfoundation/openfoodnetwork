@@ -1,4 +1,4 @@
-class Checkout < ActiveRecord::Base; end;
+class Checkout < ActiveRecord::Base; end
 
 # Hack to prevent issues with legacy migrations
 class Order < ActiveRecord::Base

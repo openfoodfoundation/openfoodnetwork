@@ -6,7 +6,7 @@ module Spree
       order_cycles.map do |oc|
         orders_open_at = oc.orders_open_at.andand.to_s(:short) || 'NA'
         orders_close_at = oc.orders_close_at.andand.to_s(:short) || 'NA'
-        [ "#{oc.name} &nbsp; (#{orders_open_at} - #{orders_close_at})".html_safe, oc.id ]
+        ["#{oc.name} &nbsp; (#{orders_open_at} - #{orders_close_at})".html_safe, oc.id]
       end
     end
 
@@ -15,12 +15,12 @@ module Spree
     end
 
     def report_shipping_method_options(orders)
-      orders.map { |o| o.shipping_method.andand.name  }.uniq
+      orders.map { |o| o.shipping_method.andand.name }.uniq
     end
 
     def xero_report_types
-      [['Summary', 'summary'],
-       ['Detailed', 'detailed']]
+      [%w(Summary summary),
+       %w(Detailed detailed)]
     end
 
     def currency_symbol

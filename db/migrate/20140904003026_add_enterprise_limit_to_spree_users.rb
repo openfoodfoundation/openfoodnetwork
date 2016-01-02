@@ -4,11 +4,10 @@ class AddEnterpriseLimitToSpreeUsers < ActiveRecord::Migration
 
     Spree::User.all.each do |u|
       e_count = u.owned_enterprises.length
-      if u.admin? || e_count > 1
-        e_limit = 100
-        e_limit = 1000 if u.admin?
-        u.update_column :enterprise_limit, e_limit
-      end
+      next unless u.admin? || e_count > 1
+      e_limit = 100
+      e_limit = 1000 if u.admin?
+      u.update_column :enterprise_limit, e_limit
     end
   end
 

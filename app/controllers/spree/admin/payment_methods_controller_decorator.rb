@@ -1,9 +1,9 @@
 module Spree
   module Admin
     PaymentMethodsController.class_eval do
-      before_filter :force_environment, only: [:create, :update]
-      skip_before_filter :load_resource, only: [:show_provider_preferences]
-      before_filter :load_hubs, only: [:new, :edit, :update]
+      before_action :force_environment, only: [:create, :update]
+      skip_before_action :load_resource, only: [:show_provider_preferences]
+      before_action :load_hubs, only: [:new, :edit, :update]
       create.before :load_hubs
 
       # Only show payment methods that user has access to and sort by distributor name
@@ -11,7 +11,7 @@ module Spree
       def collection
         return parent.send(controller_name) if parent_data.present?
         collection = if model_class.respond_to?(:accessible_by) &&
-                         !current_ability.has_block?(params[:action], model_class)
+                        !current_ability.has_block?(params[:action], model_class)
 
                        model_class.accessible_by(current_ability, action)
 
@@ -40,7 +40,7 @@ module Spree
             @payment_method = PaymentMethod.find(params[:pm_id])
           end
         else
-          @payment_method = params[:provider_type].constantize.new()
+          @payment_method = params[:provider_type].constantize.new
         end
         render partial: 'provider_settings'
       end
@@ -53,14 +53,14 @@ module Spree
 
       def load_data
         if spree_current_user.admin? || Rails.env.test?
-          @providers = Gateway.providers.sort{|p1, p2| p1.name <=> p2.name }
+          @providers = Gateway.providers.sort { |p1, p2| p1.name <=> p2.name }
         else
-          @providers = Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort{|p1, p2| p1.name <=> p2.name }
+          @providers = Gateway.providers.reject { |p| p.name.include? 'Bogus' }.sort { |p1, p2| p1.name <=> p2.name }
         end
       end
 
       def load_hubs
-        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [(@payment_method.has_distributor? d) ? 0 : 1, d.name] }
+        @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by! { |d| [(@payment_method.has_distributor? d) ? 0 : 1, d.name] }
       end
     end
   end

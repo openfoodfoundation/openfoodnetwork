@@ -31,19 +31,19 @@ class AbilityDecorator
   # Users can manage products if they have an enterprise that is not a profile.
   def can_manage_products?(user)
     can_manage_enterprises?(user) &&
-    user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
+      user.enterprises.any? { |e| e.category != :hub_profile && e.producer_profile_only != true }
   end
 
   # Users can manage order cycles if they manage a sells own/any enterprise
   # OR if they manage a producer which is included in any order cycles
   def can_manage_order_cycles?(user)
     can_manage_orders?(user) ||
-    OrderCycle.accessible_by(user).any?
+      OrderCycle.accessible_by(user).any?
   end
 
   # Users can manage orders if they have a sells own/any enterprise.
   def can_manage_orders?(user)
-    ( user.enterprises.map(&:sells) & %w(own any) ).any?
+    (user.enterprises.map(&:sells) & %w(own any)).any?
   end
 
   def can_manage_relationships?(user)
@@ -51,7 +51,7 @@ class AbilityDecorator
   end
 
   # New users can create an enterprise, and gain other permissions from doing this.
-  def add_base_abilities(user)
+  def add_base_abilities(_user)
     can [:create], Enterprise
   end
 
@@ -112,13 +112,13 @@ class AbilityDecorator
     end
 
     can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
-      hub_auth = OpenFoodNetwork::Permissions.new(user).
-        variant_override_hubs.
-        include? vo.hub
+      hub_auth = OpenFoodNetwork::Permissions.new(user)
+                 .variant_override_hubs
+                 .include? vo.hub
 
-      producer_auth = OpenFoodNetwork::Permissions.new(user).
-        variant_override_producers.
-        include? vo.variant.product.supplier
+      producer_auth = OpenFoodNetwork::Permissions.new(user)
+                      .variant_override_producers
+                      .include? vo.variant.product.supplier
 
       hub_auth && producer_auth
     end
@@ -153,9 +153,9 @@ class AbilityDecorator
       order.distributor.nil? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
     can [:admin, :bulk_management, :managed], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
-    can [:admin , :for_line_items], Enterprise
+    can [:admin, :for_line_items], Enterprise
     can [:admin, :index, :create], Spree::LineItem
-    can [:destroy, :update], Spree::LineItem do |item|
+    can [:destroy, :update], Spree::LineItem do |_item|
       user.admin? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
 
@@ -198,7 +198,6 @@ class AbilityDecorator
 
     can [:admin, :index, :update], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
   end
-
 
   def add_relationship_management_abilities(user)
     can [:admin, :index, :create], EnterpriseRelationship

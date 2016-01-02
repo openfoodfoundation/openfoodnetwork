@@ -1,5 +1,5 @@
 Spree::Admin::BaseController.class_eval do
-  before_filter :warn_invalid_order_cycles
+  before_action :warn_invalid_order_cycles
 
   # Warn the user when they have an active order cycle with hubs that are not ready
   # for checkout (ie. does not have valid shipping and payment methods).
@@ -18,7 +18,7 @@ Spree::Admin::BaseController.class_eval do
       record = model_class
     else
       # this line changed to allow specificity for each non-resource controller (to be consistent with "authorize_resource class: false", see https://github.com/ryanb/cancan/blob/60cf6a67ef59c0c9b63bc27ea0101125c4193ea6/lib/cancan/controller_resource.rb#L146)
-      record = self.class.to_s.sub("Controller", "").underscore.split('/').last.singularize.to_sym
+      record = self.class.to_s.sub('Controller', '').underscore.split('/').last.singularize.to_sym
     end
     authorize! :admin, record
     authorize! action, record
@@ -36,7 +36,6 @@ Spree::Admin::BaseController.class_eval do
     end
   end
 
-
   private
 
   def active_distributors_not_ready_for_checkout
@@ -49,13 +48,13 @@ Spree::Admin::BaseController.class_eval do
     distributor_names = distributors.map(&:name).join ', '
 
     if distributors.count > 1
-      "The hubs #{distributor_names} are listed in an active order cycle, " +
-        "but do not have valid shipping and payment methods. " +
-        "Until you set these up, customers will not be able to shop at these hubs."
+      "The hubs #{distributor_names} are listed in an active order cycle, " \
+        'but do not have valid shipping and payment methods. ' \
+        'Until you set these up, customers will not be able to shop at these hubs.'
     else
-      "The hub #{distributor_names} is listed in an active order cycle, " +
-        "but does not have valid shipping and payment methods. " +
-        "Until you set these up, customers will not be able to shop at this hub."
+      "The hub #{distributor_names} is listed in an active order cycle, " \
+        'but does not have valid shipping and payment methods. ' \
+        'Until you set these up, customers will not be able to shop at this hub.'
     end
   end
 
@@ -67,7 +66,7 @@ Spree::Admin::BaseController.class_eval do
     request.format.json?
   end
 
-  def render_as_json(data, options={})
+  def render_as_json(data, options = {})
     ams_prefix = options.delete :ams_prefix
     if [Array, ActiveRecord::Relation].include? data.class
       render options.merge(json: data, each_serializer: serializer(ams_prefix))
@@ -78,11 +77,11 @@ Spree::Admin::BaseController.class_eval do
 
   def serializer(ams_prefix)
     if ams_prefix.nil? || ams_prefix_whitelist.include?(ams_prefix.to_sym)
-      prefix = ams_prefix.andand.classify || ""
+      prefix = ams_prefix.andand.classify || ''
       name = controller_name.classify
       "Api::Admin::#{prefix}#{name}Serializer".constantize
     else
-      raise "Suffix '#{ams_prefix}' not found in ams_prefix_whitelist for #{self.class.name}."
+      fail "Suffix '#{ams_prefix}' not found in ams_prefix_whitelist for #{self.class.name}."
     end
   end
 end

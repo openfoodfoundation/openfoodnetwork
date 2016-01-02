@@ -1,5 +1,4 @@
 module OpenFoodNetwork
-
   class OrderGrouper
     def initialize(rules, column_constructors)
       @rules = rules
@@ -19,10 +18,10 @@ module OpenFoodNetwork
     def group_and_sort(rule, remaining_rules, items)
       branch = {}
       groups = items.group_by { |item| rule[:group_by].call(item) }
-      sorted_groups = groups.sort_by { |key, value| rule[:sort_by].call(key) }
+      sorted_groups = groups.sort_by { |key, _value| rule[:sort_by].call(key) }
       sorted_groups.each do |property, items_by_property|
         branch[property] = build_tree(items_by_property, remaining_rules)
-        branch[property][:summary_row] = { items: items_by_property, columns: rule[:summary_columns] } unless rule[:summary_columns] == nil || is_leaf_node(branch[property])
+        branch[property][:summary_row] = { items: items_by_property, columns: rule[:summary_columns] } unless rule[:summary_columns].nil? || is_leaf_node(branch[property])
       end
       branch
     end

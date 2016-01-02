@@ -5,31 +5,32 @@ module OpenFoodNetwork
       @params = params
 
       # Convert arrays of ids to comma delimited strings
-      @params[:enterprise_id_in] = @params[:enterprise_id_in].join(',') if @params[:enterprise_id_in].kind_of? Array
-      @params[:user_id_in] = @params[:user_id_in].join(',') if @params[:user_id_in].kind_of? Array
+      @params[:enterprise_id_in] = @params[:enterprise_id_in].join(',') if @params[:enterprise_id_in].is_a? Array
+      @params[:user_id_in] = @params[:user_id_in].join(',') if @params[:user_id_in].is_a? Array
     end
 
     def header
       [
-          "User",
-          "Relationship",
-          "Enterprise",
-          "Producer?",
-          "Sells",
-          "Visible",
-          "Confirmation Date"
-        ]
+        "User",
+        "Relationship",
+        "Enterprise",
+        "Producer?",
+        "Sells",
+        "Visible",
+        "Confirmation Date"
+      ]
     end
 
     def table
-      users_and_enterprises.map do |uae| [
-        uae["user_email"],
-        uae["relationship_type"],
-        uae["name"],
-        to_bool(uae["is_primary_producer"]),
-        uae["sells"],
-        uae["visible"],
-        to_local_datetime(uae["confirmed_at"])
+      users_and_enterprises.map do |uae| 
+        [
+          uae["user_email"],
+          uae["relationship_type"],
+          uae["name"],
+          to_bool(uae["is_primary_producer"]),
+          uae["sells"],
+          uae["visible"],
+          to_local_datetime(uae["confirmed_at"])
         ]
       end
     end
@@ -61,17 +62,17 @@ module OpenFoodNetwork
     end
 
     def users_and_enterprises
-      sort( owners_and_enterprises.concat managers_and_enterprises )
+      sort(owners_and_enterprises.concat managers_and_enterprises)
     end
 
     def sort(results)
-      results.sort do |a,b|
+      results.sort do |a, b|
         if a["confirmed_at"].nil? || b["confirmed_at"].nil?
-          [ (a["confirmed_at"].nil? ? 0 : 1), a["name"], b["relationship_type"], a["user_email"] ] <=>
-          [ (b["confirmed_at"].nil? ? 0 : 1), b["name"], a["relationship_type"], b["user_email"] ]
+          [(a["confirmed_at"].nil? ? 0 : 1), a["name"], b["relationship_type"], a["user_email"]] <=>
+            [(b["confirmed_at"].nil? ? 0 : 1), b["name"], a["relationship_type"], b["user_email"]]
         else
-          [ DateTime.parse(b["confirmed_at"]), a["name"], b["relationship_type"], a["user_email"] ] <=>
-          [ DateTime.parse(a["confirmed_at"]), b["name"], a["relationship_type"], b["user_email"] ]
+          [DateTime.parse(b["confirmed_at"]), a["name"], b["relationship_type"], a["user_email"]] <=>
+            [DateTime.parse(a["confirmed_at"]), b["name"], a["relationship_type"], b["user_email"]]
         end
       end
     end

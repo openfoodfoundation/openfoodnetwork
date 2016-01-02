@@ -4,36 +4,36 @@ require 'open_food_network/referer_parser'
 Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   include OrderCyclesHelper
-  before_filter :load_form_data, only: [:bulk_edit, :new, :create, :edit, :update]
-  before_filter :load_spree_api_key, only: [:bulk_edit, :variant_overrides]
-  before_filter :strip_new_properties, only: [:create, :update]
+  before_action :load_form_data, only: [:bulk_edit, :new, :create, :edit, :update]
+  before_action :load_spree_api_key, only: [:bulk_edit, :variant_overrides]
+  before_action :strip_new_properties, only: [:create, :update]
 
   alias_method :location_after_save_original, :location_after_save
 
   respond_to :json, only: :clone
 
   respond_override create: { html: {
-    success: lambda {
-      if params[:button] == "add_another"
+    success: lambda do
+      if params[:button] == 'add_another'
         redirect_to new_admin_product_path
       else
         redirect_to '/admin/products/bulk_edit'
       end
-    },
-    failure: lambda {
+    end,
+    failure: lambda do
       render :new
-    } } }
-  #respond_override clone: { json: {success: lambda { redirect_to bulk_index_admin_products_url+"?q[id_eq]=#{@new.id}" } } }
+    end } }
+  # respond_override clone: { json: {success: lambda { redirect_to bulk_index_admin_products_url+"?q[id_eq]=#{@new.id}" } } }
 
   def product_distributions
   end
 
   def bulk_update
-    collection_hash = Hash[params[:products].each_with_index.map { |p,i| [i,p] }]
-    product_set = Spree::ProductSet.new({collection_attributes: collection_hash})
+    collection_hash = Hash[params[:products].each_with_index.map { |p, i| [i, p] }]
+    product_set = Spree::ProductSet.new(collection_attributes: collection_hash)
 
     params[:filters] ||= {}
-    bulk_index_query = params[:filters].reduce("") do |string, filter|
+    bulk_index_query = params[:filters].reduce('') do |string, filter|
       "#{string}q[#{filter[:property][:db_column]}_#{filter[:predicate][:predicate]}]=#{filter[:value]};"
     end
 
@@ -51,10 +51,10 @@ Spree::Admin::ProductsController.class_eval do
     end
   end
 
-
   protected
+
   def location_after_save
-    referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
+    referer_path = OpenFoodNetwork::RefererParser.path(request.referer)
     if referer_path == '/admin/products/bulk_edit'
       bulk_edit_admin_products_url
     else
@@ -68,21 +68,21 @@ Spree::Admin::ProductsController.class_eval do
     # TODO: There has to be a better way!!!
     return @collection if @collection.present?
     params[:q] ||= {}
-    params[:q][:deleted_at_null] ||= "1"
+    params[:q][:deleted_at_null] ||= '1'
 
-    params[:q][:s] ||= "name asc"
+    params[:q][:s] ||= 'name asc'
 
     @search = Spree::Product.ransack(params[:q]) # this line is modified - hit Spree::Product instead of super, avoiding cancan error for fetching records with block permissions via accessible_by
-    @collection = @search.result.
-      managed_by(spree_current_user). # this line is added to the original spree code!!!!!
-      group_by_products_id.
-      includes(product_includes).
-      page(params[:page]).
-      per(Spree::Config[:admin_products_per_page])
+    @collection = @search.result
+                  .managed_by(spree_current_user) # this line is added to the original spree code!!!!!
+                  .group_by_products_id
+                  .includes(product_includes)
+                  .page(params[:page])
+                  .per(Spree::Config[:admin_products_per_page])
 
-    if params[:q][:s].include?("master_default_price_amount")
+    if params[:q][:s].include?('master_default_price_amount')
       # PostgreSQL compatibility
-      @collection = @collection.group("spree_prices.amount")
+      @collection = @collection.group('spree_prices.amount')
     end
     @collection
   end
@@ -90,7 +90,6 @@ Spree::Admin::ProductsController.class_eval do
   def collection_actions
     [:index, :bulk_edit, :bulk_update]
   end
-
 
   private
 

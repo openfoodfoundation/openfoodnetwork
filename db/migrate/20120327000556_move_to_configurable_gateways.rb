@@ -6,12 +6,12 @@ class MoveToConfigurableGateways < ActiveRecord::Migration
     drop_table :gateway_configurations
 
     create_table :gateways, force: true do |t|
-      t.string   :type, :name
-      t.text     :description
-      t.boolean  :active, default: true
-      t.string   :environment, default: 'development'
-      t.string   :server, default: 'test'
-      t.boolean  :test_mode, default: true
+      t.string :type, :name
+      t.text :description
+      t.boolean :active, default: true
+      t.string :environment, default: 'development'
+      t.string :server, default: 'test'
+      t.boolean :test_mode, default: true
 
       t.timestamps
     end
@@ -27,7 +27,7 @@ class MoveToConfigurableGateways < ActiveRecord::Migration
     end
 
     create_table :gateway_option_values, force: true do |t|
-      t.text     :value
+      t.text :value
       t.references :gateway_configuration
       t.references :gateway_option
 
@@ -35,18 +35,18 @@ class MoveToConfigurableGateways < ActiveRecord::Migration
     end
 
     create_table :gateway_options, force: true do |t|
-      t.string   :name
-      t.text     :description
-      t.boolean  :textarea, default: false
+      t.string :name
+      t.text :description
+      t.boolean :textarea, default: false
       t.references :gateway
 
       t.timestamps
     end
 
     create_table :gateways, force: true do |t|
-      t.string   :clazz, :name
-      t.text     :description
-      t.boolean  :active
+      t.string :clazz, :name
+      t.text :description
+      t.boolean :active
 
       t.timestamps
     end

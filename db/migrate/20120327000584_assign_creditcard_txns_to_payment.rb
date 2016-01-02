@@ -18,6 +18,6 @@ class AssignCreditcardTxnsToPayment < ActiveRecord::Migration
 
   def down
     remove_column :creditcard_txns, :payment_id
-    add_column    :creditcard_txns, :creditcard_payment_id, :integer
+    add_column :creditcard_txns, :creditcard_payment_id, :integer
   end
 end

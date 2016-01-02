@@ -1,6 +1,6 @@
 # In sidebar, always render both taxonomies and filters
 
-Deface::Override.new(virtual_path: "spree/home/index",
+Deface::Override.new(virtual_path: 'spree/home/index',
                      replace: "[data-hook='homepage_sidebar_navigation']",
                      partial: 'spree/sidebar',
                      name: 'sidebar_home_index',

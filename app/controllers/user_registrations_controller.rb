@@ -1,5 +1,5 @@
 class UserRegistrationsController < Spree::UserRegistrationsController
-  before_filter :set_checkout_redirect, only: :create
+  before_action :set_checkout_redirect, only: :create
 
   # POST /resource/sign_up
   def create

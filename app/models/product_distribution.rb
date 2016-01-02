@@ -7,11 +7,10 @@ class ProductDistribution < ActiveRecord::Base
   validates_presence_of :distributor_id, :enterprise_fee_id
   validates_uniqueness_of :product_id, scope: :distributor_id
 
-
   def adjustment_for(line_item)
     adjustments = line_item.order.adjustments.enterprise_fee.where(originator_id: enterprise_fee)
 
-    raise "Multiple adjustments for this enterprise fee on this line item. This method is not designed to deal with this scenario." if adjustments.count > 1
+    fail 'Multiple adjustments for this enterprise fee on this line item. This method is not designed to deal with this scenario.' if adjustments.count > 1
 
     adjustments.first
   end

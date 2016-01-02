@@ -31,14 +31,14 @@ class EnterpriseGroup < ActiveRecord::Base
   delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, to: :address
 
   has_attached_file :logo,
-    styles: {medium: "100x100"},
-    url:  '/images/enterprise_groups/logos/:id/:style/:basename.:extension',
-    path: 'public/images/enterprise_groups/logos/:id/:style/:basename.:extension'
+                    styles: { medium: '100x100' },
+                    url:  '/images/enterprise_groups/logos/:id/:style/:basename.:extension',
+                    path: 'public/images/enterprise_groups/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: {large: ["1200x260#", :jpg]},
-    url:  '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
-    path: 'public/images/enterprise_groups/promo_images/:id/:style/:basename.:extension'
+                    styles: { large: ['1200x260#', :jpg] },
+                    url:  '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
+                    path: 'public/images/enterprise_groups/promo_images/:id/:style/:basename.:extension'
 
   validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
   validates_attachment_content_type :promo_image, content_type: /\Aimage\/.*\Z/

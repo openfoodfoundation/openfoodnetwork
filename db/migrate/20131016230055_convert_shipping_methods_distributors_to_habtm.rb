@@ -24,12 +24,11 @@ class ConvertShippingMethodsDistributorsToHabtm < ActiveRecord::Migration
     add_index :spree_shipping_methods, :distributor_id
 
     Spree::ShippingMethod.all.each do |sm|
-      if sm.distributors.present?
-        sm.distributor = sm.distributors.first
-        sm.save!
+      next unless sm.distributors.present?
+      sm.distributor = sm.distributors.first
+      sm.save!
 
-        say "WARNING: Discarding #{sm.distributors.count-1} distributors while flattening HABTM relation to belongs_to" if sm.distributors.count > 1
-      end
+      say "WARNING: Discarding #{sm.distributors.count - 1} distributors while flattening HABTM relation to belongs_to" if sm.distributors.count > 1
     end
 
     drop_table :distributors_shipping_methods

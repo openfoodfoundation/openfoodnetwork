@@ -11,14 +11,12 @@ class Api::Admin::BasicOrderCycleSerializer < ActiveModel::Serializer
   end
 
   def first_order
-    object.orders_open_at.andand.strftime("%F")
+    object.orders_open_at.andand.strftime('%F')
   end
 
   def last_order
     if object.orders_close_at.present?
-      (object.orders_close_at + 1.day).strftime("%F")
-    else
-      nil
+      (object.orders_close_at + 1.day).strftime('%F')
     end
   end
 end

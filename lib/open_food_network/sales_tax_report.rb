@@ -9,9 +9,9 @@ module OpenFoodNetwork
     end
 
     def header
-      ["Order number", "Date", "Items", "Items total (#{currency_symbol})", "Taxable Items Total (#{currency_symbol})",
-        "Sales Tax (#{currency_symbol})", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})", "Tax on Fees (#{currency_symbol})",
-        "Total Tax (#{currency_symbol})", "Customer", "Distributor"]
+      ['Order number', 'Date', 'Items', "Items total (#{currency_symbol})", "Taxable Items Total (#{currency_symbol})",
+       "Sales Tax (#{currency_symbol})", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})", "Tax on Fees (#{currency_symbol})",
+       "Total Tax (#{currency_symbol})", 'Customer', 'Distributor']
     end
 
     def search
@@ -34,11 +34,10 @@ module OpenFoodNetwork
       end
     end
 
-
     private
 
     def totals_of(line_items)
-      totals = {items: 0, items_total: 0.0, taxable_total: 0.0, sales_tax: 0.0}
+      totals = { items: 0, items_total: 0.0, taxable_total: 0.0, sales_tax: 0.0 }
 
       line_items.each do |line_item|
         totals[:items] += line_item.quantity
@@ -52,7 +51,7 @@ module OpenFoodNetwork
         end
       end
 
-      totals.each_pair do |k, v|
+      totals.each_pair do |k, _v|
         totals[k] = totals[k].round(2)
       end
 
@@ -60,7 +59,7 @@ module OpenFoodNetwork
     end
 
     def shipping_cost_for(order)
-      shipping_cost = order.adjustments.find_by_label("Shipping").andand.amount
+      shipping_cost = order.adjustments.find_by_label('Shipping').andand.amount
       shipping_cost = shipping_cost.nil? ? 0.0 : shipping_cost
     end
 

@@ -2,8 +2,8 @@ class CreateTokenizedPermissions < ActiveRecord::Migration
   def change
     create_table :tokenized_permissions do |t|
       t.integer :permissable_id
-      t.string  :permissable_type
-      t.string  :token
+      t.string :permissable_type
+      t.string :token
 
       t.timestamps
     end

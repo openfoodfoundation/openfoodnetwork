@@ -19,7 +19,7 @@ class EnterpriseConfirmationsController < DeviseController
       set_flash_message(:error, :confirmation_not_sent) if is_navigational_format?
     end
 
-    respond_with_navigational(resource){ redirect_to spree.admin_path }
+    respond_with_navigational(resource) { redirect_to spree.admin_path }
   end
 
   # GET /resource/confirmation?confirmation_token=abcdef
@@ -32,7 +32,7 @@ class EnterpriseConfirmationsController < DeviseController
       set_flash_message(:error, :not_confirmed) if is_navigational_format?
     end
 
-    respond_with_navigational(resource){ redirect_to redirect_path(resource) }
+    respond_with_navigational(resource) { redirect_to redirect_path(resource) }
   end
 
   private

@@ -1,9 +1,8 @@
 module Admin
   class EnterpriseFeesController < ResourceController
-    before_filter :load_enterprise_fee_set, only: :index
-    before_filter :load_data
-    before_filter :do_not_destroy_referenced_fees, only: :destroy
-
+    before_action :load_enterprise_fee_set, only: :index
+    before_action :load_data
+    before_action :do_not_destroy_referenced_fees, only: :destroy
 
     def index
       @include_calculators = params[:include_calculators].present?
@@ -24,9 +23,9 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render json: ActiveModel::ArraySerializer.new( @collection,
-            each_serializer: Api::Admin::EnterpriseFeeSerializer, controller: self
-          ).to_json
+          render json: ActiveModel::ArraySerializer.new(@collection,
+                                                        each_serializer: Api::Admin::EnterpriseFeeSerializer, controller: self
+                                                       ).to_json
         end
       end
     end
@@ -44,7 +43,6 @@ module Admin
         render :index
       end
     end
-
 
     private
 
@@ -95,6 +93,5 @@ module Admin
     def current_enterprise
       Enterprise.find params[:enterprise_id] if params.key? :enterprise_id
     end
-
   end
 end

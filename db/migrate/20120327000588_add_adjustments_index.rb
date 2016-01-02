@@ -3,4 +3,3 @@ class AddAdjustmentsIndex < ActiveRecord::Migration
     add_index :adjustments, :order_id
   end
 end
-

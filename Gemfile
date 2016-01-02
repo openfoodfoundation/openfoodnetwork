@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.1.5"
+ruby '2.1.5'
 
 gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
@@ -8,14 +8,14 @@ gem 'i18n', '~> 0.6.11'
 gem 'nokogiri'
 
 gem 'pg'
-gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
-gem 'spree_i18n', :github => 'spree/spree_i18n', :branch => '1-3-stable'
-gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '1-3-stable'
+gem 'spree', github: 'openfoodfoundation/spree', branch: '1-3-stable'
+gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
+gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '1-3-stable'
 
 # Waiting on merge of PR #117
 # https://github.com/spree-contrib/better_spree_paypal_express/pull/117
-gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "1-3-stable"
-#gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
+gem 'spree_paypal_express', github: 'openfoodfoundation/better_spree_paypal_express', branch: '1-3-stable'
+# gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
 
 gem 'delayed_job_active_record'
 gem 'daemons'
@@ -23,14 +23,14 @@ gem 'comfortable_mexican_sofa'
 
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
 # When merged, revert to upstream gem
-gem 'simple_form', :github => 'RohanM/simple_form'
+gem 'simple_form', github: 'RohanM/simple_form'
 
 gem 'unicorn'
 gem 'angularjs-rails', '1.2.13'
 gem 'bugsnag'
 gem 'newrelic_rpm'
 gem 'haml'
-gem 'sass', "~> 3.3"
+gem 'sass', '~> 3.3'
 gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
 gem 'redcarpet'
 gem 'aws-sdk'
@@ -39,16 +39,16 @@ gem 'andand'
 gem 'truncate_html'
 gem 'representative_view'
 gem 'rabl'
-gem "active_model_serializers"
+gem 'active_model_serializers'
 gem 'oj'
-gem 'deface', :github => 'spree/deface', :ref => '1110a13'
+gem 'deface', github: 'spree/deface', ref: '1110a13'
 gem 'paperclip'
 gem 'dalli'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'spinjs-rails'
-gem 'rack-ssl', :require => 'rack/ssl'
-gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
+gem 'rack-ssl', require: 'rack/ssl'
+gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
 gem 'roadie-rails', '~> 1.0.3'
 gem 'figaro'
@@ -81,22 +81,21 @@ group :assets do
   gem 'angular-rails-templates', '~> 0.2.0'
 end
 
-gem "foundation-rails"
-gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
+gem 'foundation-rails'
+gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: 'rails3'
 
 gem 'jquery-rails'
 gem 'css_splitter'
 
-
 group :test, :development do
   # Pretty printed test output
-  gem 'turn', '~> 0.8.3', :require => false
+  gem 'turn', '~> 0.8.3', require: false
   gem 'fuubar'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails', :require => false
+  gem 'factory_girl_rails', require: false
   gem 'capybara'
-  gem 'database_cleaner', '0.7.1', :require => false
+  gem 'database_cleaner', '0.7.1', require: false
   gem 'awesome_print'
   gem 'letter_opener'
   gem 'timecop'
@@ -113,7 +112,7 @@ group :test do
   gem 'webmock'
 
   # See spec/spec_helper.rb for instructions
-  #gem 'perftools.rb'
+  # gem 'perftools.rb'
 end
 
 group :development do

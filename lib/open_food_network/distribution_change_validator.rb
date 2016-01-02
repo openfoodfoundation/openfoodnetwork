@@ -1,6 +1,5 @@
 class DistributionChangeValidator
-  
-  def initialize order
+  def initialize(order)
     @order = order
   end
 
@@ -56,13 +55,13 @@ class DistributionChangeValidator
     @all_available_distributors ||= (available_distributors(Enterprise.all) || [])
   end
 
-  def available_distributors enterprises
+  def available_distributors(enterprises)
     enterprises.select do |e|
       (@order.line_item_variants - e.distributed_variants).empty?
     end
   end
 
-  def available_order_cycles order_cycles
+  def available_order_cycles(order_cycles)
     order_cycles.select do |oc|
       (@order.line_item_variants - oc.distributed_variants).empty?
     end

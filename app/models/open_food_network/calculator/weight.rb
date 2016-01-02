@@ -4,15 +4,14 @@ module OpenFoodNetwork
     attr_accessible :preferred_per_kg
 
     def self.description
-      "Weight (per kg)"
+      'Weight (per kg)'
     end
 
     def compute(object)
       line_items = line_items_for object
       total_weight = line_items.sum { |li| ((li.variant.andand.weight || 0) * li.quantity) }
-      total_weight * self.preferred_per_kg
+      total_weight * preferred_per_kg
     end
-
 
     private
 
@@ -22,7 +21,7 @@ module OpenFoodNetwork
       elsif object.respond_to?(:variant) && object.respond_to?(:quantity)
         [object]
       else
-        raise "Unknown object type: #{object.inspect}"
+        fail "Unknown object type: #{object.inspect}"
       end
     end
   end

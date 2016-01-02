@@ -15,13 +15,13 @@ class ChangeTaxonsToNestedSet < ActiveRecord::Migration
       left_column_name = 'lft'
       right_column_name = 'rgt'
       quoted_parent_column_name = 'parent_id'
-      scope = lambda{|node|}
+      scope = ->(node) {}
 
       set_left_and_rights = lambda do |node|
         # set left
         node[left_column_name] = indices[scope.call(node)] += 1
         # find
-        where("#{quoted_parent_column_name} = ?", node).order('position ASC').each{ |n| set_left_and_rights.call(n) }
+        where("#{quoted_parent_column_name} = ?", node).order('position ASC').each { |n| set_left_and_rights.call(n) }
         # set right
         node[right_column_name] = indices[scope.call(node)] += 1
         node.save!

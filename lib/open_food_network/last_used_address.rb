@@ -9,20 +9,19 @@ module OpenFoodNetwork
     end
 
     def last_used_ship_address
-      recent_orders.detect { |o|
+      recent_orders.detect do |o|
         o.ship_address && o.shipping_method.andand.require_ship_address
-       }.andand.ship_address
+      end.andand.ship_address
     end
-
 
     private
 
     def recent_orders
-      Spree::Order.
-        order("id DESC").
-        where(email: @email).
-        where("state != 'cart'").
-        limit(8)
+      Spree::Order
+        .order('id DESC')
+        .where(email: @email)
+        .where("state != 'cart'")
+        .limit(8)
     end
   end
 end

@@ -1,5 +1,4 @@
 module GroupsHelper
-
   def link_to_service(baseurl, name, html_options = {})
     return if name.blank?
     html_options = html_options.merge target: '_blank'
@@ -19,5 +18,4 @@ module GroupsHelper
   def strip_url(url)
     url.andand.sub(/^https?:\/\//i, '')
   end
-
 end

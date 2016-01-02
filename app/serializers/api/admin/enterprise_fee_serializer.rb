@@ -14,10 +14,9 @@ class Api::Admin::EnterpriseFeeSerializer < ActiveModel::Serializer
     result = nil
 
     options[:controller].send(:with_format, :html) do
-      result = options[:controller].render_to_string partial: 'admin/enterprise_fees/calculator_settings', locals: {enterprise_fee: object}
+      result = options[:controller].render_to_string partial: 'admin/enterprise_fees/calculator_settings', locals: { enterprise_fee: object }
     end
 
     result.gsub('[0]', '[{{ $index }}]').gsub('_0_', '_{{ $index }}_')
   end
-
 end

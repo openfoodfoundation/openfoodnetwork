@@ -1,6 +1,6 @@
 Spree::Address.class_eval do
   has_one :enterprise
-  belongs_to :country, class_name: "Spree::Country"
+  belongs_to :country, class_name: 'Spree::Country'
 
   after_save :touch_enterprise
 
@@ -10,13 +10,13 @@ Spree::Address.class_eval do
 
   def geocode_address
     geocode_address = [address1, address2, zipcode, city, country.andand.name, state.andand.name]
-    filtered_address = geocode_address.select{ |field| !field.nil? && field != '' }
+    filtered_address = geocode_address.select { |field| !field.nil? && field != '' }
     filtered_address.compact.join(', ')
   end
 
   def full_address
     full_address = [address1, address2, city, zipcode, state.andand.name]
-    filtered_address = full_address.select{ |field| !field.nil? && field != '' }
+    filtered_address = full_address.select { |field| !field.nil? && field != '' }
     filtered_address.compact.join(', ')
   end
 
@@ -34,7 +34,7 @@ Spree::Address.class_eval do
   #
   #-- Rohan, 17-9-2913
   def create
-    if self.zipcode.nil?
+    if zipcode.nil?
       Bugsnag.notify RuntimeError.new('Creating a Spree::Address with nil values')
     end
 
@@ -42,7 +42,7 @@ Spree::Address.class_eval do
   end
 
   def update(attribute_names = @attributes.keys)
-    if self.zipcode.nil?
+    if zipcode.nil?
       Bugsnag.notify RuntimeError.new('Updating a Spree::Address with nil values')
     end
 
