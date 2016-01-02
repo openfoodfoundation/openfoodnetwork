@@ -14,16 +14,16 @@ module OpenFoodNetwork
 
     def header
       case params[:report_type]
-      when "bulk_coop_supplier_report"
+      when 'bulk_coop_supplier_report'
         @supplier_report.header
-      when "bulk_coop_allocation"
+      when 'bulk_coop_allocation'
         @allocation_report.header
-      when "bulk_coop_packing_sheets"
-        ["Customer", "Product", "Variant", "Sum Total"]
-      when "bulk_coop_customer_payments"
-        ["Customer", "Date of Order", "Total Cost", "Amount Owing", "Amount Paid"]
+      when 'bulk_coop_packing_sheets'
+        ['Customer', 'Product', 'Variant', 'Sum Total']
+      when 'bulk_coop_customer_payments'
+        ['Customer', 'Date of Order', 'Total Cost', 'Amount Owing', 'Amount Paid']
       else
-        ["Supplier", "Product", "Bulk Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"]
+        ['Supplier', 'Product', 'Bulk Unit Size', 'Variant', 'Weight', 'Sum Total', 'Sum Max Total', 'Units Required', 'Remainder']
       end
     end
 
@@ -39,78 +39,78 @@ module OpenFoodNetwork
       line_items_with_hidden_details =
         permissions.editable_line_items.empty? ? line_items : line_items.where('"spree_line_items"."id" NOT IN (?)', permissions.editable_line_items)
 
-      line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
-        # TODO We should really be hiding customer code here too, but until we
+      line_items.select { |li| line_items_with_hidden_details.include? li }.each do |line_item|
+        # TODO: We should really be hiding customer code here too, but until we
         # have an actual association between order and customer, it's a bit tricky
-        line_item.order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.assign_attributes(email: "HIDDEN")
+        line_item.order.bill_address.andand.assign_attributes(firstname: 'HIDDEN', lastname: '', phone: '', address1: '', address2: '', city: '', zipcode: '', state: nil)
+        line_item.order.ship_address.andand.assign_attributes(firstname: 'HIDDEN', lastname: '', phone: '', address1: '', address2: '', city: '', zipcode: '', state: nil)
+        line_item.order.assign_attributes(email: 'HIDDEN')
       end
       line_items
     end
 
     def rules
       case params[:report_type]
-      when "bulk_coop_supplier_report"
+      when 'bulk_coop_supplier_report'
         @supplier_report.rules
-      when "bulk_coop_allocation"
+      when 'bulk_coop_allocation'
         @allocation_report.rules
-      when "bulk_coop_packing_sheets"
-        [ { group_by: proc { |li| li.product },
-          sort_by: proc { |product| product.name } },
-          { group_by: proc { |li| li.full_name },
-          sort_by: proc { |full_name| full_name } },
-          { group_by: proc { |li| li.order },
-          sort_by: proc { |order| order.to_s } } ]
-      when "bulk_coop_customer_payments"
-        [ { group_by: proc { |li| li.order },
-          sort_by: proc { |order|  order.completed_at } } ]
+      when 'bulk_coop_packing_sheets'
+        [{ group_by: proc { |li| li.product },
+           sort_by: proc { |product| product.name } },
+         { group_by: proc { |li| li.full_name },
+           sort_by: proc { |full_name| full_name } },
+         { group_by: proc { |li| li.order },
+           sort_by: proc { |order| order.to_s } }]
+      when 'bulk_coop_customer_payments'
+        [{ group_by: proc { |li| li.order },
+           sort_by: proc { |order|  order.completed_at } }]
       else
-        [ { group_by: proc { |li| li.product.supplier },
-        sort_by: proc { |supplier| supplier.name } },
-        { group_by: proc { |li| li.product },
-        sort_by: proc { |product| product.name },
-        summary_columns: [ proc { |lis| lis.first.product.supplier.name },
-          proc { |lis| lis.first.product.name },
-          proc { |lis| lis.first.product.group_buy_unit_size || 0.0 },
-          proc { |lis| "" },
-          proc { |lis| "" },
-          proc { |lis| lis.sum { |li| li.quantity * (li.weight_from_unit_value || 0) } },
-          proc { |lis| lis.sum { |li| (li.max_quantity || 0) * (li.weight_from_unit_value || 0) } },
-          proc { |lis| ( (lis.first.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.weight_from_unit_value || 0) } / lis.first.product.group_buy_unit_size ) ).floor },
-          proc { |lis| lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.weight_from_unit_value || 0) } - ( ( (lis.first.product.group_buy_unit_size || 0).zero? ? 0 : ( lis.sum { |li| ( [li.max_quantity || 0, li.quantity || 0].max ) * (li.weight_from_unit_value || 0) } / lis.first.product.group_buy_unit_size ) ).floor * (lis.first.product.group_buy_unit_size || 0) ) } ] },
-        { group_by: proc { |li| li.full_name },
-        sort_by: proc { |full_name| full_name } } ]
+        [{ group_by: proc { |li| li.product.supplier },
+           sort_by: proc { |supplier| supplier.name } },
+         { group_by: proc { |li| li.product },
+           sort_by: proc { |product| product.name },
+           summary_columns: [proc { |lis| lis.first.product.supplier.name },
+                             proc { |lis| lis.first.product.name },
+                             proc { |lis| lis.first.product.group_buy_unit_size || 0.0 },
+                             proc { |_lis| '' },
+                             proc { |_lis| '' },
+                             proc { |lis| lis.sum { |li| li.quantity * (li.weight_from_unit_value || 0) } },
+                             proc { |lis| lis.sum { |li| (li.max_quantity || 0) * (li.weight_from_unit_value || 0) } },
+                             proc { |lis| ((lis.first.product.group_buy_unit_size || 0).zero? ? 0 : (lis.sum { |li| ([li.max_quantity || 0, li.quantity || 0].max) * (li.weight_from_unit_value || 0) } / lis.first.product.group_buy_unit_size)).floor },
+                             proc { |lis| lis.sum { |li| ([li.max_quantity || 0, li.quantity || 0].max) * (li.weight_from_unit_value || 0) } - (((lis.first.product.group_buy_unit_size || 0).zero? ? 0 : (lis.sum { |li| ([li.max_quantity || 0, li.quantity || 0].max) * (li.weight_from_unit_value || 0) } / lis.first.product.group_buy_unit_size)).floor * (lis.first.product.group_buy_unit_size || 0)) }] },
+         { group_by: proc { |li| li.full_name },
+           sort_by: proc { |full_name| full_name } }]
       end
     end
 
     def columns
       case params[:report_type]
-      when "bulk_coop_supplier_report"
+      when 'bulk_coop_supplier_report'
         @supplier_report.columns
-      when "bulk_coop_allocation"
+      when 'bulk_coop_allocation'
         @allocation_report.columns
-      when "bulk_coop_packing_sheets"
-        [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
-          proc { |lis| lis.first.product.name },
-          proc { |lis| lis.first.full_name },
-          proc { |lis|  lis.sum { |li| li.quantity } } ]
-      when "bulk_coop_customer_payments"
-        [ proc { |lis| lis.first.order.bill_address.firstname + " " + lis.first.order.bill_address.lastname },
-          proc { |lis| lis.first.order.completed_at.to_s },
-          proc { |lis| lis.map { |li| li.order }.uniq.sum { |o| o.total } },
-          proc { |lis| lis.map { |li| li.order }.uniq.sum { |o| o.outstanding_balance } },
-          proc { |lis| lis.map { |li| li.order }.uniq.sum { |o| o.payment_total } } ]
+      when 'bulk_coop_packing_sheets'
+        [proc { |lis| lis.first.order.bill_address.firstname + ' ' + lis.first.order.bill_address.lastname },
+         proc { |lis| lis.first.product.name },
+         proc { |lis| lis.first.full_name },
+         proc { |lis| lis.sum(&:quantity) }]
+      when 'bulk_coop_customer_payments'
+        [proc { |lis| lis.first.order.bill_address.firstname + ' ' + lis.first.order.bill_address.lastname },
+         proc { |lis| lis.first.order.completed_at.to_s },
+         proc { |lis| lis.map(&:order).uniq.sum(&:total) },
+         proc { |lis| lis.map(&:order).uniq.sum(&:outstanding_balance) },
+         proc { |lis| lis.map(&:order).uniq.sum(&:payment_total) }]
       else
-        [ proc { |lis| lis.first.product.supplier.name },
-          proc { |lis| lis.first.product.name },
-          proc { |lis| lis.first.product.group_buy_unit_size || 0.0 },
-          proc { |lis| lis.first.full_name },
-          proc { |lis| lis.first.weight_from_unit_value || 0 },
-          proc { |lis| lis.sum { |li| li.quantity } },
-          proc { |lis| lis.sum { |li| li.max_quantity || 0 } },
-          proc { |lis| "" },
-          proc { |lis| "" } ]
+        [proc { |lis| lis.first.product.supplier.name },
+         proc { |lis| lis.first.product.name },
+         proc { |lis| lis.first.product.group_buy_unit_size || 0.0 },
+         proc { |lis| lis.first.full_name },
+         proc { |lis| lis.first.weight_from_unit_value || 0 },
+         proc { |lis| lis.sum(&:quantity) },
+         proc { |lis| lis.sum { |li| li.max_quantity || 0 } },
+         proc { |_lis| '' },
+         proc { |_lis| '' }]
       end
     end
 

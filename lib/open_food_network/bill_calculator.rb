@@ -2,7 +2,7 @@ module OpenFoodNetwork
   class BillCalculator
     attr_accessor :turnover, :fixed, :rate, :cap, :tax_rate
 
-    def initialize(opts={})
+    def initialize(opts = {})
       @turnover = opts[:turnover] || 0
       @fixed = opts[:fixed] || Spree::Config[:account_invoices_monthly_fixed]
       @rate = opts[:rate] || Spree::Config[:account_invoices_monthly_rate]

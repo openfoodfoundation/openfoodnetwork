@@ -4,7 +4,7 @@ describe Spree::Admin::PaymentMethodsController do
   context "Requesting provider preference fields" do
     let(:enterprise) { create(:distributor_enterprise) }
     let(:user) do
-      new_user = create(:user, email: 'enterprise@hub.com', password: 'blahblah', :password_confirmation => 'blahblah', )
+      new_user = create(:user, email: 'enterprise@hub.com', password: 'blahblah', password_confirmation: 'blahblah', )
       new_user.spree_roles = [] # for some reason unbeknown to me, this new user gets admin permissions by default.
       new_user.enterprise_roles.build(enterprise: enterprise).save
       new_user.save

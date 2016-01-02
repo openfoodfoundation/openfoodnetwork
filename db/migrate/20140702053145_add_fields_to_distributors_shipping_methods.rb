@@ -1,6 +1,6 @@
 class AddFieldsToDistributorsShippingMethods < ActiveRecord::Migration
   class DistributorShippingMethod < ActiveRecord::Base
-    self.table_name = "distributors_shipping_methods"
+    self.table_name = 'distributors_shipping_methods'
   end
 
   def up

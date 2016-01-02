@@ -2,7 +2,7 @@ require 'open_food_network/enterprise_fee_applicator'
 
 module OpenFoodNetwork
   class EnterpriseFeeCalculator
-    def initialize(distributor=nil, order_cycle=nil)
+    def initialize(distributor = nil, order_cycle = nil)
       @distributor = distributor
       @order_cycle = order_cycle
     end
@@ -22,9 +22,8 @@ module OpenFoodNetwork
         fees[enterprise_fee.fee_type.to_sym] ||= 0
         fees[enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, enterprise_fee
         fees
-      end.select { |fee_type, amount| amount > 0 }
+      end.select { |_fee_type, amount| amount > 0 }
     end
-
 
     def fees_for(variant)
       per_item_enterprise_fee_applicators_for(variant).sum do |applicator|
@@ -37,9 +36,8 @@ module OpenFoodNetwork
         fees[applicator.enterprise_fee.fee_type.to_sym] ||= 0
         fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant, applicator.enterprise_fee
         fees
-      end.select { |fee_type, amount| amount > 0 }
+      end.select { |_fee_type, amount| amount > 0 }
     end
-
 
     def create_line_item_adjustments_for(line_item)
       variant = line_item.variant
@@ -60,7 +58,6 @@ module OpenFoodNetwork
       end
     end
 
-
     private
 
     def load_enterprise_fees
@@ -72,12 +69,12 @@ module OpenFoodNetwork
     end
 
     def per_item_enterprise_fees_with_exchange_details
-      EnterpriseFee.
-        per_item.
-        joins(:exchanges => :exchange_variants).
-        where('exchanges.order_cycle_id = ?', @order_cycle.id).
-        merge(Exchange.supplying_to(@distributor)).
-        select('enterprise_fees.*, exchange_variants.variant_id AS variant_id')
+      EnterpriseFee
+        .per_item
+        .joins(exchanges: :exchange_variants)
+        .where('exchanges.order_cycle_id = ?', @order_cycle.id)
+        .merge(Exchange.supplying_to(@distributor))
+        .select('enterprise_fees.*, exchange_variants.variant_id AS variant_id')
     end
 
     def load_exchange_fees(exchange_fees)
@@ -99,7 +96,6 @@ module OpenFoodNetwork
     def indexed_enterprise_fees_for(variant)
       @indexed_enterprise_fees[variant.id] || []
     end
-
 
     def calculate_fee_for(variant, enterprise_fee)
       # Spree's Calculator interface accepts Orders or LineItems,

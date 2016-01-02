@@ -1,8 +1,7 @@
 class CreateEnterpriseFeeRecordsForProductDistributions < ActiveRecord::Migration
-
   class ProductDistribution < ActiveRecord::Base
-    belongs_to :shipping_method, :class_name => 'Spree::ShippingMethod'
-    belongs_to :distributor, :class_name => 'Enterprise'
+    belongs_to :shipping_method, class_name: 'Spree::ShippingMethod'
+    belongs_to :distributor, class_name: 'Enterprise'
     belongs_to :enterprise_fee
   end
 
@@ -21,6 +20,6 @@ class CreateEnterpriseFeeRecordsForProductDistributions < ActiveRecord::Migratio
   end
 
   def down
-    ProductDistribution.update_all :enterprise_fee_id => nil
+    ProductDistribution.update_all enterprise_fee_id: nil
   end
 end

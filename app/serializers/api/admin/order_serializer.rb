@@ -5,18 +5,18 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
   has_one :order_cycle, serializer: Api::Admin::IdSerializer
 
   def full_name
-    object.billing_address.nil? ? "" : ( object.billing_address.full_name || "" )
+    object.billing_address.nil? ? '' : (object.billing_address.full_name || '')
   end
 
   def email
-    object.email || ""
+    object.email || ''
   end
 
   def phone
-    object.billing_address.nil? ? "a" : ( object.billing_address.phone || "" )
+    object.billing_address.nil? ? 'a' : (object.billing_address.phone || '')
   end
 
   def completed_at
-    object.completed_at.blank? ? "" : object.completed_at.strftime("%F %T")
+    object.completed_at.blank? ? '' : object.completed_at.strftime('%F %T')
   end
 end

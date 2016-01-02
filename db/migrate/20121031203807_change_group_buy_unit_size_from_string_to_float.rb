@@ -17,5 +17,4 @@ class ChangeGroupBuyUnitSizeFromStringToFloat < ActiveRecord::Migration
   def down
     change_column :spree_products, :group_buy_unit_size, :string
   end
-
 end

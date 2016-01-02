@@ -12,9 +12,8 @@ require 'rspec/autorun'
 
 # Ref: http://pluralsight.com/training/Courses/TableOfContents/database-your-friend
 
-
-describe "data integrity" do
-  it "has no deleted variants in order cycles" do
+describe 'data integrity' do
+  it 'has no deleted variants in order cycles' do
     # When a variant is soft deleted, it should be removed from all order cycles
     # via Spree::Product#delete or Spree::Variant#delete.
     evs = ExchangeVariant.joins(:variant).where('spree_variants.deleted_at IS NOT NULL')

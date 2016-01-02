@@ -10,14 +10,14 @@ module OpenFoodNetwork
 
     def header
       if is_payment_methods?
-        ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance"]
+        ['First Name', 'Last Name', 'Hub', 'Hub Code', 'Email', 'Phone', 'Shipping Method', 'Payment Method', 'Amount', 'Balance']
       else
-        ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
+        ['First Name', 'Last Name', 'Hub', 'Hub Code', 'Delivery Address', 'Delivery Postcode', 'Phone', 'Shipping Method', 'Payment Method', 'Amount', 'Balance', 'Temp Controlled Items?', 'Special Instructions']
       end
     end
 
     def search
-      Spree::Order.complete.where("spree_orders.state != ?", :canceled).distributed_by_user(@user).managed_by(@user).search(params[:q])
+      Spree::Order.complete.where('spree_orders.state != ?', :canceled).distributed_by_user(@user).managed_by(@user).search(params[:q])
     end
 
     def orders
@@ -83,7 +83,7 @@ module OpenFoodNetwork
 
     def filter_to_shipping_method(orders)
       if params[:shipping_method_name].present?
-        orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:shipping_method_name])
+        orders.joins(:shipping_method).where('spree_shipping_methods.name = ?', params[:shipping_method_name])
       else
         orders
       end
@@ -102,12 +102,12 @@ module OpenFoodNetwork
     end
 
     def is_payment_methods?
-      params[:report_type] == "payment_methods"
+      params[:report_type] == 'payment_methods'
     end
 
     def customer_code(email)
       customer = Customer.where(email: email).first
-      customer.nil? ? "" : customer.code
+      customer.nil? ? '' : customer.code
     end
   end
 end

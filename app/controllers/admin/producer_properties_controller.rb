@@ -1,9 +1,8 @@
 module Admin
   class ProducerPropertiesController < ResourceController
-    before_filter :load_enterprise
-    before_filter :load_properties
-    before_filter :setup_property, only: [:index]
-
+    before_action :load_enterprise
+    before_action :load_properties
+    before_action :setup_property, only: [:index]
 
     private
 

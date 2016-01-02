@@ -46,7 +46,7 @@ class UpdateBillablePeriods
   end
 
   def split_for_trial(enterprise, begins_at, ends_at, trial_start, trial_expiry)
-    trial_start = trial_expiry = begins_at-1.day if trial_start.nil? || trial_expiry.nil?
+    trial_start = trial_expiry = begins_at - 1.day if trial_start.nil? || trial_expiry.nil?
 
     # If the trial begins after ends_at, create a bill for the entire period
     # Otherwise, create a normal billable_period from the begins_at until the start of the trial
@@ -77,13 +77,11 @@ class UpdateBillablePeriods
 
     unless account_invoice.order.andand.complete?
       billable_period ||= BillablePeriod.new(account_invoice_id: account_invoice.id, begins_at: begins_at, enterprise_id: enterprise.id)
-      billable_period.update_attributes({
-        ends_at: ends_at,
-        sells: sells,
-        trial: trial,
-        owner_id: owner_id,
-        turnover: orders.sum(&:total)
-      })
+      billable_period.update_attributes(ends_at: ends_at,
+                                        sells: sells,
+                                        trial: trial,
+                                        owner_id: owner_id,
+                                        turnover: orders.sum(&:total))
     end
 
     billable_period.touch
@@ -96,32 +94,28 @@ class UpdateBillablePeriods
     if obsolete_billable_periods.any?
       current_billable_periods = enterprise.billable_periods.where('ends_at >= (?) AND begins_at <= (?) AND billable_periods.updated_at > (?)', start_date, end_date, job_start_time)
 
-      Delayed::Worker.logger.info "#{enterprise.name} #{start_date.strftime("%F %T")} #{job_start_time.strftime("%F %T")}"
-      Delayed::Worker.logger.info "#{obsolete_billable_periods.first.updated_at.strftime("%F %T")}"
+      Delayed::Worker.logger.info "#{enterprise.name} #{start_date.strftime('%F %T')} #{job_start_time.strftime('%F %T')}"
+      Delayed::Worker.logger.info "#{obsolete_billable_periods.first.updated_at.strftime('%F %T')}"
 
-      Bugsnag.notify(RuntimeError.new("Obsolete BillablePeriods"), {
-        current: current_billable_periods.map(&:as_json),
-        obsolete: obsolete_billable_periods.map(&:as_json)
-      })
+      Bugsnag.notify(RuntimeError.new('Obsolete BillablePeriods'),         current: current_billable_periods.map(&:as_json),
+                                                                           obsolete: obsolete_billable_periods.map(&:as_json))
     end
 
-    obsolete_billable_periods.includes({ account_invoice: :order}).
-    where('spree_orders.state <> \'complete\' OR account_invoices.order_id IS NULL').
-    each(&:delete)
+    obsolete_billable_periods.includes(account_invoice: :order)
+      .where('spree_orders.state <> \'complete\' OR account_invoices.order_id IS NULL')
+      .each(&:delete)
   end
 
   private
 
   def settings_are_valid?
     unless end_date <= Time.zone.now
-      Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "UpdateBillablePeriods",
-        error: "end_date is in the future",
-        data: {
-          end_date: end_date.in_time_zone.strftime("%F %T"),
-          now: Time.zone.now.strftime("%F %T")
-        }
-      })
+      Bugsnag.notify(RuntimeError.new('InvalidJobSettings'),         job: 'UpdateBillablePeriods',
+                                                                     error: 'end_date is in the future',
+                                                                     data: {
+                                                                       end_date: end_date.in_time_zone.strftime('%F %T'),
+                                                                       now: Time.zone.now.strftime('%F %T')
+                                                                     })
       return false
     end
 

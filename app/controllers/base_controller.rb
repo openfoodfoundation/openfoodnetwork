@@ -10,14 +10,13 @@ class BaseController < ApplicationController
   # include Spree::ProductsHelper so that method is available on the controller
   include Spree::ProductsHelper
 
-  before_filter :check_order_cycle_expiry
-
+  before_action :check_order_cycle_expiry
 
   private
 
   def set_order_cycles
     @order_cycles = OrderCycle.with_distributor(@distributor).active
-    .order(@distributor.preferred_shopfront_order_cycle_order)
+                    .order(@distributor.preferred_shopfront_order_cycle_order)
 
     # And default to the only order cycle if there's only the one
     if @order_cycles.count == 1

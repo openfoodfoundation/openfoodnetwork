@@ -1,7 +1,7 @@
 class ConvertShippingMethodsDistributorsToHabtm < ActiveRecord::Migration
   class Spree::ShippingMethod < ActiveRecord::Base
     belongs_to :distributor, class_name: 'Enterprise'
-    has_and_belongs_to_many :distributors, join_table: 'distributors_shipping_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
+    has_and_belongs_to_many :distributors, join_table: 'distributors_shipping_methods', class_name: 'Enterprise', association_foreign_key: 'distributor_id'
   end
 
   def up
@@ -24,12 +24,11 @@ class ConvertShippingMethodsDistributorsToHabtm < ActiveRecord::Migration
     add_index :spree_shipping_methods, :distributor_id
 
     Spree::ShippingMethod.all.each do |sm|
-      if sm.distributors.present?
-        sm.distributor = sm.distributors.first
-        sm.save!
+      next unless sm.distributors.present?
+      sm.distributor = sm.distributors.first
+      sm.save!
 
-        say "WARNING: Discarding #{sm.distributors.count-1} distributors while flattening HABTM relation to belongs_to" if sm.distributors.count > 1
-      end
+      say "WARNING: Discarding #{sm.distributors.count - 1} distributors while flattening HABTM relation to belongs_to" if sm.distributors.count > 1
     end
 
     drop_table :distributors_shipping_methods

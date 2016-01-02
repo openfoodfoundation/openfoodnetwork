@@ -1,10 +1,10 @@
 Spree::Admin::LineItemsController.class_eval do
-  prepend_before_filter :load_order, except: :index
-  around_filter :apply_enterprise_fees_with_lock, only: :update
+  prepend_before_action :load_order, except: :index
+  around_action :apply_enterprise_fees_with_lock, only: :update
 
   respond_to :json
 
-  # TODO make updating line items faster by creating a bulk update method
+  # TODO: make updating line items faster by creating a bulk update method
 
   def index
     respond_to do |format|
@@ -25,15 +25,14 @@ Spree::Admin::LineItemsController.class_eval do
 
     if @order.save
       respond_with(@line_item) do |format|
-        format.html { render :partial => 'spree/admin/orders/form', :locals => { :order => @order.reload } }
+        format.html { render partial: 'spree/admin/orders/form', locals: { order: @order.reload } }
       end
     else
       respond_with(@line_item) do |format|
-        format.js { render :action => 'create', :locals => { :order => @order.reload } }
+        format.js { render action: 'create', locals: { order: @order.reload } }
       end
     end
   end
-
 
   private
 

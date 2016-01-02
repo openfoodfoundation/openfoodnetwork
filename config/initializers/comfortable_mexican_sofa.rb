@@ -35,12 +35,12 @@ ComfortableMexicanSofa.configure do |config|
   # http://rdoc.info/gems/paperclip/2.3.8/Paperclip/Storage/S3, and for
   # filesystem see: http://rdoc.info/gems/paperclip/2.3.8/Paperclip/Storage/Filesystem
   config.upload_file_options = {
-    :storage => 's3',
-    :s3_protocol => :https,
-    :s3_credentials => {
-      :bucket => Spree::Config[:s3_bucket],
-      :access_key_id => Spree::Config[:s3_access_key],
-      :secret_access_key => Spree::Config[:s3_secret]
+    storage: 's3',
+    s3_protocol: :https,
+    s3_credentials: {
+      bucket: Spree::Config[:s3_bucket],
+      access_key_id: Spree::Config[:s3_access_key],
+      secret_access_key: Spree::Config[:s3_secret]
     }
   }
 
@@ -70,8 +70,8 @@ ComfortableMexicanSofa.configure do |config|
   #   config.revisions_limit = 25
 
   # Locale definitions. If you want to define your own locale merge
-  # {:locale => 'Locale Title'} with this.
-  #   config.locales = {:en => 'English', :es => 'Español'}
+  # {locale: 'Locale Title'} with this.
+  #   config.locales = {en: 'English', es: 'Español'}
 
   # Admin interface will respect the locale of the site being managed. However you can
   # force it to English by setting this to `:en`
@@ -104,7 +104,6 @@ ComfortableMexicanSofa.configure do |config|
   # e.g. config.site_aliases = {'host.com' => 'host.inv', 'host_a.com' => ['host.lvh.me', 'host.dev']}
   # Default is nil (not used)
   #   config.hostname_aliases = nil
-
 end
 
 module CmsSpreeAuth

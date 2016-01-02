@@ -13,7 +13,8 @@ class DeleteInProgressOrders < ActiveRecord::Migration
   end
 
   private
-    def delete_orphans(table_name)
-      execute "DELETE FROM #{table_name} WHERE order_id NOT IN (SELECT id FROM orders)"
-    end
+
+  def delete_orphans(table_name)
+    execute "DELETE FROM #{table_name} WHERE order_id NOT IN (SELECT id FROM orders)"
+  end
 end

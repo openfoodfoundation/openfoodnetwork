@@ -14,13 +14,11 @@ class EnterpriseFee < ActiveRecord::Base
   FEE_TYPES = %w(packing transport admin sales fundraising)
   PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate']
 
-
-  validates_inclusion_of :fee_type, :in => FEE_TYPES
+  validates_inclusion_of :fee_type, in: FEE_TYPES
   validates_presence_of :name
 
-
-  scope :for_enterprise, lambda { |enterprise| where(enterprise_id: enterprise) }
-  scope :for_enterprises, lambda { |enterprises| where(enterprise_id: enterprises) }
+  scope :for_enterprise, ->(enterprise) { where(enterprise_id: enterprise) }
+  scope :for_enterprises, ->(enterprises) { where(enterprise_id: enterprises) }
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -47,14 +45,14 @@ class EnterpriseFee < ActiveRecord::Base
 
   # Create an adjustment that starts as locked. Preferable to making an adjustment and locking it since
   # the unlocked adjustment tends to get hit by callbacks before we have a chance to lock it.
-  def create_locked_adjustment(label, target, calculable, mandatory=false)
+  def create_locked_adjustment(label, target, calculable, mandatory = false)
     amount = compute_amount(calculable)
     return if amount == 0 && !mandatory
-    target.adjustments.create({ :amount => amount,
-                                :source => calculable,
-                                :originator => self,
-                                :label => label,
-                                :mandatory => mandatory,
-                                :locked => true}, :without_protection => true)
+    target.adjustments.create({ amount: amount,
+                                source: calculable,
+                                originator: self,
+                                label: label,
+                                mandatory: mandatory,
+                                locked: true }, without_protection: true)
   end
 end

@@ -1,7 +1,7 @@
 module Admin
   module ImageSettingsHelper
     def admin_image_settings_format_options
-      [['Unchanged', ''], ['PNG', 'png'], ['JPEG', 'jpg']]
+      [['Unchanged', ''], %w(PNG png), %w(JPEG jpg)]
     end
 
     def admin_image_settings_geometry_from_style(style)

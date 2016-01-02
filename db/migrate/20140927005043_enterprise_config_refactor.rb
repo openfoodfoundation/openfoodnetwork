@@ -11,7 +11,7 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     Enterprise.reset_column_information
 
     Enterprise.all.each do |enterprise|
-      enterprise.update_attributes!({:sells => sells_what?(enterprise)})
+      enterprise.update_attributes!(sells: sells_what?(enterprise))
     end
 
     remove_column :enterprises, :type
@@ -26,10 +26,8 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     Enterprise.reset_column_information
 
     Enterprise.all.each do |enterprise|
-      enterprise.update_attributes!({
-        :type => type?(enterprise),
-        :is_distributor => distributes?(enterprise)
-      })
+      enterprise.update_attributes!(type: type?(enterprise),
+                                    is_distributor: distributes?(enterprise))
     end
 
     remove_column :enterprises, :sells
@@ -39,19 +37,19 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     is_distributor = enterprise.read_attribute(:is_distributor)
     is_primary_producer = enterprise.read_attribute(:is_primary_producer)
     type = enterprise.read_attribute(:type)
-    return "own" if type == "single" && (is_distributor || is_primary_producer)
-    return "none" if !is_distributor || type == "profile"
-    return "any"
+    return 'own' if type == 'single' && (is_distributor || is_primary_producer)
+    return 'none' if !is_distributor || type == 'profile'
+    'any'
   end
 
   def distributes?(enterprise)
-    enterprise.read_attribute(:sells) != "none"
+    enterprise.read_attribute(:sells) != 'none'
   end
 
   def type?(enterprise)
     sells = enterprise.read_attribute(:sells)
-    return "profile" if sells == "none"
-    return "single" if sells == "own"
-    return "full"
+    return 'profile' if sells == 'none'
+    return 'single' if sells == 'own'
+    'full'
   end
 end

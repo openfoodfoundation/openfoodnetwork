@@ -13,7 +13,7 @@ module Admin
         render text: Api::Admin::EnterpriseRoleSerializer.new(@enterprise_role).to_json
 
       else
-        render status: 400, json: {errors: @enterprise_role.errors.full_messages.join(', ')}
+        render status: 400, json: { errors: @enterprise_role.errors.full_messages.join(', ') }
       end
     end
 

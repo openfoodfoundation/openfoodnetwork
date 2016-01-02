@@ -5,8 +5,11 @@ class ModelSet
 
   attr_accessor :collection
 
-  def initialize(klass, collection, attributes={}, reject_if=nil, delete_if=nil)
-    @klass, @collection, @reject_if, @delete_if = klass, collection, reject_if, delete_if
+  def initialize(klass, collection, attributes = {}, reject_if = nil, delete_if = nil)
+    @klass = klass
+    @collection = collection
+    @reject_if = reject_if
+    @delete_if = delete_if
 
     # Set here first, to ensure that we apply collection_attributes to the right collection
     @collection = attributes[:collection] if attributes[:collection]
@@ -17,8 +20,8 @@ class ModelSet
   end
 
   def collection_attributes=(attributes)
-    attributes.each do |k, attributes|
-      # attributes == {:id => 123, :next_collection_at => '...'}
+    attributes.each do |_k, attributes|
+      # attributes == {id: 123, next_collection_at: '...'}
       e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
       if e.nil?
         @collection << @klass.new(attributes) unless @reject_if.andand.call(attributes)
@@ -51,5 +54,4 @@ class ModelSet
   def persisted?
     false
   end
-
 end

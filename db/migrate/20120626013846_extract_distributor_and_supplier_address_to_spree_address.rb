@@ -3,21 +3,20 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
   class Distributor < ActiveRecord::Base; end
   class Spree::Address < ActiveRecord::Base; end
 
-
   def up
     # -- Distributors
     add_column :distributors, :pickup_address_id, :integer
     Distributor.reset_column_information
 
     Distributor.all.each do |distributor|
-      pickup_address = Spree::Address.create!(:firstname => 'unused',
-                                              :lastname => 'unused',
-                                              :phone => 'unused',
-                                              :address1 => distributor[:pickup_address],
-                                              :city => distributor.city,
-                                              :zipcode => distributor.post_code,
-                                              :state_id => distributor.state_id,
-                                              :country_id => distributor.country_id)
+      pickup_address = Spree::Address.create!(firstname: 'unused',
+                                              lastname: 'unused',
+                                              phone: 'unused',
+                                              address1: distributor[:pickup_address],
+                                              city: distributor.city,
+                                              zipcode: distributor.post_code,
+                                              state_id: distributor.state_id,
+                                              country_id: distributor.country_id)
       distributor.pickup_address = pickup_address
       distributor.save!
     end
@@ -26,20 +25,19 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
       remove_column :distributors, column
     end
 
-
     # -- Suppliers
     add_column :suppliers, :address_id, :integer
     Supplier.reset_column_information
 
     Supplier.all.each do |supplier|
-      address = Spree::Address.create!(:firstname => 'unused',
-                                       :lastname => 'unused',
-                                       :phone => 'unused',
-                                       :address1 => supplier[:address],
-                                       :city => supplier.city,
-                                       :zipcode => supplier.postcode,
-                                       :state_id => supplier.state_id,
-                                       :country_id => supplier.country_id)
+      address = Spree::Address.create!(firstname: 'unused',
+                                       lastname: 'unused',
+                                       phone: 'unused',
+                                       address1: supplier[:address],
+                                       city: supplier.city,
+                                       zipcode: supplier.postcode,
+                                       state_id: supplier.state_id,
+                                       country_id: supplier.country_id)
       supplier.address = address
       supplier.save!
     end
@@ -68,7 +66,6 @@ class ExtractDistributorAndSupplierAddressToSpreeAddress < ActiveRecord::Migrati
     end
 
     remove_column :distributors, :pickup_address_id
-
 
     # -- Suppliers
     add_column :suppliers, :address, :string

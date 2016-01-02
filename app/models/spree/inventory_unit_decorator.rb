@@ -3,7 +3,7 @@ module Spree
     def self.assign_opening_inventory(order)
       return [] unless order.completed?
 
-      #increase inventory to meet initial requirements
+      # increase inventory to meet initial requirements
       scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
       order.line_items.each do |line_item|
         # Scope variant to hub so that stock levels may be subtracted from VariantOverride.

@@ -6,7 +6,7 @@ module Spree
 
     before do
       stub_authentication!
-      Spree.user_class.stub :find_by_spree_api_key => current_api_user
+      Spree.user_class.stub find_by_spree_api_key: current_api_user
     end
 
     def self.make_simple_data!

@@ -12,8 +12,8 @@ module OpenFoodNetwork
     validates :account_invoices_monthly_cap, presence: true, numericality: { greater_than_or_equal_to: 0 }
     validates :account_invoices_tax_rate, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
 
-    def initialize(attr, button=nil)
-      attr.each { |k,v| instance_variable_set("@#{k}", v) }
+    def initialize(attr, button = nil)
+      attr.each { |k, v| instance_variable_set("@#{k}", v) }
       @button = button
     end
   end

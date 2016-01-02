@@ -27,13 +27,12 @@ class Api::UncachedProductSerializer < ActiveModel::Serializer
     else
       object.master.price_with_fees(options[:current_distributor], options[:current_order_cycle])
     end
-
   end
 end
 
 class Api::CachedProductSerializer < ActiveModel::Serializer
-  #cached
-  #delegate :cache_key, to: :object
+  # cached
+  # delegate :cache_key, to: :object
 
   attributes :id, :name, :permalink, :count_on_hand
   attributes :on_demand, :group_buy, :notes, :description
@@ -59,5 +58,4 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   def master
     options[:master_variants][object.id].andand.first
   end
-
 end

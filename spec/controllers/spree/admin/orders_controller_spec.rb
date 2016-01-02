@@ -52,7 +52,7 @@ describe Spree::Admin::OrdersController do
       make_simple_data!
 
       it "should deny me access to the index action" do
-        spree_get :index, :format => :json
+        spree_get :index, format: :json
         expect(response).to redirect_to spree.unauthorized_path
       end
     end
@@ -62,7 +62,7 @@ describe Spree::Admin::OrdersController do
 
       before do
         controller.stub spree_current_user: quick_login_as_admin
-        spree_get :index, :format => :json
+        spree_get :index, format: :json
       end
 
       it "retrieves a list of orders with appropriate attributes, including line items with appropriate attributes" do
@@ -105,7 +105,7 @@ describe Spree::Admin::OrdersController do
 
         before do
           controller.stub spree_current_user: supplier.owner
-          spree_get :index, :format => :json
+          spree_get :index, format: :json
         end
 
         it "does not display line items for which my enterprise is a supplier" do
@@ -116,7 +116,7 @@ describe Spree::Admin::OrdersController do
       context "coordinator enterprise" do
         before do
           controller.stub spree_current_user: coordinator.owner
-          spree_get :index, :format => :json
+          spree_get :index, format: :json
         end
 
         it "retrieves a list of orders" do
@@ -128,7 +128,7 @@ describe Spree::Admin::OrdersController do
       context "hub enterprise" do
         before do
           controller.stub spree_current_user: distributor1.owner
-          spree_get :index, :format => :json
+          spree_get :index, format: :json
         end
 
         it "retrieves a list of orders" do

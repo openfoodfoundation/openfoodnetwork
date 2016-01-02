@@ -30,12 +30,11 @@ class VariantOverride < ActiveRecord::Base
     vo = self.for(hub, variant)
 
     if vo.nil?
-      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level for a variant without a VariantOverride."
+      Bugsnag.notify RuntimeError.new 'Attempting to decrement stock level for a variant without a VariantOverride.'
     else
       vo.decrement_stock! quantity
     end
   end
-
 
   def stock_overridden?
     count_on_hand.present?
@@ -45,15 +44,13 @@ class VariantOverride < ActiveRecord::Base
     if stock_overridden?
       decrement! :count_on_hand, quantity
     else
-      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
+      Bugsnag.notify RuntimeError.new 'Attempting to decrement stock level on a VariantOverride without a count_on_hand specified.'
     end
   end
-
 
   private
 
   def self.for(hub, variant)
-    VariantOverride.where(variant_id: variant, hub_id: hub).first
+    VariantOverride.find_by(variant_id: variant, hub_id: hub)
   end
-
 end

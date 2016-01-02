@@ -21,5 +21,4 @@ class Api::Admin::IndexEnterpriseSerializer < ActiveModel::Serializer
   def warnings
     OpenFoodNetwork::EnterpriseIssueValidator.new(object).warnings
   end
-
 end

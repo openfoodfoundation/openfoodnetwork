@@ -16,7 +16,6 @@ module OpenFoodNetwork
       a.set_absolute_included_tax! adjustment_tax(order, a)
     end
 
-
     private
 
     def line_item_adjustment_label

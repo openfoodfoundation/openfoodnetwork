@@ -3,12 +3,12 @@ require 'open_food_network/last_used_address'
 class CheckoutController < Spree::CheckoutController
   layout 'darkswarm'
 
-  prepend_before_filter :check_hub_ready_for_checkout
-  prepend_before_filter :check_order_cycle_expiry
-  prepend_before_filter :require_order_cycle
-  prepend_before_filter :require_distributor_chosen
+  prepend_before_action :check_hub_ready_for_checkout
+  prepend_before_action :check_order_cycle_expiry
+  prepend_before_action :require_order_cycle
+  prepend_before_action :require_distributor_chosen
 
-  skip_before_filter :check_registration
+  skip_before_action :check_registration
 
   include OrderCyclesHelper
   include EnterprisesHelper
@@ -20,8 +20,8 @@ class CheckoutController < Spree::CheckoutController
     if @order.update_attributes(object_params)
       check_order_for_phantom_fees
       fire_event('spree.checkout.update')
-      while @order.state != "complete"
-        if @order.state == "payment"
+      while @order.state != 'complete'
+        if @order.state == 'payment'
           return if redirect_to_paypal_express_form_if_needed
         end
 
@@ -37,16 +37,16 @@ class CheckoutController < Spree::CheckoutController
           return
         end
       end
-      if @order.state == "complete" ||  @order.completed?
+      if @order.state == 'complete' || @order.completed?
         flash[:success] = t(:order_processed_successfully)
-          respond_to do |format|
-            format.html do
-              respond_with(@order, :location => order_path(@order))
-            end
-            format.js do
-              render json: {path: order_path(@order)}, status: 200
-            end
+        respond_to do |format|
+          format.html do
+            respond_with(@order, location: order_path(@order))
           end
+          format.js do
+            render json: { path: order_path(@order) }, status: 200
+          end
+        end
       else
         update_failed
       end
@@ -55,20 +55,17 @@ class CheckoutController < Spree::CheckoutController
     end
   end
 
-
   private
 
   def check_order_for_phantom_fees
-    phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id').
-    where("originator_type = 'EnterpriseFee' AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
+    phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id')
+                   .where("originator_type = 'EnterpriseFee' AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
 
     if phantom_fees.any?
-      Bugsnag.notify(RuntimeError.new("Phantom Fees"), {
-        phantom_fees: {
-          phantom_total: phantom_fees.sum(&:amount).to_s,
-          phantom_fees: phantom_fees.as_json
-        }
-      })
+      Bugsnag.notify(RuntimeError.new('Phantom Fees'), phantom_fees: {
+                       phantom_total: phantom_fees.sum(&:amount).to_s,
+                       phantom_fees: phantom_fees.as_json
+                     })
     end
   end
 
@@ -79,7 +76,7 @@ class CheckoutController < Spree::CheckoutController
     if params[:payment_source].present? && source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
       params[:order][:payments_attributes].first[:source_attributes] = source_params
     end
-    if (params[:order][:payments_attributes])
+    if params[:order][:payments_attributes]
       params[:order][:payments_attributes].first[:amount] = @order.total
     end
     params[:order]
@@ -95,7 +92,6 @@ class CheckoutController < Spree::CheckoutController
     false
   end
 
-
   def update_failed
     clear_ship_address
     respond_to do |format|
@@ -103,7 +99,7 @@ class CheckoutController < Spree::CheckoutController
         render :edit
       end
       format.js do
-        render json: {errors: @order.errors, flash: flash.to_hash}.to_json, status: 400
+        render json: { errors: @order.errors, flash: flash.to_hash }.to_json, status: 400
       end
     end
   end
@@ -122,7 +118,7 @@ class CheckoutController < Spree::CheckoutController
 
   def load_order
     @order = current_order
-    redirect_to main_app.shop_path and return unless @order and @order.checkout_allowed?
+    redirect_to main_app.shop_path and return unless @order && @order.checkout_allowed?
     raise_insufficient_quantity and return if @order.insufficient_stock_lines.present?
     redirect_to main_app.shop_path and return if @order.completed?
     before_address
@@ -136,7 +132,10 @@ class CheckoutController < Spree::CheckoutController
     last_used_bill_address = lua.last_used_bill_address.andand.clone
     last_used_ship_address = lua.last_used_ship_address.andand.clone
 
-    preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user.respond_to?(:bill_address) && spree_current_user.respond_to?(:ship_address)
+    if spree_current_user.respond_to?(:bill_address) && spree_current_user.respond_to?(:ship_address)
+      preferred_bill_address = spree_current_user.bill_address
+      preferred_ship_address = spree_current_user.ship_address
+    end
     @order.bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
     @order.ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default
   end
@@ -159,9 +158,9 @@ class CheckoutController < Spree::CheckoutController
     return unless params[:order][:payments_attributes]
 
     payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
-    return unless payment_method.kind_of?(Spree::Gateway::PayPalExpress)
+    return unless payment_method.is_a?(Spree::Gateway::PayPalExpress)
 
-    render json: {path: spree.paypal_express_url(payment_method_id: payment_method.id)}, status: 200
+    render json: { path: spree.paypal_express_url(payment_method_id: payment_method.id) }, status: 200
     true
   end
 end

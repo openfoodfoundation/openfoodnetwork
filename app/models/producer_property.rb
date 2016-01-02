@@ -1,8 +1,7 @@
 class ProducerProperty < ActiveRecord::Base
   belongs_to :property, class_name: 'Spree::Property'
 
-  default_scope order("#{self.table_name}.position")
-
+  default_scope order("#{table_name}.position")
 
   def property_name
     property.name if property
@@ -11,7 +10,7 @@ class ProducerProperty < ActiveRecord::Base
   def property_name=(name)
     unless name.blank?
       self.property = Spree::Property.find_by_name(name) ||
-        Spree::Property.create(name: name, presentation: name)
+                      Spree::Property.create(name: name, presentation: name)
     end
   end
 end

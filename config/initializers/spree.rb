@@ -6,7 +6,6 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 
-
 require 'spree/product_filters'
 
 Spree.config do |config|
@@ -14,22 +13,22 @@ Spree.config do |config|
   config.address_requires_state = true
 
   # Settings dependent on locale
-  config.checkout_zone = ENV["CHECKOUT_ZONE"]
+  config.checkout_zone = ENV['CHECKOUT_ZONE']
   config.currency = ENV['CURRENCY']
   if Spree::Country.table_exists?
     country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
     config.default_country_id = country.id if country.present?
   else
-    config.default_country_id = 12  # Australia
+    config.default_country_id = 12 # Australia
   end
 
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
   config.auto_capture = true
-  #config.override_actionmailer_config = false
+  # config.override_actionmailer_config = false
 end
 
-# TODO Work out why this is necessary
+# TODO: Work out why this is necessary
 # Seems like classes within OFN module become 'uninitialized' when server reloads
 # unless the empty module is explicity 'registered' here. Something to do with autoloading?
 module OpenFoodNetwork

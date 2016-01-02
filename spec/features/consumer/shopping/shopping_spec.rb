@@ -73,7 +73,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should_not have_content product.name
           Spree::Order.last.order_cycle.should == nil
 
-          select "frogs", :from => "order_cycle_id"
+          select "frogs", from: "order_cycle_id"
           page.should have_selector "products"
           page.should have_content "Next order closing in 2 days"
           Spree::Order.last.order_cycle.should == oc1

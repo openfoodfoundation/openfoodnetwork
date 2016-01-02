@@ -1,14 +1,13 @@
 class EnterpriseFeePresenter
   def initialize(controller, enterprise_fee, index)
-    @controller, @enterprise_fee, @index = controller, enterprise_fee, index
+    @controller = controller
+    @enterprise_fee = enterprise_fee
+    @index = index
   end
 
-  delegate :id, :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :to => :enterprise_fee
+  delegate :id, :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, to: :enterprise_fee
 
-  def enterprise_fee
-    @enterprise_fee
-  end
-
+  attr_reader :enterprise_fee
 
   def enterprise_name
     @enterprise_fee.enterprise.andand.name
@@ -22,10 +21,9 @@ class EnterpriseFeePresenter
     result = nil
 
     @controller.send(:with_format, :html) do
-      result = @controller.render_to_string :partial => 'admin/enterprise_fees/calculator_settings', :locals => {:enterprise_fee => @enterprise_fee, :index => @index}
+      result = @controller.render_to_string partial: 'admin/enterprise_fees/calculator_settings', locals: { enterprise_fee: @enterprise_fee, index: @index }
     end
 
     result.gsub('[0]', '[{{ $index }}]').gsub('_0_', '_{{ $index }}_')
   end
-
 end

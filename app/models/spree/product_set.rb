@@ -1,5 +1,5 @@
 class Spree::ProductSet < ModelSet
-  def initialize(attributes={})
+  def initialize(attributes = {})
     super(Spree::Product, [], attributes, proc { |attrs| attrs[:product_id].blank? })
   end
 
@@ -9,14 +9,14 @@ class Spree::ProductSet < ModelSet
   # and so an explicit call to update attributes on each individual variant was required. ie:
   # variant.update_attributes( { price: xx.x } )
   def update_attributes(attributes)
-    attributes[:taxon_ids] = attributes[:taxon_ids].split(',')  if attributes[:taxon_ids].present?
+    attributes[:taxon_ids] = attributes[:taxon_ids].split(',') if attributes[:taxon_ids].present?
     e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
     if e.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
     else
-      ( attributes.except(:id, :variants_attributes, :master_attributes).present? ? e.update_attributes(attributes.except(:id, :variants_attributes, :master_attributes)) : true) and
-      (attributes[:variants_attributes] ? update_variants_attributes(e, attributes[:variants_attributes]) : true ) and
-      (attributes[:master_attributes] ? update_variant(e, attributes[:master_attributes]) : true )
+      (attributes.except(:id, :variants_attributes, :master_attributes).present? ? e.update_attributes(attributes.except(:id, :variants_attributes, :master_attributes)) : true) &&
+        (attributes[:variants_attributes] ? update_variants_attributes(e, attributes[:variants_attributes]) : true) &&
+        (attributes[:master_attributes] ? update_variant(e, attributes[:master_attributes]) : true)
     end
   end
 
@@ -36,7 +36,7 @@ class Spree::ProductSet < ModelSet
   end
 
   def collection_attributes=(attributes)
-    @collection = Spree::Product.where( :id => attributes.each_value.map{ |p| p[:id] } )
+    @collection = Spree::Product.where(id: attributes.each_value.map { |p| p[:id] })
     @collection_hash = attributes
   end
 

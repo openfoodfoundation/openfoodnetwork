@@ -1,10 +1,9 @@
 module Api
   class EnterprisesController < Spree::Api::BaseController
-
-    before_filter :override_owner, only: [:create, :update]
-    before_filter :check_type, only: :update
-    before_filter :override_sells, only: [:create, :update]
-    before_filter :override_visible, only: [:create, :update]
+    before_action :override_owner, only: [:create, :update]
+    before_action :check_type, only: :update
+    before_action :override_sells, only: [:create, :update]
+    before_action :override_visible, only: [:create, :update]
     respond_to :json
 
     def managed
@@ -17,7 +16,7 @@ module Api
 
       @enterprise = Enterprise.new(params[:enterprise])
       if @enterprise.save
-        render text: @enterprise.id, :status => 201
+        render text: @enterprise.id, status: 201
       else
         invalid_resource!(@enterprise)
       end
@@ -28,7 +27,7 @@ module Api
       authorize! :update, @enterprise
 
       if @enterprise.update_attributes(params[:enterprise])
-        render text: @enterprise.id, :status => 200
+        render text: @enterprise.id, status: 200
       else
         invalid_resource!(@enterprise)
       end
@@ -38,10 +37,10 @@ module Api
       @enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
       authorize! :update, @enterprise
 
-      if params[:logo] && @enterprise.update_attributes( { logo: params[:logo] } )
-        render text: @enterprise.logo.url(:medium), :status => 200
-      elsif params[:promo] && @enterprise.update_attributes( { promo_image: params[:promo] } )
-        render text: @enterprise.promo_image.url(:medium), :status => 200
+      if params[:logo] && @enterprise.update_attributes(logo: params[:logo])
+        render text: @enterprise.logo.url(:medium), status: 200
+      elsif params[:promo] && @enterprise.update_attributes(promo_image: params[:promo])
+        render text: @enterprise.promo_image.url(:medium), status: 200
       else
         invalid_resource!(@enterprise)
       end

@@ -1,11 +1,10 @@
 # LandingPage used to support static pages, we've moved to a static
 # event. This adds path to promotions then migrates the old LandingPage rules
 class ContentVisitedEvent < ActiveRecord::Migration
-
   # Removed Class for Migrations
   class Spree::Promotion::Rules::LandingPage < Spree::PromotionRule
     preference :path, :string
-    def eligible?(order, options = {})
+    def eligible?(_order, _options = {})
       true
     end
   end
@@ -19,7 +18,7 @@ class ContentVisitedEvent < ActiveRecord::Migration
       promotion.event_name = 'spree.content.visited'
       promotion.path = promotion_rule.preferred_path
       promotion.promotion_rules.delete promotion_rule
-      promotion.save(:validate => false)
+      promotion.save(validate: false)
     end
   end
 

@@ -5,8 +5,8 @@ class ProductGroupsAndScopes < ActiveRecord::Migration
     end
 
     create_table :product_scopes do |t|
-      t.string   :name
-      t.text     :arguments
+      t.string :name
+      t.text :arguments
       t.references :product_group
     end
 

@@ -7,8 +7,8 @@ class AddPermalinkToGroups < ActiveRecord::Migration
     EnterpriseGroup.all.each do |group|
       counter = 1
       permalink = group.name.parameterize
-      permalink = "my-group-name" if permalink == ""
-      while EnterpriseGroup.find_by_permalink(permalink) do
+      permalink = 'my-group-name' if permalink == ''
+      while EnterpriseGroup.find_by_permalink(permalink)
         permalink = group.name.parameterize + counter.to_s
         counter += 1
       end
@@ -17,7 +17,7 @@ class AddPermalinkToGroups < ActiveRecord::Migration
     end
 
     change_column :enterprise_groups, :permalink, :string, null: false
-    add_index :enterprise_groups, :permalink, :unique => true
+    add_index :enterprise_groups, :permalink, unique: true
   end
 
   def down

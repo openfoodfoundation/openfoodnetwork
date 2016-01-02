@@ -1,4 +1,4 @@
-class Adjustment < ActiveRecord::Base; end;
+class Adjustment < ActiveRecord::Base; end
 
 class FixExistingCouponCredits < ActiveRecord::Migration
   def up

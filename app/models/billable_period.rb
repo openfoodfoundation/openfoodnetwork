@@ -4,50 +4,50 @@ class BillablePeriod < ActiveRecord::Base
   belongs_to :enterprise
   belongs_to :owner, class_name: 'Spree::User'
   belongs_to :account_invoice
-  has_one :adjustment, :as => :source, class_name: "Spree::Adjustment" #, :dependent => :destroy
+  has_one :adjustment, as: :source, class_name: 'Spree::Adjustment' # , dependent: :destroy
 
   default_scope where(deleted_at: nil)
 
   def display_turnover
-    Spree::Money.new(turnover, {currency: Spree::Config[:currency]})
+    Spree::Money.new(turnover, currency: Spree::Config[:currency])
   end
 
   def display_bill
-    Spree::Money.new(bill, {currency: Spree::Config[:currency]})
+    Spree::Money.new(bill, currency: Spree::Config[:currency])
   end
 
   def bill
     return 0 if trial?
-    return 0 unless ['own', 'any'].include?(sells)
+    return 0 unless %w(own any).include?(sells)
     OpenFoodNetwork::BillCalculator.new(turnover: turnover).bill
   end
 
   def label
     enterprise_version = enterprise.version_at(begins_at)
     category = enterprise_version.category.to_s.titleize
-    category += (trial ? " Trial" : "")
+    category += (trial ? ' Trial' : '')
 
     "#{enterprise_version.name} (#{category})"
   end
 
   def adjustment_label
-    begins = begins_at.in_time_zone.strftime("%d/%m/%y")
-    ends = ends_at.in_time_zone.strftime("%d/%m/%y")
+    begins = begins_at.in_time_zone.strftime('%d/%m/%y')
+    ends = ends_at.in_time_zone.strftime('%d/%m/%y')
 
     "#{label} [#{begins} - #{ends}]"
   end
 
   def delete
-    self.update_column(:deleted_at, Time.zone.now)
+    update_column(:deleted_at, Time.zone.now)
   end
 
   def ensure_correct_adjustment_for(invoice)
     if adjustment
       # adjustment.originator = enterprise.package
       adjustment.adjustable = invoice
-      adjustment.update_attributes( label: adjustment_label, amount: bill )
+      adjustment.update_attributes(label: adjustment_label, amount: bill)
     else
-      self.adjustment = invoice.adjustments.new( adjustment_attrs, :without_protection => true )
+      self.adjustment = invoice.adjustments.new(adjustment_attrs, without_protection: true)
     end
 
     if Spree::Config.account_invoices_tax_rate > 0

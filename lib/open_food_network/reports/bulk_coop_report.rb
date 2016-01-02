@@ -2,12 +2,9 @@ require 'open_food_network/reports/report'
 
 module OpenFoodNetwork::Reports
   class BulkCoopReport < Report
-
-
     private
 
     class << self
-
       def supplier_name(lis)
         lis.first.variant.product.supplier.name
       end
@@ -33,7 +30,7 @@ module OpenFoodNetwork::Reports
         if group_buy_unit_size(lis).zero?
           0
         else
-          ( total_amount(lis) / group_buy_unit_size(lis) ).ceil
+          (total_amount(lis) / group_buy_unit_size(lis)).ceil
         end
       end
 

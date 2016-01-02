@@ -7,7 +7,7 @@ class EnterpriseGroup < ActiveRecord::Base
 
   has_and_belongs_to_many :enterprises
   belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_groups
-  belongs_to :address, :class_name => 'Spree::Address'
+  belongs_to :address, class_name: 'Spree::Address'
   accepts_nested_attributes_for :address
   validates :address, presence: true, associated: true
   before_validation :set_undefined_address_fields
@@ -28,20 +28,20 @@ class EnterpriseGroup < ActiveRecord::Base
   attr_accessible :address_attributes
   attr_accessible :email, :website, :facebook, :instagram, :linkedin, :twitter
 
-  delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, :to => :address
+  delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, to: :address
 
   has_attached_file :logo,
-    styles: {medium: "100x100"},
-    url:  '/images/enterprise_groups/logos/:id/:style/:basename.:extension',
-    path: 'public/images/enterprise_groups/logos/:id/:style/:basename.:extension'
+                    styles: { medium: '100x100' },
+                    url:  '/images/enterprise_groups/logos/:id/:style/:basename.:extension',
+                    path: 'public/images/enterprise_groups/logos/:id/:style/:basename.:extension'
 
   has_attached_file :promo_image,
-    styles: {large: ["1200x260#", :jpg]},
-    url:  '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
-    path: 'public/images/enterprise_groups/promo_images/:id/:style/:basename.:extension'
+                    styles: { large: ['1200x260#', :jpg] },
+                    url:  '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
+                    path: 'public/images/enterprise_groups/promo_images/:id/:style/:basename.:extension'
 
-  validates_attachment_content_type :logo, :content_type => /\Aimage\/.*\Z/
-  validates_attachment_content_type :promo_image, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :promo_image, content_type: /\Aimage\/.*\Z/
 
   include Spree::Core::S3Support
   supports_s3 :logo

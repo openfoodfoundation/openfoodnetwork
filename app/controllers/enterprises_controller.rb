@@ -1,20 +1,19 @@
 class EnterprisesController < BaseController
-  layout "darkswarm"
+  layout 'darkswarm'
   helper Spree::ProductsHelper
   include OrderCyclesHelper
 
   # These prepended filters are in the reverse order of execution
-  prepend_before_filter :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
-  before_filter :clean_permalink, only: :check_permalink
+  prepend_before_action :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
+  before_action :clean_permalink, only: :check_permalink
 
   respond_to :js, only: :permalink_checker
-
 
   def check_permalink
     return render text: params[:permalink], status: 409 if Enterprise.find_by_permalink params[:permalink]
 
-    path = Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
-    if path && path[:controller] == "cms_content"
+    path = Rails.application.routes.recognize_path("/#{params[:permalink]}")
+    if path && path[:controller] == 'cms_content'
       render text: params[:permalink], status: 200
     else
       render text: params[:permalink], status: 409
@@ -31,7 +30,7 @@ class EnterprisesController < BaseController
     distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
     order = current_order(true)
 
-    if order.distributor and order.distributor != distributor
+    if order.distributor && order.distributor != distributor
       order.empty!
       order.set_order_cycle! nil
     end

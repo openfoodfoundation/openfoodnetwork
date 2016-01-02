@@ -4,10 +4,10 @@ class AddConfirmableToEnterprise < ActiveRecord::Migration
     add_column :enterprises, :confirmed_at, :datetime
     add_column :enterprises, :confirmation_sent_at, :datetime
     add_column :enterprises, :unconfirmed_email, :string
-    add_index :enterprises, :confirmation_token, :unique => true
+    add_index :enterprises, :confirmation_token, unique:/ true
 
     # Existing enterprises are assumed to be confirmed
-    Enterprise.update_all(:confirmed_at => Time.zone.now)
+    Enterprise.update_all(confirmed_at:/ Time.zone.now)
   end
 
   def down

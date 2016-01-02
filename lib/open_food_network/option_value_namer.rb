@@ -11,12 +11,12 @@ module OpenFoodNetwork
 
       name_fields = []
       name_fields << "#{value}#{separator}#{unit}" if value.present? && unit.present?
-      name_fields << @variant.unit_description   if @variant.unit_description.present?
+      name_fields << @variant.unit_description if @variant.unit_description.present?
       name_fields.join ' '
     end
 
     def value
-      value, _ = option_value_value_unit
+      value, = option_value_value_unit
       value
     end
 
@@ -24,7 +24,6 @@ module OpenFoodNetwork
       _, unit = option_value_value_unit
       unit
     end
-
 
     private
 
@@ -61,14 +60,14 @@ module OpenFoodNetwork
     end
 
     def scale_for_unit_value
-      units = {'weight' => {1.0 => 'g', 1000.0 => 'kg', 1000000.0 => 'T'},
-               'volume' => {0.001 => 'mL', 1.0 => 'L',  1000.0 => 'kL'}}
+      units = { 'weight' => { 1.0 => 'g', 1000.0 => 'kg', 1_000_000.0 => 'T' },
+                'volume' => { 0.001 => 'mL', 1.0 => 'L',  1000.0 => 'kL' } }
 
       # Find the largest available unit where unit_value comes to >= 1 when expressed in it.
       # If there is none available where this is true, use the smallest available unit.
-      unit = units[@variant.product.variant_unit].select { |scale, unit_name|
+      unit = units[@variant.product.variant_unit].select do |scale, _unit_name|
         @variant.unit_value / scale >= 1
-      }.to_a.last
+      end.to_a.last
       unit = units[@variant.product.variant_unit].first if unit.nil?
 
       unit

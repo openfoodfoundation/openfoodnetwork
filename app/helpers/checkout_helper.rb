@@ -1,5 +1,5 @@
 module CheckoutHelper
-  def checkout_adjustments_for(order, opts={})
+  def checkout_adjustments_for(order, opts = {})
     adjustments = order.adjustments.eligible
     exclude = opts[:exclude] || {}
 
@@ -19,11 +19,11 @@ module CheckoutHelper
 
   def display_checkout_admin_and_handling_adjustments_total_for(order)
     adjustments = order.adjustments.eligible.where('originator_type = ? AND source_type != ? ', 'EnterpriseFee', 'Spree::LineItem')
-    Spree::Money.new adjustments.sum(&:amount) , currency: order.currency
+    Spree::Money.new adjustments.sum(&:amount), currency: order.currency
   end
 
   def checkout_line_item_adjustments(order)
-    order.adjustments.eligible.where(source_type: "Spree::LineItem")
+    order.adjustments.eligible.where(source_type: 'Spree::LineItem')
   end
 
   def checkout_subtotal(order)
@@ -31,7 +31,7 @@ module CheckoutHelper
   end
 
   def display_checkout_subtotal(order)
-    Spree::Money.new checkout_subtotal(order) , currency: order.currency
+    Spree::Money.new checkout_subtotal(order), currency: order.currency
   end
 
   def display_checkout_tax_total(order)
@@ -56,29 +56,28 @@ module CheckoutHelper
     available_countries.map { |c| [c.name, c.id] }
   end
 
-
   def validated_input(name, path, args = {})
     attributes = {
       required: true,
       type: :text,
       name: path,
       id: path,
-      "ng-model" => path,
-      "ng-class" => "{error: !fieldValid('#{path}')}"
+      'ng-model' => path,
+      'ng-class' => "{error: !fieldValid('#{path}')}"
     }.merge args
 
-    render "shared/validated_input", name: name, path: path, attributes: attributes
+    render 'shared/validated_input', name: name, path: path, attributes: attributes
   end
 
   def validated_select(name, path, options, args = {})
     attributes = {
       required: true,
       id: path,
-      "ng-model" => path,
-      "ng-class" => "{error: !fieldValid('#{path}')}"
+      'ng-model' => path,
+      'ng-class' => "{error: !fieldValid('#{path}')}"
     }.merge args
 
-    render "shared/validated_select", name: name, path: path, options: options, attributes: attributes
+    render 'shared/validated_select', name: name, path: path, options: options, attributes: attributes
   end
 
   def reset_order

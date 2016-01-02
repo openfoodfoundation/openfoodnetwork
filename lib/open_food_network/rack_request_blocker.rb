@@ -5,7 +5,6 @@ require 'atomic'
 
 # Rack middleware that keeps track of the number of active requests and can block new requests.
 class RackRequestBlocker
-
   @@num_active_requests = Atomic.new(0)
   @@block_requests = Atomic.new(false)
 
@@ -45,10 +44,10 @@ class RackRequestBlocker
     max_wait_time = 30
     polling_interval = 0.01
     wait_until = Time.now + max_wait_time.seconds
-    while true
-      return if self.num_active_requests == 0
+    loop do
+      return if num_active_requests == 0
       if Time.now > wait_until
-        raise "Failed waiting for completing requests, #{self.num_active_requests} running."
+        fail "Failed waiting for completing requests, #{num_active_requests} running."
       else
         sleep(polling_interval)
       end
@@ -63,7 +62,7 @@ class RackRequestBlocker
     @@block_requests.value
   end
 
-  def block_request(env)
+  def block_request(_env)
     [503, {}, []]
   end
 

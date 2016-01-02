@@ -22,13 +22,13 @@ module OpenFoodNetwork
 
       issues << {
         description: "Email confirmation is pending. We've sent a confirmation email to #{@enterprise.email}.",
-        link: "<a class='button fullwidth' href='#{enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } )}' method='post'>Resend Email</a>"
+        link: "<a class='button fullwidth' href='#{enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email })}' method='post'>Resend Email</a>"
       } unless confirmed?
 
       issues
     end
 
-    def issues_summary(opts={})
+    def issues_summary(opts = {})
       if    !opts[:confirmation_only] && !shipping_methods_ok? && !payment_methods_ok?
         'no shipping or payment methods'
       elsif !opts[:confirmation_only] && !shipping_methods_ok?
@@ -50,7 +50,6 @@ module OpenFoodNetwork
 
       warnings
     end
-
 
     private
 

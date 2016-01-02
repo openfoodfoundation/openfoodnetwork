@@ -4,28 +4,27 @@ require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  Bundler.require(*Rails.groups(assets: %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
 
 module Openfoodnetwork
   class Application < Rails::Application
-
     config.to_prepare do
       # Load application's model / class decorators
-      Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
+      Dir.glob(File.join(File.dirname(__FILE__), '../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
 
       # Load application's view overrides
-      Dir.glob(File.join(File.dirname(__FILE__), "../app/overrides/*.rb")) do |c|
+      Dir.glob(File.join(File.dirname(__FILE__), '../app/overrides/*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
     end
 
     # Register Spree calculators
-    initializer "spree.register.calculators" do |app|
+    initializer 'spree.register.calculators' do |app|
       app.config.spree.calculators.shipping_methods << OpenFoodNetwork::Calculator::Weight
 
       app.config.spree.calculators.enterprise_fees = [Spree::Calculator::FlatPercentItemTotal,
@@ -37,7 +36,7 @@ module Openfoodnetwork
     end
 
     # Register Spree payment methods
-    initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
+    initializer 'spree.gateway.payment_methods', after: 'spree.register.payment_methods' do |app|
       app.config.spree.payment_methods << Spree::Gateway::Migs
       app.config.spree.payment_methods << Spree::Gateway::Pin
     end
@@ -61,11 +60,11 @@ module Openfoodnetwork
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    config.time_zone = ENV["TIMEZONE"]
+    config.time_zone = ENV['TIMEZONE']
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = ENV["LOCALE"]
+    config.i18n.default_locale = ENV['LOCALE']
 
     # Setting this to true causes a performance regression in Rails 3.2.17
     # When we're on a version with the fix below, we can set it to true
@@ -73,7 +72,7 @@ module Openfoodnetwork
     I18n.config.enforce_available_locales = false
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
@@ -100,6 +99,5 @@ module Openfoodnetwork
     config.assets.precompile += ['comfortable_mexican_sofa/*']
     config.assets.precompile += ['search/all.css', 'search/*.js']
     config.assets.precompile += ['shared/*']
-
   end
 end
