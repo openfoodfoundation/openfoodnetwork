@@ -17,7 +17,30 @@ fr:
   producers: Producteurs & hubs
   producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
   charges_sales_tax: Soumis à la TVA?
-  print: "Imprimer"
+  print_invoice: "Imprimer la facture"
+  send_invoice: "Envoyer la facture"
+  resend_confirmation: "Renvoyer la confirmation"
+  view_order: "Voir la commande"
+  edit_order: "Editer la commande"
+  ship_order: "Envoyer la commande"
+  cancel_order: "Annuler la commande"
+  confirm_send_invoice: "La facture de cette commande va être transmise au client. Etes-vous sûr de vouloir continuer ?"
+  confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
+  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
+  invoice: "Facture"
+  percentage_of_sales: "%{percentage} des ventes"
+  percentage_of_turnover: "Pourcentage du chiffre d'affaire"
+  monthly_cap_excl_tax: "Cumul mensuel (sans TVA)"
+  capped_at_cap: "plafonné à %{cap}"
+  per_month: "par mois"
+  free: "gratuit"
+  plus_tax: "plus TVA"
+  total_monthly_bill_incl_tax: "Facture mensuelle totale (taxes incluses)"
+  sort_order_cycles_on_shopfront_by: "Trier les cycles de vente par"
+  invoice_column_item: "Produit"
+  invoice_column_qty: "Qté"
+  invoice_column_tax: "TVA"
+  invoice_column_price: "Prix"
   logo: "Logo (640x130)"
   logo_mobile: "Logo smartphone (75x26)"
   logo_mobile_svg: "Logo  smartphone (SVG)"
@@ -34,7 +57,6 @@ fr:
   footer_links_md: "Liens"
   footer_about_url: "A propos URL"
   footer_tos_url: "Conditions d'utilisation URL"
-  invoice: "Facture"
   name: Nom
   first_name: Prénom
   last_name: Nom de famille
@@ -210,7 +232,7 @@ fr:
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_summary: Résumé du paiement
-  email_payment_method: "Payé via:"
+  email_payment_method: "Payer via :"
   email_shipping_delivery_details: Détails de livraison
   email_shipping_delivery_time: "Livré le:"
   email_shipping_delivery_address: "Adresse de livraison:"
@@ -576,4 +598,4 @@ fr:
   fundraising_fee: "Frais recherche de financement"
   price_graph: "Légende détail du prix"
   included_tax: "Inclut TVA"
-  remove_tax: "Afficher prix HT"
+  remove_tax: "Retirer TVA"
