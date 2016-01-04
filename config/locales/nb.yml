@@ -17,7 +17,30 @@ nb:
   producers: Norske Produsenter
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
   charges_sales_tax: MVA-pliktig?
-  print: "Print"
+  print_invoice: "Skriv ut Faktura"
+  send_invoice: "Send Faktura"
+  resend_confirmation: "Send Bekreftelse på nytt"
+  view_order: "Se Bestilling"
+  edit_order: "Rediger Bestilling"
+  ship_order: "Send Bestilling"
+  cancel_order: "Avbryt Bestilling"
+  confirm_send_invoice: "En faktura for denne bestillingen vil bli sendt til kunden. Er du sikker på at du vil fortsette?"
+  confirm_resend_order_confirmation: "Er du sikker på at du vil sende ordrebekreftelse via epost på nytt?"
+  must_have_valid_business_number: "%{enterprise_name} må ha et gyldig ORG nr. før fakturaer kan sendes."
+  invoice: "Faktura"
+  percentage_of_sales: "%{percentage} av handel"
+  percentage_of_turnover: "Prosent av omsetning"
+  monthly_cap_excl_tax: "månedlig tak (eks. MVA)"
+  capped_at_cap: "tak på %{cap}"
+  per_month: "pr. måned"
+  free: "gratis"
+  plus_tax: "pluss MVA"
+  total_monthly_bill_incl_tax: "Total månedlig regning (Inkl. Avgift)"
+  sort_order_cycles_on_shopfront_by: "Sorter Bestillingsrunder i Nettbutikk etter"
+  invoice_column_item: "Vare"
+  invoice_column_qty: "Mengde"
+  invoice_column_tax: "MVA"
+  invoice_column_price: "Pris"
   logo: "Logo (640x130)"
   logo_mobile: "Mobil logo (75x26)"
   logo_mobile_svg: "Mobil logo (SVG)"
@@ -34,7 +57,6 @@ nb:
   footer_links_md: "Linker"
   footer_about_url: "Om URL"
   footer_tos_url: "Vilkår URL"
-  invoice: "Faktura"
   name: Navn
   first_name: Fornavn
   last_name: Etternavn
@@ -575,4 +597,4 @@ nb:
   fundraising_fee: "Pengeinnsamlingsgebyr"
   price_graph: "Prisgraf"
   included_tax: "inkludert avgift"
-  remove_tax: "Fjern MVA"
+  remove_tax: "Fjern avgift"
