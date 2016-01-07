@@ -1,3 +1,9 @@
+- if discourse_configured?
+  %li
+    %a{href: discourse_login_path, target: '_blank'}
+      %span.nav-primary
+        = t 'label_notices'
+
 %li.has-dropdown.not-click
   
   %a{href: "#"} 

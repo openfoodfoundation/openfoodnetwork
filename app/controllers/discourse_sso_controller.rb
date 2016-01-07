@@ -2,6 +2,17 @@ require 'discourse/single_sign_on'
 
 class DiscourseSsoController < ApplicationController
   include SharedHelper
+  include DiscourseHelper
+
+  before_filter :require_config
+
+  def login
+    if require_activation?
+      redirect_to discourse_url
+    else
+      redirect_to discourse_login_url
+    end
+  end
 
   def sso
     if spree_current_user
@@ -15,9 +26,11 @@ class DiscourseSsoController < ApplicationController
     end
   end
 
+  private
+
   def sso_url
-    secret = ENV['DISCOURSE_SSO_SECRET'] or raise 'Missing SSO secret'
-    discourse_url = ENV['DISCOURSE_SSO_URL'] or raise 'Missing Discourse SSO login URL.'
+    secret = discourse_sso_secret!
+    discourse_url = discourse_url!
     sso = Discourse::SingleSignOn.parse(request.query_string, secret)
     sso.email = spree_current_user.email
     sso.username = spree_current_user.login
@@ -25,7 +38,11 @@ class DiscourseSsoController < ApplicationController
     sso.sso_secret = secret
     sso.admin = admin_user?
     sso.require_activation = require_activation?
-    sso.to_url(discourse_url)
+    sso.to_url(discourse_sso_url)
+  end
+
+  def require_config
+    raise ActionController::RoutingError.new('Not Found') unless discourse_configured?
   end
 
   def require_activation?
@@ -33,6 +50,6 @@ class DiscourseSsoController < ApplicationController
   end
 
   def email_validated?
-    spree_current_user.confirmed.map(&:email).include?(spree_current_user.email)
+    spree_current_user.enterprises.confirmed.map(&:email).include?(spree_current_user.email)
   end
 end

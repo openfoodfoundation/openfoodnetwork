@@ -11,7 +11,8 @@ Openfoodnetwork::Application.routes.draw do
   get "/#/login", to: "home#index", as: :spree_login
   get "/login", to: redirect("/#/login")
 
-  get "/sso", to: "discourse_sso#sso"
+  get "/discourse/login", to: "discourse_sso#login"
+  get "/discourse/sso", to: "discourse_sso#sso"
 
   get "/map", to: "map#index", as: :map
 

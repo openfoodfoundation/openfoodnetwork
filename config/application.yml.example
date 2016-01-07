@@ -16,4 +16,4 @@ CURRENCY: AUD
 
 # SingleSignOn login for Discourse
 #DISCOURSE_SSO_SECRET: ""
-#DISCOURSE_SSO_URL: "https://community.openfoodnetwork.org/session/sso_login"
+#DISCOURSE_URL: "https://community.openfoodnetwork.org"
