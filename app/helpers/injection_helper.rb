@@ -53,8 +53,8 @@ module InjectionHelper
 
   def inject_orders_by_distributor
     # Convert ActiveRecord::Relation to array for serialization
-    # This query could maybe go in a model, or just serialize orders and handle the rest in JS
-    data_array = Enterprise.includes(:distributed_orders).where(enterprises: {id: spree_current_user.enterprises_ordered_from }, spree_orders: {state: :complete, user_id: spree_current_user.id}).to_a
+    data_array = spree_current_user.orders_by_distributor.to_a
+    data_array.each{|enterprise| enterprise.distributed_orders.each{|order| order.payments.keep_if{|payment| payment.state == "completed"} }}
     data_array.sort!{|a,b| b.distributed_orders.length <=> a.distributed_orders.length}
     inject_json_ams "orders_by_distributor", data_array, Api::OrdersByDistributorSerializer
   end

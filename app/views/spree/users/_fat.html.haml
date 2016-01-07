@@ -1,5 +1,5 @@
 .row.active_table_row{"ng-if" => "open()","ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
-  .columns.small-12.medium-7.large-7.fat
+  .columns.small-12.medium-12.large-12.fat
     %table
       %tr
         %th{"bo-text" => "'transaction' | t"}
@@ -8,10 +8,18 @@
         %th{"bo-text" => "'shipping_state' | t"}
         %th{"bo-text" => "'value' | t"}
         %th{"bo-text" => "'balance' | t"}
-      %tr{"ng-repeat" => "order in distributor.distributed_orders"}
-        %td{"bo-text" => "order.id"}
-        %td{"bo-text" => "order.completed_at"}
-        %td{"bo-text" => "order.payment_state | t"}
-        %td{"bo-text" => "order.shipment_state | t"}
-        %td {{order.total_money.currency_symbol}}&nbsp{{order.total_money.amount}}
-        %td{"ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}"} {{order.balance_money.currency_symbol}}&nbsp{{order.balance_money.amount}}
+      %tbody{"ng-repeat" => "order in distributor.distributed_orders"}
+        %tr
+          %td{"bo-text" => "'Order ' + order.id"}
+          %td{"bo-text" => "order.completed_at"}
+          %td{"bo-text" => "order.payment_state | t"}
+          %td{"bo-text" => "order.shipment_state | t"}
+          %td.text-right {{order.total_money.currency_symbol}}&nbsp{{order.total_money.amount}}
+          %td.text-right{"ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}"} {{order.balance_money.currency_symbol}}&nbsp{{order.balance_money.amount}}
+          %tr{"ng-repeat" => "payment in order.payments"}
+            %td{"bo-text" => "'Payment '+ payment.identifier"}
+            %td{"bo-text" => "payment.updated_at"}
+            %td{"bo-text" => "payment.payment_method"}
+            %td
+            %td.text-right {{order.total_money.currency_symbol}}&nbsp{{payment.amount}}
+            %td
