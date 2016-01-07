@@ -3,7 +3,7 @@ require 'spec_helper'
 include AuthenticationWorkflow
 
 module OpenFoodNetwork
-  describe PackingReport do
+  describe BulkCoopReport do
     describe "fetching orders" do
       let(:d1) { create(:distributor_enterprise) }
       let(:oc1) { create(:simple_order_cycle) }
@@ -14,7 +14,7 @@ module OpenFoodNetwork
 
       context "as a site admin" do
         let(:user) { create(:admin_user) }
-        subject { PackingReport.new user }
+        subject { BulkCoopReport.new user }
 
         it "fetches completed orders" do
           o2 = create(:order)
@@ -31,7 +31,7 @@ module OpenFoodNetwork
 
       context "as a manager of a supplier" do
         let!(:user) { create(:user) }
-        subject { PackingReport.new user }
+        subject { BulkCoopReport.new user }
 
         let(:s1) { create(:supplier_enterprise) }
 

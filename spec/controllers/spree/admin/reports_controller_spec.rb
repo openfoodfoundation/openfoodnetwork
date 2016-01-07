@@ -4,6 +4,7 @@ describe Spree::Admin::ReportsController do
 
   # Given two distributors and two suppliers
   let(:ba) { create(:address) }
+  let(:sa) { create(:address) }
   let(:si) { "pick up on thursday please" }
   let(:c1) { create(:distributor_enterprise) }
   let(:c2) { create(:distributor_enterprise) }
@@ -23,7 +24,7 @@ describe Spree::Admin::ReportsController do
 
   # orderA1 can only be accessed by s1, s3 and d1
   let!(:orderA1) do
-    order = create(:order, distributor: d1, bill_address: ba, special_instructions: si, order_cycle: ocA)
+    order = create(:order, distributor: d1, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocA)
     order.line_items << create(:line_item, variant: p1.master)
     order.line_items << create(:line_item, variant: p3.master)
     order.finalize!
@@ -32,7 +33,7 @@ describe Spree::Admin::ReportsController do
   end
   # orderA2 can only be accessed by s2 and d2
   let!(:orderA2) do
-    order = create(:order, distributor: d2, bill_address: ba, special_instructions: si, order_cycle: ocA)
+    order = create(:order, distributor: d2, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocA)
     order.line_items << create(:line_item, variant: p2.master)
     order.finalize!
     order.save
@@ -40,7 +41,7 @@ describe Spree::Admin::ReportsController do
   end
   # orderB1 can only be accessed by s1, s3 and d1
   let!(:orderB1) do
-    order = create(:order, distributor: d1, bill_address: ba, special_instructions: si, order_cycle: ocB)
+    order = create(:order, distributor: d1, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocB)
     order.line_items << create(:line_item, variant: p1.master)
     order.line_items << create(:line_item, variant: p3.master)
     order.finalize!
@@ -49,7 +50,7 @@ describe Spree::Admin::ReportsController do
   end
   # orderB2 can only be accessed by s2 and d2
   let!(:orderB2) do
-    order = create(:order, distributor: d2, bill_address: ba, special_instructions: si, order_cycle: ocB)
+    order = create(:order, distributor: d2, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocB)
     order.line_items << create(:line_item, variant: p2.master)
     order.finalize!
     order.save
@@ -131,11 +132,25 @@ describe Spree::Admin::ReportsController do
     before { login_as_enterprise_user [s1] }
 
     describe 'Bulk Coop' do
-      it "only shows product line items that I am supplying" do
-        spree_get :bulk_coop
+      context "where I have granted P-OC to the distributor" do
+        before do
+          create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:add_to_order_cycle])
+        end
 
-        resulting_products.should     include p1
-        resulting_products.should_not include p2, p3
+        it "only shows product line items that I am supplying" do
+          spree_get :bulk_coop
+
+          resulting_products.should     include p1
+          resulting_products.should_not include p2, p3
+        end
+      end
+
+      context "where I have not granted P-OC to the distributor" do
+        it "shows product line items that I am supplying" do
+          spree_get :bulk_coop
+
+          resulting_products.should_not include p1, p2, p3
+        end
       end
     end
 
@@ -151,6 +166,13 @@ describe Spree::Admin::ReportsController do
           resulting_products.should     include p1
           resulting_products.should_not include p2, p3
         end
+
+        it "only shows the selected order cycle" do
+          spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
+
+          resulting_orders_prelim.should     include(orderA1)
+          resulting_orders_prelim.should_not include(orderB1)
+        end
       end
 
       context "where I have not granted P-OC to the distributor" do
@@ -159,13 +181,6 @@ describe Spree::Admin::ReportsController do
 
           resulting_products.should_not include p1, p2, p3
         end
-      end
-
-      it "only shows the selected order cycle" do
-        spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
-
-        resulting_orders_prelim.should     include(orderA1)
-        resulting_orders_prelim.should_not include(orderB1)
       end
     end
   end

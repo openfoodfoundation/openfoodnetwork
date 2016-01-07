@@ -2,23 +2,25 @@ require 'open_food_network/xero_invoices_report'
 
 module OpenFoodNetwork
   describe XeroInvoicesReport do
-    subject { XeroInvoicesReport.new [] }
+    subject { XeroInvoicesReport.new user }
+
+    let(:user) { create(:user) }
 
     describe "option defaults" do
-      let(:report) { XeroInvoicesReport.new [], {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
+      let(:report) { XeroInvoicesReport.new user, {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
 
       around { |example| Timecop.travel(Time.zone.local(2015, 5, 5, 14, 0, 0)) { example.run } }
 
       it "uses defaults when blank params are passed" do
         report.instance_variable_get(:@opts).should == {invoice_date: Date.civil(2015, 5, 5),
-                                                        due_date: Date.civil(2015, 5, 19),
+                                                        due_date: Date.civil(2015, 6, 5),
                                                         account_code: 'food sales',
                                                         report_type: 'summary'}
       end
     end
 
     describe "summary rows" do
-      let(:report) { XeroInvoicesReport.new [], {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
+      let(:report) { XeroInvoicesReport.new user, {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
       let(:order) { double(:order) }
       let(:summary_rows) { report.send(:summary_rows_for_order, order, 1, {}) }
 
@@ -73,7 +75,7 @@ module OpenFoodNetwork
     end
 
     describe "finding account invoice adjustments" do
-      let(:report) { XeroInvoicesReport.new [], {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
+      let(:report) { XeroInvoicesReport.new user, {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
       let!(:order) { create(:order) }
       let(:billable_period) { create(:billable_period) }
       let(:shipping_method) { create(:shipping_method) }
@@ -100,7 +102,7 @@ module OpenFoodNetwork
       end
 
       describe "when an initial invoice number is given" do
-        subject { XeroInvoicesReport.new [], {initial_invoice_number: '123'} }
+        subject { XeroInvoicesReport.new user, {initial_invoice_number: '123'} }
 
         it "increments the number by the index" do
           subject.send(:invoice_number_for, order, 456).should == 579
