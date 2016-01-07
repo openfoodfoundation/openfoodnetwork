@@ -54,7 +54,6 @@ describe Spree::Order do
       product_distribution.should_receive(:create_adjustment_for).with(line_item)
       subject.stub(:product_distribution_for) { product_distribution }
 
-      subject.should_receive(:update!)
 
       subject.update_distribution_charge!
     end
@@ -66,8 +65,6 @@ describe Spree::Order do
       subject.stub(:provided_by_order_cycle?) { false }
 
       subject.stub(:product_distribution_for) { nil }
-
-      subject.should_receive(:update!)
 
       subject.update_distribution_charge!
     end
@@ -93,8 +90,6 @@ describe Spree::Order do
         with(line_item)
       OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.stub(:create_order_adjustments_for)
       subject.stub(:order_cycle) { order_cycle }
-
-      subject.should_receive(:update!)
 
       subject.update_distribution_charge!
     end

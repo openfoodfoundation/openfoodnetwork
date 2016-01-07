@@ -164,29 +164,21 @@ Spree::Order.class_eval do
 
   def update_distribution_charge!
     with_lock do
+      EnterpriseFee.clear_all_adjustments_on_order self
 
-      # Without intervention, the Spree::Adjustment#update_adjustable callback is called
-      # once for every (line item x fee), which triggers a costly Spree::Order#update!
-      Spree::Adjustment.without_callbacks do
-        EnterpriseFee.clear_all_adjustments_on_order self
+      line_items.each do |line_item|
+        if provided_by_order_cycle? line_item
+          OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
 
-        line_items.each do |line_item|
-          if provided_by_order_cycle? line_item
-            OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
-
-          else
-            pd = product_distribution_for line_item
-            pd.create_adjustment_for line_item if pd
-          end
-        end
-
-        if order_cycle
-          OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+        else
+          pd = product_distribution_for line_item
+          pd.create_adjustment_for line_item if pd
         end
       end
 
-      # After fees are calculated, we update the order once
-      update!
+      if order_cycle
+        OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+      end
     end
   end
 
