@@ -13,3 +13,7 @@ LOCALE: en
 CHECKOUT_ZONE: Australia
 # Find currency codes at http://en.wikipedia.org/wiki/ISO_4217.
 CURRENCY: AUD
+
+# SingleSignOn login for Discourse
+#DISCOURSE_SSO_SECRET: ""
+#DISCOURSE_SSO_URL: "https://community.openfoodnetwork.org/session/sso_login"

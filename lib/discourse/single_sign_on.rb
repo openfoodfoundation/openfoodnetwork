@@ -1,6 +1,6 @@
 # This class is the reference implementation of a SSO provider from Discourse.
 
-module OpenFoodNetwork
+module Discourse
   class SingleSignOn
     ACCESSORS = [:nonce, :name, :username, :email, :avatar_url, :avatar_force_update, :require_activation,
                  :about_me, :external_id, :return_sso_url, :admin, :moderator, :suppress_welcome_message]
