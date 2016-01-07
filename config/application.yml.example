@@ -15,5 +15,9 @@ CHECKOUT_ZONE: Australia
 CURRENCY: AUD
 
 # SingleSignOn login for Discourse
+#
+# DISCOURSE_SSO_SECRET should be a random string. It must be the same as provided to your Discourse instance.
 #DISCOURSE_SSO_SECRET: ""
-#DISCOURSE_URL: "https://community.openfoodnetwork.org"
+#
+# DISCOURSE_URL must be the URL of your Discourse instance.
+#DISCOURSE_URL: "https://noticeboard.openfoodnetwork.org.au"
