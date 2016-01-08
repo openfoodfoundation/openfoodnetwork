@@ -15,11 +15,12 @@ env:
     - TZ="Australia/Melbourne"
     - TIMEZONE="Australia/Melbourne"
   matrix:
-    - TEST_CASES="./spec/features/admin" GITHUB_DEPLOY="true"
-    - TEST_CASES="./spec/features/consumer ./spec/serializers ./spec/performance"
-    - TEST_CASES="./spec/models"
-    - TEST_CASES="./spec/controllers ./spec/views ./spec/jobs"
-    - TEST_CASES="./spec/requests ./spec/helpers ./spec/mailers ./spec/lib" KARMA="true"
+    - TEST_CASES="./spec"
+#    - TEST_CASES="./spec/features/admin" GITHUB_DEPLOY="true"
+#    - TEST_CASES="./spec/features/consumer ./spec/serializers ./spec/performance"
+#    - TEST_CASES="./spec/models"
+#    - TEST_CASES="./spec/controllers ./spec/views ./spec/jobs"
+#    - TEST_CASES="./spec/requests ./spec/helpers ./spec/mailers ./spec/lib" KARMA="true"
 
 before_script:
   - cp config/database.travis.yml config/database.yml
@@ -36,7 +37,7 @@ before_script:
 
 script:
   - '[ "$KARMA" = "true" ] && bundle exec rake karma:run || echo "Skipping karma run"'
-  - "bundle exec rspec $TEST_CASES"
+  - "KNAPSACK_GENERATE_REPORT=true bundle exec rspec $TEST_CASES"
 
 after_success:
   - >
