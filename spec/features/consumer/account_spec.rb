@@ -30,9 +30,9 @@ feature %q{
 
   it "reveals table of orders for distributors when clicked" do
     expand_active_table_node distributor1.name
-    expect(page).to have_content d1o1.id
+    expect(page).to have_content "Order " + d1o1.id.to_s
     expand_active_table_node distributor2.name
-    expect(page).not_to have_content d1o1.id
+    expect(page).not_to have_content "Order " + d1o1.id.to_s
   end
 
 end
