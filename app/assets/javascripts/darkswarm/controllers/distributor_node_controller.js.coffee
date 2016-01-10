@@ -1,9 +1,9 @@
 Darkswarm.controller "DistributorNodeCtrl", ($scope, HashNavigation, $anchorScroll) ->
   $scope.toggle = ->
-    HashNavigation.toggle $scope.distributor.id
+    HashNavigation.toggle $scope.distributor.hash
 
   $scope.open = ->
-    HashNavigation.active($scope.distributor.id)
+    HashNavigation.active($scope.distributor.hash)
 
   if $scope.open()
     $anchorScroll()
