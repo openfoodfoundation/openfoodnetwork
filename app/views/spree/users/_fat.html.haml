@@ -10,12 +10,12 @@
         %th{"bo-text" => "'balance' | t"}
       %tbody{"ng-repeat" => "order in distributor.distributed_orders"}
         %tr
-          %td{"bo-text" => "'Order ' + order.id"}
+          %td{"bo-text" => "('order' | t )+ ' ' + order.id"}
           %td{"bo-text" => "order.completed_at"}
           %td{"bo-text" => "order.payment_state | t"}
           %td{"bo-text" => "order.shipment_state | t"}
-          %td.text-right {{order.total_money.currency_symbol}}&nbsp{{order.total_money.amount}}
-          %td.text-right{"ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}"} {{order.balance_money.currency_symbol}}&nbsp{{order.balance_money.amount}}
+          %td.text-right{"bo-text" => "order.total_money.currency_symbol + order.total_money.amount"}
+          %td.text-right{"ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}", "bo-text" => "order.balance_money.currency_symbol + order.balance_money.amount"}
           %tr{"ng-repeat" => "payment in order.payments"}
             %td{"bo-text" => "'Payment '+ payment.identifier"}
             %td{"bo-text" => "payment.updated_at"}

@@ -1,5 +1,5 @@
 class Api::OrdersByDistributorSerializer < ActiveModel::Serializer
-  attributes :name, :id, :hash, :balance, :distributed_orders
+  attributes :name, :id, :hash, :balance, :logo, :distributed_orders
   has_many :distributed_orders, serializer: Api::OrderSerializer
 
   def balance
@@ -8,6 +8,10 @@ class Api::OrdersByDistributorSerializer < ActiveModel::Serializer
 
   def hash
     object.to_param
+  end
+
+  def logo
+    object.logo(:small) if object.logo?
   end
 
 end
