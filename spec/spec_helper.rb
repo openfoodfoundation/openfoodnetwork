@@ -1,13 +1,10 @@
-require 'knapsack'
-
-# CUSTOM_CONFIG_GOES_HERE
-
-Knapsack::Adapters::RSpecAdapter.bind
-
 require 'rubygems'
 
 # Require pry when we're not inside Travis-CI
-require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
+require 'pry' unless ENV['CI']
+
+require 'knapsack'
+Knapsack::Adapters::RSpecAdapter.bind
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
