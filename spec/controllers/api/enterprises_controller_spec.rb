@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Api
-  describe EnterprisesController do
+  describe EnterprisesController, :type => :controller do
     include AuthenticationWorkflow
     render_views
 

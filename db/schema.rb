@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151125051510) do
+ActiveRecord::Schema.define(:version => 20151128185900) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -1159,6 +1159,8 @@ ActiveRecord::Schema.define(:version => 20151125051510) do
     t.integer "hub_id",                                      :null => false
     t.decimal "price",         :precision => 8, :scale => 2
     t.integer "count_on_hand"
+    t.integer "default_stock"
+    t.boolean "resettable"
   end
 
   add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"

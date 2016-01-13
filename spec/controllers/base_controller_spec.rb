@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BaseController do
+describe BaseController, :type => :controller do
   let(:oc)    { mock_model(OrderCycle) }
   let(:hub)   { mock_model(Enterprise, ready_for_checkout?: true) }
   let(:order) { mock_model(Spree::Order, distributor: hub) }

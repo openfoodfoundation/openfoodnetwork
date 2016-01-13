@@ -48,6 +48,8 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
         DirtyVariantOverrides.clear()
         VariantOverrides.updateIds updatedVos
         $timeout -> StatusMessage.display 'success', 'Changes saved.'
+        # Refresh page data
+        VariantOverrides.updateData updatedVos
       .error (data, status) ->
         $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)
 
@@ -62,6 +64,18 @@ angular.module("ofn.admin").controller "AdminVariantOverridesCtrl", ($scope, $ti
         errors = errors.concat field_errors
       errors = errors.join ', '
       "I had some trouble saving: #{errors}"
-
     else
       "Oh no! I was unable to save your changes."
+
+  $scope.resetStock = ->
+    if DirtyVariantOverrides.count() > 0
+      StatusMessage.display 'alert', 'Save changes first.'
+      $timeout ->
+        $scope.displayDirty()
+      , 3000 # 3 second delay
+    else
+      StatusMessage.display 'progress', 'Changing on hand stock levels...'
+      VariantOverrides.resetStock()
+      .success (updatedVos) ->
+        VariantOverrides.updateData updatedVos
+        $timeout -> StatusMessage.display 'success', 'Stocks reset to defaults.'

@@ -66,7 +66,7 @@ class AbilityDecorator
   def add_enterprise_management_abilities(user)
     # Spree performs authorize! on (:create, nil) when creating a new order from admin, and also (:search, nil)
     # when searching for variants to add to the order
-    can [:create, :search, :bulk_update], nil
+    can [:create, :search], nil
 
     can [:admin, :index], :overview
 
@@ -111,7 +111,7 @@ class AbilityDecorator
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
     end
 
-    can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
+    can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
       hub_auth = OpenFoodNetwork::Permissions.new(user).
         variant_override_hubs.
         include? vo.hub
