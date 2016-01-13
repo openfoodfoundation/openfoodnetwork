@@ -225,8 +225,8 @@ feature %q{
 
           # Clearing values manually
           fill_in "variant-overrides-#{variant.id}-price", with: ''
-          fill_in "variant-overrides-#{variant.id}-count-on-hand", with: ''
-          fill_in "variant-overrides-#{variant.id}-default-stock", with: ''
+          fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ''
+          fill_in "variant-overrides-#{variant.id}-default_stock", with: ''
           page.uncheck "variant-overrides-#{variant.id}-resettable"
           page.should have_content "Changes to one override remain unsaved."
 
@@ -249,25 +249,22 @@ feature %q{
           click_button 'Reset Stock to Defaults'
           page.should have_content 'Stocks reset to defaults.'
           vo.reload
-          page.should have_input "variant-overrides-#{variant.id}-count-on-hand", with: '1000', placeholder: '12'
+          page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '1000', placeholder: '12'
           vo.count_on_hand.should == 1000
         end
 
         it "doesn't reset stock levels if the behaviour is disabled" do
           click_button 'Reset Stock to Defaults'
           vo_no_reset.reload
-          page.should have_input "variant-overrides-#{variant2.id}-count-on-hand", with: '40', placeholder: '12'
+          page.should have_input "variant-overrides-#{variant2.id}-count_on_hand", with: '40', placeholder: '12'
           vo_no_reset.count_on_hand.should == 40
         end
-
 
         it "prompts to save changes before reset if any are pending" do
           fill_in "variant-overrides-#{variant.id}-price", with: '200'
           click_button 'Reset Stock to Defaults'
           page.should have_content "Save changes first"
         end
-
-
       end
     end
   end
