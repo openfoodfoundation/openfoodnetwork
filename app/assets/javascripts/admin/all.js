@@ -42,5 +42,8 @@
 //= require textAngular.min.js
 //= require textAngular-sanitize.min.js
 //= require ../shared/bindonce.min.js
+//= require darkswarm/i18n.js
+//= require darkswarm/i18n.translate.js
+
 
 //= require_tree .

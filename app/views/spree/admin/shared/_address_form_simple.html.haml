@@ -1,18 +1,24 @@
 %tr{"data-hook" => "address1"}
-  %td Address:
+  %td
+    = t(:admin_shared_address_1):
   %td= f.text_field :address1
-%tr{"data-hook" => "address2"}
-  %td Address (cont.):
+%tr{"data-hook" => "address2" }
+  %td
+    = t(:admin_shared_address_2):
   %td= f.text_field :address2
-%tr{"data-hook" => "city"}
-  %td City:
+%tr{"data-hook" => "city" }
+  %td
+    = t(:admin_share_city):
   %td= f.text_field :city
-%tr{"data-hook" => "zipcode"}
-  %td Postcode:
+%tr{"data-hook" => "zipcode" }
+  %td
+    = t(:admin_share_zipcode):
   %td= f.text_field :zipcode
-%tr{"data-hook" => "country"}
-  %td Country:
+%tr{"data-hook" => "country" }
+  %td
+    = t(:admin_share_country):
   %td= f.collection_select(:country_id, available_countries, :id, :name)
-%tr{"data-hook" => "state"}
-  %td State:
+%tr{"data-hook" => "state" }
+  %td
+    = t(:admin_share_state):
   %td= f.collection_select(:state_id, f.object.country.states, :id, :name)

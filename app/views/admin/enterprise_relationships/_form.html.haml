@@ -3,17 +3,17 @@
     %select{name: "enterprise_relationship_parent_id", "ng-model" => "parent_id", "ng-options" => "e.id as e.name for e in Enterprises.my_enterprises"}
 
   %td
-    permits
+    = t 'admin_entreprise_relationships_permits'
   %td
     %select{name: "enterprise_relationship_child_id", "ng-model" => "child_id", "ng-options" => "e.id as e.name for e in Enterprises.all_enterprises"}
   %td
     %label
       %input{type: "checkbox", ng: {checked: "allPermissionsChecked()", click: "checkAllPermissions()"}}
-      Everything
+        = t 'admin_entreprise_relationships_everything'
     %div{"ng-repeat" => "permission in EnterpriseRelationships.all_permissions"}
       %label
         %input{type: "checkbox", "ng-model" => "permissions[permission]"}
         to {{ EnterpriseRelationships.permission_presentation(permission) }}
   %td.actions
-    %input{type: "button", value: "Create", "ng-click" => "create()"}
+    %input{type: "button", value: t(:admin_entreprise_relationships_button_create), "ng-click" => "create()"}
     .errors {{ EnterpriseRelationships.create_errors }}

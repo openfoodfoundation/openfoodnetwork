@@ -6,7 +6,7 @@ angular.module("admin.enterprises")
     $scope.navClear = NavigationCheck.clear
     $scope.pristineEmail = $scope.Enterprise.email
     $scope.menu = SideMenu
-    $scope.newManager = { id: '', email: 'Add a manager...' }
+    $scope.newManager = { id: '', email: (t('add_manager')) }
 
     # Provide a callback for generating warning messages displayed before leaving the page. This is passed in
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
@@ -31,4 +31,6 @@ angular.module("admin.enterprises")
         if (user for user in $scope.Enterprise.users when user.id == manager.id).length == 0
           $scope.Enterprise.users.push manager
         else
-          alert "#{manager.email} is already a manager!"
+          alert ("#{manager.email}" + " " + t("is_already_manager"))
+
+

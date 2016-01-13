@@ -1,15 +1,15 @@
 = content_for :page_title do
-  Order Cycles
+  = t :admin_order_cycles
 
 = content_for :page_actions do
   %li#new_order_cycle_link
-    = button_link_to "New Order Cycle", main_app.new_admin_order_cycle_path, :icon => 'icon-plus', :id => 'admin_new_order_cycle_link'
+    = button_link_to t(:new_order_cycle), main_app.new_admin_order_cycle_path, :icon => 'icon-plus', :id => 'admin_new_order_cycle_link'
   - if @show_more
     %li
-      = button_link_to "Show less", main_app.admin_order_cycles_path
+      = button_link_to t(:label_less), main_app.admin_order_cycles_path
   - else
     %li
-      = button_link_to "Show more", main_app.admin_order_cycles_path(params: { show_more: true })
+      = button_link_to t(:label_more), main_app.admin_order_cycles_path(params: { show_more: true })
 
 = form_for @order_cycle_set, :url => main_app.bulk_update_admin_order_cycles_path do |f|
   %table.index#listing_order_cycles
@@ -28,14 +28,21 @@
 
     %thead
       %tr
-        %th Name
-        %th Open
-        %th Close
+        %th 
+          =t'name'
+        %th 
+          =t'open'
+        %th 
+          =t'close'
         - unless order_cycles_simple_index
-          %th Supplier
-          %th Coordinator
-          %th Distributors
-        %th Products
+          %th 
+            =t'supplier'
+          %th 
+            =t'coordinator'
+          %th 
+            =t'distributors'
+        %th 
+          =t'products'
         %th.actions
         %th.actions
         %th.actions
@@ -44,4 +51,4 @@
       = f.fields_for :collection do |order_cycle_form|
         = render 'admin/order_cycles/row', order_cycle_form: order_cycle_form
 
-  = f.submit 'Update'
+  = f.submit t(:update)
