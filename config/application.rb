@@ -67,7 +67,7 @@ module Openfoodnetwork
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = ENV["LOCALE"]
     I18n.locale = config.i18n.locale = config.i18n.default_locale
-    
+
     # Setting this to true causes a performance regression in Rails 3.2.17
     # When we're on a version with the fix below, we can set it to true
     # https://github.com/svenfuchs/i18n/issues/230
