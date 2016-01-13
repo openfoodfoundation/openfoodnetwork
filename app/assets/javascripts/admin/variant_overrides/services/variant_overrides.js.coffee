@@ -19,7 +19,15 @@ angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOve
               price: null
               count_on_hand: null
               on_demand: null
+              default_stock: null
 
     updateIds: (updatedVos) ->
       for vo in updatedVos
         @variantOverrides[vo.hub_id][vo.variant_id].id = vo.id
+
+    resetStock: ->
+      $http
+        method: "POST"
+        url: "/admin/variant_overrides/bulk_reset"
+        data:
+          variant_overrides: @all()

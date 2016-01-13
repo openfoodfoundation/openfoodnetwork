@@ -7,6 +7,7 @@
       %th.price{ ng: { show: 'columns.price.visible' } } Price
       %th.on_hand{ ng: { show: 'columns.on_hand.visible' } } On hand
       %th.on_demand{ ng: { show: 'columns.on_demand.visible' } } On Demand?
+      %th Default stock
   %tbody{bindonce: true, ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id | attrFilter:{producer_id:producerFilter} | filter:query' } }
     = render 'admin/variant_overrides/products_product'
     = render 'admin/variant_overrides/products_variants'
