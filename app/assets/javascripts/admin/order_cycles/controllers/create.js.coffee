@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller('AdminCreateOrderCycleCtrl', ['$scope', '$filter', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'ocInstance', 'StatusMessage', ($scope, $filter, OrderCycle, Enterprise, EnterpriseFee, ocInstance, StatusMessage) ->
+  .controller 'AdminCreateOrderCycleCtrl', ($scope, $filter, OrderCycle, Enterprise, EnterpriseFee, ocInstance, StatusMessage) ->
     $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
@@ -81,4 +81,3 @@ angular.module('admin.orderCycles')
 
     $scope.submit = (destination) ->
       OrderCycle.create(destination)
-  ])

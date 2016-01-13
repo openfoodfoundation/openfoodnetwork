@@ -1,10 +1,9 @@
 angular.module('admin.orderCycles', ['ngResource', 'admin.utils', 'admin.indexUtils'])
 
-  .config(['$httpProvider', ($httpProvider) ->
+  .config ($httpProvider) ->
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-  ])
 
-  .directive('datetimepicker', ['$parse', ($parse) ->
+  .directive 'datetimepicker', ($parse) ->
     (scope, element, attrs) ->
       # using $parse instead of scope[attrs.datetimepicker] for cases
       # where attrs.datetimepicker is 'foo.bar.lol'
@@ -19,18 +18,15 @@ angular.module('admin.orderCycles', ['ngResource', 'admin.utils', 'admin.indexUt
       	  scope.$apply ->
       	    parsed = $parse(attrs.datetimepicker)
       	    parsed.assign(scope, dateText)
-    ])
 
-  .directive('ofnOnChange', ->
+  .directive 'ofnOnChange', ->
     (scope, element, attrs) ->
       element.bind 'change', ->
         scope.$apply(attrs.ofnOnChange)
-    )
 
-  .directive('ofnSyncDistributions', ->
+  .directive 'ofnSyncDistributions', ->
     (scope, element, attrs) ->
       element.bind 'change', ->
         if !$(this).is(':checked')
           scope.$apply ->
             scope.removeDistributionOfVariant(attrs.ofnSyncDistributions)
-    )

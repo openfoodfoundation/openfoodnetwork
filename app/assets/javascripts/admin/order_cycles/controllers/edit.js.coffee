@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller('AdminEditOrderCycleCtrl', ['$scope', '$filter', '$location', 'OrderCycle', 'Enterprise', 'EnterpriseFee', 'StatusMessage', ($scope, $filter, $location, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
+  .controller 'AdminEditOrderCycleCtrl', ($scope, $filter, $location, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
@@ -82,4 +82,3 @@ angular.module('admin.orderCycles')
 
     $scope.submit = (destination) ->
       OrderCycle.update(destination)
-  ])
