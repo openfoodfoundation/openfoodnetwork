@@ -1159,10 +1159,10 @@ ActiveRecord::Schema.define(:version => 20151128185900) do
     t.integer "hub_id",                                      :null => false
     t.decimal "price",         :precision => 8, :scale => 2
     t.integer "count_on_hand"
-    t.string  "sku"
-    t.boolean "on_demand"
     t.integer "default_stock"
     t.boolean "resettable"
+    t.string  "sku"
+    t.boolean "on_demand"
   end
 
   add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"

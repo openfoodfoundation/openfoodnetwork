@@ -1,4 +1,4 @@
-angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $timeout, Indexer, Columns, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
+angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = Indexer.index hubs
   $scope.hub = null
   $scope.products = []
@@ -89,8 +89,12 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
         $scope.displayDirty()
       , 3000 # 3 second delay
     else
+      return unless $scope.hub_id?
       StatusMessage.display 'progress', 'Changing on hand stock levels...'
-      VariantOverrides.resetStock()
+      $http
+        method: "POST"
+        url: "/admin/variant_overrides/bulk_reset"
+        data: { hub_id: $scope.hub_id }
       .success (updatedVos) ->
         VariantOverrides.updateData updatedVos
         StatusMessage.display 'success', 'Stocks reset to defaults.'

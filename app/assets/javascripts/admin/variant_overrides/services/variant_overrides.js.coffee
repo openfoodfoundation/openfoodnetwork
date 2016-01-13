@@ -1,4 +1,5 @@
-angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOverrides, $http) ->
+
+angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOverrides) ->
   new class VariantOverrides
     variantOverrides: {}
 
@@ -30,17 +31,9 @@ angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOve
       default_stock: null
       resettable: false
 
-
     updateIds: (updatedVos) ->
       for vo in updatedVos
         @variantOverrides[vo.hub_id][vo.variant_id].id = vo.id
-
-    resetStock: ->
-      $http
-        method: "POST"
-        url: "/admin/variant_overrides/bulk_reset"
-        data:
-          variant_overrides: variantOverrides
 
     updateData: (updatedVos) ->
       for vo in updatedVos

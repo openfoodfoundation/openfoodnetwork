@@ -67,11 +67,6 @@ describe "VariantOverrides service", ->
     expect(VariantOverrides.variantOverrides[2][3].id).toEqual 1
     expect(VariantOverrides.variantOverrides[2][8].id).toEqual 6
 
-  it "sends an HTTP request to reset stock", ->
-    $httpBackend.expectPOST("/admin/variant_overrides/bulk_reset", variant_overrides: variantOverrides).respond 200
-    VariantOverrides.resetStock variantOverrides
-    $httpBackend.flush()
-
   it "updates the variant overrides on the page with new data", ->
     VariantOverrides.variantOverrides[1] =
       3: {id: 1, hub_id: 1, variant_id: 3, price: "4.0", count_on_hand: 5, default_stock: 3, resettable: true}

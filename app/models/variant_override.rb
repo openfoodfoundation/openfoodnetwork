@@ -67,15 +67,6 @@ class VariantOverride < ActiveRecord::Base
     self
   end
 
-  def self.reset_stock!(hub, variant)
-    vo = self.for(hub, variant)
-    if vo.nil?
-      Bugsnag.notify RuntimeError.new "Attempting to reset stock level for a variant without a VariantOverride."
-    else
-      vo.reset_stock!
-    end
-  end
-
   private
 
   def self.for(hub, variant)

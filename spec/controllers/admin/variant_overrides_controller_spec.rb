@@ -76,37 +76,57 @@ describe Admin::VariantOverridesController, type: :controller do
       let!(:variant_override1) { create(:variant_override, hub: hub, variant: variant1, count_on_hand: 5, default_stock: 7, resettable: true) }
       let!(:variant_override2) { create(:variant_override, hub: hub, variant: variant2, count_on_hand: 2, default_stock: 1, resettable: false) }
 
-      before do
-        allow(controller).to receive(:spree_current_user) { hub.owner }
-      end
+      let(:params) { { format: format, hub_id: hub.id } }
 
-      context "where the producer has not granted create_variant_overrides permission to the hub" do
-        let(:params) { { format: format, variant_overrides: [ { id: variant_override1.id } ] } }
+      context "where I don't manage the variant override hub" do
+        before do
+          user = create(:user)
+          user.owned_enterprises << create(:enterprise)
+          allow(controller).to receive(:spree_current_user) { user }
+        end
 
-        it "restricts access" do
+        it "redirects to unauthorized" do
           spree_put :bulk_reset, params
           expect(response).to redirect_to spree.unauthorized_path
         end
       end
 
-      context "where the producer has granted create_variant_overrides permission to the hub" do
-        let!(:er1) { create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:create_variant_overrides]) }
+      context "where I manage the variant override hub" do
+        before do
+          allow(controller).to receive(:spree_current_user) { hub.owner }
+        end
 
-        context "where reset is enabled" do
-          let(:params) { { format: format, variant_overrides: [ { id: variant_override1.id } ] } }
-
-          it "updates stock to default values" do
+        context "where the producer has not granted create_variant_overrides permission to the hub" do
+          it "restricts access" do
             spree_put :bulk_reset, params
-            expect(variant_override1.reload.count_on_hand).to eq 7
+            expect(response).to redirect_to spree.unauthorized_path
           end
         end
 
-        context "where reset is disabled" do
-          let(:params) { { format: format, variant_overrides: [ { id: variant_override2.id } ] } }
+        context "where the producer has granted create_variant_overrides permission to the hub" do
+          let!(:er1) { create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:create_variant_overrides]) }
 
-          it "doesn't update on_hand" do
+          it "updates stock to default values where reset is enabled" do
+            expect(variant_override1.reload.count_on_hand).to eq 5 # reset enabled
+            expect(variant_override2.reload.count_on_hand).to eq 2 # reset disabled
             spree_put :bulk_reset, params
-            expect(variant_override2.reload.count_on_hand).to eq 2
+            expect(variant_override1.reload.count_on_hand).to eq 7 # reset enabled
+            expect(variant_override2.reload.count_on_hand).to eq 2 # reset disabled
+          end
+
+          context "and the producer has granted create_variant_overrides permission to another hub I manage" do
+            before { hub.owner.update_attribute(:enterprise_limit, 2) }
+            let(:hub2) { create(:distributor_enterprise, owner: hub.owner) }
+            let(:product) { create(:product, supplier: producer) }
+            let(:variant3) { create(:variant, product: product) }
+            let!(:variant_override3) { create(:variant_override, hub: hub2, variant: variant3, count_on_hand: 1, default_stock: 13, resettable: true) }
+            let!(:er2) { create(:enterprise_relationship, parent: producer, child: hub2, permissions_list: [:create_variant_overrides]) }
+
+            it "does not reset count_on_hand for variant_overrides not in params" do
+              expect {
+                spree_put :bulk_reset, params
+              }.to_not change{variant_override3.reload.count_on_hand}
+            end
           end
         end
       end

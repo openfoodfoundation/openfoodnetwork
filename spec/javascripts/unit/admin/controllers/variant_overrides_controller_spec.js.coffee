@@ -1,6 +1,6 @@
 describe "VariantOverridesCtrl", ->
   ctrl = null
-  scope = null
+  scope = {}
   hubs = [{id: 1, name: 'Hub'}]
   producers = [{id: 2, name: 'Producer'}]
   products = [{id: 1, name: 'Product'}]
@@ -19,7 +19,6 @@ describe "VariantOverridesCtrl", ->
       $provide.value 'variantOverrides', variantOverrides
       $provide.value 'dirtyVariantOverrides', dirtyVariantOverrides
       null
-    scope = {}
 
     inject ($controller, _VariantOverrides_, _DirtyVariantOverrides_, _StatusMessage_) ->
       VariantOverrides = _VariantOverrides_
@@ -69,13 +68,19 @@ describe "VariantOverridesCtrl", ->
 
   describe "setting stock to defaults", ->
     it "prompts to save changes if there are any pending", ->
-      spyOn(VariantOverrides,"resetStock")
+      spyOn(StatusMessage, "display")
       DirtyVariantOverrides.add {hub_id: 1, variant_id: 1}
-      scope.resetStock
-      #expect(scope.StatusMessage.statusMessage.text).toMatch "changes"
-      expect(VariantOverrides.resetStock).not.toHaveBeenCalled
-    it "updates and refreshes on hand value for variant overrides with a default stock level", ->
-      spyOn(VariantOverrides,"resetStock")
-      scope.resetStock
-      expect(VariantOverrides.resetStock).toHaveBeenCalled
-      #expect(scope.StatusMessage.statusMessage.text).toMatch "defaults"
+      scope.resetStock()
+      expect(StatusMessage.display).toHaveBeenCalledWith  'alert', 'Save changes first.'
+
+    it "updates and refreshes on hand value for variant overrides with a default stock level", inject ($httpBackend) ->
+      scope.hub_id = 123
+      variant_overrides_mock = "mock object"
+      spyOn(StatusMessage, "display")
+      spyOn(VariantOverrides, "updateData")
+      $httpBackend.expectPOST("/admin/variant_overrides/bulk_reset", hub_id: 123).respond 200, variant_overrides_mock
+      scope.resetStock()
+      expect(StatusMessage.display).toHaveBeenCalledWith 'progress', 'Changing on hand stock levels...'
+      $httpBackend.flush()
+      expect(VariantOverrides.updateData).toHaveBeenCalledWith variant_overrides_mock
+      expect(StatusMessage.display).toHaveBeenCalledWith 'success', 'Stocks reset to defaults.'
