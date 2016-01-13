@@ -119,7 +119,7 @@ module WebHelper
   # Do not use this without good reason. Capybara's built-in waiting is very effective.
   def wait_until(secs=nil)
     require "timeout"
-    Timeout.timeout(secs || Capybara.default_wait_time) do
+    Timeout.timeout(secs || Capybara.default_max_wait_time) do
       sleep(0.1) until value = yield
       value
     end

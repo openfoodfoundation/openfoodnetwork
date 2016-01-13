@@ -2,8 +2,11 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
+    update_running: false
+    update_enqueued: false
     order: CurrentOrder.order
     line_items: CurrentOrder.order?.line_items || []
+
     constructor: ->
       for line_item in @line_items
         line_item.variant.line_item = line_item
@@ -12,15 +15,31 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
 
     orderChanged: =>
       @unsaved()
+
+      if !@update_running
+        @scheduleUpdate()
+      else
+        @update_enqueued = true
+
+    scheduleUpdate: =>
       if @promise
         $timeout.cancel(@promise)
       @promise = $timeout @update, 1000
 
     update: =>
+      @update_running = true
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
+        @update_running = false
+        @popQueue() if @update_enqueued
+
       .error (response, status)=>
-        @scheduleRetry()
+        @scheduleRetry(status)
+        @update_running = false
+
+    popQueue: =>
+      @update_enqueued = false
+      @scheduleUpdate()
 
     data: =>
       variants = {}
@@ -30,7 +49,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
           max_quantity: li.max_quantity
       {variants: variants}
 
-    scheduleRetry: =>
+    scheduleRetry: (status) =>
       console.log "Error updating cart: #{status}. Retrying in 3 seconds..."
       $timeout =>
         console.log "Retrying cart update"
