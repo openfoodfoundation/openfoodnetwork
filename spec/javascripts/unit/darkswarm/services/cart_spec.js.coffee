@@ -48,8 +48,51 @@ describe 'Cart service', ->
     order.line_items[0].quantity = 2
     expect(Cart.total_item_count()).toEqual 2
 
+  describe "triggering cart updates", ->
+    it "schedules an update when there's no update running", ->
+      Cart.update_running = false
+      Cart.update_enqueued = false
+      spyOn(Cart, 'scheduleUpdate')
+      spyOn(Cart, 'unsaved')
+      Cart.orderChanged()
+      expect(Cart.scheduleUpdate).toHaveBeenCalled()
+
+    it "enqueues an update when there's already an update running", ->
+      Cart.update_running = true
+      Cart.update_enqueued = false
+      spyOn(Cart, 'scheduleUpdate')
+      spyOn(Cart, 'unsaved')
+      Cart.orderChanged()
+      expect(Cart.scheduleUpdate).not.toHaveBeenCalled()
+      expect(Cart.update_enqueued).toBe(true)
+
+    it "does nothing when there's already an update enqueued", ->
+      Cart.update_running = true
+      Cart.update_enqueued = true
+      spyOn(Cart, 'scheduleUpdate')
+      spyOn(Cart, 'unsaved')
+      Cart.orderChanged()
+      expect(Cart.scheduleUpdate).not.toHaveBeenCalled()
+      expect(Cart.update_enqueued).toBe(true)
+
   describe "updating the cart", ->
     data = {variants: {}}
+
+    it "sets update_running during the update, and clears it on success", ->
+      $httpBackend.expectPOST("/orders/populate", data).respond 200, {}
+      expect(Cart.update_running).toBe(false)
+      Cart.update()
+      expect(Cart.update_running).toBe(true)
+      $httpBackend.flush()
+      expect(Cart.update_running).toBe(false)
+
+    it "sets update_running during the update, and clears it on failure", ->
+      $httpBackend.expectPOST("/orders/populate", data).respond 404, {}
+      expect(Cart.update_running).toBe(false)
+      Cart.update()
+      expect(Cart.update_running).toBe(true)
+      $httpBackend.flush()
+      expect(Cart.update_running).toBe(false)
 
     it "marks the form as saved on success", ->
       spyOn(Cart, 'saved')
@@ -58,12 +101,37 @@ describe 'Cart service', ->
       $httpBackend.flush()
       expect(Cart.saved).toHaveBeenCalled()
 
+    it "runs enqueued updates after success", ->
+      Cart.update_enqueued = true
+      spyOn(Cart, 'saved')
+      spyOn(Cart, 'popQueue')
+      $httpBackend.expectPOST("/orders/populate", data).respond 200, {}
+      Cart.update()
+      $httpBackend.flush()
+      expect(Cart.popQueue).toHaveBeenCalled()
+
+    it "doesn't run an update if it's not enqueued", ->
+      Cart.update_enqueued = false
+      spyOn(Cart, 'saved')
+      spyOn(Cart, 'popQueue')
+      $httpBackend.expectPOST("/orders/populate", data).respond 200, {}
+      Cart.update()
+      $httpBackend.flush()
+      expect(Cart.popQueue).not.toHaveBeenCalled()
+
     it "retries the update on failure", ->
       spyOn(Cart, 'scheduleRetry')
       $httpBackend.expectPOST("/orders/populate", data).respond 404, {}
       Cart.update()
       $httpBackend.flush()
       expect(Cart.scheduleRetry).toHaveBeenCalled()
+
+  it "pops the queue", ->
+    Cart.update_enqueued = true
+    spyOn(Cart, 'scheduleUpdate')
+    Cart.popQueue()
+    expect(Cart.update_enqueued).toBe(false)
+    expect(Cart.scheduleUpdate).toHaveBeenCalled()
 
   it "schedules retries of updates", ->
     spyOn(Cart, 'orderChanged')
