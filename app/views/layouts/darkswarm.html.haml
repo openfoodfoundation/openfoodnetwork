@@ -2,7 +2,9 @@
   %head
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
-
+    %meta{:content => yield(:title).empty? ? "#{t(:title)}" : yield(:title), :property => "og:title"}/
+    %meta{:content => yield(:description).empty? ? og_default_description : yield(:description), :property => "og:description"}/
+    %meta{:content => yield(:image).empty? ? ContentConfig.logo.url : yield(:image), :property => "og:image"}/
     %title= content_for?(:title) ? "#{yield(:title)} - #{t(:title)}".html_safe : "#{t(:welcome_to)} #{t(:title)}"
     - if Rails.env.production?
       = favicon_link_tag
