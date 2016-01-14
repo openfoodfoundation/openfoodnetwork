@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151125051510) do
+ActiveRecord::Schema.define(:version => 20151217100329) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -511,6 +511,16 @@ ActiveRecord::Schema.define(:version => 20151125051510) do
 
   add_index "spree_assets", ["viewable_id"], :name => "index_assets_on_viewable_id"
   add_index "spree_assets", ["viewable_type", "type"], :name => "index_assets_on_viewable_type_and_type"
+
+  create_table "spree_authentication_methods", :force => true do |t|
+    t.string   "environment"
+    t.string   "provider"
+    t.string   "api_key"
+    t.string   "api_secret"
+    t.boolean  "active"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "spree_calculators", :force => true do |t|
     t.string   "type"
@@ -1053,6 +1063,14 @@ ActiveRecord::Schema.define(:version => 20151125051510) do
     t.datetime "updated_at",                     :null => false
   end
 
+  create_table "spree_user_authentications", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "spree_users", :force => true do |t|
     t.string   "encrypted_password"
     t.string   "password_salt"
@@ -1081,10 +1099,14 @@ ActiveRecord::Schema.define(:version => 20151125051510) do
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                :limit => 40
     t.integer  "enterprise_limit",                     :default => 1, :null => false
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "spree_users", ["email"], :name => "email_idx_unique", :unique => true
   add_index "spree_users", ["persistence_token"], :name => "index_users_on_persistence_token"
+  add_index "spree_users", ["provider"], :name => "index_spree_users_on_provider"
+  add_index "spree_users", ["uid"], :name => "index_spree_users_on_uid"
 
   create_table "spree_variants", :force => true do |t|
     t.string   "sku",                                            :default => "",    :null => false

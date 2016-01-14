@@ -18,6 +18,11 @@ Spree.user_class.class_eval do
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
+  devise :omniauthable, :omniauth_providers => [:facebook]
+  
+  def self.find_from_facebook(auth)
+    where(email: auth.info.email).first
+  end 
 
   def known_users
     if admin?
