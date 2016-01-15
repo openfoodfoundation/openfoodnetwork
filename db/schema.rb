@@ -395,6 +395,16 @@ ActiveRecord::Schema.define(:version => 20160204031816) do
   add_index "exchanges", ["receiver_id"], :name => "index_exchanges_on_receiver_id"
   add_index "exchanges", ["sender_id"], :name => "index_exchanges_on_sender_id"
 
+  create_table "inventory_items", :force => true do |t|
+    t.integer  "enterprise_id",                   :null => false
+    t.integer  "variant_id",                      :null => false
+    t.boolean  "visible",       :default => true, :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "inventory_items", ["enterprise_id", "variant_id"], :name => "index_inventory_items_on_enterprise_id_and_variant_id", :unique => true
+
   create_table "order_cycles", :force => true do |t|
     t.string   "name"
     t.datetime "orders_open_at"
@@ -671,9 +681,9 @@ ActiveRecord::Schema.define(:version => 20160204031816) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end
