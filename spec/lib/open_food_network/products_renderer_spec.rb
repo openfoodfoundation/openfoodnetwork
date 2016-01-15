@@ -3,10 +3,10 @@ require 'open_food_network/products_renderer'
 
 module OpenFoodNetwork
   describe ProductsRenderer do
-    let(:d) { create(:distributor_enterprise) }
-    let(:order_cycle) { create(:simple_order_cycle, distributors: [d], coordinator: create(:distributor_enterprise)) }
-    let(:exchange) { Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) }
-    let(:pr) { ProductsRenderer.new(d, order_cycle) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+    let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
+    let(:pr) { ProductsRenderer.new(distributor, order_cycle) }
 
     describe "sorting" do
       let(:t1) { create(:taxon) }
@@ -24,13 +24,13 @@ module OpenFoodNetwork
       end
 
       it "sorts products by the distributor's preferred taxon list" do
-        d.stub(:preferred_shopfront_taxon_order) {"#{t1.id},#{t2.id}"}
+        distributor.stub(:preferred_shopfront_taxon_order) {"#{t1.id},#{t2.id}"}
         products = pr.send(:products_for_shop)
         products.should == [p2, p4, p1, p3]
       end
 
       it "alphabetizes products by name when taxon list is not set" do
-        d.stub(:preferred_shopfront_taxon_order) {""}
+        distributor.stub(:preferred_shopfront_taxon_order) {""}
         products = pr.send(:products_for_shop)
         products.should == [p1, p2, p3, p4]
       end
@@ -81,9 +81,9 @@ module OpenFoodNetwork
       let(:p) { create(:simple_product) }
       let!(:v1) { create(:variant, product: p, unit_value: 3) }
       let!(:v2) { create(:variant, product: p, unit_value: 5) }
+      let(:pr) { ProductsRenderer.new(hub, oc) }
 
       it "scopes variants to distribution" do
-        pr = ProductsRenderer.new(hub, oc)
         pr.send(:variants_for_shop_by_id).should == {p.id => [v1]}
       end
     end
