@@ -9,8 +9,8 @@ module OpenFoodNetwork
       @order_cycle = order_cycle
     end
 
-    def products
-      products = products_for_shop
+    def products_json
+      products = load_products
 
       if products
         enterprise_fee_calculator = EnterpriseFeeCalculator.new @distributor, @order_cycle
@@ -31,7 +31,7 @@ module OpenFoodNetwork
 
     private
 
-    def products_for_shop
+    def load_products
       if @order_cycle
         scoper = ScopeProductToHub.new(@distributor)
 

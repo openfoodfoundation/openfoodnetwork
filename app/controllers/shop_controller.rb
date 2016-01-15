@@ -11,7 +11,7 @@ class ShopController < BaseController
 
   def products
     begin
-      products_json = OpenFoodNetwork::ProductsRenderer.new(current_distributor, current_order_cycle).products
+      products_json = OpenFoodNetwork::ProductsRenderer.new(current_distributor, current_order_cycle).products_json
 
       render json: products_json
 
