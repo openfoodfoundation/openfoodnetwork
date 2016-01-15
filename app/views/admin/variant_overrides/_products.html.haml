@@ -1,4 +1,4 @@
-%table.index.bulk{ ng: {show: 'hub'}}
+%table.index.bulk#variant-overrides{ ng: {show: 'hub'}}
   %col.producer{ width: "20%", ng: { show: 'columns.producer.visible' } }
   %col.product{ width: "20%", ng: { show: 'columns.product.visible' } }
   %col.sku{ width: "20%", ng: { show: 'columns.sku.visible' } }
@@ -8,6 +8,7 @@
   %col.reset{ width: "1%", ng: { show: 'columns.reset.visible' } }
   %col.reset{ width: "15%", ng: { show: 'columns.reset.visible' } }
   %col.inheritance{ width: "5%", ng: { show: 'columns.inheritance.visible' } }
+  %col.visibility{ width: "10%", ng: { show: 'columns.visibility.visible' } }
   %thead
     %tr{ ng: { controller: "ColumnsCtrl" } }
       %th.producer{ ng: { show: 'columns.producer.visible' } } Producer
@@ -18,6 +19,12 @@
       %th.on_demand{ ng: { show: 'columns.on_demand.visible' } } On Demand?
       %th.reset{ colspan: 2, ng: { show: 'columns.reset.visible' } } Enable Stock Level Reset?
       %th.inheritance{ ng: { show: 'columns.inheritance.visible' } } Inherit?
-  %tbody{bindonce: true, ng: {repeat: 'product in products | hubPermissions:hubPermissions:hub.id | attrFilter:{producer_id:producerFilter} | filter:query' } }
+      %th.visibility{ ng: { show: 'columns.visibility.visible' } } Show/Hide?
+  %tbody{bindonce: true, ng: {repeat: 'product in filteredProducts = (products | hubPermissions:hubPermissions:hub.id | inventoryProducts:hub.id:showHidden | attrFilter:{producer_id:producerFilter} | filter:query) | limitTo:productLimit' } }
     = render 'admin/variant_overrides/products_product'
     = render 'admin/variant_overrides/products_variants'
+
+.sixteen.columns.alpha.omega.text-center{ ng: {show: 'hub && productLimit < filteredProducts.length'}}
+  %input{ type: 'button', value: 'Show More', ng: { click: 'productLimit = productLimit + 10' } }
+  or
+  %input{ type: 'button', value: "Show All ({{ filteredProducts.length - productLimit }})", ng: { click: 'productLimit = filteredProducts.length' } }

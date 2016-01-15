@@ -109,6 +109,8 @@ Openfoodnetwork::Application.routes.draw do
       post :bulk_reset, on: :collection
     end
 
+    resources :inventory_items, only: [:create, :update]
+
     resources :customers, only: [:index, :update]
 
     resource :content

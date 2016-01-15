@@ -30,6 +30,7 @@
 //= require ./enterprise_fees/enterprise_fees
 //= require ./enterprise_groups/enterprise_groups
 //= require ./index_utils/index_utils
+//= require ./inventory_items/inventory_items
 //= require ./line_items/line_items
 //= require ./orders/orders
 //= require ./order_cycles/order_cycles

@@ -159,6 +159,7 @@ feature %q{
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Price").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "$50.00"
           fill_in "final_weight_volume", :with => 2000
@@ -177,6 +178,7 @@ feature %q{
         visit '/admin/orders/bulk_management'
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Price").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * 5)}"
           fill_in "quantity", :with => 6
@@ -190,6 +192,7 @@ feature %q{
         visit '/admin/orders/bulk_management'
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "final_weight_volume", with: "#{li1.final_weight_volume.round}"
           fill_in "quantity", :with => 6
@@ -211,6 +214,7 @@ feature %q{
 
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Producer").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
 
         expect(page).to_not have_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"

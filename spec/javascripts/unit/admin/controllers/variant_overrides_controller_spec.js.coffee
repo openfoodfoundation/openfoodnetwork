@@ -9,6 +9,7 @@ describe "VariantOverridesCtrl", ->
   variantOverrides = {}
   DirtyVariantOverrides = null
   dirtyVariantOverrides = {}
+  inventoryItems = {}
   StatusMessage = null
   statusMessage = {}
 
@@ -18,6 +19,7 @@ describe "VariantOverridesCtrl", ->
       $provide.value 'SpreeApiKey', 'API_KEY'
       $provide.value 'variantOverrides', variantOverrides
       $provide.value 'dirtyVariantOverrides', dirtyVariantOverrides
+      $provide.value 'inventoryItems', inventoryItems
       null
 
     inject ($controller, _VariantOverrides_, _DirtyVariantOverrides_, _StatusMessage_) ->

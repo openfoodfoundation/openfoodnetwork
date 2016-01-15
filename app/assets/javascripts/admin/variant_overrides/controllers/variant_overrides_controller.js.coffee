@@ -1,11 +1,15 @@
-angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, VariantOverrides, DirtyVariantOverrides) ->
+angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, InventoryItems, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = Indexer.index hubs
   $scope.hub = null
   $scope.products = []
   $scope.producers = producers
   $scope.producersByID = Indexer.index producers
   $scope.hubPermissions = hubPermissions
+  $scope.showHidden = false
+  $scope.productLimit = 10
   $scope.variantOverrides = VariantOverrides.variantOverrides
+  $scope.inventoryItems = InventoryItems.inventoryItems
+  $scope.setVisibility = InventoryItems.setVisibility
   $scope.StatusMessage = StatusMessage
 
   $scope.columns = Columns.setColumns
@@ -17,6 +21,7 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
     on_demand:    { name: "On Demand",          visible: false }
     reset:        { name: "Reset Stock Level",  visible: false }
     inheritance:  { name: "Inheritance",        visible: false }
+    visibility:   { name: "Show/Hide",          visible: false }
 
   $scope.resetSelectFilters = ->
     $scope.producerFilter = 0

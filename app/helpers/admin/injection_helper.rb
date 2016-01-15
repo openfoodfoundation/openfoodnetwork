@@ -39,6 +39,10 @@ module Admin
       admin_inject_json_ams_array opts[:module], "producers", @producers, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_inventory_items(opts={module: 'ofn.admin'})
+      admin_inject_json_ams_array opts[:module], "inventoryItems", @inventory_items, Api::Admin::InventoryItemSerializer
+    end
+
     def admin_inject_enterprise_permissions
       permissions =
         {can_manage_shipping_methods: can?(:manage_shipping_methods, @enterprise),

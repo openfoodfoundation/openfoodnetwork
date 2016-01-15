@@ -1,0 +1,25 @@
+%hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'newProducts.length > 0' } }
+%table#new-variants{ ng: { show: 'newProducts.length > 0' } }
+  %col.producer{ width: "20%" }
+  %col.product{ width: "20%" }
+  %col.variant{ width: "40%" }
+  %col.add{ width: "10%" }
+  %col.ignore{ width: "10%" }
+  %thead
+    %tr
+      %th.producer Producer
+      %th.product Product
+      %th.variant Variant
+      %th.add Add
+      %th.ignore Ignore
+  %tbody{ bindonce: true, ng: { repeat: 'product in newProducts = (products | hubPermissions:hubPermissions:hub.id | newInventoryProducts:hub.id)' } }
+    %tr{ id: "nv_{{variant.id}}", ng: { repeat: 'variant in product.variants | newInventoryVariants:hub.id'} }
+      %td.producer{ bo: { bind: 'producersByID[product.producer_id].name'} }
+      %td.product{ bo: { bind: 'product.name'} }
+      %td.variant
+        %span{ bo: { bind: 'variant.display_name || ""'} }
+        .variant-override-unit{ bo: { bind: 'variant.unit_to_display'} }
+      %td.add
+        %input.fullwidth{ :type => 'button', value: "Add", ng: { click: "setVisibility(hub.id,variant.id,true)" } }
+      %td.ignore
+        %input.fullwidth{ :type => 'button', value: "Ignore", ng: { click: "setVisibility(hub.id,variant.id,false)" } }
