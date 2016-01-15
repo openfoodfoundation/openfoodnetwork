@@ -2,7 +2,7 @@ describe "indexer", ->
   Indexer = null
 
   beforeEach ->
-    module "ofn.admin"
+    module "admin.indexUtils"
 
   beforeEach inject (_Indexer_) ->
     Indexer = _Indexer_

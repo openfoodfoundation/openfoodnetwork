@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "dataFetcher", [
+angular.module("admin.indexUtils").factory "dataFetcher", [
   "$http", "$q"
   ($http, $q) ->
     return (dataLocation) ->

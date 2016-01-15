@@ -122,7 +122,7 @@ GEM
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
     active_link_to (1.0.0)
-    active_model_serializers (0.8.1)
+    active_model_serializers (0.8.3)
       activemodel (>= 3.0)
     activemerchant (1.48.0)
       activesupport (>= 3.2.14, < 5.0.0)
@@ -730,6 +730,3 @@ DEPENDENCIES
   whenever
   wicked_pdf
   wkhtmltopdf-binary
-
-BUNDLED WITH
-   1.10.6

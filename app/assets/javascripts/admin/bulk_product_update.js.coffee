@@ -352,6 +352,9 @@ filterSubmitVariant = (variant) ->
   filteredVariant = {}
   if not variant.deleted_at? and variant.hasOwnProperty("id")
     filteredVariant.id = variant.id unless variant.id <= 0
+    if variant.hasOwnProperty("sku")
+      filteredVariant.sku = variant.sku
+      hasUpdatableProperty = true
     if variant.hasOwnProperty("on_hand")
       filteredVariant.on_hand = variant.on_hand
       hasUpdatableProperty = true

@@ -192,7 +192,7 @@ feature %q{
         order = create(:completed_order_with_totals, distributor: distributor1)
         visit spree.admin_order_path(order)
 
-        find("#links-dropdown .ofn_drop_down").click
+        find("#links-dropdown .ofn-drop-down").click
         within "#links-dropdown" do
           expect(page).to have_link "Edit", href: spree.edit_admin_order_path(order)
           expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(order)

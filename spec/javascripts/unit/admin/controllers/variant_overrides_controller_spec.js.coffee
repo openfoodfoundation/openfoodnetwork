@@ -1,28 +1,38 @@
 describe "VariantOverridesCtrl", ->
   ctrl = null
-  scope = null
+  scope = {}
   hubs = [{id: 1, name: 'Hub'}]
   producers = [{id: 2, name: 'Producer'}]
   products = [{id: 1, name: 'Product'}]
   hubPermissions = {}
   VariantOverrides = null
   variantOverrides = {}
+  DirtyVariantOverrides = null
+  dirtyVariantOverrides = {}
+  StatusMessage = null
+  statusMessage = {}
 
   beforeEach ->
-    module 'ofn.admin'
+    module 'admin.variantOverrides'
     module ($provide) ->
       $provide.value 'SpreeApiKey', 'API_KEY'
       $provide.value 'variantOverrides', variantOverrides
+      $provide.value 'dirtyVariantOverrides', dirtyVariantOverrides
       null
-    scope = {}
 
-    inject ($controller, Indexer, _VariantOverrides_) ->
+    inject ($controller, _VariantOverrides_, _DirtyVariantOverrides_, _StatusMessage_) ->
       VariantOverrides = _VariantOverrides_
-      ctrl = $controller 'AdminVariantOverridesCtrl', {$scope: scope, Indexer: Indexer, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: _VariantOverrides_}
+      DirtyVariantOverrides = _DirtyVariantOverrides_
+      StatusMessage = _StatusMessage_
+      ctrl = $controller 'AdminVariantOverridesCtrl', { $scope: scope, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: VariantOverrides, DirtyVariantOverrides: DirtyVariantOverrides, StatusMessage: StatusMessage}
 
   it "initialises the hub list and the chosen hub", ->
-    expect(scope.hubs).toEqual hubs
+    expect(scope.hubs).toEqual { 1: {id: 1, name: 'Hub'} }
     expect(scope.hub).toBeNull()
+
+  it "initialises select filters", ->
+    expect(scope.producerFilter).toEqual 0
+    expect(scope.query).toEqual ''
 
   it "adds products", ->
     spyOn(VariantOverrides, "ensureDataFor")
@@ -55,3 +65,22 @@ describe "VariantOverridesCtrl", ->
 
       it "returns a generic message otherwise", ->
         expect(scope.updateError({}, 500)).toEqual "Oh no! I was unable to save your changes."
+
+  describe "setting stock to defaults", ->
+    it "prompts to save changes if there are any pending", ->
+      spyOn(StatusMessage, "display")
+      DirtyVariantOverrides.add {hub_id: 1, variant_id: 1}
+      scope.resetStock()
+      expect(StatusMessage.display).toHaveBeenCalledWith  'alert', 'Save changes first.'
+
+    it "updates and refreshes on hand value for variant overrides with a default stock level", inject ($httpBackend) ->
+      scope.hub_id = 123
+      variant_overrides_mock = "mock object"
+      spyOn(StatusMessage, "display")
+      spyOn(VariantOverrides, "updateData")
+      $httpBackend.expectPOST("/admin/variant_overrides/bulk_reset", hub_id: 123).respond 200, variant_overrides_mock
+      scope.resetStock()
+      expect(StatusMessage.display).toHaveBeenCalledWith 'progress', 'Changing on hand stock levels...'
+      $httpBackend.flush()
+      expect(VariantOverrides.updateData).toHaveBeenCalledWith variant_overrides_mock
+      expect(StatusMessage.display).toHaveBeenCalledWith 'success', 'Stocks reset to defaults.'

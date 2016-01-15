@@ -7,7 +7,7 @@ describe "maintaining a list of dirty variant overrides", ->
     count_on_hand: 4
 
   beforeEach ->
-    module "ofn.admin"
+    module "admin.variantOverrides"
 
   beforeEach inject (_DirtyVariantOverrides_) ->
     DirtyVariantOverrides = _DirtyVariantOverrides_
