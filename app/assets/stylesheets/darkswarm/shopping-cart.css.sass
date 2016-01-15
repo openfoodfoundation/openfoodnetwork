@@ -13,8 +13,10 @@
     right: 10px
     top: 55px
     width: 480px
-    overflow-y: auto
-    max-height: calc(95vh - 55px)
+
+    @media screen and (min-width: 641px)
+      overflow-y: auto
+      max-height: calc(95vh - 55px)
 
     @media screen and (max-width: 640px)
       width: 96%
