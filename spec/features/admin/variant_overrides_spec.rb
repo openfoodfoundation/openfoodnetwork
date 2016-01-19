@@ -95,10 +95,10 @@ feature %q{
         end
 
         it "creates new overrides" do
-          first("div#columns-dropdown", :text => "COLUMNS").click
+          first("div#columns-dropdown", text: "COLUMNS").click
           first("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
           first("div#columns-dropdown div.menu div.menu_item", text: "On Demand").click
-          first("div#columns-dropdown", :text => "COLUMNS").click
+          first("div#columns-dropdown", text: "COLUMNS").click
 
           fill_in "variant-overrides-#{variant.id}-sku", with: 'NEWSKU'
           fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
@@ -217,10 +217,10 @@ feature %q{
 
         # Any new fields added to the VO model need to be added to this test
         it "deletes overrides when values are cleared" do
-          first("div#columns-dropdown", :text => "COLUMNS").click
+          first("div#columns-dropdown", text: "COLUMNS").click
           first("div#columns-dropdown div.menu div.menu_item", text: "On Demand").click
           first("div#columns-dropdown div.menu div.menu_item", text: "Reset Stock Level").click
-          first("div#columns-dropdown", :text => "COLUMNS").click
+          first("div#columns-dropdown", text: "COLUMNS").click
 
           # Clearing values manually
           fill_in "variant-overrides-#{variant.id}-price", with: ''
@@ -230,9 +230,9 @@ feature %q{
           page.should have_content "Changes to one override remain unsaved."
 
           # Clearing values by 'inheriting'
-          first("div#columns-dropdown", :text => "COLUMNS").click
+          first("div#columns-dropdown", text: "COLUMNS").click
           first("div#columns-dropdown div.menu div.menu_item", text: "Inheritance").click
-          first("div#columns-dropdown", :text => "COLUMNS").click
+          first("div#columns-dropdown", text: "COLUMNS").click
           page.check "variant-overrides-#{variant3.id}-inherit"
 
           expect do

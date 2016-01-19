@@ -5,15 +5,15 @@ Spree::Product.class_eval do
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
   # https://github.com/rails/rails/issues/7618
-  has_many :option_types, :through => :product_option_types, :dependent => :destroy
+  has_many :option_types, through: :product_option_types, dependent: :destroy
 
-  belongs_to :supplier, :class_name => 'Enterprise', touch: true
+  belongs_to :supplier, class_name: 'Enterprise', touch: true
   belongs_to :primary_taxon, class_name: 'Spree::Taxon'
 
-  has_many :product_distributions, :dependent => :destroy
-  has_many :distributors, :through => :product_distributions
+  has_many :product_distributions, dependent: :destroy
+  has_many :distributors, through: :product_distributions
 
-  accepts_nested_attributes_for :product_distributions, :allow_destroy => true
+  accepts_nested_attributes_for :product_distributions, allow_destroy: true
   delegate_belongs_to :master, :unit_value, :unit_description
   delegate :images_attributes=, :display_as=, to: :master
 
@@ -36,7 +36,7 @@ Spree::Product.class_eval do
                         if: -> p { p.variant_unit == 'items' }
 
   after_save :ensure_standard_variant
-  after_initialize :set_available_on_to_now, :if => :new_record?
+  after_initialize :set_available_on_to_now, if: :new_record?
   after_save :update_units
   after_touch :touch_distributors
   before_save :add_primary_taxon_to_taxons
@@ -49,10 +49,10 @@ Spree::Product.class_eval do
                                   joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
                                   joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
 
-  scope :with_order_cycles_inner, joins(:variants_including_master => {:exchanges => :order_cycle})
+  scope :with_order_cycles_inner, joins(variants_including_master: {exchanges: :order_cycle})
 
   # -- Scopes
-  scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
+  scope :in_supplier, lambda { |supplier| where(supplier_id: supplier) }
 
   scope :in_any_supplier, lambda { |suppliers|
     where('supplier_id IN (?)', suppliers.map(&:id))
@@ -162,7 +162,7 @@ Spree::Product.class_eval do
   def build_product_distributions_for_user user
     Enterprise.is_distributor.managed_by(user).each do |distributor|
       unless self.product_distributions.find_by_distributor_id distributor.id
-        self.product_distributions.build(:distributor => distributor)
+        self.product_distributions.build(distributor: distributor)
       end
     end
   end

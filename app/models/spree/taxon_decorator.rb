@@ -15,7 +15,7 @@ Spree::Taxon.class_eval do
     taxons = {}
 
     Spree::Taxon.
-      joins(:products => :supplier).
+      joins(products: :supplier).
       select('spree_taxons.*, enterprises.id AS enterprise_id').
       each do |t|
 

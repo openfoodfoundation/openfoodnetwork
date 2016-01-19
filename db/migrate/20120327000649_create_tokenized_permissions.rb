@@ -8,6 +8,6 @@ class CreateTokenizedPermissions < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :tokenized_permissions, [:permissable_id, :permissable_type], :name => 'index_tokenized_name_and_type'
+    add_index :tokenized_permissions, [:permissable_id, :permissable_type], name: 'index_tokenized_name_and_type'
   end
 end

@@ -2,10 +2,10 @@ class UpdateLineItemCaching < ActiveRecord::Migration
 
   class SpreeLineItem < ActiveRecord::Base
     belongs_to :shipping_method, class_name: 'Spree::ShippingMethod'
-    belongs_to :variant, :class_name => "Spree::Variant"
+    belongs_to :variant, class_name: "Spree::Variant"
 
     def itemwise_shipping_cost
-      order = OpenStruct.new :line_items => [self]
+      order = OpenStruct.new line_items: [self]
       shipping_method.compute_amount(order)
     end
 

@@ -1,8 +1,8 @@
 class OrderCycle < ActiveRecord::Base
-  belongs_to :coordinator, :class_name => 'Enterprise'
-  has_and_belongs_to_many :coordinator_fees, :class_name => 'EnterpriseFee', :join_table => 'coordinator_fees'
+  belongs_to :coordinator, class_name: 'Enterprise'
+  has_and_belongs_to_many :coordinator_fees, class_name: 'EnterpriseFee', join_table: 'coordinator_fees'
 
-  has_many :exchanges, :dependent => :destroy
+  has_many :exchanges, dependent: :destroy
 
   # TODO: DRY the incoming/outgoing clause used in several cases below
   # See Spree::Product definition, scopes variants and variants_including_master

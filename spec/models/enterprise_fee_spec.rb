@@ -131,11 +131,11 @@ describe EnterpriseFee do
     it "does not clear adjustments from another originator" do
       order = create(:order)
       tax_rate = create(:tax_rate, calculator: stub_model(Spree::Calculator))
-      order.adjustments.create({:amount => 12.34,
-                                :source => order,
-                                :originator => tax_rate,
-                                :locked => true,
-                                :label => 'hello' }, :without_protection => true)
+      order.adjustments.create({amount: 12.34,
+                                source: order,
+                                originator: tax_rate,
+                                locked: true,
+                                label: 'hello' }, without_protection: true)
 
       expect do
         EnterpriseFee.clear_all_adjustments_on_order order

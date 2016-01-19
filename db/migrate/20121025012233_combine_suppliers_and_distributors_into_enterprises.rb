@@ -37,7 +37,7 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
       e = Enterprise.create! attrs
 
       # Update supplier_id on product to point at the new enterprise
-      product_ids = Spree::Product.where(:supplier_id => s.id).pluck(:id)
+      product_ids = Spree::Product.where(supplier_id: s.id).pluck(:id)
       Spree::Product.update_all("supplier_id=#{e.id}", "supplier_id=#{s.id} AND id NOT IN (#{updated_product_ids.join(', ')})")
       updated_product_ids += product_ids
     end
@@ -53,8 +53,8 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
       e = Enterprise.create! attrs
 
       # Update distributor_id on product distribution and order to point at the new enterprise
-      product_distribution_ids = ProductDistribution.where(:distributor_id => d.id).pluck(:id)
-      order_ids = Spree::Order.where(:distributor_id => d.id).pluck(:id)
+      product_distribution_ids = ProductDistribution.where(distributor_id: d.id).pluck(:id)
+      order_ids = Spree::Order.where(distributor_id: d.id).pluck(:id)
       ProductDistribution.update_all("distributor_id=#{e.id}", "distributor_id=#{d.id} AND id NOT IN (#{updated_product_distribution_ids.join(', ')})")
       Spree::Order.update_all("distributor_id=#{e.id}", "distributor_id=#{d.id} AND id NOT IN (#{updated_order_ids.join(', ')})")
       updated_product_distribution_ids += product_distribution_ids

@@ -15,67 +15,67 @@ feature %q{
     Spree::Order.destroy_all
     Spree::LineItem.destroy_all
 
-    @distributor = create(:distributor_enterprise, :name => 'Edible garden',
-                          :address => create(:address,
-                                             :address1 => '12 Bungee Rd',
-                                             :city => 'Carion',
-                                             :zipcode => 3056,
-                                             :state => Spree::State.find_by_name('Victoria'),
-                                             :country => Spree::Country.find_by_name('Australia')),
-                          :pickup_times => 'Tuesday, 4 PM')
+    @distributor = create(:distributor_enterprise, name: 'Edible garden',
+                          address: create(:address,
+                                             address1: '12 Bungee Rd',
+                                             city: 'Carion',
+                                             zipcode: 3056,
+                                             state: Spree::State.find_by_name('Victoria'),
+                                             country: Spree::Country.find_by_name('Australia')),
+                          pickup_times: 'Tuesday, 4 PM')
 
-    @distributor_alternative = create(:distributor_enterprise, :name => 'Alternative Distributor',
-                          :address => create(:address,
-                                             :address1 => '1600 Rathdowne St',
-                                             :city => 'Carlton North',
-                                             :zipcode => 3054,
-                                             :state => Spree::State.find_by_name('Victoria'),
-                                             :country => Spree::Country.find_by_name('Australia')),
-                          :pickup_times => 'Tuesday, 4 PM')
+    @distributor_alternative = create(:distributor_enterprise, name: 'Alternative Distributor',
+                          address: create(:address,
+                                             address1: '1600 Rathdowne St',
+                                             city: 'Carlton North',
+                                             zipcode: 3054,
+                                             state: Spree::State.find_by_name('Victoria'),
+                                             country: Spree::Country.find_by_name('Australia')),
+                          pickup_times: 'Tuesday, 4 PM')
 
-    @enterprise_fee_1 = create(:enterprise_fee, :name => 'Enterprise Fee One', :calculator => Spree::Calculator::PerItem.new)
+    @enterprise_fee_1 = create(:enterprise_fee, name: 'Enterprise Fee One', calculator: Spree::Calculator::PerItem.new)
     @enterprise_fee_1.calculator.set_preference :amount, 1
     @enterprise_fee_1.calculator.save!
 
-    @enterprise_fee_2 = create(:enterprise_fee, :name => 'Enterprise Fee Two', :calculator => Spree::Calculator::PerItem.new)
+    @enterprise_fee_2 = create(:enterprise_fee, name: 'Enterprise Fee Two', calculator: Spree::Calculator::PerItem.new)
     @enterprise_fee_2.calculator.set_preference :amount, 2
     @enterprise_fee_2.calculator.save!
 
-    @product_1 = create(:product, :name => 'Fuji apples')
-    @product_1.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_1)
-    @product_1.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_1)
+    @product_1 = create(:product, name: 'Fuji apples')
+    @product_1.product_distributions.create(distributor: @distributor, enterprise_fee: @enterprise_fee_1)
+    @product_1.product_distributions.create(distributor: @distributor_alternative, enterprise_fee: @enterprise_fee_1)
 
-    @product_1a = create(:product, :name => 'Sundowner apples')
-    @product_1a.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_1)
-    @product_1a.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_1)
+    @product_1a = create(:product, name: 'Sundowner apples')
+    @product_1a.product_distributions.create(distributor: @distributor, enterprise_fee: @enterprise_fee_1)
+    @product_1a.product_distributions.create(distributor: @distributor_alternative, enterprise_fee: @enterprise_fee_1)
 
-    @product_2 = create(:product, :name => 'Garlic')
-    @product_2.product_distributions.create(:distributor => @distributor, :enterprise_fee => @enterprise_fee_2)
-    @product_2.product_distributions.create(:distributor => @distributor_alternative, :enterprise_fee => @enterprise_fee_2)
+    @product_2 = create(:product, name: 'Garlic')
+    @product_2.product_distributions.create(distributor: @distributor, enterprise_fee: @enterprise_fee_2)
+    @product_2.product_distributions.create(distributor: @distributor_alternative, enterprise_fee: @enterprise_fee_2)
 
     # -- Shipping
     @zone = create(:zone)
     c = Spree::Country.find_by_name('Australia')
-    Spree::ZoneMember.create(:zoneable => c, :zone => @zone)
+    Spree::ZoneMember.create(zoneable: c, zone: @zone)
     sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new, require_ship_address: false)
     sm.calculator.set_preference(:amount, 0); sm.calculator.save!
 
-    @payment_method_distributor = create(:payment_method, :name => 'Edible Garden payment method', :distributors => [@distributor])
-    @payment_method_alternative = create(:payment_method, :name => 'Alternative Distributor payment method', :distributors => [@distributor_alternative])
+    @payment_method_distributor = create(:payment_method, name: 'Edible Garden payment method', distributors: [@distributor])
+    @payment_method_alternative = create(:payment_method, name: 'Alternative Distributor payment method', distributors: [@distributor_alternative])
 
     supplier = create(:supplier_enterprise)
     @order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [@distributor], variants: [@product_1.master, @product_1a.master, @product_2.master])
     @order_cycle.coordinator_fees << create(:enterprise_fee, enterprise: @order_cycle.coordinator)
   end
 
-  scenario "viewing delivery fees for product distribution", :js => true, :to_figure_out => true do
+  scenario "viewing delivery fees for product distribution", js: true, to_figure_out: true do
     # Given I am logged in
     login_to_consumer_section
     click_link 'Edible garden'
 
     make_order_cycle
 
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, from: 'order_order_cycle_id'
 
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
@@ -90,10 +90,10 @@ feature %q{
       [['Fuji apples - sales fee by coordinator Edible garden', '$1.00', ''],
        ['Garlic - sales fee by coordinator Edible garden', '$1.00', '']]
 
-    page.should have_selector 'span.distribution-total', :text => '$2.00'
+    page.should have_selector 'span.distribution-total', text: '$2.00'
   end
 
-  scenario "viewing delivery fees for order cycle distribution", :js => true do
+  scenario "viewing delivery fees for order cycle distribution", js: true do
     # Given an order cycle
     make_order_cycle
 
@@ -124,7 +124,7 @@ feature %q{
        ["Whole order - admin fee by coordinator My coordinator", "$1.00", ""],
        ["Whole order - sales fee by coordinator My coordinator", "$2.00", ""]]
 
-    page.should have_selector 'span.distribution-total', :text => '$51.00'
+    page.should have_selector 'span.distribution-total', text: '$51.00'
   end
 
   scenario "attempting to purchase products that mix product and order cycle distribution", future: true do
@@ -139,7 +139,7 @@ feature %q{
     login_to_consumer_section
     click_link "Edible garden"
 
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, from: 'order_order_cycle_id'
 
     # When I add the first to my cart
     click_link 'Fuji apples'
@@ -158,7 +158,7 @@ feature %q{
     login_to_consumer_section
     click_link "Edible garden"
 
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, from: 'order_order_cycle_id'
 
     # When I add some apples and some garlic to my cart
     click_link 'Fuji apples'
@@ -177,15 +177,15 @@ feature %q{
 
       [['Garlic - transport fee by coordinator Edible garden', '$3.00', '']]
 
-    page.should have_selector 'span.distribution-total', :text => '$3.00'
+    page.should have_selector 'span.distribution-total', text: '$3.00'
   end
 
-  scenario "adding products with differing quantities produces correct fees", js: true, :to_figure_out => true do
+  scenario "adding products with differing quantities produces correct fees", js: true, to_figure_out: true do
     # Given I am logged in
     login_to_consumer_section
     click_link "Edible garden"
 
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, from: 'order_order_cycle_id'
 
     # When I add two products to my cart that share the same enterprise fee
     click_link 'Fuji apples'
@@ -200,7 +200,7 @@ feature %q{
       [['Fuji apples - packing fee by coordinator Edible garden', '$4.00', ''],
        ['Sundowner apples - packing fee by coordinator Edible garden', '$4.00', '']]
 
-    page.should have_selector 'span.distribution-total', :text => '$8.00'
+    page.should have_selector 'span.distribution-total', text: '$8.00'
 
     # And I update the quantity of one of them
     fill_in 'order_line_items_attributes_0_quantity', with: 2
@@ -211,12 +211,12 @@ feature %q{
       [['Fuji apples - packing fee by coordinator Edible garden', '$8.00', ''],
        ['Sundowner apples - packing fee by coordinator Edible garden', '$4.00', '']]
 
-    page.should have_selector 'span.distribution-total', :text => '$12.00'
+    page.should have_selector 'span.distribution-total', text: '$12.00'
   end
 
-  scenario "changing distributor updates delivery fees", :future => true do
+  scenario "changing distributor updates delivery fees", future: true do
     # Given two distributors and enterprise fees
-    d1 = create(:distributor_enterprise, :name => "FruitAndVeg")
+    d1 = create(:distributor_enterprise, name: "FruitAndVeg")
     create_enterprise_group_for d1
     d2 = create(:distributor_enterprise)
     ef1 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
@@ -251,12 +251,12 @@ feature %q{
     page.should have_selector 'span.distribution-total', text: '$4.68'
   end
 
-  scenario "adding a product to cart after emptying cart shows correct delivery fees", js: true, :to_figure_out => true do
+  scenario "adding a product to cart after emptying cart shows correct delivery fees", js: true, to_figure_out: true do
     # When I add a product to my cart
     login_to_consumer_section
     click_link "Edible garden"
 
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, from: 'order_order_cycle_id'
 
     click_link @product_1.name
     click_button 'Add To Cart'
@@ -274,11 +274,11 @@ feature %q{
     page.should have_selector 'span.grand-total', text: '$24.99'
   end
 
-  scenario "buying a product", :js => true, :to_figure_out => true do
+  scenario "buying a product", js: true, to_figure_out: true do
     login_to_consumer_section
     click_link 'Edible garden'
 
-    select_by_value @order_cycle.id, :from => 'order_order_cycle_id'
+    select_by_value @order_cycle.id, from: 'order_order_cycle_id'
 
     click_link 'Fuji apples'
     click_button 'Add To Cart'
@@ -296,8 +296,8 @@ feature %q{
                    'order_bill_address_attributes_zipcode' => '3213',
                    'order_bill_address_attributes_phone' => '12999911111')
 
-    select('Australia', :from => 'order_bill_address_attributes_country_id')
-    select('Victoria', :from => 'order_bill_address_attributes_state_id')
+    select('Australia', from: 'order_bill_address_attributes_country_id')
+    select('Victoria', from: 'order_bill_address_attributes_state_id')
 
     # Distributor details should be displayed
     within('fieldset#shipping') do
@@ -323,8 +323,8 @@ feature %q{
 
     # -- Checkout: Payment
     # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
-    page.should have_selector     'label', :text => @payment_method_distributor.name
-    page.should_not have_selector 'label', :text => @payment_method_alternative.name
+    page.should have_selector     'label', text: @payment_method_distributor.name
+    page.should_not have_selector 'label', text: @payment_method_alternative.name
     click_checkout_continue_button
 
     # -- Checkout: Order complete
@@ -339,7 +339,7 @@ feature %q{
     email.body.should =~ /Distribution[\s+]\$12.00/
   end
 
-  scenario "buying a product from an order cycle", :js => true do
+  scenario "buying a product from an order cycle", js: true do
     make_order_cycle
 
     login_to_consumer_section
@@ -365,8 +365,8 @@ feature %q{
                    'order_bill_address_attributes_zipcode' => '3213',
                    'order_bill_address_attributes_phone' => '12999911111')
 
-    select('Australia', :from => 'order_bill_address_attributes_country_id')
-    select('Victoria', :from => 'order_bill_address_attributes_state_id')
+    select('Australia', from: 'order_bill_address_attributes_country_id')
+    select('Victoria', from: 'order_bill_address_attributes_state_id')
 
     # Distributor details should be displayed
     within('fieldset#shipping') do
@@ -393,8 +393,8 @@ feature %q{
     # -- Checkout: Payment
     # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
     page.should have_content "PAYMENT INFORMATION"
-    page.should have_selector     'label', :text => @payment_method_distributor_oc.name
-    page.should_not have_selector 'label', :text => @payment_method_alternative.name
+    page.should have_selector     'label', text: @payment_method_distributor_oc.name
+    page.should_not have_selector 'label', text: @payment_method_alternative.name
     click_checkout_continue_button
 
     # -- Checkout: Order complete
@@ -411,7 +411,7 @@ feature %q{
     email.body.should =~ /Distribution[\s+]\$51.00/
   end
 
-  scenario "when I have past orders, it fills in my address", :js => true do
+  scenario "when I have past orders, it fills in my address", js: true do
     make_order_cycle
 
     login_to_consumer_section
@@ -442,8 +442,8 @@ feature %q{
     # We perform login inline because:
     # a) It's a common user flow
     # b) It has been known to trigger errors with spree_last_address
-    fill_in 'spree_user_email', :with => 'someone@ofn.org'
-    fill_in 'spree_user_password', :with => 'passw0rd'
+    fill_in 'spree_user_email', with: 'someone@ofn.org'
+    fill_in 'spree_user_password', with: 'passw0rd'
     click_button 'Login'
     visit "/checkout" # Force to old checkout
 
@@ -519,7 +519,7 @@ feature %q{
     # Shipping method and payment method
     sm = create(:shipping_method, zone: @zone, calculator: Spree::Calculator::FlatRate.new, distributors: [@distributor_oc], require_ship_address: false)
     sm.calculator.set_preference(:amount, 0); sm.calculator.save!
-    @payment_method_distributor_oc = create(:payment_method, :name => 'FruitAndVeg payment method', :distributors => [@distributor_oc])
+    @payment_method_distributor_oc = create(:payment_method, name: 'FruitAndVeg payment method', distributors: [@distributor_oc])
   end
 
   def checkout_fees_table

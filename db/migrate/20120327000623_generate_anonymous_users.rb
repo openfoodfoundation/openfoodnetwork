@@ -4,7 +4,7 @@ class GenerateAnonymousUsers < ActiveRecord::Migration
     Spree::Order.table_name = 'orders'
 
     Spree::User.reset_column_information
-    Spree::Order.where(:user_id => nil).each do |order|
+    Spree::Order.where(user_id: nil).each do |order|
       user = Spree::User.anonymous!
       user.email ||= order.email
       order.user = user

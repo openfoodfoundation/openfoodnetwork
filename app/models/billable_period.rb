@@ -4,7 +4,7 @@ class BillablePeriod < ActiveRecord::Base
   belongs_to :enterprise
   belongs_to :owner, class_name: 'Spree::User'
   belongs_to :account_invoice
-  has_one :adjustment, :as => :source, class_name: "Spree::Adjustment" #, :dependent => :destroy
+  has_one :adjustment, as: :source, class_name: "Spree::Adjustment" #, dependent: :destroy
 
   default_scope where(deleted_at: nil)
 
@@ -47,7 +47,7 @@ class BillablePeriod < ActiveRecord::Base
       adjustment.adjustable = invoice
       adjustment.update_attributes( label: adjustment_label, amount: bill )
     else
-      self.adjustment = invoice.adjustments.new( adjustment_attrs, :without_protection => true )
+      self.adjustment = invoice.adjustments.new( adjustment_attrs, without_protection: true )
     end
 
     if Spree::Config.account_invoices_tax_rate > 0

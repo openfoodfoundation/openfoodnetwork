@@ -7,7 +7,7 @@ feature %q{
 }, skip: true do
   include AuthenticationWorkflow
   include WebHelper
-  let(:d) { create(:distributor_enterprise, :name => 'Edible garden') }
+  let(:d) { create(:distributor_enterprise, name: 'Edible garden') }
 
   background do
     create_enterprise_group_for d
@@ -42,9 +42,9 @@ feature %q{
     visit enterprise_path d
 
     # Then I should see a menu with these pages
-    page.should have_selector 'ul#main-nav-bar li', :text => 'One'
-    page.should have_selector 'ul#main-nav-bar li', :text => 'Two'
-    page.should have_selector 'ul#main-nav-bar li', :text => 'Three'
+    page.should have_selector 'ul#main-nav-bar li', text: 'One'
+    page.should have_selector 'ul#main-nav-bar li', text: 'Two'
+    page.should have_selector 'ul#main-nav-bar li', text: 'Three'
   end
 
   scenario "viewing a page from the CMS menu" do

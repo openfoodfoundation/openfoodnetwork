@@ -44,13 +44,13 @@ class NamespacePromoTables < ActiveRecord::Migration
 
     # add old promo preferences as columns
     add_column :spree_activators, :usage_limit, :integer
-    add_column :spree_activators, :match_policy, :string, :default => 'all'
+    add_column :spree_activators, :match_policy, :string, default: 'all'
     add_column :spree_activators, :code, :string
-    add_column :spree_activators, :advertise, :boolean, :default => false
+    add_column :spree_activators, :advertise, :boolean, default: false
 
     Spree::Activator.reset_column_information
 
-    Spree::Preference.where(:owner_type => 'Spree::Activator').each do |preference|
+    Spree::Preference.where(owner_type: 'Spree::Activator').each do |preference|
       unless Spree::Activator.exists? preference.owner_id
         preference.destroy
         next

@@ -143,10 +143,10 @@ feature %q{
       within(".side_menu") { click_link 'Enterprise Fees' }
       click_link "Create One Now"
 
-      select distributor1.name, :from => 'enterprise_fee_set_collection_attributes_0_enterprise_id'
-      fill_in 'enterprise_fee_set_collection_attributes_0_name', :with => 'foo'
+      select distributor1.name, from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
+      fill_in 'enterprise_fee_set_collection_attributes_0_name', with: 'foo'
       select 'GST', from: 'enterprise_fee_set_collection_attributes_0_tax_category_id'
-      select 'Flat Percent', :from => 'enterprise_fee_set_collection_attributes_0_calculator_type'
+      select 'Flat Percent', from: 'enterprise_fee_set_collection_attributes_0_calculator_type'
       click_button 'Update'
 
       flash_message.should == 'Your enterprise fees have been updated.'

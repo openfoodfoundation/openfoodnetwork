@@ -9,7 +9,7 @@ class PolymorphicPayments < ActiveRecord::Migration
     rename_column :payments, :order_id, :payable_id
     change_table :payments do |t|
       t.string :payable_type, :payment_method
-      t.references :source, :polymorphic => true
+      t.references :source, polymorphic: true
     end
     execute "UPDATE payments SET payable_type = 'Order'"
 

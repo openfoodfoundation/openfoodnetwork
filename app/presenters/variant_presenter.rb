@@ -5,7 +5,7 @@ class VariantPresenter
     @variant = variant
   end
 
-  delegate :id, :to => :variant
+  delegate :id, to: :variant
 
   def image_url
     @variant.images.first.attachment.url :mini if @variant.images.present?

@@ -14,7 +14,7 @@ class EnterpriseFee < ActiveRecord::Base
   FEE_TYPES = %w(packing transport admin sales fundraising)
   PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate']
 
-  validates_inclusion_of :fee_type, :in => FEE_TYPES
+  validates_inclusion_of :fee_type, in: FEE_TYPES
   validates_presence_of :name
 
   scope :for_enterprise, lambda { |enterprise| where(enterprise_id: enterprise) }
@@ -48,11 +48,11 @@ class EnterpriseFee < ActiveRecord::Base
   def create_locked_adjustment(label, target, calculable, mandatory=false)
     amount = compute_amount(calculable)
     return if amount == 0 && !mandatory
-    target.adjustments.create({ :amount => amount,
-                                :source => calculable,
-                                :originator => self,
-                                :label => label,
-                                :mandatory => mandatory,
-                                :locked => true}, :without_protection => true)
+    target.adjustments.create({ amount: amount,
+                                source: calculable,
+                                originator: self,
+                                label: label,
+                                mandatory: mandatory,
+                                locked: true}, without_protection: true)
   end
 end

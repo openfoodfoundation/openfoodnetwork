@@ -15,9 +15,9 @@ module Spree
           links << { name: t(:print_invoice), url: print_admin_order_path(order), icon: 'icon-print', target: "_blank" }
         end
         if @order.ready_to_ship?
-          links << { name: t(:ship_order), url: fire_admin_order_path(@order, :e => 'ship'), method: 'put', icon: 'icon-truck', confirm: t(:are_you_sure) }
+          links << { name: t(:ship_order), url: fire_admin_order_path(@order, e: 'ship'), method: 'put', icon: 'icon-truck', confirm: t(:are_you_sure) }
         end
-        links << { name: t(:cancel_order), url: fire_admin_order_path(@order.number, { :e => 'cancel' }), icon: 'icon-trash', confirm: t(:are_you_sure) } if order.can_cancel?
+        links << { name: t(:cancel_order), url: fire_admin_order_path(@order.number, { e: 'cancel' }), icon: 'icon-trash', confirm: t(:are_you_sure) } if order.can_cancel?
         links
       end
     end

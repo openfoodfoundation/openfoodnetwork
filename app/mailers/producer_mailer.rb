@@ -30,7 +30,7 @@ class ProducerMailer < Spree::BaseMailer
 
   def line_items_from(order_cycle, producer)
     Spree::LineItem.
-      joins(:order => :order_cycle, :variant => :product).
+      joins(order: :order_cycle, variant: :product).
       where('order_cycles.id = ?', order_cycle).
       merge(Spree::Product.in_supplier(producer)).
       merge(Spree::Order.complete)

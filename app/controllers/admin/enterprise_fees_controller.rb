@@ -1,8 +1,8 @@
 module Admin
   class EnterpriseFeesController < ResourceController
-    before_filter :load_enterprise_fee_set, :only => :index
+    before_filter :load_enterprise_fee_set, only: :index
     before_filter :load_data
-    before_filter :do_not_destroy_referenced_fees, :only => :destroy
+    before_filter :do_not_destroy_referenced_fees, only: :destroy
 
     def index
       @include_calculators = params[:include_calculators].present?
@@ -37,7 +37,7 @@ module Admin
         if params.key? :enterprise_id
           redirect_path = main_app.admin_enterprise_fees_path(enterprise_id: params[:enterprise_id])
         end
-        redirect_to redirect_path, :notice => 'Your enterprise fees have been updated.'
+        redirect_to redirect_path, notice: 'Your enterprise fees have been updated.'
 
       else
         render :index
@@ -47,7 +47,7 @@ module Admin
     private
 
     def do_not_destroy_referenced_fees
-      product_distribution = ProductDistribution.where(:enterprise_fee_id => @object).first
+      product_distribution = ProductDistribution.where(enterprise_fee_id: @object).first
       if product_distribution
         p = product_distribution.product
         error = "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
@@ -63,7 +63,7 @@ module Admin
     end
 
     def load_enterprise_fee_set
-      @enterprise_fee_set = EnterpriseFeeSet.new :collection => collection
+      @enterprise_fee_set = EnterpriseFeeSet.new collection: collection
     end
 
     def load_data

@@ -8,11 +8,11 @@ module AuthenticationWorkflow
   def quick_login_as_admin
     admin_role = Spree::Role.find_or_create_by_name!('admin')
     admin_user = create(:user,
-      :password => 'passw0rd',
-      :password_confirmation => 'passw0rd',
-      :remember_me => false,
-      :persistence_token => 'pass',
-      :login => 'admin@ofn.org')
+      password: 'passw0rd',
+      password_confirmation: 'passw0rd',
+      remember_me: false,
+      persistence_token: 'pass',
+      login: 'admin@ofn.org')
 
     admin_user.spree_roles << admin_role
     quick_login_as admin_user
@@ -27,11 +27,11 @@ module AuthenticationWorkflow
   def login_to_admin_section
     admin_role = Spree::Role.find_or_create_by_name!('admin')
     admin_user = create(:user,
-      :password => 'passw0rd',
-      :password_confirmation => 'passw0rd',
-      :remember_me => false,
-      :persistence_token => 'pass',
-      :login => 'admin@ofn.org')
+      password: 'passw0rd',
+      password_confirmation: 'passw0rd',
+      remember_me: false,
+      persistence_token: 'pass',
+      login: 'admin@ofn.org')
 
     admin_user.spree_roles << admin_role
     quick_login_as admin_user
@@ -50,30 +50,30 @@ module AuthenticationWorkflow
     quick_login_as user
     visit spree.admin_path
     #visit spree.admin_path
-    #fill_in 'spree_user_email', :with => user.email
-    #fill_in 'spree_user_password', :with => user.password
+    #fill_in 'spree_user_email', with: user.email
+    #fill_in 'spree_user_password', with: user.password
     #click_button 'Login'
   end
 
   def login_to_consumer_section
     user_role = Spree::Role.find_or_create_by_name!('user')
     user = create_enterprise_user({
-      :email => 'someone@ofn.org',
-      :password => 'passw0rd',
-      :password_confirmation => 'passw0rd',
-      :remember_me => false,
-      :persistence_token => 'pass',
-      :login => 'someone@ofn.org'})
+      email: 'someone@ofn.org',
+      password: 'passw0rd',
+      password_confirmation: 'passw0rd',
+      remember_me: false,
+      persistence_token: 'pass',
+      login: 'someone@ofn.org'})
 
     user.spree_roles << user_role
 
     visit spree.login_path
-    fill_in 'email', :with => 'someone@ofn.org'
-    fill_in 'password', :with => 'passw0rd'
+    fill_in 'email', with: 'someone@ofn.org'
+    fill_in 'password', with: 'passw0rd'
     click_button 'Login'
   end
 end
 
 RSpec.configure do |config|
-  config.extend AuthenticationWorkflow, :type => :feature
+  config.extend AuthenticationWorkflow, type: :feature
 end

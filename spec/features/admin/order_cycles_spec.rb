@@ -158,7 +158,7 @@ feature %q{
     oc.exchanges.last.variants.count.should == 2
 
     # And my pickup time and instructions should have been saved
-    exchange = oc.exchanges.where(:sender_id => oc.coordinator_id).first
+    exchange = oc.exchanges.where(sender_id: oc.coordinator_id).first
     exchange.pickup_time.should == 'pickup time'
     exchange.pickup_instructions.should == 'pickup instructions'
   end
@@ -184,8 +184,8 @@ feature %q{
     page.should have_content "COORDINATOR #{oc.coordinator.name}"
 
     # And I should see the suppliers
-    page.should have_selector 'td.supplier_name', :text => oc.suppliers.first.name
-    page.should have_selector 'td.supplier_name', :text => oc.suppliers.last.name
+    page.should have_selector 'td.supplier_name', text: oc.suppliers.first.name
+    page.should have_selector 'td.supplier_name', text: oc.suppliers.last.name
 
     # And the suppliers should have products
     page.all('table.exchanges tbody tr.supplier').each do |row|
@@ -207,8 +207,8 @@ feature %q{
     page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
 
     # And I should see the distributors
-    page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
-    page.should have_selector 'td.distributor_name', :text => oc.distributors.last.name
+    page.should have_selector 'td.distributor_name', text: oc.distributors.first.name
+    page.should have_selector 'td.distributor_name', text: oc.distributors.last.name
 
     page.should have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'time 0'
     page.should have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'instructions 0'

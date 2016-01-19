@@ -2,7 +2,7 @@ class AddForeignKeys < ActiveRecord::Migration
   class AdjustmentMetadata < ActiveRecord::Base; end
   class CoordinatorFee < ActiveRecord::Base; end
   class Enterprise < ActiveRecord::Base
-    belongs_to :address, :class_name => 'Spree::Address'
+    belongs_to :address, class_name: 'Spree::Address'
   end
   class ExchangeVariant < ActiveRecord::Base; end
   class Spree::InventoryUnit < ActiveRecord::Base; end

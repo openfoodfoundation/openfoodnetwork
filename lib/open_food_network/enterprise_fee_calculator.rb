@@ -71,7 +71,7 @@ module OpenFoodNetwork
     def per_item_enterprise_fees_with_exchange_details
       EnterpriseFee.
         per_item.
-        joins(:exchanges => :exchange_variants).
+        joins(exchanges: :exchange_variants).
         where('exchanges.order_cycle_id = ?', @order_cycle.id).
         merge(Exchange.supplying_to(@distributor)).
         select('enterprise_fees.*, exchange_variants.variant_id AS variant_id')

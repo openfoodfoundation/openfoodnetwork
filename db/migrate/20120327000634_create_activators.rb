@@ -1,6 +1,6 @@
 class CreateActivators < ActiveRecord::Migration
   def change
-    create_table :activators, :force => true do |t|
+    create_table :activators, force: true do |t|
       t.string   :description
       t.datetime :expires_at
       t.datetime :created_at

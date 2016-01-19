@@ -41,7 +41,7 @@ class CheckoutController < Spree::CheckoutController
         flash[:success] = t(:order_processed_successfully)
           respond_to do |format|
             format.html do
-              respond_with(@order, :location => order_path(@order))
+              respond_with(@order, location: order_path(@order))
             end
             format.js do
               render json: {path: order_path(@order)}, status: 200

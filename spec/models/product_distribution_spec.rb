@@ -8,16 +8,16 @@ describe ProductDistribution do
     new_product = create(:product)
     new_distributor = create(:distributor_enterprise)
 
-    pd2 = build(:product_distribution, :product => pd1.product, :distributor => pd1.distributor)
+    pd2 = build(:product_distribution, product: pd1.product, distributor: pd1.distributor)
     pd2.should_not be_valid
 
-    pd2 = build(:product_distribution, :product => pd1.product, :distributor => new_distributor)
+    pd2 = build(:product_distribution, product: pd1.product, distributor: new_distributor)
     pd2.should be_valid
 
-    pd2 = build(:product_distribution, :product => new_product, :distributor => pd1.distributor)
+    pd2 = build(:product_distribution, product: new_product, distributor: pd1.distributor)
     pd2.should be_valid
 
-    pd2 = build(:product_distribution, :product => new_product, :distributor => new_distributor)
+    pd2 = build(:product_distribution, product: new_product, distributor: new_distributor)
     pd2.should be_valid
   end
 
@@ -48,7 +48,7 @@ describe ProductDistribution do
 
         # And it should have the correct data
         order.reload
-        adjustments = order.adjustments.where(:originator_type => 'EnterpriseFee')
+        adjustments = order.adjustments.where(originator_type: 'EnterpriseFee')
         adjustments.count.should == 1
         adjustment = adjustments.first
 

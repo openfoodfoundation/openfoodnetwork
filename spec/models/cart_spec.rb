@@ -14,7 +14,7 @@ describe Cart do
     let(:other_distributor) { FactoryGirl.create(:distributor_enterprise) }
     let(:currency) { "AUD" }
 
-    let(:product) { FactoryGirl.create(:product, :distributors => [distributor]) }
+    let(:product) { FactoryGirl.create(:product, distributors: [distributor]) }
 
     let(:product_with_order_cycle) { create(:product) }
     let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor, other_distributor], variants: [product_with_order_cycle.master]) }
@@ -44,11 +44,11 @@ describe Cart do
     end
 
     describe 'to a cart with an order for a distributor' do
-      let(:product_from_other_distributor) { FactoryGirl.create(:product, :distributors => [other_distributor]) }
-      let(:order) { FactoryGirl.create(:order, :distributor => distributor) }
+      let(:product_from_other_distributor) { FactoryGirl.create(:product, distributors: [other_distributor]) }
+      let(:order) { FactoryGirl.create(:order, distributor: distributor) }
 
       before (:each) do
-        FactoryGirl.create(:line_item, :order => order, :product => product)
+        FactoryGirl.create(:line_item, order: order, product: product)
         order.reload
         subject.orders << order
         subject.save!
@@ -86,7 +86,7 @@ describe Cart do
     end
 
     describe 'existing order for distributor and order cycle' do
-      let(:order) { FactoryGirl.create(:order, :distributor => distributor, :order_cycle => order_cycle) }
+      let(:order) { FactoryGirl.create(:order, distributor: distributor, order_cycle: order_cycle) }
 
       before (:each) do
         subject.orders << order

@@ -10,7 +10,7 @@ module ApplicationHelper
   def ng_form_for(name, *args, &block)
     options = args.extract_options!
 
-    form_for(name, *(args << options.merge(:builder => AngularFormBuilder)), &block)
+    form_for(name, *(args << options.merge(builder: AngularFormBuilder)), &block)
   end
 
   # Pass URL helper calls on to spree where applicable so that we don't need to use

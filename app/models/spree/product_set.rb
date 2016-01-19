@@ -36,7 +36,7 @@ class Spree::ProductSet < ModelSet
   end
 
   def collection_attributes=(attributes)
-    @collection = Spree::Product.where( :id => attributes.each_value.map{ |p| p[:id] } )
+    @collection = Spree::Product.where( id: attributes.each_value.map{ |p| p[:id] } )
     @collection_hash = attributes
   end
 

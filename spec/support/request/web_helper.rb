@@ -34,7 +34,7 @@ module WebHelper
   def fill_in_fields(field_values)
     field_values.each do |key, value|
       begin
-        fill_in key, :with => value
+        fill_in key, with: value
       rescue Capybara::ElementNotFound
         find_field(key).select(value)
       end

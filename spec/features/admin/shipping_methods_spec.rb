@@ -45,7 +45,7 @@ feature 'shipping methods' do
       visit_delete spree.admin_shipping_method_path(@sm)
 
       page.should have_content "Shipping method \"#{@sm.name}\" has been successfully removed!"
-      Spree::ShippingMethod.where(:id => @sm.id).should be_empty
+      Spree::ShippingMethod.where(id: @sm.id).should be_empty
     end
 
     scenario "deleting a shipping method referenced by an order" do
@@ -89,7 +89,7 @@ feature 'shipping methods' do
       page.should_not have_select 'shipping_method_display_on'
       page.should have_field 'shipping_method_require_ship_address_true', checked: true
 
-      fill_in 'shipping_method_name', :with => 'Teleport'
+      fill_in 'shipping_method_name', with: 'Teleport'
 
       check "shipping_method_distributor_ids_#{distributor1.id}"
       click_button 'Create'

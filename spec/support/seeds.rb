@@ -6,10 +6,10 @@
 # You can add more entries here if you need them for your tests.
 
 if Spree::Country.scoped.empty?
-  Spree::Country.create!({"name"=>"Australia", "iso3"=>"AUS", "iso"=>"AU", "iso_name"=>"AUSTRALIA", "numcode"=>"36"}, :without_protection => true)
+  Spree::Country.create!({"name"=>"Australia", "iso3"=>"AUS", "iso"=>"AU", "iso_name"=>"AUSTRALIA", "numcode"=>"36"}, without_protection: true)
   country = Spree::Country.find_by_name('Australia')
-  Spree::State.create!({"name"=>"Victoria", "abbr"=>"Vic", :country=>country}, :without_protection => true)
-  Spree::State.create!({"name"=>"New South Wales", "abbr"=>"NSW", :country=>country}, :without_protection => true)
+  Spree::State.create!({"name"=>"Victoria", "abbr"=>"Vic", country:country}, without_protection: true)
+  Spree::State.create!({"name"=>"New South Wales", "abbr"=>"NSW", country:country}, without_protection: true)
 end
 
 # Since the country seeding differs from other environments, the default
