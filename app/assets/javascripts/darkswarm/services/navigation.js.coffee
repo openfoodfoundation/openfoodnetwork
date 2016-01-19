@@ -1,9 +1,9 @@
 Darkswarm.factory 'Navigation', ($location, $window) ->
   new class Navigation
-    path: null 
+    path: null
 
     active: (path)->
-      $location.path() == path 
+      $location.path() == path
 
     navigate: (path)=>
       @path = path

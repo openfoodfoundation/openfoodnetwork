@@ -10,7 +10,7 @@ angular.module("ofn.admin").directive "ofnDisplayAs", (OptionValueNamer) ->
     , ->
       [variant_unit, variant_unit_scale] = productUnitProperties()
       [unit_value, unit_description] = variantUnitProperties(variant_unit_scale)
-      variant_object = 
+      variant_object =
         unit_value: unit_value
         unit_description: unit_description
         product:

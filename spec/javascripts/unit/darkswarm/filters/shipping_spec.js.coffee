@@ -11,7 +11,6 @@ describe 'filtering by shipping method', ->
     }
   ]
 
-
   beforeEach ->
     module 'Darkswarm'
     inject ($filter) ->

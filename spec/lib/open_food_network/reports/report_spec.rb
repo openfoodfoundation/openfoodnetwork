@@ -37,14 +37,12 @@ module OpenFoodNetwork::Reports
       column { |o| my_helper(o) }
     end
 
-
     private
 
     def self.my_helper(o)
       o[:one]
     end
   end
-
 
   describe Report do
     let(:report) { TestReport.new }

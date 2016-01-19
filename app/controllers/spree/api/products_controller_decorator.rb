@@ -34,9 +34,8 @@ Spree::Api::ProductsController.class_eval do
     @product = find_product(params[:product_id])
     authorize! :delete, @product
     @product.delete
-    respond_with(@product, :status => 204)
+    respond_with(@product, status: 204)
   end
-
 
   private
 

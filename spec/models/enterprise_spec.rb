@@ -252,7 +252,7 @@ describe Enterprise do
   end
 
   describe "delegations" do
-    #subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
+    #subject { FactoryGirl.create(:distributor_enterprise, address: FactoryGirl.create(:address)) }
 
     it { should delegate(:latitude).to(:address) }
     it { should delegate(:longitude).to(:address) }
@@ -405,7 +405,7 @@ describe Enterprise do
         s = create(:supplier_enterprise)
         d = create(:distributor_enterprise)
         p = create(:product)
-        create(:simple_order_cycle, :orders_open_at => 10.days.from_now, suppliers: [s], distributors: [d], variants: [p.master])
+        create(:simple_order_cycle, orders_open_at: 10.days.from_now, suppliers: [s], distributors: [d], variants: [p.master])
         Enterprise.distributors_with_active_order_cycles.should_not include d
       end
     end
@@ -413,25 +413,25 @@ describe Enterprise do
     describe "active_distributors" do
       it "finds active distributors by product distributions" do
         d = create(:distributor_enterprise)
-        create(:product, :distributors => [d])
+        create(:product, distributors: [d])
         Enterprise.active_distributors.should == [d]
       end
 
       it "doesn't show distributors of deleted products" do
         d = create(:distributor_enterprise)
-        create(:product, :distributors => [d], :deleted_at => Time.zone.now)
+        create(:product, distributors: [d], deleted_at: Time.zone.now)
         Enterprise.active_distributors.should be_empty
       end
 
       it "doesn't show distributors of unavailable products" do
         d = create(:distributor_enterprise)
-        create(:product, :distributors => [d], :available_on => 1.week.from_now)
+        create(:product, distributors: [d], available_on: 1.week.from_now)
         Enterprise.active_distributors.should be_empty
       end
 
       it "doesn't show distributors of out of stock products" do
         d = create(:distributor_enterprise)
-        create(:product, :distributors => [d], :on_hand => 0)
+        create(:product, distributors: [d], on_hand: 0)
         Enterprise.active_distributors.should be_empty
       end
 
@@ -458,9 +458,9 @@ describe Enterprise do
         d2 = create(:distributor_enterprise)
         d3 = create(:distributor_enterprise)
         d4 = create(:distributor_enterprise)
-        create(:product, :distributors => [d1, d2], :on_hand => 5)
-        create(:product, :distributors => [d1], :on_hand => 5)
-        create(:product, :distributors => [d3], :on_hand => 0)
+        create(:product, distributors: [d1, d2], on_hand: 5)
+        create(:product, distributors: [d1], on_hand: 5)
+        create(:product, distributors: [d3], on_hand: 0)
 
         Enterprise.with_distributed_active_products_on_hand.should match_array [d1, d2]
       end
@@ -472,11 +472,11 @@ describe Enterprise do
         d4 = create(:distributor_enterprise) # no products on hand
         d5 = create(:distributor_enterprise) # deleted product
         d6 = create(:distributor_enterprise) # no products
-        create(:product, :distributors => [d1, d2], :on_hand => 5)
-        create(:product, :distributors => [d1], :on_hand => 5)
-        create(:product, :distributors => [d3], :on_hand => 5, :available_on => 1.week.from_now)
-        create(:product, :distributors => [d4], :on_hand => 0)
-        create(:product, :distributors => [d5]).delete
+        create(:product, distributors: [d1, d2], on_hand: 5)
+        create(:product, distributors: [d1], on_hand: 5)
+        create(:product, distributors: [d3], on_hand: 5, available_on: 1.week.from_now)
+        create(:product, distributors: [d4], on_hand: 0)
+        create(:product, distributors: [d5]).delete
 
         Enterprise.with_distributed_active_products_on_hand.should match_array [d1, d2]
         Enterprise.with_distributed_active_products_on_hand.distinct_count.should == 2
@@ -491,12 +491,12 @@ describe Enterprise do
         d4 = create(:supplier_enterprise) # no products on hand
         d5 = create(:supplier_enterprise) # deleted product
         d6 = create(:supplier_enterprise) # no products
-        create(:product, :supplier => d1, :on_hand => 5)
-        create(:product, :supplier => d1, :on_hand => 5)
-        create(:product, :supplier => d2, :on_hand => 5)
-        create(:product, :supplier => d3, :on_hand => 5, :available_on => 1.week.from_now)
-        create(:product, :supplier => d4, :on_hand => 0)
-        create(:product, :supplier => d5).delete
+        create(:product, supplier: d1, on_hand: 5)
+        create(:product, supplier: d1, on_hand: 5)
+        create(:product, supplier: d2, on_hand: 5)
+        create(:product, supplier: d3, on_hand: 5, available_on: 1.week.from_now)
+        create(:product, supplier: d4, on_hand: 0)
+        create(:product, supplier: d5).delete
 
         Enterprise.with_supplied_active_products_on_hand.should match_array [d1, d2]
         Enterprise.with_supplied_active_products_on_hand.distinct_count.should == 2
@@ -629,7 +629,6 @@ describe Enterprise do
         end
       end
 
-
       describe "when a new hub is created" do
         it "it creates links to the hub, from all producers owned by the same user, granting add_to_order_cycle and create_variant_overrides permissions" do
           producer1
@@ -639,7 +638,6 @@ describe Enterprise do
           should_have_enterprise_relationship from: producer1, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
           should_have_enterprise_relationship from: producer2, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
         end
-
 
         it "creates links from the new hub to all hubs owned by the same user, granting add_to_order_cycle permission" do
           hub1
@@ -659,7 +657,6 @@ describe Enterprise do
           expect { hub3 }.to change(EnterpriseRelationship, :count).by(4) # 2 producer links + 2 hub links
         end
       end
-
 
       def should_have_enterprise_relationship(opts={})
         er = EnterpriseRelationship.where(parent_id: opts[:from], child_id: opts[:to]).last
@@ -683,12 +680,12 @@ describe Enterprise do
     end
 
     it "returns false when the product is out of stock" do
-      create(:product, :supplier => @supplier, :on_hand => 0)
+      create(:product, supplier: @supplier, on_hand: 0)
       @supplier.should_not have_supplied_products_on_hand
     end
 
     it "returns true when the product is in stock" do
-      create(:product, :supplier => @supplier, :on_hand => 1)
+      create(:product, supplier: @supplier, on_hand: 1)
       @supplier.should have_supplied_products_on_hand
     end
   end

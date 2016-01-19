@@ -31,7 +31,6 @@
           %a{href: "http://www.openfoodnetwork.org/contact/", target: "_blank"}
             = t :footer_global_contact
 
-
       .small-12.medium-4.columns.text-center
         %h6
           = t :footer_sites_headline
@@ -94,7 +93,6 @@
             %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
               = t :footer_contact_email
         = render_markdown(ContentConfig.footer_links_md).html_safe
-
 
       .small-6.medium-3.columns.text-left
         %h4

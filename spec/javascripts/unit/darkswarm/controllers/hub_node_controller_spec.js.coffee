@@ -6,7 +6,7 @@ describe "HubNodeCtrl", ->
 
   beforeEach ->
     module 'Darkswarm'
-    scope = 
+    scope =
       hub: {}
     CurrentHub =
       hub:
@@ -16,7 +16,7 @@ describe "HubNodeCtrl", ->
       ctrl = $controller 'HubNodeCtrl', {$scope: scope, CurrentHub: CurrentHub, $location : $location}
 
   it "knows whether the controlled hub is current", ->
-    scope.hub = {id: 1} 
+    scope.hub = {id: 1}
     expect(scope.current()).toEqual false
-    scope.hub = {id: 99} 
+    scope.hub = {id: 99}
     expect(scope.current()).toEqual true

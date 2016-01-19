@@ -36,7 +36,6 @@ module OpenFoodNetwork
       rows.compact
     end
 
-
     private
 
     def detail_rows_for_order(order, invoice_number, opts)

@@ -1,4 +1,3 @@
-
 angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOverrides) ->
   new class VariantOverrides
     variantOverrides: {}

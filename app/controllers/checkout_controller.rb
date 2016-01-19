@@ -41,7 +41,7 @@ class CheckoutController < Spree::CheckoutController
         flash[:success] = t(:order_processed_successfully)
           respond_to do |format|
             format.html do
-              respond_with(@order, :location => order_path(@order))
+              respond_with(@order, location: order_path(@order))
             end
             format.js do
               render json: {path: order_path(@order)}, status: 200
@@ -54,7 +54,6 @@ class CheckoutController < Spree::CheckoutController
       update_failed
     end
   end
-
 
   private
 
@@ -94,7 +93,6 @@ class CheckoutController < Spree::CheckoutController
     retry unless (tries -= 1).zero?
     false
   end
-
 
   def update_failed
     clear_ship_address

@@ -63,7 +63,6 @@ module OpenFoodNetwork
         p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
         v.stub(:product) { p }
         v.stub(:unit_value) { 100 }
-        
 
         expect(subject.send(:option_value_value_unit)).to eq [100, 'g']
       end

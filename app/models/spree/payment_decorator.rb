@@ -12,7 +12,6 @@ module Spree
     end
     alias_method_chain :actions, :pin_payment_adaptations
 
-
     def refund!(refund_amount=nil)
       protect_from_connection_error do
         check_environment
@@ -28,18 +27,17 @@ module Spree
         record_response(response)
 
         if response.success?
-          self.class.create({ :order => order,
-                              :source => self,
-                              :payment_method => payment_method,
-                              :amount => refund_amount.abs * -1,
-                              :response_code => response.authorization,
-                              :state => 'completed' }, :without_protection => true)
+          self.class.create({ order: order,
+                              source: self,
+                              payment_method: payment_method,
+                              amount: refund_amount.abs * -1,
+                              response_code: response.authorization,
+                              state: 'completed' }, without_protection: true)
         else
           gateway_error(response)
         end
       end
     end
-
 
     private
 

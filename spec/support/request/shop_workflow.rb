@@ -34,9 +34,9 @@ module ShopWorkflow
 
   def add_product_and_variant_to_order_cycle(exchange, product, variant)
     exchange.variants << product.master
-    exchange.variants << variant 
+    exchange.variants << variant
   end
-  
+
   def set_order_cycle(order, order_cycle)
     order.update_attribute(:order_cycle, order_cycle)
   end

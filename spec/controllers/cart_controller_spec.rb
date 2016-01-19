@@ -22,7 +22,7 @@ module OpenFoodNetwork
       context 'with an existing cart' do
 
         it "retrieves an empty cart" do
-          get :show, {id: cart, :format => :json }
+          get :show, {id: cart, format: :json }
           json_response = JSON.parse(response.body)
 
           json_response['id'].should == cart.id
@@ -38,7 +38,7 @@ module OpenFoodNetwork
           end
 
           it "retrieves a cart with a single order and line item" do
-            get :show, {id: cart, :format => :json }
+            get :show, {id: cart, format: :json }
             json_response = JSON.parse(response.body)
 
             json_response['orders'].size.should == 1
@@ -60,7 +60,7 @@ module OpenFoodNetwork
           end
 
           it "retrieves a cart with a single order and line item" do
-            get :show, {id: cart, :format => :json }
+            get :show, {id: cart, format: :json }
             json_response = JSON.parse(response.body)
 
             json_response['orders'].size.should == 1

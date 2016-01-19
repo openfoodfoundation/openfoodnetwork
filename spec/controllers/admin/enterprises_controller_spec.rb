@@ -138,7 +138,6 @@ module Admin
           expect(distributor.users).to_not include user
         end
 
-
         describe "enterprise properties" do
           let(:producer) { create(:enterprise) }
           let!(:property) { create(:property, name: "A nice name") }
@@ -221,7 +220,6 @@ module Admin
           profile_enterprise.reload
           expect(profile_enterprise.sells).to eq 'any'
         end
-
 
         it "allows owner to be changed" do
           controller.stub spree_current_user: admin_user

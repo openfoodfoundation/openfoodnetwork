@@ -56,7 +56,6 @@ describe "Enterprises service", ->
         it "returns an array of enterprises, with a blank option appended to the beginning", ->
           expect(result).toDeepEqual response
 
-
   describe "#save", ->
     result = null
 
@@ -77,7 +76,6 @@ describe "Enterprises service", ->
 
       it "resolves the promise", ->
         expect(resolved).toBe(true);
-
 
     describe "failure", ->
       enterprise = null
@@ -110,14 +108,12 @@ describe "Enterprises service", ->
       it "returns false", ->
         expect(Enterprises.saved({})).toBe true
 
-
   describe "diff", ->
     beforeEach ->
       Enterprises.pristineByID = { 23: { id: 23, name: "ent1", is_primary_producer: true } }
 
     it "returns a list of properties that have been altered", ->
       expect(Enterprises.diff({ id: 23, name: "enterprise123", is_primary_producer: true })).toEqual ["name"]
-
 
   describe "resetAttribute", ->
     enterprise = { id: 23, name: "ent1", is_primary_producer: true }

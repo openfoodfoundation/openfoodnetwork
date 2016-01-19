@@ -38,7 +38,6 @@ class VariantOverride < ActiveRecord::Base
     end
   end
 
-
   def stock_overridden?
     count_on_hand.present?
   end

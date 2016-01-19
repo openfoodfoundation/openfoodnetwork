@@ -1,6 +1,6 @@
 Darkswarm.controller "AccordionCtrl", ($scope, storage, $timeout, $document, CurrentHub) ->
-  $scope.accordion = 
-    details: true 
+  $scope.accordion =
+    details: true
     billing: false
     shipping: false
     payment: false

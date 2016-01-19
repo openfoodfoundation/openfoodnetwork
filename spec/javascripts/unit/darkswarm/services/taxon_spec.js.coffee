@@ -7,10 +7,10 @@ describe "Taxons service", ->
 
   beforeEach ->
     module('Darkswarm')
-    angular.module('Darkswarm').value 'taxons', taxons 
+    angular.module('Darkswarm').value 'taxons', taxons
 
     inject ($injector)->
-      Taxons = $injector.get("Taxons") 
+      Taxons = $injector.get("Taxons")
 
   it "caches taxons in an id-referenced hash", ->
     expect(Taxons.taxons_by_id[1]).toBe taxons[0]

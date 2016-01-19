@@ -15,20 +15,20 @@ class Enterprise < ActiveRecord::Base
 
   self.inheritance_column = nil
 
-  acts_as_gmappable :process_geocoding => false
+  acts_as_gmappable process_geocoding: false
 
   has_many :relationships_as_parent, class_name: 'EnterpriseRelationship', foreign_key: 'parent_id', dependent: :destroy
   has_many :relationships_as_child, class_name: 'EnterpriseRelationship', foreign_key: 'child_id', dependent: :destroy
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :properties, through: :producer_properties
-  has_many :supplied_products, :class_name => 'Spree::Product', :foreign_key => 'supplier_id', :dependent => :destroy
-  has_many :distributed_orders, :class_name => 'Spree::Order', :foreign_key => 'distributor_id'
-  belongs_to :address, :class_name => 'Spree::Address'
-  has_many :product_distributions, :foreign_key => 'distributor_id', :dependent => :destroy
-  has_many :distributed_products, :through => :product_distributions, :source => :product
+  has_many :supplied_products, class_name: 'Spree::Product', foreign_key: 'supplier_id', dependent: :destroy
+  has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id'
+  belongs_to :address, class_name: 'Spree::Address'
+  has_many :product_distributions, foreign_key: 'distributor_id', dependent: :destroy
+  has_many :distributed_products, through: :product_distributions, source: :product
   has_many :enterprise_fees
-  has_many :enterprise_roles, :dependent => :destroy
+  has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_enterprises
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
@@ -37,7 +37,7 @@ class Enterprise < ActiveRecord::Base
   has_many :customers
   has_many :billable_periods
 
-  delegate :latitude, :longitude, :city, :state_name, :to => :address
+  delegate :latitude, :longitude, :city, :state_name, to: :address
 
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
@@ -52,13 +52,12 @@ class Enterprise < ActiveRecord::Base
     url:  '/images/enterprises/promo_images/:id/:style/:basename.:extension',
     path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
 
-  validates_attachment_content_type :logo, :content_type => /\Aimage\/.*\Z/
-  validates_attachment_content_type :promo_image, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :promo_image, content_type: /\Aimage\/.*\Z/
 
   include Spree::Core::S3Support
   supports_s3 :logo
   supports_s3 :promo_image
-
 
   validates :name, presence: true
   validate :name_is_unique
@@ -69,7 +68,7 @@ class Enterprise < ActiveRecord::Base
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
-  validates_length_of :description, :maximum => 255
+  validates_length_of :description, maximum: 255
 
   before_save :confirmation_check, if: lambda { email_changed? }
 
@@ -106,10 +105,10 @@ class Enterprise < ActiveRecord::Base
           Enterprise.ready_for_checkout,
           Enterprise.ready_for_checkout.count)
   }
-  scope :is_primary_producer, where(:is_primary_producer => true)
+  scope :is_primary_producer, where(is_primary_producer: true)
   scope :is_distributor, where('sells != ?', 'none')
   scope :is_hub, where(sells: 'any')
-  scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
+  scope :supplying_variant_in, lambda { |variants| joins(supplied_products: :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
       .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.zone.now)
@@ -173,7 +172,7 @@ class Enterprise < ActiveRecord::Base
     enterprises = []
 
     unless suburb.nil?
-      addresses = Spree::Address.near([suburb.latitude, suburb.longitude], ENTERPRISE_SEARCH_RADIUS, :units => :km).joins(:enterprise).limit(10)
+      addresses = Spree::Address.near([suburb.latitude, suburb.longitude], ENTERPRISE_SEARCH_RADIUS, units: :km).joins(:enterprise).limit(10)
       enterprises = addresses.collect(&:enterprise)
     end
 
@@ -256,7 +255,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def available_variants
-    Spree::Variant.joins(:product => :product_distributions).where('product_distributions.distributor_id=?', self.id)
+    Spree::Variant.joins(product: :product_distributions).where('product_distributions.distributor_id=?', self.id)
   end
 
   def is_distributor

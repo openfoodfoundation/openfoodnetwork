@@ -5,7 +5,7 @@ angular.module("admin.customers").factory 'Customers', (CustomerResource) ->
     loaded: false
 
     index: (params={}, callback=null) ->
-    	CustomerResource.index params, (data) =>
+      CustomerResource.index params, (data) =>
         for customer in data
           @customers.push customer
           @customers_by_id[customer.id] = customer
@@ -13,4 +13,4 @@ angular.module("admin.customers").factory 'Customers', (CustomerResource) ->
         @loaded = true
         (callback || angular.noop)(@customers)
 
-    	@customers
+      @customers

@@ -59,7 +59,6 @@ describe "enterpriseCtrl", ->
       expect(enterprise.users).not.toContain u4
       expect(window.alert).toHaveBeenCalledWith "email-doesn't-matter.com is already a manager!"
 
-
   describe "removing managers", ->
     u1 = u2 = u3 = null
     beforeEach ->
@@ -67,7 +66,6 @@ describe "enterpriseCtrl", ->
       u2 = { id: 2, email: 'name2@email.com' }
       u3 = { id: 3, email: 'name3@email.com' }
       enterprise.users = [u1, u2 ,u3]
-
 
     it "removes a user with the given id", ->
       scope.removeManager {id: 2}

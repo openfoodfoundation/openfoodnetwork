@@ -14,7 +14,6 @@ Openfoodnetwork::Application.configure do
   # Separate cache stores when running in parallel
   config.cache_store = :file_store, Rails.root.join("tmp", "cache", "paralleltests#{ENV['TEST_ENV_NUMBER']}")
 
-
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 
@@ -43,7 +42,7 @@ Openfoodnetwork::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  config.action_mailer.default_url_options = { :host => "test.host" }
+  config.action_mailer.default_url_options = { host: "test.host" }
 
   # To block requests before running the database cleaner
   require 'open_food_network/rack_request_blocker'

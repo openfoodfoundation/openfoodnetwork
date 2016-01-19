@@ -39,4 +39,3 @@ describe 'convert number to localised currency ', ->
     currencyconfig.hide_cents = "true"
     expect(filter(5)).toEqual "$5"
 
-

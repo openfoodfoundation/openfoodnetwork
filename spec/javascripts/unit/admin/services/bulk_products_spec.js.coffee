@@ -36,7 +36,6 @@ describe "BulkProducts service", ->
       BulkProducts.fetch [filter], ->
       $httpBackend.flush()
 
-
   describe "cloning products", ->
     it "clones products using a http get request to /admin/products/(permalink)/clone.json", ->
       BulkProducts.products = [
@@ -73,7 +72,6 @@ describe "BulkProducts service", ->
       BulkProducts.unpackProduct(clonedProduct)
       expect(BulkProducts.insertProductAfter).toHaveBeenCalledWith originalProduct, clonedProduct
 
-
   describe "preparing products", ->
     beforeEach ->
       spyOn BulkProducts, "loadVariantUnit"
@@ -82,7 +80,6 @@ describe "BulkProducts service", ->
       product = {id: 123}
       BulkProducts.unpackProduct product
       expect(BulkProducts.loadVariantUnit).toHaveBeenCalled()
-
 
   describe "loading variant unit", ->
     describe "setting product variant_unit_with_scale field", ->
@@ -173,7 +170,6 @@ describe "BulkProducts service", ->
         BulkProducts.loadVariantUnitValues product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '0'
 
-
   describe "calculating the scaled unit value for a variant", ->
     it "returns the scaled value when variant has a unit_value", ->
       product = {variant_unit_scale: 0.001}
@@ -194,7 +190,6 @@ describe "BulkProducts service", ->
       product = {}
       variant = {}
       expect(BulkProducts.variantUnitValue(product, variant)).toEqual null
-
 
   describe "fetching a product by id", ->
     it "returns the product when it is present", ->

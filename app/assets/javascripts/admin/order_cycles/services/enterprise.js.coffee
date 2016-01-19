@@ -16,7 +16,7 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
     loaded: false
 
     index: (params={}, callback=null) ->
-    	Enterprise.index params, (data) =>
+      Enterprise.index params, (data) =>
         for enterprise in data
           @enterprises[enterprise.id] = enterprise
           @producer_enterprises.push(enterprise) if enterprise.is_primary_producer
@@ -28,7 +28,7 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
         @loaded = true
         (callback || angular.noop)(@enterprises)
 
-    	this.enterprises
+      this.enterprises
 
     suppliedVariants: (enterprise_id) ->
       vs = (this.variantsOf(product) for product in this.enterprises[enterprise_id].supplied_products)

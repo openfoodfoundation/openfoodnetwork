@@ -1,6 +1,6 @@
 describe "Maintaining a live record of dirty products and properties", ->
   DirtyProducts = null
-  
+
   beforeEach ->
     module "ofn.admin"
 
@@ -60,7 +60,7 @@ describe "Maintaining a live record of dirty products and properties", ->
       DirtyProducts.deleteProduct 1
       expect(DirtyProducts.all()["1"]).not.toBeDefined()
       expect(DirtyProducts.all()["2"]).toBeDefined()
-      
+
     it "does nothing if id key does not exist", ->
       DirtyProducts.addProductProperty 1, "PropertyName1", "val1"
       expect(DirtyProducts.all()["1"]["PropertyName1"]).toBeDefined()
@@ -74,7 +74,7 @@ describe "Maintaining a live record of dirty products and properties", ->
       DirtyProducts.removeProductProperty 1, "PropertyName1"
       expect(DirtyProducts.all()["1"]["PropertyName1"]).not.toBeDefined()
       expect(DirtyProducts.all()["1"]["PropertyName2"]).toBeDefined()
-    
+
     it "calls deleteProduct on the productID if no other properties are defined on it", ->
       spyOn(DirtyProducts, "deleteProduct")
       DirtyProducts.addProductProperty 1, "PropertyName1", "val1"
@@ -102,7 +102,7 @@ describe "Maintaining a live record of dirty products and properties", ->
       DirtyProducts.removeVariantProperty 1, 3, "PropertyName1"
       expect(DirtyProducts.all()["1"]["variants"]["3"]["PropertyName1"]).not.toBeDefined()
       expect(DirtyProducts.all()["1"]["variants"]["3"]["PropertyName2"]).toBeDefined()
-    
+
     it "calls deleteVariant on the variantID if no other properties are defined on it", ->
       spyOn(DirtyProducts, "deleteVariant")
       DirtyProducts.addVariantProperty 1, 3, "PropertyName1", "val1"

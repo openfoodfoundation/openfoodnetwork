@@ -5,7 +5,7 @@ describe 'Checkout service', ->
   Navigation = null
   flash = null
   scope = null
-  FlashLoaderMock = 
+  FlashLoaderMock =
     loadFlash: (arg)->
   paymentMethods = [{
       id: 99
@@ -41,10 +41,10 @@ describe 'Checkout service', ->
 
     module 'Darkswarm'
     module ($provide)->
-      $provide.value "RailsFlashLoader", FlashLoaderMock 
-      $provide.value "currentOrder", orderData 
-      $provide.value "shippingMethods", shippingMethods 
-      $provide.value "paymentMethods", paymentMethods 
+      $provide.value "RailsFlashLoader", FlashLoaderMock
+      $provide.value "currentOrder", orderData
+      $provide.value "shippingMethods", shippingMethods
+      $provide.value "paymentMethods", paymentMethods
       null
 
     inject ($injector, _$httpBackend_, $rootScope)->
@@ -80,7 +80,7 @@ describe 'Checkout service', ->
   it 'Gets the current payment method', ->
     expect(Checkout.paymentMethod()).toEqual null
     Checkout.order.payment_method_id = 99
-    expect(Checkout.paymentMethod()).toEqual paymentMethods[0] 
+    expect(Checkout.paymentMethod()).toEqual paymentMethods[0]
 
   it "Posts the Checkout to the server", ->
     $httpBackend.expectPUT("/checkout", {order: Checkout.preprocess()}).respond 200, {path: "test"}

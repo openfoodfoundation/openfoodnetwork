@@ -7,7 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-
   context "as a site administrator" do
     before { login_to_admin_section }
 
@@ -79,7 +78,6 @@ feature %q{
       EnterpriseRole.where(id: er.id).should be_empty
     end
   end
-
 
   private
 

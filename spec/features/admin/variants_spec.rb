@@ -24,7 +24,6 @@ feature %q{
     page.should have_content "Variant \"#{p.name}\" has been successfully created!"
   end
 
-
   scenario "editing unit value and description for a variant", js:true do
     # Given a product with unit-related option types, with a variant
     p = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
@@ -70,7 +69,6 @@ feature %q{
     end
 
     page.should_not have_selector "tr#spree_variant_#{v.id}"
-
 
     v.reload
     v.deleted_at.should_not be_nil

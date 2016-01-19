@@ -44,7 +44,7 @@ describe "Option Value Namer", ->
         p = {}
         v = { product: p }
         namer = new OptionValueNamer(v)
-        
+
       it "returns true when the product has a scale", ->
         p.variant_unit_scale = 1000
         expect(namer.value_scaled()).toBe true

@@ -19,7 +19,6 @@ module AngularFormHelper
   end
 end
 
-
 class ActionView::Helpers::InstanceTag
   include AngularFormHelper
 end

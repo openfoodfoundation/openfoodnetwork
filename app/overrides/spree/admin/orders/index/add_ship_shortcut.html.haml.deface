@@ -1,4 +1,4 @@
-/ insert_bottom "[data-hook='admin_orders_index_row_actions']" 
+/ insert_bottom "[data-hook='admin_orders_index_row_actions']"
 -# See also: app/overrides/add_capture_order_shortcut.rb
 
 - if order.ready_to_ship?

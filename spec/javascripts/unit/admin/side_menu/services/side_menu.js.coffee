@@ -56,7 +56,6 @@ describe "SideMenu service", ->
       it "switches the selected value of the newly selected item to true", ->
         expect(item2.selected).toBe true
 
-
   describe "finding by name", ->
     it "returns the element that matches", ->
       SideMenu.items = [ { name: "Name 1"}, { name: "Name 2"} ]

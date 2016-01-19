@@ -10,4 +10,4 @@ Darkswarm.filter "printArray", ->
     array ?= []
     output = (item for item in array when item).join ", "
     output
-    
+

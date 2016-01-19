@@ -1,32 +1,32 @@
 input, div {
-	&.update-pending {
-	  border: solid 1px orange;
+  &.update-pending {
+    border: solid 1px orange;
   }
 }
 
 input.show-dirty {
-	&.ng-dirty {
-	  border: solid 1px orange;
-		&.update-error {
-			border: solid 1px #DA5354;
-		}
+  &.ng-dirty {
+    border: solid 1px orange;
+    &.update-error {
+      border: solid 1px #DA5354;
+    }
   }
 }
 
 span.error {
-	color: #DA5354;
+  color: #DA5354;
 }
 
 input, div {
-	&.update-error {
-		border: solid 1px #DA5354;
-	}
+  &.update-error {
+    border: solid 1px #DA5354;
+  }
 }
 
 input, div {
-	&.update-success {
-		border: solid 1px #9fc820;
-	}
+  &.update-success {
+    border: solid 1px #9fc820;
+  }
 }
 
 .no-close .ui-dialog-titlebar-close {
@@ -35,38 +35,38 @@ input, div {
 
 div#group_buy_calculation {
     border-radius: 3px;
-	background-color: #eff5fc;
-	div {
-		margin-bottom: 5px;
-		span, h6 {
-			padding: 5px;
-		}
-	}
+  background-color: #eff5fc;
+  div {
+    margin-bottom: 5px;
+    span, h6 {
+      padding: 5px;
+    }
+  }
 
-	hr {
-		width: 95%;
-		margin: 0 auto;
-	}
+  hr {
+    width: 95%;
+    margin: 0 auto;
+  }
 
-	.row span {
-		text-align: center;
-	}
+  .row span {
+    text-align: center;
+  }
 }
 
 .input-symbol {
   position: relative;
   &.before {
 
-	  span {
-			position: absolute;
-		  transform: translate(0,-50%);
-		  top:50%;
-		  pointer-events:none;
-		  margin-left: 1em;
-		}
+    span {
+      position: absolute;
+      transform: translate(0,-50%);
+      top:50%;
+      pointer-events:none;
+      margin-left: 1em;
+    }
 
-		input {
-			text-indent:1em;
-		}
-	}
+    input {
+      text-indent:1em;
+    }
+  }
 }

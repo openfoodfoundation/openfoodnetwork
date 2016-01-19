@@ -17,7 +17,6 @@ describe "Pending Changes", ->
     inject (_pendingChanges_) ->
       pendingChanges = _pendingChanges_
 
-
   describe "adding a new change", ->
     it "adds a new object with key of id if it does not already exist", ->
       expect(pendingChanges.pendingChanges).toEqual {}
@@ -84,7 +83,6 @@ describe "Pending Changes", ->
       scope = { reset: jasmine.createSpy('reset'), success: jasmine.createSpy('success'), error: jasmine.createSpy('error') };
       attr = "propertyName"
       change = { object: object, scope: scope, attr: attr }
-
 
     it "sends the correct object to dataSubmitter", ->
       pendingChanges.submit change

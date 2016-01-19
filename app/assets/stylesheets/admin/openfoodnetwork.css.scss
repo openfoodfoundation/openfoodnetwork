@@ -28,7 +28,6 @@ text-angular .ta-editor {
   left: 275px;
 }
 
-
 /* Fix conflict between Spree and elRTE's styles */
 .el-rte .toolbar {
   float: none;
@@ -36,7 +35,7 @@ text-angular .ta-editor {
 }
 
 input.red {
-	background-color: #DA5354;
+  background-color: #DA5354;
 }
 
 input.search {
@@ -49,7 +48,6 @@ input.search {
 .ng .ng-invalid.ng-dirty {
   background-color: #fa787e;
 }
-
 
 form.order_cycle {
   h2 {
@@ -170,7 +168,6 @@ table#listing_enterprise_groups {
   font-weight:bold;
   color: #DA5354;
 }
-
 
 #loading {
   text-align: center;

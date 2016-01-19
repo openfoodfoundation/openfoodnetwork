@@ -25,15 +25,14 @@ Spree::Admin::LineItemsController.class_eval do
 
     if @order.save
       respond_with(@line_item) do |format|
-        format.html { render :partial => 'spree/admin/orders/form', :locals => { :order => @order.reload } }
+        format.html { render partial: 'spree/admin/orders/form', locals: { order: @order.reload } }
       end
     else
       respond_with(@line_item) do |format|
-        format.js { render :action => 'create', :locals => { :order => @order.reload } }
+        format.js { render action: 'create', locals: { order: @order.reload } }
       end
     end
   end
-
 
   private
 

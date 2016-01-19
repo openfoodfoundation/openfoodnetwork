@@ -14,7 +14,6 @@
   .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded && filteredEnterprises.length == 0'}
     %h1#no_results No enterprises found.
 
-
   .row{ ng: { show: "loaded && filteredEnterprises.length > 0" }, bindonce: true }
     %table.index#enterprises
       %col.name{ width: "28%", ng: { show: 'columns.name.visible' } }

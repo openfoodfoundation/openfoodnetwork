@@ -3,6 +3,6 @@ class Api::ShippingMethodSerializer < ActiveModel::Serializer
     :price
 
   def price
-    object.compute_amount(options[:current_order]) 
+    object.compute_amount(options[:current_order])
   end
 end

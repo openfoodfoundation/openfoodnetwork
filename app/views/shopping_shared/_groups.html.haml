@@ -4,10 +4,10 @@
       .small-12.large-4.columns
         - if current_distributor.groups.length > 0
           %h5
-            =current_distributor.name 
+            =current_distributor.name
             = t :shopping_groups_part_of
           %ul.bullet-list
             - for group in current_distributor.groups
               %li
                 %a{href: main_app.groups_path + "/#{group.permalink}"}
-                  = group.name 
+                  = group.name

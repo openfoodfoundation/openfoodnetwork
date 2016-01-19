@@ -17,7 +17,7 @@ module Api
 
       @enterprise = Enterprise.new(params[:enterprise])
       if @enterprise.save
-        render text: @enterprise.id, :status => 201
+        render text: @enterprise.id, status: 201
       else
         invalid_resource!(@enterprise)
       end
@@ -28,7 +28,7 @@ module Api
       authorize! :update, @enterprise
 
       if @enterprise.update_attributes(params[:enterprise])
-        render text: @enterprise.id, :status => 200
+        render text: @enterprise.id, status: 200
       else
         invalid_resource!(@enterprise)
       end
@@ -39,9 +39,9 @@ module Api
       authorize! :update, @enterprise
 
       if params[:logo] && @enterprise.update_attributes( { logo: params[:logo] } )
-        render text: @enterprise.logo.url(:medium), :status => 200
+        render text: @enterprise.logo.url(:medium), status: 200
       elsif params[:promo] && @enterprise.update_attributes( { promo_image: params[:promo] } )
-        render text: @enterprise.promo_image.url(:medium), :status => 200
+        render text: @enterprise.promo_image.url(:medium), status: 200
       else
         invalid_resource!(@enterprise)
       end

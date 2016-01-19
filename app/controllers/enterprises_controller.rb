@@ -9,7 +9,6 @@ class EnterprisesController < BaseController
 
   respond_to :js, only: :permalink_checker
 
-
   def check_permalink
     return render text: params[:permalink], status: 409 if Enterprise.find_by_permalink params[:permalink]
 

@@ -48,7 +48,7 @@ Spree::Admin::ReportsController.class_eval do
   before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
   # Render a partial for orders and fulfillment description
-  respond_override :index => { :html => { :success => lambda {
+  respond_override index: { html: { success: lambda {
     @reports[:orders_and_fulfillment][:description] =
       render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
     @reports[:products_and_inventory][:description] =
@@ -60,7 +60,6 @@ Spree::Admin::ReportsController.class_eval do
     @reports[:packing][:description] =
         render_to_string(partial: 'packing_description', layout: false, locals: {report_types: REPORT_TYPES[:packing]}).html_safe
 } } }
-
 
   # Overide spree reports list.
   def index
@@ -146,13 +145,13 @@ Spree::Admin::ReportsController.class_eval do
 
     @report = OpenFoodNetwork::OrderAndDistributorReport.new orders
     unless params[:csv]
-      render :html => @report
+      render html: @report
     else
       csv_string = CSV.generate do |csv|
         csv << @report.header
         @report.table.each { |row| csv << row }
       end
-      send_data csv_string, :filename => "orders_and_distributors_#{timestamp}.csv"
+      send_data csv_string, filename: "orders_and_distributors_#{timestamp}.csv"
     end
   end
 
@@ -163,13 +162,13 @@ Spree::Admin::ReportsController.class_eval do
     @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, params
 
     unless params[:csv]
-      render :html => @report
+      render html: @report
     else
       csv_string = CSV.generate do |csv|
         csv << @report.header
         @report.table.each { |row| csv << row }
       end
-      send_data csv_string, :filename => "sales_tax.csv"
+      send_data csv_string, filename: "sales_tax.csv"
     end
   end
 
@@ -266,16 +265,15 @@ Spree::Admin::ReportsController.class_eval do
     render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
   end
 
-
   def render_report(header, table, create_csv, csv_file_name)
     unless create_csv
-      render :html => table
+      render html: table
     else
       csv_string = CSV.generate do |csv|
         csv << header
        table.each { |row| csv << row }
       end
-      send_data csv_string, :filename => csv_file_name
+      send_data csv_string, filename: csv_file_name
     end
   end
 
@@ -309,19 +307,19 @@ Spree::Admin::ReportsController.class_eval do
 
   def authorized_reports
     reports = {
-      :orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"},
-      :bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"},
-      :payments => {:name => "Payment Reports", :description => "Reports for Payments"},
-      :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
-      :customers => {:name => "Customers", :description => 'Customer details'},
-      :products_and_inventory => {:name => "Products & Inventory", :description => ''},
-      :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
-      :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
-      :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
-      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
-      :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' },
-      :packing => { :name => "Packing Reports", :description => '' },
-      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
+      orders_and_distributors: {name: "Orders And Distributors", description: "Orders with distributor details"},
+      bulk_coop: {name: "Bulk Co-Op", description: "Reports for Bulk Co-Op orders"},
+      payments: {name: "Payment Reports", description: "Reports for Payments"},
+      orders_and_fulfillment: {name: "Orders & Fulfillment Reports", description: ''},
+      customers: {name: "Customers", description: 'Customer details'},
+      products_and_inventory: {name: "Products & Inventory", description: ''},
+      sales_total: { name: "Sales Total", description: "Sales Total For All Orders" },
+      users_and_enterprises: { name: "Users & Enterprises", description: "Enterprise Ownership & Status" },
+      order_cycle_management: {name: "Order Cycle Management", description: ''},
+      sales_tax: { name: "Sales Tax", description: "Sales Tax For Orders" },
+      xero_invoices: { name: "Xero Invoices", description: 'Invoices for import into Xero' },
+      packing: { name: "Packing Reports", description: '' },
+      sales_tax: { name: "Sales Tax", description: "Sales Tax For Orders" }
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }

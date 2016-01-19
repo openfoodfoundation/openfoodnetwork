@@ -8,12 +8,12 @@ end
 
 Spree::Order.class_eval do
   belongs_to :order_cycle
-  belongs_to :distributor, :class_name => 'Enterprise'
+  belongs_to :distributor, class_name: 'Enterprise'
   belongs_to :cart
   belongs_to :customer
 
   validates :customer, presence: true, if: :require_customer?
-  validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
+  validate :products_available_from_new_distribution, if: lambda { distributor_id_changed? || order_cycle_id_changed? }
   attr_accessible :order_cycle_id, :distributor_id
 
   before_validation :shipping_address_from_distributor
@@ -22,7 +22,7 @@ Spree::Order.class_eval do
   checkout_flow do
     go_to_state :address
     go_to_state :delivery
-    go_to_state :payment, :if => lambda { |order|
+    go_to_state :payment, if: lambda { |order|
       # Fix for #2191
       if order.shipping_method.andand.require_ship_address and
         if order.ship_address.andand.valid?
@@ -32,11 +32,10 @@ Spree::Order.class_eval do
       end
       order.payment_required?
     }
-    go_to_state :confirm, :if => lambda { |order| order.confirmation_required? }
-    go_to_state :complete, :if => lambda { |order| (order.payment_required? && order.has_unprocessed_payments?) || !order.payment_required? }
-    remove_transition :from => :delivery, :to => :confirm
+    go_to_state :confirm, if: lambda { |order| order.confirmation_required? }
+    go_to_state :complete, if: lambda { |order| (order.payment_required? && order.has_unprocessed_payments?) || !order.payment_required? }
+    remove_transition from: :delivery, to: :confirm
   end
-
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -70,11 +69,10 @@ Spree::Order.class_eval do
   }
 
   scope :with_payment_method_name, lambda { |payment_method_name|
-    joins(:payments => :payment_method).
+    joins(payments: :payment_method).
       where('spree_payment_methods.name IN (?)', payment_method_name).
       select('DISTINCT spree_orders.*')
   }
-
 
   # -- Methods
   def products_available_from_new_distribution
@@ -108,7 +106,6 @@ Spree::Order.class_eval do
     current_item.destroy
   end
 
-
   # Overridden to support max_quantity
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
     line_items(:reload)
@@ -135,7 +132,7 @@ Spree::Order.class_eval do
       current_item.currency = currency unless currency.nil?
       current_item.save
     else
-      current_item = Spree::LineItem.new(:quantity => quantity, max_quantity: max_quantity)
+      current_item = Spree::LineItem.new(quantity: quantity, max_quantity: max_quantity)
       current_item.variant = variant
       if currency
         current_item.currency = currency unless currency.nil?
@@ -249,7 +246,6 @@ Spree::Order.class_eval do
       Delayed::Job.enqueue ConfirmOrderJob.new(id)
     end
   end
-
 
   private
 

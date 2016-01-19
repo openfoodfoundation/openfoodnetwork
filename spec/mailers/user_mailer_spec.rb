@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spree::UserMailer do
   let(:user) { build(:user) }
-  
+
   after do
     ActionMailer::Base.deliveries.clear
   end

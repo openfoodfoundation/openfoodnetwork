@@ -1,4 +1,4 @@
--#%aside#sidebar.right-off-canvas-menu{ role: "complementary", "ng-controller" => "SidebarCtrl", 
+-#%aside#sidebar.right-off-canvas-menu{ role: "complementary", "ng-controller" => "SidebarCtrl",
 -#"ng-class" => "{'active' : Sidebar.active()}"}
 
   -#- if spree_current_user.nil?
@@ -8,5 +8,5 @@
       -#= render partial: "shared/forgot_sidebar"
   -#- else
     -#= render partial: "shared/account_sidebar"
-            
+
   -#= yield :sidebar

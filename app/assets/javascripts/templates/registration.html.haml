@@ -5,6 +5,6 @@
     %ng-include{ src: "'registration/'+ step + '.html'" }
   %div{ ng: { show: "currentStep() == 'finished'" } }
     %ng-include{ src: "'registration/finished.html'" }
-        
-%a.close-reveal-modal{"ng-click" => "$close()"}  
+
+%a.close-reveal-modal{"ng-click" => "$close()"}
   %i.ofn-i_009-close

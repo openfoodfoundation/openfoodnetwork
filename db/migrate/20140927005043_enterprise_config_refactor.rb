@@ -11,7 +11,7 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
     Enterprise.reset_column_information
 
     Enterprise.all.each do |enterprise|
-      enterprise.update_attributes!({:sells => sells_what?(enterprise)})
+      enterprise.update_attributes!({sells: sells_what?(enterprise)})
     end
 
     remove_column :enterprises, :type
@@ -27,8 +27,8 @@ class EnterpriseConfigRefactor < ActiveRecord::Migration
 
     Enterprise.all.each do |enterprise|
       enterprise.update_attributes!({
-        :type => type?(enterprise),
-        :is_distributor => distributes?(enterprise)
+        type: type?(enterprise),
+        is_distributor: distributes?(enterprise)
       })
     end
 

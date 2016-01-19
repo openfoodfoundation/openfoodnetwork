@@ -12,14 +12,14 @@ module Spree
 
     before do
       stub_authentication!
-      Spree.user_class.stub :find_by_spree_api_key => current_api_user
+      Spree.user_class.stub find_by_spree_api_key: current_api_user
     end
 
     context "as a normal user" do
       sign_in_as_user!
 
       it "retrieves a list of variants with appropriate attributes" do
-        spree_get :index, { :template => 'bulk_index', :format => :json }
+        spree_get :index, { template: 'bulk_index', format: :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
         attributes.all?{ |attr| keys.include? attr }.should == true
       end

@@ -43,7 +43,6 @@ describe 'OrderCycle controllers', ->
       inject ($controller) ->
         ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
 
-
     it 'Loads enterprises and supplied products', ->
       expect(Enterprise.index).toHaveBeenCalled()
       expect(scope.enterprises).toEqual('enterprises list')
@@ -321,7 +320,6 @@ describe 'OrderCycle controllers', ->
       scope.submit('/admin/order_cycles')
       expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles')
 
-
 describe 'OrderCycle services', ->
   describe 'Enterprise service', ->
     $httpBackend = null
@@ -437,7 +435,6 @@ describe 'OrderCycle services', ->
         new EnterpriseFee.EnterpriseFee({id: 1, name: "Yayfee", enterprise_id: 1})
         ]
 
-
   describe 'OrderCycle service', ->
     OrderCycle = null
     $httpBackend = null
@@ -511,7 +508,6 @@ describe 'OrderCycle services', ->
       it "detects novel distributors with enterprise as string id", ->
         expect(OrderCycle.novelDistributor('1')).toBe false
         expect(OrderCycle.novelDistributor('2')).toBe true
-
 
     describe 'fetching the direction for an exchange', ->
       it 'returns "incoming" for incoming exchanges', ->
@@ -727,7 +723,6 @@ describe 'OrderCycle services', ->
       it 'returns false for products whose variants are not supplied', ->
         expect(OrderCycle.productSuppliedToOrderCycle(product_variant_absent)).toBeFalsy()
 
-
     describe 'checking whether a variant is supplied to the order cycle', ->
       beforeEach ->
         spyOn(OrderCycle, 'incomingExchangesVariants').andReturn([1, 3])
@@ -737,7 +732,6 @@ describe 'OrderCycle services', ->
 
       it 'returns false for variants that are not supplied', ->
         expect(OrderCycle.variantSuppliedToOrderCycle({id: 999})).toBeFalsy()
-
 
     describe 'remove all distribution of a variant', ->
       it 'removes the variant from every outgoing exchange', ->
@@ -762,7 +756,6 @@ describe 'OrderCycle services', ->
       beforeEach ->
         OrderCycle.new()
         $httpBackend.flush()
-
 
       it 'loads basic fields', ->
         expect(OrderCycle.order_cycle.id).toEqual(123)

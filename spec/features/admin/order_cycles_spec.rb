@@ -158,11 +158,10 @@ feature %q{
     oc.exchanges.last.variants.count.should == 2
 
     # And my pickup time and instructions should have been saved
-    exchange = oc.exchanges.where(:sender_id => oc.coordinator_id).first
+    exchange = oc.exchanges.where(sender_id: oc.coordinator_id).first
     exchange.pickup_time.should == 'pickup time'
     exchange.pickup_instructions.should == 'pickup instructions'
   end
-
 
   scenario "editing an order cycle" do
     # Given an order cycle with all the settings
@@ -185,8 +184,8 @@ feature %q{
     page.should have_content "COORDINATOR #{oc.coordinator.name}"
 
     # And I should see the suppliers
-    page.should have_selector 'td.supplier_name', :text => oc.suppliers.first.name
-    page.should have_selector 'td.supplier_name', :text => oc.suppliers.last.name
+    page.should have_selector 'td.supplier_name', text: oc.suppliers.first.name
+    page.should have_selector 'td.supplier_name', text: oc.suppliers.last.name
 
     # And the suppliers should have products
     page.all('table.exchanges tbody tr.supplier').each do |row|
@@ -208,8 +207,8 @@ feature %q{
     page.should have_select 'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: supplier.enterprise_fees.first.name
 
     # And I should see the distributors
-    page.should have_selector 'td.distributor_name', :text => oc.distributors.first.name
-    page.should have_selector 'td.distributor_name', :text => oc.distributors.last.name
+    page.should have_selector 'td.distributor_name', text: oc.distributors.first.name
+    page.should have_selector 'td.distributor_name', text: oc.distributors.last.name
 
     page.should have_field 'order_cycle_outgoing_exchange_0_pickup_time', with: 'time 0'
     page.should have_field 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'instructions 0'
@@ -236,7 +235,6 @@ feature %q{
     page.should have_select 'order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id', selected: distributor.enterprise_fees.first.name
   end
 
-
   scenario "editing an order cycle with an exchange between the same enterprise" do
     c = create(:distributor_enterprise, is_primary_producer: true)
     login_to_admin_section
@@ -257,7 +255,6 @@ feature %q{
     page.should     have_selector 'table.exchanges tr.distributor'
     page.should_not have_selector 'table.exchanges tr.supplier'
   end
-
 
   scenario "updating an order cycle", js: true do
     # Given an order cycle with all the settings
@@ -384,7 +381,6 @@ feature %q{
     OrderCycle.last.exchanges.where(pickup_time: 'New time 1', pickup_instructions: 'New instructions 1').should be_present
   end
 
-
   scenario "updating many order cycle opening/closing times at once" do
     # Given three order cycles
     oc1 = create(:simple_order_cycle)
@@ -434,7 +430,6 @@ feature %q{
     occ.name.should == "COPY OF #{oc.name}"
   end
 
-
   scenario "removing a master variant from an order cycle when further variants have been added" do
     # Given a product with a variant, with its master variant included in the order cycle
     # (this usually happens when a product is added to an order cycle, then variants are added
@@ -459,7 +454,6 @@ feature %q{
     page.should have_content "Your order cycle has been updated."
     ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id).should be_empty
   end
-
 
   describe "ensuring that hubs in order cycles have valid shipping and payment methods" do
     context "when they don't" do
@@ -756,7 +750,6 @@ feature %q{
     end
   end
 
-
   describe "simplified interface for enterprise users selling only their own produce" do
     let(:user) { create_enterprise_user }
     let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
@@ -926,7 +919,6 @@ feature %q{
     first('a.delete-order-cycle').click
     page.should_not have_content("Translusent Berries")
   end
-
 
   private
 

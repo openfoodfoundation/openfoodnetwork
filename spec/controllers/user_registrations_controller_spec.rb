@@ -10,14 +10,14 @@ describe UserRegistrationsController do
   describe "via ajax" do
     render_views
     it "returns errors when registration fails" do
-      xhr :post, :create, spree_user: {}, :use_route => :spree
+      xhr :post, :create, spree_user: {}, use_route: :spree
       response.status.should == 401
       json = JSON.parse(response.body)
       json.should == {"email" => ["can't be blank"], "password" => ["can't be blank"]}
     end
 
     it "returns 200 when registration succeeds" do
-      xhr :post, :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
+      xhr :post, :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, use_route: :spree
       response.status.should == 200
       json = JSON.parse(response.body)
       json.should == {"email" => "test@test.com"}
@@ -36,7 +36,7 @@ describe UserRegistrationsController do
   context "when registration succeeds" do
     context "when referer is not '/checkout'" do
       it "redirects to root" do
-        spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
+        spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, use_route: :spree
         response.should redirect_to root_path
         assigns[:user].email.should == "test@test.com"
       end
@@ -46,7 +46,7 @@ describe UserRegistrationsController do
       before { @request.env['HTTP_REFERER'] = 'http://test.com/checkout' }
 
       it "redirects to checkout" do
-        spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
+        spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, use_route: :spree
         response.should redirect_to checkout_path
         assigns[:user].email.should == "test@test.com"
       end

@@ -92,7 +92,6 @@
       = t(:or)
     = link_to_with_icon 'icon-remove', t('actions.cancel'), bulk_edit_admin_products_path, :class => 'button'
 
-
 :javascript
   angular.element(document.getElementById("new_product")).ready(function() {
     angular.bootstrap(document.getElementById("new_product"), ['admin.products']);

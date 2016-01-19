@@ -7,7 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-
   context "as a site administrator" do
     before { login_to_admin_section }
 
@@ -31,7 +30,6 @@ feature %q{
       end
     end
 
-
     scenario "creating a relationship" do
       e1 = create(:enterprise, name: 'One')
       e2 = create(:enterprise, name: 'Two')
@@ -52,7 +50,6 @@ feature %q{
       er.should be_present
       er.permissions.map(&:name).should match_array ['add_to_order_cycle', 'edit_profile', 'create_variant_overrides']
     end
-
 
     scenario "attempting to create a relationship with invalid data" do
       e1 = create(:enterprise, name: 'One')
@@ -86,7 +83,6 @@ feature %q{
     end
   end
 
-
   context "as an enterprise user" do
     let!(:d1) { create(:distributor_enterprise) }
     let!(:d2) { create(:distributor_enterprise) }
@@ -107,14 +103,12 @@ feature %q{
       page.should_not have_relationship d2, d3
     end
 
-
     scenario "enterprise user can only add their own enterprises as parent" do
       visit admin_enterprise_relationships_path
       page.should have_select 'enterprise_relationship_parent_id', options: ['', d1.name]
       page.should have_select 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
     end
   end
-
 
   private
 

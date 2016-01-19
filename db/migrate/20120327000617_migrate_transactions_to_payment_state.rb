@@ -12,7 +12,7 @@ class MigrateTransactionsToPaymentState < ActiveRecord::Migration
   PAYMENT_COMPLETE = 'completed'
   PAYMENT_VOID = 'void'
   PAYMENT_PENDING = 'pending'
-  
+
   # Temporarily set the table back to payments
   Spree::Payment.table_name = 'payments'
 
@@ -32,10 +32,10 @@ class MigrateTransactionsToPaymentState < ActiveRecord::Migration
       payment = Spree::Payment.find(tx)
       order = payment.order
       order.create_payment(
-        :amount => tx.amount,
-        :source_id => payment.source_id, :source_type => 'Creditcard',
-        :payment_method_id => payment.payment_method_id, :state => PAYMENT_COMPLETE,
-        :avs_response => tx.avs_response, :response_code => tx.response_code
+        amount: tx.amount,
+        source_id: payment.source_id, source_type: 'Creditcard',
+        payment_method_id: payment.payment_method_id, state: PAYMENT_COMPLETE,
+        avs_response: tx.avs_response, response_code: tx.response_code
       )
     end
     credited.each { |rec| rec.destroy }
@@ -85,11 +85,11 @@ class MigrateTransactionsToPaymentState < ActiveRecord::Migration
   def update_payment(tx, state)
     payment = Spree::Payment.find(tx.payment_id)
     payment.update_attributes_without_callbacks({
-      :state => state,
-      :source_type => 'Creditcard',
-      :amount => tx.amount,
-      :response_code => tx.response_code,
-      :avs_response => tx.avs_response
+      state: state,
+      source_type: 'Creditcard',
+      amount: tx.amount,
+      response_code: tx.response_code,
+      avs_response: tx.avs_response
     })
   end
 

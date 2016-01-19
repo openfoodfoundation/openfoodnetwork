@@ -1,13 +1,13 @@
 %li.has-dropdown.not-click
-  
-  %a{href: "#"} 
+
+  %a{href: "#"}
     %i.ofn-i_022-cog
-  
+
   %ul.dropdown
-    
+
     - if admin_user? or enterprise_user?
       %li
-        %a{href: spree.admin_path, target:'_blank'} 
+        %a{href: spree.admin_path, target:'_blank'}
           %i.ofn-i_021-tools
           = t 'label_administration'
 
@@ -16,8 +16,8 @@
         %i.ofn-i_015-user
         = t 'label_account'
         = "(" + spree_current_user.email + ")"
-    
+
     %li
-      %a{title: t('label_logout'), href:'/logout' } 
+      %a{title: t('label_logout'), href:'/logout' }
         %i.ofn-i_018-unlocked
         = t 'label_logout'

@@ -6,7 +6,7 @@ Spree::Address.class_eval do
 
   geocoded_by :geocode_address
 
-  delegate :name, :to => :state, :prefix => true, :allow_nil => true
+  delegate :name, to: :state, prefix: true, allow_nil: true
 
   def geocode_address
     geocode_address = [address1, address2, zipcode, city, country.andand.name, state.andand.name]

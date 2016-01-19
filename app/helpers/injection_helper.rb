@@ -64,7 +64,6 @@ module InjectionHelper
     render partial: "json/injection_ams", locals: {name: name, json: json}
   end
 
-
   private
 
   def enterprise_injection_data

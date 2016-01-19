@@ -1,19 +1,19 @@
 %div.modal-centered{bindonce: true, "bo-if" => "enterprise.twitter || enterprise.facebook || enterprise.linkedin || enterprise.instagram"}
   %p.modal-header {{'follow' | t}}
   .follow-icons
-    %span{"bo-if" => "enterprise.twitter"} 
+    %span{"bo-if" => "enterprise.twitter"}
       %a{"bo-href-i" => "http://twitter.com/{{enterprise.twitter}}", target: "_blank"}
         %i.ofn-i_041-twitter
-    
+
     %span{"bo-if" => "enterprise.facebook"}
       %a{"bo-href-i" => "http://{{enterprise.facebook | stripUrl}}", target: "_blank"}
         %i.ofn-i_044-facebook
-    
+
     %span{"bo-if" => "enterprise.linkedin"}
       %a{"bo-href-i" => "http://{{enterprise.linkedin | stripUrl}}", target: "_blank"}
         %i.ofn-i_042-linkedin
-    
+
     %span{"bo-if" => "enterprise.instagram"}
-      %a{"bo-href-i" => "http://instagram.com/{{enterprise.instagram}}", target: "_blank"}  
+      %a{"bo-href-i" => "http://instagram.com/{{enterprise.instagram}}", target: "_blank"}
         %i.ofn-i_043-instagram
 

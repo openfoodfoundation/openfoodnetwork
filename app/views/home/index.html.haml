@@ -1,7 +1,6 @@
 :css
   #tagline:before { background-image: url("#{ContentConfig.home_hero.url}") }
 
-
 %div{"ng-controller" => "HomeCtrl"}
   = render partial: "shared/menu/alert"
 
@@ -14,7 +13,6 @@
           %br/
           %a.button.transparent{href: "/shops"}
             = t :home_shop
-
 
   #panes
     = render partial: "home/brandstory"

@@ -1,6 +1,6 @@
 module OpenFoodNetwork
   class Calculator::Weight < Spree::Calculator
-    preference :per_kg, :decimal, :default => 0.0
+    preference :per_kg, :decimal, default: 0.0
     attr_accessible :preferred_per_kg
 
     def self.description
@@ -12,7 +12,6 @@ module OpenFoodNetwork
       total_weight = line_items.sum { |li| ((li.variant.andand.weight || 0) * li.quantity) }
       total_weight * self.preferred_per_kg
     end
-
 
     private
 

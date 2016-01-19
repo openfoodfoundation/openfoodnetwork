@@ -92,8 +92,8 @@ feature %q{
 
     let(:bill_address1) { create(:address, lastname: "Aman") }
     let(:bill_address2) { create(:address, lastname: "Bman") }
-    let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
-    let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
+    let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
+    let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
     let(:order1) { create(:order, distributor: distributor, bill_address: bill_address1) }
     let(:order2) { create(:order, distributor: distributor, bill_address: bill_address2) }
     let(:supplier) { create(:supplier_enterprise, name: "Supplier") }
@@ -142,7 +142,6 @@ feature %q{
       all('table#listing_orders tbody tr').count.should == 4 # Totals row per supplier
     end
   end
-
 
   scenario "orders and distributors report" do
     login_to_admin_section
@@ -239,20 +238,20 @@ feature %q{
 
     context "with two orders on the same day at different times" do
       let(:bill_address) { create(:address) }
-      let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
-      let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
+      let(:distributor_address) { create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234") }
+      let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
       let(:product) { create(:product) }
-      let(:product_distribution) { create(:product_distribution, :product => product, :distributor => distributor) }
+      let(:product_distribution) { create(:product_distribution, product: product, distributor: distributor) }
       let(:shipping_instructions) { "pick up on thursday please!" }
-      let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
-      let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
+      let(:order1) { create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions) }
+      let(:order2) { create(:order, distributor: distributor, bill_address: bill_address, special_instructions: shipping_instructions) }
 
       before do
         Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
         Timecop.travel(Time.zone.local(2013, 4, 25, 16, 0, 0)) { order2.finalize! }
 
-        create(:line_item, :product => product, :order => order1)
-        create(:line_item, :product => product, :order => order2)
+        create(:line_item, product: product, order: order1)
+        create(:line_item, product: product, order: order2)
       end
 
       it "is precise to time of day, not just date" do
@@ -302,8 +301,8 @@ feature %q{
       variant2.update_column(:sku, "sku2")
       variant3.update_column(:count_on_hand, 9)
       variant3.update_column(:sku, "")
-      variant1.option_values = [create(:option_value, :presentation => "Test")]
-      variant2.option_values = [create(:option_value, :presentation => "Something")]
+      variant1.option_values = [create(:option_value, presentation: "Test")]
+      variant2.option_values = [create(:option_value, presentation: "Something")]
     end
 
     it "shows products and inventory report" do
@@ -403,7 +402,6 @@ feature %q{
     let!(:adj_manual1) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
     let!(:adj_manual2) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
 
-
     before do
       order1.update_attribute :email, 'customer@email.com'
       Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
@@ -501,7 +499,6 @@ feature %q{
         ]
       end
     end
-
 
     private
 

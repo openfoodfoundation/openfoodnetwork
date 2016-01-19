@@ -6,7 +6,6 @@ describe "permalinkCtrl", ->
   $httpBackend = null
   $q = null
 
-
   beforeEach ->
     module('admin.enterprises')
     Enterprise =

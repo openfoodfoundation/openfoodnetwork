@@ -65,7 +65,6 @@ Spree::OrderPopulator.class_eval do
     @order.remove_variant(variant)
   end
 
-
   private
 
   def distributor_and_order_cycle

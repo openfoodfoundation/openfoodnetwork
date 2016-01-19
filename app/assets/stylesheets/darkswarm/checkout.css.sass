@@ -10,19 +10,19 @@
 checkout
   display: block
 
-  @media all and (max-width: 640px) 
-    &.row .row 
+  @media all and (max-width: 640px)
+    &.row .row
       margin-left: 0
       margin-right: 0
-  
+
   orderdetails
     .button, table
       width: 100%
-    @media all and (max-width: 640px) 
+    @media all and (max-width: 640px)
       form.edit_order
         border: 1px solid $disabled-bright
         margin-bottom: 2rem
-  
+
   #details, #billing, #shipping, #payment
     border: 0
     margin: 1em 0
@@ -34,20 +34,20 @@ checkout
     margin: 0
     padding: 0.65em
     background: #f7f7f7
-  
-    .label 
+
+    .label
       font-size: 1em
       padding: 0.3rem 0.35rem 0.275rem
 
     // Logic to turn on & off the alerts for success against each fieldset
 
-    label, label.alert, label.success, &.valid label.alert, &.dirty label.success 
+    label, label.alert, label.success, &.valid label.alert, &.dirty label.success
       display: none
 
-    &.dirty label.alert 
+    &.dirty label.alert
       display: inline
-    &.dirty.valid label.alert 
-      display: none 
+    &.dirty.valid label.alert
+      display: none
     &.valid label.success
       display: inline
 
@@ -60,7 +60,7 @@ checkout
     text-align: left
 
   // Logic to swap out up / down accordion icons
-  //Foundation overrides 
+  //Foundation overrides
   dd > a
     @include csstrans
     background: $disabled-light !important
@@ -68,7 +68,7 @@ checkout
   dd > a:hover
     background: $disabled-v-dark !important
     color: white
-  
+
   dd
     span.accordion-up
       display: none

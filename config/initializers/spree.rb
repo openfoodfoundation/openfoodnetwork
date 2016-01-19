@@ -6,7 +6,6 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 
-
 require 'spree/product_filters'
 
 Spree.config do |config|

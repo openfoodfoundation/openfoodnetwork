@@ -1,5 +1,5 @@
 Darkswarm.directive "ofnFlash", (flash, $timeout, RailsFlashLoader)->
-  # Our own flash class. Uses the "flash" service (third party), and a directive 
+  # Our own flash class. Uses the "flash" service (third party), and a directive
   # called RailsFlashLoader to render
   typePairings =
     info: "info"
@@ -14,7 +14,7 @@ Darkswarm.directive "ofnFlash", (flash, $timeout, RailsFlashLoader)->
 
   link: ($scope, element, attr) ->
     $scope.flashes = []
-    
+
     # Callback when a new flash message is pushed to flash service
     show = (message, type)=>
       if message

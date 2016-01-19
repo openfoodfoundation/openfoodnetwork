@@ -70,7 +70,6 @@ describe "EnterpriseRegistrationService", ->
       it "does not move the user to the about page", ->
         expect(RegistrationServiceMock.select).not.toHaveBeenCalled
 
-
   describe "updating an enterprise", ->
     beforeEach ->
       EnterpriseRegistrationService.enterprise.id = 78

@@ -6,7 +6,6 @@
 (function( jQuery, window, undefined ) {
 "use strict";
 
-
 var warnedAbout = {};
 
 // List of warnings already given; public read only
@@ -63,7 +62,6 @@ if ( document.compatMode === "BackCompat" ) {
   // jQuery has never supported or tested Quirks Mode
   migrateWarn( "jQuery is not compatible with Quirks Mode" );
 }
-
 
 var attrFn = {},
   attr = jQuery.attr,
@@ -165,7 +163,6 @@ jQuery.attrHooks.value = {
   }
 };
 
-
 var matched, browser,
   oldInit = jQuery.fn.init,
   // Note this does NOT include the # XSS fix from 1.7!
@@ -253,7 +250,6 @@ jQuery.sub = function() {
   return jQuerySub;
 };
 
-
 var oldFnData = jQuery.fn.data;
 
 jQuery.fn.data = function( name ) {
@@ -271,7 +267,6 @@ jQuery.fn.data = function( name ) {
   }
   return oldFnData.apply( this, arguments );
 };
-
 
 var rscriptType = /\/(java|ecma)script/i,
   oldSelf = jQuery.fn.andSelf || jQuery.fn.addBack,
@@ -493,6 +488,5 @@ jQuery.each( ajaxEvents.split("|"),
     };
   }
 );
-
 
 })( jQuery, window );

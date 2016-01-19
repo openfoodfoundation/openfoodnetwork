@@ -178,7 +178,6 @@ module Admin
       end
     end
 
-
     describe "notifying producers" do
       let(:user) { create_enterprise_user }
       let(:admin_user) do
@@ -204,7 +203,6 @@ module Admin
         flash[:notice].should == 'Emails to be sent to producers have been queued for sending.'
       end
     end
-
 
     describe "destroy" do
       let!(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }

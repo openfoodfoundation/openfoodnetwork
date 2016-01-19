@@ -26,7 +26,6 @@ module WebHelper
     have_selector selector
   end
 
-
   def current_path_should_be path
     current_path = URI.parse(current_url).path
     current_path.should == path
@@ -35,7 +34,7 @@ module WebHelper
   def fill_in_fields(field_values)
     field_values.each do |key, value|
       begin
-        fill_in key, :with => value
+        fill_in key, with: value
       rescue Capybara::ElementNotFound
         find_field(key).select(value)
       end
@@ -46,7 +45,6 @@ module WebHelper
     from = options.delete :from
     page.find_by_id(from).find("option[value='#{value}']").select_option
   end
-
 
   def should_have_failed
     page.status_code.should == 200
@@ -143,7 +141,6 @@ module WebHelper
     sleep 1
     have_selector "div.select2-result-label", text: value
   end
-
 
   private
   def wait_for_ajax

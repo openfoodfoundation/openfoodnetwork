@@ -1,5 +1,5 @@
 Darkswarm.factory "Loading", ->
   new class Loading
-    message: null 
+    message: null
     clear: =>
       @message = null

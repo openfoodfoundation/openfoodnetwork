@@ -4,13 +4,13 @@ require 'open_food_network/referer_parser'
 Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   include OrderCyclesHelper
-  before_filter :load_form_data, :only => [:bulk_edit, :new, :create, :edit, :update]
-  before_filter :load_spree_api_key, :only => [:bulk_edit, :variant_overrides]
+  before_filter :load_form_data, only: [:bulk_edit, :new, :create, :edit, :update]
+  before_filter :load_spree_api_key, only: [:bulk_edit, :variant_overrides]
   before_filter :strip_new_properties, only: [:create, :update]
 
   alias_method :location_after_save_original, :location_after_save
 
-  respond_to :json, :only => :clone
+  respond_to :json, only: :clone
 
   respond_override create: { html: {
     success: lambda {
@@ -23,14 +23,14 @@ Spree::Admin::ProductsController.class_eval do
     failure: lambda {
       render :new
     } } }
-  #respond_override :clone => { :json => {:success => lambda { redirect_to bulk_index_admin_products_url+"?q[id_eq]=#{@new.id}" } } }
+  #respond_override clone: { json: {success: lambda { redirect_to bulk_index_admin_products_url+"?q[id_eq]=#{@new.id}" } } }
 
   def product_distributions
   end
 
   def bulk_update
     collection_hash = Hash[params[:products].each_with_index.map { |p,i| [i,p] }]
-    product_set = Spree::ProductSet.new({:collection_attributes => collection_hash})
+    product_set = Spree::ProductSet.new({collection_attributes: collection_hash})
 
     params[:filters] ||= {}
     bulk_index_query = params[:filters].reduce("") do |string, filter|
@@ -46,11 +46,10 @@ Spree::Admin::ProductsController.class_eval do
       if product_set.errors.present?
         render json: { errors: product_set.errors }, status: 400
       else
-        render :nothing => true, :status => 500
+        render nothing: true, status: 500
       end
     end
   end
-
 
   protected
   def location_after_save
@@ -90,7 +89,6 @@ Spree::Admin::ProductsController.class_eval do
   def collection_actions
     [:index, :bulk_edit, :bulk_update]
   end
-
 
   private
 

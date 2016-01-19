@@ -109,7 +109,6 @@
                 - else
                   = link_to image_tag(item.variant.images.first.attachment.url(:mini)), item.variant.product
 
-
               = render 'spree/shared/line_item_name', line_item: item
 
             %td.text-right.price{"data-hook" => "order_item_price"}

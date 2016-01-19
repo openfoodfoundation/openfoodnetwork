@@ -45,7 +45,7 @@ describe Spree::OrdersController do
   context "adding a group buy product to the cart" do
     it "sets a variant attribute for the max quantity" do
       distributor_product = create(:distributor_enterprise)
-      p = create(:product, :distributors => [distributor_product], :group_buy => true)
+      p = create(:product, distributors: [distributor_product], group_buy: true)
 
       order = subject.current_order(true)
       order.stub(:distributor) { distributor_product }
@@ -53,7 +53,7 @@ describe Spree::OrdersController do
       controller.stub(:current_order).and_return(order)
 
       expect do
-        spree_post :populate, :variants => {p.master.id => 1}, :variant_attributes => {p.master.id => {:max_quantity => 3}}
+        spree_post :populate, variants: {p.master.id => 1}, variant_attributes: {p.master.id => {max_quantity: 3}}
       end.to change(Spree::LineItem, :count).by(1)
     end
 
@@ -106,7 +106,6 @@ describe Spree::OrdersController do
       }
     end
   end
-
 
   private
 

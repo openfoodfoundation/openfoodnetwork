@@ -55,17 +55,16 @@ module OpenFoodNetwork
       destroy_untouched_exchanges
     end
 
-
     private
 
     attr_accessor :touched_exchanges
 
     def exchange_exists?(sender_id, receiver_id, incoming)
-      @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming).present?
+      @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming).present?
     end
 
     def add_exchange(sender_id, receiver_id, incoming, attrs={})
-      attrs = attrs.reverse_merge(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming)
+      attrs = attrs.reverse_merge(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming)
       exchange = @order_cycle.exchanges.build attrs
 
       if manages_coordinator?
@@ -75,7 +74,7 @@ module OpenFoodNetwork
     end
 
     def update_exchange(sender_id, receiver_id, incoming, attrs={})
-      exchange = @order_cycle.exchanges.where(:sender_id => sender_id, :receiver_id => receiver_id, :incoming => incoming).first
+      exchange = @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming).first
 
       unless manages_coordinator? || manager_for(exchange)
         attrs.delete :enterprise_fee_ids
@@ -131,12 +130,12 @@ module OpenFoodNetwork
 
     def find_incoming_exchange(attrs)
       @order_cycle.exchanges.
-      where(:sender_id => attrs[:enterprise_id], :receiver_id => @order_cycle.coordinator_id, :incoming => true).first
+      where(sender_id: attrs[:enterprise_id], receiver_id: @order_cycle.coordinator_id, incoming: true).first
     end
 
     def find_outgoing_exchange(attrs)
       @order_cycle.exchanges.
-      where(:sender_id => @order_cycle.coordinator_id, :receiver_id => attrs[:enterprise_id], :incoming => false).first
+      where(sender_id: @order_cycle.coordinator_id, receiver_id: attrs[:enterprise_id], incoming: false).first
     end
 
     def persisted_variants_hash(exchange)

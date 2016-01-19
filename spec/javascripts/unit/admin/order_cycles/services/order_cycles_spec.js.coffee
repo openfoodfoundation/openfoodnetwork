@@ -56,7 +56,6 @@ describe "OrderCycles service", ->
         it "returns an array of orderCycles", ->
           expect(result).toDeepEqual response
 
-
   describe "#save", ->
     result = null
 
@@ -77,7 +76,6 @@ describe "OrderCycles service", ->
 
       it "resolves the promise", ->
         expect(resolved).toBe(true);
-
 
     describe "failure", ->
       orderCycle = null
@@ -110,14 +108,12 @@ describe "OrderCycles service", ->
       it "returns false", ->
         expect(OrderCycles.saved({})).toBe true
 
-
   describe "diff", ->
     beforeEach ->
       OrderCycles.pristineByID = { 23: { id: 23, name: "ent1", is_primary_producer: true } }
 
     it "returns a list of properties that have been altered", ->
       expect(OrderCycles.diff({ id: 23, name: "orderCycle123", is_primary_producer: true })).toEqual ["name"]
-
 
   describe "resetAttribute", ->
     orderCycle = { id: 23, name: "ent1", is_primary_producer: true }

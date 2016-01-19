@@ -5,5 +5,5 @@ Darkswarm.directive "ofnScrollTo", ($location, $anchorScroll)->
   link: (scope, element, attrs)->
     element.bind 'click', (ev)->
       ev.stopPropagation()
-      $location.hash attrs.ofnScrollTo 
+      $location.hash attrs.ofnScrollTo
       $anchorScroll()

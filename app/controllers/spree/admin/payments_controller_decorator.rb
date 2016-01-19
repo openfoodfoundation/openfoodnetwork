@@ -6,7 +6,7 @@ Spree::Admin::PaymentsController.class_eval do
   #   payments_url not defined.
   # This could be fixed by replacing line 37 with:
   #   respond_with(@payment, location: admin_order_payments_url) { |format| format.html { redirect_to admin_order_payments_path(@order) } }
-  respond_override :fire => { :html => { :success => lambda {
+  respond_override fire: { html: { success: lambda {
     redirect_to request.referer  # Keeps any filter and sort prefs
   } } }
 

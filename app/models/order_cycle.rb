@@ -1,8 +1,8 @@
 class OrderCycle < ActiveRecord::Base
-  belongs_to :coordinator, :class_name => 'Enterprise'
-  has_and_belongs_to_many :coordinator_fees, :class_name => 'EnterpriseFee', :join_table => 'coordinator_fees'
+  belongs_to :coordinator, class_name: 'Enterprise'
+  has_and_belongs_to_many :coordinator_fees, class_name: 'EnterpriseFee', join_table: 'coordinator_fees'
 
-  has_many :exchanges, :dependent => :destroy
+  has_many :exchanges, dependent: :destroy
 
   # TODO: DRY the incoming/outgoing clause used in several cases below
   # See Spree::Product definition, scopes variants and variants_including_master
@@ -35,7 +35,6 @@ class OrderCycle < ActiveRecord::Base
   scope :with_distributor, lambda { |distributor|
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
   }
-
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -106,7 +105,6 @@ class OrderCycle < ActiveRecord::Base
       map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
     ]
   end
-
 
   def clone!
     oc = self.dup
@@ -229,7 +227,6 @@ class OrderCycle < ActiveRecord::Base
   def coordinated_by?(user)
     coordinator.users.include? user
   end
-
 
   private
 

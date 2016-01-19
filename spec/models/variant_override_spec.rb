@@ -23,7 +23,6 @@ describe VariantOverride do
     end
   end
 
-
   describe "looking up prices" do
     it "returns the numeric price when present" do
       VariantOverride.create!(variant: variant, hub: hub, price: 12.34)

@@ -11,7 +11,6 @@ module OpenFoodNetwork
       variant.instance_variable_set :@variant_override, @variant_overrides[variant]
     end
 
-
     module ScopeVariantToHub
       def price
         @variant_override.andand.price || super

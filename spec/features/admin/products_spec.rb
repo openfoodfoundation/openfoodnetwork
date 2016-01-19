@@ -7,11 +7,10 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-
   let!(:taxon) { create(:taxon) }
 
   background do
-    @supplier = create(:supplier_enterprise, :name => 'New supplier')
+    @supplier = create(:supplier_enterprise, name: 'New supplier')
     @distributors = (1..3).map { create(:distributor_enterprise) }
     @enterprise_fees = (0..2).map { |i| create(:enterprise_fee, enterprise: @distributors[i]) }
   end
@@ -61,15 +60,14 @@ feature %q{
       visit spree.product_distributions_admin_product_path(product)
 
       check @distributors[0].name
-      select2_select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
+      select2_select @enterprise_fees[0].name, from: 'product_product_distributions_attributes_0_enterprise_fee_id'
       check @distributors[2].name
-      select2_select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
+      select2_select @enterprise_fees[2].name, from: 'product_product_distributions_attributes_2_enterprise_fee_id'
 
       click_button 'Update'
 
       product.reload
       product.distributors.should match_array [@distributors[0], @distributors[2]]
-
 
       product.product_distributions.map { |pd| pd.enterprise_fee }.should match_array [@enterprise_fees[0], @enterprise_fees[2]]
     end
@@ -82,7 +80,7 @@ feature %q{
       visit spree.edit_admin_product_path(product)
 
       choose 'product_group_buy_1'
-      fill_in 'Bulk unit size', :with => '10'
+      fill_in 'Bulk unit size', with: '10'
 
       click_button 'Update'
 
@@ -108,7 +106,6 @@ feature %q{
       login_to_admin_as @new_user
     end
 
-
     context "additional fields" do
       it "should have a notes field" do
         product = create(:simple_product, supplier: @supplier2)
@@ -123,11 +120,11 @@ feature %q{
           click_link 'Products'
           click_link 'New Product'
 
-          fill_in 'product_name', :with => 'A new product !!!'
-          fill_in 'product_price', :with => '19.99'
+          fill_in 'product_name', with: 'A new product !!!'
+          fill_in 'product_price', with: '19.99'
 
           page.should have_selector('#product_supplier_id')
-          select 'Another Supplier', :from => 'product_supplier_id'
+          select 'Another Supplier', from: 'product_supplier_id'
           select 'Weight (g)', from: 'product_variant_unit_with_scale'
           fill_in 'product_unit_value_with_description', with: '500'
           select taxon.name, from: "product_primary_taxon_id"
@@ -168,7 +165,7 @@ feature %q{
       within('#sidebar') { click_link 'Product Distributions' }
 
       check @distributors[0].name
-      select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
+      select @enterprise_fees[0].name, from: 'product_product_distributions_attributes_0_enterprise_fee_id'
 
       # Should only have distributors listed which the user can manage
       within "#product_product_distributions_field" do
@@ -181,7 +178,6 @@ feature %q{
 
       product.distributors.should == [@distributors[0]]
     end
-
 
     scenario "deleting product properties", js: true do
       # Given a product with a property
@@ -202,11 +198,10 @@ feature %q{
       page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval'
     end
 
-
     scenario "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)
       image = File.open(File.expand_path('../../../../app/assets/images/logo-white.png', __FILE__))
-      Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
+      Spree::Image.create({viewable_id: product.master.id, viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1})
 
       visit spree.admin_product_images_path(product)
       page.should have_selector "table[data-hook='images_table'] td img"

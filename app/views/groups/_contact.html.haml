@@ -1,4 +1,4 @@
-%div.contact-container{bindonce: true}  
+%div.contact-container{bindonce: true}
   - if @group.email.present? || @group.website.present? || @group.phone.present?
     %div.modal-centered
       %p.modal-header
@@ -16,12 +16,12 @@
           =link_to_service "http://", @group.website do
             = t :groups_contact_website
 
-%div{bindonce: true}  
+%div{bindonce: true}
   - if @group.facebook.present? || @group.twitter.present? || @group.linkedin.present? || @group.instagram.present?
     %div.modal-centered.pad-top
       %p.modal-header
         = t :groups_contact_web
-      .follow-icons{bindonce: true} 
+      .follow-icons{bindonce: true}
         =link_to_service "http://twitter.com/", @group.twitter do
           %i.ofn-i_041-twitter
         =link_to_service "https://www.facebook.com/", @group.facebook do
@@ -30,8 +30,8 @@
           %i.ofn-i_042-linkedin
         =link_to_service "http://instagram.com/", @group.instagram do
           %i.ofn-i_043-instagram
-        
-%div{bindonce: true}  
+
+%div{bindonce: true}
   - if @group.address1.present? || @group.city.present?
     %div.modal-centered.pad-top
       %p.modal-header
@@ -46,5 +46,4 @@
           = @group.city
           = @group.state
           = @group.zipcode
-
 

@@ -68,7 +68,6 @@ describe ProducerMailer do
     end.to change(ActionMailer::Base.deliveries, :count).by(0)
   end
 
-
   private
 
   def body_lines_including(mail, s)

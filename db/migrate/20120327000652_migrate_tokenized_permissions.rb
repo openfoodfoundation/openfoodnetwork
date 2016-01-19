@@ -18,7 +18,7 @@ class MigrateTokenizedPermissions < ActiveRecord::Migration
   end
 
   def down
-    execute "UPDATE spree_tokenized_permissions SET permissable_type = REPLACE(permissable_type, 'Spree::', '')" + 
+    execute "UPDATE spree_tokenized_permissions SET permissable_type = REPLACE(permissable_type, 'Spree::', '')" +
             " WHERE permissable_type LIKE 'Spree::%'"
   end
 end

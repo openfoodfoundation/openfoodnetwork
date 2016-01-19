@@ -2,7 +2,6 @@ Spree::Taxon.class_eval do
   self.attachment_definitions[:icon][:path] = 'public/images/spree/taxons/:id/:style/:basename.:extension'
   self.attachment_definitions[:icon][:url] = '/images/spree/taxons/:id/:style/:basename.:extension'
 
-
   # Indicate which filters should be used for this taxon
   def applicable_filters
     fs = []
@@ -16,7 +15,7 @@ Spree::Taxon.class_eval do
     taxons = {}
 
     Spree::Taxon.
-      joins(:products => :supplier).
+      joins(products: :supplier).
       select('spree_taxons.*, enterprises.id AS enterprise_id').
       each do |t|
 

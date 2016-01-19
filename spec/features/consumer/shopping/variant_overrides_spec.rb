@@ -105,7 +105,6 @@ feature "shopping with variant overrides defined", js: true do
     end
   end
 
-
   describe "creating orders" do
     it "creates the order with the correct prices" do
       fill_in "variants[#{v1.id}]", with: "2"
@@ -160,7 +159,6 @@ feature "shopping with variant overrides defined", js: true do
     end
   end
 
-
   private
 
   def complete_checkout
@@ -191,7 +189,7 @@ feature "shopping with variant overrides defined", js: true do
     within "#payment" do
       choose pm.name
     end
-    
+
     place_order
     page.should have_content "Your order has been processed successfully"
   end

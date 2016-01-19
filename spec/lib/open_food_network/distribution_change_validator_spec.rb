@@ -87,7 +87,7 @@ describe DistributionChangeValidator do
       enterprise_with_some_variants.stub(:distributed_variants) { [variant1, variant3] } # Only some variants
       enterprise_with_some_plus_extras = double(:enterprise)
       enterprise_with_some_plus_extras.stub(:distributed_variants) { [variant1, variant2, variant3, variant4] } # Only some variants, plus extras
-      
+
       subject.available_distributors([enterprise_with_some_variants]).should_not include enterprise_with_some_variants
       subject.available_distributors([enterprise_with_some_plus_extras]).should_not include enterprise_with_some_plus_extras
     end
@@ -97,10 +97,10 @@ describe DistributionChangeValidator do
       order.stub(:line_item_variants) { line_item_variants }
       enterprise = double(:enterprise)
       enterprise.stub(:distributed_variants) { [variant1, variant2, variant3, variant4, variant5] } # Excess variants
-      
+
       subject.available_distributors([enterprise]).should == [enterprise]
     end
-    
+
     it "matches no enterprises when none are provided" do
       subject.available_distributors([]).should == []
     end

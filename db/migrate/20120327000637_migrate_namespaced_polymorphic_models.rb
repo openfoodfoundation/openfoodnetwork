@@ -27,7 +27,7 @@ class MigrateNamespacedPolymorphicModels < ActiveRecord::Migration
         " where #{column_name} LIKE 'Spree::%'"
     end
   end
-  
+
   def up
     update_column_data(['spree_payments', 'spree_adjustments', 'spree_log_entries'], 'source_type')
     update_column_data('spree_adjustments', 'originator_type')

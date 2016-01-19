@@ -2,11 +2,11 @@ require 'open_food_network/referer_parser'
 
 module Admin
   class EnterprisesController < ResourceController
-    before_filter :load_enterprise_set, :only => :index
-    before_filter :load_countries, :except => [:index, :register, :check_permalink]
-    before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
-    before_filter :load_groups, :only => [:new, :edit, :update, :create]
-    before_filter :load_taxons, :only => [:new, :edit, :update, :create]
+    before_filter :load_enterprise_set, only: :index
+    before_filter :load_countries, except: [:index, :register, :check_permalink]
+    before_filter :load_methods_and_fees, only: [:new, :edit, :update, :create]
+    before_filter :load_groups, only: [:new, :edit, :update, :create]
+    before_filter :load_taxons, only: [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
     before_filter :override_owner, only: :create
@@ -40,7 +40,7 @@ module Admin
         flash[:success] = flash_message_for(@object, :successfully_updated)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
-          format.js   { render :layout => false }
+          format.js   { render layout: false }
           format.json { render_as_json @object, ams_prefix: 'index', spree_current_user: spree_current_user }
         end
       else

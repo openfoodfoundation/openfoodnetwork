@@ -1,8 +1,8 @@
 Darkswarm.factory "Sidebar", ($location, Navigation)->
   new class Sidebar
-    paths: ["/login", "/signup", "/forgot", "/account"] 
+    paths: ["/login", "/signup", "/forgot", "/account"]
 
-    active: -> 
+    active: ->
       $location.path() in @paths
 
     toggle: ->

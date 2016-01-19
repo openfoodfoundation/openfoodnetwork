@@ -6,7 +6,6 @@ module OpenFoodNetwork
       flush_jobs
     end
 
-
     # Process all pending Delayed jobs, keeping in mind jobs could spawn new
     # delayed job (so things might be added to the queue while processing)
     def flush_jobs(options = {})
@@ -23,11 +22,9 @@ module OpenFoodNetwork
       end
     end
 
-
     def clear_jobs
       Delayed::Job.delete_all
     end
-
 
     # expect { foo }.to enqueue_job MyJob, field1: 'foo', field2: 'bar'
     RSpec::Matchers.define :enqueue_job do |klass, options = {}|

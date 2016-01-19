@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 require 'support/request/authentication_workflow'
 
-
 describe Spree::CheckoutController do
   include AuthenticationWorkflow
 

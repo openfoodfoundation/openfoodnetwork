@@ -1,17 +1,17 @@
 class Exchange < ActiveRecord::Base
   belongs_to :order_cycle
-  belongs_to :sender, :class_name => 'Enterprise'
-  belongs_to :receiver, :class_name => 'Enterprise'
-  belongs_to :payment_enterprise, :class_name => 'Enterprise'
+  belongs_to :sender, class_name: 'Enterprise'
+  belongs_to :receiver, class_name: 'Enterprise'
+  belongs_to :payment_enterprise, class_name: 'Enterprise'
 
-  has_many :exchange_variants, :dependent => :destroy
-  has_many :variants, :through => :exchange_variants
+  has_many :exchange_variants, dependent: :destroy
+  has_many :variants, through: :exchange_variants
 
-  has_many :exchange_fees, :dependent => :destroy
-  has_many :enterprise_fees, :through => :exchange_fees
+  has_many :exchange_fees, dependent: :destroy
+  has_many :enterprise_fees, through: :exchange_fees
 
   validates_presence_of :order_cycle, :sender, :receiver
-  validates_uniqueness_of :sender_id, :scope => [:order_cycle_id, :receiver_id, :incoming]
+  validates_uniqueness_of :sender_id, scope: [:order_cycle_id, :receiver_id, :incoming]
 
   accepts_nested_attributes_for :variants
 
@@ -42,7 +42,6 @@ class Exchange < ActiveRecord::Base
         where('sender_roles.user_id = ? AND receiver_roles.user_id = ?', user.id, user.id)
     end
   }
-
 
   def clone!(new_order_cycle)
     exchange = self.dup

@@ -1,7 +1,5 @@
-
 - content_for :page_title do
   = t(:account)
-
 
 - if @invoices.empty?
   %h4= t(:no_invoices_to_display)
@@ -47,7 +45,6 @@
       %td.text-center &nbsp;
       %td= t(:total).upcase
       %td.text-right= invoice_total_for(invoice)
-
 
 -#   - if @enterprises.empty?
 -#     %h4 No enterprises to display

@@ -13,7 +13,6 @@ module OpenFoodNetwork
       product.instance_variable_set :@variant_overrides, @variant_overrides
     end
 
-
     module ScopeProductToHub
       def variants_distributed_by(order_cycle, distributor)
         super.each { |v| ScopeVariantToHub.new(@hub, @variant_overrides).scope(v) }

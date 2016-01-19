@@ -1,1 +1,1 @@
-angular.module("admin.taxons", [])
+angular.module("admin.taxons", [])

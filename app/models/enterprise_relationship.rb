@@ -24,7 +24,6 @@ class EnterpriseRelationship < ActiveRecord::Base
 
   scope :by_name, with_enterprises.order('child_enterprises.name, parent_enterprises.name')
 
-
   # Load an array of the relatives of each enterprise (ie. any enterprise related to it in
   # either direction). This array is split into distributors and producers, and has the format:
   # {enterprise_id => {distributors: [id, ...], producers: [id, ...]} }
@@ -58,7 +57,6 @@ class EnterpriseRelationship < ActiveRecord::Base
 
     relatives
   end
-
 
   def permissions_list=(perms)
     perms.andand.each { |name| permissions.build name: name }

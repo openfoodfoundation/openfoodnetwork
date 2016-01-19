@@ -6,5 +6,5 @@ Darkswarm.controller "ShippingCtrl", ($scope, $timeout, ShippingMethods) ->
 
   $scope.summary = ->
     [$scope.Checkout.shippingMethod()?.name]
-  
-  $timeout $scope.onTimeout 
+
+  $timeout $scope.onTimeout

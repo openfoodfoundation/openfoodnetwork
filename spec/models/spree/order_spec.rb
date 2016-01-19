@@ -4,7 +4,7 @@ describe Spree::Order do
   describe "setting variant attributes" do
     it "sets attributes on line items for variants" do
       d = create(:distributor_enterprise)
-      p = create(:product, :distributors => [d])
+      p = create(:product, distributors: [d])
 
       subject.distributor = d
       subject.save!
@@ -53,7 +53,6 @@ describe Spree::Order do
       product_distribution = double(:product_distribution)
       product_distribution.should_receive(:create_adjustment_for).with(line_item)
       subject.stub(:product_distribution_for) { product_distribution }
-
 
       subject.update_distribution_charge!
     end
@@ -416,7 +415,7 @@ describe Spree::Order do
   context "validating distributor changes" do
     it "checks that a distributor is available when changing" do
       set_feature_toggle :order_cycles, false
-      order_enterprise = FactoryGirl.create(:enterprise, id: 1, :name => "Order Enterprise")
+      order_enterprise = FactoryGirl.create(:enterprise, id: 1, name: "Order Enterprise")
       subject.distributor = order_enterprise
       product1 = FactoryGirl.create(:product)
       product2 = FactoryGirl.create(:product)
@@ -439,13 +438,13 @@ describe Spree::Order do
       subject.reload
       subject.line_items = [line_item1,line_item2,line_item3]
 
-      test_enterprise = FactoryGirl.create(:enterprise, id: 2, :name => "Test Enterprise")
+      test_enterprise = FactoryGirl.create(:enterprise, id: 2, name: "Test Enterprise")
       # Test Enterprise sells only product 1
       FactoryGirl.create(:product_distribution, product: product1, distributor: test_enterprise)
 
       subject.distributor = test_enterprise
       subject.should_not be_valid
-      subject.errors.messages.should == {:distributor_id => ["cannot supply the products in your cart"]}
+      subject.errors.messages.should == {distributor_id: ["cannot supply the products in your cart"]}
     end
   end
 

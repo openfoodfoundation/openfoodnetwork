@@ -26,7 +26,6 @@ module Spree
           end
         end
 
-
         def sign_in_as_admin!
           let!(:current_api_user) do
             user = stub_model(Spree::LegacyUser)

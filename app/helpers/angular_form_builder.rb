@@ -20,7 +20,7 @@ class AngularFormBuilder < ActionView::Helpers::FormBuilder
   def ng_hidden_field(method, options = {})
     value = "{{ #{@object.send(@fields_for_record_name).first.class.to_s.underscore}.#{method} }}"
 
-    @template.hidden_field_tag angular_name(method), value, :id => angular_id(method)
+    @template.hidden_field_tag angular_name(method), value, id: angular_id(method)
   end
 
   def ng_select(method, choices, angular_field, options = {})

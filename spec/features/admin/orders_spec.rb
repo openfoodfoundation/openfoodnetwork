@@ -88,7 +88,6 @@ feature %q{
     page.should have_content "Distributor or order cycle cannot supply the products in your cart"
   end
 
-
   scenario "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
@@ -164,7 +163,6 @@ feature %q{
     current_path.should == spree.admin_orders_path
   end
 
-
   context "as an enterprise manager" do
     let(:coordinator1) { create(:distributor_enterprise) }
     let(:coordinator2) { create(:distributor_enterprise) }
@@ -198,8 +196,8 @@ feature %q{
           expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(order)
           expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
           expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
-          # expect(page).to have_link "Ship Order", href: spree.fire_admin_order_path(order, :e => 'ship')
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, :e => 'cancel')
+          # expect(page).to have_link "Ship Order", href: spree.fire_admin_order_path(order, e: 'ship')
+          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, e: 'cancel')
         end
       end
     end

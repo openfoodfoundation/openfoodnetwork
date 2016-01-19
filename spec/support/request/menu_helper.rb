@@ -4,6 +4,6 @@ module MenuHelper
   end
 
   def have_login_modal
-    have_selector ".login-modal" 
+    have_selector ".login-modal"
   end
 end

@@ -5,7 +5,7 @@ class MoveDistributorFromOrderToProduct < ActiveRecord::Migration
   def up
     remove_column :spree_orders, :distributor_id
 
-    create_table :distributors_products, :id => false do |t|
+    create_table :distributors_products, id: false do |t|
       t.references :product
       t.references :distributor
     end

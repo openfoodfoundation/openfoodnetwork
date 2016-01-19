@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Api
-  describe EnterprisesController, :type => :controller do
+  describe EnterprisesController, type: :controller do
     include AuthenticationWorkflow
     render_views
 
@@ -17,7 +17,7 @@ module Api
       let(:enterprise) { create(:distributor_enterprise, owner: enterprise_owner) }
 
       before do
-        Spree.user_class.stub :find_by_spree_api_key => enterprise_owner
+        Spree.user_class.stub find_by_spree_api_key: enterprise_owner
       end
 
       describe "creating an enterprise" do
@@ -39,7 +39,7 @@ module Api
 
       before do
         enterprise_manager.enterprise_roles.build(enterprise: enterprise).save
-        Spree.user_class.stub :find_by_spree_api_key => enterprise_manager
+        Spree.user_class.stub find_by_spree_api_key: enterprise_manager
       end
 
       describe "submitting a valid image" do
@@ -58,7 +58,7 @@ module Api
       let(:non_managing_user) { create_enterprise_user }
 
       before do
-        Spree.user_class.stub :find_by_spree_api_key => non_managing_user
+        Spree.user_class.stub find_by_spree_api_key: non_managing_user
       end
 
       describe "submitting a valid image" do
