@@ -165,7 +165,6 @@ module Spree
       end
     end
 
-
     describe "validations" do
       describe "determining if distributor can supply products in cart" do
         it "delegates to DistributionChangeValidator" do
@@ -218,7 +217,6 @@ module Spree
         end
       end
     end
-
 
     describe "support" do
       describe "checking if order cycle is required for a variant" do

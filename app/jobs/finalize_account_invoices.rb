@@ -17,7 +17,6 @@ class FinalizeAccountInvoices
   def perform
     return unless settings_are_valid?
 
-
     invoice_orders = AccountInvoice.where(year: year, month: month).map(&:order)
     invoice_orders.select{ |order| order.present? && order.completed_at.nil? }.each{ |order| finalize(order) }
   end

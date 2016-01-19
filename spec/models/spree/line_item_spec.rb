@@ -226,7 +226,7 @@ module Spree
       describe "generating the full name" do
         let(:li) { LineItem.new }
 
-	      context "when display_name is blank" do
+        context "when display_name is blank" do
           before do
             li.stub(:unit_to_display) { 'unit_to_display' }
             li.stub(:display_name) { '' }

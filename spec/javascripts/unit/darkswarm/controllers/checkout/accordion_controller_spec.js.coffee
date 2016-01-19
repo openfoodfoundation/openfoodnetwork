@@ -1,17 +1,17 @@
 describe "AccordionCtrl", ->
   ctrl = null
   scope = null
-  CurrentHubMock = 
+  CurrentHubMock =
     hub:
       id: 1
 
   beforeEach ->
     module "Darkswarm"
     module ($provide)->
-      $provide.value "CurrentHub", CurrentHubMock 
+      $provide.value "CurrentHub", CurrentHubMock
       null
     inject ($controller, $rootScope) ->
-      scope = $rootScope.$new() 
+      scope = $rootScope.$new()
       scope.order =
         id: 129
       ctrl = $controller 'AccordionCtrl', {$scope: scope}

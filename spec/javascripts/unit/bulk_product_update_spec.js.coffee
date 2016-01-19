@@ -264,7 +264,6 @@ describe "AdminProductEditCtrl", ->
       expect($scope.fetchProducts.calls.length).toEqual 1
       expect($scope.spree_api_key_ok).toEqual true
 
-
   describe "fetching products", ->
     $q = null
     deferred = null
@@ -290,7 +289,6 @@ describe "AdminProductEditCtrl", ->
       $scope.$digest()
       expect($scope.loading).toEqual false
 
-
   describe "resetting products", ->
     beforeEach ->
       spyOn DirtyProducts, "clear"
@@ -308,7 +306,6 @@ describe "AdminProductEditCtrl", ->
 
     it "resets dirtyProducts", ->
       expect(DirtyProducts.clear).toHaveBeenCalled()
-
 
   describe "updating the product on hand count", ->
     it "updates when product is not available on demand", ->
@@ -337,7 +334,6 @@ describe "AdminProductEditCtrl", ->
         ]
       $scope.updateOnHand(product)
       expect(product.on_hand).toBeUndefined()
-
 
   describe "getting on_hand counts when products have variants", ->
     p1 = undefined
@@ -398,7 +394,6 @@ describe "AdminProductEditCtrl", ->
       expect($scope.onHand([])).toEqual "error"
       expect($scope.onHand(not_variants: [])).toEqual "error"
 
-
   describe "determining whether a product has variants that are available on demand", ->
     it "returns true when at least one variant does", ->
       product =
@@ -416,7 +411,6 @@ describe "AdminProductEditCtrl", ->
         ]
       expect($scope.hasOnDemandVariants(product)).toBe(false)
 
-
   describe "determining whether a product has variants", ->
     it "returns true when it does", ->
       product =
@@ -428,7 +422,6 @@ describe "AdminProductEditCtrl", ->
         variants: []
       expect($scope.hasVariants(product)).toBe(false)
 
-
   describe "determining whether a product has a unit", ->
     it "returns true when it does", ->
       product =
@@ -438,7 +431,6 @@ describe "AdminProductEditCtrl", ->
     it "returns false when its unit is undefined", ->
       product = {}
       expect($scope.hasUnit(product)).toBe(false)
-
 
   describe "determining whether a variant has been saved", ->
     it "returns true when it has a positive id", ->
@@ -452,7 +444,6 @@ describe "AdminProductEditCtrl", ->
     it "returns false when it has a negative id", ->
       variant = {id: -1}
       expect($scope.variantSaved(variant)).toBe(false)
-
 
   describe "submitting products to be updated", ->
     describe "packing products", ->
@@ -606,7 +597,6 @@ describe "AdminProductEditCtrl", ->
           unit_description: ''
           unit_value_with_description: "12"
 
-
     describe "filtering products", ->
       beforeEach ->
         spyOn $scope, "packProduct"
@@ -643,7 +633,6 @@ describe "AdminProductEditCtrl", ->
             id: 2
             propName: "something"
 
-
       it "sends dirty and filtered objects to submitProducts()", ->
         expect($scope.updateProducts).toHaveBeenCalledWith [
           {
@@ -655,7 +644,6 @@ describe "AdminProductEditCtrl", ->
             value: 4
           }
         ]
-
 
     describe "updating products", ->
       it "submits products to be updated with a http post request to /admin/products/bulk_update", ->
@@ -710,7 +698,6 @@ describe "AdminProductEditCtrl", ->
         $httpBackend.flush()
         expect(window.alert).toHaveBeenCalledWith("Saving failed with the following error(s):\nan error\n")
 
-
   describe "adding variants", ->
     beforeEach ->
       spyOn DisplayProperties, 'setShowVariants'
@@ -730,7 +717,6 @@ describe "AdminProductEditCtrl", ->
       product = {id: 123, variants: []}
       $scope.addVariant(product)
       expect(DisplayProperties.setShowVariants).toHaveBeenCalledWith 123, true
-
 
   describe "deleting products", ->
     it "deletes products with a http delete request to /api/products/id/soft_delete", ->
@@ -776,8 +762,6 @@ describe "AdminProductEditCtrl", ->
         id: 9
         someProperty: "something"
 
-
-
   describe "deleting variants", ->
     describe "when the variant is the only one left on the product", ->
       it "alerts the user", ->
@@ -802,7 +786,6 @@ describe "AdminProductEditCtrl", ->
         ])
         expect(DirtyProducts.all()).toEqual
           1: { id: 1, something: 'something'}
-
 
     describe "when the variant has been saved", ->
       it "deletes variants with a http delete request to /api/products/product_permalink/variants/(variant_id)/soft_delete", ->
@@ -876,8 +859,6 @@ describe "AdminProductEditCtrl", ->
             id: 13
             name: "P1"
 
-
-
   describe "filtering products", ->
     describe "clearing filters", ->
       it "resets filter variables", ->
@@ -888,7 +869,6 @@ describe "AdminProductEditCtrl", ->
         expect($scope.query).toBe ""
         expect($scope.producerFilter).toBe "0"
         expect($scope.categoryFilter).toBe "0"
-
 
 describe "converting arrays of objects with ids to an object with ids as keys", ->
   it "returns an object", ->
@@ -911,7 +891,6 @@ describe "converting arrays of objects with ids to an object with ids as keys", 
       3:
         id: 3
 
-
   it "ignores items which are not objects and those which do not possess ids", ->
     array = [
       {
@@ -924,7 +903,6 @@ describe "converting arrays of objects with ids to an object with ids as keys", 
     ]
     expect(toObjectWithIDKeys(array)).toEqual 1:
       id: 1
-
 
   it "sends arrays with the key 'variants' to itself", ->
     spyOn(window, "toObjectWithIDKeys").andCallThrough()

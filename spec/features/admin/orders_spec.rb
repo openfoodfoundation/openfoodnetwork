@@ -88,7 +88,6 @@ feature %q{
     page.should have_content "Distributor or order cycle cannot supply the products in your cart"
   end
 
-
   scenario "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
@@ -163,7 +162,6 @@ feature %q{
     # we should still be on the same page
     current_path.should == spree.admin_orders_path
   end
-
 
   context "as an enterprise manager" do
     let(:coordinator1) { create(:distributor_enterprise) }

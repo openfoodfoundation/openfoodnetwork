@@ -329,7 +329,6 @@ describe "LineItemsCtrl", ->
           scope.updateOnQuantity(scope.filteredLineItems[0])
           expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
 
-
 describe "Auxiliary functions", ->
   describe "getting a zero filled two digit number", ->
     it "returns the number as a string if its value is greater than or equal to 10", ->

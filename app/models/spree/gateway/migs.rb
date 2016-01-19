@@ -5,7 +5,6 @@ module Spree
 
     attr_accessible :preferred_login, :preferred_password
 
-
     def provider_class
       ActiveMerchant::Billing::MigsGateway
     end

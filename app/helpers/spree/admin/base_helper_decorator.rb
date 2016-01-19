@@ -16,7 +16,6 @@ module Spree
         link_to_with_icon('icon-trash', name, url, :class => "remove_fields #{options[:class]}", :data => {:action => 'remove'}, :title => t(:remove)) + f.hidden_field(:_destroy)
       end
 
-
       def preference_field_tag_with_files(name, value, options)
         if options[:type] == :file
           file_field_tag name, preference_field_options(options)

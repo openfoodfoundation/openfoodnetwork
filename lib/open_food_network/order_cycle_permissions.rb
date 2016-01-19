@@ -189,7 +189,6 @@ module OpenFoodNetwork
       end
     end
 
-
     private
 
     def user_manages_coordinator_or(enterprise)

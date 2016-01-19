@@ -3,4 +3,3 @@ Darkswarm.filter "stripUrl", ->
   (url) ->
     url.match(stripper).pop()
 
-

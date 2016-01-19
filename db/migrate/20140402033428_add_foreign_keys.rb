@@ -21,7 +21,6 @@ class AddForeignKeys < ActiveRecord::Migration
     super
   end
 
-
   private
 
   def sanitise_data
@@ -44,7 +43,7 @@ class AddForeignKeys < ActiveRecord::Migration
     orphaned_inventory_units = Spree::InventoryUnit.joins('LEFT OUTER JOIN spree_variants ON spree_variants.id=spree_inventory_units.variant_id').where('spree_variants.id IS NULL')
     say "Destroying #{orphaned_inventory_units.count} orphaned InventoryUnits (of total #{Spree::InventoryUnit.count})"
     orphaned_inventory_units.destroy_all
-    
+
     # Remove orphaned Spree::LineItems
     orphaned_line_items = Spree::LineItem.
       joins('LEFT OUTER JOIN spree_variants ON spree_variants.id=spree_line_items.variant_id').
@@ -82,7 +81,6 @@ class AddForeignKeys < ActiveRecord::Migration
       CoordinatorFee.connection.execute("DELETE FROM coordinator_fees WHERE coordinator_fees.order_cycle_id=#{cf.order_cycle_id} AND coordinator_fees.enterprise_fee_id=#{cf.enterprise_fee_id}")
     end
   end
-
 
   def setup_foreign_keys
     add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id"

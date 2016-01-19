@@ -5,7 +5,6 @@ describe 'filtering by active', ->
     {active: false}
   ]
 
-
   beforeEach ->
     module 'Darkswarm'
     inject ($filter) ->

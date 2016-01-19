@@ -17,7 +17,7 @@ class SpreeZeroNineZero < ActiveRecord::Migration
       t.decimal  :amount, :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.string   :type, :description, :adjustment_source_type, :secondary_type
       t.references :order
-      
+
       t.timestamps
     end
 
@@ -51,7 +51,7 @@ class SpreeZeroNineZero < ActiveRecord::Migration
     create_table :configurations, :force => true do |t|
       t.string   :name
       t.string   :type, :limit => 50
-      
+
       t.timestamps
     end
 
@@ -67,7 +67,7 @@ class SpreeZeroNineZero < ActiveRecord::Migration
       t.integer  :usage_limit
       t.boolean  :combine
       t.datetime :expires_at, :starts_at
-      
+
       t.timestamps
     end
 
@@ -347,7 +347,7 @@ class SpreeZeroNineZero < ActiveRecord::Migration
     create_table :users, :force => true do |t|
       t.string   :crypted_password, :limit => 128, :default => '', :null => false
       t.string   :salt,             :limit => 128, :default => '', :null => false
-      t.string   :email, :remember_token, :remember_token_expires_at, 
+      t.string   :email, :remember_token, :remember_token_expires_at,
                  :persistence_token, :single_access_token, :perishable_token
       t.integer  :login_count,        :default => 0, :null => false
       t.integer  :failed_login_count, :default => 0, :null => false

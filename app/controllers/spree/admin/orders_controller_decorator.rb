@@ -21,7 +21,6 @@ Spree::Admin::OrdersController.class_eval do
 
   before_filter :require_distributor_abn, only: :invoice
 
-
   respond_to :html, :json
 
   # Mostly the original Spree method, tweaked to allow us to ransack with completed_at in a sane way

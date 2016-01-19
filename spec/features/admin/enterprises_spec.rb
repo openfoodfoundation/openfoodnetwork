@@ -250,7 +250,6 @@ feature %q{
     end
   end
 
-
   context "as an Enterprise user", js: true do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }

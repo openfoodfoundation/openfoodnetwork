@@ -4,7 +4,6 @@ module Admin
     before_filter :load_properties
     before_filter :setup_property, only: [:index]
 
-
     private
 
     def collection_url

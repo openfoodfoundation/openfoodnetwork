@@ -12,7 +12,6 @@ module Spree
     end
     alias_method_chain :actions, :pin_payment_adaptations
 
-
     def refund!(refund_amount=nil)
       protect_from_connection_error do
         check_environment
@@ -39,7 +38,6 @@ module Spree
         end
       end
     end
-
 
     private
 

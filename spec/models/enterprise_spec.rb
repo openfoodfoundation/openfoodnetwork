@@ -629,7 +629,6 @@ describe Enterprise do
         end
       end
 
-
       describe "when a new hub is created" do
         it "it creates links to the hub, from all producers owned by the same user, granting add_to_order_cycle and create_variant_overrides permissions" do
           producer1
@@ -639,7 +638,6 @@ describe Enterprise do
           should_have_enterprise_relationship from: producer1, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
           should_have_enterprise_relationship from: producer2, to: hub1, with: [:add_to_order_cycle, :create_variant_overrides]
         end
-
 
         it "creates links from the new hub to all hubs owned by the same user, granting add_to_order_cycle permission" do
           hub1
@@ -659,7 +657,6 @@ describe Enterprise do
           expect { hub3 }.to change(EnterpriseRelationship, :count).by(4) # 2 producer links + 2 hub links
         end
       end
-
 
       def should_have_enterprise_relationship(opts={})
         er = EnterpriseRelationship.where(parent_id: opts[:from], child_id: opts[:to]).last

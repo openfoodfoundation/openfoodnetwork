@@ -4,7 +4,7 @@ angular.module("admin.orders").factory 'Orders', ($q, OrderResource) ->
     pristineByID: {}
 
     index: (params={}, callback=null) ->
-    	OrderResource.index params, (data) =>
+      OrderResource.index params, (data) =>
         for order in data
           @ordersByID[order.id] = order
           @pristineByID[order.id] = angular.copy(order)

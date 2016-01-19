@@ -7,7 +7,7 @@ feature %q{
 }, skip: true do
   include AuthenticationWorkflow
   include WebHelper
-  let(:d) { create(:distributor_enterprise, :name => 'Edible garden') } 
+  let(:d) { create(:distributor_enterprise, :name => 'Edible garden') }
 
   background do
     create_enterprise_group_for d
@@ -40,7 +40,6 @@ feature %q{
     # and proceed to the shop front
     click_on "Edible garden"
     visit enterprise_path d
-
 
     # Then I should see a menu with these pages
     page.should have_selector 'ul#main-nav-bar li', :text => 'One'

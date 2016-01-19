@@ -4,7 +4,6 @@ module Spree
 
     attr_accessible :preferred_api_key
 
-
     def provider_class
       ActiveMerchant::Billing::PinGateway
     end

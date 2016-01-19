@@ -31,7 +31,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.optionTabs =
       filters:        { title: "Filter Products",   visible: false }
 
-
     $scope.producers = producers
     $scope.taxons = Taxons.taxons
     $scope.tax_categories = tax_categories
@@ -64,7 +63,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         $scope.resetProducts()
         $scope.loading = false
 
-
     $scope.resetProducts = ->
       DirtyProducts.clear()
       StatusMessage.clear()
@@ -75,7 +73,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     #       product.producer = producer
     #       break
 
-
     $scope.updateOnHand = (product) ->
       on_demand_variants = []
       if product.variants
@@ -83,7 +80,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
       unless product.on_demand || on_demand_variants.length > 0
         product.on_hand = $scope.onHand(product)
-
 
     $scope.onHand = (product) ->
       onHand = 0
@@ -108,7 +104,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       if (DirtyProducts.count() > 0 and confirm("Unsaved changes will be lost. Continue anyway?")) or (DirtyProducts.count() == 0)
         window.location = "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
-
     $scope.toggleShowAllVariants = ->
       showVariants = !DisplayProperties.showVariants 0
       $scope.filteredProducts.forEach (product) ->
@@ -128,7 +123,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       $scope.productsWithUnsavedVariants.push product
       DisplayProperties.setShowVariants product.id, true
 
-
     $scope.nextVariantId = ->
       $scope.variantIdCounter = 0 unless $scope.variantIdCounter?
       $scope.variantIdCounter -= 1
@@ -143,7 +137,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
           $scope.products.splice $scope.products.indexOf(product), 1
           DirtyProducts.deleteProduct product.id
           $scope.displayDirtyProducts()
-
 
     $scope.deleteVariant = (product, variant) ->
       if product.variants.length > 1
@@ -164,25 +157,20 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       DirtyProducts.deleteVariant product.id, variant.id
       $scope.displayDirtyProducts()
 
-
     $scope.cloneProduct = (product) ->
       BulkProducts.cloneProduct product
 
     $scope.hasVariants = (product) ->
       product.variants.length > 0
 
-
     $scope.hasUnit = (product) ->
       product.variant_unit_with_scale?
-
 
     $scope.variantSaved = (variant) ->
       variant.hasOwnProperty('id') && variant.id > 0
 
-
     $scope.hasOnDemandVariants = (product) ->
       (variant for id, variant of product.variants when variant.on_demand).length > 0
-
 
     $scope.submitProducts = ->
       # Pack pack $scope.products, so they will match the list returned from the server,
@@ -195,7 +183,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         $scope.updateProducts productsToSubmit # Don't submit an empty list
       else
         StatusMessage.display 'alert', 'No changes to save.'
-
 
     $scope.updateProducts = (productsToSubmit) ->
       $scope.displayUpdating()
@@ -217,7 +204,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         else
           $scope.displayFailure "Server returned with error status: " + status
 
-
     $scope.packProduct = (product) ->
       if product.variant_unit_with_scale
         match = product.variant_unit_with_scale.match(/^([^_]+)_([\d\.]+)$/)
@@ -236,7 +222,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         for id, variant of product.variants
           $scope.packVariant product, variant
 
-
     $scope.packVariant = (product, variant) ->
       if variant.hasOwnProperty("unit_value_with_description")
         match = variant.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
@@ -251,18 +236,14 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       if $scope.limit < $scope.products.length
         $scope.limit = $scope.limit + 5
 
-
     $scope.displayUpdating = ->
       StatusMessage.display 'progress', 'Saving...'
-
 
     $scope.displaySuccess = ->
       StatusMessage.display 'success', 'Changes saved.'
 
-
     $scope.displayFailure = (failMessage) ->
       StatusMessage.display 'failure', "Saving failed. #{failMessage}"
-
 
     $scope.displayDirtyProducts = ->
       if DirtyProducts.count() > 0
@@ -270,7 +251,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         StatusMessage.display 'notice', "Changes to #{message} remain unsaved."
       else
         StatusMessage.clear()
-
 
 filterSubmitProducts = (productsToFilter) ->
   filteredProducts = []
@@ -346,7 +326,6 @@ filterSubmitProducts = (productsToFilter) ->
 
   filteredProducts
 
-
 filterSubmitVariant = (variant) ->
   hasUpdatableProperty = false
   filteredVariant = {}
@@ -377,7 +356,6 @@ filterSubmitVariant = (variant) ->
       filteredVariant.display_as = variant.display_as
       hasUpdatableProperty = true
   {filteredVariant: filteredVariant, hasUpdatableProperty: hasUpdatableProperty}
-
 
 toObjectWithIDKeys = (array) ->
   object = {}

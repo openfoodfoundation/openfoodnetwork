@@ -15,7 +15,6 @@ class UpdateLineItemCaching < ActiveRecord::Migration
     alias total amount
   end
 
-
   def up
     add_column :spree_line_items, :distribution_fee, :decimal, precision: 10, scale: 2
     add_column :spree_line_items, :shipping_method_name, :string

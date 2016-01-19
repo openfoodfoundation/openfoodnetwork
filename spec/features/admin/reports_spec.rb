@@ -143,7 +143,6 @@ feature %q{
     end
   end
 
-
   scenario "orders and distributors report" do
     login_to_admin_section
     click_link 'Reports'
@@ -403,7 +402,6 @@ feature %q{
     let!(:adj_manual1) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 30, included_tax: 0) }
     let!(:adj_manual2) { create(:adjustment, adjustable: order1, originator: nil, source: nil, label: "Manual adjustment", amount: 40, included_tax: 3) }
 
-
     before do
       order1.update_attribute :email, 'customer@email.com'
       Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
@@ -501,7 +499,6 @@ feature %q{
         ]
       end
     end
-
 
     private
 

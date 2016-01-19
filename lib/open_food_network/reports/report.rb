@@ -27,7 +27,6 @@ module OpenFoodNetwork::Reports
       rules.map &:to_h
     end
 
-
     # -- DSL
     def self.header(*columns)
       self._header = columns

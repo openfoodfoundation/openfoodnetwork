@@ -43,7 +43,6 @@ class Exchange < ActiveRecord::Base
     end
   }
 
-
   def clone!(new_order_cycle)
     exchange = self.dup
     exchange.order_cycle = new_order_cycle

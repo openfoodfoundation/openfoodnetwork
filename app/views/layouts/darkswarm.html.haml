@@ -4,7 +4,7 @@
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
     %meta{:content => yield(:title).empty? ? "#{t(:title)}" : yield(:title), :property => "og:title"}/
     %meta{:content => yield(:description).empty? ? "#{t(:og_description)}" : yield(:description), :property => "og:description"}/
-    %meta{:content => yield(:image).empty? ? image_url("logo-black2.png") : image_url(yield(:image)), :property => "og:image"}/ 
+    %meta{:content => yield(:image).empty? ? image_url("logo-black2.png") : image_url(yield(:image)), :property => "og:image"}/
     %title= content_for?(:title) ? "#{yield(:title)} - #{t(:title)}".html_safe : "#{t(:welcome_to)} #{t(:title)}"
     - if Rails.env.production?
       = favicon_link_tag
@@ -16,7 +16,6 @@
     %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry"}
     = split_stylesheet_link_tag "darkswarm/all"
     = javascript_include_tag "darkswarm/all"
-
 
     = render "layouts/bugherd_script"
     = csrf_meta_tags

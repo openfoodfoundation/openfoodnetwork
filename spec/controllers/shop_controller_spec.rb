@@ -8,7 +8,6 @@ describe ShopController do
     response.should redirect_to root_path
   end
 
-
   describe "with a distributor in place" do
     before do
       controller.stub(:current_distributor).and_return d
@@ -66,7 +65,6 @@ describe ShopController do
         controller.current_order_cycle.should == nil
       end
     end
-
 
     describe "producers/suppliers" do
       let(:supplier) { create(:supplier_enterprise) }

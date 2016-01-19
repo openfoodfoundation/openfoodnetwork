@@ -12,7 +12,6 @@ describe 'Navigation service', ->
     inject ($injector)->
       Navigation = $injector.get("Navigation")
 
-
   it "caches the path provided", ->
     Navigation.navigate "/foo"
     expect(Navigation.path).toEqual "/foo"
@@ -25,4 +24,4 @@ describe 'Navigation service', ->
     it "redirects to paths", ->
       Navigation.go "/woo/yeah"
       expect(window.location.pathname).toEqual "/woo/yeah"
-    
+

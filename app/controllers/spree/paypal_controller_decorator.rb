@@ -8,7 +8,6 @@ Spree::PaypalController.class_eval do
     redirect_to main_app.checkout_path
   end
 
-
   private
 
   def reset_order_when_complete

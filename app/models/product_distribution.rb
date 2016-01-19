@@ -7,7 +7,6 @@ class ProductDistribution < ActiveRecord::Base
   validates_presence_of :distributor_id, :enterprise_fee_id
   validates_uniqueness_of :product_id, :scope => :distributor_id
 
-
   def adjustment_for(line_item)
     adjustments = line_item.order.adjustments.enterprise_fee.where(originator_id: enterprise_fee)
 

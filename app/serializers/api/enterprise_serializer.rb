@@ -37,7 +37,6 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     object.andand.cache_key
   end
 
-
   attributes :name, :id, :description, :latitude, :longitude,
     :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
@@ -47,7 +46,6 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
-
 
   def taxons
     ids_to_objs options[:data].distributed_taxons[object.id]
@@ -134,7 +132,6 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     }
     icon_fonts[object.category]
   end
-
 
   private
 

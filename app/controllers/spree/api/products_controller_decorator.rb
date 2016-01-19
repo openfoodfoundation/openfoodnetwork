@@ -37,7 +37,6 @@ Spree::Api::ProductsController.class_eval do
     respond_with(@product, :status => 204)
   end
 
-
   private
 
   # Copied and modified from Spree::Api::BaseController to allow

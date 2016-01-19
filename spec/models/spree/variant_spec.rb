@@ -156,7 +156,6 @@ module Spree
       end
     end
 
-
     describe "calculating the fees" do
       it "delegates to EnterpriseFeeCalculator" do
         distributor = double(:distributor)
@@ -168,7 +167,6 @@ module Spree
         variant.fees_for(distributor, order_cycle).should == 23
       end
     end
-
 
     describe "calculating fees broken down by fee type" do
       it "delegates to EnterpriseFeeCalculator" do
@@ -182,7 +180,6 @@ module Spree
         variant.fees_by_type_for(distributor, order_cycle).should == fees
       end
     end
-
 
     context "when the product has variants" do
       let!(:product) { create(:simple_product) }

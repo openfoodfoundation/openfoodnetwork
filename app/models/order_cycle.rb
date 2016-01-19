@@ -36,7 +36,6 @@ class OrderCycle < ActiveRecord::Base
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
   }
 
-
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
@@ -106,7 +105,6 @@ class OrderCycle < ActiveRecord::Base
       map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
     ]
   end
-
 
   def clone!
     oc = self.dup
@@ -229,7 +227,6 @@ class OrderCycle < ActiveRecord::Base
   def coordinated_by?(user)
     coordinator.users.include? user
   end
-
 
   private
 

@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe CheckoutHelper do
   it "generates html for validated inputs" do
     helper.should_receive(:render).with(

@@ -7,7 +7,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-
   let!(:taxon) { create(:taxon) }
 
   background do
@@ -70,7 +69,6 @@ feature %q{
       product.reload
       product.distributors.should match_array [@distributors[0], @distributors[2]]
 
-
       product.product_distributions.map { |pd| pd.enterprise_fee }.should match_array [@enterprise_fees[0], @enterprise_fees[2]]
     end
 
@@ -107,7 +105,6 @@ feature %q{
 
       login_to_admin_as @new_user
     end
-
 
     context "additional fields" do
       it "should have a notes field" do
@@ -182,7 +179,6 @@ feature %q{
       product.distributors.should == [@distributors[0]]
     end
 
-
     scenario "deleting product properties", js: true do
       # Given a product with a property
       p = create(:simple_product, supplier: @supplier)
@@ -201,7 +197,6 @@ feature %q{
       page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
       page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval'
     end
-
 
     scenario "deleting product images", js: true do
       product = create(:simple_product, supplier: @supplier2)

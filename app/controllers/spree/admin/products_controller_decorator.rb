@@ -51,7 +51,6 @@ Spree::Admin::ProductsController.class_eval do
     end
   end
 
-
   protected
   def location_after_save
     referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
@@ -90,7 +89,6 @@ Spree::Admin::ProductsController.class_eval do
   def collection_actions
     [:index, :bulk_edit, :bulk_update]
   end
-
 
   private
 

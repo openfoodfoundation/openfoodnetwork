@@ -23,7 +23,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
   it "does not not render the login form when logged in" do
     quick_login_as user
-    visit checkout_path 
+    visit checkout_path
     within "section[role='main']" do
       page.should_not have_content "Login"
       page.should have_checkout_details
@@ -31,7 +31,7 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   it "renders the login buttons when logged out" do
-    visit checkout_path 
+    visit checkout_path
     within "section[role='main']" do
       page.should have_content "Login"
       click_button "Login"
@@ -53,9 +53,9 @@ feature "As a consumer I want to check out my cart", js: true do
   end
 
   it "allows user to checkout as guest" do
-    visit checkout_path 
+    visit checkout_path
     checkout_as_guest
-    page.should have_checkout_details 
+    page.should have_checkout_details
   end
 end
 

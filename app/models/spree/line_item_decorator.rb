@@ -42,7 +42,6 @@ Spree::LineItem.class_eval do
   scope :without_tax, joins("LEFT OUTER JOIN spree_adjustments ON (spree_adjustments.adjustable_id=spree_line_items.id AND spree_adjustments.adjustable_type = 'Spree::LineItem' AND spree_adjustments.originator_type='Spree::TaxRate')").
                       where('spree_adjustments.id IS NULL')
 
-
   def has_tax?
     adjustments.included_tax.any?
   end

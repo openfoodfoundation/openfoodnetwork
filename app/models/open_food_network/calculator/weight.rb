@@ -13,7 +13,6 @@ module OpenFoodNetwork
       total_weight * self.preferred_per_kg
     end
 
-
     private
 
     def line_items_for(object)

@@ -18,7 +18,6 @@
 #= require ../shared/angular-slideables.js
 #= require angularjs-file-upload
 
-
 #= require angular-rails-templates
 #= require_tree ../templates
 #

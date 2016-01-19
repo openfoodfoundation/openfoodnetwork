@@ -11,7 +11,6 @@ describe "Sidebar", ->
       location = $location
       Sidebar.paths = ["/test", "/frogs"]
 
-
   it 'is active when a location in paths is set', ->
     spyOn(location, "path").andReturn "/test"
     expect(Sidebar.active()).toEqual true
@@ -19,7 +18,7 @@ describe "Sidebar", ->
   it 'is inactive if location is set', ->
     spyOn(location, "path").andReturn null
     expect(Sidebar.active()).toEqual false
-  
+
   describe "Toggling on/off", ->
     it 'toggles the current sidebar path', ->
       expect(Sidebar.active()).toEqual false
@@ -32,6 +31,4 @@ describe "Sidebar", ->
       spyOn(Navigation, 'navigate')
       Sidebar.toggle()
       expect(Navigation.navigate).toHaveBeenCalledWith("/test")
-      
-
 

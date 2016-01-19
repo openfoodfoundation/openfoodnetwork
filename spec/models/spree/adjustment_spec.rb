@@ -168,7 +168,6 @@ module Spree
           end
         end
 
-
         context "when enterprise fees are taxed per-item" do
           let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
 

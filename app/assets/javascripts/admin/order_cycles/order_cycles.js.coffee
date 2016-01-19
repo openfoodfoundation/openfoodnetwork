@@ -8,16 +8,16 @@ angular.module('admin.orderCycles', ['ngResource', 'admin.utils', 'admin.indexUt
       # using $parse instead of scope[attrs.datetimepicker] for cases
       # where attrs.datetimepicker is 'foo.bar.lol'
       $(element).datetimepicker
-      	dateFormat: 'yy-mm-dd'
-      	timeFormat: 'HH:mm:ss'
-      	showOn: "button"
-      	buttonImage: "<%= asset_path 'datepicker/cal.gif' %>"
-      	buttonImageOnly: true
-      	stepMinute: 15
-      	onSelect: (dateText, inst) ->
-      	  scope.$apply ->
-      	    parsed = $parse(attrs.datetimepicker)
-      	    parsed.assign(scope, dateText)
+        dateFormat: 'yy-mm-dd'
+        timeFormat: 'HH:mm:ss'
+        showOn: "button"
+        buttonImage: "<%= asset_path 'datepicker/cal.gif' %>"
+        buttonImageOnly: true
+        stepMinute: 15
+        onSelect: (dateText, inst) ->
+          scope.$apply ->
+            parsed = $parse(attrs.datetimepicker)
+            parsed.assign(scope, dateText)
 
   .directive 'ofnOnChange', ->
     (scope, element, attrs) ->

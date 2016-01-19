@@ -8,7 +8,6 @@ module Spree
       alias_method_chain :match, :sales_tax_registration
     end
 
-
     def adjust_with_included_tax(order)
       adjust_without_included_tax(order)
 
@@ -18,7 +17,6 @@ module Spree
       end
     end
     alias_method_chain :adjust, :included_tax
-
 
     # Manually apply a TaxRate to a particular amount. TaxRates normally compute against
     # LineItems or Orders, so we mock out a line item here to fit the interface
@@ -39,7 +37,6 @@ module Spree
         calculator.compute line_item
       end
     end
-
 
     private
 

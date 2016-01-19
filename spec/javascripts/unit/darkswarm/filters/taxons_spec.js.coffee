@@ -4,7 +4,7 @@ describe 'filtering by taxons', ->
     {
       taxons: []
       supplied_taxons: []
-      primary_taxon: 
+      primary_taxon:
         name: "frogs"
         id: 1
     }
@@ -34,5 +34,4 @@ describe 'filtering by taxons', ->
   it "filters by multiple", ->
     expect(filterByTaxons(objects, [1, 2])[0]).toBe objects[0]
     expect(filterByTaxons(objects, [1, 2])[1]).toBe objects[1]
-
 

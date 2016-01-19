@@ -55,7 +55,6 @@ class CheckoutController < Spree::CheckoutController
     end
   end
 
-
   private
 
   def check_order_for_phantom_fees
@@ -94,7 +93,6 @@ class CheckoutController < Spree::CheckoutController
     retry unless (tries -= 1).zero?
     false
   end
-
 
   def update_failed
     clear_ship_address

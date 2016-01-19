@@ -31,7 +31,7 @@
         margin-left: 0.5rem
 
     //Hub Link
-    @media all and (max-width: 640px) 
+    @media all and (max-width: 640px)
       a.hub
         display: block
 
@@ -47,7 +47,7 @@
     &.closed
       .active_table_row
         border: 1px solid transparent
-        @media all and (max-width: 640px) 
+        @media all and (max-width: 640px)
           border-color: $clr-brick-light
         &:hover, &:active, &:focus
           border-color: $clr-brick-light-bright
@@ -58,7 +58,7 @@
         border-color: $clr-brick-light-bright
 
     &.open, &.closed
-      @media all and (max-width: 640px) 
+      @media all and (max-width: 640px)
         .active_table_row:first-child .skinny-head
           background-color: $clr-brick-light
           @include border-radius-mixed(0.5em, 0.5em, 0, 0)
@@ -74,7 +74,6 @@
       .active_table_row:nth-child(2)
         padding-bottom: 0.75rem
 
-      
     .producers-list
       li.more-producers-link
         .less
@@ -106,11 +105,10 @@
           &:hover, &:focus, &:active
             opacity: 0.9
             border-color: $clr-brick-bright
-        @media all and (max-width: 640px) 
+        @media all and (max-width: 640px)
           .active_table_row:first-child .skinny-head
             background-color: rgba(255,255,255,0.85)
 
-        
     //INACTIVE - closed hub
     &.inactive
       &.closed, &.open
@@ -127,7 +125,7 @@
           // border-color: $disabled-bright
           &, &:hover, &:active, &:focus
             border-color: $disabled-bright
-      
+
       &.closed, &.open
 
         // & Current hub
@@ -144,10 +142,10 @@
           @media all and (max-width: 640px)
             .active_table_row:first-child .skinny-head
               background-color: $disabled-bright
-        
+
         // Small devices
-        @media all and (max-width: 640px) 
-          .active_table_row, .active_table_row:first-child, .active_table_row:last-child  
+        @media all and (max-width: 640px)
+          .active_table_row, .active_table_row:first-child, .active_table_row:last-child
             border-color: $disabled-bright
             background-color: transparent
             &:hover, &:focus, &:active
@@ -163,6 +161,6 @@
           &:hover, &:active, &:focus
             border-color: transparent
             cursor: auto
-          @media all and (max-width: 640px) 
+          @media all and (max-width: 640px)
             border-color: transparent
 

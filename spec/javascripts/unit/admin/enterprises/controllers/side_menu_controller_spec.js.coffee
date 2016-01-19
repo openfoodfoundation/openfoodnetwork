@@ -32,7 +32,6 @@ describe "menuCtrl", ->
     it "sets the initally selected value", ->
       expect(SideMenu.select).toHaveBeenCalledWith 0
 
-
   describe "selecting an item", ->
     it "selects an item by performing setting the selected property on the item to true", ->
       scope.select 4

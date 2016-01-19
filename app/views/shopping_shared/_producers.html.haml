@@ -6,6 +6,6 @@
           = t :shopping_producers_of_hub, hub: '{{CurrentHub.hub.name}}'
         %ul.small-block-grid-2.large-block-grid-4
           %li{"ng-repeat" => "enterprise in CurrentHub.hub.producers"}
-            %enterprise-modal 
+            %enterprise-modal
               %i.ofn-i_036-producers
               {{ enterprise.name }}

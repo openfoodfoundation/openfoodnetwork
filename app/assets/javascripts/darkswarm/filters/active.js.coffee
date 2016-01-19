@@ -1,8 +1,8 @@
-Darkswarm.filter 'active', ()-> 
+Darkswarm.filter 'active', ()->
   (objects, options)->
     objects ||= []
     options ?= null
-    
+
     if options.open and !options.closed
       objects.filter (obj)->
         obj.active

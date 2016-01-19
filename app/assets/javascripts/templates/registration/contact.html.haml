@@ -5,7 +5,7 @@
       %header
         %h2 {{'registration_greeting' | t}}
         %h5{ "ng-bind" => "'who_is_managing_enterprise' | t:{enterprise: enterprise.name}" }
-  
+
   %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('type',contact)" } }
     .row.content
       .small-12.medium-12.large-7.columns

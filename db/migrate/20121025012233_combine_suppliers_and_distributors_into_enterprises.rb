@@ -6,7 +6,6 @@ class CombineSuppliersAndDistributorsIntoEnterprises < ActiveRecord::Migration
   class Spree::Product < ActiveRecord::Base; end
   class Spree::Order < ActiveRecord::Base; end
 
-
   def up
     # Create enterprises table
     create_table :enterprises do |t|

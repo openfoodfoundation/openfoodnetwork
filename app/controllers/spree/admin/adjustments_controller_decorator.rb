@@ -4,7 +4,6 @@ module Spree
       before_filter :set_included_tax, only: [:create, :update]
       before_filter :set_default_tax_rate, only: :edit
 
-
       private
 
       # Choose a default tax rate to show on the edit form. The adjustment stores its included
@@ -27,7 +26,6 @@ module Spree
           end
         end
       end
-
 
       def set_included_tax
         if params[:tax_rate_id].present?

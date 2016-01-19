@@ -17,7 +17,6 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
       @selectedPath = path || @selectedPath
       Navigation.navigate @selectedPath
 
-
     select: (path)=>
       @selectedPath = path
       Navigation.navigate @selectedPath

@@ -12,7 +12,6 @@ require 'rspec/autorun'
 
 # Ref: http://pluralsight.com/training/Courses/TableOfContents/database-your-friend
 
-
 describe "data integrity" do
   it "has no deleted variants in order cycles" do
     # When a variant is soft deleted, it should be removed from all order cycles

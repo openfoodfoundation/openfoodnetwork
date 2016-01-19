@@ -4,7 +4,6 @@ module Admin
     before_filter :load_data
     before_filter :do_not_destroy_referenced_fees, :only => :destroy
 
-
     def index
       @include_calculators = params[:include_calculators].present?
       @enterprise = current_enterprise
@@ -44,7 +43,6 @@ module Admin
         render :index
       end
     end
-
 
     private
 

@@ -12,7 +12,7 @@ class MigrateTransactionsToPaymentState < ActiveRecord::Migration
   PAYMENT_COMPLETE = 'completed'
   PAYMENT_VOID = 'void'
   PAYMENT_PENDING = 'pending'
-  
+
   # Temporarily set the table back to payments
   Spree::Payment.table_name = 'payments'
 

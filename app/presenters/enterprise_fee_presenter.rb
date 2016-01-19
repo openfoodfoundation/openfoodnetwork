@@ -9,7 +9,6 @@ class EnterpriseFeePresenter
     @enterprise_fee
   end
 
-
   def enterprise_name
     @enterprise_fee.enterprise.andand.name
   end

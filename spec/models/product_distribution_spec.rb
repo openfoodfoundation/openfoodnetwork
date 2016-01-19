@@ -21,7 +21,6 @@ describe ProductDistribution do
     pd2.should be_valid
   end
 
-
   describe "adjusting orders" do
     context "integration" do
       it "creates an adjustment for product distributions" do
@@ -118,7 +117,6 @@ describe ProductDistribution do
       end
     end
   end
-
 
   private
 

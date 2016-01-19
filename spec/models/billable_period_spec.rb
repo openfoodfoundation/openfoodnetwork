@@ -27,7 +27,6 @@ describe BillablePeriod, type: :model do
     end
   end
 
-
   describe "calculating monthly bills for enterprises" do
     let!(:subject) { create(:billable_period, turnover: 100) }
 

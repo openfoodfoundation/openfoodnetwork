@@ -61,7 +61,6 @@ Spree::Admin::ReportsController.class_eval do
         render_to_string(partial: 'packing_description', layout: false, locals: {report_types: REPORT_TYPES[:packing]}).html_safe
 } } }
 
-
   # Overide spree reports list.
   def index
     @reports = authorized_reports
@@ -265,7 +264,6 @@ Spree::Admin::ReportsController.class_eval do
     @report = OpenFoodNetwork::XeroInvoicesReport.new spree_current_user, params
     render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
   end
-
 
   def render_report(header, table, create_csv, csv_file_name)
     unless create_csv

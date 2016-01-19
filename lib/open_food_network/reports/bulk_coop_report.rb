@@ -3,7 +3,6 @@ require 'open_food_network/reports/report'
 module OpenFoodNetwork::Reports
   class BulkCoopReport < Report
 
-
     private
 
     class << self

@@ -27,8 +27,6 @@ RSpec::Matchers.define :have_table_row do |row|
   end
 end
 
-
-
 # find("#my-table").should match_table [[...]]
 RSpec::Matchers.define :match_table do |expected_table|
 

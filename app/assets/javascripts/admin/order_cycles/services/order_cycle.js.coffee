@@ -2,8 +2,8 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
   OrderCycleResource = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
     'new'   : { method: 'GET', params: { action_name: "new" } }
-		'create': { method: 'POST'}
-		'update': { method: 'PUT'}}
+    'create': { method: 'POST'}
+    'update': { method: 'PUT'}}
 
   new class OrderCycle
     order_cycle: {incoming_exchanges: [], outgoing_exchanges: []}
@@ -31,7 +31,7 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
       if this.order_cycle.incoming_exchanges.indexOf(exchange) == -1 then 'outgoing' else 'incoming'
 
     toggleProducts: (exchange) ->
-    	exchange.showProducts = !exchange.showProducts
+      exchange.showProducts = !exchange.showProducts
 
     toggleAllProducts: (direction) ->
       this.showProducts[direction] = !this.showProducts[direction]
@@ -43,10 +43,10 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
       exchange.variants[variant] = selected for variant in variants when variant in editable
 
     addSupplier: (new_supplier_id) ->
-    	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
+      this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
 
     addDistributor: (new_distributor_id) ->
-    	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: []})
+      this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: []})
 
     removeExchange: (exchange) ->
       if exchange.incoming

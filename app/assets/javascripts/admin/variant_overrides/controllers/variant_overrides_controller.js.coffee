@@ -32,16 +32,13 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
     .catch (message) ->
       $scope.api_error_msg = message
 
-
   $scope.fetchProducts = ->
     url = "/api/products/overridable?page=::page::;per_page=100"
     PagedFetcher.fetch url, (data) => $scope.addProducts data.products
 
-
   $scope.addProducts = (products) ->
     $scope.products = $scope.products.concat products
     VariantOverrides.ensureDataFor hubs, products
-
 
   $scope.selectHub = ->
     $scope.hub = $scope.hubs[$scope.hub_id]
@@ -67,7 +64,6 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
         VariantOverrides.updateData updatedVos # Refresh page data
       .error (data, status) ->
         StatusMessage.display 'failure', $scope.updateError(data, status)
-
 
   $scope.updateError = (data, status) ->
     if status == 401

@@ -34,7 +34,6 @@ Spree::Admin::LineItemsController.class_eval do
     end
   end
 
-
   private
 
   def load_order

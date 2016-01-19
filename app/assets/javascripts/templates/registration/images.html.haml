@@ -5,7 +5,7 @@
       %header
         %h2 {{'registration_images_headline' | t}}
         %h5 {{'registration_images_description' | t}}
-        
+
   %form{ name: 'images', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "select('social')" } }
     .row{ ng: { repeat: 'image_step in imageSteps', show: "imageStep == image_step" } }
       %ng-include{ src: "'registration/images/'+ image_step + '.html'" }

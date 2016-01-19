@@ -1,4 +1,3 @@
-
 def update_address(address, user)
   unless address.nil?
     address.firstname = user[:first_name]

@@ -41,7 +41,6 @@ Spree::Product.class_eval do
   after_touch :touch_distributors
   before_save :add_primary_taxon_to_taxons
 
-
   # -- Joins
   scope :with_product_distributions_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id = spree_products.id')
 
@@ -51,7 +50,6 @@ Spree::Product.class_eval do
                                   joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
 
   scope :with_order_cycles_inner, joins(:variants_including_master => {:exchanges => :order_cycle})
-
 
   # -- Scopes
   scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }
@@ -106,7 +104,6 @@ Spree::Product.class_eval do
       where('supplier_id IN (?)', user.enterprises)
     end
   }
-
 
   # -- Methods
 
@@ -189,7 +186,6 @@ Spree::Product.class_eval do
     end
   end
   alias_method_chain :delete, :delete_from_order_cycles
-
 
   private
 

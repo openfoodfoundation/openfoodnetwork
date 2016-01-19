@@ -26,7 +26,6 @@
   .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredCustomers.length == 0'}
     %h1#no_results No customers found.
 
-
   .row{ ng: { show: "loaded() && filteredCustomers.length > 0" } }
     %form{ name: "customers" }
       %table.index#customers

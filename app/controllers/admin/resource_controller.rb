@@ -4,7 +4,6 @@ module Admin
       "#{controller_name.classify}".constantize
     end
 
-
     # URL helpers
     def new_object_url(options = {})
       if parent_data.present?

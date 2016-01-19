@@ -53,7 +53,7 @@ feature %q{
     end
   end
 
-  # This case no longer exists as anyone with an enterprise can supply into the system. 
+  # This case no longer exists as anyone with an enterprise can supply into the system.
   # Or can they?? There is no producer profile anyway.
   # TODO discuss what parts of this are still necessary in which cases.
   pending "with only a profile-level enterprise" do

@@ -35,7 +35,6 @@ module OpenFoodNetwork
       end
     end
 
-
     private
 
     def gst(variant)

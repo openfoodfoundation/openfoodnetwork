@@ -1,6 +1,6 @@
 Darkswarm.directive "ofnModal", ($modal)->
   # Generic modal! Uses transclusion so designer-types can do stuff like:
-  # %ofn-modal 
+  # %ofn-modal
   #   CONTENT
   # Only works for simple cases, so roll your own when necessary!
   restrict: 'E'

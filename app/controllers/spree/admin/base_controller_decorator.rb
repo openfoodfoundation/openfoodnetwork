@@ -36,7 +36,6 @@ Spree::Admin::BaseController.class_eval do
     end
   end
 
-
   private
 
   def active_distributors_not_ready_for_checkout

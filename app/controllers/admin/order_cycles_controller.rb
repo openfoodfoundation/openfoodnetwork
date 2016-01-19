@@ -91,7 +91,6 @@ module Admin
       redirect_to main_app.admin_order_cycles_path, :notice => 'Emails to be sent to producers have been queued for sending.'
     end
 
-
     protected
     def collection
       ocs = if params[:as] == "distributor"

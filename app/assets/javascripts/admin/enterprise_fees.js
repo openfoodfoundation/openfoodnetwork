@@ -5,7 +5,7 @@ angular.module('enterprise_fees', [])
 
       var match = $window.location.search.match(/enterprise_id=(\d+)/);
       if(match) {
-	url += "&"+match[0];
+  url += "&"+match[0];
       }
 
       return url;
@@ -17,7 +17,7 @@ angular.module('enterprise_fees', [])
       // TODO: Angular 1.1.0 will have a means to reset a form to its pristine state, which
       //       would avoid the need to save off original calculator types for comparison.
       for(i in $scope.enterprise_fees) {
-	$scope.enterprise_fees[i].orig_calculator_type = $scope.enterprise_fees[i].calculator_type;
+  $scope.enterprise_fees[i].orig_calculator_type = $scope.enterprise_fees[i].calculator_type;
       }
     });
   }])
@@ -25,7 +25,7 @@ angular.module('enterprise_fees', [])
   .directive('ngBindHtmlUnsafeCompiled', ['$compile', function($compile) {
     return function(scope, element, attrs) {
       scope.$watch(attrs.ngBindHtmlUnsafeCompiled, function(value) {
-	element.html($compile(value)(scope));
+  element.html($compile(value)(scope));
       });
     }
   }])
@@ -33,10 +33,10 @@ angular.module('enterprise_fees', [])
   .directive('spreeDeleteResource', function() {
     return function(scope, element, attrs) {
       if(scope.enterprise_fee.id) {
-	var url = "/admin/enterprise_fees/" + scope.enterprise_fee.id
-	var html = '<a href="'+url+'" class="delete-resource icon_link with-tip icon-trash no-text" data-action="remove" data-confirm="Are you sure?" url="'+url+'"></a>';
-	//var html = '<a href="'+url+'" class="delete-resource" data-confirm="Are you sure?"><img alt="Delete" src="/assets/admin/icons/delete.png" /> Delete</a>';
-	element.append(html);
+  var url = "/admin/enterprise_fees/" + scope.enterprise_fee.id
+  var html = '<a href="'+url+'" class="delete-resource icon_link with-tip icon-trash no-text" data-action="remove" data-confirm="Are you sure?" url="'+url+'"></a>';
+  //var html = '<a href="'+url+'" class="delete-resource" data-confirm="Are you sure?"><img alt="Delete" src="/assets/admin/icons/delete.png" /> Delete</a>';
+  element.append(html);
       }
     }
   })
@@ -51,19 +51,19 @@ angular.module('enterprise_fees', [])
 
     return function(scope, element, attrs) {
       scope.$watch(function(scope) {
-	//return scope.enterprise_fee.calculator_type;
-	return element.val();
+  //return scope.enterprise_fee.calculator_type;
+  return element.val();
       }, function(value) {
-	var settings = element.parent().parent().find("div.calculator-settings");
+  var settings = element.parent().parent().find("div.calculator-settings");
 
-	// scope.enterprise_fee.calculator_type == scope.enterprise_fee.orig_calculator_type
-	if(element.val() == scope.enterprise_fee.orig_calculator_type) {
-	  settings.show();
-	  settings.find("input").prop("disabled", false);
-	} else {
-	  settings.hide();
-	  settings.find("input").prop("disabled", true);
-	}
+  // scope.enterprise_fee.calculator_type == scope.enterprise_fee.orig_calculator_type
+  if(element.val() == scope.enterprise_fee.orig_calculator_type) {
+    settings.show();
+    settings.find("input").prop("disabled", false);
+  } else {
+    settings.hide();
+    settings.find("input").prop("disabled", true);
+  }
       });
     }
   });

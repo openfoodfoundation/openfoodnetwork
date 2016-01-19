@@ -107,7 +107,6 @@ describe Spree::OrdersController do
     end
   end
 
-
   private
 
   def num_items_in_cart

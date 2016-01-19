@@ -8,12 +8,12 @@ Darkswarm.directive "shippingTypeSelector", (FilterSelectorsService)->
       pickup: false
       delivery: false
 
-    scope.selectors = 
+    scope.selectors =
       delivery: FilterSelectorsService.new
         icon: "ofn-i_039-delivery"
       pickup: FilterSelectorsService.new
         icon: "ofn-i_038-takeaway"
-      
+
     scope.emit = ->
       scope.shippingTypes =
         pickup: scope.selectors.pickup.active

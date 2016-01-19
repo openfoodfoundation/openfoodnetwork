@@ -16,7 +16,6 @@ Spree::Admin::SearchController.class_eval do
     render :users
   end
 
-
   def users_with_ams
     users_without_ams
     render json: @users, each_serializer: Api::Admin::UserSerializer

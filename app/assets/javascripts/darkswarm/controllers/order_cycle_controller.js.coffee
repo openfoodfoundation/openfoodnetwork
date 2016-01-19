@@ -9,7 +9,6 @@ Darkswarm.controller "OrderCycleCtrl", ($scope, $timeout, OrderCycle) ->
     if !$scope.OrderCycle.selected()
       $("#order_cycle_id").trigger("openTrigger")
 
-
 Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Products, Variants, Cart) ->
   # Track previous order cycle id for use with revertOrderCycle()
   $scope.previous_order_cycle_id = OrderCycle.order_cycle.order_cycle_id

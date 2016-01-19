@@ -8,10 +8,8 @@ module Admin
     before_filter :load_collection, only: [:bulk_update]
     before_filter :load_spree_api_key, only: :index
 
-
     def index
     end
-
 
     def bulk_update
       # Ensure we're authorised to update all variant overrides
@@ -40,7 +38,6 @@ module Admin
         render json: @collection, each_serializer: Api::Admin::VariantOverrideSerializer
       end
     end
-
 
     private
 

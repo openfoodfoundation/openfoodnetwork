@@ -143,7 +143,6 @@ module OpenFoodNetwork
       end
     end
 
-
     describe "indexed fee retrieval" do
       subject { EnterpriseFeeCalculator.new distributor, order_cycle }
       let(:order_cycle) { create(:simple_order_cycle, coordinator_fees: [ef_coordinator]) }

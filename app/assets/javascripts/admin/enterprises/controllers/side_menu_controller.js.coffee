@@ -22,7 +22,6 @@ angular.module("admin.enterprises")
 
     $scope.select(0)
 
-
     $scope.showItem = (item) ->
       if item.show?
         $parse(item.show)($scope)

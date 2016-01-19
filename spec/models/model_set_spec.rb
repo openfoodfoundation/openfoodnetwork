@@ -13,7 +13,6 @@ describe ModelSet do
       EnterpriseRelationshipPermission.where(name: ['s1', 's2']).count.should == 2
     end
 
-
     it "updates existing models" do
       e1 = create(:enterprise_group)
       e2 = create(:enterprise_group)
@@ -27,7 +26,6 @@ describe ModelSet do
 
       EnterpriseGroup.where(name: ['e1zz', 'e2yy']).count.should == 2
     end
-
 
     it "destroys deleted models" do
       e1 = create(:enterprise)
@@ -44,7 +42,6 @@ describe ModelSet do
       Enterprise.where(id: e1.id).should be_empty
       Enterprise.where(id: e2.id).should be_present
     end
-
 
     it "ignores deletable new records" do
       attrs = {collection_attributes: {'1' => {name: 'deleteme'}}}

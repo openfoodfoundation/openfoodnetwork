@@ -3,7 +3,7 @@
     angular.module('Darkswarm').value('orderCycleData', #{render "json/order_cycle"})
 
   - if @order_cycles and @order_cycles.empty?
-    %h4.text-right 
+    %h4.text-right
       %i.ofn-i_032-closed-sign
       = t :shopping_oc_closed
     %p.text-right

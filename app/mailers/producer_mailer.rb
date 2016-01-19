@@ -18,7 +18,6 @@ class ProducerMailer < Spree::BaseMailer
     end
   end
 
-
   private
 
   def has_orders?(order_cycle, producer)

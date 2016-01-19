@@ -241,7 +241,6 @@ FactoryGirl.define do
   end
 end
 
-
 FactoryGirl.modify do
   factory :base_product do
     unit_value 1
@@ -308,7 +307,6 @@ FactoryGirl.modify do
     end
   end
 end
-
 
 # -- CMS
 FactoryGirl.define do

@@ -50,7 +50,6 @@ module OpenFoodNetwork
           subject.orders.should == [o1]
         end
 
-
         it "does not show orders through a hub that the current user does not manage" do
           # Given a supplier enterprise with an order for one of its products
           supplier.enterprise_roles.create!(user: user)

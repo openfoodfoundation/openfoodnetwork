@@ -316,7 +316,6 @@ module OpenFoodNetwork
         end
       end
 
-
       describe "as the manager of a hub" do
         let!(:ex_in) { create(:exchange, order_cycle: oc, sender: producer, receiver: coordinator, incoming: true) }
 
@@ -430,7 +429,6 @@ module OpenFoodNetwork
         end
       end
     end
-
 
     describe "finding the variants within a hypothetical exchange between two enterprises which are visible to a user" do
       let!(:producer1) { create(:supplier_enterprise) }

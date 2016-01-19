@@ -10,7 +10,6 @@ angular.module("admin.utils")
 
         $rootScope.$on "$locationChangeStart", @locationChangeStartHandler
 
-
       # Action for regular browser navigation.
       onBeforeUnloadHandler: ($event) =>
         message = @getMessage()

@@ -3,7 +3,6 @@
 - content_for :page_title do
   Content
 
-
 = form_tag main_app.admin_content_path, method: :put, multipart: true do
   #preferences
     - @preference_sections.each do |preference_section|

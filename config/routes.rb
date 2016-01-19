@@ -145,7 +145,6 @@ Openfoodnetwork::Application.routes.draw do
 
 end
 
-
 # Overriding Devise routes to use our own controller
 Spree::Core::Engine.routes.draw do
   devise_for :spree_user,
@@ -157,8 +156,6 @@ Spree::Core::Engine.routes.draw do
              :path_names => { :sign_out => 'logout' },
              :path_prefix => :user
 end
-
-
 
 Spree::Core::Engine.routes.prepend do
   match '/admin/reports/orders_and_distributors' => 'admin/reports#orders_and_distributors', :as => "orders_and_distributors_admin_reports",  :via  => [:get, :post]
@@ -177,7 +174,6 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/xero_invoices' => 'admin/reports#xero_invoices', :as => "xero_invoices_admin_reports",  :via  => [:get, :post]
   match '/admin', :to => 'admin/overview#index', :as => :admin
   match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
-
 
   namespace :api, :defaults => { :format => 'json' } do
     resources :users do

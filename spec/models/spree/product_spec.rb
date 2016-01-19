@@ -56,7 +56,6 @@ module Spree
         end
       end
 
-
       it "does not allow the last variant to be deleted" do
         product = create(:simple_product)
         expect(product.variants(:reload).length).to eq 1
@@ -455,7 +454,6 @@ module Spree
         p1.should_not be_in_order_cycle oc2
       end
     end
-
 
     describe "variant units" do
       context "when the product already has a variant unit set (and all required option types exist)" do

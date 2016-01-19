@@ -6,7 +6,7 @@ describe Spree::StoreController do
     def index
       render text: ""
     end
-  end 
+  end
   it "redirects to home when unauthorized" do
     get :index
     response.should render_template("shared/unauthorized", layout: 'darkswarm')

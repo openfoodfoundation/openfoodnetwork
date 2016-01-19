@@ -32,7 +32,6 @@ describe "LineItems service", ->
     it "returns an array of line items", ->
       expect(result).toDeepEqual response
 
-
   describe "#save", ->
     describe "success", ->
       lineItem = null
@@ -51,7 +50,6 @@ describe "LineItems service", ->
 
       it "resolves the promise", ->
         expect(resolved).toBe(true);
-
 
     describe "failure", ->
       lineItem = null
@@ -84,7 +82,6 @@ describe "LineItems service", ->
       it "returns false", ->
         expect(LineItems.isSaved({})).toBe true
 
-
   describe "diff", ->
     beforeEach ->
       LineItems.pristineByID = { 23: { id: 23, price: 15, quantity: 3, something: 3 } }
@@ -92,7 +89,6 @@ describe "LineItems service", ->
     it "returns a list of properties that have been altered and are in the list of updateable attrs", ->
       expect(LineItems.diff({ id: 23, price: 12, quantity: 3 })).toEqual ["price"]
       expect(LineItems.diff({ id: 23, price: 15, something: 1 })).toEqual []
-
 
   describe "resetAttribute", ->
     lineItem = { id: 23, price: 15 }
@@ -128,7 +124,6 @@ describe "LineItems service", ->
       it "resolves the promise", ->
         expect(resolved).toBe(true)
         expect(rejected).toBe(false)
-
 
     describe "failure", ->
       callback = jasmine.createSpy("callback")

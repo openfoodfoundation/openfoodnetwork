@@ -10,6 +10,6 @@
     .small-12.columns.text-center
       %h4{ "ng-bind" => "'registration_finished_activate' | t:{enterprise: enterprise.name}" }
 
-      %p{ "ng-bind-html" => "t('registration_finished_activate_instruction_html', {email: enterprise.email})"} 
+      %p{ "ng-bind-html" => "t('registration_finished_activate_instruction_html', {email: enterprise.email})"}
 
       %a.button.primary{ type: "button", href: "/" } {{'registration_finished_action' | t}} &gt;

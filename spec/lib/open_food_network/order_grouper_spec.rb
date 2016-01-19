@@ -9,7 +9,7 @@ module OpenFoodNetwork
 
     context "constructing the table" do
       it "should build a tree then build a table" do
-        rules = [ { group_by: Proc.new { |sentence| sentence.paragraph.chapter }, sort_by: Proc.new { |chapter| chapter.name }, summary_columns: [Proc.new { |is| is.first.paragraph.chapter.name }, Proc.new { |is| "TOTAL" }, Proc.new { |is| "" }, Proc.new { |is| is.sum {|i| i.property1 } } ] }, 
+        rules = [ { group_by: Proc.new { |sentence| sentence.paragraph.chapter }, sort_by: Proc.new { |chapter| chapter.name }, summary_columns: [Proc.new { |is| is.first.paragraph.chapter.name }, Proc.new { |is| "TOTAL" }, Proc.new { |is| "" }, Proc.new { |is| is.sum {|i| i.property1 } } ] },
         { group_by: Proc.new { |sentence| sentence.paragraph }, sort_by: Proc.new { |paragraph| paragraph.name } } ]
         columns = [Proc.new { |is| is.first.paragraph.chapter.name }, Proc.new { |is| is.first.paragraph.name }, Proc.new { |is| is.first.name }, Proc.new { |is| is.sum {|i| i.property1 } }]
 
@@ -21,7 +21,7 @@ module OpenFoodNetwork
 
         subject.table(@items)
       end
-      
+
     end
 
     context "grouping items without rules" do
@@ -31,14 +31,14 @@ module OpenFoodNetwork
         column2 = double(:col2)
         columns = [column1, column2]
         subject = OrderGrouper.new rules, columns
-        
+
         rules.should_receive(:clone).and_return(rules)
         subject.build_tree(@items, rules).should == @items
       end
     end
 
     context "grouping items with rules" do
-      
+
       before(:each) do
         @rule1 = double(:rule1)
         rule2 = double(:rule2)
@@ -48,7 +48,7 @@ module OpenFoodNetwork
         column2 = double(:col2)
         @columns = [column1, column2]
       end
-      
+
       it "builds branches by removing a rule from 'rules' and running group_and_sort" do
         subject = OrderGrouper.new @rules, @columns
 
@@ -119,7 +119,7 @@ module OpenFoodNetwork
 
         subject.build_table(@items1).should == [["Column1", "Column2"]]
       end
-      
+
       it "should return a row for each key-value pair when given a Hash" do
         groups = { items1: @items1, items2: @items2, items3: @items3 }
 
@@ -138,8 +138,8 @@ module OpenFoodNetwork
         subject = OrderGrouper.new @rules, @columns
 
         expected_return = []
-        groups.each do |key, group| 
-          if key == :summary_row 
+        groups.each do |key, group|
+          if key == :summary_row
             expected_return << ["SumColumn1", "SumColumn2"]
           else
             expected_return << ["Column1", "Column2"]

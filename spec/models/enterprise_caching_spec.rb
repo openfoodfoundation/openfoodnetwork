@@ -27,10 +27,10 @@ describe Enterprise do
         let(:child_enterprise) { create(:supplier_enterprise) }
         let!(:er) { create(:enterprise_relationship, parent: enterprise, child: child_enterprise) }
         it "touches enterprise when enterprise relationship is updated" do
-          expect{er.save!}.to change {enterprise.reload.updated_at }  
+          expect{er.save!}.to change {enterprise.reload.updated_at }
         end
       end
-      
+
       describe "with shipping methods" do
         let(:sm) { create(:shipping_method) }
         before do
@@ -43,12 +43,12 @@ describe Enterprise do
         end
 
         it "touches enterprise when shipping method is updated" do
-          expect{sm.save!}.to change {enterprise.reload.updated_at }  
+          expect{sm.save!}.to change {enterprise.reload.updated_at }
         end
       end
-      
+
       it "touches enterprise when address is updated" do
-        expect{enterprise.address.save!}.to change {enterprise.reload.updated_at }  
+        expect{enterprise.address.save!}.to change {enterprise.reload.updated_at }
       end
     end
   end

@@ -55,7 +55,6 @@ module OpenFoodNetwork
       destroy_untouched_exchanges
     end
 
-
     private
 
     attr_accessor :touched_exchanges

@@ -12,7 +12,6 @@ class BaseController < ApplicationController
 
   before_filter :check_order_cycle_expiry
 
-
   private
 
   def set_order_cycles

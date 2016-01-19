@@ -21,7 +21,7 @@ Darkswarm.directive 'mapSearch', ($timeout)->
           #map.setCenter place.geometry.location
           map.fitBounds place.geometry.viewport
         #map.fitBounds bounds
-      
+
       # Bias the SearchBox results towards places that are within the bounds of the
       # current map's viewport.
       google.maps.event.addListener map, "bounds_changed", ->

@@ -51,7 +51,6 @@ module OpenFoodNetwork
       warnings
     end
 
-
     private
 
     def shipping_methods_ok?

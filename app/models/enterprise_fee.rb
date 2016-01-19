@@ -14,10 +14,8 @@ class EnterpriseFee < ActiveRecord::Base
   FEE_TYPES = %w(packing transport admin sales fundraising)
   PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate']
 
-
   validates_inclusion_of :fee_type, :in => FEE_TYPES
   validates_presence_of :name
-
 
   scope :for_enterprise, lambda { |enterprise| where(enterprise_id: enterprise) }
   scope :for_enterprises, lambda { |enterprises| where(enterprise_id: enterprises) }

@@ -130,7 +130,6 @@ module OpenFoodNetwork
       @user.enterprises.length == 1
     end
 
-
     private
 
     def admin?

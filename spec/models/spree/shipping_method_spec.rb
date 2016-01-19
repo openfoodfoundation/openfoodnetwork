@@ -35,7 +35,6 @@ module Spree
       ShippingMethod.by_name.should == [sm2, sm3, sm1]
     end
 
-
     describe "availability" do
       let(:sm) { build(:shipping_method) }
 

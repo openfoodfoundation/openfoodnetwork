@@ -25,7 +25,6 @@ Spree::ShippingMethod.class_eval do
 
   scope :by_name, order('spree_shipping_methods.name ASC')
 
-
   # Return the services (pickup, delivery) that different distributors provide, in the format:
   # {distributor_id => {pickup: true, delivery: false}, ...}
   def self.services
@@ -39,7 +38,6 @@ Spree::ShippingMethod.class_eval do
       map { |sm| [sm.distributor_id.to_i, {pickup: sm.pickup == 't', delivery: sm.delivery == 't'}] }
     ]
   end
-
 
   def available_to_order_with_distributor_check?(order, display_on=nil)
     available_to_order_without_distributor_check?(order, display_on) &&

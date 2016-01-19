@@ -86,7 +86,6 @@ Spree::OrdersController.class_eval do
     @order_cycle = OrderCycle.find session[:expired_order_cycle_id]
   end
 
-
   private
 
   def populate_variant_attributes

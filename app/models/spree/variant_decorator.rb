@@ -8,7 +8,6 @@ Spree::Variant.class_eval do
   remove_method :options_text if instance_methods(false).include? :options_text
   include OpenFoodNetwork::VariantAndLineItemNaming
 
-
   has_many :exchange_variants, dependent: :destroy
   has_many :exchanges, through: :exchange_variants
   has_many :variant_overrides
@@ -54,7 +53,6 @@ Spree::Variant.class_eval do
       scoped.map { |v| [v.id, v] }
     ]
   end
-
 
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)

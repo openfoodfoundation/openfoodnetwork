@@ -6,7 +6,6 @@ class SpreeOneTwo < ActiveRecord::Migration
     # already exists. Assume the best.
     return if table_exists?(:spree_addresses)
 
-
     create_table :spree_activators do |t|
       t.string     :description
       t.datetime   :expires_at

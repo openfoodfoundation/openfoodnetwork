@@ -111,7 +111,6 @@ feature %q{
       page.all('td', text: 'Two').count.should == 1
     end
 
-
     pending "shows me only payment methods for the enterprise I select" do
       pm1
       pm2

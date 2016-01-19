@@ -76,7 +76,7 @@ module OpenFoodNetwork
       end
     end
 
-    it "should split and group line items from multiple suppliers and of multiple variants" do 
+    it "should split and group line items from multiple suppliers and of multiple variants" do
       subject = GroupBuyReport.new @orders
 
       table_row_objects = subject.variants_and_quantities

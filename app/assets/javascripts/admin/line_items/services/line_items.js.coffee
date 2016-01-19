@@ -4,7 +4,7 @@ angular.module("admin.lineItems").factory 'LineItems', ($q, LineItemResource) ->
     pristineByID: {}
 
     index: (params={}, callback=null) ->
-    	LineItemResource.index params, (data) =>
+      LineItemResource.index params, (data) =>
         @resetData()
         for lineItem in data
           @lineItemsByID[lineItem.id] = lineItem

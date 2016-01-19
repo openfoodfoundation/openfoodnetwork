@@ -41,7 +41,6 @@ feature %q{
       let!(:producer_unrelated) { create(:supplier_enterprise) }
       let!(:product_unrelated) { create(:simple_product, supplier: producer_unrelated) }
 
-
       before do
         # Remove 'S' option value
         variant.option_values.first.destroy

@@ -3,7 +3,6 @@ class ProducerProperty < ActiveRecord::Base
 
   default_scope order("#{self.table_name}.position")
 
-
   def property_name
     property.name if property
   end

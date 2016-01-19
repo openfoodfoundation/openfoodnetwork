@@ -7,7 +7,6 @@ describe Api::Admin::ExchangeSerializer do
   let(:permissions_mock) { double(:permissions) }
   let(:serializer) { Api::Admin::ExchangeSerializer.new exchange }
 
-
   before do
     allow(OpenFoodNetwork::OrderCyclePermissions).to receive(:new) { permissions_mock }
     allow(permissions_mock).to receive(:visible_variants_for_outgoing_exchanges_to) do

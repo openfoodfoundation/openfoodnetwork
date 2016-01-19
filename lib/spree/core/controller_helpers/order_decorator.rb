@@ -13,7 +13,6 @@ Spree::Core::ControllerHelpers::Order.class_eval do
   end
   alias_method_chain :current_order, :scoped_variants
 
-
   # Override definition in spree/auth/app/controllers/spree/base_controller_decorator.rb
   # Do not attempt to merge incomplete and current orders. Instead, destroy the incomplete orders.
   def set_current_order

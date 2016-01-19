@@ -8,4 +8,3 @@ class UpdatePrecisionOnLineItemFinalWeightVolume < ActiveRecord::Migration
   end
 end
 
-

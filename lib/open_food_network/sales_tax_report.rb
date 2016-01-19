@@ -34,7 +34,6 @@ module OpenFoodNetwork
       end
     end
 
-
     private
 
     def totals_of(line_items)

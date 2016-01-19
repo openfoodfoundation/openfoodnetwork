@@ -8,7 +8,6 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-
   background do
     set_feature_toggle :order_cycles, true
 
@@ -24,7 +23,6 @@ feature %q{
                                              :state => Spree::State.find_by_name('Victoria'),
                                              :country => Spree::Country.find_by_name('Australia')),
                           :pickup_times => 'Tuesday, 4 PM')
-
 
     @distributor_alternative = create(:distributor_enterprise, :name => 'Alternative Distributor',
                           :address => create(:address,
@@ -69,7 +67,6 @@ feature %q{
     @order_cycle = create(:simple_order_cycle, suppliers: [supplier], distributors: [@distributor], variants: [@product_1.master, @product_1a.master, @product_2.master])
     @order_cycle.coordinator_fees << create(:enterprise_fee, enterprise: @order_cycle.coordinator)
   end
-
 
   scenario "viewing delivery fees for product distribution", :js => true, :to_figure_out => true do
     # Given I am logged in
@@ -408,7 +405,6 @@ feature %q{
     page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
     page.should have_selector 'tfoot#order-charges tr.total td', text: '51.00'
 
-
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
     email.reply_to.include?(@distributor_oc.email).should == true
@@ -461,7 +457,6 @@ feature %q{
     page.should have_select 'order_bill_address_attributes_state_id', selected: 'Victoria'
     page.should have_select 'order_bill_address_attributes_country_id', selected: 'Australia'
   end
-
 
   private
 

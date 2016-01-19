@@ -59,7 +59,6 @@ class Enterprise < ActiveRecord::Base
   supports_s3 :logo
   supports_s3 :promo_image
 
-
   validates :name, presence: true
   validate :name_is_unique
   validates :sells, presence: true, inclusion: {in: SELLS}

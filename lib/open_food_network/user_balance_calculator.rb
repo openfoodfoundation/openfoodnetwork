@@ -9,7 +9,6 @@ module OpenFoodNetwork
       payment_total - order_total
     end
 
-
     private
 
     def order_total
@@ -19,7 +18,6 @@ module OpenFoodNetwork
     def payment_total
       payments.sum &:amount
     end
-
 
     def orders
       Spree::Order.where(distributor_id: @distributor, user_id: @user)

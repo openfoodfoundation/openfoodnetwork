@@ -25,7 +25,6 @@ module OpenFoodNetwork
       unit
     end
 
-
     private
 
     def value_scaled?

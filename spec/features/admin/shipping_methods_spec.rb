@@ -41,7 +41,6 @@ feature 'shipping methods' do
 
     it "at checkout, user can only see shipping methods for their current distributor (checkout spec)"
 
-
     scenario "deleting a shipping method" do
       visit_delete spree.admin_shipping_method_path(@sm)
 

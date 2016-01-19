@@ -37,7 +37,6 @@ Spree::Order.class_eval do
     remove_transition :from => :delivery, :to => :confirm
   end
 
-
   # -- Scopes
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
@@ -75,7 +74,6 @@ Spree::Order.class_eval do
       select('DISTINCT spree_orders.*')
   }
 
-
   # -- Methods
   def products_available_from_new_distribution
     # Check that the line_items in the current order are available from a newly selected distribution
@@ -107,7 +105,6 @@ Spree::Order.class_eval do
     current_item = find_line_item_by_variant(variant)
     current_item.destroy
   end
-
 
   # Overridden to support max_quantity
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
@@ -249,7 +246,6 @@ Spree::Order.class_eval do
       Delayed::Job.enqueue ConfirmOrderJob.new(id)
     end
   end
-
 
   private
 

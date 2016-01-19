@@ -3,19 +3,18 @@
 @import branding
 @import big-input
 
-
 .darkswarm
   // #search
   @include placeholder(rgba(0,0,0,0.4), #777)
-  
+
   input#search
     @include medium-input(rgba(0,0,0,0.3), #777, $clr-brick)
 
   // ordering
   product
-    
+
     input
-      @include border-radius(0) 
+      @include border-radius(0)
       @include csstrans
       margin: 0
       width: 10rem
@@ -23,20 +22,20 @@
       @include box-shadow(none)
       border-color: #b3b3b3
       text-align: right
-      
+
       @media all and (max-width: 1024px)
         width: 8rem
 
       @media all and (max-width: 768px)
         width: 7rem
 
-      @media all and (max-width: 640px) 
+      @media all and (max-width: 640px)
         float: left !important
         font-size: 0.75rem
         padding-left: 0.25rem
         padding-right: 0.25rem
-     
-      @media all and (max-width: 480px) 
+
+      @media all and (max-width: 480px)
         width: 5.8rem
 
       &:hover
@@ -49,7 +48,6 @@
         background-color: #f9f4b9
         border-color: #666
 
-
     // BULK
 
     input.bulk
@@ -61,7 +59,7 @@
       @media all and (max-width: 768px)
         width: 3.5rem
 
-      @media all and (max-width: 480px) 
+      @media all and (max-width: 480px)
         width: 2.8rem
 
     input.bulk.first
@@ -69,17 +67,13 @@
 
     input.bulk.second
       border-left: 0
-      
+
     .bulk-input-container
       float: right
 
-      @media all and (max-width: 640px) 
+      @media all and (max-width: 640px)
         float: left !important
 
       .bulk-input
         float: left
-
-      
-
-
 

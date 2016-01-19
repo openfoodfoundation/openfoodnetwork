@@ -14,7 +14,6 @@ module OpenFoodNetwork
        }.andand.ship_address
     end
 
-
     private
 
     def recent_orders

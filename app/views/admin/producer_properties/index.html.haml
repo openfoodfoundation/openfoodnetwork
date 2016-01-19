@@ -2,15 +2,12 @@
   = "#{@enterprise.name}:"
   Producer Properties
 
-
 - content_for :page_actions do
   %ul.tollbar.inline-menu
     %li
       = link_to_add_fields 'Add Producer Property', 'tbody#producer_properties', class: 'icon-plus button'
 
-
 = render 'spree/shared/error_messages', target: @enterprise
-
 
 = form_for @enterprise, url: main_app.admin_enterprise_path(@enterprise), method: :put do |f|
   = render 'form', f: f

@@ -7,7 +7,6 @@ angular.module("admin.enterprises").controller "EnterpriseIndexRowCtrl", ($scope
     else
       "ok"
 
-
   $scope.producerText = ->
     switch $scope.enterprise.is_primary_producer
       when true
@@ -41,7 +40,6 @@ angular.module("admin.enterprises").controller "EnterpriseIndexRowCtrl", ($scope
     $scope.package = $scope.packageText()
     $scope.producerError = ($scope.producer == "Choose")
     $scope.packageError = ($scope.package == "Choose")
-
 
   $scope.updateRowText()
 

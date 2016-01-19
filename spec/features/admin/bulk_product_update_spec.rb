@@ -131,7 +131,6 @@ feature %q{
       expect(page).to have_field "variant_on_hand", with: "6"
     end
 
-
     it "displays a price input (for each variant) for each product" do
       p1 = FactoryGirl.create(:product, price: 2.0)
       v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75)
@@ -160,7 +159,6 @@ feature %q{
     end
   end
 
-
   scenario "creating a new product" do
     s = FactoryGirl.create(:supplier_enterprise)
     d = FactoryGirl.create(:distributor_enterprise)
@@ -185,7 +183,6 @@ feature %q{
     expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
     expect(page).to have_field "product_name", with: 'Big Bag Of Apples'
   end
-
 
   scenario "creating new variants" do
     # Given a product without variants or a unit
@@ -453,7 +450,6 @@ feature %q{
       let!(:v1) { p1.variants.first }
       let!(:v2) { p2.variants.first }
       let!(:v3) { FactoryGirl.create(:variant, product: p2 ) }
-
 
       before do
         quick_login_as_admin

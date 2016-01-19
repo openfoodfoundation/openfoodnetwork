@@ -137,7 +137,6 @@ feature 'Enterprises Index' do
         expect(find("#content-header")).to have_link "New Enterprise"
       end
 
-
       it "does not give me an option to change or update the package and producer properties of enterprises I manage" do
         click_link "Enterprises"
 
