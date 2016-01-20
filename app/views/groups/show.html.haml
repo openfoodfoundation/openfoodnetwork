@@ -86,17 +86,13 @@
                       = t :groups_hubs
 
                 = render partial: "shared/components/enterprise_search"
-                -# TODO: find out why this is not working
-                -#= render partial: "home/filters"
-                .small-12.medium-6.columns
-                  %span &nbsp;
-                = render partial: 'shared/components/show_profiles'
+                = render partial: "hub_filters"
 
                 .row{bindonce: true}
                   .small-12.columns
                     .active_table
                       %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
-                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
                       "ng-controller" => "GroupEnterpriseNodeCtrl"}
                         .small-12.columns
