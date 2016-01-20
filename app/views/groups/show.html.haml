@@ -59,14 +59,13 @@
                     %h1
                       = t :groups_producers
                 = render partial: "shared/components/enterprise_search"
-                -# TODO: find out why this is not working
-                -#= render partial: "producers/filters"
+                = render partial: "producers/filters"
 
                 .row{bindonce: true}
                   .small-12.columns
                     .active_table
                       %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | visible | searchEnterprises:query | taxons:activeTaxons)",
+                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | searchEnterprises:query | taxons:activeTaxons)",
                       "ng-controller" => "GroupEnterpriseNodeCtrl",
                       "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
                       id: "{{producer.hash}}"}
