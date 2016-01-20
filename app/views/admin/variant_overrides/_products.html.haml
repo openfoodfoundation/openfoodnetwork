@@ -1,4 +1,4 @@
-%table.index.bulk#variant-overrides{ ng: {show: 'hub'}}
+%table.index.bulk#variant-overrides
   %col.producer{ width: "20%", ng: { show: 'columns.producer.visible' } }
   %col.product{ width: "20%", ng: { show: 'columns.product.visible' } }
   %col.sku{ width: "20%", ng: { show: 'columns.sku.visible' } }
@@ -24,7 +24,7 @@
     = render 'admin/variant_overrides/products_product'
     = render 'admin/variant_overrides/products_variants'
 
-.sixteen.columns.alpha.omega.text-center{ ng: {show: 'hub && productLimit < filteredProducts.length'}}
+.sixteen.columns.alpha.omega.text-center{ ng: {show: 'productLimit < filteredProducts.length'}}
   %input{ type: 'button', value: 'Show More', ng: { click: 'productLimit = productLimit + 10' } }
   or
-  %input{ type: 'button', value: "Show All ({{ filteredProducts.length - productLimit }})", ng: { click: 'productLimit = filteredProducts.length' } }
+  %input{ type: 'button', value: "Show All ({{ filteredProducts.length - productLimit }}  More)", ng: { click: 'productLimit = filteredProducts.length' } }
