@@ -350,6 +350,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   groups_title: Groups
   groups_headline: Groups / regions
+  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"
