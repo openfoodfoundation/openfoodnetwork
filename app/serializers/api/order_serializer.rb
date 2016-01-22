@@ -1,5 +1,5 @@
 class Api::OrderSerializer < ActiveModel::Serializer
-  attributes :id, :completed_at, :total, :state, :shipment_state, :payment_state, :outstanding_balance, :total_money, :balance_money, :payments
+  attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state, :outstanding_balance, :total_money, :balance_money, :payments, :path
 
   has_many :payments, serializer: Api::PaymentSerializer
 
@@ -25,6 +25,10 @@ class Api::OrderSerializer < ActiveModel::Serializer
 
   def balance_money
     to_money(object.outstanding_balance)
+  end
+
+  def path
+    spree.order_url(object.number, only_path: true)
   end
 
   private

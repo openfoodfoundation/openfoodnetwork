@@ -8,6 +8,7 @@ feature %q{
   include UIComponentHelper
   include AuthenticationWorkflow
   let!(:user) { create(:user)}
+  let!(:user2) {create(:user)}
   let!(:distributor1) { create(:distributor_enterprise) }
   let!(:distributor2) { create(:distributor_enterprise) }
   let!(:distributor_without_orders) { create(:distributor_enterprise) }
@@ -30,9 +31,20 @@ feature %q{
 
   it "reveals table of orders for distributors when clicked" do
     expand_active_table_node distributor1.name
-    expect(page).to have_content "Order " + d1o1.id.to_s
+    expect(page).to have_content "Order " + d1o1.number.to_s
     expand_active_table_node distributor2.name
-    expect(page).not_to have_content "Order " + d1o1.id.to_s
+    expect(page).not_to have_content "Order " + d1o1.number.to_s
+  end
+
+  context "for a user without orders" do
+    before do
+      login_as user2
+      visit "/account"
+    end
+
+    it "displays an appropriate message" do
+      expect(page).to have_content "You have no orders yet"
+    end
   end
 
 end

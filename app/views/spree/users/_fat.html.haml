@@ -10,7 +10,8 @@
         %th{"bo-text" => "'balance' | t"}
       %tbody{"ng-repeat" => "order in distributor.distributed_orders"}
         %tr
-          %td{"bo-text" => "('order' | t )+ ' ' + order.id"}
+          %td
+            %a{"bo-href" => "order.path", "bo-text" => "('order' | t )+ ' ' + order.number"}
           %td{"bo-text" => "order.completed_at"}
           %td{"bo-text" => "order.payment_state | t"}
           %td{"bo-text" => "order.shipment_state | t"}
