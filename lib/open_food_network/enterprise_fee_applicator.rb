@@ -34,7 +34,7 @@ module OpenFoodNetwork
     def adjustment_tax(order, adjustment)
       tax_rates = enterprise_fee.tax_category ? enterprise_fee.tax_category.tax_rates.match(order) : []
 
-      tax_rates.sum do |rate|
+      tax_rates.select(&:included_in_price).sum do |rate|
         rate.compute_tax adjustment.amount
       end
     end

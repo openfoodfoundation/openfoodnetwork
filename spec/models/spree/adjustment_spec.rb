@@ -137,21 +137,25 @@ module Spree
         context "when enterprise fees are taxed per-order" do
           let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
 
-          it "records the tax on the enterprise fee adjustments" do
-            # The fee is $50, tax is 10%, and the fee is inclusive of tax
-            # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
+          describe "when the tax rate includes the tax in the price" do
+            it "records the tax on the enterprise fee adjustments" do
+              # The fee is $50, tax is 10%, and the fee is inclusive of tax
+              # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
 
-            adjustment.included_tax.should == 4.55
+              adjustment.included_tax.should == 4.55
+            end
           end
 
           describe "when the tax rate does not include the tax in the price" do
             before do
               tax_rate.update_attribute :included_in_price, false
+              order.create_tax_charge! # Updating line_item or order has the same effect
               order.update_distribution_charge!
             end
 
-            it "treats it as inclusive anyway" do
-              adjustment.included_tax.should == 4.55
+            it "records the tax on TaxRate adjustment on the order" do
+              adjustment.included_tax.should == 0
+              order.adjustments.tax.first.amount.should == 5.0
             end
           end
 
@@ -172,8 +176,23 @@ module Spree
         context "when enterprise fees are taxed per-item" do
           let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
 
-          it "records the tax on the enterprise fee adjustments" do
-            adjustment.included_tax.should == 4.55
+          describe "when the tax rate includes the tax in the price" do
+            it "records the tax on the enterprise fee adjustments" do
+              adjustment.included_tax.should == 4.55
+            end
+          end
+
+          describe "when the tax rate does not include the tax in the price" do
+            before do
+              tax_rate.update_attribute :included_in_price, false
+              order.create_tax_charge!  # Updating line_item or order has the same effect
+              order.update_distribution_charge!
+            end
+
+            it "records the tax on TaxRate adjustment on the order" do
+              adjustment.included_tax.should == 0
+              order.adjustments.tax.first.amount.should == 5.0
+            end
           end
         end
       end
