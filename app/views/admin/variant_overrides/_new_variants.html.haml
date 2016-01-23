@@ -6,9 +6,11 @@
   ng: { show: 'newProducts.length > 0 && addingNewVariants == undefined' } }
 
 %div{ ng: { show: 'newProducts.length > 0 && addingNewVariants' } }
-  .sixteen.columns.alpha.omega.text-center.margin-bottom-20
-    .one-third.column.alpha
-      %button.text-normal.fullwidth{ type: 'button', ng: { click: 'addingNewVariants = false' } }
+  .sixteen.columns.alpha.omega.margin-bottom-20
+    .two-thirds.column.alpha.text-normal
+      Add products to your inventory by clicking 'Add', or hide them from view by clicking 'Ignore'. Don't worry, you can always change your mind later.
+    .one-third.column.omega
+      %button.fullwidth{ type: 'button', ng: { click: 'addingNewVariants = false' } }
         %i.icon-chevron-left
         Back to my inventory
     -# .one-third.column

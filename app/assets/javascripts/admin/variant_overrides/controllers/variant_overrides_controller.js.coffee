@@ -1,4 +1,4 @@
-angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, SpreeApiAuth, PagedFetcher, StatusMessage, hubs, producers, hubPermissions, InventoryItems, VariantOverrides, DirtyVariantOverrides) ->
+angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, SpreeApiAuth, PagedFetcher, StatusMessage, RequestMonitor, hubs, producers, hubPermissions, InventoryItems, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = Indexer.index hubs
   $scope.hub = null
   $scope.products = []
@@ -11,6 +11,7 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
   $scope.inventoryItems = InventoryItems.inventoryItems
   $scope.setVisibility = InventoryItems.setVisibility
   $scope.StatusMessage = StatusMessage
+  $scope.RequestMonitor = RequestMonitor
 
   $scope.columns = Columns.setColumns
     producer:     { name: "Producer",           visible: true }

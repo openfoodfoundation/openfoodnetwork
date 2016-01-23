@@ -4,4 +4,4 @@
     %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
     %div.menu{ 'ng-show' => "expanded" }
       .three.columns.alpha.menu_item{ 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'ofn-close-on-click' => true }
-        %span.three.columns.omega {{action.name }}
+        %span.three.columns.omega {{ action.name }}
