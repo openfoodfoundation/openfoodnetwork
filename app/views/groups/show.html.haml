@@ -1,5 +1,9 @@
 - content_for(:title) do
   = @group.name
+- content_for(:description) do
+  = @group.description
+- content_for(:image) do
+  = @group.logo.url
 
 -# inject all enterprises as "enterprises"
 -# it could be more efficient to inject only the enterprises that are related to the group

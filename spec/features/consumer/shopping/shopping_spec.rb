@@ -187,7 +187,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           visit shop_path
         end
 
-        it "should save group buy data to the cart" do
+        it "should save group buy data to the cart and display it on shopfront reload" do
           # -- Quantity
           fill_in "variants[#{variant.id}]", with: 6
           page.should have_in_cart product.name
@@ -202,6 +202,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           li = Spree::Order.order(:created_at).last.line_items.order(:created_at).last
           li.max_quantity.should == 7
+
+          # -- Reload
+          visit shop_path
+          page.should have_field "variants[#{variant.id}]", with: 6
+          page.should have_field "variant_attributes[#{variant.id}][max_quantity]", with: 7
         end
       end
     end

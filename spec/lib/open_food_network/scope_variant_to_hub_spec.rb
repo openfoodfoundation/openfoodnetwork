@@ -3,8 +3,8 @@ require 'open_food_network/scope_variant_to_hub'
 module OpenFoodNetwork
   describe ScopeVariantToHub do
     let(:hub) { create(:distributor_enterprise) }
-    let(:v)   { create(:variant, price: 11.11, count_on_hand: 1) }
-    let(:vo)  { create(:variant_override, hub: hub, variant: v, price: 22.22, count_on_hand: 2) }
+    let(:v)   { create(:variant, price: 11.11, count_on_hand: 1, on_demand: true, sku: "VARIANTSKU") }
+    let(:vo)  { create(:variant_override, hub: hub, variant: v, price: 22.22, count_on_hand: 2, on_demand: false, sku: "VOSKU") }
     let(:vo_price_only) { create(:variant_override, hub: hub, variant: v, price: 22.22, count_on_hand: nil) }
     let(:scoper) { ScopeVariantToHub.new(hub) }
 
@@ -64,6 +64,75 @@ module OpenFoodNetwork
         it "does not clear on_demand when there is no override" do
           scoper.scope v
           v.on_demand.should be_true
+        end
+      end
+
+      describe "overriding on_demand" do
+        context "when an override exists" do
+          before { vo }
+
+          context "with an on_demand set" do
+            it "returns the overridden on_demand" do
+              scoper.scope v
+              expect(v.on_demand).to be_false
+            end
+          end
+
+          context "without an on_demand set" do
+            before { vo.update_column(:on_demand, nil) }
+
+            context "when count_on_hand is set" do
+              it "returns false" do
+                scoper.scope v
+                expect(v.on_demand).to be_false
+              end
+            end
+
+            context "when count_on_hand is not set" do
+              before { vo.update_column(:count_on_hand, nil) }
+
+              it "returns the variant's on_demand" do
+                scoper.scope v
+                expect(v.on_demand).to be_true
+              end
+            end
+          end
+        end
+
+        context "when no override exists" do
+          it "returns the variant's on_demand" do
+            scoper.scope v
+            expect(v.on_demand).to be_true
+          end
+        end
+      end
+
+      describe "overriding sku" do
+        context "when an override exists" do
+          before { vo }
+
+          context "with an sku set" do
+            it "returns the overridden sku" do
+              scoper.scope v
+              expect(v.sku).to eq "VOSKU"
+            end
+          end
+
+          context "without an sku set" do
+            before { vo.update_column(:sku, nil) }
+
+            it "returns the variant's sku" do
+              scoper.scope v
+              expect(v.sku).to eq "VARIANTSKU"
+            end
+          end
+        end
+
+        context "when no override exists" do
+          it "returns the variant's sku" do
+            scoper.scope v
+            expect(v.sku).to eq "VARIANTSKU"
+          end
         end
       end
     end
