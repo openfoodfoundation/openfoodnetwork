@@ -166,6 +166,7 @@ fr:
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
   order_special_instructions: "Vos commentaires:"
+  order_pickup_time: Disponible pour retrait
   order_pickup_instructions: Instructions de retrait
   order_produce: Produit
   order_total_price: Total

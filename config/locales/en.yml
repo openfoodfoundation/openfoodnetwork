@@ -227,6 +227,7 @@ en:
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
   order_special_instructions: "Your notes:"
+  order_pickup_time: Ready for collection
   order_pickup_instructions: Collection Instructions
   order_produce: Produce
   order_total_price: Total
