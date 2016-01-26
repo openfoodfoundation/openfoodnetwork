@@ -6,7 +6,7 @@ describe Api::OrderSerializer do
 
 
   it "serializes an order" do
-    expect(serializer.to_json).to match order.id.to_s
+    expect(serializer.to_json).to match order.number.to_s
   end
 
   it "converts the total to currency and amount" do
