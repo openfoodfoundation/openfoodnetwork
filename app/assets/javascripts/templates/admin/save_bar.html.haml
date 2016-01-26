@@ -1,10 +1,6 @@
-#save-bar.animate-show{ ng: { show: 'dirty()' } }
+#save-bar.animate-show{ ng: { show: 'form.$dirty || StatusMessage.active()' } }
   .twelve.columns.alpha
-    %h5{ ng: { show: "dirty() && !saving()" } }
-      You have unsaved changes
-    %h5{ ng: { hide: "dirty() || saving()" } }
-      All changes saved
-    %h5{ ng: { show: "saving()" } }
-      Saving...
+    %h5#status-message{ ng: { style: 'StatusMessage.statusMessage.style' } }
+      {{ StatusMessage.statusMessage.text || "&nbsp;" }}
   .four.columns.omega.text-right
-    %input.red{type: "button", value: "Save Changes", ng: { click: "save()" } }
+    %input.red{type: "button", value: "Save Changes", ng: { disabled: '!form.$dirty', click: "save()" } }
