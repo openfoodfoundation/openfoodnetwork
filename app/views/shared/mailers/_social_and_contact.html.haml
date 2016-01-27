@@ -9,23 +9,14 @@
               = t :email_social
             %p.social-icons
               - if ContentConfig.footer_facebook_url.present?
-                %a{href: ContentConfig.footer_facebook_url}
-                  %i.ofn-i_044-facebook
+                %a.soc-btn.fb{href: ContentConfig.footer_facebook_url}
+                  Facebook
               - if ContentConfig.footer_twitter_url.present?
-                %a{href: ContentConfig.footer_twitter_url}
-                  %i.ofn-i_041-twitter
-              - if ContentConfig.footer_instagram_url.present?
-                %a{href: ContentConfig.footer_instagram_url}
-                  %i.ofn-i_043-instagram
+                %a.soc-btn.tw{href: ContentConfig.footer_twitter_url}
+                  Twitter
               - if ContentConfig.footer_linkedin_url.present?
-                %a{href: ContentConfig.footer_linkedin_url}
-                  %i.ofn-i_042-linkedin
-              - if ContentConfig.footer_googleplus_url.present?
-                %a{href: ContentConfig.footer_googleplus_url}
-                  %i.ofn-i_046-g
-              - if ContentConfig.footer_pinterest_url.present?
-                %a{href: ContentConfig.footer_pinterest_url}
-                  %i.ofn-i_045-pintrest
+                %a..soc-btn.li{href: ContentConfig.footer_linkedin_url}
+                  LinkedIn
       %table.column{:align => "left"}
         %tr
           %td

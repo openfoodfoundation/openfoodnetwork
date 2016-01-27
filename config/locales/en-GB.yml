@@ -244,7 +244,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_payment_method: "Paying via:"
   email_shipping_delivery_details: Delivery details
   email_shipping_delivery_time: "Delivery on:"
-  email_shipping_delivery_address: "Delivery address (if applicable):"
+  email_shipping_delivery_address: "Delivery address:"
   email_shipping_collection_details: Collection details
   email_shipping_collection_time: "Ready for collection:"
   email_shipping_collection_instructions: "Collection instructions:"
