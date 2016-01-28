@@ -24,6 +24,22 @@ describe VariantOverride do
   end
 
 
+  describe "callbacks" do
+    let!(:vo) { create(:variant_override, hub: hub, variant: variant) }
+
+    it "refreshes the products cache on save" do
+      expect(OpenFoodNetwork::ProductsCache).to receive(:variant_override_changed).with(vo)
+      vo.price = 123.45
+      vo.save
+    end
+
+    it "refreshes the products cache on destroy" do
+      expect(OpenFoodNetwork::ProductsCache).to receive(:variant_override_destroyed).with(vo)
+      vo.destroy
+    end
+  end
+
+
   describe "looking up prices" do
     it "returns the numeric price when present" do
       VariantOverride.create!(variant: variant, hub: hub, price: 12.34)

@@ -28,6 +28,14 @@ module OpenFoodNetwork
     end
 
 
+    def self.variant_override_changed(variant_override)
+    end
+
+
+    def self.variant_override_destroyed(variant_override)
+    end
+
+
     private
 
     def self.exchanges_featuring_variants(variants)
