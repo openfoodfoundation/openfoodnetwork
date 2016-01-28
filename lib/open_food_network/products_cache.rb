@@ -4,14 +4,14 @@ module OpenFoodNetwork
   # the products cache.
   class ProductsCache
     def self.variant_changed(variant)
-      exchanges_featuring_variant(variant).each do |exchange|
+      exchanges_featuring_variants(variant).each do |exchange|
         refresh_cache exchange.receiver, exchange.order_cycle
       end
     end
 
 
     def self.variant_destroyed(variant, &block)
-      exchanges = exchanges_featuring_variant(variant).to_a
+      exchanges = exchanges_featuring_variants(variant).to_a
 
       block.call
 
@@ -22,15 +22,18 @@ module OpenFoodNetwork
 
 
     def self.product_changed(product)
+      exchanges_featuring_variants(product.variants).each do |exchange|
+        refresh_cache exchange.receiver, exchange.order_cycle
+      end
     end
 
 
     private
 
-    def self.exchanges_featuring_variant(variant)
+    def self.exchanges_featuring_variants(variants)
       Exchange.
         outgoing.
-        with_variant(variant).
+        with_any_variant(variants).
         joins(:order_cycle).
         merge(OrderCycle.dated).
         merge(OrderCycle.not_closed)
