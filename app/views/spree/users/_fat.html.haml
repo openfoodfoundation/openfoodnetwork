@@ -8,8 +8,8 @@
         %th.order4{"bo-text" => "'shipping_state' | t"}
         %th.order5{"bo-text" => "'value' | t"}
         %th.order6{"bo-text" => "'balance' | t"}
-      %tbody{"ng-repeat" => "order in distributor.distributed_orders"}
-        %tr
+      %tbody.transaction-group{"ng-repeat" => "order in distributor.distributed_orders"}
+        %tr.order-row
           %td.order1
             %a{"bo-href" => "order.path", "bo-text" => "('order' | t )+ ' ' + order.number"}
           %td.order2{"bo-text" => "order.completed_at"}
@@ -17,7 +17,7 @@
           %td.order4{"bo-text" => "order.shipment_state | t"}
           %td.order5.text-right{"bo-text" => "order.total | localizeCurrency"}
           %td.order6.text-right{"ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}", "bo-text" => "order.outstanding_balance | localizeCurrency"}
-          %tr{"ng-repeat" => "payment in order.payments"}
+          %tr.payment-row{"ng-repeat" => "payment in order.payments"}
             %td.order1{"bo-text" => "'Payment '+ payment.identifier"}
             %td.order2{"bo-text" => "payment.updated_at"}
             %td.order3{"bo-text" => "payment.payment_method"}
