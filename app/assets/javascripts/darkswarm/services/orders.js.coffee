@@ -4,4 +4,3 @@ Darkswarm.factory 'Orders', (orders_by_distributor, currencyConfig, CurrentHub, 
       # Populate Orders.orders from json in page.
       @orders_by_distributor = orders_by_distributor
       @currency_symbol = currencyConfig.symbol
-      # Sorting by most orders (most recent/frequent?)
