@@ -108,6 +108,16 @@ module OpenFoodNetwork
     end
 
 
+    describe "when a variant override is destroyed" do
+      let(:vo) { double(:variant_override) }
+
+      it "performs the same refresh as a variant override change" do
+        expect(ProductsCache).to receive(:variant_override_changed).with(vo)
+        ProductsCache.variant_override_destroyed vo
+      end
+    end
+
+
     describe "refreshing the cache" do
       let(:distributor) { double(:distributor, id: 123) }
       let(:order_cycle) { double(:order_cycle, id: 456) }

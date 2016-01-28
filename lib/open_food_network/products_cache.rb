@@ -36,6 +36,7 @@ module OpenFoodNetwork
 
 
     def self.variant_override_destroyed(variant_override)
+      variant_override_changed variant_override
     end
 
 
