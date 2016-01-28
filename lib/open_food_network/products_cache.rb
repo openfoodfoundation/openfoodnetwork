@@ -29,6 +29,9 @@ module OpenFoodNetwork
 
 
     def self.variant_override_changed(variant_override)
+      exchanges_featuring_variants(variant_override.variant, distributor: variant_override.hub).each do |exchange|
+        refresh_cache exchange.receiver, exchange.order_cycle
+      end
     end
 
 
@@ -38,13 +41,17 @@ module OpenFoodNetwork
 
     private
 
-    def self.exchanges_featuring_variants(variants)
-      Exchange.
+    def self.exchanges_featuring_variants(variants, distributor: nil)
+      exchanges = Exchange.
         outgoing.
         with_any_variant(variants).
         joins(:order_cycle).
         merge(OrderCycle.dated).
         merge(OrderCycle.not_closed)
+
+      exchanges = exchanges.to_enterprise(distributor) if distributor
+
+      exchanges
     end
 
 

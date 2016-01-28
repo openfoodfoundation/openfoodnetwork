@@ -89,6 +89,25 @@ module OpenFoodNetwork
       end
     end
 
+    describe "when a variant override changes" do
+      let(:variant) { create(:variant) }
+      let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
+      let!(:vo) { create(:variant_override, variant: variant, hub: d1) }
+      let!(:oc) { create(:open_order_cycle, distributors: [d1, d2], variants: [variant]) }
+
+      it "refreshes the distributions that the variant override affects" do
+        expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+        ProductsCache.variant_override_changed vo
+      end
+
+      it "does not refresh other distributors of the variant" do
+        expect(ProductsCache).to receive(:refresh_cache).with(d2, oc).never
+        ProductsCache.variant_override_changed vo
+      end
+    end
+
+
     describe "refreshing the cache" do
       let(:distributor) { double(:distributor, id: 123) }
       let(:order_cycle) { double(:order_cycle, id: 456) }
