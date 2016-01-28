@@ -9,7 +9,8 @@ RefreshProductsCacheJob = Struct.new(:distributor_id, :order_cycle_id) do
   private
 
   def products_json
-    OpenFoodNetwork::ProductsRenderer.new(distributor_id, order_cycle_id).products_json
+    distributor = Enterprise.find distributor_id
+    order_cycle = OrderCycle.find order_cycle_id
+    OpenFoodNetwork::ProductsRenderer.new(distributor, order_cycle).products_json
   end
-
 end
