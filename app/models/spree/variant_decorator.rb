@@ -10,7 +10,7 @@ Spree::Variant.class_eval do
   include OpenFoodNetwork::VariantAndLineItemNaming
 
 
-  has_many :exchange_variants, dependent: :destroy
+  has_many :exchange_variants
   has_many :exchanges, through: :exchange_variants
   has_many :variant_overrides
 
@@ -26,16 +26,7 @@ Spree::Variant.class_eval do
   before_validation :update_weight_from_unit_value, if: -> v { v.product.present? }
   after_save :update_units
   after_save :refresh_products_cache
-  around_destroy :refresh_products_cache_from_destroy
-
-  def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.variant_changed self
-  end
-
-  def refresh_products_cache_from_destroy
-    OpenFoodNetwork::ProductsCache.variant_destroyed(self) { yield }
-  end
-
+  around_destroy :destruction
 
 
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
@@ -98,5 +89,21 @@ Spree::Variant.class_eval do
 
   def update_weight_from_unit_value
     self.weight = weight_from_unit_value if self.product.variant_unit == 'weight' && unit_value.present?
+  end
+
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.variant_changed self
+  end
+
+  def destruction
+    OpenFoodNetwork::ProductsCache.variant_destroyed(self) do
+      # Remove this association here instead of using dependent: :destroy because
+      # dependent-destroy acts before this around_filter is called, so ProductsCache
+      # has no way of knowing which exchanges the variant was a member of.
+      exchange_variants.destroy_all
+
+      # Destroy the variant
+      yield
+    end
   end
 end

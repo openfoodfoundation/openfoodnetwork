@@ -51,6 +51,25 @@ module OpenFoodNetwork
       end
     end
 
+    describe "when a variant is destroyed" do
+      let(:variant) { create(:variant) }
+      let(:distributor) { create(:distributor_enterprise) }
+      let!(:oc) { create(:open_order_cycle, distributors: [distributor], variants: [variant]) }
+
+      it "refreshes the cache based on exchanges the variant was in before destruction" do
+        expect(ProductsCache).to receive(:refresh_cache).with(distributor, oc)
+        variant.destroy
+      end
+
+      it "performs the cache refresh after the variant has been destroyed" do
+        expect(ProductsCache).to receive(:refresh_cache).with(distributor, oc) do
+          expect(Spree::Variant.where(id: variant.id)).to be_empty
+        end
+
+        variant.destroy
+      end
+    end
+
     describe "refreshing the cache" do
       let(:distributor) { double(:distributor, id: 123) }
       let(:order_cycle) { double(:order_cycle, id: 456) }

@@ -10,6 +10,17 @@ module OpenFoodNetwork
     end
 
 
+    def self.variant_destroyed(variant, &block)
+      exchanges = exchanges_featuring_variant(variant).to_a
+
+      block.call
+
+      exchanges.each do |exchange|
+        refresh_cache exchange.receiver, exchange.order_cycle
+      end
+    end
+
+
     private
 
     def self.exchanges_featuring_variant(variant)
