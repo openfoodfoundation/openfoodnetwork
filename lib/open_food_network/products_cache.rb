@@ -21,6 +21,10 @@ module OpenFoodNetwork
     end
 
 
+    def self.product_changed(product)
+    end
+
+
     private
 
     def self.exchanges_featuring_variant(variant)
