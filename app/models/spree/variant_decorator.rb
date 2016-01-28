@@ -1,5 +1,6 @@
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/variant_and_line_item_naming'
+require 'open_food_network/products_cache'
 
 Spree::Variant.class_eval do
   # Remove method From Spree, so method from the naming module is used instead
@@ -24,6 +25,18 @@ Spree::Variant.class_eval do
 
   before_validation :update_weight_from_unit_value, if: -> v { v.product.present? }
   after_save :update_units
+  after_save :refresh_products_cache
+  around_destroy :refresh_products_cache_from_destroy
+
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.variant_changed self
+  end
+
+  def refresh_products_cache_from_destroy
+    OpenFoodNetwork::ProductsCache.variant_destroyed(self) { yield }
+  end
+
+
 
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
 

@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'open_food_network/option_value_namer'
+require 'open_food_network/products_cache'
 
 module Spree
   describe Variant do
@@ -109,6 +110,21 @@ module Spree
         it "does not return variants not in the order cycle" do
           p_external.variants.for_distribution(oc, d1).should be_empty
         end
+      end
+    end
+
+    describe "callbacks" do
+      let(:variant) { create(:variant) }
+
+      it "refreshes the products cache on save" do
+        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).with(variant)
+        variant.sku = 'abc123'
+        variant.save
+      end
+
+      it "refreshes the products cache on destroy" do
+        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_destroyed).with(variant)
+        variant.destroy
       end
     end
 
