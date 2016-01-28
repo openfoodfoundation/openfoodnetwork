@@ -43,6 +43,8 @@ describe OrderCycle do
     OrderCycle.upcoming.should == [oc_not_yet_open]
     OrderCycle.closed.should == [oc_already_closed]
     OrderCycle.undated.should == [oc_undated, oc_undated_open, oc_undated_close]
+    OrderCycle.not_closed.should == [oc_active, oc_not_yet_open, oc_undated]
+    OrderCycle.dated.should == [oc_active, oc_not_yet_open, oc_already_closed]
   end
 
   it "finds order cycles accessible by a user" do
