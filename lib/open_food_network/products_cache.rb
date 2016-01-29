@@ -49,6 +49,15 @@ module OpenFoodNetwork
     end
 
 
+    def self.enterprise_fee_changed(enterprise_fee)
+    end
+
+
+    def self.enterprise_fee_destroyed(enterprise_fee, &block)
+      block.call
+    end
+
+
     private
 
     def self.exchanges_featuring_variants(variants, distributor: nil)

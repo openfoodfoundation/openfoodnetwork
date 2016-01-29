@@ -10,8 +10,20 @@ describe EnterpriseFee do
   end
 
   describe "callbacks" do
+    let(:ef) { create(:enterprise_fee) }
+
+    it "refreshes the products cache when saved" do
+      expect(OpenFoodNetwork::ProductsCache).to receive(:enterprise_fee_changed).with(ef)
+      ef.name = 'foo'
+      ef.save
+    end
+
+    it "refreshes the products cache when destroyed" do
+      expect(OpenFoodNetwork::ProductsCache).to receive(:enterprise_fee_destroyed).with(ef)
+      ef.destroy
+    end
+
     it "removes itself from order cycle coordinator fees when destroyed" do
-      ef = create(:enterprise_fee)
       oc = create(:simple_order_cycle, coordinator_fees: [ef])
 
       ef.destroy
@@ -19,7 +31,6 @@ describe EnterpriseFee do
     end
 
     it "removes itself from order cycle exchange fees when destroyed" do
-      ef = create(:enterprise_fee)
       oc = create(:simple_order_cycle)
       ex = create(:exchange, order_cycle: oc, enterprise_fees: [ef])
 

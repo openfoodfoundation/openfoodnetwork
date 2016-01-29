@@ -2,10 +2,11 @@ class EnterpriseFee < ActiveRecord::Base
   belongs_to :enterprise
   belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
   has_and_belongs_to_many :order_cycles, join_table: 'coordinator_fees'
-  has_many :exchange_fees, dependent: :destroy
+  has_many :exchange_fees
   has_many :exchanges, through: :exchange_fees
 
-  before_destroy { order_cycles.clear }
+  after_save :refresh_products_cache
+  around_destroy :destruction
 
   calculated_adjustments
 
@@ -56,5 +57,26 @@ class EnterpriseFee < ActiveRecord::Base
                                 :label => label,
                                 :mandatory => mandatory,
                                 :locked => true}, :without_protection => true)
+  end
+
+
+  private
+
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.enterprise_fee_changed self
+  end
+
+  def destruction
+    OpenFoodNetwork::ProductsCache.enterprise_fee_destroyed(self) do
+      # Remove this association here instead of using dependent: :destroy because
+      # dependent-destroy acts before this around_filter is called, so ProductsCache
+      # has no way of knowing where this fee was used.
+      order_cycles.clear
+      exchange_fees.destroy_all
+
+      # Destroy the enterprise fee
+      yield
+    end
+
   end
 end
