@@ -164,6 +164,23 @@ module OpenFoodNetwork
     end
 
 
+    describe "when an enterprise fee is changed" do
+      let(:s) { create(:supplier_enterprise) }
+      let(:c) { create(:distributor_enterprise) }
+      let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
+      let(:ef) { create(:enterprise_fee) }
+      let(:ef_coord) { create(:enterprise_fee, order_cycles: [oc]) }
+      let(:oc) { create(:open_order_cycle, coordinator: c) }
+
+
+      it "updates order cycles when it's a coordinator fee" do
+        ef_coord
+        expect(ProductsCache).to receive(:order_cycle_changed).with(oc).once
+        ProductsCache.enterprise_fee_changed ef_coord
+      end
+    end
+
     describe "refreshing the cache" do
       let(:distributor) { double(:distributor, id: 123) }
       let(:order_cycle) { double(:order_cycle, id: 456) }

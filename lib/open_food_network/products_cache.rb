@@ -50,6 +50,7 @@ module OpenFoodNetwork
 
 
     def self.enterprise_fee_changed(enterprise_fee)
+      refresh_coordinator_fee enterprise_fee
     end
 
 
@@ -71,6 +72,13 @@ module OpenFoodNetwork
       exchanges = exchanges.to_enterprise(distributor) if distributor
 
       exchanges
+    end
+
+
+    def self.refresh_coordinator_fee(enterprise_fee)
+      enterprise_fee.order_cycles.each do |order_cycle|
+        order_cycle_changed order_cycle
+      end
     end
 
 
