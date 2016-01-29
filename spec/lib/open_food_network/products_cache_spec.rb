@@ -179,6 +179,54 @@ module OpenFoodNetwork
         expect(ProductsCache).to receive(:order_cycle_changed).with(oc).once
         ProductsCache.enterprise_fee_changed ef_coord
       end
+
+
+      describe "updating exchanges when it's a distributor fee" do
+        let(:ex0) { create(:exchange, order_cycle: oc, sender: s, receiver: c, incoming: true, enterprise_fees: [ef]) }
+        let(:ex1) { create(:exchange, order_cycle: oc, sender: c, receiver: d1, incoming: false, enterprise_fees: [ef]) }
+        let(:ex2) { create(:exchange, order_cycle: oc, sender: c, receiver: d2, incoming: false, enterprise_fees: []) }
+
+        describe "updating distributions that include the fee" do
+          it "does not update undated order cycles" do
+            oc.update_attributes! orders_open_at: nil, orders_close_at: nil
+            ex1
+            expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).never
+            ProductsCache.enterprise_fee_changed ef
+          end
+
+          it "updates upcoming order cycles" do
+            oc.update_attributes! orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now
+            ex1
+            expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+            ProductsCache.enterprise_fee_changed ef
+          end
+
+          it "updates open order cycles" do
+            ex1
+            expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+            ProductsCache.enterprise_fee_changed ef
+          end
+
+          it "does not update closed order cycles" do
+            oc.update_attributes! orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago
+            ex1
+            expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).never
+            ProductsCache.enterprise_fee_changed ef
+          end
+        end
+
+        it "doesn't update exchanges that don't include the fee" do
+          ex1; ex2
+          expect(ProductsCache).to receive(:refresh_cache).with(d2, oc).never
+          ProductsCache.enterprise_fee_changed ef
+        end
+
+        it "doesn't update incoming exchanges" do
+          ex0
+          expect(ProductsCache).to receive(:refresh_cache).with(c, oc).never
+          ProductsCache.enterprise_fee_changed ef
+        end
+      end
     end
 
     describe "refreshing the cache" do

@@ -51,6 +51,7 @@ module OpenFoodNetwork
 
     def self.enterprise_fee_changed(enterprise_fee)
       refresh_coordinator_fee enterprise_fee
+      refresh_distributor_fee enterprise_fee
     end
 
 
@@ -78,6 +79,19 @@ module OpenFoodNetwork
     def self.refresh_coordinator_fee(enterprise_fee)
       enterprise_fee.order_cycles.each do |order_cycle|
         order_cycle_changed order_cycle
+      end
+    end
+
+
+    def self.refresh_distributor_fee(enterprise_fee)
+      enterprise_fee.exchange_fees.
+        joins(:exchange => :order_cycle).
+        merge(Exchange.outgoing).
+        merge(OrderCycle.dated).
+        merge(OrderCycle.not_closed).
+        each do |exf|
+
+        refresh_cache exf.exchange.receiver, exf.exchange.order_cycle
       end
     end
 
