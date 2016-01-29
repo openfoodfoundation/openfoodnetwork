@@ -55,7 +55,7 @@ describe OrderCycle do
     OrderCycle.upcoming.should == [oc_not_yet_open]
     OrderCycle.closed.should == [oc_already_closed]
     OrderCycle.undated.should == [oc_undated, oc_undated_open, oc_undated_close]
-    OrderCycle.not_closed.should == [oc_active, oc_not_yet_open, oc_undated]
+    OrderCycle.not_closed.should == [oc_active, oc_not_yet_open, oc_undated, oc_undated_open, oc_undated_close]
     OrderCycle.dated.should == [oc_active, oc_not_yet_open, oc_already_closed]
   end
 
@@ -381,6 +381,7 @@ describe OrderCycle do
       oc.update_attributes!(orders_close_at: nil)
 
       oc.should     be_undated
+      oc.should_not be_dated
       oc.should_not be_upcoming
       oc.should_not be_open
       oc.should_not be_closed
@@ -390,6 +391,7 @@ describe OrderCycle do
       oc.update_attributes!(orders_open_at: nil)
 
       oc.should     be_undated
+      oc.should_not be_dated
       oc.should_not be_upcoming
       oc.should_not be_open
       oc.should_not be_closed
