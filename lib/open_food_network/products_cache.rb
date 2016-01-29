@@ -40,6 +40,15 @@ module OpenFoodNetwork
     end
 
 
+    def self.order_cycle_changed(order_cycle)
+      if order_cycle.dated? && !order_cycle.closed?
+        order_cycle.exchanges.outgoing.each do |exchange|
+          refresh_cache exchange.receiver, order_cycle
+        end
+      end
+    end
+
+
     private
 
     def self.exchanges_featuring_variants(variants, distributor: nil)

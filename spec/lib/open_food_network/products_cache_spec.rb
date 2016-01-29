@@ -118,6 +118,52 @@ module OpenFoodNetwork
     end
 
 
+    describe "when an order cycle is changed" do
+      let(:variant) { create(:variant) }
+      let(:s) { create(:supplier_enterprise) }
+      let(:c) { create(:distributor_enterprise) }
+      let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
+      let!(:oc_open) { create(:open_order_cycle, suppliers: [s], coordinator: c, distributors: [d1, d2], variants: [variant]) }
+      let!(:oc_upcoming) { create(:upcoming_order_cycle, suppliers: [s], coordinator: c, distributors: [d1, d2], variants: [variant]) }
+
+      before do
+        oc_open.reload
+        oc_upcoming.reload
+      end
+
+      it "updates each outgoing distribution in an upcoming order cycle" do
+        expect(ProductsCache).to receive(:refresh_cache).with(d1, oc_upcoming).once
+        expect(ProductsCache).to receive(:refresh_cache).with(d2, oc_upcoming).once
+        ProductsCache.order_cycle_changed oc_upcoming
+      end
+
+      it "updates each outgoing distribution in an open order cycle" do
+        expect(ProductsCache).to receive(:refresh_cache).with(d1, oc_open).once
+        expect(ProductsCache).to receive(:refresh_cache).with(d2, oc_open).once
+        ProductsCache.order_cycle_changed oc_open
+      end
+
+      it "does nothing when the order cycle has been made undated" do
+        expect(ProductsCache).to receive(:refresh_cache).never
+        oc_open.orders_open_at = oc_open.orders_close_at = nil
+        oc_open.save!
+      end
+
+      it "does nothing when the order cycle has been closed" do
+        expect(ProductsCache).to receive(:refresh_cache).never
+        oc_open.orders_open_at = 2.weeks.ago
+        oc_open.orders_close_at = 1.week.ago
+        oc_open.save!
+      end
+
+      it "does not update incoming exchanges" do
+        expect(ProductsCache).to receive(:refresh_cache).with(c, oc_open).never
+        ProductsCache.order_cycle_changed oc_open
+      end
+    end
+
+
     describe "refreshing the cache" do
       let(:distributor) { double(:distributor, id: 123) }
       let(:order_cycle) { double(:order_cycle, id: 456) }
