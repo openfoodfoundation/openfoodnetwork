@@ -50,6 +50,7 @@ module OpenFoodNetwork
 
 
     def self.enterprise_fee_changed(enterprise_fee)
+      refresh_supplier_fee    enterprise_fee
       refresh_coordinator_fee enterprise_fee
       refresh_distributor_fee enterprise_fee
     end
@@ -76,6 +77,19 @@ module OpenFoodNetwork
     end
 
 
+    def self.refresh_supplier_fee(enterprise_fee)
+      outgoing_exchanges = Set.new
+
+      incoming_exchanges_for_enterprise_fee(enterprise_fee).each do |exchange|
+        outgoing_exchanges.merge outgoing_exchanges_with_variants(exchange.order_cycle, exchange.variant_ids)
+      end
+
+      outgoing_exchanges.each do |exchange|
+        refresh_cache exchange.receiver, exchange.order_cycle
+      end
+    end
+
+
     def self.refresh_coordinator_fee(enterprise_fee)
       enterprise_fee.order_cycles.each do |order_cycle|
         order_cycle_changed order_cycle
@@ -93,6 +107,21 @@ module OpenFoodNetwork
 
         refresh_cache exf.exchange.receiver, exf.exchange.order_cycle
       end
+    end
+
+
+    def self.incoming_exchanges_for_enterprise_fee(enterprise_fee)
+      enterprise_fee.exchanges.incoming.
+        joins(:order_cycle).
+        merge(OrderCycle.dated).
+        merge(OrderCycle.not_closed)
+    end
+
+
+    def self.outgoing_exchanges_with_variants(order_cycle, variant_ids)
+      order_cycle.exchanges.outgoing.
+        joins(:exchange_variants).
+        where('exchange_variants.variant_id IN (?)', variant_ids)
     end
 
 

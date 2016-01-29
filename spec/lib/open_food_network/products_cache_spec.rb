@@ -174,6 +174,46 @@ module OpenFoodNetwork
       let(:oc) { create(:open_order_cycle, coordinator: c) }
 
 
+      describe "updating exchanges when it's a supplier fee" do
+        let(:v) { create(:variant) }
+        let!(:ex1) { create(:exchange, order_cycle: oc, sender: s, receiver: c, incoming: true, variants: [v], enterprise_fees: [ef]) }
+        let!(:ex2) { create(:exchange, order_cycle: oc, sender: c, receiver: d1, incoming: false, variants: [v]) }
+        let!(:ex3) { create(:exchange, order_cycle: oc, sender: c, receiver: d2, incoming: false, variants: []) }
+
+        before { ef.reload }
+
+        describe "updating distributions that include one of the supplier's variants" do
+          it "does not update undated order cycles" do
+            oc.update_attributes! orders_open_at: nil, orders_close_at: nil
+            expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).never
+            ProductsCache.enterprise_fee_changed ef
+          end
+
+          it "updates upcoming order cycles" do
+            oc.update_attributes! orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now
+            expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+            ProductsCache.enterprise_fee_changed ef
+          end
+
+          it "updates open order cycles" do
+            expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+            ProductsCache.enterprise_fee_changed ef
+          end
+
+          it "does not update closed order cycles" do
+            oc.update_attributes! orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago
+            expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).never
+            ProductsCache.enterprise_fee_changed ef
+          end
+        end
+
+        it "doesn't update distributions that don't include any of the supplier's variants" do
+          expect(ProductsCache).to receive(:refresh_cache).with(d2, oc).never
+          ProductsCache.enterprise_fee_changed ef
+        end
+      end
+
+
       it "updates order cycles when it's a coordinator fee" do
         ef_coord
         expect(ProductsCache).to receive(:order_cycle_changed).with(oc).once
