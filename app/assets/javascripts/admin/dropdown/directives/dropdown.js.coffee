@@ -1,8 +1,9 @@
  angular.module("admin.dropdown").directive "ofnDropDown", ($document) ->
+  restrict: 'C'
   link: (scope, element, attrs) ->
     outsideClickListener = (event) ->
-      unless $(event.target).is("div.ofn_drop_down##{attrs.id} div.menu") ||
-        $(event.target).parents("div.ofn_drop_down##{attrs.id} div.menu").length > 0
+      unless $(event.target).is("div.ofn-drop-down##{attrs.id} div.menu") ||
+        $(event.target).parents("div.ofn-drop-down##{attrs.id} div.menu").length > 0
           scope.$emit "offClick"
 
     element.click (event) ->

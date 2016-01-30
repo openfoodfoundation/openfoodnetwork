@@ -22,12 +22,12 @@ feature "shopping with variant overrides defined", js: true do
   let(:v4) { create(:variant, product: p1, price: 44.44, unit_value: 4) }
   let(:v5) { create(:variant, product: p3, price: 55.55, unit_value: 5, on_demand: true) }
   let(:v6) { create(:variant, product: p3, price: 66.66, unit_value: 6, on_demand: true) }
-  let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55, count_on_hand: nil) }
-  let!(:vo2) { create(:variant_override, hub: hub, variant: v2, count_on_hand: 0) }
-  let!(:vo3) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0) }
-  let!(:vo4) { create(:variant_override, hub: hub, variant: v4, count_on_hand: 3) }
-  let!(:vo5) { create(:variant_override, hub: hub, variant: v5, count_on_hand: 0) }
-  let!(:vo6) { create(:variant_override, hub: hub, variant: v6, count_on_hand: 6) }
+  let!(:vo1) { create(:variant_override, hub: hub, variant: v1, price: 55.55, count_on_hand: nil, default_stock: nil, resettable: false) }
+  let!(:vo2) { create(:variant_override, hub: hub, variant: v2, count_on_hand: 0, default_stock: nil, resettable: false) }
+  let!(:vo3) { create(:variant_override, hub: hub, variant: v3, count_on_hand: 0, default_stock: nil, resettable: false) }
+  let!(:vo4) { create(:variant_override, hub: hub, variant: v4, count_on_hand: 3, default_stock: nil, resettable: false) }
+  let!(:vo5) { create(:variant_override, hub: hub, variant: v5, count_on_hand: 0, default_stock: nil, resettable: false) }
+  let!(:vo6) { create(:variant_override, hub: hub, variant: v6, count_on_hand: 6, default_stock: nil, resettable: false) }
   let(:ef) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)) }
 
   before do
@@ -143,7 +143,6 @@ feature "shopping with variant overrides defined", js: true do
     it "does not subtract stock from overrides that do not override count_on_hand" do
       fill_in "variants[#{v1.id}]", with: "2"
       click_checkout
-
       expect do
         complete_checkout
       end.to change { v1.reload.count_on_hand }.by(-2)
@@ -192,7 +191,7 @@ feature "shopping with variant overrides defined", js: true do
     within "#payment" do
       choose pm.name
     end
-
+    
     place_order
     page.should have_content "Your order has been processed successfully"
   end

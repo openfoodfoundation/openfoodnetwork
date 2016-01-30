@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "DirtyVariantOverrides", ($http) ->
+angular.module("admin.variantOverrides").factory "DirtyVariantOverrides", ($http) ->
   new class DirtyVariantOverrides
     dirtyVariantOverrides: {}
 
