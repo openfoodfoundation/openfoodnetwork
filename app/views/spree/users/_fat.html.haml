@@ -1,5 +1,5 @@
 .row.active_table_row{"ng-if" => "open()","ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
-  .columns.small-12.medium-12.large-12.fat
+  .columns.small-12.large-10.large-offset-2.fat
     %table
       %tr
         %th.order1{"bo-text" => "'transaction' | t"}
@@ -8,7 +8,7 @@
         %th.order4{"bo-text" => "'shipping_state' | t"}
         %th.order5{"bo-text" => "'value' | t"}
         %th.order6{"bo-text" => "'balance' | t"}
-      %tbody.transaction-group{"ng-repeat" => "order in distributor.distributed_orders"}
+      %tbody.transaction-group{"ng-repeat" => "order in distributor.distributed_orders", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
         %tr.order-row
           %td.order1
             %a{"bo-href" => "order.path", "bo-text" => "('order' | t )+ ' ' + order.number"}

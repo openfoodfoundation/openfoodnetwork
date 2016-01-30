@@ -1,0 +1,36 @@
+@import branding
+@import mixins
+
+.orders
+  @include sidepaddingSm
+  @include panepadding
+  a
+    color: $clr-brick
+    &:hover, &:active, &:focus
+      color: $clr-brick-med-bright
+  a.button.primary
+    &:hover, &:active, &:focus
+      color: white
+  .strong
+    color: $clr-brick
+
+  table
+    tr:nth-of-type(even)
+      background: transparent // clear previous
+    tbody.odd
+      tr
+        background-color: #f9f9f9
+        border: none
+  // Column widths for order table
+  .order1
+    width: 25%
+  .order2
+    width: 20%
+  .order3
+    width: 25%
+  .order4
+    width: 10%
+  .order5
+    width: 10%
+  .order6
+    width: 10%
