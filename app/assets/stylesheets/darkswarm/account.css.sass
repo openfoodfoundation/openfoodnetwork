@@ -4,6 +4,11 @@
 .orders
   @include sidepaddingSm
   @include panepadding
+  padding-top: 10px
+
+  h3
+    padding-top: 2em
+
   a
     color: $clr-brick
     &:hover, &:active, &:focus
@@ -14,7 +19,17 @@
   .strong
     color: $clr-brick
 
+  .credit
+    color: green
+
+  .debit
+    color: $clr-brick
+
+  .distributor-balance.paid
+    visibility: hidden
+
   table
+    border-radius: 0.5em 0.5em 0 0
     tr:nth-of-type(even)
       background: transparent // clear previous
     tbody.odd

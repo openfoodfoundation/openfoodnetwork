@@ -14,7 +14,7 @@ feature %q{
   let!(:distributor_credit) { create(:distributor_enterprise) }
   let!(:distributor_without_orders) { create(:distributor_enterprise) }
   let!(:d1o1) { create(:completed_order_with_totals, distributor_id: distributor1.id, user_id: user.id, total: 10000)}
-  let!(:d1o2) { create(:completed_order_with_totals, distributor_id: distributor1.id, user_id: user.id, total: 5000)}
+  let!(:d1o2) { create(:order_without_full_payment, distributor_id: distributor1.id, user_id: user.id, total: 5000)}
   let!(:d2o1) { create(:completed_order_with_totals, distributor_id: distributor2.id, user_id: user.id)}
   let!(:credit_order) { create(:order_with_credit_payment, distributor_id: distributor_credit.id, user_id: user.id)}
 #  let!(:credit_payment) { create(:payment, amount: 12000.00, order_id: credit_order.id)}

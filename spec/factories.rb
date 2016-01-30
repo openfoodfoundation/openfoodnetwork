@@ -199,6 +199,16 @@ FactoryGirl.define do
     end
   end
 
+  factory :order_without_full_payment, parent: :completed_order_with_totals do
+    distributor { create(:distributor_enterprise)}
+    order_cycle { create(:simple_order_cycle) }
+
+    after(:create) do |order|
+      create(:payment, amount: order.total - 1, order: order, state: "completed")
+      order.reload
+    end
+  end
+
   factory :zone_with_member, :parent => :zone do
     default_tax true
 

@@ -6,8 +6,8 @@
         %th.order2{"bo-text" => "'transaction_date' | t"}
         %th.order3{"bo-text" => "'payment_state' | t"}
         %th.order4{"bo-text" => "'shipping_state' | t"}
-        %th.order5{"bo-text" => "'value' | t"}
-        %th.order6{"bo-text" => "'balance' | t"}
+        %th.order5.text-right{"bo-text" => "'value' | t"}
+        %th.order6.text-right{"bo-text" => "'balance' | t"}
       %tbody.transaction-group{"ng-repeat" => "order in distributor.distributed_orders", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
         %tr.order-row
           %td.order1
