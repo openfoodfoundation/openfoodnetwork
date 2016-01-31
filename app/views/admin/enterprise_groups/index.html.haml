@@ -1,5 +1,5 @@
 = content_for :page_title do
-  Enterprise Groups
+  = t 'admin_entreprise_groups'
 
 = content_for :page_actions do
   %li#new_enterprise_group_link
@@ -8,11 +8,15 @@
 %table.index#listing_enterprise_groups
   %thead
     %tr
-      %th Name
+      %th 
+        = t 'admin_entreprise_groups_name'
       - if spree_current_user.admin?
-        %th Owner
-      %th On front page?
-      %th Enterprises
+        %th
+          = t 'admin_entreprise_groups_owner'
+      %th 
+        = t 'admin_entreprise_groups_on_front_page'
+      %th 
+        = t 'admin_entreprise_groups_entreprise'
       %th.actions
 
   %tbody

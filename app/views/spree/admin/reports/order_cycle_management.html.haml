@@ -2,16 +2,16 @@
   = render 'date_range_form', f: f
 
   .row
-    .alpha.two.columns= label_tag nil, "Hubs: "
+    .alpha.two.columns= label_tag nil, t(:report_hubs)
     .omega.fourteen.columns= f.collection_select(:distributor_id_in, @distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})
 
   .row
-    .alpha.two.columns= label_tag nil, "Order Cycles: "
+    .alpha.two.columns= label_tag nil, t(:reports_customers_cycle)
     .omega.fourteen.columns
       = f.select(:order_cycle_id_in, report_order_cycle_options(@order_cycles), {selected: params[:q][:order_cycle_id_in]}, {class: "select2 fullwidth", multiple: true})
 
   .row
-    .alpha.two.columns= label_tag nil, "Payment Methods: "
+    .alpha.two.columns= label_tag nil, t(:report_payment)
     .omega.fourteen.columns= select_tag(:payment_method_in, options_for_select(report_payment_method_options(@report.orders), params[:payment_method_in]), {class: "select2 fullwidth", multiple: true})
 
   .row
@@ -24,7 +24,7 @@
 
   .row
     = check_box_tag :csv
-    = label_tag :csv, "Download as csv"
+    = label_tag :csv, t(:report_customers_csv)
 
   .row
   = button t(:search)
@@ -33,7 +33,7 @@
 %br
 %table#listing_ocm_orders.index
   %thead
-    %tr{'data-hook' => "orders_header"}
+    %tr{'data-hook' => "orders_header" }
       - @report.header.each do |heading|
         %th=heading
   %tbody

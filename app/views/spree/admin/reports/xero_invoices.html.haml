@@ -2,31 +2,31 @@
   = render 'date_range_form', f: f
 
   .row
-    .four.columns.alpha= label_tag :report_type, "Report Type: "
+    .four.columns.alpha= label_tag :report_type, t(:report_type)
     .four.columns.omega= select_tag :report_type, options_for_select(xero_report_types, params[:report_type]), {include_blank: false, class: "select2 fullwidth"}
   .row
-    .four.columns.alpha= label_tag nil, "Hub: "
+    .four.columns.alpha= label_tag nil, t(:report_hubs)
     .four.columns.omega= f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
   .row
-    .four.columns.alpha= label_tag nil, "Order Cycle: "
+    .four.columns.alpha= label_tag nil, t(:report_order_cycle)
     .four.columns.omega= f.select(:order_cycle_id_eq,
       options_for_select(report_order_cycle_options(@order_cycles), params[:q][:order_cycle_id_eq]),
       {:include_blank => true}, {:class => "select2 fullwidth"})
 
   .row
-    .four.columns.alpha= label_tag :initial_invoice_number, "Initial invoice number:"
+    .four.columns.alpha= label_tag :initial_invoice_number, t(:initial_invoice_number)
     .twelve.columns.omega= text_field_tag :initial_invoice_number, params[:initial_invoice_number]
   .row
-    .four.columns.alpha= label_tag :invoice_date, "Invoice date:"
+    .four.columns.alpha= label_tag :invoice_date, t(:invoice_date)
     .twelve.columns.omega= text_field_tag :invoice_date, params[:invoice_date], class: 'datetimepicker'
   .row
-    .four.columns.alpha= label_tag :due_date, "Due date:"
+    .four.columns.alpha= label_tag :due_date, t(:due_date)
     .twelve.columns.omega= text_field_tag :due_date, params[:due_date], class: 'datetimepicker'
   .row
-    .four.columns.alpha= label_tag :account_code, "Account code:"
+    .four.columns.alpha= label_tag :account_code, t(:account_code)
     .twelve.columns.omega= text_field_tag :account_code, params[:account_code]
   .row
-    .four.columns.alpha= label_tag :csv, "Download as CSV:"
+    .four.columns.alpha= label_tag :csv, t(:report_customers_csv)
     .twelve.columns.omega= check_box_tag :csv
   .row
     .four.columns.alpha= button t(:search)

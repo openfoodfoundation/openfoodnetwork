@@ -4,11 +4,13 @@
     %br
     %input.search{ :class => "four columns alpha", 'ng-model' => 'query', :name => "quick_filter", :type => 'text', 'placeholder' => 'Quick Search' }
   .filter_select{ :class => "four columns" }
-    %label{ :for => 'producer_filter' }Producer
+    %label{ :for => 'producer_filter' }
+      = t 'producer'
     %br
     %select{ :class => "four columns alpha", :id => 'producer_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'producerFilter', 'ng-options' => 'producer.id as producer.name for producer in filterProducers' }
   .filter_select{ :class => "four columns" }
-    %label{ :for => 'category_filter' }Category
+    %label{ :for => 'category_filter' }
+      = t 'category'
     %br
     %select{ :class => "four columns alpha", :id => 'category_filter', 'ofn-select2-min-search' => 5, 'ng-model' => 'categoryFilter', 'ng-options' => 'taxon.id as taxon.name for taxon in filterTaxons'}
   %div{ :class => "one column" } &nbsp;

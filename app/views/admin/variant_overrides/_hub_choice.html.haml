@@ -1,7 +1,7 @@
 .row
   .two.columns.alpha
-    Hub
+    =t :hub
   .four.columns
     %select.select2.fullwidth#hub_id{ 'ng-model' => 'hub_id', name: 'hub_id', 'ng-options' => 'hub.id as hub.name for hub in hubs' }
   .ten.columns.omega
-    %input{ type: 'button', value: 'Go', 'ng-click' => 'selectHub()' }
+    %input{ type: 'button', value: t(:go), 'ng-click' => 'selectHub()' }

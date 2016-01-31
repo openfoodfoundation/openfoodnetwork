@@ -7,7 +7,7 @@ angular.module("ofn.admin").controller "AdminEnterpriseRelationshipsCtrl", ($sco
     $scope.EnterpriseRelationships.create($scope.parent_id, $scope.child_id, $scope.permissions)
 
   $scope.delete = (enterprise_relationship) ->
-    if confirm("Are you sure?")
+    if confirm(t("are_you_sure"))
       $scope.EnterpriseRelationships.delete enterprise_relationship
 
   $scope.toggleKeyword = (string, key) ->

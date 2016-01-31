@@ -1,5 +1,5 @@
 = content_for :page_title do
-  Enterprise Fees
+  =t :Enterprise_Fees
 
 = ng_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path, :html => {'ng-app' => 'enterprise_fees', 'ng-controller' => 'AdminEnterpriseFeesCtrl'} do |enterprise_fee_set_form|
   = hidden_field_tag 'enterprise_id', @enterprise.id if @enterprise
@@ -10,12 +10,18 @@
   %table.index#listing_enterprise_fees
     %thead
       %tr
-        %th Enterprise
-        %th Fee Type
-        %th Name
-        %th Tax Category
-        %th Calculator
-        %th Calculator values
+        %th 
+          =t'Enterprise'
+        %th 
+          =t'fee_type'
+        %th 
+          =t'name'
+        %th 
+          =t'tax_category'
+        %th 
+          =t'calculator'
+        %th 
+          =t'calculator_values'
         %th.actions
     %tbody
       = enterprise_fee_set_form.ng_fields_for :collection do |f|
@@ -30,4 +36,4 @@
           %td{'ng-bind-html-unsafe-compiled' => 'enterprise_fee.calculator_settings'}
           %td.actions{'spree-delete-resource' => "1"}
 
-  = enterprise_fee_set_form.submit 'Update'
+  = enterprise_fee_set_form.submit t(:update)

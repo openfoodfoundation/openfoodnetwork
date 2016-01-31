@@ -1,7 +1,7 @@
 - if enterprise
   -if shop_trial_in_progress?(enterprise)
     #trial_progress_bar
-      = "Your shopfront trial expires in #{remaining_trial_days(enterprise)}."
+      = t(:shop_trial_in_progress)
   -elsif shop_trial_expired?(enterprise)
     #trial_progress_bar
-      = "Good news! We have decided to extend shopfront trials until further notice (probably around March 2015)."
+      = t(:shop_trial_expired)
