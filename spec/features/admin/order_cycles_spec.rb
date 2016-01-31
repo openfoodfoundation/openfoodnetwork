@@ -102,6 +102,7 @@ feature %q{
     # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
+    fill_in 'order_cycle_incoming_exchange_0_receival_instructions', with: 'receival instructions'
     page.find('table.exchanges tr.supplier td.products input').click
     check "order_cycle_incoming_exchange_0_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_0_variants_#{v2.id}"
@@ -157,8 +158,11 @@ feature %q{
     oc.exchanges.first.variants.count.should == 2
     oc.exchanges.last.variants.count.should == 2
 
-    # And my pickup time and instructions should have been saved
-    exchange = oc.exchanges.where(:sender_id => oc.coordinator_id).first
+    # And my receival and pickup time and instructions should have been saved
+    exchange = oc.exchanges.incoming.first
+    exchange.receival_instructions.should == 'receival instructions'
+
+    exchange = oc.exchanges.outgoing.first
     exchange.pickup_time.should == 'pickup time'
     exchange.pickup_instructions.should == 'pickup instructions'
   end
@@ -187,6 +191,9 @@ feature %q{
     # And I should see the suppliers
     page.should have_selector 'td.supplier_name', :text => oc.suppliers.first.name
     page.should have_selector 'td.supplier_name', :text => oc.suppliers.last.name
+
+    page.should have_field 'order_cycle_incoming_exchange_0_receival_instructions', with: 'instructions 0'
+    page.should have_field 'order_cycle_incoming_exchange_1_receival_instructions', with: 'instructions 1'
 
     # And the suppliers should have products
     page.all('table.exchanges tbody tr.supplier').each do |row|
