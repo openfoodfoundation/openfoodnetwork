@@ -23,8 +23,7 @@ class Api::OrderSerializer < ActiveModel::Serializer
     object.state ? object.state.humanize : nil # Or a call to t() here?
   end
 
-  delegate :order_url, to: Spree::Core::Engine.routes_url_helpers
   def path
-    order_url(object.number, only_path: true)
+    Spree::Core::Engine.routes_url_helpers.order_url(object.number, only_path: true)
   end
 end

@@ -36,7 +36,8 @@ feature %q{
 
   it "reveals table of orders for distributors when clicked" do
     expand_active_table_node distributor1.name
-    expect(page).to have_content "Order " + d1o1.number.to_s
+    expect(page).to have_link "Order " + d1o1.number, href:"/orders/#{d1o1.number}"
+
     expand_active_table_node distributor2.name
     expect(page).not_to have_content "Order " + d1o1.number.to_s
   end
