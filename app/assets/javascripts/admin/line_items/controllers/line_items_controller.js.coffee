@@ -1,7 +1,6 @@
-angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout, $http, $q, Columns, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, blankOption, VariantUnitManager, RequestMonitor) ->
+angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout, $http, $q, StatusMessage, Columns, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, blankOption, VariantUnitManager, RequestMonitor) ->
   $scope.initialized = false
   $scope.RequestMonitor = RequestMonitor
-  $scope.saving = false
   $scope.filteredLineItems = []
   $scope.confirmDelete = true
   $scope.startDate = formatDate daysFromToday -7
@@ -55,6 +54,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       Dereferencer.dereferenceAttr $scope.lineItems, "supplier", Enterprises.enterprisesByID
       Dereferencer.dereferenceAttr $scope.lineItems, "order", Orders.ordersByID
       $scope.bulk_order_form.$setPristine()
+      StatusMessage.clear()
       unless $scope.initialized
         $scope.initialized = true
         $timeout ->
@@ -62,16 +62,20 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.refreshData()
 
-  $scope.submit = =>
+  $scope.$watch 'bulk_order_form.$dirty', (newVal, oldVal) ->
+    if newVal == true
+      StatusMessage.display 'notice', "You have unsaved changes"
+
+  $scope.submit = ->
     if $scope.bulk_order_form.$valid
-      $scope.saving = true
+      StatusMessage.display 'progress', "Saving..."
       $q.all(LineItems.saveAll()).then(->
+        StatusMessage.display 'success', "All changes saved"
         $scope.bulk_order_form.$setPristine()
-        $scope.saving = false
       ).catch ->
-        alert "#{t("unsaved_changes_warning")}"
+        StatusMessage.display 'failure', #{t("unsaved_changes_warning")}
     else
-      alert "#{t("unsaved_changes_warning")}"
+      StatusMessage.display 'failure', #{t("unsaved_changes_warning")}
 
   $scope.deleteLineItem = (lineItem) ->
     if ($scope.confirmDelete && confirm(t("are_you_sure"))) || !$scope.confirmDelete

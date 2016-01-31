@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "SpreeApiAuth", ($q, $http, SpreeApiKey) ->
+angular.module("admin.indexUtils").factory "SpreeApiAuth", ($q, $http, SpreeApiKey) ->
   new class SpreeApiAuth
     authorise: ->
       deferred = $q.defer()

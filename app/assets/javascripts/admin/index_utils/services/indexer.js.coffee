@@ -4,7 +4,7 @@
 # Indexer.index producers
 # -> {1: {id: 1, name: 'one'}, 2: {id: 2, name: 'two'}}
 
-angular.module("ofn.admin").factory 'Indexer', ->
+angular.module("admin.indexUtils").factory 'Indexer', ->
   new class Indexer
     index: (data, key='id') ->
       index = {}

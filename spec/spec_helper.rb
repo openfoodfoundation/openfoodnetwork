@@ -1,7 +1,10 @@
 require 'rubygems'
 
 # Require pry when we're not inside Travis-CI
-require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
+require 'pry' unless ENV['CI']
+
+require 'knapsack'
+Knapsack::Adapters::RSpecAdapter.bind
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
@@ -39,7 +42,7 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, options)
 end
 
-Capybara.default_wait_time = 30
+Capybara.default_max_wait_time = 30
 
 require "paperclip/matchers"
 

@@ -16,8 +16,8 @@ class ModelSet
     end
   end
 
-  def collection_attributes=(attributes)
-    attributes.each do |k, attributes|
+  def collection_attributes=(collection_attributes)
+    collection_attributes.each do |k, attributes|
       # attributes == {:id => 123, :next_collection_at => '...'}
       e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
       if e.nil?
@@ -41,7 +41,11 @@ class ModelSet
   end
 
   def collection_to_delete
-    collection.select { |e| @delete_if.andand.call(e.attributes) }
+    # Remove all elements to be deleted from collection and return them
+    # Allows us to render @model_set.collection without deleted elements
+    deleted = []
+    collection.delete_if { |e| deleted << e if @delete_if.andand.call(e.attributes) }
+    deleted
   end
 
   def collection_to_keep
@@ -51,5 +55,4 @@ class ModelSet
   def persisted?
     false
   end
-
 end

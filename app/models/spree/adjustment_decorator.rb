@@ -35,5 +35,19 @@ module Spree
     def display_included_tax
       Spree::Money.new(included_tax, { :currency => currency })
     end
+
+    def self.without_callbacks
+      skip_callback :save, :after, :update_adjustable
+      skip_callback :destroy, :after, :update_adjustable
+
+      result = yield
+
+    ensure
+      set_callback :save, :after, :update_adjustable
+      set_callback :destroy, :after, :update_adjustable
+
+      result
+    end
+
   end
 end

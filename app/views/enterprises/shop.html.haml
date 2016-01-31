@@ -1,5 +1,9 @@
 - content_for(:title) do
   = current_distributor.name
+- content_for(:description) do
+  = current_distributor.description
+- content_for(:image) do
+  = current_distributor.logo.url
 
 = inject_enterprises
 

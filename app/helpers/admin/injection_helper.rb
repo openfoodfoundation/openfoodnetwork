@@ -31,12 +31,12 @@ module Admin
       admin_inject_json_ams_array ngModule, "shops", @shops, Api::Admin::IdNameSerializer
     end
 
-    def admin_inject_hubs
-      admin_inject_json_ams_array "ofn.admin", "hubs", @hubs, Api::Admin::IdNameSerializer
+    def admin_inject_hubs(opts={module: 'ofn.admin'})
+      admin_inject_json_ams_array opts[:module], "hubs", @hubs, Api::Admin::IdNameSerializer
     end
 
-    def admin_inject_producers
-      admin_inject_json_ams_array "ofn.admin", "producers", @producers, Api::Admin::IdNameSerializer
+    def admin_inject_producers(opts={module: 'ofn.admin'})
+      admin_inject_json_ams_array opts[:module], "producers", @producers, Api::Admin::IdNameSerializer
     end
 
     def admin_inject_enterprise_permissions
@@ -49,7 +49,7 @@ module Admin
     end
 
     def admin_inject_hub_permissions
-      render partial: "admin/json/injection_ams", locals: {ngModule: "ofn.admin", name: "hubPermissions", json: @hub_permissions.to_json}
+      render partial: "admin/json/injection_ams", locals: {ngModule: "admin.variantOverrides", name: "hubPermissions", json: @hub_permissions.to_json}
     end
 
     def admin_inject_products
@@ -69,7 +69,7 @@ module Admin
     end
 
     def admin_inject_variant_overrides
-      admin_inject_json_ams_array "ofn.admin", "variantOverrides", @variant_overrides, Api::Admin::VariantOverrideSerializer
+      admin_inject_json_ams_array "admin.variantOverrides", "variantOverrides", @variant_overrides, Api::Admin::VariantOverrideSerializer
     end
 
     def admin_inject_order_cycle_instance
@@ -85,7 +85,7 @@ module Admin
     end
 
     def admin_inject_spree_api_key
-      render partial: "admin/json/injection_ams", locals: {ngModule: 'ofn.admin', name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
+      render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.indexUtils', name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
     end
 
     def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})

@@ -23,13 +23,23 @@ Spree::OrdersController.class_eval do
   end
 
   def populate
-    populator = Spree::OrderPopulator.new(current_order(true), current_currency)
-    if populator.populate(params.slice(:products, :variants, :quantity), true)
-      fire_event('spree.cart.add')
-      fire_event('spree.order.contents_changed')
-      render json: true, status: 200
-    else
-      render json: false, status: 402
+    # Without intervention, the Spree::Adjustment#update_adjustable callback is called many times
+    # during cart population, for both taxation and enterprise fees. This operation triggers a
+    # costly Spree::Order#update!, which only needs to be run once. We avoid this by disabling
+    # callbacks on Spree::Adjustment and then manually invoke Spree::Order#update! on success.
+
+    Spree::Adjustment.without_callbacks do
+      populator = Spree::OrderPopulator.new(current_order(true), current_currency)
+      if populator.populate(params.slice(:products, :variants, :quantity), true)
+        fire_event('spree.cart.add')
+        fire_event('spree.order.contents_changed')
+
+        current_order.update!
+
+        render json: true, status: 200
+      else
+        render json: false, status: 402
+      end
     end
   end
 

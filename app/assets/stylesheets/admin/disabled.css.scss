@@ -1,0 +1,13 @@
+label.disabled {
+  color: #c3c3c3;
+  pointer-events: none;
+}
+
+input[type='button']:disabled {
+  background-color: #c3c3c3;
+  color: #ffffff;
+}
+
+.select2-container-disabled {
+  pointer-events: none;
+}
