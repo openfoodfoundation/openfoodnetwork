@@ -1,30 +1,27 @@
-%table.index.bulk#variant-overrides
-  %col.producer{ width: "20%", ng: { show: 'columns.producer.visible' } }
-  %col.product{ width: "20%", ng: { show: 'columns.product.visible' } }
-  %col.sku{ width: "20%", ng: { show: 'columns.sku.visible' } }
-  %col.price{ width: "10%", ng: { show: 'columns.price.visible' } }
-  %col.on_hand{ width: "10%", ng: { show: 'columns.on_hand.visible' } }
-  %col.on_demand{ width: "10%", ng: { show: 'columns.on_demand.visible' } }
-  %col.reset{ width: "1%", ng: { show: 'columns.reset.visible' } }
-  %col.reset{ width: "15%", ng: { show: 'columns.reset.visible' } }
-  %col.inheritance{ width: "5%", ng: { show: 'columns.inheritance.visible' } }
-  %col.visibility{ width: "10%", ng: { show: 'columns.visibility.visible' } }
-  %thead
-    %tr{ ng: { controller: "ColumnsCtrl" } }
-      %th.producer{ ng: { show: 'columns.producer.visible' } } Producer
-      %th.product{ ng: { show: 'columns.product.visible' } } Product
-      %th.sku{ ng: { show: 'columns.sku.visible' } } SKU
-      %th.price{ ng: { show: 'columns.price.visible' } } Price
-      %th.on_hand{ ng: { show: 'columns.on_hand.visible' } } On hand
-      %th.on_demand{ ng: { show: 'columns.on_demand.visible' } } On Demand?
-      %th.reset{ colspan: 2, ng: { show: 'columns.reset.visible' } } Enable Stock Level Reset?
-      %th.inheritance{ ng: { show: 'columns.inheritance.visible' } } Inherit?
-      %th.visibility{ ng: { show: 'columns.visibility.visible' } } Show/Hide?
-  %tbody{bindonce: true, ng: {repeat: 'product in filteredProducts = (products | hubPermissions:hubPermissions:hub.id | inventoryProducts:hub.id:showHidden | attrFilter:{producer_id:producerFilter} | filter:query) | limitTo:productLimit' } }
-    = render 'admin/variant_overrides/products_product'
-    = render 'admin/variant_overrides/products_variants'
-
-.sixteen.columns.alpha.omega.text-center{ ng: {show: 'productLimit < filteredProducts.length'}}
-  %input{ type: 'button', value: 'Show More', ng: { click: 'productLimit = productLimit + 10' } }
-  or
-  %input{ type: 'button', value: "Show All ({{ filteredProducts.length - productLimit }}  More)", ng: { click: 'productLimit = filteredProducts.length' } }
+%form{ name: 'variant_overrides_form', ng: { show: "views.inventory.visible" } }
+  %save-bar{ save: "update()", form: "variant_overrides_form" }
+  %table.index.bulk#variant-overrides
+    %col.producer{ width: "20%", ng: { show: 'columns.producer.visible' } }
+    %col.product{ width: "20%", ng: { show: 'columns.product.visible' } }
+    %col.sku{ width: "20%", ng: { show: 'columns.sku.visible' } }
+    %col.price{ width: "10%", ng: { show: 'columns.price.visible' } }
+    %col.on_hand{ width: "10%", ng: { show: 'columns.on_hand.visible' } }
+    %col.on_demand{ width: "10%", ng: { show: 'columns.on_demand.visible' } }
+    %col.reset{ width: "1%", ng: { show: 'columns.reset.visible' } }
+    %col.reset{ width: "15%", ng: { show: 'columns.reset.visible' } }
+    %col.inheritance{ width: "5%", ng: { show: 'columns.inheritance.visible' } }
+    %col.visibility{ width: "10%", ng: { show: 'columns.visibility.visible' } }
+    %thead
+      %tr{ ng: { controller: "ColumnsCtrl" } }
+        %th.producer{ ng: { show: 'columns.producer.visible' } } Producer
+        %th.product{ ng: { show: 'columns.product.visible' } } Product
+        %th.sku{ ng: { show: 'columns.sku.visible' } } SKU
+        %th.price{ ng: { show: 'columns.price.visible' } } Price
+        %th.on_hand{ ng: { show: 'columns.on_hand.visible' } } On hand
+        %th.on_demand{ ng: { show: 'columns.on_demand.visible' } } On Demand?
+        %th.reset{ colspan: 2, ng: { show: 'columns.reset.visible' } } Enable Stock Level Reset?
+        %th.inheritance{ ng: { show: 'columns.inheritance.visible' } } Inherit?
+        %th.visibility{ ng: { show: 'columns.visibility.visible' } } Hide
+    %tbody{bindonce: true, ng: {repeat: 'product in filteredProducts = (products | hubPermissions:hubPermissions:hub.id | inventoryProducts:hub.id:views | attrFilter:{producer_id:producerFilter} | filter:query) | limitTo:productLimit' } }
+      = render 'admin/variant_overrides/products_product'
+      = render 'admin/variant_overrides/products_variants'

@@ -1,4 +1,4 @@
-%tr.variant{ id: "v_{{variant.id}}", ng: {repeat: 'variant in product.variants | inventoryVariants:hub.id:showHidden'}}
+%tr.variant{ id: "v_{{variant.id}}", ng: {repeat: 'variant in product.variants | inventoryVariants:hub.id:views'}}
   %td.producer{ ng: { show: 'columns.producer.visible' } }
   %td.product{ ng: { show: 'columns.product.visible' } }
     %span{ bo: { bind: 'variant.display_name || ""'} }
@@ -18,4 +18,5 @@
   %td.inheritance{ ng: { show: 'columns.inheritance.visible' } }
     %input.field{ :type => 'checkbox', name: 'variant-overrides-{{ variant.id }}-inherit', ng: { model: 'inherit' }, 'track-inheritance' => true }
   %td.visibility{ ng: { show: 'columns.visibility.visible' } }
-    %input.fullwidth{ :type => 'button', ng: { value: "inventoryItems[hub.id][variant.id].visible ? 'Hide' : 'Show'", click: "setVisibility(hub.id,variant.id,!inventoryItems[hub.id][variant.id].visible)", class: "{ hidden: !inventoryItems[hub.id][variant.id].visible}" } }
+    %button.icon-remove.hide.fullwidth{ :type => 'button', ng: { click: "setVisibility(hub.id,variant.id,false)" } }
+      = t(:hide)

@@ -1,0 +1,7 @@
+%div.text-big.no-results{ ng: { show: 'hub && products.length > 0 && filteredProducts.length == 0' } }
+  %span{ ng: { show: 'views.inventory.visible && !filtersApplied()' } } You inventory is currently empty.
+  %span{ ng: { show: 'views.inventory.visible && filtersApplied()' } } No matching products found in your inventory.
+  %span{ ng: { show: 'views.hidden.visible && !filtersApplied()' } } No products have been hidden from this inventory.
+  %span{ ng: { show: 'views.hidden.visible && filtersApplied()' } } No hidden products match your search criteria.
+  %span{ ng: { show: 'views.new.visible && !filtersApplied()' } } No new products available to add this inventory.
+  %span{ ng: { show: 'views.new.visible && filtersApplied()' } } No new products match your search criteria.

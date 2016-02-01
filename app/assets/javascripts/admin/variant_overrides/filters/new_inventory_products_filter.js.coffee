@@ -5,4 +5,5 @@ angular.module("admin.variantOverrides").filter "newInventoryProducts", ($filter
     return $filter('filter')(products, (product) ->
       for variant in product.variants
         return true if !InventoryItems.inventoryItems[hub_id].hasOwnProperty(variant.id)
+      false
     , true)

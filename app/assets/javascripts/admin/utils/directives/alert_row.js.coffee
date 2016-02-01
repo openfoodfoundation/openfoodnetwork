@@ -5,11 +5,14 @@ angular.module("admin.utils").directive "alertRow", ->
     message: '@'
     buttonText: '@?'
     buttonAction: '&?'
+    dismissed: '=?'
     close: "&?"
   transclude: true
   templateUrl: "admin/alert_row.html"
   link: (scope, element, attrs) ->
+    scope.dismissed = false
+
     scope.dismiss = ->
+      scope.dismissed = true
       scope.close() if scope.close?
-      element.hide()
       return false

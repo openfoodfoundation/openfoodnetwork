@@ -99,23 +99,24 @@ feature %q{
 
             # Show/Hide products
             first("div#columns-dropdown", :text => "COLUMNS").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "Show/Hide").click
+            first("div#columns-dropdown div.menu div.menu_item", text: "Hide").click
             first("div#columns-dropdown", :text => "COLUMNS").click
             expect(page).to have_selector "tr#v_#{variant.id}"
             expect(page).to have_selector "tr#v_#{variant_related.id}"
             within "tr#v_#{variant.id}" do click_button 'Hide' end
             expect(page).to_not have_selector "tr#v_#{variant.id}"
             expect(page).to have_selector "tr#v_#{variant_related.id}"
-            click_button 'Show Hidden'
-            expect(page).to have_selector "tr#v_#{variant.id}"
-            expect(page).to have_selector "tr#v_#{variant_related.id}"
-            within "tr#v_#{variant.id}" do click_button 'Show' end
-            within "tr#v_#{variant_related.id}" do click_button 'Hide' end
-            expect(page).to have_selector "tr#v_#{variant.id}"
-            expect(page).to have_selector "tr#v_#{variant_related.id}"
-            click_button 'Hide Hidden'
+            first("div#views-dropdown").click
+            first("div#views-dropdown div.menu div.menu_item", text: "Hidden Products").click
             expect(page).to have_selector "tr#v_#{variant.id}"
             expect(page).to_not have_selector "tr#v_#{variant_related.id}"
+            within "tr#v_#{variant.id}" do click_button 'Add' end
+            expect(page).to_not have_selector "tr#v_#{variant.id}"
+            expect(page).to_not have_selector "tr#v_#{variant_related.id}"
+            first("div#views-dropdown").click
+            first("div#views-dropdown div.menu div.menu_item", text: "Inventory Products").click
+            expect(page).to have_selector "tr#v_#{variant.id}"
+            expect(page).to have_selector "tr#v_#{variant_related.id}"
           end
 
           it "creates new overrides" do
@@ -271,7 +272,8 @@ feature %q{
           end
 
           it "resets stock to defaults" do
-            click_button 'Reset Stock to Defaults'
+            first("div#bulk-actions-dropdown").click
+            first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
             page.should have_content 'Stocks reset to defaults.'
             vo.reload
             page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '1000', placeholder: '12'
@@ -279,7 +281,8 @@ feature %q{
           end
 
           it "doesn't reset stock levels if the behaviour is disabled" do
-            click_button 'Reset Stock to Defaults'
+            first("div#bulk-actions-dropdown").click
+            first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
             vo_no_reset.reload
             page.should have_input "variant-overrides-#{variant2.id}-count_on_hand", with: '40', placeholder: '12'
             vo_no_reset.count_on_hand.should == 40
@@ -287,7 +290,8 @@ feature %q{
 
           it "prompts to save changes before reset if any are pending" do
             fill_in "variant-overrides-#{variant.id}-price", with: '200'
-            click_button 'Reset Stock to Defaults'
+            first("div#bulk-actions-dropdown").click
+            first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
             page.should have_content "Save changes first"
           end
         end
@@ -305,20 +309,30 @@ feature %q{
           select2_select hub.name, from: 'hub_id'
         end
 
-        it "shows new variants, and allows them to be added or ignored" do
+        it "alerts the user to the presence of new products, and allows them to be added or hidden" do
           expect(page).to_not have_selector "table#variant-overrides tr#v_#{variant1.id}"
           expect(page).to_not have_selector "table#variant-overrides tr#v_#{variant2.id}"
 
-          expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'VARIANT', 'ADD', 'IGNORE']
-          expect(page).to have_selector "table#new-variants tr#nv_#{variant1.id}"
-          expect(page).to have_selector "table#new-variants tr#nv_#{variant2.id}"
-          within "table#new-variants tr#nv_#{variant1.id}" do click_button 'Add' end
-          within "table#new-variants tr#nv_#{variant2.id}" do click_button 'Ignore' end
-          expect(page).to_not have_selector "table#new-variants tr#nv_#{variant1.id}"
-          expect(page).to_not have_selector "table#new-variants tr#nv_#{variant2.id}"
+          expect(page).to have_selector '.alert-row span.message', text: "There are 1 new products available to add to your inventory."
+          click_button "Review Now"
+
+          expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'VARIANT', 'ADD', 'HIDE']
+          expect(page).to have_selector "table#new-products tr#v_#{variant1.id}"
+          expect(page).to have_selector "table#new-products tr#v_#{variant2.id}"
+          within "table#new-products tr#v_#{variant1.id}" do click_button 'Add' end
+          within "table#new-products tr#v_#{variant2.id}" do click_button 'Hide' end
+          expect(page).to_not have_selector "table#new-products tr#v_#{variant1.id}"
+          expect(page).to_not have_selector "table#new-products tr#v_#{variant2.id}"
+          click_button "Back to my inventory"
 
           expect(page).to have_selector "table#variant-overrides tr#v_#{variant1.id}"
           expect(page).to_not have_selector "table#variant-overrides tr#v_#{variant2.id}"
+
+          first("div#views-dropdown").click
+          first("div#views-dropdown div.menu div.menu_item", text: "Hidden Products").click
+
+          expect(page).to_not have_selector "table#hidden-products tr#v_#{variant1.id}"
+          expect(page).to have_selector "table#hidden-products tr#v_#{variant2.id}"
         end
       end
     end

@@ -1,17 +1,23 @@
-angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, SpreeApiAuth, PagedFetcher, StatusMessage, RequestMonitor, hubs, producers, hubPermissions, InventoryItems, VariantOverrides, DirtyVariantOverrides) ->
+angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, Views, SpreeApiAuth, PagedFetcher, StatusMessage, RequestMonitor, hubs, producers, hubPermissions, InventoryItems, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = Indexer.index hubs
   $scope.hub = null
   $scope.products = []
   $scope.producers = producers
   $scope.producersByID = Indexer.index producers
   $scope.hubPermissions = hubPermissions
-  $scope.showHidden = false
   $scope.productLimit = 10
   $scope.variantOverrides = VariantOverrides.variantOverrides
   $scope.inventoryItems = InventoryItems.inventoryItems
   $scope.setVisibility = InventoryItems.setVisibility
   $scope.StatusMessage = StatusMessage
   $scope.RequestMonitor = RequestMonitor
+  $scope.selectView = Views.selectView
+  $scope.currentView = -> Views.currentView
+
+  $scope.views = Views.setViews
+    inventory:    { name: "Inventory Products", visible: true }
+    hidden:       { name: "Hidden Products",    visible: false }
+    new:          { name: "New Products",       visible: false }
 
   $scope.columns = Columns.setColumns
     producer:     { name: "Producer",           visible: true }
@@ -22,13 +28,18 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
     on_demand:    { name: "On Demand",          visible: false }
     reset:        { name: "Reset Stock Level",  visible: false }
     inheritance:  { name: "Inheritance",        visible: false }
-    visibility:   { name: "Show/Hide",          visible: false }
+    visibility:   { name: "Hide",               visible: false }
+
+  $scope.bulkActions = [ name: "Reset Stock Levels To Defaults", callback: 'resetStock' ]
 
   $scope.resetSelectFilters = ->
     $scope.producerFilter = 0
     $scope.query = ''
 
   $scope.resetSelectFilters()
+
+  $scope.filtersApplied = ->
+    $scope.producerFilter != 0 || $scope.query != ''
 
   $scope.initialise = ->
     SpreeApiAuth.authorise()

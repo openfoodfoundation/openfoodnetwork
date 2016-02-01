@@ -1,0 +1,5 @@
+%div{ ng: { show: '(newProductCount = (products | newInventoryProducts:hub_id).length) > 0 && !views.new.visible && !alertDismissed' } }
+  %hr.divider.sixteen.columns.alpha.omega
+  %alert-row{ message: "There are {{ newProductCount }} new products available to add to your inventory.",
+    dismissed: "alertDismissed",
+    button: { text: 'Review Now', action: "selectView('new')" } }
