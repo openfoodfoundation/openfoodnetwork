@@ -18,7 +18,7 @@
           %td.order5.text-right{"bo-text" => "order.total | localizeCurrency"}
           %td.order6.text-right{"ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}", "bo-text" => "order.outstanding_balance | localizeCurrency"}
           %tr.payment-row{"ng-repeat" => "payment in order.payments"}
-            %td.order1{"bo-text" => "'Payment '+ payment.identifier"}
+            %td.order1{"bo-text" => "()'payment' | t) + ' ' + payment.identifier"}
             %td.order2{"bo-text" => "payment.updated_at"}
             %td.order3{"bo-text" => "payment.payment_method"}
             %td.order4
