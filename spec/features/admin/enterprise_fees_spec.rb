@@ -17,11 +17,11 @@ feature %q{
     click_link 'Configuration'
     click_link 'Enterprise Fees'
 
-    page.should have_selector "#enterprise_fee_set_collection_attributes_0_enterprise_id"
-    page.should have_selector "option[selected]", text: 'Packing'
+    page.should have_select "enterprise_fee_set_collection_attributes_0_enterprise_id"
+    page.should have_select "enterprise_fee_set_collection_attributes_0_fee_type", selected: 'Packing'
     page.should have_selector "input[value='$0.50 / kg']"
-    page.should have_selector "option[selected]", text: 'GST'
-    page.should have_selector "option[selected]", text: 'Flat Rate (per item)'
+    page.should have_select "enterprise_fee_set_collection_attributes_0_tax_category_id", selected: 'GST'
+    page.should have_select "enterprise_fee_set_collection_attributes_0_calculator_type", selected: 'Flat Rate (per item)'
     page.should have_selector "input[value='#{amount}']"
   end
 
@@ -73,8 +73,8 @@ feature %q{
     click_button 'Update'
 
     # Then I should see the updated fields for my fee
-    page.should have_selector "option[selected]", text: 'Foo'
-    page.should have_selector "option[selected]", text: 'Admin'
+    page.should have_select "enterprise_fee_set_collection_attributes_0_enterprise_id", selected: 'Foo'
+    page.should have_select "enterprise_fee_set_collection_attributes_0_fee_type", selected: 'Admin'
     page.should have_selector "input[value='Greetings!']"
     page.should have_select 'enterprise_fee_set_collection_attributes_0_tax_category_id', selected: ''
     page.should have_selector "option[selected]", text: 'Flat Percent'

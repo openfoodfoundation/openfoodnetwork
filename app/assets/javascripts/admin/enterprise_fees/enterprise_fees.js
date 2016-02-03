@@ -1,1 +1,1 @@
-angular.module("admin.enterpriseFees", [])
+angular.module("admin.enterpriseFees", ['admin.indexUtils'])
