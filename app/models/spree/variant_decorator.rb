@@ -85,18 +85,19 @@ Spree::Variant.class_eval do
     end
   end
 
-  private
-
-  def update_weight_from_unit_value
-    self.weight = weight_from_unit_value if self.product.variant_unit == 'weight' && unit_value.present?
-  end
-
   def refresh_products_cache
     if is_master?
       product.refresh_products_cache
     else
       OpenFoodNetwork::ProductsCache.variant_changed self
     end
+  end
+
+
+  private
+
+  def update_weight_from_unit_value
+    self.weight = weight_from_unit_value if self.product.variant_unit == 'weight' && unit_value.present?
   end
 
   def destruction
