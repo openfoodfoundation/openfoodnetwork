@@ -1,7 +1,7 @@
 = content_for :page_title do
   Enterprise Fees
 
-= ng_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path, :html => {'ng-app' => 'enterprise_fees', 'ng-controller' => 'AdminEnterpriseFeesCtrl'} do |enterprise_fee_set_form|
+= ng_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path, :html => {'ng-app' => 'admin.enterpriseFees', 'ng-controller' => 'enterpriseFeesCtrl'} do |enterprise_fee_set_form|
   = hidden_field_tag 'enterprise_id', @enterprise.id if @enterprise
   = render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise_fee_set }
 
