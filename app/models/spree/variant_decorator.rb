@@ -92,18 +92,29 @@ Spree::Variant.class_eval do
   end
 
   def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.variant_changed self
+    if is_master?
+      product.refresh_products_cache
+    else
+      OpenFoodNetwork::ProductsCache.variant_changed self
+    end
   end
 
   def destruction
-    OpenFoodNetwork::ProductsCache.variant_destroyed(self) do
-      # Remove this association here instead of using dependent: :destroy because
-      # dependent-destroy acts before this around_filter is called, so ProductsCache
-      # has no way of knowing which exchanges the variant was a member of.
+    if is_master?
       exchange_variants(:reload).destroy_all
-
-      # Destroy the variant
       yield
+      product.refresh_products_cache
+
+    else
+      OpenFoodNetwork::ProductsCache.variant_destroyed(self) do
+        # Remove this association here instead of using dependent: :destroy because
+        # dependent-destroy acts before this around_filter is called, so ProductsCache
+        # has no way of knowing which exchanges the variant was a member of.
+        exchange_variants(:reload).destroy_all
+
+        # Destroy the variant
+        yield
+      end
     end
   end
 end
