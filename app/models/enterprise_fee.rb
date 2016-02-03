@@ -71,8 +71,8 @@ class EnterpriseFee < ActiveRecord::Base
       # Remove this association here instead of using dependent: :destroy because
       # dependent-destroy acts before this around_filter is called, so ProductsCache
       # has no way of knowing where this fee was used.
-      order_cycles.clear
-      exchange_fees.destroy_all
+      order_cycles(:reload).clear
+      exchange_fees(:reload).destroy_all
 
       # Destroy the enterprise fee
       yield

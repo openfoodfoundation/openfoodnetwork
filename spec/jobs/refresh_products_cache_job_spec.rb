@@ -6,11 +6,11 @@ describe RefreshProductsCacheJob do
   let(:order_cycle) { create(:simple_order_cycle) }
 
   it "renders products and writes them to cache" do
-    OpenFoodNetwork::ProductsRenderer.any_instance.stub(:products_json) { 'products' }
+    RefreshProductsCacheJob.any_instance.stub(:products_json) { 'products' }
 
     run_job RefreshProductsCacheJob.new distributor.id, order_cycle.id
 
-    expect(Rails.cache.read("products-json-123-456")).to eq 'products'
+    expect(Rails.cache.read("products-json-#{distributor.id}-#{order_cycle.id}")).to eq 'products'
   end
 
   describe "fetching products JSON" do

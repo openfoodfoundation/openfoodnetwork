@@ -100,7 +100,7 @@ Spree::Variant.class_eval do
       # Remove this association here instead of using dependent: :destroy because
       # dependent-destroy acts before this around_filter is called, so ProductsCache
       # has no way of knowing which exchanges the variant was a member of.
-      exchange_variants.destroy_all
+      exchange_variants(:reload).destroy_all
 
       # Destroy the variant
       yield
