@@ -191,6 +191,11 @@ Spree::Product.class_eval do
   alias_method_chain :delete, :delete_from_order_cycles
 
 
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.product_changed self
+  end
+
+
   private
 
   def set_available_on_to_now
@@ -250,9 +255,5 @@ Spree::Product.class_eval do
       requested = permalink.presence || permalink_was.presence || name.presence || 'product'
       self.permalink = create_unique_permalink(requested.parameterize)
     end
-  end
-
-  def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.product_changed self
   end
 end
