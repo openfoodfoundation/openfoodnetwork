@@ -18,11 +18,6 @@ describe EnterpriseFee do
       ef.save
     end
 
-    it "refreshes the products cache when destroyed" do
-      expect(OpenFoodNetwork::ProductsCache).to receive(:enterprise_fee_destroyed).with(ef)
-      ef.destroy
-    end
-
     it "removes itself from order cycle coordinator fees when destroyed" do
       oc = create(:simple_order_cycle, coordinator_fees: [ef])
 
