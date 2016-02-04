@@ -13,6 +13,8 @@ module OpenFoodNetwork
 
     def products_json
       products_json = Rails.cache.fetch("products-json-#{@distributor.id}-#{@order_cycle.id}") do
+        log_warning
+
         begin
           uncached_products_json
         rescue ProductsRenderer::NoProducts
@@ -27,6 +29,12 @@ module OpenFoodNetwork
 
 
     private
+
+    def log_warning
+      if Rails.env.production? || Rails.env.staging?
+        Bugsnag.notify RuntimeError.new("Live server MISS on products cache for distributor: #{@distributor.id}, order cycle: #{@order_cycle.id}")
+      end
+    end
 
     def uncached_products_json
       ProductsRenderer.new(@distributor, @order_cycle).products_json
