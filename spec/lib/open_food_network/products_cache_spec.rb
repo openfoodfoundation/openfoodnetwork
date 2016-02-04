@@ -270,13 +270,12 @@ module OpenFoodNetwork
     end
 
     describe "refreshing the cache" do
-      let(:distributor) { double(:distributor, id: 123) }
-      let(:order_cycle) { double(:order_cycle, id: 456) }
+      let(:distributor) { double(:distributor) }
+      let(:order_cycle) { double(:order_cycle) }
 
-      it "enqueues a RefreshProductsCacheJob" do
-        expect do
-          ProductsCache.send(:refresh_cache, distributor, order_cycle)
-        end.to enqueue_job RefreshProductsCacheJob, distributor_id: distributor.id, order_cycle_id: order_cycle.id
+      it "notifies ProductsCacheRefreshment" do
+        expect(ProductsCacheRefreshment).to receive(:refresh).with(distributor, order_cycle)
+        ProductsCache.send(:refresh_cache, distributor, order_cycle)
       end
     end
   end

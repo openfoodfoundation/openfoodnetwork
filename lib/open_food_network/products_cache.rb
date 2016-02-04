@@ -1,7 +1,8 @@
-module OpenFoodNetwork
+require 'open_food_network/products_cache_refreshment'
 
-  # When elements of the data model change, enqueue jobs to refresh the appropriate parts of
-  # the products cache.
+# When elements of the data model change, refresh the appropriate parts of the products cache.
+
+module OpenFoodNetwork
   class ProductsCache
     def self.variant_changed(variant)
       exchanges_featuring_variants(variant).each do |exchange|
@@ -126,7 +127,7 @@ module OpenFoodNetwork
 
 
     def self.refresh_cache(distributor, order_cycle)
-      Delayed::Job.enqueue RefreshProductsCacheJob.new distributor.id, order_cycle.id
+      ProductsCacheRefreshment.refresh distributor, order_cycle
     end
   end
 end
