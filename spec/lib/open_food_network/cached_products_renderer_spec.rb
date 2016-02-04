@@ -19,7 +19,7 @@ module OpenFoodNetwork
 
       it "raises an exception when there are no products" do
         Rails.cache.write "products-json-#{distributor.id}-#{order_cycle.id}", nil
-        expect { cpr.products_json }.to raise_error ProductsRenderer::NoProducts
+        expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
       end
     end
 
@@ -52,18 +52,18 @@ module OpenFoodNetwork
         before { cpr.stub(:uncached_products_json).and_raise ProductsRenderer::NoProducts }
 
         it "raises an error" do
-          expect { cpr.products_json }.to raise_error ProductsRenderer::NoProducts
+          expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
         end
 
         it "caches the products as nil" do
-          expect { cpr.products_json }.to raise_error ProductsRenderer::NoProducts
+          expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
           expect(cache_present).to be
           expect(cached_json).to be_nil
         end
 
         it "logs a warning" do
           cpr.should_receive :log_warning
-          expect { cpr.products_json }.to raise_error ProductsRenderer::NoProducts
+          expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
         end
       end
     end
