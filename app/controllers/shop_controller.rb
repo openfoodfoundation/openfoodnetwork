@@ -1,4 +1,4 @@
-require 'open_food_network/products_renderer'
+require 'open_food_network/cached_products_renderer'
 
 class ShopController < BaseController
   layout "darkswarm"
@@ -11,11 +11,11 @@ class ShopController < BaseController
 
   def products
     begin
-      products_json = OpenFoodNetwork::ProductsRenderer.new(current_distributor, current_order_cycle).products_json
+      products_json = OpenFoodNetwork::CachedProductsRenderer.new(current_distributor, current_order_cycle).products_json
 
       render json: products_json
 
-    rescue OpenFoodNetwork::ProductsRenderer::NoProducts
+    rescue OpenFoodNetwork::CachedProductsRenderer::NoProducts
       render status: 404, json: ''
     end
   end
