@@ -120,78 +120,152 @@ module Spree
 
       describe "EnterpriseFee adjustments" do
         let!(:zone)                { create(:zone_with_member) }
-        let(:tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
-        let(:tax_category)         { create(:tax_category, tax_rates: [tax_rate]) }
+        let(:fee_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
+        let(:fee_tax_category)         { create(:tax_category, tax_rates: [fee_tax_rate]) }
 
         let(:coordinator) { create(:distributor_enterprise, charges_sales_tax: true) }
-        let(:variant)     { create(:variant) }
+        let(:variant)     { create(:variant, product: create(:product, tax_category: nil)) }
         let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
         let!(:order)      { create(:order, order_cycle: order_cycle, distributor: coordinator) }
         let!(:line_item)  { create(:line_item, order: order, variant: variant) }
         let(:adjustment)  { order.adjustments(:reload).enterprise_fee.first }
 
-        before do
-          order.reload.update_distribution_charge!
+        context "when enterprise fees have a fixed tax_category" do
+          before do
+            order.reload.update_distribution_charge!
+          end
+
+          context "when enterprise fees are taxed per-order" do
+            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
+
+            describe "when the tax rate includes the tax in the price" do
+              it "records the tax on the enterprise fee adjustments" do
+                # The fee is $50, tax is 10%, and the fee is inclusive of tax
+                # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
+
+                adjustment.included_tax.should == 4.55
+              end
+            end
+
+            describe "when the tax rate does not include the tax in the price" do
+              before do
+                fee_tax_rate.update_attribute :included_in_price, false
+                order.reload.create_tax_charge! # Updating line_item or order has the same effect
+                order.update_distribution_charge!
+              end
+
+              it "records the tax on TaxRate adjustment on the order" do
+                adjustment.included_tax.should == 0
+                order.adjustments.tax.first.amount.should == 5.0
+              end
+            end
+
+            describe "when enterprise fees have no tax" do
+              before do
+                enterprise_fee.tax_category = nil
+                enterprise_fee.save!
+                order.update_distribution_charge!
+              end
+
+              it "records no tax as charged" do
+                adjustment.included_tax.should == 0
+              end
+            end
+          end
+
+
+          context "when enterprise fees are taxed per-item" do
+            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
+
+            describe "when the tax rate includes the tax in the price" do
+              it "records the tax on the enterprise fee adjustments" do
+                adjustment.included_tax.should == 4.55
+              end
+            end
+
+            describe "when the tax rate does not include the tax in the price" do
+              before do
+                fee_tax_rate.update_attribute :included_in_price, false
+                order.reload.create_tax_charge!  # Updating line_item or order has the same effect
+                order.update_distribution_charge!
+              end
+
+              it "records the tax on TaxRate adjustment on the order" do
+                adjustment.included_tax.should == 0
+                order.adjustments.tax.first.amount.should == 5.0
+              end
+            end
+          end
         end
 
-        context "when enterprise fees are taxed per-order" do
-          let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
+        context "when enterprise fees inherit their tax_category product they are applied to" do
+          let(:product_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.2) }
+          let(:product_tax_category)         { create(:tax_category, tax_rates: [product_tax_rate]) }
 
-          describe "when the tax rate includes the tax in the price" do
-            it "records the tax on the enterprise fee adjustments" do
-              # The fee is $50, tax is 10%, and the fee is inclusive of tax
-              # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
+          before do
+            variant.product.update_attribute(:tax_category_id, product_tax_category.id)
+            order.reload.create_tax_charge! # Updating line_item or order has the same effect
+            order.reload.update_distribution_charge!
+          end
 
-              adjustment.included_tax.should == 4.55
+          context "when enterprise fees are taxed per-order" do
+            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
+
+            describe "when the tax rate includes the tax in the price" do
+              it "records no tax on the enterprise fee adjustments" do
+                # EnterpriseFee tax category is nil and inheritance only applies to per item fees
+                # so tax on the enterprise_fee adjustment will be 0
+                # Tax on line item is: 0.2/1.2 x $10 = $1.67
+                adjustment.included_tax.should == 0.0
+                line_item.adjustments.first.included_tax.should == 1.67
+              end
+            end
+
+            describe "when the tax rate does not include the tax in the price" do
+              before do
+                product_tax_rate.update_attribute :included_in_price, false
+                order.reload.create_tax_charge! # Updating line_item or order has the same effect
+                order.reload.update_distribution_charge!
+              end
+
+              it "records the no tax on TaxRate adjustment on the order" do
+                # EnterpriseFee tax category is nil and inheritance only applies to per item fees
+                # so total tax on the order is only that which applies to the line_item itself
+                # ie. $10 x 0.2 = $2.0
+                adjustment.included_tax.should == 0
+                order.adjustments.tax.first.amount.should == 2.0
+              end
             end
           end
 
-          describe "when the tax rate does not include the tax in the price" do
-            before do
-              tax_rate.update_attribute :included_in_price, false
-              order.create_tax_charge! # Updating line_item or order has the same effect
-              order.update_distribution_charge!
+
+          context "when enterprise fees are taxed per-item" do
+            let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
+
+            describe "when the tax rate includes the tax in the price" do
+              it "records the tax on the enterprise fee adjustments" do
+                # Applying product tax rate of 0.2 to enterprise fee of $50
+                # gives tax on fee of 0.2/1.2 x $50 = $8.33
+                # Tax on line item is: 0.2/1.2 x $10 = $1.67
+                adjustment.included_tax.should == 8.33
+                line_item.adjustments.first.included_tax.should == 1.67
+              end
             end
 
-            it "records the tax on TaxRate adjustment on the order" do
-              adjustment.included_tax.should == 0
-              order.adjustments.tax.first.amount.should == 5.0
-            end
-          end
+            describe "when the tax rate does not include the tax in the price" do
+              before do
+                product_tax_rate.update_attribute :included_in_price, false
+                order.reload.create_tax_charge!  # Updating line_item or order has the same effect
+                order.update_distribution_charge!
+              end
 
-          describe "when enterprise fees have no tax" do
-            before do
-              enterprise_fee.tax_category = nil
-              enterprise_fee.save!
-              order.update_distribution_charge!
-            end
-
-            it "records no tax as charged" do
-              adjustment.included_tax.should == 0
-            end
-          end
-        end
-
-
-        context "when enterprise fees are taxed per-item" do
-          let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
-
-          describe "when the tax rate includes the tax in the price" do
-            it "records the tax on the enterprise fee adjustments" do
-              adjustment.included_tax.should == 4.55
-            end
-          end
-
-          describe "when the tax rate does not include the tax in the price" do
-            before do
-              tax_rate.update_attribute :included_in_price, false
-              order.create_tax_charge!  # Updating line_item or order has the same effect
-              order.update_distribution_charge!
-            end
-
-            it "records the tax on TaxRate adjustment on the order" do
-              adjustment.included_tax.should == 0
-              order.adjustments.tax.first.amount.should == 5.0
+              it "records the tax on TaxRate adjustment on the order" do
+                # EnterpriseFee inherits tax_category from product so total tax on
+                # the order is that which applies to the line item itself, plus the
+                # same rate applied to the fee of $50. ie. ($10 + $50) x 0.2 = $12.0
+                adjustment.included_tax.should == 0
+                order.adjustments.tax.first.amount.should == 12.0
+              end
             end
           end
         end

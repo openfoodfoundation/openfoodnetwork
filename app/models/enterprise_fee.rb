@@ -18,6 +18,7 @@ class EnterpriseFee < ActiveRecord::Base
   validates_inclusion_of :fee_type, :in => FEE_TYPES
   validates_presence_of :name
 
+  before_save :ensure_valid_tax_category_settings
 
   scope :for_enterprise, lambda { |enterprise| where(enterprise_id: enterprise) }
   scope :for_enterprises, lambda { |enterprises| where(enterprise_id: enterprises) }
@@ -56,5 +57,19 @@ class EnterpriseFee < ActiveRecord::Base
                                 :label => label,
                                 :mandatory => mandatory,
                                 :locked => true}, :without_protection => true)
+  end
+
+  private
+
+  def ensure_valid_tax_category_settings
+    # Setting an explicit tax_category removes any inheritance behaviour
+    # In the absence of any current changes to tax_category, setting
+    # inherits_tax_category to true will clear the tax_category
+    if tax_category_id_changed?
+      self.inherits_tax_category = false if tax_category.present?
+    elsif inherits_tax_category_changed?
+      self.tax_category_id = nil if inherits_tax_category?
+    end
+    return true
   end
 end

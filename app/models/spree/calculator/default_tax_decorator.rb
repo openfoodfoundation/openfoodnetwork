@@ -19,7 +19,8 @@ Spree::Calculator::DefaultTax.class_eval do
     # Added this block, finds relevant fees for each line_item, calculates the tax on them, and returns the total tax
     per_item_fees_total = order.line_items.sum do |line_item|
       calculator.send(:per_item_enterprise_fee_applicators_for, line_item.variant)
-      .select { |applicator| applicator.enterprise_fee.tax_category == rate.tax_category }
+      .select { |applicator| (!applicator.enterprise_fee.inherits_tax_category && applicator.enterprise_fee.tax_category == rate.tax_category) ||
+        (applicator.enterprise_fee.inherits_tax_category && line_item.product.tax_category == rate.tax_category) }
       .sum { |applicator| applicator.enterprise_fee.compute_amount(line_item) }
     end
 
