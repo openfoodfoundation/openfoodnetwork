@@ -91,6 +91,21 @@ describe Exchange do
     end
   end
 
+  describe "products caching" do
+    let!(:exchange) { create(:exchange) }
+
+    it "refreshes the products cache on change" do
+      expect(OpenFoodNetwork::ProductsCache).to receive(:exchange_changed).with(exchange)
+      exchange.pickup_time = 'asdf'
+      exchange.save
+    end
+
+    it "refreshes the products cache on destruction" do
+      expect(OpenFoodNetwork::ProductsCache).to receive(:exchange_destroyed).with(exchange)
+      exchange.destroy
+    end
+  end
+
   describe "scopes" do
     let(:supplier) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise, is_primary_producer: true) }

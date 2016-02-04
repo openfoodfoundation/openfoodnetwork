@@ -164,6 +164,71 @@ module OpenFoodNetwork
     end
 
 
+    describe "when an exchange is changed" do
+      let(:s) { create(:supplier_enterprise) }
+      let(:c) { create(:distributor_enterprise) }
+      let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
+      let(:v) { create(:variant) }
+      let(:oc) { create(:open_order_cycle, coordinator: c) }
+
+      describe "incoming exchanges" do
+        let!(:ex1) { create(:exchange, order_cycle: oc, sender: s, receiver: c, incoming: true, variants: [v]) }
+        let!(:ex2) { create(:exchange, order_cycle: oc, sender: c, receiver: d1, incoming: false, variants: [v]) }
+        let!(:ex3) { create(:exchange, order_cycle: oc, sender: c, receiver: d2, incoming: false, variants: []) }
+
+        before { oc.reload }
+
+        it "updates distributions that include one of the supplier's variants" do
+          expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+          ProductsCache.exchange_changed ex1
+        end
+
+        it "doesn't update distributions that don't include any of the supplier's variants" do
+          expect(ProductsCache).to receive(:refresh_cache).with(d2, oc).never
+          ProductsCache.exchange_changed ex1
+        end
+      end
+
+      describe "outgoing exchanges" do
+        let!(:ex) { create(:exchange, order_cycle: oc, sender: c, receiver: d1, incoming: false) }
+
+        it "does not update for undated order cycles" do
+          oc.update_attributes! orders_open_at: nil, orders_close_at: nil
+          expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).never
+          ProductsCache.exchange_changed ex
+        end
+
+        it "updates for upcoming order cycles" do
+          oc.update_attributes! orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now
+          expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+          ProductsCache.exchange_changed ex
+        end
+
+        it "updates for open order cycles" do
+          expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+          ProductsCache.exchange_changed ex
+        end
+
+        it "does not update for closed order cycles" do
+          oc.update_attributes! orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago
+          expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).never
+          ProductsCache.exchange_changed ex
+        end
+      end
+    end
+
+
+    describe "when an exchange is destroyed" do
+      let(:exchange) { double(:exchange) }
+
+      it "triggers the same update as a change to the exchange" do
+        expect(ProductsCache).to receive(:exchange_changed).with(exchange)
+        ProductsCache.exchange_destroyed exchange
+      end
+    end
+
+
     describe "when an enterprise fee is changed" do
       let(:s) { create(:supplier_enterprise) }
       let(:c) { create(:distributor_enterprise) }
