@@ -241,6 +241,10 @@ class OrderCycle < ActiveRecord::Base
     coordinator.users.include? user
   end
 
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.order_cycle_changed self
+  end
+
 
   private
 
@@ -254,9 +258,4 @@ class OrderCycle < ActiveRecord::Base
       distributed_variants.include?(product.master) &&
       (product.variants & distributed_variants).empty?
   end
-
-  def refresh_products_cache
-    OpenFoodNetwork::ProductsCache.order_cycle_changed self
-  end
-
 end
