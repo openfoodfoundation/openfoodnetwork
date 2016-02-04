@@ -14,6 +14,8 @@ module OpenFoodNetwork
     end
 
     def products_json
+      raise NoProducts.new if @distributor.nil? || @order_cycle.nil?
+
       products_json = Rails.cache.fetch("products-json-#{@distributor.id}-#{@order_cycle.id}") do
         log_warning
 

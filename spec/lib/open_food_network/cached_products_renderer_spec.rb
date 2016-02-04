@@ -8,6 +8,14 @@ module OpenFoodNetwork
     let(:order_cycle) { double(:order_cycle, id: 456) }
     let(:cpr) { CachedProductsRenderer.new(distributor, order_cycle) }
 
+    describe "when the distribution is not set" do
+      let(:cpr) { CachedProductsRenderer.new(nil, nil) }
+
+      it "raises an exception and returns no products" do
+        expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
+      end
+    end
+
     describe "when the products JSON is already cached" do
       before do
         Rails.cache.write "products-json-#{distributor.id}-#{order_cycle.id}", 'products'
