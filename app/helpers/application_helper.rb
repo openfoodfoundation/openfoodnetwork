@@ -25,8 +25,4 @@ module ApplicationHelper
       super
     end
   end
-
-  def image_url(file)
-    request.protocol + request.host_with_port + path_to_image(file)
-  end
 end
