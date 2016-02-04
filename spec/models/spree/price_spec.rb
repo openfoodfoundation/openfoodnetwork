@@ -12,10 +12,8 @@ module Spree
         price.save
       end
 
-      it "refreshes the products cache on destroy" do
-        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).with(variant)
-        price.destroy
-      end
+      # Do not refresh on price destruction - this (only?) happens when variant is destroyed,
+      # and in that case the variant will take responsibility for refreshing the cache
 
       it "does not refresh the cache when variant is not set" do
         # Creates a price without the back link to variant
