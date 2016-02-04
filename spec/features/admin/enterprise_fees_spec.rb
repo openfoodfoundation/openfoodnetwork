@@ -57,7 +57,7 @@ feature %q{
   scenario "editing an enterprise fee" do
     # Given an enterprise fee
     fee = create(:enterprise_fee)
-    create(:enterprise, name: 'Foo')
+    enterprise = create(:enterprise, name: 'Foo')
 
     # When I go to the enterprise fees page
     login_to_admin_section
@@ -68,7 +68,7 @@ feature %q{
     select 'Foo', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
     select 'Admin', from: 'enterprise_fee_set_collection_attributes_0_fee_type'
     fill_in 'enterprise_fee_set_collection_attributes_0_name', with: 'Greetings!'
-    select '', from: 'enterprise_fee_set_collection_attributes_0_tax_category_id'
+    select 'Inherit From Product', from: 'enterprise_fee_set_collection_attributes_0_tax_category_id'
     select 'Flat Percent', from: 'enterprise_fee_set_collection_attributes_0_calculator_type'
     click_button 'Update'
 
@@ -76,8 +76,18 @@ feature %q{
     page.should have_select "enterprise_fee_set_collection_attributes_0_enterprise_id", selected: 'Foo'
     page.should have_select "enterprise_fee_set_collection_attributes_0_fee_type", selected: 'Admin'
     page.should have_selector "input[value='Greetings!']"
-    page.should have_select 'enterprise_fee_set_collection_attributes_0_tax_category_id', selected: ''
+    page.should have_select 'enterprise_fee_set_collection_attributes_0_tax_category_id', selected: 'Inherit From Product'
     page.should have_selector "option[selected]", text: 'Flat Percent'
+
+    fee.reload
+    fee.enterprise.should == enterprise
+    fee.name.should == 'Greetings!'
+    fee.fee_type.should == 'admin'
+    fee.calculator_type.should == "Spree::Calculator::FlatPercentItemTotal"
+
+    # Sets tax_category and inherits_tax_category
+    fee.tax_category.should == nil
+    fee.inherits_tax_category.should == true
   end
 
   scenario "deleting an enterprise fee" do

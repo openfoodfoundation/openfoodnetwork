@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151128185900) do
+ActiveRecord::Schema.define(:version => 20160204031816) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -235,9 +235,10 @@ ActiveRecord::Schema.define(:version => 20151128185900) do
     t.integer  "enterprise_id"
     t.string   "fee_type"
     t.string   "name"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.integer  "tax_category_id"
+    t.boolean  "inherits_tax_category", :default => false, :null => false
   end
 
   add_index "enterprise_fees", ["enterprise_id"], :name => "index_enterprise_fees_on_enterprise_id"

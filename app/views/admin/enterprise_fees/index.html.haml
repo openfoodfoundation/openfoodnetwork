@@ -20,23 +20,20 @@
         %th.actions
     %tbody
       = enterprise_fee_set_form.ng_fields_for :collection do |f|
-        %tr{'ng-repeat' => 'enterprise_fee in enterprise_fees | filter:query' }
+        %tr{ ng: { repeat: 'enterprise_fee in enterprise_fees | filter:query' } }
           %td
             = f.ng_hidden_field :id
             %ofn-select{ :id => angular_id(:enterprise_id), data: 'enterprises', include_blank: true, ng: { model: 'enterprise_fee.enterprise_id' } }
             %input{ type: "hidden", name: angular_name(:enterprise_id), ng: { value: "enterprise_fee.enterprise_id" } }
-            -# = f.ng_collection_select :enterprise_id, @enterprises, :id, :name, 'enterprise_fee.enterprise_id', include_blank: false
           %td= f.ng_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
           %td= f.ng_text_field :name, { placeholder: 'e.g. packing fee' }
           %td
-            = f.ng_hidden_field :inherits_tax_category
             %ofn-select{ :id => angular_id(:tax_category_id), data: 'tax_categories', include_blank: true, ng: { model: 'enterprise_fee.tax_category_id' } }
-            %input{ type: "hidden", name: angular_name(:tax_category_id), ng: { value: "enterprise_fee.tax_category_id" } }
-            -# = f.ng_collection_select :tax_category_id, @tax_categories, :id, :name, 'enterprise_fee.tax_category_id', include_blank: " "
+            %input{ type: "hidden", name: angular_name(:tax_category_id), 'watch-tax-category' => true }
+            %input{ type: "hidden", name: angular_name(:inherits_tax_category), ng: { value: "enterprise_fee.inherits_tax_category" } }
           %td
             %ofn-select.calculator_type{ :id => angular_id(:calculator_type), ng: { model: 'enterprise_fee.calculator_type' }, value_attr: 'name', text_attr: 'description', data: 'calculators', 'spree-ensure-calculator-preferences-match-type' => true }
             %input{ type: "hidden", name: angular_name(:calculator_type), ng: { value: "enterprise_fee.calculator_type" } }
-            -# = f.ng_collection_select :calculator_type, @calculators, :name, :description, 'enterprise_fee.calculator_type', {'class' => 'calculator_type', 'spree-ensure-calculator-preferences-match-type' => "1"}
           %td{'ng-bind-html-unsafe-compiled' => 'enterprise_fee.calculator_settings'}
           %td.actions{'spree-delete-resource' => "1"}
 
