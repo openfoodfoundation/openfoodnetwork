@@ -76,7 +76,7 @@ module OpenFoodNetwork
     def self.refresh_supplier_fee(enterprise_fee)
       outgoing_exchanges = Set.new
 
-      incoming_exchanges_for_enterprise_fee(enterprise_fee).each do |exchange|
+      incoming_exchanges(enterprise_fee.exchanges).each do |exchange|
         outgoing_exchanges.merge outgoing_exchanges_with_variants(exchange.order_cycle, exchange.variant_ids)
       end
 
@@ -106,8 +106,9 @@ module OpenFoodNetwork
     end
 
 
-    def self.incoming_exchanges_for_enterprise_fee(enterprise_fee)
-      enterprise_fee.exchanges.incoming.
+    def self.incoming_exchanges(exchanges)
+      exchanges.
+        incoming.
         joins(:order_cycle).
         merge(OrderCycle.dated).
         merge(OrderCycle.not_closed)
