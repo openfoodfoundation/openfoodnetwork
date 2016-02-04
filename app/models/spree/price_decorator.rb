@@ -7,7 +7,7 @@ module Spree
     private
 
     def refresh_products_cache
-      variant.refresh_products_cache
+      variant.andand.refresh_products_cache
     end
   end
 end

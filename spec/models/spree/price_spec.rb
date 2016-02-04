@@ -16,6 +16,12 @@ module Spree
         expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).with(variant)
         price.destroy
       end
+
+      it "does not refresh the cache when variant is not set" do
+        # Creates a price without the back link to variant
+        create(:product, master: create(:variant))
+        expect(OpenFoodNetwork::ProductsCache).to receive(:variant_changed).never
+      end
     end
   end
 end
