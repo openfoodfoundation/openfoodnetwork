@@ -13,6 +13,12 @@ module OpenFoodNetwork
           ProductsCacheRefreshment.refresh distributor, order_cycle
         end.to enqueue_job RefreshProductsCacheJob
       end
+
+      it "enqueues the job with a lower than default priority" do
+        ProductsCacheRefreshment.refresh distributor, order_cycle
+        job = Delayed::Job.last
+        expect(job.priority).to be > Delayed::Worker.default_priority
+      end
     end
 
     describe "when there is an enqueued task, and it is running" do

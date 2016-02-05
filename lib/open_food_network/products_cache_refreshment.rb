@@ -41,7 +41,7 @@ module OpenFoodNetwork
     end
 
     def self.enqueue_job(distributor, order_cycle)
-      Delayed::Job.enqueue RefreshProductsCacheJob.new distributor.id, order_cycle.id
+      Delayed::Job.enqueue RefreshProductsCacheJob.new(distributor.id, order_cycle.id), priority: 10
     end
   end
 end
