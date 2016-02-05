@@ -41,6 +41,14 @@ module OpenFoodNetwork
     end
 
 
+    def self.producer_property_changed(producer_property)
+    end
+
+
+    def self.producer_property_destroyed(producer_property)
+    end
+
+
     def self.order_cycle_changed(order_cycle)
       if order_cycle.dated? && !order_cycle.closed?
         order_cycle.exchanges.outgoing.each do |exchange|

@@ -3,6 +3,9 @@ class ProducerProperty < ActiveRecord::Base
 
   default_scope order("#{self.table_name}.position")
 
+  after_save :refresh_products_cache
+  after_destroy :refresh_products_cache_from_destroy
+
 
   def property_name
     property.name if property
@@ -14,4 +17,16 @@ class ProducerProperty < ActiveRecord::Base
         Spree::Property.create(name: name, presentation: name)
     end
   end
+
+
+  private
+
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.producer_property_changed self
+  end
+
+  def refresh_products_cache_from_destroy
+    OpenFoodNetwork::ProductsCache.producer_property_destroyed self
+  end
+
 end
