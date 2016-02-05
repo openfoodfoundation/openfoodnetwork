@@ -48,3 +48,7 @@ dialog .close-reveal-modal, .reveal-modal .close-reveal-modal
   &:hover, &:active, &:focus
     background-color: rgba(205,205,205,1)
     color: #333
+
+// Prevent body from scrolling when a modal is open
+body.modal-open
+  overflow: hidden
