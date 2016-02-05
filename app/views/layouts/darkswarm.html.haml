@@ -3,7 +3,7 @@
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
     %meta{property: "og:title", content: content_for?(:title) ? yield(:title) : t(:title)}
-    %meta{property: "og:description", content: content_for?(:description) ? yield(:description) : t(:meta_description)}
+    %meta{property: "og:description", content: content_for?(:description) ? yield(:description) : t(:site_meta_description)}
     %meta{property: "og:image", content: content_for?(:image) ? yield(:image) : ContentConfig.logo.url}
     %title= content_for?(:title) ? "#{yield(:title)} - #{t(:title)}".html_safe : "#{t(:welcome_to)} #{t(:title)}"
     - if Rails.env.production?
