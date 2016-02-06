@@ -66,7 +66,9 @@ Create a PostgreSQL user:
 * Login as your system postrgresql priviledged user: `sudo -i -u postgres` (this may vary on your OS). Now your prompt looks like: `[postgres@your_host ~]$`
 * Create the `ofn` database superuser and give it the password `f00d`:
 
-    createuser -s -P ofn
+```
+createuser -s -P ofn
+```
 
 Create the development and test databases, using the settings specified in `config/database.yml`, and populate them with a schema and seed data:
 
