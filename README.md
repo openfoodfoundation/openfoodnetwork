@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/openfoodfoundation/openfoodnetwork.svg?branch=master)](https://travis-ci.org/openfoodfoundation/openfoodnetwork)
 [![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 
 # Open Food Network
@@ -14,10 +15,12 @@ We're part of global movement - get involved!
 
 ## Getting started
 
-Below are instructions for setting up a development environment for Open Food Network. If you're interested in provisioning a server, see [the project's Ansible playbooks](https://github.com/openfoodfoundation/ofn_deployment).
+Below are instructions for setting up a development environment for Open Food Network. More information is in the [developer wiki](https://github.com/openfoodfoundation/openfoodnetwork/wiki).
+
+If you're interested in provisioning a server, see [the project's Ansible playbooks](https://github.com/openfoodfoundation/ofn_deployment).
 
 
-## Dependencies
+### Dependencies
 
 * Rails 3.2.x
 * Ruby 2.1.5
@@ -26,7 +29,7 @@ Below are instructions for setting up a development environment for Open Food Ne
 * See Gemfile for a list of gems required
 
 
-## Get it
+### Get it
 
 The source code is managed with Git (a version control system) and
 hosted at GitHub.
@@ -40,7 +43,7 @@ You can download the source with the command:
     git clone https://github.com/openfoodfoundation/openfoodnetwork.git
 
 
-## Get it running
+### Get it running
 
 For those new to Rails, the following tutorial will help get you up to speed with configuring a Rails environment: http://guides.rubyonrails.org/getting_started.html .
 
@@ -71,7 +74,7 @@ At long last, your dreams of spinning up a development server can be realised:
     rails server
 
 
-## Testing
+### Testing
 
 Tests, both unit and integration, are based on RSpec. To run the test suite, first prepare the test database:
 
@@ -97,6 +100,10 @@ usage instructions.
 * Will Marshall (http://soundcloud.com/willmarshall)
 * Laura Summers (https://github.com/summerscope)
 * Maikel Linke (https://github.com/mkllnk)
+* Lynne Davis (https://github.com/lin-d-hop)
+* Paul Mackay (https://github.com/pmackay)
+* Steve Petitt (https://github.com/stveep)
+
 
 ## Licence
 
