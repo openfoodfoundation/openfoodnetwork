@@ -1,0 +1,11 @@
+engines:
+  rubocop:
+    enabled: true
+ratings:
+  paths:
+  - app/**
+  - lib/**
+  - "**.rb"
+exclude_paths:
+- spec/**/*
+- vendor/**/*
