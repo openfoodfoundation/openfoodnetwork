@@ -133,7 +133,7 @@ nb:
   footer_join_groups: "Bli med som Gruppe"
   footer_join_partners: "Samarbeidspartnere"
   footer_legal_call: "Les våre"
-  footer_legal_tos: "Vilkår & betingelser"
+  footer_legal_tos: "Vilkår og betingelser"
   footer_legal_visit: "Finn oss på"
   footer_legal_text_html: "Open Food Network er en plattform med fri og åpen kildekode. Vårt innhold er lisensiert med %{content_license} og vår kode med %{code_license}."
   home_shop: Handle nå

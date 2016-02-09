@@ -129,7 +129,7 @@ en-GB:
   footer_join_partners: "Food systems partners"
 
   footer_legal_call: "Read our"
-  footer_legal_tos: "Terms & conditions"
+  footer_legal_tos: "Terms and conditions"
   footer_legal_visit: "Find us on"
   footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
 
@@ -355,7 +355,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   modal_how: "How it works"
   modal_how_shop: Shop the Open Food Network
   modal_how_shop_explained: Search for a food hub near you to start shopping! You can expand each food hub to see what kinds of goodies are available, and click through to start shopping. (You can only shop one food hub at a time.)
-  modal_how_pickup: Pick-ups, delivery & shipping costs
+  modal_how_pickup: Pick-ups, delivery and shipping costs
   modal_how_pickup_explained: Some food hubs deliver to your door, while others require you to pick-up your purchases. You can see which options are available on the homepage, and select which you'd like at the shopping and check-out pages. Delivery will cost more, and pricing differs from hub-to-hub. Each food hub is a sales point with independent business operations and logisitics - so variations between hubs are to be expected. 
   modal_how_more: Learn more
   modal_how_more_explained: "If you want to learn more about the Open Food Network, how it works, and get involved, check out:"
@@ -432,7 +432,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_edit_checkout: Checkout
   orders_form_empty_cart: "Empty cart"
   orders_form_subtotal: Produce subtotal
-  orders_form_admin: Admin & handling
+  orders_form_admin: Admin and handling
   orders_form_total: Total
   orders_oc_expired_headline: Orders have closed for this order cycle
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."

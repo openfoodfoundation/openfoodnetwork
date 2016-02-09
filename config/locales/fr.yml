@@ -14,7 +14,7 @@ fr:
   title: Open Food France
   welcome_to: 'Bienvenue sur '
   search_by_name: Recherche pas nom ou région...
-  producers: Producteurs & hubs
+  producers: Producteurs et hubs
   producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
   charges_sales_tax: Soumis à la TVA?
   print_invoice: "Imprimer la facture"
@@ -133,7 +133,7 @@ fr:
   footer_join_groups: "Inscription groupes"
   footer_join_partners: "Partenaires"
   footer_legal_call: "Lire nos"
-  footer_legal_tos: "Termes & conditions"
+  footer_legal_tos: "Termes et conditions"
   footer_legal_visit: "Nous trouver sur"
   footer_legal_text_html: "Open Food Network est une plateforme logicielle open source, libre et gratuite. Nos données sont protégées sous licence %{content_license} et notre code sous %{code_license}."
   home_shop: Faire mes courses
@@ -401,7 +401,7 @@ fr:
   orders_edit_checkout: Régler ma commande
   orders_form_empty_cart: "Vider le panier"
   orders_form_subtotal: Sous-total
-  orders_form_admin: Admin & opérations
+  orders_form_admin: Admin et opérations
   orders_form_total: Total
   orders_oc_expired_headline: Les commandes ne sont plus possibles pour ce cycle de vente.
   orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives."
