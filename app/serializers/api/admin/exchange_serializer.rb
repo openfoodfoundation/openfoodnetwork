@@ -9,8 +9,18 @@ class Api::Admin::ExchangeSerializer < ActiveModel::Serializer
       permitted = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle).
       visible_variants_for_incoming_exchanges_from(object.sender)
     else
-      permitted = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle).
-      visible_variants_for_outgoing_exchanges_to(object.receiver)
+      # This is hopefully a temporary measure, pending the arrival of multiple named inventories
+      # for shops. We need this here to allow hubs to restrict visible variants to only those in
+      # their inventory if they so choose
+      permitted = if object.receiver.prefers_product_selection_from_inventory_only?
+        OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle)
+        .visible_variants_for_outgoing_exchanges_to(object.receiver)
+        .visible_for(object.receiver)
+      else
+        OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle)
+        .visible_variants_for_outgoing_exchanges_to(object.receiver)
+        .not_hidden_for(object.receiver)
+      end
     end
     Hash[ object.variants.merge(permitted).map { |v| [v.id, true] } ]
   end

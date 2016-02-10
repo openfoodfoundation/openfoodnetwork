@@ -12,6 +12,7 @@ Spree::Variant.class_eval do
   has_many :exchange_variants, dependent: :destroy
   has_many :exchanges, through: :exchange_variants
   has_many :variant_overrides
+  has_many :inventory_items
 
   attr_accessible :unit_value, :unit_description, :images_attributes, :display_as, :display_name
   accepts_nested_attributes_for :images
@@ -38,6 +39,14 @@ Spree::Variant.class_eval do
 
   scope :for_distribution, lambda { |order_cycle, distributor|
     where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
+  }
+
+  scope :visible_for, lambda { |enterprise|
+    joins(:inventory_items).where('inventory_items.enterprise_id = (?) AND inventory_items.visible = (?)', enterprise, true)
+  }
+  scope :not_hidden_for, lambda { |enterprise|
+    joins('LEFT OUTER JOIN inventory_items ON inventory_items.variant_id = spree_variants.id')
+    .where('inventory_items.id IS NULL OR (inventory_items.enterprise_id = (?) AND inventory_items.visible != (?))', enterprise, false)
   }
 
   # Define sope as class method to allow chaining with other scopes filtering id.

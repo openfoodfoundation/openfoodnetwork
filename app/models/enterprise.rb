@@ -8,6 +8,11 @@ class Enterprise < ActiveRecord::Base
   preference :shopfront_taxon_order, :string, default: ""
   preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
 
+  # This is hopefully a temporary measure, pending the arrival of multiple named inventories
+  # for shops. We need this here to allow hubs to restrict visible variants to only those in
+  # their inventory if they so choose
+  preference :product_selection_from_inventory_only, :boolean, default: false
+
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
   handle_asynchronously :send_confirmation_instructions
   handle_asynchronously :send_on_create_confirmation_instructions
