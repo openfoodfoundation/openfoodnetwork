@@ -3,9 +3,9 @@
   .eight.columns.alpha
     = render 'admin/shared/bulk_actions_dropdown'
     = render 'admin/shared/views_dropdown'
-    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.inventory.visible' } , data: { powertip: 'This is your inventory of products. Products must be listed here before you can sell them in your shop. To add products to your inventory, select \'New Products\' from the Viewing dropdown.' } }
-    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.hidden.visible' } , data: { powertip: 'These products have been hidden from your inventory and will not be available in your shop. You can click \'Add\' to add a product to you inventory.' } }
-    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.new.visible' } , data: { powertip: 'These products are available to be added to your inventory. Click \'Add\' to add a product to your inventory, or \'Hide\' to hide it from view. You can always change your mind later!' } }
+    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.inventory.visible' } , data: { powertip: "#{t('admin.inventory.inventory_powertip')}" } }
+    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.hidden.visible' } , data: { powertip: "#{t('admin.inventory.hidden_powertip')}" } }
+    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.new.visible' } , data: { powertip: "#{t('admin.inventory.new_powertip')}" } }
   .four.columns &nbsp;
   .four.columns.omega{ ng: { show: 'views.new.visible' } }
     %button.fullwidth{ type: 'button', ng: { click: "selectView('inventory')" } }

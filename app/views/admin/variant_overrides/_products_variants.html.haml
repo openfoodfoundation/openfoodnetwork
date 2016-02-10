@@ -19,4 +19,4 @@
     %input.field{ :type => 'checkbox', name: 'variant-overrides-{{ variant.id }}-inherit', ng: { model: 'inherit' }, 'track-inheritance' => true }
   %td.visibility{ ng: { show: 'columns.visibility.visible' } }
     %button.icon-remove.hide.fullwidth{ :type => 'button', ng: { click: "setVisibility(hub.id,variant.id,false)" } }
-      = t(:hide)
+      = t('admin.inventory.hide')

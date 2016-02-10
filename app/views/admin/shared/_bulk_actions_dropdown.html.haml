@@ -1,5 +1,5 @@
 .ofn-drop-down#bulk-actions-dropdown
-  %span.icon-check &nbsp; Actions
+  %span.icon-check= "&nbsp; #{t('admin.actions')}".html_safe
   %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
   .menu{ 'ng-show' => "expanded" }
     .menu_item{ 'ng-repeat' => "action in bulkActions", 'ng-click' => "$eval(action.callback)(filteredLineItems)", 'close-on-click' => true }
