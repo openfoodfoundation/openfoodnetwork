@@ -5,10 +5,10 @@
     = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles", class: "fullwidth" }
 
 - if spree_current_user.admin?
-  .row{ ng: { app: "admin.users" } }
+  .row
     .three.columns.alpha
       =f.label :owner_id, 'Owner'
-      .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
+      %div{'ofn-with-tip' => "The primary user responsible for this enterprise."}
         %a What's this?
     .nine.columns.omega
       - owner_email = @enterprise.andand.owner.andand.email || ""
@@ -16,7 +16,7 @@
 .row
   .three.columns.alpha
     %label Primary Producer?
-    .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food."}
+    %div{'ofn-with-tip' => "Select 'Producer' if you are a primary producer of food."}
       %a What's this?
   .five.columns.omega
     = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
@@ -27,7 +27,7 @@
     .alpha.eleven.columns
       .three.columns.alpha
         = f.label :sells, 'Sells'
-        .with-tip{'data-powertip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
+        %div{'ofn-with-tip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
           %a What's this?
       .two.columns
         = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'

@@ -11,5 +11,5 @@
 
 = form_for [main_app, :admin, @enterprise], html: { "nav-check" => '', "nav-callback" => '' } do |f|
   .row
-    .twelve.columns.fullwidth_inputs
+    .twelve.columns.fullwidth_inputs{ ng: { app: "admin.users" } }
       = render 'new_form', f: f

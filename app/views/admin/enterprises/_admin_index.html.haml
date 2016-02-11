@@ -2,7 +2,7 @@
 - if flash[:action]
   %p= flash[:action]
 
-= form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path do |f|
+= form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path, html: {"ng-app" => "admin.enterprises"} do |f|
   %table#listing_enterprises.index
     %colgroup
       %col{style: "width: 25%;"}/
