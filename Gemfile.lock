@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/openfoodfoundation/spree.git
-  revision: afcc23e489eb604a3e2651598a7c8364e2acc7b3
+  revision: 6e3edfe40a5de8eba0095b2c5f3db9ea54c3afda
   branch: 1-3-stable
   specs:
     spree (1.3.6.beta)
@@ -54,7 +54,7 @@ GIT
       rabl (= 0.7.2)
       rails (~> 3.2.16)
       ransack (= 0.7.2)
-      select2-rails (= 3.2.1)
+      select2-rails (= 3.5.9.3)
       state_machine (= 1.1.2)
       stringex (~> 1.3.2)
       truncate_html (~> 0.5.5)
@@ -124,8 +124,8 @@ GEM
     active_link_to (1.0.0)
     active_model_serializers (0.8.3)
       activemodel (>= 3.0)
-    activemerchant (1.48.0)
-      activesupport (>= 3.2.14, < 5.0.0)
+    activemerchant (1.57.0)
+      activesupport (>= 3.2.14, < 5.1)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
       nokogiri (~> 1.4)
@@ -574,7 +574,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    select2-rails (3.2.1)
+    select2-rails (3.5.9.3)
       thor (~> 0.14)
     shoulda-matchers (1.1.0)
       activesupport (>= 3.0.0)
@@ -730,3 +730,6 @@ DEPENDENCIES
   whenever
   wicked_pdf
   wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.6
