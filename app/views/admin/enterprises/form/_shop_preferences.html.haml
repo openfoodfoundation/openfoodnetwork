@@ -33,17 +33,3 @@
     .five.columns.omega
       = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_close_at, { 'ng-model' => 'Enterprise.preferred_shopfront_order_cycle_order' }
       = label :enterprise, :preferred_shopfront_order_cycle_order_orders_close_at, "Close Date"
-
--# This is hopefully a temporary measure, pending the arrival of multiple named inventories
--# for shops. We need this here to allow hubs to restrict visible variants to only those in
--# their inventory if they so choose
-.row
-  .alpha.eleven.columns
-    .three.columns.alpha
-      = f.label "enterprise_preferred_product_selection_from_inventory_only", t(:select_products_for_order_cycle_from)
-    .three.columns
-      = radio_button :enterprise, :preferred_product_selection_from_inventory_only, "1", { 'ng-model' => 'Enterprise.preferred_product_selection_from_inventory_only' }
-      = label :enterprise, :preferred_product_selection_from_inventory_only, "Inventory Only"
-    .five.columns.omega
-      = radio_button :enterprise, :preferred_product_selection_from_inventory_only, "0", { 'ng-model' => 'Enterprise.preferred_product_selection_from_inventory_only' }
-      = label :enterprise, :preferred_product_selection_from_inventory_only, "All Available Products (Ignore Inventory)"
