@@ -16,27 +16,27 @@
           - if can? :admin, Spree::PaymentMethod
             - payment_method_count = enterprise.payment_methods.count
             - if payment_method_count > 0
-              %span.icon-ok-sign.with-tip{ title: "#{pluralize payment_method_count, 'payment method'}" }
+              %span.icon-ok-sign{ 'ofn-with-tip' => "#{pluralize payment_method_count, 'payment method'}" }
             - else
-              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no payment methods" }
+              %span.icon-remove-sign{ 'ofn-with-tip' => "#{enterprise.name} has no payment methods" }
           - else
             &nbsp;
         %span.symbol.three.columns.centered
           - if can? :admin, Spree::ShippingMethod
             - shipping_method_count = enterprise.shipping_methods.count
             - if shipping_method_count > 0
-              %span.icon-ok-sign.with-tip{ title: "#{pluralize shipping_method_count, 'shipping method'}" }
+              %span.icon-ok-sign{ 'ofn-with-tip' => "#{pluralize shipping_method_count, 'shipping method'}" }
             - else
-              %span.icon-remove-sign.with-tip{ title: "#{enterprise.name} has no shipping methods" }
+              %span.icon-remove-sign{ 'ofn-with-tip' => "#{enterprise.name} has no shipping methods" }
           - else
             &nbsp;
         %span.symbol.three.columns.centered
           - if can? :admin, EnterpriseFee
             - fee_count = enterprise.enterprise_fees.count
             - if fee_count > 0
-              %span.icon-ok-sign.with-tip{ title: "#{pluralize fee_count, 'fee'}" }
+              %span.icon-ok-sign{ 'ofn-with-tip' => "#{pluralize fee_count, 'fee'}" }
             - else
-              %span.icon-warning-sign.with-tip{ title: "#{enterprise.name} has no enterprise fees" }
+              %span.icon-warning-sign{ 'ofn-with-tip' => "#{enterprise.name} has no enterprise fees" }
           - else
             &nbsp;
         %span.two.columns.omega.right
