@@ -133,7 +133,7 @@ module Spree
         context "finding variants that are visible in an enterprise's inventory" do
           let!(:variants) { Spree::Variant.visible_for(enterprise) }
 
-          it "lists any variants that are not listed as visible=false" do
+          it "lists any variants that are listed as visible=true" do
             expect(variants).to include visible_variant
             expect(variants).to_not include new_variant, hidden_variant
           end

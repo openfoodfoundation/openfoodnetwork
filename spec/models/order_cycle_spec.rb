@@ -380,7 +380,7 @@ describe OrderCycle do
 
   it "clones itself" do
     coordinator = create(:enterprise);
-    oc = create(:simple_order_cycle, coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)])
+    oc = create(:simple_order_cycle, coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)], preferred_product_selection_from_coordinator_inventory_only: true)
     ex1 = create(:exchange, order_cycle: oc)
     ex2 = create(:exchange, order_cycle: oc)
     oc.clone!
@@ -390,10 +390,12 @@ describe OrderCycle do
     occ.orders_open_at.should be_nil
     occ.orders_close_at.should be_nil
     occ.coordinator.should_not be_nil
+    occ.preferred_product_selection_from_coordinator_inventory_only.should be_true
     occ.coordinator.should == oc.coordinator
 
     occ.coordinator_fee_ids.should_not be_empty
     occ.coordinator_fee_ids.should == oc.coordinator_fee_ids
+    occ.preferred_product_selection_from_coordinator_inventory_only.should == oc.preferred_product_selection_from_coordinator_inventory_only
 
     # to_h gives us a unique hash for each exchange
     # check that the clone has no additional exchanges

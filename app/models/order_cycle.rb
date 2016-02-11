@@ -11,6 +11,8 @@ class OrderCycle < ActiveRecord::Base
 
   validates_presence_of :name, :coordinator_id
 
+  preference :product_selection_from_coordinator_inventory_only, :boolean, default: false
+
   scope :active, lambda { where('order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?', Time.zone.now, Time.zone.now) }
   scope :active_or_complete, lambda { where('order_cycles.orders_open_at <= ?', Time.zone.now) }
   scope :inactive, lambda { where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?', Time.zone.now, Time.zone.now) }
@@ -113,6 +115,7 @@ class OrderCycle < ActiveRecord::Base
     oc.name = "COPY OF #{oc.name}"
     oc.orders_open_at = oc.orders_close_at = nil
     oc.coordinator_fee_ids = self.coordinator_fee_ids
+    oc.preferred_product_selection_from_coordinator_inventory_only = self.preferred_product_selection_from_coordinator_inventory_only
     oc.save!
     self.exchanges.each { |e| e.clone!(oc) }
     oc.reload

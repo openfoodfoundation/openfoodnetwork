@@ -94,6 +94,13 @@ en:
       hidden_powertip: These products have been hidden from your inventory and will not be available to add to your shop. You can click 'Add' to add a product to you inventory.
       new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
 
+
+    order_cycle:
+      choose_products_from: "Choose Products From:"
+
+    enterprise:
+      select_outgoing_oc_products_from: Select outgoing OC products from
+
   # Printable Invoice Columns
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
