@@ -2,5 +2,5 @@
 
 - if order.special_instructions.present?
   %br
-  %span{class: "icon-warning-sign with-tip", title: order.special_instructions}
+  %span{class: "icon-warning-sign", "ofn-with-tip" => order.special_instructions}
     notes
