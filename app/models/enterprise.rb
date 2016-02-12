@@ -253,6 +253,14 @@ class Enterprise < ActiveRecord::Base
     strip_url read_attribute(:linkedin)
   end
 
+  def inventory_variants
+    if prefers_product_selection_from_inventory_only?
+      Spree::Variant.visible_for(self)
+    else
+      Spree::Variant.not_hidden_for(self)
+    end
+  end
+
   def distributed_variants
     Spree::Variant.joins(:product).merge(Spree::Product.in_distributor(self)).select('spree_variants.*')
   end

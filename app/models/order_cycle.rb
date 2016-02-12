@@ -145,12 +145,15 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def distributed_variants
+    # TODO: only used in DistributionChangeValidator, can we remove?
     self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def variants_distributed_by(distributor)
+    return Spree::Variant.where("1=0") unless distributor.present?
     Spree::Variant.
       not_deleted.
+      merge(distributor.inventory_variants).
       joins(:exchanges).
       merge(Exchange.in_order_cycle(self)).
       merge(Exchange.outgoing).
