@@ -13,5 +13,5 @@ angular.module("admin.variantOverrides").filter "inventoryProducts", ($filter, I
         else
           # Important to only return if true, as other variants for this product might be visible
           return true if views.new.visible
-        false
+      false
     , true)
