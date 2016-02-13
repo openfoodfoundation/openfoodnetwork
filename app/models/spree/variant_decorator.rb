@@ -44,9 +44,11 @@ Spree::Variant.class_eval do
   scope :visible_for, lambda { |enterprise|
     joins(:inventory_items).where('inventory_items.enterprise_id = (?) AND inventory_items.visible = (?)', enterprise, true)
   }
+
   scope :not_hidden_for, lambda { |enterprise|
-    joins('LEFT OUTER JOIN inventory_items ON inventory_items.variant_id = spree_variants.id')
-    .where('inventory_items.id IS NULL OR (inventory_items.enterprise_id = (?) AND inventory_items.visible != (?))', enterprise, false)
+    return where("1=0") unless enterprise.present?
+    joins("LEFT OUTER JOIN (SELECT * from inventory_items WHERE enterprise_id = #{sanitize enterprise.andand.id}) AS o_inventory_items ON o_inventory_items.variant_id = spree_variants.id")
+    .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = (?)", true)
   }
 
   # Define sope as class method to allow chaining with other scopes filtering id.
