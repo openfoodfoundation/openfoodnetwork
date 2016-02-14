@@ -1,10 +1,8 @@
 Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart, Taxons, Properties) ->
   $scope.Products = Products
   $scope.Cart = Cart
-  $scope.totalActive =  FilterSelectorsService.totalActive
-  $scope.clearAll =  FilterSelectorsService.clearAll
-  $scope.filterText =  FilterSelectorsService.filterText
-  $scope.FilterSelectorsService =  FilterSelectorsService
+  $scope.taxonSelectors = FilterSelectorsService.createSelectors()
+  $scope.propertySelectors = FilterSelectorsService.createSelectors()
   $scope.filtersActive = true
   $scope.limit = 3
   $scope.order_cycle = OrderCycle.order_cycle
@@ -33,4 +31,5 @@ Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, 
 
   $scope.clearAll = ->
     $scope.query = ""
-    FilterSelectorsService.clearAll()
+    $scope.taxonSelectors.clearAll()
+    $scope.propertySelectors.clearAll()

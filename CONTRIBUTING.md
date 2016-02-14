@@ -1,7 +1,7 @@
 # Contributing
 
 We love pull requests from everyone. Here are some instructions for
-contributing code to Open Food Network.
+contributing code to Open Food Network. See the [developer wiki](https://github.com/openfoodfoundation/openfoodnetwork/wiki) for more information.
 
 Fork, then clone the repo:
 

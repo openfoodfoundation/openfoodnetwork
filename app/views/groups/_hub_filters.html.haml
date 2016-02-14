@@ -1,6 +1,5 @@
 .row
   = render partial: 'shared/components/filter_controls'
-  -# .small-12.medium-6.columns &nbsp;
   = render partial: 'shared/components/show_profiles'
 
 .row.animate-show{"ng-show" => "filtersActive"}
@@ -11,7 +10,7 @@
           .light
             = t :hubs_filter_by
           = t :hubs_filter_type
-        %filter-selector.small-block-grid-2.medium-block-grid-4.large-block-grid-5{ "selector-set" => "filterSelectors", objects: "visibleMatches | visible | taxonsOf", "active-selectors" => "activeTaxons" }
+        %filter-selector.small-block-grid-2.medium-block-grid-4.large-block-grid-5{"selector-set" => "filterSelectors", objects: "group_hubs | searchEnterprises:query | shipping:shippingTypes | showHubProfiles:show_profiles | taxonsOf", "active-selectors" => "activeTaxons"}
       .small-12.large-3.columns
         %h5.tdhead
           .light
