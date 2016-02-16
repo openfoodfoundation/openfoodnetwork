@@ -8,6 +8,7 @@
         %th.order4{"bo-text" => "'shipping_state' | t"}
         %th.order5.text-right{"bo-text" => "'value' | t"}
         %th.order6.text-right{"bo-text" => "'balance' | t"}
+        %th.order6.text-right{"bo-text" => "'running_balance' | t"}
       %tbody.transaction-group{"ng-repeat" => "order in distributor.distributed_orders", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
         %tr.order-row
           %td.order1
@@ -17,6 +18,7 @@
           %td.order4{"bo-text" => "order.shipment_state | t"}
           %td.order5.text-right{"bo-text" => "order.total | localizeCurrency"}
           %td.order6.text-right{"ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}", "bo-text" => "order.outstanding_balance | localizeCurrency"}
+          %td.order7.text-right{"ng-class" => "{'credit' : order.running_balance < 0, 'debit' : order.running_balance > 0, 'paid' : order.running_balance == 0}", "bo-text" => "order.running_balance | localizeCurrency"}
           %tr.payment-row{"ng-repeat" => "payment in order.payments"}
             %td.order1{"bo-text" => "()'payment' | t) + ' ' + payment.identifier"}
             %td.order2{"bo-text" => "payment.updated_at"}
@@ -24,3 +26,4 @@
             %td.order4
             %td.order5.text-right{"bo-text" => "payment.amount | localizeCurrency"}
             %td.order6
+            %td.order7
