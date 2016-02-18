@@ -22,7 +22,7 @@ feature %q{
 
     describe "selecting a hub" do
       it "displays a list of hub choices" do
-        visit '/admin/variant_overrides'
+        visit '/admin/inventory'
 
         page.should have_select2 'hub_id', options: ['', hub.name, hub2.name]
       end
@@ -51,7 +51,7 @@ feature %q{
 
       context "when a hub is selected" do
         before do
-          visit '/admin/variant_overrides'
+          visit '/admin/inventory'
           select2_select hub.name, from: 'hub_id'
         end
 
@@ -216,7 +216,7 @@ feature %q{
           let!(:inventory_item3) { create(:inventory_item, enterprise: hub, variant: variant3) }
 
           before do
-            visit '/admin/variant_overrides'
+            visit '/admin/inventory'
             select2_select hub.name, from: 'hub_id'
           end
 
@@ -305,7 +305,7 @@ feature %q{
 
       context "when a hub is selected" do
         before do
-          visit '/admin/variant_overrides'
+          visit '/admin/inventory'
           select2_select hub.name, from: 'hub_id'
         end
 

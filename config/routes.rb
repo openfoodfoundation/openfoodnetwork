@@ -104,6 +104,8 @@ Openfoodnetwork::Application.routes.draw do
       get :move_down
     end
 
+    get '/inventory', to: 'variant_overrides#index'
+
     resources :variant_overrides do
       post :bulk_update, on: :collection
       post :bulk_reset, on: :collection

@@ -72,7 +72,11 @@ en:
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
 
+    whats_this: What's this?
+
     inventory:
+      title: Inventory
+      description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
       sku: SKU
       price: Price
       on_hand: On Hand
