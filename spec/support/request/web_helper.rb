@@ -144,6 +144,13 @@ module WebHelper
     have_selector "div.select2-result-label", text: value
   end
 
+  def open_select2(selector)
+    page.evaluate_script "jQuery('#{selector}').select2('open');"
+  end
+
+  def close_select2(selector)
+    page.evaluate_script "jQuery('#{selector}').select2('close');"
+  end
 
   private
   def wait_for_ajax

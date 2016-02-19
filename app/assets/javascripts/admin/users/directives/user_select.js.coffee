@@ -2,12 +2,12 @@ angular.module("admin.users").directive "userSelect", ->
   scope:
     user: '&userSelect'
     model: '=ngModel'
-  link: (scope,element,attrs) ->
+  link: (scope, element, attrs) ->
     setTimeout ->
       element.select2
         multiple: false
         initSelection: (element, callback) ->
-          callback {id: scope.user().id, email: scope.user().email}
+          callback {id: scope.user()?.id, email: scope.user()?.email}
         ajax:
           url: '/admin/search/known_users'
           datatype: 'json'
