@@ -4,6 +4,7 @@
     %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last" }
   %td{ 'ng-show' => 'columns.producer.visible' }
   %td{ 'ng-show' => 'columns.sku.visible' }
+    %input{ 'ng-model' => "variant.sku", :name => 'variant_sku', 'ofn-track-variant' => 'sku', :type => 'text' }
   %td{ 'ng-show' => 'columns.name.visible' }
     %input{ 'ng-model' => 'variant.display_name', :name => 'variant_display_name', 'ofn-track-variant' => 'display_name', :type => 'text', placeholder: "{{ product.name }}" }
   %td.unit_value{ 'ng-show' => 'columns.unit.visible' }

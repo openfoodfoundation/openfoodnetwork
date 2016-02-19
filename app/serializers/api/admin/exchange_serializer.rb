@@ -1,5 +1,5 @@
 class Api::Admin::ExchangeSerializer < ActiveModel::Serializer
-  attributes :id, :sender_id, :receiver_id, :incoming, :variants, :pickup_time, :pickup_instructions
+  attributes :id, :sender_id, :receiver_id, :incoming, :variants, :receival_instructions, :pickup_time, :pickup_instructions
 
   has_many :enterprise_fees, serializer: Api::Admin::BasicEnterpriseFeeSerializer
 

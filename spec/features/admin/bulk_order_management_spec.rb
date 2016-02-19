@@ -119,10 +119,9 @@ feature %q{
           expect(page).to_not have_selector "#save-bar"
           fill_in "quantity", :with => 2
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
-          expect(page).to have_selector "#save-bar"
-          expect(page).to have_button "Save Changes"
+          expect(page).to have_selector "#save-bar", text: "You have unsaved changes"
           click_button "Save Changes"
-          expect(page).to_not have_selector "#save-bar"
+          expect(page).to have_selector "#save-bar", text: "All changes saved"
           expect(page).to_not have_selector "input[name='quantity'].ng-dirty"
         end
       end
@@ -132,10 +131,9 @@ feature %q{
           expect(page).to_not have_selector "#save-bar"
           fill_in "quantity", :with => li1.variant.on_hand + li1.quantity + 10
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
-          expect(page).to have_selector "#save-bar"
-          expect(page).to have_button "Save Changes"
+          expect(page).to have_selector "#save-bar", text: "You have unsaved changes"
           click_button "Save Changes"
-          expect(page).to have_selector "#save-bar"
+          expect(page).to have_selector "#save-bar", text: "Fields with red borders contain errors."
           expect(page).to have_selector "input[name='quantity'].ng-dirty.update-error"
           expect(page).to have_content "exceeds available stock. Please ensure line items have a valid quantity."
         end
@@ -158,9 +156,9 @@ feature %q{
     context "modifying the weight/volume of a line item" do
       it "price is altered" do
         visit '/admin/orders/bulk_management'
-        first("div#columns_dropdown", :text => "COLUMNS").click
-        first("div#columns_dropdown div.menu div.menu_item", text: "Weight/Volume").click
-        first("div#columns_dropdown div.menu div.menu_item", text: "Price").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
+        first("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
+        first("div#columns-dropdown div.menu div.menu_item", text: "Price").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "$50.00"
           fill_in "final_weight_volume", :with => 2000
@@ -177,8 +175,8 @@ feature %q{
     context "modifying the quantity of a line item" do
       it "price is altered" do
         visit '/admin/orders/bulk_management'
-        first("div#columns_dropdown", :text => "COLUMNS").click
-        first("div#columns_dropdown div.menu div.menu_item", text: "Price").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
+        first("div#columns-dropdown div.menu div.menu_item", text: "Price").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * 5)}"
           fill_in "quantity", :with => 6
@@ -190,8 +188,8 @@ feature %q{
     context "modifying the quantity of a line item" do
       it "weight/volume is altered" do
         visit '/admin/orders/bulk_management'
-        first("div#columns_dropdown", :text => "COLUMNS").click
-        first("div#columns_dropdown div.menu div.menu_item", text: "Weight/Volume").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
+        first("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "final_weight_volume", with: "#{li1.final_weight_volume.round}"
           fill_in "quantity", :with => 6
@@ -211,8 +209,8 @@ feature %q{
         expect(page).to have_selector "th", :text => "QUANTITY"
         expect(page).to have_selector "th", :text => "MAX"
 
-        first("div#columns_dropdown", :text => "COLUMNS").click
-        first("div#columns_dropdown div.menu div.menu_item", text: "Producer").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
+        first("div#columns-dropdown div.menu div.menu_item", text: "Producer").click
 
         expect(page).to_not have_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"
@@ -501,8 +499,8 @@ feature %q{
 
       it "displays a bulk action select box with a list of actions" do
         list_of_actions = ['Delete Selected']
-        find("div#bulk_actions_dropdown").click
-        within("div#bulk_actions_dropdown") do
+        find("div#bulk-actions-dropdown").click
+        within("div#bulk-actions-dropdown") do
           list_of_actions.each { |action_name| expect(page).to have_selector "div.menu_item", text: action_name }
         end
       end
@@ -514,8 +512,8 @@ feature %q{
           within("tr#li_#{li2.id} td.bulk") do
             check "bulk"
           end
-          find("div#bulk_actions_dropdown").click
-          find("div#bulk_actions_dropdown div.menu_item", :text => "Delete Selected" ).click
+          find("div#bulk-actions-dropdown").click
+          find("div#bulk-actions-dropdown div.menu_item", :text => "Delete Selected" ).click
           expect(page).to have_selector "tr#li_#{li1.id}", visible: true
           expect(page).to_not have_selector "tr#li_#{li2.id}", visible: true
         end
@@ -534,8 +532,8 @@ feature %q{
         it "only applies the delete action to filteredLineItems" do
           check "toggle_bulk"
           fill_in "quick_search", with: o1.number
-          find("div#bulk_actions_dropdown").click
-          find("div#bulk_actions_dropdown div.menu_item", :text => "Delete Selected" ).click
+          find("div#bulk-actions-dropdown").click
+          find("div#bulk-actions-dropdown div.menu_item", :text => "Delete Selected" ).click
           fill_in "quick_search", with: ''
           expect(page).to_not have_selector "tr#li_#{li1.id}", visible: true
           expect(page).to have_selector "tr#li_#{li2.id}", visible: true

@@ -26,12 +26,16 @@ module OpenFoodNetwork
       end
 
       def on_demand
-        if @variant_override.andand.count_on_hand.present?
-          # If we're overriding the stock level of an on_demand variant, show it as not
-          # on_demand, so our stock control can take effect.
-          false
+        if @variant_override.andand.on_demand.nil?
+          if @variant_override.andand.count_on_hand.present?
+            # If we're overriding the stock level of an on_demand variant, show it as not
+            # on_demand, so our stock control can take effect.
+            false
+          else
+            super
+          end
         else
-          super
+          @variant_override.andand.on_demand
         end
       end
 
@@ -42,7 +46,10 @@ module OpenFoodNetwork
           super
         end
       end
-    end
 
+      def sku
+        @variant_override.andand.sku || super
+      end
+    end
   end
 end

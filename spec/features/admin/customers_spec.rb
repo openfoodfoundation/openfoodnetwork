@@ -39,8 +39,8 @@ feature 'Customers' do
         # Toggling columns
         expect(page).to have_selector "th.email"
         expect(page).to have_content customer1.email
-        first("div#columns_dropdown", :text => "COLUMNS").click
-        first("div#columns_dropdown div.menu div.menu_item", text: "Email").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
+        first("div#columns-dropdown div.menu div.menu_item", text: "Email").click
         expect(page).to_not have_selector "th.email"
         expect(page).to_not have_content customer1.email
       end

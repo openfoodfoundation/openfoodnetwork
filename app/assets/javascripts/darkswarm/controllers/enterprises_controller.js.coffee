@@ -1,9 +1,7 @@
 Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
   $scope.Enterprises = Enterprises
-  $scope.totalActive = FilterSelectorsService.totalActive
-  $scope.clearAll = FilterSelectorsService.clearAll
-  $scope.filterText = FilterSelectorsService.filterText
-  $scope.FilterSelectorsService = FilterSelectorsService
+  $scope.producers_to_filter = Enterprises.producers
+  $scope.filterSelectors = FilterSelectorsService.createSelectors()
   $scope.query = Search.search()
   $scope.openModal = EnterpriseModal.open
   $scope.activeTaxons = []

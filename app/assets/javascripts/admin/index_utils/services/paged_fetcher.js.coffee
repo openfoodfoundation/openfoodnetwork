@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "PagedFetcher", (dataFetcher) ->
+angular.module("admin.indexUtils").factory "PagedFetcher", (dataFetcher) ->
   new class PagedFetcher
     # Given a URL like http://example.com/foo?page=::page::&per_page=20
     # And the response includes an attribute pages with the number of pages to fetch

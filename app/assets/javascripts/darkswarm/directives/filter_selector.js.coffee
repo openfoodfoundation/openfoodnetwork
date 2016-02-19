@@ -1,9 +1,10 @@
-Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
+Darkswarm.directive "filterSelector", ->
   # Automatically builds activeSelectors for taxons
   # Lots of magic here
   restrict: 'E'
   replace: true
   scope:
+    selectorSet: '='
     objects: "&"
     activeSelectors: "=?"
     allSelectors: "=?" # Optional
@@ -36,7 +37,7 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
         if selector = selectors_by_id[id]
           selectors.push selector
         else
-          selector = selectors_by_id[id] = FilterSelectorsService.new
+          selector = selectors_by_id[id] = scope.selectorSet.new
             object: object
           selectors.push selector
       selectors

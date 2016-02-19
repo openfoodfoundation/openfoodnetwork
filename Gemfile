@@ -105,6 +105,7 @@ group :test, :development do
   gem 'json_spec'
   gem 'unicorn-rails'
   gem 'atomic'
+  gem 'knapsack'
 end
 
 group :test do

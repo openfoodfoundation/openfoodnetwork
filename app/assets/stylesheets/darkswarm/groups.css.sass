@@ -11,6 +11,10 @@
   background-size:  922px 922px
   @include sidepaddingSm
   @include panepadding
+  h1, p.text
+    font-weight: 300
+  h1
+    font-size: 350%
   a > .group-name
     &:hover, &:focus, &:active
       text-decoration: underline
@@ -97,11 +101,13 @@
   // Producers tab
   .producers
     background-image: none
+    background-color: initial
     .active_table .active_table_node a.is_distributor, .active_table .active_table_node a.is_distributor i.ofn-i_059-producer
       color: $clr-turquoise
+    padding: 0
   // Hubs tab
   .hubs
     background-image: none
     padding-top: 0
     padding-bottom: 0
-    
+

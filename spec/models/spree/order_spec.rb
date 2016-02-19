@@ -54,6 +54,7 @@ describe Spree::Order do
       product_distribution.should_receive(:create_adjustment_for).with(line_item)
       subject.stub(:product_distribution_for) { product_distribution }
 
+
       subject.update_distribution_charge!
     end
 

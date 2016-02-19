@@ -6,7 +6,7 @@ module InjectionHelper
   end
 
   def inject_group_enterprises
-    inject_json_ams "group_enterprises", @group.enterprises, Api::EnterpriseSerializer, enterprise_injection_data
+    inject_json_ams "group_enterprises", @group.enterprises.activated.all, Api::EnterpriseSerializer, enterprise_injection_data
   end
 
   def inject_current_hub
