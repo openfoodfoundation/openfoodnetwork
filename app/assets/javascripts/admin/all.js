@@ -21,7 +21,7 @@
 //= require ../shared/ng-tags-input.min.js
 //= require angular-rails-templates
 //= require_tree ../templates/admin
-//= require ./ofn_admin
+//= require ./admin_ofn
 //= require ./accounts_and_billing_settings/accounts_and_billing_settings
 //= require ./business_model_configuration/business_model_configuration
 //= require ./customers/customers
