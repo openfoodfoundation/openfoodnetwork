@@ -6,7 +6,7 @@ Darkswarm.factory 'Orders', (orders_by_distributor, currencyConfig, CurrentHub, 
       @currency_symbol = currencyConfig.symbol
 
       for distributor in @orders_by_distributor
-        @updateRunningBalance(distributor.distributed_orders)
+        @updateRunningBalance(distributor.distributed_orders)  
 
 
     updateRunningBalance: (orders) ->
