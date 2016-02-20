@@ -1,5 +1,5 @@
 class Api::PaymentSerializer < ActiveModel::Serializer
-  attributes :identifier, :amount, :updated_at, :payment_method
+  attributes :amount, :updated_at, :payment_method
   def payment_method
     object.payment_method.name
   end
