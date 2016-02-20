@@ -681,10 +681,10 @@ Please follow the instructions there to make your enterprise visible on the Open
   payment_state: "Payment status"
   shipping_state: "Shipping status"
   value: "Value"
-  "Balance due": "Balance due" # TODO: In /accounts better to pass the symbol and translate rather than humanize
   balance_due: "Balance due"
   credit: "Credit"
   Paid: "Paid"
   Ready: "Ready"
   you_have_no_orders_yet: "You have no orders yet"
   running_balance: "Running balance"
+  outstanding_balance: "Outstanding balance"

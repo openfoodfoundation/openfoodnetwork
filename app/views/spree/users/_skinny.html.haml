@@ -5,7 +5,7 @@
   .columns.small-10.medium-5
     %span.margin-top
       %strong{"bo-text" => "distributor.name"}
-  .columns.small-8.small-offset-2.medium-3
+  .columns.small-8.small-offset-2.medium-3.text-right
     %span.margin-top.distributor-balance{"bo-text" => "distributor.balance | formatBalance", "ng-class" => "{'credit' : distributor.balance < 0, 'debit' : distributor.balance > 0, 'paid' : distributor.balance == 0}" }
     -#  %span.margin-top{"bo-text" => "('balance' | t) + ': ' + Orders.currency_symbol + distributor.balance", "ng-class" => "{'credit' : order.outstanding_balance < 0, 'debit' : order.outstanding_balance > 0, 'paid' : order.outstanding_balance == 0}"}
   .columns.small-2.medium-2.text-right
