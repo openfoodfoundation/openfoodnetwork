@@ -1,8 +1,11 @@
+# Returns a factory with the only function `createSelectors()`.
+# That function creates objects managing a list of filter selectors.
 Darkswarm.factory "FilterSelectorsService", ->
   # This stores all filters so we can access in-use counts etc
-  # Accessed via activeSelector Directive
-  new class FilterSelectorsService
-    selectors: []
+  class FilterSelectors
+    constructor: ->
+      @selectors = []
+
     new: (obj = {})->
       obj.active = false
       @selectors.push obj
@@ -26,3 +29,8 @@ Darkswarm.factory "FilterSelectorsService", ->
       for selector in @selectors
         selector.active = false
         selector.emit()
+
+  # Creates instances of `FilterSelectors`
+  new class FilterSelectorsService
+    createSelectors: ->
+      new FilterSelectors

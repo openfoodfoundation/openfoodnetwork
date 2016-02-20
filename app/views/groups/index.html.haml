@@ -7,10 +7,14 @@
   angular.module('Darkswarm').value('groups', #{render partial: "json/groups", object: @groups})
 
 #groups.pad-top.footer-pad{"ng-controller" => "GroupsCtrl"}
-  #active-table-search.row.pad-top
-    .small-12.columns
+  .row
+    .small-12.medium-6.medium-offset-3.columns.text-center
       %h1
         = t :groups_headline
+      %p.text
+        = t :groups_text
+  #active-table-search.row.pad-top
+    .small-12.columns
       %p
         %input{type: :text,
         "ng-model" => "query",

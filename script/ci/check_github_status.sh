@@ -15,5 +15,11 @@ echo "--- Checking environment variables"
 require_env_vars OFN_COMMIT BUILDKITE_REPO
 
 echo "--- Checking GitHub status"
+if [ -n "$1" ]; then
+  REQUIRED_STATUS="$1"
+else
+  REQUIRED_STATUS="success"
+fi
+echo "Require status '$REQUIRED_STATUS'"
 echo "Visiting $GITHUB_API_URL"
-curl -s "$GITHUB_API_URL" | head -n 2 | grep '^ *"state": "success",$'
+curl -s "$GITHUB_API_URL" | head -n 2 | grep '^ *"state":' | egrep "\"$REQUIRED_STATUS\",\$"

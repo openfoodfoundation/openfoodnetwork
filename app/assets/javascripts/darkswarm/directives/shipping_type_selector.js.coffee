@@ -1,4 +1,4 @@
-Darkswarm.directive "shippingTypeSelector", (FilterSelectorsService)->
+Darkswarm.directive "shippingTypeSelector", ->
   # Builds selector for shipping types
   restrict: 'E'
   replace: true
@@ -8,10 +8,10 @@ Darkswarm.directive "shippingTypeSelector", (FilterSelectorsService)->
       pickup: false
       delivery: false
 
-    scope.selectors = 
-      delivery: FilterSelectorsService.new
+    scope.selectors =
+      delivery: scope.filterSelectors.new
         icon: "ofn-i_039-delivery"
-      pickup: FilterSelectorsService.new
+      pickup: scope.filterSelectors.new
         icon: "ofn-i_038-takeaway"
       
     scope.emit = ->

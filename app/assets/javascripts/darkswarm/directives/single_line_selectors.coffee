@@ -2,6 +2,7 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
   restrict: 'E'
   templateUrl: "single_line_selectors.html"
   scope:
+    selectors: "="
     objects: "&"
     activeSelectors: "="
     selectorName: "@activeSelectors"
