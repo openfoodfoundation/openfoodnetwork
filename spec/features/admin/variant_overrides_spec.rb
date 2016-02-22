@@ -54,7 +54,7 @@ feature %q{
         end
 
         it "displays the list of products with variants" do
-          page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
+          page.should have_table_row ["PRODUCER", "PRODUCT", "PRICE", "ON HAND"]
           page.should have_table_row [producer.name, product.name, '', '']
           page.should have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
           page.should have_input "variant-overrides-#{variant.id}-count_on_hand", placeholder: '12'
