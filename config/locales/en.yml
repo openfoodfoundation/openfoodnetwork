@@ -31,7 +31,7 @@ en:
   welcome_to: 'Welcome to '
   description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or suburb...
-  producers: Aussie Producers #FIXME
+  producers: 'Australian Producers'
   producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
   charges_sales_tax: Charges GST?
   print_invoice: "Print Invoice"

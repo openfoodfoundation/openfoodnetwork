@@ -31,7 +31,7 @@
   .alert-box
     = t "spree_admin_single_enterprise_alert_mail_confirmation"
     %strong= "#{@enterprise.name}."
-    = t(:spree_admin_single_enterprise_alert_mail_sent)
+    = t "spree_admin_single_enterprise_alert_mail_sent"
     %strong= "#{@enterprise.email}."
     = link_to(t('resend'), main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } ), method: :post)
     %a.close{ href: "#" } ×
@@ -39,7 +39,7 @@
   .alert-box
     %strong 
       = t "spree_admin_single_enterprise_hint"
-    %strong= "#{t:manage} #{@enterprise.name}."
+    %strong= "#{t 'manage'} #{@enterprise.name}."
     %a.close{ href: "#" } ×
 
 .row
@@ -47,15 +47,15 @@
     .header
       %h3
         %span.icon-map-marker
-          = t:your_profil_live
+          = t "your_profil_live"
       %p
-        = t:on_ofn_map
+        = t "on_ofn_map"
     .list
       /-# Can we pass an anchor here to zoom to our enterprise?
       %a.button.bottom{href: main_app.map_path, target: '_blank'}
-        = t:see
+        = t "see"
         = @enterprise.name
-        = t:live
+        = t "live"
         %span.icon-arrow-right
   .two.columns
     &nbsp;
@@ -64,12 +64,12 @@
     .header
       %h3
         %span.icon-edit
-          = t:edit_profile_details
+          = t "edit_profile_details"
       %p
-        = t:edit_profile_details_etc
+        = t "edit_profile_details_etc"
     .list
       %a.button.bottom{href: main_app.edit_admin_enterprise_path(@enterprise)}
-        = t:manage
+        = t "manage"
         = @enterprise.name
         %span.icon-arrow-right
 
@@ -79,10 +79,10 @@
       .header
         %h3
           %span.icon-th-large
-            = t:add_and_manage_products
+            = t "add_and_manage_products"
       .list
         %a.button.bottom{href: bulk_edit_admin_products_path}
-          = t:manage_products
+          = t "manage_products"
           %span.icon-arrow-right
 
   .two.columns
@@ -93,8 +93,8 @@
       .header
         %h3
           %span.icon-shopping-cart
-            = t:add_and_manage_order_cycles
+            = t "add_and_manage_order_cycles"
       .list
         %a.button.bottom{href: main_app.admin_order_cycles_path}
-          = t:manage_order_cycles
+          = t "manage_order_cycles"
           %span.icon-arrow-right

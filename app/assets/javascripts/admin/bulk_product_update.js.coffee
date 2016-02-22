@@ -212,7 +212,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       ).error (data, status) ->
         if status == 400 && data.errors? && data.errors.length > 0
           errors = error + "\n" for error in data.errors
-          alert t("products_update_error") + errors
+          alert t("products_update_error") + "\n" + errors
           $scope.displayFailure t("products_update_error")
         else
           $scope.displayFailure t("products_update_error_data") + status
