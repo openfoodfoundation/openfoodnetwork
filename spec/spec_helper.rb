@@ -1,17 +1,18 @@
-require 'simplecov'
-SimpleCov.start
-
-
 require 'rubygems'
 
 # Require pry when we're not inside Travis-CI
-require 'pry' unless ENV['HAS_JOSH_K_SEAL_OF_APPROVAL']
+require 'pry' unless ENV['CI']
+
+require 'knapsack'
+Knapsack::Adapters::RSpecAdapter.bind
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
+require 'rspec/retry'
+require 'paper_trail/frameworks/rspec'
 
 # Allow connections to phantomjs/selenium whilst raising errors
 # when connecting to external sites
@@ -33,7 +34,7 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
 Capybara.register_driver :poltergeist do |app|
-  options = {phantomjs_options: ['--load-images=no'], window_size: [1280, 800], timeout: 1.minute}
+  options = {phantomjs_options: ['--load-images=no'], window_size: [1280, 800], timeout: 2.minutes}
   # Extend poltergeist's timeout to allow ample time to use pry in browser thread
   #options.merge! {timeout: 5.minutes}
   # Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
@@ -41,7 +42,7 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, options)
 end
 
-Capybara.default_wait_time = 30
+Capybara.default_max_wait_time = 30
 
 require "paperclip/matchers"
 
@@ -70,15 +71,26 @@ RSpec.configure do |config|
   # Filters
   config.filter_run_excluding :skip => true, :future => true, :to_figure_out => true
 
+  # Retry
+  config.verbose_retry = true
+
   # DatabaseCleaner
   config.before(:suite)          { DatabaseCleaner.clean_with :deletion, {except: ['spree_countries', 'spree_states']} }
   config.before(:each)           { DatabaseCleaner.strategy = :transaction }
   config.before(:each, js: true) { DatabaseCleaner.strategy = :deletion, {except: ['spree_countries', 'spree_states']} }
   config.before(:each)           { DatabaseCleaner.start }
   config.after(:each)            { DatabaseCleaner.clean }
+  config.after(:each, js:true) do
+    Capybara.reset_sessions!
+    RackRequestBlocker.wait_for_requests_complete
+    DatabaseCleaner.clean
+  end
 
   # Geocoding
   config.before(:each) { Spree::Address.any_instance.stub(:geocode).and_return([1,1]) }
+
+  # Ensure we start with consistent config settings
+  config.before(:each) { Spree::Config.products_require_tax_category = false }
 
   # Helpers
   config.include Rails.application.routes.url_helpers
@@ -91,10 +103,12 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::ControllerHelper, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
+  config.include OpenFoodNetwork::ProductsHelper
   config.include OpenFoodNetwork::DistributionHelper
   config.include OpenFoodNetwork::HtmlHelper
   config.include ActionView::Helpers::DateHelper
   config.include OpenFoodNetwork::DelayedJobHelper
+  config.include OpenFoodNetwork::PerformanceHelper
 
   # FactoryGirl
   require 'factory_girl_rails'

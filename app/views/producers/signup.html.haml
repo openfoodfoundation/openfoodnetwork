@@ -1,0 +1,52 @@
+- content_for(:title) do
+  = t :producers_signup_title
+
+#panes
+  #producer-signup.pane
+    .row.header
+      .small-12.medium-12.columns.text-center
+        %h2
+          = t :producers_signup_headline
+    .row.content
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %p.text-big
+          = t :producers_signup_motivation
+        %br
+        %a.button.transparent{href: "/register"}
+          = t :producers_signup_send
+  .pane
+    .row
+      .small-12.medium-10.medium-offset-1.columns.text-center
+        %h2
+          = t :producers_signup_enterprise
+        -# %p.text-big
+        -#   If there is a time-sensitive offer you can write it here, e.g.
+        -#   Sign up before 30th June for an extra month free!
+        %br
+        = ContentConfig.producer_signup_pricing_table_html.html_safe
+
+  #producer-case-studies
+    .row
+      .small-12.medium-10.medium-offset-1.columns
+        %h2.text-center
+          = t :producers_signup_studies
+        %br
+        = ContentConfig.producer_signup_case_studies_html.html_safe
+
+  .pane#cta
+    .row
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %h2
+          = t :producers_signup_cta_headline
+        %p.text-big Start with a free profile, and expand when you're ready!
+        %a.button.transparent{href: "/register"}
+          = t :producers_signup_cta_action
+
+  #producer-details.pane.footer-pad
+    .row
+      .small-12.medium-10.medium-offset-1.columns
+        %h2.text-center
+          = t :producers_signup_detail
+        = ContentConfig.producer_signup_detail_html.html_safe
+
+= render partial: "shared/footer"

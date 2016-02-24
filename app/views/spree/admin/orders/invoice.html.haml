@@ -1,0 +1,52 @@
+= wicked_pdf_stylesheet_link_tag "mail/all"
+
+
+%table{:width => "100%"}
+  %tbody
+    %tr{ valign: "top" }
+      %td{ :align => "left", colspan: 3 }
+        %h6= "Issued on: #{Time.zone.now.strftime("%F")}"
+    %tr{ valign: "top" }
+      %td{ :align => "left" }
+        %h4
+          = "TAX INVOICE: "
+          = "#{@order.number}"
+      %td{width: "10%" }
+        &nbsp;
+      %td{ :align => "right" }
+        %h4= @order.order_cycle.andand.name
+    %tr{ valign: "top" }
+      %td{ :align => "left" }
+        %strong= "From: #{@order.distributor.name}"
+        - if @order.distributor.abn.present?
+          %br
+          = "ABN: #{@order.distributor.abn}"
+        %br
+        = @order.distributor.address.full_address
+        %br
+        = @order.distributor.email
+      %td{width: "10%" }
+        &nbsp;
+      %td{ :align => "right" }
+        %strong= "To: #{@order.ship_address.full_name}"
+        - if @order.customer.code.present?
+          %br
+          = "Code: #{@order.customer.code}"
+        %br
+        = @order.ship_address.full_address
+        %br
+        = "#{@order.customer.email},"
+        = "#{@order.bill_address.phone}"
+
+= render 'spree/admin/orders/invoice_table'
+
+- if @order.special_instructions.present?
+  %p.callout
+    %strong
+      = t :customer_instructions
+  %p
+    %em= @order.special_instructions
+  %p
+    &nbsp;
+
+= render 'spree/order_mailer/payment'

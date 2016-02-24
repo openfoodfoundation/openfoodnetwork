@@ -4,7 +4,7 @@ describe InjectionHelper do
   let!(:enterprise) { create(:distributor_enterprise, facebook: "roger") }
 
   it "will inject via AMS" do
-    helper.inject_json_ams("test", [enterprise], Api::EnterpriseSerializer).should match enterprise.name
+    helper.inject_json_ams("test", [enterprise], Api::IdSerializer).should match /#{enterprise.id}/
   end
 
   it "injects enterprises" do

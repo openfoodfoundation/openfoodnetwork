@@ -1,0 +1,60 @@
+- content_for :page_title do
+  %h1.page-title Customers
+
+= admin_inject_shops
+
+%div{ ng: { app: 'admin.customers', controller: 'customersCtrl' } }
+  .row{ ng: { hide: "loaded() && filteredCustomers.length > 0" } }
+    .five.columns.alpha
+      %h3 Please select a Hub:
+    .four.columns
+      %select.select2.fullwidth#shop_id{ 'ng-model' => 'shop.id', name: 'shop_id', 'ng-options' => 'shop.id as shop.name for shop in shops' }
+    .seven.columns.omega &nbsp;
+
+  .row{ 'ng-hide' => '!loaded() || filteredCustomers.length == 0' }
+    .controls.sixteen.columns.alpha.omega
+      .five.columns.alpha
+        %input.fullwidth{ :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
+      .five.columns &nbsp;
+      -# =render 'admin/shared/bulk_actions_dropdown'
+      .three.columns &nbsp;
+      = render 'admin/shared/columns_dropdown'
+  .row{ 'ng-if' => 'shop && !loaded()' }
+    .sixteen.columns.alpha#loading
+      %img.spinner{ src: "/assets/spinning-circles.svg" }
+      %h1 LOADING CUSTOMERS
+  .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredCustomers.length == 0'}
+    %h1#no_results No customers found.
+
+
+  .row{ ng: { show: "loaded() && filteredCustomers.length > 0" } }
+    %form{ name: "customers" }
+      %table.index#customers
+        %col.email{ width: "20%"}
+        %col.code{ width: "20%"}
+        %col.tags{ width: "50%"}
+        %col.actions{ width: "10%"}
+        %thead
+          %tr{ ng: { controller: "ColumnsCtrl" } }
+            -# %th.bulk
+              -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
+            %th.email{ 'ng-show' => 'columns.email.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'customer.email'; reverse = !reverse" } Email
+            %th.code{ 'ng-show' => 'columns.code.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'customer.code'; reverse = !reverse" } Code
+            %th.tags{ 'ng-show' => 'columns.tags.visible' } Tags
+            %th.actions
+              Ask?&nbsp;
+              %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
+        %tr.customer{ 'ng-repeat' => "customer in filteredCustomers = ( customers | filter:quickSearch | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "c_{{customer.id}}" }
+          -# %td.bulk
+            -# %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
+          %td.email{ 'ng-show' => 'columns.email.visible' } {{ customer.email }}
+          %td.code{ 'ng-show' => 'columns.code.visible' }
+            %input{ :type => 'text', :name => 'code', :id => 'code', 'ng-model' => 'customer.code', 'obj-for-update' => "customer", "attr-for-update" => "code" }
+          %td.tags{ 'ng-show' => 'columns.tags.visible' }
+            .tag_watcher{ 'obj-for-update' => "customer", "attr-for-update" => "tag_list"}
+              %tags_with_translation{ object: 'customer' }
+          %td.actions
+            %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
+      %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'submitAll()' }

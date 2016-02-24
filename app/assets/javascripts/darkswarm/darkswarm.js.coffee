@@ -10,6 +10,7 @@ window.Darkswarm = angular.module("Darkswarm", ["ngResource",
   'google-maps',
   'duScroll',
   'angularFileUpload',
+  'angularSlideables'
   ]).config ($httpProvider, $tooltipProvider, $locationProvider, $anchorScrollProvider) ->
   $httpProvider.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content')
   $httpProvider.defaults.headers.put['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content')

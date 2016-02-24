@@ -1,20 +1,18 @@
 %h3
-  = "Hi, #{@resource.contact}!"
+  = t :email_confirmation_greeting, contact: @enterprise.contact
 %p.lead
-  = "Please confirm your email address for "
-  %strong
-    = "#{@resource.name}."
+  = t :email_confirmation_profile_created, name: @enterprise.name
 %p &nbsp;
 
 %p.callout
-  Click the link below to confirm your email and to activate your enterprise. This link can be used only once:
+  = t :email_confirmation_click_link
   %br
   %strong
-    = link_to 'Confirm this email address »', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)
+    = link_to t(:email_confirmation_link_label), confirmation_url(@enterprise, :confirmation_token => @enterprise.confirmation_token)
 
 %p &nbsp;
 %p
-  = "We're so excited that you're joining the #{ Spree::Config[:site_name] }! Don't hestitate to get in touch if you have any questions."
+  = t :email_confirmation_help_html, link: link_to(t(:email_confirmation_userguide), 'http://www.openfoodnetwork.org/platform/user-guide/'), sitename: Spree::Config[:site_name]
 
 = render 'shared/mailers/signoff'
 

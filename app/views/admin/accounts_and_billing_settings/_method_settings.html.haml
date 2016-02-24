@@ -1,0 +1,10 @@
+.row
+  .six.columns.alpha
+    .field
+      = label :settings, :default_accounts_payment_method_id, t(:default_accounts_payment_method)
+      = collection_select(:settings, :default_accounts_payment_method_id, @payment_methods, :id, :name, { include_blank: true, selected: Spree::Config.default_accounts_payment_method_id}, { class: "select2 fullwidth" })
+
+  .six.columns.omega
+    .field
+      = label :settings, :default_accounts_shipping_method_id, t(:default_accounts_shipping_method)
+      = collection_select(:settings, :default_accounts_shipping_method_id, @shipping_methods, :id, :name, { include_blank: true, selected: Spree::Config.default_accounts_shipping_method_id}, { class: "select2 fullwidth" })

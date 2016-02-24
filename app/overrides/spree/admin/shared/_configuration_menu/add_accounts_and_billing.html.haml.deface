@@ -1,0 +1,4 @@
+// insert_bottom "[data-hook='admin_configurations_sidebar_menu']"
+
+%li
+  = link_to 'Accounts & Billing', main_app.edit_admin_accounts_and_billing_settings_path

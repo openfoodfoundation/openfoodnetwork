@@ -1,14 +1,16 @@
 source 'https://rubygems.org'
-ruby "1.9.3"
+ruby "2.1.5"
 
 gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'i18n', '~> 0.6.11'
 
+gem 'nokogiri'
+
 gem 'pg'
-gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
-gem 'spree_i18n', :github => 'spree/spree_i18n', :branch => '1-3-stable'
-gem 'spree_auth_devise', :github => 'spree/spree_auth_devise', :branch => '1-3-stable'
+gem 'spree', github: 'openfoodfoundation/spree', branch: '1-3-stable'
+gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
+gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '1-3-stable'
 
 # Waiting on merge of PR #117
 # https://github.com/spree-contrib/better_spree_paypal_express/pull/117
@@ -30,6 +32,7 @@ gem 'newrelic_rpm'
 gem 'haml'
 gem 'sass', "~> 3.3"
 gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
+gem 'redcarpet'
 gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'
@@ -49,6 +52,12 @@ gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.0'
 gem 'roadie-rails', '~> 1.0.3'
 gem 'figaro'
+gem 'blockenspiel'
+gem 'acts-as-taggable-on', '~> 3.4'
+gem 'paper_trail', '~> 3.0.8'
+
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 gem 'foreigner'
 gem 'immigrant'
@@ -69,13 +78,14 @@ group :assets do
   gem 'turbo-sprockets-rails3'
   gem 'foundation-icons-sass-rails'
   gem 'momentjs-rails'
-  gem 'angular-rails-templates'
+  gem 'angular-rails-templates', '~> 0.2.0'
 end
+
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
 gem 'jquery-rails'
-
+gem 'css_splitter'
 
 
 group :test, :development do
@@ -87,13 +97,15 @@ group :test, :development do
   gem 'factory_girl_rails', :require => false
   gem 'capybara'
   gem 'database_cleaner', '0.7.1', :require => false
-  gem 'simplecov', :require => false
   gem 'awesome_print'
   gem 'letter_opener'
   gem 'timecop'
   gem 'poltergeist'
+  gem 'rspec-retry'
   gem 'json_spec'
   gem 'unicorn-rails'
+  gem 'atomic'
+  gem 'knapsack'
 end
 
 group :test do
@@ -104,7 +116,7 @@ group :test do
 end
 
 group :development do
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'debugger-linecache'
   gem 'guard'
   gem 'guard-livereload'
@@ -112,4 +124,5 @@ group :development do
   gem 'guard-rails'
   gem 'guard-zeus'
   gem 'guard-rspec'
+  gem 'parallel_tests'
 end

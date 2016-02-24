@@ -1,0 +1,601 @@
+fr:
+  devise:
+    failure:
+      invalid: |
+        Email / mot de passe incorrect.
+        Créez votre compte ou réinitialisez votre mot de passe.
+    enterprise_confirmations:
+      enterprise:
+        confirmed: Merci, votre adresse email est confirmée.
+        not_confirmed: Votre adresse email n'a pas pu être confirmée. Peut-être l'aviez-vous déjà confirmée?
+        confirmation_sent: "Un mail de confirmation a été envoyé!"
+        confirmation_not_sent: "Impossible d'envoyer le mail de confirmation."
+  home: "OFN"
+  title: Open Food France
+  welcome_to: 'Bienvenue sur '
+  search_by_name: Recherche pas nom ou région...
+  producers: Producteurs et hubs
+  producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
+  charges_sales_tax: Soumis à la TVA?
+  print_invoice: "Imprimer la facture"
+  send_invoice: "Envoyer la facture"
+  resend_confirmation: "Renvoyer la confirmation"
+  view_order: "Voir la commande"
+  edit_order: "Editer la commande"
+  ship_order: "Envoyer la commande"
+  cancel_order: "Annuler la commande"
+  confirm_send_invoice: "La facture de cette commande va être transmise au client. Etes-vous sûr de vouloir continuer ?"
+  confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
+  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
+  invoice: "Facture"
+  percentage_of_sales: "%{percentage} des ventes"
+  percentage_of_turnover: "Pourcentage du chiffre d'affaire"
+  monthly_cap_excl_tax: "Cumul mensuel (sans TVA)"
+  capped_at_cap: "plafonné à %{cap}"
+  per_month: "par mois"
+  free: "gratuit"
+  plus_tax: "plus TVA"
+  total_monthly_bill_incl_tax: "Facture mensuelle totale (taxes incluses)"
+  sort_order_cycles_on_shopfront_by: "Trier les cycles de vente par"
+  invoice_column_item: "Produit"
+  invoice_column_qty: "Qté"
+  invoice_column_tax: "TVA"
+  invoice_column_price: "Prix"
+  logo: "Logo (640x130)"
+  logo_mobile: "Logo smartphone (75x26)"
+  logo_mobile_svg: "Logo  smartphone (SVG)"
+  home_hero: "Bannière"
+  home_show_stats: "Afficher statistiques"
+  footer_logo: "Logo (220x76)"
+  footer_facebook_url: "Facebook URL"
+  footer_twitter_url: "Twitter URL"
+  footer_instagram_url: "Instagram URL"
+  footer_linkedin_url: "LinkedIn URL"
+  footer_googleplus_url: "Google Plus URL"
+  footer_pinterest_url: "Pinterest URL"
+  footer_email: "Email"
+  footer_links_md: "Liens"
+  footer_about_url: "A propos URL"
+  footer_tos_url: "Conditions d'utilisation URL"
+  name: Nom
+  first_name: Prénom
+  last_name: Nom de famille
+  email: Email
+  phone: Téléphone
+  next: Suivant
+  address: Adresse
+  address2: Adresse (suite)
+  city: Ville
+  state: Région
+  postcode: Code postal
+  country: Pays
+  unauthorized: Non authorisé
+  terms_of_service: "Conditions d'utilisation"
+  on_demand: A volonté
+  none: Aucun
+  alert_selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food France?"
+  alert_start_here: "Démarrez ici"
+  label_shops: "Boutiques"
+  label_map: "Carte"
+  label_producers: "Producteurs"
+  label_groups: "Groupes"
+  label_about: "A propos"
+  label_shopping: "Achats"
+  label_login: "Login"
+  label_logout: "Logout"
+  label_signup: "Inscription"
+  label_administration: "Administration"
+  label_admin: "Admin"
+  label_account: "Compte"
+  label_more: "Afficher"
+  label_less: "Masquer"
+  items: "produits"
+  cart_headline: "Votre panier"
+  total: "Total"
+  checkout: "Régler la commande"
+  cart_updating: "Mettre à jour le panier"
+  cart_empty: "Panier vide"
+  cart_edit: "Modifier votre panier"
+  card_number: Numéro de carte
+  card_securitycode: "Cryptogramme visuel"
+  card_expiry_date: Date d'expiration
+  ofn_cart_headline: "Panier actuel pour:"
+  ofn_cart_distributor: "Distributeur:"
+  ofn_cart_oc: "Cycle de vente:"
+  ofn_cart_from: "De:"
+  ofn_cart_to: "Pour:"
+  ofn_cart_product: "Produit:"
+  ofn_cart_quantitiy: "Quantité:"
+  ofn_cart_send: "Acheter"
+  ie_warning_headline: "Votre navigateur n'est pas à jour :-("
+  ie_warning_text: "Pour une expérience optimale sur Open Food France, nous vous recommandons fortement de mettre à jour votre navigateur:"
+  ie_warning_chrome: Télécharger Chrome
+  ie_warning_firefox: Télécharger Firefox
+  ie_warning_ie: Mettre à jour Internet Explorer
+  ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez Open Food France sur votre smartphone :-)"
+  footer_global_headline: "OFN Global"
+  footer_global_home: "Accueil"
+  footer_global_news: "News"
+  footer_global_about: "A propos"
+  footer_global_contact: "Contact"
+  footer_sites_headline: "Sites OFN"
+  footer_sites_developer: "Developpeur"
+  footer_sites_community: "Communauté"
+  footer_sites_userguide: "Guide utilisateur"
+  footer_secure: "Fiable et sécurisé."
+  footer_secure_text: "Open Food France utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de votre commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
+  footer_contact_headline: "Restez en contact"
+  footer_contact_email: "Nous écrire"
+  footer_nav_headline: "Naviguer"
+  footer_join_headline: "Nous rejoindre"
+  footer_join_producers: "Inscription producteurs"
+  footer_join_hubs: "Inscription hubs"
+  footer_join_groups: "Inscription groupes"
+  footer_join_partners: "Partenaires"
+  footer_legal_call: "Lire nos"
+  footer_legal_tos: "Termes et conditions"
+  footer_legal_visit: "Nous trouver sur"
+  footer_legal_text_html: "Open Food Network est une plateforme logicielle open source, libre et gratuite. Nos données sont protégées sous licence %{content_license} et notre code sous %{code_license}."
+  home_shop: Faire mes courses
+  brandstory_headline: "Des aliments porteurs de sens."
+  brandstory_intro: "Parfois, le meilleur moyen de réparer le système, c'est d'en inventer un autre..."
+  brandstory_part1: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent véritablement changer le monde."
+  brandstory_part2: "Nous avons besoin d'un outil pour rendre tout ça réel. Un moyen de redonner le pouvoir à ceux qui cultivent, vendent et achètent la nourriture. Un moyen de raconter les histoires, de gérer la logistique. Un moyen de transformer chaque jour les transactions en actions porteuses de changement."
+  brandstory_part3: "C'est pour cela que nous construisons cette plateforme, ce \"marché en ligne\", afin de rééquilibrer les échanges et redistribuer le pouvoir. Elle est transparente, pour assurer des relations équitables et favoriser les prises de conscience. Elle est open source, donc possédée par tout le monde. Elle se déploie aux échelles régionales et nationales, et des gens lancent de multiples versions à travers le monde."
+  brandstory_part4: "Elle fonctionne partout. Elle change tout."
+  brandstory_part5_strong: "Cette plateforme s'appelle Open Food Network."
+  brandstory_part6: "Nous aimons notre nourriture. Maintenant nous pouvons aussi aimer notre système alimentaire."
+  system_headline: "Comment ça marche?"
+  system_step1: "1. Recherche"
+  system_step1_text: "Recherchez des produits locaux, de saison, parmi nos multiples boutiques indépendantes. Filtrez par localisation ou catégorie de produits, livraison en point retrait ou à domicile."
+  system_step2: "2. Achat"
+  system_step2_text: "Transformez vos achats en choisissant des produits locaux et abordables, proposés par les divers producteurs et hubs. Découvrez les histoires et les personnes qui se cachent derrière les produits!"
+  system_step3: "3. Retrait / Livraison"
+  system_step3_text: "Réceptionnez vos produits à domicile, ou rendez vous chez votre producteur ou hub pour rencontrer les gens qui se cachent derrière les produits. Au delà de la bio-diversité, nous cultivons l'éco-diversité: vivez des expériences d'achat de nourriture uniques et humaines."
+  cta_headline: "Des achats qui rendent le monde un peu meilleur."
+  cta_label: "Je vote avec mes achats"
+  stats_headline: "Nous créons un nouveau système alimentaire."
+  stats_producers: "agriculteurs et producteurs"
+  stats_shops: "boutiques"
+  stats_shoppers: "acheteurs"
+  stats_orders: "commandes"
+  checkout_title: Paiement
+  checkout_now: Régler la commande
+  checkout_order_ready: Commande prête pour
+  checkout_hide: Masquer
+  checkout_expand: Afficher
+  checkout_headline: "Ok, prêt pour le paiement?"
+  checkout_as_guest: "Régler en mode invité"
+  checkout_details: "Vos informations"
+  checkout_billing: "Informations de facturation"
+  checkout_shipping: Informations de livraison
+  checkout_method_free: Gratuit
+  checkout_address_same: Adresse de livraison identique à l'adresse de facturation?
+  checkout_ready_for: "Prêt pour:"
+  checkout_instructions: "Commentaires ou demandes spécifiques?"
+  checkout_payment: Paiement
+  checkout_send: Passer la commande
+  checkout_your_order: Votre commande
+  checkout_cart_total: Panier total
+  checkout_shipping_price: Livraison
+  checkout_total_price: Total
+  checkout_back_to_cart: "Retour au Panier"
+  order_paid: RÉGLÉ
+  order_not_paid: NON RÉGLÉ
+  order_total: Total commande
+  order_payment: "Payer via:"
+  order_billing_address: Adresse de facturation
+  order_delivery_on: Livraison prévue
+  order_delivery_address: Adresse de livraison
+  order_special_instructions: "Vos commentaires:"
+  order_pickup_time: Disponible pour retrait
+  order_pickup_instructions: Instructions de retrait
+  order_produce: Produit
+  order_total_price: Total
+  order_includes_tax: (TVA inclue)
+  order_payment_paypal_successful: Votre paiement via PayPal a été réalisé avec succès.
+  order_hub_info: Hub Info
+  products: "Produits"
+  products_in: "dans %{oc}"
+  products_at: "à %{distributor}"
+  products_elsewhere: "Produits trouvés ailleurs"
+  email_welcome: "Bienvenue"
+  email_confirmed: "Veuillez confirmer votre adresse email."
+  email_registered: "fait maintenant partie de"
+  email_userguide_html: "Le Guide Utilisateur expliquant comment mettre en place son profil producteur ou son hub est accessible ici: %{link}"
+  email_admin_html: "Vous pouvez gérer votre compte en vous connectant ici %{link} ou en cliquant sur la roue en haut à droite de la page d'accueil et en sélectionnant Administration."
+  email_community_html: "Nous avons aussi un forum de discussion en ligne (en anglais) pour échanger avec la communauté sur des questions liées au logiciel OFN et aux défis de la gestion d'un food hub.  Nous vous invitons à y participer. Nous sommes en constante évolution et vos contributions à ce forum vont façonner les prochaines étapes. %{link}"
+  email_help: "En cas de difficulté, consultez notre FAQ, parcourez le forum (en anglais) ou postez un message dans la section 'Support' et quelqu'un viendra vous aider!"
+  email_confirmation_greeting: "Bonjour %{contact}!"
+  email_confirmation_profile_created: "Le profil pour %{name} a été créé avec succès! Pour activer votre Profil nous devons vérifier cette adresse email."
+  email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
+  email_confirmation_link_label: "Confirmer cette adresse email »"
+  email_confirmation_help_html: "Après confirmation de votre email, vous pourrez accéder au compte d'administration de cette entreprise. Voir %{link} pour en savoir plus à propos de %{sitename} et commencer à utiliser votre profil et/ou boutique en ligne."
+  email_confirmation_userguide: "Guide Utilisateur"
+  email_social: "Nous suivre:"
+  email_contact: "Nous écrire:"
+  email_signoff: "Cordialement,"
+  email_signature: "L'équipe %{sitename}"
+  email_confirm_customer_greeting: "Bonjour %{name},"
+  email_confirm_customer_intro_html: "Merci d'avoir passé commande chez <strong>%{distributor}</strong>!"
+  email_confirm_customer_number_html: "Confirmation de commande <strong>#%{number}</strong>"
+  email_confirm_customer_details_html: "Détails de votre commande chez <strong>%{distributor}</strong>:"
+  email_confirm_customer_signoff: "Cordialement,"
+  email_confirm_shop_greeting: "Bonjour %{name},"
+  email_confirm_shop_order_html: "Bravo! Vous avez reçu une nouvelle commande pour <strong>%{distributor}</strong>!"
+  email_confirm_shop_number_html: "Confirmation de commande <strong>#%{number}</strong>"
+  email_order_summary_item: "Produit"
+  email_order_summary_quantity: "Qté"
+  email_order_summary_price: "Prix"
+  email_order_summary_subtotal: "Sous-total:"
+  email_order_summary_total: "Total:"
+  email_payment_paid: RÉGLÉ
+  email_payment_not_paid: NON RÉGLÉ
+  email_payment_summary: Résumé du paiement
+  email_payment_method: "Payer via :"
+  email_shipping_delivery_details: Détails de livraison
+  email_shipping_delivery_time: "Livré le:"
+  email_shipping_delivery_address: "Adresse de livraison:"
+  email_shipping_collection_details: Détails de retrait
+  email_shipping_collection_time: "Prêt pour retrait:"
+  email_shipping_collection_instructions: "Instructions de retrait:"
+  email_special_instructions: "Vos commentaires:"
+  email_signup_greeting: Bonjour!
+  email_signup_welcome: "Bienvenue sur %{sitename}!"
+  email_signup_login: Votre login
+  email_signup_email: Votre email de connexion est
+  email_signup_shop_html: "Vous pouvez maintenant commencer vos achats sur %{link}."
+  email_signup_text: "Merci d'avoir rejoint le réseau. Si vous êtes un client, nous sommes impatients de vous faire découvrir de nombreux agriculteurs fantastiques, de merveilleux hubs de distribution et des plats délicieux! Si vous êtes un producteur ou autre entreprise alimentaire, nous sommes ravis de vous compter parmi les membres du réseau."
+  email_signup_help_html: "Vos questions et suggestions sont les bienvenues; vous pouvez utiliser le bouton <em>Envoyer un commentaire</em> sur le site ou envoyez-nous un email à"
+  shopping_oc_closed: La boutique est actuellement fermée
+  shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvez accépter une commande tardive)"
+  shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
+  shopping_oc_next_open: "Le prochain cycle de vente ouvrira dans %{distance_of_time}"
+  shopping_tabs_about: "A propos de %{distributor}"
+  shopping_tabs_contact: "Contact"
+  shopping_contact_address: "Adresse"
+  shopping_contact_web: "Contact"
+  shopping_contact_social: "Suivre"
+  shopping_groups_part_of: "fait partie de:"
+  shopping_producers_of_hub: "Les producteurs de %{hub}:"
+  enterprises_next_closing: "Prochaine commande à passer avant"
+  enterprises_ready_for: "Prêt pour"
+  enterprises_choose: "Choisissez votre date de commande:"
+  hubs_buy: "Acheter:"
+  hubs_shopping_here: "Achats en cours"
+  hubs_orders_closed: "Boutique fermée"
+  hubs_profile_only: "Fiche profil"
+  hubs_delivery_options: "Options de livraison"
+  hubs_pickup: "Retrait"
+  hubs_delivery: "Livraison"
+  hubs_producers: "Nos producteurs"
+  hubs_filter_by: "Filtrer par"
+  hubs_filter_type: "Catégorie"
+  hubs_filter_delivery: "Livraison"
+  hubs_matches: "Vous voulez dire?"
+  hubs_intro: Passez commande près de chez vous
+  hubs_distance: Le plus près de
+  hubs_distance_filter: "Afficher les boutiques près de %{location}"
+  products_clear_all: Vider
+  products_showing: "Afficher:"
+  products_with: avec
+  products_search: "Recherche par produit ou producteur"
+  products_loading: "Produits en cours de chargement..."
+  products_updating_cart: "Actualisation du panier..."
+  products_cart_empty: "Panier vide"
+  products_edit_cart: "Modifier votre panier"
+  products_from: de
+  search_no_results_html: "Désolé, aucun résultat pour %{query}. Autre recherche?"
+  components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur Open Food France mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
+  components_profiles_show: "Afficher aussi les profils"
+  components_filters_nofilters: "Pas de filtre"
+  components_filters_clearfilters: "Vider les filtres"
+  groups_title: Groupes
+  groups_headline: Groupes  / réseaux territoriaux
+  groups_search: "Recherche par nom ou mot-clé"
+  groups_no_groups: "Aucun groupe trouvé"
+  groups_about: "A propos"
+  groups_producers: "Nos producteurs"
+  groups_hubs: "Nos hubs"
+  groups_contact_web: Contact
+  groups_contact_social: Suivre
+  groups_contact_address: Adresse
+  groups_contact_email: Nous écrire
+  groups_contact_website: Visiter notre site web
+  groups_contact_facebook: Nous suivre sur Facebook
+  groups_signup_title: S'inscrire en tant que groupe
+  groups_signup_headline: Inscription groupe
+  groups_signup_intro: "Nous sommes une plate-forme très efficace pour le marketing collaboratif, une excellente manière pour vos membres et parties prenantes d'atteindre de nouveaux marchés. Nous sommes à but non lucratif, abordable et simple."
+  groups_signup_email: Nous écrire
+  groups_signup_motivation1: Nous transformons les systèmes alimentaires pour remettre de l'équité dans les échanges.
+  groups_signup_motivation2: C'est pourquoi nous sortons du lit chaque matin. Nous sommes une organisation à but non lucratif, basée sur un code source ouvert. Nous opérons en toute transparence.
+  groups_signup_motivation3: Vous avez de belles idées, et nous voulons vous aider. Nous partageons nos connaissances, réseaux et ressources. Nous savons que l'isolement ne crée pas le changement, alors coopérons.
+  groups_signup_motivation4: Nous venons à votre rencontrer.
+  groups_signup_motivation5: Vous êtes un réseau de circuits de distribution alternatifs, de producteurs, de distributeurs, une administration liée à l'industrie alimentaire ou une autorité locale?
+  groups_signup_motivation6: Quel que soit votre rôle dans la relocalisation des systèmes alimentaires, nous sommes prêts à vous soutenir. Si vous vous demandez à quoi Open Food Network ressemble / pourrait ressembler dans votre coin du monde, contactez-nous.
+  groups_signup_motivation7: Nous contribuons à remettre du sens dans les systèmes alimentaires.
+  groups_signup_motivation8: Vous avez besoin de connecter et d'outiller vos réseaux, nous offrons une plate-forme pour la coopération et l'action. Vous souhaitez de l'engagement. Nous vous aidons à atteindre les acteurs, les parties-prenantes, les secteurs.
+  groups_signup_motivation9: Vous avez besoin de ressources. Nous mettons à votre service notre expérience. Vous avez besoin de coopération. Nous vous connectons à un large réseau d'acteurs et d'organisations soeurs partout dans le monde.
+  groups_signup_pricing: Compte groupe
+  groups_signup_studies: Etudes de cas
+  groups_signup_contact: Vous voulez discuter?
+  groups_signup_contact_text: "Prenez contact et découvrez ce qu'Open Food France peut faire pour vous:"
+  groups_signup_detail: "Plus de précisions."
+  login_invalid: "Email ou mot de passe erroné"
+  modal_hubs: "Food Hubs"
+  modal_hubs_abstract: Nos food hubs sont les points de contact entre vous et les personnes qui produisent votre nourriture!
+  modal_hubs_content1: Vous pouvez chercher le hub qui vous convient par localisation ou par nom. Certains hubs ont de multiples points de retrait de vos achats, et certains proposent également la livraison à domicile. Chaque food hub est un point de vente et gère de façon indépendante ses opérations et sa logistique - attendez-vous donc à des disparités de fonctionnement entre les hubs.
+  modal_hubs_content2: Vous pouvez uniquement faire vos courses dans un hub à la fois.
+  modal_groups: "Groupes / réseaux territoriaux"
+  modal_groups_content1: Voilà les organisations et les relations inter-hubs qui constituent l'Open Food Network.
+  modal_groups_content2: Certains groupes sont regroupés pas localisation ou région, d'autres sur des smilitudes non géographiques.
+  modal_how: "Comment ça marche"
+  modal_how_shop: Faire vos courses sur Open Food France
+  modal_how_shop_explained: Recherchez un food hub près de chez vous et commencez vos achats! Vous pouvez afficher plus d'infos sur chaque food hub pour voir le type de produits qu'il propose, et cliquer sur le hub pour commencer vos achats. (Vous ne pouvez faire vos courses que dans un food hub à la fois.)
+  modal_how_pickup: Frais de retraits, livraison, transport
+  modal_how_pickup_explained: Certains food hubs livrent à domicile, d'autres vous demandent de venir récupérer vos achats dans un point de retrait. Vous pouvez voir quelle options sont proposées sur la page d'accueil du hub, et sélectionner votre choix au moment de la validation de la commande. La livraison à domicile coûtera souvent plus cher, et les prix diffèrent selon le hub. Chaque food hub est un point de vente et gère de façon indépendante ses opérations et sa logistique - attendez-vous donc à des disparités de fonctionnement entre les hubs.
+  modal_how_more: En savoir plus
+  modal_how_more_explained: "Pour en savoir plus sur Open Food France, comment ça marche, et contribuer, allez voir:"
+  modal_producers: "Producteurs"
+  modal_producers_explained: "Nos producteurs font pousser et fabriquent tous les délicieux produits que vous pouvez acheter sur Open Food France."
+  ocs_choice_hub: "Hub:"
+  ocs_choice_oc: "Cycle de vente:"
+  ocs_choice_text: "Vous n'avez pas encore sélectionné votre point de retrait."
+  ocs_closed_headline: La boutique est actuellement fermée
+  ocs_closed_time: "Le dernier cycle de vente s'est terminé il y a %{time}."
+  ocs_closed_contact: "Veuillez contacter le hub en direct pour voir s'il accepte des commandes tardives, ou patientez jusqu'à l'ouverture du prochain cycle de vente."
+  ocs_closed_opens: "Le prochain cycle de vente commence dans %{time}"
+  ocs_closed_email: "Email: %{email}"
+  ocs_closed_phone: "Téléphone: %{phone}"
+  ocs_pickup_time: "Votre commande sera prête pour %{pickup_time}"
+  ocs_change_date: "Changer la date de retrait"
+  ocs_change_date_notice: "(Votre panier sera vidé)"
+  ocs_close_time: "BOUTIQUE FERMÉE"
+  ocs_when_headline: Quand voulez-vous commander?
+  ocs_when_text: Les produits s'afficheront quand vous aurez sélectionné une date.
+  ocs_when_closing: "Fermera"
+  ocs_when_choose: "Choisir le cycle de vente"
+  ocs_list: "Afficher la liste"
+  producers_about: A propos
+  producers_buy: Acheter
+  producers_contact: Contact
+  producers_contact_phone: Appeler
+  producers_contact_social: Suivre
+  producers_buy_at_html: "Acheter les produits de %{enterprise} dans les boutiques suivantes:"
+  producers_filter: Filtrer par
+  producers_filter_type: Catégorie
+  producers_title: Producteurs
+  producers_headline: Trouvez un producteur local
+  producers_signup_title: S'inscrire en tant que producteur
+  producers_signup_headline: Des producteurs, indépendants
+  producers_signup_motivation: Vendez vos produits et racontez vos histoires pour toucher de nouveaux marchés. Gagnez du temps et de l'argent sur la gestion des opérations courantes. Vous pouvez innover sans prendre de risque. Nous nivellons le terrain de jeu pour des échanges plus équitables.
+  producers_signup_send: Rejoindre le réseau
+  producers_signup_enterprise: Comptes entreprises
+  producers_signup_studies: Les histoires de nos producteurs.
+  producers_signup_cta_headline: Rejoindre le réseau!
+  producers_signup_cta_action: Rejoindre le réseau
+  producers_signup_detail: Comment ça marche.
+  products_item: Produit
+  products_description: Description
+  products_variant: Variante
+  products_availabel: En stock?
+  products_price: Prix
+  register_title: S'inscrire
+  shops_title: Boutiques
+  shops_headline: Des achats qui transforment.
+  shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles. Alors ici, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos au hub !
+  shops_signup_title: S'inscrire en tant que hub
+  shops_signup_headline: Des hubs divers et variés
+  shops_signup_motivation: Quel que soit votre modèle, vous pouvez vous appuyer sur Open Food France. Si vous voulez le faire évoluer, nous sommes là pour vous aider. Nous agissons selon des principes de non-lucrativité, d'indépendance, et de transparence. Et nous faisons tout notre possible pour répondre à vos besoins et vous accompagner en toute circonstance.
+  shops_signup_action: Rejoindre le réseau
+  shops_signup_pricing: Comptes entreprises
+  shops_signup_stories: Histoires de hubs.
+  shops_signup_help: Nous sommes là pour vous aider.
+  shops_signup_help_text: Vous avez besoin de pouvoir travailler de manière efficace. Vous avez besoin de nouveaux acheteurs et de partenaires logistiques. Vous souhaitez que votre histoire soit racontée tout au long du circuit, que l'acheteur final sache qui se trouve derrière les produits.
+  shops_signup_detail: Comment ça marche.
+  orders_fees: Frais...
+  orders_edit_title: Panier
+  orders_edit_headline: Votre panier
+  orders_edit_time: Commande prête pour
+  orders_edit_continue: Poursuivre mes achats
+  orders_edit_checkout: Régler ma commande
+  orders_form_empty_cart: "Vider le panier"
+  orders_form_subtotal: Sous-total
+  orders_form_admin: Admin et opérations
+  orders_form_total: Total
+  orders_oc_expired_headline: Les commandes ne sont plus possibles pour ce cycle de vente.
+  orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives."
+  orders_oc_expired_text_others_html: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le hub pour voir s'il accepte les commandes tardives <strong>%{link}</strong>."
+  orders_oc_expired_text_link: "ou voir si d'autres cycles de vente sont ouverts pour ce hub"
+  orders_oc_expired_email: "Email:"
+  orders_oc_expired_phone: "Téléphone:"
+  orders_show_title: Confirmation de commande
+  orders_show_time: Commande prête pour
+  orders_show_number: Confirmation de commande
+  products_cart_distributor_choice: "Distributeur pour votre commande:"
+  products_cart_distributor_change: "Vore distributeur pour cette commande sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
+  products_cart_distributor_is: "Votre distributeur pour cette commande est %{name}."
+  products_distributor_error: "Terminez votre commande chez %{link} avant de faire vos courses chez un autre distributeur."
+  products_oc: "Cycle de vente pour votre commande:"
+  products_oc_change: "Votre cycle de vente pour cette commande sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
+  products_oc_is: "Votre cycle de vente pour cette commande est %{name}."
+  products_oc_error: "Veuillez terminer votre commande pour %{link} avant de faire vos courses pour un autre cycle de vente."
+  products_oc_current: "votre cycle de vente actuel"
+  products_quantity: Quantité
+  products_max_quantity: Quantité max
+  products_distributor: Distributeur
+  products_distributor_info: Quand vous choisissez un distributeur pour votre commande, les adresse et date de retrait seront affichées ici.
+  password: Mot de passe
+  remember_me: Se souvenir de moi
+  are_you_sure: "Confirmer?"
+  orders_open: Boutique ouverte
+  closing: "Fermeture"
+  going_back_to_home_page: "Retour à la page d'accueil"
+  creating: Création
+  updating: Mettre à jour
+  failed_to_create_enterprise: "Impossible de créer votre entreprise"
+  failed_to_create_enterprise_unknown: "Impossible de créer votre entreprise.\nVérifiez que tous les champs sont remplis."
+  failed_to_update_enterprise_unknown: "Impossible de mettre à jour votre entreprise.\nVérifiez que tous les champs sont remplis."
+  order_not_saved_yet: "Votre commande n'a pas encore été enregistrée. Attendez quelques secondes!"
+  filter_by: "Filtrer par"
+  hide_filters: "Masquer les filtres"
+  one_filter_applied: "1 filtre appliqué"
+  x_filters_applied: "filtres appliqués"
+  submitting_order: "Votre commande est en cours d'envoi: veuillez patienter"
+  confirm_hub_change: "Confirmer? Cette action modifiera la boutique sélectionnée et tous les articles de votre panier seront effacés."
+  confirm_oc_change: "Confirmer? Cette action modifiera le cycle de vente sélectionné et tous les articles de votre panier seront effacés."
+  location_placeholder: "Saisissez une localisation..."
+  error_required: "Champ obligatoire"
+  error_number: "saisir un nombre"
+  error_email: "saisir une adresse email"
+  item_handling_fees: "Frais logistiques (inclus dans le prix affiché)"
+  january: "Janvier"
+  february: "Février"
+  march: "Mars"
+  april: "Avril"
+  may: "Mai"
+  june: "Juin"
+  july: "Juillet"
+  august: "Août"
+  september: "Septembre"
+  october: "Octobre"
+  november: "Novembre"
+  december: "Décembre"
+  email_not_found: "Adresse email non trouvée"
+  email_required: "Vous devez saisir une adresse email"
+  logging_in: "Veuillez patienter, connexion en cours"
+  signup_email: "Votre email"
+  choose_password: "Choisissez un mot de passe"
+  confirm_password: "Confirmez votre mot de passe"
+  action_signup: "S'inscrire"
+  welcome_to_ofn: "Bienvenue sur Open Food France"
+  signup_or_login: "Commencez par vous inscrire (ou connexion)"
+  have_an_account: "Déjà inscrit?"
+  action_login: "Se connecter."
+  forgot_password: "Mot de passe oublié?"
+  password_reset_sent: "Un email contenant les instructions pour changer votre mot de passe a été envoyé!"
+  reset_password: "Changer de mot de passe"
+  who_is_managing_enterprise: "Qui gère %{enterprise}?"
+  enterprise_contact: "Personne référente"
+  enterprise_contact_required: "Vous devez saisir une personne référente"
+  enterprise_email: "Adresse email"
+  enterprise_email_required: "Veuillez saisir une adresse email valide."
+  enterprise_phone: "Numéro de téléphone"
+  back: "Retour"
+  continue: "Suivant"
+  limit_reached_headline: "Oh non!"
+  limit_reached_message: "Vous avez atteint la limite!"
+  limit_reached_text: "Vous avez atteint la limite du nombre d'entreprises que vous êtes autorisés à gérer sur"
+  limit_reached_action: "Retour sur la page d'accueil"
+  select_promo_image: "Etape 3. Sélectionnez une image promotionnelle"
+  promo_image_tip: "Conseil: affichée en format bannière, taille optimale 1200×260px"
+  promo_image_label: "Choisissez une image promotionnelle"
+  action_or: "OU"
+  promo_image_drag: "Glissez déplacez votre image promotionnelle ici"
+  review_promo_image: "Etape 4. Validez votre bannière promotionnelle"
+  review_promo_image_tip: "Conseil: pour un résultat optimal, votre image promotionnelle doit être adaptée à l'espace disponible"
+  promo_image_placeholder: "Votre logo apparaîtra ici pour validation une fois uploadé"
+  uploading: "Upload en cours..."
+  select_logo: "Etape 1. Insérez votre logo"
+  logo_tip: "Conseil: utilisez un format d'image carré de préférence, min 300×300px"
+  logo_label: "Insérez votre logo"
+  logo_drag: "Glissez déplacez votre logo ici"
+  review_logo: "Etape 2: Validez votre logo"
+  review_logo_tip: "Conseil: pour un résultat optimal, votre logo doit être adapté à l'espace disponible"
+  logo_placeholder: "Votre logo apparaîtra ici pour validation une fois uploadé"
+  enterprise_about_headline: "Bien joué!"
+  enterprise_about_message: "A présent, allons un peu plus dans les détails concernant"
+  enterprise_success: "Opération réussie! %{enterprise} a été ajoutée à Open Food France"
+  enterprise_registration_exit_message: "Si vous quittez cet assistant en cours de saisie, vous devrez cliquer sur le lien de confirmation figurant dans l'email que vous avez reçu. Ce lien vous renverra vers votre interface administrateur où vous pourrez poursuivre la configuration de votre profil."
+  enterprise_description: "Description courte"
+  enterprise_description_placeholder: "Une phrase pour décrire votre organisation"
+  enterprise_long_desc: "Description longue"
+  enterprise_long_desc_placeholder: "Vous pouvez ici raconter l'histoire de votre organisation - votre projet, les valeurs que vous défendez. Nous vous conseillons de ne pas dépasser 600 caractères ou 150 mots."
+  enterprise_long_desc_length: "%{num} caractères / inférieur à 600 recommandé"
+  enterprise_abn: "SIRET"
+  enterprise_abn_placeholder: "ex: 404 833 048 00022"
+  enterprise_acn: "n° TVA intracommunautaire"
+  enterprise_acn_placeholder: "ex: 404 833 048"
+  enterprise_tax_required: "Merci de choisir."
+  enterprise_final_step: "Dernière étape!"
+  enterprise_social_text: "Comment trouver la boutique en ligne %{enterprise}"
+  website: "Site internet"
+  website_placeholder: "ex: openfoodfrance.fr"
+  facebook: "Facebook"
+  facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
+  linkedin: "LinkedIn"
+  linkedin_placeholder: "ex: www.linkedin.com/VotreNom"
+  twitter: "Twitter"
+  twitter_placeholder: "ex: @twitter_pseudo"
+  instagram: "Instagram"
+  instagram_placeholder: "ex: @instagram_pseudo"
+  registration_greeting: "Bonjour!"
+  registration_intro: "Vous pouvez maintenant créer votre profil \"Producteur\" ou \"Hub\""
+  registration_action: "Démarrons!"
+  registration_checklist: "Vous aurez besoin de"
+  registration_time: "5-10 minutes"
+  registration_enterprise_address: "L'adresse de l'entreprise"
+  registration_contact_details: "Les détails du contact référent"
+  registration_logo: "Votre logo"
+  registration_promo_image: "Une image bannière pour votre profil"
+  registration_about_us: "Un texte \"A propos\""
+  registration_outcome_headline: "Qu'est-ce que ça m'apporte?"
+  registration_outcome1_html: "Votre profil permet aux gens de vous <strong>trouver</strong> et de vous <strong>contacter</strong> via Open Food France."
+  registration_outcome2: "Utilisez cet espace pour raconter l'histoire de votre entreprise, et stimuler les visites vers vos points de présence en ligne."
+  registration_outcome3: "C'est aussi le premier pas vers la vente via Open Food France, ou l'ouverture de votre boutique en ligne."
+  registration_finished_headline: "C'est terminé!"
+  registration_finished_thanks: "Merci d'avoir complété le profil de %{enterprise}"
+  registration_finished_login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Open Food France, rubrique Admin."
+  registration_finished_activate: "Activez %{enterprise}."
+  registration_finished_activate_instruction_html: "Nous avons envoyé un email de confirmation à <strong>%{email}</strong> s'il n'a pas été activé auparavant.<br/> Veuillez suivre les instructions dans l'email pour rendre votre organisation visible sur Open Food France."
+  registration_finished_action: "Accueil Open Food France"
+  registration_type_headline: "Dernière étape pour ajouter %{enterprise}!"
+  registration_type_question: "Etes-vous un producteur?"
+  registration_type_producer: "Oui, je suis un producteur"
+  registration_type_no_producer: "Non, je ne suis pas un producteur"
+  registration_type_error: "Veuillez faire un choix. Etes vous un producteur?"
+  registration_type_producer_help: "Un \"producteur\" produit de toutes bonnes choses à manger ou à boire. Vous êtes un producteur si vous les faites pousser, si vous les élevez, si vous les pétrissez, transformez, fermentez, si vous les réduisez en grains, etc."
+  registration_type_no_producer_help: "Si vous n'êtes pas un producteur, vous êtes probablement un revendeur ou distributeur alimentaire: un \"hub\", une coopérative, un groupement d'achat, un revendeur, un grossiste, ou autre."
+  create_profile: "Créer votre profil"
+  registration_images_headline: "Merci!"
+  registration_images_description: "Ajoutez maintenant de jolies photos pour que votre profil soit attractif! :)"
+  registration_detail_headline: "Commençons"
+  registration_detail_enterprise: "Woohoo! Dites-nous déjà quelques mots à propos de votre entreprise:"
+  registration_detail_producer: "Woohoo! Dites-nous déjà quelques mots à propos de votre ferme:"
+  registration_detail_name_enterprise: "Nom de l'entreprise:"
+  registration_detail_name_producer: "Nom de la ferme:"
+  registration_detail_name_placeholder: "ex: La super ferme de Charlie"
+  registration_detail_name_error: "Veuillez choisir le nom de votre entreprise"
+  registration_detail_address1: "Adresse ligne 1"
+  registration_detail_address1_placeholder: "ex: 123 rue des étangs"
+  registration_detail_address1_error: "Veuillez saisir une adresse"
+  registration_detail_address2: "Adresse ligne 2"
+  registration_detail_suburb: "Département:"
+  registration_detail_suburb_placeholder: "ex: Vendée"
+  registration_detail_suburb_error: "Veuillez saisir un Département"
+  registration_detail_postcode: "Code postal:"
+  registration_detail_postcode_placeholder: "ex: 44000"
+  registration_detail_postcode_error: "Veuillez saisir le code postal"
+  registration_detail_state: "Région:"
+  registration_detail_state_error: "Veuillez saisir une Région"
+  registration_detail_country: "Pays:"
+  registration_detail_country_error: "Veuillez saisir une Pays"
+  fees: "Frais"
+  item_cost: "Coût du produit"
+  bulk: "Vrac"
+  shop_variant_quantity_min: "min"
+  shop_variant_quantity_max: "max"
+  contact: "Contact"
+  follow: "Suivre"
+  shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les boutiques suivantes:"
+  change_shop: "Changer de boutique pour:"
+  shop_at: "Acheter maintenant :"
+  price_breakdown: "Détail du prix:"
+  admin_fee: "Frais de gestion admin"
+  sales_fee: "Frais de ventes/marketing"
+  packing_fee: "Frais de packaging"
+  transport_fee: "Frais logistiques"
+  fundraising_fee: "Frais recherche de financement"
+  price_graph: "Légende détail du prix"
+  included_tax: "Inclut TVA"
+  remove_tax: "Retirer TVA"

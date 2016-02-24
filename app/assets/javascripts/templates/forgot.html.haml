@@ -1,5 +1,5 @@
 %tab#forgot{"ng-controller" => "ForgotCtrl",
-  heading: "Forgot Password?",
+  heading: "{{'forgot_password' | t}}",
   active: "active(path)", 
   select: "select(path)"}
 
@@ -8,7 +8,7 @@
     .row
       .large-12.columns
         .alert-box.success.radius{"ng-show" => "sent"}
-          An email with instructions on resetting your password has been sent!
+          {{'password_reset_sent' | t}}
 
     %div{"ng-show" => "!sent"}
       .alert-box.alert{"ng-show" => "errors != null"}
@@ -16,7 +16,7 @@
         
       .row
         .large-12.columns
-          %label{for: "email"} Your email
+          %label{for: "email"} {{'signup_email' | t}}
           %input.title.input-text{name: "email", 
             type: "email",
             id: "email",
@@ -27,4 +27,4 @@
           %input.button.primary{name: "commit", 
             tabindex: "3", 
             type: "submit", 
-            value: "Reset password"}
+            value: "{{'reset_password' | t}}"}

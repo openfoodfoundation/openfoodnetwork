@@ -1,12 +1,19 @@
+- content_for(:title) do
+  = @group.name
+- content_for(:description) do
+  = @group.description
+- content_for(:image) do
+  = @group.logo.url
+
 -# inject all enterprises as "enterprises"
 -# it could be more efficient to inject only the enterprises that are related to the group
 = inject_enterprises
 
 -# inject enterprises in this group
--# further hubs and producers of these enterprises can't be resoleved within this small subset
-= inject_json_ams "group_enterprises", @group.enterprises, Api::EnterpriseSerializer, active_distributors: @active_distributors
+-# further hubs and producers of these enterprises can't be resolved within this small subset
+= inject_group_enterprises
 
-#group-page.row.pad-top{"ng-controller" => "GroupPageCtrl"}
+#group-page.row.pad-top.footer-pad{"ng-controller" => "GroupPageCtrl"}
   .small-12.columns.pad-top
     %header
       .row
@@ -27,7 +34,7 @@
       .small-12.medium-12.large-9.columns
         %div{"ng-controller" => "TabsCtrl"}
           %tabset
-            %tab{heading: 'Map',
+            %tab{heading: t(:label_map),
                 active: "active(\'\')",
                 select: "select(\'\')"}
               .map-container
@@ -36,28 +43,29 @@
                     %markers{models: "mapMarkers", fit: "true",
                     coords: "'self'", icon: "'icon'", click: "'reveal'"}
 
-            %tab{heading: 'About us',
+            %tab{heading: t(:groups_about),
                 active: "active(\'about\')",
                 select: "select(\'about\')"}
-              %h1 About Us
+              %h1
+                = t :groups_about
               %p!= @group.long_description
 
-            %tab{heading: 'Our producers',
+            %tab{heading: t(:groups_producers),
                 active: "active(\'producers\')",
                 select: "select(\'producers\')"}
               .producers{"ng-controller" => "GroupEnterprisesCtrl"}
                 .row
                   .small-12.columns
-                    %h1 Our Producers
+                    %h1
+                      = t :groups_producers
                 = render partial: "shared/components/enterprise_search"
-                -# TODO: find out why this is not working
-                -#= render partial: "producers/filters"
+                = render partial: "producers/filters"
 
                 .row{bindonce: true}
                   .small-12.columns
                     .active_table
                       %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | visible | searchEnterprises:query | taxons:activeTaxons)",
+                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | searchEnterprises:query | taxons:activeTaxons)",
                       "ng-controller" => "GroupEnterpriseNodeCtrl",
                       "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
                       id: "{{producer.hash}}"}
@@ -68,26 +76,23 @@
 
                       = render partial: 'shared/components/enterprise_no_results'
 
-            %tab{heading: 'Our hubs',
+            %tab{heading: t(:groups_hubs),
                 active: "active(\'hubs\')",
                 select: "select(\'hubs\')"}
               .hubs{"ng-controller" => "GroupEnterprisesCtrl"}
                 .row
                   .small-12.columns
-                    %h1 Our Hubs
+                    %h1
+                      = t :groups_hubs
 
                 = render partial: "shared/components/enterprise_search"
-                -# TODO: find out why this is not working
-                -#= render partial: "home/filters"
-                .small-12.medium-6.columns
-                  %span &nbsp;
-                = render partial: 'shared/components/show_profiles'
+                = render partial: "hub_filters"
 
                 .row{bindonce: true}
                   .small-12.columns
                     .active_table
                       %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
-                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | visible | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
                       "ng-controller" => "GroupEnterpriseNodeCtrl"}
                         .small-12.columns
@@ -95,7 +100,7 @@
                           = render partial: 'home/fat'
 
                       = render partial: 'shared/components/enterprise_no_results'
-      
+
       .small-12.medium-12.large-3.columns
         = render partial: 'contact'
 
@@ -104,13 +109,13 @@
       .small-12.columns.text-center.small
         %hr
         %p.text-small
-          = "Copyright #{Date.today.year} #{@group.name}"
+          = "Copyright #{Date.current.year} #{@group.name}"
         %h2
-          =link_to_service "https://www.facebook.com/", @group.facebook, title: 'Follow us on Facebook' do
+          =link_to_service "https://www.facebook.com/", @group.facebook, title: t(:groups_contact_facebook) do
             %i.ofn-i_044-facebook
-          =link_to_service "", @group.email.reverse, title:'Email us', mailto: true do
+          =link_to_service "", @group.email.reverse, title: t(:groups_contact_email), mailto: true do
             %i.ofn-i_050-mail-circle
-          =link_to_service "http://", @group.website, title: 'Visit our website' do
+          =link_to_service "http://", @group.website, title: t(:groups_contact_website) do
             %i.ofn-i_049-web
         %p
           &nbsp;

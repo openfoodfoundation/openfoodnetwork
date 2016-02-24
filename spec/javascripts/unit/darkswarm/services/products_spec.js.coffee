@@ -10,6 +10,7 @@ describe 'Products service', ->
   productWithImage = null
   properties = null
   taxons = null
+  Geo = {}
 
   beforeEach ->
     product =
@@ -40,6 +41,7 @@ describe 'Products service', ->
       $provide.value "currentOrder", currentOrder
       $provide.value "taxons", taxons
       $provide.value "properties", properties
+      $provide.value "Geo", Geo
       null
 
     inject ($injector, _$httpBackend_)->

@@ -11,7 +11,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
         @enterprise[key] = value
 
     create: =>
-      Loading.message = "Creating " + @enterprise.name
+      Loading.message = t('creating') + " " + @enterprise.name
       $http(
         method: "POST"
         url: "/api/enterprises"
@@ -26,12 +26,15 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
         RegistrationService.select('about')
       ).error((data) =>
         Loading.clear()
-        alert('Failed to create your enterprise.\nPlease ensure all fields are completely filled out.')
+        if data?.errors?
+          errors = ("#{k.capitalize()} #{v[0]}" for k, v of data.errors when v.length > 0)
+          alert t('failed_to_create_enterprise') + "\n" + errors.join('\n')
+        else
+          alert(t('failed_to_create_enterprise_unknown'))
       )
-      # RegistrationService.select('about')
 
     update: (step) =>
-      Loading.message = "Updating " + @enterprise.name
+      Loading.message = t('updating') + " " + @enterprise.name
       $http(
         method: "PUT"
         url: "/api/enterprises/#{@enterprise.id}"
@@ -44,9 +47,8 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
         RegistrationService.select(step)
       ).error((data) ->
         Loading.clear()
-        alert('Failed to update your enterprise.\nPlease ensure all fields are completely filled out.')
+        alert(t('failed_to_update_enterprise_unknown'))
       )
-      # RegistrationService.select(step)
 
     prepare: =>
       enterprise = {}

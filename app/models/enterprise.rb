@@ -6,15 +6,19 @@ class Enterprise < ActiveRecord::Base
   preference :shopfront_message, :text, default: ""
   preference :shopfront_closed_message, :text, default: ""
   preference :shopfront_taxon_order, :string, default: ""
+  preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
 
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
   handle_asynchronously :send_confirmation_instructions
   handle_asynchronously :send_on_create_confirmation_instructions
+  has_paper_trail only: [:owner_id, :sells], on: [:update]
 
   self.inheritance_column = nil
 
   acts_as_gmappable :process_geocoding => false
 
+  has_many :relationships_as_parent, class_name: 'EnterpriseRelationship', foreign_key: 'parent_id', dependent: :destroy
+  has_many :relationships_as_child, class_name: 'EnterpriseRelationship', foreign_key: 'child_id', dependent: :destroy
   has_and_belongs_to_many :groups, class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id'
   has_many :properties, through: :producer_properties
@@ -30,6 +34,8 @@ class Enterprise < ActiveRecord::Base
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
+  has_many :customers
+  has_many :billable_periods
 
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
@@ -55,6 +61,7 @@ class Enterprise < ActiveRecord::Base
 
 
   validates :name, presence: true
+  validate :name_is_unique
   validates :sells, presence: true, inclusion: {in: SELLS}
   validates :address, presence: true, associated: true
   validates :email, presence: true
@@ -68,6 +75,7 @@ class Enterprise < ActiveRecord::Base
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
+  before_validation :ensure_email_set
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
@@ -105,12 +113,12 @@ class Enterprise < ActiveRecord::Base
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
   scope :with_supplied_active_products_on_hand, lambda {
     joins(:supplied_products)
-      .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now)
+      .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.zone.now)
       .uniq
   }
   scope :with_distributed_active_products_on_hand, lambda {
     joins(:distributed_products)
-      .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.now)
+      .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.zone.now)
       .uniq
   }
 
@@ -134,7 +142,7 @@ class Enterprise < ActiveRecord::Base
 
   scope :active_distributors, lambda {
     with_distributed_products_outer.with_order_cycles_as_distributor_outer.
-    where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.now, Time.now, Time.now).
+    where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.zone.now, Time.zone.now, Time.zone.now).
     select('DISTINCT enterprises.*')
   }
 
@@ -178,6 +186,10 @@ class Enterprise < ActiveRecord::Base
     count(distinct: true)
   end
 
+  def activated?
+    confirmed_at.present? && sells != 'unspecified'
+  end
+
   def set_producer_property(property_name, property_value)
     transaction do
       property = Spree::Property.where(name: property_name).first_or_create!(presentation: property_name)
@@ -212,12 +224,16 @@ class Enterprise < ActiveRecord::Base
     ", self.id, self.id)
   end
 
+  def relatives_including_self
+    Enterprise.where(id: relatives.pluck(:id) | [id])
+  end
+
   def distributors
-    self.relatives.is_distributor
+    self.relatives_including_self.is_distributor
   end
 
   def suppliers
-    self.relatives.is_primary_producer
+    self.relatives_including_self.is_primary_producer
   end
 
   def website
@@ -316,6 +332,14 @@ class Enterprise < ActiveRecord::Base
     !confirmed? || pending_reconfirmation?
   end
 
+  def shop_trial_expiry
+    shop_trial_start_date.andand + Enterprise::SHOP_TRIAL_LENGTH.days
+  end
+
+  def can_invoice?
+    abn.present?
+  end
+
   protected
 
   def devise_mailer
@@ -323,6 +347,15 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def name_is_unique
+    dups = Enterprise.where(name: name)
+    dups = dups.where('id != ?', id) unless new_record?
+
+    if dups.any?
+      errors.add :name, "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at #{dups.first.owner.email}."
+    end
+  end
 
   def email_is_known?
     owner.enterprises.confirmed.map(&:email).include?(email)
@@ -361,6 +394,10 @@ class Enterprise < ActiveRecord::Base
 
   def ensure_owner_is_manager
     users << owner unless users.include?(owner) || owner.admin?
+  end
+
+  def ensure_email_set
+    self.email = owner.email if email.blank?
   end
 
   def enforce_ownership_limit

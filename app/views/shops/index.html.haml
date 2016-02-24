@@ -1,0 +1,14 @@
+- content_for(:title) do
+  = t :shops_title
+
+#panes
+  #shops.pane
+    .row
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %h2
+          = t :shops_headline
+        %p.text-big
+          = t :shops_text
+
+= render partial: "home/hubs"
+= render partial: "shared/footer"

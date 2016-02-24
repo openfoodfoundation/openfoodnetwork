@@ -1,6 +1,6 @@
 angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
-  "$scope", "$http", "$filter", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer", "SpreeApiKey"
-  ($scope, $http, $filter, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer, SpreeApiKey) ->
+  "$scope", "$http", "$filter", "dataFetcher", "blankOption", "pendingChanges", "VariantUnitManager", "OptionValueNamer", "SpreeApiKey", "Columns"
+  ($scope, $http, $filter, dataFetcher, blankOption, pendingChanges, VariantUnitManager, OptionValueNamer, SpreeApiKey, Columns) ->
     $scope.loading = true
 
     $scope.initialiseVariables = ->
@@ -11,16 +11,13 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.confirmDelete = true
       $scope.startDate = formatDate start
       $scope.endDate = formatDate end
-      $scope.pendingChanges = pendingChanges
       $scope.quickSearch = ""
       $scope.bulkActions = [ { name: "Delete Selected", callback: $scope.deleteLineItems } ]
       $scope.selectedBulkAction = $scope.bulkActions[0]
       $scope.selectedUnitsProduct = {};
       $scope.selectedUnitsVariant = {};
       $scope.sharedResource = false
-      $scope.predicate = ""
-      $scope.reverse = false
-      $scope.columns =
+      $scope.columns = Columns.setColumns
         order_no:     { name: "Order No.",    visible: false }
         full_name:    { name: "Name",         visible: true }
         email:        { name: "Email",        visible: false }
@@ -32,7 +29,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         variant:      { name: "Variant",      visible: true }
         quantity:     { name: "Quantity",     visible: true }
         max:          { name: "Max",          visible: true }
-        unit_value:   { name: "Weight/Volume", visible: false }
+        final_weight_volume:   { name: "Weight/Volume", visible: false }
         price:        { name: "Price",        visible: false }
     $scope.initialise = ->
       $scope.initialiseVariables()
@@ -79,6 +76,10 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
           line_item.checked = false
           line_item.supplier = $scope.matchObject $scope.suppliers, line_item.supplier, null
           line_item.order = orderWithoutLineItems
+          line_item.original_final_weight_volume = line_item.final_weight_volume
+          line_item.original_quantity = line_item.quantity
+          line_item.original_price = line_item.price
+
         lineItems.concat order.line_items
       , []
 
@@ -109,6 +110,12 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.deleteLineItem lineItem for lineItem in lineItems when lineItem.checked
       $scope.confirmDelete = existingState
 
+    $scope.submit = ->
+      if $scope.bulk_order_form.$valid
+        pendingChanges.submitAll()
+      else
+        alert "Some errors must be resolved be before you can update orders.\nAny fields with red borders contain errors."
+
     $scope.allBoxesChecked = ->
       checkedCount = $scope.filteredLineItems.reduce (count,lineItem) ->
         count + (if lineItem.checked then 1 else 0 )
@@ -125,17 +132,17 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
 
     $scope.sumUnitValues = ->
       sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
-        sum = sum + lineItem.quantity * lineItem.units_variant.unit_value
+        sum = sum + lineItem.final_weight_volume
       , 0
 
     $scope.sumMaxUnitValues = ->
       sum = $scope.filteredLineItems.reduce (sum,lineItem) ->
-        sum = sum + Math.max(lineItem.max_quantity,lineItem.quantity) * lineItem.units_variant.unit_value
+        sum = sum + Math.max(lineItem.max_quantity,lineItem.original_quantity) * lineItem.units_variant.unit_value
       , 0
 
-    $scope.allUnitValuesPresent = ->
+    $scope.allFinalWeightVolumesPresent = ->
       for i,lineItem of $scope.filteredLineItems
-        return false if !lineItem.units_variant.hasOwnProperty('unit_value') || !(lineItem.units_variant.unit_value > 0)
+        return false if !lineItem.hasOwnProperty('final_weight_volume') || !(lineItem.final_weight_volume > 0)
       true
 
     # How is this different to OptionValueNamer#name?
@@ -166,19 +173,22 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.orderCycleFilter = $scope.orderCycles[0].id
       $scope.quickSearch = ""
 
-    $scope.weightAdjustedPrice = (lineItem, oldValue) ->
-      if oldValue <= 0
-        oldValue = lineItem.units_variant.unit_value
-      if lineItem.unit_value <= 0
-        lineItem.unit_value = lineItem.units_variant.unit_value
-      lineItem.price = lineItem.price * lineItem.unit_value / oldValue
-      #$scope.bulk_order_form.line_item.price.$setViewValue($scope.bulk_order_form.line_item.price.$viewValue)
+    $scope.weightAdjustedPrice = (lineItem) ->
+      if lineItem.final_weight_volume > 0
+        unit_value = lineItem.final_weight_volume / lineItem.quantity
+        original_unit_value = lineItem.original_final_weight_volume / lineItem.original_quantity
+        lineItem.price = lineItem.original_price * (unit_value / original_unit_value)
 
     $scope.unitValueLessThanZero = (lineItem) ->
       if lineItem.units_variant.unit_value <= 0
         true
       else
         false
+
+    $scope.updateOnQuantity = (lineItem) ->
+      if lineItem.quantity > 0
+        lineItem.final_weight_volume = lineItem.original_final_weight_volume * lineItem.quantity / lineItem.original_quantity
+        $scope.weightAdjustedPrice(lineItem)
 
     $scope.$watch "orderCycleFilter", (newVal, oldVal) ->
       unless $scope.orderCycleFilter == "0" || angular.equals(newVal, oldVal)

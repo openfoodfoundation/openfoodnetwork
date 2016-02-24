@@ -3,7 +3,7 @@
 - @styles.each_with_index do |(style_name, style_value), index|
   .field.three.columns
     = label_tag "attachment_styles[#{style_name}]", style_name
-    %a.destroy_style.with-tip{:alt => t(:destroy), :href => "#", :title => t(:destroy)}
+    %a.destroy_style{:alt => t(:destroy), :href => "#", :title => t(:destroy)}
       %i.icon-trash
     = text_field_tag "attachment_styles[#{style_name}][]", admin_image_settings_geometry_from_style(style_value), :class => 'fullwidth'
     %br/

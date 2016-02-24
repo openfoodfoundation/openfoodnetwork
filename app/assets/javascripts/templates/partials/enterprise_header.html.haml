@@ -2,7 +2,7 @@
   .highlight-top.row
     .small-12.medium-7.large-8.columns
       %h3{"ng-if" => "enterprise.is_distributor"}
-        %a{"bo-href" => "enterprise.path", "ofn-empties-cart" => "enterprise"}
+        %a{"bo-href" => "enterprise.path", "ofn-change-hub" => "enterprise"}
           %i{"ng-class" => "enterprise.icon_font"}
           %span{"bo-text" => "enterprise.name"}
       %h3{"ng-if" => "!enterprise.is_distributor", "ng-class" => "{'is_producer' : enterprise.is_primary_producer}"}
@@ -10,4 +10,4 @@
         %span{"bo-text" => "enterprise.name"}
     .small-12.medium-5.large-4.columns.text-right.small-only-text-left
       %p{"bo-bind" => "[enterprise.address.city, enterprise.address.state_name] | printArray"}
-  %img.hero-img{"bo-src" => "enterprise.promo_image"} 
+  %img.hero-img{"bo-src" => "enterprise.promo_image"}

@@ -93,17 +93,9 @@ module WebHelper
     errors.map(&:text)
   end
 
-  def handle_js_confirm(accept=true, debug=false)
+  def handle_js_confirm(accept=true)
     page.evaluate_script "window.confirm = function(msg) { return #{!!accept }; }"
     yield
-  end
-
-  def handle_webdriver_random_failure(retry_times = 3)
-    begin
-      yield
-    rescue Selenium::WebDriver::Error::InvalidSelectorError => e
-      e.message =~ /nsIDOMXPathEvaluator.createNSResolver/ ? (retry if (retry_times -= 1 ) > 0) : raise
-    end
   end
 
   def click_dialog_button(button_content)
@@ -127,7 +119,7 @@ module WebHelper
   # Do not use this without good reason. Capybara's built-in waiting is very effective.
   def wait_until(secs=nil)
     require "timeout"
-    Timeout.timeout(secs || Capybara.default_wait_time) do
+    Timeout.timeout(secs || Capybara.default_max_wait_time) do
       sleep(0.1) until value = yield
       value
     end
@@ -152,10 +144,16 @@ module WebHelper
     have_selector "div.select2-result-label", text: value
   end
 
+  def open_select2(selector)
+    page.evaluate_script "jQuery('#{selector}').select2('open');"
+  end
+
+  def close_select2(selector)
+    page.evaluate_script "jQuery('#{selector}').select2('close');"
+  end
 
   private
   def wait_for_ajax
     wait_until { page.evaluate_script("$.active") == 0 }
   end
 end
-

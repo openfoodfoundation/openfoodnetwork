@@ -1,0 +1,3 @@
+/ replace "code[erb-loud]:contains('variant.options_text')"
+
+= variant.full_name

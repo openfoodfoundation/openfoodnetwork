@@ -5,9 +5,45 @@
 
 // Generic \\
 
+@mixin tiledPane
+  background-image: url("/assets/tile-wide.png")
+  background-color: $brand-colour
+  background-position: center center
+  @include paneWhiteText
+
 @mixin panepadding
   padding-top: 100px
   padding-bottom: 100px
+
+@mixin paneWhiteText
+  &, & *
+    color: white
+
+@mixin sidepaddingSm
+  padding-left: 10px
+  padding-right: 10px
+  @media all and (min-width: 768px)
+    padding-left: 20px
+    padding-right: 20px
+  @media all and (min-width: 1024px)
+    padding-left: 50px
+    padding-right: 50px
+  @media all and (min-width: 1200px)
+    padding-left: 100px
+    padding-right: 100px
+
+@mixin sidepaddingBg
+  padding-left: 20px
+  padding-right: 20px
+  @media all and (min-width: 768px)
+    padding-left: 40px
+    padding-right: 40px
+  @media all and (min-width: 1024px)
+    padding-left: 100px
+    padding-right: 100px
+  @media all and (min-width: 1200px)
+    padding-left: 200px
+    padding-right: 200px
 
 @mixin disabled
   color: $disabled-bright
@@ -52,9 +88,6 @@
   transform: $scale
 
 // Typography \\
-
-@mixin avenir
-  font-family: "AvenirBla_IE", "AvenirBla"
 
 @mixin textpress
   text-shadow: 0 -1px 1px #111111,  0 1px 2px #222222
@@ -108,7 +141,7 @@
       color: $clr-turquoise-bright
 
 @mixin fullbg
-  background-position: center center 
+  background-position: center center
   background-repeat: no-repeat
   -webkit-background-size: cover
   -moz-background-size: cover
@@ -116,7 +149,7 @@
   background-size: cover
 
 @mixin fullwidthbg
-  background-position: center top 
+  background-position: center top
   background-repeat: no-repeat
   background-size: 100% auto
 
@@ -137,4 +170,3 @@
   // W3C
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gradient-clr1', endColorstr='$gradient-clr2',GradientType=0 )
   // IE6-8
-

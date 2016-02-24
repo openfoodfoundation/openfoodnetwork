@@ -10,11 +10,14 @@ Spree::Order.class_eval do
   belongs_to :order_cycle
   belongs_to :distributor, :class_name => 'Enterprise'
   belongs_to :cart
+  belongs_to :customer
 
+  validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
   attr_accessible :order_cycle_id, :distributor_id
 
   before_validation :shipping_address_from_distributor
+  before_validation :associate_customer, unless: :customer_is_valid?
 
   checkout_flow do
     go_to_state :address
@@ -99,6 +102,13 @@ Spree::Order.class_eval do
     end
   end
 
+  def remove_variant(variant)
+    line_items(:reload)
+    current_item = find_line_item_by_variant(variant)
+    current_item.destroy
+  end
+
+
   # Overridden to support max_quantity
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
     line_items(:reload)
@@ -127,7 +137,6 @@ Spree::Order.class_eval do
     else
       current_item = Spree::LineItem.new(:quantity => quantity, max_quantity: max_quantity)
       current_item.variant = variant
-      current_item.unit_value = variant.unit_value
       if currency
         current_item.currency = currency unless currency.nil?
         current_item.price    = variant.price_in(currency).amount
@@ -154,20 +163,22 @@ Spree::Order.class_eval do
   end
 
   def update_distribution_charge!
-    EnterpriseFee.clear_all_adjustments_on_order self
+    with_lock do
+      EnterpriseFee.clear_all_adjustments_on_order self
 
-    line_items.each do |line_item|
-      if provided_by_order_cycle? line_item
-        OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
+      line_items.each do |line_item|
+        if provided_by_order_cycle? line_item
+          OpenFoodNetwork::EnterpriseFeeCalculator.new.create_line_item_adjustments_for line_item
 
-      else
-        pd = product_distribution_for line_item
-        pd.create_adjustment_for line_item if pd
+        else
+          pd = product_distribution_for line_item
+          pd.create_adjustment_for line_item if pd
+        end
       end
-    end
 
-    if order_cycle
-      OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+      if order_cycle
+        OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+      end
     end
   end
 
@@ -227,9 +238,16 @@ Spree::Order.class_eval do
     (adjustments + price_adjustments).sum &:included_tax
   end
 
+  def account_invoice?
+    distributor_id == Spree::Config.accounts_distributor_id
+  end
+
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
+  # And separately, to skip sending confirmation email completely for user invoice orders
   def deliver_order_confirmation_email
-    Delayed::Job.enqueue ConfirmOrderJob.new(id)
+    unless account_invoice?
+      Delayed::Job.enqueue ConfirmOrderJob.new(id)
+    end
   end
 
 
@@ -260,5 +278,25 @@ Spree::Order.class_eval do
 
   def product_distribution_for(line_item)
     line_item.variant.product.product_distribution_for self.distributor
+  end
+
+  def require_customer?
+    return true unless new_record? or state == 'cart'
+  end
+
+  def customer_is_valid?
+    return true unless require_customer?
+    customer.present? && customer.enterprise_id == distributor_id && customer.email == (user.andand.email || email)
+  end
+
+  def associate_customer
+    email_for_customer = user.andand.email || email
+    existing_customer = Customer.of(distributor).find_by_email(email_for_customer)
+    if existing_customer
+      self.customer = existing_customer
+    else
+      new_customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user)
+      self.customer = new_customer
+    end
   end
 end

@@ -6,11 +6,11 @@ child enterprises: :enterprises do
 end
 
 node :logo do |group|
-  group.logo(:medium) if group.logo.exists?
+  group.logo(:medium) if group.logo?
 end
 
 node :promo_image do |group|
-  group.promo_image(:large) if group.promo_image.exists?
+  group.promo_image(:large) if group.promo_image?
 end
 
 node :state do |group|

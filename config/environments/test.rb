@@ -11,6 +11,10 @@ Openfoodnetwork::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
+  # Separate cache stores when running in parallel
+  config.cache_store = :file_store, Rails.root.join("tmp", "cache", "paralleltests#{ENV['TEST_ENV_NUMBER']}")
+
+
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 
@@ -29,6 +33,9 @@ Openfoodnetwork::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  # Tests assume English text on the site.
+  config.i18n.default_locale = "en"
+
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
@@ -37,6 +44,11 @@ Openfoodnetwork::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
   config.action_mailer.default_url_options = { :host => "test.host" }
+
+  # To block requests before running the database cleaner
+  require 'open_food_network/rack_request_blocker'
+  # Make sure the middleware is inserted first in middleware chain
+  config.middleware.insert_before('ActionDispatch::Static', 'RackRequestBlocker')
 end
 
 # Allows us to use _url helpers in Rspec

@@ -1,4 +1,4 @@
-angular.module('admin.order_cycles').factory('Enterprise', ($resource) ->
+angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
   Enterprise = $resource('/admin/enterprises/for_order_cycle/:enterprise_id.json', {}, {
     'index':
       method: 'GET'
@@ -10,6 +10,8 @@ angular.module('admin.order_cycles').factory('Enterprise', ($resource) ->
   {
     Enterprise: Enterprise
     enterprises: {}
+    producer_enterprises: []
+    hub_enterprises: []
     supplied_products: []
     loaded: false
 
@@ -17,6 +19,8 @@ angular.module('admin.order_cycles').factory('Enterprise', ($resource) ->
     	Enterprise.index params, (data) =>
         for enterprise in data
           @enterprises[enterprise.id] = enterprise
+          @producer_enterprises.push(enterprise) if enterprise.is_primary_producer
+          @hub_enterprises.push(enterprise) if enterprise.sells == 'any'
 
           for product in enterprise.supplied_products
             @supplied_products.push(product)

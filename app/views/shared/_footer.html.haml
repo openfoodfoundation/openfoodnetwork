@@ -1,60 +1,158 @@
 %footer
-  .row.landing-page-row
-    .small-12.medium-4.columns.text-left
-      %h4 Email us
-      %p
-        %a{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true} 
-          %span.email
-            = "hello@openfoodnetwork.org".reverse
-      %h4 Follow us
-      %p
-        %a{title:'Follow us on Facebook', href: 'https://www.facebook.com/OpenFoodNet', target: '_blank'} 
-          %i.ofn-i_044-facebook
-          Facebook &nbsp;&nbsp;
-        %a{title:'Follow us on Twitter', href: 'https://twitter.com/OpenFoodNet', target: '_blank'} 
-          %i.ofn-i_041-twitter
-          Twitter &nbsp;&nbsp;
-        %a{title:'Join our group on LinkedIn', href: 'http://www.linkedin.com/groups/Open-Food-Foundation-4743336', target: '_blank'} 
-          %i.ofn-i_042-linkedin
-          LinkedIn
-    .small-12.medium-3.columns.text-left
-      %h4 Getting around
-      %ul.bullet-list
-        %li
-          %a{href: "/shop"} Shop
-        %li
-          %a{href: "/map"} Map
-        %li
-          %a{href: "/producers"} Producers
-        %li
-          %a{href: "/groups"} Groups
-    .small-12.medium-2.columns.text-left
-      %h4 Producers
-      %p
-        = t :producers_join
-      %p
-        %a{href: "/register"} Register now
-    .small-12.medium-3.columns.text-left
-      %h4 About us
-      %p OFN is a network of independent online food stores that connect farmers and food hubs with individuals and local businesses.  It gives farmers and food hubs an easier and fairer way to distribute their food.
-  .row.landing-page-row
-    .small-12.columns.text-center.pad-top
-      %hr
-      %h5.pad-top
-        %a{title: 'Open Food Network', href:'http://www.openfoodnetwork.org', target: '_blank' } openfoodnetwork.org
-      %br
-      © Copyright
-      = Date.today.year
-      Open Food Foundation
-      %p
-        %small
-          %a{href:"https://creativecommons.org/licenses/by-sa/3.0/", target: "_blank" } Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
-      %p
-        %small
-          %a{href:"/Terms-of-service.pdf", target: "_blank" } Site terms & conditions
-          |
-          %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank" } Open Source & developer info on GitHub
+  .footer-global
+    .row
+      .small-12.columns.text-center
+        .logo
+          %img{src: "/assets/logo-white-notext.png", width: "120px"}
+    .row
+      .small-12.medium-8.medium-offset-2.columns.text-center
+        .alert-box
+          %a.big-alert{href: "http://www.openfoodnetwork.org", target: "_blank"}
+            %h6
+              = t :alert_selling_on_ofn
+              &nbsp;
+              %strong
+                = t :alert_start_here
+              %i.ofn-i_054-point-right
+    .row
+      .small-12.medium-4.medium-offset-2.columns.text-center
+        %h6
+          = t :footer_global_headline
+        %p
+          %a{href: "http://www.openfoodnetwork.org", target: "_blank"}
+            = t :footer_global_home
+          %span &#124;
+          %a{href: "http://www.openfoodnetwork.org/news/", target: "_blank"}
+            = t :footer_global_news
+          %span &#124;
+          %a{href: "http://www.openfoodnetwork.org/about/history-team/", target: "_blank"}
+            = t :footer_global_about
+          %span &#124;
+          %a{href: "http://www.openfoodnetwork.org/contact/", target: "_blank"}
+            = t :footer_global_contact
 
-          // To be added when Guy's pretty landing page is up:
-          //|
-          //%a{href:'' } Developers
+
+      .small-12.medium-4.columns.text-center
+        %h6
+          = t :footer_sites_headline
+        %p
+          %a{href: "http://dev.openfoodnetwork.org", target: "_blank"}
+            = t :footer_sites_developer
+          %span &#124;
+          %a{href: "http://community.openfoodnetwork.org", target: "_blank"}
+            = t :footer_sites_community
+          %span &#124;
+          %a{href: "http://www.openfoodnetwork.org/platform/user-guide/", target: "_blank"}
+            = t :footer_sites_userguide
+
+      .medium-2.columns.text-center
+        / Placeholder
+
+  .footer-local
+    .row
+      .small-12.medium-2.medium-offset-2.columns.text-center
+        %p.secure-icon
+          %i.ofn-i_017-locked
+      .small-12.medium-6.columns.text-center
+        %p.text-big.secure-text
+          = t :footer_secure
+        %p.secure-text
+          = t :footer_secure_text
+      .small-12.medium-2.columns
+
+    .row
+      .small-12.medium-8.medium-offset-2.columns.text-center
+        %hr.hr-light
+        %br
+
+    .row
+      .small-6.medium-3.medium-offset-2.columns.text-left
+        // This is the instance-managed set of links:
+        %h4
+          = t :footer_contact_headline
+        %p.social-icons
+          - if ContentConfig.footer_facebook_url.present?
+            %a{href: ContentConfig.footer_facebook_url}
+              %i.ofn-i_044-facebook
+          - if ContentConfig.footer_twitter_url.present?
+            %a{href: ContentConfig.footer_twitter_url}
+              %i.ofn-i_041-twitter
+          - if ContentConfig.footer_instagram_url.present?
+            %a{href: ContentConfig.footer_instagram_url}
+              %i.ofn-i_043-instagram
+          - if ContentConfig.footer_linkedin_url.present?
+            %a{href: ContentConfig.footer_linkedin_url}
+              %i.ofn-i_042-linkedin
+          - if ContentConfig.footer_googleplus_url.present?
+            %a{href: ContentConfig.footer_googleplus_url}
+              %i.ofn-i_046-g
+          - if ContentConfig.footer_pinterest_url.present?
+            %a{href: ContentConfig.footer_pinterest_url}
+              %i.ofn-i_045-pintrest
+        - if ContentConfig.footer_email.present?
+          %p
+            %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
+              = t :footer_contact_email
+        = render_markdown(ContentConfig.footer_links_md).html_safe
+
+
+      .small-6.medium-3.columns.text-left
+        %h4
+          = t :footer_nav_headline
+        %p
+          %a{href: "/shops"}
+            = t :label_shops
+        %p
+          %a{href: "/map"}
+            = t :label_map
+        %p
+          %a{href: "/producers"}
+            = t :label_producers
+        %p
+          %a{href: "/groups"}
+            = t :label_groups
+        %p
+          %a{href: ContentConfig.footer_about_url}
+            = t :label_about
+
+      .small-12.medium-2.columns.text-left
+        %h4
+          = t :footer_join_headline
+        %p
+          %a{href: "/producers/signup"}
+            = t :footer_join_producers
+        %p
+          %a{href: "/shops/signup"}
+            = t :footer_join_hubs
+        %p
+          %a{href: "/groups/signup"}
+            = t :footer_join_groups
+        %p
+          %a{href: "http://www.openfoodnetwork.org/platform/food-system-partners/", target: "_blank"}
+            = t :footer_join_partners
+
+      .medium-2.columns.text-center
+        / Placeholder
+
+    .row
+      .small-12.medium-8.medium-offset-2.columns.text-center
+        %hr.hr-light
+        %br
+
+    .row
+      .small-12.medium-3.medium-offset-2.columns.text-left
+        %a{href: root_path}
+          %img{src: ContentConfig.footer_logo.url, width: "220"}
+      .small-12.medium-5.columns.text-left
+        %p.text-small
+          = t :footer_legal_call
+          %a{href: ContentConfig.footer_tos_url}
+            = t :footer_legal_tos
+          &#124;
+          = t :footer_legal_visit
+          %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} GitHub
+        %p.text-small
+          = t :footer_legal_text_html, {content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)')}
+
+      .medium-2.columns.text-center
+        / Placeholder

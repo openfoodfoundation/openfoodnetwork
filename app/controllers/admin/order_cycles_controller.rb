@@ -5,18 +5,26 @@ module Admin
   class OrderCyclesController < ResourceController
     include OrderCyclesHelper
 
-    before_filter :load_data_for_index, :only => :index
+    prepend_before_filter :load_data_for_index, :only => :index
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
     before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
     around_filter :protect_invalid_destroy, only: :destroy
 
+    def index
+      respond_to do |format|
+        format.html
+        format.json do
+          render_as_json @collection, ams_prefix: params[:ams_prefix], current_user: spree_current_user
+        end
+      end
+    end
 
     def show
       respond_to do |format|
         format.html
         format.json do
-          render json: Api::Admin::OrderCycleSerializer.new(@order_cycle, current_user: spree_current_user).to_json
+          render_as_json @order_cycle, current_user: spree_current_user
         end
       end
     end
@@ -25,7 +33,7 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render json: Api::Admin::OrderCycleSerializer.new(@order_cycle, current_user: spree_current_user).to_json
+          render_as_json @order_cycle, current_user: spree_current_user
         end
       end
     end
@@ -53,20 +61,17 @@ module Admin
       respond_to do |format|
         if @order_cycle.update_attributes(params[:order_cycle])
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-
-          flash[:notice] = 'Your order cycle has been updated.'
-          format.html { redirect_to admin_order_cycles_path }
-          format.json { render :json => {:success => true} }
+          flash[:notice] = 'Your order cycle has been updated.' if params[:reloading] == '1'
+          format.json { render :json => {:success => true}  }
         else
-          format.html
           format.json { render :json => {:success => false} }
         end
       end
     end
 
     def bulk_update
-      @order_cycle_set = OrderCycleSet.new(params[:order_cycle_set])
-      if @order_cycle_set.save
+      @order_cycle_set = params[:order_cycle_set] && OrderCycleSet.new(params[:order_cycle_set])
+      if @order_cycle_set.andand.save
         redirect_to main_app.admin_order_cycles_path, :notice => 'Order cycles have been updated.'
       else
         render :index
@@ -79,21 +84,46 @@ module Admin
       redirect_to main_app.admin_order_cycles_path, :notice => "Your order cycle #{@order_cycle.name} has been cloned."
     end
 
+    # Send notifications to all producers who are part of the order cycle
+    def notify_producers
+      Delayed::Job.enqueue OrderCycleNotificationJob.new(params[:id].to_i)
+
+      redirect_to main_app.admin_order_cycles_path, :notice => 'Emails to be sent to producers have been queued for sending.'
+    end
+
 
     protected
-    def collection(show_more=false)
-      ocs = OrderCycle.accessible_by(spree_current_user)
+    def collection
+      ocs = if params[:as] == "distributor"
+        OrderCycle.ransack(params[:q]).result.
+        involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
+      elsif params[:as] == "producer"
+        OrderCycle.ransack(params[:q]).result.
+        involving_managed_producers_of(spree_current_user).order('updated_at DESC')
+      else
+        OrderCycle.ransack(params[:q]).result.accessible_by(spree_current_user)
+      end
 
       ocs.undated +
         ocs.soonest_closing +
         ocs.soonest_opening +
-        (show_more ? ocs.closed : ocs.recently_closed)
+        ocs.closed
+    end
+
+    def collection_actions
+      [:index]
     end
 
     private
     def load_data_for_index
       @show_more = !!params[:show_more]
-      @order_cycle_set = OrderCycleSet.new :collection => collection(@show_more)
+      unless @show_more || params[:q].andand[:orders_close_at_gt].present?
+        # Split ransack params into all those that currently exist and new ones to limit returned ocs to recent or undated
+        params[:q] = {
+          g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: 31.days.ago, orders_close_at_null: true } ]
+        }
+      end
+      @order_cycle_set = OrderCycleSet.new :collection => (@collection = collection)
     end
 
     def require_coordinator
@@ -132,12 +162,22 @@ module Admin
     end
 
     def remove_unauthorized_bulk_attrs
-      params[:order_cycle_set][:collection_attributes].each do |i, hash|
-        order_cycle = OrderCycle.find(hash[:id])
-        unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
-          params[:order_cycle_set][:collection_attributes].delete i
+      if params.key? :order_cycle_set
+        params[:order_cycle_set][:collection_attributes].each do |i, hash|
+          order_cycle = OrderCycle.find(hash[:id])
+          unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
+            params[:order_cycle_set][:collection_attributes].delete i
+          end
         end
       end
+    end
+
+    def ams_prefix_whitelist
+      [:basic]
+    end
+
+    def collection_actions
+      [:index, :bulk_update]
     end
   end
 end

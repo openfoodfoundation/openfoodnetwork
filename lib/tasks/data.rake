@@ -5,7 +5,7 @@ namespace :openfoodnetwork do
       input = request_months
 
       # For each order cycle which was modified within the past 3 months
-      OrderCycle.where('updated_at > ?', Date.today - input.months).each do |order_cycle|
+      OrderCycle.where('updated_at > ?', Date.current - input.months).each do |order_cycle|
         # Cycle through the incoming exchanges
         order_cycle.exchanges.incoming.each do |exchange|
           unless exchange.sender == exchange.receiver

@@ -3,18 +3,18 @@ Darkswarm.controller "PaymentCtrl", ($scope, $timeout) ->
   $scope.name = "payment"
 
   $scope.months = [
-    {key: "January", value: "1"},
-    {key: "February", value: "2"},
-    {key: "March", value: "3"},
-    {key: "April", value: "4"},
-    {key: "May", value: "5"},
-    {key: "June", value: "6"},
-    {key: "July", value: "7"},
-    {key: "August", value: "8"},
-    {key: "September", value: "9"},
-    {key: "October", value: "10"},
-    {key: "November", value: "11"},
-    {key: "December", value: "12"},
+    {key: t("january"), value: "1"},
+    {key: t("february"), value: "2"},
+    {key: t("march"), value: "3"},
+    {key: t("april"), value: "4"},
+    {key: t("may"), value: "5"},
+    {key: t("june"), value: "6"},
+    {key: t("july"), value: "7"},
+    {key: t("august"), value: "8"},
+    {key: t("september"), value: "9"},
+    {key: t("october"), value: "10"},
+    {key: t("november"), value: "11"},
+    {key: t("december"), value: "12"},
   ]
 
   $scope.years = [moment().year()..(moment().year()+15)]

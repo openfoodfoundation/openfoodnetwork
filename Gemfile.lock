@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git://github.com/openfoodfoundation/spree.git
-  revision: afcc23e489eb604a3e2651598a7c8364e2acc7b3
+  revision: 6e3edfe40a5de8eba0095b2c5f3db9ea54c3afda
   branch: 1-3-stable
   specs:
     spree (1.3.6.beta)
@@ -54,7 +54,7 @@ GIT
       rabl (= 0.7.2)
       rails (~> 3.2.16)
       ransack (= 0.7.2)
-      select2-rails (= 3.2.1)
+      select2-rails (= 3.5.9.3)
       state_machine (= 1.1.2)
       stringex (~> 1.3.2)
       truncate_html (~> 0.5.5)
@@ -107,6 +107,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    CFPropertyList (2.3.2)
     actionmailer (3.2.21)
       actionpack (= 3.2.21)
       mail (~> 2.5.4)
@@ -121,10 +122,10 @@ GEM
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
     active_link_to (1.0.0)
-    active_model_serializers (0.8.1)
+    active_model_serializers (0.8.3)
       activemodel (>= 3.0)
-    activemerchant (1.48.0)
-      activesupport (>= 3.2.14, < 5.0.0)
+    activemerchant (1.57.0)
+      activesupport (>= 3.2.14, < 5.1)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
       nokogiri (~> 1.4)
@@ -142,17 +143,20 @@ GEM
     activesupport (3.2.21)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    acts-as-taggable-on (3.5.0)
+      activerecord (>= 3.2, < 5)
     acts_as_list (0.1.4)
     addressable (2.3.3)
     andand (1.3.3)
-    angular-rails-templates (0.1.1)
+    angular-rails-templates (0.2.0)
       railties (>= 3.1)
-      sprockets
+      sprockets (~> 2)
       tilt
     angularjs-file-upload-rails (1.1.0)
     angularjs-rails (1.2.13)
     ansi (1.4.2)
     arel (3.0.3)
+    atomic (1.1.99)
     awesome_nested_set (2.1.5)
       activerecord (>= 3.0.0)
     awesome_print (1.0.2)
@@ -163,12 +167,16 @@ GEM
     bcrypt (3.1.7)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
+    blockenspiel (0.4.5)
     bugsnag (1.5.2)
       httparty (>= 0.6, < 1.0)
       multi_json (~> 1.0)
     builder (3.0.4)
+    byebug (2.7.0)
+      columnize (~> 0.3)
+      debugger-linecache (~> 1.2)
     cancan (1.6.8)
-    capybara (2.2.1)
+    capybara (2.5.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -187,12 +195,12 @@ GEM
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
-    coffee-script (2.2.0)
+    coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.3.3)
+    coffee-script-source (1.10.0)
     colorize (0.7.7)
-    columnize (0.3.6)
+    columnize (0.9.0)
     comfortable_mexican_sofa (1.6.24)
       active_link_to (~> 1.0.0)
       paperclip (>= 2.3.0)
@@ -217,6 +225,8 @@ GEM
       safe_yaml (~> 0.9.0)
     css_parser (1.3.5)
       addressable
+    css_splitter (0.4.1)
+      sprockets (>= 2.0.0)
     daemons (1.2.2)
     dalli (2.7.2)
     database_cleaner (0.7.1)
@@ -224,12 +234,7 @@ GEM
       activerecord (~> 3.0)
       fog (~> 1.0)
       rails (~> 3.0)
-    debugger (1.6.1)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.3)
     delayed_job (4.0.4)
       activesupport (>= 3.0, < 4.2)
     delayed_job_active_record (4.0.2)
@@ -247,10 +252,9 @@ GEM
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
     erubis (2.7.0)
-    eventmachine (1.0.3)
-    excon (0.25.3)
-    execjs (1.4.0)
-      multi_json (~> 1.0)
+    eventmachine (1.0.8)
+    excon (0.45.4)
+    execjs (2.6.0)
     factory_girl (3.3.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (3.3.0)
@@ -261,19 +265,117 @@ GEM
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
-    fog (1.14.0)
+    fission (0.5.0)
+      CFPropertyList (~> 2.2)
+    fog (1.36.0)
+      fog-aliyun (>= 0.1.0)
+      fog-atmos
+      fog-aws (>= 0.6.0)
+      fog-brightbox (~> 0.4)
+      fog-core (~> 1.32)
+      fog-dynect (~> 0.0.2)
+      fog-ecloud (~> 0.1)
+      fog-google (<= 0.1.0)
+      fog-json
+      fog-local
+      fog-powerdns (>= 0.1.1)
+      fog-profitbricks
+      fog-radosgw (>= 0.0.2)
+      fog-riakcs
+      fog-sakuracloud (>= 0.0.4)
+      fog-serverlove
+      fog-softlayer
+      fog-storm_on_demand
+      fog-terremark
+      fog-vmfusion
+      fog-voxel
+      fog-xenserver
+      fog-xml (~> 0.1.1)
+      ipaddress (~> 0.5)
+      nokogiri (~> 1.5, >= 1.5.11)
+    fog-aliyun (0.1.0)
+      fog-core (~> 1.27)
+      fog-json (~> 1.0)
+      ipaddress (~> 0.8)
+      xml-simple (~> 1.1)
+    fog-atmos (0.1.0)
+      fog-core
+      fog-xml
+    fog-aws (0.7.6)
+      fog-core (~> 1.27)
+      fog-json (~> 1.0)
+      fog-xml (~> 0.1)
+      ipaddress (~> 0.8)
+    fog-brightbox (0.9.0)
+      fog-core (~> 1.22)
+      fog-json
+      inflecto (~> 0.0.2)
+    fog-core (1.35.0)
       builder
-      excon (~> 0.25.0)
-      formatador (~> 0.2.0)
-      mime-types
-      multi_json (~> 1.0)
-      net-scp (~> 1.1)
-      net-ssh (>= 2.1.3)
-      nokogiri (~> 1.5)
-      ruby-hmac
+      excon (~> 0.45)
+      formatador (~> 0.2)
+    fog-dynect (0.0.2)
+      fog-core
+      fog-json
+      fog-xml
+    fog-ecloud (0.3.0)
+      fog-core
+      fog-xml
+    fog-google (0.1.0)
+      fog-core
+      fog-json
+      fog-xml
+    fog-json (1.0.2)
+      fog-core (~> 1.0)
+      multi_json (~> 1.10)
+    fog-local (0.2.1)
+      fog-core (~> 1.27)
+    fog-powerdns (0.1.1)
+      fog-core (~> 1.27)
+      fog-json (~> 1.0)
+      fog-xml (~> 0.1)
+    fog-profitbricks (0.0.5)
+      fog-core
+      fog-xml
+      nokogiri
+    fog-radosgw (0.0.4)
+      fog-core (>= 1.21.0)
+      fog-json
+      fog-xml (>= 0.0.1)
+    fog-riakcs (0.1.0)
+      fog-core
+      fog-json
+      fog-xml
+    fog-sakuracloud (1.4.0)
+      fog-core
+      fog-json
+    fog-serverlove (0.1.2)
+      fog-core
+      fog-json
+    fog-softlayer (1.0.2)
+      fog-core
+      fog-json
+    fog-storm_on_demand (0.1.1)
+      fog-core
+      fog-json
+    fog-terremark (0.1.0)
+      fog-core
+      fog-xml
+    fog-vmfusion (0.1.0)
+      fission
+      fog-core
+    fog-voxel (0.1.0)
+      fog-core
+      fog-xml
+    fog-xenserver (0.2.2)
+      fog-core
+      fog-xml
+    fog-xml (0.1.2)
+      fog-core
+      nokogiri (~> 1.5, >= 1.5.11)
     foreigner (1.6.1)
       activerecord (>= 3.0.0)
-    formatador (0.2.4)
+    formatador (0.2.5)
     foundation-icons-sass-rails (3.0.0)
       railties (>= 3.1.1)
       sass-rails (>= 3.1.1)
@@ -315,23 +417,28 @@ GEM
     immigrant (0.1.6)
       activerecord (>= 3.0)
       foreigner (>= 1.2.1)
+    inflecto (0.0.2)
+    ipaddress (0.8.0)
     journey (1.0.4)
     jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.2)
+    json (1.8.3)
     json_spec (1.1.1)
       multi_json (~> 1.0)
       rspec (~> 2.0)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kgio (2.7.4)
+    kgio (2.9.3)
+    knapsack (1.5.1)
+      rake
+      timecop (>= 0.1.0)
     launchy (2.1.2)
       addressable (~> 2.3)
     letter_opener (1.0.0)
       launchy (>= 2.0.4)
-    libv8 (3.16.14.3)
+    libv8 (3.16.14.11)
     listen (2.2.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -347,28 +454,31 @@ GEM
       railties (>= 3.1)
     money (5.1.1)
       i18n (~> 0.6.0)
-    multi_json (1.11.0)
+    multi_json (1.11.2)
     multi_xml (0.5.5)
-    net-scp (1.1.2)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.6.8)
-    newrelic_rpm (3.6.7.152)
-    nokogiri (1.6.6.2)
+    newrelic_rpm (3.12.0.288)
+    nokogiri (1.6.6.4)
       mini_portile (~> 0.6.0)
     oj (2.1.2)
     orm_adapter (0.5.0)
+    paper_trail (3.0.8)
+      activerecord (>= 3.0, < 5.0)
+      activesupport (>= 3.0, < 5.0)
     paperclip (3.5.4)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    parallel (1.4.1)
+    parallel_tests (1.3.7)
+      parallel
     paypal-sdk-core (0.2.10)
       multi_json (~> 1.0)
       xml-simple
     paypal-sdk-merchant (1.106.1)
       paypal-sdk-core (~> 0.2.3)
     pg (0.13.2)
-    poltergeist (1.5.0)
+    poltergeist (1.7.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
@@ -380,13 +490,13 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    pry-debugger (0.2.2)
-      debugger (~> 1.3)
-      pry (~> 0.9.10)
+    pry-byebug (1.3.2)
+      byebug (~> 2.7)
+      pry (~> 0.9.12)
     rabl (0.7.2)
       activesupport (>= 2.3.14)
       multi_json (~> 1.0)
-    rack (1.4.5)
+    rack (1.4.7)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-livereload (0.3.15)
@@ -413,7 +523,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    raindrops (0.9.0)
+    raindrops (0.13.0)
     rake (10.4.2)
     ransack (0.7.2)
       actionpack (~> 3.0)
@@ -424,6 +534,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    redcarpet (3.2.3)
     ref (1.0.5)
     representative (1.0.5)
       activesupport (>= 2.2.2)
@@ -454,7 +565,8 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    ruby-hmac (0.4.0)
+    rspec-retry (0.4.2)
+      rspec-core
     ruby-progressbar (1.7.1)
     safe_yaml (0.9.5)
     sass (3.3.14)
@@ -462,14 +574,10 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    select2-rails (3.2.1)
+    select2-rails (3.5.9.3)
       thor (~> 0.14)
     shoulda-matchers (1.1.0)
       activesupport (>= 3.0.0)
-    simplecov (0.7.1)
-      multi_json (~> 1.0)
-      simplecov-html (~> 0.7.1)
-    simplecov-html (0.7.1)
     slop (3.4.5)
     spinjs-rails (1.3)
       rails (>= 3.1)
@@ -497,10 +605,10 @@ GEM
     turn (0.8.3)
       ansi
     tzinfo (0.3.44)
-    uglifier (1.2.4)
+    uglifier (2.7.1)
       execjs (>= 0.3.0)
-      multi_json (>= 1.0.2)
-    unicorn (4.3.1)
+      json (>= 1.8.0)
+    unicorn (4.9.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -517,10 +625,15 @@ GEM
     webmock (1.13.0)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
-    websocket-driver (0.3.2)
+    websocket-driver (0.6.2)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.2)
     whenever (0.9.2)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
+    wicked_pdf (0.11.0)
+      rails
+    wkhtmltopdf-binary (0.9.9.3)
     xml-simple (1.1.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -532,17 +645,21 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  acts-as-taggable-on (~> 3.4)
   andand
-  angular-rails-templates
+  angular-rails-templates (~> 0.2.0)
   angularjs-file-upload-rails (~> 1.1.0)
   angularjs-rails (= 1.2.13)
+  atomic
   awesome_print
   aws-sdk
+  blockenspiel
   bugsnag
   capybara
   coffee-rails (~> 3.2.1)
   comfortable_mexican_sofa
   compass-rails
+  css_splitter
   custom_error_message!
   daemons
   dalli
@@ -570,27 +687,32 @@ DEPENDENCIES
   immigrant
   jquery-rails
   json_spec
+  knapsack
   letter_opener
   momentjs-rails
   newrelic_rpm
+  nokogiri
   oj
+  paper_trail (~> 3.0.8)
   paperclip
+  parallel_tests
   pg
   poltergeist
-  pry-debugger
+  pry-byebug
   rabl
   rack-livereload
   rack-ssl
   rails (= 3.2.21)
   rails-i18n (~> 3.0.0)
+  redcarpet
   representative_view
   roadie-rails (~> 1.0.3)
   rspec-rails
+  rspec-retry
   sass (~> 3.3)
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form!
-  simplecov
   spinjs-rails
   spree!
   spree_auth_devise!
@@ -606,3 +728,8 @@ DEPENDENCIES
   unicorn-rails
   webmock
   whenever
+  wicked_pdf
+  wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.6

@@ -1,14 +1,14 @@
 Spree.user_class.class_eval do
-  if method_defined? :send_reset_password_instructions_with_delay
-    Bugsnag.notify RuntimeError.new "send_reset_password_instructions already handled asyncronously - double-calling results in infinite job loop"
-  else
-    handle_asynchronously :send_reset_password_instructions
-  end
+  # handle_asynchronously will define send_reset_password_instructions_with_delay.
+  # If handle_asynchronously is called twice, we get an infinite job loop.
+  handle_asynchronously :send_reset_password_instructions unless method_defined? :send_reset_password_instructions_with_delay
 
   has_many :enterprise_roles, :dependent => :destroy
   has_many :enterprises, through: :enterprise_roles
   has_many :owned_enterprises, class_name: 'Enterprise', foreign_key: :owner_id, inverse_of: :owner
   has_many :owned_groups, class_name: 'EnterpriseGroup', foreign_key: :owner_id, inverse_of: :owner
+  has_many :account_invoices
+  has_many :billable_periods, foreign_key: :owner_id, inverse_of: :owner
   has_one :cart
   has_many :customers
 
@@ -18,7 +18,6 @@ Spree.user_class.class_eval do
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
-
 
   def known_users
     if admin?
@@ -49,7 +48,6 @@ Spree.user_class.class_eval do
   def can_own_more_enterprises?
     owned_enterprises(:reload).size < enterprise_limit
   end
-
 
   private
 

@@ -1,16 +1,16 @@
 .row
   .small-12.columns
     %header
-      %h2 Oh no!
-      %h4 You have reached the limit!
+      %h2 {{'limit_reached_headline' | t}}
+      %h4 {{'limit_reached_message' | t}}
 .row
   .small-12.medium-3.large-2.columns.text-right.hide-for-small-only
     %img{:src => "/assets/potatoes.png"}
   .small-12.medium-9.large-10.columns
     %p
-      You have reached the limit for the number of enterprises you are allowed to own on the
+      {{'limit_reached_text' | t}}
       %strong Open Food Network.
 .row
   .small-12.columns
     %hr
-    %input.button.primary{ type: "button", value: "Return to the homepage", ng: { click: "close()" } }
+    %input.button.primary{ type: "button", value: "{{'limit_reached_action' | t}}", ng: { click: "close()" } }

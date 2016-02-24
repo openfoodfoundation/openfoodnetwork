@@ -1,3 +1,9 @@
+- if discourse_configured?
+  %li
+    %a{href: main_app.discourse_login_path, target: '_blank'}
+      %span.nav-primary
+        = t 'label_notices'
+
 %li.has-dropdown.not-click
   
   %a{href: "#"} 
@@ -9,17 +15,15 @@
       %li
         %a{href: spree.admin_path, target:'_blank'} 
           %i.ofn-i_021-tools
-          Administration
+          = t 'label_administration'
 
     %li
       %a{href: spree.account_path}
         %i.ofn-i_015-user
-        Account
+        = t 'label_account'
         = "(" + spree_current_user.email + ")"
     
     %li
-      %a{title: 'Log Out', href:'/logout' } 
+      %a{title: t('label_logout'), href:'/logout' } 
         %i.ofn-i_018-unlocked
-        Log out
-
-    
+        = t 'label_logout'

@@ -2,17 +2,19 @@
   %head
     %meta{charset: 'utf-8'}/
     %meta{name: 'viewport', content: "width=device-width,initial-scale=1.0"}/
-
-    %title= content_for?(:title) ? yield(:title) : 'Welcome to Open Food Network'
+    %meta{property: "og:title", content: content_for?(:title) ? yield(:title) : t(:title)}
+    %meta{property: "og:description", content: content_for?(:description) ? yield(:description) : t(:site_meta_description)}
+    %meta{property: "og:image", content: content_for?(:image) ? yield(:image) : ContentConfig.logo.url}
+    %title= content_for?(:title) ? "#{yield(:title)} - #{t(:title)}".html_safe : "#{t(:welcome_to)} #{t(:title)}"
     - if Rails.env.production?
       = favicon_link_tag
     - else
       = favicon_link_tag "/favicon-staging.ico"
-    %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:400,700", rel: "stylesheet", type: "text/css"}/
+    %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
 
     = yield :scripts
-    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places&sensor=false"}
-    = stylesheet_link_tag "darkswarm/all"
+    %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry"}
+    = split_stylesheet_link_tag "darkswarm/all"
     = javascript_include_tag "darkswarm/all"
 
 
@@ -24,7 +26,7 @@
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
 
-    = inject_json "currentHub", "current_hub"
+    = inject_current_hub
     = inject_json "user", "current_user"
     = inject_json "railsFlash", "flash"
     = inject_taxons
@@ -34,7 +36,7 @@
 
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
-        = render partial: "shared/menu/menu"
+        = render "shared/menu/menu"
 
         %section{ role: "main" }
           = yield

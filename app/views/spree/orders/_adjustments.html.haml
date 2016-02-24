@@ -1,6 +1,7 @@
 %tr{"data-hook" => "cart_adjustments_headers"}
   %td.cart-adjustments{colspan: "5"}
-    %a{ href: "#" } Fees...
+    %a{ href: "#" }
+      = t :orders_fees
 
 - checkout_line_item_adjustments(@order).each do |adjustment|
   %tr.cart_adjustment

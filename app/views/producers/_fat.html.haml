@@ -1,58 +1,62 @@
 .row.active_table_row{"ng-if" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
-  
+
   .columns.small-12.medium-7.large-7.fat
     / Will add in long description available once clean up HTML formatting producer.long_description
     %div{"bo-if" => "producer.description"}
-      %label About us
+      %label
+        = t :producers_about
       %img.right.show-for-medium-up{"bo-src" => "producer.logo" }
       %p.text-small{ "bo-text" => "producer.description"}
     %div.show-for-medium-up{"bo-if" => "producer.description.length==0"}
       %label &nbsp;
 
   .columns.small-12.medium-5.large-5.fat
-    
+
     %div{"bo-if" => "producer.supplied_taxons"}
-      %label Shop for
+      %label
+        = t :producers_buy
       %p.trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
           %render-svg{path: "{{taxon.icon}}"}
           %span{"bo-text" => "taxon.name"}
-    
+
     %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
       &nbsp;
 
-    %div{"bo-if" => "producer.email || producer.website || producer.phone"}
-      %label Contact
-      
-      %p.word-wrap{"bo-if" => "producer.phone"}
-        Call 
-        %span{"bo-text" => "producer.phone"} 
+    %div{"bo-if" => "producer.email_address || producer.website || producer.phone"}
+      %label
+        = t :producers_contact
 
-      %p.word-wrap{"bo-if" => "producer.email"}
-        %a{"bo-href" => "producer.email | stripUrl", target: "_blank", mailto: true}
-          %span.email{"bo-bind" => "producer.email | stripUrl"}
+      %p.word-wrap{"bo-if" => "producer.phone"}
+        = t :producers_contact_phone
+        %span{"bo-text" => "producer.phone"}
+
+      %p.word-wrap{"bo-if" => "producer.email_address"}
+        %a{"bo-href" => "producer.email_address | stripUrl", target: "_blank", mailto: true}
+          %span.email{"bo-bind" => "producer.email_address | stripUrl"}
 
       %p.word-wrap{"bo-if" => "producer.website"}
         %a{"bo-href-i" => "http://{{producer.website | stripUrl}}", target: "_blank" }
           %span{"bo-bind" => "producer.website | stripUrl"}
 
     %div{"bo-if" => "producer.twitter || producer.facebook || producer.linkedin || producer.instagram"}
-      %label Follow
+      %label
+        = t :producers_social
       .follow-icons{bindonce: true}
-        %span{"bo-if" => "producer.twitter"} 
+        %span{"bo-if" => "producer.twitter"}
           %a{"bo-href-i" => "http://twitter.com/{{producer.twitter}}", target: "_blank"}
             %i.ofn-i_041-twitter
-        
+
         %span{"bo-if" => "producer.facebook"}
           %a{"bo-href-i" => "http://{{producer.facebook | stripUrl}}", target: "_blank"}
             %i.ofn-i_044-facebook
-        
+
         %span{"bo-if" => "producer.linkedin"}
           %a{"bo-href-i" => "http://{{producer.linkedin | stripUrl}}", target: "_blank"}
             %i.ofn-i_042-linkedin
-        
+
         %span{"bo-if" => "producer.instagram"}
-          %a{"bo-href-i" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}  
+          %a{"bo-href-i" => "http://instagram.com/{{producer.instagram}}", target: "_blank"}
             %i.ofn-i_043-instagram
 
 .row.active_table_row.pad-top{"ng-if" => "open()", "bo-if" => "producer.hubs"}
@@ -60,19 +64,16 @@
     .row
       .columns.small-12.fat
         %div{"bo-if" => "producer.name"}
-          %label 
-            Shop for
-            %span.turquoise{"bo-text" => "producer.name"} 
-            products at:
+          %label
+            = t :producers_buy_at_html, {enterprise: '<span class="turquoise" bo-text="producer.name"></span>'.html_safe}
         %div.show-for-medium-up{"bo-if" => "!producer.name"}
           &nbsp;
     .row.cta-container
       .columns.small-12
-        %a.cta-hub{"ng-repeat" => "hub in producer.hubs | orderBy:'-active'",
-        "bo-href" => "hub.path", "ofn-empties-cart" => "hub", 
+        %a.cta-hub{"ng-repeat" => "hub in producer.hubs | visible | orderBy:'-active'",
+        "bo-href" => "hub.path", "ofn-change-hub" => "hub",
         "bo-class" => "{primary: hub.active, secondary: !hub.active}"}
           %i.ofn-i_033-open-sign{"bo-if" => "hub.active"}
           %i.ofn-i_032-closed-sign{"bo-if" => "!hub.active"}
           .hub-name{"bo-text" => "hub.name"}
           .button-address{"bo-bind" => "[hub.address.city, hub.address.state_name] | printArray"}
-

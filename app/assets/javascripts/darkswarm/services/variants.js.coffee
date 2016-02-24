@@ -1,6 +1,10 @@
 Darkswarm.factory 'Variants', ->
   new class Variants
     variants: {}
+
+    clear: ->
+      @variants = {}
+
     register: (variant)->
       @variants[variant.id] ||= @extend variant
 

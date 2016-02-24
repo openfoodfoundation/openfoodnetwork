@@ -1,9 +1,11 @@
-angular.module('admin.order_cycles').controller "AdminSimpleEditOrderCycleCtrl", ($scope, $location, OrderCycle, Enterprise, EnterpriseFee) ->
+angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", ($scope, $location, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
   $scope.orderCycleId = ->
     $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
 
+  $scope.StatusMessage = StatusMessage
   $scope.enterprises = Enterprise.index(order_cycle_id: $scope.orderCycleId())
   $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: $scope.orderCycleId())
+  $scope.OrderCycle = OrderCycle
   $scope.order_cycle = OrderCycle.load $scope.orderCycleId(), (order_cycle) =>
     $scope.init()
 
@@ -32,7 +34,6 @@ angular.module('admin.order_cycles').controller "AdminSimpleEditOrderCycleCtrl",
     $event.preventDefault()
     OrderCycle.removeCoordinatorFee(index)
 
-  $scope.submit = (event) ->
-    event.preventDefault()
+  $scope.submit = (destination) ->
     OrderCycle.mirrorIncomingToOutgoingProducts()
-    OrderCycle.update()
+    OrderCycle.update(destination)

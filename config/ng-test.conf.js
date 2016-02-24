@@ -11,6 +11,7 @@ module.exports = function(config) {
       'app/assets/javascripts/shared/angular-local-storage.js',
       'app/assets/javascripts/shared/bindonce.min.js',
       'app/assets/javascripts/shared/ng-infinite-scroll.min.js',
+      'app/assets/javascripts/shared/angular-slideables.js',
 
       'app/assets/javascripts/admin/*.js*',
       'app/assets/javascripts/admin/*/*.js*', // Pull in top level files in each folder first (often these are module declarations)
@@ -24,6 +25,7 @@ module.exports = function(config) {
       '**/.#*',
       'app/assets/javascripts/darkswarm/all.js.coffee',
       'app/assets/javascripts/darkswarm/overrides.js.coffee',
+      'app/assets/javascripts/darkswarm/i18n.js.erb',
       'app/assets/javascripts/admin/util.js.erb'
     ],
 

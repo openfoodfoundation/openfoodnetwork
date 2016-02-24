@@ -9,24 +9,57 @@ module Spree
     let(:order_cycle) { double(:order_cycle) }
     let(:op) { OrderPopulator.new(order, currency) }
 
+    context "end-to-end" do
+      let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+      let(:distributor) { create(:distributor_enterprise) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [v]) }
+      let(:op) { OrderPopulator.new(order, nil) }
+      let(:v) { create(:variant) }
+
+      describe "populate" do
+        it "adds a variant" do
+          op.populate({variants: {v.id.to_s => {quantity: '1', max_quantity: '2'}}}, true)
+          li = order.find_line_item_by_variant(v)
+          li.should be
+          li.quantity.should == 1
+          li.max_quantity.should == 2
+          li.final_weight_volume.should == 1.0
+        end
+
+        it "updates a variant's quantity, max quantity and final_weight_volume" do
+          order.add_variant v, 1, 2
+
+          op.populate({variants: {v.id.to_s => {quantity: '2', max_quantity: '3'}}}, true)
+          li = order.find_line_item_by_variant(v)
+          li.should be
+          li.quantity.should == 2
+          li.max_quantity.should == 3
+          li.final_weight_volume.should == 2.0
+        end
+
+        it "removes a variant" do
+          order.add_variant v, 1, 2
+
+          op.populate({variants: {}}, true)
+          order.line_items(:reload)
+          li = order.find_line_item_by_variant(v)
+          li.should_not be
+        end
+      end
+    end
+
     describe "populate" do
       before do
         op.should_receive(:distributor_and_order_cycle).
           and_return([distributor, order_cycle])
       end
+
       it "checks that distribution can supply all products in the cart" do
         op.should_receive(:distribution_can_supply_products_in_cart).
           with(distributor, order_cycle).and_return(false)
 
         op.populate(params).should be_false
         op.errors.to_a.should == ["That distributor or order cycle can't supply all the products in your cart. Please choose another."]
-      end
-      
-      it "empties the order if override is true" do
-        op.stub(:distribution_can_supply_products_in_cart).and_return true
-        order.stub(:with_lock).and_yield
-        order.should_receive(:empty!)
-        op.populate(params, true)
       end
 
       it "locks the order" do
@@ -37,20 +70,90 @@ module Spree
 
       it "attempts cart add with max_quantity" do
         op.stub(:distribution_can_supply_products_in_cart).and_return true
-        order.should_receive(:empty!)
-        params = {variants: {"1" => {quantity: 1, max_quantity: 2}}} 
+        params = {variants: {"1" => {quantity: 1, max_quantity: 2}}}
         order.stub(:with_lock).and_yield
+        op.stub(:varies_from_cart) { true }
+        op.stub(:variants_removed) { [] }
         op.should_receive(:attempt_cart_add).with("1", 1, 2).and_return true
         op.populate(params, true)
+      end
+    end
+
+    describe "varies_from_cart" do
+      let(:variant) { double(:variant, id: 123) }
+
+      it "returns true when item is not in cart and a quantity is specified" do
+        op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'}).should be_true
+      end
+
+      it "returns true when item is not in cart and a max_quantity is specified" do
+        op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '0', max_quantity: '2'}).should be_true
+      end
+
+      it "returns false when item is not in cart and no quantity or max_quantity are specified" do
+        op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '0'}).should be_false
+      end
+
+      it "returns true when quantity varies" do
+        li = double(:line_item, quantity: 1, max_quantity: nil)
+        op.stub(:line_item_for_variant_id) { li }
+
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'}).should be_true
+      end
+
+      it "returns true when max_quantity varies" do
+        li = double(:line_item, quantity: 1, max_quantity: nil)
+        op.stub(:line_item_for_variant_id) { li }
+
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '3'}).should be_true
+      end
+
+      it "returns false when max_quantity varies only in nil vs 0" do
+        li = double(:line_item, quantity: 1, max_quantity: nil)
+        op.stub(:line_item_for_variant_id) { li }
+
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1'}).should be_false
+      end
+
+      it "returns false when both are specified and neither varies" do
+        li = double(:line_item, quantity: 1, max_quantity: 2)
+        op.stub(:line_item_for_variant_id) { li }
+
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '2'}).should be_false
+      end
+    end
+
+    describe "variants_removed" do
+      it "returns the variant ids when one is in the cart but not in those given" do
+        op.stub(:variant_ids_in_cart) { [123] }
+        op.send(:variants_removed, []).should == [123]
+      end
+
+      it "returns nothing when all items in the cart are provided" do
+        op.stub(:variant_ids_in_cart) { [123] }
+        op.send(:variants_removed, [{variant_id: '123'}]).should == []
+      end
+
+      it "returns nothing when items are added to cart" do
+        op.stub(:variant_ids_in_cart) { [123] }
+        op.send(:variants_removed, [{variant_id: '123'}, {variant_id: '456'}]).should == []
+      end
+
+      it "does not return duplicates" do
+        op.stub(:variant_ids_in_cart) { [123, 123] }
+        op.send(:variants_removed, []).should == [123]
       end
     end
 
     describe "attempt_cart_add" do
       it "performs additional validations" do
         variant = double(:variant)
-        variant.stub(:scope_to_hub)
         quantity = 123
         Spree::Variant.stub(:find).and_return(variant)
+        VariantOverride.stub(:for).and_return(nil)
 
         op.should_receive(:check_stock_levels).with(variant, quantity).and_return(true)
         op.should_receive(:check_order_cycle_provided_for).with(variant).and_return(true)

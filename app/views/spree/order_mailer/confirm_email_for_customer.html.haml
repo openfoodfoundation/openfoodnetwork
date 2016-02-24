@@ -5,10 +5,9 @@
         %tr
           %td
             %h3 
-              Hi #{@order.bill_address.firstname},
+              = t :email_confirm_customer_greeting, name: @order.bill_address.firstname
             %h4
-              Thanks for shopping at 
-              %strong= "#{@order.distributor.name}!"
+              = t :email_confirm_customer_intro_html, distributor: @order.distributor.name
       %table.column{:align => "left"}
         %tr
           %td{:align => "right"}
@@ -17,31 +16,12 @@
 
 %p &nbsp;
 %h4
-  Order confirmation 
-  %strong ##{@order.number}
+  = t :email_confirm_customer_number_html, number: @order.number
 %p
-  Here are your order details from
-  %strong= "#{@order.distributor.name}:"  
+  = t :email_confirm_customer_details_html, distributor: @order.distributor.name
 
 = render 'order_summary'
 = render 'payment'
 = render 'shipping'
 = render 'special_instructions'
-
-%br
-%p.callout
-  Kind regards,
-  %br
-  #{@order.distributor.contact}
-  %br
-  %br
-  = @order.distributor.name
-  %br
-  = @order.distributor.phone || ""
-  %br
-  %a{:href => "mailto:#{@order.distributor.email}", :target => "_blank"}
-    = @order.distributor.email
-  %br
-  = @order.distributor.website || ""
-
-
+= render 'signoff'

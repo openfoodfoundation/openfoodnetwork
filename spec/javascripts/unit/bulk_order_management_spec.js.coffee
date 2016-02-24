@@ -261,59 +261,56 @@ describe "AdminOrderMgmtCtrl", ->
         scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
         expect(scope.fulfilled(1500)).toEqual 1.5
 
-    describe "allUnitValuesPresent()", ->
+    describe "allFinalWeightVolumesPresent()", ->
       it "returns false if the unit_value of any item in filteredLineItems does not exist", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 1000 } }
-          { units_variant: { unit_value: 2000 } }
-          { units_variant: { unit_yayay: 1000 } }
+          { final_weight_volume: 1000 }
+          { final_weight_volume: 3000 }
+          { final_weight_yayaya: 2000 }
         ]
-        expect(scope.allUnitValuesPresent()).toEqual false
+        expect(scope.allFinalWeightVolumesPresent()).toEqual false
 
       it "returns false if the unit_value of any item in filteredLineItems is not a number greater than 0", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 0 } }
-          { units_variant: { unit_value: 2000 } }
-          { units_variant: { unit_value: 1000 } }
+          { final_weight_volume: 0 }
+          { final_weight_volume: 3000 }
+          { final_weight_volume: 2000 }
         ]
-        expect(scope.allUnitValuesPresent()).toEqual false
+        expect(scope.allFinalWeightVolumesPresent()).toEqual false
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 'lala' } }
-          { units_variant: { unit_value: 2000 } }
-          { units_variant: { unit_value: 1000 } }
+          { final_weight_volume: 'lalala' }
+          { final_weight_volume: 3000 }
+          { final_weight_volume: 2000 }
         ]
-        expect(scope.allUnitValuesPresent()).toEqual false
+        expect(scope.allFinalWeightVolumesPresent()).toEqual false
 
       it "returns true if the unit_value of all items in filteredLineItems are numbers greater than 0", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 100 } }
-          { units_variant: { unit_value: 2000 } }
-          { units_variant: { unit_value: 1000 } }
+          { final_weight_volume: 1000 }
+          { final_weight_volume: 3000 }
+          { final_weight_volume: 2000 }
         ]
-        expect(scope.allUnitValuesPresent()).toEqual true
+        expect(scope.allFinalWeightVolumesPresent()).toEqual true
 
     describe "sumUnitValues()", ->
-      it "returns the sum of the product of unit_value and quantity for specified line_items", ->
+      it "returns the sum of the final_weight_volumes line_items", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 1 }, quantity: 2 }
-          { units_variant: { unit_value: 2 }, quantity: 3 }
-          { units_variant: { unit_value: 3 }, quantity: 7 }
+          { final_weight_volume: 2 }
+          { final_weight_volume: 7 }
+          { final_weight_volume: 21 }
         ]
-        sp0 = scope.filteredLineItems[0].units_variant.unit_value * scope.filteredLineItems[0].quantity
-        sp1 = scope.filteredLineItems[1].units_variant.unit_value * scope.filteredLineItems[1].quantity
-        sp2 = scope.filteredLineItems[2].units_variant.unit_value * scope.filteredLineItems[2].quantity
-        expect(scope.sumUnitValues()).toEqual (sp0 + sp1 + sp2)
+        expect(scope.sumUnitValues()).toEqual 30
 
     describe "sumMaxUnitValues()", ->
       it "returns the sum of the product of unit_value and maxOf(max_quantity,quantity) for specified line_items", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 1 }, quantity: 2, max_quantity: 5 }
-          { units_variant: { unit_value: 2 }, quantity: 3, max_quantity: 1 }
-          { units_variant: { unit_value: 3 }, quantity: 7, max_quantity: 10 }
+          { units_variant: { unit_value: 1 }, original_quantity: 2, max_quantity: 5 }
+          { units_variant: { unit_value: 2 }, original_quantity: 3, max_quantity: 1 }
+          { units_variant: { unit_value: 3 }, original_quantity: 7, max_quantity: 10 }
         ]
-        sp0 = scope.filteredLineItems[0].units_variant.unit_value * Math.max(scope.filteredLineItems[0].quantity, scope.filteredLineItems[0].max_quantity)
-        sp1 = scope.filteredLineItems[1].units_variant.unit_value * Math.max(scope.filteredLineItems[1].quantity, scope.filteredLineItems[1].max_quantity)
-        sp2 = scope.filteredLineItems[2].units_variant.unit_value * Math.max(scope.filteredLineItems[2].quantity, scope.filteredLineItems[2].max_quantity)
+        sp0 = scope.filteredLineItems[0].units_variant.unit_value * Math.max(scope.filteredLineItems[0].original_quantity, scope.filteredLineItems[0].max_quantity)
+        sp1 = scope.filteredLineItems[1].units_variant.unit_value * Math.max(scope.filteredLineItems[1].original_quantity, scope.filteredLineItems[1].max_quantity)
+        sp2 = scope.filteredLineItems[2].units_variant.unit_value * Math.max(scope.filteredLineItems[2].original_quantity, scope.filteredLineItems[2].max_quantity)
         expect(scope.sumMaxUnitValues()).toEqual (sp0 + sp1 + sp2)
 
     describe "formatting a value based upon the properties of a specified Units Variant", ->
@@ -351,260 +348,53 @@ describe "AdminOrderMgmtCtrl", ->
         expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
 
     describe "updating the price upon updating the weight of a line item", ->
-
-      it "resets the weight if the weight is set to zero", ->
-        scope.filteredLineItems = [
-          { units_variant: { unit_value: 100 }, price: 2, unit_value: 0 }
-        ]
-        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], 100)).toEqual scope.filteredLineItems[0].price
-
       it "updates the price if the weight is changed", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 100 }, price: 2, unit_value: 200 }
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 1, original_final_weight_volume: 2000, final_weight_volume: 4000  }
         ]
-        old_value = scope.filteredLineItems[0].units_variant.unit_value
-        new_value = scope.filteredLineItems[0].unit_value
-        sp = scope.filteredLineItems[0].price * new_value / old_value
-        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], old_value)).toEqual sp
+        scope.weightAdjustedPrice(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].price).toEqual 4.00
 
-      it "doesn't update the price if the weight is not changed", ->
+      it "doesn't update the price if the weight <= 0", ->
         scope.filteredLineItems = [
-          { units_variant: { unit_value: 100 }, price: 2, unit_value: 100 }
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 1, original_final_weight_volume: 2000, final_weight_volume: 0  }
         ]
-        old_value = scope.filteredLineItems[0].unit_value
-        new_value = scope.filteredLineItems[0].unit_value
-        sp = scope.filteredLineItems[0].price
-        expect(scope.weightAdjustedPrice(scope.filteredLineItems[0], old_value)).toEqual sp
+        scope.weightAdjustedPrice(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].price).toEqual 2.00
 
+      it "doesn't update the price if the weight is an empty string", ->
+        scope.filteredLineItems = [
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 1, original_final_weight_volume: 2000, final_weight_volume: ""  }
+        ]
+        scope.weightAdjustedPrice(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].price).toEqual 2.00
 
-describe "managing pending changes", ->
-  dataSubmitter = pendingChangesService = null
+    describe "updating final_weight_volume upon updating the quantity for a line_item", ->
+      beforeEach ->
+        spyOn(scope, "weightAdjustedPrice")
 
-  beforeEach ->
-    dataSubmitter = jasmine.createSpy('dataSubmitter').andReturn {
-      then: (thenFn) ->
-        thenFn({propertyName: "new_value"})
-    }
+      it "updates the weight if the quantity is changed, then calls weightAdjustedPrice()", ->
+        scope.filteredLineItems = [
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 2, original_final_weight_volume: 2000, final_weight_volume: 0  }
+        ]
+        scope.updateOnQuantity(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 4000
+        expect(scope.weightAdjustedPrice).toHaveBeenCalled()
 
-  beforeEach ->
-    module "ofn.admin", ($provide) ->
-      $provide.value 'dataSubmitter', dataSubmitter
-      return
+      it "doesn't update the weight if the quantity <= 0", ->
+        scope.filteredLineItems = [
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: 0, original_final_weight_volume: 2000, final_weight_volume: 1000  }
+        ]
+        scope.updateOnQuantity(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
 
-  beforeEach inject (pendingChanges) ->
-    pendingChangesService = pendingChanges
+      it "doesn't update the weight if the quantity is an empty string", ->
+        scope.filteredLineItems = [
+          { original_price: 2.00, price: 2.00, original_quantity: 1, quantity: "", original_final_weight_volume: 2000, final_weight_volume: 1000  }
+        ]
+        scope.updateOnQuantity(scope.filteredLineItems[0])
+        expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
 
-  describe "adding a new change", ->
-    it "adds a new object with key of id if it does not already exist", ->
-      expect(pendingChangesService.pendingChanges).toEqual {}
-      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
-      pendingChangesService.add 1, "propertyName", { a: 1 }
-      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
-
-    it "adds a new object with key of the altered attribute name if it does not already exist", ->
-      pendingChangesService.add 1, "propertyName", { a: 1 }
-      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
-      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { a: 1 }
-
-    it "replaces the existing object when adding a change to an attribute which already exists", ->
-      pendingChangesService.add 1, "propertyName", { a: 1 }
-      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
-      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { a: 1 }
-      pendingChangesService.add 1, "propertyName", { b: 2 }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName"]).toEqual { b: 2 }
-
-   it "adds an attribute to key to a line item object when one already exists", ->
-      pendingChangesService.add 1, "propertyName1", { a: 1 }
-      pendingChangesService.add 1, "propertyName2", { b: 2 }
-      expect(pendingChangesService.pendingChanges["1"]).toEqual { propertyName1: { a: 1}, propertyName2: { b: 2 } }
-
-  describe "removing all existing changes", ->
-    it "resets pendingChanges object", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      expect(pendingChangesService.pendingChanges["1"]["propertyName2"]).toBeDefined()
-      pendingChangesService.removeAll()
-      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
-      expect(pendingChangesService.pendingChanges).toEqual {}
-
-  describe "removing an existing change", ->
-    it "deletes a change if it exists", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 }, "propertyName2": { b: 2 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      pendingChangesService.remove 1, "propertyName1"
-      expect(pendingChangesService.pendingChanges["1"]).toBeDefined()
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).not.toBeDefined()
-
-    it "deletes a line item object if it is empty", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      pendingChangesService.remove 1, "propertyName1"
-      expect(pendingChangesService.pendingChanges["1"]).not.toBeDefined()
-
-    it "does nothing if key with specified attribute does not exist", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      pendingChangesService.remove 1, "propertyName2"
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toEqual { a: 1 }
-
-    it "does nothing if key with specified id does not exist", ->
-      pendingChangesService.pendingChanges = { 1: { "propertyName1": { a: 1 } } }
-      expect(pendingChangesService.pendingChanges["1"]["propertyName1"]).toBeDefined()
-      pendingChangesService.remove 2, "propertyName1"
-      expect(pendingChangesService.pendingChanges["1"]).toEqual { "propertyName1": { a: 1 } }
-
-  describe "submitting an individual change to the server", ->
-    it "sends the correct object to dataSubmitter", ->
-      changeObj = { element: {} }
-      pendingChangesService.submit 1, "propertyName", changeObj
-      expect(dataSubmitter.calls.length).toEqual 1
-      expect(dataSubmitter).toHaveBeenCalledWith changeObj
-
-    it "calls remove with id and attribute name", ->
-      changeObj = { element: {} }
-      spyOn(pendingChangesService, "remove").andCallFake(->)
-      pendingChangesService.submit 1, "propertyName", changeObj
-      expect(pendingChangesService.remove.calls.length).toEqual 1
-      expect(pendingChangesService.remove).toHaveBeenCalledWith 1, "propertyName"
-
-    it "resets the dbValue attribute of the element in question", ->
-      element = { dbValue: 2 }
-      changeObj = { element: element }
-      pendingChangesService.submit 1, "propertyName", changeObj
-      expect(element.dbValue).toEqual "new_value"
-
-  describe "cycling through all changes to submit to server", ->
-    it "sends the correct object to dataSubmitter", ->
-      spyOn(pendingChangesService, "submit").andCallFake(->)
-      pendingChangesService.pendingChanges =
-        1: { "prop1": 1, "prop2": 2 }
-        2: { "prop1": 2, "prop2": 4 }
-        7: { "prop2": 5 }
-      pendingChangesService.submitAll()
-      expect(pendingChangesService.submit.calls.length).toEqual 5
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '1', "prop1", 1
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '1', "prop2", 2
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop1", 2
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '2', "prop2", 4
-      expect(pendingChangesService.submit).toHaveBeenCalledWith '7', "prop2", 5
-
-    it "returns an array of promises representing all sumbit requests", ->
-      spyOn(pendingChangesService, "submit").andCallFake (id,attrName,changeObj) ->
-        id
-      pendingChangesService.pendingChanges =
-        1: { "prop1": 1 }
-        2: { "prop1": 2, "prop2": 4 }
-      expect(pendingChangesService.submitAll()).toEqual [ '1','2','2' ]
-
-describe "dataSubmitter service", ->
-  qMock = httpMock = {}
-  switchClassSpy = resolveSpy = rejectSpy = dataSubmitterService = null
-
-  beforeEach ->
-    resolveSpy = jasmine.createSpy('resolve')
-    rejectSpy = jasmine.createSpy('reject')
-    qMock.defer = ->
-      resolve: resolveSpy
-      reject: rejectSpy
-      promise: "promise1"
-
-    # Can't use httpBackend because the qMock interferes with it
-    httpMock.put = (url) ->
-      success: (successFn) ->
-        successFn("somedata") if url == "successURL"
-        error: (errorFn) ->
-          errorFn() if url == "errorURL"
-
-    spyOn(httpMock, "put").andCallThrough()
-    spyOn(qMock, "defer").andCallThrough()
-
-    switchClassSpy = jasmine.createSpy('switchClass')
-
-  beforeEach ->
-    module "ofn.admin" , ($provide) ->
-      $provide.value '$q', qMock
-      $provide.value '$http', httpMock
-      $provide.value 'switchClass', switchClassSpy
-      return
-
-  beforeEach inject (dataSubmitter) ->
-    dataSubmitterService = dataSubmitter
-
-  it "returns a promise", ->
-    expect(dataSubmitterService( { url: "successURL" } )).toEqual "promise1"
-    expect(qMock.defer).toHaveBeenCalled()
-
-  it "sends a PUT request with the url property of changeObj", ->
-    dataSubmitterService { url: "successURL" }
-    expect(httpMock.put).toHaveBeenCalledWith "successURL"
-
-  it "calls resolve on deferred object when request is successful", ->
-    element = { a: 1 }
-    dataSubmitterService { url: "successURL", element: element }
-    expect(resolveSpy.calls.length).toEqual 1
-    expect(rejectSpy.calls.length).toEqual 0
-    expect(resolveSpy).toHaveBeenCalledWith "somedata"
-    expect(switchClassSpy).toHaveBeenCalledWith element, "update-success", ["update-pending", "update-error"], 3000
-
-  it "calls reject on deferred object when request is erroneous", ->
-    element = { b: 2 }
-    dataSubmitterService { url: "errorURL", element: element  }
-    expect(resolveSpy.calls.length).toEqual 0
-    expect(rejectSpy.calls.length).toEqual 1
-    expect(switchClassSpy).toHaveBeenCalledWith element, "update-error", ["update-pending", "update-success"], false
-
-describe "switchClass service", ->
-  elementMock = timeoutMock = {}
-  removeClass = addClass = switchClassService = null
-
-  beforeEach ->
-    addClass = jasmine.createSpy('addClass')
-    removeClass = jasmine.createSpy('removeClass')
-    elementMock =
-      addClass: addClass
-      removeClass: removeClass
-    timeoutMock = jasmine.createSpy('timeout').andReturn "new timeout"
-    timeoutMock.cancel = jasmine.createSpy('timeout.cancel')
-
-  beforeEach ->
-    module "ofn.admin" , ($provide) ->
-      $provide.value '$timeout', timeoutMock
-      return
-
-  beforeEach inject (switchClass) ->
-    switchClassService = switchClass
-
-  it "calls addClass on the element once", ->
-    switchClassService elementMock, "addClass", [], false
-    expect(addClass).toHaveBeenCalledWith "addClass"
-    expect(addClass.calls.length).toEqual 1
-
-  it "calls removeClass on the element for ", ->
-    switchClassService elementMock, "", ["remClass1", "remClass2", "remClass3"], false
-    expect(removeClass).toHaveBeenCalledWith "remClass1"
-    expect(removeClass).toHaveBeenCalledWith "remClass2"
-    expect(removeClass).toHaveBeenCalledWith "remClass3"
-    expect(removeClass.calls.length).toEqual 3
-
-  it "call cancel on element.timout only if it exists", ->
-    switchClassService elementMock, "", [], false
-    expect(timeoutMock.cancel).not.toHaveBeenCalled()
-    elementMock.timeout = true
-    switchClassService elementMock, "", [], false
-    expect(timeoutMock.cancel).toHaveBeenCalled()
-
-  it "doesn't set up a new timeout if 'timeout' is false", ->
-    switchClassService elementMock, "class1", ["class2"], false
-    expect(timeoutMock).not.toHaveBeenCalled()
-
-  it "doesn't set up a new timeout if 'timeout' is a string", ->
-    switchClassService elementMock, "class1", ["class2"], "string"
-    expect(timeoutMock).not.toHaveBeenCalled()
-
-  it "sets up a new timeout if 'timeout' parameter is an integer", ->
-    switchClassService elementMock, "class1", ["class2"], 1000
-    expect(timeoutMock).toHaveBeenCalled()
-    expect(elementMock.timeout).toEqual "new timeout"
 
 describe "Auxiliary functions", ->
   describe "getting a zero filled two digit number", ->
@@ -624,14 +414,14 @@ describe "Auxiliary functions", ->
     beforeEach ->
       date = new Date
       date.setYear(2010)
-      date.setMonth(5) # Zero indexed, so 5 is June
+      date.setMonth(4) # Zero indexed, so 4 is May
       date.setDate(15)
       date.setHours(5)
       date.setMinutes(10)
       date.setSeconds(30)
 
     it "returns a date formatted as yyyy-mm-dd", ->
-      expect(formatDate(date)).toEqual "2010-06-15"
+      expect(formatDate(date)).toEqual "2010-05-15"
 
     it "returns a time formatted as hh-MM:ss", ->
       expect(formatTime(date)).toEqual "05:10:30"

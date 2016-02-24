@@ -1,19 +1,23 @@
-= inject_enterprises 
+- content_for(:title) do
+  = t :orders_edit_title
+
+= inject_enterprises
 
 .darkswarm
   - content_for :order_cycle_form do
-    %closing Your shopping cart
-    %p 
-      Order ready for
+    %closing
+      = t :orders_edit_headline
+    %p
+      = t :orders_edit_time
       %strong
         - if @order.order_cycle
-          = pickup_time @order.order_cycle 
+          = pickup_time @order.order_cycle
         - else
           = @order.distributor.next_collection_at
 
   = render partial: "shopping_shared/details"
-  
-  %fieldset
+
+  %fieldset.footer-pad
     - if @order.line_items.empty?
       %div.row{"data-hook" => "empty_cart"}
         %p= t(:your_cart_is_empty)
@@ -31,14 +35,13 @@
         .links{'data-hook' => "cart_buttons"}
           .row
             .columns.large-8{"data-hook" => ""}
-              
+
               %a.button.large.secondary{href: main_app.shop_path}
-                %i.ofn-i_008-caret-left 
-                Continue shopping
+                %i.ofn-i_008-caret-left
+                = t :orders_edit_continue
             .columns.large-4.text-right
               %a#checkout-link.button.large.primary{href: main_app.checkout_path}
-                Checkout
+                = t :orders_edit_checkout
                 %i.ofn-i_007-caret-right
 
 = render partial: "shared/footer"
-

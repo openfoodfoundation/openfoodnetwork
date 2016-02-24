@@ -1,0 +1,22 @@
+Dear #{@producer.name},
+\
+We now have all the consumer orders for the next food drop.
+\
+- if @receival_instructions
+  Stock pickup/delivery instructions:
+  = @receival_instructions
+
+\
+Orders summary
+================
+\
+Here is a summary of the orders for your products:
+\
+- @line_items.each_pair do |variant, line_item|
+  #{variant.sku} - #{raw(variant.product.supplier.name)} - #{raw(variant.product_and_full_name)} (QTY: #{line_item.quantity}) @ #{line_item.single_money} = #{line_item.display_amount}
+\
+Thanks and best wishes,
+#{@coordinator.name}
+#{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
+#{@coordinator.phone}
+#{@coordinator.email}

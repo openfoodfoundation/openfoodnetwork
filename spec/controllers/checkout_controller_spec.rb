@@ -52,12 +52,6 @@ describe CheckoutController do
     response.should be_success
   end
 
-  it "doesn't copy the previous shipping address from a pickup order" do
-    old_order = create(:order, bill_address: create(:address), ship_address: create(:address))
-    Spree::Order.stub_chain(:order, :where, :where, :limit, :detect).and_return(old_order)
-    controller.send(:find_last_used_addresses, "email").last.should == nil 
-  end
-
   describe "building the order" do
     before do
       controller.stub(:current_distributor).and_return(distributor)
@@ -69,7 +63,7 @@ describe CheckoutController do
       get :edit
       assigns[:order].ship_address.address1.should be_nil
     end
-    
+
     it "clears the ship address when re-rendering edit" do
       controller.should_receive(:clear_ship_address).and_return true
       order.stub(:update_attributes).and_return false
@@ -118,6 +112,32 @@ describe CheckoutController do
       xhr :post, :update, order: {}, use_route: :spree
       response.status.should == 200
       response.body.should == {path: spree.order_path(order)}.to_json
+    end
+
+    describe "stale object handling" do
+      it "retries when a stale object error is encountered" do
+        order.stub(:update_attributes).and_return true
+        controller.stub(:state_callback)
+
+        # The first time, raise a StaleObjectError. The second time, succeed.
+        order.stub(:next).once.
+          and_raise(ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update'))
+        order.stub(:next).once do
+          order.update_column :state, 'complete'
+          true
+        end
+
+        xhr :post, :update, order: {}, use_route: :spree
+        response.status.should == 200
+      end
+
+      it "tries a maximum of 3 times before giving up and returning an error" do
+        order.stub(:update_attributes).and_return true
+        order.stub(:next) { raise ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update') }
+
+        xhr :post, :update, order: {}, use_route: :spree
+        response.status.should == 400
+      end
     end
   end
 

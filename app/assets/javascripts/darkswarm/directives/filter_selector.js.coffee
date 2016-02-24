@@ -1,9 +1,10 @@
-Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
+Darkswarm.directive "filterSelector", ->
   # Automatically builds activeSelectors for taxons
   # Lots of magic here
   restrict: 'E'
   replace: true
   scope:
+    selectorSet: '='
     objects: "&"
     activeSelectors: "=?"
     allSelectors: "=?" # Optional
@@ -22,17 +23,11 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
       .map (selector)->
         selector.object.id
 
-    # This can be called from a parent scope
-    # when data has been loaded, in order to pass
-    # selectors up
-    scope.$on 'loadFilterSelectors', ->
-      scope.allSelectors = scope.selectors() if attr.allSelectors?
-
-    scope.$watchCollection "selectors()", (newValue, oldValue) ->
-      scope.allSelectors = scope.selectors() if attr.allSelectors?
+    scope.$watchCollection "objects()", (newValue, oldValue) ->
+      scope.allSelectors = scope.buildSelectors()
 
     # Build a list of selectors
-    scope.selectors = ->
+    scope.buildSelectors = ->
       # Generate a selector for each object.
       # NOTE: THESE ARE MEMOIZED to stop new selectors from being created constantly, otherwise function always returns non-identical results
       # This means the $digest cycle can never close and times out
@@ -42,7 +37,7 @@ Darkswarm.directive "filterSelector",  (FilterSelectorsService)->
         if selector = selectors_by_id[id]
           selectors.push selector
         else
-          selector = selectors_by_id[id] = FilterSelectorsService.new
+          selector = selectors_by_id[id] = scope.selectorSet.new
             object: object
           selectors.push selector
       selectors

@@ -1,6 +1,6 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, NavigationCheck, Enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu) ->
-    $scope.Enterprise = Enterprise.enterprise
+  .controller "enterpriseCtrl", ($scope, NavigationCheck, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu) ->
+    $scope.Enterprise = enterprise
     $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
     $scope.navClear = NavigationCheck.clear

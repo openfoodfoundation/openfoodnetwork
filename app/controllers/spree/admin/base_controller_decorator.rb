@@ -58,4 +58,31 @@ Spree::Admin::BaseController.class_eval do
         "Until you set these up, customers will not be able to shop at this hub."
     end
   end
+
+  def html_request?
+    request.format.html?
+  end
+
+  def json_request?
+    request.format.json?
+  end
+
+  def render_as_json(data, options={})
+    ams_prefix = options.delete :ams_prefix
+    if [Array, ActiveRecord::Relation].include? data.class
+      render options.merge(json: data, each_serializer: serializer(ams_prefix))
+    else
+      render options.merge(json: data, serializer: serializer(ams_prefix))
+    end
+  end
+
+  def serializer(ams_prefix)
+    if ams_prefix.nil? || ams_prefix_whitelist.include?(ams_prefix.to_sym)
+      prefix = ams_prefix.andand.classify || ""
+      name = controller_name.classify
+      "Api::Admin::#{prefix}#{name}Serializer".constantize
+    else
+      raise "Suffix '#{ams_prefix}' not found in ams_prefix_whitelist for #{self.class.name}."
+    end
+  end
 end

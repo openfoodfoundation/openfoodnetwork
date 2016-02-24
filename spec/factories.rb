@@ -15,15 +15,17 @@ FactoryGirl.define do
 
       # Incoming Exchanges
       ex1 = create(:exchange, :order_cycle => oc, :incoming => true,
-                   :sender => supplier1, :receiver => oc.coordinator)
+                   :sender => supplier1, :receiver => oc.coordinator,
+                   :receival_instructions => 'instructions 0')
       ex2 = create(:exchange, :order_cycle => oc, :incoming => true,
-                   :sender => supplier2, :receiver => oc.coordinator)
+                   :sender => supplier2, :receiver => oc.coordinator,
+                   :receival_instructions => 'instructions 1')
       ExchangeFee.create!(exchange: ex1,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex1.sender))
       ExchangeFee.create!(exchange: ex2,
                           enterprise_fee: create(:enterprise_fee, enterprise: ex2.sender))
 
-      #Distributors
+      # Distributors
       distributor1 = create(:distributor_enterprise)
       distributor2 = create(:distributor_enterprise)
 
@@ -42,7 +44,7 @@ FactoryGirl.define do
       # Products with images
       [ex1, ex2].each do |exchange|
         product = create(:product, supplier: exchange.sender)
-        image = File.open(File.expand_path('../../app/assets/images/logo.jpg', __FILE__))
+        image = File.open(File.expand_path('../../app/assets/images/logo-white.png', __FILE__))
         Spree::Image.create({:viewable_id => product.master.id, :viewable_type => 'Spree::Variant', :alt => "position 1", :attachment => image, :position => 1})
 
         exchange.variants << product.variants.first
@@ -71,7 +73,7 @@ FactoryGirl.define do
 
     after(:create) do |oc, proxy|
       proxy.suppliers.each do |supplier|
-        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :incoming => true, :pickup_time => 'time', :pickup_instructions => 'instructions')
+        ex = create(:exchange, :order_cycle => oc, :sender => supplier, :receiver => oc.coordinator, :incoming => true, :receival_instructions => 'instructions')
         proxy.variants.each { |v| ex.variants << v }
       end
 
@@ -92,6 +94,8 @@ FactoryGirl.define do
   factory :variant_override, :class => VariantOverride do
     price         77.77
     count_on_hand 11111
+    default_stock 2000
+    resettable  false
   end
 
   factory :enterprise, :class => Enterprise do
@@ -102,7 +106,7 @@ FactoryGirl.define do
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
     email 'enterprise@example.com'
     address { FactoryGirl.create(:address) }
-    confirmed_at { Time.now }
+    confirmed_at { Time.zone.now }
   end
 
   factory :supplier_enterprise, :parent => :enterprise do
@@ -212,8 +216,28 @@ FactoryGirl.define do
   factory :customer, :class => Customer do
     email { Faker::Internet.email }
     enterprise
-    code 'abc123'
+    code { SecureRandom.base64(150) }
     user
+  end
+
+  factory :billable_period do
+    begins_at { Time.zone.now.beginning_of_month }
+    ends_at { Time.zone.now.beginning_of_month + 1.month }
+    sells { 'any' }
+    trial { false }
+    enterprise
+    owner { enterprise.owner }
+    turnover { rand(100000).to_f/100 }
+    account_invoice do
+      AccountInvoice.where(user_id: owner_id, year: begins_at.year, month: begins_at.month).first ||
+      FactoryGirl.create(:account_invoice, user: owner, year: begins_at.year, month: begins_at.month)
+    end
+  end
+
+  factory :account_invoice do
+    user { FactoryGirl.create :user }
+    year { 2000 + rand(100) }
+    month { 1 + rand(12) }
   end
 end
 

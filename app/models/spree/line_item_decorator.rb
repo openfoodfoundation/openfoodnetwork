@@ -1,6 +1,16 @@
+require 'open_food_network/variant_and_line_item_naming'
+
 Spree::LineItem.class_eval do
-  attr_accessible :max_quantity, :unit_value
-  attr_accessible :unit_value, :price, :as => :api
+  include OpenFoodNetwork::VariantAndLineItemNaming
+  has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items', class_name: 'Spree::OptionValue'
+
+  attr_accessible :max_quantity, :final_weight_volume, :price
+  attr_accessible :final_weight_volume, :price, :as => :api
+
+  before_save :calculate_final_weight_volume, if: :quantity_changed?, unless: :final_weight_volume_changed?
+  after_save :update_units
+
+  delegate :unit_description, to: :variant
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -24,6 +34,23 @@ Spree::LineItem.class_eval do
     where('spree_products.supplier_id IN (?)', enterprises)
   }
 
+  scope :with_tax, joins(:adjustments).
+                   where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
+                   select('DISTINCT spree_line_items.*')
+
+  # Line items without a Spree::TaxRate-originated adjustment
+  scope :without_tax, joins("LEFT OUTER JOIN spree_adjustments ON (spree_adjustments.adjustable_id=spree_line_items.id AND spree_adjustments.adjustable_type = 'Spree::LineItem' AND spree_adjustments.originator_type='Spree::TaxRate')").
+                      where('spree_adjustments.id IS NULL')
+
+
+  def has_tax?
+    adjustments.included_tax.any?
+  end
+
+  def included_tax
+    adjustments.included_tax.sum(&:included_tax)
+  end
+
   def price_with_adjustments
     # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
     # so line_item.adjustments returns an empty array
@@ -43,5 +70,28 @@ Spree::LineItem.class_eval do
 
   def display_amount_with_adjustments
     Spree::Money.new(amount_with_adjustments, { :currency => currency })
+  end
+
+  def display_included_tax
+    Spree::Money.new(included_tax, { :currency => currency })
+  end
+
+  def display_name
+    variant.display_name
+  end
+
+  def unit_value
+    return 0 if quantity == 0
+    (final_weight_volume || 0) / quantity
+  end
+
+  private
+
+  def calculate_final_weight_volume
+    if final_weight_volume.present? && quantity_was > 0
+      self.final_weight_volume = final_weight_volume * quantity / quantity_was
+    elsif variant.andand.unit_value.present?
+      self.final_weight_volume = variant.andand.unit_value * quantity
+    end
   end
 end

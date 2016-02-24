@@ -5,6 +5,6 @@ Darkswarm.filter "date_in_words", ->
 Darkswarm.filter "sensible_timeframe", (date_in_wordsFilter)->
   (date) ->
     if moment().add('days', 2) < moment(date)
-      "Orders open"
+      t 'orders_open'
     else
-      "Closing #{date_in_wordsFilter(date)}"
+      t('closing') + date_in_wordsFilter(date)

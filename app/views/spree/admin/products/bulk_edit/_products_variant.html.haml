@@ -4,6 +4,7 @@
     %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last" }
   %td{ 'ng-show' => 'columns.producer.visible' }
   %td{ 'ng-show' => 'columns.sku.visible' }
+    %input{ 'ng-model' => "variant.sku", :name => 'variant_sku', 'ofn-track-variant' => 'sku', :type => 'text' }
   %td{ 'ng-show' => 'columns.name.visible' }
     %input{ 'ng-model' => 'variant.display_name', :name => 'variant_display_name', 'ofn-track-variant' => 'display_name', :type => 'text', placeholder: "{{ product.name }}" }
   %td.unit_value{ 'ng-show' => 'columns.unit.visible' }
@@ -24,6 +25,6 @@
   %td.actions
     %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)" }
   %td.actions
-    %span.icon-warning-sign.with-tip{ 'ng-if' => 'variant.variant_overrides', title: "This variant has {{variant.variant_overrides.length}} override(s)" }
+    %span.icon-warning-sign{ 'ng-if' => 'variant.variant_overrides', 'ofn-with-tip' => "This variant has {{variant.variant_overrides.length}} override(s)" }
   %td.actions
     %a{ 'ng-click' => 'deleteVariant(product,variant)', "ng-class" => '{disabled: product.variants.length < 2}', :class => "delete-variant icon-trash no-text" }

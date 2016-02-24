@@ -2,21 +2,21 @@
   .cta-container.small-12.columns
     .row
       .small-4.columns
-        %label{"active-table-hub-link" => "enterprise", change: "Change shop to:", shop: "Shop now at:"}
+        %label{"active-table-hub-link" => "enterprise", change: "{{'change_shop' | t}}", shop: "{{'shop_at' | t}}"}
       .small-8.columns.right
         %label.right{"bo-if" => "enterprise.pickup || enterprise.delivery"}
-          Delivery options: 
-          %span{"bo-if" => "enterprise.pickup"} 
+          {{'hubs_delivery_options' | t}}:
+          %span{"bo-if" => "enterprise.pickup"}
             %i.ofn-i_038-takeaway
-            Pickup
-          %span{"bo-if" => "enterprise.delivery"} 
+            {{'hubs_pickup' | t}}
+          %span{"bo-if" => "enterprise.delivery"}
             %i.ofn-i_039-delivery
-            Delivery
+            {{'hubs_delivery' | t}}
     .row
       .columns.small-12
-        %a.cta-hub{"bo-href" => "enterprise.path", 
+        %a.cta-hub{"bo-href" => "enterprise.path",
         "ng-class" => "{primary: enterprise.active, secondary: !enterprise.active}",
-        "ofn-empties-cart" => "enterprise"}
+        "ofn-change-hub" => "enterprise"}
           %i.ofn-i_033-open-sign{"bo-if" => "enterprise.active"}
           %i.ofn-i_032-closed-sign{"bo-if" => "!enterprise.active"}
           .hub-name{"bo-text" => "enterprise.name"}

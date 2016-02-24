@@ -1,8 +1,13 @@
 Spree::Api::LineItemsController.class_eval do
-  after_filter :apply_enterprise_fees, :only => :update
+  around_filter :apply_enterprise_fees_with_lock, only: :update
 
-  def apply_enterprise_fees
+  private
+
+  def apply_enterprise_fees_with_lock
     authorize! :read, order
-    order.update_distribution_charge!
+    order.with_lock do
+      yield
+      order.update_distribution_charge!
+    end
   end
 end

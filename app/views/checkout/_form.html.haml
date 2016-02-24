@@ -13,5 +13,5 @@
   = render "checkout/payment", f: f
   %p
     %button.button.primary{type: :submit}
-      Place order now
+      = t :checkout_send
     / {{ checkout.$valid }}

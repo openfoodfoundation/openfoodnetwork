@@ -1,0 +1,7 @@
+input.ng-invalid {
+  border: solid 1px red;
+
+  &.update-pending {
+    border: solid 1px red;
+  }
+}

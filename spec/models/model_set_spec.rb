@@ -6,11 +6,11 @@ describe ModelSet do
       attrs = {collection_attributes: {'1' => {name: 's1'},
                                        '2' => {name: 's2'}}}
 
-      ms = ModelSet.new(Suburb, Suburb.all, attrs)
+      ms = ModelSet.new(EnterpriseRelationshipPermission, EnterpriseRelationshipPermission.all, attrs)
 
-      expect { ms.save }.to change(Suburb, :count).by(2)
+      expect { ms.save }.to change(EnterpriseRelationshipPermission, :count).by(2)
 
-      Suburb.where(name: ['s1', 's2']).count.should == 2
+      EnterpriseRelationshipPermission.where(name: ['s1', 's2']).count.should == 2
     end
 
 

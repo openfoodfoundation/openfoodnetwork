@@ -1,8 +1,8 @@
 %p &nbsp;
 
 %p
-  Cheers,
+  = t :email_signoff
   %br
-  = "#{ Spree::Config[:site_name] } Team"
+    = t :email_signature, sitename: Spree::Config[:site_name]
 
 %p &nbsp;

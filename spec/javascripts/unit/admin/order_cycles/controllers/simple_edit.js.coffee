@@ -3,6 +3,7 @@ describe "AdminSimpleEditOrderCycleCtrl", ->
   scope = {}
   location = {}
   OrderCycle = {}
+  StatusMessage = {}
   Enterprise = {}
   EnterpriseFee = {}
   incoming_exchange = {}
@@ -23,9 +24,9 @@ describe "AdminSimpleEditOrderCycleCtrl", ->
     EnterpriseFee =
       index: jasmine.createSpy()
 
-    module('admin.order_cycles')
+    module('admin.orderCycles')
     inject ($controller) ->
-      ctrl = $controller 'AdminSimpleEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
+      ctrl = $controller 'AdminSimpleEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, StatusMessage: StatusMessage}
 
   describe "initialisation", ->
     enterprise = {id: 123}

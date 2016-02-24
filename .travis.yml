@@ -1,15 +1,58 @@
 language: ruby
+sudo: false
+cache: bundler
 bundler_args: --without development
 rvm:
-  - "1.9.3"
-services: postgresql
-before_install:
+  - "2.1.5"
+
+# Set the timezone for phantomjs with TZ
+# Set the timezone for karma with TIMEZONE
+#
+# The test cases are roughly split according to their test times.
+# It would be better to use https://github.com/ArturT/knapsack.
+env:
+  global:
+    - TZ="Australia/Melbourne"
+    - TIMEZONE="Australia/Melbourne"
+    - CI_NODE_TOTAL=5
+  matrix:
+    - CI_NODE_INDEX=0
+    - CI_NODE_INDEX=1
+    - CI_NODE_INDEX=2
+    - CI_NODE_INDEX=3
+    - CI_NODE_INDEX=4 KARMA="true" GITHUB_DEPLOY="true"
+
 before_script:
   - cp config/database.travis.yml config/database.yml
-  - psql -c 'create database open_food_network_test;' -U postgres
   - cp config/application.yml.example config/application.yml
+  - RAILS_ENV=test bundle exec rake db:create db:schema:load
+  - >
+    if [ "$KARMA" = "true" ]; then
+      npm install karma@0.12.31
+      npm install karma-jasmine@0.1.5
+      npm install karma-phantomjs-launcher@0.1.4
+      npm install karma-coffee-preprocessor@0.2.1
+      npm install -g karma-cli@0.0.4
+    fi
+
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake spec
+  - 'if [ "$KARMA" = "true" ]; then bundle exec rake karma:run; else echo "Skipping karma run"; fi'
+  #- "KNAPSACK_GENERATE_REPORT=true bundle exec rspec spec"
+  - "bundle exec rake knapsack:rspec"
+
+after_success:
+  - >
+    if [ "$GITHUB_DEPLOY" = "true" -a "$TRAVIS_PULL_REQUEST" = "false" -a -n "$TRAVIS_BRANCH" -a -n "$GITHUB_API_SECRET" ]; then
+      description="`git show "$TRAVIS_BRANCH" -s --oneline --no-color`"
+      data="{
+        \"ref\":\"$TRAVIS_BRANCH\",
+        \"description\":\"$description\",
+        \"environment\":\"staging\",
+        \"required_contexts\":[]}"
+      curl -u "$GITHUB_API_SECRET" -d "$data" "https://api.github.com/repos/$TRAVIS_REPO_SLUG/deployments"
+    else
+      echo "Not deploying on this build."
+    fi
+
 notifications:
   email: false

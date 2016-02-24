@@ -25,6 +25,41 @@ class EnterpriseRelationship < ActiveRecord::Base
   scope :by_name, with_enterprises.order('child_enterprises.name, parent_enterprises.name')
 
 
+  # Load an array of the relatives of each enterprise (ie. any enterprise related to it in
+  # either direction). This array is split into distributors and producers, and has the format:
+  # {enterprise_id => {distributors: [id, ...], producers: [id, ...]} }
+  def self.relatives(activated_only=false)
+    relationships = EnterpriseRelationship.includes(:child, :parent)
+    relatives = {}
+
+    Enterprise.is_primary_producer.pluck(:id).each do |enterprise_id|
+      relatives[enterprise_id] ||= { distributors: Set.new, producers: Set.new }
+      relatives[enterprise_id][:producers] << enterprise_id
+    end
+    Enterprise.is_distributor.pluck(:id).each do |enterprise_id|
+      relatives[enterprise_id] ||= { distributors: Set.new, producers: Set.new }
+      relatives[enterprise_id][:distributors] << enterprise_id
+    end
+
+    relationships.each do |r|
+      relatives[r.parent_id] ||= {distributors: Set.new, producers: Set.new}
+      relatives[r.child_id]  ||= {distributors: Set.new, producers: Set.new}
+
+      if !activated_only || r.child.activated?
+        relatives[r.parent_id][:producers]    << r.child_id if r.child.is_primary_producer
+        relatives[r.parent_id][:distributors] << r.child_id if r.child.is_distributor
+      end
+
+      if !activated_only || r.parent.activated?
+        relatives[r.child_id][:producers]    << r.parent_id if r.parent.is_primary_producer
+        relatives[r.child_id][:distributors] << r.parent_id if r.parent.is_distributor
+      end
+    end
+
+    relatives
+  end
+
+
   def permissions_list=(perms)
     perms.andand.each { |name| permissions.build name: name }
   end

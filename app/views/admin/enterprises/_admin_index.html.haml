@@ -1,0 +1,44 @@
+-# For purposes of debugging bulk_update. See Admin/Enterprises#bulk_update.
+- if flash[:action]
+  %p= flash[:action]
+
+= form_for @enterprise_set, url: main_app.bulk_update_admin_enterprises_path, html: {"ng-app" => "admin.enterprises"} do |f|
+  %table#listing_enterprises.index
+    %colgroup
+      %col{style: "width: 25%;"}/
+      %col{style: "width: 15%;"}/
+      %col{style: "width: 5%;"}/
+      - if spree_current_user.admin?
+        %col{style: "width: 12%;"}/
+      - if spree_current_user.admin?
+        %col{style: "width: 18%;"}/
+      %col{style: "width: 25%;"}/
+    %thead
+      %tr{"data-hook" => "enterprises_header"}
+        %th Name
+        %th Role
+        - if spree_current_user.admin?
+          %th Sells
+        %th Visible?
+        - if spree_current_user.admin?
+          %th Owner
+        %th
+    %tbody
+      = f.fields_for :collection do |enterprise_form|
+        - enterprise = enterprise_form.object
+        %tr{class: "enterprise-#{enterprise.id}"}
+          %td= link_to enterprise.name, main_app.edit_admin_enterprise_path(enterprise)
+          %td
+            = enterprise_form.check_box :is_primary_producer
+            Producer
+          - if spree_current_user.admin?
+            %td= enterprise_form.select :sells, Enterprise::SELLS, {}, class: 'select2 fullwidth'
+          %td= enterprise_form.check_box :visible
+          - if spree_current_user.admin?
+            %td= enterprise_form.select :owner_id, enterprise.users.map{ |e| [ e.email, e.id ] }, {}, class: "select2 fullwidth"
+          %td{"data-hook" => "admin_users_index_row_actions"}
+            = render 'actions', enterprise: enterprise
+      - if @enterprises.empty?
+        %tr
+          %td{colspan: "4"}= t(:none)
+  = f.submit 'Update'

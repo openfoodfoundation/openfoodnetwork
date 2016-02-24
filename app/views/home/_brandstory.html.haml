@@ -1,0 +1,26 @@
+#brand-story.pane
+  .row
+    .small-12.medium-8.medium-offset-2.columns.text-center
+      %h2
+        = t :brandstory_headline
+      %p
+        = t :brandstory_intro
+
+      #brand-story-text.hide-show.slideable
+        %p
+          = t :brandstory_part1
+        %p
+          = t :brandstory_part2
+        %p
+          = t :brandstory_part3
+        %p
+          = t :brandstory_part4
+        %p
+          %strong
+            = t :brandstory_part5_strong
+        %p
+          = t :brandstory_part6
+
+      %a.text-vbig{"slide-toggle" => "#brand-story-text", "ng-click" => "toggleBrandStory()"}
+        %i.ofn-i_005-caret-down{"ng-hide" => "brandStoryExpanded"}
+        %i.ofn-i_006-caret-up{  "ng-show" => "brandStoryExpanded"}

@@ -1,3 +1,5 @@
+require 'open_food_network/order_cycle_permissions'
+
 module OpenFoodNetwork
 
   # There are two translator classes on the boundary between Angular and Rails: On the Angular side,
@@ -21,10 +23,12 @@ module OpenFoodNetwork
 
         if exchange_exists?(exchange[:enterprise_id], @order_cycle.coordinator_id, true)
           update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, true,
-                          {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids})
+                          {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
+                           receival_instructions: exchange[:receival_instructions]})
         else
           add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, true,
-                       {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids})
+                       {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
+                        receival_instructions: exchange[:receival_instructions],})
         end
       end
 
@@ -35,12 +39,16 @@ module OpenFoodNetwork
 
         if exchange_exists?(@order_cycle.coordinator_id, exchange[:enterprise_id], false)
           update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], false,
-                          {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
-                           pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
+                          {variant_ids: variant_ids,
+                           enterprise_fee_ids: enterprise_fee_ids,
+                           pickup_time: exchange[:pickup_time],
+                           pickup_instructions: exchange[:pickup_instructions]})
         else
           add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], false,
-                       {variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
-                        pickup_time: exchange[:pickup_time], pickup_instructions: exchange[:pickup_instructions]})
+                       {variant_ids: variant_ids,
+                        enterprise_fee_ids: enterprise_fee_ids,
+                        pickup_time: exchange[:pickup_time],
+                        pickup_instructions: exchange[:pickup_instructions]})
         end
       end
 
@@ -149,7 +157,7 @@ module OpenFoodNetwork
         variants[variant_id.to_i] = value  if permitted.include?(variant_id.to_i)
       end
 
-      variants.select { |k, v| v }.keys.map { |k| k.to_i }.sort
+      variants_to_a variants
     end
 
     def outgoing_exchange_variant_ids(attrs)
@@ -162,10 +170,33 @@ module OpenFoodNetwork
 
       # Only change visibility for variants I have permission to edit
       attrs[:variants].each do |variant_id, value|
-        variants[variant_id.to_i] = value  if permitted.include?(variant_id.to_i)
+        variant_id = variant_id.to_i
+
+        variants = update_outgoing_variants(variants, permitted, variant_id, value)
       end
 
-      variants.select { |k, v| v }.keys.map { |k| k.to_i }.sort
+      variants_to_a variants
+    end
+
+    def update_outgoing_variants(variants, permitted, variant_id, value)
+      if !incoming_variant_ids.include? variant_id
+        # When a variant has been removed from incoming but remains
+        # in outgoing, remove it from outgoing too
+        variants[variant_id] = false
+
+      elsif permitted.include? variant_id
+        variants[variant_id] = value
+      end
+
+      variants
+    end
+
+    def incoming_variant_ids
+      @order_cycle.supplied_variants.map &:id
+    end
+
+    def variants_to_a(variants)
+      variants.select { |k, v| v }.keys.map(&:to_i).sort
     end
   end
 end

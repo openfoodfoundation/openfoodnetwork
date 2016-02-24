@@ -68,7 +68,9 @@ feature %q{
     within "tr#spree_variant_#{v.id}" do
       page.find('a.delete-resource').click
     end
-    page.should_not have_content v.options_text
+
+    page.should_not have_selector "tr#spree_variant_#{v.id}"
+
 
     v.reload
     v.deleted_at.should_not be_nil

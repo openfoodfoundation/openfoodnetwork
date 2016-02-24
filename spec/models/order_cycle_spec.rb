@@ -35,12 +35,14 @@ describe OrderCycle do
     oc_not_yet_open = create(:simple_order_cycle, orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
     oc_already_closed = create(:simple_order_cycle, orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago)
     oc_undated = create(:simple_order_cycle, orders_open_at: nil, orders_close_at: nil)
+    oc_undated_open = create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: nil)
+    oc_undated_close = create(:simple_order_cycle, orders_open_at: nil, orders_close_at: 1.week.from_now)
 
     OrderCycle.active.should == [oc_active]
     OrderCycle.inactive.should match_array [oc_not_yet_open, oc_already_closed]
     OrderCycle.upcoming.should == [oc_not_yet_open]
     OrderCycle.closed.should == [oc_already_closed]
-    OrderCycle.undated.should == [oc_undated]
+    OrderCycle.undated.should == [oc_undated, oc_undated_open, oc_undated_close]
   end
 
   it "finds order cycles accessible by a user" do
@@ -87,17 +89,6 @@ describe OrderCycle do
       p.reload
 
       OrderCycle.distributing_product(p).should == []
-    end
-  end
-
-  describe "#recently_closed" do
-    it "finds the orders closed in the last 30 days sorted in descending order" do
-      create(:simple_order_cycle, orders_close_at: 3.days.from_now)
-      oc1 = create(:simple_order_cycle, orders_close_at: 1.day.ago)
-      oc2 = create(:simple_order_cycle, orders_close_at: 30.days.ago)
-      create(:simple_order_cycle, orders_close_at: 31.days.ago)
-
-      OrderCycle.recently_closed.should == [oc1 , oc2]
     end
   end
 
@@ -202,7 +193,7 @@ describe OrderCycle do
 
       @p0 = create(:simple_product)
       @p1 = create(:simple_product)
-      @p1_v_deleted = create(:variant, product: @p1, deleted_at: Time.now)
+      @p1_v_deleted = create(:variant, product: @p1, deleted_at: Time.zone.now)
       @p2 = create(:simple_product)
       @p2_v = create(:variant, product: @p2)
 
@@ -216,6 +207,14 @@ describe OrderCycle do
 
     it "reports on the variants exchanged" do
       @oc.variants.should match_array [@p0.master, @p1.master, @p2.master, @p2_v]
+    end
+
+    it "returns the correct count of variants" do
+      @oc.variants.count.should == 4
+    end
+
+    it "reports on the variants supplied" do
+      @oc.supplied_variants.should match_array [@p0.master]
     end
 
     it "reports on the variants distributed" do
@@ -359,6 +358,24 @@ describe OrderCycle do
       oc.should_not be_open
       oc.should_not be_closed
     end
+
+    it "reports status when an order cycle is partially dated - opening time only" do
+      oc.update_attributes!(orders_close_at: nil)
+
+      oc.should     be_undated
+      oc.should_not be_upcoming
+      oc.should_not be_open
+      oc.should_not be_closed
+    end
+
+    it "reports status when an order cycle is partially dated - closing time only" do
+      oc.update_attributes!(orders_open_at: nil)
+
+      oc.should     be_undated
+      oc.should_not be_upcoming
+      oc.should_not be_open
+      oc.should_not be_closed
+    end
   end
 
   it "clones itself" do
@@ -420,6 +437,25 @@ describe OrderCycle do
       oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor], orders_open_at: 1.days.ago, orders_close_at: 11.days.from_now)
       oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now)
       OrderCycle.first_closing_for(distributor).should == oc
+    end
+  end
+
+  describe "finding the earliest closing times for each distributor" do
+    let(:time1) { 1.week.from_now }
+    let(:time2) { 2.weeks.from_now }
+    let(:time3) { 3.weeks.from_now }
+    let(:e1) { create(:distributor_enterprise) }
+    let(:e2) { create(:distributor_enterprise) }
+    let!(:oc1) { create(:simple_order_cycle, orders_close_at: time1, distributors: [e1]) }
+    let!(:oc2) { create(:simple_order_cycle, orders_close_at: time2, distributors: [e2]) }
+    let!(:oc3) { create(:simple_order_cycle, orders_close_at: time3, distributors: [e2]) }
+
+    it "returns the closing time, indexed by enterprise id" do
+      OrderCycle.earliest_closing_times[e1.id].should == time1
+    end
+
+    it "returns the earliest closing time" do
+      OrderCycle.earliest_closing_times[e2.id].should == time2
     end
   end
 end

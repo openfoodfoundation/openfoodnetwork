@@ -3,10 +3,18 @@ require 'open_food_network/option_value_namer'
 
 module Spree
   describe Variant do
+    describe "double loading" do
+      # app/models/spree/variant_decorator.rb  may be double-loaded in delayed job environment,
+      # so we need to be able to do so without error.
+      it "succeeds without error" do
+        load "#{Rails.root}/app/models/spree/variant_decorator.rb"
+      end
+    end
+
     describe "scopes" do
       it "finds non-deleted variants" do
         v_not_deleted = create(:variant)
-        v_deleted = create(:variant, deleted_at: Time.now)
+        v_deleted = create(:variant, deleted_at: Time.zone.now)
 
         Spree::Variant.not_deleted.should     include v_not_deleted
         Spree::Variant.not_deleted.should_not include v_deleted
@@ -104,41 +112,36 @@ module Spree
       end
     end
 
-    describe "generating the full name" do
+    describe "indexing variants by id" do
+      let!(:v1) { create(:variant) }
+      let!(:v2) { create(:variant) }
+      let!(:v3) { create(:variant) }
+
+      it "indexes variants by id" do
+        Variant.where(id: [v1, v2, v3]).indexed.should ==
+          {v1.id => v1, v2.id => v2, v3.id => v3}
+      end
+    end
+
+    describe "generating the product and variant name" do
       let(:v) { Variant.new }
+      let(:p) { double(:product, name: 'product') }
+      before { allow(v).to receive(:product) { p } }
 
-      before do
-        v.stub(:display_name) { 'display_name' }
-        v.stub(:unit_to_display) { 'unit_to_display' }
+      context "when full_name starts with the product name" do
+        before { allow(v).to receive(:full_name) { p.name + " - something" } }
+
+        it "does not show the product name twice" do
+          v.product_and_full_name.should == 'product - something'
+        end
       end
 
-      it "returns unit_to_display when display_name is blank" do
-        v.stub(:display_name) { '' }
-        v.full_name.should == 'unit_to_display'
-      end
+      context "when full_name does not start with the product name" do
+        before { allow(v).to receive(:full_name) { "display_name (unit)" } }
 
-      it "returns display_name when it contains unit_to_display" do
-        v.stub(:display_name) { 'DiSpLaY_name' }
-        v.stub(:unit_to_display) { 'name' }
-        v.full_name.should == 'DiSpLaY_name'
-      end
-
-      it "returns unit_to_display when it contains display_name" do
-        v.stub(:display_name) { '_to_' }
-        v.stub(:unit_to_display) { 'unit_TO_display' }
-        v.full_name.should == 'unit_TO_display'
-      end
-
-      it "returns a combination otherwise" do
-        v.stub(:display_name) { 'display_name' }
-        v.stub(:unit_to_display) { 'unit_to_display' }
-        v.full_name.should == 'display_name (unit_to_display)'
-      end
-
-      it "is resilient to regex chars" do
-        v = Variant.new display_name: ")))"
-        v.stub(:unit_to_display) { ")))" }
-        v.full_name.should == ")))"
+        it "prepends the product name to the full name" do
+          v.product_and_full_name.should == 'product - display_name (unit)'
+        end
       end
     end
 
@@ -240,6 +243,44 @@ module Spree
     end
 
     describe "unit value/description" do
+      describe "generating the full name" do
+        let(:v) { Variant.new }
+
+        before do
+          v.stub(:display_name) { 'display_name' }
+          v.stub(:unit_to_display) { 'unit_to_display' }
+        end
+
+        it "returns unit_to_display when display_name is blank" do
+          v.stub(:display_name) { '' }
+          v.full_name.should == 'unit_to_display'
+        end
+
+        it "returns display_name when it contains unit_to_display" do
+          v.stub(:display_name) { 'DiSpLaY_name' }
+          v.stub(:unit_to_display) { 'name' }
+          v.full_name.should == 'DiSpLaY_name'
+        end
+
+        it "returns unit_to_display when it contains display_name" do
+          v.stub(:display_name) { '_to_' }
+          v.stub(:unit_to_display) { 'unit_TO_display' }
+          v.full_name.should == 'unit_TO_display'
+        end
+
+        it "returns a combination otherwise" do
+          v.stub(:display_name) { 'display_name' }
+          v.stub(:unit_to_display) { 'unit_to_display' }
+          v.full_name.should == 'display_name (unit_to_display)'
+        end
+
+        it "is resilient to regex chars" do
+          v = Variant.new display_name: ")))"
+          v.stub(:unit_to_display) { ")))" }
+          v.full_name.should == ")))"
+        end
+      end
+
       describe "getting name for display" do
         it "returns display_name if present" do
           v = create(:variant, display_name: "foo")
@@ -305,23 +346,18 @@ module Spree
         end
       end
 
-      context "when the variant already has a value set (and all required option values exist)" do
-        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-        let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
-
+      context "when the variant already has a value set (and all required option values do not exist)" do
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
 
         it "removes the old option value and assigns the new one" do
           ov_orig = v.option_values.last
-          ov_new  = v0.option_values.last
 
           expect {
             v.update_attributes!(unit_value: 10, unit_description: 'foo')
-          }.to change(Spree::OptionValue, :count).by(0)
+          }.to change(Spree::OptionValue, :count).by(1)
 
           v.option_values.should_not include ov_orig
-          v.option_values.should     include ov_new
         end
       end
 

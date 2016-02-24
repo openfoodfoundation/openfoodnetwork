@@ -1,21 +1,29 @@
+- content_for(:title) do
+  = current_distributor.name
+- content_for(:description) do
+  = current_distributor.description
+- content_for(:image) do
+  = current_distributor.logo.url
+
 = inject_enterprises
 
 %shop.darkswarm
   - content_for :order_cycle_form do
 
-    %div{"ng-controller" => "OrderCycleChangeCtrl"}
+    %div{"ng-controller" => "OrderCycleChangeCtrl", "ng-cloak" => true}
       %closing{"ng-if" => "OrderCycle.selected()"}
-        Next order closing
+        = t :enterprises_next_closing
         %strong {{ OrderCycle.orders_close_at() | date_in_words }}
 
-      %span Ready for
+      %span
+        = t :enterprises_ready_for
 
       / Will this label should be a variable to reflect 'Ready for pickup / delivery' as appropriate
 
       %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
-              "ng-change" => "changeOrderCycle()",
+              "ofn-change-order-cycle" => true,
               "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}",
-              "popover-placement" => "left", "popover" => "Choose when you want your order:", "popover-trigger" => "openTrigger"}
+              "popover-placement" => "left", "popover" => t(:enterprises_choose), "popover-trigger" => "openTrigger"}
 
 
 

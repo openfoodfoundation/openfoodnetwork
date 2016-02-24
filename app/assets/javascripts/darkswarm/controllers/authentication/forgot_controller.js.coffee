@@ -7,6 +7,6 @@ Darkswarm.controller "ForgotCtrl", ($scope, $http, $location, AuthenticationServ
       $http.post("/user/spree_user/password", {spree_user: $scope.spree_user}).success (data)->
         $scope.sent = true
       .error (data) ->
-        $scope.errors = "Email address not found"
+        $scope.errors = t 'email_not_found'
     else
-      $scope.errors = "You must provide an email address"
+      $scope.errors = t 'email_required'

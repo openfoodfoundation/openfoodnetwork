@@ -19,5 +19,5 @@ angular.module('Darkswarm').factory "RegistrationService", (Navigation, $modal, 
       @current_step
 
     close: ->
-      Loading.message = "Taking you back to the home page"
+      Loading.message = t 'going_back_to_home_page'
       Navigation.go "/"

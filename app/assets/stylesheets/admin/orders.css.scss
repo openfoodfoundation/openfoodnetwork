@@ -1,23 +1,32 @@
-.filter_select, .date_filter {
-	margin-bottom: 10px;
+input, div {
+	&.update-pending {
+	  border: solid 1px orange;
+  }
 }
 
-.filter_clear {
-	input {
-		background-color: #DA5354;
+input.show-dirty {
+	&.ng-dirty {
+	  border: solid 1px orange;
+		&.update-error {
+			border: solid 1px #DA5354;
+		}
+  }
+}
+
+span.error {
+	color: #DA5354;
+}
+
+input, div {
+	&.update-error {
+		border: solid 1px #DA5354;
 	}
 }
 
-input.update-pending {
-	border: solid 1px orange;
-}
-
-input.update-error {
-	border: solid 1px red;
-}
-
-input.update-success {
-	border: solid 1px #9fc820;
+input, div {
+	&.update-success {
+		border: solid 1px #9fc820;
+	}
 }
 
 .no-close .ui-dialog-titlebar-close {
@@ -41,5 +50,23 @@ div#group_buy_calculation {
 
 	.row span {
 		text-align: center;
+	}
+}
+
+.input-symbol {
+  position: relative;
+  &.before {
+
+	  span {
+			position: absolute;
+		  transform: translate(0,-50%);
+		  top:50%;
+		  pointer-events:none;
+		  margin-left: 1em;
+		}
+
+		input {
+			text-indent:1em;
+		}
 	}
 }

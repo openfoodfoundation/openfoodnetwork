@@ -1,8 +1,13 @@
-= inject_enterprises 
-.producers.pad-top{"ng-controller" => "EnterprisesCtrl"}
+- content_for(:title) do
+  = t :producers_title
+
+= inject_enterprises
+
+.producers{"ng-controller" => "EnterprisesCtrl", "ng-cloak" => true}
   .row
     .small-12.columns.pad-top
-      %h1 Find local producers
+      %h1
+        = t :producers_headline
 
   = render partial: "shared/components/enterprise_search"
   = render partial: "producers/filters"
@@ -11,7 +16,6 @@
     .small-12.columns
       .active_table
         %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-        "scroll-after-load" => true,
         "ng-repeat" => "producer in filteredEnterprises = (Enterprises.producers | visible | searchEnterprises:query | taxons:activeTaxons)",
         "ng-controller" => "ProducerNodeCtrl",
         "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",

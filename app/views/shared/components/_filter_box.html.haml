@@ -1,5 +1,5 @@
-.row.filter-box.clear-filters.animate-show{"ng-show" => "filtersActive && totalActive() > 0"}
+.row.filter-box.clear-filters.animate-show{"ng-show" => "filtersActive && filterSelectors.totalActive() > 0"}
   .small-12.columns
-    %a.button.secondary.small.expand{"ng-click" => "clearAll()"} 
+    %a.button.secondary.small.expand{"ng-click" => "filterSelectors.clearAll()"}
       %i.ofn-i_009-close
-      Clear all filters
+      = t :components_filters_clearfilters

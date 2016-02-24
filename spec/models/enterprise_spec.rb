@@ -109,6 +109,17 @@ describe Enterprise do
       Spree::Product.where(id: p.id).should be_empty
     end
 
+    it "destroys relationships upon destroy" do
+      e = create(:enterprise)
+      e_other = create(:enterprise)
+      er1 = create(:enterprise_relationship, parent: e, child: e_other)
+      er2 = create(:enterprise_relationship, child: e, parent: e_other)
+
+      e.destroy
+
+      EnterpriseRelationship.where(id: [er1, er2]).should be_empty
+    end
+
     describe "relationships to other enterprises" do
       let(:e) { create(:distributor_enterprise) }
       let(:p) { create(:supplier_enterprise) }
@@ -121,14 +132,18 @@ describe Enterprise do
         e.relatives.should match_array [p, c]
       end
 
+      it "finds relatives_including_self" do
+        expect(e.relatives_including_self).to include e
+      end
+
       it "scopes relatives to visible distributors" do
-        e.should_receive(:relatives).and_return(relatives = [])
+        e.should_receive(:relatives_including_self).and_return(relatives = [])
         relatives.should_receive(:is_distributor).and_return relatives
         e.distributors
       end
 
       it "scopes relatives to visible producers" do
-        e.should_receive(:relatives).and_return(relatives = [])
+        e.should_receive(:relatives_including_self).and_return(relatives = [])
         relatives.should_receive(:is_primary_producer).and_return relatives
         e.suppliers
       end
@@ -173,6 +188,31 @@ describe Enterprise do
       expect{
         e = create(:enterprise, owner: nil)
         }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Owner can't be blank"
+    end
+
+    describe "name uniqueness" do
+      let(:owner) { create(:user, email: 'owner@example.com') }
+      let!(:enterprise) { create(:enterprise, name: 'Enterprise', owner: owner) }
+
+      it "prevents duplicate names for new records" do
+        e = Enterprise.new name: enterprise.name
+        e.should_not be_valid
+        e.errors[:name].first.should ==
+          "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."
+      end
+
+      it "prevents duplicate names for existing records" do
+        e = create(:enterprise, name: 'foo')
+        e.name = enterprise.name
+        e.should_not be_valid
+        e.errors[:name].first.should ==
+          "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."
+      end
+
+      it "does not prohibit the saving of an enterprise with no name clash" do
+        enterprise.email = 'new@email.com'
+        enterprise.should be_valid
+      end
     end
 
     describe "preferred_shopfront_taxon_order" do
@@ -262,9 +302,9 @@ describe Enterprise do
     end
 
     describe "activated" do
-      let!(:inactive_enterprise1) { create(:enterprise, sells: "unspecified", confirmed_at: Time.now) ;}
+      let!(:inactive_enterprise1) { create(:enterprise, sells: "unspecified", confirmed_at: Time.zone.now) ;}
       let!(:inactive_enterprise2) { create(:enterprise, sells: "none", confirmed_at: nil) }
-      let!(:active_enterprise) { create(:enterprise, sells: "none", confirmed_at: Time.now) }
+      let!(:active_enterprise) { create(:enterprise, sells: "none", confirmed_at: Time.zone.now) }
 
       it "finds enterprises that have a sells property other than 'unspecified' and that are confirmed" do
         activated_enterprises = Enterprise.activated
@@ -379,7 +419,7 @@ describe Enterprise do
 
       it "doesn't show distributors of deleted products" do
         d = create(:distributor_enterprise)
-        create(:product, :distributors => [d], :deleted_at => Time.now)
+        create(:product, :distributors => [d], :deleted_at => Time.zone.now)
         Enterprise.active_distributors.should be_empty
       end
 
@@ -697,41 +737,6 @@ describe Enterprise do
       v = p.variants.first
       oc = create(:simple_order_cycle, distributors: [d], variants: [v])
       d.product_distribution_variants.should == []
-    end
-  end
-
-  describe "geo search" do
-    before(:each) do
-      Enterprise.delete_all
-
-      state_id_vic = Spree::State.where(abbr: "Vic").first.id
-      state_id_nsw = Spree::State.where(abbr: "NSW").first.id
-
-      @suburb_in_vic = Suburb.create(name: "Camberwell", postcode: 3124, latitude: -37.824818, longitude: 145.057957, state_id: state_id_vic)
-      @suburb_in_nsw = Suburb.create(name: "Cabramatta", postcode: 2166, latitude: -33.89507, longitude: 150.935889, state_id: state_id_nsw)
-
-      address_vic1 = FactoryGirl.create(:address, state_id: state_id_vic, city: "Hawthorn", zipcode: "3123")
-      address_vic1.update_column(:latitude, -37.842105)
-      address_vic1.update_column(:longitude, 145.045951)
-
-      address_vic2 = FactoryGirl.create(:address, state_id: state_id_vic, city: "Richmond", zipcode: "3121")
-      address_vic2.update_column(:latitude, -37.826869)
-      address_vic2.update_column(:longitude, 145.007098)
-
-      FactoryGirl.create(:distributor_enterprise, address: address_vic1)
-      FactoryGirl.create(:distributor_enterprise, address: address_vic2)
-    end
-
-    it "should find nearby hubs if there are any" do
-      Enterprise.find_near(@suburb_in_vic).count.should eql(2)
-    end
-
-    it "should not have nils in the result" do
-      Enterprise.find_near(@suburb_in_vic).should_not include(nil)
-    end
-
-    it "should not find hubs if not nearby " do
-      Enterprise.find_near(@suburb_in_nsw).count.should eql(0)
     end
   end
 

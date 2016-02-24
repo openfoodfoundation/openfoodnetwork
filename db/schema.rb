@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150527004427) do
+ActiveRecord::Schema.define(:version => 20160212092908) do
+
+  create_table "account_invoices", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "order_id"
+    t.integer  "year",       :null => false
+    t.integer  "month",      :null => false
+    t.datetime "issued_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "account_invoices", ["order_id"], :name => "index_account_invoices_on_order_id"
+  add_index "account_invoices", ["user_id"], :name => "index_account_invoices_on_user_id"
 
   create_table "adjustment_metadata", :force => true do |t|
     t.integer "adjustment_id"
@@ -23,6 +36,22 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
 
   add_index "adjustment_metadata", ["adjustment_id"], :name => "index_adjustment_metadata_on_adjustment_id"
   add_index "adjustment_metadata", ["enterprise_id"], :name => "index_adjustment_metadata_on_enterprise_id"
+
+  create_table "billable_periods", :force => true do |t|
+    t.integer  "enterprise_id"
+    t.integer  "owner_id"
+    t.datetime "begins_at"
+    t.datetime "ends_at"
+    t.string   "sells"
+    t.boolean  "trial",              :default => false
+    t.decimal  "turnover",           :default => 0.0
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "account_invoice_id",                    :null => false
+  end
+
+  add_index "billable_periods", ["account_invoice_id"], :name => "index_billable_periods_on_account_invoice_id"
 
   create_table "carts", :force => true do |t|
     t.integer "user_id"
@@ -158,7 +187,7 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
   create_table "customers", :force => true do |t|
     t.string   "email",         :null => false
     t.integer  "enterprise_id", :null => false
-    t.string   "code",          :null => false
+    t.string   "code"
     t.integer  "user_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
@@ -317,12 +346,15 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
     t.boolean  "producer_profile_only",    :default => false
     t.string   "permalink",                                    :null => false
     t.boolean  "charges_sales_tax",        :default => false,  :null => false
+    t.string   "email_address"
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
   add_index "enterprises", ["confirmation_token"], :name => "index_enterprises_on_confirmation_token", :unique => true
   add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
+  add_index "enterprises", ["name"], :name => "index_enterprises_on_name", :unique => true
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
+  add_index "enterprises", ["permalink"], :name => "index_enterprises_on_permalink", :unique => true
   add_index "enterprises", ["sells"], :name => "index_enterprises_on_sells"
 
   create_table "exchange_fees", :force => true do |t|
@@ -355,6 +387,7 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
     t.boolean  "incoming",              :default => false, :null => false
+    t.string   "receival_instructions"
   end
 
   add_index "exchanges", ["order_cycle_id"], :name => "index_exchanges_on_order_cycle_id"
@@ -395,6 +428,16 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
   add_index "product_distributions", ["distributor_id"], :name => "index_product_distributions_on_distributor_id"
   add_index "product_distributions", ["enterprise_fee_id"], :name => "index_product_distributions_on_enterprise_fee_id"
   add_index "product_distributions", ["product_id"], :name => "index_product_distributions_on_product_id"
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "spree_activators", :force => true do |t|
     t.string   "description"
@@ -551,7 +594,7 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
     t.string   "currency"
     t.decimal  "distribution_fee",     :precision => 10, :scale => 2
     t.string   "shipping_method_name"
-    t.decimal  "unit_value",           :precision => 8,  :scale => 2
+    t.decimal  "final_weight_volume",  :precision => 10, :scale => 2
   end
 
   add_index "spree_line_items", ["order_id"], :name => "index_line_items_on_order_id"
@@ -594,6 +637,13 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "spree_option_values_line_items", :id => false, :force => true do |t|
+    t.integer "line_item_id"
+    t.integer "option_value_id"
+  end
+
+  add_index "spree_option_values_line_items", ["line_item_id"], :name => "index_option_values_line_items_on_line_item_id"
+
   create_table "spree_option_values_variants", :id => false, :force => true do |t|
     t.integer "variant_id"
     t.integer "option_value_id"
@@ -625,8 +675,10 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
     t.string   "last_ip_address"
     t.integer  "order_cycle_id"
     t.integer  "cart_id"
+    t.integer  "customer_id"
   end
 
+  add_index "spree_orders", ["customer_id"], :name => "index_spree_orders_on_customer_id"
   add_index "spree_orders", ["number"], :name => "index_orders_on_number"
 
   create_table "spree_payment_methods", :force => true do |t|
@@ -1083,17 +1135,59 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
     t.integer "state_id"
   end
 
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", :force => true do |t|
+    t.string  "name"
+    t.integer "taggings_count", :default => 0
+  end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
+
   create_table "variant_overrides", :force => true do |t|
     t.integer "variant_id",                                  :null => false
     t.integer "hub_id",                                      :null => false
     t.decimal "price",         :precision => 8, :scale => 2
     t.integer "count_on_hand"
+    t.integer "default_stock"
+    t.boolean "resettable"
+    t.string  "sku"
+    t.boolean "on_demand"
   end
 
   add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"
 
+  create_table "versions", :force => true do |t|
+    t.string   "item_type",  :null => false
+    t.integer  "item_id",    :null => false
+    t.string   "event",      :null => false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
+
+  add_foreign_key "account_invoices", "spree_orders", name: "account_invoices_order_id_fk", column: "order_id"
+  add_foreign_key "account_invoices", "spree_users", name: "account_invoices_user_id_fk", column: "user_id"
+
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
-  add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id"
+  add_foreign_key "adjustment_metadata", "spree_adjustments", name: "adjustment_metadata_adjustment_id_fk", column: "adjustment_id", dependent: :delete
+
+  add_foreign_key "billable_periods", "account_invoices", name: "billable_periods_account_invoice_id_fk"
+  add_foreign_key "billable_periods", "enterprises", name: "bill_items_enterprise_id_fk"
+  add_foreign_key "billable_periods", "spree_users", name: "bill_items_owner_id_fk", column: "owner_id"
 
   add_foreign_key "carts", "spree_users", name: "carts_user_id_fk", column: "user_id"
 
@@ -1188,6 +1282,7 @@ ActiveRecord::Schema.define(:version => 20150527004427) do
   add_foreign_key "spree_option_values_variants", "spree_variants", name: "spree_option_values_variants_variant_id_fk", column: "variant_id"
 
   add_foreign_key "spree_orders", "carts", name: "spree_orders_cart_id_fk"
+  add_foreign_key "spree_orders", "customers", name: "spree_orders_customer_id_fk"
   add_foreign_key "spree_orders", "enterprises", name: "spree_orders_distributor_id_fk", column: "distributor_id"
   add_foreign_key "spree_orders", "order_cycles", name: "spree_orders_order_cycle_id_fk"
   add_foreign_key "spree_orders", "spree_addresses", name: "spree_orders_bill_address_id_fk", column: "bill_address_id"

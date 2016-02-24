@@ -1,3 +1,0 @@
-/ insert_before "code[erb-loud]:contains('button_link_to t(:resend)')"
-- if @order.ready_to_ship?
-  %li= button_link_to t(:ship), fire_admin_order_url(@order, :e => 'ship'), :method => :put, :data => { :confirm => t(:are_you_sure) }

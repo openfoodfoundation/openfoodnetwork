@@ -27,7 +27,9 @@ class Exchange < ActiveRecord::Base
   scope :with_variant, lambda { |variant| joins(:exchange_variants).where('exchange_variants.variant_id = ?', variant) }
   scope :with_any_variant, lambda { |variants| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', variants).select('DISTINCT exchanges.*') }
   scope :with_product, lambda { |product| joins(:exchange_variants).where('exchange_variants.variant_id IN (?)', product.variants_including_master) }
-
+  scope :by_enterprise_name, joins('INNER JOIN enterprises AS sender   ON (sender.id   = exchanges.sender_id)').
+                             joins('INNER JOIN enterprises AS receiver ON (receiver.id = exchanges.receiver_id)').
+                             order("CASE WHEN exchanges.incoming='t' THEN sender.name ELSE receiver.name END")
 
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')

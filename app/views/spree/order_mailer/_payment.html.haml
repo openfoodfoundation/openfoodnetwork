@@ -2,12 +2,13 @@
   %p.callout
     %span{:style => "float:right;"}
       - if @order.paid?
-        PAID
+        = t :email_payment_paid
       - else
-        NOT PAID
-    %strong Payment summary
+        = t :email_payment_not_paid
+    %strong
+      = t :email_payment_summary
   %h4
-    Paying via:
+    = t :email_payment_method
     %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe
   %p
     %em= @order.payments.first.andand.payment_method.andand.description.andand.html_safe

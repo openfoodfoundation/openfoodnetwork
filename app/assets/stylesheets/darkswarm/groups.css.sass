@@ -1,14 +1,20 @@
 @import branding
 @import mixins
+@import typography
 
 // Search page
 #groups
-  background-color: $clr-brick-light
+  background-color: lighten($clr-brick, 56%)
   background-image: url("/assets/groups.svg")
-  background-position: center 15px
+  background-position: center 50px
   background-repeat: no-repeat
-  padding-bottom: 20px
-
+  background-size:  922px 922px
+  @include sidepaddingSm
+  @include panepadding
+  h1, p.text
+    font-weight: 300
+  h1
+    font-size: 350%
   a > .group-name
     &:hover, &:focus, &:active
       text-decoration: underline
@@ -65,7 +71,7 @@
     margin-bottom: -2px
     margin-right: 2px
     text-transform: capitalize
-    @include avenir
+    @include headingFont
     @include border-radius(1em 0.25em 0 0) 
     @include gradient($disabled-light, $disabled-bright)
   @media screen and (min-width: 768px)
@@ -95,11 +101,13 @@
   // Producers tab
   .producers
     background-image: none
+    background-color: initial
     .active_table .active_table_node a.is_distributor, .active_table .active_table_node a.is_distributor i.ofn-i_059-producer
       color: $clr-turquoise
+    padding: 0
   // Hubs tab
   .hubs
     background-image: none
     padding-top: 0
     padding-bottom: 0
-    
+

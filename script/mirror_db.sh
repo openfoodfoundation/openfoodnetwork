@@ -7,7 +7,15 @@ set -e
 if hash zeus 2>/dev/null && [ -e .zeus.sock ]; then
   RAILS_RUN='zeus r'
 else
-  RAILS_RUN='rails runner'
+  RAILS_RUN='bundle exec rails runner'
+fi
+
+if [[ $1 != 'ofn-no' ]]; then
+  DB_USER='openfoodweb'
+  DB_DATABASE='openfoodweb_production'
+else
+  DB_USER='ofn_user'
+  DB_DATABASE='openfoodnetwork'
 fi
 
 
@@ -15,7 +23,7 @@ fi
 echo "Mirroring database..."
 echo "drop database open_food_network_dev" | psql -h localhost -U ofn open_food_network_test
 echo "create database open_food_network_dev" | psql -h localhost -U ofn open_food_network_test
-ssh $1 "pg_dump -h localhost -U openfoodweb openfoodweb_production |gzip" |gunzip |psql -h localhost -U ofn open_food_network_dev
+ssh $1 "pg_dump -h localhost -U $DB_USER $DB_DATABASE |gzip" |gunzip |psql -h localhost -U ofn open_food_network_dev
 
 
 # -- Disable S3

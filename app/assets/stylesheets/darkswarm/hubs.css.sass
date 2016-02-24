@@ -2,8 +2,9 @@
 @import mixins
 
 #hubs
-  background-repeat: repeat
-  background-image: url("/assets/subtle_white_feathers.png")
-  // background: $clr-brick-ultra-light url("/assets/home/shopping-bg.jpg")
-  // @include fullwidthbg
+  background-color: lighten($ofn-grey, 43%)
   @include panepadding
+  @include sidepaddingSm
+
+  .name-matches, .distance-matches
+    margin-top: 4em

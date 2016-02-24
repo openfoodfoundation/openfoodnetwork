@@ -1,0 +1,86 @@
+= admin_inject_enterprise
+= admin_inject_monthly_bill_description
+
+= form_for @enterprise, url: main_app.register_admin_enterprise_path(@enterprise),
+  html: { name: "change_type", id: "change_type", novalidate: true, "ng-app" => "admin.enterprises", "ng-controller"=> 'changeTypeFormCtrl' } do |change_type_form|
+  -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
+  %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own|any)$/", model: 'sells', value: "sells"} }
+
+  .row
+    .options.sixteen.columns.alpha
+      - if @enterprise.is_primary_producer
+        .basic_producer.option.one-third.column.alpha
+          %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+            .top
+              %h3 Producer Profile
+              %p Connect through OFN
+            .bottom ALWAYS FREE
+          %p.description
+            Add your products to Open Food Network, allowing hubs to stock your products in their stores.
+
+        .producer_shop.option.one-third.column
+          %a.full-width.button.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
+            .top
+              %h3 Producer Shop
+              %p Sell your own produce
+            .bottom
+              %monthly-pricing-description{ joiner: "newline" }
+
+          %p.description
+            Sell your products directly to customers through your very own Open Food Network shopfront.
+            %br
+            %br
+            A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
+
+        .full_hub.option.one-third.column.omega
+          %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
+            .top
+              %h3 Producer Hub
+              %p Sell produce from self and others
+            .bottom
+              %monthly-pricing-description{ joiner: "newline" }
+
+          %p.description
+            Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+
+          -# %p.description
+          -#   Test out having your own shopfront with full access to all Shopfront features for 30 days.
+          -#   %br
+          -#   %br
+          -#   At the end of your trial, there is a one-off $200 fee to fully activate your account. Then you will be billed for 2% of your actual transactions, capped at $50 a month (so if you don’t sell anything you don’t pay anything, but you never pay more than $50 a month).
+
+      - else
+        .shop_profile.option.one-third.column.alpha
+          %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+            .top
+              %h3 Profile Only
+              %p Get a listing
+            .bottom ALWAYS FREE
+          %p.description
+            People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
+
+        .full_hub.option.one-third.column
+          %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
+            .top
+              %h3 Hub Shop
+              %p Sell produce from others
+            .bottom
+              %monthly-pricing-description{ joiner: "newline" }
+
+          %p.description
+            Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+
+
+  .row
+    .sixteen.columns.alpha
+      %span.error{ ng: { show: "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" } }
+        Please choose one of the options above.
+      - if @enterprise.sells == 'unspecified' && @enterprise.shop_trial_start_date.nil?
+        %input.button.big{ type: 'submit', value: 'Start 30 Day Trial', ng: { click: "submit(change_type)", show: "sells=='own' || sells=='any'" } }
+        %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)", hide: "sells=='own' || sells=='any'" } }
+      - elsif @enterprise.sells == 'unspecified'
+        %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)" } }
+      - else
+        %input.button.big{ type: 'submit', value: 'Change now', ng: { click: "submit(change_type)" } }
+      %br &nbsp;
+      %hr

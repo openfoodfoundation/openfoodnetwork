@@ -11,7 +11,7 @@ feature "Registration", js: true do
 
       expect(URI.parse(current_url).path).to eq registration_auth_path
 
-      page.has_selector? "dd", text: "Log in"
+      page.has_selector? "dd", text: "Login"
       switch_to_login_tab
 
       # Enter Login details
@@ -45,7 +45,7 @@ feature "Registration", js: true do
       # Choosing a type
       expect(page).to have_content 'Last step to add My Awesome Enterprise!'
       click_link 'producer-panel'
-      click_button 'Continue'
+      click_button 'Create Profile'
 
       # Enterprise should be created
       expect(page).to have_content 'Nice one!'
@@ -102,8 +102,8 @@ feature "Registration", js: true do
     # Link appears to be unresponsive for a while, so keep clicking it until it works
     using_wait_time 0.5 do
       10.times do
-        click_link "Log in"
-        break if page.has_selector? "dd.active", text: "Log in"
+        find("a", text: "Login").click()
+        break if page.has_selector? "dd.active", text: "Login"
       end
     end
   end
@@ -112,7 +112,7 @@ feature "Registration", js: true do
     # Buttons appear to be unresponsive for a while, so keep clicking them until content appears
     using_wait_time 1 do
       3.times do
-        click_button "Log in"
+        click_button "Login"
         break if page.has_selector? "div#loading", text: "Hold on a moment, we're logging you in"
       end
     end

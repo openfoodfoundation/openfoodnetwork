@@ -2,23 +2,19 @@
   %thead
     %tr
       %th{:align => "left"}
-        %h4 Item
+        %h4
+          = t :email_order_summary_item
       %th{:align => "right", :width => "25%"}
-        %h4 Qty
+        %h4
+          = t :email_order_summary_quantity
       %th{:align => "right", :width => "25%"}
-        %h4 Price
+        %h4
+          = t :email_order_summary_price
   %tbody
     - @order.line_items.each do |item|
       %tr
         %td
-          - if item.variant.product.name == item.variant.name_to_display
-            %strong= "#{raw(item.variant.product.name)}"
-          - else
-            %strong
-              %span= "#{raw(item.variant.product.name)}"
-              %span= "- " + "#{raw(item.variant.name_to_display)}"
-          - if item.variant.options_text
-            = "(" + "#{raw(item.variant.options_text)}" + ")"
+          = render 'spree/shared/line_item_name', line_item: item
           %br
           %small
             %em= raw(item.variant.product.supplier.name)
@@ -29,7 +25,7 @@
   %tfoot
     %tr
       %td{:align => "right", :colspan => "2"}
-        Subtotal:
+        = t :email_order_summary_subtotal
       %td{:align => "right"}
         = display_checkout_subtotal(@order)
     - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
@@ -40,7 +36,8 @@
           = adjustment.display_amount
     %tr
       %td{:align => "right", :colspan => "2"}
-        %strong Total:
+        %strong
+          = t :email_order_summary_total
       %td{:align => "right"}
         %strong= @order.display_total
 

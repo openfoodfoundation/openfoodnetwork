@@ -184,6 +184,15 @@ module Admin
       end
 
       context "as owner" do
+        it "allows 'sells' to be changed" do
+          controller.stub spree_current_user: profile_enterprise.owner
+          enterprise_params = { id: profile_enterprise, enterprise: { sells: 'any' } }
+
+          spree_put :update, enterprise_params
+          profile_enterprise.reload
+          expect(profile_enterprise.sells).to eq 'any'
+        end
+
         it "allows owner to be changed" do
           controller.stub spree_current_user: distributor_owner
           update_params = { id: distributor, enterprise: { owner_id: distributor_manager } }
@@ -234,39 +243,51 @@ module Admin
       end
     end
 
-    describe "set_sells" do
+    describe "register" do
       let(:enterprise) { create(:enterprise, sells: 'none') }
 
-      before do
-        controller.stub spree_current_user: distributor_manager
-      end
-
       context "as a normal user" do
-        it "does not allow 'sells' to be set" do
-          spree_post :set_sells, { id: enterprise.id, sells: 'none' }
+        before do
+          controller.stub spree_current_user: distributor_manager
+        end
+
+        it "does not allow access" do
+          spree_post :register, { id: enterprise.id, sells: 'none' }
           expect(response).to redirect_to spree.unauthorized_path
         end
       end
 
       context "as a manager" do
         before do
+          controller.stub spree_current_user: distributor_manager
           enterprise.enterprise_roles.build(user: distributor_manager).save
         end
 
-        context "allows setting 'sells' to 'none'" do
+        it "does not allow access" do
+          spree_post :register, { id: enterprise.id, sells: 'none' }
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+
+      context "as an owner" do
+        before do
+          controller.stub spree_current_user: enterprise.owner
+        end
+
+        context "setting 'sells' to 'none'" do
           it "is allowed" do
-            spree_post :set_sells, { id: enterprise, sells: 'none' }
+            spree_post :register, { id: enterprise, sells: 'none' }
             expect(response).to redirect_to spree.admin_path
             expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
             expect(enterprise.reload.sells).to eq 'none'
           end
+        end
 
-          context "setting producer_profile_only to true" do
-            it "is allowed" do
-              spree_post :set_sells, { id: enterprise, sells: 'none', producer_profile_only: true }
-              expect(response).to redirect_to spree.admin_path
-              expect(enterprise.reload.producer_profile_only).to eq true
-            end
+        context "setting producer_profile_only" do
+          it "is ignored" do
+            spree_post :register, { id: enterprise, sells: 'none', producer_profile_only: true }
+            expect(response).to redirect_to spree.admin_path
+            expect(enterprise.reload.producer_profile_only).to be false
           end
         end
 
@@ -277,68 +298,97 @@ module Admin
           end
 
           context "if the trial has finished" do
-            it "is disallowed" do
+            let(:trial_start) { 30.days.ago.beginning_of_day }
+
+            before do
+              enterprise.update_attribute(:shop_trial_start_date, trial_start)
+            end
+
+            it "is allowed" do
               Timecop.freeze(Time.zone.local(2015, 4, 16, 14, 0, 0)) do
-                enterprise.update_attribute(:shop_trial_start_date, 30.days.ago.beginning_of_day)
-                spree_post :set_sells, { id: enterprise, sells: 'own' }
+                spree_post :register, { id: enterprise, sells: 'own' }
                 expect(response).to redirect_to spree.admin_path
-                trial_expiry = Date.today.strftime("%Y-%m-%d")
-                expect(flash[:error]).to eq "Sorry, but you've already had a trial. Expired on: #{trial_expiry}"
-                expect(enterprise.reload.sells).to eq 'none'
+                expect(enterprise.reload.sells).to eq 'own'
+                expect(enterprise.shop_trial_start_date).to eq trial_start
               end
             end
           end
 
           context "if the trial has not finished" do
+            let(:trial_start) { Date.current.to_time }
+
             before do
-              enterprise.shop_trial_start_date = Date.today.to_time
-              enterprise.save!
+              enterprise.update_attribute(:shop_trial_start_date, trial_start)
             end
 
             it "is allowed, but trial start date is not reset" do
-              spree_post :set_sells, { id: enterprise, sells: 'own' }
+              spree_post :register, { id: enterprise, sells: 'own' }
               expect(response).to redirect_to spree.admin_path
-              trial_expiry = (Date.today + 30.days).strftime("%Y-%m-%d")
-              expect(flash[:notice]).to eq "Welcome back! Your trial expires on: #{trial_expiry}"
               expect(enterprise.reload.sells).to eq 'own'
-              expect(enterprise.reload.shop_trial_start_date).to eq Date.today.to_time
+              expect(enterprise.shop_trial_start_date).to eq trial_start
             end
           end
 
           context "if a trial has not started" do
             it "is allowed" do
-              spree_post :set_sells, { id: enterprise, sells: 'own' }
+              spree_post :register, { id: enterprise, sells: 'own' }
               expect(response).to redirect_to spree.admin_path
               expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
               expect(enterprise.reload.sells).to eq 'own'
-              expect(enterprise.reload.shop_trial_start_date).to be > Time.now-(1.minute)
-            end
-          end
-
-          context "setting producer_profile_only to true" do
-            it "is ignored" do
-              spree_post :set_sells, { id: enterprise, sells: 'own', producer_profile_only: true }
-              expect(response).to redirect_to spree.admin_path
-              expect(enterprise.reload.producer_profile_only).to be false
+              expect(enterprise.reload.shop_trial_start_date).to be > Time.zone.now-(1.minute)
             end
           end
         end
 
         context "setting 'sells' to any" do
-          it "is not allowed" do
-            spree_post :set_sells, { id: enterprise, sells: 'any' }
-            expect(response).to redirect_to spree.admin_path
-            expect(flash[:error]).to eq "Unauthorised"
-            expect(enterprise.reload.sells).to eq 'none'
+          context "if the trial has finished" do
+            let(:trial_start) { 30.days.ago.beginning_of_day }
+
+            before do
+              enterprise.update_attribute(:shop_trial_start_date, trial_start)
+            end
+
+            it "is allowed" do
+              Timecop.freeze(Time.zone.local(2015, 4, 16, 14, 0, 0)) do
+                spree_post :register, { id: enterprise, sells: 'any' }
+                expect(response).to redirect_to spree.admin_path
+                expect(enterprise.reload.sells).to eq 'any'
+                expect(enterprise.shop_trial_start_date).to eq trial_start
+              end
+            end
+          end
+
+          context "if the trial has not finished" do
+            let(:trial_start) { Date.current.to_time }
+
+            before do
+              enterprise.update_attribute(:shop_trial_start_date, trial_start)
+            end
+
+            it "is allowed, but trial start date is not reset" do
+              spree_post :register, { id: enterprise, sells: 'any' }
+              expect(response).to redirect_to spree.admin_path
+              expect(enterprise.reload.sells).to eq 'any'
+              expect(enterprise.shop_trial_start_date).to eq trial_start
+            end
+          end
+
+          context "if a trial has not started" do
+            it "is allowed" do
+              spree_post :register, { id: enterprise, sells: 'any' }
+              expect(response).to redirect_to spree.admin_path
+              expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
+              expect(enterprise.reload.sells).to eq 'any'
+              expect(enterprise.reload.shop_trial_start_date).to be > Time.zone.now-(1.minute)
+            end
           end
         end
 
         context "settiing 'sells' to 'unspecified'" do
           it "is not allowed" do
-            spree_post :set_sells, { id: enterprise, sells: 'unspecified' }
-            expect(response).to redirect_to spree.admin_path
-            expect(flash[:error]).to eq "Unauthorised"
-            expect(enterprise.reload.sells).to eq 'none'
+            spree_post :register, { id: enterprise, sells: 'unspecified' }
+            expect(response).to render_template :welcome
+            expect(flash[:error]).to eq "Please select a package"
           end
         end
       end
@@ -383,6 +433,21 @@ module Admin
           bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, visible: 'false' } } } }
           spree_put :bulk_update, bulk_enterprise_params
           expect(assigns(:enterprise_set).collection).to eq [profile_enterprise1]
+        end
+      end
+
+      context "as the owner of an enterprise" do
+        it "allows 'sells' and 'owner' to be changed" do
+          controller.stub spree_current_user: original_owner
+          bulk_enterprise_params = { enterprise_set: { collection_attributes: { '0' => { id: profile_enterprise1.id, sells: 'any', owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id } } } }
+
+          spree_put :bulk_update, bulk_enterprise_params
+          profile_enterprise1.reload
+          profile_enterprise2.reload
+          expect(profile_enterprise1.sells).to eq 'any'
+          expect(profile_enterprise2.sells).to eq 'any'
+          expect(profile_enterprise1.owner).to eq original_owner
+          expect(profile_enterprise2.owner).to eq original_owner
         end
       end
 
@@ -446,6 +511,75 @@ module Admin
         before { spree_get :for_order_cycle, format: :json, order_cycle_id: 1, coordinator_id: 1 }
         it "initializes permissions with the existing OrderCycle" do
           expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user, "existing OrderCycle")
+        end
+      end
+    end
+
+    describe "for_line_items" do
+      let!(:user) { create(:user) }
+      let!(:enterprise) { create(:enterprise, sells: 'any', owner: user) }
+
+      before do
+        # As a user with permission
+        controller.stub spree_current_user: user
+      end
+
+      it "initializes permissions with the existing OrderCycle" do
+        # expect(controller).to receive(:render_as_json).with([enterprise], {ams_prefix: 'basic', spree_current_user: user})
+        spree_get :for_line_items, format: :json
+      end
+    end
+
+    describe "index" do
+      context "as super admin" do
+        let(:super_admin) { create(:admin_user) }
+        let!(:user) { create_enterprise_user(enterprise_limit: 10) }
+        let!(:enterprise1) { create(:enterprise, sells: 'any', owner: user) }
+        let!(:enterprise2) { create(:enterprise, sells: 'own', owner: user) }
+        let!(:enterprise3) { create(:enterprise, sells: 'any', owner: create_enterprise_user ) }
+
+        before do
+          controller.stub spree_current_user: super_admin
+        end
+
+        context "html" do
+          it "returns all enterprises" do
+            spree_get :index, format: :html
+            expect(assigns(:collection)).to include enterprise1, enterprise2, enterprise3
+          end
+        end
+
+        context "json" do
+          it "returns all enterprises" do
+            spree_get :index, format: :json
+            expect(assigns(:collection)).to include enterprise1, enterprise2, enterprise3
+          end
+        end
+      end
+
+      context "as an enterprise user" do
+        let!(:user) { create_enterprise_user(enterprise_limit: 10) }
+        let!(:enterprise1) { create(:enterprise, sells: 'any', owner: user) }
+        let!(:enterprise2) { create(:enterprise, sells: 'own', owner: user) }
+        let!(:enterprise3) { create(:enterprise, sells: 'any', owner: create_enterprise_user ) }
+
+        before do
+          controller.stub spree_current_user: user
+        end
+
+        context "html" do
+          it "returns an empty @collection" do
+            spree_get :index, format: :html
+            expect(assigns(:collection)).to eq []
+          end
+        end
+
+        context "json" do
+          it "scopes @collection to enterprises editable by the user" do
+            spree_get :index, format: :json
+            expect(assigns(:collection)).to include enterprise1, enterprise2
+            expect(assigns(:collection)).to_not include enterprise3
+          end
         end
       end
     end

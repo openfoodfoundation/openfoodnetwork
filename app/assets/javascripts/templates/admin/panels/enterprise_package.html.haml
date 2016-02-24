@@ -1,0 +1,131 @@
+.row.enterprise_package_panel{ ng: { controller: 'indexPackagePanelCtrl' } }
+  .alpha.eight.columns
+    %div{ ng: { if: "!enterprise.is_primary_producer", switch: "enterprise.sells" } }
+      .info{ ng: { switch: { when: "none" } } }
+        %h3 Hub Profile
+
+        %p
+          %strong COST: ALWAYS FREE
+
+        %p People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
+
+        %p Having a profile, and making connections within your local food system through the Open Food Network will always be free.
+
+      .info{ ng: { switch: { when: "any" } } }
+        %h3 Hub Shop
+
+        %p
+          %strong
+            %monthly-pricing-description{ joiner: "comma" }
+
+        %p Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+
+        %p Hubs can take many forms, whether they be a food co-op, a buying group, a veggie-box program, or a local grocery store.
+
+        %p If you also want to sell your own products, you will need to switch this enterprise to be a producer.
+
+      .info{ ng: { switch: { default: true } } }
+        %h3
+          Please Choose a Package
+          %i.icon-arrow-right
+
+        %p
+          %strong Your enterprise will not be fully activated until a package is selected from the options on the left.
+
+        %p
+          Click on an option to see more detailed information about each package, and hit the red SAVE button when you are done!
+
+
+
+    %div{ ng: { if: "enterprise.is_primary_producer", switch: "enterprise.sells" } }
+      .info{ ng: { switch: { when: "none" } } }
+        %h3 Profile Only
+
+        %p
+          %strong COST: ALWAYS FREE
+
+        %p A profile makes you visible and contactable to others and is a way to share your story.
+
+        %p If you prefer to focus on producing food, and want to leave the work of selling it to someone else, you won't require a shop on the Open Food Network.
+
+        %p Add your products to Open Food Network, allowing hubs to stock your products in their stores.
+
+      .info{ ng: { switch: { when: "own" } } }
+        %h3 Producer Shop
+
+        %p
+          %strong
+            %monthly-pricing-description{ joiner: "comma" }
+
+        %p Sell your products directly to customers through your very own Open Food Network shopfront.
+
+        %p A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, please select 'Producer Hub'.
+
+      .info{ ng: { switch: { when: "any" } } }
+        %h3 Producer Hub
+
+        %p
+          %strong
+            %monthly-pricing-description{ joiner: "comma" }
+
+        %p Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+
+        %p Producer Hubs can take many forms, whether they be a CSA, a veggie-box program, or a food co-op with a rooftop garden.
+
+        %p The Open Food Network aims to support as many hub models as possible, so no matter your situation, we want to provide the tools you need to run your organisation or local food business.
+
+      .info{ ng: { switch: { default: true } } }
+        %h3
+          Please Choose a Package
+          %i.icon-arrow-right
+
+        %p
+          %strong Your producer enterprise will not be fully activated until a package is selected from the options on the left.
+
+        %p
+          Click on an option to see more detailed information about each package, and hit the red SAVE button when you are done!
+
+  .omega.eight.columns{ ng: { switch: "enterprise.is_primary_producer" } }
+    %div{ ng: { switch: { when: "false" } } }
+      %a.button.selector.hub-profile{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
+        .top
+          %h3 Profile Only
+          %p Get a listing
+        .bottom ALWAYS FREE
+      %a.button.selector.hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
+        .top
+          %h3 Hub Shop
+          %p Sell produce from others
+        .bottom
+          %monthly-pricing-description{ joiner: "newline" }
+
+    %div{ ng: { switch: { when: "true" } } }
+      %a.button.selector.producer-profile{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
+        .top
+          %h3 Profile Only
+          %p Get a listing
+        .bottom ALWAYS FREE
+      %a.button.selector.producer-shop{ ng: { click: "enterprise.owned && (enterprise.sells='own')", class: "{selected: enterprise.sells=='own', disabled: !enterprise.owned}" } }
+        .top
+          %h3 Producer Shop
+          %p Sell your own produce
+        .bottom
+          %monthly-pricing-description{ joiner: "newline" }
+
+      %a.button.selector.producer-hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
+        .top
+          %h3 Producer Hub
+          %p Sell produce from self and others
+        .bottom
+          %monthly-pricing-description{ joiner: "newline" }
+
+    %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
+      %span{ ng: {hide: "saved() || saving" } }
+        SAVE
+        %i.icon-save
+      %span{ ng: {show: "saved() && !saving" } }
+        SAVED
+        %i.icon-ok-sign
+      %span{ ng: {show: "saving" } }
+        SAVING
+        %i.icon-refresh

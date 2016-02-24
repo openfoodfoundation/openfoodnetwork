@@ -2,6 +2,7 @@ angular.module("admin.enterprises").factory 'PermalinkChecker', ($q, $http) ->
   new class PermalinkChecker
     deferredRequest: null
     deferredAbort: null
+    MAX_PERMALINK_LENGTH: 255
 
     check: (permalink) =>
       @abort(@deferredAbort) if @deferredRequest && @deferredRequest.promise
@@ -15,9 +16,14 @@ angular.module("admin.enterprises").factory 'PermalinkChecker', ($q, $http) ->
         timeout: deferredAbort.promise
       )
       .success( (data) =>
-        deferredRequest.resolve
-          permalink: data
-          available: "Available"
+        if data.length > @MAX_PERMALINK_LENGTH || !data.match(/^[\w-]+$/)
+          deferredRequest.resolve
+            permalink: permalink
+            available: "Error"
+        else
+          deferredRequest.resolve
+            permalink: data
+            available: "Available"
       ).error (data,status) =>
         if status == 409
           deferredRequest.resolve

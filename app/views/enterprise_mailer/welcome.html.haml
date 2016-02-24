@@ -1,66 +1,22 @@
 %h3
-  = "Welcome, #{@enterprise.contact}!"
+  = "#{t(:email_welcome)}, #{@enterprise.contact}!"
 %p.lead
-  Congratulations,
+  = t :email_confirmed
   %strong
-    %strong= @enterprise.name
-  = "is now part of #{ Spree::Config.site_name }!"
-/ Heading Panel
+    = @enterprise.name
+  = "#{t(:email_registered)} #{ Spree::Config.site_name }!"
+
 %p
-  Please find below all the details for viewing and editing your enterprise on
-  %strong= "#{ Spree::Config.site_name }."
-  We suggest keeping this email and information somewhere safe. Logging in with the account details below will allow complete access to your products and services.
+  = t :email_userguide_html, link: link_to('Open Food Network User Guide', 'http://www.openfoodnetwork.org/platform/user-guide/')
 
--#%p &nbsp;
-
--# %p.callout
--#   %strong
--#     Your enterprise details
--# %table{:width => "100%"}
--#   %tr
--#     %td{:align => "right"}
--#       %strong
--#         Shop URL
--#     %td &nbsp;
--#     %td
--#       %a{:href => "#{ main_app.enterprise_shop_url(@enterprise) }", :target => "_blank"}
--#         = main_app.enterprise_shop_url(@enterprise)
--#   %tr
--#     %td &nbsp;
--#   %tr
--#     %td{:align => "right"}
--#       %strong
--#         Email
--#     %td &nbsp;
--#     %td
--#       %a{:href => "mailto:#{ @enterprise.email }", :target => "_blank"}
--#         = @enterprise.email
-
-%p &nbsp;
 %p
-  Log into
-  %strong= "#{ Spree::Config.site_name } Admin"
-  in order to edit your enterprise details such as website and social media links, or to start adding products to your enterprise!
+  = t :email_admin_html, link: link_to('Admin Panel', spree.admin_url)
 
-%p.callout
-  %strong
-    OFN Admin
-%table{ :width => "100%"}
-  %tr
-    %td{:align => "right"}
-      %strong
-        Admin
-    %td &nbsp;
-    %td
-      %a{:href => "#{ spree.admin_url }", :target => "_blank"}
-        = spree.admin_url
-
-%p &nbsp;
-/ /Heading Panel
 %p
-  We're so pleased to have you as a valued member of
-  %strong= "#{Spree::Config.site_name}!"
-  Don't hestitate to get in touch if you have any questions.
+  = t :email_community_html, link: link_to('Join the community.', 'http://community.openfoodnetwork.org/')
+
+%p
+  = t :email_help
 
 = render 'shared/mailers/signoff'
 

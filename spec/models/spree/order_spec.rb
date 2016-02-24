@@ -54,6 +54,7 @@ describe Spree::Order do
       product_distribution.should_receive(:create_adjustment_for).with(line_item)
       subject.stub(:product_distribution_for) { product_distribution }
 
+
       subject.update_distribution_charge!
     end
 
@@ -329,6 +330,22 @@ describe Spree::Order do
     end
   end
 
+  describe "removing an item from the order" do
+    let(:order) { create(:order) }
+    let(:v1)    { create(:variant) }
+    let(:v2)    { create(:variant) }
+
+    before do
+      order.add_variant v1
+      order.add_variant v2
+    end
+
+    it "removes the variant's line item" do
+      order.remove_variant v1
+      order.line_items(:reload).map(&:variant).should == [v2]
+    end
+  end
+
   describe "emptying the order" do
     it "removes shipping method" do
       subject.shipping_method = create(:shipping_method)
@@ -504,11 +521,79 @@ describe Spree::Order do
     end
   end
 
+  describe "checking if an order is an account invoice" do
+    let(:accounts_distributor)  { create(:distributor_enterprise) }
+    let(:order_account_invoice) { create(:order, distributor: accounts_distributor) }
+    let(:order_general)         { create(:order, distributor: create(:distributor_enterprise)) }
+
+    before do
+      Spree::Config.accounts_distributor_id = accounts_distributor.id
+    end
+
+    it "returns true when the order is distributed by the accounts distributor" do
+      order_account_invoice.should be_account_invoice
+    end
+
+    it "returns false otherwise" do
+      order_general.should_not be_account_invoice
+    end
+  end
+
   describe "sending confirmation emails" do
+    let!(:distributor) { create(:distributor_enterprise) }
+    let!(:order) { create(:order, distributor: distributor) }
+
     it "sends confirmation emails" do
       expect do
-        create(:order).deliver_order_confirmation_email
+        order.deliver_order_confirmation_email
       end.to enqueue_job ConfirmOrderJob
+    end
+
+    it "does not send confirmation emails when distributor is the accounts_distributor" do
+      Spree::Config.set({ accounts_distributor_id: distributor.id })
+
+      expect do
+        order.deliver_order_confirmation_email
+      end.to_not enqueue_job ConfirmOrderJob
+    end
+  end
+
+  describe "associating a customer" do
+    let(:user) { create(:user) }
+    let(:distributor) { create(:distributor_enterprise) }
+
+    context "when a user has been set on the order" do
+      let!(:order) { create(:order, distributor: distributor, user: user) }
+      context "and a customer for order.distributor and order.user.email already exists" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: user.email) }
+        it "associates the order with the existing customer" do
+          order.send(:associate_customer)
+          expect(order.customer).to eq customer
+        end
+      end
+      context "and a customer for order.distributor and order.user.email does not alread exist" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: 'some-other-email@email.com') }
+        it "creates a new customer" do
+          expect{order.send(:associate_customer)}.to change{Customer.count}.by 1
+        end
+      end
+    end
+
+    context "when a user has not been set on the order" do
+      let!(:order) { create(:order, distributor: distributor, user: nil) }
+      context "and a customer for order.distributor and order.email already exists" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: order.email) }
+        it "creates a new customer" do
+          order.send(:associate_customer)
+          expect(order.customer).to eq customer
+        end
+      end
+      context "and a customer for order.distributor and order.email does not alread exist" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: 'some-other-email@email.com') }
+        it "creates a new customer" do
+          expect{order.send(:associate_customer)}.to change{Customer.count}.by 1
+        end
+      end
     end
   end
 end

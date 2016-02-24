@@ -3,23 +3,23 @@
     .order-summary.text-small
       .right
         - if order.paid?
-          PAID
+          = t :order_paid
         - else
-          NOT PAID
+          = t :order_not_paid
       %span
-        Total order
+        = t :order_total
         %strong
           = order.display_total.to_html
     .pad
       .text-big
-        Paying via:
+        = t :order_payment
         %strong=  order.payments.first.andand.payment_method.andand.name.andand.html_safe
       %p.text-small.text-skinny.pre-line
         %em= order.payments.first.andand.payment_method.andand.description.andand.html_safe
 
     .order-summary.text-small
       %strong
-        Billing address
+        = t :order_billing_address
     .pad
       %p.text-small
         = order.bill_address.firstname + " " + order.bill_address.lastname
@@ -35,13 +35,13 @@
         %strong= order.shipping_method.name
       .pad
         .text-big
-          Delivery on
+          = t :order_delivery_time
           %strong #{order.order_cycle.pickup_time_for(order.distributor)}
         %p.text-small.text-skinny.pre-line
           %em= order.shipping_method.description.andand.html_safe || ""
       .order-summary.text-small
         %strong
-          Delivery address
+          = t :order_delivery_address
       .pad
         %p.text-small
           = order.ship_address.firstname + " " + order.ship_address.lastname
@@ -52,7 +52,8 @@
         - if order.special_instructions.present?
           %br
           %p.light.small
-            %strong Your notes:
+            %strong
+              = t :order_special_instructions
             %br
             = order.special_instructions
     - else
@@ -61,29 +62,24 @@
         %strong= order.shipping_method.name
       .pad
         .text-big
-          Ready for collection
+          = t :order_pickup_time
           %strong #{order.order_cycle.pickup_time_for(order.distributor)}
         %p.text-small.text-skinny.pre-line
           %em= order.shipping_method.description.andand.html_safe || ""
-      .order-summary.text-small
-        %strong
-          Collection Address
-      .pad
-        %p.text-small
-          = order.ship_address.full_address
 
         - if order.order_cycle.pickup_instructions_for(order.distributor).present?
           %br
           %p.text-small
             %strong
-              Collection Instructions
+              = t :order_pickup_instructions
             %br
             #{order.order_cycle.pickup_instructions_for(order.distributor)}
 
         - if order.special_instructions.present?
           %br
           %p.light.small
-            %strong Your notes:
+            %strong
+              = t :order_special_instructions
             %br
             = order.special_instructions
 
@@ -114,15 +110,7 @@
                   = link_to image_tag(item.variant.images.first.attachment.url(:mini)), item.variant.product
 
 
-              - if item.variant.product.name == item.variant.name_to_display
-                %h5
-                  %span= item.variant.product.name
-                  %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
-              - else
-                %h5
-                  %span= item.variant.product.name
-                  %span= "- " + item.variant.name_to_display
-                  %span.text-small.text-skinny=  "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty?
+              = render 'spree/shared/line_item_name', line_item: item
 
             %td.text-right.price{"data-hook" => "order_item_price"}
               %span= item.single_display_amount_with_adjustments.to_html
@@ -135,7 +123,7 @@
           %tr#subtotal-row.total
             %td.text-right{colspan: "3"}
               %strong
-                Produce
+                = t :order_produce
             %td.text-right.total
               %span= display_checkout_subtotal(order)
 
@@ -152,7 +140,7 @@
           %tr.total
             %td.text-right{colspan: "3"}
               %h5
-                Total
+                = t :order_total_price
             %td.text-right.total
               %h5#order_total= order.display_total.to_html
 
@@ -160,6 +148,6 @@
           #tax{"data-hook" => "order_details_tax"}
             %tr#tax-row.total
               %td.text-right{colspan: "3"}
-                (includes tax)
+                = t :order_includes_tax
               %td.text-right.total
                 %span= display_checkout_tax_total(order)

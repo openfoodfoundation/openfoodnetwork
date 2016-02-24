@@ -1,0 +1,24 @@
+= csrf_meta_tags
+
+- content_for :page_actions do
+  %li= event_links
+  %li= button_link_to t(:resend), resend_admin_order_url(@order), method: :post, icon: 'icon-email'
+  %li= button_link_to t(:back_to_orders_list), admin_orders_path, icon: 'icon-arrow-left'
+
+= admin_inject_shops 'admin.orders'
+= admin_inject_order_cycles
+
+= render 'spree/admin/shared/order_tabs', current: 'Order Details'
+
+%div{"data-hook" => "admin_order_edit_header"}
+  = render 'spree/shared/error_messages', target: @order
+
+%div{"ng-app" => "admin.orders", "ng-controller" => "ordersCtrl", "ofn-distributor-id" => @order.distributor_id, "ofn-order-cycle-id" => @order.order_cycle_id}
+  = render 'add_product'
+
+  %div{"data-hook" => "admin_order_edit_form"}
+    #order-form-wrapper
+      = render 'form', order: @order
+
+- content_for :head do
+  = javascript_tag 'var expand_variants = true;'

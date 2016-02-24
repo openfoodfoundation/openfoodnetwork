@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[open-food-network.enyml]
+file_filter = config/locales/<lang>.yml
+source_lang = en
+type = YML
+

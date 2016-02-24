@@ -4,60 +4,11 @@ class EnterprisesController < BaseController
   include OrderCyclesHelper
 
   # These prepended filters are in the reverse order of execution
-  prepend_before_filter :load_active_distributors, :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
+  prepend_before_filter :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
   before_filter :clean_permalink, only: :check_permalink
 
   respond_to :js, only: :permalink_checker
 
-  def index
-    @enterprises = Enterprise.all
-  end
-
-  def suppliers
-    @suppliers = Enterprise.is_primary_producer
-  end
-
-  def distributors
-    @distributors = Enterprise.is_distributor
-
-    respond_to do |format|
-      format.js do
-        @distributor_details = Hash[@distributors.map { |d| [d.id, render_to_string(:partial => 'enterprises/distributor_details', :locals => {:distributor => d})] }]
-      end
-      format.html do
-        @distributors
-      end
-    end
-  end
-
-  def show
-    @enterprise = Enterprise.find_by_permalink(params[:id]) || Enterprise.find(params[:id])
-
-    # User can view this page if they've already chosen their distributor, or if this page
-    # is for a supplier, they may use it to select a distributor that sells this supplier's
-    # products.
-    unless current_distributor || @enterprise.is_primary_producer
-      redirect_to spree.root_path and return
-    end
-
-
-    options = {:enterprise_id => params[:id]}
-    options.merge(params.reject { |k,v| k == :id })
-
-    @products = []
-
-    if @enterprise.is_primary_producer
-      @distributors = Enterprise.distributing_any_product_of(@enterprise.supplied_products).by_name.all
-    end
-
-    if current_order_cycle
-      @searcher = Spree::Config.searcher_class.new(options)
-      @products = @searcher.retrieve_products
-
-      order_cycle_products = current_order_cycle.products_distributed_by(current_distributor)
-      @products = @products & order_cycle_products
-    end
-  end
 
   def check_permalink
     return render text: params[:permalink], status: 409 if Enterprise.find_by_permalink params[:permalink]

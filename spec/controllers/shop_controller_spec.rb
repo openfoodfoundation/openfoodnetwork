@@ -162,7 +162,10 @@ describe ShopController do
         end
 
         it "returns price including fees" do
-          Spree::Variant.any_instance.stub(:price_with_fees).and_return 998.00
+          # Price is 19.99
+          OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
+            stub(:indexed_fees_for).and_return 978.01
+
           xhr :get, :products
           response.body.should have_content "998.0"
         end
@@ -174,6 +177,20 @@ describe ShopController do
           response.body.should have_content taxon.name
         end
       end
+    end
+  end
+
+  describe "loading variants" do
+    let(:hub) { create(:distributor_enterprise) }
+    let(:oc) { create(:simple_order_cycle, distributors: [hub], variants: [v1]) }
+    let(:p) { create(:simple_product) }
+    let!(:v1) { create(:variant, product: p, unit_value: 3) }
+    let!(:v2) { create(:variant, product: p, unit_value: 5) }
+
+    it "scopes variants to distribution" do
+      controller.stub(:current_order_cycle) { oc }
+      controller.stub(:current_distributor) { hub }
+      controller.send(:variants_for_shop_by_id).should == {p.id => [v1]}
     end
   end
 end

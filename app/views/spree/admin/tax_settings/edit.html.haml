@@ -1,0 +1,23 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t(:tax_settings)
+
+= form_tag admin_tax_settings_path, :method => :put do
+
+  .field.align-center{ "data-hook" => "products_require_tax_category" }
+    = hidden_field_tag 'preferences[products_require_tax_category]', '0'
+    = check_box_tag 'preferences[products_require_tax_category]', '1',  Spree::Config[:products_require_tax_category]
+    = label_tag nil, t(:products_require_tax_category)
+
+  .field.align-center{"data-hook" => "shipment_vat"}
+    = hidden_field_tag 'preferences[shipment_inc_vat]', '0'
+    = check_box_tag 'preferences[shipment_inc_vat]', '1',  Spree::Config[:shipment_inc_vat]
+    = label_tag nil, t(:shipment_inc_vat)
+
+  .field.align-center{ "data-hook" => "shipping_tax_rate" }
+    = number_field_tag "preferences[shipping_tax_rate]", Spree::Config[:shipping_tax_rate].to_f, in: 0.0..1.0, step: 0.01
+    = label_tag nil, t(:shipping_tax_rate)
+
+  .form-buttons{"data-hook" => "buttons"}
+    = button t(:update), 'icon-refresh'

@@ -27,6 +27,8 @@ describe Spree::OrdersController do
   end
 
   it "redirects home with message if hub is not ready for checkout" do
+    VariantOverride.stub(:indexed).and_return({})
+
     order = subject.current_order(true)
     distributor.stub(:ready_for_checkout?) { false }
     order.stub(distributor: distributor, order_cycle: order_cycle)
@@ -56,21 +58,21 @@ describe Spree::OrdersController do
     end
 
     it "returns HTTP success when successful" do
-      Spree::OrderPopulator.stub(:new).and_return(populator = mock())
+      Spree::OrderPopulator.stub(:new).and_return(populator = double())
       populator.stub(:populate).and_return true
       xhr :post, :populate, use_route: :spree, format: :json
       response.status.should == 200
     end
 
     it "returns failure when unsuccessful" do
-      Spree::OrderPopulator.stub(:new).and_return(populator = mock())
+      Spree::OrderPopulator.stub(:new).and_return(populator = double())
       populator.stub(:populate).and_return false
       xhr :post, :populate, use_route: :spree, format: :json
       response.status.should == 402
     end
 
     it "tells populator to overwrite" do
-      Spree::OrderPopulator.stub(:new).and_return(populator = mock())
+      Spree::OrderPopulator.stub(:new).and_return(populator = double())
       populator.should_receive(:populate).with({}, true)
       xhr :post, :populate, use_route: :spree, format: :json
     end

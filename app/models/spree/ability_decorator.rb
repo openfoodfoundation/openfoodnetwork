@@ -66,15 +66,18 @@ class AbilityDecorator
   def add_enterprise_management_abilities(user)
     # Spree performs authorize! on (:create, nil) when creating a new order from admin, and also (:search, nil)
     # when searching for variants to add to the order
-    can [:create, :search, :bulk_update], nil
+    can [:create, :search], nil
 
     can [:admin, :index], :overview
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
     can [:admin, :index, :create], Enterprise
-    can [:read, :edit, :update, :bulk_update, :set_sells, :resend_confirmation], Enterprise do |enterprise|
+    can [:read, :edit, :update, :bulk_update, :resend_confirmation], Enterprise do |enterprise|
       OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
+    end
+    can [:welcome, :register], Enterprise do |enterprise|
+      enterprise.owner == user
     end
     can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
       user.enterprises.include? enterprise
@@ -87,6 +90,13 @@ class AbilityDecorator
     end
 
     can [:admin, :known_users], :search
+
+    can [:admin, :show], :account
+
+    # For printing own account invoice orders
+    can [:print], Spree::Order do |order|
+      order.user == user
+    end
   end
 
   def add_product_management_abilities(user)
@@ -101,7 +111,9 @@ class AbilityDecorator
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
     end
 
-    can [:admin, :index, :read, :update, :bulk_update], VariantOverride do |vo|
+    can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
+      next false unless vo.hub.present? && vo.variant.andand.product.andand.supplier.present?
+
       hub_auth = OpenFoodNetwork::Permissions.new(user).
         variant_override_hubs.
         include? vo.hub
@@ -120,14 +132,14 @@ class AbilityDecorator
     can [:admin, :index, :read, :create, :edit], Spree::Classification
 
     # Reports page
-    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], :report
+    can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing], :report
   end
 
   def add_order_cycle_management_abilities(user)
     can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
       OrderCycle.accessible_by(user).include? order_cycle
     end
-    can [:bulk_update, :clone, :destroy], OrderCycle do |order_cycle|
+    can [:bulk_update, :clone, :destroy, :notify_producers], OrderCycle do |order_cycle|
       user.enterprises.include? order_cycle.coordinator
     end
     can [:for_order_cycle], Enterprise
@@ -137,15 +149,16 @@ class AbilityDecorator
   def add_order_management_abilities(user)
     # Enterprise User can only access orders that they are a distributor for
     can [:index, :create], Spree::Order
-    can [:read, :update, :fire, :resend], Spree::Order do |order|
+    can [:read, :update, :fire, :resend, :invoice, :print], Spree::Order do |order|
       # We allow editing orders with a nil distributor as this state occurs
       # during the order creation process from the admin backend
-      order.distributor.nil? || user.enterprises.include?(order.distributor)
+      order.distributor.nil? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
     can [:admin, :bulk_management, :managed], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
-    can [:admin, :create], Spree::LineItem
-    can [:destroy], Spree::LineItem do |item|
-      user.admin? || user.enterprises.include?(order.distributor) || user == order.order_cycle.manager
+    can [:admin , :for_line_items], Enterprise
+    can [:admin, :index, :create], Spree::LineItem
+    can [:destroy, :update], Spree::LineItem do |item|
+      user.admin? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
 
     can [:admin, :index, :read, :create, :edit, :update, :fire], Spree::Payment
@@ -158,10 +171,10 @@ class AbilityDecorator
         true
       elsif adjustment.adjustable.instance_of? Spree::Order
         order = adjustment.adjustable
-        user.enterprises.include?(order.distributor) || user == order.order_cycle.manager
+        user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
       elsif adjustment.adjustable.instance_of? Spree::LineItem
         order = adjustment.adjustable.order
-        user.enterprises.include?(order.distributor) || user == order.order_cycle.manager
+        user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
       end
     end
 
@@ -183,7 +196,9 @@ class AbilityDecorator
     end
 
     # Reports page
-    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management], :report
+    can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
+
+    can [:admin, :index, :update], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
   end
 
 

@@ -3,18 +3,16 @@
   .columns.small-12.large-6.product-header
     %h3{"bo-text" => "product.name"}
     %span
-      %em from
-      %span.avenir{"bo-text" => "enterprise.name"}
+      %em {{'products_from' | t}}
+      %span{"bo-text" => "enterprise.name"}
 
     %br
 
     .filter-shopfront.taxon-selectors.inline-block
-      %ul
-        %filter-selector{ objects: "[product] | taxonsOf" }
+      %filter-selector{ objects: "[product] | taxonsOf" }
 
     .filter-shopfront.property-selectors.inline-block
-      %ul
-        %filter-selector{ objects: "[product] | propertiesWithValuesOf" }
+      %filter-selector{ objects: "[product] | propertiesWithValuesOf" }
 
     %div{"ng-if" => "product.description"}
       %hr

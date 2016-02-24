@@ -1,15 +1,21 @@
 #!/bin/bash
 
-set -ex
+set -e
+source "`dirname $0`/includes.sh"
 
-# Add production git remote if required
-PROD_TEST=`git remote | grep -s 'production' || true`
-if [[ "$PROD_TEST" != *production* ]]; then
-    git remote add production ubuntu@ofn-prod:apps/openfoodweb/current
+OFN_COMMIT=$(get_ofn_commit)
+if [ "$OFN_COMMIT" = 'OFN_COMMIT_NOT_FOUND' ]; then
+  OFN_COMMIT=$(git rev-parse $BUILDKITE_COMMIT)
 fi
 
+echo "--- Checking environment variables"
+require_env_vars OFN_COMMIT STAGING_SSH_HOST STAGING_CURRENT_PATH STAGING_SERVICE STAGING_DB_HOST STAGING_DB_USER STAGING_DB PRODUCTION_REMOTE
+
 echo "--- Saving baseline data for staging"
-ssh ofn-staging2 "/home/openfoodweb/apps/openfoodweb/current/script/ci/save_staging_baseline.sh $BUILDKITE_COMMIT"
+VARS="CURRENT_PATH='$STAGING_CURRENT_PATH' SERVICE='$STAGING_SERVICE' DB_HOST='$STAGING_DB_HOST' DB_USER='$STAGING_DB_USER' DB='$STAGING_DB'"
+ssh "$STAGING_SSH_HOST" "$VARS $STAGING_CURRENT_PATH/script/ci/save_staging_baseline.sh $OFN_COMMIT"
 
 echo "--- Pushing to production"
-[[ $(git push production $BUILDKITE_COMMIT:master --force 2>&1) =~ "Done" ]]
+exec 5>&1
+OUTPUT=$(git push "$PRODUCTION_REMOTE" "$OFN_COMMIT":master --force 2>&1 |tee /dev/fd/5)
+[[ $OUTPUT =~ "Done" ]]

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BaseController do
+describe BaseController, :type => :controller do
   let(:oc)    { mock_model(OrderCycle) }
   let(:hub)   { mock_model(Enterprise, ready_for_checkout?: true) }
   let(:order) { mock_model(Spree::Order, distributor: hub) }
@@ -23,10 +23,5 @@ describe BaseController do
     session[:expired_order_cycle_id].should == oc.id
     response.should redirect_to root_url
     flash[:info].should == "The order cycle you've selected has just closed. Please try again!"
-  end
-
-  it "loads active_distributors" do
-    Enterprise.stub(:distributors_with_active_order_cycles) { 'active distributors' }
-    controller.load_active_distributors.should == 'active distributors'
   end
 end

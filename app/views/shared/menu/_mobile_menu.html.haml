@@ -2,7 +2,13 @@
   %section.left
     %a.left-off-canvas-toggle.menu-icon
       %span
-  %section.right
+
+  %section.left
+    .ofn-logo
+      %a{href: root_path}
+        %img{src: ContentConfig.logo_mobile.url, srcset: ContentConfig.logo_mobile_svg.url, width: "75", height: "26"}
+
+  %section.right{"ng-cloak" => true}
     .cart
       = render partial: "shared/menu/cart"
     %a{href: main_app.shop_path}
@@ -11,36 +17,39 @@
 %aside.left-off-canvas-menu.show-for-medium-down
   %ul.off-canvas-list
     %li.ofn-logo
-      %a{href: root_path} 
-        %img{src: "/assets/open-food-network-beta.png", srcset: "/assets/open-food-network-beta.svg", width: "110", height: "26"}
-    
-    - if current_page? root_path
-      %li.li-menu
+      %a{href: root_path}
+        %img{src: ContentConfig.logo_mobile.url, srcset: ContentConfig.logo_mobile_svg.url, width: "75", height: "26"}
+    %li.li-menu
+      - if current_page? main_app.shops_path
         %a{"ofn-scroll-to" => "hubs"}
-          %span.nav-primary 
-            %i.ofn-i_040-hub
-            Hubs
-    - else
-      %li.li-menu
-        %a{href: root_path + "#/#hubs"}
-          %span.nav-primary 
-            %i.ofn-i_040-hub
-            Hubs
+          %span.nav-primary
+            %i.ofn-i_019-map-pin
+            = t 'label_shops'
+      - else
+        %a{href: main_app.shops_path}
+          %span.nav-primary
+            %i.ofn-i_019-map-pin
+            = t 'label_shops'
     %li.li-menu
       %a{href: main_app.map_path}
-        %span.nav-primary 
+        %span.nav-primary
           %i.ofn-i_037-map
-          Map
+          = t 'label_map'
     %li.li-menu
       %a{href: main_app.producers_path}
-        %span.nav-primary 
+        %span.nav-primary
           %i.ofn-i_036-producers
-          Producers
+          = t 'label_producers'
     %li.li-menu
       %a{href: main_app.groups_path}
-        %span.nav-primary 
+        %span.nav-primary
           %i.ofn-i_035-groups
-          Groups
+          = t 'label_groups'
+    %li.li-menu
+      %a{href: ContentConfig.footer_about_url}
+        %span.nav-primary
+          %i.ofn-i_013-help
+          = t 'label_about'
 
     %li
     - if spree_current_user.nil?

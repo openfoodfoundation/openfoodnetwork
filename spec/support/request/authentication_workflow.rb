@@ -70,7 +70,7 @@ module AuthenticationWorkflow
     visit spree.login_path
     fill_in 'email', :with => 'someone@ofn.org'
     fill_in 'password', :with => 'passw0rd'
-    click_button 'Log in'
+    click_button 'Login'
   end
 end
 

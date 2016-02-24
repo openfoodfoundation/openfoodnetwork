@@ -1,4 +1,4 @@
-angular.module('admin.order_cycles').factory('EnterpriseFee', ($resource) ->
+angular.module('admin.orderCycles').factory('EnterpriseFee', ($resource) ->
   EnterpriseFee = $resource('/admin/enterprise_fees/for_order_cycle/:enterprise_fee_id.json', {},  {
     'index':
       method: 'GET'

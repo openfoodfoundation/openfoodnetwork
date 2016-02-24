@@ -39,7 +39,7 @@ describe 'OrderCycle controllers', ->
         forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
       ocInstance = {}
 
-      module('admin.order_cycles')
+      module('admin.orderCycles')
       inject ($controller) ->
         ctrl = $controller 'AdminCreateOrderCycleCtrl', {$scope: scope, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee, ocInstance: ocInstance}
 
@@ -156,9 +156,8 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle create', ->
-      eventMock = { preventDefault: -> }
-      scope.submit(eventMock)
-      expect(OrderCycle.create).toHaveBeenCalled()
+      scope.submit('/admin/order_cycles')
+      expect(OrderCycle.create).toHaveBeenCalledWith('/admin/order_cycles')
 
   describe 'AdminEditOrderCycleCtrl', ->
     ctrl = null
@@ -202,7 +201,7 @@ describe 'OrderCycle controllers', ->
         index: jasmine.createSpy('index').andReturn('enterprise fees list')
         forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
 
-      module('admin.order_cycles')
+      module('admin.orderCycles')
       inject ($controller) ->
         ctrl = $controller 'AdminEditOrderCycleCtrl', {$scope: scope, $location: location, OrderCycle: OrderCycle, Enterprise: Enterprise, EnterpriseFee: EnterpriseFee}
 
@@ -319,9 +318,8 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle update', ->
-      eventMock = { preventDefault: -> }
-      scope.submit(eventMock)
-      expect(OrderCycle.update).toHaveBeenCalled()
+      scope.submit('/admin/order_cycles')
+      expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles')
 
 
 describe 'OrderCycle services', ->
@@ -330,29 +328,39 @@ describe 'OrderCycle services', ->
     Enterprise = null
 
     beforeEach ->
-      module 'admin.order_cycles'
+      module 'admin.orderCycles'
       inject ($injector, _$httpBackend_)->
         Enterprise = $injector.get('Enterprise')
         $httpBackend = _$httpBackend_
         $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json?').respond [
-          {id: 1, name: 'One', supplied_products: [1, 2]}
+          {id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true}
           {id: 2, name: 'Two', supplied_products: [3, 4]}
-          {id: 3, name: 'Three', supplied_products: [5, 6]}
+          {id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'}
           ]
 
     it 'loads enterprises as a hash', ->
       enterprises = Enterprise.index()
       $httpBackend.flush()
       expect(enterprises).toEqual
-        1: new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2]})
+        1: new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true})
         2: new Enterprise.Enterprise({id: 2, name: 'Two', supplied_products: [3, 4]})
-        3: new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6]})
+        3: new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'})
 
     it 'reports its loadedness', ->
       expect(Enterprise.loaded).toBe(false)
       Enterprise.index()
       $httpBackend.flush()
       expect(Enterprise.loaded).toBe(true)
+
+    it 'loads producers as an array', ->
+      Enterprise.index()
+      $httpBackend.flush()
+      expect(Enterprise.producer_enterprises).toEqual [new Enterprise.Enterprise({id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true})]
+
+    it 'loads hubs as an array', ->
+      Enterprise.index()
+      $httpBackend.flush()
+      expect(Enterprise.hub_enterprises).toEqual [new Enterprise.Enterprise({id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'})]
 
     it 'collates all supplied products', ->
       enterprises = Enterprise.index()
@@ -396,7 +404,7 @@ describe 'OrderCycle services', ->
     EnterpriseFee = null
 
     beforeEach ->
-      module 'admin.order_cycles'
+      module 'admin.orderCycles'
       inject ($injector, _$httpBackend_)->
         EnterpriseFee = $injector.get('EnterpriseFee')
         $httpBackend = _$httpBackend_
@@ -438,7 +446,7 @@ describe 'OrderCycle services', ->
     beforeEach ->
       $window = {navigator: {userAgent: 'foo'}}
 
-      module 'admin.order_cycles', ($provide)->
+      module 'admin.orderCycles', ($provide)->
         $provide.value('$window', $window)
         null
 
@@ -462,11 +470,48 @@ describe 'OrderCycle services', ->
           exchanges: []
 
     it 'initialises order cycle', ->
-      expect(OrderCycle.order_cycle).toEqual {}
+      expect(OrderCycle.order_cycle).toEqual {incoming_exchanges: [], outgoing_exchanges: []}
 
     it 'counts selected variants in an exchange', ->
       result = OrderCycle.exchangeSelectedVariants({variants: {1: true, 2: false, 3: true}})
       expect(result).toEqual(2)
+
+    describe "fetching exchange ids", ->
+      it "gets enterprise ids as ints", ->
+        OrderCycle.order_cycle.incoming_exchanges = [
+          {enterprise_id: 1}
+          {enterprise_id: '2'}
+        ]
+        OrderCycle.order_cycle.outgoing_exchanges = [
+          {enterprise_id: 3}
+          {enterprise_id: '4'}
+        ]
+        expect(OrderCycle.exchangeIds('incoming')).toEqual [1, 2]
+
+    describe "checking for novel enterprises", ->
+      e1 = {id: 1}
+      e2 = {id: 2}
+
+      beforeEach ->
+        OrderCycle.order_cycle.incoming_exchanges = [{enterprise_id: 1}]
+        OrderCycle.order_cycle.outgoing_exchanges = [{enterprise_id: 1}]
+
+      it "detects novel suppliers", ->
+        expect(OrderCycle.novelSupplier(e1)).toBe false
+        expect(OrderCycle.novelSupplier(e2)).toBe true
+
+      it "detects novel suppliers with enterprise as string id", ->
+        expect(OrderCycle.novelSupplier('1')).toBe false
+        expect(OrderCycle.novelSupplier('2')).toBe true
+
+      it "detects novel distributors", ->
+        expect(OrderCycle.novelDistributor(e1)).toBe false
+        expect(OrderCycle.novelDistributor(e2)).toBe true
+
+      it "detects novel distributors with enterprise as string id", ->
+        expect(OrderCycle.novelDistributor('1')).toBe false
+        expect(OrderCycle.novelDistributor('2')).toBe true
+
 
     describe 'fetching the direction for an exchange', ->
       it 'returns "incoming" for incoming exchanges', ->
@@ -760,16 +805,19 @@ describe 'OrderCycle services', ->
         expect(OrderCycle.order_cycle.exchanges).toBeUndefined()
 
     describe 'creating an order cycle', ->
-      it 'redirects to the order cycles page on success', ->
+      beforeEach ->
+        spyOn(OrderCycle, 'confirmNoDistributors').andReturn true
+
+      it 'redirects to the destination page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
           order_cycle: 'this is the submit data'
           }).respond {success: true}
 
-        OrderCycle.create()
+        OrderCycle.create('/destination/page')
         $httpBackend.flush()
-        expect($window.location).toEqual('/admin/order_cycles')
+        expect($window.location).toEqual('/destination/page')
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
@@ -778,30 +826,33 @@ describe 'OrderCycle services', ->
           order_cycle: 'this is the submit data'
           }).respond {success: false}
 
-        OrderCycle.create()
+        OrderCycle.create('/destination/page')
         $httpBackend.flush()
         expect($window.location).toEqual(undefined)
 
     describe 'updating an order cycle', ->
-      it 'redirects to the order cycles page on success', ->
+      beforeEach ->
+        spyOn(OrderCycle, 'confirmNoDistributors').andReturn true
+
+      it 'redirects to the destination page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
-        $httpBackend.expectPUT('/admin/order_cycles.json', {
+        $httpBackend.expectPUT('/admin/order_cycles.json?reloading=1', {
           order_cycle: 'this is the submit data'
           }).respond {success: true}
 
-        OrderCycle.update()
+        OrderCycle.update('/destination/page')
         $httpBackend.flush()
-        expect($window.location).toEqual('/admin/order_cycles')
+        expect($window.location).toEqual('/destination/page')
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
-        $httpBackend.expectPUT('/admin/order_cycles.json', {
+        $httpBackend.expectPUT('/admin/order_cycles.json?reloading=1', {
           order_cycle: 'this is the submit data'
           }).respond {success: false}
 
-        OrderCycle.update()
+        OrderCycle.update('/destination/page')
         $httpBackend.flush()
         expect($window.location).toEqual(undefined)
 
@@ -898,3 +949,30 @@ describe 'OrderCycle services', ->
           expect(order_cycle.outgoing_exchanges[0].enterprise_fees).toEqual [{id: 3}, {id: 4}]
           expect(order_cycle.incoming_exchanges[0].enterprise_fee_ids).toBeUndefined()
           expect(order_cycle.outgoing_exchanges[0].enterprise_fee_ids).toBeUndefined()
+
+    describe "confirming when there are no distributors", ->
+      order_cycle_with_exchanges = order_cycle_without_exchanges = null
+
+      beforeEach ->
+        order_cycle_with_exchanges =
+          outgoing_exchanges: [{}]
+        order_cycle_without_exchanges =
+          outgoing_exchanges: []
+
+      it "returns true when there are distributors", ->
+        spyOn window, 'confirm'
+        OrderCycle.order_cycle = order_cycle_with_exchanges
+        expect(OrderCycle.confirmNoDistributors()).toBe true
+        expect(window.confirm).not.toHaveBeenCalled()
+
+      it "returns true when there are no distributors but the user confirms", ->
+        spyOn(window, 'confirm').andReturn true
+        OrderCycle.order_cycle = order_cycle_without_exchanges
+        expect(OrderCycle.confirmNoDistributors()).toBe true
+        expect(window.confirm).toHaveBeenCalled()
+
+      it "returns false when there are no distributors and the user does not confirm", ->
+        spyOn(window, 'confirm').andReturn false
+        OrderCycle.order_cycle = order_cycle_without_exchanges
+        expect(OrderCycle.confirmNoDistributors()).toBe false
+        expect(window.confirm).toHaveBeenCalled()
