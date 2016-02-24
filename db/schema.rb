@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151128185900) do
+ActiveRecord::Schema.define(:version => 20160212092908) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -346,6 +346,7 @@ ActiveRecord::Schema.define(:version => 20151128185900) do
     t.boolean  "producer_profile_only",    :default => false
     t.string   "permalink",                                    :null => false
     t.boolean  "charges_sales_tax",        :default => false,  :null => false
+    t.string   "email_address"
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"

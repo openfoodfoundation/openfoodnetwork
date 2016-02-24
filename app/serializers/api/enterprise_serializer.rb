@@ -41,7 +41,7 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :name, :id, :description, :latitude, :longitude,
     :long_description, :website, :instagram, :linkedin, :twitter,
     :facebook, :is_primary_producer, :is_distributor, :phone, :visible,
-    :email, :hash, :logo, :promo_image, :path, :pickup, :delivery,
+    :email_address, :hash, :logo, :promo_image, :path, :pickup, :delivery,
     :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
 
   attributes :taxons, :supplied_taxons
@@ -67,8 +67,8 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     services ? services[:delivery] : false
   end
 
-  def email
-    object.email.to_s.reverse
+  def email_address
+    object.email_address.to_s.reverse
   end
 
   def hash

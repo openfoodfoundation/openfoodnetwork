@@ -50,13 +50,9 @@
     = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
 .row
   .alpha.three.columns
-    = f.label :email
+    = f.label :email_address
   .omega.nine.columns
-    = f.text_field :email, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email" }
-    .alert-box
-      %i.icon-info-sign
-      If we don't recognise this email address we'll send you a confirmation email to make sure it belongs to you. You'll need to use the link in the email we send to fully activate your new enterprise.
-      %a.close{ href: "" } ×
+    = f.text_field :email_address, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email_address" }
 .row
   .alpha.three.columns
     = f.label :phone

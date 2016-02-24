@@ -75,6 +75,7 @@ class Enterprise < ActiveRecord::Base
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
+  before_validation :ensure_email_set
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
@@ -393,6 +394,10 @@ class Enterprise < ActiveRecord::Base
 
   def ensure_owner_is_manager
     users << owner unless users.include?(owner) || owner.admin?
+  end
+
+  def ensure_email_set
+    self.email = owner.email if email.blank?
   end
 
   def enforce_ownership_limit
