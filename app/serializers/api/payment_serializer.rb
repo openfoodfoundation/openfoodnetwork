@@ -9,6 +9,6 @@ class Api::PaymentSerializer < ActiveModel::Serializer
   end
 
   def updated_at
-    object.updated_at.to_formatted_s(:long_ordinal)
+    I18n.l(object.updated_at, format: :long)
   end
 end

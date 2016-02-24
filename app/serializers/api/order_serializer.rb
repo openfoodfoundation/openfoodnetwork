@@ -4,7 +4,7 @@ class Api::OrderSerializer < ActiveModel::Serializer
   has_many :payments, serializer: Api::PaymentSerializer
 
   def completed_at
-    object.completed_at.blank? ? "" : object.completed_at.to_formatted_s(:long_ordinal)
+    object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: :long) #.to_formatted_s(:long_ordinal)
   end
 
   def total
