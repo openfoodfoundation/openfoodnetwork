@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature %q{
   As an Administrator
-  With products I can add to order cycles
+  With products I can add to my hub's inventory
   I want to override the stock level and price of those products
   Without affecting other hubs that share the same products
 }, js: true do
@@ -11,20 +11,20 @@ feature %q{
 
   let!(:hub) { create(:distributor_enterprise) }
   let!(:hub2) { create(:distributor_enterprise) }
-  let!(:hub3) { create(:distributor_enterprise) }
   let!(:producer) { create(:supplier_enterprise) }
-  let!(:er1) { create(:enterprise_relationship, parent: hub, child: producer,
-                      permissions_list: [:add_to_order_cycle]) }
 
   context "as an enterprise user" do
-    let(:user) { create_enterprise_user enterprises: [hub2, producer] }
+    let(:user) { create_enterprise_user enterprises: [hub, producer] }
     before { quick_login_as user }
 
     describe "selecting a hub" do
-      it "displays a list of hub choices" do
+      let!(:er1) { create(:enterprise_relationship, parent: hub2, child: producer,
+                          permissions_list: [:add_to_order_cycle]) } # This er should not confer ability to create VOs for hub2
+
+      it "displays a list of hub choices (ie. only those managed by the user)" do
         visit '/admin/inventory'
 
-        page.should have_select2 'hub_id', options: ['', hub.name, hub2.name]
+        page.should have_select2 'hub_id', options: ['', hub.name]
       end
     end
 
@@ -206,7 +206,7 @@ feature %q{
 
         context "with overrides" do
           let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, resettable: true) }
-          let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub3, price: 1, count_on_hand: 2) }
+          let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2) }
           let!(:product2) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
           let!(:variant2) { create(:variant, product: product2, unit_value: 8, price: 1.00, on_hand: 12) }
           let!(:inventory_item2) { create(:inventory_item, enterprise: hub, variant: variant2) }

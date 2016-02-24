@@ -137,22 +137,16 @@ module OpenFoodNetwork
       end
 
       describe "hubs connected to the user by relationships only" do
-        # producer_managed can add hub to order cycle
-        # hub can create variant overrides for producer
-        # we manage producer_managed
-        # therefore, we should be able to create variant overrides for hub on producer's products
-
         let!(:producer_managed) { create(:supplier_enterprise) }
         let!(:er_oc) { create(:enterprise_relationship, parent: hub, child: producer_managed,
-                              permissions_list: [:add_to_order_cycle]) }
+                              permissions_list: [:add_to_order_cycle, :create_variant_overrides]) }
 
         before do
           permissions.stub(:managed_enterprises) { Enterprise.where(id: producer_managed.id) }
         end
 
-        it "allows the hub to create variant overrides for the producer" do
-          permissions.variant_override_enterprises_per_hub.should ==
-            {hub.id => [producer.id, producer_managed.id]}
+        it "does not allow the user to create variant overrides for the hub" do
+          permissions.variant_override_enterprises_per_hub.should == {}
         end
       end
 

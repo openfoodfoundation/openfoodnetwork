@@ -26,7 +26,7 @@ module OpenFoodNetwork
     end
 
     def variant_override_hubs
-      managed_and_related_enterprises_granting(:add_to_order_cycle).is_hub
+      managed_enterprises.is_distributor
     end
 
     def variant_override_producers
@@ -38,7 +38,7 @@ module OpenFoodNetwork
     # override variants
     # {hub1_id => [producer1_id, producer2_id, ...], ...}
     def variant_override_enterprises_per_hub
-      hubs = managed_and_related_enterprises_granting(:add_to_order_cycle).is_distributor
+      hubs = variant_override_hubs
 
       # Permissions granted by create_variant_overrides relationship from producer to hub
       permissions = Hash[
