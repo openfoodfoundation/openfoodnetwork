@@ -1,4 +1,5 @@
 class ProducerProperty < ActiveRecord::Base
+  belongs_to :producer, class_name: 'Enterprise'
   belongs_to :property, class_name: 'Spree::Property'
 
   default_scope order("#{self.table_name}.position")

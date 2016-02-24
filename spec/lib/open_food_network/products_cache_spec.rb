@@ -118,6 +118,48 @@ module OpenFoodNetwork
     end
 
 
+    describe "when a producer property is changed" do
+      let(:s) { create(:supplier_enterprise) }
+      let(:pp) { s.producer_properties.last }
+      let(:product) { create(:simple_product, supplier: s) }
+      let(:v1) { create(:variant, product: product) }
+      let(:v2) { create(:variant, product: product) }
+      let(:v_deleted) { create(:variant, product: product, deleted_at: Time.now) }
+      let(:d1) { create(:distributor_enterprise) }
+      let(:d2) { create(:distributor_enterprise) }
+      let(:d3) { create(:distributor_enterprise) }
+      let(:oc) { create(:open_order_cycle) }
+      let!(:ex1) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1, variants: [v1]) }
+      let!(:ex2) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2, variants: [v1, v2]) }
+      let!(:ex3) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d3, variants: [product.master, v_deleted]) }
+
+      before do
+        s.set_producer_property :organic, 'NASAA 12345'
+      end
+
+      it "refreshes the distributions the supplied variants appear in" do
+        expect(ProductsCache).to receive(:refresh_cache).with(d1, oc).once
+        expect(ProductsCache).to receive(:refresh_cache).with(d2, oc).once
+        ProductsCache.producer_property_changed pp
+      end
+
+      it "doesn't respond to master or deleted variants" do
+        expect(ProductsCache).to receive(:refresh_cache).with(d3, oc).never
+        ProductsCache.producer_property_changed pp
+      end
+    end
+
+
+    describe "when a producer property is destroyed" do
+      let(:producer_property) { double(:producer_property) }
+
+      it "triggers the same update as a change to the producer property" do
+        expect(ProductsCache).to receive(:producer_property_changed).with(producer_property)
+        ProductsCache.producer_property_destroyed producer_property
+      end
+    end
+
+
     describe "when an order cycle is changed" do
       let(:variant) { create(:variant) }
       let(:s) { create(:supplier_enterprise) }
