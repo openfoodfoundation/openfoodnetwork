@@ -1,4 +1,4 @@
-angular.module("admin.users").directive "userSelect", ->
+angular.module("admin.users").directive "userSelect", ($sanitize) ->
   scope:
     user: '&userSelect'
     model: '=ngModel'
@@ -11,9 +11,10 @@ angular.module("admin.users").directive "userSelect", ->
         ajax:
           url: '/admin/search/known_users'
           datatype: 'json'
-          data:(term, page) ->
+          data: (term, page) ->
             { q: term }
           results: (data, page) ->
+            item.email = $sanitize(item.email) for item in data
             { results: data }
         formatResult: (user) ->
           user.email
