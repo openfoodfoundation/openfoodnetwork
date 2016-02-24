@@ -180,7 +180,6 @@ describe Enterprise do
   describe "validations" do
     subject { FactoryGirl.create(:distributor_enterprise) }
     it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:permalink) }
     it { should ensure_length_of(:description).is_at_most(255) }
 
@@ -210,8 +209,14 @@ describe Enterprise do
       end
 
       it "does not prohibit the saving of an enterprise with no name clash" do
-        enterprise.email = 'new@email.com'
         enterprise.should be_valid
+      end
+
+      it "takes the owner's email address as default email" do
+        enterprise.email = nil
+        enterprise.should be_valid
+        enterprise.email.should be_present
+        enterprise.email.should eq owner.email
       end
     end
 

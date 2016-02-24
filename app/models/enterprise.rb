@@ -397,7 +397,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def ensure_email_set
-    self.email = owner.email if email.blank?
+    self.email = owner.email if email.blank? && owner.present?
   end
 
   def enforce_ownership_limit
