@@ -56,7 +56,7 @@ Spree.user_class.class_eval do
 
   # Returns orders and their associated payments for all distributors that have been ordered from
   def orders_by_distributor
-    Enterprise.includes(distributed_orders: :payments).where(enterprises: {id: self.enterprises_ordered_from }, spree_orders: {state: 'complete', user_id: self.id}).order('spree_orders.completed_at DESC')
+    Enterprise.includes(distributed_orders: :payments).where(enterprises: { id: self.enterprises_ordered_from }, spree_orders: { state: 'complete', user_id: self.id }).order('spree_orders.completed_at DESC')
   end
 
   private
