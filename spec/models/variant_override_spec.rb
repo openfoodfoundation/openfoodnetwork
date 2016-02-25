@@ -10,6 +10,12 @@ describe VariantOverride do
     let(:v) { create(:variant) }
     let!(:vo1) { create(:variant_override, hub: hub1, variant: v) }
     let!(:vo2) { create(:variant_override, hub: hub2, variant: v) }
+    let!(:vo3) { create(:variant_override, hub: hub1, variant: v, permission_revoked_at: Time.now) }
+
+    it "ignores variant_overrides with revoked_permissions by default" do
+      expect(VariantOverride.all).to_not include vo3
+      expect(VariantOverride.unscoped).to include vo3
+    end
 
     it "finds variant overrides for a set of hubs" do
       VariantOverride.for_hubs([hub1, hub2]).should match_array [vo1, vo2]
