@@ -4,9 +4,10 @@
 - content_for :page_title do
   %h1.page-title
     = t "bulk_order_management"
-  %a{ 'ofn-with-tip' => "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required." } What's this?
+  %a{ 'ofn-with-tip' => "#t('bom_tip')" }
     = t "admin_entreprise_groups_what_s_this"
-  %h1.page-title Bulk Order Management
+  %h1.page-title
+    = t "bom_page_title"
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
@@ -30,7 +31,8 @@
       %br
       %select{ :class => "three columns alpha", :id => 'supplier_filter', 'select2-min-search' => 5, 'ng-model' => 'supplierFilter', 'ng-options' => 's.id as s.name for s in suppliers' }
     .filter_select{ :class => "three columns" }
-      %label{ :for => 'distributor_filter' }Hub
+      %label{ :for => 'distributor_filter' }
+        = t "bom_hub"
       %br
       %select{ :class => "three columns alpha", :id => 'distributor_filter', 'select2-min-search' => 5, 'ng-model' => 'distributorFilter', 'ng-options' => 'd.id as d.name for d in distributors'}
     .filter_select{ :class => "three columns" }
@@ -49,7 +51,7 @@
     %div.shared_resource{ :class => "four columns alpha" }
       %span{ :class => 'three columns alpha' }
         %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
-        Shared Resource?
+        = t "bom_shared"
     %div{ :class => "eight columns" }
       %h6{ :class => "eight columns alpha", 'ng-show' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsProduct.name + ": ALL" }}
       %h6{ :class => "eight columns alpha", 'ng-hide' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsVariant.full_name }}
@@ -60,7 +62,7 @@
     .row
       .one.column.alpha &nbsp;
       .two.columns
-        %span.two.columns 
+        %span.two.columns
           = t "group_buy_unit_size"
         %span.two.columns {{ formattedValueWithUnitName( selectedUnitsProduct.group_buy_unit_size, selectedUnitsProduct, selectedUnitsVariant ) }}
       .one.column &nbsp;
@@ -103,7 +105,8 @@
       %div{ :class => "seven columns" } &nbsp;
       %div{ :class => "three columns omega" }
         %div.ofn_drop_down{ 'ng-controller' => "DropDownCtrl", :id => "columns_dropdown", 'ofn-drop-down' => true, :style => 'float:right;' }
-          %span{ :class => 'icon-reorder' } &nbsp; Columns
+          %span{ :class => 'icon-reorder' }
+            = t "bom_columns"
           %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
           %div.menu{ 'ng-show' => "expanded" }
             %div.menu_item{ :class => "three columns alpha", 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
@@ -111,10 +114,12 @@
               %span{ :class => 'two columns omega' } {{column.name }}
   %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
     %img.spinner{ src: "/assets/spinning-circles.svg" }
-    %h1 LOADING ORDERS
+    %h1
+      =t "bom_loading"
 
   %div{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredLineItems.length == 0'}
-    %h1#no_results No orders found.
+    %h1#no_results
+      = t "bom_no_results"
 
   %div{ 'ng-hide' => 'RequestMonitor.loading || filteredLineItems.length == 0' }
     %form{ name: 'bulk_order_form' }
@@ -136,15 +141,20 @@
               %a{ :href => '', 'ng-click' => "predicate = 'order.phone'; reverse = !reverse" }
                 = t "phone"
             %th.date{ 'ng-show' => 'columns.order_date.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.completed_at'; reverse = !reverse" } Order Date
+              %a{ :href => '', 'ng-click' => "predicate = 'order.completed_at'; reverse = !reverse" }
+                =t "bom_date"
             %th.producer{ 'ng-show' => 'columns.producer.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'supplier.name'; reverse = !reverse" } Producer
+              %a{ :href => '', 'ng-click' => "predicate = 'supplier.name'; reverse = !reverse" }
+                = t "producer"
             %th.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.order_cycle.name'; reverse = !reverse" } Order Cycle
+              %a{ :href => '', 'ng-click' => "predicate = 'order.order_cycle.name'; reverse = !reverse" }
+                = t "bom_cycle"
             %th.hub{ 'ng-show' => 'columns.hub.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.distributor.name'; reverse = !reverse" } Hub
+              %a{ :href => '', 'ng-click' => "predicate = 'order.distributor.name'; reverse = !reverse" }
+                = t "bom_hub"
             %th.variant{ 'ng-show' => 'columns.variant.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'units_variant.full_name'; reverse = !reverse" } Product: Unit
+              %a{ :href => '', 'ng-click' => "predicate = 'units_variant.full_name'; reverse = !reverse" }
+                = t "bom_variant"
             %th.quantity{ 'ng-show' => 'columns.quantity.visible' }
               = t "products_quantity"
             %th.max{ 'ng-show' => 'columns.max.visible' }
@@ -155,7 +165,7 @@
               = t "products_price"
             %th.actions
             %th.actions
-              = t("ask")&nbsp;
+              = t "ask"
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
 
         %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }

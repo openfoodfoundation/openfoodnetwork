@@ -239,16 +239,20 @@ en:
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
   order_hub_info: Hub Info
 
+  bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
+  bom_shared: "Shared Resource?"
+  bom_columns: "Columns"
+  bom_page_title: "Bulk Order Management"
   bom_no: "Order no."
   bom_date: "Order date"
   bom_cycle: "Order cycle"
-  bom_quantity: "Quantity"
   bom_max: "Max"
   bom_hub: "Hub"
-  bom_variant: "Variant"
+  bom_variant: "Product: Unit"
   bom_final_weigth_volume: "Weight/Volume"
-  bom_price: "Price"
   bom_actions_delete: "Delete Selected"
+  bom_loading: "Loading orders"
+  bom_no_results: "No orders found."
   bom_order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
 
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
@@ -526,7 +530,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_oc_is: "Your order cycle for this order is %{name}."
   products_oc_error: "Please complete your order from %{link} before shopping in a different order cycle."
   products_oc_current: "your current order cycle"
-  products_quantity: Quantity
   products_max_quantity: Max quantity
   products_distributor: Distributor
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
@@ -764,7 +767,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   update_user_invoices: "Update User Invoices"
   update_user_invoice_explained: "Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night."
   auto_finalise_invoices: "Auto-finalise invoices monthly on the 2nd at 1:30am"
-  auto_update_invoices: "Auto-update invoices nightly at 1:00am" 
+  auto_update_invoices: "Auto-update invoices nightly at 1:00am"
   in_progress: "In Progress"
   started_at: "Started at"
   queued: "Queued"
@@ -841,7 +844,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   no_orders_found: "No orders found."
   order_no: "Order No."
   weight_volume: "Weight/Volume"
-  remove_tax: "Remove tax" 
+  remove_tax: "Remove tax"
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
   admin_shared_address_1: "Address"
@@ -864,7 +867,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
   report_customers_header: "orders header"
-  report_producers: "Producers: " 
+  report_producers: "Producers: "
   report_type: "Report Type: "
   report_hubs: "Hubs: "
   report_payment: "Payment Methods: "
