@@ -151,7 +151,7 @@
               = t "products_price"
             %th.actions
             %th.actions
-              = t "ask"&nbsp;
+              = t("ask")&nbsp;
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
 
         %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }
