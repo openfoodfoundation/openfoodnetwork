@@ -16,7 +16,7 @@ class OrderCycle < ActiveRecord::Base
   scope :inactive, lambda { where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?', Time.zone.now, Time.zone.now) }
   scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.zone.now) }
   scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.zone.now).order("order_cycles.orders_close_at DESC") }
-  scope :undated, where(orders_open_at: nil, orders_close_at: nil)
+  scope :undated, where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL')
 
   scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
   # TODO This method returns all the closed orders. So maybe we can replace it with :recently_closed.
@@ -182,7 +182,7 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def undated?
-    self.orders_open_at.nil? && self.orders_close_at.nil?
+    self.orders_open_at.nil? || self.orders_close_at.nil?
   end
 
   def upcoming?

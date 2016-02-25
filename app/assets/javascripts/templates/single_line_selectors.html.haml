@@ -1,5 +1,5 @@
 -# In order for the single-line-selector scope to have access to the available selectors,
-%filter-selector{objects: "objects()", "active-selectors" => "activeSelectors", "all-selectors" => "allSelectors" }
+%filter-selector{"selector-set" => "selectors", objects: "objects()", "active-selectors" => "activeSelectors", "all-selectors" => "allSelectors" }
 
 %ul{ ng: { if: "overFlowSelectors().length > 0 || fitting" } }
   %li.more

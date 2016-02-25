@@ -8,6 +8,7 @@
     - else
       %a.with-tip{ title: t(:spree_admin_order_cycles_tip) } 
         = t "admin_entreprise_groups_what_s_this"
+      %a{ "ofn-with-tip" => "Order cycles determine when and where your products are available to customers." } What's this?
   %div.seven.columns.alpha.list
     - if @order_cycle_count > 0
       %div.seven.columns.alpha.list-item
@@ -26,4 +27,6 @@
           %span.icon-warning-sign
       %a.seven.columns.alpha.button.bottom.orange{ href: "#{main_app.admin_order_cycles_path}" }
         = t "spree_admin_enterprises_producers_manage_order_cycles"
+        %span.icon-arrow-right
+        MANAGE ORDER CYCLES
         %span.icon-arrow-right

@@ -1,1 +1,1 @@
-angular.module("admin.users", [])
+angular.module("admin.users", ['admin.utils'])

@@ -1,4 +1,4 @@
-angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons) ->
+angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons, $sanitize) ->
   # Adapted from Spree's existing taxon autocompletion
   scope: true
   link: (scope,element,attrs) ->
@@ -18,7 +18,7 @@ angular.module("admin.taxons").directive "ofnTaxonAutocomplete", (Taxons) ->
         query: (query) ->
           query.callback { results: Taxons.findByTerm(query.term) }
         formatResult: (taxon) ->
-          taxon.name
+          $sanitize(taxon.name)
         formatSelection: (taxon) ->
           taxon.name
 

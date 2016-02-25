@@ -11,13 +11,12 @@
           .light
             = t :hubs_filter_by
           = t :hubs_filter_type
-          %filter-selector.small-block-grid-2.medium-block-grid-4.large-block-grid-5{ objects: "visibleMatches | visible | taxonsOf", "active-selectors" => "activeTaxons" }
+        %filter-selector.small-block-grid-2.medium-block-grid-4.large-block-grid-5{ "selector-set" => "filterSelectors", objects: "visibleMatches | visible | taxonsOf", "active-selectors" => "activeTaxons" }
       .small-12.large-3.columns
         %h5.tdhead
           .light
             = t :hubs_filter_by
           = t :hubs_filter_delivery
-        %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-2
-          %shipping-type-selector{results: "shippingTypes"}
+        %shipping-type-selector
 
 = render partial: 'shared/components/filter_box'
