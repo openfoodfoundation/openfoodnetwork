@@ -480,11 +480,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_name: "name"
   products_unit: "unit"
   products_on_hand: "on hand"
-  products_on_demand: "on demand"
+  products_on_demand: "On demand?"
   products_category: "Category"
   products_tax_category: "tax category"
   products_available_on: "Available On"
+  products_inherit: "Inherit?"
   products_inherits_properties: "Inherits Properties?"
+  products_stock_level_reset: "Enable Stock Level Reset?"
 
   register_title: Register
 
