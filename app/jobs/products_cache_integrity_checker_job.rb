@@ -3,7 +3,7 @@ require 'open_food_network/products_renderer'
 ProductsCacheIntegrityCheckerJob = Struct.new(:distributor_id, :order_cycle_id) do
   def perform
     if diff.any?
-      Bugsnag.notify RuntimeError.new("Products JSON differs from cached version for distributor: #{@distributor_id}, order cycle: #{@order_cycle_id}"), diff: diff.to_s(:text)
+      Bugsnag.notify RuntimeError.new("Products JSON differs from cached version for distributor: #{distributor_id}, order cycle: #{order_cycle_id}"), diff: diff.to_s(:text)
     end
   end
 
