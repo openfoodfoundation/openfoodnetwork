@@ -1,17 +1,17 @@
 .filters.sixteen.columns.alpha
   .filter.four.columns.alpha
-    %label{ :for => 'query', ng: {class: '{disabled: !hub.id}'} }=t('admin.quick_search')
+    %label{ :for => 'query', ng: {class: '{disabled: !hub_id}'} }=t('admin.quick_search')
     %br
-    %input.fullwidth{ :type => "text", :id => 'query', ng: { model: 'query', disabled: '!hub.id'} }
+    %input.fullwidth{ :type => "text", :id => 'query', ng: { model: 'query', disabled: '!hub_id'} }
   .two.columns &nbsp;
   .filter_select.four.columns
     %label{ :for => 'hub_id', ng: { bind: "hub_id ? '#{t('admin.shop')}' : '#{t('admin.inventory.select_a_shop')}'" } }
     %br
-    %select.select2.fullwidth#hub_id{ 'ng-model' => 'hub_id', name: 'hub_id', ng: { options: 'hub.id as hub.name for (id, hub) in hubs', change: 'selectHub()' } }
+    %select.select2.fullwidth#hub_id{ 'ng-model' => 'hub_id', name: 'hub_id', ng: { options: 'hub.id as hub.name for (id, hub) in hubs' } }
   .filter_select.four.columns
-    %label{ :for => 'producer_filter', ng: {class: '{disabled: !hub.id}'} }=t('admin.producer')
+    %label{ :for => 'producer_filter', ng: {class: '{disabled: !hub_id}'} }=t('admin.producer')
     %br
-    %input.ofn-select2.fullwidth{ :id => 'producer_filter', type: 'number', data: 'producers', blank: "{id: 0, name: 'All'}", ng: { model: 'producerFilter', disabled: '!hub.id' } }
+    %input.ofn-select2.fullwidth{ :id => 'producer_filter', type: 'number', data: 'producers', blank: "{id: 0, name: 'All'}", ng: { model: 'producerFilter', disabled: '!hub_id' } }
   -# .filter_select{ :class => "three columns" }
   -#   %label{ :for => 'distributor_filter' }Hub
   -#   %br
@@ -23,4 +23,4 @@
   .filter_clear.two.columns.omega
     %label{ :for => 'clear_all_filters' }
     %br
-    %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "#{t('admin.clear_all')}", ng: { click: "resetSelectFilters()", disabled: '!hub.id'} }
+    %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "#{t('admin.clear_all')}", ng: { click: "resetSelectFilters()", disabled: '!hub_id'} }

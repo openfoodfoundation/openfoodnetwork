@@ -22,6 +22,6 @@
         %th.reset{ colspan: 2, ng: { show: 'columns.reset.visible' } }=t('admin.inventory.enable_reset')
         %th.inheritance{ ng: { show: 'columns.inheritance.visible' } }=t('admin.inventory.inherit')
         %th.visibility{ ng: { show: 'columns.visibility.visible' } }=t('admin.inventory.hide')
-    %tbody{bindonce: true, ng: {repeat: 'product in filteredProducts = (products | hubPermissions:hubPermissions:hub.id | inventoryProducts:hub.id:views | attrFilter:{producer_id:producerFilter} | filter:query) | limitTo:productLimit' } }
+    %tbody{bindonce: true, ng: {repeat: 'product in filteredProducts = (products | hubPermissions:hubPermissions:hub_id | inventoryProducts:hub_id:views | attrFilter:{producer_id:producerFilter} | filter:query) | limitTo:productLimit' } }
       = render 'admin/variant_overrides/products_product'
       = render 'admin/variant_overrides/products_variants'

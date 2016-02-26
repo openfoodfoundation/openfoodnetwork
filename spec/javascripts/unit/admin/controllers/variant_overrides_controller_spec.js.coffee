@@ -28,9 +28,20 @@ describe "VariantOverridesCtrl", ->
       StatusMessage = _StatusMessage_
       ctrl = $controller 'AdminVariantOverridesCtrl', { $scope: scope, hubs: hubs, producers: producers, products: products, hubPermissions: hubPermissions, VariantOverrides: VariantOverrides, DirtyVariantOverrides: DirtyVariantOverrides, StatusMessage: StatusMessage}
 
-  it "initialises the hub list and the chosen hub", ->
-    expect(scope.hubs).toEqual { 1: {id: 1, name: 'Hub'} }
-    expect(scope.hub).toBeNull()
+  describe "when only one hub is available", ->
+    it "initialises the hub list and the selects the only hub in the list", ->
+      expect(scope.hubs).toEqual { 1: {id: 1, name: 'Hub'} }
+      expect(scope.hub_id).toEqual 1
+
+  describe "when more than one hub is available", ->
+    beforeEach ->
+      inject ($controller) ->
+        hubs = [{id: 1, name: 'Hub1'}, {id: 12, name: 'Hub2'}]
+        $controller 'AdminVariantOverridesCtrl', { $scope: scope, hubs: hubs, producers: [], products: [], hubPermissions: []}
+
+    it "initialises the hub list and the selects the only hub in the list", ->
+      expect(scope.hubs).toEqual { 1: {id: 1, name: 'Hub1'}, 12: {id: 12, name: 'Hub2'} }
+      expect(scope.hub_id).toBeNull()
 
   it "initialises select filters", ->
     expect(scope.producerFilter).toEqual 0
@@ -44,17 +55,6 @@ describe "VariantOverridesCtrl", ->
     scope.addProducts ['c', 'd']
     expect(scope.products).toEqual ['a', 'b', 'c', 'd']
     expect(VariantOverrides.ensureDataFor).toHaveBeenCalled()
-
-  describe "selecting a hub", ->
-    it "sets the chosen hub", ->
-      scope.hub_id = 1
-      scope.selectHub()
-      expect(scope.hub).toEqual hubs[0]
-
-    it "does nothing when no selection has been made", ->
-      scope.hub_id = ''
-      scope.selectHub
-      expect(scope.hub).toBeNull
 
   describe "updating", ->
     describe "error messages", ->

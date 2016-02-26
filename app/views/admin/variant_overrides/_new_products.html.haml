@@ -12,15 +12,15 @@
       %th.add=t('admin.inventory.add')
       %th.hide=t('admin.inventory.hide')
   %tbody{ bindonce: true, ng: { repeat: 'product in filteredProducts | limitTo:productLimit' } }
-    %tr{ id: "v_{{variant.id}}", ng: { repeat: 'variant in product.variants | inventoryVariants:hub.id:views' } }
+    %tr{ id: "v_{{variant.id}}", ng: { repeat: 'variant in product.variants | inventoryVariants:hub_id:views' } }
       %td.producer{ bo: { bind: 'producersByID[product.producer_id].name'} }
       %td.product{ bo: { bind: 'product.name'} }
       %td.variant
         %span{ bo: { bind: 'variant.display_name || ""'} }
         .variant-override-unit{ bo: { bind: 'variant.unit_to_display'} }
       %td.add
-        %button.fullwidth.icon-plus{ ng: { click: "setVisibility(hub.id,variant.id,true)" } }
+        %button.fullwidth.icon-plus{ ng: { click: "setVisibility(hub_id,variant.id,true)" } }
           = t('admin.inventory.add')
       %td.hide
-        %button.fullwidth.hide.icon-remove{ ng: { click: "setVisibility(hub.id,variant.id,false)" } }
+        %button.fullwidth.hide.icon-remove{ ng: { click: "setVisibility(hub_id,variant.id,false)" } }
           = t('admin.inventory.hide')

@@ -1,4 +1,4 @@
-%div.text-big.no-results{ ng: { show: 'hub && products.length > 0 && filteredProducts.length == 0' } }
+%div.text-big.no-results{ ng: { show: 'hub_id && products.length > 0 && filteredProducts.length == 0' } }
   %span{ ng: { show: 'views.inventory.visible && !filtersApplied()' } }=t('admin.inventory.currently_empty')
   %span{ ng: { show: 'views.inventory.visible && filtersApplied()' } }=t('admin.inventory.no_matching_products')
   %span{ ng: { show: 'views.hidden.visible && !filtersApplied()' } }=t('admin.inventory.no_hidden_products')

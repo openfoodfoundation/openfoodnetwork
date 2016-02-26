@@ -1,6 +1,6 @@
 angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl", ($scope, $http, $timeout, Indexer, Columns, Views, SpreeApiAuth, PagedFetcher, StatusMessage, RequestMonitor, hubs, producers, hubPermissions, InventoryItems, VariantOverrides, DirtyVariantOverrides) ->
   $scope.hubs = Indexer.index hubs
-  $scope.hub = null
+  $scope.hub_id = if hubs.length == 1 then hubs[0].id else null
   $scope.products = []
   $scope.producers = producers
   $scope.producersByID = Indexer.index producers
@@ -58,10 +58,6 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
   $scope.addProducts = (products) ->
     $scope.products = $scope.products.concat products
     VariantOverrides.ensureDataFor hubs, products
-
-
-  $scope.selectHub = ->
-    $scope.hub = $scope.hubs[$scope.hub_id]
 
   $scope.displayDirty = ->
     if DirtyVariantOverrides.count() > 0

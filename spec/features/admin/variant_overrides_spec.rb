@@ -24,7 +24,7 @@ feature %q{
       it "displays a list of hub choices (ie. only those managed by the user)" do
         visit '/admin/inventory'
 
-        page.should have_select2 'hub_id', options: ['', hub.name]
+        page.should have_select2 'hub_id', options: [hub.name] # Selects the hub automatically when only one is available
       end
     end
 
