@@ -119,7 +119,7 @@ module OpenFoodNetwork
           {hub.id => [producer.id]}
       end
 
-      it "returns only permissions relating to managed enterprises" do
+      it "returns only permissions relating to managed hubs" do
         create(:enterprise_relationship, parent: e1, child: e2,
                          permissions_list: [:create_variant_overrides])
 
@@ -150,12 +150,17 @@ module OpenFoodNetwork
         end
       end
 
-      it "also returns managed producers" do
+      it "does not return managed producers (ie. only uses explicitly granted VO permissions)" do
         producer2 = create(:supplier_enterprise)
         permissions.stub(:managed_enterprises) { Enterprise.where(id: [hub, producer2]) }
 
-        permissions.variant_override_enterprises_per_hub.should ==
-          {hub.id => [producer.id, producer2.id]}
+        expect(permissions.variant_override_enterprises_per_hub[hub.id]).to_not include producer2.id
+      end
+
+      it "returns itself if self is also a primary producer (even when no explicit permission exists)" do
+        hub.update_attribute(:is_primary_producer, true)
+
+        expect(permissions.variant_override_enterprises_per_hub[hub.id]).to include hub.id
       end
     end
 

@@ -49,13 +49,10 @@ module OpenFoodNetwork
            map { |child_id, ers| [child_id, ers.map { |er| er.parent_id }] }
           ]
 
-      # We have permission to create variant overrides for any producers we manage, for any
-      # hub we can add to an order cycle
-      managed_producer_ids = managed_enterprises.is_primary_producer.pluck(:id)
-      if managed_producer_ids.any?
-        hubs.each do |hub|
-          permissions[hub.id] = ((permissions[hub.id] || []) + managed_producer_ids).uniq
-        end
+      # Allow a producer hub to override it's own products without explicit permission
+      hubs.is_primary_producer.each do |hub|
+        permissions[hub.id] ||= []
+        permissions[hub.id] |= [hub.id]
       end
 
       permissions
