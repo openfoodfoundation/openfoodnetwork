@@ -8,7 +8,7 @@ env "MAILTO", "rohan@rohanmitchell.com"
 job_type :run_file, "cd :path; :environment_variable=:environment bundle exec script/rails runner :task :output"
 
 every 1.hour do
-  rake 'openfoodnetwork:cache:check_products_cache_integrity'
+  rake 'openfoodnetwork:cache:check_products_integrity'
 end
 
 every 1.day, at: '12:05am' do
