@@ -689,3 +689,34 @@ Please follow the instructions there to make your enterprise visible on the Open
   you_have_no_orders_yet: "You have no orders yet"
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"
+
+  spree:
+    shipment_states:
+      backorder: backorder
+      partial: partial
+      pending: pending
+      ready: ready
+      shipped: shipped
+    payment_states:
+      balance_due: balance due
+      completed: completed
+      checkout: checkout
+      credit_owed: credit owed
+      failed: failed
+      paid: paid
+      pending: pending
+      processing: processing
+      void: void
+    order_state:
+      address: address
+      adjustments: adjustments
+      awaiting_return: awaiting return
+      canceled: canceled
+      cart: cart
+      complete: complete
+      confirm: confirm
+      delivery: delivery
+      payment: payment
+      resumed: resumed
+      returned: returned
+      skrill: skrill

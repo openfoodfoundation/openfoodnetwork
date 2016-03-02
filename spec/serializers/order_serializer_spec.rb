@@ -1,4 +1,4 @@
-#require 'spec_helper'
+require 'spec_helper'
 
 describe Api::OrderSerializer do
   let(:serializer) { Api::OrderSerializer.new order }
@@ -9,9 +9,9 @@ describe Api::OrderSerializer do
     expect(serializer.to_json).to match order.number.to_s
   end
 
-  it "convert the state attributes to readable strings" do
-    expect(serializer.to_json).to match "Complete"
-    expect(serializer.to_json).to match "Balance due"
+  it "convert the state attributes to translatable keys" do
+    expect(serializer.to_json).to match "complete"
+    expect(serializer.to_json).to match "balance_due"
   end
 
 end

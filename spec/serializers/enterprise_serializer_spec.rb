@@ -1,4 +1,4 @@
-#require 'spec_helper'
+require 'spec_helper'
 
 describe Api::EnterpriseSerializer do
   let(:serializer) { Api::EnterpriseSerializer.new enterprise, data: data }
