@@ -219,7 +219,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       before do
         add_variant_to_order_cycle(exchange, variant)
-        add_variant_to_order_cycle(exchange, variant2)
         set_order_cycle(order, oc1)
         visit shop_path
       end
