@@ -1,0 +1,18 @@
+- content_for :page_title do
+  = t(:cache_settings)
+
+%table.index
+  %thead
+    %tr
+      %th Distributor
+      %th Order Cycle
+      %th Status
+      %th Diff
+  %tbody
+    - @results.each do |result|
+      %tr
+        %td= result[:distributor].name
+        %td= result[:order_cycle].name
+        %td= result[:status] ? 'OK' : 'Error'
+        %td
+          %pre= result[:diff].to_s(:text)
