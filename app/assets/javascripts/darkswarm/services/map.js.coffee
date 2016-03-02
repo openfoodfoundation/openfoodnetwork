@@ -2,6 +2,8 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, visibleFilter) ->
   new class OfnMap
     constructor: ->
       @enterprises = @enterprise_markers(Enterprises.enterprises)
+      @enterprises = @enterprises.filter (enterprise) ->
+        enterprise.latitude || enterprise.longitude # Remove enterprises w/o lat or long
 
     enterprise_markers: (enterprises) ->
       @extend(enterprise) for enterprise in visibleFilter(enterprises)
