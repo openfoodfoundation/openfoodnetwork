@@ -46,6 +46,22 @@ feature "As a consumer I want to check out my cart", js: true do
       distributor.shipping_methods << sm3
     end
 
+    describe "when I have an out of stock product in my cart" do
+      before do
+        Spree::Config.set allow_backorders: false
+        variant.on_hand = 0
+        variant.save!
+      end
+
+      it "returns me to the cart with an error message" do
+        visit checkout_path
+
+        page.should_not have_selector 'closing', text: "Checkout now"
+        page.should have_selector 'closing', text: "Your shopping cart"
+        page.should have_content "An item in your cart has become unavailable"
+      end
+    end
+
     context "on the checkout page" do
       before do
         visit checkout_path
