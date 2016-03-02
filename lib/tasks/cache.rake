@@ -19,11 +19,7 @@ namespace :openfoodnetwork do
     private
 
     def active_exchanges
-      Exchange.
-        outgoing.
-        joins(:order_cycle).
-        merge(OrderCycle.dated).
-        merge(OrderCycle.not_closed)
+      ProductsCacheIntegrityChecker.active_exchanges
     end
   end
 end
