@@ -15,6 +15,7 @@ class OrderCycle < ActiveRecord::Base
 
   after_save :refresh_products_cache
 
+  preference :product_selection_from_coordinator_inventory_only, :boolean, default: false
 
   scope :active, lambda { where('order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?', Time.zone.now, Time.zone.now) }
   scope :active_or_complete, lambda { where('order_cycles.orders_open_at <= ?', Time.zone.now) }
@@ -120,6 +121,7 @@ class OrderCycle < ActiveRecord::Base
     oc.name = "COPY OF #{oc.name}"
     oc.orders_open_at = oc.orders_close_at = nil
     oc.coordinator_fee_ids = self.coordinator_fee_ids
+    oc.preferred_product_selection_from_coordinator_inventory_only = self.preferred_product_selection_from_coordinator_inventory_only
     oc.save!
     self.exchanges.each { |e| e.clone!(oc) }
     oc.reload
@@ -149,12 +151,15 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def distributed_variants
+    # TODO: only used in DistributionChangeValidator, can we remove?
     self.exchanges.outgoing.map(&:variants).flatten.uniq.reject(&:deleted?)
   end
 
   def variants_distributed_by(distributor)
+    return Spree::Variant.where("1=0") unless distributor.present?
     Spree::Variant.
       not_deleted.
+      merge(distributor.inventory_variants).
       joins(:exchanges).
       merge(Exchange.in_order_cycle(self)).
       merge(Exchange.outgoing).

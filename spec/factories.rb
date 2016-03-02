@@ -118,6 +118,12 @@ FactoryGirl.define do
     resettable  false
   end
 
+  factory :inventory_item, :class => InventoryItem do
+    enterprise
+    variant
+    visible true
+  end
+
   factory :enterprise, :class => Enterprise do
     owner { FactoryGirl.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }

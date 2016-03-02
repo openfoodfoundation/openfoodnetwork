@@ -52,6 +52,13 @@ Spree::Product.class_eval do
 
   scope :with_order_cycles_inner, joins(:variants_including_master => {:exchanges => :order_cycle})
 
+  scope :visible_for, lambda { |enterprise|
+    joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
+    joins('LEFT OUTER JOIN inventory_items AS o_inventory_items ON (o_spree_variants.id = o_inventory_items.variant_id)').
+    where('o_inventory_items.enterprise_id = (?) AND visible = (?)', enterprise, true).
+    select('DISTINCT spree_products.*')
+  }
+
 
   # -- Scopes
   scope :in_supplier, lambda { |supplier| where(:supplier_id => supplier) }

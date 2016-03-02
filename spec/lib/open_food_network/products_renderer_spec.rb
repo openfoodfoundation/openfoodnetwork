@@ -77,14 +77,37 @@ module OpenFoodNetwork
 
     describe "loading variants" do
       let(:hub) { create(:distributor_enterprise) }
-      let(:oc) { create(:simple_order_cycle, distributors: [hub], variants: [v1]) }
+      let(:oc) { create(:simple_order_cycle, distributors: [hub], variants: [v1, v3, v4]) }
       let(:p) { create(:simple_product) }
-      let!(:v1) { create(:variant, product: p, unit_value: 3) }
-      let!(:v2) { create(:variant, product: p, unit_value: 5) }
+      let!(:v1) { create(:variant, product: p, unit_value: 3) } # In exchange, not in inventory (ie. not_hidden)
+      let!(:v2) { create(:variant, product: p, unit_value: 5) } # Not in exchange
+      let!(:v3) { create(:variant, product: p, unit_value: 7, inventory_items: [create(:inventory_item, enterprise: hub, visible: true)]) }
+      let!(:v4) { create(:variant, product: p, unit_value: 9, inventory_items: [create(:inventory_item, enterprise: hub, visible: false)]) }
       let(:pr) { ProductsRenderer.new(hub, oc) }
+      let(:variants) { pr.send(:variants_for_shop_by_id) }
 
       it "scopes variants to distribution" do
-        pr.send(:variants_for_shop_by_id).should == {p.id => [v1]}
+        expect(variants[p.id]).to include v1
+        expect(variants[p.id]).to_not include v2
+      end
+
+      it "does not render variants that have been hidden by the hub" do
+        # but does render 'new' variants, ie. v1
+        expect(variants[p.id]).to include v1, v3
+        expect(variants[p.id]).to_not include v4
+      end
+
+
+      context "when hub opts to only see variants in its inventory" do
+        before do
+          allow(hub).to receive(:prefers_product_selection_from_inventory_only?) { true }
+        end
+
+        it "does not render variants that have not been explicitly added to the inventory for the hub" do
+          # but does render 'new' variants, ie. v1
+          expect(variants[p.id]).to include v3
+          expect(variants[p.id]).to_not include v1, v4
+        end
       end
     end
   end

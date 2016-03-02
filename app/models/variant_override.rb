@@ -9,6 +9,7 @@ class VariantOverride < ActiveRecord::Base
   after_save :refresh_products_cache_from_save
   after_destroy :refresh_products_cache_from_destroy
 
+  default_scope where(permission_revoked_at: nil)
 
   scope :for_hubs, lambda { |hubs|
     where(hub_id: hubs)

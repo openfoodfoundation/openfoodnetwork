@@ -140,8 +140,13 @@ module OpenFoodNetwork
     end
 
     def persisted_variants_hash(exchange)
-      exchange ||= OpenStruct.new(variants: [])
-      Hash[ exchange.variants.map{ |v| [v.id, true] } ]
+      return {} unless exchange
+
+      # When we have permission to edit a variant, mark it for removal here, assuming it will be included again if that is what the use wants
+      # When we don't have permission to edit a variant and it is already in the exchange, keep it in the exchange.
+      method_name = "editable_variant_ids_for_#{ exchange.incoming? ? 'incoming' : 'outgoing' }_exchange_between"
+      editable = send(method_name, exchange.sender, exchange.receiver)
+      Hash[ exchange.variants.map { |v| [v.id, editable.exclude?(v.id)] } ]
     end
 
     def incoming_exchange_variant_ids(attrs)

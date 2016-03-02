@@ -111,6 +111,57 @@ module Spree
           p_external.variants.for_distribution(oc, d1).should be_empty
         end
       end
+
+      describe "finding variants based on visiblity in inventory" do
+        let(:enterprise) { create(:distributor_enterprise) }
+        let!(:new_variant) { create(:variant) }
+        let!(:hidden_variant) { create(:variant) }
+        let!(:visible_variant) { create(:variant) }
+
+        let!(:hidden_inventory_item) { create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false ) }
+        let!(:visible_inventory_item) { create(:inventory_item, enterprise: enterprise, variant: visible_variant, visible: true ) }
+
+        context "finding variants that are not hidden from an enterprise's inventory" do
+          context "when the enterprise given is nil" do
+            let!(:variants) { Spree::Variant.not_hidden_for(nil) }
+
+            it "returns an empty list" do
+              expect(variants).to eq []
+            end
+          end
+
+          context "when an enterprise is given" do
+            let!(:variants) { Spree::Variant.not_hidden_for(enterprise) }
+
+            it "lists any variants that are not listed as visible=false" do
+              expect(variants).to include new_variant, visible_variant
+              expect(variants).to_not include hidden_variant
+            end
+
+            context "when inventory items exist for other enterprises" do
+              let(:other_enterprise) { create(:distributor_enterprise) }
+
+              let!(:new_inventory_item) { create(:inventory_item, enterprise: other_enterprise, variant: new_variant, visible: true ) }
+              let!(:hidden_inventory_item2) { create(:inventory_item, enterprise: other_enterprise, variant: visible_variant, visible: false ) }
+              let!(:visible_inventory_item2) { create(:inventory_item, enterprise: other_enterprise, variant: hidden_variant, visible: true ) }
+
+              it "lists any variants that are not listed as visible=false only for the relevant enterprise" do
+                expect(variants).to include new_variant, visible_variant
+                expect(variants).to_not include hidden_variant
+              end
+            end
+          end
+        end
+
+        context "finding variants that are visible in an enterprise's inventory" do
+          let!(:variants) { Spree::Variant.visible_for(enterprise) }
+
+          it "lists any variants that are listed as visible=true" do
+            expect(variants).to include visible_variant
+            expect(variants).to_not include new_variant, hidden_variant
+          end
+        end
+      end
     end
 
     describe "callbacks" do

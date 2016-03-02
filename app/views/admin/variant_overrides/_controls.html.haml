@@ -1,0 +1,15 @@
+%hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'hub_id && products.length > 0' } }
+.controls.sixteen.columns.alpha.omega{ ng: { show: 'hub_id && products.length > 0' } }
+  .eight.columns.alpha
+    = render 'admin/shared/bulk_actions_dropdown'
+    = render 'admin/shared/views_dropdown'
+    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.inventory.visible' } , data: { powertip: "#{t('admin.inventory.inventory_powertip')}" } }
+    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.hidden.visible' } , data: { powertip: "#{t('admin.inventory.hidden_powertip')}" } }
+    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.new.visible' } , data: { powertip: "#{t('admin.inventory.new_powertip')}" } }
+  .four.columns &nbsp;
+  .four.columns.omega{ ng: { show: 'views.new.visible' } }
+    %button.fullwidth{ type: 'button', ng: { click: "selectView('inventory')" } }
+      %i.icon-chevron-left
+      Back to my inventory
+  .four.columns.omega{ng: { show: 'views.inventory.visible' } }
+    = render 'admin/shared/columns_dropdown'

@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").directive "ofnToggleColumn", (Columns) ->
+angular.module("admin.indexUtils").directive "toggleColumn", (Columns) ->
   link: (scope, element, attrs) ->
     element.addClass "selected" if scope.column.visible
 
