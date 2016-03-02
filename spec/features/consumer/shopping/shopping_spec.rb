@@ -182,7 +182,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       describe "with variants on the product" do
         let(:variant) { create(:variant, product: product, on_hand: 10 ) }
         before do
-          add_product_and_variant_to_order_cycle(exchange, product, variant)
+          add_variant_to_order_cycle(exchange, variant)
           set_order_cycle(order, oc1)
           visit shop_path
         end
@@ -217,7 +217,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       let(:variant) { create(:variant, product: product) }
 
       before do
-        add_product_and_variant_to_order_cycle(exchange, product, variant)
+        add_variant_to_order_cycle(exchange, variant)
         set_order_cycle(order, oc1)
         visit shop_path
       end
