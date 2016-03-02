@@ -1,3 +1,5 @@
+require 'open_food_network/products_cache_integrity_checker'
+
 namespace :openfoodnetwork do
   namespace :cache do
     desc 'check the integrity of the products cache'
@@ -19,7 +21,7 @@ namespace :openfoodnetwork do
     private
 
     def active_exchanges
-      ProductsCacheIntegrityChecker.active_exchanges
+      OpenFoodNetwork::ProductsCacheIntegrityChecker.active_exchanges
     end
   end
 end
