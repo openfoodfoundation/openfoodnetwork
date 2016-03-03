@@ -9,8 +9,8 @@ describe "Hubs service", ->
       orders_close_at: new Date()
       type: "hub"
       visible: true
-      latitude: 50
-      longitude: 50
+      latitude: 0
+      longitude: 0
     }
     {
       id: 3
