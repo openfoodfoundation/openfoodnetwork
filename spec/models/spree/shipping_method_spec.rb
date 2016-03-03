@@ -37,27 +37,26 @@ module Spree
 
 
     describe "availability" do
-      let(:sm) { build(:shipping_method) }
+      let(:sm) { create(:shipping_method) }
 
       before do
         sm.calculator.preferences[:currency] = Spree::Config.currency
-
       end
 
       it "is available to orders that match its distributor" do
-        o = build(:order, ship_address: build(:address),
+        o = create(:order, ship_address: create(:address),
                   distributor: sm.distributors.first, currency: Spree::Config.currency)
         sm.should be_available_to_order o
       end
 
       it "is not available to orders that do not match its distributor" do
-        o = build(:order, ship_address: build(:address),
-                  distributor: build(:distributor_enterprise), currency: Spree::Config.currency)
+        o = create(:order, ship_address: create(:address),
+                  distributor: create(:distributor_enterprise), currency: Spree::Config.currency)
         sm.should_not be_available_to_order o
       end
 
       it "is available to orders with no shipping address" do
-        o = build(:order, ship_address: nil,
+        o = create(:order, ship_address: nil,
                   distributor: sm.distributors.first, currency: Spree::Config.currency)
         sm.should be_available_to_order o
       end
