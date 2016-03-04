@@ -137,6 +137,11 @@ en:
   invoice_column_tax: "GST"
   invoice_column_price: "Price"
 
+  # Tag Rules
+  tag_rules:
+    discount_order:
+      label: "%{percentage}% discount"
+
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME
   logo_mobile_svg: "Mobile logo (SVG)" #FIXME

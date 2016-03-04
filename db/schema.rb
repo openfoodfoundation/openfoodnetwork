@@ -1147,6 +1147,13 @@ ActiveRecord::Schema.define(:version => 20160401043927) do
     t.integer "state_id"
   end
 
+  create_table "tag_rules", :force => true do |t|
+    t.integer  "enterprise_id", :null => false
+    t.string   "type",          :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"

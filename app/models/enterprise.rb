@@ -42,6 +42,7 @@ class Enterprise < ActiveRecord::Base
   has_many :customers
   has_many :billable_periods
   has_many :inventory_items
+  has_many :tag_rules
 
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
@@ -341,6 +342,13 @@ class Enterprise < ActiveRecord::Base
 
   def can_invoice?
     abn.present?
+  end
+
+  def apply_tag_rules_to(subject, context)
+    tag_rules.each do |rule|
+      rule.set_context(subject,context)
+      rule.apply
+    end
   end
 
   protected
