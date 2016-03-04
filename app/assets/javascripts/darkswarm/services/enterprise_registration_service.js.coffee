@@ -2,7 +2,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
   new class EnterpriseRegistrationService
     enterprise:
       user_ids: [CurrentUser.id]
-      email: CurrentUser.email
+      email_address: CurrentUser.email
       address: {}
       country: availableCountries[0]
 
@@ -55,6 +55,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       excluded = [ 'address', 'country', 'id' ]
       for key, value of @enterprise when key not in excluded
         enterprise[key] = value
+      enterprise.email = enterprise.email_address
       enterprise.address_attributes = @enterprise.address if @enterprise.address?
       enterprise.address_attributes.country_id = @enterprise.country.id if @enterprise.country?
       enterprise
