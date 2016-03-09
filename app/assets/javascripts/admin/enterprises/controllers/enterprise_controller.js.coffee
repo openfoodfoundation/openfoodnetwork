@@ -32,5 +32,3 @@ angular.module("admin.enterprises")
           $scope.Enterprise.users.push manager
         else
           alert ("#{manager.email}" + " " + t("is_already_manager"))
-
-
