@@ -11,6 +11,9 @@ Openfoodnetwork::Application.routes.draw do
   get "/#/login", to: "home#index", as: :spree_login
   get "/login", to: redirect("/#/login")
 
+  get "/discourse/login", to: "discourse_sso#login"
+  get "/discourse/sso", to: "discourse_sso#sso"
+
   get "/map", to: "map#index", as: :map
 
   get "/register", to: "registration#index", as: :registration
@@ -101,10 +104,14 @@ Openfoodnetwork::Application.routes.draw do
       get :move_down
     end
 
+    get '/inventory', to: 'variant_overrides#index'
+
     resources :variant_overrides do
       post :bulk_update, on: :collection
       post :bulk_reset, on: :collection
     end
+
+    resources :inventory_items, only: [:create, :update]
 
     resources :customers, only: [:index, :update]
 

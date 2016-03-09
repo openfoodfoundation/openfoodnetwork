@@ -6,7 +6,7 @@
     =f.label :owner_id, 'Owner'
     - if full_permissions
       %span.required *
-    .with-tip{'data-powertip' => "The primary user responsible for this enterprise."}
+    %div{'ofn-with-tip' => "The primary user responsible for this enterprise."}
       %a What's this?
   .eight.columns.omega
     - if full_permissions
@@ -19,7 +19,7 @@
     =f.label :user_ids, 'Managers'
     - if full_permissions
       %span.required *
-    .with-tip{'data-powertip' => "The other users with permission to manage this enterprise."}
+    %div{'ofn-with-tip' => "The other users with permission to manage this enterprise."}
       %a What's this?
   .eight.columns.omega
     - if full_permissions

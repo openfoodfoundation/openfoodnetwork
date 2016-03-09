@@ -21,14 +21,16 @@
 //= require ../shared/ng-tags-input.min.js
 //= require angular-rails-templates
 //= require_tree ../templates/admin
-//= require ./admin
+//= require ./admin_ofn
 //= require ./accounts_and_billing_settings/accounts_and_billing_settings
 //= require ./business_model_configuration/business_model_configuration
 //= require ./customers/customers
 //= require ./dropdown/dropdown
 //= require ./enterprises/enterprises
+//= require ./enterprise_fees/enterprise_fees
 //= require ./enterprise_groups/enterprise_groups
 //= require ./index_utils/index_utils
+//= require ./inventory_items/inventory_items
 //= require ./line_items/line_items
 //= require ./orders/orders
 //= require ./order_cycles/order_cycles

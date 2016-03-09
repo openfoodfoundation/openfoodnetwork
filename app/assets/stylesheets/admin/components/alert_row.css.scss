@@ -1,0 +1,21 @@
+.alert-row{
+  margin-bottom: 10px;
+  font-weight: bold;
+  background-color: #eff5fc;
+
+  .column, .columns {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    &.alpha { padding-left: 10px; }
+    &.omega { padding-right: 10px; }
+  }
+
+  span {
+    line-height: 3rem;
+  }
+
+  a.close {
+    line-height: 3rem;
+    font-size: 2.0rem;
+  }
+}

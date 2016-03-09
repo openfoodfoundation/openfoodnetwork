@@ -25,6 +25,6 @@
   %td.actions
     %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)" }
   %td.actions
-    %span.icon-warning-sign.with-tip{ 'ng-if' => 'variant.variant_overrides', title: "This variant has {{variant.variant_overrides.length}} override(s)" }
+    %span.icon-warning-sign{ 'ng-if' => 'variant.variant_overrides', 'ofn-with-tip' => "This variant has {{variant.variant_overrides.length}} override(s)" }
   %td.actions
     %a{ 'ng-click' => 'deleteVariant(product,variant)', "ng-class" => '{disabled: product.variants.length < 2}', :class => "delete-variant icon-trash no-text" }

@@ -27,9 +27,12 @@
 	-ms-user-select: none;
 	user-select: none;
 	text-align: center;
+  margin-right: 10px;
 
 	&.right {
 		float: right;
+    margin-right: 0px;
+    margin-left: 10px;
 	}
 
   &:hover, &.expanded {
@@ -55,12 +58,35 @@
 		background-color: #ffffff;
 		box-shadow: 1px 3px 10px #888888;
 		z-index: 100;
+    white-space: nowrap;
+
 
 		.menu_item {
 			margin: 0px;
-			padding: 2px 0px;
+			padding: 2px 10px;
 			color: #454545;
 			text-align: left;
+      display: block;
+
+      .check {
+        display: inline-block;
+        text-align: center;
+        width: 40px;
+        &:before {
+          content: "\00a0";
+        }
+      }
+
+      .name {
+        display: inline-block;
+        padding: 0px 15px 0px 0px;
+      }
+
+      &.selected{
+        .check:before {
+          content: "\2713";
+        }
+      }
 		}
 
 		.menu_item:hover {

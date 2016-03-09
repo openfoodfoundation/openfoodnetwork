@@ -60,8 +60,12 @@ module Admin
 
       respond_to do |format|
         if @order_cycle.update_attributes(params[:order_cycle])
-          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
+          unless params[:order_cycle][:incoming_exchanges].nil? && params[:order_cycle][:outgoing_exchanges].nil?
+            # Only update apply exchange information if it is actually submmitted
+            OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
+          end
           flash[:notice] = 'Your order cycle has been updated.' if params[:reloading] == '1'
+          format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
           format.json { render :json => {:success => true}  }
         else
           format.json { render :json => {:success => false} }

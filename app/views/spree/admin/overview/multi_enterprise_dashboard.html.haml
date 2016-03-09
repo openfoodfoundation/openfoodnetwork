@@ -2,27 +2,28 @@
   = render 'admin/shared/user_guide_link'
 
 
-%h1{ :style => 'margin-bottom: 30px'} Dashboard
+%div{ 'ng-app' => 'ofn.admin' }
+  %h1{ :style => 'margin-bottom: 30px' } Dashboard
 
-- if @enterprises.unconfirmed.any?
+  - if @enterprises.unconfirmed.any?
 
-  = render partial: "unconfirmed"
+    = render partial: "unconfirmed"
 
-  %hr
+    %hr
 
-- if @enterprises.empty?
+  - if @enterprises.empty?
 
-  = render partial: "enterprises"
+    = render partial: "enterprises"
 
-- else
+  - else
 
-  - if can? :admin, Spree::Product
-    = render partial: "products"
+    - if can? :admin, Spree::Product
+      = render partial: "products"
 
-    %div.two.columns
-      &nbsp;
+      %div.two.columns
+        &nbsp;
 
-  - if can? :admin, OrderCycle
-    = render partial: "order_cycles"
+    - if can? :admin, OrderCycle
+      = render partial: "order_cycles"
 
-  = render partial: "enterprises"
+    = render partial: "enterprises"

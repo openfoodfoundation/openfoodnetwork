@@ -58,7 +58,14 @@ class Api::Admin::OrderCycleSerializer < ActiveModel::Serializer
     permissions = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object)
     enterprises = permissions.visible_enterprises
     enterprises.each do |enterprise|
-      variants = permissions.visible_variants_for_outgoing_exchanges_to(enterprise).pluck(:id)
+      # This is hopefully a temporary measure, pending the arrival of multiple named inventories
+      # for shops. We need this here to allow hubs to restrict visible variants to only those in
+      # their inventory if they so choose
+      variants = if enterprise.prefers_product_selection_from_inventory_only?
+        permissions.visible_variants_for_outgoing_exchanges_to(enterprise).visible_for(enterprise)
+      else
+        permissions.visible_variants_for_outgoing_exchanges_to(enterprise).not_hidden_for(enterprise)
+      end.pluck(:id)
       visible[enterprise.id] = variants if variants.any?
     end
     visible
