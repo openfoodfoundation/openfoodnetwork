@@ -151,8 +151,17 @@ class CheckoutController < Spree::CheckoutController
 
   # Overriding Spree's methods
   def raise_insufficient_quantity
-    flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
-    redirect_to cart_path
+    respond_to do |format|
+      format.html do
+        flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
+        redirect_to cart_path
+      end
+
+      format.json do
+        flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
+        render json: {path: cart_path}, status: 400
+      end
+    end
   end
 
   def redirect_to_paypal_express_form_if_needed

@@ -230,6 +230,18 @@ feature "As a consumer I want to check out my cart", js: true do
             page.should have_content "Your order has been processed successfully"
           end
 
+          it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
+            Spree::Config.set allow_backorders: false
+            variant.on_hand = 0
+            variant.save!
+
+            place_order
+
+            page.should_not have_content "Your order has been processed successfully"
+            page.should have_selector 'closing', text: "Your shopping cart"
+            page.should have_content "Out of Stock"
+          end
+
           context "when we are charged a shipping fee" do
             before { choose sm2.name }
 
