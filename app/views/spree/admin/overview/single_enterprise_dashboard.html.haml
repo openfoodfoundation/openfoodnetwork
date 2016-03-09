@@ -37,7 +37,7 @@
     %a.close{ href: "#" } ×
 - if !@enterprise.visible
   .alert-box
-    %strong 
+    %strong
       = t "spree_admin_single_enterprise_hint"
     %strong= "#{t 'manage'} #{@enterprise.name}."
     %a.close{ href: "#" } ×
@@ -47,7 +47,7 @@
     .header
       %h3
         %span.icon-map-marker
-          = t "your_profil_live"
+        = t "your_profil_live"
       %p
         = t "on_ofn_map"
     .list
@@ -64,7 +64,7 @@
     .header
       %h3
         %span.icon-edit
-          = t "edit_profile_details"
+        = t "edit_profile_details"
       %p
         = t "edit_profile_details_etc"
     .list
@@ -79,7 +79,7 @@
       .header
         %h3
           %span.icon-th-large
-            = t "add_and_manage_products"
+          = t "add_and_manage_products"
       .list
         %a.button.bottom{href: bulk_edit_admin_products_path}
           = t "manage_products"
@@ -93,7 +93,7 @@
       .header
         %h3
           %span.icon-shopping-cart
-            = t "add_and_manage_order_cycles"
+          = t "add_and_manage_order_cycles"
       .list
         %a.button.bottom{href: main_app.admin_order_cycles_path}
           = t "manage_order_cycles"

@@ -1,11 +1,11 @@
 %div.producers_tab{ ng: { show: "activeTab == 'producers'"} }
   %div.list-title.sixteen.columns.alpha
-    %span.five.columns.alpha 
+    %span.five.columns.alpha
       = t "spree_admin_enterprises_producers_name"
     - if can? :admin, Spree::Product
       %span.centered.three.columns
         = t "spree_admin_enterprises_producers_total_products"
-      %span.centered.three.columns 
+      %span.centered.three.columns
         = t "spree_admin_enterprises_producers_active_products"
     - if can? :admin, OrderCycle
       %span.centered.three.columns

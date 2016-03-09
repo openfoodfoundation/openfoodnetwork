@@ -6,9 +6,8 @@
       %a.three.columns.omega.icon-plus.button.blue{ href: "#{new_admin_product_path}" }
         = t "spree_admin_enterprises_create_new"
     - else
-      %a.with-tip{ title: "The products that you sell through the Open Food Network." } 
+      %a{ "ofn-with-tip" => "The products that you sell through the Open Food Network." }
         = t "admin_entreprise_groups_what_s_this"
-      %a{ "ofn-with-tip" => "The products that you sell through the Open Food Network." } What's this?
   %div.seven.columns.alpha.list
     - if @product_count > 0
       %div.seven.columns.alpha.list-item
@@ -21,12 +20,10 @@
         %span.icon-arrow-right
     - else
       %div.seven.columns.alpha.list-item.red
-        %span.six.columns.alpha 
+        %span.six.columns.alpha
           = t "spree_admin_enterprises_any_active_products_text"
         %span.one.column.omega
           %span.icon-remove-sign
       %a.seven.columns.alpha.button.bottom.red{ href: "#{new_admin_product_path}" }
         = t "spree_admin_enterprises_create_new_product"
-        %span.icon-arrow-right
-        CREATE A NEW PRODUCT
         %span.icon-arrow-right

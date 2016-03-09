@@ -1,11 +1,11 @@
 %div.hubs_tab{ ng: { show: "activeTab == 'hubs'"} }
   %div.sixteen.columns.alpha.list-title
-    %span.five.columns.alpha 
+    %span.five.columns.alpha
       = t "spree_admin_enterprises_hubs_name"
     - if can? :admin, Spree::PaymentMethod
       %span.centered.three.columns Payment Methods
     - if can? :admin, Spree::ShippingMethod
-      %span.centered.three.columns 
+      %span.centered.three.columns
         = t "spree_admin_enterprises_shipping_methods"
     - if can? :admin, EnterpriseFee
       %span.centered.three.columns
