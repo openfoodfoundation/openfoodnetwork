@@ -251,6 +251,32 @@ feature %q{
   end
 
 
+  describe "inventory settings", js: true do
+    let!(:enterprise) { create(:distributor_enterprise) }
+    let!(:product) { create(:simple_product) }
+    let!(:order_cycle) { create(:simple_order_cycle, distributors: [enterprise], variants: [product.variants.first]) }
+
+    before do
+      Delayed::Job.destroy_all
+      quick_login_as_admin
+    end
+
+    it "refreshes the cache when I change what products appear on my shopfront" do
+      # Given a product that's not in my inventory, but is in an active order cycle
+
+      # When I change which products appear on the shopfront
+      visit edit_admin_enterprise_path(enterprise)
+      within(".side_menu") { click_link 'Inventory Settings' }
+      choose 'enterprise_preferred_product_selection_from_inventory_only_1'
+
+      # Then a job should have been enqueued to refresh the cache
+      expect do
+        click_button 'Update'
+      end.to enqueue_job RefreshProductsCacheJob, distributor_id: enterprise.id, order_cycle_id: order_cycle.id
+    end
+  end
+
+
   context "as an Enterprise user", js: true do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }
     let(:supplier2) { create(:supplier_enterprise, name: 'Another Supplier') }

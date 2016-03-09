@@ -88,6 +88,13 @@ module OpenFoodNetwork
     end
 
 
+    def self.distributor_changed(enterprise)
+      Exchange.cachable.where(receiver_id: enterprise).each do |exchange|
+        refresh_cache exchange.receiver, exchange.order_cycle
+      end
+    end
+
+
     private
 
     def self.exchanges_featuring_variants(variants, distributor: nil)

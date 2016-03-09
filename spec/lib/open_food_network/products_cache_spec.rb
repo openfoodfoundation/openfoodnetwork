@@ -376,6 +376,16 @@ module OpenFoodNetwork
       end
     end
 
+    describe "when a distributor enterprise is changed" do
+      let(:d) { create(:distributor_enterprise) }
+      let(:oc) { create(:open_order_cycle, distributors: [d]) }
+
+      it "updates each distribution the enterprise is active in" do
+        expect(ProductsCache).to receive(:refresh_cache).with(d, oc)
+        ProductsCache.distributor_changed d
+      end
+    end
+
     describe "refreshing the cache" do
       let(:distributor) { double(:distributor) }
       let(:order_cycle) { double(:order_cycle) }
