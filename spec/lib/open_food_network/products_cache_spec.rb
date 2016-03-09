@@ -386,6 +386,25 @@ module OpenFoodNetwork
       end
     end
 
+    describe "when an inventory item is changed" do
+      let!(:d) { create(:distributor_enterprise) }
+      let!(:v) { create(:variant) }
+      let!(:oc1) { create(:open_order_cycle, distributors: [d], variants: [v]) }
+      let(:oc2) { create(:open_order_cycle, distributors: [d], variants: []) }
+      let!(:ii) { create(:inventory_item, enterprise: d, variant: v) }
+
+      it "updates each distribution for that enterprise+variant" do
+        expect(ProductsCache).to receive(:refresh_cache).with(d, oc1)
+        ProductsCache.inventory_item_changed ii
+      end
+
+      it "doesn't update distributions that don't feature the variant" do
+        oc2
+        expect(ProductsCache).to receive(:refresh_cache).with(d, oc2).never
+        ProductsCache.inventory_item_changed ii
+      end
+    end
+
     describe "refreshing the cache" do
       let(:distributor) { double(:distributor) }
       let(:order_cycle) { double(:order_cycle) }

@@ -95,6 +95,13 @@ module OpenFoodNetwork
     end
 
 
+    def self.inventory_item_changed(inventory_item)
+      exchanges_featuring_variants(inventory_item.variant, distributor: inventory_item.enterprise).each do |exchange|
+        refresh_cache exchange.receiver, exchange.order_cycle
+      end
+    end
+
+
     private
 
     def self.exchanges_featuring_variants(variants, distributor: nil)
