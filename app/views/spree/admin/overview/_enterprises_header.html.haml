@@ -1,11 +1,10 @@
 %div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "red"}"}
-  %h3.thirteen.columns.alpha 
+  %h3.thirteen.columns.alpha
     = t "spree_admin_overview_enterprises_header"
   - if @enterprises.any?
     - if spree_current_user.can_own_more_enterprises?
       %a.three.columns.omega.icon-plus.button.blue.white-bottom{ href: "#{main_app.new_admin_enterprise_path}" }
         = t "spree_admin_enterprises_create_new"
   - else
-    %a.with-tip{ title: "Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network." } 
+    %a{ "ofn-with-tip" => "Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network." }
       = t "admin_enterprise_groups_what_s_this"
-    %a{ "ofn-with-tip" => "Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network." } What's this?

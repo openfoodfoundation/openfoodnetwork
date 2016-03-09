@@ -1,5 +1,5 @@
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Images'" } }
-  %legend 
+  %legend
     = t 'admin_entreprise_groups_images'
   .row
     .alpha.three.columns
@@ -13,7 +13,7 @@
     .alpha.three.columns
       = f.label :promo_image, class: 'with-tip', 'data-powertip' => t(:admin_entreprise_groups_data_powertip_promo_image)
       .with-tip{'data-powertip' => t(:admin_entreprise_groups_data_powertip_promo_image_tip)}
-        %a 
+        %a
           = t 'admin_entreprise_groups_what_s_this'
       = f.label :promo_image, 'ofn-with-tip' => 'This image is displayed at the top of the Group profile'
       %div{'ofn-with-tip' => 'This image is displayed at the top of the Group profile'}

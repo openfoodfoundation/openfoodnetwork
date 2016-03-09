@@ -1,5 +1,5 @@
 - content_for :page_title do
-  %h1.page-title  
+  %h1.page-title
   =t :customers
 
 = admin_inject_shops
@@ -7,7 +7,7 @@
 %div{ ng: { app: 'admin.customers', controller: 'customersCtrl' } }
   .row{ ng: { hide: "loaded() && filteredCustomers.length > 0" } }
     .five.columns.alpha
-      %h3 
+      %h3
         =t :please_select_hub
     .four.columns
       %select.select2.fullwidth#shop_id{ 'ng-model' => 'shop.id', name: 'shop_id', 'ng-options' => 'shop.id as shop.name for shop in shops' }
@@ -27,7 +27,7 @@
       %h1
         =t :loading_customers
   .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredCustomers.length == 0'}
-    %h1#no_results 
+    %h1#no_results
       =t :no_customers_found
 
 

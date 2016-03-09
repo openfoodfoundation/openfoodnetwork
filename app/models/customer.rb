@@ -18,4 +18,3 @@ class Customer < ActiveRecord::Base
     self.user = user || Spree::User.find_by_email(email)
   end
 end
-

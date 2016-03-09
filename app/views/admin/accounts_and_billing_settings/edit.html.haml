@@ -8,7 +8,7 @@
 -# - month_options = (0...12).map { |i| Time.zone.now.beginning_of_month - i.months }.map{ |t| [t.strftime("%b %Y"), t.strftime("%b %Y %z")]}
 
 %fieldset.no-border-bottom
-  %legend 
+  %legend
     =t :admin_settings
   = form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
     .row{ ng: { app: t(:admin_accounts_and_billing) } }
@@ -24,7 +24,7 @@
     .row
       .six.columns.alpha
         %fieldset.no-border-bottom
-          %legend 
+          %legend
             =t :update_invoice
           = f.check_box :auto_update_invoices
           = f.label :auto_update_invoices,
@@ -32,7 +32,7 @@
 
       .six.columns.omega
         %fieldset.no-border-bottom
-          %legend 
+          %legend
             =t :finalise_invoice
           = f.check_box :auto_finalize_invoices
           = f.label :auto_finalize_invoices,
@@ -48,7 +48,7 @@
   .row
     .six.columns.alpha.step.text-center
       .form-buttons{"data-hook" => "buttons"}
-        =link_to_with_icon "icon-undo", 
+        =link_to_with_icon "icon-undo",
             t(:update_user_invoices) ,
           main_app.start_job_admin_accounts_and_billing_settings_path(job: { name: "update_account_invoices" }),
           class: "button fullwidth"
@@ -62,7 +62,7 @@
             %br
               =t :started_at
           - else
-            %strong 
+            %strong
               =t :queued
             %br
               =t :Scheduled_for
@@ -82,12 +82,12 @@
       - if @finalize_account_invoices_job
         %p.text-center
           - if @finalize_account_invoices_job.run_at < Time.zone.now
-            %strong  
+            %strong
               =t :in_progress
             %br
               =t :started_at
           - else
-            %strong 
+            %strong
               =t :queued
             %br
               =t :scheduled_for
@@ -95,4 +95,3 @@
       - else
         %p.explanation
           =t :finalise_user_invoice_explained
-
