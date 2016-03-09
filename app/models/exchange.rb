@@ -34,6 +34,12 @@ class Exchange < ActiveRecord::Base
                              joins('INNER JOIN enterprises AS receiver ON (receiver.id = exchanges.receiver_id)').
                              order("CASE WHEN exchanges.incoming='t' THEN sender.name ELSE receiver.name END")
 
+  # Exchanges on order cycles that are dated and are upcoming or open are cached
+  scope :cachable, outgoing.
+                   joins(:order_cycle).
+                   merge(OrderCycle.dated).
+                   merge(OrderCycle.not_closed)
+
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped

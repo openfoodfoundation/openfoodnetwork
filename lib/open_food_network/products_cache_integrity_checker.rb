@@ -16,15 +16,6 @@ module OpenFoodNetwork
     end
 
 
-    def self.active_exchanges
-      Exchange.
-        outgoing.
-        joins(:order_cycle).
-        merge(OrderCycle.dated).
-        merge(OrderCycle.not_closed)
-    end
-
-
     private
 
     def cached_json
