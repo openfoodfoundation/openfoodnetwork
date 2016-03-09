@@ -56,10 +56,10 @@ module InjectionHelper
     data_array = spree_current_user.orders_by_distributor.to_a
     data_array.each do |enterprise|
       enterprise.distributed_orders.each do |order|
-        order.payments.keep_if{ |payment| payment.state == "completed" }
+        order.payments.keep_if { |payment| payment.state == "completed" }
       end
     end
-    data_array.sort!{ |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
+    data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
     inject_json_ams "orders_by_distributor", data_array, Api::OrdersByDistributorSerializer
   end
 
