@@ -30,7 +30,7 @@ feature %q{
       payment_method.distributors.should == [@distributors[0]]
     end
 
-    scenario "updating a payment method" do
+    scenario "updating a payment method", retry: 3 do
       pm = create(:payment_method, distributors: [@distributors[0]])
       login_to_admin_section
 
