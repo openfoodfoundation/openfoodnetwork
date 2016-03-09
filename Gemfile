@@ -5,7 +5,8 @@ gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'i18n', '~> 0.6.11'
 
-gem 'nokogiri'
+# Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
+gem 'nokogiri', '>= 1.6.7.1'
 
 gem 'pg'
 gem 'spree', :github => 'openfoodfoundation/spree', :branch => '1-3-stable'
