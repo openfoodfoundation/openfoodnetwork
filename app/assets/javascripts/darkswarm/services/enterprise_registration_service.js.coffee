@@ -55,7 +55,6 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       excluded = [ 'address', 'country', 'id' ]
       for key, value of @enterprise when key not in excluded
         enterprise[key] = value
-      enterprise.email = enterprise.email_address
       enterprise.address_attributes = @enterprise.address if @enterprise.address?
       enterprise.address_attributes.country_id = @enterprise.country.id if @enterprise.country?
       enterprise
