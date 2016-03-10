@@ -282,6 +282,31 @@ feature %q{
     end
   end
 
+  describe "tag rules", js: true do
+    let!(:enterprise) { create(:distributor_enterprise) }
+
+    context "updating" do
+      let!(:tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "member" ) }
+
+      before do
+        login_to_admin_section
+        visit main_app.edit_admin_enterprise_path(enterprise)
+      end
+
+      it "saves changes to the rule" do
+        click_link "Tag Rules"
+
+        expect(first('.customer_tag .header')).to have_content "For customers tagged #member"
+        expect(page).to have_input "enterprise[tag_rules_attributes][#{tag_rule.id}][calculator_attributes][preferred_flat_percent]", with: "0"
+        fill_in "enterprise[tag_rules_attributes][#{tag_rule.id}][calculator_attributes][preferred_flat_percent]", with: 45
+
+        click_button 'Update'
+
+        expect(tag_rule.calculator.preferred_flat_percent).to eq 45
+      end
+    end
+  end
+
 
   context "as an Enterprise user", js: true do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }

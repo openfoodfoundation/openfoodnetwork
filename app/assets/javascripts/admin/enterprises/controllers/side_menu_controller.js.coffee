@@ -17,8 +17,9 @@ angular.module("admin.enterprises")
       { name: t('shipping_methods'), icon_class: "icon-truck", show: "showShippingMethods()" }
       { name: t('payment_methods'), icon_class: "icon-money", show: "showPaymentMethods()" }
       { name: t('enterprise_fees'), icon_class: "icon-tasks", show: "showEnterpriseFees()" }
-      { name: t('inventory_settings'), icon_class: "icon-list-ol", show: "showInventorySettings()" }
-      { name: t('shop_preferences'), icon_class: "icon-shopping-cart", show: "showShopPreferences()" }
+      { name: t('inventory_settings'), icon_class: "icon-list-ol", show: "enterpriseIsShop()" }
+      { name: t('tag_rules'), icon_class: "icon-random", show: "enterpriseIsShop()" }
+      { name: t('shop_preferences'), icon_class: "icon-shopping-cart", show: "enterpriseIsShop()" }
     ]
 
     $scope.select(0)
@@ -42,8 +43,5 @@ angular.module("admin.enterprises")
     $scope.showEnterpriseFees = ->
       enterprisePermissions.can_manage_enterprise_fees && ($scope.Enterprise.sells != "none" || $scope.Enterprise.is_primary_producer)
 
-    $scope.showInventorySettings = ->
-      $scope.Enterprise.sells != "none"
-
-    $scope.showShopPreferences = ->
+    $scope.enterpriseIsShop = ->
       $scope.Enterprise.sells != "none"

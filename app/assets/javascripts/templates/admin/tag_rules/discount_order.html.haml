@@ -1,0 +1,26 @@
+%div
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{rule.id}}_id",
+    name: "enterprise[tag_rules_attributes][{{rule.id}}][id]",
+    ng: { value: "rule.id" } }
+
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{rule.id}}_calculator_attributes_id",
+    name: "enterprise[tag_rules_attributes][{{rule.id}}][calculator_attributes][id]",
+    ng: { value: "rule.calculator.id" } }
+
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{rule.id}}_calculator_attributes_type",
+    name: "enterprise[tag_rules_attributes][{{rule.id}}][calculator_attributes][type]",
+    value: "TagRule::FlatPercentItemTotal" }
+
+  %span.text-big Apply a discount of
+  %span.input-symbol.after
+    %span.text-big %
+    %input.text-big{ type: "number",
+      id: "enterprise_tag_rules_attributes_{{rule.id}}_calculator_attributes_preferred_flat_percent",
+      name: "enterprise[tag_rules_attributes][{{rule.id}}][calculator_attributes][preferred_flat_percent]",
+      min: 0,
+      max: 100,
+      ng: { model: "rule.calculator.preferred_flat_percent" } }
+  %span.text-big to order subtotals

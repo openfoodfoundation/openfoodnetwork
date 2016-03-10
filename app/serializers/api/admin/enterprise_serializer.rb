@@ -7,4 +7,5 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
 
   has_one :owner, serializer: Api::Admin::UserSerializer
   has_many :users, serializer: Api::Admin::UserSerializer
+  has_many :tag_rules, serializer: Api::Admin::TagRuleSerializer
 end

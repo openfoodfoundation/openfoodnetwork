@@ -1001,6 +1001,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   payment_methods: "Payment Methods"
   enterprise_fees: "Enterprise Fees"
   inventory_settings: "Inventory Settings"
+  tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"

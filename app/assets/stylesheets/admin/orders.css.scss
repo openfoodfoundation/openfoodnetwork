@@ -69,6 +69,21 @@ div#group_buy_calculation {
 			text-indent:1em;
 		}
 	}
+
+	&.after {
+
+		span {
+			position: absolute;
+			transform: translate(0,-55%);
+			top:50%;
+			right: 0.5em;
+			pointer-events:none;
+		}
+
+		input {
+			padding-right: 1.2em;
+		}
+	}
 }
 
 th.actions {

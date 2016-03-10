@@ -4,7 +4,7 @@ module Admin
   class EnterprisesController < ResourceController
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => [:index, :register, :check_permalink]
-    before_filter :load_methods_and_fees, :only => [:new, :edit, :update, :create]
+    before_filter :load_methods_and_fees, :only => [:edit, :update]
     before_filter :load_groups, :only => [:new, :edit, :update, :create]
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update

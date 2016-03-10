@@ -1,0 +1,10 @@
+.row{ ng: { controller: "TagRulesCtrl" } }
+  .eleven.columns.alpha.omega
+    .eleven.columns.alpha.omega
+      .customer_tag{ ng: { repeat: "(tags, rules) in groupedTagRules" }, bindonce: true }
+        .header
+          %h3
+            For customers tagged
+            %span.text-red &#35;{{ tags.split(",").join(", #") }}
+        .tag_rule{ ng: { repeat: "rule in rules" } }
+          %discount-order{ bo: { if: "rule.type == 'TagRule::DiscountOrder'" } }
