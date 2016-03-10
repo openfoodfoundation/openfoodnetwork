@@ -103,9 +103,9 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
   end
 
   def with_select2_open(from)
-    find(from).click
+    open_select2 from
     r = yield
-    find(from).click
+    close_select2 from
     r
   end
 end

@@ -11,7 +11,7 @@
       - suppliers = order_cycle.suppliers.merge(OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises)
       - supplier_list = suppliers.map(&:name).sort.join ', '
       - if suppliers.count > 3
-        %span.with-tip{'data-powertip' => supplier_list}
+        %span{'ofn-with-tip' => supplier_list}
           = suppliers.count
           suppliers
       - else
@@ -21,7 +21,7 @@
       - distributors = order_cycle.distributors.merge(OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises)
       - distributor_list = distributors.map(&:name).sort.join ', '
       - if distributors.count > 3
-        %span.with-tip{'data-powertip' => distributor_list}
+        %span{'ofn-with-tip' => distributor_list}
           = distributors.count
           distributors
       - else

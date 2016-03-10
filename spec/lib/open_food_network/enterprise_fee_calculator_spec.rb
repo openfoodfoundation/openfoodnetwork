@@ -194,77 +194,90 @@ module OpenFoodNetwork
       end
     end
 
-    describe "creating adjustments for a line item" do
-      let(:oc) { OrderCycle.new }
-      let(:variant) { double(:variant) }
-      let(:distributor) { double(:distributor) }
-      let(:order) { double(:order, distributor: distributor, order_cycle: oc) }
-      let(:line_item) { double(:line_item, variant: variant, order: order) }
-
-      it "creates an adjustment for each fee" do
-        applicator = double(:enterprise_fee_applicator)
-        applicator.should_receive(:create_line_item_adjustment).with(line_item)
-
-        efc = EnterpriseFeeCalculator.new
-        efc.should_receive(:per_item_enterprise_fee_applicators_for).with(variant) { [applicator] }
-
-        efc.create_line_item_adjustments_for line_item
-      end
-
-      it "makes fee applicators for a line item" do
-        distributor = double(:distributor)
-        ef1 = double(:enterprise_fee)
-        ef2 = double(:enterprise_fee)
-        ef3 = double(:enterprise_fee)
-        incoming_exchange = double(:exchange, role: 'supplier')
-        outgoing_exchange = double(:exchange, role: 'distributor')
-        incoming_exchange.stub_chain(:enterprise_fees, :per_item) { [ef1] }
-        outgoing_exchange.stub_chain(:enterprise_fees, :per_item) { [ef2] }
-
-        oc.stub(:exchanges_carrying) { [incoming_exchange, outgoing_exchange] }
-        oc.stub_chain(:coordinator_fees, :per_item) { [ef3] }
-
-        efc = EnterpriseFeeCalculator.new(distributor, oc)
-        efc.send(:per_item_enterprise_fee_applicators_for, line_item.variant).should ==
-          [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, line_item.variant, 'supplier'),
-           OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, line_item.variant, 'distributor'),
-           OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, line_item.variant, 'coordinator')]
-      end
-    end
-
-    describe "creating adjustments for an order" do
+    describe "creating adjustments" do
       let(:oc) { OrderCycle.new }
       let(:distributor) { double(:distributor) }
-      let(:order) { double(:order, distributor: distributor, order_cycle: oc) }
+      let(:ef1) { double(:enterprise_fee) }
+      let(:ef2) { double(:enterprise_fee) }
+      let(:ef3) { double(:enterprise_fee) }
+      let(:incoming_exchange) { double(:exchange, role: 'supplier') }
+      let(:outgoing_exchange) { double(:exchange, role: 'distributor') }
+      let(:applicator) { double(:enterprise_fee_applicator) }
 
-      it "creates an adjustment for each fee" do
-        applicator = double(:enterprise_fee_applicator)
-        applicator.should_receive(:create_order_adjustment).with(order)
 
-        efc = EnterpriseFeeCalculator.new
-        efc.should_receive(:per_order_enterprise_fee_applicators_for).with(order) { [applicator] }
+      describe "for a line item" do
+        let(:variant) { double(:variant) }
+        let(:line_item) { double(:line_item, variant: variant, order: order) }
 
-        efc.create_order_adjustments_for order
+        before do
+          allow(incoming_exchange).to receive(:enterprise_fees) { double(:enterprise_fees, per_item: [ef1]) }
+          allow(outgoing_exchange).to receive(:enterprise_fees) { double(:enterprise_fees, per_item: [ef2]) }
+          allow(oc).to receive(:exchanges_carrying) { [incoming_exchange, outgoing_exchange] }
+          allow(oc).to receive(:coordinator_fees) { double(:coodinator_fees, per_item: [ef3]) }
+        end
+
+        context "with order_cycle and distributor set" do
+          let(:efc) { EnterpriseFeeCalculator.new(distributor, oc) }
+          let(:order) { double(:order, distributor: distributor, order_cycle: oc) }
+
+          it "creates an adjustment for each fee" do
+            expect(efc).to receive(:per_item_enterprise_fee_applicators_for).with(variant) { [applicator] }
+            expect(applicator).to receive(:create_line_item_adjustment).with(line_item)
+            efc.create_line_item_adjustments_for line_item
+          end
+
+          it "makes fee applicators for a line item" do
+            expect(efc.send(:per_item_enterprise_fee_applicators_for, line_item.variant))
+            .to eq [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, line_item.variant, 'supplier'),
+                    OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, line_item.variant, 'distributor'),
+                    OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, line_item.variant, 'coordinator')]
+          end
+        end
+
+        context "with no order_cycle or distributor set" do
+          let(:efc) { EnterpriseFeeCalculator.new }
+          let(:order) { double(:order, distributor: nil, order_cycle: nil) }
+
+          it "does not make applicators for an order" do
+            expect(efc.send(:per_item_enterprise_fee_applicators_for, line_item.variant)).to eq []
+          end
+        end
       end
 
-      it "makes fee applicators for an order" do
-        distributor = double(:distributor)
-        ef1 = double(:enterprise_fee)
-        ef2 = double(:enterprise_fee)
-        ef3 = double(:enterprise_fee)
-        incoming_exchange = double(:exchange, role: 'supplier')
-        outgoing_exchange = double(:exchange, role: 'distributor')
-        incoming_exchange.stub_chain(:enterprise_fees, :per_order) { [ef1] }
-        outgoing_exchange.stub_chain(:enterprise_fees, :per_order) { [ef2] }
+      describe "for an order" do
+        before do
+          allow(incoming_exchange).to receive(:enterprise_fees) { double(:enterprise_fees, per_order: [ef1]) }
+          allow(outgoing_exchange).to receive(:enterprise_fees) { double(:enterprise_fees, per_order: [ef2]) }
+          allow(oc).to receive(:exchanges_supplying) { [incoming_exchange, outgoing_exchange] }
+          allow(oc).to receive(:coordinator_fees) { double(:coodinator_fees, per_order: [ef3]) }
+        end
 
-        oc.stub(:exchanges_supplying) { [incoming_exchange, outgoing_exchange] }
-        oc.stub_chain(:coordinator_fees, :per_order) { [ef3] }
+        context "with order_cycle and distributor set" do
+          let(:efc) { EnterpriseFeeCalculator.new(distributor, oc) }
+          let(:order) { double(:order, distributor: distributor, order_cycle: oc) }
 
-        efc = EnterpriseFeeCalculator.new(distributor, oc)
-        efc.send(:per_order_enterprise_fee_applicators_for, order).should ==
-          [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, nil, 'supplier'),
-           OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, nil, 'distributor'),
-           OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, nil, 'coordinator')]
+          it "creates an adjustment for each fee" do
+            expect(efc).to receive(:per_order_enterprise_fee_applicators_for).with(order) { [applicator] }
+            expect(applicator).to receive(:create_order_adjustment).with(order)
+            efc.create_order_adjustments_for order
+          end
+
+          it "makes fee applicators for an order" do
+            expect(efc.send(:per_order_enterprise_fee_applicators_for, order))
+            .to eq [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, nil, 'supplier'),
+                    OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, nil, 'distributor'),
+                    OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, nil, 'coordinator')]
+          end
+        end
+
+        context "with no order_cycle or distributor set" do
+          let(:efc) { EnterpriseFeeCalculator.new }
+          let(:order) { double(:order, distributor: nil, order_cycle: nil) }
+
+          it "does not make applicators for an order" do
+            expect(efc.send(:per_order_enterprise_fee_applicators_for, order)).to eq []
+          end
+        end
       end
     end
   end

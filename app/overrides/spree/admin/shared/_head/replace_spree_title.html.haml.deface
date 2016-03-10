@@ -1,4 +1,7 @@
 / replace_contents "title"
 
-= t(controller.controller_name, :default => controller.controller_name.titleize)
+- if content_for? :html_title
+  = yield :html_title
+- else
+  = t(controller.controller_name, :default => controller.controller_name.titleize)
 = " - OFN #{t(:administration)}"

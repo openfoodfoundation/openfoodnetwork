@@ -1,8 +1,26 @@
-- if can? :notify_producers, @order_cycle
-  = content_for :page_actions do
+- content_for :page_actions do
+  :javascript
+    function toggleSettings(){
+      if( $('#advanced_settings').is(":visible") ){
+        $('button#toggle_settings i').switchClass("icon-chevron-up","icon-chevron-down")
+      }
+      else {
+        $('button#toggle_settings i').switchClass("icon-chevron-down","icon-chevron-up")
+      }
+      $("#advanced_settings").slideToggle()
+    }
+
+  - if can? :notify_producers, @order_cycle
     %li
       = button_to "Notify producers", main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers', :confirm => 'Are you sure?'
+  %li
+    %button#toggle_settings{ onClick: 'toggleSettings()' }
+      Advanced Settings
+      %i.icon-chevron-down
 
+
+#advanced_settings{ hidden: true }
+  = render partial: "/admin/order_cycles/advanced_settings"
 
 %h1 Edit Order Cycle
 

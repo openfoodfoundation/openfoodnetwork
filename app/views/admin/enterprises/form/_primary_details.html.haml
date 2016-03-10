@@ -10,7 +10,7 @@
     .alpha.eleven.columns
       .three.columns.alpha
         = f.label :group_ids, 'Groups'
-        .with-tip{'data-powertip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
+        %div{'ofn-with-tip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
           %a What's this?
       .eight.columns.omega
         = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
@@ -18,7 +18,7 @@
 .row
   .three.columns.alpha
     %label Primary Producer
-    .with-tip{'data-powertip' => "Select 'Producer' if you are a primary producer of food."}
+    %div{'ofn-with-tip' => "Select 'Producer' if you are a primary producer of food."}
       %a What's this?
   .five.columns.omega
     = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
@@ -29,7 +29,7 @@
     .alpha.eleven.columns
       .three.columns.alpha
         = f.label :sells, 'Sells'
-        .with-tip{'data-powertip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
+        %div{'ofn-with-tip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
           %a What's this?
       .two.columns
         = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
@@ -46,7 +46,7 @@
 .row
   .three.columns.alpha
     %label Visible in search?
-    .with-tip{'data-powertip' => "Determines whether this enterprise will be visible to customers when searching the site."}
+    %div{'ofn-with-tip' => "Determines whether this enterprise will be visible to customers when searching the site."}
       %a What's this?
   .two.columns
     = f.radio_button :visible, true
@@ -60,7 +60,7 @@
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha
       = f.label :permalink, 'Permalink (no spaces)'
-      .with-tip{'data-powertip' => "This permalink is used to create the url to your shop: #{spree.root_url}your-shop-name/shop"}
+      %div{'ofn-with-tip' => "This permalink is used to create the url to your shop: #{spree.root_url}your-shop-name/shop"}
         %a What's this?
     .six.columns
       = f.text_field :permalink, { 'ng-model' => "Enterprise.permalink", placeholder: "eg. your-shop-name", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }" }
@@ -72,7 +72,7 @@
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha
       %label Link to shop front
-      .with-tip{'data-powertip' => "A direct link to your shopfront on the Open Food Network."}
+      %div{'ofn-with-tip' => "A direct link to your shopfront on the Open Food Network."}
         %a What's this?
     .eight.columns.omega
       = surround spree.root_url, "/shop" do

@@ -1,19 +1,22 @@
-%tr.variant{ id: "v_{{variant.id}}", ng: {repeat: 'variant in product.variants'}}
+%tr.variant{ id: "v_{{variant.id}}", ng: {repeat: 'variant in product.variants | inventoryVariants:hub_id:views'}}
   %td.producer{ ng: { show: 'columns.producer.visible' } }
   %td.product{ ng: { show: 'columns.product.visible' } }
     %span{ bo: { bind: 'variant.display_name || ""'} }
     .variant-override-unit{ bo: { bind: 'variant.unit_to_display'} }
   %td.sku{ ng: { show: 'columns.sku.visible' } }
-    %input{name: 'variant-overrides-{{ variant.id }}-sku', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].sku'}, placeholder: '{{ variant.sku }}', 'ofn-track-variant-override' => 'sku'}
+    %input{name: 'variant-overrides-{{ variant.id }}-sku', type: 'text', ng: {model: 'variantOverrides[hub_id][variant.id].sku'}, placeholder: '{{ variant.sku }}', 'ofn-track-variant-override' => 'sku'}
   %td.price{ ng: { show: 'columns.price.visible' } }
-    %input{name: 'variant-overrides-{{ variant.id }}-price', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].price'}, placeholder: '{{ variant.price }}', 'ofn-track-variant-override' => 'price'}
+    %input{name: 'variant-overrides-{{ variant.id }}-price', type: 'text', ng: {model: 'variantOverrides[hub_id][variant.id].price'}, placeholder: '{{ variant.price }}', 'ofn-track-variant-override' => 'price'}
   %td.on_hand{ ng: { show: 'columns.on_hand.visible' } }
-    %input{name: 'variant-overrides-{{ variant.id }}-count_on_hand', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}', 'ofn-track-variant-override' => 'count_on_hand'}
+    %input{name: 'variant-overrides-{{ variant.id }}-count_on_hand', type: 'text', ng: {model: 'variantOverrides[hub_id][variant.id].count_on_hand'}, placeholder: '{{ variant.on_hand }}', 'ofn-track-variant-override' => 'count_on_hand'}
   %td.on_demand{ ng: { show: 'columns.on_demand.visible' } }
-    %input.field{ :type => 'checkbox', name: 'variant-overrides-{{ variant.id }}-on_demand', ng: { model: 'variantOverrides[hub.id][variant.id].on_demand' }, 'ofn-track-variant-override' => 'on_demand' }
+    %input.field{ :type => 'checkbox', name: 'variant-overrides-{{ variant.id }}-on_demand', ng: { model: 'variantOverrides[hub_id][variant.id].on_demand' }, 'ofn-track-variant-override' => 'on_demand' }
   %td.reset{ ng: { show: 'columns.reset.visible' } }
-    %input{name: 'variant-overrides-{{ variant.id }}-resettable', type: 'checkbox', ng: {model: 'variantOverrides[hub.id][variant.id].resettable'}, placeholder: '{{ variant.resettable }}', 'ofn-track-variant-override' => 'resettable'}
+    %input{name: 'variant-overrides-{{ variant.id }}-resettable', type: 'checkbox', ng: {model: 'variantOverrides[hub_id][variant.id].resettable'}, placeholder: '{{ variant.resettable }}', 'ofn-track-variant-override' => 'resettable'}
   %td.reset{ ng: { show: 'columns.reset.visible' } }
-    %input{name: 'variant-overrides-{{ variant.id }}-default_stock', type: 'text', ng: {model: 'variantOverrides[hub.id][variant.id].default_stock'}, placeholder: '{{ variant.default_stock ? variant.default_stock : "Default stock"}}', 'ofn-track-variant-override' => 'default_stock'}
+    %input{name: 'variant-overrides-{{ variant.id }}-default_stock', type: 'text', ng: {model: 'variantOverrides[hub_id][variant.id].default_stock'}, placeholder: '{{ variant.default_stock ? variant.default_stock : "Default stock"}}', 'ofn-track-variant-override' => 'default_stock'}
   %td.inheritance{ ng: { show: 'columns.inheritance.visible' } }
     %input.field{ :type => 'checkbox', name: 'variant-overrides-{{ variant.id }}-inherit', ng: { model: 'inherit' }, 'track-inheritance' => true }
+  %td.visibility{ ng: { show: 'columns.visibility.visible' } }
+    %button.icon-remove.hide.fullwidth{ :type => 'button', ng: { click: "setVisibility(hub_id,variant.id,false)" } }
+      = t('admin.inventory.hide')

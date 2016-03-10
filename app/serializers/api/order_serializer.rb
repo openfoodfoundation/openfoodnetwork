@@ -5,7 +5,7 @@ module Api
     has_many :payments, serializer: Api::PaymentSerializer
 
     def completed_at
-      object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: :long) #.to_formatted_s(:long_ordinal)
+      object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: :long)
     end
 
     def total
@@ -13,15 +13,15 @@ module Api
     end
 
     def shipment_state
-      object.shipment_state ? object.shipment_state.humanize : nil # Or a call to t() here?
+      object.shipment_state ? object.shipment_state : nil
     end
 
     def payment_state
-      object.payment_state ? object.payment_state.humanize : nil # Or a call to t() here?
+      object.payment_state ? object.payment_state : nil
     end
 
     def state
-      object.state ? object.state.humanize : nil # Or a call to t() here?
+      object.state ? object.state : nil
     end
 
     def path

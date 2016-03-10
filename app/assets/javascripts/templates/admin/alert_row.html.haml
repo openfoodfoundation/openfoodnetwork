@@ -1,0 +1,8 @@
+.sixteen.columns.alpha.omega.alert-row{ ng: { show: '!dismissed' } }
+  .fifteen.columns.pad.alpha
+    %span.message.text-big{ ng: { bind: 'message'} }
+    &nbsp;&nbsp;&nbsp;
+    %input{ type: 'button', ng: { value: "buttonText", show: 'buttonText && buttonAction', click: "buttonAction()" } }
+  .one.column.omega.pad.text-center
+    %a.close{ href: "#", ng: { click: "dismiss()" } }
+      &times;
