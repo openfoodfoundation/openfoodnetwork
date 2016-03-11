@@ -55,19 +55,21 @@ Spree.user_class.class_eval do
   end
 
   # Returns orders and their associated payments for all distributors that have been ordered from
+  def get_orders_by_distributor
+    Enterprise.includes(distributed_orders: { payments: :payment_method })
+    .where(enterprises: { id: self.enterprises_ordered_from },
+           spree_orders: { state: 'complete', user_id: self.id })
+    .order('spree_orders.completed_at DESC')
+  end
+
   def orders_by_distributor
-    data_array = Enterprise.includes(distributed_orders: {payments: :payment_method})
-      .where(enterprises: { id: self.enterprises_ordered_from },
-        spree_orders: { state: 'complete', user_id: self.id}
-      ).order('spree_orders.completed_at DESC')
-      .to_a
     # Remove uncompleted payments as these will not be reflected in order balance
-    data_array.each do |enterprise|
+    data_array = self.get_orders_by_distributor.to_a.each do |enterprise|
       enterprise.distributed_orders.each do |order|
-        order.payments.keep_if{ |payment| payment.state == "completed" }
+        order.payments.keep_if { |payment| payment.state == "completed" }
       end
     end
-    data_array.sort!{ |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
+    data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
   end
 
   private
