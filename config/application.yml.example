@@ -13,3 +13,11 @@ LOCALE: en
 CHECKOUT_ZONE: Australia
 # Find currency codes at http://en.wikipedia.org/wiki/ISO_4217.
 CURRENCY: AUD
+
+# SingleSignOn login for Discourse
+#
+# DISCOURSE_SSO_SECRET should be a random string. It must be the same as provided to your Discourse instance.
+#DISCOURSE_SSO_SECRET: ""
+#
+# DISCOURSE_URL must be the URL of your Discourse instance.
+#DISCOURSE_URL: "https://noticeboard.openfoodnetwork.org.au"

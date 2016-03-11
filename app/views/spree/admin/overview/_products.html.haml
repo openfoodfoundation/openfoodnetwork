@@ -5,7 +5,7 @@
       %a.three.columns.omega.icon-plus.button.blue{ href: "#{new_admin_product_path}" }
         CREATE NEW
     - else
-      %a.with-tip{ title: "The products that you sell through the Open Food Network." } What's this?
+      %a{ "ofn-with-tip" => "The products that you sell through the Open Food Network." } What's this?
   %div.seven.columns.alpha.list
     - if @product_count > 0
       %div.seven.columns.alpha.list-item

@@ -38,7 +38,7 @@ feature "Registration", js: true do
       # Filling in Contact Details
       expect(page).to have_content 'Who is responsible for managing My Awesome Enterprise?'
       fill_in 'enterprise_contact', with: 'Saskia Munroe'
-      page.should have_field 'enterprise_email', with: user.email
+      page.should have_field 'enterprise_email_address', with: user.email
       fill_in 'enterprise_phone', with: '12 3456 7890'
       click_button 'Continue'
 

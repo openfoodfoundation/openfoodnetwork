@@ -58,6 +58,53 @@ en:
 
   sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
 
+
+  admin:
+    # General form elements
+    quick_search: Quick Search
+    clear_all: Clear All
+    producer: Producer
+    shop: Shop
+    product: Product
+    variant: Variant
+
+    columns: Columns
+    actions: Actions
+    viewing: "Viewing: %{current_view_name}"
+
+    whats_this: What's this?
+
+    inventory:
+      title: Inventory
+      description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
+      sku: SKU
+      price: Price
+      on_hand: On Hand
+      on_demand: On Demand?
+      enable_reset: Enable Stock Level Reset?
+      inherit: Inherit?
+      add: Add
+      hide: Hide
+      select_a_shop: Select A Shop
+      review_now: Review Now
+      new_products_alert_message: There are %{new_product_count} new products available to add to your inventory.
+      currently_empty: Your inventory is currently empty
+      no_matching_products: No matching products found in your inventory
+      no_hidden_products: No products have been hidden from this inventory
+      no_matching_hidden_products: No hidden products match your search criteria
+      no_new_products: No new products are available to add to this inventory
+      no_matching_new_products: No new products match your search criteria
+      inventory_powertip: This is your inventory of products. To add products to your inventory, select 'New Products' from the Viewing dropdown.
+      hidden_powertip: These products have been hidden from your inventory and will not be available to add to your shop. You can click 'Add' to add a product to you inventory.
+      new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
+
+
+    order_cycle:
+      choose_products_from: "Choose Products From:"
+
+    enterprise:
+      select_outgoing_oc_products_from: Select outgoing OC products from
+
   # Printable Invoice Columns
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
@@ -114,6 +161,7 @@ en:
   label_account: "Account"
   label_more: "More"
   label_less: "Show less"
+  label_notices: "Notices"
 
   items: "items"
   cart_headline: "Your shopping cart"
@@ -554,8 +602,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
   enterprise_contact: "Primary Contact"
   enterprise_contact_required: "You need to enter a primary contact."
-  enterprise_email: "Email address"
-  enterprise_email_required: "You need to enter valid email address."
+  enterprise_email_address: "Email address"
   enterprise_phone: "Phone number"
   back: "Back"
   continue: "Continue"

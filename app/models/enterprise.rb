@@ -8,6 +8,11 @@ class Enterprise < ActiveRecord::Base
   preference :shopfront_taxon_order, :string, default: ""
   preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
 
+  # This is hopefully a temporary measure, pending the arrival of multiple named inventories
+  # for shops. We need this here to allow hubs to restrict visible variants to only those in
+  # their inventory if they so choose
+  preference :product_selection_from_inventory_only, :boolean, default: false
+
   devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
   handle_asynchronously :send_confirmation_instructions
   handle_asynchronously :send_on_create_confirmation_instructions
@@ -36,6 +41,7 @@ class Enterprise < ActiveRecord::Base
   has_many :shipping_methods, through: :distributor_shipping_methods
   has_many :customers
   has_many :billable_periods
+  has_many :inventory_items
 
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
@@ -75,6 +81,7 @@ class Enterprise < ActiveRecord::Base
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
+  before_validation :ensure_email_set
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
@@ -165,7 +172,7 @@ class Enterprise < ActiveRecord::Base
     if user.has_spree_role?('admin')
       scoped
     else
-      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id).select("DISTINCT enterprises.*")
+      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end
   }
 
@@ -245,6 +252,14 @@ class Enterprise < ActiveRecord::Base
 
   def linkedin
     strip_url read_attribute(:linkedin)
+  end
+
+  def inventory_variants
+    if prefers_product_selection_from_inventory_only?
+      Spree::Variant.visible_for(self)
+    else
+      Spree::Variant.not_hidden_for(self)
+    end
   end
 
   def distributed_variants
@@ -393,6 +408,10 @@ class Enterprise < ActiveRecord::Base
 
   def ensure_owner_is_manager
     users << owner unless users.include?(owner) || owner.admin?
+  end
+
+  def ensure_email_set
+    self.email = owner.email if email.blank? && owner.present?
   end
 
   def enforce_ownership_limit

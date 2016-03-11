@@ -44,7 +44,7 @@ feature %q{
       select2_select "PayPal Express", from: "payment_method_type"
       click_button 'Update'
 
-      expect(flash_message).to eq 'Payment Method has been successfully updated!'
+      flash_message.should eq 'Payment Method has been successfully updated!'
 
       payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
       expect(payment_method.distributors).to include @distributors[1], @distributors[2]

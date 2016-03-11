@@ -1,14 +1,14 @@
 = render 'admin/variant_overrides/header'
 = render 'admin/variant_overrides/data'
 
-%div{ ng: { app: 'admin.variantOverrides', controller: 'AdminVariantOverridesCtrl', init: 'initialise()' } }
+.margin-bottom-50{ ng: { app: 'admin.variantOverrides', controller: 'AdminVariantOverridesCtrl', init: 'initialise()' } }
   = render 'admin/variant_overrides/filters'
-  %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'hub' } }
-  .controls.sixteen.columns.alpha.omega{ ng: { show: 'hub' } }
-    %input.four.columns.alpha{ type: 'button', value: 'Reset Stock to Defaults', 'ng-click' => 'resetStock()' }
-    %div.nine.columns.alpha &nbsp;
-    = render 'admin/shared/columns_dropdown'
-
-  %form{ name: 'variant_overrides_form' }
-    %save-bar{ save: "update()", form: "variant_overrides_form" }
+  = render 'admin/variant_overrides/new_products_alert'
+  = render 'admin/variant_overrides/loading_flash'
+  = render 'admin/variant_overrides/controls'
+  = render 'admin/variant_overrides/no_results'
+  %div{ ng: { cloak: true, show: 'hub_id && filteredProducts.length > 0' } }
+    = render 'admin/variant_overrides/new_products'
+    = render 'admin/variant_overrides/hidden_products'
     = render 'admin/variant_overrides/products'
+    = render 'admin/variant_overrides/show_more'

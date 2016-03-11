@@ -16,18 +16,15 @@ module Admin
 
       respond_to do |format|
         format.html
-        format.json { @presented_collection = @collection.each_with_index.map { |ef, i| EnterpriseFeePresenter.new(self, ef, i) } }
+        format.json { render_as_json @collection, controller: self, include_calculators: @include_calculators }
+        # format.json { @presented_collection = @collection.each_with_index.map { |ef, i| EnterpriseFeePresenter.new(self, ef, i) } }
       end
     end
 
     def for_order_cycle
       respond_to do |format|
         format.html
-        format.json do
-          render json: ActiveModel::ArraySerializer.new( @collection,
-            each_serializer: Api::Admin::EnterpriseFeeSerializer, controller: self
-          ).to_json
-        end
+        format.json { render_as_json @collection, controller: self }
       end
     end
 

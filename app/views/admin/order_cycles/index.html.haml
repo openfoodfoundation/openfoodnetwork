@@ -11,7 +11,7 @@
     %li
       = button_link_to "Show more", main_app.admin_order_cycles_path(params: { show_more: true })
 
-= form_for @order_cycle_set, :url => main_app.bulk_update_admin_order_cycles_path do |f|
+= form_for @order_cycle_set, url: main_app.bulk_update_admin_order_cycles_path, html: {"ng-app" => "admin.orderCycles"} do |f|
   %table.index#listing_order_cycles
     %colgroup
       %col

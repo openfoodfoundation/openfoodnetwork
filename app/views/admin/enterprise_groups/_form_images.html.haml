@@ -2,16 +2,16 @@
   %legend Images
   .row
     .alpha.three.columns
-      = f.label :logo, class: 'with-tip', 'data-powertip' => 'This is the logo'
-      .with-tip{'data-powertip' => 'This is the logo'}
+      = f.label :logo, 'ofn-with-tip' => 'This is the logo for the group'
+      %div{'ofn-with-tip' => 'This is the logo for the group'}
         %a What's this?
     .omega.eight.columns
       = image_tag @object.logo.url if @object.logo.present?
       = f.file_field :logo
   .row
     .alpha.three.columns
-      = f.label :promo_image, class: 'with-tip', 'data-powertip' => 'This image is displayed at the top of the Group profile'
-      .with-tip{'data-powertip' => 'This image is displayed at the top of the Group profile'}
+      = f.label :promo_image, 'ofn-with-tip' => 'This image is displayed at the top of the Group profile'
+      %div{'ofn-with-tip' => 'This image is displayed at the top of the Group profile'}
         %a What's this?
     .omega.eight.columns
       = image_tag @object.promo_image.url if @object.promo_image.present?

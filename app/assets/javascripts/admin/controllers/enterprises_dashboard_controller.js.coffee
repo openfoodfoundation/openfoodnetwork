@@ -1,5 +1,2 @@
-angular.module("ofn.admin").controller "enterprisesDashboardCtrl", [
-  "$scope"
-  ($scope) ->
-    $scope.activeTab = "hubs"
-]
+angular.module("ofn.admin").controller "enterprisesDashboardCtrl", ($scope) ->
+  $scope.activeTab = "hubs"
