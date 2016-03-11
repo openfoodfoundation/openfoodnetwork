@@ -1,9 +1,9 @@
 = content_for :page_title do
   Enterprise Groups
 
-= content_for :page_actions do
-  %li#new_enterprise_group_link
-    = button_link_to "New Enterprise Group", main_app.new_admin_enterprise_group_path, :icon => 'add', :id => 'admin_new_enterprise_group_link'
+- if admin_user?
+  = content_for :page_actions do
+    %li= button_link_to "New Enterprise Group", main_app.new_admin_enterprise_group_path
 
 %table.index#listing_enterprise_groups
   %thead
