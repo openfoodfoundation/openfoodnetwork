@@ -159,6 +159,8 @@ feature %q{
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Price").click
+        # hide dropdown
+        first("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "$50.00"
           fill_in "final_weight_volume", :with => 2000

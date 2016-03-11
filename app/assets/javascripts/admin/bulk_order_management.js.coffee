@@ -30,7 +30,7 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
         quantity:     { name: t("bom_quantity"),     visible: true }
         max:          { name: t("bom_max"),          visible: true }
         final_weight_volume:   { name: t("bom_final_weigth_volume"), visible: false }
-        price:        { name: t("bom_price"),        visible: false }
+        price:        { name: t("price"),            visible: false }
     $scope.initialise = ->
       $scope.initialiseVariables()
       authorise_api_reponse = ""

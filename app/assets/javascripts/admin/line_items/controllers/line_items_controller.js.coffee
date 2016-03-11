@@ -22,7 +22,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     quantity:     { name: t("bom_quantity"),     visible: true }
     max:          { name: t("bom_max"),          visible: true }
     final_weight_volume:   { name: t("bom_final_weigth_volume"), visible: false }
-    price:        { name: t("bom_price"),        visible: false }
+    price:        { name: t("price"),            visible: false }
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t "unsaved_changes_warning")

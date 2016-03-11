@@ -250,6 +250,7 @@ en:
   bom_hub: "Hub"
   bom_variant: "Product: Unit"
   bom_final_weigth_volume: "Weight/Volume"
+  bom_quantity: "Quantity"
   bom_actions_delete: "Delete Selected"
   bom_loading: "Loading orders"
   bom_no_results: "No orders found."
