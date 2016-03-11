@@ -54,6 +54,8 @@ module Admin
 
       @hub_permissions = OpenFoodNetwork::Permissions.new(spree_current_user).
         variant_override_enterprises_per_hub
+
+      @inventory_items = InventoryItem.where(enterprise_id: @hubs)
     end
 
     def load_collection

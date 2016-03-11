@@ -1,5 +1,5 @@
 class Api::Admin::EnterpriseFeeSerializer < ActiveModel::Serializer
-  attributes :id, :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type
+  attributes :id, :enterprise_id, :fee_type, :name, :tax_category_id, :inherits_tax_category, :calculator_type
   attributes :enterprise_name, :calculator_description, :calculator_settings
 
   def enterprise_name
@@ -11,6 +11,8 @@ class Api::Admin::EnterpriseFeeSerializer < ActiveModel::Serializer
   end
 
   def calculator_settings
+    return nil unless options[:include_calculators]
+
     result = nil
 
     options[:controller].send(:with_format, :html) do

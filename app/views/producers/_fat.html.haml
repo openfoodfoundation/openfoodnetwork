@@ -23,7 +23,7 @@
     %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
       &nbsp;
 
-    %div{"bo-if" => "producer.email || producer.website || producer.phone"}
+    %div{"bo-if" => "producer.email_address || producer.website || producer.phone"}
       %label
         = t :producers_contact
 
@@ -31,9 +31,9 @@
         = t :producers_contact_phone
         %span{"bo-text" => "producer.phone"}
 
-      %p.word-wrap{"bo-if" => "producer.email"}
-        %a{"bo-href" => "producer.email | stripUrl", target: "_blank", mailto: true}
-          %span.email{"bo-bind" => "producer.email | stripUrl"}
+      %p.word-wrap{"bo-if" => "producer.email_address"}
+        %a{"bo-href" => "producer.email_address | stripUrl", target: "_blank", mailto: true}
+          %span.email{"bo-bind" => "producer.email_address | stripUrl"}
 
       %p.word-wrap{"bo-if" => "producer.website"}
         %a{"bo-href-i" => "http://{{producer.website | stripUrl}}", target: "_blank" }

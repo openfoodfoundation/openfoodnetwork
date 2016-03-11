@@ -12,6 +12,6 @@
       = t :ocs_closed_opens, time: distance_of_time_in_words_to_now(next_oc.orders_open_at)
 
   %p
-    = t(:ocs_closed_email, email: current_distributor.email) if current_distributor.email
+    = t(:ocs_closed_email, email: current_distributor.email_address) if current_distributor.email_address
     %br/
     = t(:ocs_closed_phone, phone: current_distributor.phone) if current_distributor.phone

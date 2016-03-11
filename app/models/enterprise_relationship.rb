@@ -6,6 +6,8 @@ class EnterpriseRelationship < ActiveRecord::Base
   validates_presence_of :parent_id, :child_id
   validates_uniqueness_of :child_id, scope: :parent_id, message: I18n.t('validation_msg_relationship_already_established')
 
+  after_save :apply_variant_override_permissions
+
   scope :with_enterprises,
     joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
     joins('LEFT JOIN enterprises AS child_enterprises ON child_enterprises.id = enterprise_relationships.child_id')
@@ -61,10 +63,28 @@ class EnterpriseRelationship < ActiveRecord::Base
 
 
   def permissions_list=(perms)
-    perms.andand.each { |name| permissions.build name: name }
+    if perms.nil?
+      permissions.destroy_all
+    else
+      permissions.where('name NOT IN (?)', perms).destroy_all
+      perms.map { |name| permissions.find_or_initialize_by_name name }
+    end
   end
 
   def has_permission?(name)
-    permissions.map(&:name).map(&:to_sym).include? name.to_sym
+    permissions(:reload).map(&:name).map(&:to_sym).include? name.to_sym
+  end
+
+  private
+
+  def apply_variant_override_permissions
+    variant_overrides = VariantOverride.unscoped.for_hubs(child)
+      .joins(variant: :product).where("spree_products.supplier_id IN (?)", parent)
+
+    if has_permission?(:create_variant_overrides)
+      variant_overrides.update_all(permission_revoked_at: nil)
+    else
+      variant_overrides.update_all(permission_revoked_at: Time.now)
+    end
   end
 end

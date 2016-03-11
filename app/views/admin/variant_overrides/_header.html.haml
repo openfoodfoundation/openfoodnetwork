@@ -1,4 +1,8 @@
+- content_for :html_title do
+  = t("admin.inventory.title")
+
 - content_for :page_title do
-  =t :override_product_details
+  %h1.page-title= t("admin.inventory.title")
+  %a.with-tip{ 'data-powertip' => "#{t("admin.inventory.description")}" }=t('admin.whats_this')
 
 = render :partial => 'spree/admin/shared/product_sub_menu'

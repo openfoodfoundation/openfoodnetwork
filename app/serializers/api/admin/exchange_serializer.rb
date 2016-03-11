@@ -4,14 +4,35 @@ class Api::Admin::ExchangeSerializer < ActiveModel::Serializer
   has_many :enterprise_fees, serializer: Api::Admin::BasicEnterpriseFeeSerializer
 
   def variants
-    permitted = Spree::Variant.where("1=0")
-    if object.incoming
-      permitted = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle).
-      visible_variants_for_incoming_exchanges_from(object.sender)
+    variants = object.incoming? ? visible_incoming_variants : visible_outgoing_variants
+    Hash[ object.variants.merge(variants).map { |v| [v.id, true] } ]
+  end
+
+  private
+
+  def visible_incoming_variants
+    if object.order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+      permitted_incoming_variants.visible_for(object.order_cycle.coordinator)
     else
-      permitted = OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle).
-      visible_variants_for_outgoing_exchanges_to(object.receiver)
+      permitted_incoming_variants
     end
-    Hash[ object.variants.merge(permitted).map { |v| [v.id, true] } ]
+  end
+
+  def visible_outgoing_variants
+    if object.receiver.prefers_product_selection_from_inventory_only?
+      permitted_outgoing_variants.visible_for(object.receiver)
+    else
+      permitted_outgoing_variants.not_hidden_for(object.receiver)
+    end
+  end
+
+  def permitted_incoming_variants
+    OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle).
+    visible_variants_for_incoming_exchanges_from(object.sender)
+  end
+
+  def permitted_outgoing_variants
+    OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle)
+    .visible_variants_for_outgoing_exchanges_to(object.receiver)
   end
 end

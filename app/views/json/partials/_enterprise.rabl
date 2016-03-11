@@ -1,7 +1,7 @@
 attributes :name, :id, :description, :latitude, :longitude, :long_description, :website, :instagram, :linkedin, :twitter, :facebook, :is_primary_producer, :is_distributor, :phone
 
-node :email do |enterprise|
-  enterprise.email.to_s.reverse
+node :email_address do |enterprise|
+  enterprise.email_address.to_s.reverse
 end
 
 child :address do
