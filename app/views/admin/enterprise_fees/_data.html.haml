@@ -1,0 +1,3 @@
+= admin_inject_json_ams_array "admin.enterpriseFees", "enterprises", @enterprises, Api::Admin::IdNameSerializer
+= admin_inject_tax_categories(module: "admin.enterpriseFees")
+= admin_inject_json_ams_array "admin.enterpriseFees", "calculators", @calculators, Api::Admin::CalculatorSerializer

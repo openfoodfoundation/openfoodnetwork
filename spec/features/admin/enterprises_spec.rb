@@ -47,7 +47,7 @@ feature %q{
 
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
-    fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
+    fill_in 'enterprise_email_address', :with => 'info@eaterprises.com.au'
     fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
 
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
@@ -130,7 +130,7 @@ feature %q{
     click_link "Contact"
     fill_in 'enterprise_contact', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
-    fill_in 'enterprise_email', :with => 'info@eaterprises.com.au'
+    fill_in 'enterprise_email_address', :with => 'info@eaterprises.com.au'
     fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
 
     click_link "Social"
@@ -286,7 +286,7 @@ feature %q{
         click_link 'Enterprises'
         click_link 'New Enterprise'
         fill_in 'enterprise_name', with: 'zzz'
-        fill_in 'enterprise_email', with: 'bob@example.com'
+        fill_in 'enterprise_email_address', with: 'bob@example.com'
         fill_in 'enterprise_address_attributes_address1', with: 'z'
         fill_in 'enterprise_address_attributes_city', with: 'z'
         fill_in 'enterprise_address_attributes_zipcode', with: 'z'

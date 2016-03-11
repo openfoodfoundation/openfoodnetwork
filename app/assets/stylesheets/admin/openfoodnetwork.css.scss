@@ -166,11 +166,16 @@ table#listing_enterprise_groups {
   }
 }
 
+// TODO: remove this, use class below
 #no_results {
   font-weight:bold;
   color: #DA5354;
 }
 
+.no-results {
+  font-weight:bold;
+  color: #DA5354;
+}
 
 #loading {
   text-align: center;

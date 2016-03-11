@@ -6,6 +6,8 @@ class VariantOverride < ActiveRecord::Base
   # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero. Need to ensure this can be set by the user.
   validates :default_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
+  default_scope where(permission_revoked_at: nil)
+
   scope :for_hubs, lambda { |hubs|
     where(hub_id: hubs)
   }

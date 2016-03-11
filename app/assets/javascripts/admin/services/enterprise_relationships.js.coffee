@@ -29,4 +29,4 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
         when "add_to_order_cycle" then "add to order cycle"
         when "manage_products" then "manage products"
         when "edit_profile" then "edit profile"
-        when "create_variant_overrides" then "override variant details"
+        when "create_variant_overrides" then "add products to inventory"

@@ -40,5 +40,12 @@ describe Spree::OrderMailer do
       ActionMailer::Base.deliveries.count.should == 1
       ActionMailer::Base.deliveries.first.to.should == [@distributor.email]
     end
+
+    it "sends an email even if a footer_email is given" do
+      # Testing bug introduced by a9c37c162e1956028704fbdf74ce1c56c5b3ce7d
+      ContentConfig.footer_email = "email@example.com"
+      Spree::OrderMailer.confirm_email_for_shop(@order1.id).deliver
+      ActionMailer::Base.deliveries.count.should == 1
+    end
   end
 end

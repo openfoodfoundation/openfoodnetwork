@@ -1,0 +1,7 @@
+.ofn-drop-down#views-dropdown
+  %span{ :class => 'icon-eye-open' }= "&nbsp; #{t('admin.viewing', current_view_name: '{{ currentView().name }}')}".html_safe
+  %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+  %div.menu{ 'ng-show' => "expanded" }
+    %div.menu_item{ ng: { repeat: "(viewKey, view) in views" }, toggle: { view: true }, 'close-on-click' => true }
+      %span.check
+      %span.name {{ view.name }}
