@@ -48,7 +48,7 @@ class Enterprise < ActiveRecord::Base
 
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
-  accepts_nested_attributes_for :tag_rules, allow_destroy: true
+  accepts_nested_attributes_for :tag_rules, allow_destroy: true, reject_if: lambda { |tag_rule| tag_rule[:preferred_customer_tags].blank? }
 
   has_attached_file :logo,
     styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },

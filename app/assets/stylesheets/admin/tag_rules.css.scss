@@ -1,5 +1,13 @@
+.no_tags {
+  margin-bottom: 40px;
+  color: #aeaeae;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .customer_tag {
   border: 1px solid #cee1f4;
+  margin-bottom: 40px;
 
   .header {
     padding: 8px 10px;
@@ -7,7 +15,21 @@
     border-bottom: 1px solid #cee1f4;
   }
 
+  .no_rules {
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    color: #aeaeae;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
   .tag_rule {
     padding: 8px 10px;
+    margin-bottom: 10px;
+  }
+
+  .add_rule {
+    padding: 8px 10px;
+    margin-bottom: 10px;
   }
 }

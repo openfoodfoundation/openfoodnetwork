@@ -7,6 +7,8 @@ class TagRule < ActiveRecord::Base
 
   validates :enterprise, presence: true
 
+  attr_accessible :enterprise, :enterprise_id, :preferred_customer_tags
+
   def set_context(subject, context)
     @subject = subject
     @context = context

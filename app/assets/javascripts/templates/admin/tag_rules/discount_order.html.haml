@@ -1,26 +1,36 @@
 %div
   %input{ type: "hidden",
-    id: "enterprise_tag_rules_attributes_{{rule.id}}_id",
-    name: "enterprise[tag_rules_attributes][{{rule.id}}][id]",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_id",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][id]",
     ng: { value: "rule.id" } }
 
   %input{ type: "hidden",
-    id: "enterprise_tag_rules_attributes_{{rule.id}}_calculator_attributes_id",
-    name: "enterprise[tag_rules_attributes][{{rule.id}}][calculator_attributes][id]",
-    ng: { value: "rule.calculator.id" } }
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_type",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][type]",
+    value: "TagRule::DiscountOrder" }
 
   %input{ type: "hidden",
-    id: "enterprise_tag_rules_attributes_{{rule.id}}_calculator_attributes_type",
-    name: "enterprise[tag_rules_attributes][{{rule.id}}][calculator_attributes][type]",
-    value: "TagRule::FlatPercentItemTotal" }
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_customer_tags",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_customer_tags]",
+    ng: { value: "rule.preferred_customer_tags" } }
 
-  %span.text-big Apply a discount of
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_calculator_type",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][calculator_type]",
+    value: "Spree::Calculator::FlatPercentItemTotal" }
+
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_calculator_attributes_id",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][calculator_attributes][id]",
+    ng: { value: "rule.calculator.id" } }
+
+  %span.text-normal {{ $index + 1 }}. Apply a discount of
   %span.input-symbol.after
-    %span.text-big %
+    %span.text-normal %
     %input.text-big{ type: "number",
-      id: "enterprise_tag_rules_attributes_{{rule.id}}_calculator_attributes_preferred_flat_percent",
-      name: "enterprise[tag_rules_attributes][{{rule.id}}][calculator_attributes][preferred_flat_percent]",
+      id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_calculator_attributes_preferred_flat_percent",
+      name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][calculator_attributes][preferred_flat_percent]",
       min: 0,
       max: 100,
       ng: { model: "rule.calculator.preferred_flat_percent" } }
-  %span.text-big to order subtotals
+  %span.text-normal to order subtotals

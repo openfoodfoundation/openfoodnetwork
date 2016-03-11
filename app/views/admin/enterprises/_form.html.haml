@@ -55,6 +55,6 @@
   %legend Shop Preferences
   = render 'admin/enterprises/form/shop_preferences', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Tag Rules'" } }
+%fieldset.alpha.no-border-bottom{ ng: { if: "menu.selected.name=='Tag Rules'" } }
   %legend Tag Rules
   = render 'admin/enterprises/form/tag_rules', f: f

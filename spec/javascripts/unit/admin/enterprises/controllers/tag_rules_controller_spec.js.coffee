@@ -6,10 +6,9 @@ describe "TagRulesCtrl", ->
   beforeEach ->
     module('admin.enterprises')
     enterprise =
-      tag_rules: [
-        { id: 1, preferred_customer_tags: "member" },
-        { id: 2, preferred_customer_tags: "member" },
-        { id: 3, preferred_customer_tags: "local" }
+      tag_groups: [
+        { tags: "member", rules: [{ id: 1, preferred_customer_tags: "member" }, { id: 2, preferred_customer_tags: "member" }] },
+        { tags: "volunteer", rules: [{ id: 3, preferred_customer_tags: "local" }] }
       ]
 
     inject ($rootScope, $controller) ->
@@ -17,9 +16,12 @@ describe "TagRulesCtrl", ->
       scope.Enterprise = enterprise
       ctrl = $controller 'TagRulesCtrl', {$scope: scope}
 
-  describe "initialization", ->
-    it "groups rules by preferred_customer_tags", ->
-      expect(scope.groupedTagRules).toEqual {
-        member: [{ id: 1, preferred_customer_tags: "member" }, { id: 2, preferred_customer_tags: "member" }],
-        local: [{ id: 3, preferred_customer_tags: "local" }]
-      }
+  describe "tagGroup start indices", ->
+    it "updates on initialization", ->
+      expect(scope.tagGroups[0].startIndex).toEqual 0
+      expect(scope.tagGroups[1].startIndex).toEqual 2
+
+    it "updates when tags are added to a tagGroup", ->
+      scope.addNewRuleTo(scope.tagGroups[0])
+      expect(scope.tagGroups[0].startIndex).toEqual 0
+      expect(scope.tagGroups[1].startIndex).toEqual 3

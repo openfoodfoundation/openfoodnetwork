@@ -35,6 +35,8 @@ module Admin
 
     def update
       invoke_callbacks(:update, :before)
+      tag_rules_attributes = params[object_name].delete :tag_rules_attributes
+      update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
       if @object.update_attributes(params[object_name])
         invoke_callbacks(:update, :after)
         flash[:success] = flash_message_for(@object, :successfully_updated)
@@ -178,6 +180,27 @@ module Admin
 
     def load_taxons
       @taxons = Spree::Taxon.order(:name)
+    end
+
+    def update_tag_rules(tag_rules_attributes)
+      # Due to the combination of trying to use nested attributes and type inheritance
+      # we cannot apply all attributes to tag rules in one hit because mass assignment
+      # methods that are specific to each class do not become available until after the
+      # record is persisted. This problem is compounded by the use of calculators.
+      @object.transaction do
+        tag_rules_attributes.select{ |i, attrs| attrs[:type].present? }.each do |i, attrs|
+          rule = @object.tag_rules.find_by_id(attrs.delete :id) || attrs[:type].constantize.new(enterprise:  @object)
+          create_calculator_for(rule, attrs) if rule.type == "TagRule::DiscountOrder" && rule.calculator.nil?
+          rule.update_attributes(attrs)
+        end
+      end
+    end
+
+    def create_calculator_for(rule, attrs)
+      if attrs[:calculator_type].present? && attrs[:calculator_attributes].present?
+        rule.update_attributes(calculator_type: attrs[:calculator_type])
+        attrs[:calculator_attributes].merge!( { id: rule.calculator.id } )
+      end
     end
 
     def check_can_change_bulk_sells
