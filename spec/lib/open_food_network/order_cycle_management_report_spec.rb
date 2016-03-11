@@ -89,7 +89,7 @@ module OpenFoodNetwork
           order2 = create(:order)
           payment2 = create(:payment, order: order2, payment_method: pm2)
 
-          subject.stub(:params).and_return(payment_method_name: pm1.name)
+          subject.stub(:params).and_return(payment_method_in: pm1.name)
           subject.filter(orders).should == [order1]
         end
 
@@ -97,7 +97,7 @@ module OpenFoodNetwork
           sm2 = create(:shipping_method, name: "ship2")
           order2 = create(:order, shipping_method: sm2)
 
-          subject.stub(:params).and_return(shipping_method_name: sm1.name)
+          subject.stub(:params).and_return(shipping_method_in: sm1.name)
           subject.filter(orders).should == [order1]
         end
 

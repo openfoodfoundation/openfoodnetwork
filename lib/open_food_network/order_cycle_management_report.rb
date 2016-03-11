@@ -17,7 +17,7 @@ module OpenFoodNetwork
     end
 
     def search
-      Spree::Order.complete.distributed_by_user(@user).managed_by(@user).search(params[:q])
+      Spree::Order.complete.not_state(:canceled).distributed_by_user(@user).managed_by(@user).search(params[:q])
     end
 
     def orders
