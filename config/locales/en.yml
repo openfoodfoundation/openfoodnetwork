@@ -789,7 +789,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   on_hand: "On hand"
   save_changes: "Save Changes"
   update_action: "update()" #FIXME
-  admin_entreprise_groups_what_s_this: "What's this ?"
+  what_is_this: "What's this?"
   spree_admin_overview_enterprises_header: "My Enterprises"
   spree_admin_overview_enterprises_footer: "MANAGE MY ENTERPRISES"
   spree_admin_enterprises_hubs_name: "Name"
@@ -831,7 +831,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   manage_products: "Manage products"
   edit_profile_details: "Edit profile details"
   edit_profile_details_etc: "Change your profile description, images, etc."
-  bulk_order_management: "Bulk Order Management"
   start_date: "Start Date"
   end_date: "End Date"
   order_cycle: "Order Cycle"

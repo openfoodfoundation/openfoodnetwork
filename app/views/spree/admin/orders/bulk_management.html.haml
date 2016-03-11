@@ -3,11 +3,9 @@
 
 - content_for :page_title do
   %h1.page-title
-    = t "bulk_order_management"
-  %a{ 'ofn-with-tip' => "#t('bom_tip')" }
-    = t "admin_entreprise_groups_what_s_this"
-  %h1.page-title
     = t "bom_page_title"
+  %a{ 'ofn-with-tip' => "#t('bom_tip')" }
+    = t "what_is_this"
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
