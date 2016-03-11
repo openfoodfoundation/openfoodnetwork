@@ -1,6 +1,8 @@
 %div.three.columns.omega
   %div.ofn-drop-down.right#columns-dropdown{ 'ng-controller' => "DropDownCtrl" }
-    %span{ :class => 'icon-reorder' } &nbsp; Columns
+    %span{ :class => 'icon-reorder' }
+      &nbsp;
+      = t "bom_columns"
     %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
     %div.menu{ 'ng-show' => "expanded" }
       %div.menu_item.three.columns.alpha.omega{ 'ng-repeat' => "column in columns",  'ofn-toggle-column' => true }
