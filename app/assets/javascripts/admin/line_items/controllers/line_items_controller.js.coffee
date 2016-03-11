@@ -73,9 +73,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
         StatusMessage.display 'success', "All changes saved"
         $scope.bulk_order_form.$setPristine()
       ).catch ->
-        StatusMessage.display 'failure', t "unsaved_changes_warning"
+        StatusMessage.display 'failure', t "unsaved_changes_error"
     else
-      StatusMessage.display 'failure', t "unsaved_changes_warning"
+      StatusMessage.display 'failure', t "unsaved_changes_error"
 
   $scope.deleteLineItem = (lineItem) ->
     if ($scope.confirmDelete && confirm(t "are_you_sure")) || !$scope.confirmDelete

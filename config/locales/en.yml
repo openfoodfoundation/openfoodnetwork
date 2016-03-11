@@ -302,7 +302,8 @@ en:
   bom_no_results: "No orders found."
   bom_order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
 
-  unsaved_changes_warning: "Fields with red borders contain errors."
+  unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
+  unsaved_changes_error: "Fields with red borders contain errors."
 
   products: "Products"
   products_in: "in %{oc}"
