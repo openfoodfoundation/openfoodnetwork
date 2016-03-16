@@ -31,6 +31,7 @@ class TagRule < ActiveRecord::Base
 
   def customer_tags_match?
     context_customer_tags = context.andand[:customer].andand.tag_list || []
-    ( context_customer_tags & preferred_customer_tags.split(",") ).any?
+    preferred_tags = preferred_customer_tags.split(",")
+    ( context_customer_tags & preferred_tags ).any?
   end
 end

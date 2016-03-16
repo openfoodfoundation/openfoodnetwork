@@ -140,7 +140,7 @@ en:
   # Tag Rules
   tag_rules:
     discount_order:
-      label: "%{percentage}% discount"
+      discount: "Discount"
 
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME

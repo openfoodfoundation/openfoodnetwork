@@ -66,7 +66,7 @@ describe TagRule::DiscountOrder, type: :model do
         tag_rule.send(:apply!)
         expect(adjustment).to be_a Spree::Adjustment
         expect(adjustment.amount).to eq -10.00
-        expect(adjustment.label).to eq "10.00% discount"
+        expect(adjustment.label).to eq "Discount"
         expect(order.adjustment_total).to eq -10.00
         expect(order.total).to eq 90.00
       end
@@ -84,7 +84,7 @@ describe TagRule::DiscountOrder, type: :model do
         tag_rule.send(:apply!)
         expect(adjustment).to be_a Spree::Adjustment
         expect(adjustment.amount).to eq -10.00
-        expect(adjustment.label).to eq "10.00% discount"
+        expect(adjustment.label).to eq "Discount"
         expect(order.adjustment_total).to eq 15.00
         expect(order.total).to eq 115.00
       end

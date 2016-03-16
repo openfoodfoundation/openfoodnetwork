@@ -24,13 +24,16 @@
     name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][calculator_attributes][id]",
     ng: { value: "rule.calculator.id" } }
 
+  %input{ type: "hidden",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][calculator_attributes][preferred_flat_percent]",
+    ng: { value: "rule.calculator.preferred_flat_percent" } }
+
   %span.text-normal {{ $index + 1 }}. Apply a discount of
   %span.input-symbol.after
     %span.text-normal %
     %input.text-big{ type: "number",
       id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_calculator_attributes_preferred_flat_percent",
-      name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][calculator_attributes][preferred_flat_percent]",
-      min: 0,
+      min: -100,
       max: 100,
-      ng: { model: "rule.calculator.preferred_flat_percent" } }
+      ng: { model: "rule.calculator.preferred_flat_percent" }, 'invert-number' => true }
   %span.text-normal to order subtotals

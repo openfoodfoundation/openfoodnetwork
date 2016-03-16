@@ -301,13 +301,13 @@ feature %q{
 
         expect(page).to have_content 'No rules apply to this tag yet'
         click_button '+ Add A New Rule'
-        fill_in "enterprise[tag_rules_attributes][0][calculator_attributes][preferred_flat_percent]", with: 22
+        fill_in "enterprise_tag_rules_attributes_0_calculator_attributes_preferred_flat_percent", with: 22
 
         click_button 'Update'
 
         tag_rule = TagRule::DiscountOrder.last
         expect(tag_rule.preferred_customer_tags).to eq "volunteer"
-        expect(tag_rule.calculator.preferred_flat_percent).to eq 22
+        expect(tag_rule.calculator.preferred_flat_percent).to eq -22
       end
     end
 
@@ -325,13 +325,13 @@ feature %q{
         expect(first('.customer_tag .header')).to have_content "For customers tagged:"
         expect(first('tags-input .tag-list ti-tag-item')).to have_content "member"
         find(:css, "tags-input .tags input").set "volunteer\n"
-        expect(page).to have_input "enterprise[tag_rules_attributes][0][calculator_attributes][preferred_flat_percent]", with: "0"
-        fill_in "enterprise[tag_rules_attributes][0][calculator_attributes][preferred_flat_percent]", with: 45
+        expect(page).to have_field "enterprise_tag_rules_attributes_0_calculator_attributes_preferred_flat_percent", with: '0'
+        fill_in "enterprise_tag_rules_attributes_0_calculator_attributes_preferred_flat_percent", with: 45
 
         click_button 'Update'
 
         expect(tag_rule.preferred_customer_tags).to eq "member,volunteer"
-        expect(tag_rule.calculator.preferred_flat_percent).to eq 45
+        expect(tag_rule.calculator.preferred_flat_percent).to eq -45
       end
     end
 

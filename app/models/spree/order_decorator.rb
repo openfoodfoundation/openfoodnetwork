@@ -17,7 +17,8 @@ Spree::Order.class_eval do
   attr_accessible :order_cycle_id, :distributor_id
 
   before_validation :shipping_address_from_distributor
-  before_validation :associate_customer, unless: :customer_is_valid?
+  before_validation :associate_customer, unless: :customer_id?
+  before_validation :ensure_customer, unless: :customer_is_valid?
 
   checkout_flow do
     go_to_state :address
@@ -179,6 +180,10 @@ Spree::Order.class_eval do
       if order_cycle
         OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
       end
+
+      if distributor.present? && customer.present?
+        distributor.apply_tag_rules_to(self, customer: customer)
+      end
     end
   end
 
@@ -289,14 +294,18 @@ Spree::Order.class_eval do
     customer.present? && customer.enterprise_id == distributor_id && customer.email == (user.andand.email || email)
   end
 
+  def email_for_customer
+    user.andand.email || email
+  end
+
   def associate_customer
-    email_for_customer = user.andand.email || email
-    existing_customer = Customer.of(distributor).find_by_email(email_for_customer)
-    if existing_customer
-      self.customer = existing_customer
-    else
-      new_customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user)
-      self.customer = new_customer
+    return customer if customer.present?
+    self.customer = Customer.of(distributor).find_by_email(email_for_customer)
+  end
+
+  def ensure_customer
+    unless associate_customer
+      self.customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user)
     end
   end
 end
