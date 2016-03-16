@@ -19,6 +19,12 @@
       = form_for @settings, as: :settings, url: main_app.admin_business_model_configuration_path, :method => :put do |f|
         .row
           .three.columns.alpha
+            = f.label :shop_trial_length_days, t(:shop_trial_length)
+            %span.icon-question-sign{'ofn-with-tip' => "The length of time (in days) that enterprises who are set up as shops can run as a trial period."}
+          .two.columns.omega
+            = f.number_field :shop_trial_length_days, min: 0.0, step: 1.0, class: "fullwidth", 'watch-value-as' => 'fixed'
+        .row
+          .three.columns.alpha
             = f.label :account_invoices_monthly_fixed, t(:fixed_monthly_charge)
             %span.icon-question-sign{'ofn-with-tip' => "A fixed monthly charge for ALL enterprises who are set up as a shop, regardless of how much produce they sell."}
           .two.columns.omega

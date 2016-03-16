@@ -20,7 +20,9 @@ Spree::AppConfiguration.class_eval do
   preference :account_invoices_monthly_rate, :decimal, default: 0
   preference :account_invoices_monthly_cap, :decimal, default: 0
   preference :account_invoices_tax_rate, :decimal, default: 0
+  preference :shop_trial_length_days, :integer, default: 30
 
   # Monitoring
   preference :last_job_queue_heartbeat_at, :string, default: nil
+
 end
