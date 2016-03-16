@@ -1,0 +1,18 @@
+-# This is hopefully a temporary measure, pending the arrival of multiple named inventories
+-# for shops. We need this here to allow hubs to restrict visible variants to only those in
+-# their inventory if they so choose
+.row
+  .alpha.eleven.columns
+    You may opt to manage stock levels and prices in via your
+    = succeed "." do
+      %strong
+        %a{href: main_app.admin_inventory_path } inventory
+    If you are using the inventory tool, you can select whether new products added by your suppliers need to be added to your inventory before they can be stocked. If you are not using your inventory to manage your products you should select the 'recommended' option below:
+.row
+  .alpha.eleven.columns
+    .five.columns.alpha
+      = radio_button :enterprise, :preferred_product_selection_from_inventory_only, "0", { 'ng-model' => 'Enterprise.preferred_product_selection_from_inventory_only' }
+      = label :enterprise, :preferred_product_selection_from_inventory_only, "New products can be put into my shopfront (recommended)"
+    .six.columns.omega
+      = radio_button :enterprise, :preferred_product_selection_from_inventory_only, "1", { 'ng-model' => 'Enterprise.preferred_product_selection_from_inventory_only' }
+      = label :enterprise, :preferred_product_selection_from_inventory_only, "New products must be added to my inventory before they can be put into my shopfront"

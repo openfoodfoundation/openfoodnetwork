@@ -96,7 +96,7 @@ module Admin
     def for_order_cycle
       respond_to do |format|
         format.json do
-          render json: @collection, each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, spree_current_user: spree_current_user
+          render json: @collection, each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer, order_cycle: @order_cycle, spree_current_user: spree_current_user
         end
       end
     end
@@ -138,10 +138,10 @@ module Admin
     def collection
       case action
       when :for_order_cycle
-        order_cycle = OrderCycle.find_by_id(params[:order_cycle_id]) if params[:order_cycle_id]
+        @order_cycle = OrderCycle.find_by_id(params[:order_cycle_id]) if params[:order_cycle_id]
         coordinator = Enterprise.find_by_id(params[:coordinator_id]) if params[:coordinator_id]
-        order_cycle = OrderCycle.new(coordinator: coordinator) if order_cycle.nil? && coordinator.present?
-        return OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises
+        @order_cycle = OrderCycle.new(coordinator: coordinator) if @order_cycle.nil? && coordinator.present?
+        return OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle).visible_enterprises
       when :index
         if spree_current_user.admin?
           OpenFoodNetwork::Permissions.new(spree_current_user).

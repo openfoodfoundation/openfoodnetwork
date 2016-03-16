@@ -26,6 +26,36 @@ describe EnterpriseFee do
       ef.destroy
       ex.reload.exchange_fee_ids.should be_empty
     end
+
+    describe "for tax_category" do
+      let(:tax_category) { create(:tax_category) }
+      let(:enterprise_fee) { create(:enterprise_fee, tax_category_id: nil, inherits_tax_category: true) }
+
+
+      it  "maintains valid tax_category settings" do
+        # Changing just tax_category, when inheriting
+        # tax_category is changed, inherits.. set to false
+        enterprise_fee.assign_attributes(tax_category_id: tax_category.id)
+        enterprise_fee.save!
+        expect(enterprise_fee.tax_category).to eq tax_category
+        expect(enterprise_fee.inherits_tax_category).to be false
+
+        # Changing inherits_tax_category, when tax_category is set
+        # tax_category is dropped, inherits.. set to true
+        enterprise_fee.assign_attributes(inherits_tax_category: true)
+        enterprise_fee.save!
+        expect(enterprise_fee.tax_category).to be nil
+        expect(enterprise_fee.inherits_tax_category).to be true
+
+        # Changing both tax_category and inherits_tax_category
+        # tax_category is changed, but inherits.. changes are dropped
+        enterprise_fee.assign_attributes(tax_category_id: tax_category.id)
+        enterprise_fee.assign_attributes(inherits_tax_category: true)
+        enterprise_fee.save!
+        expect(enterprise_fee.tax_category).to eq tax_category
+        expect(enterprise_fee.inherits_tax_category).to be false
+      end
+    end
   end
 
   describe "scopes" do

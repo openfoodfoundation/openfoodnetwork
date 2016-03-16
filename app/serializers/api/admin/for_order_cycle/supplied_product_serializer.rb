@@ -14,8 +14,17 @@ class Api::Admin::ForOrderCycle::SuppliedProductSerializer < ActiveModel::Serial
   end
 
   def variants
-    object.variants.map do |variant|
-      { id: variant.id, label: variant.full_name }
+    variants = if order_cycle.prefers_product_selection_from_coordinator_inventory_only?
+      object.variants.visible_for(order_cycle.coordinator)
+    else
+      object.variants
     end
+    variants.map { |variant| { id: variant.id, label: variant.full_name } }
+  end
+
+  private
+
+  def order_cycle
+    options[:order_cycle]
   end
 end
