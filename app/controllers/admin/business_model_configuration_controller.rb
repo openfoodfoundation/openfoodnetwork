@@ -20,7 +20,7 @@ class Admin::BusinessModelConfigurationController < Spree::Admin::BaseController
     @settings = OpenFoodNetwork::BusinessModelConfigurationValidator.new(params[:settings] || {
       shop_trial_length_days: Spree::Config[:shop_trial_length_days],
       account_invoices_monthly_fixed: Spree::Config[:account_invoices_monthly_fixed],
-      account_invoiceaccount_invoices_monthly_rates_monthly_rate: Spree::Config[:account_invoices_monthly_rate],
+      account_invoices_monthly_rate: Spree::Config[:account_invoices_monthly_rate],
       account_invoices_monthly_cap: Spree::Config[:account_invoices_monthly_cap],
       account_invoices_tax_rate: Spree::Config[:account_invoices_tax_rate]
     })
