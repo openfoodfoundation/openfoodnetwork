@@ -1,4 +1,4 @@
-angular.module("admin.enterprises").controller "TagRulesCtrl", ($scope) ->
+angular.module("admin.enterprises").controller "TagRulesCtrl", ($scope, $http) ->
   $scope.tagGroups = $scope.Enterprise.tag_groups
 
   updateRuleCounts = ->
@@ -24,3 +24,18 @@ angular.module("admin.enterprises").controller "TagRulesCtrl", ($scope) ->
 
   $scope.addNewTag = ->
     $scope.tagGroups.push { tags: [], rules: [] }
+
+  $scope.deleteTagRule = (tagGroup, tagRule) ->
+    index = tagGroup.rules.indexOf(tagRule)
+    return unless index >= 0
+    if tagRule.id is null
+      tagGroup.rules.splice(index, 1)
+      updateRuleCounts()
+    else
+      if confirm("Are you sure?")
+        $http
+          method: "DELETE"
+          url: "/admin/enterprises/#{$scope.Enterprise.id}/tag_rules/#{tagRule.id}.json"
+        .success ->
+          tagGroup.rules.splice(index, 1)
+          updateRuleCounts()

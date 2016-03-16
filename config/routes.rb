@@ -87,6 +87,8 @@ Openfoodnetwork::Application.routes.draw do
       resources :producer_properties do
         post :update_positions, on: :collection
       end
+
+      resources :tag_rules, only: [:destroy]
     end
 
     resources :enterprise_relationships

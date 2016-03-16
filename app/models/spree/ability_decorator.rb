@@ -72,6 +72,10 @@ class AbilityDecorator
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
+    can [:admin, :destroy], TagRule do |tag_rule|
+      user.enterprises.include? tag_rule.enterprise
+    end
+
     can [:admin, :index, :create], Enterprise
     can [:read, :edit, :update, :bulk_update, :resend_confirmation], Enterprise do |enterprise|
       OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise

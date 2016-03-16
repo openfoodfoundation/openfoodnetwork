@@ -13,6 +13,16 @@
     padding: 8px 10px;
     background-color: #eff5fc;
     border-bottom: 1px solid #cee1f4;
+
+    table {
+      padding: 0px;
+      margin: 0px 0px 0px 0px;
+      tr {
+        td {
+          border: none;
+        }
+      }
+    }
   }
 
   .no_rules {
@@ -23,9 +33,25 @@
     font-weight: bold;
   }
 
-  .tag_rule {
-    padding: 8px 10px;
-    margin-bottom: 10px;
+  table {
+    padding: 0px;
+    margin: 0px 0px 10px 0px;
+
+    tr.tag_rule {
+      border: none;
+      padding: 0px;
+      margin: 0px;
+
+      td {
+        border: none;
+        padding: 4px 10px;
+        margin: 0px;
+
+        input {
+          width: auto;
+        }
+      }
+    }
   }
 
   .add_rule {

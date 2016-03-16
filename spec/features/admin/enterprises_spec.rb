@@ -334,6 +334,28 @@ feature %q{
         expect(tag_rule.calculator.preferred_flat_percent).to eq 45
       end
     end
+
+    context "deleting" do
+      let!(:tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "member" ) }
+
+      before do
+        login_to_admin_section
+        visit main_app.edit_admin_enterprise_path(enterprise)
+      end
+
+      it "deletes rules from the database" do
+        click_link "Tag Rules"
+
+        expect(page).to have_selector "#tr_#{tag_rule.id}"
+
+        expect{
+          within "#tr_#{tag_rule.id}" do
+            first("a.delete-tag-rule").click
+          end
+          expect(page).to_not have_selector "#tr_#{tag_rule.id}"
+        }.to change{TagRule.count}.by(-1)
+      end
+    end
   end
 
 
