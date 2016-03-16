@@ -1,6 +1,5 @@
 class Enterprise < ActiveRecord::Base
   SELLS = %w(unspecified none own any)
-  SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
   preference :shopfront_message, :text, default: ""
@@ -332,7 +331,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def shop_trial_expiry
-    shop_trial_start_date.andand + Enterprise::SHOP_TRIAL_LENGTH.days
+    shop_trial_start_date.andand + Spree::Config[:shop_trial_length_days].days
   end
 
   def can_invoice?
