@@ -22,7 +22,7 @@
             = f.label :shop_trial_length_days, t(:shop_trial_length)
             %span.icon-question-sign{'ofn-with-tip' => "The length of time (in days) that enterprises who are set up as shops can run as a trial period."}
           .two.columns.omega
-            = f.number_field :shop_trial_length_days, min: 0.0, step: 1.0, class: "fullwidth", 'watch-value-as' => 'fixed'
+            = f.number_field :shop_trial_length_days, min: 0.0, step: 1.0, class: "fullwidth"
         .row
           .three.columns.alpha
             = f.label :account_invoices_monthly_fixed, t(:fixed_monthly_charge)
