@@ -160,12 +160,27 @@ module OpenFoodNetwork
 
           context "when an exchange is passed in" do
             let(:v1) { create(:variant) }
-            let(:exchange) { create(:exchange, variants: [v1]) }
+            let(:v2) { create(:variant) }
+            let(:v3) { create(:variant) }
+            let(:exchange) { create(:exchange, variants: [v1, v2, v3]) }
             let(:hash) { applicator.send(:persisted_variants_hash, exchange) }
 
-            it "returns a hash with variant ids as keys an all values set to true" do
-              expect(hash.length).to be 1
-              expect(hash[v1.id]).to be true
+            before do
+              allow(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between) { [ v1.id, v2.id ] }
+            end
+
+            it "returns a hash with variant ids as keys" do
+              expect(hash.length).to be 3
+              expect(hash.keys).to include v1.id, v2.id, v3.id
+             end
+
+             it "editable variant ids are set to false" do
+               expect(hash[v1.id]).to be false
+               expect(hash[v2.id]).to be false
+             end
+
+             it "and non-editable variant ids are set to true" do
+               expect(hash[v3.id]).to be true
              end
           end
         end
@@ -209,7 +224,7 @@ module OpenFoodNetwork
           before do
             applicator.stub(:find_outgoing_exchange) { exchange_mock }
             applicator.stub(:incoming_variant_ids) { [1, 2, 3, 4] }
-            expect(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between).
+            allow(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between).
             with(coordinator_mock, enterprise_mock) { [1, 2, 3] }
           end
 
@@ -231,6 +246,16 @@ module OpenFoodNetwork
             applicator.stub(:persisted_variants_hash) { {2 => true} }
             expect(exchange_mock).to receive(:receiver) { enterprise_mock }
             ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}})
+            expect(ids).to eq [1, 3]
+          end
+
+          it "removes variants which the user has permission to remove and that are not included in the submitted data" do
+            allow(exchange_mock).to receive(:incoming?) { false }
+            allow(exchange_mock).to receive(:variants) { [double(:variant, id: 1), double(:variant, id: 2), double(:variant, id: 3)] }
+            allow(exchange_mock).to receive(:sender) { coordinator_mock }
+            allow(exchange_mock).to receive(:receiver) { enterprise_mock }
+            applicator.stub(:incoming_variant_ids) { [1, 2, 3] }
+            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '3' => true}})
             expect(ids).to eq [1, 3]
           end
 

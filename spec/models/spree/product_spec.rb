@@ -338,6 +338,22 @@ module Spree
           product.should include @p2
         end
       end
+
+      describe "visible_for" do
+        let(:enterprise) { create(:distributor_enterprise) }
+        let!(:new_variant) { create(:variant) }
+        let!(:hidden_variant) { create(:variant) }
+        let!(:visible_variant) { create(:variant) }
+        let!(:hidden_inventory_item) { create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false ) }
+        let!(:visible_inventory_item) { create(:inventory_item, enterprise: enterprise, variant: visible_variant, visible: true ) }
+
+        let!(:products) { Spree::Product.visible_for(enterprise) }
+
+        it "lists any products with variants that are listed as visible=true" do
+          expect(products).to include visible_variant.product
+          expect(products).to_not include new_variant.product, hidden_variant.product
+        end
+      end
     end
 
     describe "finders" do

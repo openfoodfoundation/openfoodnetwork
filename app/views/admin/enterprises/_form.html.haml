@@ -47,6 +47,10 @@
   %legend Enterprise Fees
   = render 'admin/enterprises/form/enterprise_fees', f: f
 
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Inventory Settings'" } }
+  %legend Inventory Settings
+  = render 'admin/enterprises/form/inventory_settings', f: f
+
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Shop Preferences'" } }
   %legend Shop Preferences
   = render 'admin/enterprises/form/shop_preferences', f: f

@@ -9,6 +9,7 @@ describe Admin::VariantOverridesController, type: :controller do
 
       let(:hub) { create(:distributor_enterprise) }
       let(:variant) { create(:variant) }
+      let!(:inventory_item) { create(:inventory_item, enterprise: hub, variant: variant, visible: true) }
       let!(:variant_override) { create(:variant_override, hub: hub, variant: variant) }
       let(:variant_override_params) { [ { id: variant_override.id, price: 123.45, count_on_hand: 321, sku: "MySKU", on_demand: false } ] }
 
@@ -40,6 +41,14 @@ describe Admin::VariantOverridesController, type: :controller do
         context "and the producer has granted VO permission" do
           before do
             create(:enterprise_relationship, parent: variant.product.supplier, child: hub, permissions_list: [:create_variant_overrides])
+          end
+
+          it "loads data" do
+            spree_put :bulk_update, format: format, variant_overrides: variant_override_params
+            expect(assigns[:hubs]).to eq [hub]
+            expect(assigns[:producers]).to eq [variant.product.supplier]
+            expect(assigns[:hub_permissions]).to eq Hash[hub.id,[variant.product.supplier.id]]
+            expect(assigns[:inventory_items]).to eq [inventory_item]
           end
 
           it "allows me to update the variant override" do
@@ -105,6 +114,14 @@ describe Admin::VariantOverridesController, type: :controller do
 
         context "where the producer has granted create_variant_overrides permission to the hub" do
           let!(:er1) { create(:enterprise_relationship, parent: producer, child: hub, permissions_list: [:create_variant_overrides]) }
+
+          it "loads data" do
+            spree_put :bulk_reset, params
+            expect(assigns[:hubs]).to eq [hub]
+            expect(assigns[:producers]).to eq [producer]
+            expect(assigns[:hub_permissions]).to eq Hash[hub.id,[producer.id]]
+            expect(assigns[:inventory_items]).to eq []
+          end
 
           it "updates stock to default values where reset is enabled" do
             expect(variant_override1.reload.count_on_hand).to eq 5 # reset enabled

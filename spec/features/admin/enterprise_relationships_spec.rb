@@ -37,17 +37,17 @@ feature %q{
       e2 = create(:enterprise, name: 'Two')
 
       visit admin_enterprise_relationships_path
-      select 'One', from: 'enterprise_relationship_parent_id'
+      select2_select 'One', from: 'enterprise_relationship_parent_id'
 
       check 'to add to order cycle'
       check 'to manage products'
       uncheck 'to manage products'
       check 'to edit profile'
-      check 'to override variant details'
-      select 'Two', from: 'enterprise_relationship_child_id'
+      check 'to add products to inventory'
+      select2_select 'Two', from: 'enterprise_relationship_child_id'
       click_button 'Create'
 
-      page.should have_relationship e1, e2, ['to add to order cycle', 'to override variant details', 'to edit profile']
+      page.should have_relationship e1, e2, ['to add to order cycle', 'to add products to inventory', 'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
       er.should be_present
       er.permissions.map(&:name).should match_array ['add_to_order_cycle', 'edit_profile', 'create_variant_overrides']
@@ -62,8 +62,8 @@ feature %q{
       expect do
         # When I attempt to create a duplicate relationship
         visit admin_enterprise_relationships_path
-        select 'One', from: 'enterprise_relationship_parent_id'
-        select 'Two', from: 'enterprise_relationship_child_id'
+        select2_select 'One', from: 'enterprise_relationship_parent_id'
+        select2_select 'Two', from: 'enterprise_relationship_child_id'
         click_button 'Create'
 
         # Then I should see an error message
@@ -110,8 +110,8 @@ feature %q{
 
     scenario "enterprise user can only add their own enterprises as parent" do
       visit admin_enterprise_relationships_path
-      page.should have_select 'enterprise_relationship_parent_id', options: ['', d1.name]
-      page.should have_select 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
+      page.should have_select2 'enterprise_relationship_parent_id', options: ['', d1.name]
+      page.should have_select2 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
     end
   end
 
