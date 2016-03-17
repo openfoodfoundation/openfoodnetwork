@@ -27,6 +27,73 @@ describe BillablePeriod, type: :model do
     end
   end
 
+  describe "calculating monthly bills for enterprises with no turnover" do
+    let!(:subject) { create(:billable_period, turnover: 0) }
+
+    context "when no tax is charged" do
+      before { Spree::Config.set(:account_invoices_tax_rate, 0) }
+
+      context "when no minimum billable turnover" do
+        before { Spree::Config.set(:minimum_billable_turnover, -1) }
+
+        context "when a fixed cost is included" do
+          before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
+          it { expect(subject.bill).to eq 10 }
+        end
+
+        context "when no fixed cost is included" do
+          before { Spree::Config.set(:account_invoices_monthly_fixed, 0) }
+          it { expect(subject.bill).to eq 0 }
+        end
+      end
+
+      context "when minimum billable turnover exists" do
+        before { Spree::Config.set(:minimum_billable_turnover, 0) }
+
+        context "when a fixed cost is included" do
+          before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
+          it { expect(subject.bill).to eq 0 }
+        end
+
+        context "when no fixed cost is included" do
+          before { Spree::Config.set(:account_invoices_monthly_fixed, 0) }
+          it { expect(subject.bill).to eq 0 }
+        end
+      end
+    end
+
+    context "when tax is charged" do
+      before { Spree::Config.set(:account_invoices_tax_rate, 0.1) }
+
+      context "when no minimum billable turnover" do
+        before { Spree::Config.set(:minimum_billable_turnover, -1) }
+
+        context "when a fixed cost is included" do
+          before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
+          it { expect(subject.bill).to eq 11 }
+        end
+
+        context "when no fixed cost is included" do
+          before { Spree::Config.set(:account_invoices_monthly_fixed, 0) }
+          it { expect(subject.bill).to eq 0 }
+        end
+      end
+
+      context "when minimum billable turnover exists" do
+        before { Spree::Config.set(:minimum_billable_turnover, 0) }
+
+        context "when a fixed cost is included" do
+          before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
+          it { expect(subject.bill).to eq 0 }
+        end
+
+        context "when no fixed cost is included" do
+          before { Spree::Config.set(:account_invoices_monthly_fixed, 0) }
+          it { expect(subject.bill).to eq 0 }
+        end
+      end
+    end
+  end
 
   describe "calculating monthly bills for enterprises" do
     let!(:subject) { create(:billable_period, turnover: 100) }
@@ -35,7 +102,7 @@ describe BillablePeriod, type: :model do
       before { Spree::Config.set(:account_invoices_tax_rate, 0) }
 
       context "when no minimum billable turnover" do
-        before { Spree::Config.set(:minimum_billable_turnover, 0) }
+        before { Spree::Config.set(:minimum_billable_turnover, -1) }
 
         context "when a fixed cost is included" do
           before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
