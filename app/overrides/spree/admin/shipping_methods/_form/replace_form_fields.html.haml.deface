@@ -1,6 +1,9 @@
 / replace "div[data-hook='admin_shipping_method_form_fields']"
 
-.alpha.eleven.columns{"data-hook" => "admin_shipping_method_form_fields"}
+=admin_inject_shipping_method
+.alpha.eleven.columns{  "data-hook" => "admin_shipping_method_form_fields",
+  "ng-app" => "admin.shippingMethods",
+  "ng-controller" => "shippingMethodCtrl" }
   .row
     .alpha.three.columns
       = f.label :name, t(:name)
@@ -45,6 +48,13 @@
       = f.radio_button :require_ship_address, false
       &nbsp;
       = f.label :pick_up, t(:pick_up)
+
+  .row
+    .alpha.three.columns
+      = f.label :tags, t(:tags)
+    .omega.eight.columns
+      = f.hidden_field :tag_list, "ng-value" => "shippingMethod.tag_list"
+      %tags-with-translation#something{ object: "shippingMethod" }
 
   .row
     .alpha.eleven.columns
