@@ -1,1 +1,1 @@
-angular.module("admin.payment_methods", [])
+angular.module("admin.paymentMethods", [])

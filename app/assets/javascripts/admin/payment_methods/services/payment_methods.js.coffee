@@ -1,4 +1,4 @@
-angular.module("admin.payment_methods")
+angular.module("admin.paymentMethods")
   .factory "PaymentMethods", (paymentMethods) ->
     new class PaymentMethods
       paymentMethods: paymentMethods

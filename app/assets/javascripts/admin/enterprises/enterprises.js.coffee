@@ -1,1 +1,1 @@
-angular.module("admin.enterprises", [  "admin.payment_methods",  "admin.utils",  "admin.shipping_methods",  "admin.users",  "textAngular",  "admin.side_menu",  "admin.taxons",  'admin.indexUtils',  'admin.dropdown',  'pasvaz.bindonce',  'ngSanitize',  'ngTagsInput'])
+angular.module("admin.enterprises", [  "admin.paymentMethods",  "admin.utils",  "admin.shippingMethods",  "admin.users",  "textAngular",  "admin.side_menu",  "admin.taxons",  'admin.indexUtils',  'admin.dropdown',  'pasvaz.bindonce',  'ngSanitize',  'ngTagsInput'])
