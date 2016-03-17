@@ -1,4 +1,4 @@
-angular.module("admin.customers").directive "tagsWithTranslation", ->
+angular.module("admin.utils").directive "tagsWithTranslation", ->
   restrict: "E"
   template: "<tags-input ng-model='object.tags'>"
   scope:
