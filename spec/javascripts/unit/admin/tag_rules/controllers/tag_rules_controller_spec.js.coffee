@@ -4,7 +4,7 @@ describe "TagRulesCtrl", ->
   enterprise = null
 
   beforeEach ->
-    module('admin.enterprises')
+    module('admin.tagRules')
     enterprise =
       id: 45
       tag_groups: [
@@ -14,8 +14,7 @@ describe "TagRulesCtrl", ->
 
     inject ($rootScope, $controller) ->
       scope = $rootScope
-      scope.Enterprise = enterprise
-      ctrl = $controller 'TagRulesCtrl', {$scope: scope}
+      ctrl = $controller 'TagRulesCtrl', {$scope: scope, enterprise: enterprise}
 
   describe "tagGroup start indices", ->
     it "updates on initialization", ->

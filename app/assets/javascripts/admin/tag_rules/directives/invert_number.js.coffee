@@ -1,4 +1,4 @@
-angular.module("admin.enterprises").directive "invertNumber", ->
+angular.module("admin.tagRules").directive "invertNumber", ->
   restrict: "A"
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
