@@ -1,6 +1,7 @@
 .row
   .three.columns.alpha
     = f.label :name
+    %span.required *
   .nine.columns.omega
     = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles", class: "fullwidth" }
 
@@ -8,6 +9,7 @@
   .row
     .three.columns.alpha
       =f.label :owner_id, 'Owner'
+      %span.required *
       %div{'ofn-with-tip' => "The primary user responsible for this enterprise."}
         %a What's this?
     .nine.columns.omega
@@ -50,13 +52,9 @@
     = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
 .row
   .alpha.three.columns
-    = f.label :email
+    = f.label :email_address
   .omega.nine.columns
-    = f.text_field :email, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email" }
-    .alert-box
-      %i.icon-info-sign
-      If we don't recognise this email address we'll send you a confirmation email to make sure it belongs to you. You'll need to use the link in the email we send to fully activate your new enterprise.
-      %a.close{ href: "" } ×
+    = f.text_field :email_address, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email_address" }
 .row
   .alpha.three.columns
     = f.label :phone
@@ -72,6 +70,7 @@
   .row
     .three.columns.alpha
       = af.label :address1
+      %span.required *
     .nine.columns.omega
       = af.text_field :address1, { placeholder: "eg. 123 High Street"}
   .row
@@ -84,6 +83,7 @@
       = af.label :city, 'Suburb'
       \/
       = af.label :zipcode, 'Postcode'
+      %span.required *
     .four.columns
       = af.text_field :city, { placeholder: "eg. Northcote"}
     .five.columns.omega

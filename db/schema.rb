@@ -347,6 +347,7 @@ ActiveRecord::Schema.define(:version => 20160302044850) do
     t.boolean  "producer_profile_only",    :default => false
     t.string   "permalink",                                    :null => false
     t.boolean  "charges_sales_tax",        :default => false,  :null => false
+    t.string   "email_address"
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
