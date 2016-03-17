@@ -7,7 +7,7 @@
         %th
     %tbody
       - @shipping_methods.each do |shipping_method|
-        %tr{ ng: { controller: 'shippingMethodCtrl', init: "findShippingMethodByID(#{shipping_method.id})" } }
+        %tr{ ng: { controller: 'shippingMethodsCtrl', init: "findShippingMethodByID(#{shipping_method.id})" } }
           %td= shipping_method.name
           %td= f.check_box :shipping_method_ids, { :multiple => true, 'ng-model' => 'ShippingMethod.selected' }, shipping_method.id, nil
           %td= link_to "Edit", edit_admin_shipping_method_path(shipping_method)
