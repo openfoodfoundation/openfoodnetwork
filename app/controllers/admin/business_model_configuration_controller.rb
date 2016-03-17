@@ -22,7 +22,9 @@ class Admin::BusinessModelConfigurationController < Spree::Admin::BaseController
       account_invoices_monthly_fixed: Spree::Config[:account_invoices_monthly_fixed],
       account_invoices_monthly_rate: Spree::Config[:account_invoices_monthly_rate],
       account_invoices_monthly_cap: Spree::Config[:account_invoices_monthly_cap],
-      account_invoices_tax_rate: Spree::Config[:account_invoices_tax_rate]
+      account_invoices_tax_rate: Spree::Config[:account_invoices_tax_rate],
+      minimum_billable_turnover: Spree::Config[:minimum_billable_turnover]
+
     })
   end
 
