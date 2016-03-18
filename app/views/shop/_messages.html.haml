@@ -4,8 +4,8 @@
     .small-12.columns
       .shopfront_closed_message
         = t '.require_login_html',
-          {login: link_to(t('.login'), login_path),
-           register: link_to(t('.register'), '/register')}
+          {login: ('<a auth="login">' + t('.login') + '</a>').html_safe,
+           register: ('<a auth="signup">' + t('.register') + '</a>').html_safe}
 - elsif @order_cycles and @order_cycles.empty?
   - if current_distributor.preferred_shopfront_closed_message.present?
     .row
