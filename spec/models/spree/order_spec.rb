@@ -457,33 +457,6 @@ describe Spree::Order do
         Spree::Order.not_state(:canceled).should_not include o
       end
     end
-
-    describe "with payment method names" do
-      let!(:o1) { create(:order) }
-      let!(:o2) { create(:order) }
-      let!(:pm1) { create(:payment_method, name: 'foo') }
-      let!(:pm2) { create(:payment_method, name: 'bar') }
-      let!(:p1) { create(:payment, order: o1, payment_method: pm1) }
-      let!(:p2) { create(:payment, order: o2, payment_method: pm2) }
-
-      it "returns the order with payment method name when one specified" do
-        Spree::Order.with_payment_method_name('foo').should == [o1]
-      end
-
-      it "returns the orders with payment method name when many specified" do
-        Spree::Order.with_payment_method_name(['foo', 'bar']).should include o1, o2
-      end
-
-      it "doesn't return rows with a different payment method name" do
-        Spree::Order.with_payment_method_name('foobar').should_not include o1
-        Spree::Order.with_payment_method_name('foobar').should_not include o2
-      end
-
-      it "doesn't return duplicate rows" do
-        p2 = FactoryGirl.create(:payment, order: o1, payment_method: pm1)
-        Spree::Order.with_payment_method_name('foo').length.should == 1
-      end
-    end
   end
 
   describe "shipping address prepopulation" do
