@@ -22,8 +22,6 @@ Spree::Product.class_eval do
   attr_accessible :variant_unit, :variant_unit_scale, :variant_unit_name, :unit_value
   attr_accessible :inherits_properties, :sku
 
-  before_validation :sanitize_permalink
-
   # validates_presence_of :variants, unless: :new_record?, message: "Product must have at least one variant"
   validates_presence_of :supplier
   validates :primary_taxon, presence: { message: "^Product Category can't be blank" }
@@ -35,11 +33,13 @@ Spree::Product.class_eval do
   validates_presence_of :variant_unit_name,
                         if: -> p { p.variant_unit == 'items' }
 
-  after_save :ensure_standard_variant
   after_initialize :set_available_on_to_now, :if => :new_record?
-  after_save :update_units
-  after_touch :touch_distributors
+  before_validation :sanitize_permalink
   before_save :add_primary_taxon_to_taxons
+  after_touch :touch_distributors
+  after_save :ensure_standard_variant
+  after_save :update_units
+  after_save :refresh_products_cache
 
 
   # -- Joins
@@ -196,6 +196,11 @@ Spree::Product.class_eval do
     end
   end
   alias_method_chain :delete, :delete_from_order_cycles
+
+
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.product_changed self
+  end
 
 
   private

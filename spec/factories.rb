@@ -60,8 +60,8 @@ FactoryGirl.define do
   factory :simple_order_cycle, :class => OrderCycle do
     sequence(:name) { |n| "Order Cycle #{n}" }
 
-    orders_open_at  { Time.zone.now - 1.day }
-    orders_close_at { Time.zone.now + 1.week }
+    orders_open_at  { 1.day.ago }
+    orders_close_at { 1.week.from_now }
 
     coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
 
@@ -82,6 +82,26 @@ FactoryGirl.define do
         proxy.variants.each { |v| ex.variants << v }
       end
     end
+  end
+
+  factory :undated_order_cycle, parent: :simple_order_cycle do
+    orders_open_at  nil
+    orders_close_at nil
+  end
+
+  factory :upcoming_order_cycle, parent: :simple_order_cycle do
+    orders_open_at  { 1.week.from_now }
+    orders_close_at { 2.weeks.from_now }
+  end
+
+  factory :open_order_cycle, parent: :simple_order_cycle do
+    orders_open_at  { 1.week.ago }
+    orders_close_at { 1.week.from_now }
+  end
+
+  factory :closed_order_cycle, parent: :simple_order_cycle do
+    orders_open_at  { 2.weeks.ago }
+    orders_close_at { 1.week.ago }
   end
 
   factory :exchange, :class => Exchange do

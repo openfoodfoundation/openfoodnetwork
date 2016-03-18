@@ -36,7 +36,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   #delegate :cache_key, to: :object
   include ActionView::Helpers::SanitizeHelper
 
-  attributes :id, :name, :permalink, :count_on_hand
+  attributes :id, :name, :permalink
   attributes :on_demand, :group_buy, :notes, :description
   attributes :properties_with_values
 

@@ -20,6 +20,18 @@ describe OrderCycle do
     oc.save!
   end
 
+  describe "products cache" do
+    let(:oc) { create(:open_order_cycle) }
+
+    it "refreshes the products cache on save" do
+      expect(OpenFoodNetwork::ProductsCache).to receive(:order_cycle_changed).with(oc)
+      oc.name = 'asdf'
+      oc.save
+    end
+
+    # On destroy, we're removing distributions, so no updates to the products cache are required
+  end
+
   it "has exchanges" do
     oc = create(:simple_order_cycle)
 
@@ -43,6 +55,8 @@ describe OrderCycle do
     OrderCycle.upcoming.should == [oc_not_yet_open]
     OrderCycle.closed.should == [oc_already_closed]
     OrderCycle.undated.should == [oc_undated, oc_undated_open, oc_undated_close]
+    OrderCycle.not_closed.should == [oc_active, oc_not_yet_open, oc_undated, oc_undated_open, oc_undated_close]
+    OrderCycle.dated.should == [oc_active, oc_not_yet_open, oc_already_closed]
   end
 
   it "finds order cycles accessible by a user" do
@@ -353,6 +367,7 @@ describe OrderCycle do
     it "reports status when an order cycle is upcoming" do
       Timecop.freeze(oc.orders_open_at - 1.second) do
         oc.should_not be_undated
+        oc.should     be_dated
         oc.should     be_upcoming
         oc.should_not be_open
         oc.should_not be_closed
@@ -361,6 +376,7 @@ describe OrderCycle do
 
     it "reports status when an order cycle is open" do
       oc.should_not be_undated
+      oc.should     be_dated
       oc.should_not be_upcoming
       oc.should     be_open
       oc.should_not be_closed
@@ -369,6 +385,7 @@ describe OrderCycle do
     it "reports status when an order cycle has closed" do
       Timecop.freeze(oc.orders_close_at + 1.second) do
         oc.should_not be_undated
+        oc.should     be_dated
         oc.should_not be_upcoming
         oc.should_not be_open
         oc.should     be_closed
@@ -378,7 +395,8 @@ describe OrderCycle do
     it "reports status when an order cycle is undated" do
       oc.update_attributes!(orders_open_at: nil, orders_close_at: nil)
 
-      oc.should be_undated
+      oc.should     be_undated
+      oc.should_not be_dated
       oc.should_not be_upcoming
       oc.should_not be_open
       oc.should_not be_closed
@@ -388,6 +406,7 @@ describe OrderCycle do
       oc.update_attributes!(orders_close_at: nil)
 
       oc.should     be_undated
+      oc.should_not be_dated
       oc.should_not be_upcoming
       oc.should_not be_open
       oc.should_not be_closed
@@ -397,6 +416,7 @@ describe OrderCycle do
       oc.update_attributes!(orders_open_at: nil)
 
       oc.should     be_undated
+      oc.should_not be_dated
       oc.should_not be_upcoming
       oc.should_not be_open
       oc.should_not be_closed

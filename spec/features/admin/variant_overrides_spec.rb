@@ -318,7 +318,7 @@ feature %q{
           select2_select hub.name, from: 'hub_id'
         end
 
-        it "alerts the user to the presence of new products, and allows them to be added or hidden" do
+        it "alerts the user to the presence of new products, and allows them to be added or hidden", retry: 3 do
           expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant1.id}"
           expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant2.id}"
 
