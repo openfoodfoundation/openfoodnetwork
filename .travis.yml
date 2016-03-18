@@ -40,19 +40,5 @@ script:
   #- "KNAPSACK_GENERATE_REPORT=true bundle exec rspec spec"
   - "bundle exec rake 'knapsack:rspec[--tag ~performance]'"
 
-after_success:
-  - >
-    if [ "$GITHUB_DEPLOY" = "true" -a "$TRAVIS_PULL_REQUEST" = "false" -a -n "$TRAVIS_BRANCH" -a -n "$GITHUB_API_SECRET" ]; then
-      description="`git show "$TRAVIS_BRANCH" -s --oneline --no-color`"
-      data="{
-        \"ref\":\"$TRAVIS_BRANCH\",
-        \"description\":\"$description\",
-        \"environment\":\"staging\",
-        \"required_contexts\":[]}"
-      curl -u "$GITHUB_API_SECRET" -d "$data" "https://api.github.com/repos/$TRAVIS_REPO_SLUG/deployments"
-    else
-      echo "Not deploying on this build."
-    fi
-
 notifications:
   email: false
