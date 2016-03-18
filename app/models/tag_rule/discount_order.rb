@@ -8,8 +8,8 @@ class TagRule::DiscountOrder < TagRule
     create_adjustment(I18n.t("tag_rules.discount_order.discount"), subject, subject)
   end
 
-  def subject_class
-    Spree::Order
+  def subject_class_matches?
+    subject.class == Spree::Order
   end
 
   def additional_requirements_met?

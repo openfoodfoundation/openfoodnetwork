@@ -43,50 +43,38 @@ describe TagRule, type: :model do
           allow(subject).to receive(:class) { Spree::Order }
         end
 
-        context "when customer_tags_match? returns false" do
-          before { expect(tag_rule).to receive(:customer_tags_match?) { false } }
+        context "when the rule does not repond to #additional_requirements_met?" do
+          before { allow(tag_rule).to receive(:respond_to?).with(:additional_requirements_met?, true) { false } }
 
-          it "returns the value of customer_tags_match?" do
-            expect(tag_rule.send(:relevant?)).to be false
+          it "returns true" do
+            expect(tag_rule.send(:relevant?)).to be true
           end
         end
 
-        context "when customer_tags_match? returns true" do
-          before { expect(tag_rule).to receive(:customer_tags_match?) { true } }
+        context "when the rule reponds to #additional_requirements_met?" do
+          before { allow(tag_rule).to receive(:respond_to?).with(:additional_requirements_met?, true) { true } }
 
-          context "when the rule does not repond to #additional_requirements_met?" do
-            before { allow(tag_rule).to receive(:respond_to?).with(:additional_requirements_met?, true) { false } }
+          context "and #additional_requirements_met? returns a truthy value" do
+            before { allow(tag_rule).to receive(:additional_requirements_met?) { "smeg" } }
 
-            it "returns true" do
+            it "returns true immediately" do
               expect(tag_rule.send(:relevant?)).to be true
             end
           end
 
-          context "when the rule reponds to #additional_requirements_met?" do
-            before { allow(tag_rule).to receive(:respond_to?).with(:additional_requirements_met?, true) { true } }
+          context "and #additional_requirements_met? returns true" do
+            before { allow(tag_rule).to receive(:additional_requirements_met?) { true } }
 
-            context "and #additional_requirements_met? returns a truthy value" do
-              before { allow(tag_rule).to receive(:additional_requirements_met?) { "smeg" } }
-
-              it "returns true immediately" do
-                expect(tag_rule.send(:relevant?)).to be true
-              end
+            it "returns true immediately" do
+              expect(tag_rule.send(:relevant?)).to be true
             end
+          end
 
-            context "and #additional_requirements_met? returns true" do
-              before { allow(tag_rule).to receive(:additional_requirements_met?) { true } }
+          context "and #additional_requirements_met? returns false" do
+            before { allow(tag_rule).to receive(:additional_requirements_met?) { false } }
 
-              it "returns true immediately" do
-                expect(tag_rule.send(:relevant?)).to be true
-              end
-            end
-
-            context "and #additional_requirements_met? returns false" do
-              before { allow(tag_rule).to receive(:additional_requirements_met?) { false } }
-
-              it "returns false immediately" do
-                expect(tag_rule.send(:relevant?)).to be false
-              end
+            it "returns false immediately" do
+              expect(tag_rule.send(:relevant?)).to be false
             end
           end
         end
@@ -165,13 +153,42 @@ describe TagRule, type: :model do
       context "when the rule is deemed to be relevant" do
         before { allow(tag_rule).to receive(:relevant?) { true } }
 
-        it "applies the rule" do
-          tag_rule.apply
-          expect(tag_rule).to have_received(:apply!)
+        context "and customer_tags_match? returns true" do
+          before { expect(tag_rule).to receive(:customer_tags_match?) { true } }
+
+          it "applies the rule" do
+            tag_rule.apply
+            expect(tag_rule).to have_received(:apply!)
+          end
+        end
+
+        context "when customer_tags_match? returns false" do
+          before { expect(tag_rule).to receive(:customer_tags_match?) { false } }
+          before { allow(tag_rule).to receive(:apply_default!) }
+
+          context "and the rule responds to #apply_default!" do
+            before { allow(tag_rule).to receive(:respond_to?).with(:apply_default!, true) { true } }
+
+            it "applies the default action" do
+              tag_rule.apply
+              expect(tag_rule).to_not have_received(:apply!)
+              expect(tag_rule).to have_received(:apply_default!)
+            end
+          end
+
+          context "and the rule does not respond to #apply_default!" do
+            before { allow(tag_rule).to receive(:respond_to?).with(:apply_default!, true) { false } }
+
+            it "does not apply the rule or the default action" do
+              tag_rule.apply
+              expect(tag_rule).to_not have_received(:apply!)
+              expect(tag_rule).to_not have_received(:apply_default!)
+            end
+          end
         end
       end
 
-      context "when the rule is deemed to be relevant" do
+      context "when the rule is deemed not to be relevant" do
         before { allow(tag_rule).to receive(:relevant?) { false } }
 
         it "does not apply the rule" do

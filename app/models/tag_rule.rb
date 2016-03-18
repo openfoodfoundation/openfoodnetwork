@@ -15,14 +15,19 @@ class TagRule < ActiveRecord::Base
   end
 
   def apply
-    apply! if relevant?
+    if relevant?
+      if customer_tags_match?
+        apply!
+      else
+        apply_default! if respond_to?(:apply_default!,true)
+      end
+    end
   end
 
   private
 
   def relevant?
-    return false unless subject.class == subject_class
-    return false unless customer_tags_match?
+    return false unless subject_class_matches?
     if respond_to?(:additional_requirements_met?, true)
       return false unless additional_requirements_met?
     end
