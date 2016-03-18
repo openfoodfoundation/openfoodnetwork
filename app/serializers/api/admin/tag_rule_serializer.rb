@@ -16,4 +16,12 @@ module Api::Admin::TagRule
   class DiscountOrderSerializer < BaseSerializer
     has_one :calculator, serializer: Api::Admin::Calculator::FlatPercentItemTotalSerializer
   end
+
+  class FilterShippingMethodsSerializer < BaseSerializer
+    attributes :preferred_matched_shipping_methods_visibility, :shipping_method_tags
+
+    def shipping_method_tags
+      object.preferred_shipping_method_tags.split(",")
+    end
+  end
 end

@@ -1,6 +1,8 @@
 angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, enterprise) ->
   $scope.tagGroups = enterprise.tag_groups
 
+  $scope.visibilityOptions = [ { id: "visible", name: "VISIBLE" }, { id: "hidden", name: "NOT VISIBLE" } ]
+
   updateRuleCounts = ->
     index = 0
     for tagGroup in $scope.tagGroups
@@ -13,13 +15,18 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, ente
     for tagRule in tagGroup.rules
       tagRule.preferred_customer_tags = (tag.text for tag in tagGroup.tags).join(",")
 
-  $scope.addNewRuleTo = (tagGroup) ->
-    tagGroup.rules.push
-      id: null
-      preferred_customer_tags: (tag.text for tag in tagGroup.tags).join(",")
-      type: "TagRule::DiscountOrder"
-      calculator:
-        preferred_flat_percent: 0
+  $scope.addNewRuleTo = (tagGroup, ruleType) ->
+    newRule =
+        id: null
+        preferred_customer_tags: (tag.text for tag in tagGroup.tags).join(",")
+        type: "TagRule::#{ruleType}"
+    switch ruleType
+      when "DiscountOrder"
+        newRule.calculator = { preferred_flat_percent: 0 }
+      when "FilterShippingMethods"
+        newRule.peferred_shipping_method_tags = []
+        newRule.preferred_matched_shipping_methods_visibility = "visible"
+    tagGroup.rules.push(newRule)
     updateRuleCounts()
 
   $scope.addNewTag = ->

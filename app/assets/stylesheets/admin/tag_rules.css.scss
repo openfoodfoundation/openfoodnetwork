@@ -44,7 +44,7 @@
 
       td {
         border: none;
-        padding: 4px 10px;
+        padding: 4px 10px 10px 10px;
         margin: 0px;
 
         input {
@@ -57,5 +57,12 @@
   .add_rule {
     padding: 8px 10px;
     margin-bottom: 10px;
+  }
+}
+
+#new-tag-rule-dialog{
+  .select2-chosen, .select2-result-label{
+    font-size: 1rem;
+    font-weight: lighter;
   }
 }

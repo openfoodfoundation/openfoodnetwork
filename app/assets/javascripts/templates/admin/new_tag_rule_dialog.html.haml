@@ -1,0 +1,10 @@
+#new-tag-rule-dialog
+  .text-normal.margin-bottom-30.text-center
+    Select a rule type:
+
+  .text-center.margin-bottom-30
+    -# %select.fullwidth{ 'select2-min-search' => 5, 'ng-model' => 'newRuleType', 'ng-options' => 'ruleType.id as ruleType.name for ruleType in availableRuleTypes' }
+    %input.ofn-select2.fullwidth{ :id => 'rule_type_selector', ng: { model: "ruleType" }, data: "ruleTypes", 'min-search' => "5" }
+
+  .text-center
+    %input.button.red.icon-plus{ type: 'button', value: "Add Rule", ng: { click: 'addRule(tagGroup, ruleType)' } }

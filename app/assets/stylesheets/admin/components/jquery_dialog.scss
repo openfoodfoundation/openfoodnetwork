@@ -1,0 +1,88 @@
+/**
+Main colors:
+dark: #545454
+light: #ccc
+*/
+.ui-dialog {
+  border: 2px solid #4a4a4a;
+  border-radius:3px;
+  padding:0px;
+  -moz-box-shadow: 3px 3px 4px #797979;
+  -webkit-box-shadow: 3px 3px 4px #797979;
+  box-shadow: 3px 3px 4px #797979;
+
+  /* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#545454')";
+
+  /* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#545454');
+}
+
+.ui-dialog .ui-dialog-titlebar{
+  border-radius: 3px;
+}
+
+.ui-dialog .ui-state-hover {
+  &.ui-dialog-titlebar-close{
+
+  }
+}
+
+/*.ui-dialog .ui-icon-closethick{background:url(/static/assets/dialogCloseButton.png);}*/
+
+.ui-dialog .ui-widget-header{
+  background-image: none;
+  background-color: #ffffff;
+  border:0px;
+  border-radius: 3px;
+  padding: 0px 5px 0px 5px;
+}
+.ui-dialog .ui-widget-content{
+  border: none;
+  border-radius: 3px;
+  padding: 0px 50px 30px 50px;
+}
+
+.ui-dialog .ui-corner-all{
+  border-radius:0px;
+}
+.ui-dialog  {
+  .ui-state-hover, .ui-state-focus{
+    border: none;
+    background: none;
+    color: #545454;
+  }
+}
+
+.ui-state-hover, .ui-widget-header .ui-state-hover, .ui-widget-content .ui-state-hover {
+  background-color: #ffffff;
+  background: none;
+}
+
+.ui-dialog-titlebar-close {
+  float: right;
+  &:before {
+    color: #000000;
+    font-size: 2em;
+    font-weight: 400;
+    content: '\00d7';
+    display: inline;
+  }
+
+  &:hover {
+    &:before {
+      color: #da5354;
+    }
+  }
+
+  .ui-icon {
+    &.ui-icon-closethick {
+      display: none;
+    }
+  }
+}
+
+.ui-widget-overlay {
+  background: #e9e9e9;
+  opacity: 0.6;
+}
