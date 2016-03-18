@@ -27,7 +27,10 @@ describe InjectionHelper do
   it "injects shipping_methods" do
     sm = create(:shipping_method)
     helper.stub(:current_order).and_return order = create(:order)
-    helper.stub_chain(:current_distributor, :shipping_methods, :uniq).and_return [sm]
+    shipping_methods = double(:shipping_methods, uniq: [sm])
+    current_distributor = double(:distributor, shipping_methods: shipping_methods)
+    allow(helper).to receive(:current_distributor) { current_distributor }
+    allow(current_distributor).to receive(:apply_tag_rules_to).with(shipping_methods, {customer: nil} )
     helper.inject_available_shipping_methods.should match sm.id.to_s
     helper.inject_available_shipping_methods.should match sm.compute_amount(order).to_s
   end
