@@ -3,10 +3,10 @@ require 'open_food_network/products_renderer'
 
 module OpenFoodNetwork
   describe ProductsRenderer do
-    let(:d) { create(:distributor_enterprise) }
-    let(:order_cycle) { create(:simple_order_cycle, distributors: [d], coordinator: create(:distributor_enterprise)) }
-    let(:exchange) { Exchange.find(order_cycle.exchanges.to_enterprises(d).outgoing.first.id) }
-    let(:pr) { ProductsRenderer.new(d, order_cycle) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+    let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
+    let(:pr) { ProductsRenderer.new(distributor, order_cycle) }
 
     describe "sorting" do
       let(:t1) { create(:taxon) }
@@ -24,14 +24,14 @@ module OpenFoodNetwork
       end
 
       it "sorts products by the distributor's preferred taxon list" do
-        d.stub(:preferred_shopfront_taxon_order) {"#{t1.id},#{t2.id}"}
-        products = pr.send(:products_for_shop)
+        distributor.stub(:preferred_shopfront_taxon_order) {"#{t1.id},#{t2.id}"}
+        products = pr.send(:load_products)
         products.should == [p2, p4, p1, p3]
       end
 
       it "alphabetizes products by name when taxon list is not set" do
-        d.stub(:preferred_shopfront_taxon_order) {""}
-        products = pr.send(:products_for_shop)
+        distributor.stub(:preferred_shopfront_taxon_order) {""}
+        products = pr.send(:load_products)
         products.should == [p1, p2, p3, p4]
       end
     end
@@ -45,17 +45,17 @@ module OpenFoodNetwork
       end
 
       it "only returns products for the current order cycle" do
-        pr.products.should include product.name
+        pr.products_json.should include product.name
       end
 
       it "doesn't return products not in stock" do
         variant.update_attribute(:count_on_hand, 0)
-        pr.products.should_not include product.name
+        pr.products_json.should_not include product.name
       end
 
       it "strips html from description" do
         product.update_attribute(:description, "<a href='44'>turtles</a> frogs")
-        json = pr.products
+        json = pr.products_json
         json.should include "frogs"
         json.should_not include "<a href"
       end
@@ -65,13 +65,13 @@ module OpenFoodNetwork
         OpenFoodNetwork::EnterpriseFeeCalculator.any_instance.
           stub(:indexed_fees_for).and_return 978.01
 
-        pr.products.should include "998.0"
+        pr.products_json.should include "998.0"
       end
 
       it "includes the primary taxon" do
         taxon = create(:taxon)
         Spree::Product.any_instance.stub(:primary_taxon).and_return taxon
-        pr.products.should include taxon.name
+        pr.products_json.should include taxon.name
       end
     end
 

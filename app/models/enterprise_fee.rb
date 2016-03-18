@@ -1,11 +1,18 @@
 class EnterpriseFee < ActiveRecord::Base
   belongs_to :enterprise
   belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
-  has_and_belongs_to_many :order_cycles, join_table: 'coordinator_fees'
+
+  has_many :coordinator_fees, dependent: :destroy
+  has_many :order_cycles, through: :coordinator_fees
+
   has_many :exchange_fees, dependent: :destroy
   has_many :exchanges, through: :exchange_fees
 
-  before_destroy { order_cycles.clear }
+
+  after_save :refresh_products_cache
+  # After destroy, the products cache is refreshed via the after_destroy hook for
+  # coordinator_fees and exchange_fees
+
 
   calculated_adjustments
 
@@ -59,6 +66,7 @@ class EnterpriseFee < ActiveRecord::Base
                                 :locked => true}, :without_protection => true)
   end
 
+
   private
 
   def ensure_valid_tax_category_settings
@@ -71,5 +79,9 @@ class EnterpriseFee < ActiveRecord::Base
       self.tax_category_id = nil if inherits_tax_category?
     end
     return true
+  end
+
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.enterprise_fee_changed self
   end
 end

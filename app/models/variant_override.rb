@@ -6,6 +6,9 @@ class VariantOverride < ActiveRecord::Base
   # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero. Need to ensure this can be set by the user.
   validates :default_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
+  after_save :refresh_products_cache_from_save
+  after_destroy :refresh_products_cache_from_destroy
+
   default_scope where(permission_revoked_at: nil)
 
   scope :for_hubs, lambda { |hubs|
@@ -75,4 +78,11 @@ class VariantOverride < ActiveRecord::Base
     VariantOverride.where(variant_id: variant, hub_id: hub).first
   end
 
+  def refresh_products_cache_from_save
+    OpenFoodNetwork::ProductsCache.variant_override_changed self
+  end
+
+  def refresh_products_cache_from_destroy
+    OpenFoodNetwork::ProductsCache.variant_override_destroyed self
+  end
 end

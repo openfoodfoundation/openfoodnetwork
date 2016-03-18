@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(:version => 20160302044850) do
   add_index "cms_snippets", ["site_id", "identifier"], :name => "index_cms_snippets_on_site_id_and_identifier", :unique => true
   add_index "cms_snippets", ["site_id", "position"], :name => "index_cms_snippets_on_site_id_and_position"
 
-  create_table "coordinator_fees", :id => false, :force => true do |t|
+  create_table "coordinator_fees", :force => true do |t|
     t.integer "order_cycle_id"
     t.integer "enterprise_fee_id"
   end
