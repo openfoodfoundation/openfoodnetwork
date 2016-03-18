@@ -86,19 +86,23 @@ module OpenFoodNetwork
 
         it "filters to a payment method" do
           pm2 = create(:payment_method, name: "PM2")
-          order2 = create(:order)
-          payment2 = create(:payment, order: order2, payment_method: pm2)
+          pm3 = create(:payment_method, name: "PM3")
+          order2 = create(:order, payments: [create(:payment, payment_method: pm2)])
+          order3 = create(:order, payments: [create(:payment, payment_method: pm3)])
+          # payment2 = create(:payment, order: order2, payment_method: pm2)
 
-          subject.stub(:params).and_return(payment_method_in: pm1.name)
-          subject.filter(orders).should == [order1]
+          subject.stub(:params).and_return(payment_method_in: [pm1.id, pm3.id] )
+          subject.filter(orders).should == [order1, order3]
         end
 
         it "filters to a shipping method" do
           sm2 = create(:shipping_method, name: "ship2")
+          sm3 = create(:shipping_method, name: "ship3")
           order2 = create(:order, shipping_method: sm2)
+          order3 = create(:order, shipping_method: sm3)
 
-          subject.stub(:params).and_return(shipping_method_in: sm1.name)
-          subject.filter(orders).should == [order1]
+          subject.stub(:params).and_return(shipping_method_in: [sm1.id, sm3.id])
+          subject.filter(orders).should == [order1, order3]
         end
 
         it "should do all the filters at once" do

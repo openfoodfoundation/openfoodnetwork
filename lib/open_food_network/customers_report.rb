@@ -31,7 +31,7 @@ module OpenFoodNetwork
             ba.phone,
             order.distributor.andand.name,
             [da.andand.address1, da.andand.address2, da.andand.city].join(" "),
-            order.shipping_method.andand.name 
+            order.shipping_method.andand.name
           ]
         end
       end
@@ -78,4 +78,3 @@ module OpenFoodNetwork
     end
   end
 end
-
