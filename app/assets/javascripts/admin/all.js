@@ -9,7 +9,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require shared/jquery-ui-timepicker-addon
-//= require shared/jquery.dialogOptions
 //= require angular
 //= require angular-resource
 //= require angular-animate
