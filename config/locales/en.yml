@@ -105,6 +105,20 @@ en:
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
+    enterprises:
+      form:
+        primary_details:
+          shopfront_requires_login: "Shopfront requires login?"
+          shopfront_requires_login_tip: "Choose whether viewing the shopfront requires to login or not."
+          shopfront_requires_login_false: "Public"
+          shopfront_requires_login_true: "Require customers to login"
+
+  shop:
+    messages:
+      login: "login"
+      register: "register"
+      require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
+
   # Printable Invoice Columns
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"

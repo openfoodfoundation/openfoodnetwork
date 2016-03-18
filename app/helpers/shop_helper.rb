@@ -7,4 +7,8 @@ module ShopHelper
       ]
     end
   end
+
+  def require_login?
+    current_distributor.require_login? && spree_current_user.nil?
+  end
 end

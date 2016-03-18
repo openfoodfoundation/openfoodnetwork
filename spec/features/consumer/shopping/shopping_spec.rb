@@ -253,5 +253,26 @@ feature "As a consumer I want to shop with a distributor", js: true do
         page.should have_content "The next cycle opens in 10 days"
       end
     end
+
+    context "when shopping requires to login" do
+      let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+      let(:product) { create(:simple_product) }
+      let(:variant) { create(:variant, product: product) }
+
+      before do
+        add_product_and_variant_to_order_cycle(exchange, product, variant)
+        set_order_cycle(order, oc1)
+        distributor.require_login = true
+        distributor.save!
+        visit shop_path
+      end
+
+      it "tells us to login" do
+        expect(page).to have_content "Please login"
+      end
+      it "does not show products" do
+        expect(page).to have_no_content product.name
+      end
+    end
   end
 end
