@@ -7,14 +7,14 @@
         options_from_collection_for_select(@distributors, :id, :name, params[:distributor_id]),
         {:include_blank => true, :class => "select2 fullwidth"})
 
-  
+
     .four.columns
-      = label_tag nil, t(:reports_customers_supplier)
+      = label_tag nil, t(:report_customers_supplier)
       = select_tag(:supplier_id,
         options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id]),
         {:include_blank => true, :class => "select2 fullwidth"})
 
-  
+
     .six.columns
       = label_tag nil, t(:report_order_cycle)
       = select_tag(:order_cycle_id,

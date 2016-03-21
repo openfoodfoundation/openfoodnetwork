@@ -28,7 +28,7 @@
             =t :update_invoice
           = f.check_box :auto_update_invoices
           = f.label :auto_update_invoices,
-            t(:auto_finalise_invoices)
+            t(:auto_update_invoices)
 
       .six.columns.omega
         %fieldset.no-border-bottom
@@ -36,7 +36,7 @@
             =t :finalise_invoice
           = f.check_box :auto_finalize_invoices
           = f.label :auto_finalize_invoices,
-            t(:auto_update_invoices)
+            t(:auto_finalise_invoices)
 
     .row
       .twelve.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}

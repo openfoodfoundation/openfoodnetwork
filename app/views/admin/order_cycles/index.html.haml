@@ -28,14 +28,21 @@
 
     %thead
       %tr
-        %th =t :name
-        %th =t :open
-        %th =t :close
+        %th
+          =t :name
+        %th
+          =t :open
+        %th
+          =t :close
         - unless order_cycles_simple_index
-          %th =t :supplier
-          %th =t :coordinator
-          %th =t :distributors
-        %th =t :products
+          %th
+            =t :supplier
+          %th
+            =t :coordinator
+          %th
+            =t :distributors
+        %th
+          =t :products
         %th.actions
         %th.actions
         %th.actions

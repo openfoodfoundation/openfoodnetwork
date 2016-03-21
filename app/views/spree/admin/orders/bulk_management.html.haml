@@ -4,7 +4,7 @@
 - content_for :page_title do
   %h1.page-title
     = t "bom_page_title"
-  %a{ 'ofn-with-tip' => "#t('bom_tip')" }
+  %a{ 'ofn-with-tip' => t("bom_tip") }
     = t "admin.whats_this"
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
