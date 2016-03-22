@@ -1,6 +1,11 @@
 Spree::Taxon.class_eval do
+  has_many :classifications, :dependent => :destroy
+
+
   self.attachment_definitions[:icon][:path] = 'public/images/spree/taxons/:id/:style/:basename.:extension'
   self.attachment_definitions[:icon][:url] = '/images/spree/taxons/:id/:style/:basename.:extension'
+
+  after_save :refresh_products_cache
 
 
   # Indicate which filters should be used for this taxon
@@ -44,5 +49,12 @@ Spree::Taxon.class_eval do
     end
 
     taxons
+  end
+
+
+  private
+
+  def refresh_products_cache
+    products(:reload).each &:refresh_products_cache
   end
 end
