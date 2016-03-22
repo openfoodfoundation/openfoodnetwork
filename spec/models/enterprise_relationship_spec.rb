@@ -31,16 +31,51 @@ describe EnterpriseRelationship do
     end
 
     describe "creating with a permission list" do
-      it "creates permissions with a list" do
-        er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: ['one', 'two']
-        er.reload
-        er.permissions.map(&:name).should match_array ['one', 'two']
+      context "creating a new list of permissions" do
+        it "creates a new permission for each item in the list" do
+          er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: ['one', 'two']
+          er.reload
+          er.permissions.map(&:name).should match_array ['one', 'two']
+        end
+
+        it "does nothing when the list is nil" do
+          er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: nil
+          er.reload
+          er.permissions.should be_empty
+        end
       end
 
-      it "does nothing when the list is nil" do
-        er = EnterpriseRelationship.create! parent: e1, child: e2, permissions_list: nil
-        er.reload
-        er.permissions.should be_empty
+      context "updating an existing list of permissions" do
+        let(:er) { create(:enterprise_relationship, parent: e1, child: e2, permissions_list: ["one", "two", "three"]) }
+        it "creates a new permission for each item in the list that has no existing permission" do
+          er.permissions_list = ['four']
+          er.save!
+          er.reload
+          er.permissions.map(&:name).should include 'four'
+        end
+
+        it "does not duplicate existing permissions" do
+          er.permissions_list = ["one", "two", "three"]
+          er.save!
+          er.reload
+          er.permissions.map(&:name).count.should == 3
+          er.permissions.map(&:name).should match_array ["one", "two", "three"]
+        end
+
+        it "removes permissions that are not in the list" do
+          er.permissions_list = ['one', 'three']
+          er.save!
+          er.reload
+          er.permissions.map(&:name).should include 'one', 'three'
+          er.permissions.map(&:name).should_not include 'two'
+        end
+
+        it "does removes all permissions when the list provided is nil" do
+          er.permissions_list = nil
+          er.save!
+          er.reload
+          er.permissions.should be_empty
+        end
       end
     end
 
@@ -101,6 +136,74 @@ describe EnterpriseRelationship do
     it "does not show duplicates" do
       er_reverse
       EnterpriseRelationship.relatives[e2.id][:producers].should == Set.new([e1.id])
+    end
+  end
+
+  describe "callbacks" do
+    context "applying variant override permissions" do
+      let(:hub) { create(:distributor_enterprise) }
+      let(:producer) { create(:supplier_enterprise) }
+      let(:some_other_producer) { create(:supplier_enterprise) }
+
+      context "when variant_override permission is present" do
+        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] )}
+        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles, :create_variant_overrides] )}
+        let!(:vo1) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer))) }
+        let!(:vo2) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer))) }
+        let!(:vo3) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: some_other_producer))) }
+
+        context "and is then removed" do
+          before { er.permissions_list = [:add_to_order_cycles]; er.save! }
+          it "should set permission_revoked_at to the current time for all relevant variant overrides" do
+            expect(vo1.reload.permission_revoked_at).to_not be_nil
+            expect(vo2.reload.permission_revoked_at).to_not be_nil
+          end
+
+          it "should not affect other variant overrides" do
+            expect(vo3.reload.permission_revoked_at).to be_nil
+          end
+        end
+
+        context "and then some other permission is removed" do
+          before { er.permissions_list = [:create_variant_overrides]; er.save! }
+
+          it "should have no effect on existing variant_overrides" do
+            expect(vo1.reload.permission_revoked_at).to be_nil
+            expect(vo2.reload.permission_revoked_at).to be_nil
+            expect(vo3.reload.permission_revoked_at).to be_nil
+          end
+        end
+      end
+
+      context "when variant_override permission is not present" do
+        let!(:er) { create(:enterprise_relationship, child: hub, parent: producer, permissions_list: [:add_to_order_cycles] )}
+        let!(:some_other_er) { create(:enterprise_relationship, child: hub, parent: some_other_producer, permissions_list: [:add_to_order_cycles] )}
+        let!(:vo1) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now) }
+        let!(:vo2) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now) }
+        let!(:vo3) { create(:variant_override, hub: hub, variant: create(:variant, product: create(:product, supplier: some_other_producer)), permission_revoked_at: Time.now) }
+
+        context "and is then added" do
+          before { er.permissions_list = [:add_to_order_cycles, :create_variant_overrides]; er.save! }
+          it "should set permission_revoked_at to nil for all relevant variant overrides" do
+            expect(vo1.reload.permission_revoked_at).to be_nil
+            expect(vo2.reload.permission_revoked_at).to be_nil
+          end
+
+          it "should not affect other variant overrides" do
+            expect(vo3.reload.permission_revoked_at).to_not be_nil
+          end
+        end
+
+        context "and then some other permission is added" do
+          before { er.permissions_list = [:add_to_order_cycles, :manage_products]; er.save! }
+
+          it "should have no effect on existing variant_overrides" do
+            expect(vo1.reload.permission_revoked_at).to_not be_nil
+            expect(vo2.reload.permission_revoked_at).to_not be_nil
+            expect(vo3.reload.permission_revoked_at).to_not be_nil
+          end
+        end
+      end
     end
   end
 end

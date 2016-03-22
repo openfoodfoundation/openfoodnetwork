@@ -5,7 +5,7 @@ module Spree
       def link_to_remove_fields(name, f, options = {})
         name = '' if options[:no_text]
         options[:class] = '' unless options[:class]
-        options[:class] += 'no-text with-tip' if options[:no_text]
+        options[:class] += 'no-text' if options[:no_text]
 
         url = if f.object.persisted?
                 options[:url] || [:admin, f.object]

@@ -1,0 +1,4 @@
+.sixteen.columns.alpha.omega.text-center{ ng: {show: 'productLimit < filteredProducts.length'}}
+  %input{ type: 'button', value: 'Show More', ng: { click: 'productLimit = productLimit + 10' } }
+  or
+  %input{ type: 'button', value: "Show All ({{ filteredProducts.length - productLimit }}  More)", ng: { click: 'productLimit = filteredProducts.length' } }

@@ -1,4 +1,4 @@
- angular.module("admin.dropdown").directive "ofnCloseOnClick", ($document) ->
+ angular.module("admin.dropdown").directive "closeOnClick", () ->
    link: (scope, element, attrs) ->
      element.click (event) ->
        event.stopPropagation()

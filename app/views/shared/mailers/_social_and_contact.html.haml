@@ -24,6 +24,5 @@
               %h5
                 = t :email_contact
               %strong
-                %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
-                  #{ContentConfig.footer_email}
+                = mail_to ContentConfig.footer_email
       %span.clear

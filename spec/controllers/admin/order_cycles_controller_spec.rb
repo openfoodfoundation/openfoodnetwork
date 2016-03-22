@@ -103,8 +103,32 @@ module Admin
       end
 
       it "does not set flash message otherwise" do
-        spree_put :update, id: order_cycle.id, reloading: '0', order_cycle: {}
         flash[:notice].should be_nil
+      end
+
+      context "when updating without explicitly submitting exchanges" do
+        let(:form_applicator_mock) { double(:form_applicator) }
+        let(:incoming_exchange) { create(:exchange, order_cycle: order_cycle, incoming: true) }
+        let(:outgoing_exchange) { create(:exchange, order_cycle: order_cycle, incoming: false) }
+
+
+        before do
+          allow(OpenFoodNetwork::OrderCycleFormApplicator).to receive(:new) { form_applicator_mock }
+          allow(form_applicator_mock).to receive(:go!) { nil }
+        end
+
+         it "does not run the OrderCycleFormApplicator" do
+           expect(order_cycle.exchanges.incoming).to eq [incoming_exchange]
+           expect(order_cycle.exchanges.outgoing).to eq [outgoing_exchange]
+           expect(order_cycle.prefers_product_selection_from_coordinator_inventory_only?).to be false
+           spree_put :update, id: order_cycle.id, order_cycle: { name: 'Some new name', preferred_product_selection_from_coordinator_inventory_only: true }
+           expect(form_applicator_mock).to_not have_received(:go!)
+           order_cycle.reload
+           expect(order_cycle.exchanges.incoming).to eq [incoming_exchange]
+           expect(order_cycle.exchanges.outgoing).to eq [outgoing_exchange]
+           expect(order_cycle.name).to eq 'Some new name'
+           expect(order_cycle.prefers_product_selection_from_coordinator_inventory_only?).to be true
+         end
       end
 
       context "as a producer supplying to an order cycle" do

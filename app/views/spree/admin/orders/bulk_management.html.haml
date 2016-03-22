@@ -1,10 +1,13 @@
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.lineItems'"
+
 - content_for :page_title do
   %h1.page-title Bulk Order Management
-  %a.with-tip{ 'data-powertip' => "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required." } What's this?
+  %a{ 'ofn-with-tip' => "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required." } What's this?
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
-%div{ ng: { app: 'admin.lineItems', controller: 'LineItemsCtrl' } }
+%div{ ng: { controller: 'LineItemsCtrl' } }
   %save-bar{ save: "submit()", form: "bulk_order_form" }
   .filters{ :class => "sixteen columns alpha" }
     .date_filter{ :class => "two columns alpha" }
@@ -89,7 +92,7 @@
   %div{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredLineItems.length == 0'}
     %h1#no_results No orders found.
 
-  %div{ 'ng-hide' => 'RequestMonitor.loading || filteredLineItems.length == 0' }
+  .margin-bottom-50{ 'ng-hide' => 'RequestMonitor.loading || filteredLineItems.length == 0' }
     %form{ name: 'bulk_order_form' }
       %table.index#listing_orders.bulk{ :class => "sixteen columns alpha" }
         %thead

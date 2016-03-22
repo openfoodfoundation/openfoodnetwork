@@ -1,0 +1,2 @@
+add_to_attributes "table#listing_orders"
+attributes "ng-app" => "ofn.admin"

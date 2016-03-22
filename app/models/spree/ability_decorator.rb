@@ -125,6 +125,20 @@ class AbilityDecorator
       hub_auth && producer_auth
     end
 
+    can [:admin, :create, :update], InventoryItem do |ii|
+      next false unless ii.enterprise.present? && ii.variant.andand.product.andand.supplier.present?
+
+      hub_auth = OpenFoodNetwork::Permissions.new(user).
+        variant_override_hubs.
+        include? ii.enterprise
+
+      producer_auth = OpenFoodNetwork::Permissions.new(user).
+        variant_override_producers.
+        include? ii.variant.product.supplier
+
+      hub_auth && producer_auth
+    end
+
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], Spree::ProductProperty
     can [:admin, :index, :read, :create, :edit, :update, :destroy], Spree::Image
 

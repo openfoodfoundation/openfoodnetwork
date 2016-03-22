@@ -17,7 +17,7 @@ module OpenFoodNetwork
     end
 
     def search
-      Spree::Order.complete.not_state(:canceled).distributed_by_user(@user).managed_by(@user).search(params[:q])
+      Spree::Order.complete.where("spree_orders.state != ?", :canceled).distributed_by_user(@user).managed_by(@user).search(params[:q])
     end
 
     def orders
@@ -75,7 +75,7 @@ module OpenFoodNetwork
 
     def filter_to_payment_method(orders)
       if params[:payment_method_in].present?
-        orders.with_payment_method_name(params[:payment_method_in])
+        orders.joins(payments: :payment_method).where(spree_payments: { payment_method_id: params[:payment_method_in]})
       else
         orders
       end
@@ -83,7 +83,7 @@ module OpenFoodNetwork
 
     def filter_to_shipping_method(orders)
       if params[:shipping_method_in].present?
-        orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:shipping_method_in])
+        orders.joins(:shipping_method).where(shipping_method_id: params[:shipping_method_in])
       else
         orders
       end

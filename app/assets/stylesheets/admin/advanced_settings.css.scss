@@ -1,0 +1,19 @@
+#advanced_settings {
+  background-color: #eff5fc;
+  border: 1px solid #cee1f4;
+  margin-bottom: 20px;
+
+  .row{
+    margin: 0px -4px;
+
+    padding: 20px 0px;
+
+    .column.alpha, .columns.alpha {
+      padding-left: 20px;
+    }
+
+    .column.omega, .columns.omega {
+      padding-right: 20px;
+    }
+  }
+}

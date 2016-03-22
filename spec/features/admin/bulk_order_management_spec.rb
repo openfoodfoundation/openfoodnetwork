@@ -159,6 +159,7 @@ feature %q{
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Price").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "$50.00"
           fill_in "final_weight_volume", :with => 2000
@@ -177,6 +178,7 @@ feature %q{
         visit '/admin/orders/bulk_management'
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Price").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * 5)}"
           fill_in "quantity", :with => 6
@@ -190,6 +192,7 @@ feature %q{
         visit '/admin/orders/bulk_management'
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Weight/Volume").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "final_weight_volume", with: "#{li1.final_weight_volume.round}"
           fill_in "quantity", :with => 6
@@ -211,6 +214,7 @@ feature %q{
 
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Producer").click
+        first("div#columns-dropdown", :text => "COLUMNS").click
 
         expect(page).to_not have_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"
@@ -236,9 +240,9 @@ feature %q{
         it "displays a select box for producers, which filters line items by the selected supplier" do
           supplier_names = ["All"]
           Enterprise.is_primary_producer.each{ |e| supplier_names << e.name }
-          find("div.select2-container#s2id_supplier_filter").click
+          open_select2 "div.select2-container#s2id_supplier_filter"
           supplier_names.each { |sn| expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: sn }
-          find("div.select2-container#s2id_supplier_filter").click
+          close_select2 "div.select2-container#s2id_supplier_filter"
           expect(page).to have_selector "tr#li_#{li1.id}", visible: true
           expect(page).to have_selector "tr#li_#{li2.id}", visible: true
           select2_select s1.name, from: "supplier_filter"
@@ -271,9 +275,9 @@ feature %q{
         it "displays a select box for distributors, which filters line items by the selected distributor" do
           distributor_names = ["All"]
           Enterprise.is_distributor.each{ |e| distributor_names << e.name }
-          find("div.select2-container#s2id_distributor_filter").click
+          open_select2 "div.select2-container#s2id_distributor_filter"
           distributor_names.each { |dn| expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: dn }
-          find("div.select2-container#s2id_distributor_filter").click
+          close_select2 "div.select2-container#s2id_distributor_filter"
           expect(page).to have_selector "tr#li_#{li1.id}", visible: true
           expect(page).to have_selector "tr#li_#{li2.id}", visible: true
           select2_select d1.name, from: "distributor_filter"
