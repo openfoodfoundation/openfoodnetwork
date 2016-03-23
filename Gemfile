@@ -13,9 +13,10 @@ gem 'spree', github: 'openfoodfoundation/spree', branch: '1-3-stable'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '1-3-stable'
 
-# Waiting on merge of PR #117
-# https://github.com/spree-contrib/better_spree_paypal_express/pull/117
-gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "1-3-stable"
+# Our branch contains two changes
+# - Pass customer email and phone number to PayPal (merged to upstream master)
+# - Change type of password from string to password to hide it in the form
+gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "hide-password"
 #gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
 
 gem 'delayed_job_active_record'
