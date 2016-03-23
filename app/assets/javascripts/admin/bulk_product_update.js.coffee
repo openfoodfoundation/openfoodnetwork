@@ -265,11 +265,11 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
 
     $scope.displayDirtyProducts = ->
-      if DirtyProducts.count() > 0
-        message = if DirtyProducts.count() == 1 then t("one_product") else DirtyProducts.count() + t("products")
-        StatusMessage.display 'notice', t("changes_to") + "#{message}" + t("remain_unsaved.")
-      else
-        StatusMessage.clear()
+      count = DirtyProducts.count()
+      switch count
+        when 0 then StatusMessage.clear()
+        when 1 then StatusMessage.display 'notice', t("one_product_unsaved")
+        else StatusMessage.display 'notice', t("products_unsaved", n: count)
 
 
 filterSubmitProducts = (productsToFilter) ->
