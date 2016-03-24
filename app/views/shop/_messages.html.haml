@@ -2,7 +2,7 @@
 - if require_customer?
   .row.footer-pad
     .small-12.columns
-      .shopfront_closed_message
+      .shopfront_hidden_message
         = t '.require_customer_login'
         - if spree_current_user.nil?
           = t '.require_login_html',

@@ -109,7 +109,7 @@ en:
       form:
         primary_details:
           shopfront_requires_login: "Shopfront requires login?"
-          shopfront_requires_login_tip: "Choose whether viewing the shopfront requires to login or not."
+          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront."
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Require customers to login"
 
