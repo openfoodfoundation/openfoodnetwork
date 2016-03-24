@@ -254,7 +254,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
     end
 
-    context "when shopping requires to login" do
+    context "when shopping requires a customer" do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
       let(:product) { create(:simple_product) }
       let(:variant) { create(:variant, product: product) }
@@ -264,14 +264,43 @@ feature "As a consumer I want to shop with a distributor", js: true do
         set_order_cycle(order, oc1)
         distributor.require_login = true
         distributor.save!
-        visit shop_path
       end
 
-      it "tells us to login" do
-        expect(page).to have_content "Please login"
+      context "when not logged in" do
+        it "tells us to login" do
+          visit shop_path
+          expect(page).to have_content "This shop is for customers only."
+          expect(page).to have_content "Please login"
+          expect(page).to have_no_content product.name
+        end
       end
-      it "does not show products" do
-        expect(page).to have_no_content product.name
+
+      context "when logged in" do
+        let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
+        let(:user) { create(:user, bill_address: address, ship_address: address) }
+
+        before do
+          quick_login_as user
+        end
+
+        context "as non-customer" do
+          it "tells us to contact enterprise" do
+            visit shop_path
+            expect(page).to have_content "This shop is for customers only."
+            expect(page).to have_content "Please contact #{distributor.name}"
+            expect(page).to have_no_content product.name
+          end
+        end
+
+        context "as customer" do
+          let!(:customer) { create(:customer, user: user, enterprise: distributor) }
+
+          it "shows just products" do
+            visit shop_path
+            expect(page).to have_no_content "This shop is for customers only."
+            expect(page).to have_content product.name
+          end
+        end
       end
     end
   end

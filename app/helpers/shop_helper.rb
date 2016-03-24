@@ -8,7 +8,7 @@ module ShopHelper
     end
   end
 
-  def require_login?
-    current_distributor.require_login? && spree_current_user.nil?
+  def require_customer?
+    current_distributor.require_login? and not spree_current_user.andand.customer_of current_distributor
   end
 end
