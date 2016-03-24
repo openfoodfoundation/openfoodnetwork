@@ -31,11 +31,22 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
         @update_running = false
+
+        @compareAndNotifyStockLevels data.stock_levels
+
         @popQueue() if @update_enqueued
 
       .error (response, status)=>
         @scheduleRetry(status)
         @update_running = false
+
+    compareAndNotifyStockLevels: (stockLevels) =>
+      for li in @line_items_present()
+        if !stockLevels[li.variant.id]?
+          alert "Variant out of stock: #{li.variant.id}"
+          li.quantity = 0
+          li.max_quantity = 0 if li.max_quantity?
+          li.variant.count_on_hand = 0
 
     popQueue: =>
       @update_enqueued = false

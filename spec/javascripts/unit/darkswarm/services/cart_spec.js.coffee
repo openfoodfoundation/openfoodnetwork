@@ -126,6 +126,27 @@ describe 'Cart service', ->
       $httpBackend.flush()
       expect(Cart.scheduleRetry).toHaveBeenCalled()
 
+  describe "verifying stock levels after update", ->
+    describe "when an item is out of stock", ->
+      it "reduces the quantity in the cart", ->
+        li = {variant: {id: 1}, quantity: 5}
+        spyOn(Cart, 'line_items_present').andReturn [li]
+        Cart.compareAndNotifyStockLevels({})
+        expect(li.quantity).toEqual 0
+        expect(li.max_quantity).toBeUndefined()
+
+      it "reduces the max_quantity in the cart", ->
+        li = {variant: {id: 1}, quantity: 5, max_quantity: 6}
+        spyOn(Cart, 'line_items_present').andReturn [li]
+        Cart.compareAndNotifyStockLevels({})
+        expect(li.max_quantity).toEqual 0
+
+      it "resets the count on hand available", ->
+        li = {variant: {id: 1, count_on_hand: 10}, quantity: 5}
+        spyOn(Cart, 'line_items_present').andReturn [li]
+        Cart.compareAndNotifyStockLevels({})
+        expect(li.variant.count_on_hand).toEqual 0
+
   it "pops the queue", ->
     Cart.update_enqueued = true
     spyOn(Cart, 'scheduleUpdate')
