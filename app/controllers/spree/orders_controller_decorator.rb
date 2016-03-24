@@ -80,10 +80,7 @@ Spree::OrdersController.class_eval do
         current_order.cap_quantity_at_stock!
         current_order.update!
 
-        variant_ids = variant_ids_in(populator.variants_h)
-
-        render json: {error: false, stock_levels: stock_levels(current_order, variant_ids)},
-               status: 200
+        render json: {error: false, stock_levels: stock_levels}, status: 200
 
       else
         render json: {error: true}, status: 412
@@ -91,31 +88,13 @@ Spree::OrdersController.class_eval do
     end
   end
 
-
-  # Report the stock levels in the order for all variant ids requested
-  def stock_levels(order, variant_ids)
-    stock_levels = li_stock_levels(order)
-
-    li_variant_ids = stock_levels.keys
-    (variant_ids - li_variant_ids).each do |variant_id|
-      stock_levels[variant_id] = {quantity: 0, max_quantity: 0,
-                                  on_hand: Spree::Variant.find(variant_id).on_hand}
-    end
-
-    stock_levels
-  end
-
-  def variant_ids_in(variants_h)
-    variants_h.map { |v| v[:variant_id].to_i }
-  end
-
-  def li_stock_levels(order)
+  def stock_levels
     Hash[
-      order.line_items.map do |li|
+      current_order.line_items.map do |li|
         [li.variant.id,
          {quantity: li.quantity,
           max_quantity: li.max_quantity,
-          on_hand: wrap_json_infinity(li.variant.on_hand)}]
+          on_hand: li.variant.on_hand}]
       end
     ]
   end

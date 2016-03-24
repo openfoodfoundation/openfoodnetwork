@@ -43,36 +43,13 @@ describe Spree::OrdersController do
     flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
-  describe "when an item has insufficient stock" do
-    let(:order) { subject.current_order(true) }
-    let(:oc) { create(:simple_order_cycle, distributors: [d], variants: [variant]) }
-    let(:d) { create(:distributor_enterprise, shipping_methods: [create(:shipping_method)], payment_methods: [create(:payment_method)]) }
-    let(:variant) { create(:variant, on_demand: false, on_hand: 5) }
-    let(:line_item) { order.line_items.last }
-
-    before do
-      Spree::Config.allow_backorders = false
-      order.set_distribution! d, oc
-      order.add_variant variant, 5
-      variant.update_attributes! on_hand: 3
-    end
-
-    it "displays a flash message when we view the cart" do
-      spree_get :edit
-      expect(response.status).to eq 200
-      flash[:error].should == "An item in your cart has become unavailable."
-    end
-  end
-
   describe "returning stock levels in JSON on success" do
     let(:product) { create(:simple_product) }
 
     it "returns stock levels as JSON" do
-      controller.stub(:variant_ids_in) { [123] }
       controller.stub(:stock_levels) { 'my_stock_levels' }
       Spree::OrderPopulator.stub(:new).and_return(populator = double())
       populator.stub(:populate) { true }
-      populator.stub(:variants_h) { {} }
 
       xhr :post, :populate, use_route: :spree, format: :json
 
@@ -84,7 +61,6 @@ describe Spree::OrdersController do
       let!(:order) { create(:order) }
       let!(:li) { create(:line_item, order: order, variant: v, quantity: 2, max_quantity: 3) }
       let!(:v) { create(:variant, count_on_hand: 4) }
-      let!(:v2) { create(:variant, count_on_hand: 2) }
 
       before do
         order.reload
@@ -92,36 +68,8 @@ describe Spree::OrdersController do
       end
 
       it "returns a hash with variant id, quantity, max_quantity and stock on hand" do
-        controller.stock_levels(order, [v.id]).should ==
-          {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
+        controller.stock_levels.should == {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
       end
-
-      it "includes all line items, even when the variant_id is not specified" do
-        controller.stock_levels(order, []).should ==
-          {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
-      end
-
-      it "includes an empty quantity entry for variants that aren't in the order" do
-        controller.stock_levels(order, [v.id, v2.id]).should ==
-          {v.id  => {quantity: 2, max_quantity: 3, on_hand: 4},
-           v2.id => {quantity: 0, max_quantity: 0, on_hand: 2}}
-      end
-
-      describe "encoding Infinity" do
-        let!(:v) { create(:variant, on_demand: true, count_on_hand: 0) }
-
-        it "encodes Infinity as a large, finite integer" do
-          controller.stock_levels(order, [v.id]).should ==
-            {v.id => {quantity: 2, max_quantity: 3, on_hand: 2147483647}}
-        end
-      end
-    end
-
-    it "extracts variant ids from the populator" do
-      variants_h = [{:variant_id=>"900", :quantity=>2, :max_quantity=>nil},
-       {:variant_id=>"940", :quantity=>3, :max_quantity=>3}]
-
-      controller.variant_ids_in(variants_h).should == [900, 940]
     end
   end
 
