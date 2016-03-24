@@ -92,10 +92,12 @@
           = label_tag :included_tax, t(:included_tax)
           %span.icon-question-sign{'ofn-with-tip' => "The total tax included in the example monthly bill, given the settings and the turnover provided."}
         .two.columns.omega
-          %input.fullwidth{ id: 'included_tax', type: "text", readonly: true, ng: { value: 'includedTax() | currency' } }
+          %span= Spree::Money.currency_symbol
+          %input.fullwidth{ id: 'included_tax', type: "text", readonly: true, ng: { value: 'includedTax()' } }
       .row
         .three.columns.alpha
           = label_tag :total_incl_tax, t(:total_monthly_bill_incl_tax)
           %span.icon-question-sign{'ofn-with-tip' => "The example total monthly bill with tax included, given the settings and the turnover provided."}
         .two.columns.omega
-          %input.fullwidth{ id: 'total_incl_tax', type: "text", readonly: true, ng: { value: 'total() | currency' } }
+          %span= Spree::Money.currency_symbol
+          %input.fullwidth{ id: 'total_incl_tax', type: "text", readonly: true, ng: { value: 'total()' } }
