@@ -66,8 +66,6 @@ Spree::OrderPopulator.class_eval do
 
       if quantity_to_add > 0
         @order.add_variant(variant, quantity_to_add, max_quantity_to_add, currency)
-      else
-        @order.remove_variant variant
       end
     end
   end
@@ -77,7 +75,7 @@ Spree::OrderPopulator.class_eval do
     on_hand = variant.on_hand
     on_hand = [quantity, max_quantity].compact.max if Spree::Config.allow_backorders
     quantity_to_add = [quantity, on_hand].min
-    max_quantity_to_add = max_quantity # max_quantity is not capped
+    max_quantity_to_add = [max_quantity, on_hand].min if max_quantity
 
     [quantity_to_add, max_quantity_to_add]
   end

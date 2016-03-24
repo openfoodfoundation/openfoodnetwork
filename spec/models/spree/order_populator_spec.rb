@@ -177,45 +177,27 @@ module Spree
 
         op.attempt_cart_add(333, quantity.to_s, quantity.to_s)
       end
-
-      it "removes variants which have become out of stock" do
-        op.should_receive(:quantities_to_add).with(variant, 123, 123).
-          and_return([0, 0])
-
-        op.stub(:check_order_cycle_provided_for) { true }
-        op.stub(:check_variant_available_under_distribution) { true }
-
-        order.should_receive(:remove_variant).with(variant)
-        order.should_receive(:add_variant).never
-
-        op.attempt_cart_add(333, quantity.to_s, quantity.to_s)
-      end
     end
 
     describe "quantities_to_add" do
       let(:v) { double(:variant, on_hand: 10) }
-
-      context "when backorders are not allowed" do
-        before { Spree::Config.allow_backorders = false }
-
-        context "when max_quantity is not provided" do
-          it "returns full amount when available" do
-            op.quantities_to_add(v, 5, nil).should == [5, nil]
-          end
-
-          it "returns a limited amount when not entirely available" do
-            op.quantities_to_add(v, 15, nil).should == [10, nil]
-          end
+      context "when max_quantity is not provided" do
+        it "returns full amount when available" do
+          op.quantities_to_add(v, 5, nil).should == [5, nil]
         end
 
-        context "when max_quantity is provided" do
-          it "returns full amount when available" do
-            op.quantities_to_add(v, 5, 6).should == [5, 6]
-          end
+        it "returns a limited amount when not entirely available" do
+          op.quantities_to_add(v, 15, nil).should == [10, nil]
+        end
+      end
 
-          it "also returns the full amount when not entirely available" do
-            op.quantities_to_add(v, 15, 16).should == [10, 16]
-          end
+      context "when max_quantity is provided" do
+        it "returns full amount when available" do
+          op.quantities_to_add(v, 5, 6).should == [5, 6]
+        end
+
+        it "returns a limited amount when not entirely available" do
+          op.quantities_to_add(v, 15, 16).should == [10, 10]
         end
       end
 
