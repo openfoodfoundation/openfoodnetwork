@@ -131,21 +131,44 @@ describe 'Cart service', ->
       it "reduces the quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 5}
         spyOn(Cart, 'line_items_present').andReturn [li]
-        Cart.compareAndNotifyStockLevels({})
+        Cart.compareAndNotifyStockLevels {}
         expect(li.quantity).toEqual 0
         expect(li.max_quantity).toBeUndefined()
 
       it "reduces the max_quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 5, max_quantity: 6}
         spyOn(Cart, 'line_items_present').andReturn [li]
-        Cart.compareAndNotifyStockLevels({})
+        Cart.compareAndNotifyStockLevels {}
         expect(li.max_quantity).toEqual 0
 
       it "resets the count on hand available", ->
         li = {variant: {id: 1, count_on_hand: 10}, quantity: 5}
         spyOn(Cart, 'line_items_present').andReturn [li]
-        Cart.compareAndNotifyStockLevels({})
+        Cart.compareAndNotifyStockLevels {}
         expect(li.variant.count_on_hand).toEqual 0
+
+    describe "when the quantity available is less than that requested", ->
+      it "reduces the quantity in the cart", ->
+        li = {variant: {id: 1}, quantity: 6}
+        stockLevels = {1: {quantity: 5, on_hand: 5}}
+        spyOn(Cart, 'line_items_present').andReturn [li]
+        Cart.compareAndNotifyStockLevels stockLevels
+        expect(li.quantity).toEqual 5
+        expect(li.max_quantity).toBeUndefined()
+
+      it "reduces the max_quantity in the cart", ->
+        li = {variant: {id: 1}, quantity: 6, max_quantity: 7}
+        stockLevels = {1: {quantity: 5, max_quantity: 5, on_hand: 5}}
+        spyOn(Cart, 'line_items_present').andReturn [li]
+        Cart.compareAndNotifyStockLevels stockLevels
+        expect(li.max_quantity).toEqual 5
+
+      it "resets the count on hand available", ->
+        li = {variant: {id: 1}, quantity: 6}
+        stockLevels = {1: {quantity: 5, on_hand: 6}}
+        spyOn(Cart, 'line_items_present').andReturn [li]
+        Cart.compareAndNotifyStockLevels stockLevels
+        expect(li.variant.count_on_hand).toEqual 6
 
   it "pops the queue", ->
     Cart.update_enqueued = true

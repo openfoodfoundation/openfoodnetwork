@@ -47,6 +47,14 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
           li.quantity = 0
           li.max_quantity = 0 if li.max_quantity?
           li.variant.count_on_hand = 0
+        else
+          if stockLevels[li.variant.id].quantity < li.quantity
+            alert "Variant quantity reduced: #{li.variant.id}"
+            li.quantity = stockLevels[li.variant.id].quantity
+          if stockLevels[li.variant.id].max_quantity < li.max_quantity
+            alert "Variant max_quantity reduced: #{li.variant.id}"
+            li.max_quantity = stockLevels[li.variant.id].max_quantity
+          li.variant.count_on_hand = stockLevels[li.variant.id].on_hand
 
     popQueue: =>
       @update_enqueued = false
