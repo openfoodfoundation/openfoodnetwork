@@ -49,16 +49,31 @@ Spree::OrderPopulator.class_eval do
 
   def attempt_cart_add(variant_id, quantity, max_quantity = nil)
     quantity = quantity.to_i
+    max_quantity = max_quantity.to_i if max_quantity
     variant = Spree::Variant.find(variant_id)
     OpenFoodNetwork::ScopeVariantToHub.new(@distributor).scope(variant)
-    if quantity > 0
-      if check_stock_levels(variant, quantity) &&
-          check_order_cycle_provided_for(variant) &&
-          check_variant_available_under_distribution(variant)
-        @order.add_variant(variant, quantity, max_quantity, currency)
+    if quantity > 0 &&
+       check_order_cycle_provided_for(variant) &&
+       check_variant_available_under_distribution(variant)
+
+      quantity_to_add, max_quantity_to_add = quantities_to_add(variant, quantity, max_quantity)
+
+      if quantity_to_add > 0
+        @order.add_variant(variant, quantity_to_add, max_quantity_to_add, currency)
       end
     end
   end
+
+  def quantities_to_add(variant, quantity, max_quantity)
+    # If not enough stock is available, add as much as we can to the cart
+    on_hand = variant.on_hand
+    on_hand = [quantity, max_quantity].compact.max if Spree::Config.allow_backorders
+    quantity_to_add = [quantity, on_hand].min
+    max_quantity_to_add = [max_quantity, on_hand].min if max_quantity
+
+    [quantity_to_add, max_quantity_to_add]
+  end
+
 
   def cart_remove(variant_id)
     variant = Spree::Variant.find(variant_id)

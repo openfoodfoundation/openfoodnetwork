@@ -149,13 +149,15 @@ module Spree
     end
 
     describe "attempt_cart_add" do
-      it "performs additional validations" do
-        variant = double(:variant)
-        quantity = 123
+      let(:variant) { double(:variant, on_hand: 250) }
+      let(:quantity) { 123 }
+
+      before do
         Spree::Variant.stub(:find).and_return(variant)
         VariantOverride.stub(:for).and_return(nil)
+      end
 
-        op.should_receive(:check_stock_levels).with(variant, quantity).and_return(true)
+      it "performs additional validations" do
         op.should_receive(:check_order_cycle_provided_for).with(variant).and_return(true)
         op.should_receive(:check_variant_available_under_distribution).with(variant).
           and_return(true)
@@ -163,8 +165,58 @@ module Spree
 
         op.attempt_cart_add(333, quantity.to_s)
       end
+
+      it "filters quantities through #quantities_to_add" do
+        op.should_receive(:quantities_to_add).with(variant, 123, 123).
+          and_return([5, 5])
+
+        op.stub(:check_order_cycle_provided_for) { true }
+        op.stub(:check_variant_available_under_distribution) { true }
+
+        order.should_receive(:add_variant).with(variant, 5, 5, currency)
+
+        op.attempt_cart_add(333, quantity.to_s, quantity.to_s)
+      end
     end
 
+    describe "quantities_to_add" do
+      let(:v) { double(:variant, on_hand: 10) }
+      context "when max_quantity is not provided" do
+        it "returns full amount when available" do
+          op.quantities_to_add(v, 5, nil).should == [5, nil]
+        end
+
+        it "returns a limited amount when not entirely available" do
+          op.quantities_to_add(v, 15, nil).should == [10, nil]
+        end
+      end
+
+      context "when max_quantity is provided" do
+        it "returns full amount when available" do
+          op.quantities_to_add(v, 5, 6).should == [5, 6]
+        end
+
+        it "returns a limited amount when not entirely available" do
+          op.quantities_to_add(v, 15, 16).should == [10, 10]
+        end
+      end
+
+      context "when backorders are allowed" do
+        around do |example|
+          Spree::Config.allow_backorders = true
+          example.run
+          Spree::Config.allow_backorders = false
+        end
+
+        it "does not limit quantity" do
+          op.quantities_to_add(v, 15, nil).should == [15, nil]
+        end
+
+        it "does not limit max_quantity" do
+          op.quantities_to_add(v, 15, 16).should == [15, 16]
+        end
+      end
+    end
 
     describe "validations" do
       describe "determining if distributor can supply products in cart" do
