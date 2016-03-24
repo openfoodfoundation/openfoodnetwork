@@ -84,13 +84,11 @@ Spree::OrdersController.class_eval do
 
         render json: {error: false, stock_levels: stock_levels(current_order, variant_ids)},
                status: 200
-
       else
         render json: {error: true}, status: 412
       end
     end
   end
-
 
   # Report the stock levels in the order for all variant ids requested
   def stock_levels(order, variant_ids)
