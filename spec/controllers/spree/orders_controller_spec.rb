@@ -42,6 +42,36 @@ describe Spree::OrdersController do
     flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
+  describe "returning stock levels in JSON on success" do
+    let(:product) { create(:simple_product) }
+
+    it "returns stock levels as JSON" do
+      controller.stub(:stock_levels) { 'my_stock_levels' }
+      Spree::OrderPopulator.stub(:new).and_return(populator = double())
+      populator.stub(:populate) { true }
+
+      xhr :post, :populate, use_route: :spree, format: :json
+
+      data = JSON.parse(response.body)
+      data['stock_levels'].should == 'my_stock_levels'
+    end
+
+    describe "generating stock levels" do
+      let!(:order) { create(:order) }
+      let!(:li) { create(:line_item, order: order, variant: v, quantity: 2, max_quantity: 3) }
+      let!(:v) { create(:variant, count_on_hand: 4) }
+
+      before do
+        order.reload
+        controller.stub(:current_order) { order }
+      end
+
+      it "returns a hash with variant id, quantity, max_quantity and stock on hand" do
+        controller.stock_levels.should == {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
+      end
+    end
+  end
+
   context "adding a group buy product to the cart" do
     it "sets a variant attribute for the max quantity" do
       distributor_product = create(:distributor_enterprise)
@@ -68,7 +98,7 @@ describe Spree::OrdersController do
       Spree::OrderPopulator.stub(:new).and_return(populator = double())
       populator.stub(:populate).and_return false
       xhr :post, :populate, use_route: :spree, format: :json
-      response.status.should == 402
+      response.status.should == 412
     end
 
     it "tells populator to overwrite" do
@@ -78,7 +108,7 @@ describe Spree::OrdersController do
     end
   end
 
-  context "removing line items from cart" do
+  describe "removing line items from cart" do
     describe "when I pass params that includes a line item no longer in our cart" do
       it "should silently ignore the missing line item" do
         order = subject.current_order(true)

@@ -30,18 +30,32 @@ Spree::OrdersController.class_eval do
 
     Spree::Adjustment.without_callbacks do
       populator = Spree::OrderPopulator.new(current_order(true), current_currency)
+
       if populator.populate(params.slice(:products, :variants, :quantity), true)
         fire_event('spree.cart.add')
         fire_event('spree.order.contents_changed')
 
         current_order.update!
 
-        render json: true, status: 200
+        render json: {error: false, stock_levels: stock_levels}, status: 200
+
       else
-        render json: false, status: 402
+        render json: {error: true}, status: 412
       end
     end
   end
+
+  def stock_levels
+    Hash[
+      current_order.line_items.map do |li|
+        [li.variant.id,
+         {quantity: li.quantity,
+          max_quantity: li.max_quantity,
+          on_hand: li.variant.on_hand}]
+      end
+    ]
+  end
+
 
   def update_distribution
     @order = current_order(true)
