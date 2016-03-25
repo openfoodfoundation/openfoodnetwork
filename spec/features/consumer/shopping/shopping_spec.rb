@@ -301,6 +301,29 @@ feature "As a consumer I want to shop with a distributor", js: true do
             expect(page).to have_content product.name
           end
         end
+
+        context "as a manager" do
+          let!(:role) { create(:enterprise_role, user: user, enterprise: distributor) }
+
+          it "shows just products" do
+            visit shop_path
+            expect(page).to have_no_content "This shop is for customers only."
+            expect(page).to have_content product.name
+          end
+        end
+
+        context "as the owner" do
+          before do
+            distributor.owner = user
+            distributor.save!
+          end
+
+          it "shows just products" do
+            visit shop_path
+            expect(page).to have_no_content "This shop is for customers only."
+            expect(page).to have_content product.name
+          end
+        end
       end
     end
   end
