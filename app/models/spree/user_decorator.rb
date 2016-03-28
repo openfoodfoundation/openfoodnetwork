@@ -54,10 +54,22 @@ Spree.user_class.class_eval do
     self.orders.where(state: :complete).map(&:distributor_id).uniq
   end
 
+  # Returns orders and their associated payments for all distributors that have been ordered from
+  def get_orders_by_distributor
+    Enterprise.includes(distributed_orders: { payments: :payment_method })
+    .where(enterprises: { id: self.enterprises_ordered_from },
+           spree_orders: { state: 'complete', user_id: self.id })
+    .order('spree_orders.completed_at DESC')
+  end
+
   def orders_by_distributor
-    distributors_with_orders.to_a.sort! do |a, b|
-      b.distributed_orders.length <=> a.distributed_orders.length
+    # Remove uncompleted payments as these will not be reflected in order balance
+    data_array = self.get_orders_by_distributor.to_a.each do |enterprise|
+      enterprise.distributed_orders.each do |order|
+        order.payments.keep_if { |payment| payment.state == "completed" }
+      end
     end
+    data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
   end
 
   private
@@ -66,16 +78,5 @@ Spree.user_class.class_eval do
     if owned_enterprises.size > enterprise_limit
       errors.add(:owned_enterprises, "^#{email} is not permitted to own any more enterprises (limit is #{enterprise_limit}).")
     end
-  end
-
-  def distributors_with_orders
-    Enterprise
-    .select("DISTINCT enterprises.*")
-    .joins("LEFT OUTER JOIN spree_orders ON spree_orders.distributor_id = enterprises.id")
-    .joins("LEFT OUTER JOIN spree_payments ON spree_payments.order_id = spree_orders.id
-           AND spree_payments.state = 'completed'")
-    .joins("LEFT OUTER JOIN spree_payment_methods ON spree_payment_methods.id = spree_payments.payment_method_id")
-    .where(enterprises: { id: enterprises_ordered_from },
-           spree_orders: { state: 'complete', user_id: id })
   end
 end
