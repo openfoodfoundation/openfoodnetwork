@@ -176,17 +176,6 @@ class Enterprise < ActiveRecord::Base
     end
   }
 
-  def self.find_near(suburb)
-    enterprises = []
-
-    unless suburb.nil?
-      addresses = Spree::Address.near([suburb.latitude, suburb.longitude], ENTERPRISE_SEARCH_RADIUS, :units => :km).joins(:enterprise).limit(10)
-      enterprises = addresses.collect(&:enterprise)
-    end
-
-    enterprises
-  end
-
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
     count(distinct: true)
