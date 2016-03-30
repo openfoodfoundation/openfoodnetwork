@@ -7,5 +7,5 @@ angular.module("ofn.admin").controller "AdminEnterpriseRolesCtrl", ($scope, Ente
     $scope.EnterpriseRoles.create($scope.user_id, $scope.enterprise_id)
 
   $scope.delete = (enterprise_role) ->
-    if confirm("Are you sure?")
+    if confirm(t('are_you_sure'))
       $scope.EnterpriseRoles.delete enterprise_role

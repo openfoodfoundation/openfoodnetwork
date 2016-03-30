@@ -1,8 +1,9 @@
 - hubs_color = @hubs.count > 0 ? "blue" : "red"
-- hubs_color = 'red' if (controller.action_name == 'create' || controller.action_name == 'update') && @object.errors.full_messages.include?("At least one hub must be selected")
+- hubs_color = 'red' if (controller.action_name == 'create' || controller.action_name == 'update') && @object.errors.full_messages.include?(t(:hub_sidebar_at_least))
 .sidebar_item.omega.four.columns#hubs
   .four.columns.alpha.header{ class: "#{hubs_color}" }
-    %span.four.columns.alpha.centered Hubs
+    %span.four.columns.alpha.centered
+      = t(:hub_sidebar_hubs)
   .four.columns.alpha.list{ class: "#{hubs_color}" }
     - if @hubs.count > 0
       = hidden_field klass, :distributor_ids, :multiple => true, value: nil
@@ -17,9 +18,10 @@
               %span.icon-arrow-right
     - else
       .four.columns.alpha.list-item
-        %span.three.columns.alpha None Available
+        %span.three.columns.alpha
+          = t(:hub_sidebar_none_available)
         %span.one.column.omega
           %span.icon-remove-sign
   %a.four.columns.alpha.button{ href: "#{main_app.admin_enterprises_path}", class: "#{hubs_color}" }
-    MANAGE
+    = t(:hub_sidebar_manage)
     %span.icon-arrow-right

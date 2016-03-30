@@ -1,10 +1,12 @@
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Users'" } }
-  %legend Users
+  %legend
+    = t(:users)
   .row
     .three.columns.alpha
-      =f.label :owner_id, 'Owner'
-      %div{'ofn-with-tip' => "The primary user responsible for this group."}
-        %a What's this?
+      =f.label :owner_id, t(:admin_entreprise_groups_owner)
+      .with-tip{'data-powertip' => t(:admin_entreprise_groups_data_powertip)}
+        %a
+          = t 'admin.whats_this'
     .eight.columns.omega
     - if spree_current_user.admin?
       = f.hidden_field :owner_id,

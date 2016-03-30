@@ -2,7 +2,7 @@
   = render 'date_range_form', f: f
 
   = check_box_tag :csv
-  = label_tag :csv, "Download as csv"
+  = label_tag :csv, t(:report_customers_csv)
   %br
   = button t(:search)
 
@@ -10,7 +10,7 @@
 %br
 %table#listing_orders.index
   %thead
-    %tr{'data-hook' => "orders_header"}
+    %tr{'data-hook' => t(:report_customers_header)}
       - @report.header.each do |heading|
         %th=heading
   %tbody
