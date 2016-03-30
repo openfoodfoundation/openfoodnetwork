@@ -7,13 +7,7 @@
     .row
       .small-12.medium-8.medium-offset-2.columns.text-center
         .alert-box
-          %a.big-alert{href: "http://www.openfoodnetwork.org", target: "_blank"}
-            %h6
-              = t :alert_selling_on_ofn
-              &nbsp;
-              %strong
-                = t :alert_start_here
-              %i.ofn-i_054-point-right
+          = render 'shared/register_call'
     .row
       .small-12.medium-4.medium-offset-2.columns.text-center
         %h6

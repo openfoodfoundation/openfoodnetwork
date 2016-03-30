@@ -118,6 +118,10 @@ en:
       show_closed_shops: "Show closed shops"
       hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
+  shared:
+    register_call:
+      selling_on_ofn: "Interested in getting on the Open Food Network?"
+      register: "Register here"
   shop:
     messages:
       login: "login"
@@ -167,8 +171,6 @@ en:
   on_demand: On demand
   none: None
 
-  alert_selling_on_ofn: "Interested in selling food on the Open Food Network?"
-  alert_start_here: "Start here"
   label_shops: "Shops"
   label_map: "Map"
   label_producers: "Producers"

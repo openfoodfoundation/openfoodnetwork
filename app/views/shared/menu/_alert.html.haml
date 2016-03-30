@@ -1,10 +1,4 @@
 .text-center.page-alert.fixed{ "ofn-page-alert" => true }
   .alert-box
-    %a.alert-cta{href: registration_path, target: "_blank"}
-      %h6
-        = t 'alert_selling_on_ofn'
-        &nbsp;
-        %strong
-          = t 'alert_start_here'
-          %i.ofn-i_054-point-right
+    = render 'shared/register_call'
     %a.close{ ng: { click: "close()" } } &times;
