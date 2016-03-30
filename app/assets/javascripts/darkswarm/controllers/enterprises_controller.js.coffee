@@ -44,8 +44,8 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
   $scope.filterEnterprises = ->
     es = Enterprises.hubs
     $scope.nameMatches = enterpriseMatchesNameQueryFilter(es, true)
-    $scope.distanceMatches = enterpriseMatchesNameQueryFilter(es, false)
-    $scope.distanceMatches = distanceWithinKmFilter($scope.distanceMatches, 50)
+    noNameMatches = enterpriseMatchesNameQueryFilter(es, false)
+    $scope.distanceMatches = distanceWithinKmFilter(noNameMatches, 50)
 
 
   $scope.updateVisibleMatches = ->
