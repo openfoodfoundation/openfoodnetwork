@@ -107,6 +107,8 @@ en:
 
   home:
     hubs:
+      show_closed_shops: "Show closed shops"
+      hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
 
   # Printable Invoice Columns
