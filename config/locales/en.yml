@@ -137,11 +137,6 @@ en:
   invoice_column_tax: "GST"
   invoice_column_price: "Price"
 
-  # Tag Rules
-  tag_rules:
-    discount_order:
-      discount: "Discount"
-
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME
   logo_mobile_svg: "Mobile logo (SVG)" #FIXME
@@ -973,6 +968,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   account_code: "Account code:"
   equals: "Equals"
   contains: "contains"
+  discount: "Discount"
   filter_products: "Filter Products"
   delete_product_variant: "The last variant cannot be deleted!"
   progress: "progress"

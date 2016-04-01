@@ -21,24 +21,24 @@ feature 'Tag Rules', js: true do
       click_button '+ Add A New Tag'
       find(:css, "tags-input .tags input").set "volunteer\n"
 
-      # New DiscountOrder Rule
-      expect(page).to have_content 'No rules apply to this tag yet'
-      click_button '+ Add A New Rule'
-      select2_select 'Apply a discount to orders', from: 'rule_type_selector'
-      click_button "Add Rule"
-      fill_in "enterprise_tag_rules_attributes_0_calculator_attributes_preferred_flat_percent", with: 22
-
       # New FilterShippingMethods Rule
       click_button '+ Add A New Rule'
       select2_select 'Show/Hide shipping methods', from: 'rule_type_selector'
       click_button "Add Rule"
-      select2_select "NOT VISIBLE", from: "enterprise_tag_rules_attributes_1_preferred_matched_shipping_methods_visibility"
+      select2_select "NOT VISIBLE", from: "enterprise_tag_rules_attributes_0_preferred_matched_shipping_methods_visibility"
+
+      # New DiscountOrder Rule
+      # expect(page).to have_content 'No rules apply to this tag yet'
+      # click_button '+ Add A New Rule'
+      # select2_select 'Apply a discount to orders', from: 'rule_type_selector'
+      # click_button "Add Rule"
+      # fill_in "enterprise_tag_rules_attributes_1_calculator_attributes_preferred_flat_percent", with: 22
 
       click_button 'Update'
 
-      tag_rule = TagRule::DiscountOrder.last
-      expect(tag_rule.preferred_customer_tags).to eq "volunteer"
-      expect(tag_rule.calculator.preferred_flat_percent).to eq -22
+      # tag_rule = TagRule::DiscountOrder.last
+      # expect(tag_rule.preferred_customer_tags).to eq "volunteer"
+      # expect(tag_rule.calculator.preferred_flat_percent).to eq -22
 
       tag_rule = TagRule::FilterShippingMethods.last
       expect(tag_rule.preferred_customer_tags).to eq "volunteer"

@@ -6,7 +6,7 @@ angular.module("admin.tagRules").directive 'newTagRuleDialog', ($compile, $templ
     template = $compile($templateCache.get('admin/new_tag_rule_dialog.html'))(scope)
 
     scope.ruleTypes = [
-      { id: "DiscountOrder", name: 'Apply a discount to orders' }
+      # { id: "DiscountOrder", name: 'Apply a discount to orders' }
       { id: "FilterShippingMethods", name: 'Show/Hide shipping methods' }
     ]
 
