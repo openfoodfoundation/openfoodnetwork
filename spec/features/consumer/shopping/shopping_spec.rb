@@ -253,5 +253,78 @@ feature "As a consumer I want to shop with a distributor", js: true do
         page.should have_content "The next cycle opens in 10 days"
       end
     end
+
+    context "when shopping requires a customer" do
+      let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+      let(:product) { create(:simple_product) }
+      let(:variant) { create(:variant, product: product) }
+
+      before do
+        add_product_and_variant_to_order_cycle(exchange, product, variant)
+        set_order_cycle(order, oc1)
+        distributor.require_login = true
+        distributor.save!
+      end
+
+      context "when not logged in" do
+        it "tells us to login" do
+          visit shop_path
+          expect(page).to have_content "This shop is for customers only."
+          expect(page).to have_content "Please login"
+          expect(page).to have_no_content product.name
+        end
+      end
+
+      context "when logged in" do
+        let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
+        let(:user) { create(:user, bill_address: address, ship_address: address) }
+
+        before do
+          quick_login_as user
+        end
+
+        context "as non-customer" do
+          it "tells us to contact enterprise" do
+            visit shop_path
+            expect(page).to have_content "This shop is for customers only."
+            expect(page).to have_content "Please contact #{distributor.name}"
+            expect(page).to have_no_content product.name
+          end
+        end
+
+        context "as customer" do
+          let!(:customer) { create(:customer, user: user, enterprise: distributor) }
+
+          it "shows just products" do
+            visit shop_path
+            expect(page).to have_no_content "This shop is for customers only."
+            expect(page).to have_content product.name
+          end
+        end
+
+        context "as a manager" do
+          let!(:role) { create(:enterprise_role, user: user, enterprise: distributor) }
+
+          it "shows just products" do
+            visit shop_path
+            expect(page).to have_no_content "This shop is for customers only."
+            expect(page).to have_content product.name
+          end
+        end
+
+        context "as the owner" do
+          before do
+            distributor.owner = user
+            distributor.save!
+          end
+
+          it "shows just products" do
+            visit shop_path
+            expect(page).to have_no_content "This shop is for customers only."
+            expect(page).to have_content product.name
+          end
+        end
+      end
+    end
   end
 end

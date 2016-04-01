@@ -105,11 +105,27 @@ en:
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
+    enterprises:
+      form:
+        primary_details:
+          shopfront_requires_login: "Shopfront requires login?"
+          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront."
+          shopfront_requires_login_false: "Public"
+          shopfront_requires_login_true: "Require customers to login"
+
   home:
     hubs:
       show_closed_shops: "Show closed shops"
       hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
+  shop:
+    messages:
+      login: "login"
+      register: "register"
+      contact: "contact"
+      require_customer_login: "This shop is for customers only."
+      require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
+      require_customer_html: "Please %{contact} %{enterprise} to become a customer."
 
   # Printable Invoice Columns
   invoice_column_item: "Item"

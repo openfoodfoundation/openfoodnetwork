@@ -22,6 +22,7 @@
 
       %select.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
               "ofn-change-order-cycle" => true,
+              "disabled" => require_customer?,
               "ng-options" => "oc.id as oc.time for oc in #{@order_cycles.map {|oc| {time: pickup_time(oc), id: oc.id}}.to_json}",
               "popover-placement" => "left", "popover" => t(:enterprises_choose), "popover-trigger" => "openTrigger"}
 
@@ -31,7 +32,7 @@
 
   = render partial: 'shop/messages'
 
-  .row
-    = render partial: "shop/products/form"
+  - unless require_customer?
+    .row= render partial: "shop/products/form"
 
 = render partial: "shared/footer"
