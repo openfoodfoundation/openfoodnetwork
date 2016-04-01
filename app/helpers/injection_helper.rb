@@ -2,7 +2,7 @@ require 'open_food_network/enterprise_injection_data'
 
 module InjectionHelper
   def inject_enterprises
-    inject_json_ams "enterprises", Enterprise.activated.includes(:address).all, Api::EnterpriseSerializer, enterprise_injection_data
+    inject_json_ams "enterprises", Enterprise.activated.includes(address: :state).all, Api::EnterpriseSerializer, enterprise_injection_data
   end
 
   def inject_group_enterprises
@@ -49,6 +49,11 @@ module InjectionHelper
 
   def inject_enterprise_attributes
     render partial: "json/injection_ams", locals: {name: 'enterpriseAttributes', json: "#{@enterprise_attributes.to_json}"}
+  end
+
+  def inject_orders_by_distributor
+    data_array = spree_current_user.orders_by_distributor
+    inject_json_ams "orders_by_distributor", data_array, Api::OrdersByDistributorSerializer
   end
 
   def inject_json(name, partial, opts = {})

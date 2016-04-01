@@ -49,11 +49,40 @@ Spree.user_class.class_eval do
     owned_enterprises(:reload).size < enterprise_limit
   end
 
+  # Returns Enterprise IDs for distributors that the user has shopped at
+  def enterprises_ordered_from
+    orders.where(state: :complete).map(&:distributor_id).uniq
+  end
+
+  # Returns orders and their associated payments for all distributors that have been ordered from
+  def compelete_orders_by_distributor
+    Enterprise
+      .includes(distributed_orders: { payments: :payment_method })
+      .where(enterprises: { id: enterprises_ordered_from },
+             spree_orders: { state: 'complete', user_id: id })
+      .order('spree_orders.completed_at DESC')
+  end
+
+  def orders_by_distributor
+    # Remove uncompleted payments as these will not be reflected in order balance
+    data_array = compelete_orders_by_distributor.to_a
+    remove_uncompleted_payments(data_array)
+    data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
+  end
+
   private
 
   def limit_owned_enterprises
     if owned_enterprises.size > enterprise_limit
       errors.add(:owned_enterprises, "^#{email} is not permitted to own any more enterprises (limit is #{enterprise_limit}).")
+    end
+  end
+
+  def remove_uncompleted_payments(enterprises)
+    enterprises.each do |enterprise|
+      enterprise.distributed_orders.each do |order|
+        order.payments.keep_if { |payment| payment.state == "completed" }
+      end
     end
   end
 end

@@ -1,10 +1,11 @@
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Web'" } }
-  %legend Web Resources
+  %legend
+    = t 'admin_entreprise_groups_web'
   .row
     .alpha.three.columns
       = f.label :website
     .omega.eight.columns
-      = f.text_field :website, { placeholder: "eg. www.truffles.com"}
+      = f.text_field :website, { placeholder: t(:admin_entreprise_groups_web_website_placeholder)}
   .row
     .alpha.three.columns
       = f.label :facebook, 'Facebook'
@@ -24,4 +25,4 @@
     .alpha.three.columns
       = f.label :twitter
     .omega.eight.columns
-      = f.text_field :twitter, { placeholder: "eg. @the_prof" }
+      = f.text_field :twitter, { placeholder: t(:admin_entreprise_groups_web_twitter) }

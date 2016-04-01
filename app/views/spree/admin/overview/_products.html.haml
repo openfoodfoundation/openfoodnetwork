@@ -1,11 +1,13 @@
 %div.dashboard_item.seven.columns.alpha#products
   %div.header.seven.columns.alpha{ :class => "#{@product_count > 0 ? "" : "red"}"}
-    %h3.four.columns.alpha Products
+    %h3.four.columns.alpha
+      = t "products"
     - if @product_count > 0
       %a.three.columns.omega.icon-plus.button.blue{ href: "#{new_admin_product_path}" }
-        CREATE NEW
+        = t "spree_admin_enterprises_create_new"
     - else
-      %a{ "ofn-with-tip" => "The products that you sell through the Open Food Network." } What's this?
+      %a{ "ofn-with-tip" => "The products that you sell through the Open Food Network." }
+        = t "admin.whats_this"
   %div.seven.columns.alpha.list
     - if @product_count > 0
       %div.seven.columns.alpha.list-item
@@ -14,13 +16,14 @@
         %span.one.column.omega
           %span.icon-ok-sign
       %a.seven.columns.alpha.button.bottom.blue{ href: "#{bulk_edit_admin_products_path}" }
-        MANAGE PRODUCTS
+        = t "spree_admin_enterprises_producers_manage_products"
         %span.icon-arrow-right
     - else
       %div.seven.columns.alpha.list-item.red
-        %span.six.columns.alpha You don't have any active products.
+        %span.six.columns.alpha
+          = t "spree_admin_enterprises_any_active_products_text"
         %span.one.column.omega
           %span.icon-remove-sign
       %a.seven.columns.alpha.button.bottom.red{ href: "#{new_admin_product_path}" }
-        CREATE A NEW PRODUCT
+        = t "spree_admin_enterprises_create_new_product"
         %span.icon-arrow-right

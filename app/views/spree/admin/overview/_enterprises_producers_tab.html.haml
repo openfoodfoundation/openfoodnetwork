@@ -1,11 +1,15 @@
 %div.producers_tab{ ng: { show: "activeTab == 'producers'"} }
   %div.list-title.sixteen.columns.alpha
-    %span.five.columns.alpha Name
+    %span.five.columns.alpha
+      = t "spree_admin_enterprises_producers_name"
     - if can? :admin, Spree::Product
-      %span.centered.three.columns Total Products
-      %span.centered.three.columns Active Products
+      %span.centered.three.columns
+        = t "spree_admin_enterprises_producers_total_products"
+      %span.centered.three.columns
+        = t "spree_admin_enterprises_producers_active_products"
     - if can? :admin, OrderCycle
-      %span.centered.three.columns Products in OCs
+      %span.centered.three.columns
+        = t "spree_admin_enterprises_producers_order_cycles"
   %div.sixteen.columns.alpha.list
     - @enterprises.is_primary_producer.each do |enterprise|
       %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }

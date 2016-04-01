@@ -1,34 +1,24 @@
 .darkswarm
+  = inject_orders_by_distributor
+
   .row.pad-top
     .small-12.columns.pad-top
-      %h1= accurate_title
+      %h2= accurate_title
       .account-summary{"data-hook" => "account_summary"}
-        %dl#user-info
-          %dt= t(:email)
-          %dd
-            = @user.email
-            (#{link_to t(:edit), spree.edit_account_path})
-      .account-my-orders{"data-hook" => "account_my_orders"}
-        %h3= t(:my_orders)
-        - if @orders.present?
-          %table.order-summary
-            %thead
-              %tr
-                %th.order-number= t(:order_number)
-                %th.order-date= t(:order_date)
-                %th.order-status= t(:status)
-                %th.order-payment-state= t(:payment_state)
-                %th.order-shipment-state= t(:shipment_state)
-                %th.order-total= t(:total)
-            %tbody
-              - @orders.each do |order|
-                %tr{class: cycle('even', 'odd')}
-                  %td.order-number= link_to order.number, order_url(order)
-                  %td.order-date= l order.completed_at.to_date
-                  %td.order-status= t(order.state).titleize
-                  %td.order-payment-state= t("payment_states.#{order.payment_state}") if order.payment_state
-                  %td.order-shipment-state= t("shipment_states.#{order.shipment_state}") if order.shipment_state
-                  %td.order-total= money order.total
-        - else
-          %p= t(:you_have_no_orders_yet)
-        %br/
+        = @user.email
+        (#{link_to t(:edit), spree.edit_account_path})
+      %h3= t(:my_orders)
+      .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
+        .row{bindonce: true}
+          .small-12.columns
+            .active_table
+              %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.orders_by_distributor.length > 0", "ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
+              "ng-controller" => "DistributorNodeCtrl",
+              "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
+              id: "{{distributor.hash}}"}
+                .small-12.columns
+                  = render partial: "spree/users/skinny"
+                  = render partial: "spree/users/fat"
+          .message{"ng-if" => "Orders.orders_by_distributor.length == 0", "bo-text" => "'you_have_no_orders_yet' | t"}
+
+  = render partial: "shared/footer"

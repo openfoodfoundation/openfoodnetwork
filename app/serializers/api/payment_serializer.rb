@@ -1,0 +1,16 @@
+module Api
+  class PaymentSerializer < ActiveModel::Serializer
+    attributes :amount, :updated_at, :payment_method
+    def payment_method
+      object.payment_method.name
+    end
+
+    def amount
+      object.amount.to_money.to_s
+    end
+
+    def updated_at
+      I18n.l(object.updated_at, format: :long)
+    end
+  end
+end

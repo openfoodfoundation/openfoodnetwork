@@ -5,27 +5,27 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.confirmDelete = true
   $scope.startDate = formatDate daysFromToday -7
   $scope.endDate = formatDate daysFromToday 1
-  $scope.bulkActions = [ { name: "Delete Selected", callback: 'deleteLineItems' } ]
-  $scope.selectedUnitsProduct = {};
-  $scope.selectedUnitsVariant = {};
+  $scope.bulkActions = [ { name: t("bom_actions_delete"), callback: 'deleteLineItems' } ]
+  $scope.selectedUnitsProduct = {}
+  $scope.selectedUnitsVariant = {}
   $scope.sharedResource = false
   $scope.columns = Columns.setColumns
-    order_no:            { name: "Order No.",      visible: false }
-    full_name:           { name: "Name",           visible: true }
-    email:               { name: "Email",          visible: false }
-    phone:               { name: "Phone",          visible: false }
-    order_date:          { name: "Order Date",     visible: true }
-    producer:            { name: "Producer",       visible: true }
-    order_cycle:         { name: "Order Cycle",    visible: false }
-    hub:                 { name: "Hub",            visible: false }
-    variant:             { name: "Variant",        visible: true }
-    quantity:            { name: "Quantity",       visible: true }
-    max:                 { name: "Max",            visible: true }
-    final_weight_volume: { name: "Weight/Volume",  visible: false }
-    price:               { name: "Price",          visible: false }
+    order_no:     { name: t("bom_no"), visible: false }
+    full_name:    { name: t("name"),         visible: true }
+    email:        { name: t("email"),     visible: false }
+    phone:        { name: t("phone"),        visible: false }
+    order_date:   { name: t("bom_date"),   visible: true }
+    producer:     { name: t("producer"),     visible: true }
+    order_cycle:  { name: t("bom_cycle"),  visible: false }
+    hub:          { name: t("bom_hub"),          visible: false }
+    variant:      { name: t("bom_variant"),      visible: true }
+    quantity:     { name: t("bom_quantity"),     visible: true }
+    max:          { name: t("bom_max"),          visible: true }
+    final_weight_volume:   { name: t("bom_final_weigth_volume"), visible: false }
+    price:        { name: t("price"),            visible: false }
 
   $scope.confirmRefresh = ->
-    LineItems.allSaved() || confirm("Unsaved changes exist and will be lost if you continue.")
+    LineItems.allSaved() || confirm(t "unsaved_changes_warning")
 
   $scope.resetSelectFilters = ->
     $scope.distributorFilter = blankOption().id
@@ -73,12 +73,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
         StatusMessage.display 'success', "All changes saved"
         $scope.bulk_order_form.$setPristine()
       ).catch ->
-        StatusMessage.display 'failure', "Fields with red borders contain errors."
+        StatusMessage.display 'failure', t "unsaved_changes_error"
     else
-      StatusMessage.display 'failure', "Fields with red borders contain errors."
+      StatusMessage.display 'failure', t "unsaved_changes_error"
 
   $scope.deleteLineItem = (lineItem) ->
-    if ($scope.confirmDelete && confirm("Are you sure?")) || !$scope.confirmDelete
+    if ($scope.confirmDelete && confirm(t "are_you_sure")) || !$scope.confirmDelete
       LineItems.delete lineItem, =>
         $scope.lineItems.splice $scope.lineItems.indexOf(lineItem), 1
 

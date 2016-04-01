@@ -450,7 +450,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25.1)
-    mini_portile (0.6.2)
+    mini_portile2 (2.0.0)
     momentjs-rails (2.5.1)
       railties (>= 3.1)
     money (5.1.1)
@@ -458,8 +458,8 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     newrelic_rpm (3.12.0.288)
-    nokogiri (1.6.6.4)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
     oj (2.1.2)
     orm_adapter (0.5.0)
     paper_trail (3.0.8)
@@ -693,7 +693,7 @@ DEPENDENCIES
   letter_opener
   momentjs-rails
   newrelic_rpm
-  nokogiri
+  nokogiri (>= 1.6.7.1)
   oj
   paper_trail (~> 3.0.8)
   paperclip
@@ -732,3 +732,6 @@ DEPENDENCIES
   whenever
   wicked_pdf
   wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.6
