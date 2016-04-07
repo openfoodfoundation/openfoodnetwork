@@ -1,5 +1,5 @@
 angular.module("admin.customers").controller "customersCtrl", ($scope, Customers, Columns, pendingChanges, shops) ->
-  $scope.shop = null
+  $scope.shop = {}
   $scope.shops = shops
   $scope.submitAll = pendingChanges.submitAll
 
@@ -8,8 +8,8 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, Customers
     code:      { name: "Code",     visible: true }
     tags:      { name: "Tags",     visible: true }
 
-  $scope.$watch "shop", ->
-    if $scope.shop?
+  $scope.$watch "shop.id", ->
+    if $scope.shop.id?
       Customers.loaded = false
       $scope.customers = Customers.index(enterprise_id: $scope.shop.id)
 
