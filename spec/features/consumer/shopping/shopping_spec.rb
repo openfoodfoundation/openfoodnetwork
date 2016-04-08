@@ -215,9 +215,11 @@ feature "As a consumer I want to shop with a distributor", js: true do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
       let(:product) { create(:simple_product) }
       let(:variant) { create(:variant, product: product) }
+      let(:variant2) { create(:variant, product: product) }
 
       before do
         add_variant_to_order_cycle(exchange, variant)
+        add_variant_to_order_cycle(exchange, variant2)
         set_order_cycle(order, oc1)
         visit shop_path
       end
@@ -234,6 +236,37 @@ feature "As a consumer I want to shop with a distributor", js: true do
         wait_until { !cart_dirty }
 
         Spree::LineItem.where(id: li).should be_empty
+      end
+
+      describe "when a product goes out of stock just before it's added to the cart" do
+        before do
+          variant.update_attributes! on_hand: 0
+        end
+
+        it "stops the attempt, shows an error message and refreshes the products asynchronously" do
+          # -- Messaging
+          alert_message = accept_alert do
+            fill_in "variants[#{variant.id}]", with: '1'
+            wait_until { !cart_dirty }
+          end
+
+          # TODO: This will be a modal
+          expect(alert_message).to be
+          puts alert_message
+
+          # -- Page updates
+          # Update amount in cart
+          page.should have_field "variants[#{variant.id}]", with: '0', disabled: true
+          page.should have_field "variants[#{variant2.id}]", with: ''
+
+          # Update amount available in product list
+          #   If amount falls to zero, variant should be greyed out and input disabled
+          page.should have_selector "#variant-#{variant.id}.out-of-stock"
+          page.should have_selector "#variants_#{variant.id}[max='0']"
+          page.should have_selector "#variants_#{variant.id}[disabled='disabled']"
+        end
+
+        it "does the same for group buy products"
       end
     end
 
