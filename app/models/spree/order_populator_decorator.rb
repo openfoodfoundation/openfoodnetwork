@@ -60,6 +60,8 @@ Spree::OrderPopulator.class_eval do
 
       if quantity_to_add > 0
         @order.add_variant(variant, quantity_to_add, max_quantity_to_add, currency)
+      else
+        @order.remove_variant variant
       end
     end
   end

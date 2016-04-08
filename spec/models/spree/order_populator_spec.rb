@@ -177,6 +177,19 @@ module Spree
 
         op.attempt_cart_add(333, quantity.to_s, quantity.to_s)
       end
+
+      it "removes variants which have become out of stock" do
+        op.should_receive(:quantities_to_add).with(variant, 123, 123).
+          and_return([0, 0])
+
+        op.stub(:check_order_cycle_provided_for) { true }
+        op.stub(:check_variant_available_under_distribution) { true }
+
+        order.should_receive(:remove_variant).with(variant)
+        order.should_receive(:add_variant).never
+
+        op.attempt_cart_add(333, quantity.to_s, quantity.to_s)
+      end
     end
 
     describe "quantities_to_add" do
