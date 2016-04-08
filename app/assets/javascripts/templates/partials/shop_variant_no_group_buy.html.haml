@@ -9,4 +9,5 @@
   "ng-model" => "variant.line_item.quantity",
 
   max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
+  "ng-disabled" => "!variant.on_demand && variant.count_on_hand == 0",
   name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
