@@ -50,20 +50,29 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
         @update_running = false
 
     compareAndNotifyStockLevels: (stockLevels) =>
+      scope = $rootScope.$new(true)
+      scope.variants = []
+
+      # TODO: These changes to quantity/max_quantity trigger another cart update, which
+      #       is unnecessary.
+
       for li in @line_items_present()
         if !stockLevels[li.variant.id]?
-          alert "Variant out of stock: #{li.variant.id}"
           li.quantity = 0
           li.max_quantity = 0 if li.max_quantity?
           li.variant.count_on_hand = 0
+          scope.variants.push li.variant
         else
           if stockLevels[li.variant.id].quantity < li.quantity
-            alert "Variant quantity reduced: #{li.variant.id}"
             li.quantity = stockLevels[li.variant.id].quantity
+            scope.variants.push li.variant
           if stockLevels[li.variant.id].max_quantity < li.max_quantity
-            alert "Variant max_quantity reduced: #{li.variant.id}"
             li.max_quantity = stockLevels[li.variant.id].max_quantity
+            scope.variants.push li.variant
           li.variant.count_on_hand = stockLevels[li.variant.id].on_hand
+
+      if scope.variants.length > 0
+        $modal.open(templateUrl: "out_of_stock.html", scope: scope, windowClass: 'out-of-stock-modal')
 
     popQueue: =>
       @update_enqueued = false

@@ -94,7 +94,7 @@ Spree::OrdersController.class_eval do
         [li.variant.id,
          {quantity: li.quantity,
           max_quantity: li.max_quantity,
-          on_hand: li.variant.on_hand}]
+          on_hand: wrap_json_infinity(li.variant.on_hand)}]
       end
     ]
   end
