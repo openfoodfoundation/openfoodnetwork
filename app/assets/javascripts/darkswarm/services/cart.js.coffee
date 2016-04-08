@@ -69,6 +69,9 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       if scope.variants.length > 0
         $modal.open(templateUrl: "out_of_stock.html", scope: scope, windowClass: 'out-of-stock-modal')
 
+      if scope.variants.length > 0
+        $modal.open(templateUrl: "out_of_stock.html", scope: scope, windowClass: 'out-of-stock-modal')
+
     popQueue: =>
       @update_enqueued = false
       @scheduleUpdate()
