@@ -99,7 +99,7 @@ Spree::Order.class_eval do
   def remove_variant(variant)
     line_items(:reload)
     current_item = find_line_item_by_variant(variant)
-    current_item.destroy
+    current_item.andand.destroy
   end
 
 
