@@ -239,11 +239,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
 
       describe "when a product goes out of stock just before it's added to the cart" do
-        before do
-          variant.update_attributes! on_hand: 0
-        end
-
         it "stops the attempt, shows an error message and refreshes the products asynchronously" do
+          variant.update_attributes! on_hand: 0
+
           # -- Messaging
           alert_message = accept_alert do
             fill_in "variants[#{variant.id}]", with: '1'
@@ -266,7 +264,36 @@ feature "As a consumer I want to shop with a distributor", js: true do
           page.should have_selector "#variants_#{variant.id}[disabled='disabled']"
         end
 
-        it "does the same for group buy products"
+        context "group buy products" do
+          let(:product) { create(:simple_product, group_buy: true) }
+
+          it "does the same" do
+            # -- Place in cart so we can set max_quantity, then make out of stock
+            fill_in "variants[#{variant.id}]", with: '1'
+            wait_until { !cart_dirty }
+            variant.update_attributes! on_hand: 0
+
+            # -- Messaging
+            alert_message = accept_alert do
+              fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '1'
+              wait_until { !cart_dirty }
+            end
+
+            # TODO: This will be a modal
+            expect(alert_message).to be
+            puts alert_message
+
+            # -- Page updates
+            # Update amount in cart
+            page.should have_field "variant_attributes[#{variant.id}][max_quantity]", with: '0', disabled: true
+
+            # Update amount available in product list
+            #   If amount falls to zero, variant should be greyed out and input disabled
+            page.should have_selector "#variant-#{variant.id}.out-of-stock"
+            page.should have_selector "#variants_#{variant.id}_max[max='0']"
+            page.should have_selector "#variants_#{variant.id}_max[disabled='disabled']"
+          end
+        end
       end
     end
 
