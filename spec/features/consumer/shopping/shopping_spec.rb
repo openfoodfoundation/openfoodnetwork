@@ -243,14 +243,13 @@ feature "As a consumer I want to shop with a distributor", js: true do
           variant.update_attributes! on_hand: 0
 
           # -- Messaging
-          alert_message = accept_alert do
-            fill_in "variants[#{variant.id}]", with: '1'
-            wait_until { !cart_dirty }
-          end
+          fill_in "variants[#{variant.id}]", with: '1'
+          wait_until { !cart_dirty }
 
-          # TODO: This will be a modal
-          expect(alert_message).to be
-          puts alert_message
+          within(".out-of-stock-modal") do
+            page.should have_content "stock levels for one or more of the products in your cart have reduced"
+            page.should have_content "#{product.name} - #{variant.unit_to_display} is now out of stock."
+          end
 
           # -- Page updates
           # Update amount in cart
@@ -274,14 +273,13 @@ feature "As a consumer I want to shop with a distributor", js: true do
             variant.update_attributes! on_hand: 0
 
             # -- Messaging
-            alert_message = accept_alert do
-              fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '1'
-              wait_until { !cart_dirty }
-            end
+            fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '1'
+            wait_until { !cart_dirty }
 
-            # TODO: This will be a modal
-            expect(alert_message).to be
-            puts alert_message
+            within(".out-of-stock-modal") do
+              page.should have_content "stock levels for one or more of the products in your cart have reduced"
+              page.should have_content "#{product.name} - #{variant.unit_to_display} is now out of stock."
+            end
 
             # -- Page updates
             # Update amount in cart

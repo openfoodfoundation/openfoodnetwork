@@ -69,6 +69,14 @@ describe Spree::OrdersController do
       it "returns a hash with variant id, quantity, max_quantity and stock on hand" do
         controller.stock_levels.should == {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
       end
+
+      describe "encoding Infinity" do
+        let!(:v) { create(:variant, on_demand: true, count_on_hand: 0) }
+
+        it "encodes Infinity as a large, finite integer" do
+          controller.stock_levels.should == {v.id => {quantity: 2, max_quantity: 3, on_hand: 2147483647}}
+        end
+      end
     end
   end
 

@@ -51,11 +51,10 @@ Spree::OrdersController.class_eval do
         [li.variant.id,
          {quantity: li.quantity,
           max_quantity: li.max_quantity,
-          on_hand: li.variant.on_hand}]
+          on_hand: wrap_json_infinity(li.variant.on_hand)}]
       end
     ]
   end
-
 
   def update_distribution
     @order = current_order(true)
@@ -135,4 +134,9 @@ Spree::OrdersController.class_eval do
     end
   end
 
+  # Rails to_json encodes Float::INFINITY as Infinity, which is not valid JSON
+  # Return it as a large integer (max 32 bit signed int)
+  def wrap_json_infinity(n)
+    n == Float::INFINITY ? 2147483647 : n
+  end
 end
