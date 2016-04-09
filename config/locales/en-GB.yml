@@ -10,6 +10,11 @@ en-GB:
             password:
               confirmation: you have successfully registered
               too_short: pick a longer name
+    attributes:
+      spree/order:
+        payment_state: Payment State
+        shipment_state: Shipment State
+
   devise:
     failure:
       invalid: |
