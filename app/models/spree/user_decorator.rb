@@ -66,7 +66,7 @@ Spree.user_class.class_eval do
   def orders_by_distributor
     # Remove uncompleted payments as these will not be reflected in order balance
     data_array = complete_orders_by_distributor.to_a
-    remove_uncompleted_payments(data_array)
+    remove_payments_in_checkout(data_array)
     data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
   end
 
@@ -78,10 +78,10 @@ Spree.user_class.class_eval do
     end
   end
 
-  def remove_uncompleted_payments(enterprises)
+  def remove_payments_in_checkout(enterprises)
     enterprises.each do |enterprise|
       enterprise.distributed_orders.each do |order|
-        order.payments.keep_if { |payment| payment.state == "completed" }
+        order.payments.keep_if { |payment| payment.state != "checkout" }
       end
     end
   end

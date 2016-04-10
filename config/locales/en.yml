@@ -996,6 +996,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       pending: pending
       processing: processing
       void: void
+      invalid: invalid
     order_state:
       address: address
       adjustments: adjustments
