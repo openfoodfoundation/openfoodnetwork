@@ -194,23 +194,28 @@ module Spree
 
     describe "quantities_to_add" do
       let(:v) { double(:variant, on_hand: 10) }
-      context "when max_quantity is not provided" do
-        it "returns full amount when available" do
-          op.quantities_to_add(v, 5, nil).should == [5, nil]
+
+      context "when backorders are not allowed" do
+        before { Spree::Config.allow_backorders = false }
+
+        context "when max_quantity is not provided" do
+          it "returns full amount when available" do
+            op.quantities_to_add(v, 5, nil).should == [5, nil]
+          end
+
+          it "returns a limited amount when not entirely available" do
+            op.quantities_to_add(v, 15, nil).should == [10, nil]
+          end
         end
 
-        it "returns a limited amount when not entirely available" do
-          op.quantities_to_add(v, 15, nil).should == [10, nil]
-        end
-      end
+        context "when max_quantity is provided" do
+          it "returns full amount when available" do
+            op.quantities_to_add(v, 5, 6).should == [5, 6]
+          end
 
-      context "when max_quantity is provided" do
-        it "returns full amount when available" do
-          op.quantities_to_add(v, 5, 6).should == [5, 6]
-        end
-
-        it "returns a limited amount when not entirely available" do
-          op.quantities_to_add(v, 15, 16).should == [10, 10]
+          it "returns a limited amount when not entirely available" do
+            op.quantities_to_add(v, 15, 16).should == [10, 10]
+          end
         end
       end
 
