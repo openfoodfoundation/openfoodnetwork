@@ -10,6 +10,7 @@ en-GB:
             password:
               confirmation: you have successfully registered
               too_short: pick a longer name
+    # Overridden here due to a bug in spree i18n (Issue #870)
     attributes:
       spree/order:
         payment_state: Payment State
