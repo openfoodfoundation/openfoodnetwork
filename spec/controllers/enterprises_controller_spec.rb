@@ -4,14 +4,12 @@ describe EnterprisesController do
   describe "shopping for a distributor" do
     let(:order) { controller.current_order(true) }
 
-
-    let!(:current_distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-    let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-    let!(:order_cycle1) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 3.days.from_now ) }
-    let!(:order_cycle2) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now ) }
-
-    before do
-      order.set_distributor! current_distributor
+    before(:each) do
+      @current_distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
+      @distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
+      @order_cycle1 = create(:simple_order_cycle, distributors: [@distributor], orders_open_at: 2.days.ago, orders_close_at: 3.days.from_now )
+      @order_cycle2 = create(:simple_order_cycle, distributors: [@distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now )
+      order.set_distributor! @current_distributor
     end
 
     it "sets the shop as the distributor on the order when shopping for the distributor" do
@@ -97,10 +95,10 @@ describe EnterprisesController do
     describe "when an out of stock item is in the cart" do
       let(:variant) { create(:variant, on_demand: false, on_hand: 10) }
       let(:line_item) { create(:line_item, variant: variant) }
-      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [@distributor], variants: [variant]) }
 
       before do
-        order.set_distribution! current_distributor, order_cycle
+        order.set_distribution! @current_distributor, order_cycle
         order.line_items << line_item
 
         Spree::Config.set allow_backorders: false
@@ -109,7 +107,7 @@ describe EnterprisesController do
       end
 
       it "redirects to the cart" do
-        spree_get :shop, {id: current_distributor}
+        spree_get :shop, {id: @current_distributor}
 
         response.should redirect_to spree.cart_path
       end
