@@ -80,6 +80,10 @@ en:
 
     whats_this: What's this?
 
+    customers:
+      index:
+        add_customer: "Add customer"
+        customer_placeholder: "customer@example.org"
     inventory:
       title: Inventory
       description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page

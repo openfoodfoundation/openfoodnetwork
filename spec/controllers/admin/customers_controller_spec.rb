@@ -94,4 +94,37 @@ describe Admin::CustomersController, type: :controller do
       end
     end
   end
+
+  describe "create" do
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:another_enterprise) { create(:distributor_enterprise) }
+
+    def create_customer(enterprise)
+      spree_put :create, format: :json, customer: { email: 'new@example.com', enterprise_id: enterprise.id }
+    end
+
+    context "json" do
+      let!(:customer) { create(:customer, enterprise: enterprise) }
+
+      context "where I manage the customer's enterprise" do
+        before do
+          controller.stub spree_current_user: enterprise.owner
+        end
+
+        it "allows me to create the customer" do
+          expect { create_customer enterprise }.to change(Customer, :count).by(1)
+        end
+      end
+
+      context "where I don't manage the customer's enterprise" do
+        before do
+          controller.stub spree_current_user: another_enterprise.owner
+        end
+
+        it "prevents me from creating the customer" do
+          expect { create_customer enterprise }.to change(Customer, :count).by(0)
+        end
+      end
+    end
+  end
 end

@@ -14,6 +14,16 @@ module Admin
       end
     end
 
+    def create
+      @customer = Customer.new(params[:customer])
+      if spree_current_user.enterprises.include? @customer.enterprise
+        @customer.save
+        render json: Api::Admin::CustomerSerializer.new(@customer).to_json
+      else
+        redirect_to '/unauthorized'
+      end
+    end
+
     private
 
     def collection

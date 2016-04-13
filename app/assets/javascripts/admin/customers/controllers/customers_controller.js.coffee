@@ -1,4 +1,4 @@
-angular.module("admin.customers").controller "customersCtrl", ($scope, Customers, Columns, pendingChanges, shops) ->
+angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerResource, Columns, pendingChanges, shops) ->
   $scope.shop = {}
   $scope.shops = shops
   $scope.submitAll = pendingChanges.submitAll
@@ -10,8 +10,24 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, Customers
 
   $scope.$watch "shop.id", ->
     if $scope.shop.id?
-      Customers.loaded = false
-      $scope.customers = Customers.index(enterprise_id: $scope.shop.id)
+      $scope.customers = index {enterprise_id: $scope.shop.id}
 
-  $scope.loaded = ->
-    Customers.loaded
+  $scope.add = (email) ->
+    params =
+      enterprise_id: $scope.shop.id
+      email: email
+    CustomerResource.create params, (customer) =>
+      if customer.id
+        $scope.customers.push customer
+        $scope.quickSearch = customer.email
+
+  $scope.deleteCustomer = (customer) ->
+    params = id: customer.id
+    CustomerResource.destroy params, ->
+      i = $scope.customers.indexOf customer
+      $scope.customers.splice i, 1 unless i < 0
+
+  index = (params) ->
+    $scope.loaded = false
+    CustomerResource.index params, =>
+      $scope.loaded = true

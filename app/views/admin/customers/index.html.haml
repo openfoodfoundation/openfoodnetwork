@@ -5,7 +5,7 @@
 = admin_inject_shops
 
 %div{ ng: { app: 'admin.customers', controller: 'customersCtrl' } }
-  .row{ ng: { hide: "loaded() && customers.length > 0" } }
+  .row{ ng: { hide: "loaded && customers.length > 0" } }
     .five.columns.alpha
       %h3
         =t :please_select_hub
@@ -13,24 +13,23 @@
       %select.select2.fullwidth#shop_id{ 'ng-model' => 'shop.id', name: 'shop_id', 'ng-options' => 'shop.id as shop.name for shop in shops' }
     .seven.columns.omega &nbsp;
 
-  .row{ 'ng-hide' => '!loaded() || customers.length == 0' }
+  .row{ 'ng-hide' => '!loaded || customers.length == 0' }
     .controls.sixteen.columns.alpha.omega
       .five.columns.alpha
         %input.fullwidth{ :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
-      .five.columns &nbsp;
-      .three.columns &nbsp;
+      .eight.columns &nbsp;
       = render 'admin/shared/columns_dropdown'
-  .row{ 'ng-if' => 'shop.id && !loaded()' }
+  .row{ 'ng-if' => 'shop.id && !loaded' }
     .sixteen.columns.alpha#loading
       %img.spinner{ src: "/assets/spinning-circles.svg" }
       %h1
         =t :loading_customers
-  .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded() && filteredCustomers.length == 0'}
+  .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded && filteredCustomers.length == 0'}
     %h1#no_results
       =t :no_customers_found
 
 
-  .row{ ng: { show: "loaded() && filteredCustomers.length > 0" } }
+  .row{ ng: { show: "loaded && filteredCustomers.length > 0" } }
     %form{ name: "customers" }
       %table.index#customers
         %col.email{ width: "20%"}
@@ -61,3 +60,11 @@
           %td.actions
             %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
       %input{ :type => "button", 'value' => 'Update', 'ng-click' => 'submitAll()' }
+
+  %form{ng: {show: "loaded", submit: 'add(newCustomerEmail)'}}
+    %h2= t '.add_new_customer'
+    .row
+      .five.columns.alpha
+        %input.fullwidth{type: "text", placeholder: t('.customer_placeholder'), ng: {model: 'newCustomerEmail'}}
+      .eleven.columns.omega
+        %input{type: "submit", value: t('.add_customer')}
