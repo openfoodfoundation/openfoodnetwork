@@ -8,10 +8,6 @@ describe "InventoryItems service", ->
       $provide.value 'inventoryItems', inventoryItems
       null
 
-    this.addMatchers
-      toDeepEqual: (expected) ->
-        return angular.equals(this.actual, expected)
-
     inject ($q, _$httpBackend_, _InventoryItems_, _InventoryItemResource_) ->
       InventoryItems = _InventoryItems_
       InventoryItemResource = _InventoryItemResource_
