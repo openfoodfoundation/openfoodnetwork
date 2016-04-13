@@ -102,7 +102,7 @@ module OpenFoodNetwork
           order3 = create(:order, shipping_method: sm3)
 
           subject.stub(:params).and_return(shipping_method_in: [sm1.id, sm3.id])
-          subject.filter(orders).should == [order1, order3]
+          expect(subject.filter(orders)).to match_array [order1, order3]
         end
 
         it "should do all the filters at once" do
