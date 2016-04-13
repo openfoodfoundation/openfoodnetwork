@@ -15,6 +15,12 @@
 # See http://community.openfoodnetwork.org/t/localisation-ofn-in-your-language/397
 
 en:
+  activerecord:
+    # Overridden here due to a bug in spree i18n (Issue #870)
+    attributes:
+      spree/order:
+        payment_state: Payment State
+        shipment_state: Shipment State
   devise:
     failure:
       invalid: |
