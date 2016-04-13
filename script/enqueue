@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+
+# Push a job onto the Delayed Job queue without booting the Rails stack
+# Perfect for calling via cron.
+#
+# Use like this:
+#
+#   ./script/enqueue <JobClassName>
+#   ./script/enqueue Background::ImportJobs
+
+require 'erb'
+require 'yaml'
+
+ENV["RAILS_ENV"] ||= "development"
+
+DATABASE_CONFIG = File.expand_path("../../config/database.yml", __FILE__)
+
+def psql
+  raise "Missing database.yml" unless File.exists?(DATABASE_CONFIG)
+
+  file   = File.read(DATABASE_CONFIG)
+  erb    = ERB.new(file).result
+  env    = ENV["RAILS_ENV"]
+  config = YAML.load(erb)[env]
+
+  raise "Missing config for #{env} environment" unless config
+
+  "psql".tap do |s|
+    s << " --host #{config['host']}"     if config['host']
+    s << " --user #{config['username']}" if config['username']
+    s << " --port #{config['port']}"     if config['port']
+    s << " #{config['database']}"
+  end
+end
+
+def enqueue_delayed_job(handler, priority=nil)
+  time = Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
+  priority ||= 50
+
+  sql = <<-SQL
+    INSERT INTO delayed_jobs (
+      handler,
+      created_at,
+      updated_at,
+      run_at,
+      priority
+    ) VALUES (
+      '--- !ruby/object:#{handler} {}\n',
+      '#{time}',
+      '#{time}',
+      '#{time}',
+      #{priority}
+    );
+  SQL
+
+  IO.popen(psql, "w") do |io|
+    io.write sql
+  end
+end
+
+enqueue_delayed_job ARGV[0], ARGV[1]
