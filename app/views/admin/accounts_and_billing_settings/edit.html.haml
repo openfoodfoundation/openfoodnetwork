@@ -1,7 +1,7 @@
 = render :partial => 'spree/admin/shared/configuration_menu'
 
 - content_for :page_title do
-  = t(:accounts_and_billing_settings)
+  = t(:accounts_and_billing)
 
 = render 'spree/shared/error_messages', target: @settings
 
@@ -11,7 +11,7 @@
   %legend
     =t :admin_settings
   = form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
-    .row{ ng: { app: t(:admin_accounts_and_billing) } }
+    .row{ ng: { app: 'admin.accounts_and_billing_settings' } }
       .twelve.columns.alpha.omega
         .field
           = f.label :accounts_distributor_id, t(:accounts_administration_distributor)
