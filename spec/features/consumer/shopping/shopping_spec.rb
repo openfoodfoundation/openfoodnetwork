@@ -292,6 +292,42 @@ feature "As a consumer I want to shop with a distributor", js: true do
             page.should have_selector "#variants_#{variant.id}_max[disabled='disabled']"
           end
         end
+
+        context "when the update is for another product" do
+          it "updates quantity" do
+            fill_in "variants[#{variant.id}]", with: '1'
+            wait_until { !cart_dirty }
+
+            variant.update_attributes! on_hand: 0
+
+            fill_in "variants[#{variant2.id}]", with: '1'
+            wait_until { !cart_dirty }
+
+            within(".out-of-stock-modal") do
+              page.should have_content "stock levels for one or more of the products in your cart have reduced"
+              page.should have_content "#{product.name} - #{variant.unit_to_display} is now out of stock."
+            end
+          end
+
+          context "group buy products" do
+            let(:product) { create(:simple_product, group_buy: true) }
+
+            it "updates max_quantity" do
+              fill_in "variants[#{variant.id}]", with: '1'
+              fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '2'
+              wait_until { !cart_dirty }
+              variant.update_attributes! on_hand: 1
+
+              fill_in "variants[#{variant2.id}]", with: '1'
+              wait_until { !cart_dirty }
+
+              within(".out-of-stock-modal") do
+                page.should have_content "stock levels for one or more of the products in your cart have reduced"
+                page.should have_content "#{product.name} - #{variant.unit_to_display} now only has 1 remaining"
+              end
+            end
+          end
+        end
       end
     end
 

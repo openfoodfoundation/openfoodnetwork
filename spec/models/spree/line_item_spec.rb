@@ -55,9 +55,9 @@ module Spree
         li.reload.quantity.should == 5
       end
 
-      it "does not cap max_quantity" do
+      it "caps max_quantity" do
         li.cap_quantity_at_stock!
-        li.reload.max_quantity.should == 10
+        li.reload.max_quantity.should == 5
       end
 
       it "works for products without max_quantity" do
