@@ -43,6 +43,26 @@ describe Spree::OrdersController do
     flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
+  describe "when an item has insufficient stock" do
+    let(:order) { subject.current_order(true) }
+    let(:oc) { create(:simple_order_cycle, distributors: [d], variants: [variant]) }
+    let(:d) { create(:distributor_enterprise, shipping_methods: [create(:shipping_method)], payment_methods: [create(:payment_method)]) }
+    let(:variant) { create(:variant, on_demand: false, on_hand: 5) }
+    let(:line_item) { order.line_items.last }
+
+    before do
+      order.set_distribution! d, oc
+      order.add_variant variant, 5
+      variant.update_attributes! on_hand: 3
+    end
+
+    it "displays a flash message when we view the cart" do
+      spree_get :edit
+      expect(response.status).to eq 200
+      flash[:error].should == "An item in your cart has become unavailable."
+    end
+  end
+
   describe "returning stock levels in JSON on success" do
     let(:product) { create(:simple_product) }
 

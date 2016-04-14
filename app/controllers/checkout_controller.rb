@@ -153,12 +153,10 @@ class CheckoutController < Spree::CheckoutController
   def raise_insufficient_quantity
     respond_to do |format|
       format.html do
-        flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
         redirect_to cart_path
       end
 
       format.json do
-        flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
         render json: {path: cart_path}, status: 400
       end
     end
