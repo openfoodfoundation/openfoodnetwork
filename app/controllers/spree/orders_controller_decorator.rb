@@ -41,6 +41,7 @@ Spree::OrdersController.class_eval do
         fire_event('spree.cart.add')
         fire_event('spree.order.contents_changed')
 
+        current_order.cap_quantity_at_stock!
         current_order.update!
 
         render json: {error: false, stock_levels: stock_levels}, status: 200
