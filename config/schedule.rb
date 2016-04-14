@@ -4,8 +4,11 @@ require 'whenever'
 
 env "MAILTO", "rohan@rohanmitchell.com"
 
+
 # If we use -e with a file containing specs, rspec interprets it and filters out our examples
 job_type :run_file, "cd :path; :environment_variable=:environment bundle exec script/rails runner :task :output"
+job_type :enqueue_job,  "cd :path; :environment_variable=:environment bundle exec script/enqueue :task :priority :output"
+
 
 every 1.hour do
   rake 'openfoodnetwork:cache:check_products_integrity'
@@ -21,6 +24,10 @@ end
 
 every 4.hours do
   rake 'db2fog:backup'
+end
+
+every 5.minutes do
+  enqueue_job 'HeartbeatJob', priority: 0
 end
 
 every 1.day, at: '1:00am' do

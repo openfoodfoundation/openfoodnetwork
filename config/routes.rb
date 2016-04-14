@@ -143,6 +143,10 @@ Openfoodnetwork::Application.routes.draw do
       get :managed, on: :collection
       get :accessible, on: :collection
     end
+
+    resource :status do
+      get :job_queue
+    end
   end
 
   namespace :open_food_network do
