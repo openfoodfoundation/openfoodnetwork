@@ -1,9 +1,9 @@
 require 'spree/core/controller_helpers/order_decorator'
 
 Spree::OrdersController.class_eval do
-  after_filter  :populate_variant_attributes, :only => :populate
-  before_filter :update_distribution, :only => :update
-  before_filter :filter_order_params, :only => :update
+  after_filter  :populate_variant_attributes, only: :populate
+  before_filter :update_distribution, only: :update
+  before_filter :filter_order_params, only: :update
 
   prepend_before_filter :require_order_cycle, only: :edit
   prepend_before_filter :require_distributor_chosen, only: :edit
@@ -12,13 +12,19 @@ Spree::OrdersController.class_eval do
   include OrderCyclesHelper
   layout 'darkswarm'
 
+
   # Patching to redirect to shop if order is empty
   def edit
     @order = current_order(true)
+
     if @order.line_items.empty?
       redirect_to main_app.shop_path
     else
       associate_user
+
+      if @order.insufficient_stock_lines.present?
+        flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
+      end
     end
   end
 

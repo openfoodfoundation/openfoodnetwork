@@ -32,7 +32,6 @@ class EnterprisesController < BaseController
 
   def check_stock_levels
     if current_order(true).insufficient_stock_lines.present?
-      flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
       redirect_to spree.cart_path
     end
   end
