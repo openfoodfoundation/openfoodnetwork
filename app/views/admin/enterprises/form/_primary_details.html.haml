@@ -22,7 +22,6 @@
       %a What's this?
   .five.columns.omega
     = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
-    &nbsp;
     = f.label :is_primary_producer, 'Producer'
 - if spree_current_user.admin?
   .row
@@ -33,15 +32,12 @@
           %a What's this?
       .two.columns
         = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
-        &nbsp;
         = f.label :sells, "None", value: "none"
       .two.columns
         = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
-        &nbsp;
         = f.label :sells, "Own", value: "own"
       .four.columns.omega
         = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
-        &nbsp;
         = f.label :sells, "Any", value: "any"
 .row
   .three.columns.alpha
@@ -50,12 +46,21 @@
       %a What's this?
   .two.columns
     = f.radio_button :visible, true
-    &nbsp;
     = f.label :visible, "Visible", :value => "true"
   .five.columns.omega
     = f.radio_button :visible, false
-    &nbsp;
     = f.label :visible, "Not Visible", :value => "false"
+.row
+  .three.columns.alpha
+    %label= t '.shopfront_requires_login'
+    %div{'ofn-with-tip' => t('.shopfront_requires_login_tip')}
+      %a= t 'admin.whats_this'
+  .two.columns
+    = f.radio_button :require_login, false
+    = f.label :require_login, t('.shopfront_requires_login_false'), value: :false
+  .five.columns.omega
+    = f.radio_button :require_login, true
+    = f.label :require_login, t('.shopfront_requires_login_true'), value: :true
 .permalink{ ng: { controller: "permalinkCtrl" } }
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha

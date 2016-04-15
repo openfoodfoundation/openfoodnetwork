@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160302044850) do
+ActiveRecord::Schema.define(:version => 20160401043927) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -348,6 +348,7 @@ ActiveRecord::Schema.define(:version => 20160302044850) do
     t.string   "permalink",                                    :null => false
     t.boolean  "charges_sales_tax",        :default => false,  :null => false
     t.string   "email_address"
+    t.boolean  "require_login",            :default => false,  :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
@@ -1144,6 +1145,13 @@ ActiveRecord::Schema.define(:version => 20160302044850) do
     t.float   "latitude"
     t.float   "longitude"
     t.integer "state_id"
+  end
+
+  create_table "tag_rules", :force => true do |t|
+    t.integer  "enterprise_id", :null => false
+    t.string   "type",          :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "taggings", :force => true do |t|

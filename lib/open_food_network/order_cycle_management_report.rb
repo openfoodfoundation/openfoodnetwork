@@ -50,7 +50,7 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.amount,
-       OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance
+       OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance
       ]
     end
 
@@ -67,23 +67,23 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.amount,
-       OpenFoodNetwork::UserBalanceCalculator.new(order.user, order.distributor).balance,
+       OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance,
        has_temperature_controlled_items?(order),
        order.special_instructions
       ]
     end
 
     def filter_to_payment_method(orders)
-      if params[:payment_method_name].present?
-        orders.with_payment_method_name(params[:payment_method_name])
+      if params[:payment_method_in].present?
+        orders.joins(payments: :payment_method).where(spree_payments: { payment_method_id: params[:payment_method_in]})
       else
         orders
       end
     end
 
     def filter_to_shipping_method(orders)
-      if params[:shipping_method_name].present?
-        orders.joins(:shipping_method).where("spree_shipping_methods.name = ?", params[:shipping_method_name])
+      if params[:shipping_method_in].present?
+        orders.joins(:shipping_method).where(shipping_method_id: params[:shipping_method_in])
       else
         orders
       end

@@ -82,6 +82,10 @@ feature %q{
     page.should have_selector '.available'
     choose 'Own'
 
+    # Require login to view shopfront
+    expect(page).to have_checked_field "enterprise_require_login_false"
+    choose "Require customers to login"
+
     within (".side_menu") { click_link "Users" }
     select2_search user.email, from: 'Owner'
 
@@ -162,6 +166,8 @@ feature %q{
     page.should have_field 'enterprise_name', :with => 'Eaterprises'
     @enterprise.reload
     expect(@enterprise.owner).to eq user
+    expect(page).to have_checked_field "enterprise_visible_true"
+    expect(page).to have_checked_field "enterprise_require_login_true"
 
     click_link "Business Details"
     page.should have_checked_field "enterprise_charges_sales_tax_true"
@@ -275,7 +281,6 @@ feature %q{
       end.to enqueue_job RefreshProductsCacheJob, distributor_id: enterprise.id, order_cycle_id: order_cycle.id
     end
   end
-
 
   context "as an Enterprise user", js: true do
     let(:supplier1) { create(:supplier_enterprise, name: 'First Supplier') }

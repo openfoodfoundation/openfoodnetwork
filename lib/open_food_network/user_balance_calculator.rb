@@ -1,32 +1,30 @@
 module OpenFoodNetwork
   class UserBalanceCalculator
-    def initialize(user, distributor)
-      @user = user
+    def initialize(email, distributor)
+      @email = email
       @distributor = distributor
     end
 
     def balance
-      payment_total - order_total
+      payment_total - completed_order_total
     end
-
 
     private
 
-    def order_total
-      orders.sum &:total
+    def completed_order_total
+      completed_orders.sum &:total
     end
 
     def payment_total
       payments.sum &:amount
     end
 
-
-    def orders
-      Spree::Order.where(distributor_id: @distributor, user_id: @user)
+    def completed_orders
+      Spree::Order.where(distributor_id: @distributor, email: @email).complete.not_state(:canceled)
     end
 
     def payments
-      Spree::Payment.where(order_id: orders)
+      Spree::Payment.where(order_id: completed_orders, state: "completed")
     end
   end
 end

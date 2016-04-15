@@ -7,10 +7,22 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render json: ActiveModel::ArraySerializer.new( @collection,
-            each_serializer: Api::Admin::CustomerSerializer, spree_current_user: spree_current_user
-          ).to_json
+          serialised = ActiveModel::ArraySerializer.new(
+            @collection,
+            each_serializer: Api::Admin::CustomerSerializer,
+            spree_current_user: spree_current_user)
+          render json: serialised.to_json
         end
+      end
+    end
+
+    def create
+      @customer = Customer.new(params[:customer])
+      if user_can_create_customer?
+        @customer.save
+        render json: Api::Admin::CustomerSerializer.new(@customer).to_json
+      else
+        redirect_to '/unauthorized'
       end
     end
 
@@ -24,6 +36,11 @@ module Admin
 
     def load_managed_shops
       @shops = Enterprise.managed_by(spree_current_user).is_distributor
+    end
+
+    def user_can_create_customer?
+      spree_current_user.admin? ||
+        spree_current_user.enterprises.include?(@customer.enterprise)
     end
   end
 end

@@ -38,6 +38,7 @@
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
 //= require ./side_menu/side_menu
+//= require ./tag_rules/tag_rules
 //= require ./taxons/taxons
 //= require ./utils/utils
 //= require ./users/users

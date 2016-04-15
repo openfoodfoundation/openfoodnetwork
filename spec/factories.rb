@@ -285,6 +285,17 @@ FactoryGirl.define do
     year { 2000 + rand(100) }
     month { 1 + rand(12) }
   end
+
+  factory :filter_shipping_methods_tag_rule, class: TagRule::FilterShippingMethods do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+  end
+
+  factory :tag_rule, class: TagRule::DiscountOrder do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+    before(:create) do |tr|
+      tr.calculator = Spree::Calculator::FlatPercentItemTotal.new(calculable: tr)
+    end
+  end
 end
 
 

@@ -28,6 +28,7 @@ feature "As a consumer I want to check out my cart", js: true do
   describe "with shipping and payment methods" do
     let(:sm1) { create(:shipping_method, require_ship_address: true, name: "Frogs", description: "yellow", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0.00)) }
     let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
+    let(:sm3) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
     let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
     let!(:pm2) { create(:payment_method, distributors: [distributor]) }
     let!(:pm3) do
@@ -41,6 +42,7 @@ feature "As a consumer I want to check out my cart", js: true do
     before do
       distributor.shipping_methods << sm1
       distributor.shipping_methods << sm2
+      distributor.shipping_methods << sm3
     end
 
     context "on the checkout page" do
@@ -68,10 +70,11 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should_not have_content product.tax_category.name
       end
 
-      it "shows all shipping methods, but doesn't show ship address when not needed" do
+      it "shows all shipping methods" do
         toggle_shipping
         page.should have_content "Frogs"
         page.should have_content "Donkeys"
+        page.should have_content "Local"
       end
 
       context "when shipping method requires an address" do
@@ -82,6 +85,39 @@ feature "As a consumer I want to check out my cart", js: true do
         it "shows ship address forms when 'same as billing address' is unchecked" do
           uncheck "Shipping address same as billing address?"
           find("#ship_address > div.visible").visible?.should be_true
+        end
+      end
+
+      context "using FilterShippingMethods" do
+        it "shows shipping methods allowed by the rule" do
+          # No rules in effect
+          toggle_shipping
+          page.should have_content "Frogs"
+          page.should have_content "Donkeys"
+          page.should have_content "Local"
+
+          create(:filter_shipping_methods_tag_rule,
+            enterprise: distributor,
+            preferred_customer_tags: "local",
+            preferred_shipping_method_tags: "local",
+            preferred_matched_shipping_methods_visibility: 'visible')
+          visit checkout_path
+          checkout_as_guest
+
+          # Rule in effect, disallows access to 'Local'
+          page.should have_content "Frogs"
+          page.should have_content "Donkeys"
+          page.should_not have_content "Local"
+
+          customer = create(:customer, enterprise: distributor, tag_list: "local")
+          order.update_attribute(:customer_id, customer.id)
+          visit checkout_path
+          checkout_as_guest
+
+          # #local Customer can access 'Local' shipping method
+          page.should have_content "Frogs"
+          page.should have_content "Donkeys"
+          page.should have_content "Local"
         end
       end
     end

@@ -1,7 +1,7 @@
 - if enterprise
   -if shop_trial_in_progress?(enterprise)
     #trial_progress_bar
-      = t(:shop_trial_in_progress)
+      = t(:shop_trial_in_progress, days: remaining_trial_days(enterprise))
   -elsif shop_trial_expired?(enterprise)
     #trial_progress_bar
       = t(:shop_trial_expired)

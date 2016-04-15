@@ -1,25 +1,49 @@
 describe "CustomersCtrl", ->
-  ctrl = null
   scope = null
-  Customers = null
+  http = null
 
   beforeEach ->
-    shops = "list of shops"
-
     module('admin.customers')
-    inject ($controller, $rootScope, _Customers_) ->
+    inject ($controller, $rootScope, _CustomerResource_, $httpBackend) ->
       scope = $rootScope
-      Customers = _Customers_
-      ctrl = $controller 'customersCtrl', {$scope: scope, Customers: Customers, shops: shops}
+      http = $httpBackend
+      $controller 'customersCtrl', {$scope: scope, CustomerResource: _CustomerResource_, shops: {}}
+    this.addMatchers
+      toAngularEqual: (expected) ->
+        return angular.equals(this.actual, expected)
+
+  it "has no shop pre-selected", ->
+    expect(scope.shop).toEqual {}
 
   describe "setting the shop on scope", ->
+    customer = { id: 5, email: 'someone@email.com'}
+    customers = [customer]
+
     beforeEach ->
-      spyOn(Customers, "index").andReturn "list of customers"
+      http.expectGET('/admin/customers.json?enterprise_id=1').respond 200, customers
       scope.$apply ->
         scope.shop = {id: 1}
+      http.flush()
 
-    it "calls Customers#index with the correct params", ->
-      expect(Customers.index).toHaveBeenCalledWith({enterprise_id: 1})
+    it "retrievs the list of customers", ->
+      expect(scope.customers).toAngularEqual customers
 
-    it "resets $scope.customers with the result of Customers#index", ->
-      expect(scope.customers).toEqual "list of customers"
+    describe "scope.add", ->
+      it "creates a new customer", ->
+        email = "customer@example.org"
+        newCustomer = {id: 6, email: email}
+        customers.push(newCustomer)
+        http.expectPOST('/admin/customers.json?email=' + email + '&enterprise_id=1').respond 200, newCustomer
+        scope.add(email)
+        http.flush()
+        expect(scope.customers).toAngularEqual customers
+
+    describe "scope.deleteCustomer", ->
+      it "deletes a customer", ->
+        expect(scope.customers.length).toBe 2
+        customer = scope.customers[0]
+        http.expectDELETE('/admin/customers/' + customer.id + '.json').respond 200
+        scope.deleteCustomer(customer)
+        http.flush()
+        expect(scope.customers.length).toBe 1
+        expect(scope.customers[0]).not.toAngularEqual customer

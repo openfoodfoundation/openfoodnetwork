@@ -15,8 +15,6 @@ angular.module("admin.indexUtils").directive "ofnSelect2", ($sanitize, $timeout)
       element.select2
         minimumResultsForSearch: scope.minSearch || 0
         data: { results: scope.data, text: scope.text }
-        initSelection: (element, callback) ->
-          callback scope.data[0]
         formatSelection: (item) ->
           item[scope.text]
         formatResult: (item) ->

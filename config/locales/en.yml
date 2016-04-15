@@ -15,6 +15,12 @@
 # See http://community.openfoodnetwork.org/t/localisation-ofn-in-your-language/397
 
 en:
+  activerecord:
+    # Overridden here due to a bug in spree i18n (Issue #870)
+    attributes:
+      spree/order:
+        payment_state: Payment State
+        shipment_state: Shipment State
   devise:
     failure:
       invalid: |
@@ -74,6 +80,10 @@ en:
 
     whats_this: What's this?
 
+    customers:
+      index:
+        add_customer: "Add customer"
+        customer_placeholder: "customer@example.org"
     inventory:
       title: Inventory
       description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
@@ -104,6 +114,32 @@ en:
 
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
+
+    enterprises:
+      form:
+        primary_details:
+          shopfront_requires_login: "Shopfront requires login?"
+          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront."
+          shopfront_requires_login_false: "Public"
+          shopfront_requires_login_true: "Require customers to login"
+
+  home:
+    hubs:
+      show_closed_shops: "Show closed shops"
+      hide_closed_shops: "Hide closed shops"
+      show_on_map: "Show all on the map"
+  shared:
+    register_call:
+      selling_on_ofn: "Interested in getting on the Open Food Network?"
+      register: "Register here"
+  shop:
+    messages:
+      login: "login"
+      register: "register"
+      contact: "contact"
+      require_customer_login: "This shop is for customers only."
+      require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
+      require_customer_html: "Please %{contact} %{enterprise} to become a customer."
 
   # Printable Invoice Columns
   invoice_column_item: "Item"
@@ -145,8 +181,6 @@ en:
   on_demand: On demand
   none: None
 
-  alert_selling_on_ofn: "Interested in selling food on the Open Food Network?"
-  alert_start_here: "Start here"
   label_shops: "Shops"
   label_map: "Map"
   label_producers: "Producers"
@@ -748,7 +782,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   shop_variant_quantity_max: "max"
   contact: "Contact"
   follow: "Follow"
-  shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:" #FIXME
+  shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"
   shop_at: "Shop now at:"
   price_breakdown: "Full price breakdown"
@@ -840,13 +874,12 @@ Please follow the instructions there to make your enterprise visible on the Open
   go: "Go"
   hub: "Hub"
   accounts_administration_distributor: "accounts administration distributor"
-  admin_accounts_and_billing: "admin.accounts_and_billing_settings" #FIXME
+  accounts_and_billing: "Accounts & Billing"
   producer: "Producer"
   product: "Product"
   price: "Price"
   on_hand: "On hand"
   save_changes: "Save Changes"
-  update_action: "update()" #FIXME
   spree_admin_overview_enterprises_header: "My Enterprises"
   spree_admin_overview_enterprises_footer: "MANAGE MY ENTERPRISES"
   spree_admin_enterprises_hubs_name: "Name"
@@ -882,8 +915,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   live: "live"
   manage: "Manage"
   resend: "Resend"
-  add_and_manage_products: "Add &amp; manage products"
-  add_and_manage_order_cycles: "Add &amp; manage order cycles"
+  add_and_manage_products: "Add & manage products"
+  add_and_manage_order_cycles: "Add & manage order cycles"
   manage_order_cycles: "Manage order cycles"
   manage_products: "Manage products"
   edit_profile_details: "Edit profile details"
@@ -916,14 +949,13 @@ Please follow the instructions there to make your enterprise visible on the Open
   hub_sidebar_at_least: "At least one hub must be selected"
   hub_sidebar_blue: "blue"
   hub_sidebar_red: "red"
-  shop_trial_in_progress: "Your shopfront trial expires in #{remaining_trial_days(enterprise)}." #FIXME
+  shop_trial_in_progress: "Your shopfront trial expires in %{days}."
   shop_trial_expired: "Good news! We have decided to extend shopfront trials until further notice (probably around March 2015)." #FIXME
   report_customers_distributor: "Distributor"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
-  report_customers_header: "orders header"
   report_producers: "Producers: "
   report_type: "Report Type: "
   report_hubs: "Hubs: "
@@ -934,8 +966,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_payment_totals: 'Payment Totals'
   report_all: 'all'
   report_order_cycle: "Order Cycle: "
-  report_product_header: "products_header"
-  report_order_header: "orders_header"
   report_entreprises: "Enterprises: "
   report_users: "Users: "
   initial_invoice_number: "Initial invoice number:"
@@ -944,6 +974,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   account_code: "Account code:"
   equals: "Equals"
   contains: "contains"
+  discount: "Discount"
   filter_products: "Filter Products"
   delete_product_variant: "The last variant cannot be deleted!"
   progress: "progress"
@@ -972,6 +1003,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   payment_methods: "Payment Methods"
   enterprise_fees: "Enterprise Fees"
   inventory_settings: "Inventory Settings"
+  tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"

@@ -1,5 +1,18 @@
 
-- if @order_cycles and @order_cycles.empty?
+- if require_customer?
+  .row.footer-pad
+    .small-12.columns
+      .shopfront_hidden_message
+        = t '.require_customer_login'
+        - if spree_current_user.nil?
+          = t '.require_login_html',
+            {login: ('<a auth="login">' + t('.login') + '</a>').html_safe,
+             register: ('<a auth="signup">' + t('.register') + '</a>').html_safe}
+        - else
+          = t '.require_customer_html',
+            {contact: ('<a href="##contact">' + t('.contact') + '</a>').html_safe,
+             enterprise: current_distributor.name}
+- elsif @order_cycles and @order_cycles.empty?
   - if current_distributor.preferred_shopfront_closed_message.present?
     .row
       .small-12.columns
