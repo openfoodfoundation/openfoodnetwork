@@ -290,6 +290,10 @@ FactoryGirl.define do
     enterprise { FactoryGirl.create :distributor_enterprise }
   end
 
+  factory :filter_products_tag_rule, class: TagRule::FilterProducts do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+  end
+
   factory :tag_rule, class: TagRule::DiscountOrder do
     enterprise { FactoryGirl.create :distributor_enterprise }
     before(:create) do |tr|
