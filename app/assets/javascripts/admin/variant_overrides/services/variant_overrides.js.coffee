@@ -30,6 +30,8 @@ angular.module("admin.variantOverrides").factory "VariantOverrides", (variantOve
       on_demand: null
       default_stock: null
       resettable: false
+      tag_list: ''
+      tags: []
 
     updateIds: (updatedVos) ->
       for vo in updatedVos

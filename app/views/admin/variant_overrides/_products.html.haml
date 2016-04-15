@@ -11,6 +11,7 @@
     %col.reset{ width: "1%", ng: { show: 'columns.reset.visible' } }
     %col.reset{ width: "15%", ng: { show: 'columns.reset.visible' } }
     %col.inheritance{ width: "5%", ng: { show: 'columns.inheritance.visible' } }
+    %col.tags{ width: "30%", ng: { show: 'columns.tags.visible' } }
     %col.visibility{ width: "10%", ng: { show: 'columns.visibility.visible' } }
     %thead
       %tr{ ng: { controller: "ColumnsCtrl" } }
@@ -22,6 +23,7 @@
         %th.on_demand{ ng: { show: 'columns.on_demand.visible' } }=t('admin.on_demand?')
         %th.reset{ colspan: 2, ng: { show: 'columns.reset.visible' } }=t('admin.variant_overrides.index.enable_reset?')
         %th.inheritance{ ng: { show: 'columns.inheritance.visible' } }=t('admin.variant_overrides.index.inherit?')
+        %th.tags{ ng: { show: 'columns.tags.visible' } }=t('admin.tags')
         %th.visibility{ ng: { show: 'columns.visibility.visible' } }=t('admin.variant_overrides.index.hide')
     %tbody{ ng: {repeat: 'product in filteredProducts = (products | hubPermissions:hubPermissions:hub_id | inventoryProducts:hub_id:views | attrFilter:{producer_id:producerFilter} | filter:query) | limitTo:productLimit' } }
       = render 'admin/variant_overrides/products_product'

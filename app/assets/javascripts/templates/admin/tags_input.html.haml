@@ -1,4 +1,4 @@
-%tags-input{ template: 'admin/tag.html', ng: { model: 'object[tagsAttr]' } }
+%tags-input{ template: 'admin/tag.html', ng: { model: 'object[tagsAttr]' }, on: { tag: { added: 'tagAdded()', removed:'tagRemoved()' } } }
   %auto-complete{source: "findTags({query: $query})",
                  template: "admin/tag_autocomplete.html",
                  "min-length" => "0",
