@@ -18,7 +18,7 @@ module Admin
 
     def create
       @customer = Customer.new(params[:customer])
-      if spree_current_user.enterprises.include? @customer.enterprise
+      if user_can_create_customer?
         @customer.save
         render json: Api::Admin::CustomerSerializer.new(@customer).to_json
       else
@@ -36,6 +36,11 @@ module Admin
 
     def load_managed_shops
       @shops = Enterprise.managed_by(spree_current_user).is_distributor
+    end
+
+    def user_can_create_customer?
+      spree_current_user.admin? ||
+        spree_current_user.enterprises.include?(@customer.enterprise)
     end
   end
 end

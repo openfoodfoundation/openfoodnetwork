@@ -104,8 +104,6 @@ describe Admin::CustomersController, type: :controller do
     end
 
     context "json" do
-      let!(:customer) { create(:customer, enterprise: enterprise) }
-
       context "where I manage the customer's enterprise" do
         before do
           controller.stub spree_current_user: enterprise.owner
@@ -123,6 +121,16 @@ describe Admin::CustomersController, type: :controller do
 
         it "prevents me from creating the customer" do
           expect { create_customer enterprise }.to change(Customer, :count).by(0)
+        end
+      end
+
+      context "where I am the admin user" do
+        before do
+          controller.stub spree_current_user: create(:admin_user)
+        end
+
+        it "allows admins to create the customer" do
+          expect { create_customer enterprise }.to change(Customer, :count).by(1)
         end
       end
     end
