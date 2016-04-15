@@ -3,8 +3,8 @@ angular.module("admin.variantOverrides").directive "ofnTrackVariantOverride", (D
   link: (scope, element, attrs, ngModel) ->
     ngModel.$parsers.push (viewValue) ->
       if ngModel.$dirty
-        variantOverride = scope.variantOverrides[scope.hub_id][scope.variant.id]
         scope.inherit = false
-        DirtyVariantOverrides.add variantOverride
+        vo_id = scope.variantOverrides[scope.hub_id][scope.variant.id].id
+        DirtyVariantOverrides.set scope.hub_id, scope.variant.id, vo_id, attrs.ofnTrackVariantOverride, viewValue
         scope.displayDirty()
       viewValue

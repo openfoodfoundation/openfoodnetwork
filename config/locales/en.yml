@@ -93,6 +93,7 @@ en:
       on_demand: On Demand?
       enable_reset: Enable Stock Level Reset?
       inherit: Inherit?
+      tags: Tags
       add: Add
       hide: Hide
       select_a_shop: Select A Shop
