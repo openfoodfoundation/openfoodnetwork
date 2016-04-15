@@ -9,6 +9,17 @@ describe "Hubs service", ->
       orders_close_at: new Date()
       type: "hub"
       visible: true
+      latitude: 0
+      longitude: 0
+    }
+    {
+      id: 3
+      active: false
+      orders_close_at: new Date()
+      type: "hub"
+      visible: true
+      latitude: null
+      longitude: null
     }
   ]
 
@@ -24,3 +35,6 @@ describe "Hubs service", ->
 
   it "builds MapMarkers from enterprises", ->
     expect(OfnMap.enterprises[0].id).toBe enterprises[0].id
+
+  it "excludes enterprises without latitude or longitude", ->
+    expect(OfnMap.enterprises.map (e) -> e.id).not.toContain enterprises[1].id

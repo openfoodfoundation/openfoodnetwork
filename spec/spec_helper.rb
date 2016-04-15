@@ -4,6 +4,7 @@ require 'rubygems'
 require 'pry' unless ENV['CI']
 
 require 'knapsack'
+Knapsack.tracker.config({enable_time_offset_warning: false}) unless ENV['CI']
 Knapsack::Adapters::RSpecAdapter.bind
 
 ENV["RAILS_ENV"] ||= 'test'

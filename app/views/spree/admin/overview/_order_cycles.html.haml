@@ -1,10 +1,13 @@
 %div.dashboard_item.seven.columns.omega#order_cycles
   %div.header.seven.columns.alpha{ :class => "#{@order_cycle_count > 0 ? "" : "orange"}"}
-    %h3.four.columns.alpha Order Cycles
+    %h3.four.columns.alpha
+      = t "spree_admin_order_cycles"
     - if @order_cycle_count > 0
       %a.three.columns.omega.icon-plus.button.blue{ href: "#{main_app.new_admin_order_cycle_path}" }
-        CREATE NEW
+        = t "spree_admin_enterprises_create_new"
     - else
+      %a.with-tip{ title: t(:spree_admin_order_cycles_tip) }
+        = t "admin.whats_this"
       %a{ "ofn-with-tip" => "Order cycles determine when and where your products are available to customers." } What's this?
   %div.seven.columns.alpha.list
     - if @order_cycle_count > 0
@@ -14,13 +17,16 @@
         %span.one.column.omega
           %span.icon-ok-sign
       %a.seven.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_order_cycles_path}" }
-        MANAGE ORDER CYCLES
+        = t "spree_admin_enterprises_producers_manage_order_cycles"
         %span.icon-arrow-right
     - else
       %div.seven.columns.alpha.list-item.orange
-        %span.six.columns.alpha You don't have any active order cycles.
+        %span.six.columns.alpha
+          = t "spree_admin_enterprises_producers_orders_cycle_text"
         %span.one.column.omega
           %span.icon-warning-sign
       %a.seven.columns.alpha.button.bottom.orange{ href: "#{main_app.admin_order_cycles_path}" }
+        = t "spree_admin_enterprises_producers_manage_order_cycles"
+        %span.icon-arrow-right
         MANAGE ORDER CYCLES
         %span.icon-arrow-right

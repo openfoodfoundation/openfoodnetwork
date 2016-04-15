@@ -20,11 +20,15 @@ module Admin
     end
 
     def admin_inject_payment_methods
-      admin_inject_json_ams_array "admin.payment_methods", "paymentMethods", @payment_methods, Api::Admin::IdNameSerializer
+      admin_inject_json_ams_array "admin.paymentMethods", "paymentMethods", @payment_methods, Api::Admin::IdNameSerializer
     end
 
     def admin_inject_shipping_methods
-      admin_inject_json_ams_array "admin.shipping_methods", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer
+      admin_inject_json_ams_array "admin.shippingMethods", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer
+    end
+
+    def admin_inject_shipping_method
+      admin_inject_json_ams "admin.shippingMethods", "shippingMethod", @shipping_method, Api::Admin::ShippingMethodSerializer
     end
 
     def admin_inject_shops(ngModule='admin.customers')

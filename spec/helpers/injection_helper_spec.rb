@@ -3,6 +3,13 @@ require 'spec_helper'
 describe InjectionHelper do
   let!(:enterprise) { create(:distributor_enterprise, facebook: "roger") }
 
+  let!(:distributor1) { create(:distributor_enterprise) }
+  let!(:distributor2) { create(:distributor_enterprise) }
+  let!(:user) { create(:user)}
+  let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 10000)}
+  let!(:d1o2) { create(:completed_order_with_totals, distributor: distributor1, user_id: user.id, total: 5000)}
+  let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: user.id)}
+
   it "will inject via AMS" do
     helper.inject_json_ams("test", [enterprise], Api::IdSerializer).should match /#{enterprise.id}/
   end
@@ -20,7 +27,10 @@ describe InjectionHelper do
   it "injects shipping_methods" do
     sm = create(:shipping_method)
     helper.stub(:current_order).and_return order = create(:order)
-    helper.stub_chain(:current_distributor, :shipping_methods, :uniq).and_return [sm]
+    shipping_methods = double(:shipping_methods, uniq: [sm])
+    current_distributor = double(:distributor, shipping_methods: shipping_methods)
+    allow(helper).to receive(:current_distributor) { current_distributor }
+    allow(current_distributor).to receive(:apply_tag_rules_to).with(shipping_methods, {customer: nil} )
     helper.inject_available_shipping_methods.should match sm.id.to_s
     helper.inject_available_shipping_methods.should match sm.compute_amount(order).to_s
   end
@@ -42,8 +52,4 @@ describe InjectionHelper do
     helper.inject_taxons.should match taxon.name
   end
 
-  it "injects taxons" do
-    taxon = create(:taxon)
-    helper.inject_taxons.should match taxon.name
-  end
 end

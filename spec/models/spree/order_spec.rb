@@ -108,44 +108,76 @@ describe Spree::Order do
       subject.update_distribution_charge!
     end
 
-    describe "looking up whether a line item can be provided by an order cycle" do
-      it "returns true when the variant is provided" do
-        v = double(:variant)
-        line_item = double(:line_item, variant: v)
-        order_cycle = double(:order_cycle, variants: [v])
-        subject.stub(:order_cycle) { order_cycle }
+    context "appying tag rules" do
+      let(:enterprise) { create(:distributor_enterprise) }
+      let(:customer) { create(:customer, enterprise: enterprise, tag_list: "tagtagtag") }
+      let(:tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "tagtagtag") }
+      let(:order) { create(:order_with_totals_and_distribution, distributor: enterprise, customer: customer) }
 
-        subject.send(:provided_by_order_cycle?, line_item).should be_true
+      before do
+        tag_rule.calculator.update_attribute(:preferred_flat_percent, -10)
       end
 
-      it "returns false otherwise" do
-        v = double(:variant)
-        line_item = double(:line_item, variant: v)
-        order_cycle = double(:order_cycle, variants: [])
-        subject.stub(:order_cycle) { order_cycle }
-
-        subject.send(:provided_by_order_cycle?, line_item).should be_false
+      context "when the rule applies" do
+        it "applies the rule" do
+          order.update_distribution_charge!
+          order.reload
+          discount = order.adjustments.find_by_label("Discount")
+          expect(discount).to be_a Spree::Adjustment
+          expect(discount.amount).to eq (order.item_total / -10).round(2)
+        end
       end
 
-      it "returns false when there is no order cycle" do
-        v = double(:variant)
-        line_item = double(:line_item, variant: v)
-        subject.stub(:order_cycle) { nil }
+      context "when the rule does not apply" do
+        before { tag_rule.update_attribute(:preferred_customer_tags, "tagtag") }
 
-        subject.send(:provided_by_order_cycle?, line_item).should be_false
+        it "does not apply the rule" do
+          order.update_distribution_charge!
+          order.reload
+          discount = order.adjustments.find_by_label("Discount")
+          expect(discount).to be_nil
+        end
       end
     end
+  end
 
-    it "looks up product distribution enterprise fees for a line item" do
-      product = double(:product)
-      variant = double(:variant, product: product)
-      line_item = double(:line_item, variant: variant)
+  describe "looking up whether a line item can be provided by an order cycle" do
+    it "returns true when the variant is provided" do
+      v = double(:variant)
+      line_item = double(:line_item, variant: v)
+      order_cycle = double(:order_cycle, variants: [v])
+      subject.stub(:order_cycle) { order_cycle }
 
-      product_distribution = double(:product_distribution)
-      product.should_receive(:product_distribution_for).with(subject.distributor) { product_distribution }
-
-      subject.send(:product_distribution_for, line_item).should == product_distribution
+      subject.send(:provided_by_order_cycle?, line_item).should be_true
     end
+
+    it "returns false otherwise" do
+      v = double(:variant)
+      line_item = double(:line_item, variant: v)
+      order_cycle = double(:order_cycle, variants: [])
+      subject.stub(:order_cycle) { order_cycle }
+
+      subject.send(:provided_by_order_cycle?, line_item).should be_false
+    end
+
+    it "returns false when there is no order cycle" do
+      v = double(:variant)
+      line_item = double(:line_item, variant: v)
+      subject.stub(:order_cycle) { nil }
+
+      subject.send(:provided_by_order_cycle?, line_item).should be_false
+    end
+  end
+
+  it "looks up product distribution enterprise fees for a line item" do
+    product = double(:product)
+    variant = double(:variant, product: product)
+    line_item = double(:line_item, variant: variant)
+
+    product_distribution = double(:product_distribution)
+    product.should_receive(:product_distribution_for).with(subject.distributor) { product_distribution }
+
+    subject.send(:product_distribution_for, line_item).should == product_distribution
   end
 
   describe "getting the admin and handling charge" do
@@ -457,33 +489,6 @@ describe Spree::Order do
         Spree::Order.not_state(:canceled).should_not include o
       end
     end
-
-    describe "with payment method names" do
-      let!(:o1) { create(:order) }
-      let!(:o2) { create(:order) }
-      let!(:pm1) { create(:payment_method, name: 'foo') }
-      let!(:pm2) { create(:payment_method, name: 'bar') }
-      let!(:p1) { create(:payment, order: o1, payment_method: pm1) }
-      let!(:p2) { create(:payment, order: o2, payment_method: pm2) }
-
-      it "returns the order with payment method name when one specified" do
-        Spree::Order.with_payment_method_name('foo').should == [o1]
-      end
-
-      it "returns the orders with payment method name when many specified" do
-        Spree::Order.with_payment_method_name(['foo', 'bar']).should include o1, o2
-      end
-
-      it "doesn't return rows with a different payment method name" do
-        Spree::Order.with_payment_method_name('foobar').should_not include o1
-        Spree::Order.with_payment_method_name('foobar').should_not include o2
-      end
-
-      it "doesn't return duplicate rows" do
-        p2 = FactoryGirl.create(:payment, order: o1, payment_method: pm1)
-        Spree::Order.with_payment_method_name('foo').length.should == 1
-      end
-    end
   end
 
   describe "shipping address prepopulation" do
@@ -559,39 +564,76 @@ describe Spree::Order do
   end
 
   describe "associating a customer" do
-    let(:user) { create(:user) }
     let(:distributor) { create(:distributor_enterprise) }
+    let!(:order) { create(:order, distributor: distributor) }
 
-    context "when a user has been set on the order" do
-      let!(:order) { create(:order, distributor: distributor, user: user) }
-      context "and a customer for order.distributor and order.user.email already exists" do
-        let!(:customer) { create(:customer, enterprise: distributor, email: user.email) }
-        it "associates the order with the existing customer" do
-          order.send(:associate_customer)
+    context "when an email address is available for the order" do
+      before { allow(order).to receive(:email_for_customer) { "existing@email.com" }}
+
+      context "and a customer for order.distributor and order#email_for_customer already exists" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: "existing@email.com" ) }
+
+        it "associates the order with the existing customer, and returns the customer" do
+          result = order.send(:associate_customer)
           expect(order.customer).to eq customer
+          expect(result).to eq customer
         end
       end
+
       context "and a customer for order.distributor and order.user.email does not alread exist" do
         let!(:customer) { create(:customer, enterprise: distributor, email: 'some-other-email@email.com') }
-        it "creates a new customer" do
-          expect{order.send(:associate_customer)}.to change{Customer.count}.by 1
+
+        it "does not set the customer and returns nil" do
+          result = order.send(:associate_customer)
+          expect(order.customer).to be_nil
+          expect(result).to be_nil
         end
       end
     end
 
-    context "when a user has not been set on the order" do
-      let!(:order) { create(:order, distributor: distributor, user: nil) }
-      context "and a customer for order.distributor and order.email already exists" do
-        let!(:customer) { create(:customer, enterprise: distributor, email: order.email) }
-        it "creates a new customer" do
-          order.send(:associate_customer)
+    context "when an email address is not available for the order" do
+      let!(:customer) { create(:customer, enterprise: distributor) }
+      before { allow(order).to receive(:email_for_customer) { nil }}
+
+      it "does not set the customer and returns nil" do
+        result = order.send(:associate_customer)
+        expect(order.customer).to be_nil
+        expect(result).to be_nil
+      end
+    end
+  end
+
+  describe "ensuring a customer is linked" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let!(:order) { create(:order, distributor: distributor) }
+
+    context "when a customer has already been linked to the order" do
+      let!(:customer) { create(:customer, enterprise: distributor, email: "existing@email.com" ) }
+      before { order.update_attribute(:customer_id, customer.id) }
+
+      it "does nothing" do
+        order.send(:ensure_customer)
+        expect(order.customer).to eq customer
+      end
+    end
+
+    context "when a customer not been linked to the order" do
+      context "but one matching order#email_for_customer already exists" do
+        let!(:customer) { create(:customer, enterprise: distributor, email: 'some-other-email@email.com') }
+        before { allow(order).to receive(:email_for_customer) { 'some-other-email@email.com' } }
+
+        it "links the customer customer to the order" do
+          expect(order.customer).to be_nil
+          expect{order.send(:ensure_customer)}.to_not change{Customer.count}
           expect(order.customer).to eq customer
         end
       end
-      context "and a customer for order.distributor and order.email does not alread exist" do
-        let!(:customer) { create(:customer, enterprise: distributor, email: 'some-other-email@email.com') }
+
+      context "and order#email_for_customer does not match any existing customers" do
         it "creates a new customer" do
-          expect{order.send(:associate_customer)}.to change{Customer.count}.by 1
+          expect(order.customer).to be_nil
+          expect{order.send(:ensure_customer)}.to change{Customer.count}.by 1
+          expect(order.customer).to be_a Customer
         end
       end
     end

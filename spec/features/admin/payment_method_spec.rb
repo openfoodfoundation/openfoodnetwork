@@ -42,14 +42,33 @@ feature %q{
       check "payment_method_distributor_ids_#{@distributors[1].id}"
       check "payment_method_distributor_ids_#{@distributors[2].id}"
       select2_select "PayPal Express", from: "payment_method_type"
+      expect(page).to have_field 'Login'
+      fill_in 'payment_method_preferred_login', with: 'testlogin'
+      fill_in 'payment_method_preferred_password', with: 'secret'
+      fill_in 'payment_method_preferred_signature', with: 'sig'
+
       click_button 'Update'
 
-      flash_message.should eq 'Payment Method has been successfully updated!'
+      expect(flash_message).to eq 'Payment Method has been successfully updated!'
 
       payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
       expect(payment_method.distributors).to include @distributors[1], @distributors[2]
       expect(payment_method.distributors).not_to include @distributors[0]
       expect(payment_method.type).to eq "Spree::Gateway::PayPalExpress"
+      expect(payment_method.preferences[:login]).to eq 'testlogin'
+      expect(payment_method.preferences[:password]).to eq 'secret'
+      expect(payment_method.preferences[:signature]).to eq 'sig'
+
+      fill_in 'payment_method_preferred_login', with: 'otherlogin'
+      click_button 'Update'
+
+      expect(flash_message).to eq 'Payment Method has been successfully updated!'
+      expect(page).to have_field 'Password', with: ''
+
+      payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
+      expect(payment_method.preferences[:login]).to eq 'otherlogin'
+      expect(payment_method.preferences[:password]).to eq 'secret'
+      expect(payment_method.preferences[:signature]).to eq 'sig'
     end
   end
 

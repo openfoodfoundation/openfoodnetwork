@@ -1,12 +1,15 @@
 %div.hubs_tab{ ng: { show: "activeTab == 'hubs'"} }
   %div.sixteen.columns.alpha.list-title
-    %span.five.columns.alpha Name
+    %span.five.columns.alpha
+      = t "spree_admin_enterprises_hubs_name"
     - if can? :admin, Spree::PaymentMethod
       %span.centered.three.columns Payment Methods
     - if can? :admin, Spree::ShippingMethod
-      %span.centered.three.columns Shipping Methods
+      %span.centered.three.columns
+        = t "spree_admin_enterprises_shipping_methods"
     - if can? :admin, EnterpriseFee
-      %span.centered.three.columns Enterprise Fees
+      %span.centered.three.columns
+        = t "spree_admin_enterprises_fees"
   %div.sixteen.columns.alpha.list
     - @enterprises.is_distributor.each do |enterprise|
       %a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }

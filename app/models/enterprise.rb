@@ -41,11 +41,13 @@ class Enterprise < ActiveRecord::Base
   has_many :customers
   has_many :billable_periods
   has_many :inventory_items
+  has_many :tag_rules
 
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
+  accepts_nested_attributes_for :tag_rules, allow_destroy: true, reject_if: lambda { |tag_rule| tag_rule[:preferred_customer_tags].blank? }
 
   has_attached_file :logo,
     styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
@@ -174,17 +176,6 @@ class Enterprise < ActiveRecord::Base
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end
   }
-
-  def self.find_near(suburb)
-    enterprises = []
-
-    unless suburb.nil?
-      addresses = Spree::Address.near([suburb.latitude, suburb.longitude], ENTERPRISE_SEARCH_RADIUS, :units => :km).joins(:enterprise).limit(10)
-      enterprises = addresses.collect(&:enterprise)
-    end
-
-    enterprises
-  end
 
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
@@ -351,6 +342,13 @@ class Enterprise < ActiveRecord::Base
 
   def can_invoice?
     abn.present?
+  end
+
+  def apply_tag_rules_to(subject, context)
+    tag_rules.each do |rule|
+      rule.set_context(subject,context)
+      rule.apply
+    end
   end
 
   protected

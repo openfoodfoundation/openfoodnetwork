@@ -60,8 +60,8 @@ FactoryGirl.define do
   factory :simple_order_cycle, :class => OrderCycle do
     sequence(:name) { |n| "Order Cycle #{n}" }
 
-    orders_open_at  { Time.zone.now - 1.day }
-    orders_close_at { Time.zone.now + 1.week }
+    orders_open_at  { 1.day.ago }
+    orders_close_at { 1.week.from_now }
 
     coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
 
@@ -82,6 +82,26 @@ FactoryGirl.define do
         proxy.variants.each { |v| ex.variants << v }
       end
     end
+  end
+
+  factory :undated_order_cycle, parent: :simple_order_cycle do
+    orders_open_at  nil
+    orders_close_at nil
+  end
+
+  factory :upcoming_order_cycle, parent: :simple_order_cycle do
+    orders_open_at  { 1.week.from_now }
+    orders_close_at { 2.weeks.from_now }
+  end
+
+  factory :open_order_cycle, parent: :simple_order_cycle do
+    orders_open_at  { 1.week.ago }
+    orders_close_at { 1.week.from_now }
+  end
+
+  factory :closed_order_cycle, parent: :simple_order_cycle do
+    orders_open_at  { 2.weeks.ago }
+    orders_close_at { 1.week.ago }
   end
 
   factory :exchange, :class => Exchange do
@@ -197,6 +217,26 @@ FactoryGirl.define do
     distributor { create(:distributor_enterprise) }
   end
 
+  factory :order_with_credit_payment, parent: :completed_order_with_totals do
+    distributor { create(:distributor_enterprise)}
+    order_cycle { create(:simple_order_cycle) }
+
+    after(:create) do |order|
+      create(:payment, amount: order.total + 10000, order: order, state: "completed")
+      order.reload
+    end
+  end
+
+  factory :order_without_full_payment, parent: :completed_order_with_totals do
+    distributor { create(:distributor_enterprise)}
+    order_cycle { create(:simple_order_cycle) }
+
+    after(:create) do |order|
+      create(:payment, amount: order.total - 1, order: order, state: "completed")
+      order.reload
+    end
+  end
+
   factory :zone_with_member, :parent => :zone do
     default_tax true
 
@@ -244,6 +284,17 @@ FactoryGirl.define do
     user { FactoryGirl.create :user }
     year { 2000 + rand(100) }
     month { 1 + rand(12) }
+  end
+
+  factory :filter_shipping_methods_tag_rule, class: TagRule::FilterShippingMethods do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+  end
+
+  factory :tag_rule, class: TagRule::DiscountOrder do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+    before(:create) do |tr|
+      tr.calculator = Spree::Calculator::FlatPercentItemTotal.new(calculable: tr)
+    end
   end
 end
 

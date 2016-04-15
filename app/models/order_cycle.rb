@@ -1,6 +1,8 @@
 class OrderCycle < ActiveRecord::Base
   belongs_to :coordinator, :class_name => 'Enterprise'
-  has_and_belongs_to_many :coordinator_fees, :class_name => 'EnterpriseFee', :join_table => 'coordinator_fees'
+
+  has_many :coordinator_fee_refs, class_name: 'CoordinatorFee'
+  has_many :coordinator_fees, through: :coordinator_fee_refs, source: :enterprise_fee
 
   has_many :exchanges, :dependent => :destroy
 
@@ -11,14 +13,18 @@ class OrderCycle < ActiveRecord::Base
 
   validates_presence_of :name, :coordinator_id
 
+  after_save :refresh_products_cache
+
   preference :product_selection_from_coordinator_inventory_only, :boolean, default: false
 
   scope :active, lambda { where('order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?', Time.zone.now, Time.zone.now) }
   scope :active_or_complete, lambda { where('order_cycles.orders_open_at <= ?', Time.zone.now) }
   scope :inactive, lambda { where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?', Time.zone.now, Time.zone.now) }
   scope :upcoming, lambda { where('order_cycles.orders_open_at > ?', Time.zone.now) }
+  scope :not_closed, lambda { where('order_cycles.orders_close_at > ? OR order_cycles.orders_close_at IS NULL', Time.zone.now) }
   scope :closed, lambda { where('order_cycles.orders_close_at < ?', Time.zone.now).order("order_cycles.orders_close_at DESC") }
   scope :undated, where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL')
+  scope :dated, where('orders_open_at IS NOT NULL AND orders_close_at IS NOT NULL')
 
   scope :soonest_closing,      lambda { active.order('order_cycles.orders_close_at ASC') }
   # TODO This method returns all the closed orders. So maybe we can replace it with :recently_closed.
@@ -187,6 +193,10 @@ class OrderCycle < ActiveRecord::Base
     self.variants.include? variant
   end
 
+  def dated?
+    !undated?
+  end
+
   def undated?
     self.orders_open_at.nil? || self.orders_close_at.nil?
   end
@@ -234,6 +244,10 @@ class OrderCycle < ActiveRecord::Base
 
   def coordinated_by?(user)
     coordinator.users.include? user
+  end
+
+  def refresh_products_cache
+    OpenFoodNetwork::ProductsCache.order_cycle_changed self
   end
 
 

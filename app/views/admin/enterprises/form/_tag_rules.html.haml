@@ -1,0 +1,33 @@
+.row{ ng: { controller: "TagRulesCtrl" } }
+  .eleven.columns.alpha.omega
+    .eleven.columns.alpha.omega
+      .no_tags{ ng: { show: "tagGroups.length == 0" } }
+        No tags apply to this enterprise yet
+      .customer_tag{ ng: { repeat: "tagGroup in tagGroups" }, bindonce: true }
+        .header
+          %table
+            %colgroup
+              %col{width: '35%'}
+              %col{width: '65%'}
+            %tr
+              %td
+                %h5
+                  For customers tagged:
+              %td
+                %tags-input{ ng: { model: 'tagGroup.tags'},
+                  min: { tags: "1" },
+                  on: { tag: { added: "updateTagsRulesFor(tagGroup)", removed: "updateTagsRulesFor(tagGroup)" } } }
+
+        .no_rules{ ng: { show: "tagGroup.rules.length == 0" } }
+          No rules apply to this tag yet
+        %table
+          %tr.tag_rule{ id: "tr_{{rule.id}}", ng: { repeat: "rule in tagGroup.rules" } }
+            %td
+              %discount-order{ bo: { if: "rule.type == 'TagRule::DiscountOrder'" } }
+              %filter-shipping-methods{ bo: { if: "rule.type == 'TagRule::FilterShippingMethods'" } }
+            %td.actions
+              %a{ ng: { click: "deleteTagRule(tagGroup, rule)" }, :class => "delete-tag-rule icon-trash no-text" }
+        .add_rule.text-center
+          %input.button.icon-plus{ type: 'button', value: "+ Add A New Rule", "new-tag-rule-dialog" => true }
+      .add_tage
+        %input.button.red.icon-plus{ type: 'button', value: "+ Add A New Tag", ng: { click: 'addNewTag()' } }

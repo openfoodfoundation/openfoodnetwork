@@ -17,7 +17,8 @@ Spree::Order.class_eval do
   attr_accessible :order_cycle_id, :distributor_id
 
   before_validation :shipping_address_from_distributor
-  before_validation :associate_customer, unless: :customer_is_valid?
+  before_validation :associate_customer, unless: :customer_id?
+  before_validation :ensure_customer, unless: :customer_is_valid?
 
   checkout_flow do
     go_to_state :address
@@ -68,13 +69,6 @@ Spree::Order.class_eval do
   scope :not_state, lambda { |state|
     where("state != ?", state)
   }
-
-  scope :with_payment_method_name, lambda { |payment_method_name|
-    joins(:payments => :payment_method).
-      where('spree_payment_methods.name IN (?)', payment_method_name).
-      select('DISTINCT spree_orders.*')
-  }
-
 
   # -- Methods
   def products_available_from_new_distribution
@@ -178,6 +172,10 @@ Spree::Order.class_eval do
 
       if order_cycle
         OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
+      end
+
+      if distributor.present? && customer.present?
+        distributor.apply_tag_rules_to(self, customer: customer)
       end
     end
   end
@@ -286,17 +284,21 @@ Spree::Order.class_eval do
 
   def customer_is_valid?
     return true unless require_customer?
-    customer.present? && customer.enterprise_id == distributor_id && customer.email == (user.andand.email || email)
+    customer.present? && customer.enterprise_id == distributor_id && customer.email == email_for_customer
+  end
+
+  def email_for_customer
+    (user.andand.email || email).andand.downcase
   end
 
   def associate_customer
-    email_for_customer = user.andand.email || email
-    existing_customer = Customer.of(distributor).find_by_email(email_for_customer)
-    if existing_customer
-      self.customer = existing_customer
-    else
-      new_customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user)
-      self.customer = new_customer
+    return customer if customer.present?
+    self.customer = Customer.of(distributor).find_by_email(email_for_customer)
+  end
+
+  def ensure_customer
+    unless associate_customer
+      self.customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user)
     end
   end
 end

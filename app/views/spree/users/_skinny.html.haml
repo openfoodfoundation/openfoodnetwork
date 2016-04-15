@@ -1,0 +1,12 @@
+.row.active_table_row.skinny-head.margin-top{"ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open()}"}
+  .columns.small-2
+    %span.margin-top
+      %img.account-logo{"logo-fallback" => true, "ng-src" => "{{distributor.logo}}"}
+  .columns.small-10.medium-5
+    %span.margin-top
+      %strong{"bo-text" => "distributor.name"}
+  .columns.small-8.small-offset-2.medium-3.text-right
+    %span.margin-top.distributor-balance{"bo-text" => "distributor.balance | formatBalance", "ng-class" => "{'credit' : distributor.balance < 0, 'debit' : distributor.balance > 0, 'paid' : distributor.balance == 0}" }
+  .columns.small-2.medium-2.text-right
+    %span.margin-top
+      %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}

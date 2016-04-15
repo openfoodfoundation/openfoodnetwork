@@ -1,1 +1,1 @@
-angular.module("admin.shipping_methods", [])
+angular.module("admin.shippingMethods", ["ngTagsInput", 'admin.utils'])

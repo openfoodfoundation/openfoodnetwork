@@ -1,10 +1,45 @@
 .select2-container {
   .select2-choice {
+    .select2-search-choice-close {
+      display: none;
+    }
     .select2-arrow {
       width: 22px;
       border: none;
       background-image: none;
       background-color: transparent;
+    }
+  }
+
+  &.light {
+    .select2-choice{
+      background-color: #ffffff;
+      font-weight: normal;
+      border: 1px solid #5498da !important;
+      color: #5498da !important;
+
+      .select2-arrow {
+        &:before {
+          color: #5498da;
+          font-size: 1rem;
+          font-weight: 400;
+          content: '\25be';
+          display: inline;
+        }
+      }
+    }
+
+    &:hover, &.select2-container-active {
+      .select2-choice{
+        color: #ffffff !important;
+        background-color: #5498da !important;
+
+        .select2-arrow {
+          &:before {
+            color: #ffffff;
+          }
+        }
+      }
     }
   }
 }

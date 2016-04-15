@@ -1,5 +1,6 @@
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/variant_and_line_item_naming'
+require 'open_food_network/products_cache'
 
 Spree::Variant.class_eval do
   # Remove method From Spree, so method from the naming module is used instead
@@ -9,7 +10,7 @@ Spree::Variant.class_eval do
   include OpenFoodNetwork::VariantAndLineItemNaming
 
 
-  has_many :exchange_variants, dependent: :destroy
+  has_many :exchange_variants
   has_many :exchanges, through: :exchange_variants
   has_many :variant_overrides
   has_many :inventory_items
@@ -25,6 +26,9 @@ Spree::Variant.class_eval do
 
   before_validation :update_weight_from_unit_value, if: -> v { v.product.present? }
   after_save :update_units
+  after_save :refresh_products_cache
+  around_destroy :destruction
+
 
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
 
@@ -92,9 +96,37 @@ Spree::Variant.class_eval do
     end
   end
 
+  def refresh_products_cache
+    if is_master?
+      product.refresh_products_cache
+    else
+      OpenFoodNetwork::ProductsCache.variant_changed self
+    end
+  end
+
+
   private
 
   def update_weight_from_unit_value
     self.weight = weight_from_unit_value if self.product.variant_unit == 'weight' && unit_value.present?
+  end
+
+  def destruction
+    if is_master?
+      exchange_variants(:reload).destroy_all
+      yield
+      product.refresh_products_cache
+
+    else
+      OpenFoodNetwork::ProductsCache.variant_destroyed(self) do
+        # Remove this association here instead of using dependent: :destroy because
+        # dependent-destroy acts before this around_filter is called, so ProductsCache
+        # has no way of knowing which exchanges the variant was a member of.
+        exchange_variants(:reload).destroy_all
+
+        # Destroy the variant
+        yield
+      end
+    end
   end
 end

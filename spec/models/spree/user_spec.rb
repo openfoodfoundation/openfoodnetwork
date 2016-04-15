@@ -17,11 +17,11 @@ describe Spree.user_class do
       it "enforces the limit on the number of enterprise owned" do
         expect(u2.owned_enterprises(:reload)).to eq []
         u2.owned_enterprises << e1
-        expect(u2.save!).to_not raise_error
-        expect {
+        expect { u2.save! }.to_not raise_error
+        expect do
           u2.owned_enterprises << e2
           u2.save!
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: #{u2.email} is not permitted to own any more enterprises (limit is 1)."
+        end.to raise_error ActiveRecord::RecordInvalid, "Validation failed: #{u2.email} is not permitted to own any more enterprises (limit is 1)."
       end
     end
 
@@ -53,6 +53,23 @@ describe Spree.user_class do
         create(:user)
       end.to enqueue_job ConfirmSignupJob
     end
+
+    it "should not create a customer" do
+      expect do
+        create(:user)
+      end.to change(Customer, :count).by(0)
+    end
+
+    describe "when a customer record exists" do
+      let!(:customer) { create(:customer, user: nil) }
+
+      it "should not create a customer" do
+        expect(customer.user).to be nil
+        user = create(:user, email: customer.email)
+        customer.reload
+        expect(customer.user).to eq user
+      end
+    end
   end
 
   describe "known_users" do
@@ -65,9 +82,9 @@ describe Spree.user_class do
       it "returns a list of users which manage shared enterprises" do
         expect(u1.known_users).to include u1, u2
         expect(u1.known_users).to_not include u3
-        expect(u2.known_users).to include u1,u2
+        expect(u2.known_users).to include u1, u2
         expect(u2.known_users).to_not include u3
-        expect(u3.known_users).to_not include u1,u2,u3
+        expect(u3.known_users).to_not include u1, u2, u3
       end
     end
 
@@ -77,6 +94,45 @@ describe Spree.user_class do
       it "returns all users" do
         expect(admin.known_users).to include u1, u2, u3
       end
+    end
+  end
+
+  describe "retrieving orders for /account page" do
+    let!(:u1) { create(:user) }
+    let!(:u2) { create(:user) }
+    let!(:distributor1) { create(:distributor_enterprise) }
+    let!(:distributor2) { create(:distributor_enterprise) }
+    let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user_id: u1.id) }
+    let!(:d1o2) { create(:completed_order_with_totals, distributor: distributor1, user_id: u1.id) }
+    let!(:d1_order_for_u2) { create(:completed_order_with_totals, distributor: distributor1, user_id: u2.id) }
+    let!(:d1o3) { create(:order, state: 'cart', distributor: distributor1, user_id: u1.id) }
+    let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: u2.id) }
+
+    let!(:completed_payment) { create(:payment, order: d1o1, state: 'completed') }
+    let!(:payment) { create(:payment, order: d1o2, state: 'invalid') }
+
+    it "returns enterprises that the user has ordered from" do
+      expect(u1.enterprises_ordered_from).to eq [distributor1.id]
+    end
+
+    it "returns orders and payments for the user, organised by distributor" do
+      expect(u1.orders_by_distributor).to include distributor1
+      expect(u1.orders_by_distributor.first.distributed_orders).to include d1o1
+    end
+
+    it "doesn't return irrelevant distributors" do
+      expect(u1.orders_by_distributor).not_to include distributor2
+    end
+    it "doesn't return other users' orders" do
+      expect(u1.orders_by_distributor.first.distributed_orders).not_to include d1_order_for_u2
+    end
+
+    it "doesn't return uncompleted orders" do
+      expect(u1.orders_by_distributor.first.distributed_orders).not_to include d1o3
+    end
+
+    it "doesn't return uncompleted payments" do
+      expect(u1.orders_by_distributor.first.distributed_orders.map(&:payments).flatten).not_to include payment
     end
   end
 end

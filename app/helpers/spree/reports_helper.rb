@@ -11,11 +11,17 @@ module Spree
     end
 
     def report_payment_method_options(orders)
-      orders.map { |o| o.payments.first.payment_method.andand.name }.uniq
+      orders.map do |o|
+        pm = o.payments.first.payment_method
+        [pm.andand.name, pm.andand.id]
+      end.uniq
     end
 
     def report_shipping_method_options(orders)
-      orders.map { |o| o.shipping_method.andand.name  }.uniq
+      orders.map do |o|
+        sm = o.shipping_method
+        [sm.andand.name, sm.andand.id]
+      end.uniq
     end
 
     def xero_report_types

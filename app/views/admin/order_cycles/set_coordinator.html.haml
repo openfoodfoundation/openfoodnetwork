@@ -1,4 +1,5 @@
-%h4.text-center Select a coordinator for your order cycle
+%h4.text-center
+  =t'select_a_coordinator_for_your_order_cycle'
 
 %br
 
@@ -9,7 +10,7 @@
     .ten.columns
       = select_tag :coordinator_id, options_for_select(permitted_coordinating_enterprise_options_for(@order_cycle)), { 'required' => true, class: 'select2 fullwidth'}
     .two.columns.alpha
-      = f.submit "Continue >"
+      = f.submit "#{t(:continue)} >"
 
     .two.columns.omega
       &nbsp;

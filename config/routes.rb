@@ -87,6 +87,8 @@ Openfoodnetwork::Application.routes.draw do
       resources :producer_properties do
         post :update_positions, on: :collection
       end
+
+      resources :tag_rules, only: [:destroy]
     end
 
     resources :enterprise_relationships
@@ -113,7 +115,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :inventory_items, only: [:create, :update]
 
-    resources :customers, only: [:index, :update]
+    resources :customers, only: [:index, :create, :update, :destroy]
 
     resource :content
 
@@ -125,6 +127,8 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     resource :business_model_configuration, only: [:edit, :update], controller: 'business_model_configuration'
+
+    resource :cache_settings
 
     resource :account, only: [:show], controller: 'account'
   end
@@ -138,6 +142,10 @@ Openfoodnetwork::Application.routes.draw do
     resources :order_cycles do
       get :managed, on: :collection
       get :accessible, on: :collection
+    end
+
+    resource :status do
+      get :job_queue
     end
   end
 

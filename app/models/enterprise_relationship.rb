@@ -4,7 +4,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   has_many :permissions, class_name: 'EnterpriseRelationshipPermission', dependent: :destroy
 
   validates_presence_of :parent_id, :child_id
-  validates_uniqueness_of :child_id, scope: :parent_id, message: "^That relationship is already established."
+  validates_uniqueness_of :child_id, scope: :parent_id, message: I18n.t('validation_msg_relationship_already_established')
 
   after_save :apply_variant_override_permissions
 

@@ -181,6 +181,58 @@ module Admin
             end
           end
         end
+
+        describe "tag rules" do
+          let(:enterprise) { create(:distributor_enterprise) }
+          let!(:tag_rule) { create(:tag_rule, enterprise: enterprise) }
+
+          before do
+            login_as_enterprise_user [enterprise]
+          end
+
+          context "discount order rules" do
+            it "updates the existing rule with new attributes" do
+              spree_put :update, {
+                id: enterprise,
+                enterprise: {
+                  tag_rules_attributes: {
+                    '0' => {
+                      id: tag_rule,
+                      type: "TagRule::DiscountOrder",
+                      preferred_customer_tags: "some,new,tags",
+                      calculator_type: "Spree::Calculator::FlatPercentItemTotal",
+                      calculator_attributes: { id: tag_rule.calculator.id, preferred_flat_percent: "15" }
+                    }
+                  }
+                }
+              }
+              tag_rule.reload
+              expect(tag_rule.preferred_customer_tags).to eq "some,new,tags"
+              expect(tag_rule.calculator.preferred_flat_percent).to eq 15
+            end
+
+            it "creates new rules with new attributes" do
+              spree_put :update, {
+                id: enterprise,
+                enterprise: {
+                  tag_rules_attributes: {
+                    '0' => {
+                      id: "",
+                      type: "TagRule::DiscountOrder",
+                      preferred_customer_tags: "tags,are,awesome",
+                      calculator_type: "Spree::Calculator::FlatPercentItemTotal",
+                      calculator_attributes: { id: "", preferred_flat_percent: "24" }
+                    }
+                  }
+                }
+              }
+              expect(tag_rule.reload).to be
+              new_tag_rule = TagRule::DiscountOrder.last
+              expect(new_tag_rule.preferred_customer_tags).to eq "tags,are,awesome"
+              expect(new_tag_rule.calculator.preferred_flat_percent).to eq 24
+            end
+          end
+        end
       end
 
       context "as owner" do

@@ -4,7 +4,11 @@ module EnterprisesHelper
   end
 
   def available_shipping_methods
-    current_distributor.shipping_methods.uniq
+    shipping_methods = current_distributor.shipping_methods
+    if current_distributor.present?
+      current_distributor.apply_tag_rules_to(shipping_methods, customer: current_order.customer)
+    end
+    shipping_methods.uniq
   end
 
   def managed_enterprises

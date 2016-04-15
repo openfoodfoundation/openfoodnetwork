@@ -22,4 +22,8 @@ Spree::AppConfiguration.class_eval do
   preference :account_invoices_tax_rate, :decimal, default: 0
   preference :shop_trial_length_days, :integer, default: 30
   preference :minimum_billable_turnover, :integer, default: -1
+
+  # Monitoring
+  preference :last_job_queue_heartbeat_at, :string, default: nil
+
 end

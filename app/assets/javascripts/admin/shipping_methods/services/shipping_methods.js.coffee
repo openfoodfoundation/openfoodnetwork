@@ -1,4 +1,4 @@
-angular.module("admin.shipping_methods")
+angular.module("admin.shippingMethods")
   .factory "ShippingMethods", (shippingMethods) ->
     new class ShippingMethods
       shippingMethods: shippingMethods

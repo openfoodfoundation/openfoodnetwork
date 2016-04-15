@@ -1,0 +1,68 @@
+.no_tags {
+  margin-bottom: 40px;
+  color: #aeaeae;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.customer_tag {
+  border: 1px solid #cee1f4;
+  margin-bottom: 40px;
+
+  .header {
+    padding: 8px 10px;
+    background-color: #eff5fc;
+    border-bottom: 1px solid #cee1f4;
+
+    table {
+      padding: 0px;
+      margin: 0px 0px 0px 0px;
+      tr {
+        td {
+          border: none;
+        }
+      }
+    }
+  }
+
+  .no_rules {
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    color: #aeaeae;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  table {
+    padding: 0px;
+    margin: 0px 0px 10px 0px;
+
+    tr.tag_rule {
+      border: none;
+      padding: 0px;
+      margin: 0px;
+
+      td {
+        border: none;
+        padding: 4px 10px 10px 10px;
+        margin: 0px;
+
+        input {
+          width: auto;
+        }
+      }
+    }
+  }
+
+  .add_rule {
+    padding: 8px 10px;
+    margin-bottom: 10px;
+  }
+}
+
+#new-tag-rule-dialog{
+  .select2-chosen, .select2-result-label{
+    font-size: 1rem;
+    font-weight: lighter;
+  }
+}

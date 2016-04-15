@@ -7,14 +7,14 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   preference :logo, :file
   preference :logo_mobile, :file
   preference :logo_mobile_svg, :file
-  has_attached_file :logo
+  has_attached_file :logo, default_url: "/assets/ofn-logo.png"
   has_attached_file :logo_mobile
-  has_attached_file :logo_mobile_svg
+  has_attached_file :logo_mobile_svg, default_url: "/assets/ofn-logo-mobile.svg"
 
   # Home page
   preference :home_hero, :file
   preference :home_show_stats, :boolean, default: true
-  has_attached_file :home_hero
+  has_attached_file :home_hero, default_url: "/assets/home/home.jpg"
 
   # Producer sign-up page
   preference :producer_signup_pricing_table_html, :text, default: "(TODO: Pricing table)"
@@ -33,7 +33,7 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
 
   # Footer
   preference :footer_logo, :file
-  has_attached_file :footer_logo
+  has_attached_file :footer_logo, default_url: "/assets/ofn-logo-footer.png"
   preference :footer_facebook_url, :string, default: "https://www.facebook.com/OpenFoodNet"
   preference :footer_twitter_url, :string, default: "https://twitter.com/OpenFoodNet"
   preference :footer_instagram_url, :string, default: ""

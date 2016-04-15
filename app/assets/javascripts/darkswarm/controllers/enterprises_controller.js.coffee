@@ -8,6 +8,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
   $scope.show_profiles = false
   $scope.filtersActive = false
   $scope.distanceMatchesShown = false
+  $scope.filterExpression = {active: true}
 
 
   $scope.$watch "query", (query)->
@@ -44,8 +45,8 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
   $scope.filterEnterprises = ->
     es = Enterprises.hubs
     $scope.nameMatches = enterpriseMatchesNameQueryFilter(es, true)
-    $scope.distanceMatches = enterpriseMatchesNameQueryFilter(es, false)
-    $scope.distanceMatches = distanceWithinKmFilter($scope.distanceMatches, 50)
+    noNameMatches = enterpriseMatchesNameQueryFilter(es, false)
+    $scope.distanceMatches = distanceWithinKmFilter(noNameMatches, 50)
 
 
   $scope.updateVisibleMatches = ->
@@ -65,3 +66,9 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
       $scope.nameMatchesFiltered[0]
     else
       undefined
+
+  $scope.showClosedShops = ->
+    delete $scope.filterExpression['active']
+
+  $scope.hideClosedShops = ->
+    $scope.filterExpression['active'] = true

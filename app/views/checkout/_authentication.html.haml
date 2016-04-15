@@ -1,11 +1,11 @@
 %section{"ng-show" => "!enabled"}
   .row
-    .small-12.columns.text-center{"ng-controller" => "AuthenticationCtrl"}
+    .small-12.columns.text-center
       %h3.pad-top
         = t :checkout_headline
   .row.pad-top
-    .small-5.columns.text-center{"ng-controller" => "AuthenticationCtrl"}
-      %button.primary.expand{"ng-click" => "open()"}
+    .small-5.columns.text-center
+      %button.primary.expand{"auth" => "login"}
         = t :label_login
     .small-2.columns.text-center
       %p.pad-top= "-#{t :action_or}-"

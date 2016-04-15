@@ -2,8 +2,10 @@
   = "ng-app='admin.lineItems'"
 
 - content_for :page_title do
-  %h1.page-title Bulk Order Management
-  %a{ 'ofn-with-tip' => "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required." } What's this?
+  %h1.page-title
+    = t "bom_page_title"
+  %a{ 'ofn-with-tip' => t("bom_tip") }
+    = t "admin.whats_this"
 
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
@@ -11,24 +13,29 @@
   %save-bar{ save: "submit()", form: "bulk_order_form" }
   .filters{ :class => "sixteen columns alpha" }
     .date_filter{ :class => "two columns alpha" }
-      %label{ :for => 'start_date_filter' }Start Date
+      %label{ :for => 'start_date_filter' }
+        = t "start_date"
       %br
       %input{ :class => "two columns alpha", :type => "text", :id => 'start_date_filter', 'ng-model' => 'startDate', 'datepicker' => "startDate", 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()' }
     .date_filter{ :class => "two columns" }
-      %label{ :for => 'end_date_filter' }End Date
+      %label{ :for => 'end_date_filter' }
+        = t "end_date"
       %br
       %input{ :class => "two columns alpha", :type => "text", :id => 'end_date_filter', 'ng-model' => 'endDate', 'datepicker' => "endDate", 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()' }
     .one.column &nbsp;
     .filter_select{ :class => "three columns" }
-      %label{ :for => 'supplier_filter' }Producer
+      %label{ :for => 'supplier_filter' }
+        = t "producer"
       %br
       %select{ :class => "three columns alpha", :id => 'supplier_filter', 'select2-min-search' => 5, 'ng-model' => 'supplierFilter', 'ng-options' => 's.id as s.name for s in suppliers' }
     .filter_select{ :class => "three columns" }
-      %label{ :for => 'distributor_filter' }Hub
+      %label{ :for => 'distributor_filter' }
+        = t "bom_hub"
       %br
       %select{ :class => "three columns alpha", :id => 'distributor_filter', 'select2-min-search' => 5, 'ng-model' => 'distributorFilter', 'ng-options' => 'd.id as d.name for d in distributors'}
     .filter_select{ :class => "three columns" }
-      %label{ :for => 'order_cycle_filter' }Order Cycle
+      %label{ :for => 'order_cycle_filter' }
+        = t "order_cycle"
       %br
       %select{ :class => "three columns alpha", :id => 'order_cycle_filter', 'select2-min-search' => 5, 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.id as oc.name for oc in orderCycles', 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()'}
     .filter_clear{ :class => "two columns omega" }
@@ -42,7 +49,7 @@
     %div.shared_resource{ :class => "four columns alpha" }
       %span{ :class => 'three columns alpha' }
         %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
-        Shared Resource?
+        = t "bom_shared"
     %div{ :class => "eight columns" }
       %h6{ :class => "eight columns alpha", 'ng-show' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsProduct.name + ": ALL" }}
       %h6{ :class => "eight columns alpha", 'ng-hide' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsVariant.full_name }}
@@ -53,28 +60,33 @@
     .row
       .one.column.alpha &nbsp;
       .two.columns
-        %span.two.columns Group Buy Unit Size
+        %span.two.columns
+          = t "group_buy_unit_size"
         %span.two.columns {{ formattedValueWithUnitName( selectedUnitsProduct.group_buy_unit_size, selectedUnitsProduct, selectedUnitsVariant ) }}
       .one.column &nbsp;
       .two.columns
-        %span.two.columns Total Quantity Ordered
+        %span.two.columns
+          = t "total_qtt_ordered"
         %span.two.columns {{ formattedValueWithUnitName( sumUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
       .one.column &nbsp;
       .two.columns
-        %span.two.columns Max Quantity Ordered
+        %span.two.columns
+          = t "max_qtt_ordered"
         %span.two.columns {{ formattedValueWithUnitName( sumMaxUnitValues(), selectedUnitsProduct, selectedUnitsVariant ) }}
       .one.column &nbsp;
       .two.columns
-        %span.two.columns Current Fulfilled Units
+        %span.two.columns
+          = t "current_fulfilled_units"
         %span.two.columns {{ fulfilled(sumUnitValues()) }}
       .one.column &nbsp;
       .two.columns
-        %span.two.columns Max Fulfilled Units
+        %span.two.columns
+          = t "max_fulfilled_units"
         %span.two.columns {{ fulfilled(sumMaxUnitValues()) }}
       .one.column.omega &nbsp;
     %div{ :class => "eight columns alpha", 'ng-hide' => 'allFinalWeightVolumesPresent()' }
       %span{ :class => "eight columns alpha", style: 'color:red' }
-        WARNING: Some variants do not have a unit value
+        = t "bulk_management_warning"
 
   %hr.divider.sixteen.columns.alpha.omega
 
@@ -87,10 +99,12 @@
 
   %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
     %img.spinner{ src: "/assets/spinning-circles.svg" }
-    %h1 LOADING ORDERS
+    %h1
+      =t "bom_loading"
 
   %div{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredLineItems.length == 0'}
-    %h1#no_results No orders found.
+    %h1#no_results
+      = t "bom_no_results"
 
   .margin-bottom-50{ 'ng-hide' => 'RequestMonitor.loading || filteredLineItems.length == 0' }
     %form{ name: 'bulk_order_form' }
@@ -100,30 +114,43 @@
             %th.bulk
               %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
             %th.order_no{ 'ng-show' => 'columns.order_no.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.number'; reverse = !reverse" } Order No.
+              %a{ :href => '', 'ng-click' => "predicate = 'order.number'; reverse = !reverse" }
+                = t "order_no"
             %th.full_name{ 'ng-show' => 'columns.full_name.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.full_name'; reverse = !reverse" } Name
+              %a{ :href => '', 'ng-click' => "predicate = 'order.full_name'; reverse = !reverse" }
+                = t "name"
             %th.email{ 'ng-show' => 'columns.email.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.email'; reverse = !reverse" } Email
+              %a{ :href => '', 'ng-click' => "predicate = 'order.email'; reverse = !reverse" }
+                = t "email"
             %th.phone{ 'ng-show' => 'columns.phone.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.phone'; reverse = !reverse" } Phone
+              %a{ :href => '', 'ng-click' => "predicate = 'order.phone'; reverse = !reverse" }
+                = t "phone"
             %th.date{ 'ng-show' => 'columns.order_date.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.completed_at'; reverse = !reverse" } Order Date
+              %a{ :href => '', 'ng-click' => "predicate = 'order.completed_at'; reverse = !reverse" }
+                =t "bom_date"
             %th.producer{ 'ng-show' => 'columns.producer.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'supplier.name'; reverse = !reverse" } Producer
+              %a{ :href => '', 'ng-click' => "predicate = 'supplier.name'; reverse = !reverse" }
+                = t "producer"
             %th.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.order_cycle.name'; reverse = !reverse" } Order Cycle
+              %a{ :href => '', 'ng-click' => "predicate = 'order.order_cycle.name'; reverse = !reverse" }
+                = t "bom_cycle"
             %th.hub{ 'ng-show' => 'columns.hub.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'order.distributor.name'; reverse = !reverse" } Hub
+              %a{ :href => '', 'ng-click' => "predicate = 'order.distributor.name'; reverse = !reverse" }
+                = t "bom_hub"
             %th.variant{ 'ng-show' => 'columns.variant.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'units_variant.full_name'; reverse = !reverse" } Product: Unit
-            %th.quantity{ 'ng-show' => 'columns.quantity.visible' } Quantity
-            %th.max{ 'ng-show' => 'columns.max.visible' } Max
-            %th.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' } Weight/Volume
-            %th.price{ 'ng-show' => 'columns.price.visible' } Price
+              %a{ :href => '', 'ng-click' => "predicate = 'units_variant.full_name'; reverse = !reverse" }
+                = t "bom_variant"
+            %th.quantity{ 'ng-show' => 'columns.quantity.visible' }
+              = t "products_quantity"
+            %th.max{ 'ng-show' => 'columns.max.visible' }
+              = t "shop_variant_quantity_max"
+            %th.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
+              = t "weight_volume"
+            %th.price{ 'ng-show' => 'columns.price.visible' }
+              = t "products_price"
             %th.actions
             %th.actions
-              Ask?&nbsp;
+              = t "ask"
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
 
         %tr.line_item{ 'ng-repeat' => "line_item in filteredLineItems = ( lineItems | filter:quickSearch | selectFilter:supplierFilter:distributorFilter:orderCycleFilter | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:predicate:reverse )", 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'", :id => "li_{{line_item.id}}" }

@@ -38,6 +38,7 @@
 //= require ./products/products
 //= require ./shipping_methods/shipping_methods
 //= require ./side_menu/side_menu
+//= require ./tag_rules/tag_rules
 //= require ./taxons/taxons
 //= require ./utils/utils
 //= require ./users/users
@@ -45,5 +46,8 @@
 //= require textAngular.min.js
 //= require textAngular-sanitize.min.js
 //= require ../shared/bindonce.min.js
+//= require darkswarm/i18n.js
+//= require darkswarm/i18n.translate.js
+
 
 //= require_tree .

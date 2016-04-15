@@ -26,9 +26,17 @@ feature 'Shops', js: true do
     page.should_not have_content invisible_distributor.name
   end
 
-  it "should grey out hubs that are not in an order cycle" do
+  it "should not show hubs that are not in an order cycle" do
     create(:simple_product, distributors: [d1, d2])
     visit shops_path
+    page.should have_no_selector 'hub.inactive'
+    page.should have_no_selector 'hub',   text: d2.name
+  end
+
+  it "should show closed shops after clicking the button" do
+    create(:simple_product, distributors: [d1, d2])
+    visit shops_path
+    click_link "Show closed shops"
     page.should have_selector 'hub.inactive'
     page.should have_selector 'hub.inactive',   text: d2.name
   end
