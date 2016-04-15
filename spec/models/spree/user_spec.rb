@@ -92,7 +92,7 @@ describe Spree.user_class do
     let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: u2.id)}
 
     let!(:completed_payment) { create(:payment, order: d1o1, state: 'completed')}
-    let!(:payment) { create(:payment, order: d1o2, state: 'invalid')}
+    let!(:payment) { create(:payment, order: d1o2, state: 'checkout')}
 
     it "returns enterprises that the user has ordered from" do
       expect(u1.enterprises_ordered_from).to eq [distributor1.id]
@@ -114,7 +114,7 @@ describe Spree.user_class do
       expect(u1.orders_by_distributor.first.distributed_orders).not_to include d1o3
     end
 
-    it "doesn't return uncompleted payments" do
+    it "doesn't return payments that are still at checkout stage" do
       expect(u1.orders_by_distributor.first.distributed_orders.map{|o| o.payments}.flatten).not_to include payment
     end
   end
