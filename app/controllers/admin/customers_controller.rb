@@ -7,9 +7,11 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render json: ActiveModel::ArraySerializer.new( @collection,
-            each_serializer: Api::Admin::CustomerSerializer, spree_current_user: spree_current_user
-          ).to_json
+          serialised = ActiveModel::ArraySerializer.new(
+            @collection,
+            each_serializer: Api::Admin::CustomerSerializer,
+            spree_current_user: spree_current_user)
+          render json: serialised.to_json
         end
       end
     end
