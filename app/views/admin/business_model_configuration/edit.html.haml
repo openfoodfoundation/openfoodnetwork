@@ -19,8 +19,14 @@
       = form_for @settings, as: :settings, url: main_app.admin_business_model_configuration_path, :method => :put do |f|
         .row
           .three.columns.alpha
+            = f.label :shop_trial_length_days, t(:shop_trial_length)
+            %span.icon-question-sign{'ofn-with-tip' => "The length of time (in days) that enterprises who are set up as shops can run as a trial period."}
+          .two.columns.omega
+            = f.number_field :shop_trial_length_days, min: 0.0, step: 1.0, class: "fullwidth"
+        .row
+          .three.columns.alpha
             = f.label :account_invoices_monthly_fixed, t(:fixed_monthly_charge)
-            %span.icon-question-sign{'ofn-with-tip' => "A fixed monthly charge for ALL enterprises who are set up as a shop, regardless of how much produce they sell."}
+            %span.icon-question-sign{'ofn-with-tip' => "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."}
           .two.columns.omega
             .input-symbol.before
               %span= Spree::Money.currency_symbol
@@ -45,6 +51,14 @@
             %span.icon-question-sign{'ofn-with-tip' => "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."}
           .two.columns.omega
             = f.number_field :account_invoices_tax_rate, min: 0.0, max: 1.0, step: 0.01, class: "fullwidth", 'watch-value-as' => 'taxRate'
+        .row
+          .three.columns.alpha
+            = f.label :minimum_billable_turnover, t(:minimum_monthly_billable_turnover)
+            %span.icon-question-sign{'ofn-with-tip' => "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate. When set to -1 enterprises with no turnover will be charge the fixed rate as specified."}
+          .two.columns.omega
+            .input-symbol.before
+              %span= Spree::Money.currency_symbol
+              = f.number_field :minimum_billable_turnover, min: -1.0, class: "fullwidth", 'watch-value-as' => 'min_bill_to'
 
         .row
           .five.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
@@ -78,10 +92,12 @@
           = label_tag :included_tax, t(:included_tax)
           %span.icon-question-sign{'ofn-with-tip' => "The total tax included in the example monthly bill, given the settings and the turnover provided."}
         .two.columns.omega
-          %input.fullwidth{ id: 'included_tax', type: "text", readonly: true, ng: { value: 'includedTax() | currency' } }
+          %span= Spree::Money.currency_symbol
+          %input.fullwidth{ id: 'included_tax', type: "text", readonly: true, ng: { value: 'includedTax()' } }
       .row
         .three.columns.alpha
           = label_tag :total_incl_tax, t(:total_monthly_bill_incl_tax)
           %span.icon-question-sign{'ofn-with-tip' => "The example total monthly bill with tax included, given the settings and the turnover provided."}
         .two.columns.omega
-          %input.fullwidth{ id: 'total_incl_tax', type: "text", readonly: true, ng: { value: 'total() | currency' } }
+          %span= Spree::Money.currency_symbol
+          %input.fullwidth{ id: 'total_incl_tax', type: "text", readonly: true, ng: { value: 'total()' } }

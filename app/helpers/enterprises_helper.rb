@@ -52,17 +52,17 @@ module EnterprisesHelper
 
   def shop_trial_in_progress?(enterprise)
     !!enterprise.shop_trial_start_date &&
-    (enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days > Time.zone.now) &&
+    (enterprise.shop_trial_start_date + Spree::Config[:shop_trial_length_days].days > Time.zone.now) &&
     %w(own any).include?(enterprise.sells)
   end
 
   def shop_trial_expired?(enterprise)
     !!enterprise.shop_trial_start_date &&
-    (enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days <= Time.zone.now) &&
+    (enterprise.shop_trial_start_date + Spree::Config[:shop_trial_length_days].days <= Time.zone.now) &&
     %w(own any).include?(enterprise.sells)
   end
 
   def remaining_trial_days(enterprise)
-    distance_of_time_in_words(Time.zone.now, enterprise.shop_trial_start_date + Enterprise::SHOP_TRIAL_LENGTH.days)
+    distance_of_time_in_words(Time.zone.now, enterprise.shop_trial_start_date + Spree::Config[:shop_trial_length_days].days)
   end
 end

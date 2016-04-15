@@ -9,7 +9,9 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
       account_invoices_monthly_fixed: 5,
       account_invoices_monthly_rate: 0.02,
       account_invoices_monthly_cap: 50,
-      account_invoices_tax_rate: 0.1
+      account_invoices_tax_rate: 0.1,
+      shop_trial_length_days: 30,
+      minimum_billable_turnover: -1
     })
   end
 
@@ -53,16 +55,20 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           params[:settings][:account_invoices_monthly_rate] = '2'
           params[:settings][:account_invoices_monthly_cap] = '-1'
           params[:settings][:account_invoices_tax_rate] = '4'
+          params[:settings][:shop_trial_length_days] = '-30'
+          params[:settings][:minimum_billable_turnover] = '-2'
           spree_get :update, params
         end
 
         it "does not allow them to be set" do
           expect(response).to render_template :edit
-          expect(assigns(:settings).errors.count).to be 5
+          expect(assigns(:settings).errors.count).to be 7
           expect(Spree::Config.account_invoices_monthly_fixed).to eq 5
           expect(Spree::Config.account_invoices_monthly_rate).to eq 0.02
           expect(Spree::Config.account_invoices_monthly_cap).to eq 50
           expect(Spree::Config.account_invoices_tax_rate).to eq 0.1
+          expect(Spree::Config.shop_trial_length_days).to eq 30
+          expect(Spree::Config.minimum_billable_turnover).to eq -1
         end
       end
 
@@ -72,6 +78,8 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           params[:settings][:account_invoices_monthly_rate] = '0.05'
           params[:settings][:account_invoices_monthly_cap] = '30'
           params[:settings][:account_invoices_tax_rate] = '0.15'
+          params[:settings][:shop_trial_length_days] = '20'
+          params[:settings][:minimum_billable_turnover] = '0'
         end
 
         it "sets global config to the specified values" do
@@ -81,6 +89,8 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           expect(Spree::Config.account_invoices_monthly_rate).to eq 0.05
           expect(Spree::Config.account_invoices_monthly_cap).to eq 30
           expect(Spree::Config.account_invoices_tax_rate).to eq 0.15
+          expect(Spree::Config.shop_trial_length_days).to eq 20
+          expect(Spree::Config.minimum_billable_turnover).to eq 0
         end
       end
     end
