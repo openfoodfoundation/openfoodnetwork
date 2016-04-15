@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TagRule::DiscountOrder, type: :model do
+describe TagRule::FilterShippingMethods, type: :model do
   let!(:tag_rule) { create(:filter_shipping_methods_tag_rule) }
 
   describe "determining whether tags match for a given shipping method" do
