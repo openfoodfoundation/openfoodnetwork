@@ -28,7 +28,7 @@ gem 'comfortable_mexican_sofa'
 gem 'simple_form', :github => 'RohanM/simple_form'
 
 gem 'unicorn'
-gem 'angularjs-rails', '1.3.15'
+gem 'angularjs-rails', '1.4.8'
 gem 'bugsnag'
 gem 'newrelic_rpm'
 gem 'haml'
