@@ -26,6 +26,7 @@ feature %q{
 
   scenario "non-admin user can't access CMS admin", js: true do
     login_to_consumer_section
+    page.should_not have_content "Login"
     visit cms_admin_path
     page.should_not have_content "ComfortableMexicanSofa"
     current_path.should == root_path
