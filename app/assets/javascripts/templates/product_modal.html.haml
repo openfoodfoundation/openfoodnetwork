@@ -9,10 +9,10 @@
     %br
 
     .filter-shopfront.taxon-selectors.inline-block
-      %filter-selector{ objects: "[product] | taxonsOf" }
+      %filter-selector{ 'selector-set' => "productTaxonSelectors", objects: "[product] | taxonsOf" }
 
     .filter-shopfront.property-selectors.inline-block
-      %filter-selector{ objects: "[product] | propertiesWithValuesOf" }
+      %filter-selector{ 'selector-set' => "productPropertySelectors", objects: "[product] | propertiesWithValuesOf" }
 
     %div{"ng-if" => "product.description"}
       %hr
