@@ -22,7 +22,7 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
       @selectedPath = path
       Navigation.navigate @selectedPath
 
-    active: Navigation.active
+    isActive: Navigation.isActive
 
     close: ->
       if location.pathname in ["/", "/checkout"]

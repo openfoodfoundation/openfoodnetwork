@@ -1,5 +1,7 @@
 Darkswarm.controller "SignupCtrl", ($scope, $http, $window, $location, Redirections, AuthenticationService) ->
   $scope.path = "/signup"
+  $scope.active = $scope.isActive($scope.path)
+
   $scope.errors =
     email: null
     password: null
