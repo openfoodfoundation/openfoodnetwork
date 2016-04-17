@@ -571,6 +571,7 @@ feature %q{
           # So we save the changes
           expect(URI.parse(current_url).path).to eq "/admin/orders/bulk_management"
           click_button "Save Changes"
+          expect(page).to have_selector "#save-bar", text: "All changes saved"
 
           # And try again
           within "tr#li_#{li1.id}" do
