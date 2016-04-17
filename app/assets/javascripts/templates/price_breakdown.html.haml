@@ -1,38 +1,37 @@
-.joyride-tip-guide.price_breakdown{bindonce: true, "ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
+.joyride-tip-guide.price_breakdown{"ng-class" => "{ in: tt_isOpen, fade: tt_animation }"}
   %span.joyride-nub.right
   .joyride-content-wrapper
     .collapsed{"ng-show" => "!expanded"}
       %price-percentage{percentage: 'variant.basePricePercentage'}
-      %a{"ng-click" => "expanded = !expanded"} 
-        %span{"bo-text" => "'price_breakdown' | t"}
+      %a{"ng-click" => "expanded = !expanded"}
+        %span{"ng-bind" => "::'price_breakdown' | t"}
         %i.ofn-i_005-caret-down
 
     .expanded{"ng-show" => "expanded"}
       %ul
         %li.cost
           .right {{ variant.price | localizeCurrency }}
-          %span{"bo-text" => "'item_cost' | t"}
-        %li.admin-fee{"bo-if" => "variant.fees.admin"}
+          %span{"ng-bind" => "::'item_cost' | t"}
+        %li.admin-fee{"ng-if" => "::variant.fees.admin"}
           .right {{ variant.fees.admin | localizeCurrency }}
-          %span{"bo-text" => "'admin_fee' | t"}
-        %li.sales-fee{"bo-if" => "variant.fees.sales"}
+          %span{"ng-bind" => "::'admin_fee' | t"}
+        %li.sales-fee{"ng-if" => "::variant.fees.sales"}
           .right {{ variant.fees.sales | localizeCurrency }}
-          %span{"bo-text" => "'sales_fee' | t"}
-        %li.packing-fee{"bo-if" => "variant.fees.packing"}
+          %span{"ng-bind" => "::'sales_fee' | t"}
+        %li.packing-fee{"ng-if" => "::variant.fees.packing"}
           .right {{ variant.fees.packing | localizeCurrency }}
-          %span{"bo-text" => "'packing_fee' | t"}
-        %li.transport-fee{"bo-if" => "variant.fees.transport"}
+          %span{"ng-bind" => "::'packing_fee' | t"}
+        %li.transport-fee{"ng-if" => "::variant.fees.transport"}
           .right {{ variant.fees.transport | localizeCurrency }}
-          %span{"bo-text" => "'transport_fee' | t"}
-        %li.fundraising-fee{"bo-if" => "variant.fees.fundraising"}
+          %span{"ng-bind" => "::'transport_fee' | t"}
+        %li.fundraising-fee{"ng-if" => "::variant.fees.fundraising"}
           .right {{ variant.fees.fundraising | localizeCurrency }}
-          %span{"bo-text" => "'fundraising_fee' | t"}
+          %span{"ng-bind" => "::'fundraising_fee' | t"}
         %li.total
           %strong
             .right = {{ variant.price_with_fees | localizeCurrency }}
             &nbsp;
 
-      %a{"ng-click" => "expanded = !expanded"} 
-        %span{"bo-text" => "'price_graph' | t"}
+      %a{"ng-click" => "expanded = !expanded"}
+        %span{"ng-bind" => "::'price_graph' | t"}
         %i.ofn-i_006-caret-up
-      

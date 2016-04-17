@@ -1,4 +1,4 @@
-.row{bindonce: true}
+.row
   .small-12.large-8.columns
     / TODO: Rob add logic for taxons and properties too:
     / %div{"ng-if" => "enterprise.long_description.length > 0 || enterprise.logo"}
@@ -22,8 +22,8 @@
       -#         / TODO: Rob - need popover, use will's directive or this? http://pineconellc.github.io/angular-foundation/
       -#
       .about-container.pad-top
-        %img.enterprise-logo{"bo-src" => "enterprise.logo", "bo-if" => "enterprise.logo"}
-        %p.text-small{"ng-bind-html" => "enterprise.long_description"}
+        %img.enterprise-logo{"ng-src" => "::enterprise.logo", "ng-if" => "::enterprise.logo"}
+        %p.text-small{"ng-bind-html" => "::enterprise.long_description"}
   .small-12.large-4.columns
     %ng-include{src: "'partials/contact.html'"}
     %ng-include{src: "'partials/follow.html'"}
