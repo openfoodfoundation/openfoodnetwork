@@ -3,7 +3,7 @@
     .eleven.columns.alpha.omega
       .no_tags{ ng: { show: "tagGroups.length == 0" } }
         No tags apply to this enterprise yet
-      .customer_tag{ ng: { repeat: "tagGroup in tagGroups" }, bindonce: true }
+      .customer_tag{ ng: { repeat: "tagGroup in tagGroups" } }
         .header
           %table
             %colgroup
@@ -23,8 +23,8 @@
         %table
           %tr.tag_rule{ id: "tr_{{rule.id}}", ng: { repeat: "rule in tagGroup.rules" } }
             %td
-              %discount-order{ bo: { if: "rule.type == 'TagRule::DiscountOrder'" } }
-              %filter-shipping-methods{ bo: { if: "rule.type == 'TagRule::FilterShippingMethods'" } }
+              %discount-order{ ng: { if: "::rule.type == 'TagRule::DiscountOrder'" } }
+              %filter-shipping-methods{ ng: { if: "::rule.type == 'TagRule::FilterShippingMethods'" } }
             %td.actions
               %a{ ng: { click: "deleteTagRule(tagGroup, rule)" }, :class => "delete-tag-rule icon-trash no-text" }
         .add_rule.text-center

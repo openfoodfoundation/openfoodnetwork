@@ -15,7 +15,7 @@
     %h1#no_results No enterprises found.
 
 
-  .row{ ng: { show: "loaded && filteredEnterprises.length > 0" }, bindonce: true }
+  .row{ ng: { show: "loaded && filteredEnterprises.length > 0" } }
     %table.index#enterprises
       %col.name{ width: "28%", ng: { show: 'columns.name.visible' } }
       %col.producer{ width: "18%", ng: { show: 'columns.producer.visible' }}
@@ -33,15 +33,15 @@
       %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )", controller: 'EnterpriseIndexRowCtrl' } }
         %tr.enterprise.panel-toggle-row{ object: "enterprise", ng: { class: { even: "'even'", odd: "'odd'"} } }
           %td.name{ ng: { show: 'columns.name.visible' } }
-            %span{ bo: { bind: "enterprise.name" } }
+            %span{ ng: { bind: "::enterprise.name" } }
           %td.producer.panel-toggle.text-center{ ng: { show: 'columns.producer.visible', class: "{error: producerError}" }, name: "producer" }
             %h5{ ng: { bind: "producer" } }
           %td.package.panel-toggle.text-center{ ng: { show: 'columns.package.visible', class: "{error: packageError}" }, name: "package" }
             %h5{ ng: { bind: "package" } }
           %td.status.panel-toggle.text-center{ ng: { show: 'columns.status.visible' }, name: "status" }
-            %i.icon-status{ bo: { class: "status" } }
+            %i.icon-status{ ng: { class: "::status()" } }
           %td.manage{ ng: { show: 'columns.manage.visible' } }
-            %a.button.fullwidth{ bo: { href: 'enterprise.edit_path' } }
+            %a.button.fullwidth{ ng: { href: '{{::enterprise.edit_path}}' } }
               Manage
               %i.icon-arrow-right
 
