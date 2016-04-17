@@ -8,7 +8,7 @@
 //= require lodash.underscore.js
 //= require angular-flash.min.js
 //= require shared/ng-tags-input.min.js
-//= require shared/mm-foundation-tpls-0.2.2.min.js
+//= require shared/mm-foundation-tpls-0.8.0.min.js
 //= require textAngular.min.js
 //= require textAngular-sanitize.min.js
 //= require moment
