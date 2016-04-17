@@ -85,6 +85,11 @@ angular.module('admin.orderCycles')
       OrderCycle.removeDistributionOfVariant(variant_id)
 
     $scope.submit = (destination) ->
+      $event.preventDefault()
+      StatusMessage.display 'progress', "Saving..."
+
+    $scope.submit = ($event, destination) ->
+      $event.preventDefault()
       StatusMessage.display 'progress', "Saving..."
       OrderCycle.update(destination)
       $scope.order_cycle_form.$setPristine()

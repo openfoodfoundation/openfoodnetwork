@@ -156,7 +156,9 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle create', ->
-      scope.submit('/admin/order_cycles')
+      eventMock = {preventDefault: jasmine.createSpy()}
+      scope.submit(eventMock,'/admin/order_cycles')
+      expect(eventMock.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.create).toHaveBeenCalledWith('/admin/order_cycles')
 
   describe 'AdminEditOrderCycleCtrl', ->
@@ -321,7 +323,9 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle update', ->
-      scope.submit('/admin/order_cycles')
+      eventMock = {preventDefault: jasmine.createSpy()}
+      scope.submit(eventMock,'/admin/order_cycles')
+      expect(eventMock.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles')
       expect(scope.order_cycle_form.$setPristine.calls.length).toEqual 1
 

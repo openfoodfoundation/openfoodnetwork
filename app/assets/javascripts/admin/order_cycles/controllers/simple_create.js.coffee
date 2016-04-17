@@ -41,6 +41,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl"
   $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
     EnterpriseFee.forEnterprise(parseInt(enterprise_id))
 
-  $scope.submit = (destination) ->
+  $scope.submit = ($event, destination) ->
+    $event.preventDefault()
     OrderCycle.mirrorIncomingToOutgoingProducts()
     OrderCycle.create(destination)
