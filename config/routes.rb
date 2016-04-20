@@ -115,7 +115,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :inventory_items, only: [:create, :update]
 
-    resources :customers, only: [:index, :update]
+    resources :customers, only: [:index, :create, :update, :destroy]
 
     resource :content
 
@@ -142,6 +142,10 @@ Openfoodnetwork::Application.routes.draw do
     resources :order_cycles do
       get :managed, on: :collection
       get :accessible, on: :collection
+    end
+
+    resource :status do
+      get :job_queue
     end
   end
 

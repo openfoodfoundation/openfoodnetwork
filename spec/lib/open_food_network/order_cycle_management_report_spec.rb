@@ -92,7 +92,7 @@ module OpenFoodNetwork
           # payment2 = create(:payment, order: order2, payment_method: pm2)
 
           subject.stub(:params).and_return(payment_method_in: [pm1.id, pm3.id] )
-          subject.filter(orders).should == [order1, order3]
+          subject.filter(orders).should match_array [order1, order3]
         end
 
         it "filters to a shipping method" do
@@ -102,7 +102,7 @@ module OpenFoodNetwork
           order3 = create(:order, shipping_method: sm3)
 
           subject.stub(:params).and_return(shipping_method_in: [sm1.id, sm3.id])
-          subject.filter(orders).should == [order1, order3]
+          expect(subject.filter(orders)).to match_array [order1, order3]
         end
 
         it "should do all the filters at once" do

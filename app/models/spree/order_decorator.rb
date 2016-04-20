@@ -284,11 +284,11 @@ Spree::Order.class_eval do
 
   def customer_is_valid?
     return true unless require_customer?
-    customer.present? && customer.enterprise_id == distributor_id && customer.email == (user.andand.email || email)
+    customer.present? && customer.enterprise_id == distributor_id && customer.email == email_for_customer
   end
 
   def email_for_customer
-    user.andand.email || email
+    (user.andand.email || email).andand.downcase
   end
 
   def associate_customer

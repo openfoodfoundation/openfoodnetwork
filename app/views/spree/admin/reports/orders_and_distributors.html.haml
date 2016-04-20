@@ -10,7 +10,7 @@
 %br
 %table#listing_orders.index
   %thead
-    %tr{'data-hook' => t(:report_customers_header)}
+    %tr{'data-hook' => 'orders_header'}
       - @report.header.each do |heading|
         %th=heading
   %tbody
@@ -21,4 +21,3 @@
     - if @report.table.empty?
       %tr
         %td{:colspan => "2"}= t(:none)
-

@@ -101,6 +101,11 @@ class AbilityDecorator
     can [:print], Spree::Order do |order|
       order.user == user
     end
+
+    can [:create], Customer
+    can [:destroy], Customer do |customer|
+      user.enterprises.include? customer.enterprise
+    end
   end
 
   def add_product_management_abilities(user)

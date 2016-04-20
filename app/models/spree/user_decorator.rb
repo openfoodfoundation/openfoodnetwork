@@ -15,6 +15,7 @@ Spree.user_class.class_eval do
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 
   attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit
+  after_create :associate_customers
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
@@ -39,6 +40,10 @@ Spree.user_class.class_eval do
 
   def customer_of(enterprise)
     customers.of(enterprise).first
+  end
+
+  def associate_customers
+    Customer.update_all({ user_id: id }, { user_id: nil, email: email })
   end
 
   def send_signup_confirmation
