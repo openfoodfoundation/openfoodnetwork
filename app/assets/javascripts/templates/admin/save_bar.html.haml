@@ -1,4 +1,4 @@
-#save-bar.animate-show{ ng: { show: 'form.$dirty || StatusMessage.active()' } }
+#save-bar.animate-show{ ng: { show: 'StatusMessage.active()' } }
   .twelve.columns.alpha
     %h5#status-message{ ng: { style: 'StatusMessage.statusMessage.style' } }
       {{ StatusMessage.statusMessage.text || "&nbsp;" }}

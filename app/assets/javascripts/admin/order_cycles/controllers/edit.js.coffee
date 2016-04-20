@@ -12,6 +12,9 @@ angular.module('admin.orderCycles')
 
     $scope.StatusMessage = StatusMessage
 
+    $scope.$watch 'order_cycle_form.$dirty', (newValue) ->
+      StatusMessage.display 'notice', 'You have unsaved changes' if newValue
+
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
 
@@ -81,4 +84,6 @@ angular.module('admin.orderCycles')
       OrderCycle.removeDistributionOfVariant(variant_id)
 
     $scope.submit = (destination) ->
+      StatusMessage.display 'progress', "Saving..."
       OrderCycle.update(destination)
+      this.order_cycle_form.$setPristine()
