@@ -915,8 +915,13 @@ Please follow the instructions there to make your enterprise visible on the Open
   live: "live"
   manage: "Manage"
   resend: "Resend"
+<<<<<<< HEAD
   add_and_manage_products: "Add & manage products"
   add_and_manage_order_cycles: "Add & manage order cycles"
+=======
+  add_and_manage_products: "Add &amp; manage products"
+  add_and_manage_order_cycles: "Add &amp; manage order cycles"
+>>>>>>> 54110c6218dac2980cd92883eadef3932c35264e
   manage_order_cycles: "Manage order cycles"
   manage_products: "Manage products"
   edit_profile_details: "Edit profile details"
