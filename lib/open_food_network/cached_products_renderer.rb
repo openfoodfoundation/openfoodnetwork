@@ -16,13 +16,17 @@ module OpenFoodNetwork
     def products_json
       raise NoProducts.new if @distributor.nil? || @order_cycle.nil?
 
-      products_json = Rails.cache.fetch("products-json-#{@distributor.id}-#{@order_cycle.id}") do
-        log_warning
+      products_json = unless Rails.env.production? || Rails.env.staging?
+        uncached_products_json
+      else
+        Rails.cache.fetch("products-json-#{@distributor.id}-#{@order_cycle.id}") do
+          log_warning
 
-        begin
-          uncached_products_json
-        rescue ProductsRenderer::NoProducts
-          nil
+          begin
+            uncached_products_json
+          rescue ProductsRenderer::NoProducts
+            nil
+          end
         end
       end
 
