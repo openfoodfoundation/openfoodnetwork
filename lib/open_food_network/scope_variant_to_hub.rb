@@ -50,6 +50,10 @@ module OpenFoodNetwork
       def sku
         @variant_override.andand.sku || super
       end
+
+      def tag_list
+        @variant_override.andand.tag_list || []
+      end
     end
   end
 end
