@@ -10,8 +10,8 @@ class TagRule::FilterProducts < TagRule
   def apply!
     unless preferred_matched_variants_visibility == "visible"
       subject.reject! do |product|
-        product[:variants].reject!{ |v| tags_match?(v) }
-        product[:variants].empty?
+        product["variants"].reject!{ |v| tags_match?(v) }
+        product["variants"].empty?
       end
     end
   end
@@ -19,19 +19,19 @@ class TagRule::FilterProducts < TagRule
   def apply_default!
     if preferred_matched_variants_visibility == "visible"
       subject.reject! do |product|
-        product[:variants].reject!{ |v| tags_match?(v) }
-        product[:variants].empty?
+        product["variants"].reject!{ |v| tags_match?(v) }
+        product["variants"].empty?
       end
     end
   end
 
   def tags_match?(variant)
-    variant_tags = variant.andand[:tag_list] || []
+    variant_tags = variant.andand["tag_list"] || []
     preferred_tags = preferred_variant_tags.split(",")
     ( variant_tags & preferred_tags ).any?
   end
 
   def subject_class_matches?
-    subject.class == HashWithIndifferentAccess
+    subject.class == Array
   end
 end
