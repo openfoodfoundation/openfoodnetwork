@@ -4,7 +4,7 @@ describe TagRule::FilterProducts, type: :model do
   let!(:tag_rule) { create(:filter_products_tag_rule) }
 
   describe "determining whether tags match for a given variant" do
-    context "when the variantm is nil" do
+    context "when the variant is nil" do
 
       it "returns false" do
         expect(tag_rule.send(:tags_match?, nil)).to be false
@@ -12,7 +12,7 @@ describe TagRule::FilterProducts, type: :model do
     end
 
     context "when the variant is not nil" do
-      let(:variant_object) { { tag_list: ["member","local","volunteer"] } }
+      let(:variant_object) { { "tag_list" => ["member","local","volunteer"] } }
 
       context "when the rule has no preferred variant tags specified" do
         before { allow(tag_rule).to receive(:preferred_variant_tags) { "" } }
@@ -34,14 +34,14 @@ describe TagRule::FilterProducts, type: :model do
   describe "applying the rule" do
     # Assume that all validation is done by the TagRule base class
 
-    let(:product1) { { name: "product1", variants: [{ name: "v1", tag_list: ["tag1", "something", "somethingelse"]}] } }
-    let(:product2) { { name: "product2", variants: [{ name: "v2", tag_list: ["tag2"]}] } }
-    let(:product3) { { name: "product3", variants: [{ name: "v3", tag_list: ["tag3"]}] } }
+    let(:product1) { { name: "product1", "variants" => [{ name: "v1", "tag_list" => ["tag1", "something", "somethingelse"]}] } }
+    let(:product2) { { name: "product2", "variants" => [{ name: "v2", "tag_list" => ["tag2"]}] } }
+    let(:product3) { { name: "product3", "variants" => [{ name: "v3", "tag_list" => ["tag3"]}] } }
     let!(:product_hash) { [product1, product2, product3] }
 
     before do
       tag_rule.update_attribute(:preferred_variant_tags, "tag2")
-      tag_rule.set_context(product_hash, nil)
+      tag_rule.set_context({subject: product_hash})
     end
 
     context "apply!" do
