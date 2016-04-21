@@ -180,7 +180,7 @@ Spree::Order.class_eval do
       end
 
       if distributor.present? && customer.present?
-        distributor.apply_tag_rules_to(self, customer: customer)
+        distributor.apply_tag_rules(type: "DiscountOrder", subject: self, customer_tags: customer.andand.tag_list)
       end
     end
   end
