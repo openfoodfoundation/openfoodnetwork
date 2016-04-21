@@ -11,9 +11,18 @@ describe TagRule, type: :model do
 
   describe 'setting the context' do
     let(:subject) { double(:subject) }
-    let(:context) { double(:context) }
+    let(:context) { { subject: subject, some_other_property: "yay"} }
+
+    it "raises an error when context is nil" do
+      expect{ tag_rule.set_context(nil) }.to raise_error "Context for tag rule cannot be nil"
+    end
+
+    it "raises an error when subject is nil" do
+      expect{ tag_rule.set_context({}) }.to raise_error "Subject for tag rule cannot be nil"
+    end
+
     it "stores the subject and context provided as instance variables on the model" do
-      tag_rule.set_context(subject, context)
+      tag_rule.set_context(context)
       expect(tag_rule.subject).to eq subject
       expect(tag_rule.context).to eq context
       expect(tag_rule.instance_variable_get(:@subject)).to eq subject
@@ -32,7 +41,7 @@ describe TagRule, type: :model do
       let(:subject) { double(:subject) }
 
       before do
-        tag_rule.set_context(subject,{})
+        tag_rule.set_context({subject: subject})
         allow(tag_rule).to receive(:customer_tags_match?) { :customer_tags_match_result }
         allow(tag_rule).to receive(:subject_class) { Spree::Order}
       end
@@ -93,27 +102,20 @@ describe TagRule, type: :model do
     end
 
     describe "determining whether specified customer tags match the given context" do
-      context "when the context is nil" do
-        before { tag_rule.set_context(nil, nil) }
-        it "returns false" do
-          expect(tag_rule.send(:customer_tags_match?)).to be false
-        end
-      end
+      context "when the context has no customer tags specified" do
+        let(:context) { { subject: double(:something), not_tags: double(:not_tags) } }
 
-      context "when the context has no customer specified" do
-        let(:context) { { something_that_is_not_a_customer: double(:something) } }
-
-        before { tag_rule.set_context(nil, context) }
+        before { tag_rule.set_context(context) }
 
         it "returns false" do
           expect(tag_rule.send(:customer_tags_match?)).to be false
         end
       end
 
-      context "when the context has a customer specified" do
-        let(:context) { { customer: double(:customer, tag_list: ["member","local","volunteer"] ) } }
+      context "when the context has customer tags specified" do
+        let(:context) { { subject: double(:something), customer_tags: ["member","local","volunteer"] } }
 
-        before { tag_rule.set_context(nil, context) }
+        before { tag_rule.set_context(context) }
 
         context "when the rule has no preferred customer tags specified" do
           before do
