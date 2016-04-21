@@ -11,8 +11,7 @@ Spree::OrderPopulator.class_eval do
 
     if valid?
       @order.with_lock do
-        variants = read_products_hash(from_hash) +
-                   read_variants_hash(from_hash)
+        variants = read_variants from_hash
 
         variants.each do |v|
           if varies_from_cart(v)
@@ -29,6 +28,11 @@ Spree::OrderPopulator.class_eval do
     end
 
     valid?
+  end
+
+  def read_variants(data)
+    read_products_hash(data) +
+      read_variants_hash(data)
   end
 
   def read_products_hash(data)
