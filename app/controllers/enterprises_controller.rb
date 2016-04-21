@@ -47,6 +47,11 @@ class EnterprisesController < BaseController
 
     order.distributor = distributor
 
+    if user = try_spree_current_user
+      order.associate_user!(user) if (order.user.blank? || order.email.blank?)
+      order.send(:associate_customer) if order.customer.nil? # Only associates existing customers
+    end
+
     order_cycle_options = OrderCycle.active.with_distributor(distributor)
     order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
     order.save!
