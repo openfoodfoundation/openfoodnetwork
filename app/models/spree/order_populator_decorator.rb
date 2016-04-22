@@ -77,7 +77,7 @@ Spree::OrderPopulator.class_eval do
     on_hand = variant.on_hand
     on_hand = [quantity, max_quantity].compact.max if Spree::Config.allow_backorders
     quantity_to_add = [quantity, on_hand].min
-    max_quantity_to_add = [max_quantity, on_hand].min if max_quantity
+    max_quantity_to_add = max_quantity # max_quantity is not capped
 
     [quantity_to_add, max_quantity_to_add]
   end

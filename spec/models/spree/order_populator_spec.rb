@@ -213,8 +213,8 @@ module Spree
             op.quantities_to_add(v, 5, 6).should == [5, 6]
           end
 
-          it "returns a limited amount when not entirely available" do
-            op.quantities_to_add(v, 15, 16).should == [10, 10]
+          it "also returns the full amount when not entirely available" do
+            op.quantities_to_add(v, 15, 16).should == [10, 16]
           end
         end
       end
