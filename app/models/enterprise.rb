@@ -346,7 +346,7 @@ class Enterprise < ActiveRecord::Base
 
   def apply_tag_rules(context)
     tag_rules_for(context).each do |rule|
-      rule.set_context(context)
+      rule.context = context
       rule.apply
     end
   end

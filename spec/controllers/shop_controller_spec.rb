@@ -144,7 +144,7 @@ describe ShopController do
 
       before do
         allow(controller).to receive(:current_order) { order }
-        allow(tag_rule).to receive(:set_context)
+        allow(tag_rule).to receive(:context=)
         allow(tag_rule).to receive(:apply)
         allow(distributor).to receive(:apply_tag_rules).and_call_original
       end
@@ -168,7 +168,7 @@ describe ShopController do
 
         context "applies the rule" do
           before do
-            allow(tag_rule).to receive(:set_context).and_call_original
+            allow(tag_rule).to receive(:context=).and_call_original
             allow(tag_rule).to receive(:apply).and_call_original
           end
 

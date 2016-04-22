@@ -40,20 +40,30 @@ class EnterprisesController < BaseController
     distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
     order = current_order(true)
 
+    reset_distributor(order, distributor)
+
+    reset_user_and_customer(order) if try_spree_current_user
+
+    reset_order_cycle(order, distributor)
+
+    order.save!
+  end
+
+  def reset_distributor(order, distributor)
     if order.distributor && order.distributor != distributor
       order.empty!
       order.set_order_cycle! nil
     end
-
     order.distributor = distributor
+  end
 
-    if user = try_spree_current_user
-      order.associate_user!(user) if (order.user.blank? || order.email.blank?)
-      order.send(:associate_customer) if order.customer.nil? # Only associates existing customers
-    end
+  def reset_user_and_customer(order)
+    order.associate_user!(spree_current_user) if order.user.blank? || order.email.blank?
+    order.send(:associate_customer) if order.customer.nil? # Only associates existing customers
+  end
 
+  def reset_order_cycle(order, distributor)
     order_cycle_options = OrderCycle.active.with_distributor(distributor)
     order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
-    order.save!
   end
 end

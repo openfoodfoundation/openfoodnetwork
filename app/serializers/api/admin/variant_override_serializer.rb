@@ -7,6 +7,6 @@ class Api::Admin::VariantOverrideSerializer < ActiveModel::Serializer
   end
 
   def tags
-    object.tag_list.map{ |t| { text: t } }
+    object.tag_list.map { |t| { text: t } }
   end
 end

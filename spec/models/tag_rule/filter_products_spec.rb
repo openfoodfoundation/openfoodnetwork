@@ -41,7 +41,7 @@ describe TagRule::FilterProducts, type: :model do
 
     before do
       tag_rule.update_attribute(:preferred_variant_tags, "tag2")
-      tag_rule.set_context({subject: product_hash})
+      tag_rule.context = {subject: product_hash}
     end
 
     context "apply!" do
