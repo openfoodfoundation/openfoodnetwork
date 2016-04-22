@@ -28,6 +28,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
 
     update: =>
       @update_running = true
+
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
         @update_running = false
@@ -48,19 +49,14 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       #       is unnecessary.
 
       for li in @line_items_present()
-        if !stockLevels[li.variant.id]?
-          li.quantity = 0
-          li.max_quantity = 0 if li.max_quantity?
-          li.variant.count_on_hand = 0
-          scope.variants.push li.variant
-        else
-          if stockLevels[li.variant.id].quantity < li.quantity
-            li.quantity = stockLevels[li.variant.id].quantity
-            scope.variants.push li.variant
-          if stockLevels[li.variant.id].max_quantity < li.max_quantity
-            li.max_quantity = stockLevels[li.variant.id].max_quantity
-            scope.variants.push li.variant
+        if stockLevels[li.variant.id]?
           li.variant.count_on_hand = stockLevels[li.variant.id].on_hand
+          if li.quantity > li.variant.count_on_hand
+            li.quantity = li.variant.count_on_hand
+            scope.variants.push li.variant
+          if li.max_quantity > li.variant.count_on_hand
+            li.max_quantity = li.variant.count_on_hand
+            scope.variants.push(li.variant) unless li.variant in scope.variants
 
       if scope.variants.length > 0
         $modal.open(templateUrl: "out_of_stock.html", scope: scope, windowClass: 'out-of-stock-modal')

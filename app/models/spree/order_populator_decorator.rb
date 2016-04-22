@@ -1,6 +1,8 @@
 require 'open_food_network/scope_variant_to_hub'
 
 Spree::OrderPopulator.class_eval do
+  attr_reader :variants_h
+
   def populate(from_hash, overwrite = false)
     @distributor, @order_cycle = distributor_and_order_cycle
     # Refactor: We may not need this validation - we can't change distribution here, so
@@ -31,8 +33,8 @@ Spree::OrderPopulator.class_eval do
   end
 
   def read_variants(data)
-    read_products_hash(data) +
-      read_variants_hash(data)
+    @variants_h = read_products_hash(data) +
+                  read_variants_hash(data)
   end
 
   def read_products_hash(data)

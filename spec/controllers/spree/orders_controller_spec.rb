@@ -67,9 +67,11 @@ describe Spree::OrdersController do
     let(:product) { create(:simple_product) }
 
     it "returns stock levels as JSON" do
+      controller.stub(:variant_ids_in) { [123] }
       controller.stub(:stock_levels) { 'my_stock_levels' }
       Spree::OrderPopulator.stub(:new).and_return(populator = double())
       populator.stub(:populate) { true }
+      populator.stub(:variants_h) { {} }
 
       xhr :post, :populate, use_route: :spree, format: :json
 
@@ -81,6 +83,7 @@ describe Spree::OrdersController do
       let!(:order) { create(:order) }
       let!(:li) { create(:line_item, order: order, variant: v, quantity: 2, max_quantity: 3) }
       let!(:v) { create(:variant, count_on_hand: 4) }
+      let!(:v2) { create(:variant, count_on_hand: 2) }
 
       before do
         order.reload
@@ -88,16 +91,36 @@ describe Spree::OrdersController do
       end
 
       it "returns a hash with variant id, quantity, max_quantity and stock on hand" do
-        controller.stock_levels.should == {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
+        controller.stock_levels(order, [v.id]).should ==
+          {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
+      end
+
+      it "includes all line items, even when the variant_id is not specified" do
+        controller.stock_levels(order, []).should ==
+          {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
+      end
+
+      it "includes an empty quantity entry for variants that aren't in the order" do
+        controller.stock_levels(order, [v.id, v2.id]).should ==
+          {v.id  => {quantity: 2, max_quantity: 3, on_hand: 4},
+           v2.id => {quantity: 0, max_quantity: 0, on_hand: 2}}
       end
 
       describe "encoding Infinity" do
         let!(:v) { create(:variant, on_demand: true, count_on_hand: 0) }
 
         it "encodes Infinity as a large, finite integer" do
-          controller.stock_levels.should == {v.id => {quantity: 2, max_quantity: 3, on_hand: 2147483647}}
+          controller.stock_levels(order, [v.id]).should ==
+            {v.id => {quantity: 2, max_quantity: 3, on_hand: 2147483647}}
         end
       end
+    end
+
+    it "extracts variant ids from the populator" do
+      variants_h = [{:variant_id=>"900", :quantity=>2, :max_quantity=>nil},
+       {:variant_id=>"940", :quantity=>3, :max_quantity=>3}]
+
+      controller.variant_ids_in(variants_h).should == [900, 940]
     end
   end
 
@@ -118,7 +141,8 @@ describe Spree::OrdersController do
 
     it "returns HTTP success when successful" do
       Spree::OrderPopulator.stub(:new).and_return(populator = double())
-      populator.stub(:populate).and_return true
+      populator.stub(:populate) { true }
+      populator.stub(:variants_h) { {} }
       xhr :post, :populate, use_route: :spree, format: :json
       response.status.should == 200
     end
