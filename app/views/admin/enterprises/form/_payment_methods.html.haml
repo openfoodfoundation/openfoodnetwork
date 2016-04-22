@@ -7,7 +7,7 @@
         %th
     %tbody
       - @payment_methods.each do |payment_method|
-        %tr{ ng: { controller: 'paymentMethodCtrl', init: "findPaymentMethodByID(#{payment_method.id})" } }
+        %tr{ ng: { controller: 'paymentMethodsCtrl', init: "findPaymentMethodByID(#{payment_method.id})" } }
           %td= payment_method.name
           %td= f.check_box :payment_method_ids, { multiple: true, 'ng-model' => 'PaymentMethod.selected' }, payment_method.id, nil
           %td= link_to "Edit", edit_admin_payment_method_path(payment_method)
