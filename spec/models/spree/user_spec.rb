@@ -53,23 +53,6 @@ describe Spree.user_class do
         create(:user)
       end.to enqueue_job ConfirmSignupJob
     end
-
-    it "should not create a customer" do
-      expect do
-        create(:user)
-      end.to change(Customer, :count).by(0)
-    end
-
-    describe "when a customer record exists" do
-      let!(:customer) { create(:customer, user: nil) }
-
-      it "should not create a customer" do
-        expect(customer.user).to be nil
-        user = create(:user, email: customer.email)
-        customer.reload
-        expect(customer.user).to eq user
-      end
-    end
   end
 
   describe "known_users" do
