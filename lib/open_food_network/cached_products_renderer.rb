@@ -14,23 +14,11 @@ module OpenFoodNetwork
     end
 
     def products_json
-      raise NoProducts.new if @distributor.nil? || @order_cycle.nil?
+      raise NoProducts.new("No Products") if @distributor.nil? || @order_cycle.nil?
 
-      products_json = unless Rails.env.production? || Rails.env.staging?
-        uncached_products_json
-      else
-        Rails.cache.fetch("products-json-#{@distributor.id}-#{@order_cycle.id}") do
-          log_warning
+      products_json = cached_products_json
 
-          begin
-            uncached_products_json
-          rescue ProductsRenderer::NoProducts
-            nil
-          end
-        end
-      end
-
-      raise NoProducts.new if products_json.nil?
+      raise NoProducts.new("No Products") if products_json.nil?
 
       products_json
     end
@@ -41,6 +29,22 @@ module OpenFoodNetwork
     def log_warning
       if Rails.env.production? || Rails.env.staging?
         Bugsnag.notify RuntimeError.new("Live server MISS on products cache for distributor: #{@distributor.id}, order cycle: #{@order_cycle.id}")
+      end
+    end
+
+    def cached_products_json
+      if Rails.env.production? || Rails.env.staging?
+        Rails.cache.fetch("products-json-#{@distributor.id}-#{@order_cycle.id}") do
+          log_warning
+
+          begin
+            uncached_products_json
+          rescue ProductsRenderer::NoProducts
+            nil
+          end
+        end
+      else
+        uncached_products_json
       end
     end
 

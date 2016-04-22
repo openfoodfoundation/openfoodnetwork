@@ -14,15 +14,15 @@ describe TagRule, type: :model do
     let(:context) { { subject: subject, some_other_property: "yay"} }
 
     it "raises an error when context is nil" do
-      expect{ tag_rule.set_context(nil) }.to raise_error "Context for tag rule cannot be nil"
+      expect{ tag_rule.context = nil }.to raise_error "Context for tag rule cannot be nil"
     end
 
     it "raises an error when subject is nil" do
-      expect{ tag_rule.set_context({}) }.to raise_error "Subject for tag rule cannot be nil"
+      expect{ tag_rule.context = {} }.to raise_error "Subject for tag rule cannot be nil"
     end
 
     it "stores the subject and context provided as instance variables on the model" do
-      tag_rule.set_context(context)
+      tag_rule.context = context
       expect(tag_rule.subject).to eq subject
       expect(tag_rule.context).to eq context
       expect(tag_rule.instance_variable_get(:@subject)).to eq subject
@@ -41,7 +41,7 @@ describe TagRule, type: :model do
       let(:subject) { double(:subject) }
 
       before do
-        tag_rule.set_context({subject: subject})
+        tag_rule.context = {subject: subject}
         allow(tag_rule).to receive(:customer_tags_match?) { :customer_tags_match_result }
         allow(tag_rule).to receive(:subject_class) { Spree::Order}
       end
@@ -105,7 +105,7 @@ describe TagRule, type: :model do
       context "when the context has no customer tags specified" do
         let(:context) { { subject: double(:something), not_tags: double(:not_tags) } }
 
-        before { tag_rule.set_context(context) }
+        before { tag_rule.context = context }
 
         it "returns false" do
           expect(tag_rule.send(:customer_tags_match?)).to be false
@@ -115,7 +115,7 @@ describe TagRule, type: :model do
       context "when the context has customer tags specified" do
         let(:context) { { subject: double(:something), customer_tags: ["member","local","volunteer"] } }
 
-        before { tag_rule.set_context(context) }
+        before { tag_rule.context = context }
 
         context "when the rule has no preferred customer tags specified" do
           before do

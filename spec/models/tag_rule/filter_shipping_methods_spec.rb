@@ -41,7 +41,7 @@ describe TagRule::FilterShippingMethods, type: :model do
 
     before do
       tag_rule.update_attribute(:preferred_shipping_method_tags, "tag2")
-      tag_rule.set_context({subject: shipping_methods})
+      tag_rule.context = {subject: shipping_methods}
     end
 
     context "apply!" do

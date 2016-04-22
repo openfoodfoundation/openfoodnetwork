@@ -12,7 +12,7 @@ class TagRule < ActiveRecord::Base
   scope :for, ->(enterprise) { where(enterprise_id: enterprise) }
   scope :of_type, ->(type) { where(type: "TagRule::#{type}") }
 
-  def set_context(context)
+  def context=(context)
     raise "Context for tag rule cannot be nil" if context.nil?
     raise "Subject for tag rule cannot be nil" if context[:subject].nil?
 
