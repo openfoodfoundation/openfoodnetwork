@@ -33,8 +33,8 @@ Spree::OrderPopulator.class_eval do
   end
 
   def read_variants(data)
-    read_products_hash(data) +
-      read_variants_hash(data)
+    @variants_h = read_products_hash(data) +
+                  read_variants_hash(data)
   end
 
   def read_products_hash(data)
