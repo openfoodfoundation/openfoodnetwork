@@ -1,6 +1,4 @@
-:javascript
-  angular.module('ofn.admin').value('paymentMethod', #{ { id: @payment_method.id, type: @payment_method.type }.to_json })
-#provider-settings{ ng: { app: "ofn.admin", controller: "ProvidersCtrl" } }
+#provider-settings{ ng: { controller: "ProvidersCtrl" } }
   .row
     .alpha.three.columns
       = label :payment_method, :type, t(:provider)

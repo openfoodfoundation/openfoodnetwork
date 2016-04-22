@@ -1,6 +1,7 @@
 / replace "div[data-hook='admin_payment_method_form_fields']"
 
-%div.alpha.eleven.columns
+= render 'data'
+%div.alpha.eleven.columns{ "ng-app" => "admin.paymentMethods", "ng-controller" => "paymentMethodCtrl" }
   .row
     .alpha.three.columns
       = label_tag nil, t(:name)

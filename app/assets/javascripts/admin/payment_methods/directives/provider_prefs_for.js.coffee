@@ -1,4 +1,4 @@
-angular.module("ofn.admin").directive "providerPrefsFor", ($http) ->
+angular.module("admin.paymentMethods").directive "providerPrefsFor", ($http) ->
   link: (scope, element, attrs) ->
     element.on "change blur load", ->
       scope.$apply ->
