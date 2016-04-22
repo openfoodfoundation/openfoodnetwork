@@ -16,10 +16,7 @@ Spree::OrdersController.class_eval do
   # Patching to redirect to shop if order is empty
   def edit
     @order = current_order(true)
-<<<<<<< HEAD
     @insufficient_stock_lines = @order.insufficient_stock_lines
-=======
->>>>>>> Display out of stock banner when viewing cart directly
 
     if @order.line_items.empty?
       redirect_to main_app.shop_path
@@ -29,7 +26,6 @@ Spree::OrdersController.class_eval do
       if @order.insufficient_stock_lines.present?
         flash[:error] = t(:spree_inventory_error_flash_for_insufficient_quantity)
       end
-<<<<<<< HEAD
     end
   end
 
@@ -64,8 +60,6 @@ Spree::OrdersController.class_eval do
       @insufficient_stock_lines = @order.insufficient_stock_lines
       @order.line_items(true)
       respond_with(@order)
-=======
->>>>>>> Display out of stock banner when viewing cart directly
     end
   end
 
