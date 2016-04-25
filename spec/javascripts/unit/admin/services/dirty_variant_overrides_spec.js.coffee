@@ -8,36 +8,53 @@ describe "maintaining a list of dirty variant overrides", ->
 
   beforeEach ->
     module "admin.variantOverrides"
+    module ($provide) ->
+      $provide.value "variantOverrides", { 2: { 1: variantOverride } }
+      null
 
   beforeEach inject (_DirtyVariantOverrides_) ->
     DirtyVariantOverrides = _DirtyVariantOverrides_
 
-  it "adds new dirty variant overrides", ->
-    DirtyVariantOverrides.add variantOverride
-    expect(DirtyVariantOverrides.dirtyVariantOverrides).toEqual
-      2:
-        1:
-          variant_id: 1
-          hub_id: 2
-          price: 3
-          count_on_hand: 4
+  describe "adding a new dirty variant override", ->
+    it "adds new dirty variant overrides", ->
+      DirtyVariantOverrides.add(2,1,5)
+      expect(DirtyVariantOverrides.dirtyVariantOverrides).toEqual { 2: { 1: { id: 5, variant_id: 1, hub_id: 2 } } }
 
-  it "updates existing dirty variant overrides", ->
-    DirtyVariantOverrides.dirtyVariantOverrides =
-      2:
-        1:
-          variant_id: 5
-          hub_id: 6
-          price: 7
-          count_on_hand: 8
-    DirtyVariantOverrides.add variantOverride
-    expect(DirtyVariantOverrides.dirtyVariantOverrides).toEqual
-      2:
-        1:
-          variant_id: 1
-          hub_id: 2
-          price: 3
-          count_on_hand: 4
+
+  describe "setting the value of an attribute", ->
+    beforeEach ->
+      spyOn(DirtyVariantOverrides, "add").andCallThrough()
+
+    describe "when a record for the given VO does not exist", ->
+      beforeEach ->
+        DirtyVariantOverrides.dirtyVariantOverrides = {}
+
+      it "sets the specified attribute on a new dirty VO", ->
+        DirtyVariantOverrides.set(2,1,5,'count_on_hand', 10)
+        expect(DirtyVariantOverrides.add).toHaveBeenCalledWith(2,1,5)
+        expect(DirtyVariantOverrides.dirtyVariantOverrides).toEqual
+          2:
+            1:
+              id: 5
+              variant_id: 1
+              hub_id: 2
+              count_on_hand: 10
+
+    describe "when a record for the given VO exists", ->
+      beforeEach ->
+        DirtyVariantOverrides.dirtyVariantOverrides = { 2: { 1: { id: 5, variant_id: 1, hub_id: 2, price: 27 } } }
+
+      it "sets the specified attribute on a new dirty VO", ->
+        DirtyVariantOverrides.set(2,1,5,'count_on_hand', 10)
+        expect(DirtyVariantOverrides.add).toHaveBeenCalledWith(2,1,5)
+        expect(DirtyVariantOverrides.dirtyVariantOverrides).toEqual
+          2:
+            1:
+              id: 5
+              variant_id: 1
+              hub_id: 2
+              price: 27
+              count_on_hand: 10
 
   describe "with a number of variant overrides", ->
     beforeEach ->

@@ -30,7 +30,7 @@ describe InjectionHelper do
     shipping_methods = double(:shipping_methods, uniq: [sm])
     current_distributor = double(:distributor, shipping_methods: shipping_methods)
     allow(helper).to receive(:current_distributor) { current_distributor }
-    allow(current_distributor).to receive(:apply_tag_rules_to).with(shipping_methods, {customer: nil} )
+    allow(current_distributor).to receive(:apply_tag_rules).with({type: "FilterShippingMethods", subject: shipping_methods, customer_tags: nil})
     helper.inject_available_shipping_methods.should match sm.id.to_s
     helper.inject_available_shipping_methods.should match sm.compute_amount(order).to_s
   end

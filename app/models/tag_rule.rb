@@ -9,9 +9,15 @@ class TagRule < ActiveRecord::Base
 
   attr_accessible :enterprise, :enterprise_id, :preferred_customer_tags
 
-  def set_context(subject, context)
-    @subject = subject
+  scope :for, ->(enterprise) { where(enterprise_id: enterprise) }
+  scope :of_type, ->(type) { where(type: "TagRule::#{type}") }
+
+  def context=(context)
+    raise "Context for tag rule cannot be nil" if context.nil?
+    raise "Subject for tag rule cannot be nil" if context[:subject].nil?
+
     @context = context
+    @subject = context[:subject]
   end
 
   def apply
@@ -35,8 +41,8 @@ class TagRule < ActiveRecord::Base
   end
 
   def customer_tags_match?
-    context_customer_tags = context.andand[:customer].andand.tag_list || []
+    context_customer_tags = context[:customer_tags] || []
     preferred_tags = preferred_customer_tags.split(",")
-    ( context_customer_tags & preferred_tags ).any?
+    (context_customer_tags & preferred_tags).any?
   end
 end

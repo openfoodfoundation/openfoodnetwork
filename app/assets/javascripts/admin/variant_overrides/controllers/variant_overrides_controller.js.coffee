@@ -28,6 +28,7 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
     on_demand:    { name: "On Demand",          visible: false }
     reset:        { name: "Reset Stock Level",  visible: false }
     inheritance:  { name: "Inheritance",        visible: false }
+    tags:         { name: "Tags",               visible: false }
     visibility:   { name: "Hide",               visible: false }
 
   $scope.bulkActions = [ name: "Reset Stock Levels To Defaults", callback: 'resetStock' ]

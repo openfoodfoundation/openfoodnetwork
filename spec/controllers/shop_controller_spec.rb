@@ -8,7 +8,6 @@ describe ShopController do
     response.should redirect_to root_path
   end
 
-
   describe "with a distributor in place" do
     before do
       controller.stub(:current_distributor).and_return distributor
@@ -91,6 +90,93 @@ describe ShopController do
           xhr :get, :products
           response.status.should == 404
           response.body.should be_empty
+        end
+      end
+    end
+
+    describe "determining rule relevance" do
+      let(:products_json) { double(:products_json) }
+
+      before do
+        # allow(controller).to receive(:products_json) { products_json }
+        allow(controller).to receive(:relevant_tag_rules) { relevant_tag_rules }
+        allow(controller).to receive(:apply_tag_rules) { "some filtered json" }
+      end
+
+      context "when no relevant rules exist" do
+        let(:relevant_tag_rules) { [] }
+
+        before { allow(controller).to receive(:relevant_rules) { relevant_rules } }
+
+        it "does not attempt to apply any rules" do
+          controller.send(:filtered_json, products_json)
+          expect(expect(controller).to_not have_received(:apply_tag_rules))
+        end
+
+        it "returns products as JSON" do
+          expect(controller.send(:filtered_json, products_json)).to eq products_json
+        end
+      end
+
+      context "when relevant rules exist" do
+        let(:tag_rule) { create(:filter_products_tag_rule, preferred_customer_tags: "tag1", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "hidden" ) }
+        let(:relevant_tag_rules) { [tag_rule] }
+
+        it "attempts to apply any rules" do
+          controller.send(:filtered_json, products_json)
+          expect(controller).to have_received(:apply_tag_rules).with(relevant_tag_rules, products_json)
+        end
+
+        it "returns filtered JSON" do
+          expect(controller.send(:filtered_json, products_json)).to eq "some filtered json"
+        end
+      end
+    end
+
+    describe "applying tag rules" do
+      let(:product1) { { id: 1, name: 'product 1', "variants" => [{ id: 4, "tag_list" => ["tag1"] }] } }
+      let(:product2) { { id: 2, name: 'product 2', "variants" => [{ id: 5, "tag_list" => ["tag1"] }, {id: 9, "tag_list" => ["tag2"]}] } }
+      let(:product3) { { id: 3, name: 'product 3', "variants" => [{ id: 6, "tag_list" => ["tag3"] }] } }
+      let!(:products_array) { [product1, product2, product3] }
+      let!(:products_json) { JSON.unparse( products_array ) }
+      let(:tag_rule) { create(:filter_products_tag_rule, preferred_customer_tags: "tag1", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "hidden" ) }
+      let(:relevant_tag_rules) { [tag_rule] }
+
+      before do
+        allow(controller).to receive(:current_order) { order }
+        allow(tag_rule).to receive(:context=)
+        allow(tag_rule).to receive(:apply)
+        allow(distributor).to receive(:apply_tag_rules).and_call_original
+      end
+
+      context "when a current order with a customer does not exist" do
+        let(:order) { double(:order, customer: nil) }
+
+        it "sets the context customer_tags as an empty array" do
+          controller.send(:apply_tag_rules, relevant_tag_rules, products_json)
+          expect(distributor).to have_received(:apply_tag_rules).with(rules: relevant_tag_rules, subject: JSON.parse(products_json), :customer_tags=>[])
+        end
+      end
+
+      context "when a customer does exist" do
+        let(:order) { double(:order, customer: double(:customer, tag_list: ["tag1", "tag2"])) }
+
+        it "sets the context customer_tags" do
+          controller.send(:apply_tag_rules, relevant_tag_rules, products_json)
+          expect(distributor).to have_received(:apply_tag_rules).with(rules: relevant_tag_rules, subject: JSON.parse(products_json), :customer_tags=>["tag1", "tag2"])
+        end
+
+        context "applies the rule" do
+          before do
+            allow(tag_rule).to receive(:context=).and_call_original
+            allow(tag_rule).to receive(:apply).and_call_original
+          end
+
+          it "applies the rule" do
+            result = controller.send(:apply_tag_rules, relevant_tag_rules, products_json)
+            expect(tag_rule).to have_received(:apply)
+            expect(result).to eq JSON.unparse([{ id: 2, name: 'product 2', variants: [{id: 9, tag_list: ["tag2"]}] }, product3])
+          end
         end
       end
     end
