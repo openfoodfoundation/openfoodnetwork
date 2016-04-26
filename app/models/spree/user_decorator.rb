@@ -54,10 +54,9 @@ Spree.user_class.class_eval do
     enterprise_ids = orders.where(state: :complete).map(&:distributor_id).uniq
     # Exclude the accounts distributor
     if Spree::Config.accounts_distributor_id
-      enterprise_ids = enterprise_ids.keep_if{|a| a != Spree::Config.accounts_distributor_id}
+      enterprise_ids = enterprise_ids.keep_if { |a| a != Spree::Config.accounts_distributor_id }
     end
     enterprise_ids
-
   end
 
   # Returns orders and their associated payments for all distributors that have been ordered from
