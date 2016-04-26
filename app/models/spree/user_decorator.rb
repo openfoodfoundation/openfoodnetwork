@@ -51,10 +51,13 @@ Spree.user_class.class_eval do
 
   # Returns Enterprise IDs for distributors that the user has shopped at
   def enterprises_ordered_from
-    orders.where(state: :complete)
-      .where('distributor_id != ?', Spree::Config.accounts_distributor_id)
-      .map(&:distributor_id)
-      .uniq
+    enterprise_ids = orders.where(state: :complete).map(&:distributor_id).uniq
+    # Exclude the accounts distributor
+    if Spree::Config.accounts_distributor_id
+      enterprise_ids = enterprise_ids.keep_if{|a| a != Spree::Config.accounts_distributor_id}
+    end
+    enterprise_ids
+
   end
 
   # Returns orders and their associated payments for all distributors that have been ordered from
