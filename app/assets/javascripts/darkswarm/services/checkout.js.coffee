@@ -10,9 +10,12 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
       $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
         Navigation.go data.path
       .error (response, status)=>
-        Loading.clear()
-        @errors = response.errors
-        RailsFlashLoader.loadFlash(response.flash)
+        if response.path
+          Navigation.go response.path
+        else
+          Loading.clear()
+          @errors = response.errors
+          RailsFlashLoader.loadFlash(response.flash)
 
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->

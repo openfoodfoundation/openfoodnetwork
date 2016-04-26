@@ -1,4 +1,4 @@
-Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
+Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, storage)->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
@@ -28,14 +28,38 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, storage)->
 
     update: =>
       @update_running = true
+
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
         @update_running = false
+
+        @compareAndNotifyStockLevels data.stock_levels
+
         @popQueue() if @update_enqueued
 
       .error (response, status)=>
         @scheduleRetry(status)
         @update_running = false
+
+    compareAndNotifyStockLevels: (stockLevels) =>
+      scope = $rootScope.$new(true)
+      scope.variants = []
+
+      # TODO: These changes to quantity/max_quantity trigger another cart update, which
+      #       is unnecessary.
+
+      for li in @line_items_present()
+        if stockLevels[li.variant.id]?
+          li.variant.count_on_hand = stockLevels[li.variant.id].on_hand
+          if li.quantity > li.variant.count_on_hand
+            li.quantity = li.variant.count_on_hand
+            scope.variants.push li.variant
+          if li.max_quantity > li.variant.count_on_hand
+            li.max_quantity = li.variant.count_on_hand
+            scope.variants.push(li.variant) unless li.variant in scope.variants
+
+      if scope.variants.length > 0
+        $modal.open(templateUrl: "out_of_stock.html", scope: scope, windowClass: 'out-of-stock-modal')
 
     popQueue: =>
       @update_enqueued = false

@@ -1,61 +1,28 @@
 .variants.row
   .small-12.medium-4.large-4.columns.variant-name
-    .table-cell  
+    .table-cell
       .inline {{ variant.name_to_display }}
       .bulk-buy.inline{"bo-if" => "variant.product.group_buy"}
         %i.ofn-i_056-bulk><
         %em><
           \ {{'bulk' | t}}
 
-  -# WITHOUT GROUP BUY
-  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "!variant.product.group_buy"}
 
-    %input{type: :number, 
-    integer: true,
-    value: nil, 
-    min: 0, 
-    placeholder: "0",
-    "ofn-disable-scroll" => true,
-    "ng-model" => "variant.line_item.quantity",
-    max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
-    name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
-      
+  %ng-include{src: "'partials/shop_variant_no_group_buy.html'"}
+  %ng-include{src: "'partials/shop_variant_with_group_buy.html'"}
 
-  -# WITH GROUP BUY
-  .small-5.medium-3.large-3.columns.text-right{"bo-if" => "variant.product.group_buy"}
-    %span.bulk-input-container
-      %span.bulk-input
-        %input.bulk.first{type: :number, 
-        value: nil, 
-        integer: true,
-        min: 0, 
-        "ng-model" => "variant.line_item.quantity",
-        placeholder: "{{'shop_variant_quantity_min' | t}}",
-        "ofn-disable-scroll" => true,
-        max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
-        name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
-      %span.bulk-input
-        %input.bulk.second{type: :number,
-        "ng-disabled" => "!variant.line_item.quantity",
-        integer: true,
-        min: 0,
-        "ng-model" => "variant.line_item.max_quantity",
-        placeholder: "{{'shop_variant_quantity_max' | t}}",
-        "ofn-disable-scroll" => true,
-        max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
-        name: "variant_attributes[{{variant.id}}][max_quantity]"}
 
   .small-3.medium-1.large-1.columns.variant-unit
-    .table-cell 
+    .table-cell
       %em {{ variant.unit_to_display }}
 
   .small-4.medium-2.large-2.columns.variant-price
     .table-cell.price
-      %i.ofn-i_009-close 
+      %i.ofn-i_009-close
       {{ variant.price_with_fees | localizeCurrency }}
 
       -# Now in a template in app/assets/javascripts/templates !
-      %price-breakdown{"price-breakdown" => "_", variant: "variant", 
+      %price-breakdown{"price-breakdown" => "_", variant: "variant",
         "price-breakdown-append-to-body" => "true",
         "price-breakdown-placement" => "left",
         "price-breakdown-animation" => true}
@@ -63,4 +30,4 @@
   .small-12.medium-2.large-2.columns.total-price.text-right
     .table-cell
       %strong{"ng-class" => "{filled: variant.totalPrice()}"}
-        {{ variant.totalPrice() | localizeCurrency }} 
+        {{ variant.totalPrice() | localizeCurrency }}
