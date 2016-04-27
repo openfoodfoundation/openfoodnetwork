@@ -16,6 +16,7 @@ Spree::OrdersController.class_eval do
   # Patching to redirect to shop if order is empty
   def edit
     @order = current_order(true)
+    @insufficient_stock_lines = @order.insufficient_stock_lines
 
     if @order.line_items.empty?
       redirect_to main_app.shop_path
@@ -89,6 +90,7 @@ Spree::OrdersController.class_eval do
       end
     end
   end
+
 
   # Report the stock levels in the order for all variant ids requested
   def stock_levels(order, variant_ids)
