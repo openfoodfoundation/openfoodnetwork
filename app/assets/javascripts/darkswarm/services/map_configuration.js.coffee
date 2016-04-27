@@ -6,7 +6,7 @@ Darkswarm.factory "MapConfiguration", ->
         longitude: 144.7851531
       zoom: 12
       additional_options:
-        #mapTypeId: 'satellite'
+        # mapTypeId: 'satellite'
         mapTypeId: 'OSM'
         mapTypeControl: false
         streetViewControl: false

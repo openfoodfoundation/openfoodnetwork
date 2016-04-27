@@ -20,6 +20,7 @@ Darkswarm.directive 'mapSearch', ($timeout, Search) ->
     $timeout =>
       map = ctrl.getMap()
 
+      # Use OSM tiles server
       map.mapTypes.set 'OSM', new (google.maps.ImageMapType)(
         getTileUrl: (coord, zoom) ->
           # "Wrap" x (logitude) at 180th meridian properly
