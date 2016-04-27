@@ -52,7 +52,6 @@ feature %q{
     click_button 'Update'
 
     expect(flash_message).to eq 'Payment Method has been successfully updated!'
-    save_screenshot '/Users/rob/Desktop/ss.png'
 
     expect(first('tags-input .tag-list ti-tag-item')).to have_content "member"
 
