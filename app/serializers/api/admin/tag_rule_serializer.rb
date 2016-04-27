@@ -25,6 +25,14 @@ module Api::Admin::TagRule
     end
   end
 
+  class FilterPaymentMethodsSerializer < BaseSerializer
+    attributes :preferred_matched_payment_methods_visibility, :payment_method_tags
+
+    def payment_method_tags
+      object.preferred_payment_method_tags.split(",")
+    end
+  end
+
   class FilterProductsSerializer < BaseSerializer
     attributes :preferred_matched_variants_visibility, :variant_tags
 

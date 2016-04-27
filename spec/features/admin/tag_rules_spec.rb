@@ -34,6 +34,12 @@ feature 'Tag Rules', js: true do
       click_button "Add Rule"
       select2_select "VISIBLE", from: "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility"
 
+      # New FilterPaymentMethods Rule
+      click_button '+ Add A New Rule'
+      select2_select 'Show or Hide payment methods at checkout', from: 'rule_type_selector'
+      click_button "Add Rule"
+      select2_select "VISIBLE", from: "enterprise_tag_rules_attributes_2_preferred_matched_payment_methods_visibility"
+
       # New DiscountOrder Rule
       # click_button '+ Add A New Rule'
       # select2_select 'Apply a discount to orders', from: 'rule_type_selector'
@@ -55,6 +61,11 @@ feature 'Tag Rules', js: true do
       expect(tag_rule.preferred_customer_tags).to eq "volunteer"
       expect(tag_rule.preferred_variant_tags).to eq "volunteer"
       expect(tag_rule.preferred_matched_variants_visibility).to eq "visible"
+
+      tag_rule = TagRule::FilterPaymentMethods.last
+      expect(tag_rule.preferred_customer_tags).to eq "volunteer"
+      expect(tag_rule.preferred_payment_method_tags).to eq "volunteer"
+      expect(tag_rule.preferred_matched_payment_methods_visibility).to eq "visible"
     end
   end
 
@@ -62,6 +73,7 @@ feature 'Tag Rules', js: true do
     let!(:do_tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "member" ) }
     let!(:fsm_tag_rule) { create(:filter_shipping_methods_tag_rule, enterprise: enterprise, preferred_matched_shipping_methods_visibility: "hidden", preferred_customer_tags: "member" ) }
     let!(:fp_tag_rule) { create(:filter_products_tag_rule, enterprise: enterprise, preferred_matched_variants_visibility: "visible", preferred_customer_tags: "member" ) }
+    let!(:fpm_tag_rule) { create(:filter_payment_methods_tag_rule, enterprise: enterprise, preferred_matched_payment_methods_visibility: "hidden", preferred_customer_tags: "member" ) }
 
     before do
       login_to_admin_section
@@ -88,6 +100,10 @@ feature 'Tag Rules', js: true do
       expect(page).to have_select2 "enterprise_tag_rules_attributes_2_preferred_matched_variants_visibility", selected: 'VISIBLE'
       select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_2_preferred_matched_variants_visibility"
 
+      # FilterPaymentMethods rule
+      expect(page).to have_select2 "enterprise_tag_rules_attributes_3_preferred_matched_payment_methods_visibility", selected: 'NOT VISIBLE'
+      select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_3_preferred_matched_payment_methods_visibility"
+
       click_button 'Update'
 
       # DiscountOrder rule
@@ -103,6 +119,11 @@ feature 'Tag Rules', js: true do
       expect(fp_tag_rule.preferred_customer_tags).to eq "member,volunteer"
       expect(fp_tag_rule.preferred_variant_tags).to eq "member,volunteer"
       expect(fp_tag_rule.preferred_matched_variants_visibility).to eq "hidden"
+
+      # FilterPaymentMethods rule
+      expect(fpm_tag_rule.preferred_customer_tags).to eq "member,volunteer"
+      expect(fpm_tag_rule.preferred_payment_method_tags).to eq "member,volunteer"
+      expect(fpm_tag_rule.preferred_matched_payment_methods_visibility).to eq "visible"
     end
   end
 

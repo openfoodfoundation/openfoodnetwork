@@ -1,0 +1,27 @@
+%div
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_id",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][id]",
+    ng: { value: "rule.id" } }
+
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_type",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][type]",
+    value: "TagRule::FilterPaymentMethods" }
+
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_customer_tags",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_customer_tags]",
+    ng: { value: "rule.preferred_customer_tags" } }
+
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_payment_method_tags",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_payment_method_tags]",
+    ng: { value: "rule.preferred_customer_tags" } }
+
+  %span.text-normal {{ $index + 1 }}. Payment methods with matching tags are
+  %input.light.ofn-select2{ id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_matched_payment_methods_visibility",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_matched_payment_methods_visibility]",
+    ng: { model: "rule.preferred_matched_payment_methods_visibility"},
+    data: 'visibilityOptions', "min-search" => 5 }
+  -# %tags-with-translation{ object: "rule", "tags-attr" => "payment_method_tags", "tag-list-attr" => "preferred_payment_method_tags" }
