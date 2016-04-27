@@ -8,6 +8,7 @@ Darkswarm.directive 'mapSearch', ($timeout)->
     $timeout =>
       map = ctrl.getMap()
 
+      # Use OSM tiles server
       map.mapTypes.set 'OSM', new (google.maps.ImageMapType)(
         getTileUrl: (coord, zoom) ->
           # "Wrap" x (logitude) at 180th meridian properly
@@ -36,7 +37,7 @@ Darkswarm.directive 'mapSearch', ($timeout)->
           #map.setCenter place.geometry.location
           map.fitBounds place.geometry.viewport
         #map.fitBounds bounds
-      
+
       # Bias the SearchBox results towards places that are within the bounds of the
       # current map's viewport.
       google.maps.event.addListener map, "bounds_changed", ->
