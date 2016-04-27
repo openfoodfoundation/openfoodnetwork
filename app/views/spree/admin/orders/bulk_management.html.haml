@@ -10,7 +10,7 @@
 = render :partial => 'spree/admin/shared/order_sub_menu'
 
 %div{ ng: { controller: 'LineItemsCtrl' } }
-  %save-bar{ save: "submit()", form: "bulk_order_form" }
+  %save-bar{ save: "submit()", form: "bulk_order_form", buttons: "[{text: 'Save Changes'}]" }
   .filters{ :class => "sixteen columns alpha" }
     .date_filter{ :class => "two columns alpha" }
       %label{ :for => 'start_date_filter' }
