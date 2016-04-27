@@ -212,9 +212,10 @@ Spree::Order.class_eval do
 
   # Show payment methods for this distributor
   def available_payment_methods
-    @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm|
-      (self.distributor && (pm.distributors.include? self.distributor))
-    end
+    return [] unless distributor.present?
+    payment_methods = distributor.payment_methods.available(:front_end).all
+    distributor.apply_tag_rules( type: "FilterPaymentMethods", subject: payment_methods, customer_tags: customer.andand.tag_list)
+    payment_methods
   end
 
   # Does this order have shipments that can be shipped?

@@ -22,18 +22,97 @@ describe Spree::Order do
   end
 
   describe "Payment methods" do
-    let(:order_distributor) { create(:distributor_enterprise) }
+    let(:distributor) { create(:distributor_enterprise) }
     let(:some_other_distributor) { create(:distributor_enterprise) }
-    let(:order) { build(:order, distributor: order_distributor) }
-    let(:pm1) { create(:payment_method, distributors: [order_distributor])}
-    let(:pm2) { create(:payment_method, distributors: [some_other_distributor])}
+    let(:order) { create(:order, distributor: distributor) }
+    let!(:pm1) { create(:payment_method, distributors: [distributor])}
+    let!(:pm2) { create(:payment_method, distributors: [some_other_distributor])}
 
-    it "finds the correct payment methods" do
-      Spree::PaymentMethod.stub(:available).and_return [pm1, pm2]
-      order.available_payment_methods.include?(pm2).should == false
-      order.available_payment_methods.include?(pm1).should == true
+    context "when the order has no distributor" do
+      let(:order_without_distributor) { create(:order, distributor: nil) }
+
+      it "returns an empty array" do
+        expect(order_without_distributor.available_payment_methods).to eq []
+      end
     end
 
+    context "when no tag rules are in effect" do
+      it "finds the payment methods for the current distributor" do
+        order.available_payment_methods.include?(pm2).should == false
+        order.available_payment_methods.include?(pm1).should == true
+      end
+    end
+
+    context "when a FilterPaymentMethods tag rule is in effect, with preferred visibility of 'visible'" do
+      let!(:allowed_customer) { create(:customer, enterprise: distributor, tag_list: "trusted") }
+      let!(:disallowed_customer) { create(:customer, enterprise: distributor, tag_list: "") }
+      let!(:tag_rule) { create(:filter_payment_methods_tag_rule,
+        enterprise: distributor,
+        preferred_customer_tags: "trusted",
+        preferred_payment_method_tags: "trusted") }
+      let(:tagged_pm) { pm1 }
+      let(:untagged_pm) { pm2 }
+
+      before do
+        tagged_pm.update_attribute(:tag_list, 'trusted')
+        distributor.payment_methods = [tagged_pm, untagged_pm]
+      end
+
+      context "with a preferred visiblity of 'visible" do
+        before { tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'visible') }
+
+        context "when the customer is nil" do
+          it "applies default action (hide)" do
+            expect(order.available_payment_methods).to include untagged_pm
+            expect(order.available_payment_methods).to_not include tagged_pm
+          end
+        end
+
+        context "when the customer's tags match" do
+          before { order.update_attribute(:customer_id, allowed_customer.id) }
+
+          it "applies the action (show)" do
+            expect(order.available_payment_methods).to include tagged_pm, untagged_pm
+          end
+        end
+
+        context "when the customer's tags don't match" do
+          before { order.update_attribute(:customer_id, disallowed_customer.id) }
+
+          it "applies the default action (hide)" do
+            expect(order.available_payment_methods).to include untagged_pm
+            expect(order.available_payment_methods).to_not include tagged_pm
+          end
+        end
+      end
+
+      context "with a preferred visiblity of 'hidden" do
+        before { tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'hidden') }
+
+        context "when the customer is nil" do
+          it "applies default action (show)" do
+            expect(order.available_payment_methods).to include tagged_pm, untagged_pm
+          end
+        end
+
+        context "when the customer's tags match" do
+          before { order.update_attribute(:customer_id, allowed_customer.id) }
+
+          it "applies the action (hide)" do
+            expect(order.available_payment_methods).to include untagged_pm
+            expect(order.available_payment_methods).to_not include tagged_pm
+          end
+        end
+
+        context "when the customer's tags don't match" do
+          before { order.update_attribute(:customer_id, disallowed_customer.id) }
+
+          it "applies the default action (show)" do
+            expect(order.available_payment_methods).to include tagged_pm, untagged_pm
+          end
+        end
+      end
+    end
   end
 
   describe "updating the distribution charge" do
