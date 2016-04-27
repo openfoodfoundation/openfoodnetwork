@@ -32,10 +32,18 @@ feature "full-page cart", js: true do
     describe "updating quantities with insufficient stock available" do
       let(:li) { order.line_items(true).last }
 
-      use_short_wait 10
-
       before do
         variant.update_attributes! on_hand: 2
+      end
+
+      it "prevents me from entering an invalid value" do
+        visit spree.cart_path
+
+        accept_alert 'Insufficient stock available, only 2 remaining' do
+          fill_in "order_line_items_attributes_0_quantity", with: '4'
+        end
+
+        page.should have_field "order_line_items_attributes_0_quantity", with: '2'
       end
 
       it "shows the quantities saved, not those submitted" do
