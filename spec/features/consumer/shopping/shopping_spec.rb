@@ -238,6 +238,17 @@ feature "As a consumer I want to shop with a distributor", js: true do
         Spree::LineItem.where(id: li).should be_empty
       end
 
+      it "alerts us when we enter a quantity greater than the stock available" do
+        variant.update_attributes on_hand: 5
+        visit shop_path
+
+        accept_alert 'Insufficient stock available, only 5 remaining' do
+          fill_in "variants[#{variant.id}]", with: '10'
+        end
+
+        page.should have_field "variants[#{variant.id}]", with: '5'
+      end
+
       describe "when a product goes out of stock just before it's added to the cart" do
         it "stops the attempt, shows an error message and refreshes the products asynchronously" do
           variant.update_attributes! on_hand: 0
