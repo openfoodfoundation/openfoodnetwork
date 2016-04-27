@@ -31,7 +31,7 @@ feature "full-page cart", js: true do
 
     describe "updating quantities with insufficient stock available" do
       let(:li) { order.line_items(true).last }
-      
+
       before do
         variant.update_attributes! on_hand: 2
       end

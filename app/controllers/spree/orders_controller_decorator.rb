@@ -90,6 +90,7 @@ Spree::OrdersController.class_eval do
     end
   end
 
+
   # Report the stock levels in the order for all variant ids requested
   def stock_levels(order, variant_ids)
     stock_levels = li_stock_levels(order)
