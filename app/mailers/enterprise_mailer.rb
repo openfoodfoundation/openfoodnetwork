@@ -11,7 +11,7 @@ class EnterpriseMailer < Spree::BaseMailer
   def confirmation_instructions(record, token, opts={})
     @token = token
     find_enterprise(record)
-    mail(subject: "Please confirm your email for #{@enterprise.name}",
+   mail(subject: default_i18n_subject(enterprise: @enterprise.name),
          to: ( @enterprise.unconfirmed_email || @enterprise.email ),
          from: from_address)
   end
