@@ -270,7 +270,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           # Update amount available in product list
           #   If amount falls to zero, variant should be greyed out and input disabled
           page.should have_selector "#variant-#{variant.id}.out-of-stock"
-          page.should have_selector "#variants_#{variant.id}[max='0']"
+          page.should have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
           page.should have_selector "#variants_#{variant.id}[disabled='disabled']"
         end
 
