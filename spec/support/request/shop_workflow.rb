@@ -18,7 +18,7 @@ module ShopWorkflow
 
   def add_product_to_cart
     populator = Spree::OrderPopulator.new(order, order.currency)
-    populator.populate(variants: {product.master.id => 1})
+    populator.populate(variants: {product.variants.first.id => 1})
 
     # Recalculate fee totals
     order.update_distribution_charge!
@@ -28,15 +28,10 @@ module ShopWorkflow
     find("dd a", text: name).trigger "click"
   end
 
-  def add_product_to_order_cycle(exchange, product)
-    exchange.variants << product.master
+  def add_variant_to_order_cycle(exchange, variant)
+    exchange.variants << variant
   end
 
-  def add_product_and_variant_to_order_cycle(exchange, product, variant)
-    exchange.variants << product.master
-    exchange.variants << variant 
-  end
-  
   def set_order_cycle(order, order_cycle)
     order.update_attribute(:order_cycle, order_cycle)
   end
