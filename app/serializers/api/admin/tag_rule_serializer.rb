@@ -24,4 +24,12 @@ module Api::Admin::TagRule
       object.preferred_shipping_method_tags.split(",")
     end
   end
+
+  class FilterProductsSerializer < BaseSerializer
+    attributes :preferred_matched_variants_visibility, :variant_tags
+
+    def variant_tags
+      object.preferred_variant_tags.split(",")
+    end
+  end
 end

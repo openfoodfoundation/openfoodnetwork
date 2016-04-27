@@ -22,13 +22,19 @@ feature 'Tag Rules', js: true do
       find(:css, "tags-input .tags input").set "volunteer\n"
 
       # New FilterShippingMethods Rule
+      expect(page).to have_content 'No rules apply to this tag yet'
       click_button '+ Add A New Rule'
-      select2_select 'Show/Hide shipping methods', from: 'rule_type_selector'
+      select2_select 'Show or Hide shipping methods at checkout', from: 'rule_type_selector'
       click_button "Add Rule"
       select2_select "NOT VISIBLE", from: "enterprise_tag_rules_attributes_0_preferred_matched_shipping_methods_visibility"
 
+      # New FilterProducts Rule
+      click_button '+ Add A New Rule'
+      select2_select 'Show or Hide variants in my shop', from: 'rule_type_selector'
+      click_button "Add Rule"
+      select2_select "VISIBLE", from: "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility"
+
       # New DiscountOrder Rule
-      # expect(page).to have_content 'No rules apply to this tag yet'
       # click_button '+ Add A New Rule'
       # select2_select 'Apply a discount to orders', from: 'rule_type_selector'
       # click_button "Add Rule"
@@ -44,12 +50,18 @@ feature 'Tag Rules', js: true do
       expect(tag_rule.preferred_customer_tags).to eq "volunteer"
       expect(tag_rule.preferred_shipping_method_tags).to eq "volunteer"
       expect(tag_rule.preferred_matched_shipping_methods_visibility).to eq "hidden"
+
+      tag_rule = TagRule::FilterProducts.last
+      expect(tag_rule.preferred_customer_tags).to eq "volunteer"
+      expect(tag_rule.preferred_variant_tags).to eq "volunteer"
+      expect(tag_rule.preferred_matched_variants_visibility).to eq "visible"
     end
   end
 
   context "updating" do
     let!(:do_tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "member" ) }
     let!(:fsm_tag_rule) { create(:filter_shipping_methods_tag_rule, enterprise: enterprise, preferred_matched_shipping_methods_visibility: "hidden", preferred_customer_tags: "member" ) }
+    let!(:fp_tag_rule) { create(:filter_products_tag_rule, enterprise: enterprise, preferred_matched_variants_visibility: "visible", preferred_customer_tags: "member" ) }
 
     before do
       login_to_admin_section
@@ -72,6 +84,10 @@ feature 'Tag Rules', js: true do
       expect(page).to have_select2 "enterprise_tag_rules_attributes_1_preferred_matched_shipping_methods_visibility", selected: 'NOT VISIBLE'
       select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_1_preferred_matched_shipping_methods_visibility"
 
+      # FilterProducts rule
+      expect(page).to have_select2 "enterprise_tag_rules_attributes_2_preferred_matched_variants_visibility", selected: 'VISIBLE'
+      select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_2_preferred_matched_variants_visibility"
+
       click_button 'Update'
 
       # DiscountOrder rule
@@ -82,6 +98,11 @@ feature 'Tag Rules', js: true do
       expect(fsm_tag_rule.preferred_customer_tags).to eq "member,volunteer"
       expect(fsm_tag_rule.preferred_shipping_method_tags).to eq "member,volunteer"
       expect(fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "visible"
+
+      # FilterProducts rule
+      expect(fp_tag_rule.preferred_customer_tags).to eq "member,volunteer"
+      expect(fp_tag_rule.preferred_variant_tags).to eq "member,volunteer"
+      expect(fp_tag_rule.preferred_matched_variants_visibility).to eq "hidden"
     end
   end
 

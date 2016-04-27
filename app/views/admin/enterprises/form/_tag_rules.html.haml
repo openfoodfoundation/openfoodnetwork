@@ -25,6 +25,7 @@
             %td
               %discount-order{ ng: { if: "::rule.type == 'TagRule::DiscountOrder'" } }
               %filter-shipping-methods{ ng: { if: "::rule.type == 'TagRule::FilterShippingMethods'" } }
+              %filter-products{ ng: { if: "::rule.type == 'TagRule::FilterProducts'" } }
             %td.actions
               %a{ ng: { click: "deleteTagRule(tagGroup, rule)" }, :class => "delete-tag-rule icon-trash no-text" }
         .add_rule.text-center

@@ -26,6 +26,9 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, ente
       when "FilterShippingMethods"
         newRule.peferred_shipping_method_tags = []
         newRule.preferred_matched_shipping_methods_visibility = "visible"
+      when "FilterProducts"
+        newRule.peferred_variant_tags = []
+        newRule.preferred_matched_variants_visibility = "visible"
     tagGroup.rules.push(newRule)
     updateRuleCounts()
 
