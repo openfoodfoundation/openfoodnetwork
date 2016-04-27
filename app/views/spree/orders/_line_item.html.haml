@@ -17,7 +17,7 @@
 
     = render 'spree/shared/line_item_name', line_item: line_item
 
-    - if @order.insufficient_stock_lines.include? line_item
+    - if @insufficient_stock_lines.include? line_item
       %span.out-of-stock
         = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
         %br/
