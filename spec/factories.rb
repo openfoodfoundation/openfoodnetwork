@@ -294,6 +294,10 @@ FactoryGirl.define do
     enterprise { FactoryGirl.create :distributor_enterprise }
   end
 
+  factory :filter_payment_methods_tag_rule, class: TagRule::FilterPaymentMethods do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+  end
+
   factory :tag_rule, class: TagRule::DiscountOrder do
     enterprise { FactoryGirl.create :distributor_enterprise }
     before(:create) do |tr|
