@@ -3,4 +3,6 @@
     %h5#status-message{ ng: { style: 'StatusMessage.statusMessage.style' } }
       {{ StatusMessage.statusMessage.text || "&nbsp;" }}
   .four.columns.omega.text-right
-    %input.red{type: "button", value: "Save Changes", ng: { disabled: '!form.$dirty', click: "save()" } }
+
+    %input.red{"ng-repeat" => "button in buttons", type: "button", value: "{{button.text}}", ng: { disabled: '!form.$dirty', click: "save({param: button.param})" } }
+
