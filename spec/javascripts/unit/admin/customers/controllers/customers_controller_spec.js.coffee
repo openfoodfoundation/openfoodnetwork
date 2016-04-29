@@ -76,7 +76,7 @@ describe "CustomersCtrl", ->
         scope.deleteCustomer(customer)
         http.flush()
         expect(scope.customers.length).toBe 1
-        expect(scope.customers[0]).not.toDeepEqual customer
+        expect(scope.customers[0]).not.toAngularEqual customer
 
     describe "scope.findTags", ->
       tags = [
@@ -85,7 +85,7 @@ describe "CustomersCtrl", ->
         { text: 'three' }
       ]
       beforeEach ->
-        http.expectGET('/admin/tag_rules/map_by_tag.json?enterprise_id=3').respond 200, tags
+        http.expectGET('/admin/tags.json?enterprise_id=1').respond 200, tags
 
       it "retrieves the tag list", ->
         promise = scope.findTags('')
@@ -93,7 +93,7 @@ describe "CustomersCtrl", ->
         promise.then (data) ->
           result = data
         http.flush()
-        expect(result).toDeepEqual tags
+        expect(result).toAngularEqual tags
 
       it "filters the tag list", ->
         filtered_tags = [
@@ -105,4 +105,4 @@ describe "CustomersCtrl", ->
         promise.then (data) ->
           result = data
         http.flush()
-        expect(result).toDeepEqual filtered_tags
+        expect(result).toAngularEqual filtered_tags
