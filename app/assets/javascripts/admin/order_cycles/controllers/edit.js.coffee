@@ -86,4 +86,4 @@ angular.module('admin.orderCycles')
     $scope.submit = (destination) ->
       StatusMessage.display 'progress', "Saving..."
       OrderCycle.update(destination)
-      this.order_cycle_form.$setPristine()
+      $scope.order_cycle_form.$setPristine()
