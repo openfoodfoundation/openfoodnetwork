@@ -1,0 +1,11 @@
+.autocomplete-template
+  %span.tag-with-rules{ ng: { if: "data.rules" } }
+    {{$getDisplayText()}}
+    %span.tag-with-rules{ ng: { if: "data.rules == 1" } }
+      &mdash;
+      = t 'admin.has_one_rule'
+    %span.tag-with-rules{ ng: { if: "data.rules > 1" } }
+      &mdash;
+      = t 'admin.has_n_rules', { num: '{{data.rules}}' }
+  %span{ ng: { if: "!data.rules" } }
+    {{$getDisplayText()}}

@@ -6,6 +6,10 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   end
 
   def tags
-    object.tag_list.map{ |t| { text: t } }
+    tag_rule_map = object.enterprise.rules_per_tag
+    object.tag_list.map do |tag|
+      { text: tag, rules: tag_rule_map[tag] }
+    end
   end
+
 end
