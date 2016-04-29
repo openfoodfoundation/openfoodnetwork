@@ -1,4 +1,4 @@
-angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerResource, Columns, pendingChanges, shops) ->
+angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerResource, TagsResource, $q, Columns, pendingChanges, shops) ->
   $scope.shop = {}
   $scope.shops = shops
   $scope.submitAll = pendingChanges.submitAll
@@ -11,6 +11,16 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerR
   $scope.$watch "shop.id", ->
     if $scope.shop.id?
       $scope.customers = index {enterprise_id: $scope.shop.id}
+
+  $scope.findTags = (query) ->
+    defer = $q.defer()
+    params =
+      enterprise_id: $scope.shop.id
+    TagsResource.index params, (data) =>
+      filtered = data.filter (tag) ->
+        tag.text.toLowerCase().indexOf(query.toLowerCase()) != -1
+      defer.resolve filtered
+    defer.promise
 
   $scope.add = (email) ->
     params =
