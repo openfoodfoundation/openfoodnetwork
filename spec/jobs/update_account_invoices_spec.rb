@@ -12,7 +12,7 @@ describe UpdateAccountInvoices do
     Spree::Config.set(:account_invoices_monthly_fixed, 5)
     Spree::Config.set(:account_invoices_monthly_rate, 0.02)
     Spree::Config.set(:account_invoices_monthly_cap, 50)
-    Spree::Config.set(:minimum_billable_turnover, -1)
+    Spree::Config.set(:minimum_billable_turnover, 0)
   end
 
   describe "units specs" do

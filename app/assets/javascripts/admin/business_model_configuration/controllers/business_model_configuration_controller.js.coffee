@@ -10,7 +10,7 @@ angular.module("admin.businessModelConfiguration").controller "BusinessModelConf
     Math.min($scope.bill(), Number($scope.cap))
 
   $scope.finalBill = ->
-    return 0 if Number($scope.turnover) <= Number($scope.min_bill_to)  
+    return 0 if Number($scope.turnover) < Number($scope.minBillableTurnover)
     $scope.cappedBill()
 
   $scope.capReached = ->

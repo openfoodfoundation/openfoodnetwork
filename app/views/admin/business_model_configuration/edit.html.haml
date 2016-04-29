@@ -54,11 +54,11 @@
         .row
           .three.columns.alpha
             = f.label :minimum_billable_turnover, t(:minimum_monthly_billable_turnover)
-            %span.icon-question-sign{'ofn-with-tip' => "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate. When set to -1 enterprises with no turnover will be charge the fixed rate as specified."}
+            %span.icon-question-sign{'ofn-with-tip' => "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."}
           .two.columns.omega
             .input-symbol.before
               %span= Spree::Money.currency_symbol
-              = f.number_field :minimum_billable_turnover, min: -1.0, class: "fullwidth", 'watch-value-as' => 'min_bill_to'
+              = f.number_field :minimum_billable_turnover, min: 0, class: "fullwidth", 'watch-value-as' => 'minBillableTurnover'
 
         .row
           .five.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
