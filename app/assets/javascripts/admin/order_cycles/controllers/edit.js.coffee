@@ -63,6 +63,7 @@ angular.module('admin.orderCycles')
     $scope.removeExchange = ($event, exchange) ->
       $event.preventDefault()
       OrderCycle.removeExchange(exchange)
+      $scope.order_cycle_form.$dirty = true
 
     $scope.addCoordinatorFee = ($event) ->
       $event.preventDefault()
