@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").factory 'Columns', ($rootScope, $http, columns) ->
+angular.module("admin.indexUtils").factory 'Columns', ($rootScope, $http, $injector) ->
   new class Columns
     savedColumns: {}
     columns: {}
@@ -6,10 +6,16 @@ angular.module("admin.indexUtils").factory 'Columns', ($rootScope, $http, column
 
     constructor: ->
       @columns = {}
-      for column in columns
+      for column in @injectColumns()
         @columns[column.column_name] = column
         @savedColumns[column.column_name] = angular.copy(column)
       @calculateVisibleCount()
+
+    injectColumns: ->
+      if $injector.has('columns')
+        $injector.get('columns')
+      else
+        []
 
     toggleColumn: (column) =>
       column.visible = !column.visible

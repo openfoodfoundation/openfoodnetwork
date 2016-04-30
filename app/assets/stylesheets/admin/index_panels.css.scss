@@ -1,4 +1,4 @@
-tr.panel-toggle-row {
+tbody.panel-toggle-row {
   td.panel-toggle{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -66,13 +66,13 @@ tr.panel-toggle-row {
 
   &.expanded{
     td {
-      border-bottom: 2px solid #444444;
+      border-bottom: 1px solid #6788a2;
 
       &.selected {
         background-color: #ffffff;
-        border-left: 2px solid #444444;
-        border-right: 2px solid #444444;
-        border-top: 2px solid #444444;
+        border-left: 1px solid #6788a2;
+        border-right: 1px solid #6788a2;
+        border-top: 1px solid #6788a2;
         border-bottom: none;
 
         &:hover {
@@ -96,8 +96,6 @@ tr.panel-toggle-row {
 }
 
 tr.panel-row {
-  display: none;
-
   &:hover {
     td {
       background-color: #ffffff;
@@ -105,13 +103,9 @@ tr.panel-row {
   }
 
   >td {
-    border-color: #444444;
+    border-color: #6788a2;
     padding: 0;
     .panel {
-      border-left: 1px solid #444444;
-      border-right: 1px solid #444444;
-      border-bottom: 1px solid #444444;
-
       .row{
         margin: 0px -4px;
 

@@ -3,27 +3,19 @@ angular.module("admin.indexUtils").directive "panelToggleRow", (Panels) ->
   scope:
     object: "="
     selected: "@?"
-  controller: ($scope) ->
-    panelToggles = {}
+  controller: ($scope, $element) ->
+    this.toggle = (name) ->
+      Panels.toggle($scope.object, name)
 
-    this.register = (name, element) ->
-      panelToggles[name] = element
-      panelToggles[name].addClass("selected") if $scope.selected == name
-      $scope.selected == name
+    this.select = (selection) ->
+      $scope.$broadcast("selection:changed", selection)
+      $element.toggleClass("expanded", selection?)
 
-    this.select = (name) ->
-      panelToggle.removeClass("selected") for panelName, panelToggle of panelToggles
-
-      switch $scope.selected = Panels.toggle($scope.object.id, name)
-        when null
-          panelToggles[name].parent(".panel-toggle-row").removeClass("expanded")
-        else
-          panelToggles[$scope.selected].addClass("selected")
-          panelToggles[$scope.selected].parent(".panel-toggle-row").addClass("expanded")
-
-      $scope.selected == name
+    this.registerSelectionListener = (callback) ->
+      $scope.$on "selection:changed", (event, selection) ->
+        callback(selection)
 
     this
-  #
-  # link: (scope, element, attrs) ->
-  #   Panels.registerInitialSelection(scope.object.id, scope.selected)
+
+  link: (scope, element, attrs, ctrl) ->
+    Panels.register(ctrl, scope.object, scope.selected)

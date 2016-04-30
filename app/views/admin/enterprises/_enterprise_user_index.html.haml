@@ -29,16 +29,16 @@
           %th.package{ ng: { show: 'columns.package.visible' } }=t('.package')
           %th.status{ ng: { show: 'columns.status.visible' } }=t('.status')
           %th.manage{ ng: { show: 'columns.manage.visible' } }=t('.manage')
-      %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )", controller: 'EnterpriseIndexRowCtrl' } }
-        %tr.enterprise.panel-toggle-row{ object: "enterprise", ng: { class: { even: "'even'", odd: "'odd'"} } }
+      %tbody.panel-toggle-row{ :id => "e_{{enterprise.id}}", object: "enterprise", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" } }
+        %tr.enterprise{ ng: { class: { even: "'even'", odd: "'odd'"} } }
           %td.name{ ng: { show: 'columns.name.visible' } }
             %span{ ng: { bind: "::enterprise.name" } }
-          %td.producer.panel-toggle.text-center{ ng: { show: 'columns.producer.visible', class: "{error: producerError}" }, name: "producer" }
-            %h5{ ng: { bind: "producer" } }
-          %td.package.panel-toggle.text-center{ ng: { show: 'columns.package.visible', class: "{error: packageError}" }, name: "package" }
-            %h5{ ng: { bind: "package" } }
+          %td.producer.panel-toggle.text-center{ ng: { show: 'columns.producer.visible', class: "{error: enterprise.producerError}" }, name: "producer" }
+            %h5{ ng: { bind: "enterprise.producer" } }
+          %td.package.panel-toggle.text-center{ ng: { show: 'columns.package.visible', class: "{error: enterprise.packageError}" }, name: "package" }
+            %h5{ ng: { bind: "enterprise.package" } }
           %td.status.panel-toggle.text-center{ ng: { show: 'columns.status.visible' }, name: "status" }
-            %i.icon-status{ ng: { class: "::status()" } }
+            %i.icon-status{ ng: { class: "enterprise.status" } }
           %td.manage{ ng: { show: 'columns.manage.visible' } }
             %a.button.fullwidth{ ng: { href: '{{::enterprise.edit_path}}' } }
               Manage
