@@ -8,15 +8,18 @@ class EnterpriseMailer < Spree::BaseMailer
          :subject => "#{enterprise.name} is now on #{Spree::Config[:site_name]}")
   end
 
-  def confirmation_instructions(record, token, opts={})
+  def confirmation_instructions(record, token)
     @token = token
     find_enterprise(record)
-   mail(to: ( @enterprise.unconfirmed_email || @enterprise.email ),
-        from: from_address,
-        subject: default_i18n_subject(enterprise: @enterprise.name))
+    subject = t('enterprise_mailer.confirmation_instructions.subject',
+                enterprise: @enterprise.name)
+    mail(to: (@enterprise.unconfirmed_email || @enterprise.email),
+         from: from_address,
+         subject: subject)
   end
 
   private
+
   def find_enterprise(enterprise)
     @enterprise = enterprise.is_a?(Enterprise) ? enterprise : Enterprise.find(enterprise)
   end

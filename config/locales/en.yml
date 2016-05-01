@@ -9,7 +9,7 @@
 # If you translate this file in a text editor, please share your results with us by
 #
 # - uploading the file to Transifex or
-# - :qopening a pull request at GitHub.
+# - opening a pull request at GitHub.
 #
 #
 # See http://community.openfoodnetwork.org/t/localisation-ofn-in-your-language/397
@@ -32,9 +32,9 @@ en:
         not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
         confirmation_sent: "Confirmation email sent!"
         confirmation_not_sent: "Could not send a confirmation email."
-    enterprise_mailer:
-      confirmation_instructions:
-        subject: "Please confirm the email address for %{enterprise}"
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "Please confirm the email address for %{enterprise}"
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
@@ -924,7 +924,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   resend: "Resend"
   add_and_manage_products: "Add & manage products"
   add_and_manage_order_cycles: "Add & manage order cycles"
-
   manage_order_cycles: "Manage order cycles"
   manage_products: "Manage products"
   edit_profile_details: "Edit profile details"
