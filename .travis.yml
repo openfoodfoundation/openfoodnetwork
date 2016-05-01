@@ -28,11 +28,11 @@ before_script:
   - RAILS_ENV=test bundle exec rake db:create db:schema:load
   - >
     if [ "$KARMA" = "true" ]; then
-      npm install karma@0.12.31
-      npm install karma-jasmine@0.1.5
-      npm install karma-phantomjs-launcher@0.1.4
-      npm install karma-coffee-preprocessor@0.2.1
-      npm install -g karma-cli@0.0.4
+      npm install karma@0.13.22
+      npm install karma-jasmine@0.3.8
+      npm install karma-phantomjs-launcher@1.0.0
+      npm install karma-coffee-preprocessor@0.3.0
+      npm install -g karma-cli@0.1.2
     fi
 
 script:
