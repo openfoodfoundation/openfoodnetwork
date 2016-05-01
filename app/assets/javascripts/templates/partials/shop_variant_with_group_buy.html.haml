@@ -8,7 +8,7 @@
       "ng-model" => "variant.line_item.quantity",
       placeholder: "{{'shop_variant_quantity_min' | t}}",
       "ofn-disable-scroll" => true,
-      max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
+      "ofn-on-hand" => "{{variant.on_demand && 9999 || variant.count_on_hand }}",
       name: "variants[{{variant.id}}]", id: "variants_{{variant.id}}"}
     %span.bulk-input
       %input.bulk.second{type: :number,
@@ -18,6 +18,6 @@
       "ng-model" => "variant.line_item.max_quantity",
       placeholder: "{{'shop_variant_quantity_max' | t}}",
       "ofn-disable-scroll" => true,
-      max: "{{variant.on_demand && 9999 || variant.count_on_hand }}",
+      min: "{{variant.line_item.quantity}}",
       name: "variant_attributes[{{variant.id}}][max_quantity]",
       id: "variants_{{variant.id}}_max"}

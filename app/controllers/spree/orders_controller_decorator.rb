@@ -16,6 +16,7 @@ Spree::OrdersController.class_eval do
   # Patching to redirect to shop if order is empty
   def edit
     @order = current_order(true)
+    @insufficient_stock_lines = @order.insufficient_stock_lines
 
     if @order.line_items.empty?
       redirect_to main_app.shop_path
@@ -27,6 +28,41 @@ Spree::OrdersController.class_eval do
       end
     end
   end
+
+
+  def update
+    @insufficient_stock_lines = []
+    @order = current_order
+    unless @order
+      flash[:error] = t(:order_not_found)
+      redirect_to root_path and return
+    end
+
+    if @order.update_attributes(params[:order])
+      @order.line_items = @order.line_items.select {|li| li.quantity > 0 }
+      @order.restart_checkout_flow
+
+      render :edit and return unless apply_coupon_code
+
+      fire_event('spree.order.contents_changed')
+      respond_with(@order) do |format|
+        format.html do
+          if params.has_key?(:checkout)
+            @order.next_transition.run_callbacks if @order.cart?
+            redirect_to checkout_state_path(@order.checkout_steps.first)
+          else
+            redirect_to cart_path
+          end
+        end
+      end
+    else
+      # Show order with original values, not newly entered ones
+      @insufficient_stock_lines = @order.insufficient_stock_lines
+      @order.line_items(true)
+      respond_with(@order)
+    end
+  end
+
 
   def populate
     # Without intervention, the Spree::Adjustment#update_adjustable callback is called many times
@@ -54,6 +90,7 @@ Spree::OrdersController.class_eval do
       end
     end
   end
+
 
   # Report the stock levels in the order for all variant ids requested
   def stock_levels(order, variant_ids)

@@ -101,11 +101,6 @@ class AbilityDecorator
     can [:print], Spree::Order do |order|
       order.user == user
     end
-
-    can [:create], Customer
-    can [:destroy], Customer do |customer|
-      user.enterprises.include? customer.enterprise
-    end
   end
 
   def add_product_management_abilities(user)
@@ -221,7 +216,9 @@ class AbilityDecorator
     # Reports page
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
 
-    can [:admin, :index, :update], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    can [:create], Customer
+    can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    can [:admin, :index], :tag
   end
 
 

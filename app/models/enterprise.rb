@@ -352,6 +352,20 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
+  def rules_per_tag
+    tag_rule_map = {}
+    tag_rules.each do |rule|
+      rule.preferred_customer_tags.split(",").each do |tag|
+        if tag_rule_map[tag]
+          tag_rule_map[tag] += 1
+        else
+          tag_rule_map[tag] = 1
+        end
+      end
+    end
+    tag_rule_map
+  end
+
   protected
 
   def devise_mailer

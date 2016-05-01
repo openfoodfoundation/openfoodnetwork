@@ -1,0 +1,8 @@
+.tag-template
+  %div
+    %span.tag-with-rules{ ng: { if: "data.rules" }, "ofn-with-tip" => "{{ 'admin.tag_has_rules' | t:{num: data.rules} }}" }
+      {{$getDisplayText()}}
+    %span{ ng: { if: "!data.rules" } }
+      {{$getDisplayText()}}
+    %a.remove-button{ ng: {click: "$removeTag()"} }
+      &#10006;
