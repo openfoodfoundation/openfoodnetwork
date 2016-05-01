@@ -8,9 +8,10 @@ describe "CustomersCtrl", ->
       scope = $rootScope
       http = $httpBackend
       $controller 'customersCtrl', {$scope: scope, CustomerResource: _CustomerResource_, shops: {}}
-    this.addMatchers
-      toAngularEqual: (expected) ->
-        return angular.equals(this.actual, expected)
+    jasmine.addMatchers
+      toDeepEqual: (util, customEqualityTesters) ->
+        compare: (actual, expected) ->
+          { pass: angular.equals(actual, expected) }
 
   it "has no shop pre-selected", ->
     expect(scope.shop).toEqual {}
@@ -26,7 +27,7 @@ describe "CustomersCtrl", ->
       http.flush()
 
     it "retrievs the list of customers", ->
-      expect(scope.customers).toAngularEqual customers
+      expect(scope.customers).toDeepEqual customers
 
     describe "scope.add", ->
       it "creates a new customer", ->
@@ -36,7 +37,7 @@ describe "CustomersCtrl", ->
         http.expectPOST('/admin/customers.json?email=' + email + '&enterprise_id=1').respond 200, newCustomer
         scope.add(email)
         http.flush()
-        expect(scope.customers).toAngularEqual customers
+        expect(scope.customers).toDeepEqual customers
 
     describe "scope.deleteCustomer", ->
       it "deletes a customer", ->
@@ -46,7 +47,7 @@ describe "CustomersCtrl", ->
         scope.deleteCustomer(customer)
         http.flush()
         expect(scope.customers.length).toBe 1
-        expect(scope.customers[0]).not.toAngularEqual customer
+        expect(scope.customers[0]).not.toDeepEqual customer
 
     describe "scope.findTags", ->
       tags = [
@@ -63,7 +64,7 @@ describe "CustomersCtrl", ->
         promise.then (data) ->
           result = data
         http.flush()
-        expect(result).toAngularEqual tags
+        expect(result).toDeepEqual tags
 
       it "filters the tag list", ->
         filtered_tags = [
@@ -75,4 +76,4 @@ describe "CustomersCtrl", ->
         promise.then (data) ->
           result = data
         http.flush()
-        expect(result).toAngularEqual filtered_tags
+        expect(result).toDeepEqual filtered_tags

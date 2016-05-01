@@ -27,16 +27,16 @@ describe "EnterprisePaymentMethods service", ->
 
   describe "determining payment method colour", ->
     it "returns 'blue' when at least one payment method is selected", ->
-      spyOn(EnterprisePaymentMethods, "selectedCount").andReturn 1
+      spyOn(EnterprisePaymentMethods, "selectedCount").and.returnValue 1
       expect(EnterprisePaymentMethods.displayColor()).toBe "blue"
 
     it "returns 'red' when no payment methods are selected", ->
-      spyOn(EnterprisePaymentMethods, "selectedCount").andReturn 0
+      spyOn(EnterprisePaymentMethods, "selectedCount").and.returnValue 0
       expect(EnterprisePaymentMethods.displayColor()).toBe "red"
 
     it "returns 'red' when no payment methods exist", ->
       EnterprisePaymentMethods.paymentMethods = []
-      spyOn(EnterprisePaymentMethods, "selectedCount").andReturn 1
+      spyOn(EnterprisePaymentMethods, "selectedCount").and.returnValue 1
       expect(EnterprisePaymentMethods.displayColor()).toBe "red"
 
   describe "counting selected payment methods", ->

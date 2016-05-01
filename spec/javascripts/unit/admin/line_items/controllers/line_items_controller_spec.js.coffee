@@ -5,9 +5,10 @@ describe "LineItemsCtrl", ->
   beforeEach ->
     module "admin.lineItems"
 
-    this.addMatchers
-      toDeepEqual: (expected) ->
-        return angular.equals(this.actual, expected)
+    jasmine.addMatchers
+      toDeepEqual: (util, customEqualityTesters) ->
+        compare: (actual, expected) ->
+          { pass: angular.equals(actual, expected) }
 
   beforeEach inject(($controller, $rootScope, $httpBackend, _$timeout_, _VariantUnitManager_, _Enterprises_, _Orders_, _LineItems_, _OrderCycles_) ->
     scope = $rootScope.$new()
@@ -19,9 +20,9 @@ describe "LineItemsCtrl", ->
     LineItems = _LineItems_
     OrderCycles = _OrderCycles_
     VariantUnitManager = _VariantUnitManager_
-    spyOn(window, "daysFromToday").andReturn "SomeDate"
-    spyOn(window, "formatDate").andReturn "SomeDate"
-    spyOn(window, "parseDate").andReturn "SomeDate"
+    spyOn(window, "daysFromToday").and.returnValue "SomeDate"
+    spyOn(window, "formatDate").and.returnValue "SomeDate"
+    spyOn(window, "parseDate").and.returnValue "SomeDate"
 
     supplier = { id: 1, name: "Supplier" }
     distributor = { id: 5, name: "Distributor" }
@@ -51,7 +52,7 @@ describe "LineItemsCtrl", ->
       expect(scope.quickSearch).toBeUndefined()
 
     it "will not have reset the form state to pristine", ->
-      expect(scope.bulk_order_form.$setPristine.calls.length).toEqual 0
+      expect(scope.bulk_order_form.$setPristine.calls.count()).toBe 0
 
   describe "after data is returned", ->
     beforeEach ->
@@ -87,13 +88,13 @@ describe "LineItemsCtrl", ->
         expect(scope.quickSearch).toBe = ""
 
       it "resets the form state to pristine", ->
-        expect(scope.bulk_order_form.$setPristine.calls.length).toEqual 1
+        expect(scope.bulk_order_form.$setPristine.calls.count()).toBe 1
 
     describe "deleting a line item", ->
       order = line_item1 = line_item2 = null
 
       beforeEach inject((LineItemResource) ->
-        spyOn(window,"confirm").andReturn true
+        spyOn(window,"confirm").and.returnValue true
         order = { number: "R12345678" }
         line_item1 = new LineItemResource({ id: 1, order: order })
         line_item2 = new LineItemResource({ id: 2, order: order })
@@ -247,7 +248,7 @@ describe "LineItemsCtrl", ->
         # A Units Variant is an API object which holds unit properies of a variant
 
         beforeEach ->
-          spyOn(Math,"round").andCallThrough()
+          spyOn(Math,"round").and.callThrough()
 
         it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
           expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
@@ -267,14 +268,14 @@ describe "LineItemsCtrl", ->
 
         it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
           unitsVariant = { variant_unit: "weight" }
-          spyOn(VariantUnitManager, "getScale").andReturn 5
+          spyOn(VariantUnitManager, "getScale").and.returnValue 5
           scope.formattedValueWithUnitName(10, unitsVariant)
           expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
 
         it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
           unitsVariant = { variant_unit: "weight" }
-          spyOn(VariantUnitManager, "getScale").andReturn 1000
-          spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
+          spyOn(VariantUnitManager, "getScale").and.returnValue 1000
+          spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
           expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
 
       describe "updating the price upon updating the weight of a line item", ->

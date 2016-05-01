@@ -258,10 +258,10 @@ describe "AdminProductEditCtrl", ->
   describe "loading data upon initialisation", ->
     it "gets a list of producers and then resets products with a list of data", ->
       $httpBackend.expectGET("/api/users/authorise_api?token=API_KEY").respond success: "Use of API Authorised"
-      spyOn($scope, "fetchProducts").andReturn "nothing"
+      spyOn($scope, "fetchProducts").and.returnValue "nothing"
       $scope.initialise()
       $httpBackend.flush()
-      expect($scope.fetchProducts.calls.length).toEqual 1
+      expect($scope.fetchProducts.calls.count()).toBe 1
       expect($scope.spree_api_key_ok).toEqual true
 
 
@@ -277,7 +277,7 @@ describe "AdminProductEditCtrl", ->
       deferred = $q.defer()
       deferred.resolve()
       spyOn $scope, "resetProducts"
-      spyOn(BulkProducts, "fetch").andReturn deferred.promise
+      spyOn(BulkProducts, "fetch").and.returnValue deferred.promise
 
     it "calls resetProducts after data has been received", ->
       $scope.fetchProducts()
@@ -312,13 +312,13 @@ describe "AdminProductEditCtrl", ->
 
   describe "updating the product on hand count", ->
     it "updates when product is not available on demand", ->
-      spyOn($scope, "onHand").andReturn 123
+      spyOn($scope, "onHand").and.returnValue 123
       product = {on_demand: false}
       $scope.updateOnHand(product)
       expect(product.on_hand).toEqual 123
 
     it "updates when product's variants are not available on demand", ->
-      spyOn($scope, "onHand").andReturn 123
+      spyOn($scope, "onHand").and.returnValue 123
       product = {on_demand: false, variants: [{on_demand: false}]}
       $scope.updateOnHand(product)
       expect(product.on_hand).toEqual 123
@@ -610,7 +610,7 @@ describe "AdminProductEditCtrl", ->
     describe "filtering products", ->
       beforeEach ->
         spyOn $scope, "packProduct"
-        spyOn(window, "filterSubmitProducts").andReturn [
+        spyOn(window, "filterSubmitProducts").and.returnValue [
           {
             id: 1
             value: 3
@@ -632,7 +632,7 @@ describe "AdminProductEditCtrl", ->
         $scope.submitProducts()
 
       it "packs all products and all dirty products", ->
-        expect($scope.packProduct.calls.length).toEqual 4
+        expect($scope.packProduct.calls.count()).toBe 4
 
       it "filters returned dirty products", ->
         expect(filterSubmitProducts).toHaveBeenCalledWith
@@ -734,7 +734,7 @@ describe "AdminProductEditCtrl", ->
 
   describe "deleting products", ->
     it "deletes products with a http delete request to /api/products/id/soft_delete", ->
-      spyOn(window, "confirm").andReturn true
+      spyOn(window, "confirm").and.returnValue true
       $scope.products = [
         {
           id: 9
@@ -751,7 +751,7 @@ describe "AdminProductEditCtrl", ->
       $httpBackend.flush()
 
     it "removes the specified product from both $scope.products and $scope.dirtyProducts (if it exists there)", ->
-      spyOn(window, "confirm").andReturn true
+      spyOn(window, "confirm").and.returnValue true
       $scope.products = [
         {
           id: 9
@@ -790,7 +790,7 @@ describe "AdminProductEditCtrl", ->
 
     describe "when the variant has not been saved", ->
       it "removes the variant from products and dirtyProducts", ->
-        spyOn(window, "confirm").andReturn true
+        spyOn(window, "confirm").and.returnValue true
         $scope.products = [
           {id: 1, variants: [{id: -1},{id: -2}]}
         ]
@@ -806,7 +806,7 @@ describe "AdminProductEditCtrl", ->
 
     describe "when the variant has been saved", ->
       it "deletes variants with a http delete request to /api/products/product_permalink/variants/(variant_id)/soft_delete", ->
-        spyOn(window, "confirm").andReturn true
+        spyOn(window, "confirm").and.returnValue true
         $scope.products = [
           {
             id: 9
@@ -832,7 +832,7 @@ describe "AdminProductEditCtrl", ->
         $httpBackend.flush()
 
       it "removes the specified variant from both the variants object and $scope.dirtyProducts (if it exists there)", ->
-        spyOn(window, "confirm").andReturn true
+        spyOn(window, "confirm").and.returnValue true
         $scope.products = [
           {
             id: 9
@@ -927,7 +927,7 @@ describe "converting arrays of objects with ids to an object with ids as keys", 
 
 
   it "sends arrays with the key 'variants' to itself", ->
-    spyOn(window, "toObjectWithIDKeys").andCallThrough()
+    spyOn(window, "toObjectWithIDKeys").and.callThrough()
     array = [
       {
         id: 1

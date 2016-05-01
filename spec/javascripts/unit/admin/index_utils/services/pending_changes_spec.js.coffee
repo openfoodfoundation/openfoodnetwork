@@ -4,7 +4,7 @@ describe "Pending Changes", ->
   beforeEach ->
 
     resourcesMock =
-      update: jasmine.createSpy('update').andCallFake (change) ->
+      update: jasmine.createSpy('update').and.callFake (change) ->
         $promise:
           then: (successFn, errorFn) ->
             return successFn({propertyName: "new_value"}) if change.success
@@ -88,7 +88,7 @@ describe "Pending Changes", ->
 
     it "sends the correct object to dataSubmitter", ->
       pendingChanges.submit change
-      expect(resourcesMock.update.calls.length).toEqual 1
+      expect(resourcesMock.update.calls.count()).toBe 1
       expect(resourcesMock.update).toHaveBeenCalledWith change
 
     describe "successful request", ->
@@ -96,9 +96,9 @@ describe "Pending Changes", ->
         change.success = true
 
       it "calls remove with id and attribute name", ->
-        spyOn(pendingChanges, "remove").andCallFake(->)
+        spyOn(pendingChanges, "remove").and.callFake(->)
         pendingChanges.submit change
-        expect(pendingChanges.remove.calls.length).toEqual 1
+        expect(pendingChanges.remove.calls.count()).toBe 1
         expect(pendingChanges.remove).toHaveBeenCalledWith 1, "propertyName"
 
       it "calls reset on the relevant scope", ->
@@ -114,7 +114,7 @@ describe "Pending Changes", ->
         change.success = false
 
       it "does not call remove", ->
-        spyOn(pendingChanges, "remove").andCallFake(->)
+        spyOn(pendingChanges, "remove").and.callFake(->)
         pendingChanges.submit change
         expect(pendingChanges.remove).not.toHaveBeenCalled()
 
@@ -128,13 +128,13 @@ describe "Pending Changes", ->
 
   describe "cycling through all changes to submit to server", ->
     it "sends the correct object to dataSubmitter", ->
-      spyOn(pendingChanges, "submit").andCallFake(->)
+      spyOn(pendingChanges, "submit").and.callFake(->)
       pendingChanges.pendingChanges =
         1: { "prop1": { attr: "prop1", value: 1 }, "prop2": { attr: "prop2", value: 2 } }
         2: { "prop1": { attr: "prop1", value: 2 }, "prop2": { attr: "prop2", value: 4 } }
         7: { "prop2": { attr: "prop2", value: 5 } }
       pendingChanges.submitAll()
-      expect(pendingChanges.submit.calls.length).toEqual 5
+      expect(pendingChanges.submit.calls.count()).toBe 5
       expect(pendingChanges.submit).toHaveBeenCalledWith { attr: "prop1", value: 1 }
       expect(pendingChanges.submit).toHaveBeenCalledWith { attr: "prop2", value: 2 }
       expect(pendingChanges.submit).toHaveBeenCalledWith { attr: "prop1", value: 2 }
@@ -142,7 +142,7 @@ describe "Pending Changes", ->
       expect(pendingChanges.submit).toHaveBeenCalledWith { attr: "prop2", value: 5 }
 
     it "returns an array of promises representing all sumbit requests", ->
-      spyOn(pendingChanges, "submit").andCallFake (change) -> change.value
+      spyOn(pendingChanges, "submit").and.callFake (change) -> change.value
       pendingChanges.pendingChanges =
         1: { "prop1": { attr: "prop1", value: 1 } }
         2: { "prop1": { attr: "prop1", value: 2 }, "prop2": { attr: "prop1", value: 4 } }

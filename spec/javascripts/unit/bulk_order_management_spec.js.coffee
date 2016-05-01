@@ -10,7 +10,7 @@ describe "AdminOrderMgmtCtrl", ->
     ctrl = $controller
     httpBackend = $httpBackend
     VariantUnitManager = _VariantUnitManager_
-    spyOn(window, "formatDate").andReturn "SomeDate"
+    spyOn(window, "formatDate").and.returnValue "SomeDate"
 
     ctrl "AdminOrderMgmtCtrl", {$scope: scope}
   )
@@ -24,8 +24,8 @@ describe "AdminOrderMgmtCtrl", ->
       httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[is_primary_producer_eq]=true").respond returnedSuppliers
       httpBackend.expectGET("/api/enterprises/accessible?template=bulk_index&q[sells_in][]=own&q[sells_in][]=any").respond returnedDistributors
       httpBackend.expectGET("/api/order_cycles/accessible?as=distributor&q[orders_close_at_gt]=SomeDate").respond returnedOrderCycles
-      spyOn(scope, "initialiseVariables").andCallThrough()
-      spyOn(scope, "fetchOrders").andReturn "nothing"
+      spyOn(scope, "initialiseVariables").and.callThrough()
+      spyOn(scope, "fetchOrders").and.returnValue "nothing"
       #spyOn(returnedSuppliers, "unshift")
       #spyOn(returnedDistributors, "unshift")
       #spyOn(returnedOrderCycles, "unshift")
@@ -36,8 +36,8 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.distributors).toEqual [ { id : '0', name : 'All' }, 'list of distributors' ]
       expect(scope.orderCycles).toEqual [ { id : '0', name : 'All' }, 'oc1', 'oc2', 'oc3' ]
 
-      expect(scope.initialiseVariables.calls.length).toBe 1
-      expect(scope.fetchOrders.calls.length).toBe 1
+      expect(scope.initialiseVariables.calls.count()).toBe 1
+      expect(scope.fetchOrders.calls.count()).toBe 1
       expect(scope.spree_api_key_ok).toBe true
 
   describe "fetching orders", ->
@@ -63,8 +63,8 @@ describe "AdminOrderMgmtCtrl", ->
 
   describe "resetting orders", ->
     beforeEach ->
-      spyOn(scope, "matchObject").andReturn "nothing"
-      spyOn(scope, "resetLineItems").andReturn "nothing"
+      spyOn(scope, "matchObject").and.returnValue "nothing"
+      spyOn(scope, "resetLineItems").and.returnValue "nothing"
       scope.resetOrders [ "order1", "order2", "order3" ]
 
     it "sets the value of $scope.orders to the data received", ->
@@ -77,8 +77,8 @@ describe "AdminOrderMgmtCtrl", ->
     order1 = order2 = order3 = null
 
     beforeEach ->
-      spyOn(scope, "matchObject").andReturn "nothing"
-      spyOn(scope, "lineItemOrder").andReturn "copied order"
+      spyOn(scope, "matchObject").and.returnValue "nothing"
+      spyOn(scope, "lineItemOrder").and.returnValue "copied order"
       order1 = { name: "order1", line_items: [ { name: "line_item1.1" }, { name: "line_item1.1" }, { name: "line_item1.1" } ] }
       order2 = { name: "order2", line_items: [ { name: "line_item2.1" }, { name: "line_item2.1" }, { name: "line_item2.1" } ] }
       order3 = { name: "order3", line_items: [ { name: "line_item3.1" }, { name: "line_item3.1" }, { name: "line_item3.1" } ] }
@@ -92,18 +92,18 @@ describe "AdminOrderMgmtCtrl", ->
       expect(scope.lineItems[6].name).toEqual "line_item3.1"
 
     it "adds a reference to a modified parent order object to each line item", ->
-      expect(scope.lineItemOrder.calls.length).toEqual scope.orders.length
+      expect(scope.lineItemOrder.calls.count()).toBe scope.orders.length
       expect("copied order").toEqual line_item.order for line_item in scope.lineItems
 
     it "calls matchObject once for each line item", ->
-      expect(scope.matchObject.calls.length).toEqual scope.lineItems.length
+      expect(scope.matchObject.calls.count()).toBe scope.lineItems.length
 
   describe "copying orders", ->
     order1copy = null
 
     beforeEach ->
-      spyOn(scope, "lineItemOrder").andCallThrough()
-      spyOn(scope, "matchObject").andReturn "matched object"
+      spyOn(scope, "lineItemOrder").and.callThrough()
+      spyOn(scope, "matchObject").and.returnValue "matched object"
       order1 = { name: "order1", line_items: [  ] }
       scope.orders = [ order1 ]
       order1copy = scope.lineItemOrder order1
@@ -112,7 +112,7 @@ describe "AdminOrderMgmtCtrl", ->
       expect(order1copy.hasOwnProperty("line_items")).toEqual false
 
     it "calls matchObject twice for each order (once for distributor and once for order cycle)", ->
-      expect(scope.matchObject.calls.length).toEqual scope.lineItemOrder.calls.length * 2
+      expect(scope.matchObject.calls.count()).toBe scope.lineItemOrder.calls.count() * 2
       expect(order1copy.distributor).toEqual "matched object"
       expect(order1copy.distributor).toEqual "matched object"
 
@@ -166,7 +166,7 @@ describe "AdminOrderMgmtCtrl", ->
 
     beforeEach ->
       scope.initialiseVariables()
-      spyOn(window,"confirm").andReturn true
+      spyOn(window,"confirm").and.returnValue true
       order = { number: "R12345678", line_items: [] }
       line_item1 = { id: 1, order: order }
       line_item2 = { id: 2, order: order }
@@ -317,7 +317,7 @@ describe "AdminOrderMgmtCtrl", ->
       # A Units Variant is an API object which holds unit properies of a variant
 
       beforeEach ->
-        spyOn(Math,"round").andCallThrough()
+        spyOn(Math,"round").and.callThrough()
 
       it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
         expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
@@ -337,14 +337,14 @@ describe "AdminOrderMgmtCtrl", ->
 
       it "calls Math.round with the quotient of scale and value, multiplied by 1000", ->
         unitsVariant = { variant_unit: "weight" }
-        spyOn(VariantUnitManager, "getScale").andReturn 5
+        spyOn(VariantUnitManager, "getScale").and.returnValue 5
         scope.formattedValueWithUnitName(10, unitsVariant)
         expect(Math.round).toHaveBeenCalledWith 10/5 * 1000
 
       it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
         unitsVariant = { variant_unit: "weight" }
-        spyOn(VariantUnitManager, "getScale").andReturn 1000
-        spyOn(VariantUnitManager, "getUnitName").andReturn "kg"
+        spyOn(VariantUnitManager, "getScale").and.returnValue 1000
+        spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
         expect(scope.formattedValueWithUnitName(2000,unitsVariant)).toEqual "2 kg"
 
     describe "updating the price upon updating the weight of a line item", ->

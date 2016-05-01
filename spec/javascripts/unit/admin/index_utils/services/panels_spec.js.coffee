@@ -29,7 +29,7 @@ describe "Panels service", ->
 
     describe "when no panel is currently selected", ->
       beforeEach ->
-        scopeMock.getSelected = jasmine.createSpy('getSelected').andReturn(null)
+        scopeMock.getSelected = jasmine.createSpy('getSelected').and.returnValue(null)
         Panels.toggle(12, 'panel_name')
 
       it "calls #open on the scope", ->
@@ -37,7 +37,7 @@ describe "Panels service", ->
 
     describe "when #toggle is called for the currently selected panel", ->
       beforeEach ->
-        scopeMock.getSelected = jasmine.createSpy('getSelected').andReturn('panel_name')
+        scopeMock.getSelected = jasmine.createSpy('getSelected').and.returnValue('panel_name')
         Panels.toggle(12, 'panel_name')
 
       it "calls #close on the scope", ->
@@ -45,7 +45,7 @@ describe "Panels service", ->
 
     describe "when #toggle is called for a different panel", ->
       beforeEach ->
-        scopeMock.getSelected = jasmine.createSpy('getSelected').andReturn('some_other_panel_name')
+        scopeMock.getSelected = jasmine.createSpy('getSelected').and.returnValue('some_other_panel_name')
         Panels.toggle(12, 'panel_name')
 
       it "calls #setSelected on the scope", ->
