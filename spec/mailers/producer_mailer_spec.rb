@@ -62,6 +62,10 @@ describe ProducerMailer do
     mail.body.should_not include p3.name
   end
 
+  it "includes the total" do
+    mail.body.should include 'Total: $20.00'
+  end
+
   it "sends no mail when the producer has no orders" do
     expect do
       ProducerMailer.order_cycle_report(s3, order_cycle).deliver
