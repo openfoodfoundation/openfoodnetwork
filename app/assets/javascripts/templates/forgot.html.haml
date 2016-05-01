@@ -1,10 +1,5 @@
-%tab#forgot{"ng-controller" => "ForgotCtrl",
-  heading: "{{'forgot_password' | t}}",
-  active: "active",
-  select: "select(path)"}
-
-  %form{"ng-submit" => "submit()"}
-
+%tab#forgot{ heading: "{{'forgot_password' | t}}", active: "active", select: "select(path)"}
+  %form{ ng: { controller: "ForgotCtrl", submit: "submit()" } }
     .row
       .large-12.columns
         .alert-box.success.radius{"ng-show" => "sent"}

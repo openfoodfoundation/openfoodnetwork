@@ -1,8 +1,5 @@
-%tab#sign-up-content{"ng-controller" => "SignupCtrl",
-  heading: "{{'label_signup' | t}}",
-  active: 'active',
-  select: "select(path)"}
-  %form{"ng-submit" => "submit()"}
+%tab#sign-up-content{ heading: "{{'label_signup' | t}}", active: 'active', select: "select(path)"}
+  %form{ ng: { controller: "SignupCtrl", submit: "submit()" } }
     .row
       .large-12.columns
         %label{for: "email"} {{'signup_email' | t}}
