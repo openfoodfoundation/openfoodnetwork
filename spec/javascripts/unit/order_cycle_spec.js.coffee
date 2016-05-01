@@ -106,11 +106,6 @@ describe 'OrderCycle controllers', ->
         {id: 2, name: 'Pepper Tree Place'}
         ])
 
-    it 'Delegates toggleProducts to OrderCycle', ->
-      scope.toggleProducts(event, 'exchange')
-      expect(event.preventDefault).toHaveBeenCalled()
-      expect(OrderCycle.toggleProducts).toHaveBeenCalledWith('exchange')
-
     it 'Delegates enterpriseFeesForEnterprise to EnterpriseFee', ->
       scope.enterpriseFeesForEnterprise('123')
       expect(EnterpriseFee.forEnterprise).toHaveBeenCalledWith(123)
@@ -271,11 +266,6 @@ describe 'OrderCycle controllers', ->
       expect(scope.enterprisesWithFees()).toEqual([
         {id: 2, name: 'Pepper Tree Place'}
         ])
-
-    it 'Delegates toggleProducts to OrderCycle', ->
-      scope.toggleProducts(event, 'exchange')
-      expect(event.preventDefault).toHaveBeenCalled()
-      expect(OrderCycle.toggleProducts).toHaveBeenCalledWith('exchange')
 
     it 'Delegates enterpriseFeesForEnterprise to EnterpriseFee', ->
       scope.enterpriseFeesForEnterprise('123')
@@ -534,26 +524,6 @@ describe 'OrderCycle services', ->
         OrderCycle.order_cycle.outgoing_exchanges = [exchange]
         expect(OrderCycle.exchangeDirection(exchange)).toEqual 'outgoing'
 
-    describe 'toggling products', ->
-      exchange = null
-
-      beforeEach ->
-        exchange = {}
-
-      it 'sets a blank value to true', ->
-        OrderCycle.toggleProducts(exchange)
-        expect(exchange.showProducts).toEqual(true)
-
-      it 'sets a true value to false', ->
-        exchange.showProducts = true
-        OrderCycle.toggleProducts(exchange)
-        expect(exchange.showProducts).toEqual(false)
-
-      it 'sets a false value to true', ->
-        exchange.showProducts = false
-        OrderCycle.toggleProducts(exchange)
-        expect(exchange.showProducts).toEqual(true)
-
     describe "setting exchange variants", ->
       describe "when I have permissions to edit the variants", ->
         beforeEach ->
@@ -598,7 +568,7 @@ describe 'OrderCycle services', ->
       it 'adds the distributor to outgoing exchanges', ->
         OrderCycle.addDistributor('123')
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
-          {enterprise_id: '123', incoming: false, active: true, variants: {}, enterprise_fees: []}
+          {enterprise_id: '123', incoming: false, active: true, variants: {}, enterprise_fees: [], tags: [], tag_list: ""}
         ]
 
     describe 'removing exchanges', ->
