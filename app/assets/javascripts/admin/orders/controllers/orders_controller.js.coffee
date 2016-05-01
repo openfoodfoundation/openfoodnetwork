@@ -2,13 +2,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $compile, $attr
   $scope.$compile = $compile
   $scope.shops = shops
   $scope.orderCycles = orderCycles
-  for oc in $scope.orderCycles
-    oc.name_and_status = "#{oc.name} (#{oc.status})"
 
-  $scope.distributor_id = $attrs.ofnDistributorId
-  $scope.order_cycle_id = $attrs.ofnOrderCycleId
+  $scope.distributor_id = parseInt($attrs.ofnDistributorId)
+  $scope.order_cycle_id = parseInt($attrs.ofnOrderCycleId)
 
-  $scope.validOrderCycle = (oc, index, array) ->
+  $scope.validOrderCycle = (oc) ->
     $scope.orderCycleHasDistributor oc, parseInt($scope.distributor_id)
 
   $scope.distributorHasOrderCycles = (distributor) ->
@@ -20,3 +18,9 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $compile, $attr
 
   $scope.distributionChosen = ->
     $scope.distributor_id && $scope.order_cycle_id
+
+  for oc in $scope.orderCycles
+    oc.name_and_status = "#{oc.name} (#{oc.status})"
+
+  for shop in $scope.shops
+    shop.disabled = !$scope.distributorHasOrderCycles(shop)
