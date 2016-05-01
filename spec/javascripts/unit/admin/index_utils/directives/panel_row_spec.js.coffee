@@ -1,8 +1,8 @@
 describe "PanelRow directive", ->
   Panels = null
   element = null
+  ctrlScope = null
   panelScope = null
-  rowScope = null
 
   beforeEach ->
     module 'admin.indexUtils'
@@ -14,24 +14,24 @@ describe "PanelRow directive", ->
     Panels = _Panels_
     $templateCache.put 'admin/panel.html', '<span>{{ template }}</span>'
     # Declare the directive HTML.
-    element = angular.element('<table><tbody class="panel-toggle-row"><tr class="panel-row" object="{id: \'12\'}" panels="{ panel1: \'template\'}"></tr></tbody><table>')
+    element = angular.element('<table><tbody class="panel-ctrl"><tr class="panel-row" object="{id: \'12\'}" panels="{ panel1: \'template\'}"></tr></tbody><table>')
     # Define the root scope.
     scope = $rootScope
     # Compile and digest the directive.
     $compile(element) scope
     scope.$digest()
 
-    rowScope = element.find('tbody').isolateScope()
+    ctrlScope = element.find('tbody').isolateScope()
     panelScope = element.find('tr').isolateScope()
     return
 
   describe "initialisation", ->
     it "registers a listener on the row scope", ->
-      expect(rowScope.$$listeners["selection:changed"].length).toEqual 1
+      expect(ctrlScope.$$listeners["selection:changed"].length).toEqual 1
 
   describe "when a select event is triggered on the row scope", ->
     beforeEach ->
-      rowScope.$broadcast('selection:changed', 'panel1')
+      ctrlScope.$broadcast('selection:changed', 'panel1')
 
     it 'updates the active template on the scope', ->
       panelScope.$digest()

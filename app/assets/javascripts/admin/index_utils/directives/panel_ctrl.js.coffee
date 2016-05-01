@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").directive "panelToggleRow", (Panels) ->
+angular.module("admin.indexUtils").directive "panelCtrl", (Panels) ->
   restrict: "C"
   scope:
     object: "="

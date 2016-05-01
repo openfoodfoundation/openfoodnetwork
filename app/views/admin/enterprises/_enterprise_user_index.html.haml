@@ -29,7 +29,7 @@
           %th.package{ ng: { show: 'columns.package.visible' } }=t('.package')
           %th.status{ ng: { show: 'columns.status.visible' } }=t('.status')
           %th.manage{ ng: { show: 'columns.manage.visible' } }=t('.manage')
-      %tbody.panel-toggle-row{ :id => "e_{{enterprise.id}}", object: "enterprise", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" } }
+      %tbody.panel-ctrl{ :id => "e_{{enterprise.id}}", object: "enterprise", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" } }
         %tr.enterprise{ ng: { class: { even: "'even'", odd: "'odd'"} } }
           %td.name{ ng: { show: 'columns.name.visible' } }
             %span{ ng: { bind: "::enterprise.name" } }

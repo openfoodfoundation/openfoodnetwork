@@ -1,6 +1,6 @@
 angular.module("admin.indexUtils").directive "panelRow", (Panels, Columns) ->
   restrict: "C"
-  require: "^^panelToggleRow"
+  require: "^^panelCtrl"
   templateUrl: "admin/panel.html"
   scope:
     object: "="
