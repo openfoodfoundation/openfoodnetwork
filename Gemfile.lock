@@ -153,7 +153,7 @@ GEM
       sprockets (~> 2)
       tilt
     angularjs-file-upload-rails (1.1.0)
-    angularjs-rails (1.4.8)
+    angularjs-rails (1.5.5)
     ansi (1.4.2)
     arel (3.0.3)
     atomic (1.1.99)
@@ -650,7 +650,7 @@ DEPENDENCIES
   andand
   angular-rails-templates (~> 0.2.0)
   angularjs-file-upload-rails (~> 1.1.0)
-  angularjs-rails (= 1.4.8)
+  angularjs-rails (= 1.5.5)
   atomic
   awesome_print
   aws-sdk
