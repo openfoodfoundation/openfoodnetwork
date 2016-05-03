@@ -35,6 +35,8 @@ en:
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
+    welcome:
+      subject: "%{enterprise} is now on "
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
