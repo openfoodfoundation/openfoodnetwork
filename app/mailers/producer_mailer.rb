@@ -46,12 +46,11 @@ class ProducerMailer < Spree::BaseMailer
       else
         lis[li.variant] = li
       end
-
       lis
     end
   end
 
   def total_from_line_items(aggregated_line_items)
-    Spree::Money.new(aggregated_line_items.values.map(&:display_amount).reduce(:+)).to_s
+    Spree::Money.new(aggregated_line_items.values.map(&:total).reduce(:+)).to_s
   end
 end
