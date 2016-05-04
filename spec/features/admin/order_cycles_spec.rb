@@ -139,7 +139,7 @@ feature %q{
     select 'Distributor fee', from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
     # And I click Create
-    click_button 'Create'
+    find_button('Create').trigger('click')
 
     # Then my order cycle should have been created
     page.should have_content 'Your order cycle has been created.'
@@ -866,7 +866,7 @@ feature %q{
       page.should_not have_select 'order_cycle_coordinator_fee_1_id'
 
       select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
-      click_button 'Create'
+      find_button('Create').trigger("click")
 
       # Then my order cycle should have been created
       page.should have_content 'Your order cycle has been created.'
