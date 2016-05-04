@@ -12,4 +12,4 @@
       %i.icon-chevron-left
       Back to my inventory
   .four.columns.omega{ng: { show: 'views.inventory.visible' } }
-    = render 'admin/shared/columns_dropdown'
+    %columns-dropdown{ action: "#{controller_name}_#{action_name}" }

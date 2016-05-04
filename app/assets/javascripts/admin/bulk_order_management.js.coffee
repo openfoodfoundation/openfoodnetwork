@@ -18,19 +18,19 @@ angular.module("ofn.admin").controller "AdminOrderMgmtCtrl", [
       $scope.selectedUnitsVariant = {};
       $scope.sharedResource = false
       $scope.columns = Columns.setColumns
-        order_no:     { name: t("bom_no"), visible: false }
-        full_name:    { name: t("name"),         visible: true }
-        email:        { name: t("email"),     visible: false }
-        phone:        { name: t("phone"),        visible: false }
-        order_date:   { name: t("bom_date"),   visible: true }
-        producer:     { name: t("producer"),     visible: true }
-        order_cycle:  { name: t("bom_cycle"),  visible: false }
-        hub:          { name: t("bom_hub"),          visible: false }
-        variant:      { name: t("bom_variant"),      visible: true }
-        quantity:     { name: t("bom_quantity"),     visible: true }
-        max:          { name: t("bom_max"),          visible: true }
-        final_weight_volume:   { name: t("bom_final_weigth_volume"), visible: false }
-        price:        { name: t("price"),            visible: false }
+        order_no:               { name: t("bom_no"),                  visible: false }
+        full_name:              { name: t("name"),                    visible: true }
+        email:                  { name: t("email"),                   visible: false }
+        phone:                  { name: t("phone"),                   visible: false }
+        order_date:             { name: t("bom_date"),                visible: true }
+        producer:               { name: t("producer"),                visible: true }
+        order_cycle:            { name: t("bom_cycle"),               visible: false }
+        hub:                    { name: t("bom_hub"),                 visible: false }
+        variant:                { name: t("bom_variant"),             visible: true }
+        quantity:               { name: t("bom_quantity"),            visible: true }
+        max:                    { name: t("bom_max"),                 visible: true }
+        final_weight_volume:    { name: t("bom_final_weigth_volume"), visible: false }
+        price:                  { name: t("price"),                   visible: false }
     $scope.initialise = ->
       $scope.initialiseVariables()
       authorise_api_reponse = ""

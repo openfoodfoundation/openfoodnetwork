@@ -9,6 +9,8 @@
       = button_link_to "New Enterprise", main_app.new_admin_enterprise_path, :icon => 'icon-plus', :id => 'admin_new_enterprise_link'
 
 = admin_inject_monthly_bill_description
+= admin_inject_column_preferences module: 'admin.enterprises'
+
 = render 'admin/shared/enterprises_sub_menu'
 
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise_set }

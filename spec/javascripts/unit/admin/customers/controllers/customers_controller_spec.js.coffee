@@ -4,6 +4,10 @@ describe "CustomersCtrl", ->
 
   beforeEach ->
     module('admin.customers')
+    module ($provide) ->
+      $provide.value 'columns', []
+      null
+
     inject ($controller, $rootScope, _CustomerResource_, $httpBackend) ->
       scope = $rootScope
       http = $httpBackend

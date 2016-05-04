@@ -4,6 +4,9 @@ describe "LineItemsCtrl", ->
 
   beforeEach ->
     module "admin.lineItems"
+    module ($provide) ->
+      $provide.value 'columns', []
+      null
 
     jasmine.addMatchers
       toDeepEqual: (util, customEqualityTesters) ->

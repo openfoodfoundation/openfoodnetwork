@@ -176,6 +176,17 @@ ActiveRecord::Schema.define(:version => 20160401043927) do
   add_index "cms_snippets", ["site_id", "identifier"], :name => "index_cms_snippets_on_site_id_and_identifier", :unique => true
   add_index "cms_snippets", ["site_id", "position"], :name => "index_cms_snippets_on_site_id_and_position"
 
+  create_table "column_preferences", :force => true do |t|
+    t.integer  "user_id",     :null => false
+    t.string   "action_name", :null => false
+    t.string   "column_name", :null => false
+    t.boolean  "visible",     :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "column_preferences", ["user_id", "action_name", "column_name"], :name => "index_column_prefs_on_user_id_and_action_name_and_column_name", :unique => true
+
   create_table "coordinator_fees", :force => true do |t|
     t.integer "order_cycle_id"
     t.integer "enterprise_fee_id"
@@ -683,9 +694,9 @@ ActiveRecord::Schema.define(:version => 20160401043927) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end

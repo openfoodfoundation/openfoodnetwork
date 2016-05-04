@@ -5,6 +5,10 @@ describe "EnterprisesCtrl", ->
 
   beforeEach ->
     module('admin.enterprises')
+    module ($provide) ->
+      $provide.value 'columns', []
+      null
+
     inject ($controller, $rootScope, _Enterprises_) ->
       scope = $rootScope
       Enterprises = _Enterprises_

@@ -6,11 +6,7 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, Custo
   $scope.add = Customers.add
   $scope.deleteCustomer = Customers.remove
   $scope.customerLimit = 20
-
-  $scope.columns = Columns.setColumns
-    email:     { name: "Email",    visible: true }
-    code:      { name: "Code",     visible: true }
-    tags:      { name: "Tags",     visible: true }
+  $scope.columns = Columns.columns
 
   $scope.$watch "CurrentShop.shop", ->
     if $scope.CurrentShop.shop.id?

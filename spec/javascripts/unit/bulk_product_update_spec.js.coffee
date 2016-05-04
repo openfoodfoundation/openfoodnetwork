@@ -241,6 +241,7 @@ describe "AdminProductEditCtrl", ->
       $provide.value "taxons", []
       $provide.value "tax_categories", []
       $provide.value 'SpreeApiKey', 'API_KEY'
+      $provide.value 'columns', []
       null
 
   beforeEach inject((_$controller_, _$timeout_, $rootScope, _$httpBackend_, _BulkProducts_, _DirtyProducts_, _DisplayProperties_) ->

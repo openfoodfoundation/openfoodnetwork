@@ -135,6 +135,10 @@ Openfoodnetwork::Application.routes.draw do
     resource :cache_settings
 
     resource :account, only: [:show], controller: 'account'
+
+    resources :column_preferences, only: [], format: :json do
+      put :bulk_update, on: :collection
+    end
   end
 
   namespace :api do

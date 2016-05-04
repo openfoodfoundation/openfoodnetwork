@@ -3,19 +3,21 @@ describe "Columns service", ->
 
   beforeEach ->
     module 'admin.indexUtils'
-
+    module ($provide) ->
+      $provide.value 'columns', [
+        { column_name: 'col1', visible: true }
+        { column_name: 'col2', visible: false }
+      ]
+      null
     inject (_Columns_) ->
       Columns = _Columns_
 
-  describe "setting columns", ->
+  describe "initialising columns", ->
     it "sets resets @columns and copies each column of the provided object across", ->
-      Columns.setColumns({ name: { visible: true } })
-      expect(Columns.columns).toEqual { name: { visible: true } }
+      expect(Columns.columns).toEqual { col1: { column_name: 'col1', visible: true }, col2: { column_name: 'col2', visible: false } }
 
-    it "calls calculateVisibleCount", ->
-      spyOn(Columns, "calculateVisibleCount")
-      Columns.setColumns({ name: { visible: true } })
-      expect(Columns.calculateVisibleCount).toHaveBeenCalled()
+    it "updates visibleCount", ->
+      expect(Columns.visibleCount).toBe 1
 
   describe "toggling a column", ->
     it "switches the visibility of the given column", ->

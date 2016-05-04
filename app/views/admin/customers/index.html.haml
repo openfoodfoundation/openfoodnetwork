@@ -10,6 +10,7 @@
     %a.button.icon-plus#new-customer{ href: "#", "new-customer-dialog" => true }
       = t('admin.customers.index.new_customer')
 
+= admin_inject_column_preferences module: 'admin.customers'
 = admin_inject_shops
 
 %div{ ng: { controller: 'customersCtrl' } }
@@ -26,7 +27,7 @@
       .five.columns.alpha
         %input.fullwidth{ :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Quick Search' }
       .eight.columns &nbsp;
-      = render 'admin/shared/columns_dropdown'
+      %columns-dropdown{ action: "#{controller_name}_#{action_name}" }
   .row{ 'ng-if' => 'CurrentShop.shop.id && RequestMonitor.loading' }
     .sixteen.columns.alpha#loading
       %img.spinner{ src: "/assets/spinning-circles.svg" }
