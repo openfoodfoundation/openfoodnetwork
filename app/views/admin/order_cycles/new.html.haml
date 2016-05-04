@@ -4,7 +4,10 @@
 - ng_controller = order_cycles_simple_form ? 'AdminSimpleCreateOrderCycleCtrl' : 'AdminCreateOrderCycleCtrl'
 = admin_inject_order_cycle_instance
 
-= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller} do |f|
+= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
+
+  %save-bar{ buttons: "[{ text: 'Create', action: submit, param: '#{main_app.admin_order_cycles_path}' }]", form: "order_cycle_form" }
+
   - if order_cycles_simple_form
     = render 'simple_form', f: f
   - else
