@@ -889,10 +889,10 @@ feature %q{
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'zzy'
 
       # And I make some product selections
-      uncheck "order_cycle_incoming_exchange_0_variants_#{v1.id}"
-      check   "order_cycle_incoming_exchange_0_variants_#{v2.id}"
-      check   "order_cycle_incoming_exchange_0_variants_#{v3.id}"
-      uncheck "order_cycle_incoming_exchange_0_variants_#{v3.id}"
+      find("#order_cycle_incoming_exchange_0_variants_#{v1.id}").trigger('click')
+      find("#order_cycle_incoming_exchange_0_variants_#{v2.id}").trigger('click')
+      find("#order_cycle_incoming_exchange_0_variants_#{v3.id}").trigger('click')
+      find("#order_cycle_incoming_exchange_0_variants_#{v3.id}").trigger('click')
 
       # And I select some fees and update
       click_link 'order_cycle_coordinator_fee_0_remove'
@@ -901,9 +901,10 @@ feature %q{
       select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
 
       # When I update, or update and close, both work
-      click_button 'Update'
+      find_button('Update').trigger('click')
       page.should have_content 'Your order cycle has been updated.'
-      click_button 'Update and Close'
+
+      find_button('Update and Close').trigger('click')
 
       # Then my order cycle should have been updated
       page.should have_content 'Your order cycle has been updated.'
