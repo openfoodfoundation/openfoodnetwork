@@ -608,10 +608,6 @@ feature %q{
         page.all('tr.supplier').count.should == 3
         page.all('tr.distributor').count.should == 3
 
-        # # When I save, then those exchanges should remain
-        # click_button 'Update'
-        # page.should have_content "Your order cycle has been updated."
-
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
         oc.coordinator.should == distributor_managed
@@ -699,10 +695,6 @@ feature %q{
         # I should be able to see but not toggle v2, because I don't have permission
         expect(page).to have_field "order_cycle_outgoing_exchange_0_variants_#{v2.id}", disabled: true
 
-        # When I save, any exchanges that I can't manage remain
-        # click_button 'Update'
-        # page.should have_content "Your order cycle has been updated."
-
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
         oc.coordinator.should == distributor_managed
@@ -751,10 +743,6 @@ feature %q{
 
         # I should be able to see but not toggle v2, because I don't have permission
         expect(page).to have_field "order_cycle_incoming_exchange_0_variants_#{v2.id}", disabled: true
-
-        # When I save, any exchange that I can't manage remains
-        # click_button 'Update'
-        # page.should have_content "Your order cycle has been updated."
 
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
