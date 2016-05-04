@@ -9,7 +9,7 @@ describe 'OrderCycle controllers', ->
     EnterpriseFee = null
 
     beforeEach ->
-      scope = { order_cycle_form: { $dirty: false}}
+      scope = {}
       event =
         preventDefault: jasmine.createSpy('preventDefault')
       OrderCycle =

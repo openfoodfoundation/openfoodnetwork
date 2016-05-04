@@ -10,7 +10,8 @@ describe "AdminSimpleEditOrderCycleCtrl", ->
   outgoing_exchange = {}
 
   beforeEach ->
-    scope = {}
+    scope =
+      $watch: jasmine.createSpy('$watch')
     location =
       absUrl: ->
         'example.com/admin/order_cycles/27/edit'

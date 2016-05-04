@@ -624,10 +624,10 @@ feature %q{
         visit edit_admin_order_cycle_path(oc)
 
         # When I remove all the exchanges and save
-        page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
-        page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
-        page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
-        page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
+        page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").trigger('click')
+        page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").trigger('click')
+        page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").trigger('click')
+        page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").trigger('click')
         click_button 'Update'
 
         # Then the exchanges should be removed
@@ -897,7 +897,7 @@ feature %q{
       # And I select some fees and update
       click_link 'order_cycle_coordinator_fee_0_remove'
       page.should_not have_select 'order_cycle_coordinator_fee_0_id'
-      click_button 'Add coordinator fee'
+      find_button('Add coordinator fee').trigger('click')
       select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
 
       # When I update, or update and close, both work
