@@ -117,6 +117,8 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :customers, only: [:index, :create, :update, :destroy]
 
+    resources :tags, only: [:index], format: :json
+
     resource :content
 
     resource :accounts_and_billing_settings, only: [:edit, :update] do

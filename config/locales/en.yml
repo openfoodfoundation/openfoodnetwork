@@ -80,6 +80,10 @@ en:
 
     whats_this: What's this?
 
+    tag_has_rules: "Existing rules for this tag: %{num}"
+    has_one_rule: "has one rule"
+    has_n_rules: "has %{num} rules"
+
     customers:
       index:
         add_customer: "Add customer"

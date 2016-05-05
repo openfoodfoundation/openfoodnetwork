@@ -159,12 +159,12 @@ describe 'Cart service', ->
         expect(li.quantity).toEqual 5
         expect(li.max_quantity).toBeUndefined()
 
-      it "reduces the max_quantity in the cart", ->
+      it "does not reduce the max_quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 6, max_quantity: 7}
         stockLevels = {1: {quantity: 5, max_quantity: 5, on_hand: 5}}
         spyOn(Cart, 'line_items_present').andReturn [li]
         Cart.compareAndNotifyStockLevels stockLevels
-        expect(li.max_quantity).toEqual 5
+        expect(li.max_quantity).toEqual 7
 
       it "resets the count on hand available", ->
         li = {variant: {id: 1}, quantity: 6}

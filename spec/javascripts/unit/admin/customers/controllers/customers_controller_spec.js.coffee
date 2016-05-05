@@ -47,3 +47,32 @@ describe "CustomersCtrl", ->
         http.flush()
         expect(scope.customers.length).toBe 1
         expect(scope.customers[0]).not.toAngularEqual customer
+
+    describe "scope.findTags", ->
+      tags = [
+        { text: 'one' }
+        { text: 'two' }
+        { text: 'three' }
+      ]
+      beforeEach ->
+        http.expectGET('/admin/tags.json?enterprise_id=1').respond 200, tags
+
+      it "retrieves the tag list", ->
+        promise = scope.findTags('')
+        result = null
+        promise.then (data) ->
+          result = data
+        http.flush()
+        expect(result).toAngularEqual tags
+
+      it "filters the tag list", ->
+        filtered_tags = [
+          { text: 'two' }
+          { text: 'three' }
+        ]
+        promise = scope.findTags('t')
+        result = null
+        promise.then (data) ->
+          result = data
+        http.flush()
+        expect(result).toAngularEqual filtered_tags
