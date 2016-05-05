@@ -608,9 +608,16 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc)
 
-        # I should not see exchanges for supplier_unmanaged or distributor_unmanaged
-        page.all('tr.supplier').count.should == 3
-        page.all('tr.distributor').count.should == 3
+        # I should be able to see but not edit exchanges for supplier_unmanaged or distributor_unmanaged
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page).to have_selector "tr.supplier-#{supplier_permitted.id}"
+        expect(page).to have_selector "tr.supplier-#{supplier_unmanaged.id}"
+        expect(page.all('tr.supplier').count).to be 3
+
+        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_unmanaged.id}"
+        expect(page.all('tr.distributor').count).to be 3
 
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
@@ -689,8 +696,12 @@ feature %q{
         # I should only see exchanges for supplier_managed AND
         # distributor_managed and distributor_permitted (who I have given permission to) AND
         # and distributor_unmanaged (who distributes my products)
-        page.all('tr.supplier').count.should == 1
-        page.all('tr.distributor').count.should == 2
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page.all('tr.supplier').count).to be 1
+
+        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
+        expect(page.all('tr.distributor').count).to be 2
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.distributor-#{distributor_managed.id}" do
@@ -738,8 +749,11 @@ feature %q{
         visit edit_admin_order_cycle_path(oc)
 
         # I should see exchanges for my_distributor, and the incoming exchanges supplying the variants in it
-        page.all('tr.supplier').count.should == 1
-        page.all('tr.distributor').count.should == 1
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page.all('tr.supplier').count).to be 1
+
+        expect(page).to have_selector "tr.distributor-#{my_distributor.id}"
+        expect(page.all('tr.distributor').count).to be 1
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.supplier-#{supplier_managed.id}" do

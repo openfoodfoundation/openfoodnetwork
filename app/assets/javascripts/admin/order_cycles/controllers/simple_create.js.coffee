@@ -20,7 +20,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl"
     OrderCycle.order_cycle.coordinator_id = enterprise.id
 
   $scope.loaded = ->
-    Enterprise.loaded && EnterpriseFee.loaded
+    Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
 
   $scope.removeDistributionOfVariant = angular.noop
 

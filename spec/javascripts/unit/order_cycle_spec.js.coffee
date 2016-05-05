@@ -58,12 +58,13 @@ describe 'OrderCycle controllers', ->
 
     describe 'Reporting when all resources are loaded', ->
       it 'returns true when Enterprise and EnterpriseFee are loaded', ->
-        Enterprise.loaded = EnterpriseFee.loaded = true
+        Enterprise.loaded = EnterpriseFee.loaded = OrderCycle.loaded = true
         expect(scope.loaded()).toBe(true)
 
       it 'returns false otherwise', ->
         Enterprise.loaded = true
         EnterpriseFee.loaded = false
+        OrderCycle.loaded = true
         expect(scope.loaded()).toBe(false)
 
     it "delegates suppliedVariants to Enterprise", ->
