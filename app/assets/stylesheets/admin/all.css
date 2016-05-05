@@ -9,7 +9,7 @@
  *= require admin/spree_promo
 
  *= require shared/jquery-ui-timepicker-addon
- *= require shared/textAngular.min
+ *= require shared/textAngular
  *= require shared/ng-tags-input.min
 
  *= require_self
