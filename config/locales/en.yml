@@ -36,7 +36,7 @@ en:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
-      subject: "%{enterprise} is now on "
+      subject: "%{enterprise} is now on %{sitename}"
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
