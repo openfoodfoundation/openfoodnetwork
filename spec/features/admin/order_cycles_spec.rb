@@ -642,7 +642,6 @@ feature %q{
         expect(page).to have_selector "tr.distributor-#{distributor_unmanaged.id}"
         expect(page).to have_selector 'tr.distributor', count: 3
 
-
         # When I save, then those exchanges should remain
         click_button 'Update'
         page.should have_content "Your order cycle has been updated."
