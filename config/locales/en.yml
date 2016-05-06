@@ -32,6 +32,11 @@ en:
         not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
         confirmation_sent: "Confirmation email sent!"
         confirmation_not_sent: "Could not send a confirmation email."
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "Please confirm the email address for %{enterprise}"
+    welcome:
+      subject: "%{enterprise} is now on %{sitename}"
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
