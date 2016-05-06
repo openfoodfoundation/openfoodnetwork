@@ -1,0 +1,7 @@
+%tags-input{ template: 'admin/tag.html', ng: { model: 'object[tagsAttr]' } }
+  %auto-complete{source: "findTags({query: $query})",
+                 template: "admin/tag_autocomplete.html",
+                 "min-length" => "0",
+                 "load-on-focus" => "true",
+                 "load-on-empty" => "true",
+                 "max-results-to-show" => "32"}

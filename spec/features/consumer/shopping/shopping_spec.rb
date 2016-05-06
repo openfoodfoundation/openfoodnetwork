@@ -238,6 +238,17 @@ feature "As a consumer I want to shop with a distributor", js: true do
         Spree::LineItem.where(id: li).should be_empty
       end
 
+      it "alerts us when we enter a quantity greater than the stock available" do
+        variant.update_attributes on_hand: 5
+        visit shop_path
+
+        accept_alert 'Insufficient stock available, only 5 remaining' do
+          fill_in "variants[#{variant.id}]", with: '10'
+        end
+
+        page.should have_field "variants[#{variant.id}]", with: '5'
+      end
+
       describe "when a product goes out of stock just before it's added to the cart" do
         it "stops the attempt, shows an error message and refreshes the products asynchronously" do
           variant.update_attributes! on_hand: 0
@@ -259,7 +270,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           # Update amount available in product list
           #   If amount falls to zero, variant should be greyed out and input disabled
           page.should have_selector "#variant-#{variant.id}.out-of-stock"
-          page.should have_selector "#variants_#{variant.id}[max='0']"
+          page.should have_selector "#variants_#{variant.id}[ofn-on-hand='0']"
           page.should have_selector "#variants_#{variant.id}[disabled='disabled']"
         end
 
@@ -288,33 +299,32 @@ feature "As a consumer I want to shop with a distributor", js: true do
             # Update amount available in product list
             #   If amount falls to zero, variant should be greyed out and input disabled
             page.should have_selector "#variant-#{variant.id}.out-of-stock"
-            page.should have_selector "#variants_#{variant.id}_max[max='0']"
             page.should have_selector "#variants_#{variant.id}_max[disabled='disabled']"
           end
         end
 
         context "when the update is for another product" do
           it "updates quantity" do
-            fill_in "variants[#{variant.id}]", with: '1'
+            fill_in "variants[#{variant.id}]", with: '2'
             wait_until { !cart_dirty }
 
-            variant.update_attributes! on_hand: 0
+            variant.update_attributes! on_hand: 1
 
             fill_in "variants[#{variant2.id}]", with: '1'
             wait_until { !cart_dirty }
 
             within(".out-of-stock-modal") do
               page.should have_content "stock levels for one or more of the products in your cart have reduced"
-              page.should have_content "#{product.name} - #{variant.unit_to_display} is now out of stock."
+              page.should have_content "#{product.name} - #{variant.unit_to_display} now only has 1 remaining"
             end
           end
 
           context "group buy products" do
             let(:product) { create(:simple_product, group_buy: true) }
 
-            it "updates max_quantity" do
-              fill_in "variants[#{variant.id}]", with: '1'
-              fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '2'
+            it "does not update max_quantity" do
+              fill_in "variants[#{variant.id}]", with: '2'
+              fill_in "variant_attributes[#{variant.id}][max_quantity]", with: '3'
               wait_until { !cart_dirty }
               variant.update_attributes! on_hand: 1
 
@@ -325,6 +335,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
                 page.should have_content "stock levels for one or more of the products in your cart have reduced"
                 page.should have_content "#{product.name} - #{variant.unit_to_display} now only has 1 remaining"
               end
+
+              page.should have_field "variants[#{variant.id}]", with: '1'
+              page.should have_field "variant_attributes[#{variant.id}][max_quantity]", with: '3'
             end
           end
         end
