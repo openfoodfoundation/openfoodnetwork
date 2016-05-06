@@ -619,6 +619,9 @@ feature %q{
       end
 
       scenario "editing an order cycle" do
+        # Make the page long enough to avoid the save bar overlaying the form
+        page.driver.resize(1280, 3600)
+
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
 
         visit edit_admin_order_cycle_path(oc)
