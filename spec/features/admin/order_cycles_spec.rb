@@ -267,6 +267,9 @@ feature %q{
 
 
   scenario "updating an order cycle", js: true do
+    # Make the page long enough to avoid the save bar overlaying the form
+    page.driver.resize(1280, 3600)
+
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     initial_variants = oc.variants.sort_by &:id
@@ -317,10 +320,10 @@ feature %q{
     # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
-    page.all("table.exchanges tr.supplier td.products input").each { |e| e.trigger('click') }
+    page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
 
     page.should have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
-    page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).trigger('click') # uncheck (with visible:true filter)
+    page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
 
@@ -343,7 +346,7 @@ feature %q{
     fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'New time 1'
     fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'New instructions 1'
 
-    page.all("table.exchanges tr.distributor td.products input").each { |e| e.trigger('click') }
+    page.all("table.exchanges tr.distributor td.products input").each { |e| e.click }
 
     uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
     check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
@@ -360,7 +363,8 @@ feature %q{
 
     # And I click Update
     expect(page).to have_selector "#save-bar"
-    find_button('Update and Close').trigger('click')
+    save_screenshot('abc.png')
+    click_button 'Update and Close'
 
     # Then my order cycle should have been updated
     page.should have_content 'Your order cycle has been updated.'
@@ -620,10 +624,11 @@ feature %q{
         visit edit_admin_order_cycle_path(oc)
 
         # When I remove all the exchanges and save
-        page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").trigger('click')
-        page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").trigger('click')
-        page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").trigger('click')
-        page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").trigger('click')
+        page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
+        page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
+        page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
+        page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
+
         click_button 'Update'
 
         # Then the exchanges should be removed
@@ -857,6 +862,9 @@ feature %q{
     end
 
     scenario "updating an order cycle" do
+      # Make the page long enough to avoid the save bar overlaying the form
+      page.driver.resize(1280, 3600)
+
       # Given an order cycle with pickup time and instructions
       fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
@@ -877,22 +885,22 @@ feature %q{
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'zzy'
 
       # And I make some product selections
-      find("#order_cycle_incoming_exchange_0_variants_#{v1.id}").trigger('click')
-      find("#order_cycle_incoming_exchange_0_variants_#{v2.id}").trigger('click')
-      find("#order_cycle_incoming_exchange_0_variants_#{v3.id}").trigger('click')
-      find("#order_cycle_incoming_exchange_0_variants_#{v3.id}").trigger('click')
+      uncheck "order_cycle_incoming_exchange_0_variants_#{v1.id}"
+      check   "order_cycle_incoming_exchange_0_variants_#{v2.id}"
+      check   "order_cycle_incoming_exchange_0_variants_#{v3.id}"
+      uncheck "order_cycle_incoming_exchange_0_variants_#{v3.id}"
 
       # And I select some fees and update
       click_link 'order_cycle_coordinator_fee_0_remove'
       page.should_not have_select 'order_cycle_coordinator_fee_0_id'
-      find_button('Add coordinator fee').trigger('click')
+      click_button 'Add coordinator fee'
       select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
 
       # When I update, or update and close, both work
-      find_button('Update').trigger('click')
+      click_button 'Update'
       page.should have_content 'Your order cycle has been updated.'
 
-      find_button('Update and Close').trigger('click')
+      click_button 'Update and Close'
 
       # Then my order cycle should have been updated
       page.should have_content 'Your order cycle has been updated.'
