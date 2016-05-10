@@ -44,7 +44,7 @@ describe ProducerMailer do
   end
 
   it "includes receival instructions" do
-    mail.body.should include 'Outside shed.'
+    mail.body.encoded.should include 'Outside shed.'
   end
 
   it "cc's the enterprise" do
@@ -59,12 +59,11 @@ describe ProducerMailer do
   end
 
   it "does not include incomplete orders" do
-    mail.body.should_not include p3.name
+    mail.body.encoded.should_not include p3.name
   end
 
   it "includes the total" do
-    puts mail.body.encoded
-    mail.body.should include 'Total: $20.00'
+    mail.body.encoded.should include 'Total: $20.00'
   end
 
   it "sends no mail when the producer has no orders" do
