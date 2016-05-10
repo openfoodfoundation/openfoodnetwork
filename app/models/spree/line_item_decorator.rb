@@ -44,12 +44,7 @@ Spree::LineItem.class_eval do
 
 
   def cap_quantity_at_stock!
-    attrs = {}
-
-    attrs[:quantity]     = variant.on_hand if quantity > variant.on_hand
-    attrs[:max_quantity] = variant.on_hand if (max_quantity || 0) > variant.on_hand
-
-    update_attributes!(attrs) if attrs.any?
+    update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
   end
 
 

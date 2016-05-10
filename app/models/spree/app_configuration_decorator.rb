@@ -23,4 +23,7 @@ Spree::AppConfiguration.class_eval do
 
   # Monitoring
   preference :last_job_queue_heartbeat_at, :string, default: nil
+
+  # External services
+  preference :bugherd_api_key, :string, default: nil
 end

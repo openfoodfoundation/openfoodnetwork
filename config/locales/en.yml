@@ -32,6 +32,11 @@ en:
         not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
         confirmation_sent: "Confirmation email sent!"
         confirmation_not_sent: "Could not send a confirmation email."
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "Please confirm the email address for %{enterprise}"
+    welcome:
+      subject: "%{enterprise} is now on %{sitename}"
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
@@ -79,6 +84,10 @@ en:
     viewing: "Viewing: %{current_view_name}"
 
     whats_this: What's this?
+
+    tag_has_rules: "Existing rules for this tag: %{num}"
+    has_one_rule: "has one rule"
+    has_n_rules: "has %{num} rules"
 
     customers:
       index:
@@ -1031,6 +1040,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       pending: pending
       processing: processing
       void: void
+      invalid: invalid
     order_state:
       address: address
       adjustments: adjustments
