@@ -1,6 +1,6 @@
 Dear #{@producer.name},
 \
-We now have all the consumer orders for the next food drop.
+= t :producer_mail_text_before
 \
 - if @receival_instructions
   Stock pickup/delivery instructions:
@@ -18,7 +18,7 @@ Here is a summary of the orders for your products:
 \
 Total: #{@total}
 \
-Thanks and best wishes,
+= t :producer_mail_text_after
 #{@coordinator.name}
 #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
 #{@coordinator.phone}

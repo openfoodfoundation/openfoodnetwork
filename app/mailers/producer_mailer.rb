@@ -7,6 +7,7 @@ class ProducerMailer < Spree::BaseMailer
     @line_items = aggregated_line_items_from(@order_cycle, @producer)
     @receival_instructions = @order_cycle.receival_instructions_for @producer
     @total = total_from_line_items(@line_items)
+    @tax_total = tax_total_from_line_items(@line_items)
 
     subject = "[#{Spree::Config.site_name}] Order cycle report for #{producer.name}"
 
@@ -52,5 +53,9 @@ class ProducerMailer < Spree::BaseMailer
 
   def total_from_line_items(aggregated_line_items)
     Spree::Money.new(aggregated_line_items.values.map(&:total).reduce(:+)).to_s
+  end
+
+  def tax_total_from_line_items(aggregated_line_items)
+    Spree::Money.new(aggregated_line_items.values.map(&:included_tax).reduce(:+)).to_s
   end
 end
