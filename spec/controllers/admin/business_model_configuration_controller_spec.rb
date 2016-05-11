@@ -11,7 +11,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
       account_invoices_monthly_cap: 50,
       account_invoices_tax_rate: 0.1,
       shop_trial_length_days: 30,
-      minimum_billable_turnover: -1
+      minimum_billable_turnover: 0
     })
   end
 
@@ -56,7 +56,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           params[:settings][:account_invoices_monthly_cap] = '-1'
           params[:settings][:account_invoices_tax_rate] = '4'
           params[:settings][:shop_trial_length_days] = '-30'
-          params[:settings][:minimum_billable_turnover] = '-2'
+          params[:settings][:minimum_billable_turnover] = '-1'
           spree_get :update, params
         end
 
@@ -68,7 +68,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           expect(Spree::Config.account_invoices_monthly_cap).to eq 50
           expect(Spree::Config.account_invoices_tax_rate).to eq 0.1
           expect(Spree::Config.shop_trial_length_days).to eq 30
-          expect(Spree::Config.minimum_billable_turnover).to eq -1
+          expect(Spree::Config.minimum_billable_turnover).to eq 0
         end
       end
 
@@ -79,7 +79,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           params[:settings][:account_invoices_monthly_cap] = '30'
           params[:settings][:account_invoices_tax_rate] = '0.15'
           params[:settings][:shop_trial_length_days] = '20'
-          params[:settings][:minimum_billable_turnover] = '0'
+          params[:settings][:minimum_billable_turnover] = '10'
         end
 
         it "sets global config to the specified values" do
@@ -90,7 +90,7 @@ describe Admin::BusinessModelConfigurationController, type: :controller do
           expect(Spree::Config.account_invoices_monthly_cap).to eq 30
           expect(Spree::Config.account_invoices_tax_rate).to eq 0.15
           expect(Spree::Config.shop_trial_length_days).to eq 20
-          expect(Spree::Config.minimum_billable_turnover).to eq 0
+          expect(Spree::Config.minimum_billable_turnover).to eq 10
         end
       end
     end

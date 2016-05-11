@@ -33,8 +33,8 @@ describe BillablePeriod, type: :model do
     context "when no tax is charged" do
       before { Spree::Config.set(:account_invoices_tax_rate, 0) }
 
-      context "when no minimum billable turnover" do
-        before { Spree::Config.set(:minimum_billable_turnover, -1) }
+      context "when minimum billable turnover is zero" do
+        before { Spree::Config.set(:minimum_billable_turnover, 0) }
 
         context "when a fixed cost is included" do
           before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
@@ -47,8 +47,8 @@ describe BillablePeriod, type: :model do
         end
       end
 
-      context "when minimum billable turnover exists" do
-        before { Spree::Config.set(:minimum_billable_turnover, 0) }
+      context "when minimum billable turnover is > zero" do
+        before { Spree::Config.set(:minimum_billable_turnover, 1) }
 
         context "when a fixed cost is included" do
           before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
@@ -65,8 +65,8 @@ describe BillablePeriod, type: :model do
     context "when tax is charged" do
       before { Spree::Config.set(:account_invoices_tax_rate, 0.1) }
 
-      context "when no minimum billable turnover" do
-        before { Spree::Config.set(:minimum_billable_turnover, -1) }
+      context "when minimum billable turnover is zero" do
+        before { Spree::Config.set(:minimum_billable_turnover, 0) }
 
         context "when a fixed cost is included" do
           before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
@@ -79,8 +79,8 @@ describe BillablePeriod, type: :model do
         end
       end
 
-      context "when minimum billable turnover exists" do
-        before { Spree::Config.set(:minimum_billable_turnover, 0) }
+      context "when minimum billable turnover is > zero" do
+        before { Spree::Config.set(:minimum_billable_turnover, 1) }
 
         context "when a fixed cost is included" do
           before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
@@ -102,7 +102,7 @@ describe BillablePeriod, type: :model do
       before { Spree::Config.set(:account_invoices_tax_rate, 0) }
 
       context "when no minimum billable turnover" do
-        before { Spree::Config.set(:minimum_billable_turnover, -1) }
+        before { Spree::Config.set(:minimum_billable_turnover, 0) }
 
         context "when a fixed cost is included" do
           before { Spree::Config.set(:account_invoices_monthly_fixed, 10) }
