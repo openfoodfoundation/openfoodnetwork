@@ -29,7 +29,7 @@ module WebHelper
 
   def current_path_should_be path
     current_path = URI.parse(current_url).path
-    current_path.should == path
+    expect(page).to have_current_path path
   end
 
   def fill_in_fields(field_values)

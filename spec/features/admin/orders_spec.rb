@@ -153,7 +153,7 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/orders'
-    current_path.should == spree.admin_orders_path
+    expect(page).to have_current_path spree.admin_orders_path
 
     # click the 'capture' link for the order
     page.find("[data-action=capture][href*=#{@order.number}]").click
@@ -165,7 +165,7 @@ feature %q{
     @order.payment_state.should == "paid"
 
     # we should still be on the same page
-    current_path.should == spree.admin_orders_path
+    expect(page).to have_current_path spree.admin_orders_path
   end
 
 
