@@ -4,6 +4,10 @@ Spree::PaymentMethod.class_eval do
 
   attr_accessible :distributor_ids
 
+  calculated_adjustments
+
+  after_initialize :init
+
   validates :distributors, presence: { message: "^At least one hub must be selected" }
 
   # -- Scopes
@@ -30,6 +34,11 @@ Spree::PaymentMethod.class_eval do
     where('spree_payment_methods.display_on=? OR spree_payment_methods.display_on=? OR spree_payment_methods.display_on IS NULL', display_on, '').
     where('spree_payment_methods.environment=? OR spree_payment_methods.environment=? OR spree_payment_methods.environment IS NULL', Rails.env, '')
   }
+
+  def init
+    self.class.calculated_adjustments unless reflections.keys.include? :calculator
+    self.calculator ||= Spree::Calculator::FlatRate.new(preferred_amount: 0)
+  end
 
   def has_distributor?(distributor)
     self.distributors.include?(distributor)

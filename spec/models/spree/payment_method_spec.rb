@@ -25,5 +25,13 @@ module Spree
       # Testing else condition
       Spree::Gateway::BogusSimple.clean_name.should == "BogusSimple"
     end
+
+    it "computes the amount of fees" do
+      pickup = create(:payment_method, name: 'pickup')
+      order = create(:order)
+      expect(pickup.compute_amount(order)).to eq 0
+      delivery = create(:payment_method, name: 'delivery', calculator: Calculator::FlatRate.new(preferred_amount: 10))
+      expect(delivery.compute_amount(order)).to eq 10
+    end
   end
 end
