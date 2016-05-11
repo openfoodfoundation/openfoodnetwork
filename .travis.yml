@@ -26,14 +26,14 @@ env:
     - CI_NODE_INDEX=4 KARMA="true" GITHUB_DEPLOY="true"
 
 before_script:
-  - mkdir travis-phantomjs || true
-  - wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
-
   - cp config/database.travis.yml config/database.yml
   - cp config/application.yml.example config/application.yml
   - RAILS_ENV=test bundle exec rake db:create db:schema:load
+
+  - mkdir -p travis-phantomjs
+  - wget -nc https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 || true
+  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis-phantomjs
+  - export PATH=$PWD/travis-phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
 
   - >
     if [ "$KARMA" = "true" ]; then
