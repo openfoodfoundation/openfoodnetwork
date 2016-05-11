@@ -56,7 +56,7 @@ describe "CustomersCtrl", ->
         { text: 'three' }
       ]
       beforeEach ->
-        http.expectGET('/admin/tags.json?enterprise_id=1').respond 200, tags
+        http.expectGET('/admin/tag_rules/map_by_tag.json?enterprise_id=1').respond 200, tags
 
       it "retrieves the tag list", ->
         promise = scope.findTags('')

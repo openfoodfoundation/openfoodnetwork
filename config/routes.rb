@@ -117,7 +117,9 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :customers, only: [:index, :create, :update, :destroy]
 
-    resources :tags, only: [:index], format: :json
+    resources :tag_rules, only: [], format: :json do
+      get :map_by_tag, on: :collection
+    end
 
     resource :content
 

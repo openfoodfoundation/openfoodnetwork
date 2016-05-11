@@ -1,4 +1,4 @@
-angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerResource, TagsResource, $q, Columns, pendingChanges, shops) ->
+angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerResource, TagRuleResource, $q, Columns, pendingChanges, shops) ->
   $scope.shop = {}
   $scope.shops = shops
   $scope.submitAll = pendingChanges.submitAll
@@ -16,7 +16,7 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerR
     defer = $q.defer()
     params =
       enterprise_id: $scope.shop.id
-    TagsResource.index params, (data) =>
+    TagRuleResource.mapByTag params, (data) =>
       filtered = data.filter (tag) ->
         tag.text.toLowerCase().indexOf(query.toLowerCase()) != -1
       defer.resolve filtered

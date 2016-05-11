@@ -7,11 +7,8 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          serialised = ActiveModel::ArraySerializer.new(
-            @collection,
-            each_serializer: Api::Admin::CustomerSerializer,
-            spree_current_user: spree_current_user)
-          render json: serialised.to_json
+          tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: params[:enterprise_id]))
+          render_as_json @collection, tag_rule_mapping: tag_rule_mapping
         end
       end
     end
@@ -20,7 +17,8 @@ module Admin
       @customer = Customer.new(params[:customer])
       if user_can_create_customer?
         @customer.save
-        render json: Api::Admin::CustomerSerializer.new(@customer).to_json
+        tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
+        render_as_json @customer, tag_rule_mapping: tag_rule_mapping
       else
         redirect_to '/unauthorized'
       end
