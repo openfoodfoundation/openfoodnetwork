@@ -1,5 +1,5 @@
 %form{ name: 'variant_overrides_form', ng: { show: "views.inventory.visible" } }
-  %save-bar{ form: "variant_overrides_form", buttons: "[{ text: 'Save Changes', action: update }]" }
+  %save-bar{ form: "variant_overrides_form", buttons: "[{ text: 'Save Changes', action: update, class: 'red'  }]" }
   %table.index.bulk#variant-overrides
     %col.producer{ width: "20%", ng: { show: 'columns.producer.visible' } }
     %col.product{ width: "20%", ng: { show: 'columns.product.visible' } }

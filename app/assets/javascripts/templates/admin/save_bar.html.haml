@@ -1,8 +1,8 @@
 #save-bar.animate-show{ ng: { show: 'form.$dirty || StatusMessage.active()' } }
   .container
-    .twelve.columns.alpha
+    .eight.columns.alpha
       %h5#status-message{ ng: { style: 'StatusMessage.statusMessage.style' } }
         {{ StatusMessage.statusMessage.text || "&nbsp;" }}
-    .four.columns.omega.text-right
-      %input.red{"ng-repeat" => "button in buttons", type: "button", value: "{{button.text}}", ng: { disabled: '!form.$dirty', click: "button.action(button.param)" } }
+    .eight.columns.omega.text-right
+      %input{"ng-repeat" => "button in buttons", type: "button", value: "{{button.text}}", ng: { class: "button.class", click: "button.action(button.param)" } }
 
