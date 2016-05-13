@@ -1,3 +1,3 @@
-Darkswarm.controller "GroupsCtrl", ($scope, Groups, $anchorScroll, $rootScope) ->
+Darkswarm.controller "GroupsCtrl", ($scope, Groups) ->
   $scope.Groups = Groups
   $scope.order = 'position'
