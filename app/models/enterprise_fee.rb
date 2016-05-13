@@ -16,6 +16,10 @@ class EnterpriseFee < ActiveRecord::Base
 
   calculated_adjustments
 
+  # Class name is mis-inferred outside of Spree namespace
+  has_one   :calculator, as: :calculable, dependent: :destroy, class_name: 'Spree::Calculator'
+
+
   attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :inherits_tax_category
 
   FEE_TYPES = %w(packing transport admin sales fundraising)
