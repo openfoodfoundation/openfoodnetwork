@@ -363,7 +363,6 @@ feature %q{
 
     # And I click Update
     expect(page).to have_selector "#save-bar"
-    save_screenshot('abc.png')
     click_button 'Update and Close'
 
     # Then my order cycle should have been updated
