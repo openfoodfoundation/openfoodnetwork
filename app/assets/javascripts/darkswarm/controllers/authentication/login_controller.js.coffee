@@ -1,6 +1,5 @@
 Darkswarm.controller "LoginCtrl", ($scope, $http, $window, AuthenticationService, Redirections, Loading) ->
   $scope.path = "/login"
-  $scope.active = $scope.isActive($scope.path)
 
   $scope.submit = ->
     Loading.message = t 'logging_in'

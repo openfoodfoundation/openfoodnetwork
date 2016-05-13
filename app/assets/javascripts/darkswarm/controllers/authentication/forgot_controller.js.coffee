@@ -1,6 +1,5 @@
 Darkswarm.controller "ForgotCtrl", ($scope, $http, $location, AuthenticationService) ->
   $scope.path = "/forgot"
-  $scope.active = $scope.isActive($scope.path)
   $scope.sent = false
 
   $scope.submit = ->
