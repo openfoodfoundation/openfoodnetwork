@@ -1,7 +1,7 @@
 .product-thumb
   %a{"ng-click" => "triggerProductModal()"}
     %i.ofn-i_057-expand
-    %img{"ng-src" => "::product.primaryImageOrMissing", "ng-click" => "triggerProductModal()"}
+    %img{"ng-src" => "{{::product.primaryImageOrMissing}}", "ng-click" => "triggerProductModal()"}
 
 .row.summary
   .small-10.medium-10.large-11.columns.summary-header

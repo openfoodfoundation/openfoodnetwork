@@ -10,4 +10,4 @@
         %span{"ng-bind" => "::enterprise.name"}
     .small-12.medium-5.large-4.columns.text-right.small-only-text-left
       %p{"ng-bind" => "::[enterprise.address.city, enterprise.address.state_name] | printArray"}
-  %img.hero-img{"ng-src" => "::enterprise.promo_image"}
+  %img.hero-img{"ng-src" => "{{::enterprise.promo_image}}"}

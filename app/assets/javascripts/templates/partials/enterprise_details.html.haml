@@ -22,7 +22,7 @@
       -#         / TODO: Rob - need popover, use will's directive or this? http://pineconellc.github.io/angular-foundation/
       -#
       .about-container.pad-top
-        %img.enterprise-logo{"ng-src" => "::enterprise.logo", "ng-if" => "::enterprise.logo"}
+        %img.enterprise-logo{"ng-src" => "{{::enterprise.logo}}", "ng-if" => "::enterprise.logo"}
         %p.text-small{"ng-bind-html" => "::enterprise.long_description"}
   .small-12.large-4.columns
     %ng-include{src: "'partials/contact.html'"}
