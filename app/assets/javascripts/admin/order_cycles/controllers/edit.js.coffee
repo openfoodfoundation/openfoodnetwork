@@ -91,8 +91,7 @@ angular.module('admin.orderCycles')
     $scope.submit = ($event, destination) ->
       $event.preventDefault()
       StatusMessage.display 'progress', "Saving..."
-      OrderCycle.update(destination)
-      $scope.order_cycle_form.$setPristine()
+      OrderCycle.update(destination, $scope.order_cycle_form)
 
     $scope.cancel = (destination) ->
       $window.location = destination

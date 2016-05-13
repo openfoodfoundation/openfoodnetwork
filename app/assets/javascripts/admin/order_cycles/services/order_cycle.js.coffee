@@ -154,11 +154,12 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
         else
           console.log('Failed to create order cycle')
 
-    update: (destination) ->
+    update: (destination, form) ->
       return unless @confirmNoDistributors()
       oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
       oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
         if data['success']
+          form.$setPristine() if form
           if destination?
             $window.location = destination
           else

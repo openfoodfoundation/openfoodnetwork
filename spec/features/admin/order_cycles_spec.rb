@@ -464,7 +464,7 @@ feature %q{
     click_link 'Order Cycles'
     click_link oc.name
     within("table.exchanges tbody tr.supplier") { page.find('td.products input').click }
-    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).click # uncheck
+    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).trigger('click') # uncheck
     click_button "Update"
 
     # Then the master variant should have been removed from all exchanges
@@ -917,6 +917,7 @@ feature %q{
       click_button 'Update'
       page.should have_content 'Your order cycle has been updated.'
 
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'yyz'
       click_button 'Update and Close'
 
       # Then my order cycle should have been updated
@@ -936,7 +937,7 @@ feature %q{
       # And my pickup time and instructions should have been saved
       ex = oc.exchanges.outgoing.first
       ex.pickup_time.should == 'xy'
-      ex.pickup_instructions.should == 'zzy'
+      ex.pickup_instructions.should == 'yyz'
     end
   end
 

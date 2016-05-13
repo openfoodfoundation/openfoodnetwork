@@ -38,7 +38,8 @@
 
   .row.margin-bottom-50{ ng: { show: "!RequestMonitor.loading && filteredCustomers.length > 0" } }
     %form{ name: "customers_form" }
-      %save-bar{ buttons: "[{ text: 'Save Changes', action: submitAll, param: customers_form, class: 'red'  }]", form: "customers_form" }
+      %save-bar{ dirty: "customers_form.$dirty", persist: "false" }
+        %input.red{ type: "button", value: "Save Changes", ng: { click: "submitAll(customers_form)", disabled: "!customers_form.$dirty" } }
 
       %table.index#customers
         %col.email{ width: "20%"}

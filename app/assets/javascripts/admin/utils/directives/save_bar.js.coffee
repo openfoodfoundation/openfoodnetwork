@@ -1,8 +1,9 @@
 angular.module("admin.utils").directive "saveBar", (StatusMessage) ->
   restrict: "E"
+  transclude: true
   scope:
-    form: "="
-    buttons: "="
+    dirty: "="
+    persist: "=?"
   templateUrl: "admin/save_bar.html"
   link: (scope, element, attrs) ->
     scope.StatusMessage = StatusMessage

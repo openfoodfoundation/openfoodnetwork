@@ -327,8 +327,7 @@ describe 'OrderCycle controllers', ->
       eventMock = {preventDefault: jasmine.createSpy()}
       scope.submit(eventMock,'/admin/order_cycles')
       expect(eventMock.preventDefault).toHaveBeenCalled()
-      expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles')
-      expect(scope.order_cycle_form.$setPristine.calls.count()).toEqual 1
+      expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles', scope.order_cycle_form)
 
 
 describe 'OrderCycle services', ->
@@ -844,15 +843,17 @@ describe 'OrderCycle services', ->
         spyOn(OrderCycle, 'confirmNoDistributors').and.returnValue true
 
       it 'redirects to the destination page on success', ->
+        form = jasmine.createSpyObj('order_cycle_form', ['$dirty', '$setPristine'])
         OrderCycle.order_cycle = 'this is the order cycle'
         spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
         $httpBackend.expectPUT('/admin/order_cycles.json?reloading=1', {
           order_cycle: 'this is the submit data'
           }).respond {success: true}
 
-        OrderCycle.update('/destination/page')
+        OrderCycle.update('/destination/page', form)
         $httpBackend.flush()
         expect($window.location).toEqual('/destination/page')
+        expect(form.$setPristine.calls.count()).toBe 1
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'

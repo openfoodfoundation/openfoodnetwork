@@ -29,7 +29,10 @@
 - ng_controller = order_cycles_simple_form ? 'AdminSimpleEditOrderCycleCtrl' : 'AdminEditOrderCycleCtrl'
 = form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
 
-  %save-bar{ buttons: "[{ text: 'Update', action: submit, param: null, class: 'red' }, { text: 'Update and Close', action: submit, param: '#{main_app.admin_order_cycles_path}', class: 'red' }, { text: 'Cancel', action: cancel, param: '#{main_app.admin_order_cycles_path}', class: '' }]", form: "order_cycle_form" }
+  %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
+    %input.red{ type: "button", value: "Update", ng: { click: "submit($event, null)", disabled: "!order_cycle_form.$dirty" } }
+    %input.red{ type: "button", value: "Update and Close", ng: { click: "submit($event, '#{main_app.admin_order_cycles_path}')", disabled: "!order_cycle_form.$dirty" } }
+    %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? 'Cancel' : 'Close'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
 
   - if order_cycles_simple_form
     = render 'simple_form', f: f
