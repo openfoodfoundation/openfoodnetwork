@@ -10,21 +10,23 @@ describe ProducerMailer do
   let(:p1) { create(:product, price: 12.34, supplier: s1) }
   let(:p2) { create(:product, price: 23.45, supplier: s2) }
   let(:p3) { create(:product, price: 34.56, supplier: s1) }
+  let(:p4) { create(:product, price: 45.67, supplier: s1) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:incoming_exchange) { order_cycle.exchanges.create! sender: s1, receiver: d1, incoming: true, receival_instructions: 'Outside shed.' }
 
   let!(:order) do
     order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
-    order.line_items << create(:line_item, variant: p1.master)
-    order.line_items << create(:line_item, variant: p1.master)
-    order.line_items << create(:line_item, variant: p2.master)
+    order.line_items << create(:line_item, variant: p1.variants.first)
+    order.line_items << create(:line_item, variant: p1.variants.first)
+    order.line_items << create(:line_item, variant: p2.variants.first)
+    order.line_items << create(:line_item, variant: p4.variants.first)
     order.finalize!
     order.save
     order
   end
   let!(:order_incomplete) do
     order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'payment')
-    order.line_items << create(:line_item, variant: p3.master)
+    order.line_items << create(:line_item, variant: p3.variants.first)
     order.save
     order
   end
@@ -63,7 +65,7 @@ describe ProducerMailer do
   end
 
   it "includes the total" do
-    mail.body.encoded.should include 'Total: $20.00'
+    mail.body.encoded.should include 'Total: $30.00'
   end
 
   it "sends no mail when the producer has no orders" do
