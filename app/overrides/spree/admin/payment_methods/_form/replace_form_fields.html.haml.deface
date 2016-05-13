@@ -34,3 +34,7 @@
       &nbsp;
       = label_tag nil, t(:say_no)
   = render 'providers'
+
+  .row
+    .omega.eleven.columns
+      = render partial: 'spree/admin/shared/calculator_fields', :locals => { :f => f }

@@ -40,9 +40,7 @@ module Spree
   module Core
     class Environment
       class Calculators
-        include EnvironmentExtension
-
-        attr_accessor :enterprise_fees
+        attr_accessor :enterprise_fees, :payment_methods
       end
     end
   end
