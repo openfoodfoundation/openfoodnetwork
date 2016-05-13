@@ -9,7 +9,7 @@ gem 'i18n', '~> 0.6.11'
 gem 'nokogiri', '>= 1.6.7.1'
 
 gem 'pg'
-gem 'spree', github: 'openfoodfoundation/spree', branch: '1-3-stable'
+gem 'spree', github: 'openfoodfoundation/spree', branch: 'spree-upgrade-step1c'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '1-3-stable'
 
