@@ -328,7 +328,7 @@ describe 'OrderCycle controllers', ->
       scope.submit(eventMock,'/admin/order_cycles')
       expect(eventMock.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles')
-      expect(scope.order_cycle_form.$setPristine.calls.length).toEqual 1
+      expect(scope.order_cycle_form.$setPristine.calls.count()).toEqual 1
 
 
 describe 'OrderCycle services', ->
