@@ -91,8 +91,11 @@ en:
 
     customers:
       index:
-        add_customer: "Add customer"
+        add_customer: "Add Customer"
+        new_customer: "New Customer"
         customer_placeholder: "customer@example.org"
+        valid_email_error: Please enter a valid email address
+        add_a_new_customer_for: Add a new customer for %{shop_name}
     inventory:
       title: Inventory
       description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page

@@ -16,9 +16,12 @@ module Admin
     def create
       @customer = Customer.new(params[:customer])
       if user_can_create_customer?
-        @customer.save
-        tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
-        render_as_json @customer, tag_rule_mapping: tag_rule_mapping
+        if @customer.save
+          tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
+          render_as_json @customer, tag_rule_mapping: tag_rule_mapping
+        else
+          render json: { errors: @customer.errors.full_messages }, status: 400
+        end
       else
         redirect_to '/unauthorized'
       end

@@ -14,7 +14,7 @@ describe "CustomersCtrl", ->
           { pass: angular.equals(actual, expected) }
 
   it "has no shop pre-selected", ->
-    expect(scope.shop).toEqual {}
+    expect(scope.CurrentShop.shop).toEqual {}
 
   describe "setting the shop on scope", ->
     customer = { id: 5, email: 'someone@email.com'}
@@ -23,7 +23,7 @@ describe "CustomersCtrl", ->
     beforeEach ->
       http.expectGET('/admin/customers.json?enterprise_id=1').respond 200, customers
       scope.$apply ->
-        scope.shop = {id: 1}
+        scope.CurrentShop.shop = {id: 1}
       http.flush()
 
     it "retrievs the list of customers", ->
@@ -33,7 +33,7 @@ describe "CustomersCtrl", ->
       it "creates a new customer", ->
         email = "customer@example.org"
         newCustomer = {id: 6, email: email}
-        customers.push(newCustomer)
+        customers.unshift(newCustomer)
         http.expectPOST('/admin/customers.json?email=' + email + '&enterprise_id=1').respond 200, newCustomer
         scope.add(email)
         http.flush()

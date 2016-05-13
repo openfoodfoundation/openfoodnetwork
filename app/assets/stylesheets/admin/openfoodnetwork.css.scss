@@ -28,6 +28,9 @@ text-angular .ta-editor {
   left: 275px;
 }
 
+span.error, div.error {
+	color: #DA5354;
+}
 
 /* Fix conflict between Spree and elRTE's styles */
 .el-rte .toolbar {
