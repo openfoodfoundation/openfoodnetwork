@@ -38,7 +38,8 @@
 
   .row.margin-bottom-50{ ng: { show: "!RequestMonitor.loading && filteredCustomers.length > 0" } }
     %form{ name: "customers_form" }
-      %save-bar{ save: "submitAll(customers_form)", form: "customers_form" }
+      %save-bar{ buttons: "[{ text: 'Save Changes', action: submitAll, param: customers_form, class: 'red'  }]", form: "customers_form" }
+
       %table.index#customers
         %col.email{ width: "20%"}
         %col.code{ width: "20%"}

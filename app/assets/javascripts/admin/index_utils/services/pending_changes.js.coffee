@@ -16,7 +16,7 @@ angular.module("admin.indexUtils").factory "pendingChanges", ($q, resources, Sta
         delete @pendingChanges["#{id}"]["#{attr}"]
         delete @pendingChanges["#{id}"] if @changeCount( @pendingChanges["#{id}"] ) < 1
 
-    submitAll: (form=null) =>
+    submitAll: (event=null, form=null) =>
       all = []
       @errors = []
       StatusMessage.display('progress', "Saving...")
