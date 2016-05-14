@@ -124,6 +124,15 @@ module Spree
           expect(li_no_tax.included_tax).to eq 0.00
         end
       end
+
+      context "scaling included tax by quantity" do
+        it "multiplies included_tax" do
+          li_tax.quantity = 3
+          li_tax.save
+          expect(li_tax.included_tax).to eq 10.00
+          expect(li_tax.included_tax_amount).to eq 30.00
+        end
+      end
     end
 
     describe "unit value/description" do

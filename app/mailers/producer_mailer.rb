@@ -56,6 +56,6 @@ class ProducerMailer < Spree::BaseMailer
   end
 
   def tax_total_from_line_items(aggregated_line_items)
-    Spree::Money.new aggregated_line_items.values.map(&:included_tax).sum
+    Spree::Money.new aggregated_line_items.values.map(&:included_tax_amount).sum
   end
 end

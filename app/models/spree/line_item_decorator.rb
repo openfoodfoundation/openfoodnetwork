@@ -52,8 +52,13 @@ Spree::LineItem.class_eval do
     adjustments.included_tax.any?
   end
 
+  # Single
   def included_tax
     adjustments.included_tax.sum(&:included_tax)
+  end
+
+  def included_tax_amount
+    included_tax * quantity
   end
 
   def price_with_adjustments
@@ -77,8 +82,12 @@ Spree::LineItem.class_eval do
     Spree::Money.new(amount_with_adjustments, { :currency => currency })
   end
 
-  def display_included_tax
-    Spree::Money.new(included_tax, { :currency => currency })
+  def display_included_tax_amount
+    Spree::Money.new(included_tax_amount, { :currency => currency })
+  end
+
+  def display_amount_without_tax
+    Spree::Money.new(amount_with_adjustments - included_tax_amount, { currency: currency })
   end
 
   def display_name
