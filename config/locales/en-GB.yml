@@ -1006,7 +1006,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
-
   spree:
     shipment_states:
       backorder: backorder
@@ -1024,6 +1023,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       pending: pending
       processing: processing
       void: void
+      invalid: invalid
     order_state:
       address: address
       adjustments: adjustments

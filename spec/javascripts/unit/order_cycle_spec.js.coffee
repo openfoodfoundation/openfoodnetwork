@@ -169,7 +169,9 @@ describe 'OrderCycle controllers', ->
     EnterpriseFee = null
 
     beforeEach ->
-      scope = {}
+      scope =
+        order_cycle_form: jasmine.createSpyObj('order_cycle_form', ['$dirty', '$setPristine'])
+        $watch: jasmine.createSpy('$watch')
       event =
         preventDefault: jasmine.createSpy('preventDefault')
       location =
@@ -292,6 +294,7 @@ describe 'OrderCycle controllers', ->
       scope.removeExchange(event, 'exchange')
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.removeExchange).toHaveBeenCalledWith('exchange')
+      expect(scope.order_cycle_form.$dirty).toEqual true
 
     it 'Adds coordinator fees', ->
       scope.addCoordinatorFee(event)
@@ -320,6 +323,7 @@ describe 'OrderCycle controllers', ->
     it 'Submits the order cycle via OrderCycle update', ->
       scope.submit('/admin/order_cycles')
       expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles')
+      expect(scope.order_cycle_form.$setPristine.calls.length).toEqual 1
 
 
 describe 'OrderCycle services', ->

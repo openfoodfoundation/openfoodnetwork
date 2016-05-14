@@ -1,10 +1,11 @@
 angular.module("admin.utils").directive "tagsWithTranslation", ($timeout) ->
   restrict: "E"
-  template: "<tags-input ng-model='object[tagsAttr]'>"
+  templateUrl: "admin/tags_input.html"
   scope:
     object: "="
     tagsAttr: "@?"
     tagListAttr: "@?"
+    findTags: "&"
   link: (scope, element, attrs) ->
     $timeout ->
       scope.tagsAttr ||= "tags"
