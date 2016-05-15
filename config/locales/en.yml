@@ -410,7 +410,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   If you are a producer or food enterprise, we are excited to have you as a part of the network."
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at"
 
+  producer_mail_greeting: "Dear"
   producer_mail_text_before: "We now have all the consumer orders for the next food drop."
+  producer_mail_order_text: "Here is a summary of the orders for your products:"
+  producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_text_after: "Thanks and best wishes,"
 
   shopping_oc_closed: Orders are closed

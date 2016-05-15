@@ -1,12 +1,15 @@
-%p Dear #{@producer.name},
+%p
+  = t :producer_mail_greeting
+  #{" " + @producer.name},
 %p
   = t :producer_mail_text_before
   - if @receival_instructions
     %p
-      Stock pickup/delivery instructions:
+      %b
+        =t :producer_mail_delivery_instructions
       = @receival_instructions
 %p
-  Here is a summary of the orders for your products:
+  = t :producer_mail_order_text
   %table.order-summary
     %thead
       %tr
@@ -40,7 +43,7 @@
           %td.text-right
             #{line_item.display_total}
           %td.text-right
-            #{line_item.display_included_tax}
+            #{line_item.display_included_tax_amount}
       %tr.total_row
         %td
         %td
@@ -57,6 +60,13 @@
     %p
       #{@coordinator.name}
     %p
-      #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
+      %br
+        #{@coordinator.address.address1}
+      %br
+        #{@coordinator.address.city}
+      %br
+        #{@coordinator.address.zipcode}
+    %p
       #{@coordinator.phone}
+    %p
       #{@coordinator.email}
