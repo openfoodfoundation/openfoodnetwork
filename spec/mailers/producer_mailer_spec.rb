@@ -65,7 +65,6 @@ describe ProducerMailer do
   end
 
   it "includes the total" do
-    puts mail.body.encoded
     mail.body.encoded.should include 'Total: $30.00'
   end
 
