@@ -8,9 +8,9 @@
     %tr
       %th.producer=t('admin.producer')
       %th.product=t('admin.product')
-      %th.variant=t('(admin.variant')
-      %th.add=t('admin.inventory.add')
-      %th.hide=t('admin.inventory.hide')
+      %th.variant=t('admin.variant')
+      %th.add=t('admin.variant_overrides.index.add')
+      %th.hide=t('admin.variant_overrides.index.hide')
   %tbody{ ng: { repeat: 'product in filteredProducts | limitTo:productLimit' } }
     %tr{ id: "v_{{variant.id}}", ng: { repeat: 'variant in product.variants | inventoryVariants:hub_id:views' } }
       %td.producer{ ng: { bind: '::producersByID[product.producer_id].name'} }
@@ -20,7 +20,7 @@
         .variant-override-unit{ ng: { bind: '::variant.unit_to_display'} }
       %td.add
         %button.fullwidth.icon-plus{ ng: { click: "setVisibility(hub_id,variant.id,true)" } }
-          = t('admin.inventory.add')
+          = t('admin.variant_overrides.index.add')
       %td.hide
         %button.fullwidth.hide.icon-remove{ ng: { click: "setVisibility(hub_id,variant.id,false)" } }
-          = t('admin.inventory.hide')
+          = t('admin.variant_overrides.index.hide')

@@ -24,12 +24,11 @@
       %col.manage{ width: "18%", ng: { show: 'columns.manage.visible' }}
       %thead
         %tr{ ng: { controller: "ColumnsCtrl" } }
-          %th.name{ ng: { show: 'columns.name.visible' } }
-            Name
-          %th.producer{ ng: { show: 'columns.producer.visible' } } Producer?
-          %th.package{ ng: { show: 'columns.package.visible' } } Package
-          %th.status{ ng: { show: 'columns.status.visible' } } Status
-          %th.manage{ ng: { show: 'columns.manage.visible' } } Manage
+          %th.name{ ng: { show: 'columns.name.visible' } }=t('admin.name')
+          %th.producer{ ng: { show: 'columns.producer.visible' } }=t('.producer?')
+          %th.package{ ng: { show: 'columns.package.visible' } }=t('.package')
+          %th.status{ ng: { show: 'columns.status.visible' } }=t('.status')
+          %th.manage{ ng: { show: 'columns.manage.visible' } }=t('.manage')
       %tbody{ :id => "e_{{enterprise.id}}", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )", controller: 'EnterpriseIndexRowCtrl' } }
         %tr.enterprise.panel-toggle-row{ object: "enterprise", ng: { class: { even: "'even'", odd: "'odd'"} } }
           %td.name{ ng: { show: 'columns.name.visible' } }

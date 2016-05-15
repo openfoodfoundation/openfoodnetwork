@@ -255,12 +255,12 @@ feature %q{
           it "deletes overrides when values are cleared" do
             first("div#columns-dropdown", :text => "COLUMNS").click
             first("div#columns-dropdown div.menu div.menu_item", text: "On Demand").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "Reset Stock Level").click
+            first("div#columns-dropdown div.menu div.menu_item", text: "Enable Stock Reset?").click
             first("div#columns-dropdown", :text => "COLUMNS").click
 
             # Clearing values by 'inheriting'
             first("div#columns-dropdown", :text => "COLUMNS").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "Inheritance").click
+            first("div#columns-dropdown div.menu div.menu_item", text: "Inherit?").click
             first("div#columns-dropdown", :text => "COLUMNS").click
             check "variant-overrides-#{variant3.id}-inherit"
 

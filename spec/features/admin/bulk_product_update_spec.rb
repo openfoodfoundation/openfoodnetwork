@@ -250,7 +250,7 @@ feature %q{
 
     find("div#columns-dropdown", :text => "COLUMNS").click
     find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-    find("div#columns-dropdown div.menu div.menu_item", text: "Category").click
+    find("div#columns-dropdown div.menu div.menu_item", text: /^Category?/).click
     find("div#columns-dropdown div.menu div.menu_item", text: "Inherits Properties?").click
     find("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
     find("div#columns-dropdown", :text => "COLUMNS").click

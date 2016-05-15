@@ -9,68 +9,73 @@ module OpenFoodNetwork
     # for a given user, action_name and column_name
 
     def variant_overrides_index_columns
+      node = 'admin.variant_overrides.index'
       {
-        producer:     { name: "Producer",           visible: true },
-        product:      { name: "Product",            visible: true },
-        sku:          { name: "SKU",                visible: false },
-        price:        { name: "Price",              visible: true },
-        on_hand:      { name: "On Hand",            visible: true },
-        on_demand:    { name: "On Demand",          visible: false },
-        reset:        { name: "Reset Stock Level",  visible: false },
-        inheritance:  { name: "Inheritance",        visible: false },
-        visibility:   { name: "Hide",               visible: false }
+        producer:     { name: I18n.t("admin.producer"),         visible: true },
+        product:      { name: I18n.t("admin.product"),          visible: true },
+        sku:          { name: I18n.t("admin.sku"),              visible: false },
+        price:        { name: I18n.t("admin.price"),            visible: true },
+        on_hand:      { name: I18n.t("admin.on_hand"),          visible: true },
+        on_demand:    { name: I18n.t("admin.on_demand?"),       visible: false },
+        reset:        { name: I18n.t("#{node}.enable_reset?"),  visible: false },
+        inheritance:  { name: I18n.t("#{node}.inherit?"),       visible: false },
+        visibility:   { name: I18n.t("#{node}.hide"),           visible: false }
       }
     end
 
     def customers_index_columns
+      node = 'admin.customers.index'
       {
-        email:  { name: "Email", visible: true },
-        code:   { name: "Code",  visible: true },
-        tags:   { name: "Tags",  visible: true }
+        email:  { name: I18n.t("admin.email"),   visible: true },
+        code:   { name: I18n.t("#{node}.code"),  visible: true },
+        tags:   { name: I18n.t("admin.tags"),    visible: true }
       }
     end
 
     def orders_bulk_management_columns
+      node = "admin.orders.bulk_management"
       {
-        order_no:               { name: t("bom_no"),                  visible: false },
-        full_name:              { name: t("name"),                    visible: true },
-        email:                  { name: t("email"),                   visible: false },
-        phone:                  { name: t("phone"),                   visible: false },
-        order_date:             { name: t("bom_date"),                visible: true },
-        producer:               { name: t("producer"),                visible: true },
-        order_cycle:            { name: t("bom_cycle"),               visible: false },
-        hub:                    { name: t("bom_hub"),                 visible: false },
-        variant:                { name: t("bom_variant"),             visible: true },
-        quantity:               { name: t("bom_quantity"),            visible: true },
-        max:                    { name: t("bom_max"),                 visible: true },
-        final_weight_volume:    { name: t("bom_final_weigth_volume"), visible: false },
-        price:                  { name: t("price"),                   visible: false }
+        order_no:               { name: I18n.t("#{node}.order_no"),       visible: false },
+        full_name:              { name: I18n.t("admin.name"),             visible: true },
+        email:                  { name: I18n.t("admin.email"),            visible: false },
+        phone:                  { name: I18n.t("admin.phone"),            visible: false },
+        order_date:             { name: I18n.t("#{node}.order_date"),     visible: true },
+        producer:               { name: I18n.t("admin.producer"),         visible: true },
+        order_cycle:            { name: I18n.t("admin.order_cycle"),      visible: false },
+        hub:                    { name: I18n.t("admin.shop"),             visible: false },
+        variant:                { name: I18n.t("#{node}.product_unit"),   visible: true },
+        quantity:               { name: I18n.t("admin.quantity"),         visible: true },
+        max:                    { name: I18n.t("#{node}.max"),            visible: true },
+        final_weight_volume:    { name: I18n.t("#{node}.weight_volume"),  visible: false },
+        price:                  { name: I18n.t("admin.price"),            visible: false }
       }
     end
 
     def products_bulk_edit_columns
+      node = "admin.products.bulk_edit"
       {
-        producer:             { name: t("products_producer"),             visible: true },
-        sku:                  { name: t("products_sku"),                  visible: false },
-        name:                 { name: t("products_name"),                 visible: true },
-        unit:                 { name: t("products_unit"),                 visible: true },
-        price:                { name: t("products_price"),                visible: true },
-        on_hand:              { name: t("products_on_hand"),              visible: true },
-        on_demand:            { name: t("products_on_demand"),            visible: false },
-        category:             { name: t("products_category"),             visible: false },
-        tax_category:         { name: t("products_tax_category"),         visible: false },
-        inherits_properties:  { name: t("products_inherits_properties"),  visible: false },
-        available_on:         { name: t("products_available_on"),         visible: false }
+        producer:             { name: I18n.t("admin.producer"),                visible: true },
+        sku:                  { name: I18n.t("admin.sku"),                     visible: false },
+        name:                 { name: I18n.t("admin.name"),                    visible: true },
+        unit:                 { name: I18n.t("#{node}.unit"),                  visible: true },
+        price:                { name: I18n.t("admin.price"),                   visible: true },
+        on_hand:              { name: I18n.t("admin.on_hand"),                 visible: true },
+        on_demand:            { name: I18n.t("admin.on_demand"),               visible: false },
+        category:             { name: I18n.t("#{node}.category"),              visible: false },
+        tax_category:         { name: I18n.t("#{node}.tax_category"),          visible: false },
+        inherits_properties:  { name: I18n.t("#{node}.inherits_properties?"),  visible: false },
+        available_on:         { name: I18n.t("#{node}.available_on"),          visible: false }
       }
     end
 
     def enterprises_index_columns
+      node = "admin.enterprises.index"
       {
-        name:     { name: "Name",     visible: true },
-        producer: { name: "Producer", visible: true },
-        package:  { name: "Package",  visible: true },
-        status:   { name: "Status",   visible: true },
-        manage:   { name: "Manage",   visible: true }
+        name:     { name: I18n.t("admin.name"),         visible: true },
+        producer: { name: I18n.t("#{node}.producer?"),  visible: true },
+        package:  { name: I18n.t("#{node}.package"),    visible: true },
+        status:   { name: I18n.t("#{node}.status"),     visible: true },
+        manage:   { name: I18n.t("#{node}.manage"),     visible: true }
       }
     end
   end

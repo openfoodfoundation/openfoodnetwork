@@ -47,8 +47,9 @@ module Admin
       admin_inject_json_ams_array opts[:module], "inventoryItems", @inventory_items, Api::Admin::InventoryItemSerializer
     end
 
-    def admin_inject_column_preferences(opts={module: 'ofn.admin'})
-      column_preferences = ColumnPreference.for(spree_current_user, "#{controller_name}_#{action_name}")
+    def admin_inject_column_preferences(opts={})
+      opts.reverse_merge!(module: 'ofn.admin', action: "#{controller_name}_#{action_name}")
+      column_preferences = ColumnPreference.for(spree_current_user, opts[:action])
       admin_inject_json_ams_array opts[:module], "columns", column_preferences, Api::Admin::ColumnPreferenceSerializer
     end
 

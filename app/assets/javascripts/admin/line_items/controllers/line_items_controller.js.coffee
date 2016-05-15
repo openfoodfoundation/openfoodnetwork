@@ -5,14 +5,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.confirmDelete = true
   $scope.startDate = formatDate daysFromToday -7
   $scope.endDate = formatDate daysFromToday 1
-  $scope.bulkActions = [ { name: t("bom_actions_delete"), callback: 'deleteLineItems' } ]
+  $scope.bulkActions = [ { name: t("admin.orders.bulk_management.actions_delete"), callback: 'deleteLineItems' } ]
   $scope.selectedUnitsProduct = {}
   $scope.selectedUnitsVariant = {}
   $scope.sharedResource = false
   $scope.columns = Columns.columns
 
   $scope.confirmRefresh = ->
-    LineItems.allSaved() || confirm(t "unsaved_changes_warning")
+    LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
 
   $scope.resetSelectFilters = ->
     $scope.distributorFilter = blankOption().id
