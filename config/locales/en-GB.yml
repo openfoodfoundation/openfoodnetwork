@@ -58,6 +58,14 @@ en-GB:
 
   sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
 
+  # To customise text in emails.
+  producer_mail_greeting: "Dear"
+  producer_mail_text_before: "We now have all the consumer orders for the next food drop."
+  producer_mail_order_text: "Here is a summary of the orders for your products:"
+  producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
+  producer_mail_text_after: "Please confirm that you have got this email. Please send me an invoice for this amount so that we can send you payment. If you need to phone me on the day, please use the number below."
+  producer_mail_signoff: "Thanks and best wishes"
+
 
   admin:
     # General form elements
