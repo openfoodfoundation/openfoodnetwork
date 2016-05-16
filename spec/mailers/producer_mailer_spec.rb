@@ -58,6 +58,9 @@ describe ProducerMailer do
       line.should include 'QTY: 2'
       line.should include '@ $10.00 = $20.00'
     end
+    Capybara.string(mail.html_part.body.encoded)
+      .find("table.order-summary tr", text: p1.name)
+      .should have_selector("td", text: "$20.00")
   end
 
   it "does not include incomplete orders" do
@@ -66,6 +69,9 @@ describe ProducerMailer do
 
   it "includes the total" do
     mail.body.encoded.should include 'Total: $30.00'
+    Capybara.string(mail.html_part.body.encoded)
+      .find("tr.total-row")
+      .should have_selector("td", text: "$30.00")
   end
 
   it "sends no mail when the producer has no orders" do
