@@ -1,5 +1,24 @@
 module Spree
   Payment.class_eval do
+    has_one :adjustment, as: :source, dependent: :destroy
+
+    after_save :ensure_correct_adjustment, :update_order
+
+    def ensure_correct_adjustment
+      if adjustment
+        adjustment.originator = payment_method
+        adjustment.label = adjustment_label
+        adjustment.save
+      else
+        payment_method.create_adjustment(adjustment_label, order, self, true)
+        reload
+      end
+    end
+
+    def adjustment_label
+      I18n.t('payment_method_fee')
+    end
+
     # Pin payments lacks void and credit methods, but it does have refund
     # Here we swap credit out for refund and remove void as a possible action
     def actions_with_pin_payment_adaptations

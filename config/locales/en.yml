@@ -1038,6 +1038,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   properties: "Properties"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
+  payment_method_fee: "Transaction fee"
   enterprise_fees: "Enterprise Fees"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"

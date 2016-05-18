@@ -26,6 +26,7 @@
                     name: "order.payment_method_id",
                     "ng-model" => "order.payment_method_id"
                   = method.name
+                  = "(#{payment_method_price(method, @order)})"
 
                 %small.error.medium.input-text{"ng-show" => "!fieldValid('order.payment_method_id')"}
                   = "{{ fieldErrors('order.payment_method_id') }}"

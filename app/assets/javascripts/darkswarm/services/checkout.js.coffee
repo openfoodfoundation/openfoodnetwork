@@ -62,8 +62,11 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
     shippingPrice: ->
       @shippingMethod()?.price || 0.0
 
+    paymentPrice: ->
+      @paymentMethod()?.price || 0.0
+
     paymentMethod: ->
       PaymentMethods.payment_methods_by_id[@order.payment_method_id]
 
     cartTotal: ->
-      @shippingPrice() + @order.display_total
+      @order.display_total + @shippingPrice() + @paymentPrice()
