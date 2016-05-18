@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminEditOrderCycleCtrl', ($scope, $filter, $location, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
+  .controller 'AdminEditOrderCycleCtrl', ($scope, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
@@ -11,6 +11,9 @@ angular.module('admin.orderCycles')
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
 
     $scope.StatusMessage = StatusMessage
+
+    $scope.$watch 'order_cycle_form.$dirty', (newValue) ->
+      StatusMessage.display 'notice', 'You have unsaved changes' if newValue
 
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
@@ -60,6 +63,7 @@ angular.module('admin.orderCycles')
     $scope.removeExchange = ($event, exchange) ->
       $event.preventDefault()
       OrderCycle.removeExchange(exchange)
+      $scope.order_cycle_form.$dirty = true
 
     $scope.addCoordinatorFee = ($event) ->
       $event.preventDefault()
@@ -81,4 +85,9 @@ angular.module('admin.orderCycles')
       OrderCycle.removeDistributionOfVariant(variant_id)
 
     $scope.submit = (destination) ->
+      StatusMessage.display 'progress', "Saving..."
       OrderCycle.update(destination)
+      $scope.order_cycle_form.$setPristine()
+
+    $scope.cancel = (destination) ->
+      $window.location = destination

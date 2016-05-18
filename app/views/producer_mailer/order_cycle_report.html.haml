@@ -1,0 +1,62 @@
+%p Dear #{@producer.name},
+%p
+  = t :producer_mail_text_before
+  - if @receival_instructions
+    %p
+      Stock pickup/delivery instructions:
+      = @receival_instructions
+%p
+  Here is a summary of the orders for your products:
+  %table.order-summary
+    %thead
+      %tr
+        %th
+          = t :sku
+        %th
+          = t :supplier
+        %th
+          = t :product
+        %th.text-right
+          = t :quantity
+        %th.text-right
+          = t :price
+        %th.text-right
+          = t :subtotal
+        %th.text-right
+          = t :included_tax
+    %tbody
+      - @line_items.each_pair do |variant, line_item|
+        %tr
+          %td
+            #{variant.sku}
+          %td
+            #{raw(variant.product.supplier.name)}
+          %td
+            #{raw(variant.product_and_full_name)}
+          %td.text-right
+            #{line_item.quantity}
+          %td.text-right
+            #{line_item.single_money}
+          %td.text-right
+            #{line_item.display_total}
+          %td.text-right
+            #{line_item.display_included_tax}
+      %tr.total_row
+        %td
+        %td
+        %td
+        %td
+        %td
+        %td.text-right
+          #{@total}
+        %td.text-right
+          #{@tax_total}
+%p
+  = t :producer_mail_text_after
+  %em
+    %p
+      #{@coordinator.name}
+    %p
+      #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
+      #{@coordinator.phone}
+      #{@coordinator.email}

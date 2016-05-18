@@ -90,11 +90,17 @@ describe Spree.user_class do
     let!(:d1_order_for_u2) { create(:completed_order_with_totals, distributor: distributor1, user_id: u2.id) }
     let!(:d1o3) { create(:order, state: 'cart', distributor: distributor1, user_id: u1.id) }
     let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: u2.id) }
+    let!(:accounts_distributor) {create :distributor_enterprise}
+    let!(:order_account_invoice) { create(:order, distributor: accounts_distributor, state: 'complete', user: u1) }
 
     let!(:completed_payment) { create(:payment, order: d1o1, state: 'completed') }
-    let!(:payment) { create(:payment, order: d1o2, state: 'invalid') }
+    let!(:payment) { create(:payment, order: d1o2, state: 'checkout') }
 
-    it "returns enterprises that the user has ordered from" do
+    before do
+      Spree::Config.accounts_distributor_id = accounts_distributor.id
+    end
+
+    it "returns enterprises that the user has ordered from, excluding accounts distributor" do
       expect(u1.enterprises_ordered_from).to eq [distributor1.id]
     end
 
@@ -114,8 +120,8 @@ describe Spree.user_class do
       expect(u1.orders_by_distributor.first.distributed_orders).not_to include d1o3
     end
 
-    it "doesn't return uncompleted payments" do
-      expect(u1.orders_by_distributor.first.distributed_orders.map(&:payments).flatten).not_to include payment
+    it "doesn't return payments that are still at checkout stage" do
+      expect(u1.orders_by_distributor.first.distributed_orders.map{|o| o.payments}.flatten).not_to include payment
     end
   end
 end
