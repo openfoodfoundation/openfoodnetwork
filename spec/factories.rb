@@ -286,6 +286,10 @@ FactoryGirl.define do
     month { 1 + rand(12) }
   end
 
+  factory :filter_order_cycles_tag_rule, class: TagRule::FilterOrderCycles do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+  end
+
   factory :filter_shipping_methods_tag_rule, class: TagRule::FilterShippingMethods do
     enterprise { FactoryGirl.create :distributor_enterprise }
   end
