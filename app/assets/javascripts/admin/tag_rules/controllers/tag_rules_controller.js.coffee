@@ -32,6 +32,9 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, ente
       when "FilterProducts"
         newRule.peferred_variant_tags = []
         newRule.preferred_matched_variants_visibility = "visible"
+      when "FilterOrderCycles"
+        newRule.peferred_exchange_tags = []
+        newRule.preferred_matched_order_cycles_visibility = "visible"
     tagGroup.rules.push(newRule)
     updateRuleCounts()
 

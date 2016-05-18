@@ -40,4 +40,12 @@ module Api::Admin::TagRule
       object.preferred_variant_tags.split(",")
     end
   end
+
+  class FilterOrderCyclesSerializer < BaseSerializer
+    attributes :preferred_matched_order_cycles_visibility, :exchange_tags
+
+    def exchange_tags
+      object.preferred_exchange_tags.split(",")
+    end
+  end
 end
