@@ -4,51 +4,86 @@ describe EnterprisesController do
   describe "shopping for a distributor" do
     let(:order) { controller.current_order(true) }
 
-    before(:each) do
-      @current_distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
-      @distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
-      @order_cycle1 = create(:simple_order_cycle, distributors: [@distributor], orders_open_at: 2.days.ago, orders_close_at: 3.days.from_now )
-      @order_cycle2 = create(:simple_order_cycle, distributors: [@distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now )
-      order.set_distributor! @current_distributor
+
+    let!(:current_distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+    let!(:order_cycle1) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 2.days.ago, orders_close_at: 3.days.from_now ) }
+    let!(:order_cycle2) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now ) }
+
+    before do
+      order.set_distributor! current_distributor
     end
 
     it "sets the shop as the distributor on the order when shopping for the distributor" do
-      spree_get :shop, {id: @distributor}
+      spree_get :shop, {id: distributor}
 
-      controller.current_order.distributor.should == @distributor
+      controller.current_order.distributor.should == distributor
       controller.current_order.order_cycle.should be_nil
     end
 
     it "sorts order cycles by the distributor's preferred ordering attr" do
-      @distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_close_at')
-      spree_get :shop, {id: @distributor}
-      assigns(:order_cycles).should == [@order_cycle1, @order_cycle2].sort_by(&:orders_close_at)
+      distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_close_at')
+      spree_get :shop, {id: distributor}
+      assigns(:order_cycles).should == [order_cycle1, order_cycle2].sort_by(&:orders_close_at)
 
-      @distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_open_at')
-      spree_get :shop, {id: @distributor}
-      assigns(:order_cycles).should == [@order_cycle1, @order_cycle2].sort_by(&:orders_open_at)
+      distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_open_at')
+      spree_get :shop, {id: distributor}
+      assigns(:order_cycles).should == [order_cycle1, order_cycle2].sort_by(&:orders_open_at)
+    end
+
+    context "using FilterOrderCycles tag rules" do
+      let!(:order_cycle3) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now) }
+      let!(:oc3_exchange) { order_cycle3.exchanges.outgoing.to_enterprise(distributor).first }
+      let!(:customer) { create(:customer, enterprise: distributor) }
+
+      before do
+        order.update_attribute(:customer_id, customer.id)
+      end
+
+      it "shows order cycles allowed by the rule" do
+        create(:filter_order_cycles_tag_rule,
+          enterprise: distributor,
+          preferred_customer_tags: "wholesale",
+          preferred_exchange_tags: "wholesale",
+          preferred_matched_order_cycles_visibility: 'visible')
+
+        spree_get :shop, {id: distributor}
+        expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3
+
+        oc3_exchange.update_attribute(:tag_list, "wholesale")
+
+        spree_get :shop, {id: distributor}
+        expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2
+        expect(assigns(:order_cycles)).not_to include order_cycle3
+
+        customer.update_attribute(:tag_list, ["wholesale"])
+        order.reload
+
+        spree_get :shop, {id: distributor}
+        expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3
+      end
     end
 
     it "empties an order that was set for a previous distributor, when shopping at a new distributor" do
       line_item = create(:line_item)
       controller.current_order.line_items << line_item
 
-      spree_get :shop, {id: @distributor}
+      spree_get :shop, {id: distributor}
 
-      controller.current_order.distributor.should == @distributor
+      controller.current_order.distributor.should == distributor
       controller.current_order.order_cycle.should be_nil
       controller.current_order.line_items.size.should == 0
     end
 
     it "should not empty an order if returning to the same distributor" do
       product = create(:product)
-      create(:product_distribution, product: product, distributor: @current_distributor)
+      create(:product_distribution, product: product, distributor: current_distributor)
       line_item = create(:line_item, variant: product.master)
       controller.current_order.line_items << line_item
 
-      spree_get :shop, {id: @current_distributor}
+      spree_get :shop, {id: current_distributor}
 
-      controller.current_order.distributor.should == @current_distributor
+      controller.current_order.distributor.should == current_distributor
       controller.current_order.order_cycle.should be_nil
       controller.current_order.line_items.size.should == 1
     end
@@ -56,10 +91,10 @@ describe EnterprisesController do
     describe "when an out of stock item is in the cart" do
       let(:variant) { create(:variant, on_demand: false, on_hand: 10) }
       let(:line_item) { create(:line_item, variant: variant) }
-      let(:order_cycle) { create(:simple_order_cycle, distributors: [@distributor], variants: [variant]) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
 
       before do
-        order.set_distribution! @current_distributor, order_cycle
+        order.set_distribution! current_distributor, order_cycle
         order.line_items << line_item
 
         Spree::Config.set allow_backorders: false
@@ -68,19 +103,19 @@ describe EnterprisesController do
       end
 
       it "redirects to the cart" do
-        spree_get :shop, {id: @current_distributor}
+        spree_get :shop, {id: current_distributor}
 
         response.should redirect_to spree.cart_path
       end
     end
 
     it "sets order cycle if only one is available at the chosen distributor" do
-      @order_cycle2.destroy
+      order_cycle2.destroy
 
-      spree_get :shop, {id: @distributor}
+      spree_get :shop, {id: distributor}
 
-      controller.current_order.distributor.should == @distributor
-      controller.current_order.order_cycle.should == @order_cycle1
+      controller.current_order.distributor.should == distributor
+      controller.current_order.order_cycle.should == order_cycle1
     end
   end
 

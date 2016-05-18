@@ -19,6 +19,13 @@ class BaseController < ApplicationController
     @order_cycles = OrderCycle.with_distributor(@distributor).active
     .order(@distributor.preferred_shopfront_order_cycle_order)
 
+    @distributor.apply_tag_rules(
+     type: "FilterOrderCycles",
+     subject: @order_cycles,
+     customer_tags: current_order.andand.customer.andand.tag_list || [],
+     shop: @distributor
+    )
+
     # And default to the only order cycle if there's only the one
     if @order_cycles.count == 1
       current_order(true).set_order_cycle! @order_cycles.first
