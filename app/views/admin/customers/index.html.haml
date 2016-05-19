@@ -43,9 +43,9 @@
         %input.red{ type: "button", value: "Save Changes", ng: { click: "submitAll(customers_form)", disabled: "!customers_form.$dirty" } }
 
       %table.index#customers
-        %col.email{ width: "20%"}
-        %col.code{ width: "20%"}
-        %col.tags{ width: "50%"}
+        %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }
+        %col.code{ width: "20%", 'ng-show' => 'columns.code.visible' }
+        %col.tags{ width: "50%", 'ng-show' => 'columns.tags.visible' }
         %col.actions{ width: "10%"}
         %thead
           %tr{ ng: { controller: "ColumnsCtrl" } }
