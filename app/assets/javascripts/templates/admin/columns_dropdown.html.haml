@@ -7,4 +7,5 @@
       %span.name {{column.name }}
     %hr
     %div.menu_item.text-center
-      %input.fullwidth.red{ type: "button", ng: { value: "saved() ? 'Saved': 'Save As Default'", disabled: "saved()", click: "saveColumnPreferences(action)"} }
+      %input.fullwidth.orange{ type: "button", ng: { value: "saved() ? 'Saved': 'Saving'", show: "saved() || saving", disabled: "saved()" } }
+      %input.fullwidth.red{ type: "button", value: 'Save As Default', ng: { show: "!saved() && !saving", click: "saveColumnPreferences(action)"} }
