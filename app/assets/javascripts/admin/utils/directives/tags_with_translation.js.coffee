@@ -8,6 +8,8 @@ angular.module("admin.utils").directive "tagsWithTranslation", ($timeout) ->
     findTags: "&"
     form: '=?'
   link: (scope, element, attrs) ->
+    scope.findTags = undefined unless attrs.hasOwnProperty("findTags")
+
     $timeout ->
       scope.tagsAttr ||= "tags"
       scope.tagListAttr ||= "tag_list"
