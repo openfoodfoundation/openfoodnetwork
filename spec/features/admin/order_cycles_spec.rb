@@ -723,11 +723,11 @@ feature %q{
         # distributor_managed and distributor_permitted (who I have given permission to) AND
         # and distributor_unmanaged (who distributes my products)
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
-        expect(page.all('tr.supplier').count).to be 1
+        expect(page).to have_selector 'tr.supplier', count: 1
 
         expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
         expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
-        expect(page.all('tr.distributor').count).to be 2
+        expect(page).to have_selector 'tr.distributor', count: 2
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.distributor-#{distributor_managed.id}" do
@@ -782,10 +782,10 @@ feature %q{
 
         # I should see exchanges for my_distributor, and the incoming exchanges supplying the variants in it
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
-        expect(page.all('tr.supplier').count).to be 1
+        expect(page).to have_selector 'tr.supplier', count: 1
 
         expect(page).to have_selector "tr.distributor-#{my_distributor.id}"
-        expect(page.all('tr.distributor').count).to be 1
+        expect(page).to have_selector 'tr.distributor', count: 1
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.supplier-#{supplier_managed.id}" do
