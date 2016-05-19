@@ -1,1 +1,1 @@
-angular.module("admin.paymentMethods", ['ngTagsInput', 'admin.utils'])
+angular.module("admin.paymentMethods", ['ngTagsInput', 'admin.utils', 'templates'])
