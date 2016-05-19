@@ -25,7 +25,7 @@
           = t :price
         %th.text-right
           = t :subtotal
-        -#%th.text-right
+        %th.text-right
           = t :included_tax
     %tbody
       - @line_items.each_pair do |variant, line_item|
@@ -42,7 +42,7 @@
             #{line_item.single_money}
           %td.text-right
             #{line_item.display_total}
-          -#%td.text-right
+          %td.text-right
             #{line_item.display_included_tax_amount}
       %tr.total-row
         %td
@@ -52,7 +52,7 @@
         %td
         %td.text-right
           #{@total}
-        -#%td.text-right
+        %td.text-right
           #{@tax_total}
 %p
   = t :producer_mail_text_after

@@ -68,6 +68,7 @@ describe ProducerMailer do
   end
 
   it "includes the total" do
+    puts mail.text_part.body.encoded
     mail.body.encoded.should include 'Total: $30.00'
     Capybara.string(mail.html_part.body.encoded)
       .find("tr.total-row")
