@@ -631,6 +631,8 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc)
 
+        fill_in 'order_cycle_name', with: 'Coordinated'
+
         # I should be able to see but not edit exchanges for supplier_unmanaged or distributor_unmanaged
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector "tr.supplier-#{supplier_permitted.id}"
@@ -735,10 +737,11 @@ feature %q{
         end
 
         # I should be able to see and toggle v1
-        expect(page).to have_field "order_cycle_outgoing_exchange_0_variants_#{v1.id}", disabled: false
+        expect(page).to have_checked_field "order_cycle_outgoing_exchange_0_variants_#{v1.id}", disabled: false
+        uncheck "order_cycle_outgoing_exchange_0_variants_#{v1.id}"
 
         # I should be able to see but not toggle v2, because I don't have permission
-        expect(page).to have_field "order_cycle_outgoing_exchange_0_variants_#{v2.id}", disabled: true
+        expect(page).to have_checked_field "order_cycle_outgoing_exchange_0_variants_#{v2.id}", disabled: true
 
         page.should_not have_selector "table.exchanges tr.distributor-#{distributor_managed.id} td.tags"
 
@@ -768,8 +771,14 @@ feature %q{
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
-        ex = oc.exchanges.where(sender_id: distributor_managed, receiver_id: my_distributor, incoming: false).first
-        ex.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # Incoming exchange
+        ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed, incoming: true).first
+        ex_in.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # Outgoing exchange
+        ex_out = oc.exchanges.where(sender_id: distributor_managed, receiver_id: my_distributor, incoming: false).first
+        ex_out.update_attributes(variant_ids: [v1.id, v2.id])
 
         # Stub editable_variants_for_incoming_exchanges method so we can test permissions
         serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
@@ -793,10 +802,11 @@ feature %q{
         end
 
         # I should be able to see and toggle v1
-        expect(page).to have_field "order_cycle_incoming_exchange_0_variants_#{v1.id}", disabled: false
+        expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{v1.id}", disabled: false
+        uncheck "order_cycle_incoming_exchange_0_variants_#{v1.id}"
 
         # I should be able to see but not toggle v2, because I don't have permission
-        expect(page).to have_field "order_cycle_incoming_exchange_0_variants_#{v2.id}", disabled: true
+        expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{v2.id}", disabled: true
 
         page.should have_selector "table.exchanges tr.distributor-#{my_distributor.id} td.tags"
 
