@@ -40,6 +40,6 @@ Spree::OrderMailer.class_eval do
   end
 
   def find_order(order)
-    order.respond_to?(:id) ? order : Spree::Order.find(order)
+    @order = order.respond_to?(:id) ? order : Spree::Order.find(order)
   end
 end
