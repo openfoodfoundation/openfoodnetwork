@@ -6,7 +6,7 @@ Spree::Money.class_eval do
   end
 
   def rounded
-    @options[:no_cents] = true if @money.amount % 1 == 0
+    @options[:no_cents] = true if @money.dollars % 1 == 0
     to_s
   end
 end
