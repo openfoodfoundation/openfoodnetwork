@@ -1,4 +1,4 @@
-angular.module("ofn.admin").directive "ofnTrackMaster", ["DirtyProducts", (DirtyProducts) ->
+angular.module("ofn.admin").directive "ofnTrackMaster", (DirtyProducts) ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     ngModel.$parsers.push (viewValue) ->
@@ -6,4 +6,3 @@ angular.module("ofn.admin").directive "ofnTrackMaster", ["DirtyProducts", (Dirty
         DirtyProducts.addMasterProperty scope.product.id, scope.product.master.id, attrs.ofnTrackMaster, viewValue
         scope.displayDirtyProducts()
       viewValue
-  ]

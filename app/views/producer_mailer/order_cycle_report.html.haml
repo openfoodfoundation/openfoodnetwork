@@ -1,0 +1,74 @@
+%p
+  = t :producer_mail_greeting
+  #{" " + @producer.name},
+%p
+  = t :producer_mail_text_before
+  - if @receival_instructions
+    %p
+      %b
+        =t :producer_mail_delivery_instructions
+      = @receival_instructions
+%p
+  = t :producer_mail_order_text
+  %table.order-summary
+    %thead
+      %tr
+        %th
+          = t :sku
+        %th
+          = t :supplier
+        %th
+          = t :product
+        %th.text-right
+          = t :quantity
+        %th.text-right
+          = t :price
+        %th.text-right
+          = t :subtotal
+        %th.text-right
+          = t :included_tax
+    %tbody
+      - @grouped_line_items.each_pair do |product_and_full_name, line_items|
+        %tr
+          %td
+            #{line_items.first.variant.sku}
+          %td
+            #{raw(line_items.first.product.supplier.name)}
+          %td
+            #{raw(product_and_full_name)}
+          %td.text-right
+            #{line_items.sum(&:quantity)}
+          %td.text-right
+            #{line_items.first.single_money}
+          %td.text-right
+            #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency) }
+          %td.tax.text-right
+            #{Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency) }
+      %tr.total-row
+        %td
+        %td
+        %td
+        %td
+        %td
+        %td.text-right
+          #{@total}
+        %td.text-right
+          #{@tax_total}
+%p
+  = t :producer_mail_text_after
+%p
+  #{t(:producer_mail_signoff)},
+  %em
+    %p
+      #{@coordinator.name}
+    %p
+      %br
+        #{@coordinator.address.address1}
+      %br
+        #{@coordinator.address.city}
+      %br
+        #{@coordinator.address.zipcode}
+    %p
+      #{@coordinator.phone}
+    %p
+      #{@coordinator.email}

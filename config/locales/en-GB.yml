@@ -58,6 +58,13 @@ en-GB:
 
   sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
 
+  # To customise text in emails.
+  producer_mail_greeting: "Dear"
+  producer_mail_text_before: "We now have all the consumer orders for the next food drop."
+  producer_mail_order_text: "Here is a summary of the orders for your products:"
+  producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
+  producer_mail_text_after: "Please confirm that you have got this email. Please send me an invoice for this amount so that we can send you payment. If you need to phone me on the day, please use the number below."
+  producer_mail_signoff: "Thanks and best wishes"
 
   admin:
     # General form elements
@@ -614,6 +621,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_distributor: Distributor
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
 
+  shop_trial_length: "Shop Trial Length (Days)"
+  shop_trial_expires_in: "Your shopfront trial expires in"
+  shop_trial_expired_notice: "Open Food Network UK is currently free while we prepare for our soft launch in April, 2016."
+
   # keys used in javascript
   password: Password
   remember_me: Remember Me
@@ -1024,6 +1035,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       pending: pending
       processing: processing
       void: void
+      invalid: invalid
     order_state:
       address: address
       adjustments: adjustments
@@ -1037,7 +1049,3 @@ Please follow the instructions there to make your enterprise visible on the Open
       resumed: resumed
       returned: returned
       skrill: skrill
-  shop_trial_length: "Shop Trial Length (Days)"
-  shop_trial_length: "Shop Trial Length (Days)"
-  shop_trial_expires_in: "Your shopfront trial expires in"
-  shop_trial_expired_notice: "Open Food Network UK is currently free while we prepare for our soft launch in April, 2016."

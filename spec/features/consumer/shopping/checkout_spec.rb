@@ -11,9 +11,10 @@ feature "As a consumer I want to check out my cart", js: true do
   let!(:zone) { create(:zone_with_member) }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
-  let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.master]) }
+  let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [variant]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: product.tax_category) }
   let(:product) { create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1) }
+  let(:variant) { product.variants.first }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
   before do
@@ -43,6 +44,22 @@ feature "As a consumer I want to check out my cart", js: true do
       distributor.shipping_methods << sm1
       distributor.shipping_methods << sm2
       distributor.shipping_methods << sm3
+    end
+
+    describe "when I have an out of stock product in my cart" do
+      before do
+        Spree::Config.set allow_backorders: false
+        variant.on_hand = 0
+        variant.save!
+      end
+
+      it "returns me to the cart with an error message" do
+        visit checkout_path
+
+        page.should_not have_selector 'closing', text: "Checkout now"
+        page.should have_selector 'closing', text: "Your shopping cart"
+        page.should have_content "An item in your cart has become unavailable"
+      end
     end
 
     context "on the checkout page" do
@@ -211,6 +228,18 @@ feature "As a consumer I want to check out my cart", js: true do
           it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
             place_order
             page.should have_content "Your order has been processed successfully"
+          end
+
+          it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
+            Spree::Config.set allow_backorders: false
+            variant.on_hand = 0
+            variant.save!
+
+            place_order
+
+            page.should_not have_content "Your order has been processed successfully"
+            page.should have_selector 'closing', text: "Your shopping cart"
+            page.should have_content "Out of Stock"
           end
 
           context "when we are charged a shipping fee" do

@@ -32,6 +32,11 @@ en:
         not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
         confirmation_sent: "Confirmation email sent!"
         confirmation_not_sent: "Could not send a confirmation email."
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "Please confirm the email address for %{enterprise}"
+    welcome:
+      subject: "%{enterprise} is now on %{sitename}"
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
@@ -79,6 +84,10 @@ en:
     viewing: "Viewing: %{current_view_name}"
 
     whats_this: What's this?
+
+    tag_has_rules: "Existing rules for this tag: %{num}"
+    has_one_rule: "has one rule"
+    has_n_rules: "has %{num} rules"
 
     customers:
       index:
@@ -401,6 +410,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   If you are a producer or food enterprise, we are excited to have you as a part of the network."
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at"
 
+  producer_mail_greeting: "Dear"
+  producer_mail_text_before: "We now have all the consumer orders for the next food drop."
+  producer_mail_order_text: "Here is a summary of the orders for your products:"
+  producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
+  producer_mail_text_after: ""
+  producer_mail_signoff: "Thanks and best wishes"
+
   shopping_oc_closed: Orders are closed
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
@@ -617,6 +633,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_max_quantity: Max quantity
   products_distributor: Distributor
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
+
+  shop_trial_length: "Shop Trial Length (Days)"
+  shop_trial_expires_in: "Your shopfront trial expires in"
+  shop_trial_expired_notice: "Good news! We have decided to extend shopfront trials until further notice."
+
 
   # keys used in javascript
   password: Password
@@ -1028,6 +1049,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       pending: pending
       processing: processing
       void: void
+      invalid: invalid
     order_state:
       address: address
       adjustments: adjustments
@@ -1041,6 +1063,3 @@ Please follow the instructions there to make your enterprise visible on the Open
       resumed: resumed
       returned: returned
       skrill: skrill
-  shop_trial_length: "Shop Trial Length (Days)"
-  shop_trial_expires_in: "Your shopfront trial expires in"
-  shop_trial_expired_notice: "Good news! We have decided to extend shopfront trials until further notice (probably around March 2015)."

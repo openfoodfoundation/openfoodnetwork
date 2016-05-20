@@ -99,7 +99,7 @@ Spree::Order.class_eval do
   def remove_variant(variant)
     line_items(:reload)
     current_item = find_line_item_by_variant(variant)
-    current_item.destroy
+    current_item.andand.destroy
   end
 
 
@@ -143,6 +143,11 @@ Spree::Order.class_eval do
     self.reload
     current_item
   end
+
+  def cap_quantity_at_stock!
+    line_items.each &:cap_quantity_at_stock!
+  end
+
 
   def set_distributor!(distributor)
     self.distributor = distributor

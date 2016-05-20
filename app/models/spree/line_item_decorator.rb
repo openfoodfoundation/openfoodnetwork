@@ -43,6 +43,11 @@ Spree::LineItem.class_eval do
                       where('spree_adjustments.id IS NULL')
 
 
+  def cap_quantity_at_stock!
+    update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
+  end
+
+
   def has_tax?
     adjustments.included_tax.any?
   end
