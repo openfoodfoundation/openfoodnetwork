@@ -585,10 +585,10 @@ module Spree
       describe "finding products in stock for a particular distribution" do
         it "returns on-demand products" do
           p = create(:simple_product, on_demand: true)
-          p.master.update_attribute(:count_on_hand, 0)
+          p.variants.first.update_attributes!(count_on_hand: 0, on_demand: true)
           d = create(:distributor_enterprise)
           oc = create(:simple_order_cycle, distributors: [d])
-          oc.exchanges.outgoing.first.variants << p.master
+          oc.exchanges.outgoing.first.variants << p.variants.first
 
           p.should have_stock_for_distribution(oc, d)
         end
