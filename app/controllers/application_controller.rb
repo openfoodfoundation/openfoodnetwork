@@ -20,6 +20,11 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def action
+    params[:action].to_sym
+  end
+
+
   def require_distributor_chosen
     unless @distributor = current_distributor
       redirect_to spree.root_path
