@@ -20,16 +20,7 @@
 
         .no_rules{ ng: { show: "tagGroup.rules.length == 0" } }
           No rules apply to this tag yet
-        %table
-          %tr.tag_rule{ id: "tr_{{rule.id}}", ng: { repeat: "rule in tagGroup.rules" } }
-            %td
-              %discount-order{ ng: { if: "::rule.type == 'TagRule::DiscountOrder'" } }
-              %filter-shipping-methods{ ng: { if: "::rule.type == 'TagRule::FilterShippingMethods'" } }
-              %filter-products{ ng: { if: "::rule.type == 'TagRule::FilterProducts'" } }
-              %filter-payment-methods{ ng: { if: "::rule.type == 'TagRule::FilterPaymentMethods'" } }
-              %filter-order_cycles{ ng: { if: "::rule.type == 'TagRule::FilterOrderCycles'" } }
-            %td.actions
-              %a{ ng: { click: "deleteTagRule(tagGroup, rule)" }, :class => "delete-tag-rule icon-trash no-text" }
+        .tag_rule{ ng: { repeat: "rule in tagGroup.rules" } }
         .add_rule.text-center
           %input.button.icon-plus{ type: 'button', value: "+ Add A New Rule", "new-tag-rule-dialog" => true }
       .add_tag
