@@ -39,8 +39,6 @@ describe ProducerMailer do
     order.line_items << create(:line_item, variant: p5.variants.first)
     order.finalize!
     order.cancel
-    puts order.inspect
-    order.finalize!
     order.save
     order
   end
