@@ -10,7 +10,7 @@ end
 
 module Api::Admin::TagRule
   class BaseSerializer < ActiveModel::Serializer
-    attributes :id, :enterprise_id, :type, :preferred_customer_tags
+    attributes :id, :enterprise_id, :type, :is_default, :preferred_customer_tags
   end
 
   class DiscountOrderSerializer < BaseSerializer

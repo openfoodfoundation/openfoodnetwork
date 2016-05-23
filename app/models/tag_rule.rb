@@ -7,7 +7,7 @@ class TagRule < ActiveRecord::Base
 
   validates :enterprise, presence: true
 
-  attr_accessible :enterprise, :enterprise_id, :preferred_customer_tags
+  attr_accessible :enterprise, :enterprise_id, :is_default, :preferred_customer_tags
 
   scope :for, ->(enterprise) { where(enterprise_id: enterprise) }
   scope :of_type, ->(type) { where(type: "TagRule::#{type}") }

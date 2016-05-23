@@ -1,0 +1,14 @@
+.default_rules
+  .header
+    %table
+      %colgroup
+        %col{width: '100%'}
+      %tr
+        %td
+          %h5
+            By Default:
+  .no_rules{ ng: { show: "defaultTagGroup.rules.length == 0" } }
+    No default rules apply yet
+  .tag_rule{ ng: { repeat: "rule in defaultTagGroup.rules" } }
+  .add_rule.text-center
+    %input.button.icon-plus{ type: 'button', value: "+ Add A New Default Rule", "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true }

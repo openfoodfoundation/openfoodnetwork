@@ -3,6 +3,8 @@
     .eleven.columns.alpha.omega
       .no_tags{ ng: { show: "tagGroups.length == 0" } }
         No tags apply to this enterprise yet
+      = render 'admin/enterprises/form/tag_rules/default_rules'
+      -# = render 'customer_tags'
       .customer_tag{ ng: { repeat: "tagGroup in tagGroups" } }
         .header
           %table
@@ -22,6 +24,6 @@
           No rules apply to this tag yet
         .tag_rule{ ng: { repeat: "rule in tagGroup.rules" } }
         .add_rule.text-center
-          %input.button.icon-plus{ type: 'button', value: "+ Add A New Rule", "new-tag-rule-dialog" => true }
+          %input.button.icon-plus{ type: 'button', value: "+ Add A New Rule", "add-new-rule-to" => "addNewRuleTo", "tag-group" => "tagGroup", "new-tag-rule-dialog" => true }
       .add_tag
         %input.button.red.icon-plus{ type: 'button', value: "+ Add A New Tag", ng: { click: 'addNewTag()' } }

@@ -17,6 +17,11 @@
           ng: { value: "rule.type" } }
 
         %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_is_default",
+          name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][is_default]",
+          ng: { value: "rule.is_default" } }
+
+        %input{ type: "hidden",
           id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_customer_tags",
           name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_customer_tags]",
           ng: { value: "rule.preferred_customer_tags" } }

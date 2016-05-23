@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160401043927) do
+ActiveRecord::Schema.define(:version => 20160520065217) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -1159,10 +1159,11 @@ ActiveRecord::Schema.define(:version => 20160401043927) do
   end
 
   create_table "tag_rules", :force => true do |t|
-    t.integer  "enterprise_id", :null => false
-    t.string   "type",          :null => false
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "enterprise_id",                    :null => false
+    t.string   "type",                             :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "is_default",    :default => false, :null => false
   end
 
   create_table "taggings", :force => true do |t|

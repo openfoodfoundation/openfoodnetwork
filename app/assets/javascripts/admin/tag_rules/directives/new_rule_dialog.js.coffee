@@ -1,6 +1,8 @@
 angular.module("admin.tagRules").directive 'newTagRuleDialog', ($compile, $templateCache, $window) ->
   restrict: 'A'
-  scope: true
+  scope:
+    tagGroup: '='
+    addNewRuleTo: '='
   link: (scope, element, attr) ->
     # Compile modal template
     template = $compile($templateCache.get('admin/new_tag_rule_dialog.html'))(scope)

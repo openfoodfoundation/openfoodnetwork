@@ -1,10 +1,11 @@
 angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, enterprise) ->
   $scope.tagGroups = enterprise.tag_groups
+  $scope.defaultTagGroup = enterprise.default_tag_group
 
   $scope.visibilityOptions = [ { id: "visible", name: "VISIBLE" }, { id: "hidden", name: "NOT VISIBLE" } ]
 
   updateRuleCounts = ->
-    index = 0
+    index = $scope.defaultTagGroup.rules.length
     for tagGroup in $scope.tagGroups
       tagGroup.startIndex = index
       index = index + tagGroup.rules.length
@@ -18,6 +19,7 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, ente
   $scope.addNewRuleTo = (tagGroup, ruleType) ->
     newRule =
         id: null
+        is_default: tagGroup == $scope.defaultTagGroup
         preferred_customer_tags: (tag.text for tag in tagGroup.tags).join(",")
         type: "TagRule::#{ruleType}"
     switch ruleType
