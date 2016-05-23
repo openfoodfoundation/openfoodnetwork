@@ -68,7 +68,7 @@ describe ProducerMailer do
   it "displays tax totals for each product" do
     # Tax for p1 line items
     body_as_html(mail).find("table.order-summary tr", text: p1.name)
-      .should have_selector("td", text: "$30.00")
+      .should have_selector("td.tax", text: "$2.73")
   end
 
   it "does not include incomplete orders" do
