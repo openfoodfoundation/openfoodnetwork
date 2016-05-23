@@ -1,7 +1,6 @@
 = f.fields_for :address do |af|
-  %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Contact'" } }
-    %legend
-      = t 'admin_entreprise_groups_contact'
+  %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='contact'" } }
+    %legend {{menu.selected.label}}
     .row
       .alpha.three.columns
         = af.label :phone

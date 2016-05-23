@@ -1,6 +1,5 @@
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Web'" } }
-  %legend
-    = t 'admin_entreprise_groups_web'
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='web'" } }
+  %legend {{menu.selected.label}}
   .row
     .alpha.three.columns
       = f.label :website

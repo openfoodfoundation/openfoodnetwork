@@ -1,6 +1,5 @@
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Images'" } }
-  %legend
-    = t 'admin_entreprise_groups_images'
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='images'" } }
+  %legend {{menu.selected.label}}
   .row
     .alpha.three.columns
       = f.label :logo, 'ofn-with-tip' => t('admin_entreprise_groups_data_powertip_logo')

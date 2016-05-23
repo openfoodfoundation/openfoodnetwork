@@ -1,6 +1,5 @@
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Users'" } }
-  %legend
-    = t(:users)
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='users'" } }
+  %legend {{menu.selected.label}}
   .row
     .three.columns.alpha
       =f.label :owner_id, t(:admin_entreprise_groups_owner)

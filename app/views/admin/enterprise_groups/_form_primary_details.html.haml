@@ -1,6 +1,5 @@
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Primary Details'" } }
-  %legend
-    = t "admin_entreprise_groups_primary_details"
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='primary_details'" } }
+  %legend {{menu.selected.label}}
   = f.field_container :name do
     = f.label :name
     %br/
