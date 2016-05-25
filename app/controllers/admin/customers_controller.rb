@@ -7,11 +7,8 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          serialised = ActiveModel::ArraySerializer.new(
-            @collection,
-            each_serializer: Api::Admin::CustomerSerializer,
-            spree_current_user: spree_current_user)
-          render json: serialised.to_json
+          tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: params[:enterprise_id]))
+          render_as_json @collection, tag_rule_mapping: tag_rule_mapping
         end
       end
     end
@@ -19,10 +16,31 @@ module Admin
     def create
       @customer = Customer.new(params[:customer])
       if user_can_create_customer?
-        @customer.save
-        render json: Api::Admin::CustomerSerializer.new(@customer).to_json
+        if @customer.save
+          tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
+          render_as_json @customer, tag_rule_mapping: tag_rule_mapping
+        else
+          render json: { errors: @customer.errors.full_messages }, status: 400
+        end
       else
         redirect_to '/unauthorized'
+      end
+    end
+
+    # copy of Spree::Admin::ResourceController without flash notice
+    def destroy
+      invoke_callbacks(:destroy, :before)
+      if @object.destroy
+        invoke_callbacks(:destroy, :after)
+        respond_with(@object) do |format|
+          format.html { redirect_to location_after_destroy }
+          format.js   { render partial: "spree/admin/shared/destroy" }
+        end
+      else
+        invoke_callbacks(:destroy, :fails)
+        respond_with(@object) do |format|
+          format.html { redirect_to location_after_destroy }
+        end
       end
     end
 

@@ -11,20 +11,20 @@
           padding-bottom: 0em
           display: table
           line-height: 1.1
-          // outline: 1px solid red 
+          // outline: 1px solid red
 
-          @media all and (max-width: 768px) 
-            font-size: 0.875rem    
+          @media all and (max-width: 768px)
+            font-size: 0.875rem
 
-          @media all and (max-width: 640px) 
-            font-size: 0.75rem      
-          
+          @media all and (max-width: 640px)
+            font-size: 0.75rem
+
         .table-cell
           display: table-cell
           vertical-align: middle
           height: 37px
 
-      // ROW VARIANTS 
+      // ROW VARIANTS
       .row.variants
         margin-left: 0
         margin-right: 0
@@ -35,7 +35,10 @@
           background-color: #f9f9f9
           &:hover, &:focus, &:active
             background-color: $clr-brick-ultra-light
-        
+
+        &.out-of-stock
+          opacity: 0.2
+
         // Variant name
         .variant-name
           padding-left: 7.9375rem
@@ -52,7 +55,7 @@
               height: 27px
 
         // Variant unit
-        .variant-unit  
+        .variant-unit
           padding-left: 0rem
           padding-right: 0rem
           color: #888
@@ -88,18 +91,18 @@
         margin-left: 0
         margin-right: 0
         background: #fff
-        
+
         .columns
           padding-top: 1em
           padding-bottom: 1em
           line-height: 1
-          
+
           @media all and (max-width: 768px)
             padding-top: 0.65rem
             padding-bottom: 0.65rem
 
         .summary-header
-          padding-left: 7.9375rem      
+          padding-left: 7.9375rem
           @media all and (max-width: 768px)
             padding-left: 4.9375rem
           @media all and (max-width: 640px)
@@ -118,4 +121,3 @@
               color: $clr-brick
               i
                 font-size: 0.8em
-

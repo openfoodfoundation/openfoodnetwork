@@ -15,7 +15,6 @@ Spree.user_class.class_eval do
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 
   attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit
-  after_create :associate_customers
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
@@ -42,10 +41,6 @@ Spree.user_class.class_eval do
     customers.of(enterprise).first
   end
 
-  def associate_customers
-    Customer.update_all({ user_id: id }, { user_id: nil, email: email })
-  end
-
   def send_signup_confirmation
     Delayed::Job.enqueue ConfirmSignupJob.new(id)
   end
@@ -56,11 +51,16 @@ Spree.user_class.class_eval do
 
   # Returns Enterprise IDs for distributors that the user has shopped at
   def enterprises_ordered_from
-    orders.where(state: :complete).map(&:distributor_id).uniq
+    enterprise_ids = orders.where(state: :complete).map(&:distributor_id).uniq
+    # Exclude the accounts distributor
+    if Spree::Config.accounts_distributor_id
+      enterprise_ids = enterprise_ids.keep_if { |a| a != Spree::Config.accounts_distributor_id }
+    end
+    enterprise_ids
   end
 
   # Returns orders and their associated payments for all distributors that have been ordered from
-  def compelete_orders_by_distributor
+  def complete_orders_by_distributor
     Enterprise
       .includes(distributed_orders: { payments: :payment_method })
       .where(enterprises: { id: enterprises_ordered_from },
@@ -70,8 +70,8 @@ Spree.user_class.class_eval do
 
   def orders_by_distributor
     # Remove uncompleted payments as these will not be reflected in order balance
-    data_array = compelete_orders_by_distributor.to_a
-    remove_uncompleted_payments(data_array)
+    data_array = complete_orders_by_distributor.to_a
+    remove_payments_in_checkout(data_array)
     data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
   end
 
@@ -83,10 +83,10 @@ Spree.user_class.class_eval do
     end
   end
 
-  def remove_uncompleted_payments(enterprises)
+  def remove_payments_in_checkout(enterprises)
     enterprises.each do |enterprise|
       enterprise.distributed_orders.each do |order|
-        order.payments.keep_if { |payment| payment.state == "completed" }
+        order.payments.keep_if { |payment| payment.state != "checkout" }
       end
     end
   end

@@ -17,7 +17,7 @@
 
     = render 'spree/shared/line_item_name', line_item: line_item
 
-    - if @order.insufficient_stock_lines.include? line_item
+    - if @insufficient_stock_lines.include? line_item
       %span.out-of-stock
         = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
         %br/
@@ -30,7 +30,7 @@
     -#   "price-breakdown-placement" => "left",
     -#   "price-breakdown-animation" => true}
   %td.text-center.cart-item-quantity{"data-hook" => "cart_item_quantity"}
-    = item_form.number_field :quantity, :min => 0, :class => "line_item_quantity", :size => 5
+    = item_form.number_field :quantity, :min => 0, "ofn-on-hand" => variant.on_hand, "ng-model" => "line_item_#{line_item.id}", :class => "line_item_quantity", :size => 5
   %td.cart-item-total.text-right{"data-hook" => "cart_item_total"}
     = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 

@@ -24,6 +24,6 @@
       &nbsp;
   .row
     .small-12.columns
-      .alert-box{ "ofn-inline-alert" => true, ng: { show: "visible" } }
+      .alert-box.shopfront-message{ "ofn-inline-alert" => true, ng: { show: "visible" } }
         = current_distributor.preferred_shopfront_message.html_safe
         %a.close{ ng: { click: "close()" } } &times;

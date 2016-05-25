@@ -9,6 +9,8 @@ class TagRule < ActiveRecord::Base
 
   attr_accessible :enterprise, :enterprise_id, :preferred_customer_tags
 
+  scope :for, lambda { |enterprises| where(enterprise_id: enterprises) }
+
   def set_context(subject, context)
     @subject = subject
     @context = context
@@ -21,6 +23,19 @@ class TagRule < ActiveRecord::Base
       else
         apply_default! if respond_to?(:apply_default!,true)
       end
+    end
+  end
+
+  def self.mapping_for(enterprises)
+    self.for(enterprises).inject({}) do |mapping, rule|
+      rule.preferred_customer_tags.split(",").each do |tag|
+        if mapping[tag]
+          mapping[tag][:rules] += 1
+        else
+          mapping[tag] = { text: tag, rules: 1 }
+        end
+      end
+      mapping
     end
   end
 

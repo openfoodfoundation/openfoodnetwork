@@ -26,13 +26,16 @@ before_script:
   - cp config/database.travis.yml config/database.yml
   - cp config/application.yml.example config/application.yml
   - RAILS_ENV=test bundle exec rake db:create db:schema:load
+
+  # Only install PhantomJS if it is not already present (ie. cached)
+  - npm list -g phantomjs-prebuilt@~2.1.7 --depth=0 || npm install -g phantomjs-prebuilt@~2.1.7
+  - export PATH=`npm bin -g`:$PATH
+
   - >
     if [ "$KARMA" = "true" ]; then
-      npm install karma@0.12.31
-      npm install karma-jasmine@0.1.5
-      npm install karma-phantomjs-launcher@0.1.4
-      npm install karma-coffee-preprocessor@0.2.1
-      npm install -g karma-cli@0.0.4
+      npm install -g npm@'3.8.8'
+      npm install
+      npm install -g karma-cli@0.1.2
     fi
 
 script:

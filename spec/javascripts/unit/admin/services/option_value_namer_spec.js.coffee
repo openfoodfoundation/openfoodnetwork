@@ -15,26 +15,26 @@ describe "Option Value Namer", ->
 
     it "when description is blank", ->
       v.unit_description = null
-      spyOn(namer, "value_scaled").andReturn true
-      spyOn(namer, "option_value_value_unit").andReturn ["value", "unit"]
+      spyOn(namer, "value_scaled").and.returnValue true
+      spyOn(namer, "option_value_value_unit").and.returnValue ["value", "unit"]
       expect(namer.name()).toBe "valueunit"
 
     it "when description is present", ->
       v.unit_description = 'desc'
-      spyOn(namer, "option_value_value_unit").andReturn ["value", "unit"]
-      spyOn(namer, "value_scaled").andReturn true
+      spyOn(namer, "option_value_value_unit").and.returnValue ["value", "unit"]
+      spyOn(namer, "value_scaled").and.returnValue true
       expect(namer.name()).toBe "valueunit desc"
 
     it "when value is blank and description is present", ->
       v.unit_description = 'desc'
-      spyOn(namer, "option_value_value_unit").andReturn [null, null]
-      spyOn(namer, "value_scaled").andReturn true
+      spyOn(namer, "option_value_value_unit").and.returnValue [null, null]
+      spyOn(namer, "value_scaled").and.returnValue true
       expect(namer.name()).toBe "desc"
 
     it "spaces value and unit when value is unscaled", ->
       v.unit_description = null
-      spyOn(namer, "option_value_value_unit").andReturn ["value", "unit"]
-      spyOn(namer, "value_scaled").andReturn false
+      spyOn(namer, "option_value_value_unit").and.returnValue ["value", "unit"]
+      spyOn(namer, "value_scaled").and.returnValue false
       expect(namer.name()).toBe "value unit"
 
     describe "determining if a variant's value is scaled", ->
@@ -44,7 +44,7 @@ describe "Option Value Namer", ->
         p = {}
         v = { product: p }
         namer = new OptionValueNamer(v)
-        
+
       it "returns true when the product has a scale", ->
         p.variant_unit_scale = 1000
         expect(namer.value_scaled()).toBe true

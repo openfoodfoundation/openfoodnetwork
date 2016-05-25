@@ -4,16 +4,21 @@ describe "CustomersCtrl", ->
 
   beforeEach ->
     module('admin.customers')
+    module ($provide) ->
+      $provide.value 'columns', []
+      null
+
     inject ($controller, $rootScope, _CustomerResource_, $httpBackend) ->
       scope = $rootScope
       http = $httpBackend
       $controller 'customersCtrl', {$scope: scope, CustomerResource: _CustomerResource_, shops: {}}
-    this.addMatchers
-      toAngularEqual: (expected) ->
-        return angular.equals(this.actual, expected)
+    jasmine.addMatchers
+      toDeepEqual: (util, customEqualityTesters) ->
+        compare: (actual, expected) ->
+          { pass: angular.equals(actual, expected) }
 
   it "has no shop pre-selected", ->
-    expect(scope.shop).toEqual {}
+    expect(scope.CurrentShop.shop).toEqual {}
 
   describe "setting the shop on scope", ->
     customer = { id: 5, email: 'someone@email.com'}
@@ -22,21 +27,21 @@ describe "CustomersCtrl", ->
     beforeEach ->
       http.expectGET('/admin/customers.json?enterprise_id=1').respond 200, customers
       scope.$apply ->
-        scope.shop = {id: 1}
+        scope.CurrentShop.shop = {id: 1}
       http.flush()
 
     it "retrievs the list of customers", ->
-      expect(scope.customers).toAngularEqual customers
+      expect(scope.customers).toDeepEqual customers
 
     describe "scope.add", ->
       it "creates a new customer", ->
         email = "customer@example.org"
         newCustomer = {id: 6, email: email}
-        customers.push(newCustomer)
+        customers.unshift(newCustomer)
         http.expectPOST('/admin/customers.json?email=' + email + '&enterprise_id=1').respond 200, newCustomer
         scope.add(email)
         http.flush()
-        expect(scope.customers).toAngularEqual customers
+        expect(scope.customers).toDeepEqual customers
 
     describe "scope.deleteCustomer", ->
       it "deletes a customer", ->
@@ -46,4 +51,33 @@ describe "CustomersCtrl", ->
         scope.deleteCustomer(customer)
         http.flush()
         expect(scope.customers.length).toBe 1
-        expect(scope.customers[0]).not.toAngularEqual customer
+        expect(scope.customers[0]).not.toDeepEqual customer
+
+    describe "scope.findTags", ->
+      tags = [
+        { text: 'one' }
+        { text: 'two' }
+        { text: 'three' }
+      ]
+      beforeEach ->
+        http.expectGET('/admin/tag_rules/map_by_tag.json?enterprise_id=1').respond 200, tags
+
+      it "retrieves the tag list", ->
+        promise = scope.findTags('')
+        result = null
+        promise.then (data) ->
+          result = data
+        http.flush()
+        expect(result).toDeepEqual tags
+
+      it "filters the tag list", ->
+        filtered_tags = [
+          { text: 'two' }
+          { text: 'three' }
+        ]
+        promise = scope.findTags('t')
+        result = null
+        promise.then (data) ->
+          result = data
+        http.flush()
+        expect(result).toDeepEqual filtered_tags

@@ -34,13 +34,13 @@ describe CheckoutController do
     flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
   end
 
-  it "redirects to the shop when no line items are present" do
+  it "redirects to the cart when some items are out of stock" do
     controller.stub(:current_distributor).and_return(distributor)
     controller.stub(:current_order_cycle).and_return(order_cycle)
     controller.stub(:current_order).and_return(order)
     order.stub_chain(:insufficient_stock_lines, :present?).and_return true
     get :edit
-    response.should redirect_to shop_path
+    response.should redirect_to spree.cart_path
   end
 
   it "renders when both distributor and order cycle is selected" do

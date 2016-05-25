@@ -5,27 +5,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.confirmDelete = true
   $scope.startDate = formatDate daysFromToday -7
   $scope.endDate = formatDate daysFromToday 1
-  $scope.bulkActions = [ { name: t("bom_actions_delete"), callback: 'deleteLineItems' } ]
+  $scope.bulkActions = [ { name: t("admin.orders.bulk_management.actions_delete"), callback: 'deleteLineItems' } ]
   $scope.selectedUnitsProduct = {}
   $scope.selectedUnitsVariant = {}
   $scope.sharedResource = false
-  $scope.columns = Columns.setColumns
-    order_no:     { name: t("bom_no"), visible: false }
-    full_name:    { name: t("name"),         visible: true }
-    email:        { name: t("email"),     visible: false }
-    phone:        { name: t("phone"),        visible: false }
-    order_date:   { name: t("bom_date"),   visible: true }
-    producer:     { name: t("producer"),     visible: true }
-    order_cycle:  { name: t("bom_cycle"),  visible: false }
-    hub:          { name: t("bom_hub"),          visible: false }
-    variant:      { name: t("bom_variant"),      visible: true }
-    quantity:     { name: t("bom_quantity"),     visible: true }
-    max:          { name: t("bom_max"),          visible: true }
-    final_weight_volume:   { name: t("bom_final_weigth_volume"), visible: false }
-    price:        { name: t("price"),            visible: false }
+  $scope.columns = Columns.columns
 
   $scope.confirmRefresh = ->
-    LineItems.allSaved() || confirm(t "unsaved_changes_warning")
+    LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
 
   $scope.resetSelectFilters = ->
     $scope.distributorFilter = blankOption().id

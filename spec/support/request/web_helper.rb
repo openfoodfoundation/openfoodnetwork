@@ -29,7 +29,7 @@ module WebHelper
 
   def current_path_should_be path
     current_path = URI.parse(current_url).path
-    current_path.should == path
+    expect(page).to have_current_path path
   end
 
   def fill_in_fields(field_values)
@@ -113,6 +113,24 @@ module WebHelper
 
   def dirty_form_dialog
     DirtyFormDialog.new(page)
+  end
+
+  # Fetch the content of a script block
+  # eg. script_content with: 'my-script.com'
+  # Returns nil if not found
+  # Raises an exception if multiple matching blocks are found
+  def script_content(opts={})
+    elems = page.all('script', visible: false)
+
+    elems = elems.to_a.select { |e| e.text(:all).include? opts[:with] }  if opts[:with]
+
+    if elems.none?
+      nil
+    elsif elems.many?
+      raise "Multiple results returned for script_content"
+    else
+      elems.first.text(:all)
+    end
   end
 
   # http://www.elabs.se/blog/53-why-wait_until-was-removed-from-capybara

@@ -47,7 +47,7 @@ describe "TagRulesCtrl", ->
 
       beforeEach inject ($httpBackend) ->
         rule = scope.tagGroups[0].rules[0]
-        spyOn(window, "confirm").andReturn(true)
+        spyOn(window, "confirm").and.returnValue(true)
         $httpBackend.expectDELETE('/admin/enterprises/45/tag_rules/1.json').respond(status: 204)
         scope.deleteTagRule(scope.tagGroups[0], rule)
         $httpBackend.flush()

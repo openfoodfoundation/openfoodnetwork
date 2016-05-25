@@ -4,9 +4,10 @@ describe "Orders service", ->
   beforeEach ->
     module 'admin.orders'
 
-    this.addMatchers
-      toDeepEqual: (expected) ->
-        return angular.equals(this.actual, expected)
+    jasmine.addMatchers
+      toDeepEqual: (util, customEqualityTesters) ->
+        compare: (actual, expected) ->
+          { pass: angular.equals(actual, expected) }
 
     inject ($q, _$httpBackend_, _Orders_, _OrderResource_) ->
       Orders = _Orders_
@@ -74,14 +75,14 @@ describe "Orders service", ->
   describe "#saved", ->
     describe "when attributes of the object have been altered", ->
       beforeEach ->
-        spyOn(Orders, "diff").andReturn ["attr1", "attr2"]
+        spyOn(Orders, "diff").and.returnValue ["attr1", "attr2"]
 
       it "returns false", ->
         expect(Orders.saved({})).toBe false
 
     describe "when attributes of the object have not been altered", ->
       beforeEach ->
-        spyOn(Orders, "diff").andReturn []
+        spyOn(Orders, "diff").and.returnValue []
 
       it "returns false", ->
         expect(Orders.saved({})).toBe true

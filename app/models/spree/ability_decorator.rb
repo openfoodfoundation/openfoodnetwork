@@ -72,7 +72,7 @@ class AbilityDecorator
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
-    can [:admin, :destroy], TagRule do |tag_rule|
+    can [:admin, :map_by_tag, :destroy], TagRule do |tag_rule|
       user.enterprises.include? tag_rule.enterprise
     end
 
@@ -102,9 +102,8 @@ class AbilityDecorator
       order.user == user
     end
 
-    can [:create], Customer
-    can [:destroy], Customer do |customer|
-      user.enterprises.include? customer.enterprise
+    can [:admin, :bulk_update], ColumnPreference do |column_preference|
+      column_preference.user == user
     end
   end
 
@@ -221,7 +220,8 @@ class AbilityDecorator
     # Reports page
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
 
-    can [:admin, :index, :update], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    can [:create], Customer
+    can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
   end
 
 

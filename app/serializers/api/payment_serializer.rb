@@ -1,6 +1,6 @@
 module Api
   class PaymentSerializer < ActiveModel::Serializer
-    attributes :amount, :updated_at, :payment_method
+    attributes :amount, :updated_at, :payment_method, :state
     def payment_method
       object.payment_method.name
     end

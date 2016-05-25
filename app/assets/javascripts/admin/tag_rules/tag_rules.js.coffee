@@ -1,1 +1,1 @@
-angular.module("admin.tagRules", ['ngTagsInput'])
+angular.module("admin.tagRules", ['ngResource', 'ngTagsInput'])

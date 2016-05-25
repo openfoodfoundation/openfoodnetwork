@@ -69,17 +69,6 @@ describe ShopController do
     end
 
 
-    describe "producers/suppliers" do
-      let(:supplier) { create(:supplier_enterprise) }
-      let(:product) { create(:product, supplier: supplier) }
-      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
-
-      before do
-        exchange = order_cycle.exchanges.to_enterprises(distributor).outgoing.first
-        exchange.variants << product.master
-      end
-    end
-
     describe "returning products" do
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
       let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }

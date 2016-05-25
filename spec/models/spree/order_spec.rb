@@ -366,6 +366,7 @@ describe Spree::Order do
     let(:order) { create(:order) }
     let(:v1)    { create(:variant) }
     let(:v2)    { create(:variant) }
+    let(:v3)    { create(:variant) }
 
     before do
       order.add_variant v1
@@ -375,6 +376,12 @@ describe Spree::Order do
     it "removes the variant's line item" do
       order.remove_variant v1
       order.line_items(:reload).map(&:variant).should == [v2]
+    end
+
+    it "does nothing when there is no matching line item" do
+      expect do
+        order.remove_variant v3
+      end.to change(order.line_items(:reload), :count).by(0)
     end
   end
 

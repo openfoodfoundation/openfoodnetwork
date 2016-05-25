@@ -1,24 +1,24 @@
-.row.pad-top{bindonce: true, ng: { if: 'enterprise.is_distributor' } }
+.row.pad-top{ng: { if: 'enterprise.is_distributor' } }
   .cta-container.small-12.columns
     .row
       .small-4.columns
         %label{"active-table-hub-link" => "enterprise", change: "{{'change_shop' | t}}", shop: "{{'shop_at' | t}}"}
       .small-8.columns.right
-        %label.right{"bo-if" => "enterprise.pickup || enterprise.delivery"}
+        %label.right{"ng-if" => "::enterprise.pickup || enterprise.delivery"}
           {{'hubs_delivery_options' | t}}:
-          %span{"bo-if" => "enterprise.pickup"}
+          %span{"ng-if" => "::enterprise.pickup"}
             %i.ofn-i_038-takeaway
             {{'hubs_pickup' | t}}
-          %span{"bo-if" => "enterprise.delivery"}
+          %span{"ng-if" => "::enterprise.delivery"}
             %i.ofn-i_039-delivery
             {{'hubs_delivery' | t}}
     .row
       .columns.small-12
-        %a.cta-hub{"bo-href" => "enterprise.path",
+        %a.cta-hub{"ng-href" => "{{::enterprise.path}}",
         "ng-class" => "{primary: enterprise.active, secondary: !enterprise.active}",
         "ofn-change-hub" => "enterprise"}
-          %i.ofn-i_033-open-sign{"bo-if" => "enterprise.active"}
-          %i.ofn-i_032-closed-sign{"bo-if" => "!enterprise.active"}
-          .hub-name{"bo-text" => "enterprise.name"}
-          .button-address{"bo-bind" => "[enterprise.address.city, enterprise.address.state_name] | printArray"}
+          %i.ofn-i_033-open-sign{"ng-if" => "::enterprise.active"}
+          %i.ofn-i_032-closed-sign{"ng-if" => "::!enterprise.active"}
+          .hub-name{"ng-bind" => "::enterprise.name"}
+          .button-address{"ng-bind" => "::[enterprise.address.city, enterprise.address.state_name] | printArray"}
           / %i.ofn-i_007-caret-right

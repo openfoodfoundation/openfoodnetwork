@@ -46,8 +46,9 @@ feature %q{
       p2 = FactoryGirl.create(:product, available_on: Date.current-1)
 
       visit '/admin/products/bulk_edit'
-      first("div#columns-dropdown", :text => "COLUMNS").click
-      first("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
+      find("div#columns-dropdown", :text => "COLUMNS").click
+      find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
+      find("div#columns-dropdown", :text => "COLUMNS").click
 
       expect(page).to have_field "available_on", with: p1.available_on.strftime("%F %T")
       expect(page).to have_field "available_on", with: p2.available_on.strftime("%F %T")
@@ -73,7 +74,8 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 0, on_demand: true)
 
       visit '/admin/products/bulk_edit'
-      first("a.view-variants").trigger('click')
+      expect(page).to have_selector "a.view-variants", count: 1
+      find("a.view-variants").trigger('click')
 
       expect(page).to have_no_selector "span[name='on_hand']", text: "On demand", visible: true
       expect(page).to     have_field "variant_on_hand", with: "4"
@@ -109,7 +111,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, display_name: "something2" )
 
       visit '/admin/products/bulk_edit'
-      expect(page).to have_selector "a.view-variants"
+      expect(page).to have_selector "a.view-variants", count: 2
       all("a.view-variants").each { |e| e.trigger('click') }
 
       expect(page).to have_field "product_name", with: v1.product.name
@@ -124,6 +126,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 6)
 
       visit '/admin/products/bulk_edit'
+      expect(page).to have_selector "a.view-variants", count: 1
       all("a.view-variants").each { |e| e.trigger('click') }
 
       expect(page).to have_selector "span[name='on_hand']", text: p1.variants.sum{ |v| v.on_hand }.to_s
@@ -138,6 +141,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50)
 
       visit '/admin/products/bulk_edit'
+      expect(page).to have_selector "a.view-variants", count: 1
       all("a.view-variants").each { |e| e.trigger('click') }
 
       expect(page).to have_field "price", with: "2.0", visible: false
@@ -151,6 +155,7 @@ feature %q{
       v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)", display_as: "bin")
 
       visit '/admin/products/bulk_edit'
+      expect(page).to have_selector "a.view-variants", count: 1
       all("a.view-variants").each { |e| e.trigger('click') }
 
       expect(page).to have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
@@ -217,7 +222,7 @@ feature %q{
     fill_in "variant_price", with: "4.0"
     fill_in "variant_on_hand", with: "10"
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
 
     updated_variant = Spree::Variant.where(deleted_at: nil).last
@@ -243,11 +248,12 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
-    first("div#columns-dropdown", :text => "COLUMNS").click
-    first("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
-    first("div#columns-dropdown div.menu div.menu_item", text: "Category").click
-    first("div#columns-dropdown div.menu div.menu_item", text: "Inherits Properties?").click
-    first("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
+    find("div#columns-dropdown", :text => "COLUMNS").click
+    find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
+    find("div#columns-dropdown div.menu div.menu_item", text: /^Category?/).click
+    find("div#columns-dropdown div.menu div.menu_item", text: "Inherits Properties?").click
+    find("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
+    find("div#columns-dropdown", :text => "COLUMNS").click
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
@@ -267,7 +273,7 @@ feature %q{
       fill_in "product_sku", with: "NEW SKU"
     end
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
 
     p.reload
@@ -293,7 +299,7 @@ feature %q{
     select "Items", from: "variant_unit_with_scale"
     fill_in "variant_unit_name", with: "loaf"
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
 
     p.reload
@@ -313,12 +319,12 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
-    expect(page).to have_selector "a.view-variants"
-    first("a.view-variants").trigger('click')
+    expect(page).to have_selector "a.view-variants", count: 1
+    find("a.view-variants").trigger('click')
 
-    first("div#columns-dropdown", :text => "COLUMNS").click
-    first("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
-    first("div#columns-dropdown", :text => "COLUMNS").click
+    find("div#columns-dropdown", :text => "COLUMNS").click
+    find("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
+    find("div#columns-dropdown", :text => "COLUMNS").click
 
     expect(page).to have_field "variant_sku", with: "VARIANTSKU"
     expect(page).to have_field "variant_price", with: "3.0"
@@ -334,7 +340,7 @@ feature %q{
 
     expect(page).to have_selector "span[name='on_hand']", text: "10"
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
 
     v.reload
@@ -352,8 +358,8 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
-    expect(page).to have_selector "a.view-variants"
-    first("a.view-variants").trigger('click')
+    expect(page).to have_selector "a.view-variants", count: 1
+    find("a.view-variants").trigger('click')
 
     expect(page).to have_field "variant_price", with: "3.0"
 
@@ -361,7 +367,7 @@ feature %q{
       fill_in "variant_price", with: "10.0"
     end
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
 
     v.reload
@@ -378,21 +384,21 @@ feature %q{
 
     fill_in "product_name", with: "new name 1"
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "new name 1"
 
     fill_in "product_name", with: "new name 2"
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "new name 2"
 
     fill_in "product_name", with: "original name"
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "original name"
@@ -404,11 +410,12 @@ feature %q{
 
     visit '/admin/products/bulk_edit'
 
-    first("a.clone-product").click
+    expect(page).to have_selector "a.clone-product", count: 1
+    find("a.clone-product").click
 
     fill_in "product_name", :with => "new product name"
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "new product name"
@@ -421,7 +428,7 @@ feature %q{
 
       visit '/admin/products/bulk_edit'
 
-      first(:button, 'Save Changes').click
+      click_button 'Save Changes', match: :first
       expect(page.find("#status-message")).to have_content "No changes to save."
     end
   end
@@ -440,7 +447,7 @@ feature %q{
     expect(page).to have_no_field "product_name", with: p2.name
     fill_in "product_name", :with => "new product1"
 
-    first(:button, 'Save Changes').click
+    click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
     p1.reload
     expect(p1.name).to eq "new product1"
@@ -464,7 +471,7 @@ feature %q{
         expect(page).to have_selector "a.delete-product", :count => 2
 
         within "tr#p_#{p1.id}" do
-          first("a.delete-product").click
+          find("a.delete-product").click
         end
 
         expect(page).to have_selector "a.delete-product", :count => 1
@@ -481,7 +488,7 @@ feature %q{
         expect(page).to have_selector "a.delete-variant", :count => 3
 
         within "tr#v_#{v3.id}" do
-          first("a.delete-variant").click
+          find("a.delete-variant").click
         end
 
         expect(page).to have_selector "a.delete-variant", :count => 2
@@ -509,7 +516,7 @@ feature %q{
         expect(page).to have_selector "a.edit-product", :count => 2
 
         within "tr#p_#{p1.id}" do
-          first("a.edit-product").click
+          find("a.edit-product").click
         end
 
         expect(URI.parse(current_url).path).to eq "/admin/products/#{p1.permalink}/edit"
@@ -522,7 +529,7 @@ feature %q{
         expect(page).to have_selector "a.edit-variant", :count => 2
 
         within "tr#v_#{v1.id}" do
-          first("a.edit-variant").click
+          find("a.edit-variant").click
         end
 
         expect(URI.parse(current_url).path).to eq "/admin/products/#{v1.product.permalink}/variants/#{v1.id}/edit"
@@ -541,7 +548,7 @@ feature %q{
         expect(page).to have_selector "a.clone-product", :count => 3
 
         within "tr#p_#{p1.id}" do
-          first("a.clone-product").click
+          find("a.clone-product").click
         end
         expect(page).to have_selector "a.clone-product", :count => 4
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
@@ -564,8 +571,9 @@ feature %q{
 
         visit '/admin/products/bulk_edit'
 
-        first("div#columns-dropdown", :text => "COLUMNS").click
-        first("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
+        find("div#columns-dropdown", :text => "COLUMNS").click
+        find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
+        find("div#columns-dropdown", :text => "COLUMNS").click
 
         expect(page).to have_selector "th", :text => "NAME"
         expect(page).to have_selector "th", :text => "PRODUCER"
@@ -573,7 +581,9 @@ feature %q{
         expect(page).to have_selector "th", :text => "ON HAND"
         expect(page).to have_selector "th", :text => "AV. ON"
 
-        first("div#columns-dropdown div.menu div.menu_item", text: /^.{0,1}Producer$/).click
+        find("div#columns-dropdown", :text => "COLUMNS").click
+        find("div#columns-dropdown div.menu div.menu_item", text: /^.{0,1}Producer$/).click
+        find("div#columns-dropdown", :text => "COLUMNS").click
 
         expect(page).to have_no_selector "th", :text => "PRODUCER"
         expect(page).to have_selector "th", :text => "NAME"
@@ -696,8 +706,9 @@ feature %q{
       v = p.variants.first
 
       visit '/admin/products/bulk_edit'
-      first("div#columns-dropdown", :text => "COLUMNS").click
-      first("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
+      find("div#columns-dropdown", :text => "COLUMNS").click
+      find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
+      find("div#columns-dropdown", :text => "COLUMNS").click
 
       within "tr#p_#{p.id}" do
         expect(page).to have_field "product_name", with: p.name
@@ -718,7 +729,7 @@ feature %q{
         fill_in "variant_display_as", with: "Big Bag"
       end
 
-      first(:button, 'Save Changes').click
+      click_button 'Save Changes', match: :first
       expect(page.find("#status-message")).to have_content "Changes saved."
 
       p.reload

@@ -18,8 +18,8 @@
   %td.price{ 'ng-show' => 'columns.price.visible' }
     %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text', 'ng-hide' => 'hasVariants(product)' }
   %td.on_hand{ 'ng-show' => 'columns.on_hand.visible' }
-    %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-show' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
-    %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-hide' => 'hasVariants(product) || product.on_demand', :type => 'number' }
+    %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-if' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
+    %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-if' => '!(hasVariants(product) || product.on_demand)', :type => 'number' }
   %td.on_demand{ 'ng-show' => 'columns.on_demand.visible' }
     %input.field{ 'ng-model' => 'product.on_demand', :name => 'on_demand', 'ofn-track-product' => 'on_demand', :type => 'checkbox', 'ng-hide' => 'hasVariants(product)' }
   %td.category{ 'ng-if' => 'columns.category.visible' }

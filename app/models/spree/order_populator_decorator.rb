@@ -1,6 +1,8 @@
 require 'open_food_network/scope_variant_to_hub'
 
 Spree::OrderPopulator.class_eval do
+  attr_reader :variants_h
+
   def populate(from_hash, overwrite = false)
     @distributor, @order_cycle = distributor_and_order_cycle
     # Refactor: We may not need this validation - we can't change distribution here, so
@@ -11,8 +13,7 @@ Spree::OrderPopulator.class_eval do
 
     if valid?
       @order.with_lock do
-        variants = read_products_hash(from_hash) +
-                   read_variants_hash(from_hash)
+        variants = read_variants from_hash
 
         variants.each do |v|
           if varies_from_cart(v)
@@ -29,6 +30,11 @@ Spree::OrderPopulator.class_eval do
     end
 
     valid?
+  end
+
+  def read_variants(data)
+    @variants_h = read_products_hash(data) +
+                  read_variants_hash(data)
   end
 
   def read_products_hash(data)
@@ -49,16 +55,33 @@ Spree::OrderPopulator.class_eval do
 
   def attempt_cart_add(variant_id, quantity, max_quantity = nil)
     quantity = quantity.to_i
+    max_quantity = max_quantity.to_i if max_quantity
     variant = Spree::Variant.find(variant_id)
     OpenFoodNetwork::ScopeVariantToHub.new(@distributor).scope(variant)
-    if quantity > 0
-      if check_stock_levels(variant, quantity) &&
-          check_order_cycle_provided_for(variant) &&
-          check_variant_available_under_distribution(variant)
-        @order.add_variant(variant, quantity, max_quantity, currency)
+    if quantity > 0 &&
+       check_order_cycle_provided_for(variant) &&
+       check_variant_available_under_distribution(variant)
+
+      quantity_to_add, max_quantity_to_add = quantities_to_add(variant, quantity, max_quantity)
+
+      if quantity_to_add > 0
+        @order.add_variant(variant, quantity_to_add, max_quantity_to_add, currency)
+      else
+        @order.remove_variant variant
       end
     end
   end
+
+  def quantities_to_add(variant, quantity, max_quantity)
+    # If not enough stock is available, add as much as we can to the cart
+    on_hand = variant.on_hand
+    on_hand = [quantity, max_quantity].compact.max if Spree::Config.allow_backorders
+    quantity_to_add = [quantity, on_hand].min
+    max_quantity_to_add = max_quantity # max_quantity is not capped
+
+    [quantity_to_add, max_quantity_to_add]
+  end
+
 
   def cart_remove(variant_id)
     variant = Spree::Variant.find(variant_id)

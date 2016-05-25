@@ -4,9 +4,10 @@ describe "LineItems service", ->
   beforeEach ->
     module 'admin.lineItems'
 
-    this.addMatchers
-      toDeepEqual: (expected) ->
-        return angular.equals(this.actual, expected)
+    jasmine.addMatchers
+      toDeepEqual: (util, customEqualityTesters) ->
+        compare: (actual, expected) ->
+          { pass: angular.equals(actual, expected) }
 
     inject ($q, _$httpBackend_, _LineItems_, _LineItemResource_) ->
       LineItems = _LineItems_
@@ -72,14 +73,14 @@ describe "LineItems service", ->
   describe "#isSaved", ->
     describe "when attributes of the object have been altered", ->
       beforeEach ->
-        spyOn(LineItems, "diff").andReturn ["attr1", "attr2"]
+        spyOn(LineItems, "diff").and.returnValue ["attr1", "attr2"]
 
       it "returns false", ->
         expect(LineItems.isSaved({})).toBe false
 
     describe "when attributes of the object have not been altered", ->
       beforeEach ->
-        spyOn(LineItems, "diff").andReturn []
+        spyOn(LineItems, "diff").and.returnValue []
 
       it "returns false", ->
         expect(LineItems.isSaved({})).toBe true

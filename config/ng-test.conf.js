@@ -9,7 +9,6 @@ module.exports = function(config) {
       'app/assets/javascripts/shared/jquery-1.8.0.js', // TODO: Can we link to Rails' jquery?
       'app/assets/javascripts/shared/jquery.timeago.js',
       'app/assets/javascripts/shared/angular-local-storage.js',
-      'app/assets/javascripts/shared/bindonce.min.js',
       'app/assets/javascripts/shared/ng-infinite-scroll.min.js',
       'app/assets/javascripts/shared/angular-slideables.js',
 

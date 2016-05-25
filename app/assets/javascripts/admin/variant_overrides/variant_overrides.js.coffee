@@ -1,1 +1,1 @@
-angular.module("admin.variantOverrides", ["pasvaz.bindonce", "admin.indexUtils", "admin.utils", "admin.dropdown", "admin.inventoryItems"])
+angular.module("admin.variantOverrides", ["admin.indexUtils", "admin.utils", "admin.dropdown", "admin.inventoryItems"])

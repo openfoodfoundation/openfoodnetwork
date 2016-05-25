@@ -20,6 +20,7 @@ describe "VariantOverridesCtrl", ->
       $provide.value 'variantOverrides', variantOverrides
       $provide.value 'dirtyVariantOverrides', dirtyVariantOverrides
       $provide.value 'inventoryItems', inventoryItems
+      $provide.value 'columns', []
       null
 
     inject ($controller, _VariantOverrides_, _DirtyVariantOverrides_, _StatusMessage_) ->

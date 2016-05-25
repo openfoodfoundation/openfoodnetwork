@@ -4,8 +4,11 @@ class ProducerMailer < Spree::BaseMailer
     @producer = producer
     @coordinator = order_cycle.coordinator
     @order_cycle = order_cycle
-    @line_items = aggregated_line_items_from(@order_cycle, @producer)
+    line_items = line_items_from(@order_cycle, @producer)
+    @grouped_line_items = line_items.group_by(&:product_and_full_name)
     @receival_instructions = @order_cycle.receival_instructions_for @producer
+    @total = total_from_line_items(line_items)
+    @tax_total = tax_total_from_line_items(line_items)
 
     subject = "[#{Spree::Config.site_name}] Order cycle report for #{producer.name}"
 
@@ -25,10 +28,6 @@ class ProducerMailer < Spree::BaseMailer
     line_items_from(order_cycle, producer).any?
   end
 
-  def aggregated_line_items_from(order_cycle, producer)
-    aggregate_line_items line_items_from(order_cycle, producer)
-  end
-
   def line_items_from(order_cycle, producer)
     Spree::LineItem.
       joins(:order => :order_cycle, :variant => :product).
@@ -37,16 +36,11 @@ class ProducerMailer < Spree::BaseMailer
       merge(Spree::Order.complete)
   end
 
-  def aggregate_line_items(line_items)
-    # Arrange the items in a hash to group quantities
-    line_items.inject({}) do |lis, li|
-      if lis.key? li.variant
-        lis[li.variant].quantity += li.quantity
-      else
-        lis[li.variant] = li
-      end
+  def total_from_line_items(line_items)
+    Spree::Money.new line_items.sum(&:total)
+  end
 
-      lis
-    end
+  def tax_total_from_line_items(line_items)
+    Spree::Money.new line_items.sum(&:included_tax)
   end
 end

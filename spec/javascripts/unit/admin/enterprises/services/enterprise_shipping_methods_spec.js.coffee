@@ -27,16 +27,16 @@ describe "EnterpriseShippingMethods service", ->
 
   describe "determining shipping method colour", ->
     it "returns 'blue' when at least one shipping method is selected", ->
-      spyOn(EnterpriseShippingMethods, "selectedCount").andReturn 1
+      spyOn(EnterpriseShippingMethods, "selectedCount").and.returnValue 1
       expect(EnterpriseShippingMethods.displayColor()).toBe "blue"
 
     it "returns 'red' when no shipping methods are selected", ->
-      spyOn(EnterpriseShippingMethods, "selectedCount").andReturn 0
+      spyOn(EnterpriseShippingMethods, "selectedCount").and.returnValue 0
       expect(EnterpriseShippingMethods.displayColor()).toBe "red"
 
     it "returns 'red' when no shipping methods exist", ->
       EnterpriseShippingMethods.shippingMethods = []
-      spyOn(EnterpriseShippingMethods, "selectedCount").andReturn 1
+      spyOn(EnterpriseShippingMethods, "selectedCount").and.returnValue 1
       expect(EnterpriseShippingMethods.displayColor()).toBe "red"
 
   describe "counting selected shipping methods", ->

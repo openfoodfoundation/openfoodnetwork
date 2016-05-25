@@ -5,6 +5,9 @@ describe "PanelRow directive", ->
 
   beforeEach ->
     module 'admin.indexUtils'
+    module ($provide) ->
+      $provide.value 'columns', []
+      null
 
   beforeEach inject ($rootScope, $compile, $injector, $templateCache, _Panels_) ->
     Panels = _Panels_
