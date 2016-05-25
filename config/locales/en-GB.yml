@@ -51,10 +51,13 @@ en-GB:
   capped_at_cap: "capped at %{cap}"
   per_month: "per month"
   free: "free"
+  free_trial: "free trial"
   plus_tax: "plus GST"
   total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
+  min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
   say_no: "No"
   say_yes: "Yes"
+  then: then
 
   sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
 
