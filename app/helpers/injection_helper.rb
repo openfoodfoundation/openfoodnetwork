@@ -24,7 +24,7 @@ module InjectionHelper
 
   def inject_available_payment_methods
     inject_json_ams "paymentMethods", current_order.available_payment_methods,
-      Api::PaymentMethodSerializer
+      Api::PaymentMethodSerializer, current_order: current_order
   end
 
   def inject_taxons

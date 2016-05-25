@@ -27,11 +27,16 @@ module Spree
     end
 
     it "computes the amount of fees" do
-      pickup = create(:payment_method, name: 'pickup')
+      pickup = create(:payment_method)
       order = create(:order)
       expect(pickup.compute_amount(order)).to eq 0
-      delivery = create(:payment_method, name: 'delivery', calculator: Calculator::FlatRate.new(preferred_amount: 10))
-      expect(delivery.compute_amount(order)).to eq 10
+      transaction = create(:payment_method, calculator: Calculator::FlatRate.new(preferred_amount: 10))
+      expect(transaction.compute_amount(order)).to eq 10
+      transaction = create(:payment_method, calculator: Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10))
+      expect(transaction.compute_amount(order)).to eq 0
+      product = create(:product)
+      order.add_variant(product.master)
+      expect(transaction.compute_amount(order)).to eq 2.0
     end
   end
 end
