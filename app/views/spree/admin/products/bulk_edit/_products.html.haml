@@ -1,9 +1,12 @@
 %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || filteredProducts.length == 0' }
-  %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
+  %form{ name: 'bulk_product_form' }
+    %save-bar{ form: "bulk_product_form", buttons: "[{ text: 'Save Changes', action: submitProducts, class: 'red' }]" }
 
-    = render 'spree/admin/products/bulk_edit/products_head'
+    %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
 
-    %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | producer: producerFilter | category: categoryFilter | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+      = render 'spree/admin/products/bulk_edit/products_head'
 
-      = render 'spree/admin/products/bulk_edit/products_product'
-      = render 'spree/admin/products/bulk_edit/products_variant'
+      %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | producer: producerFilter | category: categoryFilter | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+
+        = render 'spree/admin/products/bulk_edit/products_product'
+        = render 'spree/admin/products/bulk_edit/products_variant'

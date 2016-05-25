@@ -247,6 +247,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.displaySuccess = ->
       StatusMessage.display 'success',t("products_changes_saved")
+      $scope.bulk_product_form.$setPristine()
 
 
     $scope.displayFailure = (failMessage) ->

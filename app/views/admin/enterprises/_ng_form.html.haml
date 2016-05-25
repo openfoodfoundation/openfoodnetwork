@@ -1,7 +1,7 @@
 -# Not all inputs are ng inputs, they don't make the ng-form dirty on change.
 -# ng-change is only valid for inputs, not for a form.
 -# So we use onchange and have to get the scope to access the ng controller
-= form_for [main_app, :admin, @enterprise], html: { id: "enterprise_form", name: "enterprise_form",
+= form_for [main_app, :admin, @enterprise], html: { name: "enterprise_form",
   "ng-app" => 'admin.enterprises',
   "ng-controller" => 'enterpriseCtrl',
   'onchange' => 'angular.element(enterprise_form).scope().setFormDirty()',
