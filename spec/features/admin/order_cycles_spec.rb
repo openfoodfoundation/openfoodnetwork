@@ -223,6 +223,9 @@ feature %q{
     page.should have_field 'order_cycle_outgoing_exchange_1_pickup_time', with: 'time 1'
     page.should have_field 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'instructions 1'
 
+    # Make the whole page visible
+    page.driver.resize(1280, 3600)
+
     # And the distributors should have products
     page.all('table.exchanges tbody tr.distributor').each do |row|
       row.find('td.products input').click
