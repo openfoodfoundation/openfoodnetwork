@@ -30,6 +30,7 @@ describe 'Checkout service', ->
   beforeEach ->
     orderData =
       id: 3102
+      shipping_method_id: null
       payment_method_id: null
       email: "test@test.com"
       bill_address:
@@ -78,7 +79,7 @@ describe 'Checkout service', ->
       expect(Checkout.shippingPrice()).toEqual 13
 
   it 'Gets the current payment method', ->
-    expect(Checkout.paymentMethod()).toEqual null
+    expect(Checkout.paymentMethod()).toBeUndefined()
     Checkout.order.payment_method_id = 99
     expect(Checkout.paymentMethod()).toEqual paymentMethods[0]
 

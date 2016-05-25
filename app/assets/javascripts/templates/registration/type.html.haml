@@ -1,4 +1,4 @@
-.container#registration-type{bindonce: true}
+.container#registration-type
 
   %ng-include{ src: "'registration/steps.html'" }
 
@@ -10,7 +10,7 @@
           {{'registration_type_question' | t}}
 
   %form{ name: 'type', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "create(type)" } }
-    .row#enterprise-types{ 'data-equalizer' => true, bo: { if: "enterprise.type != 'own'" } }
+    .row#enterprise-types{ 'data-equalizer' => true, ng: { if: "::enterprise.type != 'own'" } }
       .small-12.columns.field
         .row
           .small-12.medium-6.large-6.columns{ 'data-equalizer-watch' => true }

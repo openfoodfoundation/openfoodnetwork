@@ -9,6 +9,9 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
   $scope.order_cycle = OrderCycle.load $scope.orderCycleId(), (order_cycle) =>
     $scope.init()
 
+  $scope.$watch 'order_cycle_form.$dirty', (newValue) ->
+      StatusMessage.display 'notice', 'You have unsaved changes' if newValue
+
   $scope.loaded = ->
     Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
 
@@ -34,6 +37,8 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
     $event.preventDefault()
     OrderCycle.removeCoordinatorFee(index)
 
-  $scope.submit = (destination) ->
+  $scope.submit = ($event, destination) ->
+    $event.preventDefault()
+    StatusMessage.display 'progress', "Saving..."
     OrderCycle.mirrorIncomingToOutgoingProducts()
-    OrderCycle.update(destination)
+    OrderCycle.update(destination, $scope.order_cycle_form)

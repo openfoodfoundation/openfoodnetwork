@@ -1,5 +1,6 @@
 %form{ name: 'variant_overrides_form', ng: { show: "views.inventory.visible" } }
-  %save-bar{ save: "update()", form: "variant_overrides_form" }
+  %save-bar{ dirty: "customers_form.$dirty", persist: "false" }
+    %input.red{ type: "button", value: "Save Changes", ng: { click: "update()", disabled: "!variant_overrides_form.$dirty" } }
   %table.index.bulk#variant-overrides
     %col.producer{ width: "20%", ng: { show: 'columns.producer.visible' } }
     %col.product{ width: "20%", ng: { show: 'columns.product.visible' } }
@@ -15,13 +16,13 @@
       %tr{ ng: { controller: "ColumnsCtrl" } }
         %th.producer{ ng: { show: 'columns.producer.visible' } }=t('admin.producer')
         %th.product{ ng: { show: 'columns.product.visible' } }=t('admin.product')
-        %th.sku{ ng: { show: 'columns.sku.visible' } }=t('admin.inventory.sku')
-        %th.price{ ng: { show: 'columns.price.visible' } }=t('admin.inventory.price')
-        %th.on_hand{ ng: { show: 'columns.on_hand.visible' } }=t('admin.inventory.on_hand')
-        %th.on_demand{ ng: { show: 'columns.on_demand.visible' } }=t('admin.inventory.on_demand')
-        %th.reset{ colspan: 2, ng: { show: 'columns.reset.visible' } }=t('admin.inventory.enable_reset')
-        %th.inheritance{ ng: { show: 'columns.inheritance.visible' } }=t('admin.inventory.inherit')
-        %th.visibility{ ng: { show: 'columns.visibility.visible' } }=t('admin.inventory.hide')
-    %tbody{bindonce: true, ng: {repeat: 'product in filteredProducts = (products | hubPermissions:hubPermissions:hub_id | inventoryProducts:hub_id:views | attrFilter:{producer_id:producerFilter} | filter:query) | limitTo:productLimit' } }
+        %th.sku{ ng: { show: 'columns.sku.visible' } }=t('admin.sku')
+        %th.price{ ng: { show: 'columns.price.visible' } }=t('admin.price')
+        %th.on_hand{ ng: { show: 'columns.on_hand.visible' } }=t('admin.on_hand')
+        %th.on_demand{ ng: { show: 'columns.on_demand.visible' } }=t('admin.on_demand?')
+        %th.reset{ colspan: 2, ng: { show: 'columns.reset.visible' } }=t('admin.variant_overrides.index.enable_reset?')
+        %th.inheritance{ ng: { show: 'columns.inheritance.visible' } }=t('admin.variant_overrides.index.inherit?')
+        %th.visibility{ ng: { show: 'columns.visibility.visible' } }=t('admin.variant_overrides.index.hide')
+    %tbody{ ng: {repeat: 'product in filteredProducts = (products | hubPermissions:hubPermissions:hub_id | inventoryProducts:hub_id:views | attrFilter:{producer_id:producerFilter} | filter:query) | limitTo:productLimit' } }
       = render 'admin/variant_overrides/products_product'
       = render 'admin/variant_overrides/products_variants'

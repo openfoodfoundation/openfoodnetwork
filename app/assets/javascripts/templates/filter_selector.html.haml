@@ -1,4 +1,4 @@
-%ul{ bindonce: true }
+%ul
   %active-selector{ ng: { repeat: "selector in allSelectors", show: "ifDefined(selector.fits, true)" } }
     %render-svg{path: "{{selector.object.icon}}", ng: { if: "selector.object.icon"} }
-    %span{"bo-text" => "selector.object.name"}
+    %span{"ng-bind" => "::selector.object.name"}

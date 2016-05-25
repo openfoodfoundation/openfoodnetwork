@@ -267,6 +267,9 @@ feature %q{
 
 
   scenario "updating an order cycle", js: true do
+    # Make the page long enough to avoid the save bar overlaying the form
+    page.driver.resize(1280, 3600)
+
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     initial_variants = oc.variants.sort_by &:id
@@ -359,6 +362,7 @@ feature %q{
     select 'Distributor fee 2', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
 
     # And I click Update
+    expect(page).to have_selector "#save-bar"
     click_button 'Update and Close'
 
     # Then my order cycle should have been updated
@@ -459,7 +463,7 @@ feature %q{
     click_link 'Order Cycles'
     click_link oc.name
     within("table.exchanges tbody tr.supplier") { page.find('td.products input').click }
-    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).click # uncheck
+    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).trigger('click') # uncheck
     click_button "Update"
 
     # Then the master variant should have been removed from all exchanges
@@ -603,13 +607,16 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc)
 
-        # I should not see exchanges for supplier_unmanaged or distributor_unmanaged
-        page.all('tr.supplier').count.should == 3
-        page.all('tr.distributor').count.should == 3
+        # I should be able to see but not edit exchanges for supplier_unmanaged or distributor_unmanaged
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page).to have_selector "tr.supplier-#{supplier_permitted.id}"
+        expect(page).to have_selector "tr.supplier-#{supplier_unmanaged.id}"
+        expect(page.all('tr.supplier').count).to be 3
 
-        # When I save, then those exchanges should remain
-        click_button 'Update'
-        page.should have_content "Your order cycle has been updated."
+        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_unmanaged.id}"
+        expect(page.all('tr.distributor').count).to be 3
 
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
@@ -618,6 +625,9 @@ feature %q{
       end
 
       scenario "editing an order cycle" do
+        # Make the page long enough to avoid the save bar overlaying the form
+        page.driver.resize(1280, 3600)
+
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
 
         visit edit_admin_order_cycle_path(oc)
@@ -627,6 +637,7 @@ feature %q{
         page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
         page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
         page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
+
         click_button 'Update'
 
         # Then the exchanges should be removed
@@ -684,8 +695,12 @@ feature %q{
         # I should only see exchanges for supplier_managed AND
         # distributor_managed and distributor_permitted (who I have given permission to) AND
         # and distributor_unmanaged (who distributes my products)
-        page.all('tr.supplier').count.should == 1
-        page.all('tr.distributor').count.should == 2
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page.all('tr.supplier').count).to be 1
+
+        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
+        expect(page.all('tr.distributor').count).to be 2
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.distributor-#{distributor_managed.id}" do
@@ -697,10 +712,6 @@ feature %q{
 
         # I should be able to see but not toggle v2, because I don't have permission
         expect(page).to have_field "order_cycle_outgoing_exchange_0_variants_#{v2.id}", disabled: true
-
-        # When I save, any exchanges that I can't manage remain
-        click_button 'Update'
-        page.should have_content "Your order cycle has been updated."
 
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
@@ -737,8 +748,11 @@ feature %q{
         visit edit_admin_order_cycle_path(oc)
 
         # I should see exchanges for my_distributor, and the incoming exchanges supplying the variants in it
-        page.all('tr.supplier').count.should == 1
-        page.all('tr.distributor').count.should == 1
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page.all('tr.supplier').count).to be 1
+
+        expect(page).to have_selector "tr.distributor-#{my_distributor.id}"
+        expect(page.all('tr.distributor').count).to be 1
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.supplier-#{supplier_managed.id}" do
@@ -750,10 +764,6 @@ feature %q{
 
         # I should be able to see but not toggle v2, because I don't have permission
         expect(page).to have_field "order_cycle_incoming_exchange_0_variants_#{v2.id}", disabled: true
-
-        # When I save, any exchange that I can't manage remains
-        click_button 'Update'
-        page.should have_content "Your order cycle has been updated."
 
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
@@ -868,6 +878,9 @@ feature %q{
     end
 
     scenario "updating an order cycle" do
+      # Make the page long enough to avoid the save bar overlaying the form
+      page.driver.resize(1280, 3600)
+
       # Given an order cycle with pickup time and instructions
       fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
@@ -902,6 +915,8 @@ feature %q{
       # When I update, or update and close, both work
       click_button 'Update'
       page.should have_content 'Your order cycle has been updated.'
+
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'yyz'
       click_button 'Update and Close'
 
       # Then my order cycle should have been updated
@@ -921,7 +936,7 @@ feature %q{
       # And my pickup time and instructions should have been saved
       ex = oc.exchanges.outgoing.first
       ex.pickup_time.should == 'xy'
-      ex.pickup_instructions.should == 'zzy'
+      ex.pickup_instructions.should == 'yyz'
     end
   end
 

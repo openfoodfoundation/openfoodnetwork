@@ -9,7 +9,7 @@
         (#{link_to t(:edit), spree.edit_account_path})
       %h3= t(:my_orders)
       .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
-        .row{bindonce: true}
+        .row
           .small-12.columns
             .active_table
               %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.orders_by_distributor.length > 0", "ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
@@ -19,6 +19,6 @@
                 .small-12.columns
                   = render partial: "spree/users/skinny"
                   = render partial: "spree/users/fat"
-          .message{"ng-if" => "Orders.orders_by_distributor.length == 0", "bo-text" => "'you_have_no_orders_yet' | t"}
+          .message{"ng-if" => "Orders.orders_by_distributor.length == 0", "ng-bind" => "::'you_have_no_orders_yet' | t"}
 
   = render partial: "shared/footer"

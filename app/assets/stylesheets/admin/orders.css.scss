@@ -13,10 +13,6 @@ input.show-dirty {
   }
 }
 
-span.error {
-	color: #DA5354;
-}
-
 input, div {
 	&.update-error {
 		border: solid 1px #DA5354;

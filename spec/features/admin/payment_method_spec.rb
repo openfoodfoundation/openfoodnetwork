@@ -94,7 +94,7 @@ feature %q{
         click_link "Payment Methods"
       end
       click_link 'Create One Now'
-      current_path.should == spree.new_admin_payment_method_path
+      expect(page).to have_current_path spree.new_admin_payment_method_path
     end
 
     it "creates payment methods" do

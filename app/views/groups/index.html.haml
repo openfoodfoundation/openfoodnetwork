@@ -25,14 +25,14 @@
   .group.animate-repeat{"ng-repeat" => "group in groups = (Groups.groups | groups:query | orderBy:order)",
         name: "group{{group.id}}",
         id: "group{{group.id}}"}
-    .row.pad-top{bindonce: true}
+    .row.pad-top
       .small-12.medium-6.columns
         .groups-header
-          %a{"bo-href-i" => "/groups/{{group.permalink}}"}
+          %a{"ng-href" => "/groups/{{::group.permalink}}"}
             %i.ofn-i_035-groups
-            %span.group-name{"bo-text" => "group.name"}
+            %span.group-name{"ng-bind" => "::group.name"}
       .small-3.medium-2.columns
-        %p{"bo-text" => "group.state"}
+        %p{"ng-bind" => "::group.state"}
       .small-9.medium-4.columns.groups-icons
         %p
           %link-to-service.ofn-i_050-mail-circle{service: '""', ref: 'group.email.split("").reverse().join("")', mailto: true}

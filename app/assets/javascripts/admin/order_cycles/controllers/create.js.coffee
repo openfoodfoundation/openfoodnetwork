@@ -12,7 +12,7 @@ angular.module('admin.orderCycles')
     $scope.StatusMessage = StatusMessage
 
     $scope.loaded = ->
-      Enterprise.loaded && EnterpriseFee.loaded
+      Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
 
     $scope.suppliedVariants = (enterprise_id) ->
       Enterprise.suppliedVariants(enterprise_id)
@@ -79,5 +79,6 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.submit = (destination) ->
+    $scope.submit = ($event, destination) ->
+      $event.preventDefault()
       OrderCycle.create(destination)

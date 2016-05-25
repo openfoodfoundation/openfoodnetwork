@@ -1,43 +1,24 @@
-angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerResource, TagsResource, $q, Columns, pendingChanges, shops) ->
-  $scope.shop = {}
+angular.module("admin.customers").controller "customersCtrl", ($scope, $q, Customers, TagRuleResource, CurrentShop, RequestMonitor, Columns, pendingChanges, shops) ->
   $scope.shops = shops
+  $scope.CurrentShop = CurrentShop
+  $scope.RequestMonitor = RequestMonitor
   $scope.submitAll = pendingChanges.submitAll
+  $scope.add = Customers.add
+  $scope.deleteCustomer = Customers.remove
+  $scope.customerLimit = 20
+  $scope.columns = Columns.columns
 
-  $scope.columns = Columns.setColumns
-    email:     { name: "Email",    visible: true }
-    code:      { name: "Code",     visible: true }
-    tags:      { name: "Tags",     visible: true }
-
-  $scope.$watch "shop.id", ->
-    if $scope.shop.id?
-      $scope.customers = index {enterprise_id: $scope.shop.id}
+  $scope.$watch "CurrentShop.shop", ->
+    if $scope.CurrentShop.shop.id?
+      Customers.index({enterprise_id: $scope.CurrentShop.shop.id}).then (data) ->
+        $scope.customers = data
 
   $scope.findTags = (query) ->
     defer = $q.defer()
     params =
-      enterprise_id: $scope.shop.id
-    TagsResource.index params, (data) =>
+      enterprise_id: $scope.CurrentShop.shop.id
+    TagRuleResource.mapByTag params, (data) =>
       filtered = data.filter (tag) ->
         tag.text.toLowerCase().indexOf(query.toLowerCase()) != -1
       defer.resolve filtered
     defer.promise
-
-  $scope.add = (email) ->
-    params =
-      enterprise_id: $scope.shop.id
-      email: email
-    CustomerResource.create params, (customer) =>
-      if customer.id
-        $scope.customers.push customer
-        $scope.quickSearch = customer.email
-
-  $scope.deleteCustomer = (customer) ->
-    params = id: customer.id
-    CustomerResource.destroy params, ->
-      i = $scope.customers.indexOf customer
-      $scope.customers.splice i, 1 unless i < 0
-
-  index = (params) ->
-    $scope.loaded = false
-    CustomerResource.index params, =>
-      $scope.loaded = true

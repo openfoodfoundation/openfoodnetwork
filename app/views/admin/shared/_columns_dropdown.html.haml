@@ -1,7 +1,0 @@
-.ofn-drop-down.right#columns-dropdown
-  %span{ :class => 'icon-reorder' }= "&nbsp; #{t('admin.columns')}".html_safe
-  %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
-  %div.menu{ 'ng-show' => "expanded" }
-    %div.menu_item{ ng: { repeat: "column in columns" }, toggle: { column: true } }
-      %span.check
-      %span.name {{column.name }}

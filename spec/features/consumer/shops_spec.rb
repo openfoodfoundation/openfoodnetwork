@@ -43,12 +43,12 @@ feature 'Shops', js: true do
 
   it "should link to the hub page" do
     follow_active_table_node distributor.name
-    current_path.should == enterprise_shop_path(distributor)
+    expect(page).to have_current_path enterprise_shop_path(distributor)
   end
 
   it "should show hub producer modals" do
     expand_active_table_node distributor.name
-    page.should have_content producer.name
+    expect(page).to have_content producer.name
     open_enterprise_modal producer
     modal_should_be_open_for producer
   end

@@ -17,13 +17,13 @@
         %td.severity
           %i.icon-warning-sign.issue
         %td.description
-          %span{ bo: { bind: "issue.description" } }
+          %span{ ng: { bind: "::issue.description" } }
         %td.resolve
           %div{ ng: { bind: { html: "issue.link" } } }
       %tr{ ng: { repeat: "warning in warnings"} }
         %td.severity
           %i.icon-warning-sign.warning
         %td.description
-          %span{ bo: { bind: "warning.description" } }
+          %span{ ng: { bind: "::warning.description" } }
         %td.resolve
           %div{ ng: { bind: { html: "warning.link" } } }

@@ -89,6 +89,7 @@ feature "Registration", js: true do
 
       # Done
       expect(page).to have_content "Finished!"
+      expect(page).to have_content "We've sent a confirmation email to #{user.email} if it hasn't been activated before."
       e.reload
       expect(e.website).to eq "www.shop.com"
       expect(e.facebook).to eq "FaCeBoOk"

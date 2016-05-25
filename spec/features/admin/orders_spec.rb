@@ -21,7 +21,7 @@ feature %q{
     create :check_payment, order: @order, amount: @order.total
   end
 
-  scenario "creating an order with distributor and order cycle", retry: 3 do
+  scenario "creating an order with distributor and order cycle" do
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
 
@@ -31,12 +31,16 @@ feature %q{
     click_link 'New Order'
 
     # Distributors without an order cycle should be shown as disabled
-    page.should have_selector "option[value='#{distributor_disabled.id}'][disabled='disabled']"
+    open_select2('#s2id_order_distributor_id')
+    page.should have_selector "ul.select2-results li.select2-result.select2-disabled", text: distributor_disabled.name
+    close_select2('#s2id_order_distributor_id')
+
+    # Order cycle selector should be disabled
+    page.should have_selector "#s2id_order_order_cycle_id.select2-container-disabled"
 
     # When we select a distributor, it should limit order cycle selection to those for that distributor
-    page.should_not have_select2 'order_order_cycle_id'
-    select @distributor.name, from: 'order_distributor_id'
-    page.should have_select2 'order_order_cycle_id', options: ['', 'One (open)']
+    select2_select @distributor.name, from: 'order_distributor_id'
+    page.should have_select2 'order_order_cycle_id', options: ['One (open)']
     select2_select @order_cycle.name, from: 'order_order_cycle_id'
 
     page.should have_content 'ADD PRODUCT'
@@ -80,7 +84,7 @@ feature %q{
 
     click_edit
 
-    select d.name, from: 'order_distributor_id'
+    select2_select d.name, from: 'order_distributor_id'
     select2_select oc.name, from: 'order_order_cycle_id'
 
     click_button 'Update And Recalculate Fees'
@@ -106,7 +110,7 @@ feature %q{
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
 
-    page.should have_no_select 'order_distributor_id'
+    page.should_not have_select2 'order_distributor_id'
     page.should_not have_select2 'order_order_cycle_id'
 
     page.should have_selector 'p', text: "Distributor: #{@order.distributor.name}"
@@ -124,7 +128,7 @@ feature %q{
     login_to_admin_section
     visit '/admin/orders'
     click_link 'New Order'
-    select @distributor.name, from: 'order_distributor_id'
+    select2_select @distributor.name, from: 'order_distributor_id'
     select2_select @order_cycle.name, from: 'order_order_cycle_id'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
@@ -149,7 +153,7 @@ feature %q{
     login_to_admin_section
 
     visit '/admin/orders'
-    current_path.should == spree.admin_orders_path
+    expect(page).to have_current_path spree.admin_orders_path
 
     # click the 'capture' link for the order
     page.find("[data-action=capture][href*=#{@order.number}]").click
@@ -161,7 +165,7 @@ feature %q{
     @order.payment_state.should == "paid"
 
     # we should still be on the same page
-    current_path.should == spree.admin_orders_path
+    expect(page).to have_current_path spree.admin_orders_path
   end
 
 
@@ -208,7 +212,7 @@ feature %q{
       visit '/admin/orders'
       click_link 'New Order'
 
-      select distributor1.name, from: 'order_distributor_id'
+      select2_select distributor1.name, from: 'order_distributor_id'
       select2_select order_cycle1.name, from: 'order_order_cycle_id'
 
       expect(page).to have_content 'ADD PRODUCT'
@@ -218,8 +222,8 @@ feature %q{
       page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
       expect(page).to have_selector 'td', text: product.name
 
-      expect(page).to have_select 'order_distributor_id', with_options: [distributor1.name]
-      expect(page).to_not have_select 'order_distributor_id', with_options: [distributor2.name]
+      expect(page).to have_select2 'order_distributor_id', with_options: [distributor1.name]
+      expect(page).to_not have_select2 'order_distributor_id', with_options: [distributor2.name]
 
       expect(page).to have_select2 'order_order_cycle_id', with_options: ["#{order_cycle1.name} (open)"]
       expect(page).to_not have_select2 'order_order_cycle_id', with_options: ["#{order_cycle2.name} (open)"]
