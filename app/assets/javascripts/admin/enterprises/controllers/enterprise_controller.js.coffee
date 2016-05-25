@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, $window,NavigationCheck, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
+  .controller "enterpriseCtrl", ($scope, $window, NavigationCheck, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
     $scope.Enterprise = enterprise
     $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
