@@ -59,6 +59,8 @@ feature %q{
   end
 
   scenario "creating an order cycle", js: true do
+    page.driver.resize(1280, 2000)
+
     # Given coordinating, supplying and distributing enterprises with some products with variants
     coordinator = create(:distributor_enterprise, name: 'My coordinator')
     supplier = create(:supplier_enterprise, name: 'My supplier')
@@ -139,7 +141,7 @@ feature %q{
     select 'Distributor fee', from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
     # And I click Create
-    find_button('Create').trigger('click')
+    click_button 'Create'
 
     # Then my order cycle should have been created
     page.should have_content 'Your order cycle has been created.'
@@ -567,6 +569,9 @@ feature %q{
       end
 
       scenario "creating a new order cycle" do
+        # Make the page long enough to avoid the save bar overlaying the form
+        page.driver.resize(1280, 2000)
+
         click_link "Order Cycles"
         click_link 'New Order Cycle'
 
@@ -839,6 +844,9 @@ feature %q{
     end
 
     it "creates order cycles", js: true do
+      # Make the page long enough to avoid the save bar overlaying the form
+      page.driver.resize(1280, 2000)
+
       # When I go to the new order cycle page
       visit admin_order_cycles_path
       click_link 'New Order Cycle'
@@ -866,7 +874,7 @@ feature %q{
       page.should_not have_select 'order_cycle_coordinator_fee_1_id'
 
       select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
-      find_button('Create').trigger("click")
+      click_button 'Create'
 
       # Then my order cycle should have been created
       page.should have_content 'Your order cycle has been created.'
