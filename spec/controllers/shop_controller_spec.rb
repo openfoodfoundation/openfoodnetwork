@@ -96,21 +96,20 @@ describe ShopController do
 
     describe "determining rule relevance" do
       let(:products_json) { double(:products_json) }
+      let(:applicator) { double(:applicator) }
 
       before do
-        # allow(controller).to receive(:products_json) { products_json }
-        allow(controller).to receive(:relevant_tag_rules) { relevant_tag_rules }
-        allow(controller).to receive(:apply_tag_rules) { "some filtered json" }
+        allow(applicator).to receive(:rules) { tag_rules }
+        allow(controller).to receive(:applicator) { applicator }
+        allow(controller).to receive(:filter) { "some filtered json" }
       end
 
       context "when no relevant rules exist" do
-        let(:relevant_tag_rules) { [] }
-
-        before { allow(controller).to receive(:relevant_rules) { relevant_rules } }
+        let(:tag_rules) { [] }
 
         it "does not attempt to apply any rules" do
           controller.send(:filtered_json, products_json)
-          expect(expect(controller).to_not have_received(:apply_tag_rules))
+          expect(expect(controller).to_not have_received(:filter))
         end
 
         it "returns products as JSON" do
@@ -120,11 +119,11 @@ describe ShopController do
 
       context "when relevant rules exist" do
         let(:tag_rule) { create(:filter_products_tag_rule, preferred_customer_tags: "tag1", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "hidden" ) }
-        let(:relevant_tag_rules) { [tag_rule] }
+        let(:tag_rules) { [tag_rule] }
 
         it "attempts to apply any rules" do
           controller.send(:filtered_json, products_json)
-          expect(controller).to have_received(:apply_tag_rules).with(relevant_tag_rules, products_json)
+          expect(controller).to have_received(:filter).with(products_json)
         end
 
         it "returns filtered JSON" do
@@ -133,49 +132,86 @@ describe ShopController do
       end
     end
 
-    describe "applying tag rules" do
-      let(:product1) { { id: 1, name: 'product 1', "variants" => [{ id: 4, "tag_list" => ["tag1"] }] } }
-      let(:product2) { { id: 2, name: 'product 2', "variants" => [{ id: 5, "tag_list" => ["tag1"] }, {id: 9, "tag_list" => ["tag2"]}] } }
-      let(:product3) { { id: 3, name: 'product 3', "variants" => [{ id: 6, "tag_list" => ["tag3"] }] } }
+    context "when FilterProducts tag rules are in effect" do
+      let!(:tagged_customer) { create(:customer, enterprise: distributor, tag_list: "member") }
+      let!(:untagged_customer) { create(:customer, enterprise: distributor, tag_list: "") }
+      let!(:order) { create(:order, distributor: distributor) }
+      let!(:tag_rule) { create(:filter_products_tag_rule,
+        enterprise: distributor,
+        preferred_customer_tags: "member",
+        preferred_variant_tags: "members-only") }
+      let!(:default_tag_rule) { create(:filter_products_tag_rule,
+        enterprise: distributor,
+        is_default: true,
+        preferred_variant_tags: "members-only") }
+      let(:product1) { { "id" => 1, "name" => 'product 1', "variants" => [{ "id" => 4, "tag_list" => ["members-only"] }] } }
+      let(:product2) { { "id" => 2, "name" => 'product 2', "variants" => [{ "id" => 5, "tag_list" => ["members-only"] }, {"id" => 9, "tag_list" => ["something"]}] } }
+      let(:product3) { { "id" => 3, "name" => 'product 3', "variants" => [{ "id" => 6, "tag_list" => ["something-else"] }] } }
+      let(:product2_without_v5) { { "id" => 2, "name" => 'product 2', "variants" => [{"id" => 9, "tag_list" => ["something"]}] } }
       let!(:products_array) { [product1, product2, product3] }
       let!(:products_json) { JSON.unparse( products_array ) }
-      let(:tag_rule) { create(:filter_products_tag_rule, preferred_customer_tags: "tag1", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "hidden" ) }
-      let(:relevant_tag_rules) { [tag_rule] }
 
       before do
         allow(controller).to receive(:current_order) { order }
-        allow(tag_rule).to receive(:context=)
-        allow(tag_rule).to receive(:apply)
-        allow(distributor).to receive(:apply_tag_rules).and_call_original
       end
 
-      context "when a current order with a customer does not exist" do
-        let(:order) { double(:order, customer: nil) }
+      context "with a preferred visiblity of 'visible', default visibility of 'hidden'" do
+        before { tag_rule.update_attribute(:preferred_matched_variants_visibility, 'visible') }
+        before { default_tag_rule.update_attribute(:preferred_matched_variants_visibility, 'hidden') }
 
-        it "sets the context customer_tags as an empty array" do
-          controller.send(:apply_tag_rules, relevant_tag_rules, products_json)
-          expect(distributor).to have_received(:apply_tag_rules).with(rules: relevant_tag_rules, subject: JSON.parse(products_json), :customer_tags=>[])
-        end
-      end
+        let(:filtered_products) { JSON.parse(controller.send(:filter, products_json)) }
 
-      context "when a customer does exist" do
-        let(:order) { double(:order, customer: double(:customer, tag_list: ["tag1", "tag2"])) }
-
-        it "sets the context customer_tags" do
-          controller.send(:apply_tag_rules, relevant_tag_rules, products_json)
-          expect(distributor).to have_received(:apply_tag_rules).with(rules: relevant_tag_rules, subject: JSON.parse(products_json), :customer_tags=>["tag1", "tag2"])
-        end
-
-        context "applies the rule" do
-          before do
-            allow(tag_rule).to receive(:context=).and_call_original
-            allow(tag_rule).to receive(:apply).and_call_original
+        context "when the customer is nil" do
+          it "applies default action (hide)" do
+            expect(filtered_products).to include product2_without_v5, product3
+            expect(filtered_products).to_not include product1, product2
           end
+        end
 
-          it "applies the rule" do
-            result = controller.send(:apply_tag_rules, relevant_tag_rules, products_json)
-            expect(tag_rule).to have_received(:apply)
-            expect(result).to eq JSON.unparse([{ id: 2, name: 'product 2', variants: [{id: 9, tag_list: ["tag2"]}] }, product3])
+        context "when the customer's tags match" do
+          before { order.update_attribute(:customer_id, tagged_customer.id) }
+
+          it "applies the action (show)" do
+            expect(filtered_products).to include product1, product2, product3
+          end
+        end
+
+        context "when the customer's tags don't match" do
+          before { order.update_attribute(:customer_id, untagged_customer.id) }
+
+          it "applies the default action (hide)" do
+            expect(filtered_products).to include product2_without_v5, product3
+            expect(filtered_products).to_not include product1, product2
+          end
+        end
+      end
+
+      context "with a preferred visiblity of 'hidden', default visibility of 'visible'" do
+        before { tag_rule.update_attribute(:preferred_matched_variants_visibility, 'hidden') }
+        before { default_tag_rule.update_attribute(:preferred_matched_variants_visibility, 'visible') }
+
+        let(:filtered_products) { JSON.parse(controller.send(:filter, products_json)) }
+
+        context "when the customer is nil" do
+          it "applies default action (show)" do
+            expect(filtered_products).to include product1, product2, product3
+          end
+        end
+
+        context "when the customer's tags match" do
+          before { order.update_attribute(:customer_id, tagged_customer.id) }
+
+          it "applies the action (hide)" do
+            expect(filtered_products).to include product2_without_v5, product3
+            expect(filtered_products).to_not include product1, product2
+          end
+        end
+
+        context "when the customer's tags don't match" do
+          before { order.update_attribute(:customer_id, untagged_customer.id) }
+
+          it "applies the default action (show)" do
+            expect(filtered_products).to include product1, product2, product3
           end
         end
       end

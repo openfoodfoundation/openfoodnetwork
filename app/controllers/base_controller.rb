@@ -1,3 +1,5 @@
+require 'open_food_network/tag_rule_applicator'
+
 class BaseController < ApplicationController
   include Spree::Core::ControllerHelpers
   include Spree::Core::ControllerHelpers::RespondWith
@@ -19,12 +21,9 @@ class BaseController < ApplicationController
     @order_cycles = OrderCycle.with_distributor(@distributor).active
     .order(@distributor.preferred_shopfront_order_cycle_order)
 
-    @distributor.apply_tag_rules(
-     type: "FilterOrderCycles",
-     subject: @order_cycles,
-     customer_tags: current_order.andand.customer.andand.tag_list || [],
-     shop: @distributor
-    )
+    customer_tags = current_order.andand.customer.andand.tag_list
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor, "FilterOrderCycles", customer_tags)
+    applicator.filter!(@order_cycles)
 
     # And default to the only order cycle if there's only the one
     if @order_cycles.count == 1

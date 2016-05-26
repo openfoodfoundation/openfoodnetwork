@@ -5,25 +5,8 @@ class TagRule
 
     attr_accessible :preferred_matched_variants_visibility, :preferred_variant_tags
 
-    private
-
-    # Warning: this should only EVER be called via TagRule#apply
-    def apply!
-      unless preferred_matched_variants_visibility == "visible"
-        subject.reject! do |product|
-          product["variants"].reject! { |v| tags_match?(v) }
-          product["variants"].empty?
-        end
-      end
-    end
-
-    def apply_default!
-      if preferred_matched_variants_visibility == "visible"
-        subject.reject! do |product|
-          product["variants"].reject! { |v| tags_match?(v) }
-          product["variants"].empty?
-        end
-      end
+    def self.tagged_children_for(product)
+      product["variants"]
     end
 
     def tags_match?(variant)
@@ -32,8 +15,8 @@ class TagRule
       (variant_tags & preferred_tags).any?
     end
 
-    def subject_class_matches?
-      subject.class == Array
+    def reject_matched?
+      preferred_matched_variants_visibility != "visible"
     end
   end
 end

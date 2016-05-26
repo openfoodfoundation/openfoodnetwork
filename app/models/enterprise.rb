@@ -344,13 +344,6 @@ class Enterprise < ActiveRecord::Base
     abn.present?
   end
 
-  def apply_tag_rules(context)
-    tag_rules_for(context).each do |rule|
-      rule.context = context
-      rule.apply
-    end
-  end
-
   protected
 
   def devise_mailer
@@ -458,11 +451,5 @@ class Enterprise < ActiveRecord::Base
 
   def initialize_permalink
     self.permalink = Enterprise.find_available_permalink(name)
-  end
-
-  def tag_rules_for(context)
-    rules = context[:rules] || tag_rules
-    return rules unless context[:type]
-    rules.merge(TagRule.of_type(context[:type]))
   end
 end

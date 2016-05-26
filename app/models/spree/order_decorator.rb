@@ -1,6 +1,7 @@
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/distribution_change_validator'
 require 'open_food_network/feature_toggle'
+require 'open_food_network/tag_rule_applicator'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
   payload[:order].reload.update_distribution_charge!
@@ -178,10 +179,6 @@ Spree::Order.class_eval do
       if order_cycle
         OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
       end
-
-      if distributor.present? && customer.present?
-        distributor.apply_tag_rules(type: "DiscountOrder", subject: self, customer_tags: customer.andand.tag_list)
-      end
     end
   end
 
@@ -214,7 +211,11 @@ Spree::Order.class_eval do
   def available_payment_methods
     return [] unless distributor.present?
     payment_methods = distributor.payment_methods.available(:front_end).all
-    distributor.apply_tag_rules( type: "FilterPaymentMethods", subject: payment_methods, customer_tags: customer.andand.tag_list)
+
+    customer_tags = customer.andand.tag_list
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(distributor, "FilterPaymentMethods", customer_tags)
+    applicator.filter!(payment_methods)
+
     payment_methods
   end
 

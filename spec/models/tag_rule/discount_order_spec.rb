@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TagRule::DiscountOrder, type: :model do
   let!(:tag_rule) { create(:tag_rule) }
 
-  describe "determining relevance based on additional requirements" do
+  pending "determining relevance based on additional requirements" do
     let(:subject) { double(:subject) }
 
     before do
@@ -29,7 +29,7 @@ describe TagRule::DiscountOrder, type: :model do
     end
   end
 
-  describe "determining whether a the rule has already been applied to an order" do
+  pending "determining whether a the rule has already been applied to an order" do
     let!(:order) { create(:order) }
     let!(:adjustment) { order.adjustments.create({:amount => 12.34, :source => order, :originator => tag_rule, :label => 'discount' }, :without_protection => true) }
 
@@ -47,7 +47,7 @@ describe TagRule::DiscountOrder, type: :model do
     end
   end
 
-  describe "applying the rule" do
+  pending "applying the rule" do
     # Assume that all validation is done by the TagRule base class
 
     let!(:line_item) { create(:line_item, price: 100.00) }

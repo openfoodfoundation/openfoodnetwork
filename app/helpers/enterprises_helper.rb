@@ -5,13 +5,11 @@ module EnterprisesHelper
 
   def available_shipping_methods
     shipping_methods = current_distributor.shipping_methods
-    if current_distributor.present?
-      current_distributor.apply_tag_rules(
-        type: "FilterShippingMethods",
-        subject: shipping_methods,
-        customer_tags: current_order.andand.customer.andand.tag_list
-      )
-    end
+
+    customer_tags = current_order.andand.customer.andand.tag_list
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterShippingMethods", customer_tags)
+    applicator.filter!(shipping_methods)
+
     shipping_methods.uniq
   end
 

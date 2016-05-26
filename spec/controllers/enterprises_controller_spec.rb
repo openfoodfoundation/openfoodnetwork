@@ -40,12 +40,17 @@ describe EnterprisesController do
         order.update_attribute(:customer_id, customer.id)
       end
 
-      it "shows order cycles allowed by the rule" do
+      it "shows order cycles allowed by the rules" do
         create(:filter_order_cycles_tag_rule,
           enterprise: distributor,
           preferred_customer_tags: "wholesale",
           preferred_exchange_tags: "wholesale",
           preferred_matched_order_cycles_visibility: 'visible')
+        create(:filter_order_cycles_tag_rule,
+          enterprise: distributor,
+          is_default: true,
+          preferred_exchange_tags: "wholesale",
+          preferred_matched_order_cycles_visibility: 'hidden')
 
         spree_get :shop, {id: distributor}
         expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3

@@ -43,12 +43,16 @@ describe Spree::Order do
       end
     end
 
-    context "when a FilterPaymentMethods tag rule is in effect, with preferred visibility of 'visible'" do
-      let!(:allowed_customer) { create(:customer, enterprise: distributor, tag_list: "trusted") }
-      let!(:disallowed_customer) { create(:customer, enterprise: distributor, tag_list: "") }
+    context "when FilterPaymentMethods tag rules are in effect" do
+      let!(:tagged_customer) { create(:customer, enterprise: distributor, tag_list: "trusted") }
+      let!(:untagged_customer) { create(:customer, enterprise: distributor, tag_list: "") }
       let!(:tag_rule) { create(:filter_payment_methods_tag_rule,
         enterprise: distributor,
         preferred_customer_tags: "trusted",
+        preferred_payment_method_tags: "trusted") }
+      let!(:default_tag_rule) { create(:filter_payment_methods_tag_rule,
+        enterprise: distributor,
+        is_default: true,
         preferred_payment_method_tags: "trusted") }
       let(:tagged_pm) { pm1 }
       let(:untagged_pm) { pm2 }
@@ -58,8 +62,9 @@ describe Spree::Order do
         distributor.payment_methods = [tagged_pm, untagged_pm]
       end
 
-      context "with a preferred visiblity of 'visible" do
+      context "with a preferred visiblity of 'visible', default visibility of 'hidden'" do
         before { tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'visible') }
+        before { default_tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'hidden') }
 
         context "when the customer is nil" do
           it "applies default action (hide)" do
@@ -69,7 +74,7 @@ describe Spree::Order do
         end
 
         context "when the customer's tags match" do
-          before { order.update_attribute(:customer_id, allowed_customer.id) }
+          before { order.update_attribute(:customer_id, tagged_customer.id) }
 
           it "applies the action (show)" do
             expect(order.available_payment_methods).to include tagged_pm, untagged_pm
@@ -77,7 +82,7 @@ describe Spree::Order do
         end
 
         context "when the customer's tags don't match" do
-          before { order.update_attribute(:customer_id, disallowed_customer.id) }
+          before { order.update_attribute(:customer_id, untagged_customer.id) }
 
           it "applies the default action (hide)" do
             expect(order.available_payment_methods).to include untagged_pm
@@ -86,8 +91,9 @@ describe Spree::Order do
         end
       end
 
-      context "with a preferred visiblity of 'hidden" do
+      context "with a preferred visiblity of 'hidden', default visibility of 'visible'" do
         before { tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'hidden') }
+        before { default_tag_rule.update_attribute(:preferred_matched_payment_methods_visibility, 'visible') }
 
         context "when the customer is nil" do
           it "applies default action (show)" do
@@ -96,7 +102,7 @@ describe Spree::Order do
         end
 
         context "when the customer's tags match" do
-          before { order.update_attribute(:customer_id, allowed_customer.id) }
+          before { order.update_attribute(:customer_id, tagged_customer.id) }
 
           it "applies the action (hide)" do
             expect(order.available_payment_methods).to include untagged_pm
@@ -105,7 +111,7 @@ describe Spree::Order do
         end
 
         context "when the customer's tags don't match" do
-          before { order.update_attribute(:customer_id, disallowed_customer.id) }
+          before { order.update_attribute(:customer_id, untagged_customer.id) }
 
           it "applies the default action (show)" do
             expect(order.available_payment_methods).to include tagged_pm, untagged_pm
@@ -185,38 +191,6 @@ describe Spree::Order do
       subject.stub(:order_cycle) { order_cycle }
 
       subject.update_distribution_charge!
-    end
-
-    context "appying tag rules" do
-      let(:enterprise) { create(:distributor_enterprise) }
-      let(:customer) { create(:customer, enterprise: enterprise, tag_list: "tagtagtag") }
-      let(:tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "tagtagtag") }
-      let(:order) { create(:order_with_totals_and_distribution, distributor: enterprise, customer: customer) }
-
-      before do
-        tag_rule.calculator.update_attribute(:preferred_flat_percent, -10)
-      end
-
-      context "when the rule applies" do
-        it "applies the rule" do
-          order.update_distribution_charge!
-          order.reload
-          discount = order.adjustments.find_by_label("Discount")
-          expect(discount).to be_a Spree::Adjustment
-          expect(discount.amount).to eq (order.item_total / -10).round(2)
-        end
-      end
-
-      context "when the rule does not apply" do
-        before { tag_rule.update_attribute(:preferred_customer_tags, "tagtag") }
-
-        it "does not apply the rule" do
-          order.update_distribution_charge!
-          order.reload
-          discount = order.adjustments.find_by_label("Discount")
-          expect(discount).to be_nil
-        end
-      end
     end
   end
 
