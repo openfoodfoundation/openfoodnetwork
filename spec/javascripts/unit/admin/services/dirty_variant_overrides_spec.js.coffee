@@ -23,7 +23,7 @@ describe "maintaining a list of dirty variant overrides", ->
 
   describe "setting the value of an attribute", ->
     beforeEach ->
-      spyOn(DirtyVariantOverrides, "add").andCallThrough()
+      spyOn(DirtyVariantOverrides, "add").and.callThrough()
 
     describe "when a record for the given VO does not exist", ->
       beforeEach ->
