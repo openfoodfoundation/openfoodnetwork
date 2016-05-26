@@ -48,7 +48,7 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
     	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
 
     addDistributor: (new_distributor_id) ->
-    	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: [], tags: [], tag_list: ""})
+    	this.order_cycle.outgoing_exchanges.push({enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: []})
 
     removeExchange: (exchange) ->
       if exchange.incoming

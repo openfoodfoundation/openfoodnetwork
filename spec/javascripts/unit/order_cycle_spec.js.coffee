@@ -568,7 +568,7 @@ describe 'OrderCycle services', ->
       it 'adds the distributor to outgoing exchanges', ->
         OrderCycle.addDistributor('123')
         expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
-          {enterprise_id: '123', incoming: false, active: true, variants: {}, enterprise_fees: [], tags: [], tag_list: ""}
+          {enterprise_id: '123', incoming: false, active: true, variants: {}, enterprise_fees: []}
         ]
 
     describe 'removing exchanges', ->

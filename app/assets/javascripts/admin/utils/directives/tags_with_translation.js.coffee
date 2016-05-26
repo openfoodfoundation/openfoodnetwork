@@ -10,12 +10,15 @@ angular.module("admin.utils").directive "tagsWithTranslation", ($timeout) ->
   link: (scope, element, attrs) ->
     scope.findTags = undefined unless attrs.hasOwnProperty("findTags")
 
+    compileTagList = ->
+      scope.object[scope.tagListAttr] = (tag.text for tag in scope.object[scope.tagsAttr]).join(",")
+
     $timeout ->
+      # Initialize properties if necessary
       scope.tagsAttr ||= "tags"
       scope.tagListAttr ||= "tag_list"
-
-      compileTagList = ->
-        scope.object[scope.tagListAttr] = (tag.text for tag in scope.object[scope.tagsAttr]).join(",")
+      scope.object[scope.tagsAttr] ||= []
+      compileTagList()
 
       scope.tagAdded = ->
         compileTagList()
