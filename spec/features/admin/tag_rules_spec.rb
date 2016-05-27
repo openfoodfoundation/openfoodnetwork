@@ -219,24 +219,23 @@ feature 'Tag Rules', js: true do
   end
 
   context "deleting" do
-    let!(:tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "member" ) }
+    let!(:tag_rule) { create(:filter_products_tag_rule, enterprise: enterprise, preferred_customer_tags: "member" ) }
+    let!(:default_rule) { create(:filter_products_tag_rule, is_default: true, enterprise: enterprise ) }
 
     before do
       login_to_admin_section
       visit main_app.edit_admin_enterprise_path(enterprise)
     end
 
-    it "deletes rules from the database" do
+    it "deletes both default and customer rules from the database" do
       click_link "Tag Rules"
 
-      expect(page).to have_selector "#tr_0"
-
-      expect{
-        within "#tr_0" do
-          first("a.delete-tag-rule").click
-        end
+      expect do
+        within "#tr_1" do first("a.delete-tag-rule").click end
+        expect(page).to_not have_selector "#tr_1"
+        within "#tr_0" do first("a.delete-tag-rule").click end
         expect(page).to_not have_selector "#tr_0"
-      }.to change{TagRule.count}.by(-1)
+      end.to change{TagRule.count}.by(-2)
     end
   end
 end
