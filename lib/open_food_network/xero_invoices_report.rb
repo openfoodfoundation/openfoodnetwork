@@ -88,6 +88,7 @@ module OpenFoodNetwork
       rows += produce_summary_rows(order, invoice_number, opts)  unless detail?
       rows += fee_summary_rows(order, invoice_number, opts)      unless detail? && order.account_invoice?
       rows += shipping_summary_rows(order, invoice_number, opts)
+      rows += payment_summary_rows(order, invoice_number, opts)
       rows += admin_adjustment_summary_rows(order, invoice_number, opts) unless detail?
 
       rows
@@ -105,6 +106,10 @@ module OpenFoodNetwork
 
     def shipping_summary_rows(order, invoice_number, opts)
       [summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)]
+    end
+
+    def payment_summary_rows(order, invoice_number, opts)
+      [summary_row(order, 'Transaction Fee (no tax)',               total_transaction(order),        invoice_number, 'GST Free Income', opts)]
     end
 
     def admin_adjustment_summary_rows(order, invoice_number, opts)
@@ -187,6 +192,10 @@ module OpenFoodNetwork
 
     def total_shipping(order)
       order.adjustments.shipping.sum &:amount
+    end
+
+    def total_transaction(order)
+      order.adjustments.payment_fee.sum &:amount
     end
 
     def tax_on_shipping_s(order)

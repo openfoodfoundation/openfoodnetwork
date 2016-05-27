@@ -206,6 +206,10 @@ Spree::Order.class_eval do
     adjustments.eligible.where("originator_type = ? AND source_type != ?", 'EnterpriseFee', 'Spree::LineItem').sum(&:amount)
   end
 
+  def payment_fee
+    adjustments.payment_fee.map(&:amount).sum
+  end
+
   # Show payment methods for this distributor
   def available_payment_methods
     @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm|
