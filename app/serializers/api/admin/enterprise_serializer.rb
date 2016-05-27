@@ -9,9 +9,12 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
   has_many :users, serializer: Api::Admin::UserSerializer
 
   def tag_groups
-    object.tag_rules.reject(&:is_default).each_with_object([]) do |tag_rule, tag_groups|
+    object.tag_rules.prioritised.reject(&:is_default).each_with_object([]) do |tag_rule, tag_groups|
       tag_group = find_match(tag_groups, tag_rule.preferred_customer_tags.split(",").map{ |t| { text: t } })
-      tag_groups << tag_group if tag_group[:rules].empty?
+      if tag_group[:rules].empty?
+        tag_groups << tag_group
+        tag_group[:position] = tag_groups.count
+      end
       tag_group[:rules] << Api::Admin::TagRuleSerializer.new(tag_rule).serializable_hash
     end
   end

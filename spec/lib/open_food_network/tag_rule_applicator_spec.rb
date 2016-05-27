@@ -3,12 +3,12 @@ require 'open_food_network/tag_rule_applicator'
 module OpenFoodNetwork
   describe TagRuleApplicator do
     let!(:enterprise) { create(:distributor_enterprise) }
-    let!(:oc_tag_rule) { create(:filter_order_cycles_tag_rule, enterprise: enterprise, preferred_customer_tags: "tag1", preferred_exchange_tags: "tag1", preferred_matched_order_cycles_visibility: "visible" )}
-    let!(:product_tag_rule1) { create(:filter_products_tag_rule, enterprise: enterprise, preferred_customer_tags: "tag1", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "visible" ) }
-    let!(:product_tag_rule2) { create(:filter_products_tag_rule, enterprise: enterprise, preferred_customer_tags: "tag1", preferred_variant_tags: "tag3", preferred_matched_variants_visibility: "hidden" ) }
-    let!(:product_tag_rule3) { create(:filter_products_tag_rule, enterprise: enterprise, preferred_customer_tags: "tag2", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "visible" ) }
-    let!(:default_product_tag_rule) { create(:filter_products_tag_rule, enterprise: enterprise, is_default: true, preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "hidden" ) }
-    let!(:sm_tag_rule) { create(:filter_shipping_methods_tag_rule, enterprise: enterprise, preferred_customer_tags: "tag1", preferred_shipping_method_tags: "tag1", preferred_matched_shipping_methods_visibility: "visible" )}
+    let!(:oc_tag_rule) { create(:filter_order_cycles_tag_rule, enterprise: enterprise, priority: 6, preferred_customer_tags: "tag1", preferred_exchange_tags: "tag1", preferred_matched_order_cycles_visibility: "visible" )}
+    let!(:product_tag_rule1) { create(:filter_products_tag_rule, enterprise: enterprise, priority: 5, preferred_customer_tags: "tag1", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "visible" ) }
+    let!(:product_tag_rule2) { create(:filter_products_tag_rule, enterprise: enterprise, priority: 4, preferred_customer_tags: "tag1", preferred_variant_tags: "tag3", preferred_matched_variants_visibility: "hidden" ) }
+    let!(:product_tag_rule3) { create(:filter_products_tag_rule, enterprise: enterprise, priority: 3, preferred_customer_tags: "tag2", preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "visible" ) }
+    let!(:default_product_tag_rule) { create(:filter_products_tag_rule, enterprise: enterprise, priority: 2, is_default: true, preferred_variant_tags: "tag1", preferred_matched_variants_visibility: "hidden" ) }
+    let!(:sm_tag_rule) { create(:filter_shipping_methods_tag_rule, enterprise: enterprise, priority: 1, preferred_customer_tags: "tag1", preferred_shipping_method_tags: "tag1", preferred_matched_shipping_methods_visibility: "visible" )}
 
     describe "initialisation" do
       context "when enterprise is nil" do
@@ -68,19 +68,16 @@ module OpenFoodNetwork
             expect(applicator.customer_tags).to eq ["tag1"]
           end
 
-          it "selects only rules of the specified type" do
-            expect(rules).to include product_tag_rule1, product_tag_rule2, product_tag_rule3, default_product_tag_rule
-            expect(rules).not_to include oc_tag_rule, sm_tag_rule
+          it "selects only rules of the specified type, in order of priority" do
+            expect(rules).to eq [default_product_tag_rule, product_tag_rule3, product_tag_rule2, product_tag_rule1]
           end
 
-          it "splits rules into those which match customer tags and those which don't" do
-            expect(customer_rules).to include product_tag_rule1, product_tag_rule2
-            expect(customer_rules).not_to include default_product_tag_rule, product_tag_rule3, oc_tag_rule, sm_tag_rule
+          it "splits rules into those which match customer tags and those which don't, in order of priority" do
+            expect(customer_rules).to eq [product_tag_rule2, product_tag_rule1]
           end
 
           it "splits out default rules" do
-            expect(default_rules).to include default_product_tag_rule
-            expect(default_rules).not_to include product_tag_rule1, product_tag_rule2, product_tag_rule3, oc_tag_rule, sm_tag_rule
+            expect(default_rules).to eq [default_product_tag_rule]
           end
         end
       end

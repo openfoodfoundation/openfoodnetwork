@@ -5,9 +5,11 @@ class TagRule < ActiveRecord::Base
 
   validates :enterprise, presence: true
 
-  attr_accessible :enterprise, :enterprise_id, :is_default, :preferred_customer_tags
+  attr_accessible :enterprise, :enterprise_id, :is_default, :priority
+  attr_accessible :preferred_customer_tags
 
   scope :for, ->(enterprise) { where(enterprise_id: enterprise) }
+  scope :prioritised, -> { order('priority ASC') }
 
   def self.mapping_for(enterprises)
     self.for(enterprises).inject({}) do |mapping, rule|

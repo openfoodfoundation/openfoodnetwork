@@ -1,11 +1,11 @@
 .row{ ng: { controller: "TagRulesCtrl" } }
   .eleven.columns.alpha.omega
-    .eleven.columns.alpha.omega
+    %ofn-sortable{ axis: "y", handle: ".header", items: '.customer_tag', position: "tagGroup.position", after: { sort: "updateRuleCounts()" } }
       .no_tags{ ng: { show: "tagGroups.length == 0" } }
         No tags apply to this enterprise yet
       = render 'admin/enterprises/form/tag_rules/default_rules'
       -# = render 'customer_tags'
-      .customer_tag{ ng: { repeat: "tagGroup in tagGroups" } }
+      .customer_tag{ id: "tg_{{tagGroup.position}}", ng: { repeat: "tagGroup in tagGroups" } }
         .header
           %table
             %colgroup

@@ -40,7 +40,7 @@ module OpenFoodNetwork
 
     def rules
       return @rules unless @rules.nil?
-      @rules = rule_class.for(enterprise)
+      @rules = rule_class.prioritised.for(enterprise)
     end
 
     def customer_rules

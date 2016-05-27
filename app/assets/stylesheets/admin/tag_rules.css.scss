@@ -5,7 +5,14 @@
   font-weight: bold;
 }
 
+.customer_tag {
+  .header {
+    cursor: move;
+  }
+}
+
 .customer_tag, .default_rules {
+  background-color: #ffffff;
   border: 1px solid #cee1f4;
   margin-bottom: 40px;
 

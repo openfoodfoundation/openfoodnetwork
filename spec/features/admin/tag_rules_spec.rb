@@ -170,6 +170,9 @@ feature 'Tag Rules', js: true do
         select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_4_preferred_matched_shipping_methods_visibility"
       end
 
+      # Moving the Shipping Methods to top priority
+      find(".customer_tag#tg_4 .header", ).drag_to find(".customer_tag#tg_1 .header")
+
       # # DiscountOrder rule
       # within "#tr_2" do
       #   expect(page).to have_field "enterprise_tag_rules_attributes_2_calculator_attributes_preferred_flat_percent", with: '0'
@@ -178,27 +181,31 @@ feature 'Tag Rules', js: true do
 
       click_button 'Update'
 
-      # FilterShippingMethods rule
-      expect(default_fsm_tag_rule.preferred_customer_tags).to eq ""
+      # DEFAULT FilterShippingMethods rule
+      expect(default_fsm_tag_rule.reload.preferred_customer_tags).to eq ""
       expect(default_fsm_tag_rule.preferred_shipping_method_tags).to eq "local,volunteers-only"
       expect(default_fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "hidden"
 
       # FilterShippingMethods rule
+      expect(fsm_tag_rule.reload.priority).to eq 1
       expect(fsm_tag_rule.preferred_customer_tags).to eq "local,volunteer"
       expect(fsm_tag_rule.preferred_shipping_method_tags).to eq "local,volunteers-only4"
       expect(fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "visible"
 
       # FilterProducts rule
+      expect(fp_tag_rule.reload.priority).to eq 2
       expect(fp_tag_rule.preferred_customer_tags).to eq "member,volunteer"
       expect(fp_tag_rule.preferred_variant_tags).to eq "member,volunteers-only1"
       expect(fp_tag_rule.preferred_matched_variants_visibility).to eq "hidden"
 
       # FilterPaymentMethods rule
+      expect(fpm_tag_rule.reload.priority).to eq 3
       expect(fpm_tag_rule.preferred_customer_tags).to eq "trusted,volunteer"
       expect(fpm_tag_rule.preferred_payment_method_tags).to eq "trusted,volunteers-only2"
       expect(fpm_tag_rule.preferred_matched_payment_methods_visibility).to eq "visible"
 
-      # FilterPaymentMethods rule
+      # FilterOrderCycles rule
+      expect(foc_tag_rule.reload.priority).to eq 4
       expect(foc_tag_rule.preferred_customer_tags).to eq "wholesale,volunteer"
       expect(foc_tag_rule.preferred_exchange_tags).to eq "wholesale,volunteers-only3"
       expect(foc_tag_rule.preferred_matched_order_cycles_visibility).to eq "hidden"
