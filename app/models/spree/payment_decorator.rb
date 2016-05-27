@@ -19,6 +19,15 @@ module Spree
       I18n.t('payment_method_fee')
     end
 
+    # This is called by the calculator of a payment method
+    def line_items
+      if order.complete? && Spree::Config[:track_inventory_levels]
+        order.line_items.select { |li| inventory_units.pluck(:variant_id).include?(li.variant_id) }
+      else
+        order.line_items
+      end
+    end
+
     # Pin payments lacks void and credit methods, but it does have refund
     # Here we swap credit out for refund and remove void as a possible action
     def actions_with_pin_payment_adaptations
