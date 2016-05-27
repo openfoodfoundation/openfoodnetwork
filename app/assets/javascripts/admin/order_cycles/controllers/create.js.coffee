@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminCreateOrderCycleCtrl', ($scope, $filter, OrderCycle, Enterprise, EnterpriseFee, ocInstance, StatusMessage) ->
+  .controller 'AdminCreateOrderCycleCtrl', ($scope, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, ocInstance, StatusMessage) ->
     $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
@@ -79,7 +79,11 @@ angular.module('admin.orderCycles')
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
 
-    $scope.submit = (destination) ->
+    $scope.submit = ($event, destination) ->
+      $event.preventDefault()
       StatusMessage.display 'progress', "Saving..."
       OrderCycle.create(destination)
+
+    $scope.cancel = (destination) ->
+      $window.location = destination
 

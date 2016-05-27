@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, ocInstance) ->
+angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, ocInstance) ->
   $scope.StatusMessage = StatusMessage
   $scope.OrderCycle = OrderCycle
   $scope.order_cycle = OrderCycle.new {coordinator_id: ocInstance.coordinator_id}, =>
@@ -44,7 +44,11 @@ angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl"
   $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
     EnterpriseFee.forEnterprise(parseInt(enterprise_id))
 
-  $scope.submit = (destination) ->
+  $scope.submit = ($event, destination) ->
+    $event.preventDefault()
     StatusMessage.display 'progress', "Saving..."
     OrderCycle.mirrorIncomingToOutgoingProducts()
     OrderCycle.create(destination)
+
+  $scope.cancel = (destination) ->
+      $window.location = destination
