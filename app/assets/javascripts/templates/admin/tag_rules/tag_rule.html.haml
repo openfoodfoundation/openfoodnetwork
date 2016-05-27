@@ -38,7 +38,7 @@
 
         %span.text-normal {{ opt[rule.type].textTop }}
       %td
-        %tags-with-translation{ object: "rule", "tags-attr" => "{{opt[rule.type].tagsAttr}}", "tag-list-attr" => "{{opt[rule.type].tagListAttr}}" }
+        %tags-with-translation{ object: "rule", max: 1, "tags-attr" => "{{opt[rule.type].tagsAttr}}", "tag-list-attr" => "{{opt[rule.type].tagListAttr}}" }
       %td.actions{ rowspan: 2 }
         %a{ ng: { click: "deleteTagRule(tagGroup, rule)" }, :class => "delete-tag-rule icon-trash no-text" }
     %tr

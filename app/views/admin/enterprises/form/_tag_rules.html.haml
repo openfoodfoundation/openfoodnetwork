@@ -16,9 +16,7 @@
                 %h5
                   For customers tagged:
               %td
-                %tags-input{ ng: { model: 'tagGroup.tags'},
-                  min: { tags: "1" },
-                  on: { tag: { added: "updateTagsRulesFor(tagGroup)", removed: "updateTagsRulesFor(tagGroup)" } } }
+                %tags-with-translation{ object: "tagGroup", max: 1, on: { tag: { added: "updateTagsRulesFor(tagGroup)", removed: "updateTagsRulesFor(tagGroup)" } } }
 
         .no_rules{ ng: { show: "tagGroup.rules.length == 0" } }
           No rules apply to this tag yet

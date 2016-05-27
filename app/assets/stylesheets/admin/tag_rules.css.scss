@@ -1,3 +1,11 @@
+tags-input {
+  &.limit-reached {
+    input, span.input {
+      display: none;
+    }
+  }
+}
+
 .no_tags {
   margin-bottom: 40px;
   color: #aeaeae;

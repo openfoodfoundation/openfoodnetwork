@@ -64,7 +64,7 @@ feature 'Tag Rules', js: true do
       click_button "Add Rule"
       within(".default_rules #tr_0") do
         find(:css, "tags-input .tags input").set "wholesale\n"
-        select2_select "NOT VISIBLE", from: "enterprise_tag_rules_attributes_0_preferred_matched_order_cycles_visibility"
+        expect(page).to have_content "not visible"
       end
 
       # New DiscountOrder Rule
@@ -128,19 +128,21 @@ feature 'Tag Rules', js: true do
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item', text: "local", count: 1
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item', text: "wholesale", count: 1
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item', text: "trusted", count: 1
-      all(:css, ".customer_tag .header tags-input .tags input").each { |node| node.set "volunteer\n" }
+      all(:css, ".customer_tag .header tags-input").each do |node|
+        node.find("li.tag-item a.remove-button").trigger('click')
+        node.find(".tags input").set "volunteer\n"
+      end
 
       # DEFAULT FilterShippingMethods rule
       within ".default_rules #tr_0" do
-        expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
+        within "li.tag-item", text: "local ✖" do find("a.remove-button").trigger('click') end
         find(:css, "tags-input .tags input").set "volunteers-only\n"
-        expect(page).to have_select2 "enterprise_tag_rules_attributes_0_preferred_matched_shipping_methods_visibility", selected: 'VISIBLE'
-        select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_0_preferred_matched_shipping_methods_visibility"
+        expect(page).to have_content "not visible"
       end
 
       # FilterProducts rule
       within ".customer_tag #tr_1" do
-        expect(first('tags-input .tag-list ti-tag-item')).to have_content "member"
+        within "li.tag-item", text: "member ✖" do find("a.remove-button").trigger('click') end
         find(:css, "tags-input .tags input").set "volunteers-only1\n"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility", selected: 'VISIBLE'
         select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_1_preferred_matched_variants_visibility"
@@ -148,7 +150,7 @@ feature 'Tag Rules', js: true do
 
       # FilterPaymentMethods rule
       within ".customer_tag #tr_2" do
-        expect(first('tags-input .tag-list ti-tag-item')).to have_content "trusted"
+        within "li.tag-item", text: "trusted ✖" do find("a.remove-button").trigger('click') end
         find(:css, "tags-input .tags input").set "volunteers-only2\n"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_2_preferred_matched_payment_methods_visibility", selected: 'NOT VISIBLE'
         select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_2_preferred_matched_payment_methods_visibility"
@@ -156,7 +158,7 @@ feature 'Tag Rules', js: true do
 
       # FilterOrderCycles rule
       within ".customer_tag #tr_3" do
-        expect(first('tags-input .tag-list ti-tag-item')).to have_content "wholesale"
+        within "li.tag-item", text: "wholesale ✖" do find("a.remove-button").trigger('click') end
         find(:css, "tags-input .tags input").set "volunteers-only3\n"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_3_preferred_matched_order_cycles_visibility", selected: 'VISIBLE'
         select2_select 'NOT VISIBLE', from: "enterprise_tag_rules_attributes_3_preferred_matched_order_cycles_visibility"
@@ -164,7 +166,7 @@ feature 'Tag Rules', js: true do
 
       # FilterShippingMethods rule
       within ".customer_tag #tr_4" do
-        expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
+        within "li.tag-item", text: "local ✖" do find("a.remove-button").trigger('click') end
         find(:css, "tags-input .tags input").set "volunteers-only4\n"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_4_preferred_matched_shipping_methods_visibility", selected: 'NOT VISIBLE'
         select2_select 'VISIBLE', from: "enterprise_tag_rules_attributes_4_preferred_matched_shipping_methods_visibility"
@@ -183,31 +185,31 @@ feature 'Tag Rules', js: true do
 
       # DEFAULT FilterShippingMethods rule
       expect(default_fsm_tag_rule.reload.preferred_customer_tags).to eq ""
-      expect(default_fsm_tag_rule.preferred_shipping_method_tags).to eq "local,volunteers-only"
+      expect(default_fsm_tag_rule.preferred_shipping_method_tags).to eq "volunteers-only"
       expect(default_fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "hidden"
 
       # FilterShippingMethods rule
       expect(fsm_tag_rule.reload.priority).to eq 1
-      expect(fsm_tag_rule.preferred_customer_tags).to eq "local,volunteer"
-      expect(fsm_tag_rule.preferred_shipping_method_tags).to eq "local,volunteers-only4"
+      expect(fsm_tag_rule.preferred_customer_tags).to eq "volunteer"
+      expect(fsm_tag_rule.preferred_shipping_method_tags).to eq "volunteers-only4"
       expect(fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "visible"
 
       # FilterProducts rule
       expect(fp_tag_rule.reload.priority).to eq 2
-      expect(fp_tag_rule.preferred_customer_tags).to eq "member,volunteer"
-      expect(fp_tag_rule.preferred_variant_tags).to eq "member,volunteers-only1"
+      expect(fp_tag_rule.preferred_customer_tags).to eq "volunteer"
+      expect(fp_tag_rule.preferred_variant_tags).to eq "volunteers-only1"
       expect(fp_tag_rule.preferred_matched_variants_visibility).to eq "hidden"
 
       # FilterPaymentMethods rule
       expect(fpm_tag_rule.reload.priority).to eq 3
-      expect(fpm_tag_rule.preferred_customer_tags).to eq "trusted,volunteer"
-      expect(fpm_tag_rule.preferred_payment_method_tags).to eq "trusted,volunteers-only2"
+      expect(fpm_tag_rule.preferred_customer_tags).to eq "volunteer"
+      expect(fpm_tag_rule.preferred_payment_method_tags).to eq "volunteers-only2"
       expect(fpm_tag_rule.preferred_matched_payment_methods_visibility).to eq "visible"
 
       # FilterOrderCycles rule
       expect(foc_tag_rule.reload.priority).to eq 4
-      expect(foc_tag_rule.preferred_customer_tags).to eq "wholesale,volunteer"
-      expect(foc_tag_rule.preferred_exchange_tags).to eq "wholesale,volunteers-only3"
+      expect(foc_tag_rule.preferred_customer_tags).to eq "volunteer"
+      expect(foc_tag_rule.preferred_exchange_tags).to eq "volunteers-only3"
       expect(foc_tag_rule.preferred_matched_order_cycles_visibility).to eq "hidden"
 
       # DiscountOrder rule
