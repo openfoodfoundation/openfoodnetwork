@@ -1,1 +1,1 @@
-angular.module("admin.utils", ["ngSanitize"])
+angular.module("admin.utils", ["templates", "ngSanitize"])

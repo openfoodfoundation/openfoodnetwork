@@ -6,7 +6,8 @@
       %tr
         %td
           %h5
-            By Default:
+            By Default
+          %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/tag_rule_help.html' }
   .no_rules{ ng: { show: "defaultTagGroup.rules.length == 0" } }
     No default rules apply yet
   .tag_rule{ ng: { repeat: "rule in defaultTagGroup.rules" } }

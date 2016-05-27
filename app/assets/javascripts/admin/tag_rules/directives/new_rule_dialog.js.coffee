@@ -1,4 +1,4 @@
-angular.module("admin.tagRules").directive 'newTagRuleDialog', ($compile, $templateCache, $window) ->
+angular.module("admin.tagRules").directive 'newTagRuleDialog', ($compile, $templateCache, DialogDefaults) ->
   restrict: 'A'
   scope:
     tagGroup: '='
@@ -18,16 +18,7 @@ angular.module("admin.tagRules").directive 'newTagRuleDialog', ($compile, $templ
     scope.ruleType = scope.ruleTypes[0].id
 
     # Set Dialog options
-    template.dialog
-      show: { effect: "fade", duration: 400 }
-      hide: { effect: "fade", duration: 300 }
-      autoOpen: false
-      resizable: false
-      width: $window.innerWidth * 0.4;
-      modal: true
-      open: (event, ui) ->
-        $('.ui-widget-overlay').bind 'click', ->
-          $(this).siblings('.ui-dialog').find('.ui-dialog-content').dialog('close')
+    template.dialog(DialogDefaults)
 
     # Link opening of dialog to click event on element
     element.bind 'click', (e) ->
