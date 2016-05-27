@@ -26,17 +26,20 @@ describe InjectionHelper do
 
   it "injects shipping_methods" do
     sm = create(:shipping_method)
-    helper.stub(:current_order).and_return order = create(:order)
-    shipping_methods = double(:shipping_methods, uniq: [sm])
-    current_distributor = double(:distributor, shipping_methods: shipping_methods)
-    allow(helper).to receive(:current_distributor) { current_distributor }
+    current_distributor = create(:distributor_enterprise, shipping_methods: [sm])
+    order = create(:order, distributor: current_distributor)
+    allow(helper).to receive(:current_order) { order }
+    allow(helper).to receive(:spree_current_user) { nil }
     helper.inject_available_shipping_methods.should match sm.id.to_s
     helper.inject_available_shipping_methods.should match sm.compute_amount(order).to_s
   end
 
   it "injects payment methods" do
     pm = create(:payment_method)
-    helper.stub_chain(:current_order, :available_payment_methods).and_return [pm]
+    current_distributor = create(:distributor_enterprise, payment_methods: [pm])
+    order = create(:order, distributor: current_distributor)
+    allow(helper).to receive(:current_order) { order }
+    allow(helper).to receive(:spree_current_user) { nil }
     helper.inject_available_payment_methods.should match pm.id.to_s
     helper.inject_available_payment_methods.should match pm.name
   end

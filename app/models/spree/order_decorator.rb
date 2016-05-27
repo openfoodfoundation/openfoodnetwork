@@ -207,18 +207,6 @@ Spree::Order.class_eval do
     adjustments.payment_fee.map(&:amount).sum
   end
 
-  # Show payment methods for this distributor
-  def available_payment_methods
-    return [] unless distributor.present?
-    payment_methods = distributor.payment_methods.available(:front_end).all
-
-    customer_tags = customer.andand.tag_list
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(distributor, "FilterPaymentMethods", customer_tags)
-    applicator.filter!(payment_methods)
-
-    payment_methods
-  end
-
   # Does this order have shipments that can be shipped?
   def ready_to_ship?
     self.shipments.any?{|s| s.can_ship?}
@@ -229,10 +217,6 @@ Spree::Order.class_eval do
     self.shipments.each do |s|
       s.ship if s.can_ship?
     end
-  end
-
-  def available_shipping_methods(display_on = nil)
-    Spree::ShippingMethod.all_available(self, display_on)
   end
 
   def shipping_tax

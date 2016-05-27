@@ -32,13 +32,10 @@ describe EnterprisesController do
     end
 
     context "using FilterOrderCycles tag rules" do
+      let(:user) { create(:user) }
       let!(:order_cycle3) { create(:simple_order_cycle, distributors: [distributor], orders_open_at: 3.days.ago, orders_close_at: 4.days.from_now) }
       let!(:oc3_exchange) { order_cycle3.exchanges.outgoing.to_enterprise(distributor).first }
-      let!(:customer) { create(:customer, enterprise: distributor) }
-
-      before do
-        order.update_attribute(:customer_id, customer.id)
-      end
+      let(:customer) { create(:customer, user: user, enterprise: distributor) }
 
       it "shows order cycles allowed by the rules" do
         create(:filter_order_cycles_tag_rule,
@@ -55,6 +52,11 @@ describe EnterprisesController do
         spree_get :shop, {id: distributor}
         expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3
 
+        allow(controller).to receive(:spree_current_user) { user }
+
+        spree_get :shop, {id: distributor}
+        expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3
+
         oc3_exchange.update_attribute(:tag_list, "wholesale")
 
         spree_get :shop, {id: distributor}
@@ -62,7 +64,6 @@ describe EnterprisesController do
         expect(assigns(:order_cycles)).not_to include order_cycle3
 
         customer.update_attribute(:tag_list, ["wholesale"])
-        order.reload
 
         spree_get :shop, {id: distributor}
         expect(assigns(:order_cycles)).to include order_cycle1, order_cycle2, order_cycle3

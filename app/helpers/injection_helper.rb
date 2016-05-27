@@ -23,7 +23,7 @@ module InjectionHelper
   end
 
   def inject_available_payment_methods
-    inject_json_ams "paymentMethods", current_order.available_payment_methods,
+    inject_json_ams "paymentMethods", available_payment_methods,
       Api::PaymentMethodSerializer, current_order: current_order
   end
 

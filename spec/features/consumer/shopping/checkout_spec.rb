@@ -106,6 +106,9 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       context "using FilterShippingMethods" do
+        let(:user) { create(:user) }
+        let(:customer) { create(:customer, user: user, enterprise: distributor) }
+
         it "shows shipping methods allowed by the rule" do
           # No rules in effect
           toggle_shipping
@@ -131,10 +134,16 @@ feature "As a consumer I want to check out my cart", js: true do
           page.should have_content "Donkeys"
           page.should_not have_content "Local"
 
-          customer = create(:customer, enterprise: distributor, tag_list: "local")
-          order.update_attribute(:customer_id, customer.id)
+          quick_login_as(user)
           visit checkout_path
-          checkout_as_guest
+
+          # Default rule in still effect, disallows access to 'Local'
+          page.should have_content "Frogs"
+          page.should have_content "Donkeys"
+          page.should_not have_content "Local"
+
+          customer.update_attribute(:tag_list, "local")
+          visit checkout_path
 
           # #local Customer can access 'Local' shipping method
           page.should have_content "Frogs"

@@ -132,86 +132,95 @@ describe ShopController do
       end
     end
 
-    context "when FilterProducts tag rules are in effect" do
-      let!(:tagged_customer) { create(:customer, enterprise: distributor, tag_list: "member") }
-      let!(:untagged_customer) { create(:customer, enterprise: distributor, tag_list: "") }
-      let!(:order) { create(:order, distributor: distributor) }
-      let!(:tag_rule) { create(:filter_products_tag_rule,
-        enterprise: distributor,
-        preferred_customer_tags: "member",
-        preferred_variant_tags: "members-only") }
-      let!(:default_tag_rule) { create(:filter_products_tag_rule,
-        enterprise: distributor,
-        is_default: true,
-        preferred_variant_tags: "members-only") }
-      let(:product1) { { "id" => 1, "name" => 'product 1', "variants" => [{ "id" => 4, "tag_list" => ["members-only"] }] } }
-      let(:product2) { { "id" => 2, "name" => 'product 2', "variants" => [{ "id" => 5, "tag_list" => ["members-only"] }, {"id" => 9, "tag_list" => ["something"]}] } }
-      let(:product3) { { "id" => 3, "name" => 'product 3', "variants" => [{ "id" => 6, "tag_list" => ["something-else"] }] } }
-      let(:product2_without_v5) { { "id" => 2, "name" => 'product 2', "variants" => [{"id" => 9, "tag_list" => ["something"]}] } }
-      let!(:products_array) { [product1, product2, product3] }
-      let!(:products_json) { JSON.unparse( products_array ) }
+    describe "loading available order cycles" do
+      let(:user) { create(:user) }
+      before { allow(controller).to receive(:spree_current_user) { user } }
 
-      before do
-        allow(controller).to receive(:current_order) { order }
-      end
+      context "when FilterProducts tag rules are in effect" do
+        let(:customer) { create(:customer, user: user, enterprise: distributor) }
+        let!(:tag_rule) { create(:filter_products_tag_rule,
+          enterprise: distributor,
+          preferred_customer_tags: "member",
+          preferred_variant_tags: "members-only") }
+        let!(:default_tag_rule) { create(:filter_products_tag_rule,
+          enterprise: distributor,
+          is_default: true,
+          preferred_variant_tags: "members-only") }
+        let(:product1) { { "id" => 1, "name" => 'product 1', "variants" => [{ "id" => 4, "tag_list" => ["members-only"] }] } }
+        let(:product2) { { "id" => 2, "name" => 'product 2', "variants" => [{ "id" => 5, "tag_list" => ["members-only"] }, {"id" => 9, "tag_list" => ["something"]}] } }
+        let(:product3) { { "id" => 3, "name" => 'product 3', "variants" => [{ "id" => 6, "tag_list" => ["something-else"] }] } }
+        let(:product2_without_v5) { { "id" => 2, "name" => 'product 2', "variants" => [{"id" => 9, "tag_list" => ["something"]}] } }
+        let!(:products_array) { [product1, product2, product3] }
+        let!(:products_json) { JSON.unparse( products_array ) }
 
-      context "with a preferred visiblity of 'visible', default visibility of 'hidden'" do
-        before { tag_rule.update_attribute(:preferred_matched_variants_visibility, 'visible') }
-        before { default_tag_rule.update_attribute(:preferred_matched_variants_visibility, 'hidden') }
+        before do
+          allow(controller).to receive(:current_order) { order }
+        end
 
-        let(:filtered_products) { JSON.parse(controller.send(:filter, products_json)) }
+        context "with a preferred visiblity of 'visible', default visibility of 'hidden'" do
+          before { tag_rule.update_attribute(:preferred_matched_variants_visibility, 'visible') }
+          before { default_tag_rule.update_attribute(:preferred_matched_variants_visibility, 'hidden') }
 
-        context "when the customer is nil" do
-          it "applies default action (hide)" do
-            expect(filtered_products).to include product2_without_v5, product3
-            expect(filtered_products).to_not include product1, product2
+          let(:filtered_products) { JSON.parse(controller.send(:filter, products_json)) }
+
+          context "when the customer is nil" do
+            it "applies default action (hide)" do
+              expect(controller.current_customer).to be nil
+              expect(filtered_products).to include product2_without_v5, product3
+              expect(filtered_products).to_not include product1, product2
+            end
+          end
+
+          context "when the customer's tags match" do
+            before { customer.update_attribute(:tag_list, 'member') }
+
+            it "applies the action (show)" do
+              expect(controller.current_customer).to eq customer
+              expect(filtered_products).to include product1, product2, product3
+            end
+          end
+
+          context "when the customer's tags don't match" do
+            before { customer.update_attribute(:tag_list, 'something') }
+
+            it "applies the default action (hide)" do
+              expect(controller.current_customer).to eq customer
+              expect(filtered_products).to include product2_without_v5, product3
+              expect(filtered_products).to_not include product1, product2
+            end
           end
         end
 
-        context "when the customer's tags match" do
-          before { order.update_attribute(:customer_id, tagged_customer.id) }
+        context "with a preferred visiblity of 'hidden', default visibility of 'visible'" do
+          before { tag_rule.update_attribute(:preferred_matched_variants_visibility, 'hidden') }
+          before { default_tag_rule.update_attribute(:preferred_matched_variants_visibility, 'visible') }
 
-          it "applies the action (show)" do
-            expect(filtered_products).to include product1, product2, product3
+          let(:filtered_products) { JSON.parse(controller.send(:filter, products_json)) }
+
+          context "when the customer is nil" do
+            it "applies default action (show)" do
+              expect(controller.current_customer).to be nil
+              expect(filtered_products).to include product1, product2, product3
+            end
           end
-        end
 
-        context "when the customer's tags don't match" do
-          before { order.update_attribute(:customer_id, untagged_customer.id) }
+          context "when the customer's tags match" do
+            before { customer.update_attribute(:tag_list, 'member') }
 
-          it "applies the default action (hide)" do
-            expect(filtered_products).to include product2_without_v5, product3
-            expect(filtered_products).to_not include product1, product2
+            it "applies the action (hide)" do
+              expect(controller.current_customer).to eq customer
+              expect(filtered_products).to include product2_without_v5, product3
+              expect(filtered_products).to_not include product1, product2
+            end
           end
-        end
-      end
 
-      context "with a preferred visiblity of 'hidden', default visibility of 'visible'" do
-        before { tag_rule.update_attribute(:preferred_matched_variants_visibility, 'hidden') }
-        before { default_tag_rule.update_attribute(:preferred_matched_variants_visibility, 'visible') }
+          context "when the customer's tags don't match" do
+            before { customer.update_attribute(:tag_list, 'something') }
 
-        let(:filtered_products) { JSON.parse(controller.send(:filter, products_json)) }
-
-        context "when the customer is nil" do
-          it "applies default action (show)" do
-            expect(filtered_products).to include product1, product2, product3
-          end
-        end
-
-        context "when the customer's tags match" do
-          before { order.update_attribute(:customer_id, tagged_customer.id) }
-
-          it "applies the action (hide)" do
-            expect(filtered_products).to include product2_without_v5, product3
-            expect(filtered_products).to_not include product1, product2
-          end
-        end
-
-        context "when the customer's tags don't match" do
-          before { order.update_attribute(:customer_id, untagged_customer.id) }
-
-          it "applies the default action (show)" do
-            expect(filtered_products).to include product1, product2, product3
+            it "applies the default action (show)" do
+              expect(controller.current_customer).to eq customer
+              expect(filtered_products).to include product1, product2, product3
+            end
           end
         end
       end
