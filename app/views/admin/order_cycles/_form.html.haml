@@ -46,8 +46,6 @@
   = render 'add_exchange_form', f: f, type: 'distributor'
 
 .actions
-  %span{'ng-show' => 'loaded()'}
-    = link_to 'Cancel', main_app.admin_order_cycles_path
   %span{'ng-hide' => 'loaded()'} Loading...
 
 

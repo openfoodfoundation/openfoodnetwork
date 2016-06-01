@@ -21,6 +21,4 @@
 = render 'coordinator_fees', f: f
 
 .actions
-  %span{'ng-show' => 'loaded()'}
-    = link_to 'Cancel', main_app.admin_order_cycles_path
   %span{'ng-hide' => 'loaded()'} Loading...
