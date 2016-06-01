@@ -18,7 +18,7 @@ feature "Authentication", js: true, retry: 3 do
         fill_in "Password", with: user.password
         click_login_button
         page.should have_content "Find local producers"
-        current_path.should == producers_path
+        expect(page).to have_current_path producers_path
       end
     end
 

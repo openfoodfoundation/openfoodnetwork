@@ -18,7 +18,14 @@ module OpenFoodNetwork
         ["Hub", "Producer", "Product", "Variant", "Amount", "Curr. Cost per Unit", "Total Cost", "Total Shipping Cost", "Shipping Method"]
       when "order_cycle_customer_totals"
         ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant",
-                  "Amount", "Item (#{currency_symbol})", "Item + Fees (#{currency_symbol})", "Admin & Handling (#{currency_symbol})", "Ship (#{currency_symbol})", "Total (#{currency_symbol})", "Paid?",
+                  "Amount",
+                  "Item (#{currency_symbol})",
+                  "Item + Fees (#{currency_symbol})",
+                  "Admin & Handling (#{currency_symbol})",
+                  "Ship (#{currency_symbol})",
+                  "Pay fee (#{currency_symbol})",
+                  "Total (#{currency_symbol})",
+                  "Paid?",
                   "Shipping", "Delivery?",
                   "Ship Street", "Ship Street 2", "Ship City", "Ship Postcode", "Ship State",
                   "Comments", "SKU",
@@ -118,6 +125,7 @@ module OpenFoodNetwork
             proc { |line_items| line_items.sum { |li| li.amount_with_adjustments } },
             proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.admin_and_handling_total } },
             proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
+            proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.payment_fee } },
             proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.total } },
             proc { |line_items| line_items.all? { |li| li.order.paid? } ? "Yes" : "No" },
 

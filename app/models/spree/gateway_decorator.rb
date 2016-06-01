@@ -1,4 +1,5 @@
 Spree::Gateway.class_eval do
+  acts_as_taggable
 
   # Due to class load order, when config.cache_classes is enabled (ie. staging and production
   # environments), this association isn't inherited from PaymentMethod. As a result, creating
@@ -12,4 +13,6 @@ Spree::Gateway.class_eval do
   # Default to live
   preference :server, :string, :default => 'live'
   preference :test_mode, :boolean, :default => false
+
+  attr_accessible :tag_list
 end

@@ -1,0 +1,10 @@
+%div
+  %input.fullwidth.light.ofn-select2{ id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_matched_variants_visibility",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_matched_variants_visibility]",
+    ng: { model: "rule.preferred_matched_variants_visibility", if: "!rule.is_default" },
+    data: 'visibilityOptions', "min-search" => 5 }
+  %input{ type: "hidden",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_matched_variants_visibility",
+    name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_matched_variants_visibility]",
+    ng: { value: "'hidden'", if: "rule.is_default" } }
+  %span.text-normal{ ng: { if: "rule.is_default" } } not visible

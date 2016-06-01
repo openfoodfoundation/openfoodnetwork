@@ -3,12 +3,29 @@ module EnterprisesHelper
     @current_distributor ||= current_order(false).andand.distributor
   end
 
+  def current_customer
+    return nil unless spree_current_user && current_distributor
+    @current_customer ||= spree_current_user.customer_of(current_distributor)
+  end
+
   def available_shipping_methods
+    return [] unless current_distributor.present?
     shipping_methods = current_distributor.shipping_methods
-    if current_distributor.present?
-      current_distributor.apply_tag_rules_to(shipping_methods, customer: current_order.customer)
-    end
+
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterShippingMethods", current_customer.andand.tag_list)
+    applicator.filter!(shipping_methods)
+
     shipping_methods.uniq
+  end
+
+  def available_payment_methods
+    return [] unless current_distributor.present?
+    payment_methods = current_distributor.payment_methods.available(:front_end).all
+
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterPaymentMethods", current_customer.andand.tag_list)
+    applicator.filter!(payment_methods)
+
+    payment_methods
   end
 
   def managed_enterprises

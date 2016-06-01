@@ -1,45 +1,45 @@
-.row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}", bindonce: true}
+.row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
   .columns.small-12.medium-6.large-5.fat
-    %div{"bo-if" => "hub.taxons"}
+    %div{"ng-if" => "::hub.taxons"}
       %label
         = t :hubs_buy
       .trans-sentence
         %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
           %render-svg{path: "{{taxon.icon}}"}
-          %span{"bo-text" => "taxon.name"}
-    %div.show-for-medium-up{"bo-if" => "hub.taxons.length==0"}
+          %span{"ng-bind" => "::taxon.name"}
+    %div.show-for-medium-up{"ng-if" => "::hub.taxons.length==0"}
       &nbsp;
   .columns.small-12.medium-3.large-2.fat
-    %div{"bo-if" => "hub.pickup || hub.delivery"}
+    %div{"ng-if" => "::(hub.pickup || hub.delivery)"}
       %label
         = t :hubs_delivery_options
       %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-1
-        %li.pickup{"bo-if" => "hub.pickup"}
+        %li.pickup{"ng-if" => "::hub.pickup"}
           %i.ofn-i_038-takeaway
           = t :hubs_pickup
-        %li.delivery{"bo-if" => "hub.delivery"}
+        %li.delivery{"ng-if" => "::hub.delivery"}
           %i.ofn-i_039-delivery
           = t :hubs_delivery
   .columns.small-12.medium-3.large-5.fat
-    %div{"bo-if" => "hub.producers"}
+    %div{"ng-if" => "::hub.producers"}
       %label
         = t :hubs_producers
       %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-2{"ng-class" => "{'show-more-producers' : toggleMoreProducers}", "class" => "producers-list"}
         %li{"ng-repeat" => "enterprise in hub.producers | limitTo:7"}
           %enterprise-modal
             %i.ofn-i_036-producers
-            %span{"bo-text" => "enterprise.name"}
-        %li{"data-is-link" => "true", "class" => "more-producers-link", "bo-show" => "hub.producers.length>7"}
+            %span{"ng-bind" => "::enterprise.name"}
+        %li{"data-is-link" => "true", "class" => "more-producers-link", "ng-show" => "::hub.producers.length>7"}
           %a{"ng-click" => "toggleMoreProducers=!toggleMoreProducers"}
             .more
               +
-              %span{"bo-text" => "hub.producers.length-7"}
+              %span{"ng-bind" => "::hub.producers.length-7"}
               = t :label_more
             .less
               = t :label_less
         %li{"ng-repeat" => "enterprise in hub.producers.slice(7,hub.producers.length)", "class" => "additional-producer"}
           %enterprise-modal
             %i.ofn-i_036-producers
-            %span{"bo-text" => "enterprise.name"}
-    %div.show-for-medium-up{"bo-if" => "hub.producers.length==0"}
+            %span{"ng-bind" => "::enterprise.name"}
+    %div.show-for-medium-up{"ng-if" => "::hub.producers.length==0"}
       &nbsp;

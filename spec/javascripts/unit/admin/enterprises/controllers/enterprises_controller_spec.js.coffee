@@ -5,10 +5,14 @@ describe "EnterprisesCtrl", ->
 
   beforeEach ->
     module('admin.enterprises')
+    module ($provide) ->
+      $provide.value 'columns', []
+      null
+
     inject ($controller, $rootScope, _Enterprises_) ->
       scope = $rootScope
       Enterprises = _Enterprises_
-      spyOn(Enterprises, "index").andReturn "list of enterprises"
+      spyOn(Enterprises, "index").and.returnValue "list of enterprises"
       ctrl = $controller 'enterprisesCtrl', {$scope: scope, Enterprises: Enterprises}
 
   describe "setting the shop on scope", ->

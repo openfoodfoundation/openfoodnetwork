@@ -57,11 +57,11 @@ module OpenFoodNetwork
       end
 
       failure_message_for_should do |event_proc|
-        "expected job to be enqueued matching #{options.inspect} (#{@jobs_created.andand.count || '???'} others enqueued)"
+        "expected #{klass} to be enqueued matching #{options.inspect} (#{@jobs_created.andand.count || '???'} others enqueued)"
       end
 
       failure_message_for_should_not do |event_proc|
-        "expected job to not be enqueued matching #{options.inspect}"
+        "expected #{klass} to not be enqueued matching #{options.inspect}"
       end
     end
   end

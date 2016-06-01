@@ -1,19 +1,19 @@
-.container#registration-details{bindonce: true}
+.container#registration-details
   %ng-include{ src: "'registration/steps.html'" }
   .row
     .small-12.columns
       %header
         %h2 {{'registration_detail_headline' | t}}
-        %h5{ bo: { if: "enterprise.type != 'own'" } } {{'registration_detail_enterprise' | t}}
-        %h5{ bo: { if: "enterprise.type == 'own'" } } {{'registration_detail_producer' | t}}
+        %h5{ ng: { if: "::enterprise.type != 'own'" } } {{'registration_detail_enterprise' | t}}
+        %h5{ ng: { if: "::enterprise.type == 'own'" } } {{'registration_detail_producer' | t}}
 
   %form{ name: 'details', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('contact',details)" } }
 
     .row
       .small-12.medium-9.large-12.columns.end
         .field
-          %label{ for: 'enterprise_name', bo: { if: "enterprise.type != 'own'" } } {{'registration_detail_name_enterprise' | t}}
-          %label{ for: 'enterprise_name', bo: { if: "enterprise.type == 'own'" } } {{'registration_detail_name_producer' | t}}
+          %label{ for: 'enterprise_name', ng: { if: "::enterprise.type != 'own'" } } {{'registration_detail_name_enterprise' | t}}
+          %label{ for: 'enterprise_name', ng: { if: "::enterprise.type == 'own'" } } {{'registration_detail_name_producer' | t}}
           %input.chunky{ id: 'enterprise_name', name: 'name', placeholder: "{{'registration_detail_name_placeholder' | t}}", required: true, ng: { model: 'enterprise.name' } }
           %span.error{ ng: { show: "details.name.$error.required && submitted" } }
             {{'registration_detail_name_error' | t}}

@@ -1,0 +1,4 @@
+%div{ ng: { show: "data.length > limit" } }
+  %input{ type: 'button', value: 'Show More', ng: { click: 'limit = limit + increment' } }
+  or
+  %input{ type: 'button', value: "Show All ({{ data.length - limit }}  More)", ng: { click: 'limit = data.length' } }

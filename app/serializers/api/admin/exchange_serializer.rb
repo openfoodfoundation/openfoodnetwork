@@ -1,5 +1,6 @@
 class Api::Admin::ExchangeSerializer < ActiveModel::Serializer
   attributes :id, :sender_id, :receiver_id, :incoming, :variants, :receival_instructions, :pickup_time, :pickup_instructions
+  attributes :tags, :tag_list
 
   has_many :enterprise_fees, serializer: Api::Admin::BasicEnterpriseFeeSerializer
 
@@ -34,5 +35,13 @@ class Api::Admin::ExchangeSerializer < ActiveModel::Serializer
   def permitted_outgoing_variants
     OpenFoodNetwork::OrderCyclePermissions.new(options[:current_user], object.order_cycle)
     .visible_variants_for_outgoing_exchanges_to(object.receiver)
+  end
+
+  def tag_list
+    object.tag_list.join(",")
+  end
+
+  def tags
+    object.tag_list.map{ |t| { text: t } }
   end
 end

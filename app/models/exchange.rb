@@ -1,4 +1,6 @@
 class Exchange < ActiveRecord::Base
+  acts_as_taggable
+
   belongs_to :order_cycle
   belongs_to :sender, :class_name => 'Enterprise'
   belongs_to :receiver, :class_name => 'Enterprise'
@@ -58,6 +60,7 @@ class Exchange < ActiveRecord::Base
     exchange.order_cycle = new_order_cycle
     exchange.enterprise_fee_ids = self.enterprise_fee_ids
     exchange.variant_ids = self.variant_ids
+    exchange.tag_ids = self.tag_ids
     exchange.save!
     exchange
   end

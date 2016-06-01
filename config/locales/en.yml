@@ -71,13 +71,29 @@ en:
 
 
   admin:
+    # Common properties / models
+    date: Date
+    email: Email
+    name: Name
+    on_hand: On Hand
+    on_demand: On Demand
+    on_demand?: On Demand?
+    order_cycle: Order Cycle
+    phone: Phone
+    price: Price
+    producer: Producer
+    product: Product
+    quantity: Quantity
+    shop: Shop
+    sku: SKU
+    tags: Tags
+    variant: Variant
+
     # General form elements
     quick_search: Quick Search
     clear_all: Clear All
-    producer: Producer
-    shop: Shop
-    product: Product
-    variant: Variant
+    start_date: "Start Date"
+    end_date: "End Date"
 
     columns: Columns
     actions: Actions
@@ -91,40 +107,79 @@ en:
 
     customers:
       index:
-        add_customer: "Add customer"
+        add_customer: "Add Customer"
+        new_customer: "New Customer"
         customer_placeholder: "customer@example.org"
-    inventory:
-      title: Inventory
-      description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
-      sku: SKU
-      price: Price
-      on_hand: On Hand
-      on_demand: On Demand?
-      enable_reset: Enable Stock Level Reset?
-      inherit: Inherit?
-      add: Add
-      hide: Hide
-      select_a_shop: Select A Shop
-      review_now: Review Now
-      new_products_alert_message: There are %{new_product_count} new products available to add to your inventory.
-      currently_empty: Your inventory is currently empty
-      no_matching_products: No matching products found in your inventory
-      no_hidden_products: No products have been hidden from this inventory
-      no_matching_hidden_products: No hidden products match your search criteria
-      no_new_products: No new products are available to add to this inventory
-      no_matching_new_products: No new products match your search criteria
-      inventory_powertip: This is your inventory of products. To add products to your inventory, select 'New Products' from the Viewing dropdown.
-      hidden_powertip: These products have been hidden from your inventory and will not be available to add to your shop. You can click 'Add' to add a product to you inventory.
-      new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
+        valid_email_error: Please enter a valid email address
+        add_a_new_customer_for: Add a new customer for %{shop_name}
+        code: Code
 
+    products:
+      bulk_edit:
+        unit: Unit
+        display_as: Display As
+        category: Category
+        tax_category: Tax Category
+        inherits_properties?: Inherits Properties?
+        available_on: Available On
+        av_on: "Av. On"
 
-    order_cycle:
-      choose_products_from: "Choose Products From:"
+    variant_overrides:
+      index:
+        title: Inventory
+        description: Use this page to manage inventories for your enterprises. Any product details set here will override those set on the 'Products' page
+        enable_reset?: Enable Stock Reset?
+        inherit?: Inherit?
+        add: Add
+        hide: Hide
+        select_a_shop: Select A Shop
+        review_now: Review Now
+        new_products_alert_message: There are %{new_product_count} new products available to add to your inventory.
+        currently_empty: Your inventory is currently empty
+        no_matching_products: No matching products found in your inventory
+        no_hidden_products: No products have been hidden from this inventory
+        no_matching_hidden_products: No hidden products match your search criteria
+        no_new_products: No new products are available to add to this inventory
+        no_matching_new_products: No new products match your search criteria
+        inventory_powertip: This is your inventory of products. To add products to your inventory, select 'New Products' from the Viewing dropdown.
+        hidden_powertip: These products have been hidden from your inventory and will not be available to add to your shop. You can click 'Add' to add a product to you inventory.
+        new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
+
+    orders:
+      bulk_management:
+        tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
+        shared: "Shared Resource?"
+        order_no: "Order No."
+        order_date: "Order Date"
+        max: "Max"
+        product_unit: "Product: Unit"
+        weight_volume: "Weight/Volume"
+        ask: "Ask?"
+        page_title: "Bulk Order Management"
+        actions_delete: "Delete Selected"
+        loading: "Loading orders"
+        no_results: "No orders found."
+        group_buy_unit_size: "Group Buy Unit Size"
+        total_qtt_ordered: "Total Quantity Ordered"
+        max_qtt_ordered: "Max Quantity Ordered"
+        current_fulfilled_units: "Current Fulfilled Units"
+        max_fulfilled_units: "Max Fulfilled Units"
+        order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
+        variants_without_unit_value: "WARNING: Some variants do not have a unit value"
+
+    order_cycles:
+      edit:
+        choose_products_from: "Choose Products From:"
 
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
     enterprises:
+      index:
+        producer?: Producer?
+        package: Package
+        status: Status
+        manage: Manage
       form:
         primary_details:
           shopfront_requires_login: "Shopfront requires login?"
@@ -328,22 +383,6 @@ en:
   order_includes_tax: (includes tax)
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
   order_hub_info: Hub Info
-
-  bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
-  bom_shared: "Shared Resource?"
-  bom_page_title: "Bulk Order Management"
-  bom_no: "Order no."
-  bom_date: "Order date"
-  bom_cycle: "Order cycle"
-  bom_max: "Max"
-  bom_hub: "Hub"
-  bom_variant: "Product: Unit"
-  bom_final_weigth_volume: "Weight/Volume"
-  bom_quantity: "Quantity"
-  bom_actions_delete: "Delete Selected"
-  bom_loading: "Loading orders"
-  bom_no_results: "No orders found."
-  bom_order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
 
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
@@ -571,20 +610,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_description: Description
   products_variant: Variant
   products_quantity: Quantity
-  products_availabel: Available?
+  products_available: Available?
   products_producer: "Producer"
   products_price: "Price"
-  products_sku: "SKU"
-  products_name: "name"
-  products_unit: "unit"
-  products_on_hand: "on hand"
-  products_on_demand: "On demand?"
-  products_category: "Category"
-  products_tax_category: "tax category"
-  products_available_on: "Available On"
-  products_inherit: "Inherit?"
-  products_inherits_properties: "Inherits Properties?"
-  products_stock_level_reset: "Enable Stock Level Reset?"
 
   register_title: Register
 
@@ -866,7 +894,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   calculator: "Calculator"
   calculator_values: "Calculator values"
   new_order_cycles: "New Order Cycles"
-  select_a_coordinator_for_your_order_cycle: "select a coordinator for your order cycle"
+  select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"
@@ -939,19 +967,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   manage_products: "Manage products"
   edit_profile_details: "Edit profile details"
   edit_profile_details_etc: "Change your profile description, images, etc."
-  start_date: "Start Date"
-  end_date: "End Date"
   order_cycle: "Order Cycle"
-  group_buy_unit_size: "Group Buy Unit Size"
-  total_qtt_ordered: "Total Quantity Ordered"
-  max_qtt_ordered: "Max Quantity Ordered"
-  current_fulfilled_units: "Current Fulfilled Units"
-  max_fulfilled_units: "Max Fulfilled Units"
-  bulk_management_warning: "WARNING: Some variants do not have a unit value"
-  ask: "Ask?"
-  no_orders_found: "No orders found."
-  order_no: "Order No."
-  weight_volume: "Weight/Volume"
   remove_tax: "Remove tax"
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
@@ -1019,6 +1035,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   properties: "Properties"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
+  payment_method_fee: "Transaction fee"
   enterprise_fees: "Enterprise Fees"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"

@@ -33,8 +33,11 @@ angular.module("admin.enterprises").factory 'Enterprises', ($q, EnterpriseResour
     diff: (enterprise) ->
       changed = []
       for attr, value of enterprise when not angular.equals(value, @pristineByID[enterprise.id][attr])
-        changed.push attr unless attr is "$$hashKey"
+        changed.push attr unless attr in @ignoredAttrs()
       changed
+
+    ignoredAttrs: ->
+      ["$$hashKey", "producer", "package", "producerError", "packageError", "status"]
 
     resetAttribute: (enterprise, attribute) ->
       enterprise[attribute] = @pristineByID[enterprise.id][attribute]

@@ -57,6 +57,7 @@ module Spree
         else
           @providers = Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort{|p1, p2| p1.name <=> p2.name }
         end
+        @calculators = PaymentMethod.calculators.sort_by(&:name)
       end
 
       def load_hubs

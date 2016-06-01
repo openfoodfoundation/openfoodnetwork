@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, StatusMessage) ->
+angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, StatusMessage, Panels) ->
   OrderCycleResource = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
     'new'   : { method: 'GET', params: { action_name: "new" } }
@@ -30,17 +30,19 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
     exchangeDirection: (exchange) ->
       if this.order_cycle.incoming_exchanges.indexOf(exchange) == -1 then 'outgoing' else 'incoming'
 
-    toggleProducts: (exchange) ->
-    	exchange.showProducts = !exchange.showProducts
-
     toggleAllProducts: (direction) ->
       this.showProducts[direction] = !this.showProducts[direction]
-      exchange.showProducts = this.showProducts[direction] for exchange in this.exchangesByDirection(direction)
+      state = if this.showProducts[direction] then "open" else "closed"
+      exchanges = this.exchangesByDirection(direction)
+      Panels.toggle(exchange,'products',state) for exchange in exchanges
 
     setExchangeVariants: (exchange, variants, selected) ->
       direction = if exchange.incoming then "incoming" else "outgoing"
       editable = @order_cycle["editable_variants_for_#{direction}_exchanges"][exchange.enterprise_id] || []
-      exchange.variants[variant] = selected for variant in variants when variant in editable
+      for variant in variants when variant in editable
+        exchange.variants[variant] = selected
+        @removeDistributionOfVariant(variant.id) if exchange.incoming
+
 
     addSupplier: (new_supplier_id) ->
     	this.order_cycle.incoming_exchanges.push({enterprise_id: new_supplier_id, incoming: true, active: true, variants: {}, enterprise_fees: []})
@@ -154,11 +156,12 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
         else
           console.log('Failed to create order cycle')
 
-    update: (destination) ->
+    update: (destination, form) ->
       return unless @confirmNoDistributors()
       oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
       oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
         if data['success']
+          form.$setPristine() if form
           if destination?
             $window.location = destination
           else

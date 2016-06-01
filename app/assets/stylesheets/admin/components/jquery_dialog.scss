@@ -4,8 +4,8 @@ dark: #545454
 light: #ccc
 */
 .ui-dialog {
-  border: 2px solid #4a4a4a;
-  border-radius:3px;
+  border: 0px solid #4a4a4a;
+  border-radius:5px;
   padding:0px;
   -moz-box-shadow: 3px 3px 4px #797979;
   -webkit-box-shadow: 3px 3px 4px #797979;
@@ -16,10 +16,6 @@ light: #ccc
 
   /* For IE 5.5 - 7 */
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#545454');
-}
-
-.ui-dialog .ui-dialog-titlebar{
-  border-radius: 3px;
 }
 
 .ui-dialog .ui-state-hover {
@@ -34,17 +30,17 @@ light: #ccc
   background-image: none;
   background-color: #ffffff;
   border:0px;
-  border-radius: 3px;
+  border-radius: 8px;
   padding: 0px 5px 0px 5px;
 }
 .ui-dialog .ui-widget-content{
   border: none;
-  border-radius: 3px;
+  border-radius: 8px;
   padding: 0px 50px 30px 50px;
 }
 
 .ui-dialog .ui-corner-all{
-  border-radius:0px;
+  border-radius: 8px;
 }
 .ui-dialog  {
   .ui-state-hover, .ui-state-focus{
@@ -83,6 +79,6 @@ light: #ccc
 }
 
 .ui-widget-overlay {
-  background: #e9e9e9;
-  opacity: 0.6;
+  background: #000000;
+  opacity: 0.5;
 }

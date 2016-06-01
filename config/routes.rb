@@ -117,7 +117,9 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :customers, only: [:index, :create, :update, :destroy]
 
-    resources :tags, only: [:index], format: :json
+    resources :tag_rules, only: [], format: :json do
+      get :map_by_tag, on: :collection
+    end
 
     resource :content
 
@@ -133,6 +135,10 @@ Openfoodnetwork::Application.routes.draw do
     resource :cache_settings
 
     resource :account, only: [:show], controller: 'account'
+
+    resources :column_preferences, only: [], format: :json do
+      put :bulk_update, on: :collection
+    end
   end
 
   namespace :api do

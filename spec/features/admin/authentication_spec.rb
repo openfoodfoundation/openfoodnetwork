@@ -16,14 +16,14 @@ feature "Authentication", js: true do
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
       click_login_button
-      page.should have_content "DASHBOARD"
-      current_path.should == spree.admin_path
+      expect(page).to have_content "DASHBOARD"
+      expect(page).to have_current_path spree.admin_path
     end
   end
 
   scenario "viewing my account" do
     login_to_admin_section
     click_link "Account"
-    current_path.should == spree.account_path
+    expect(page).to have_current_path spree.account_path
   end
 end
