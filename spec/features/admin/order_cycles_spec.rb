@@ -229,9 +229,6 @@ feature %q{
     page.should have_field 'order_cycle_outgoing_exchange_1_pickup_time', with: 'time 1'
     page.should have_field 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'instructions 1'
 
-    # Make the whole page visible
-    page.driver.resize(1280, 3600)
-
     # And the distributors should have products
     page.all('table.exchanges tbody tr.distributor').each_with_index do |row, i|
       row.find('td.products').click
@@ -276,9 +273,6 @@ feature %q{
 
 
   scenario "updating an order cycle", js: true do
-    # Make the page long enough to avoid the save bar overlaying the form
-    page.driver.resize(1280, 3600)
-
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     initial_variants = oc.variants.sort_by &:id
@@ -655,9 +649,6 @@ feature %q{
       end
 
       scenario "editing an order cycle" do
-        # Make the page long enough to avoid the save bar overlaying the form
-        page.driver.resize(1280, 3600)
-
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
 
         visit edit_admin_order_cycle_path(oc)
@@ -927,9 +918,6 @@ feature %q{
     end
 
     scenario "updating an order cycle" do
-      # Make the page long enough to avoid the save bar overlaying the form
-      page.driver.resize(1280, 3600)
-
       # Given an order cycle with pickup time and instructions
       fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
