@@ -30,7 +30,7 @@ describe "CheckoutCtrl", ->
     beforeEach ->
       inject ($controller, $rootScope, _storage_) ->
         storage = _storage_
-        spyOn(storage, "bind").andCallThrough()
+        spyOn(storage, "bind").and.callThrough()
         scope = $rootScope.$new()
         CurrentUser = { id: 1 }
         ctrl = $controller 'CheckoutCtrl', {$scope: scope, Checkout: Checkout, CurrentUser: CurrentUser }

@@ -21,21 +21,6 @@ describe Spree::Order do
     end
   end
 
-  describe "Payment methods" do
-    let(:order_distributor) { create(:distributor_enterprise) }
-    let(:some_other_distributor) { create(:distributor_enterprise) }
-    let(:order) { build(:order, distributor: order_distributor) }
-    let(:pm1) { create(:payment_method, distributors: [order_distributor])}
-    let(:pm2) { create(:payment_method, distributors: [some_other_distributor])}
-
-    it "finds the correct payment methods" do
-      Spree::PaymentMethod.stub(:available).and_return [pm1, pm2]
-      order.available_payment_methods.include?(pm2).should == false
-      order.available_payment_methods.include?(pm1).should == true
-    end
-
-  end
-
   describe "updating the distribution charge" do
     let(:order) { build(:order) }
 
@@ -106,38 +91,6 @@ describe Spree::Order do
       subject.stub(:order_cycle) { order_cycle }
 
       subject.update_distribution_charge!
-    end
-
-    context "appying tag rules" do
-      let(:enterprise) { create(:distributor_enterprise) }
-      let(:customer) { create(:customer, enterprise: enterprise, tag_list: "tagtagtag") }
-      let(:tag_rule) { create(:tag_rule, enterprise: enterprise, preferred_customer_tags: "tagtagtag") }
-      let(:order) { create(:order_with_totals_and_distribution, distributor: enterprise, customer: customer) }
-
-      before do
-        tag_rule.calculator.update_attribute(:preferred_flat_percent, -10)
-      end
-
-      context "when the rule applies" do
-        it "applies the rule" do
-          order.update_distribution_charge!
-          order.reload
-          discount = order.adjustments.find_by_label("Discount")
-          expect(discount).to be_a Spree::Adjustment
-          expect(discount.amount).to eq (order.item_total / -10).round(2)
-        end
-      end
-
-      context "when the rule does not apply" do
-        before { tag_rule.update_attribute(:preferred_customer_tags, "tagtag") }
-
-        it "does not apply the rule" do
-          order.update_distribution_charge!
-          order.reload
-          discount = order.adjustments.find_by_label("Discount")
-          expect(discount).to be_nil
-        end
-      end
     end
   end
 

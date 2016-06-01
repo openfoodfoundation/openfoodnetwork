@@ -17,8 +17,8 @@ describe "menuCtrl", ->
     inject ($rootScope, $controller, _SideMenu_) ->
       scope = $rootScope
       SideMenu = _SideMenu_
-      spyOn(SideMenu, "select").andCallThrough()
-      spyOn(SideMenu, "setItems").andCallThrough()
+      spyOn(SideMenu, "select").and.callThrough()
+      spyOn(SideMenu, "setItems").and.callThrough()
       ctrl = $controller 'sideMenuCtrl', {$scope: scope, enterprise: enterprise, SideMenu: SideMenu, enterprisePermissions: {}}
 
   describe "initialisation", ->

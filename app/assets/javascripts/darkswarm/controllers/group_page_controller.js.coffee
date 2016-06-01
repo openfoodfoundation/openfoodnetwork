@@ -1,4 +1,4 @@
-Darkswarm.controller "GroupPageCtrl", ($scope, group_enterprises, Enterprises, MapConfiguration, OfnMap, visibleFilter) ->
+Darkswarm.controller "GroupPageCtrl", ($scope, group_enterprises, Enterprises, MapConfiguration, OfnMap, visibleFilter, Navigation) ->
   $scope.Enterprises = Enterprises
 
   all_enterprises_by_id = Enterprises.enterprises_by_id
@@ -19,4 +19,3 @@ Darkswarm.controller "GroupPageCtrl", ($scope, group_enterprises, Enterprises, M
 
   $scope.map = angular.copy MapConfiguration.options
   $scope.mapMarkers = OfnMap.enterprise_markers visible_enterprises
-

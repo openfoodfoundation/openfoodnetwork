@@ -29,7 +29,7 @@ module OpenFoodNetwork
         coordinator_id = 123
         distributor_id = 456
 
-        outgoing_exchange = {:enterprise_id => distributor_id, :incoming => false, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'}
+        outgoing_exchange = {:enterprise_id => distributor_id, :incoming => false, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions', tag_list: 'wholesale'}
 
         oc = double(:order_cycle, :coordinator_id => coordinator_id, :exchanges => [], :incoming_exchanges => [], :outgoing_exchanges => [outgoing_exchange])
 
@@ -37,7 +37,7 @@ module OpenFoodNetwork
 
         applicator.should_receive(:outgoing_exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id, false).and_return(false)
-        applicator.should_receive(:add_exchange).with(coordinator_id, distributor_id, false, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'})
+        applicator.should_receive(:add_exchange).with(coordinator_id, distributor_id, false, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions', tag_list: 'wholesale'})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -69,7 +69,7 @@ module OpenFoodNetwork
         coordinator_id = 123
         distributor_id = 456
 
-        outgoing_exchange = {:enterprise_id => distributor_id, :incoming => false, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'}
+        outgoing_exchange = {:enterprise_id => distributor_id, :incoming => false, :variants => {'1' => true, '2' => false, '3' => true}, :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions', tag_list: 'wholesale'}
 
         oc = double(:order_cycle,
                     :coordinator_id => coordinator_id,
@@ -81,7 +81,7 @@ module OpenFoodNetwork
 
         applicator.should_receive(:outgoing_exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
         applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id, false).and_return(true)
-        applicator.should_receive(:update_exchange).with(coordinator_id, distributor_id, false, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions'})
+        applicator.should_receive(:update_exchange).with(coordinator_id, distributor_id, false, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions', tag_list: 'wholesale'})
         applicator.should_receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -375,15 +375,16 @@ module OpenFoodNetwork
             allow(applicator).to receive(:manager_for) { false }
             allow(applicator).to receive(:permission_for) { true }
             applicator.send(:touched_exchanges=, [])
-            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions'})
+            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions', tag_list: 'wholesale'})
           end
 
-          it "updates the variants, enterprise fees and pickup information of the exchange" do
+          it "updates the variants, enterprise fees tags, and pickup information of the exchange" do
             exchange.reload
             expect(exchange.variants).to match_array [variant1, variant3]
             expect(exchange.enterprise_fees).to match_array [enterprise_fee2, enterprise_fee3]
             expect(exchange.pickup_time).to eq 'New Pickup Time'
             expect(exchange.pickup_instructions).to eq 'New Pickup Instructions'
+            expect(exchange.tag_list).to eq ['wholesale']
             expect(applicator.send(:touched_exchanges)).to eq [exchange]
           end
         end
@@ -394,15 +395,16 @@ module OpenFoodNetwork
             allow(applicator).to receive(:manager_for) { true }
             allow(applicator).to receive(:permission_for) { true }
             applicator.send(:touched_exchanges=, [])
-            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions'})
+            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions', tag_list: 'wholesale'})
           end
 
-          it "updates the variants, enterprise fees and pickup information of the exchange" do
+          it "updates the variants, enterprise fees, tags and pickup information of the exchange" do
             exchange.reload
             expect(exchange.variants).to match_array [variant1, variant3]
             expect(exchange.enterprise_fees).to match_array [enterprise_fee2, enterprise_fee3]
             expect(exchange.pickup_time).to eq 'New Pickup Time'
             expect(exchange.pickup_instructions).to eq 'New Pickup Instructions'
+            expect(exchange.tag_list).to eq ['wholesale']
             expect(applicator.send(:touched_exchanges)).to eq [exchange]
           end
         end
@@ -413,15 +415,16 @@ module OpenFoodNetwork
             allow(applicator).to receive(:manager_for) { false }
             allow(applicator).to receive(:permission_for) { true }
             applicator.send(:touched_exchanges=, [])
-            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions'})
+            applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id, variant3.id], :enterprise_fee_ids => [enterprise_fee2.id, enterprise_fee3.id], :pickup_time => 'New Pickup Time', :pickup_instructions => 'New Pickup Instructions', tag_list: 'wholesale'})
           end
 
-          it "updates the variants in the exchange, but not the fees or pickup information" do
+          it "updates the variants in the exchange, but not the fees, tags or pickup information" do
             exchange.reload
             expect(exchange.variants).to match_array [variant1, variant3]
             expect(exchange.enterprise_fees).to match_array [enterprise_fee1, enterprise_fee2]
             expect(exchange.pickup_time).to_not eq 'New Pickup Time'
             expect(exchange.pickup_instructions).to_not eq 'New Pickup Instructions'
+            expect(exchange.tag_list).to eq []
             expect(applicator.send(:touched_exchanges)).to eq [exchange]
           end
         end

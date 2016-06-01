@@ -1,6 +1,7 @@
 / replace "div[data-hook='admin_payment_method_form_fields']"
 
-%div.alpha.eleven.columns
+= admin_inject_payment_method
+%div.alpha.eleven.columns{ "ng-app" => "admin.paymentMethods", "ng-controller" => "paymentMethodCtrl" }
   .row
     .alpha.three.columns
       = label_tag nil, t(:name)
@@ -33,4 +34,16 @@
       = radio_button :payment_method, :active, false
       &nbsp;
       = label_tag nil, t(:say_no)
+
+  .row
+    .alpha.three.columns
+      = label(:payment_method, :tags, t(:tags))
+    .omega.eight.columns
+      = hidden_field(:payment_method, :tag_list, "ng-value" => "paymentMethod.tag_list")
+      %tags-with-translation#something{ object: "paymentMethod" }
+
   = render 'providers'
+
+  .row
+    .omega.eleven.columns
+      = render partial: 'spree/admin/shared/calculator_fields', :locals => { :f => f }

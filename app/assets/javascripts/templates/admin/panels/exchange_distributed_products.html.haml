@@ -1,0 +1,31 @@
+.row.exchange-distributed-products
+  .sixteen.columns.alpha.omega
+    .exchange-select-all-variants
+      %label
+        %input{ type: 'checkbox', name: 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants',
+          value: 1,
+          'ng-model' => 'exchange.select_all_variants',
+          'ng-change' => 'setExchangeVariants(exchange, incomingExchangeVariantsFor(exchange.enterprise_id), exchange.select_all_variants)',
+          'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants' }
+        Select all
+
+    .exchange-products
+      -# Scope product list based on permissions the current user has to view variants in this exchange
+      .exchange-product{'ng-repeat' => 'product in supplied_products | filter:productSuppliedToOrderCycle | visibleProducts:exchange:order_cycle.visible_variants_for_outgoing_exchanges | orderBy:"name"' }
+        .exchange-product-details
+          %label
+            -# MASTER_VARIANTS: No longer required
+            -# = check_box_tag 'order_cycle_outgoing_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}', 1, 1, 'ng-hide' => 'product.variants.length > 0', 'ng-model' => 'exchange.variants[product.master_id]', 'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}',
+            -# 'ng-disabled' => 'product.variants.length > 0 || !order_cycle.editable_variants_for_outgoing_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_outgoing_exchanges[exchange.enterprise_id].indexOf(product.master_id) < 0'
+            %img{'ng-src' => '{{ product.image_url }}'}
+            .name {{ product.name }}
+          .supplier {{ product.supplier_name }}
+
+        .exchange-product-variant{'ng-repeat' => 'variant in product.variants | visibleVariants:exchange:order_cycle.visible_variants_for_outgoing_exchanges | filter:variantSuppliedToOrderCycle'}
+          %label
+            %input{ type: 'checkbox', name: 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
+              value: 1,
+              'ng-model' => 'exchange.variants[variant.id]',
+              'id' => 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
+              'ng-disabled' => '!order_cycle.editable_variants_for_outgoing_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_outgoing_exchanges[exchange.enterprise_id].indexOf(variant.id) < 0' }
+            {{ variant.label }}

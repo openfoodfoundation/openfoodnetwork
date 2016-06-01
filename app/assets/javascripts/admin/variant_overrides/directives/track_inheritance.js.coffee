@@ -6,7 +6,6 @@ angular.module("admin.variantOverrides").directive "trackInheritance", (VariantO
 
     ngModel.$parsers.push (viewValue) ->
       if ngModel.$dirty && viewValue
-        variantOverride = VariantOverrides.inherit(scope.hub_id, scope.variant.id)
-        DirtyVariantOverrides.add variantOverride
+        DirtyVariantOverrides.inherit scope.hub_id, scope.variant.id, scope.variantOverrides[scope.hub_id][scope.variant.id].id
         scope.displayDirty()
       viewValue

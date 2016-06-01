@@ -1,10 +1,22 @@
-angular.module("admin.variantOverrides").factory "DirtyVariantOverrides", ($http) ->
+angular.module("admin.variantOverrides").factory "DirtyVariantOverrides", ($http, VariantOverrides) ->
   new class DirtyVariantOverrides
     dirtyVariantOverrides: {}
 
-    add: (vo) ->
-      @dirtyVariantOverrides[vo.hub_id] ||= {}
-      @dirtyVariantOverrides[vo.hub_id][vo.variant_id] = vo
+    add: (hub_id, variant_id, vo_id) ->
+      @dirtyVariantOverrides[hub_id] ||= {}
+      @dirtyVariantOverrides[hub_id][variant_id] ||=
+        { id: vo_id, variant_id: variant_id, hub_id: hub_id }
+
+    set: (hub_id, variant_id, vo_id, attr, value) ->
+      if attr in @requiredAttrs()
+        @add(hub_id, variant_id, vo_id)
+        @dirtyVariantOverrides[hub_id][variant_id][attr] = value
+
+    inherit: (hub_id, variant_id, vo_id) ->
+      @add(hub_id, variant_id, vo_id)
+      blankVo = angular.copy(VariantOverrides.inherit(hub_id, variant_id))
+      delete blankVo[attr] for attr, value of blankVo when attr not in @requiredAttrs()
+      @dirtyVariantOverrides[hub_id][variant_id] = blankVo
 
     count: ->
       count = 0
@@ -27,3 +39,6 @@ angular.module("admin.variantOverrides").factory "DirtyVariantOverrides", ($http
         url: "/admin/variant_overrides/bulk_update"
         data:
           variant_overrides: @all()
+
+    requiredAttrs: ->
+      ['id','hub_id','variant_id','sku','price','count_on_hand','on_demand','default_stock','resettable','tag_list']

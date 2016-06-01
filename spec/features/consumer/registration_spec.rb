@@ -44,10 +44,11 @@ feature "Registration", js: true do
 
       # Choosing a type
       expect(page).to have_content 'Last step to add My Awesome Enterprise!'
-      click_link 'producer-panel'
+      click_link_and_ensure('producer-panel', lambda { page.has_content? '#producer-panel.selected' } )
       click_button 'Create Profile'
 
       # Enterprise should be created
+      # save_screenshot '/Users/rob/Desktop/ss.png' unless page.has_content? "Nice one!"
       expect(page).to have_content 'Nice one!'
       e = Enterprise.find_by_name('My Awesome Enterprise')
       expect(e.address.address1).to eq "123 Abc Street"
@@ -89,6 +90,7 @@ feature "Registration", js: true do
 
       # Done
       expect(page).to have_content "Finished!"
+      expect(page).to have_content "We've sent a confirmation email to #{user.email} if it hasn't been activated before."
       e.reload
       expect(e.website).to eq "www.shop.com"
       expect(e.facebook).to eq "FaCeBoOk"
@@ -125,6 +127,16 @@ feature "Registration", js: true do
       10.times do
         click_button button_text
         break if page.has_content? content
+      end
+    end
+  end
+
+  def click_link_and_ensure(link_text, check)
+    # Buttons appear to be unresponsive for a while, so keep clicking them until content appears
+    using_wait_time 0.5 do
+      10.times do
+        click_link link_text
+        break if check.call
       end
     end
   end

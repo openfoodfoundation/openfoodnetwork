@@ -1,4 +1,6 @@
 class VariantOverride < ActiveRecord::Base
+  acts_as_taggable
+
   belongs_to :hub, class_name: 'Enterprise'
   belongs_to :variant, class_name: 'Spree::Variant'
 

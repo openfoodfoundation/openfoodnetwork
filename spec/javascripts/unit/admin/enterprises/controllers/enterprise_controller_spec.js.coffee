@@ -53,7 +53,7 @@ describe "enterpriseCtrl", ->
       expect(enterprise.users).not.toContain u4
 
     it "ignores objects that are already in the list, and alerts the user", ->
-      spyOn(window, "alert").andCallThrough()
+      spyOn(window, "alert").and.callThrough()
       u4 = { id: 3, email: "email-doesn't-matter.com" }
       scope.addManager u4
       expect(enterprise.users).not.toContain u4

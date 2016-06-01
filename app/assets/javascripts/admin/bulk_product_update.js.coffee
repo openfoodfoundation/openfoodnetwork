@@ -3,18 +3,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.StatusMessage = StatusMessage
 
-    $scope.columns = Columns.setColumns
-      producer:             {name: t("products_producer"),              visible: true}
-      sku:                  {name: t("products_sku"),                   visible: false}
-      name:                 {name: t("products_name"),                  visible: true}
-      unit:                 {name: t("products_unit"),                  visible: true}
-      price:                {name: t("products_price"),                 visible: true}
-      on_hand:              {name: t("products_on_hand"),               visible: true}
-      on_demand:            {name: t("products_on_demand"),             visible: false}
-      category:             {name: t("products_category"),              visible: false}
-      tax_category:         {name: t("products_tax_category"),          visible: false}
-      inherits_properties:  {name: t("products_inherits_properties"),   visible: false}
-      available_on:         {name: t("products_available_on"),          visible: false}
+    $scope.columns = Columns.columns
 
     $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
 

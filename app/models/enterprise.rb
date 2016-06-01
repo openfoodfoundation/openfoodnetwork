@@ -1,6 +1,5 @@
 class Enterprise < ActiveRecord::Base
   SELLS = %w(unspecified none own any)
-  SHOP_TRIAL_LENGTH = 30
   ENTERPRISE_SEARCH_RADIUS = 100
 
   preference :shopfront_message, :text, default: ""
@@ -338,32 +337,11 @@ class Enterprise < ActiveRecord::Base
   end
 
   def shop_trial_expiry
-    shop_trial_start_date.andand + Enterprise::SHOP_TRIAL_LENGTH.days
+    shop_trial_start_date.andand + Spree::Config[:shop_trial_length_days].days
   end
 
   def can_invoice?
     abn.present?
-  end
-
-  def apply_tag_rules_to(subject, context)
-    tag_rules.each do |rule|
-      rule.set_context(subject,context)
-      rule.apply
-    end
-  end
-
-  def rules_per_tag
-    tag_rule_map = {}
-    tag_rules.each do |rule|
-      rule.preferred_customer_tags.split(",").each do |tag|
-        if tag_rule_map[tag]
-          tag_rule_map[tag] += 1
-        else
-          tag_rule_map[tag] = 1
-        end
-      end
-    end
-    tag_rule_map
   end
 
   protected

@@ -28,6 +28,9 @@ text-angular .ta-editor {
   left: 275px;
 }
 
+span.error, div.error {
+	color: #DA5354;
+}
 
 /* Fix conflict between Spree and elRTE's styles */
 .el-rte .toolbar {
@@ -37,6 +40,11 @@ text-angular .ta-editor {
 
 input.red {
 	background-color: #DA5354;
+  margin-right: 5px;
+}
+
+input.orange {
+	background-color: #FF9848;
   margin-right: 5px;
 }
 
@@ -69,10 +77,6 @@ form.order_cycle {
   table.exchanges {
     tr td.active {
       width: 20px;
-    }
-
-    tr.supplier td {
-      border-bottom: 2px solid #C3D9FF;
     }
 
     .exchange-select-all-variants {

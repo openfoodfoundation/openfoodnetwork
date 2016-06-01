@@ -1,10 +1,5 @@
-%tab#forgot{"ng-controller" => "ForgotCtrl",
-  heading: "{{'forgot_password' | t}}",
-  active: "active(path)", 
-  select: "select(path)"}
-
-  %form{"ng-submit" => "submit()"}
-
+%tab#forgot{ heading: "{{'forgot_password' | t}}", active: "tabs.forgot.active", select: "select(path)"}
+  %form{ ng: { controller: "ForgotCtrl", submit: "submit()" } }
     .row
       .large-12.columns
         .alert-box.success.radius{"ng-show" => "sent"}
@@ -13,18 +8,18 @@
     %div{"ng-show" => "!sent"}
       .alert-box.alert{"ng-show" => "errors != null"}
         {{ errors }}
-        
+
       .row
         .large-12.columns
           %label{for: "email"} {{'signup_email' | t}}
-          %input.title.input-text{name: "email", 
+          %input.title.input-text{name: "email",
             type: "email",
             id: "email",
             tabindex: 1,
             "ng-model" => "spree_user.email"}
       .row
         .large-12.columns
-          %input.button.primary{name: "commit", 
-            tabindex: "3", 
-            type: "submit", 
+          %input.button.primary{name: "commit",
+            tabindex: "3",
+            type: "submit",
             value: "{{'reset_password' | t}}"}

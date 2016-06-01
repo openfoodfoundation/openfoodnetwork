@@ -39,3 +39,4 @@ NERD_tree*
 coverage
 libpeerconnection.log
 /config/application.yml
+node_modules

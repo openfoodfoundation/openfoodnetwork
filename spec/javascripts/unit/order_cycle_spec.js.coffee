@@ -13,10 +13,10 @@ describe 'OrderCycle controllers', ->
       event =
         preventDefault: jasmine.createSpy('preventDefault')
       OrderCycle =
-        exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
-        productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').andReturn('product supplied')
-        variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
-        exchangeDirection: jasmine.createSpy('exchangeDirection').andReturn('exchange direction')
+        exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').and.returnValue('variants selected')
+        productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').and.returnValue('product supplied')
+        variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').and.returnValue('variant supplied')
+        exchangeDirection: jasmine.createSpy('exchangeDirection').and.returnValue('exchange direction')
         toggleProducts: jasmine.createSpy('toggleProducts')
         setExchangeVariants: jasmine.createSpy('setExchangeVariants')
         addSupplier: jasmine.createSpy('addSupplier')
@@ -28,15 +28,15 @@ describe 'OrderCycle controllers', ->
         removeExchangeFee: jasmine.createSpy('removeExchangeFee')
         removeDistributionOfVariant: jasmine.createSpy('removeDistributionOfVariant')
         create: jasmine.createSpy('create')
-        new: jasmine.createSpy('new').andReturn "my order cycle"
+        new: jasmine.createSpy('new').and.returnValue "my order cycle"
       Enterprise =
-        index: jasmine.createSpy('index').andReturn('enterprises list')
+        index: jasmine.createSpy('index').and.returnValue('enterprises list')
         supplied_products: 'supplied products'
-        suppliedVariants: jasmine.createSpy('suppliedVariants').andReturn('supplied variants')
-        totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
+        suppliedVariants: jasmine.createSpy('suppliedVariants').and.returnValue('supplied variants')
+        totalVariants: jasmine.createSpy('totalVariants').and.returnValue('variants total')
       EnterpriseFee =
-        index: jasmine.createSpy('index').andReturn('enterprise fees list')
-        forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
+        index: jasmine.createSpy('index').and.returnValue('enterprise fees list')
+        forEnterprise: jasmine.createSpy('forEnterprise').and.returnValue('enterprise fees for enterprise')
       ocInstance = {}
 
       module('admin.orderCycles')
@@ -58,12 +58,13 @@ describe 'OrderCycle controllers', ->
 
     describe 'Reporting when all resources are loaded', ->
       it 'returns true when Enterprise and EnterpriseFee are loaded', ->
-        Enterprise.loaded = EnterpriseFee.loaded = true
+        Enterprise.loaded = EnterpriseFee.loaded = OrderCycle.loaded = true
         expect(scope.loaded()).toBe(true)
 
       it 'returns false otherwise', ->
         Enterprise.loaded = true
         EnterpriseFee.loaded = false
+        OrderCycle.loaded = true
         expect(scope.loaded()).toBe(false)
 
     it "delegates suppliedVariants to Enterprise", ->
@@ -99,16 +100,11 @@ describe 'OrderCycle controllers', ->
         1: {id: 1, name: 'Eaterprises'}
         2: {id: 2, name: 'Pepper Tree Place'}
         3: {id: 3, name: 'South East'}
-      OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').andReturn([2])
+      OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').and.returnValue([2])
       EnterpriseFee.enterprise_fees = [ {enterprise_id: 2} ] # Pepper Tree Place has a fee
       expect(scope.enterprisesWithFees()).toEqual([
         {id: 2, name: 'Pepper Tree Place'}
         ])
-
-    it 'Delegates toggleProducts to OrderCycle', ->
-      scope.toggleProducts(event, 'exchange')
-      expect(event.preventDefault).toHaveBeenCalled()
-      expect(OrderCycle.toggleProducts).toHaveBeenCalledWith('exchange')
 
     it 'Delegates enterpriseFeesForEnterprise to EnterpriseFee', ->
       scope.enterpriseFeesForEnterprise('123')
@@ -156,7 +152,9 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle create', ->
-      scope.submit('/admin/order_cycles')
+      eventMock = {preventDefault: jasmine.createSpy()}
+      scope.submit(eventMock,'/admin/order_cycles')
+      expect(eventMock.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.create).toHaveBeenCalledWith('/admin/order_cycles')
 
   describe 'AdminEditOrderCycleCtrl', ->
@@ -179,10 +177,10 @@ describe 'OrderCycle controllers', ->
           'example.com/admin/order_cycles/27/edit'
       OrderCycle =
         load: jasmine.createSpy('load')
-        exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').andReturn('variants selected')
-        productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').andReturn('product supplied')
-        variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').andReturn('variant supplied')
-        exchangeDirection: jasmine.createSpy('exchangeDirection').andReturn('exchange direction')
+        exchangeSelectedVariants: jasmine.createSpy('exchangeSelectedVariants').and.returnValue('variants selected')
+        productSuppliedToOrderCycle: jasmine.createSpy('productSuppliedToOrderCycle').and.returnValue('product supplied')
+        variantSuppliedToOrderCycle: jasmine.createSpy('variantSuppliedToOrderCycle').and.returnValue('variant supplied')
+        exchangeDirection: jasmine.createSpy('exchangeDirection').and.returnValue('exchange direction')
         toggleProducts: jasmine.createSpy('toggleProducts')
         setExchangeVariants: jasmine.createSpy('setExchangeVariants')
         addSupplier: jasmine.createSpy('addSupplier')
@@ -195,13 +193,13 @@ describe 'OrderCycle controllers', ->
         removeDistributionOfVariant: jasmine.createSpy('removeDistributionOfVariant')
         update: jasmine.createSpy('update')
       Enterprise =
-        index: jasmine.createSpy('index').andReturn('enterprises list')
+        index: jasmine.createSpy('index').and.returnValue('enterprises list')
         supplied_products: 'supplied products'
-        suppliedVariants: jasmine.createSpy('suppliedVariants').andReturn('supplied variants')
-        totalVariants: jasmine.createSpy('totalVariants').andReturn('variants total')
+        suppliedVariants: jasmine.createSpy('suppliedVariants').and.returnValue('supplied variants')
+        totalVariants: jasmine.createSpy('totalVariants').and.returnValue('variants total')
       EnterpriseFee =
-        index: jasmine.createSpy('index').andReturn('enterprise fees list')
-        forEnterprise: jasmine.createSpy('forEnterprise').andReturn('enterprise fees for enterprise')
+        index: jasmine.createSpy('index').and.returnValue('enterprise fees list')
+        forEnterprise: jasmine.createSpy('forEnterprise').and.returnValue('enterprise fees for enterprise')
 
       module('admin.orderCycles')
       inject ($controller) ->
@@ -263,16 +261,11 @@ describe 'OrderCycle controllers', ->
         1: {id: 1, name: 'Eaterprises'}
         2: {id: 2, name: 'Pepper Tree Place'}
         3: {id: 3, name: 'South East'}
-      OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').andReturn([2])
+      OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').and.returnValue([2])
       EnterpriseFee.enterprise_fees = [ {enterprise_id: 2} ] # Pepper Tree Place has a fee
       expect(scope.enterprisesWithFees()).toEqual([
         {id: 2, name: 'Pepper Tree Place'}
         ])
-
-    it 'Delegates toggleProducts to OrderCycle', ->
-      scope.toggleProducts(event, 'exchange')
-      expect(event.preventDefault).toHaveBeenCalled()
-      expect(OrderCycle.toggleProducts).toHaveBeenCalledWith('exchange')
 
     it 'Delegates enterpriseFeesForEnterprise to EnterpriseFee', ->
       scope.enterpriseFeesForEnterprise('123')
@@ -321,9 +314,10 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.removeDistributionOfVariant).toHaveBeenCalledWith('variant')
 
     it 'Submits the order cycle via OrderCycle update', ->
-      scope.submit('/admin/order_cycles')
-      expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles')
-      expect(scope.order_cycle_form.$setPristine.calls.length).toEqual 1
+      eventMock = {preventDefault: jasmine.createSpy()}
+      scope.submit(eventMock,'/admin/order_cycles')
+      expect(eventMock.preventDefault).toHaveBeenCalled()
+      expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles', scope.order_cycle_form)
 
 
 describe 'OrderCycle services', ->
@@ -336,7 +330,7 @@ describe 'OrderCycle services', ->
       inject ($injector, _$httpBackend_)->
         Enterprise = $injector.get('Enterprise')
         $httpBackend = _$httpBackend_
-        $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json?').respond [
+        $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json').respond [
           {id: 1, name: 'One', supplied_products: [1, 2], is_primary_producer: true}
           {id: 2, name: 'Two', supplied_products: [3, 4]}
           {id: 3, name: 'Three', supplied_products: [5, 6], sells: 'any'}
@@ -372,7 +366,7 @@ describe 'OrderCycle services', ->
       expect(Enterprise.supplied_products).toEqual [1, 2, 3, 4, 5, 6]
 
     it "finds supplied variants for an enterprise", ->
-      spyOn(Enterprise, 'variantsOf').andReturn(10)
+      spyOn(Enterprise, 'variantsOf').and.returnValue(10)
       Enterprise.index()
       $httpBackend.flush()
       expect(Enterprise.suppliedVariants(1)).toEqual [10, 10]
@@ -412,7 +406,7 @@ describe 'OrderCycle services', ->
       inject ($injector, _$httpBackend_)->
         EnterpriseFee = $injector.get('EnterpriseFee')
         $httpBackend = _$httpBackend_
-        $httpBackend.whenGET('/admin/enterprise_fees/for_order_cycle.json?').respond [
+        $httpBackend.whenGET('/admin/enterprise_fees/for_order_cycle.json').respond [
           {id: 1, name: "Yayfee", enterprise_id: 1}
           {id: 2, name: "FeeTwo", enterprise_id: 2}
           ]
@@ -529,26 +523,6 @@ describe 'OrderCycle services', ->
         OrderCycle.order_cycle.incoming_exchanges = []
         OrderCycle.order_cycle.outgoing_exchanges = [exchange]
         expect(OrderCycle.exchangeDirection(exchange)).toEqual 'outgoing'
-
-    describe 'toggling products', ->
-      exchange = null
-
-      beforeEach ->
-        exchange = {}
-
-      it 'sets a blank value to true', ->
-        OrderCycle.toggleProducts(exchange)
-        expect(exchange.showProducts).toEqual(true)
-
-      it 'sets a true value to false', ->
-        exchange.showProducts = true
-        OrderCycle.toggleProducts(exchange)
-        expect(exchange.showProducts).toEqual(false)
-
-      it 'sets a false value to true', ->
-        exchange.showProducts = false
-        OrderCycle.toggleProducts(exchange)
-        expect(exchange.showProducts).toEqual(true)
 
     describe "setting exchange variants", ->
       describe "when I have permissions to edit the variants", ->
@@ -717,7 +691,7 @@ describe 'OrderCycle services', ->
           master_id: 6
           variants: [{id: 7}, {id: 8}]
 
-        spyOn(OrderCycle, 'incomingExchangesVariants').andReturn([1, 3])
+        spyOn(OrderCycle, 'incomingExchangesVariants').and.returnValue([1, 3])
 
       it 'returns true for products whose master is supplied', ->
         expect(OrderCycle.productSuppliedToOrderCycle(product_master_present)).toBeTruthy()
@@ -734,7 +708,7 @@ describe 'OrderCycle services', ->
 
     describe 'checking whether a variant is supplied to the order cycle', ->
       beforeEach ->
-        spyOn(OrderCycle, 'incomingExchangesVariants').andReturn([1, 3])
+        spyOn(OrderCycle, 'incomingExchangesVariants').and.returnValue([1, 3])
 
       it 'returns true for variants that are supplied', ->
         expect(OrderCycle.variantSuppliedToOrderCycle({id: 1})).toBeTruthy()
@@ -810,11 +784,11 @@ describe 'OrderCycle services', ->
 
     describe 'creating an order cycle', ->
       beforeEach ->
-        spyOn(OrderCycle, 'confirmNoDistributors').andReturn true
+        spyOn(OrderCycle, 'confirmNoDistributors').and.returnValue true
 
       it 'redirects to the destination page on success', ->
         OrderCycle.order_cycle = 'this is the order cycle'
-        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
+        spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
           order_cycle: 'this is the submit data'
           }).respond {success: true}
@@ -825,7 +799,7 @@ describe 'OrderCycle services', ->
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
-        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
+        spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
           order_cycle: 'this is the submit data'
           }).respond {success: false}
@@ -836,22 +810,24 @@ describe 'OrderCycle services', ->
 
     describe 'updating an order cycle', ->
       beforeEach ->
-        spyOn(OrderCycle, 'confirmNoDistributors').andReturn true
+        spyOn(OrderCycle, 'confirmNoDistributors').and.returnValue true
 
       it 'redirects to the destination page on success', ->
+        form = jasmine.createSpyObj('order_cycle_form', ['$dirty', '$setPristine'])
         OrderCycle.order_cycle = 'this is the order cycle'
-        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
+        spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
         $httpBackend.expectPUT('/admin/order_cycles.json?reloading=1', {
           order_cycle: 'this is the submit data'
           }).respond {success: true}
 
-        OrderCycle.update('/destination/page')
+        OrderCycle.update('/destination/page', form)
         $httpBackend.flush()
         expect($window.location).toEqual('/destination/page')
+        expect(form.$setPristine.calls.count()).toBe 1
 
       it 'does not redirect on error', ->
         OrderCycle.order_cycle = 'this is the order cycle'
-        spyOn(OrderCycle, 'dataForSubmit').andReturn('this is the submit data')
+        spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
         $httpBackend.expectPUT('/admin/order_cycles.json?reloading=1', {
           order_cycle: 'this is the submit data'
           }).respond {success: false}
@@ -964,19 +940,19 @@ describe 'OrderCycle services', ->
           outgoing_exchanges: []
 
       it "returns true when there are distributors", ->
-        spyOn window, 'confirm'
+        spyOn(window, 'confirm')
         OrderCycle.order_cycle = order_cycle_with_exchanges
         expect(OrderCycle.confirmNoDistributors()).toBe true
         expect(window.confirm).not.toHaveBeenCalled()
 
       it "returns true when there are no distributors but the user confirms", ->
-        spyOn(window, 'confirm').andReturn true
+        spyOn(window, 'confirm').and.returnValue(true)
         OrderCycle.order_cycle = order_cycle_without_exchanges
         expect(OrderCycle.confirmNoDistributors()).toBe true
         expect(window.confirm).toHaveBeenCalled()
 
       it "returns false when there are no distributors and the user does not confirm", ->
-        spyOn(window, 'confirm').andReturn false
+        spyOn(window, 'confirm').and.returnValue(false)
         OrderCycle.order_cycle = order_cycle_without_exchanges
         expect(OrderCycle.confirmNoDistributors()).toBe false
         expect(window.confirm).toHaveBeenCalled()

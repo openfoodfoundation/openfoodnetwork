@@ -43,9 +43,9 @@
 //= require ./utils/utils
 //= require ./users/users
 //= require ./variant_overrides/variant_overrides
-//= require textAngular.min.js
+//= require textAngular-rangy.min.js
 //= require textAngular-sanitize.min.js
-//= require ../shared/bindonce.min.js
+//= require textAngular.min.js
 //= require darkswarm/i18n.js
 //= require darkswarm/i18n.translate.js
 

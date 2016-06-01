@@ -24,10 +24,9 @@ Spree::Taxon.class_eval do
       joins(:products => :supplier).
       select('spree_taxons.*, enterprises.id AS enterprise_id').
       each do |t|
-
-      taxons[t.enterprise_id.to_i] ||= Set.new
-      taxons[t.enterprise_id.to_i] << t.id
-    end
+        taxons[t.enterprise_id.to_i] ||= Set.new
+        taxons[t.enterprise_id.to_i] << t.id
+      end
 
     taxons
   end
@@ -43,10 +42,9 @@ Spree::Taxon.class_eval do
       where('o_exchanges.incoming = ?', false).
       select('spree_taxons.*, o_exchanges.receiver_id AS enterprise_id').
       each do |t|
-
-      taxons[t.enterprise_id.to_i] ||= Set.new
-      taxons[t.enterprise_id.to_i] << t.id
-    end
+        taxons[t.enterprise_id.to_i] ||= Set.new
+        taxons[t.enterprise_id.to_i] << t.id
+      end
 
     taxons
   end

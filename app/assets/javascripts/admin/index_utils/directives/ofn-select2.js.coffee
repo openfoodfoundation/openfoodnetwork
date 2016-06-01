@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").directive "ofnSelect2", ($sanitize, $timeout) ->
+angular.module("admin.indexUtils").directive "ofnSelect2", ($sanitize, $timeout, $filter) ->
   require: 'ngModel'
   restrict: 'C'
   scope:
@@ -6,15 +6,19 @@ angular.module("admin.indexUtils").directive "ofnSelect2", ($sanitize, $timeout)
     minSearch: "@?"
     text: "@?"
     blank: "=?"
+    filter: "=?"
   link: (scope, element, attrs, ngModel) ->
     $timeout ->
       scope.text ||= 'name'
+      scope.filter ||= -> true
       scope.data.unshift(scope.blank) if scope.blank? && typeof scope.blank is "object"
 
       item.name = $sanitize(item.name) for item in scope.data
       element.select2
         minimumResultsForSearch: scope.minSearch || 0
-        data: { results: scope.data, text: scope.text }
+        data: ->
+          filtered = $filter('filter')(scope.data,scope.filter)
+          { results: filtered, text: scope.text }
         formatSelection: (item) ->
           item[scope.text]
         formatResult: (item) ->

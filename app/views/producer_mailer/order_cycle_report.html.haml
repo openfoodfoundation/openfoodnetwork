@@ -1,12 +1,15 @@
-%p Dear #{@producer.name},
+%p
+  = t :producer_mail_greeting
+  #{" " + @producer.name},
 %p
   = t :producer_mail_text_before
   - if @receival_instructions
     %p
-      Stock pickup/delivery instructions:
+      %b
+        =t :producer_mail_delivery_instructions
       = @receival_instructions
 %p
-  Here is a summary of the orders for your products:
+  = t :producer_mail_order_text
   %table.order-summary
     %thead
       %tr
@@ -25,23 +28,23 @@
         %th.text-right
           = t :included_tax
     %tbody
-      - @line_items.each_pair do |variant, line_item|
+      - @grouped_line_items.each_pair do |product_and_full_name, line_items|
         %tr
           %td
-            #{variant.sku}
+            #{line_items.first.variant.sku}
           %td
-            #{raw(variant.product.supplier.name)}
+            #{raw(line_items.first.product.supplier.name)}
           %td
-            #{raw(variant.product_and_full_name)}
+            #{raw(product_and_full_name)}
           %td.text-right
-            #{line_item.quantity}
+            #{line_items.sum(&:quantity)}
           %td.text-right
-            #{line_item.single_money}
+            #{line_items.first.single_money}
           %td.text-right
-            #{line_item.display_total}
-          %td.text-right
-            #{line_item.display_included_tax}
-      %tr.total_row
+            #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency) }
+          %td.tax.text-right
+            #{Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency) }
+      %tr.total-row
         %td
         %td
         %td
@@ -53,10 +56,19 @@
           #{@tax_total}
 %p
   = t :producer_mail_text_after
+%p
+  #{t(:producer_mail_signoff)},
   %em
     %p
       #{@coordinator.name}
     %p
-      #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
+      %br
+        #{@coordinator.address.address1}
+      %br
+        #{@coordinator.address.city}
+      %br
+        #{@coordinator.address.zipcode}
+    %p
       #{@coordinator.phone}
+    %p
       #{@coordinator.email}

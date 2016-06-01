@@ -13,13 +13,13 @@ describe "Sidebar", ->
 
 
   it 'is active when a location in paths is set', ->
-    spyOn(location, "path").andReturn "/test"
+    spyOn(location, "path").and.returnValue "/test"
     expect(Sidebar.active()).toEqual true
 
   it 'is inactive if location is set', ->
-    spyOn(location, "path").andReturn null
+    spyOn(location, "path").and.returnValue null
     expect(Sidebar.active()).toEqual false
-  
+
   describe "Toggling on/off", ->
     it 'toggles the current sidebar path', ->
       expect(Sidebar.active()).toEqual false
@@ -32,6 +32,3 @@ describe "Sidebar", ->
       spyOn(Navigation, 'navigate')
       Sidebar.toggle()
       expect(Navigation.navigate).toHaveBeenCalledWith("/test")
-      
-
-

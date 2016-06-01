@@ -131,7 +131,7 @@ describe 'Cart service', ->
       it "reduces the quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 5}
         stockLevels = {1: {quantity: 0, max_quantity: 0, on_hand: 0}}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.quantity).toEqual 0
         expect(li.max_quantity).toBeUndefined()
@@ -139,14 +139,14 @@ describe 'Cart service', ->
       it "reduces the max_quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 5, max_quantity: 6}
         stockLevels = {1: {quantity: 0, max_quantity: 0, on_hand: 0}}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.max_quantity).toEqual 0
 
       it "resets the count on hand available", ->
         li = {variant: {id: 1, count_on_hand: 10}, quantity: 5}
         stockLevels = {1: {quantity: 0, max_quantity: 0, on_hand: 0}}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.variant.count_on_hand).toEqual 0
 
@@ -154,7 +154,7 @@ describe 'Cart service', ->
       it "reduces the quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 6}
         stockLevels = {1: {quantity: 5, on_hand: 5}}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.quantity).toEqual 5
         expect(li.max_quantity).toBeUndefined()
@@ -162,14 +162,14 @@ describe 'Cart service', ->
       it "does not reduce the max_quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 6, max_quantity: 7}
         stockLevels = {1: {quantity: 5, max_quantity: 5, on_hand: 5}}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.max_quantity).toEqual 7
 
       it "resets the count on hand available", ->
         li = {variant: {id: 1}, quantity: 6}
         stockLevels = {1: {quantity: 5, on_hand: 6}}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.variant.count_on_hand).toEqual 6
 
@@ -177,7 +177,7 @@ describe 'Cart service', ->
       it "does not reset the quantity", ->
         li = {variant: {id: 1}, quantity: 6}
         stockLevels = {1: {quantity: 5, on_hand: 6}}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.quantity).toEqual 6
         expect(li.max_quantity).toBeUndefined()
@@ -185,7 +185,7 @@ describe 'Cart service', ->
       it "does not reset the max_quantity", ->
         li = {variant: {id: 1}, quantity: 5, max_quantity: 7}
         stockLevels = {1: {quantity: 5, max_quantity: 6, on_hand: 7}}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.quantity).toEqual 5
         expect(li.max_quantity).toEqual 7
@@ -193,14 +193,14 @@ describe 'Cart service', ->
     describe "when the client-side quantity has been changed from 0 to 1 during the request", ->
       it "does not reset the quantity", ->
         li = {variant: {id: 1}, quantity: 1}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels {}
         expect(li.quantity).toEqual 1
         expect(li.max_quantity).toBeUndefined()
 
       it "does not reset the max_quantity", ->
         li = {variant: {id: 1}, quantity: 1, max_quantity: 1}
-        spyOn(Cart, 'line_items_present').andReturn [li]
+        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels {}
         expect(li.quantity).toEqual 1
         expect(li.max_quantity).toEqual 1

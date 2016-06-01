@@ -1,24 +1,26 @@
-Dear #{@producer.name},
+#{t :producer_mail_greeting} #{@producer.name},
 \
 = t :producer_mail_text_before
 \
 - if @receival_instructions
-  Stock pickup/delivery instructions:
+  = t :producer_mail_delivery_instructions
   = @receival_instructions
 
 \
 Orders summary
 ================
 \
-Here is a summary of the orders for your products:
+= t :producer_mail_order_text
 \
-- @line_items.each_pair do |variant, line_item|
-  #{variant.sku} - #{raw(variant.product.supplier.name)} - #{raw(variant.product_and_full_name)} (QTY: #{line_item.quantity}) @ #{line_item.single_money} = #{line_item.display_amount}
+- @grouped_line_items.each_pair do |product_and_full_name, line_items|
+  #{line_items.first.variant.sku} - #{raw(line_items.first.product.supplier.name)} - #{raw(product_and_full_name)} (QTY: #{line_items.sum(&:quantity)}) @ #{line_items.first.single_money} = #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency)}
 \
 \
 Total: #{@total}
 \
 = t :producer_mail_text_after
+
+#{t :producer_mail_signoff},
 #{@coordinator.name}
 #{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
 #{@coordinator.phone}

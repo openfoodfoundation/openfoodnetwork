@@ -29,47 +29,52 @@ feature %q{
       payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
       payment_method.distributors.should == [@distributors[0]]
     end
+  end
 
-    scenario "updating a payment method" do
-      pm = create(:payment_method, distributors: [@distributors[0]])
-      login_to_admin_section
+  scenario "updating a payment method", js: true do
+    pm = create(:payment_method, distributors: [@distributors[0]])
+    login_to_admin_section
 
-      visit spree.edit_admin_payment_method_path pm
+    visit spree.edit_admin_payment_method_path pm
 
-      fill_in 'payment_method_name', :with => 'New PM Name'
+    fill_in 'payment_method_name', :with => 'New PM Name'
+    find(:css, "tags-input .tags input").set "member\n"
 
-      uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
-      check "payment_method_distributor_ids_#{@distributors[1].id}"
-      check "payment_method_distributor_ids_#{@distributors[2].id}"
-      select2_select "PayPal Express", from: "payment_method_type"
-      expect(page).to have_field 'Login'
-      fill_in 'payment_method_preferred_login', with: 'testlogin'
-      fill_in 'payment_method_preferred_password', with: 'secret'
-      fill_in 'payment_method_preferred_signature', with: 'sig'
+    uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
+    check "payment_method_distributor_ids_#{@distributors[1].id}"
+    check "payment_method_distributor_ids_#{@distributors[2].id}"
+    select2_select "PayPal Express", from: "payment_method_type"
+    expect(page).to have_field 'Login'
+    fill_in 'payment_method_preferred_login', with: 'testlogin'
+    fill_in 'payment_method_preferred_password', with: 'secret'
+    fill_in 'payment_method_preferred_signature', with: 'sig'
 
-      click_button 'Update'
+    click_button 'Update'
 
-      expect(flash_message).to eq 'Payment Method has been successfully updated!'
+    expect(flash_message).to eq 'Payment Method has been successfully updated!'
 
-      payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
-      expect(payment_method.distributors).to include @distributors[1], @distributors[2]
-      expect(payment_method.distributors).not_to include @distributors[0]
-      expect(payment_method.type).to eq "Spree::Gateway::PayPalExpress"
-      expect(payment_method.preferences[:login]).to eq 'testlogin'
-      expect(payment_method.preferences[:password]).to eq 'secret'
-      expect(payment_method.preferences[:signature]).to eq 'sig'
+    expect(first('tags-input .tag-list ti-tag-item')).to have_content "member"
 
-      fill_in 'payment_method_preferred_login', with: 'otherlogin'
-      click_button 'Update'
+    payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
+    expect(payment_method.distributors).to include @distributors[1], @distributors[2]
+    expect(payment_method.distributors).not_to include @distributors[0]
+    expect(payment_method.type).to eq "Spree::Gateway::PayPalExpress"
+    expect(payment_method.preferences[:login]).to eq 'testlogin'
+    expect(payment_method.preferences[:password]).to eq 'secret'
+    expect(payment_method.preferences[:signature]).to eq 'sig'
 
-      expect(flash_message).to eq 'Payment Method has been successfully updated!'
-      expect(page).to have_field 'Password', with: ''
+    fill_in 'payment_method_preferred_login', with: 'otherlogin'
+    click_button 'Update'
 
-      payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
-      expect(payment_method.preferences[:login]).to eq 'otherlogin'
-      expect(payment_method.preferences[:password]).to eq 'secret'
-      expect(payment_method.preferences[:signature]).to eq 'sig'
-    end
+    expect(flash_message).to eq 'Payment Method has been successfully updated!'
+    expect(page).to have_field 'Password', with: ''
+    expect(first('tags-input .tag-list ti-tag-item')).to have_content "member"
+
+    payment_method = Spree::PaymentMethod.find_by_name('New PM Name')
+    expect(payment_method.tag_list).to eq ["member"]
+    expect(payment_method.preferences[:login]).to eq 'otherlogin'
+    expect(payment_method.preferences[:password]).to eq 'secret'
+    expect(payment_method.preferences[:signature]).to eq 'sig'
   end
 
   context "as an enterprise user", js: true do
@@ -94,7 +99,7 @@ feature %q{
         click_link "Payment Methods"
       end
       click_link 'Create One Now'
-      current_path.should == spree.new_admin_payment_method_path
+      expect(page).to have_current_path spree.new_admin_payment_method_path
     end
 
     it "creates payment methods" do
@@ -102,12 +107,15 @@ feature %q{
       fill_in 'payment_method_name', :with => 'Cheque payment method'
 
       check "payment_method_distributor_ids_#{distributor1.id}"
+      find(:css, "tags-input .tags input").set "local\n"
       click_button 'Create'
 
       flash_message.should == 'Payment Method has been successfully created!'
+      expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
       payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
       payment_method.distributors.should == [distributor1]
+      payment_method.tag_list.should == ["local"]
     end
 
     it "shows me only payment methods I have access to" do

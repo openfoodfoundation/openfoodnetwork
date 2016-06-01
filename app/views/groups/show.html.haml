@@ -32,27 +32,27 @@
   .small-12.columns.pad-top
     .row
       .small-12.medium-12.large-9.columns
-        %div{"ng-controller" => "TabsCtrl"}
+        %div{"ng-controller" => "GroupTabsCtrl"}
           %tabset
             %tab{heading: t(:label_map),
-                active: "active(\'\')",
-                select: "select(\'\')"}
+                active: "tabs.map.active",
+                select: "select(\'map\')"}
               .map-container
-                %map{"ng-if" => "(active(\'\') && (mapShowed = true)) || mapShowed"}
+                %map{"ng-if" => "(isActive(\'/map\') && (mapShowed = true)) || mapShowed"}
                   %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
                     %map-search
                     %markers{models: "mapMarkers", fit: "true",
                     coords: "'self'", icon: "'icon'", click: "'reveal'"}
 
             %tab{heading: t(:groups_about),
-                active: "active(\'about\')",
+                active: "tabs.about.active",
                 select: "select(\'about\')"}
               %h1
                 = t :groups_about
               %p!= @group.long_description
 
             %tab{heading: t(:groups_producers),
-                active: "active(\'producers\')",
+                active: "tabs.producers.active",
                 select: "select(\'producers\')"}
               .producers{"ng-controller" => "GroupEnterprisesCtrl"}
                 .row
@@ -62,7 +62,7 @@
                 = render partial: "shared/components/enterprise_search"
                 = render partial: "producers/filters"
 
-                .row{bindonce: true}
+                .row
                   .small-12.columns
                     .active_table
                       %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
@@ -78,7 +78,7 @@
                       = render partial: 'shared/components/enterprise_no_results'
 
             %tab{heading: t(:groups_hubs),
-                active: "active(\'hubs\')",
+                active: "tabs.hubs.active",
                 select: "select(\'hubs\')"}
               .hubs{"ng-controller" => "GroupEnterprisesCtrl"}
                 .row
@@ -89,7 +89,7 @@
                 = render partial: "shared/components/enterprise_search"
                 = render partial: "hub_filters"
 
-                .row{bindonce: true}
+                .row
                   .small-12.columns
                     .active_table
                       %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
