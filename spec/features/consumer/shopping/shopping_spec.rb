@@ -254,6 +254,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           variant.update_attributes! on_hand: 0
 
           # -- Messaging
+          expect(page).to have_input "variants[#{variant.id}]"
           fill_in "variants[#{variant.id}]", with: '1'
           wait_until { !cart_dirty }
 

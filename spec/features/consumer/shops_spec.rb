@@ -36,9 +36,8 @@ feature 'Shops', js: true do
   it "should show closed shops after clicking the button" do
     create(:simple_product, distributors: [d1, d2])
     visit shops_path
-    click_link "Show closed shops"
-    page.should have_selector 'hub.inactive'
-    page.should have_selector 'hub.inactive',   text: d2.name
+    click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
+    page.should have_selector 'hub.inactive', text: d2.name
   end
 
   it "should link to the hub page" do
@@ -51,5 +50,15 @@ feature 'Shops', js: true do
     expect(page).to have_content producer.name
     open_enterprise_modal producer
     modal_should_be_open_for producer
+  end
+
+  def click_link_and_ensure(link_text, check)
+    # Buttons appear to be unresponsive for a while, so keep clicking them until content appears
+    using_wait_time 0.5 do
+      10.times do
+        click_link link_text
+        break if check.call
+      end
+    end
   end
 end
