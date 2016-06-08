@@ -1,5 +1,5 @@
 class Api::CurrencyConfigSerializer < ActiveModel::Serializer
-  attributes :currency, :display_currency, :symbol, :symbol_position, :hide_cents, :decimal_mark, :thousands_separator
+  attributes :currency, :display_currency, :symbol, :symbol_position, :hide_cents
 
   def currency
     Spree::Config[:currency]
@@ -13,20 +13,12 @@ class Api::CurrencyConfigSerializer < ActiveModel::Serializer
     ::Money.new(1, Spree::Config[:currency]).symbol
   end
 
-  def symbol_position 
+  def symbol_position
     Spree::Config[:currency_symbol_position]
   end
 
-  def hide_cents 
+  def hide_cents
     Spree::Config[:hide_cents]
-  end
-
-  def decimal_mark 
-    Spree::Config[:currency_decimal_mark]
-  end
-
-  def thousands_separator 
-    Spree::Config[:currency_thousands_separator]
   end
 
 end

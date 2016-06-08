@@ -7,9 +7,6 @@ describe 'convert number to localised currency ', ->
       symbol_position: "before"
       currency: "D"
       hide_cents: "false"
-      # Not used yet...
-      # decimal_mark: "."
-      # thousands_separator: ","
     module 'Darkswarm'
     module ($provide)->
       $provide.value "currencyConfig", currencyconfig
@@ -38,5 +35,3 @@ describe 'convert number to localised currency ', ->
   it "can hide cents", ->
     currencyconfig.hide_cents = "true"
     expect(filter(5)).toEqual "$5"
-
-
