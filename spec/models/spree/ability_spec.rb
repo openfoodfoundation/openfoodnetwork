@@ -149,13 +149,13 @@ module Spree
 
         it "should be able to read/write their enterprises' products and variants" do
           should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p1)
-          should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p1.master)
+          should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p1.master)
         end
 
         it "should be able to read/write related enterprises' products and variants with manage_products permission" do
           er_ps
           should have_ability([:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :destroy], for: p_related)
-          should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy], for: p_related.master)
+          should have_ability([:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p_related.master)
         end
 
         it "should not be able to read/write other enterprises' products and variants" do
@@ -173,7 +173,7 @@ module Spree
 
         it "should be able to read/write their enterprises' product variants" do
           should have_ability([:create], for: Spree::Variant)
-          should have_ability([:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: p1.master)
+          should have_ability([:admin, :index, :read, :create, :edit, :search, :update, :destroy, :delete], for: p1.master)
         end
 
         it "should not be able to read/write other enterprises' product variants" do
