@@ -103,7 +103,7 @@ feature %q{
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
     fill_in 'order_cycle_incoming_exchange_0_receival_instructions', with: 'receival instructions'
-    page.find('table.exchanges tr.supplier td.products input').click
+    page.find('table.exchanges tr.supplier td.products').click
     check "order_cycle_incoming_exchange_0_variants_#{v1.id}"
     check "order_cycle_incoming_exchange_0_variants_#{v2.id}"
 
@@ -124,9 +124,14 @@ feature %q{
     fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
     fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
-    page.find('table.exchanges tr.distributor td.products input').click
+    page.find('table.exchanges tr.distributor td.products').click
     check "order_cycle_outgoing_exchange_0_variants_#{v1.id}"
     check "order_cycle_outgoing_exchange_0_variants_#{v2.id}"
+
+    page.find('table.exchanges tr.distributor td.tags').click
+    within ".exchange-tags" do
+      find(:css, "tags-input .tags input").set "wholesale\n"
+    end
 
     # And I add a distributor fee
     within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
@@ -165,6 +170,7 @@ feature %q{
     exchange = oc.exchanges.outgoing.first
     exchange.pickup_time.should == 'pickup time'
     exchange.pickup_instructions.should == 'pickup instructions'
+    exchange.tag_list.should == ['wholesale']
   end
 
 
@@ -196,13 +202,13 @@ feature %q{
     page.should have_field 'order_cycle_incoming_exchange_1_receival_instructions', with: 'instructions 1'
 
     # And the suppliers should have products
-    page.all('table.exchanges tbody tr.supplier').each do |row|
-      row.find('td.products input').click
+    page.all('table.exchanges tbody tr.supplier').each_with_index do |row, i|
+      row.find('td.products').click
 
-      products_row = page.all('table.exchanges tr.products').select { |r| r.visible? }.first
-      products_row.should have_selector "input[type='checkbox'][checked='checked']"
+      products_panel = page.all('table.exchanges tr.panel-row .exchange-supplied-products').select { |r| r.visible? }.first
+      products_panel.should have_selector "input[name='order_cycle_incoming_exchange_#{i}_select_all_variants']"
 
-      row.find('td.products input').click
+      row.find('td.products').click
     end
 
     # And the suppliers should have fees
@@ -224,13 +230,13 @@ feature %q{
     page.should have_field 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'instructions 1'
 
     # And the distributors should have products
-    page.all('table.exchanges tbody tr.distributor').each do |row|
-      row.find('td.products input').click
+    page.all('table.exchanges tbody tr.distributor').each_with_index do |row, i|
+      row.find('td.products').click
 
-      products_row = page.all('table.exchanges tr.products').select { |r| r.visible? }.first
-      products_row.should have_selector "input[type='checkbox'][checked='checked']"
+      products_panel = page.all('table.exchanges tr.panel-row .exchange-distributed-products').select { |r| r.visible? }.first
+      products_panel.should have_selector "input[name='order_cycle_outgoing_exchange_#{i}_select_all_variants']"
 
-      row.find('td.products input').click
+      row.find('td.products').click
     end
 
     # And the distributors should have fees
@@ -267,9 +273,6 @@ feature %q{
 
 
   scenario "updating an order cycle", js: true do
-    # Make the page long enough to avoid the save bar overlaying the form
-    page.driver.resize(1280, 3600)
-
     # Given an order cycle with all the settings
     oc = create(:order_cycle)
     initial_variants = oc.variants.sort_by &:id
@@ -320,7 +323,7 @@ feature %q{
     # And I add a supplier and some products
     select 'My supplier', from: 'new_supplier_id'
     click_button 'Add supplier'
-    page.all("table.exchanges tr.supplier td.products input").each { |e| e.click }
+    page.all("table.exchanges tr.supplier td.products").each { |e| e.click }
 
     page.should have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
     page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
@@ -346,7 +349,12 @@ feature %q{
     fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'New time 1'
     fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'New instructions 1'
 
-    page.all("table.exchanges tr.distributor td.products input").each { |e| e.click }
+    page.find("table.exchanges tr.distributor-#{distributor.id} td.tags").click
+    within ".exchange-tags" do
+      find(:css, "tags-input .tags input").set "wholesale\n"
+    end
+
+    page.all("table.exchanges tr.distributor td.products").each { |e| e.click }
 
     uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
     check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
@@ -363,7 +371,6 @@ feature %q{
 
     # And I click Update
     expect(page).to have_selector "#save-bar"
-    save_screenshot('abc.png')
     click_button 'Update and Close'
 
     # Then my order cycle should have been updated
@@ -386,6 +393,9 @@ feature %q{
 
     # And my distributor fees should have been configured
     OrderCycle.last.exchanges.outgoing.last.enterprise_fee_ids.should == [distributor_fee2.id]
+
+    # And my tags should have been save
+    OrderCycle.last.exchanges.outgoing.last.tag_list.should == ['wholesale']
 
     # And it should have some variants selected
     selected_initial_variants = initial_variants.take initial_variants.size - 1
@@ -463,8 +473,8 @@ feature %q{
     login_to_admin_section
     click_link 'Order Cycles'
     click_link oc.name
-    within("table.exchanges tbody tr.supplier") { page.find('td.products input').click }
-    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).click # uncheck
+    within("table.exchanges tbody tr.supplier") { page.find('td.products').click }
+    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).trigger('click') # uncheck
     click_button "Update"
 
     # Then the master variant should have been removed from all exchanges
@@ -589,6 +599,11 @@ feature %q{
           page.should_not have_select 'order_cycle_coordinator_id', with_options: [enterprise_name]
         end
 
+        page.find("table.exchanges tr.distributor-#{distributor_managed.id} td.tags").click
+        within ".exchange-tags" do
+          find(:css, "tags-input .tags input").set "wholesale\n"
+        end
+
         click_button 'Create'
 
         flash_message.should == "Your order cycle has been created."
@@ -596,6 +611,8 @@ feature %q{
         order_cycle.suppliers.should match_array [supplier_managed, supplier_permitted]
         order_cycle.coordinator.should == distributor_managed
         order_cycle.distributors.should match_array [distributor_managed, distributor_permitted]
+        exchange = order_cycle.exchanges.outgoing.to_enterprise(distributor_managed).first
+        exchange.tag_list.should == ["wholesale"]
       end
 
       scenario "editing an order cycle we can see (and for now, edit) all exchanges in the order cycle" do
@@ -608,9 +625,22 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc)
 
-        # I should not see exchanges for supplier_unmanaged or distributor_unmanaged
-        page.all('tr.supplier').count.should == 3
-        page.all('tr.distributor').count.should == 3
+        fill_in 'order_cycle_name', with: 'Coordinated'
+
+        # I should be able to see but not edit exchanges for supplier_unmanaged or distributor_unmanaged
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page).to have_selector "tr.supplier-#{supplier_permitted.id}"
+        expect(page).to have_selector "tr.supplier-#{supplier_unmanaged.id}"
+        expect(page).to have_selector 'tr.supplier', count: 3
+
+        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_unmanaged.id}"
+        expect(page).to have_selector 'tr.distributor', count: 3
+
+        # When I save, then those exchanges should remain
+        click_button 'Update'
+        page.should have_content "Your order cycle has been updated."
 
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
@@ -619,9 +649,6 @@ feature %q{
       end
 
       scenario "editing an order cycle" do
-        # Make the page long enough to avoid the save bar overlaying the form
-        page.driver.resize(1280, 3600)
-
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
 
         visit edit_admin_order_cycle_path(oc)
@@ -631,7 +658,6 @@ feature %q{
         page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
         page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
         page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
-
         click_button 'Update'
 
         # Then the exchanges should be removed
@@ -689,19 +715,30 @@ feature %q{
         # I should only see exchanges for supplier_managed AND
         # distributor_managed and distributor_permitted (who I have given permission to) AND
         # and distributor_unmanaged (who distributes my products)
-        page.all('tr.supplier').count.should == 1
-        page.all('tr.distributor').count.should == 2
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page).to have_selector 'tr.supplier', count: 1
+
+        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
+        expect(page).to have_selector "tr.distributor-#{distributor_permitted.id}"
+        expect(page).to have_selector 'tr.distributor', count: 2
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.distributor-#{distributor_managed.id}" do
-          page.find("td.products input").click
+          page.find("td.products").click
         end
 
         # I should be able to see and toggle v1
-        expect(page).to have_field "order_cycle_outgoing_exchange_0_variants_#{v1.id}", disabled: false
+        expect(page).to have_checked_field "order_cycle_outgoing_exchange_0_variants_#{v1.id}", disabled: false
+        uncheck "order_cycle_outgoing_exchange_0_variants_#{v1.id}"
 
         # I should be able to see but not toggle v2, because I don't have permission
-        expect(page).to have_field "order_cycle_outgoing_exchange_0_variants_#{v2.id}", disabled: true
+        expect(page).to have_checked_field "order_cycle_outgoing_exchange_0_variants_#{v2.id}", disabled: true
+
+        page.should_not have_selector "table.exchanges tr.distributor-#{distributor_managed.id} td.tags"
+
+        # When I save, any exchanges that I can't manage remain
+        click_button 'Update'
+        page.should have_content "Your order cycle has been updated."
 
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
@@ -725,8 +762,14 @@ feature %q{
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
-        ex = oc.exchanges.where(sender_id: distributor_managed, receiver_id: my_distributor, incoming: false).first
-        ex.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # Incoming exchange
+        ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed, incoming: true).first
+        ex_in.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # Outgoing exchange
+        ex_out = oc.exchanges.where(sender_id: distributor_managed, receiver_id: my_distributor, incoming: false).first
+        ex_out.update_attributes(variant_ids: [v1.id, v2.id])
 
         # Stub editable_variants_for_incoming_exchanges method so we can test permissions
         serializer = Api::Admin::OrderCycleSerializer.new(oc, current_user: new_user)
@@ -738,19 +781,29 @@ feature %q{
         visit edit_admin_order_cycle_path(oc)
 
         # I should see exchanges for my_distributor, and the incoming exchanges supplying the variants in it
-        page.all('tr.supplier').count.should == 1
-        page.all('tr.distributor').count.should == 1
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page).to have_selector 'tr.supplier', count: 1
+
+        expect(page).to have_selector "tr.distributor-#{my_distributor.id}"
+        expect(page).to have_selector 'tr.distributor', count: 1
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.supplier-#{supplier_managed.id}" do
-          page.find("td.products input").click
+          page.find("td.products").click
         end
 
         # I should be able to see and toggle v1
-        expect(page).to have_field "order_cycle_incoming_exchange_0_variants_#{v1.id}", disabled: false
+        expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{v1.id}", disabled: false
+        uncheck "order_cycle_incoming_exchange_0_variants_#{v1.id}"
 
         # I should be able to see but not toggle v2, because I don't have permission
-        expect(page).to have_field "order_cycle_incoming_exchange_0_variants_#{v2.id}", disabled: true
+        expect(page).to have_checked_field "order_cycle_incoming_exchange_0_variants_#{v2.id}", disabled: true
+
+        page.should have_selector "table.exchanges tr.distributor-#{my_distributor.id} td.tags"
+
+        # When I save, any exchange that I can't manage remains
+        click_button 'Update'
+        page.should have_content "Your order cycle has been updated."
 
         oc.reload
         oc.suppliers.should match_array [supplier_managed, supplier_permitted, supplier_unmanaged]
@@ -865,9 +918,6 @@ feature %q{
     end
 
     scenario "updating an order cycle" do
-      # Make the page long enough to avoid the save bar overlaying the form
-      page.driver.resize(1280, 3600)
-
       # Given an order cycle with pickup time and instructions
       fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
@@ -903,6 +953,7 @@ feature %q{
       click_button 'Update'
       page.should have_content 'Your order cycle has been updated.'
 
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'yyz'
       click_button 'Update and Close'
 
       # Then my order cycle should have been updated
@@ -922,7 +973,7 @@ feature %q{
       # And my pickup time and instructions should have been saved
       ex = oc.exchanges.outgoing.first
       ex.pickup_time.should == 'xy'
-      ex.pickup_instructions.should == 'zzy'
+      ex.pickup_instructions.should == 'yyz'
     end
   end
 
@@ -939,7 +990,7 @@ feature %q{
   private
 
   def select_incoming_variant(supplier, exchange_no, variant)
-    page.find("table.exchanges tr.supplier-#{supplier.id} td.products input").click
+    page.find("table.exchanges tr.supplier-#{supplier.id} td.products").click
     check "order_cycle_incoming_exchange_#{exchange_no}_variants_#{variant.id}"
   end
 end

@@ -21,6 +21,11 @@
 
         %tr
           %th
+            = t :payment_method_fee
+          %td.text-right {{ Checkout.paymentPrice() | localizeCurrency }}
+
+        %tr
+          %th
             = t :checkout_total_price
           %td.total.text-right {{ Checkout.cartTotal() | localizeCurrency }}
 

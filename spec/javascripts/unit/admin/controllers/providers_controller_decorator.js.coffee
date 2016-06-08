@@ -5,7 +5,7 @@ describe "ProvidersCtrl", ->
 
   describe "initialising using a payment method without a type", ->
     beforeEach ->
-      module 'ofn.admin'
+      module 'admin.paymentMethods'
       scope = {}
       paymentMethod =
         type: null
@@ -18,7 +18,7 @@ describe "ProvidersCtrl", ->
 
   describe "initialising using a payment method with a type", ->
     beforeEach ->
-      module 'ofn.admin'
+      module 'admin.paymentMethods'
       scope = {}
       paymentMethod =
         type: "NOT NULL"

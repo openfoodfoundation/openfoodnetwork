@@ -48,7 +48,7 @@ feature %q{
     visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
-    page.find('td.actions a.icon-edit').click
+    page.find('tr', text: 'Shipping').find('a.icon-edit').click
 
     # Then I should see the uneditable included tax and our tax rate as the default
     page.should have_field :adjustment_included_tax, with: '10.00', disabled: true
@@ -72,7 +72,7 @@ feature %q{
     visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
-    page.find('td.actions a.icon-edit').click
+    page.find('tr', text: 'Shipping').find('a.icon-edit').click
 
     # Then I should see the uneditable included tax and 'Remove tax' as the default tax rate
     page.should have_field :adjustment_included_tax, with: '0.00', disabled: true

@@ -42,13 +42,15 @@ module OpenFoodNetwork
                           {variant_ids: variant_ids,
                            enterprise_fee_ids: enterprise_fee_ids,
                            pickup_time: exchange[:pickup_time],
-                           pickup_instructions: exchange[:pickup_instructions]})
+                           pickup_instructions: exchange[:pickup_instructions],
+                           tag_list: exchange[:tag_list]})
         else
           add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], false,
                        {variant_ids: variant_ids,
                         enterprise_fee_ids: enterprise_fee_ids,
                         pickup_time: exchange[:pickup_time],
-                        pickup_instructions: exchange[:pickup_instructions]})
+                        pickup_instructions: exchange[:pickup_instructions],
+                        tag_list: exchange[:tag_list]})
         end
       end
 
@@ -81,6 +83,7 @@ module OpenFoodNetwork
         attrs.delete :enterprise_fee_ids
         attrs.delete :pickup_time
         attrs.delete :pickup_instructions
+        attrs.delete :tag_list
       end
 
       if permission_for exchange

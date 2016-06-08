@@ -1,1 +1,1 @@
-angular.module("admin.orders", ['ngResource'])
+angular.module("admin.orders", ['admin.indexUtils', 'ngResource'])

@@ -28,6 +28,7 @@ module OpenFoodNetwork
         report.stub(:produce_summary_rows)  { ['produce'] }
         report.stub(:fee_summary_rows)      { ['fee'] }
         report.stub(:shipping_summary_rows) { ['shipping'] }
+        report.stub(:payment_summary_rows)  { ['payment'] }
         report.stub(:admin_adjustment_summary_rows) { ['admin'] }
         order.stub(:account_invoice?)       { false }
       end

@@ -9,7 +9,7 @@ describe "Views service", ->
 
   describe "setting views", ->
     beforeEach ->
-      spyOn(Views, "selectView").andCallThrough()
+      spyOn(Views, "selectView").and.callThrough()
       Views.setViews
         view1: { name: 'View1', visible: true }
         view2: { name: 'View2', visible: false }

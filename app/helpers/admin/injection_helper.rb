@@ -23,6 +23,10 @@ module Admin
       admin_inject_json_ams_array "admin.paymentMethods", "paymentMethods", @payment_methods, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_payment_method
+      admin_inject_json_ams "admin.paymentMethods", "paymentMethod", @payment_method, Api::Admin::PaymentMethodSerializer
+    end
+
     def admin_inject_shipping_methods
       admin_inject_json_ams_array "admin.shippingMethods", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer
     end
@@ -47,13 +51,19 @@ module Admin
       admin_inject_json_ams_array opts[:module], "inventoryItems", @inventory_items, Api::Admin::InventoryItemSerializer
     end
 
+    def admin_inject_column_preferences(opts={})
+      opts.reverse_merge!(module: 'ofn.admin', action: "#{controller_name}_#{action_name}")
+      column_preferences = ColumnPreference.for(spree_current_user, opts[:action])
+      admin_inject_json_ams_array opts[:module], "columns", column_preferences, Api::Admin::ColumnPreferenceSerializer
+    end
+
     def admin_inject_enterprise_permissions
       permissions =
         {can_manage_shipping_methods: can?(:manage_shipping_methods, @enterprise),
          can_manage_payment_methods:  can?(:manage_payment_methods, @enterprise),
          can_manage_enterprise_fees:  can?(:manage_enterprise_fees,  @enterprise)}
 
-      render partial: "admin/json/injection_ams", locals: {ngModule: "admin.enterprises", name: "enterprisePermissions", json: permissions.to_json}
+      admin_inject_json "admin.enterprises", "enterprisePermissions", permissions
     end
 
     def admin_inject_hub_permissions
@@ -94,6 +104,11 @@ module Admin
 
     def admin_inject_spree_api_key
       render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.indexUtils', name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
+    end
+
+    def admin_inject_json(ngModule, name, data)
+      json = data.to_json
+      render partial: "admin/json/injection_ams", locals: {ngModule: ngModule, name: name, json: json}
     end
 
     def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})

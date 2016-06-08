@@ -72,7 +72,7 @@ class AbilityDecorator
 
     can [:admin, :index, :read, :create, :edit, :update_positions, :destroy], ProducerProperty
 
-    can [:admin, :destroy], TagRule do |tag_rule|
+    can [:admin, :map_by_tag, :destroy], TagRule do |tag_rule|
       user.enterprises.include? tag_rule.enterprise
     end
 
@@ -100,6 +100,10 @@ class AbilityDecorator
     # For printing own account invoice orders
     can [:print], Spree::Order do |order|
       order.user == user
+    end
+
+    can [:admin, :bulk_update], ColumnPreference do |column_preference|
+      column_preference.user == user
     end
   end
 
@@ -218,7 +222,6 @@ class AbilityDecorator
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
-    can [:admin, :index], :tag
   end
 
 

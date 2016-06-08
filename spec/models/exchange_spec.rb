@@ -282,9 +282,11 @@ describe Exchange do
     new_oc = create(:simple_order_cycle)
 
     ex1 = oc.exchanges.last
+    ex1.update_attribute(:tag_list, "wholesale")
     ex2 = ex1.clone! new_oc
 
     ex1.eql?(ex2).should be_true
+    expect(ex2.reload.tag_list).to eq ["wholesale"]
   end
 
   describe "converting to hash" do

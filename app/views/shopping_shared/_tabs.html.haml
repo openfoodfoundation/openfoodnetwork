@@ -1,16 +1,15 @@
-#tabs{"ng-controller" => "TabsCtrl", "ng-cloak" => true}
+#tabs{"ng-controller" => "ShoppingTabsCtrl", "ng-cloak" => true}
   .row
-    %tabset
+    %tabset{ 'open-on-load' => 'false' }
       -# Build all tabs.
       - for name, heading_cols in { about: [t(:shopping_tabs_about, distributor: current_distributor.name), 6],
         producers: [t(:label_producers),2],
         contact: [t(:shopping_tabs_contact),2],
         groups: [t(:label_groups),2]}
-        -# tabs take tab path in 'active' and 'select' functions defined in TabsCtrl.
         - heading, cols = heading_cols
         %tab.columns{heading: heading,
         id: "tab_#{name}",
-        active: "active(\'#{name}\')",
-        select: "toggle(\'#{name}\')",
+        active: "tabs.#{name}.active",
+        select: "select(\'#{name}\')",
         class: "small-12 medium-#{cols}" }
           = render "shopping_shared/#{name}"

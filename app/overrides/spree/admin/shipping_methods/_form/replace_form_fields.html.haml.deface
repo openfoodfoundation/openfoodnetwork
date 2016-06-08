@@ -54,7 +54,7 @@
       = f.label :tags, t(:tags)
     .omega.eight.columns
       = f.hidden_field :tag_list, "ng-value" => "shippingMethod.tag_list"
-      %tags-with-translation#something{ object: "shippingMethod" }
+      %tags-with-translation#something{ object: "shippingMethod", 'find-tags' => 'findTags(query)' }
 
   .row
     .alpha.eleven.columns

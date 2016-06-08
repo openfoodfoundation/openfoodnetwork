@@ -4,7 +4,7 @@ module OpenFoodNetwork
   class ScopeProductToHub
     def initialize(hub)
       @hub = hub
-      @variant_overrides = VariantOverride.indexed @hub
+      @variant_overrides = VariantOverride.indexed(@hub)
     end
 
     def scope(product)

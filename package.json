@@ -1,0 +1,17 @@
+{
+  "name": "openfoodnetwork",
+  "version": "1.7.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfoodfoundation/openfoodnetwork"
+  },
+  "devDependencies": {
+    "phantomjs-prebuilt": "~2.1.7",
+    "karma": "~0.13.22",
+    "karma-jasmine": "~0.3.8",
+    "jasmine-core": "~2.4.1",
+    "karma-phantomjs-launcher": "~1.0.0",
+    "karma-coffee-preprocessor": "~0.3.0"
+  },
+  "license": "AGPL-1.0"
+}

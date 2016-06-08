@@ -8,7 +8,7 @@ describe "switchClass service", ->
     elementMock =
       addClass: addClass
       removeClass: removeClass
-    timeoutMock = jasmine.createSpy('timeout').andReturn "new timeout"
+    timeoutMock = jasmine.createSpy('timeout').and.returnValue "new timeout"
     timeoutMock.cancel = jasmine.createSpy('timeout.cancel')
 
   beforeEach ->
@@ -22,14 +22,14 @@ describe "switchClass service", ->
   it "calls addClass on the element once", ->
     switchClassService elementMock, "addClass", [], false
     expect(addClass).toHaveBeenCalledWith "addClass"
-    expect(addClass.calls.length).toEqual 1
+    expect(addClass.calls.count()).toBe 1
 
   it "calls removeClass on the element for ", ->
     switchClassService elementMock, "", ["remClass1", "remClass2", "remClass3"], false
     expect(removeClass).toHaveBeenCalledWith "remClass1"
     expect(removeClass).toHaveBeenCalledWith "remClass2"
     expect(removeClass).toHaveBeenCalledWith "remClass3"
-    expect(removeClass.calls.length).toEqual 3
+    expect(removeClass.calls.count()).toBe 3
 
   it "call cancel on element.timout only if it exists", ->
     switchClassService elementMock, "", [], false

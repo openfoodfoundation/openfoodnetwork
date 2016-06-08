@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles', ['ngResource', 'admin.utils', 'admin.indexUtils'])
+angular.module('admin.orderCycles', ['ngResource', 'admin.utils', 'admin.indexUtils', 'ngTagsInput'])
 
   .config ($httpProvider) ->
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')

@@ -34,6 +34,11 @@ module Openfoodnetwork
                                                       Spree::Calculator::PerItem,
                                                       Spree::Calculator::PriceSack,
                                                       OpenFoodNetwork::Calculator::Weight]
+      app.config.spree.calculators.payment_methods = [Spree::Calculator::FlatPercentItemTotal,
+                                                      Spree::Calculator::FlatRate,
+                                                      Spree::Calculator::FlexiRate,
+                                                      Spree::Calculator::PerItem,
+                                                      Spree::Calculator::PriceSack]
     end
 
     # Register Spree payment methods
