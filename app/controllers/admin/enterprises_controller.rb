@@ -2,6 +2,10 @@ require 'open_food_network/referer_parser'
 
 module Admin
   class EnterprisesController < ResourceController
+    # These need to run before #load_resource so that @object is initialised with sanitised values
+    prepend_before_filter :override_owner, only: :create
+    prepend_before_filter :override_sells, only: :create
+
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => [:index, :register, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:edit, :update]
@@ -9,8 +13,6 @@ module Admin
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
-    before_filter :override_owner, only: :create
-    before_filter :override_sells, only: :create
     before_filter :check_can_change_owner, only: :update
     before_filter :check_can_change_bulk_owner, only: :bulk_update
     before_filter :check_can_change_managers, only: :update

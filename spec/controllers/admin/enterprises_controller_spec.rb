@@ -28,6 +28,7 @@ module Admin
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
+        response.should redirect_to edit_admin_enterprise_path enterprise
         distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first.should be
       end
 
@@ -37,15 +38,17 @@ module Admin
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
+        response.should redirect_to edit_admin_enterprise_path enterprise
         admin_user.enterprise_roles.where(enterprise_id: enterprise).should be_empty
       end
 
-      it "overrides the owner_id submitted by the user unless current_user is super admin" do
+      it "overrides the owner_id submitted by the user (when not super admin)" do
         controller.stub spree_current_user: distributor_manager
         enterprise_params[:enterprise][:owner_id] = user
 
         spree_put :create, enterprise_params
         enterprise = Enterprise.find_by_name 'zzz'
+        response.should redirect_to edit_admin_enterprise_path enterprise
         distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first.should be
       end
 
@@ -58,6 +61,7 @@ module Admin
 
           spree_put :create, enterprise_params
           enterprise = Enterprise.find_by_name 'zzz'
+          response.should redirect_to edit_admin_enterprise_path enterprise
           enterprise.sells.should == 'any'
         end
 
@@ -68,6 +72,7 @@ module Admin
 
           spree_put :create, enterprise_params
           enterprise = Enterprise.find_by_name 'zzz'
+          response.should redirect_to edit_admin_enterprise_path enterprise
           enterprise.sells.should == 'none'
         end
 
@@ -80,6 +85,7 @@ module Admin
 
           spree_put :create, enterprise_params
           enterprise = Enterprise.find_by_name 'zzz'
+          response.should redirect_to edit_admin_enterprise_path enterprise
           enterprise.sells.should == 'none'
         end
       end
