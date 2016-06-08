@@ -1,7 +1,7 @@
 module Spree
   module Admin
     AdjustmentsController.class_eval do
-      before_filter :set_included_tax, only: [:create, :update]
+      prepend_before_filter :set_included_tax, only: [:create, :update]
       before_filter :set_default_tax_rate, only: :edit
 
 
