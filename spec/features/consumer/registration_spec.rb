@@ -22,7 +22,8 @@ feature "Registration", js: true do
       expect(URI.parse(current_url).path).to eq registration_path
 
       # Done reading introduction
-      click_button_and_ensure_content "Let's get started!", "Woot! First we need to know a little bit about your enterprise:"
+      page.has_content?
+      click_and_ensure(:button, "Let's get started!", lambda { page.has_content? 'Woot!' })
 
       # Filling in details
       fill_in 'enterprise_name', with: "My Awesome Enterprise"
@@ -33,23 +34,20 @@ feature "Registration", js: true do
       fill_in 'enterprise_zipcode', with: '3070'
       select 'Australia', from: 'enterprise_country'
       select 'VIC', from: 'enterprise_state'
-      click_button 'Continue'
+      click_and_ensure(:button, "Continue", lambda { page.has_content? 'Who is responsible for managing My Awesome Enterprise?' })
+
 
       # Filling in Contact Details
-      expect(page).to have_content 'Who is responsible for managing My Awesome Enterprise?'
       fill_in 'enterprise_contact', with: 'Saskia Munroe'
       page.should have_field 'enterprise_email_address', with: user.email
       fill_in 'enterprise_phone', with: '12 3456 7890'
-      click_button 'Continue'
+      click_and_ensure(:button, "Continue", lambda { page.has_content? 'Last step to add My Awesome Enterprise!' })
 
       # Choosing a type
-      expect(page).to have_content 'Last step to add My Awesome Enterprise!'
-      click_link_and_ensure('producer-panel', lambda { page.has_content? '#producer-panel.selected' } )
-      click_button 'Create Profile'
+      click_and_ensure(:link, 'producer-panel', lambda { page.has_content? '#producer-panel.selected' } )
+      click_and_ensure(:button, "Create Profile", lambda { page.has_content? 'Nice one!' })
 
       # Enterprise should be created
-      # save_screenshot '/Users/rob/Desktop/ss.png' unless page.has_content? "Nice one!"
-      expect(page).to have_content 'Nice one!'
       e = Enterprise.find_by_name('My Awesome Enterprise')
       expect(e.address.address1).to eq "123 Abc Street"
       expect(e.sells).to eq "unspecified"
@@ -62,10 +60,9 @@ feature "Registration", js: true do
       fill_in 'enterprise_abn', with: '12345'
       fill_in 'enterprise_acn', with: '54321'
       choose 'Yes' # enterprise_charges_sales_tax
-      click_button 'Continue'
+      click_and_ensure(:button, "Continue", lambda { page.has_content? 'Step 1. Select Logo Image' })
 
       # Enterprise should be updated
-      expect(page).to have_content "Let's upload some pretty pictures so your profile looks great!"
       e.reload
       expect(e.description).to eq "Short description"
       expect(e.long_description).to eq "Long description"
@@ -75,21 +72,20 @@ feature "Registration", js: true do
 
       # Images
       # Move from logo page
-      click_button 'Continue'
+      click_and_ensure(:button, "Continue", lambda { page.has_content? 'Step 3. Select Promo Image' })
+
       # Move from promo page
-      click_button 'Continue'
+      click_and_ensure(:button, "Continue", lambda { page.has_content? 'How can people find My Awesome Enterprise online?' })
 
       # Filling in social
-      expect(page).to have_content 'How can people find My Awesome Enterprise online?'
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'
       fill_in 'enterprise_twitter', with: '@TwItTeR'
       fill_in 'enterprise_instagram', with: '@InStAgRaM'
-      click_button 'Continue'
+      click_and_ensure(:button, "Continue", lambda { page.has_content? 'Finished!' })
 
       # Done
-      expect(page).to have_content "Finished!"
       expect(page).to have_content "We've sent a confirmation email to #{user.email} if it hasn't been activated before."
       e.reload
       expect(e.website).to eq "www.shop.com"
@@ -121,21 +117,11 @@ feature "Registration", js: true do
     expect(page).to have_content content
   end
 
-  def click_button_and_ensure_content(button_text, content)
+  def click_and_ensure(type, text, check)
     # Buttons appear to be unresponsive for a while, so keep clicking them until content appears
     using_wait_time 0.5 do
       10.times do
-        click_button button_text
-        break if page.has_content? content
-      end
-    end
-  end
-
-  def click_link_and_ensure(link_text, check)
-    # Buttons appear to be unresponsive for a while, so keep clicking them until content appears
-    using_wait_time 0.5 do
-      10.times do
-        click_link link_text
+        send("click_#{type}", text)
         break if check.call
       end
     end
