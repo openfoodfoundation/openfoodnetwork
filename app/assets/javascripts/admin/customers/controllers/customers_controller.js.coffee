@@ -13,6 +13,18 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, Custo
       Customers.index({enterprise_id: $scope.CurrentShop.shop.id}).then (data) ->
         $scope.customers = data
 
+  $scope.checkForDuplicateCodes = ->
+    customers = $scope.findByCode(this.customer.code)
+    if (customers.length > 1)
+      this.duplicate = true
+    else
+      this.duplicate = false
+
+  $scope.findByCode = (code) ->
+    if $scope.customers
+      $scope.customers.filter (customer) ->
+        customer.code == code
+
   $scope.findTags = (query) ->
     defer = $q.defer()
     params =

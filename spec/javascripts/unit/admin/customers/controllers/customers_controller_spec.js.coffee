@@ -21,7 +21,7 @@ describe "CustomersCtrl", ->
     expect(scope.CurrentShop.shop).toEqual {}
 
   describe "setting the shop on scope", ->
-    customer = { id: 5, email: 'someone@email.com'}
+    customer = { id: 5, email: 'someone@email.com', code: 'a'}
     customers = [customer]
 
     beforeEach ->
@@ -32,6 +32,12 @@ describe "CustomersCtrl", ->
 
     it "retrievs the list of customers", ->
       expect(scope.customers).toDeepEqual customers
+
+    it "finds customers by code", ->
+      as = scope.findByCode('a')
+      expect(as).toDeepEqual customers
+      as = scope.findByCode('b')
+      expect(as).toDeepEqual []
 
     describe "scope.add", ->
       it "creates a new customer", ->
