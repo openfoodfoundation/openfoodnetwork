@@ -8,7 +8,6 @@ Spree::Admin::ProductsController.class_eval do
   before_filter :load_spree_api_key, :only => [:bulk_edit, :variant_overrides]
   before_filter :strip_new_properties, only: [:create, :update]
 
-  alias_method :location_after_save_original, :location_after_save
 
   respond_to :json, :only => :clone
 
@@ -53,14 +52,17 @@ Spree::Admin::ProductsController.class_eval do
 
 
   protected
-  def location_after_save
+
+  def location_after_save_with_bulk_edit
     referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
+
     if referer_path == '/admin/products/bulk_edit'
       bulk_edit_admin_products_url
     else
-      location_after_save_original
+      location_after_save_without_bulk_edit
     end
   end
+  alias_method_chain :location_after_save, :bulk_edit
 
   def collection
     # This method is copied directly from the spree product controller, except where we narrow the search below with the managed_by search to support
