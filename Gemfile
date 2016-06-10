@@ -86,7 +86,8 @@ end
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
-gem 'jquery-rails', '2.1.4'
+gem 'jquery-rails'
+gem 'jquery-migrate-rails'
 gem 'css_splitter'
 
 
