@@ -5,8 +5,9 @@ class Customer < ActiveRecord::Base
   belongs_to :user, class_name: Spree.user_class
 
   before_validation :downcase_email
+  before_validation :empty_code
 
-  validates :code, uniqueness: { scope: :enterprise_id, allow_blank: true, allow_nil: true }
+  validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
   validates :enterprise_id, presence: true
 
@@ -18,6 +19,10 @@ class Customer < ActiveRecord::Base
 
   def downcase_email
     email.andand.downcase!
+  end
+
+  def empty_code
+    self.code = nil if code.blank?
   end
 
   def associate_user

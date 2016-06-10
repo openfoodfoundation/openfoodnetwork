@@ -14,11 +14,13 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, Custo
         $scope.customers = data
 
   $scope.checkForDuplicateCodes = ->
-    customers = $scope.findByCode(this.customer.code)
-    if (customers.length > 1)
-      this.duplicate = true
-    else
-      this.duplicate = false
+    delete this.customer.code unless this.customer.code
+    this.duplicate = $scope.isDuplicateCode(this.customer.code)
+
+  $scope.isDuplicateCode = (code) ->
+    return false unless code
+    customers = $scope.findByCode(code)
+    customers.length > 1
 
   $scope.findByCode = (code) ->
     if $scope.customers
