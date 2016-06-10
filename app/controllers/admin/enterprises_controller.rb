@@ -271,9 +271,10 @@ module Admin
     # Overriding method on Spree's resource controller
     def location_after_save
       referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
-      refered_from_edit = referer_path =~ /\/edit$/
-      if params[:enterprise].key?(:producer_properties_attributes) && !refered_from_edit
-        main_app.admin_enterprises_path
+      refered_from_producer_properties = referer_path =~ /\/producer_properties$/
+
+      if refered_from_producer_properties
+        main_app.admin_enterprise_producer_properties_path(@enterprise)
       else
         main_app.edit_admin_enterprise_path(@enterprise)
       end
