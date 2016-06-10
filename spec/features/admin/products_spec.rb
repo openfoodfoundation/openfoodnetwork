@@ -39,6 +39,7 @@ feature %q{
 
       click_button 'Create'
 
+      expect(current_path).to eq spree.bulk_edit_admin_products_path
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
@@ -169,7 +170,7 @@ feature %q{
 
     scenario "deleting product properties", js: true do
       # Given a product with a property
-      p = create(:simple_product, supplier: @supplier)
+      p = create(:simple_product, supplier: @supplier2)
       p.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
@@ -179,11 +180,12 @@ feature %q{
 
       # And I delete the property
       page.all('a.remove_fields').first.click
-      wait_until { p.reload.property('fooprop').nil? }
+      click_button 'Update'
 
       # Then the property should have been deleted
       page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
       page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval'
+      expect(p.reload.property('fooprop')).to be_nil
     end
 
 
