@@ -6,6 +6,7 @@
 //
 
 //= require jquery
+//= require jquery-migrate-min
 //= require jquery_ujs
 //= require jquery-ui
 //= require shared/jquery-ui-timepicker-addon
