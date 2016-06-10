@@ -251,6 +251,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       describe "when a product goes out of stock just before it's added to the cart" do
         it "stops the attempt, shows an error message and refreshes the products asynchronously" do
+          expect(page).to have_content "Product"
+
           variant.update_attributes! on_hand: 0
 
           # -- Messaging
