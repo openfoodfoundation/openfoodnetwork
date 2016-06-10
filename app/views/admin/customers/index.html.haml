@@ -14,7 +14,7 @@
 = admin_inject_shops
 
 %div{ ng: { controller: 'customersCtrl' } }
-  .row{ ng: { hide: "!RequestMonitor.loading && customers.length > 0" } }
+  .row
     .five.columns.alpha
       %h3
         =t :please_select_hub
