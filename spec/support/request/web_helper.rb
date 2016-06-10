@@ -78,7 +78,7 @@ module WebHelper
   end
 
   def flash_message
-    find('.flash').text.strip
+    find('.flash', visible: false).text.strip
   end
 
   def errors
