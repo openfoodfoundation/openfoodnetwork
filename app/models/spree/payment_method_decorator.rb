@@ -1,4 +1,6 @@
 Spree::PaymentMethod.class_eval do
+  Spree::PaymentMethod::DISPLAY = [:both, :front_end, :back_end]
+
   acts_as_taggable
 
   has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
