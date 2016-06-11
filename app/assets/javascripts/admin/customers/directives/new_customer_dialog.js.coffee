@@ -1,4 +1,4 @@
-angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $injector, $templateCache, $window, CurrentShop, Customers) ->
+angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $injector, $templateCache, DialogDefaults, CurrentShop, Customers) ->
   restrict: 'A'
   scope: true
   link: (scope, element, attr) ->
@@ -27,16 +27,7 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $inj
     template = $compile($templateCache.get('admin/new_customer_dialog.html'))(scope)
 
     # Set Dialog options
-    template.dialog
-      show: { effect: "fade", duration: 400 }
-      hide: { effect: "fade", duration: 300 }
-      autoOpen: false
-      resizable: false
-      width: $window.innerWidth * 0.4;
-      modal: true
-      open: (event, ui) ->
-        $('.ui-widget-overlay').bind 'click', ->
-          $(this).siblings('.ui-dialog').find('.ui-dialog-content').dialog('close')
+    template.dialog(DialogDefaults)
 
     # Link opening of dialog to click event on element
     element.bind 'click', (e) ->

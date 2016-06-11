@@ -344,13 +344,6 @@ class Enterprise < ActiveRecord::Base
     abn.present?
   end
 
-  def apply_tag_rules_to(subject, context)
-    tag_rules.each do |rule|
-      rule.set_context(subject,context)
-      rule.apply
-    end
-  end
-
   protected
 
   def devise_mailer

@@ -1,8 +1,14 @@
 Spree::PaymentMethod.class_eval do
+  acts_as_taggable
+
   # See gateway_decorator.rb when modifying this association
   has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
 
-  attr_accessible :distributor_ids
+  attr_accessible :distributor_ids, :tag_list
+
+  calculated_adjustments
+
+  after_initialize :init
 
   validates :distributors, presence: { message: "^At least one hub must be selected" }
 
@@ -30,6 +36,11 @@ Spree::PaymentMethod.class_eval do
     where('spree_payment_methods.display_on=? OR spree_payment_methods.display_on=? OR spree_payment_methods.display_on IS NULL', display_on, '').
     where('spree_payment_methods.environment=? OR spree_payment_methods.environment=? OR spree_payment_methods.environment IS NULL', Rails.env, '')
   }
+
+  def init
+    self.class.calculated_adjustments unless reflections.keys.include? :calculator
+    self.calculator ||= Spree::Calculator::FlatRate.new(preferred_amount: 0)
+  end
 
   def has_distributor?(distributor)
     self.distributors.include?(distributor)

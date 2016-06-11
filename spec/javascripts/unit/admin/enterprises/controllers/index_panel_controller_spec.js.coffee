@@ -38,7 +38,7 @@ describe "indexPanelCtrl", ->
           expect(scope.saving).toBe false
 
         it "emits an 'enterprise:updated' event", ->
-          expect(scope.$emit).toHaveBeenCalledWith("enterprise:updated")
+          expect(scope.$emit).toHaveBeenCalledWith("enterprise:updated", scope.enterprise)
 
       describe "when the save is unsuccessful", ->
         beforeEach inject ($rootScope) ->

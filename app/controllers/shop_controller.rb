@@ -11,7 +11,11 @@ class ShopController < BaseController
 
   def products
     begin
-      products_json = OpenFoodNetwork::CachedProductsRenderer.new(current_distributor, current_order_cycle).products_json
+      renderer = OpenFoodNetwork::CachedProductsRenderer.new(current_distributor, current_order_cycle)
+
+      # If we add any more filtering logic, we should probably
+      # move it all to a lib class like 'CachedProductsFilterer'
+      products_json = filter(renderer.products_json)
 
       render json: products_json
 
@@ -33,4 +37,24 @@ class ShopController < BaseController
     end
   end
 
+  private
+
+  def filtered_json(products_json)
+    if applicator.send(:rules).any?
+      filter(products_json)
+    else
+      products_json
+    end
+  end
+
+  def filter(products_json)
+    products_hash = JSON.parse(products_json)
+    applicator.filter!(products_hash)
+    JSON.unparse(products_hash)
+  end
+
+  def applicator
+    return @applicator unless @applicator.nil?
+    @applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterProducts", current_customer.andand.tag_list)
+  end
 end

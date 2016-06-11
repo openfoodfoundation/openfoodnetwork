@@ -214,7 +214,7 @@ feature %q{
         end
 
         context "with overrides" do
-          let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, resettable: true) }
+          let!(:vo) { create(:variant_override, variant: variant, hub: hub, price: 77.77, count_on_hand: 11111, default_stock: 1000, resettable: true, tag_list: ["tag1","tag2","tag3"]) }
           let!(:vo_no_auth) { create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2) }
           let!(:product2) { create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1) }
           let!(:variant2) { create(:variant, product: product2, unit_value: 8, price: 1.00, on_hand: 12) }
@@ -256,6 +256,7 @@ feature %q{
             first("div#columns-dropdown", :text => "COLUMNS").click
             first("div#columns-dropdown div.menu div.menu_item", text: "On Demand").click
             first("div#columns-dropdown div.menu div.menu_item", text: "Enable Stock Reset?").click
+            first("div#columns-dropdown div.menu div.menu_item", text: "Tags").click
             first("div#columns-dropdown", :text => "COLUMNS").click
 
             # Clearing values by 'inheriting'
@@ -268,6 +269,13 @@ feature %q{
             fill_in "variant-overrides-#{variant.id}-price", with: ''
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ''
             fill_in "variant-overrides-#{variant.id}-default_stock", with: ''
+            within "tr#v_#{variant.id}" do
+              vo.tag_list.each do |tag|
+                within "li.tag-item", text: "#{tag} ✖" do
+                  find("a.remove-button").trigger('click')
+                end
+              end
+            end
             page.uncheck "variant-overrides-#{variant.id}-resettable"
             page.should have_content "Changes to 2 overrides remain unsaved."
 

@@ -41,10 +41,6 @@ angular.module('admin.orderCycles')
     $scope.enterprisesWithFees = ->
       $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 0
 
-    $scope.toggleProducts = ($event, exchange) ->
-      $event.preventDefault()
-      OrderCycle.toggleProducts(exchange)
-
     $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
       EnterpriseFee.forEnterprise(parseInt(enterprise_id))
 

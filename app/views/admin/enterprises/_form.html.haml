@@ -1,60 +1,60 @@
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Primary Details'" } }
-  %legend Primary Details
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='primary_details'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/primary_details', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Users'" } }
-  %legend Users
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='users'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/users', f: f
 
 = f.fields_for :address do |af|
-  %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Address'" } }
-    %legend Address
+  %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='address'" } }
+    %legend {{menu.selected.label}}
     = render 'admin/enterprises/form/address', af: af
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Contact'" } }
-  %legend Contact
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='contact'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/contact', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Social'" } }
-  %legend Social
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='social'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/social', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Business Details'" } }
-  %legend Business Details
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='business_details'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/business_details', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='About'" } }
-  %legend About Us
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='about'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/about_us', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Images'" } }
-  %legend Images
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='images'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/images', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Properties'" } }
-  %legend Properties
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='properties'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/properties', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Shipping Methods'" } }
-  %legend Shipping Methods
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='shipping_methods'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/shipping_methods', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Payment Methods'" } }
-  %legend Payment Methods
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='payment_methods'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/payment_methods', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Enterprise Fees'" } }
-  %legend Enterprise Fees
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='enterprise_fees'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/enterprise_fees', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Inventory Settings'" } }
-  %legend Inventory Settings
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='inventory_settings'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/inventory_settings', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='Shop Preferences'" } }
-  %legend Shop Preferences
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='shop_preferences'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/shop_preferences', f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { if: "menu.selected.name=='Tag Rules'" } }
-  %legend Tag Rules
+%fieldset.alpha.no-border-bottom{ ng: { if: "menu.selected.name=='tag_rules'" } }
+  %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/tag_rules', f: f
