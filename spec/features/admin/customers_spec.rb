@@ -50,7 +50,7 @@ feature 'Customers' do
 
         within "tr#c_#{customer1.id}" do
           fill_in "code", with: "new-customer-code"
-          expect(page).to have_css "input#code.update-pending"
+          expect(page).to have_css "input[name=code].update-pending"
         end
         within "tr#c_#{customer1.id}" do
           find(:css, "tags-input .tags input").set "awesome\n"
@@ -59,7 +59,7 @@ feature 'Customers' do
         click_button "Save Changes"
 
         # Every says it updated
-        expect(page).to have_css "input#code.update-success"
+        expect(page).to have_css "input[name=code].update-success"
         expect(page).to have_css ".tag_watcher.update-success"
 
         # And it actually did

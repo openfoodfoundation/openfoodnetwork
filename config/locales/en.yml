@@ -113,6 +113,7 @@ en:
         valid_email_error: Please enter a valid email address
         add_a_new_customer_for: Add a new customer for %{shop_name}
         code: Code
+        duplicate_code: "This code is used already."
 
     products:
       bulk_edit:

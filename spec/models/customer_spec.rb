@@ -1,6 +1,23 @@
 require 'spec_helper'
 
 describe Customer, type: :model do
+  describe 'an existing customer' do
+    let(:customer) { create(:customer) }
+
+    it "saves its code" do
+      code = "code one"
+      customer.code = code
+      customer.save
+      expect(customer.code).to eq code
+    end
+
+    it "can remove its code" do
+      customer.code = ""
+      customer.save
+      expect(customer.code).to be nil
+    end
+  end
+
   describe 'creation callbacks' do
     let!(:user1) { create(:user) }
     let!(:user2) { create(:user) }

@@ -193,7 +193,7 @@ feature "shopping with variant overrides defined", js: true do
     end
     
     place_order
-    page.should have_content "Your order has been processed successfully"
+    expect(page).to have_content "Your order has been processed successfully"
   end
 
   def click_checkout
