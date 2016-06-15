@@ -8,7 +8,8 @@ describe "AdminSimpleCreateOrderCycleCtrl", ->
   outgoing_exchange = {}
 
   beforeEach ->
-    scope = {}
+    scope =
+      $watch: jasmine.createSpy('$watch')
     order_cycle =
       coordinator_id: 123
       incoming_exchanges: [incoming_exchange]

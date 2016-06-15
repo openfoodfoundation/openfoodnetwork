@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories) ->
+angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, $window, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories) ->
     $scope.loading = true
 
     $scope.StatusMessage = StatusMessage
@@ -206,6 +206,8 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         else
           $scope.displayFailure t("products_update_error_data") + status
 
+    $scope.cancel = (destination) ->
+      $window.location = destination
 
     $scope.packProduct = (product) ->
       if product.variant_unit_with_scale
@@ -247,6 +249,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.displaySuccess = ->
       StatusMessage.display 'success',t("products_changes_saved")
+      $scope.bulk_product_form.$setPristine()
 
 
     $scope.displayFailure = (failMessage) ->

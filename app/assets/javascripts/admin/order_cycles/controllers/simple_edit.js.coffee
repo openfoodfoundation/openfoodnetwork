@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", ($scope, $location, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
+angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", ($scope, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
   $scope.orderCycleId = ->
     $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
 
@@ -42,3 +42,6 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
     StatusMessage.display 'progress', "Saving..."
     OrderCycle.mirrorIncomingToOutgoingProducts()
     OrderCycle.update(destination, $scope.order_cycle_form)
+
+  $scope.cancel = (destination) ->
+    $window.location = destination

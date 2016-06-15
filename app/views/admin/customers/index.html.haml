@@ -64,7 +64,9 @@
             -# %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
           %td.email{ 'ng-show' => 'columns.email.visible', "ng-bind" => '::customer.email' }
           %td.code{ 'ng-show' => 'columns.code.visible' }
-            %input{ :type => 'text', :name => 'code', :id => 'code', 'ng-model' => 'customer.code', 'obj-for-update' => "customer", "attr-for-update" => "code" }
+            %input{ type: 'text', name: 'code', ng: {model: 'customer.code', change: 'checkForDuplicateCodes()'}, "obj-for-update" => "customer", "attr-for-update" => "code" }
+            %i.icon-warning-sign{ ng: {if: 'duplicate'} }
+              = t('.duplicate_code')
           %td.tags{ 'ng-show' => 'columns.tags.visible' }
             .tag_watcher{ 'obj-for-update' => "customer", "attr-for-update" => "tag_list"}
               %tags_with_translation{ object: 'customer', 'find-tags' => 'findTags(query)' }

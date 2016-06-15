@@ -46,9 +46,6 @@
   = render 'add_exchange_form', f: f, type: 'distributor'
 
 .actions
-  - if @order_cycle.new_record?
-    = f.submit 'Create', 'ng-click' => "submit($event, '#{main_app.admin_order_cycles_path}')", 'ng-disabled' => '!loaded()'
-
   %span{'ng-hide' => 'loaded()'} Loading...
 
 

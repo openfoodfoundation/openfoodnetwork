@@ -668,6 +668,9 @@ describe "AdminProductEditCtrl", ->
         spyOn $scope, "displaySuccess"
         spyOn BulkProducts, "updateVariantLists"
         spyOn DirtyProducts, "clear"
+
+        $scope.bulk_product_form = jasmine.createSpyObj('bulk_product_form', ['$setPristine'])
+
         $scope.products = [
           {
             id: 1
@@ -692,6 +695,7 @@ describe "AdminProductEditCtrl", ->
         $httpBackend.flush()
         $timeout.flush()
         expect($scope.displaySuccess).toHaveBeenCalled()
+        expect($scope.bulk_product_form.$setPristine).toHaveBeenCalled
         expect(DirtyProducts.clear).toHaveBeenCalled()
         expect(BulkProducts.updateVariantLists).toHaveBeenCalled()
 
