@@ -7,6 +7,7 @@ angular.module("admin.indexUtils").directive "ofnSelect2", ($sanitize, $timeout,
     text: "@?"
     blank: "=?"
     filter: "=?"
+    onSelecting: "=?"
   link: (scope, element, attrs, ngModel) ->
     $timeout ->
       scope.text ||= 'name'
@@ -23,6 +24,8 @@ angular.module("admin.indexUtils").directive "ofnSelect2", ($sanitize, $timeout,
           item[scope.text]
         formatResult: (item) ->
           item[scope.text]
+
+      element.on "select2-opening", scope.onSelecting || angular.noop
 
     attrs.$observe 'disabled', (value) ->
       element.select2('enable', !value)

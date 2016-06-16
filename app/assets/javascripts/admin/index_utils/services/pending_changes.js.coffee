@@ -10,6 +10,8 @@ angular.module("admin.indexUtils").factory "pendingChanges", ($q, resources, Sta
 
     removeAll: =>
       @pendingChanges = {}
+      StatusMessage.clear()
+
 
     remove: (id, attr) =>
       if @pendingChanges.hasOwnProperty("#{id}")
@@ -39,6 +41,9 @@ angular.module("admin.indexUtils").factory "pendingChanges", ($q, resources, Sta
       , (error) =>
         @errors.push error
         change.scope.error()
+
+    unsavedCount: ->
+      Object.keys(@pendingChanges).length
 
     changeCount: (objectChanges) ->
       Object.keys(objectChanges).length
