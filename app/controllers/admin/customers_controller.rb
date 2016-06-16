@@ -3,6 +3,14 @@ module Admin
     before_filter :load_managed_shops, only: :index, if: :html_request?
     respond_to :json
 
+    respond_override update: { json: {
+      success: lambda {
+        tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
+        render_as_json @customer, tag_rule_mapping: tag_rule_mapping
+      },
+      failure: lambda { render json: { errors: @customer.errors.full_messages }, status: :unprocessable_entity }
+    } }
+
     def index
       respond_to do |format|
         format.html

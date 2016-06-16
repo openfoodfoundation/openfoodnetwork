@@ -15,7 +15,7 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
           object: scope.object()
           type: scope.type
           attr: scope.attr
-          value: value
+          value: if value? then value else ""
           scope: scope
         scope.pending()
         pendingChanges.add(scope.object().id, scope.attr, change)

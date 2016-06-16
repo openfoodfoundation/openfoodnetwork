@@ -11,8 +11,8 @@ feature 'Customers' do
     let(:unmanaged_distributor) { create(:distributor_enterprise) }
 
     describe "using the customers index", js: true do
-      let!(:customer1) { create(:customer, enterprise: managed_distributor1) }
-      let!(:customer2) { create(:customer, enterprise: managed_distributor1) }
+      let!(:customer1) { create(:customer, enterprise: managed_distributor1, code: nil) }
+      let!(:customer2) { create(:customer, enterprise: managed_distributor1, code: nil) }
       let!(:customer3) { create(:customer, enterprise: unmanaged_distributor) }
       let!(:customer4) { create(:customer, enterprise: managed_distributor2) }
 
@@ -77,6 +77,52 @@ feature 'Customers' do
         # And it actually did
         expect(customer1.reload.code).to eq "new-customer-code"
         expect(customer1.tag_list).to eq ["awesome"]
+
+        # Clearing attributes
+        within "tr#c_#{customer1.id}" do
+          fill_in "code", with: ""
+          expect(page).to have_css "input[name=code].update-pending"
+        end
+        within "tr#c_#{customer1.id}" do
+          find("tags-input li.tag-item a.remove-button").trigger('click')
+          expect(page).to have_css ".tag_watcher.update-pending"
+        end
+        click_button "Save Changes"
+
+        # Every says it updated
+        expect(page).to have_css "input[name=code].update-success"
+        expect(page).to have_css ".tag_watcher.update-success"
+
+        # And it actually did
+        expect(customer1.reload.code).to be nil
+        expect(customer1.tag_list).to eq []
+      end
+
+      it "prevents duplicate codes from being saved" do
+        select2_select managed_distributor1.name, from: "shop_id"
+
+        within "tr#c_#{customer1.id}" do
+          fill_in "code", with: "new-customer-code"
+          expect(page).to have_css "input[name=code].update-pending"
+        end
+        within "tr#c_#{customer2.id}" do
+          fill_in "code", with: "new-customer-code"
+          expect(page).to have_content "This code is used already."
+        end
+        click_button "Save Changes"
+
+        within "tr#c_#{customer1.id}" do
+          expect(page).to have_css "input[name=code].update-success"
+        end
+
+        within "tr#c_#{customer2.id}" do
+          expect(page).to have_css "input[name=code].update-error"
+        end
+
+        expect(page).to have_content "Oh no! I was unable to save your changes"
+
+        expect(customer1.reload.code).to eq "new-customer-code"
+        expect(customer2.reload.code).to be nil
       end
 
       describe "creating a new customer" do
