@@ -47,7 +47,7 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
-
+  has_many :properties, serializer: Api::PropertySerializer
 
   def taxons
     ids_to_objs options[:data].distributed_taxons[object.id]
@@ -55,6 +55,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   def supplied_taxons
     ids_to_objs options[:data].supplied_taxons[object.id]
+  end
+
+  def properties
+    # This results in 2 queries per enterprise
+    Spree::Property.applied_by(object)
   end
 
   def pickup

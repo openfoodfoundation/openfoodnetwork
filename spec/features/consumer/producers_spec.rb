@@ -21,7 +21,13 @@ feature %q{
   let(:shop) { create(:distributor_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: shop, child: producer1) }
 
-  before { visit producers_path }
+  before do
+    product1.set_property 'Organic', 'NASAA 12345'
+    product2.set_property 'Biodynamic', 'ABC123'
+
+    visit producers_path
+  end
+
 
   it "filters by taxon" do
     toggle_filters
@@ -41,7 +47,8 @@ feature %q{
   it "shows all producers with expandable details" do
     page.should have_content producer1.name
     expand_active_table_node producer1.name
-    page.should have_content producer1.supplied_taxons.first.name.split.map(&:capitalize).join(' ')
+    page.should have_content 'Fruit'
+    page.should have_content 'Organic'
   end
 
   it "doesn't show invisible producers" do
