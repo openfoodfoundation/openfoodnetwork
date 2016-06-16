@@ -3,18 +3,19 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $inj
   scope: true
   link: (scope, element, attr) ->
     scope.CurrentShop = CurrentShop
-    scope.submitted = null
+    scope.submitted = false
     scope.email = ""
     scope.errors = []
 
-    scope.addCustomer = (valid) ->
-      scope.submitted = scope.email
+    scope.addCustomer = ->
+      scope.new_customer_form.$setPristine()
+      scope.submitted = true
       scope.errors = []
-      if valid
+      if scope.new_customer_form.$valid
         Customers.add(scope.email).$promise.then (data) ->
           if data.id
             scope.email = ""
-            scope.submitted = null
+            scope.submitted = false
             template.dialog('close')
         , (response) ->
           if response.data.errors
