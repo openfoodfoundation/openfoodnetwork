@@ -18,6 +18,20 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
         $scope.customers_form.$setPristine()
         $scope.customers = data
 
+  $scope.checkForDuplicateCodes = ->
+    delete this.customer.code unless this.customer.code
+    this.duplicate = $scope.isDuplicateCode(this.customer.code)
+
+  $scope.isDuplicateCode = (code) ->
+    return false unless code
+    customers = $scope.findByCode(code)
+    customers.length > 1
+
+  $scope.findByCode = (code) ->
+    if $scope.customers
+      $scope.customers.filter (customer) ->
+        customer.code == code
+
   $scope.findTags = (query) ->
     defer = $q.defer()
     params =

@@ -367,7 +367,10 @@ feature %q{
       fill_in "variant_price", with: "10.0"
     end
 
-    click_button 'Save Changes', match: :first
+    within "#save-bar" do
+      click_button 'Save Changes'
+    end
+
     expect(page.find("#status-message")).to have_content "Changes saved."
 
     v.reload
@@ -384,7 +387,10 @@ feature %q{
 
     fill_in "product_name", with: "new name 1"
 
-    click_button 'Save Changes', match: :first
+    within "#save-bar" do
+      click_button 'Save Changes'
+    end
+
     expect(page.find("#status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "new name 1"
@@ -415,22 +421,13 @@ feature %q{
 
     fill_in "product_name", :with => "new product name"
 
-    click_button 'Save Changes', match: :first
+    within "#save-bar" do
+      click_button 'Save Changes'
+    end
+
     expect(page.find("#status-message")).to have_content "Changes saved."
     p.reload
     expect(p.name).to eq "new product name"
-  end
-
-  scenario "updating when no changes have been made" do
-    Capybara.using_wait_time(2) do
-      FactoryGirl.create(:product, :name => "product 1")
-      login_to_admin_section
-
-      visit '/admin/products/bulk_edit'
-
-      click_button 'Save Changes', match: :first
-      expect(page.find("#status-message")).to have_content "No changes to save."
-    end
   end
 
   scenario "updating when a filter has been applied" do
@@ -447,7 +444,10 @@ feature %q{
     expect(page).to have_no_field "product_name", with: p2.name
     fill_in "product_name", :with => "new product1"
 
-    click_button 'Save Changes', match: :first
+    within "#save-bar" do
+      click_button 'Save Changes'
+    end
+
     expect(page.find("#status-message")).to have_content "Changes saved."
     p1.reload
     expect(p1.name).to eq "new product1"

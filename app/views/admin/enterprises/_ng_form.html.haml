@@ -1,12 +1,18 @@
 -# Not all inputs are ng inputs, they don't make the ng-form dirty on change.
 -# ng-change is only valid for inputs, not for a form.
 -# So we use onchange and have to get the scope to access the ng controller
-= form_for [main_app, :admin, @enterprise], html: { name: "enterprise",
+= form_for [main_app, :admin, @enterprise], html: { name: "enterprise_form",
   "ng-app" => 'admin.enterprises',
-  "ng-submit" => "navClear()",
   "ng-controller" => 'enterpriseCtrl',
-  'onchange' => 'angular.element(enterprise).scope().enterprise.$setDirty()',
+  'onchange' => 'angular.element(enterprise_form).scope().setFormDirty()',
   } do |f|
+
+  %save-bar{ dirty: "enterprise_form.$dirty", persist: "true" }
+    %input.red{ type: "button", value: "Update", ng: { click: "submit()", disabled: "!enterprise_form.$dirty" } }
+    %input{ type: "button", ng: { value: "enterprise_form.$dirty ? 'Cancel' : 'Close'", click: "cancel('#{main_app.admin_enterprises_path}')" } }
+
+
+
   .row
     .sixteen.columns.alpha
       .four.columns.alpha
@@ -14,8 +20,3 @@
       .one.column &nbsp;
       .eleven.columns.omega.fullwidth_inputs
         = render 'form', f: f
-  .row
-    .five.columns.alpha
-      &nbsp;
-    .eleven.columns.alpha
-      = render partial: "spree/admin/shared/#{action}_resource_links"
