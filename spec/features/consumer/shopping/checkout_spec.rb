@@ -300,7 +300,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
               # Does not show duplicate shipping fee
               visit checkout_path
-              page.all("th", text: "Shipping").count.should == 1
+              page.should have_selector "th", text: "Shipping", count: 1
             end
           end
         end
