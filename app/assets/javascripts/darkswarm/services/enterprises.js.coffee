@@ -1,4 +1,4 @@
-Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo, $rootScope)->
+Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo, $rootScope) ->
   new class Enterprises
     enterprises_by_id: {}
     constructor: ->
@@ -20,13 +20,31 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
       if CurrentHub.hub?.id
         CurrentHub.hub = @enterprises_by_id[CurrentHub.hub.id]
       for enterprise in @enterprises
-        Dereferencer.dereference enterprise.hubs, @enterprises_by_id
-        Dereferencer.dereference enterprise.producers, @enterprises_by_id
+        @dereferenceEnterprise enterprise
+
+    dereferenceEnterprise: (enterprise) ->
+      # keep a backup of enterprise ids
+      # in case we dereference again after adding more enterprises
+      if enterprise.hub_references
+        enterprise.hubs = enterprise.hub_references.slice()
+      else
+        enterprise.hub_references = enterprise.hubs.slice()
+      if enterprise.producer_references
+        enterprise.producers = enterprise.producer_references.slice()
+      else
+        enterprise.producer_references = enterprise.producers.slice()
+      Dereferencer.dereference enterprise.hubs, @enterprises_by_id
+      Dereferencer.dereference enterprise.producers, @enterprises_by_id
 
     dereferenceTaxons: ->
       for enterprise in @enterprises
         Dereferencer.dereference enterprise.taxons, Taxons.taxons_by_id
         Dereferencer.dereference enterprise.supplied_taxons, Taxons.taxons_by_id
+
+    addEnterprises: (new_enterprises) ->
+      return unless new_enterprises && new_enterprises.length
+      for enterprise in new_enterprises
+        @enterprises_by_id[enterprise.id] = enterprise
 
     flagMatching: (query) ->
       for enterprise in @enterprises
