@@ -18,6 +18,8 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
         $scope.customers_form.$setPristine()
         $scope.customers = data
 
+  $scope.shop_id = shops[0].id if shops.length == 1
+
   $scope.checkForDuplicateCodes = ->
     delete this.customer.code unless this.customer.code
     this.duplicate = $scope.isDuplicateCode(this.customer.code)
