@@ -48,6 +48,7 @@ module Admin
         invoke_callbacks(:destroy, :fails)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_destroy }
+          format.json { render json: { errors: @object.errors.full_messages }, status: :conflict }
         end
       end
     end

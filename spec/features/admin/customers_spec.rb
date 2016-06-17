@@ -25,6 +25,15 @@ feature 'Customers' do
         # Prompts for a hub for a list of my managed enterprises
         expect(page).to have_select2 "shop_id", with_options: [managed_distributor1.name,managed_distributor2.name], without_options: [unmanaged_distributor.name]
 
+        select2_select managed_distributor2.name, from: "shop_id"
+
+        # Loads the right customers
+        expect(page).to_not have_selector "tr#c_#{customer1.id}"
+        expect(page).to_not have_selector "tr#c_#{customer2.id}"
+        expect(page).to_not have_selector "tr#c_#{customer3.id}"
+        expect(page).to have_selector "tr#c_#{customer4.id}"
+
+        # Changing Shops
         select2_select managed_distributor1.name, from: "shop_id"
 
         # Loads the right customers
@@ -47,14 +56,22 @@ feature 'Customers' do
         expect(page).to_not have_selector "th.email"
         expect(page).to_not have_content customer1.email
 
-        # Changing Shops
-        select2_select managed_distributor2.name, from: "shop_id"
+        # Deleting
+        create(:order, customer: customer1)
+        expect{
+          within "tr#c_#{customer1.id}" do
+            find("a.delete-customer").click
+          end
+          expect(page).to have_selector "#info-dialog .text", text: "Delete failed: customer has associated orders"
+          click_button "OK"
+        }.to_not change{Customer.count}
 
-        # Loads the right customers
-        expect(page).to_not have_selector "tr#c_#{customer1.id}"
-        expect(page).to_not have_selector "tr#c_#{customer2.id}"
-        expect(page).to_not have_selector "tr#c_#{customer3.id}"
-        expect(page).to have_selector "tr#c_#{customer4.id}"
+        expect{
+          within "tr#c_#{customer2.id}" do
+            find("a.delete-customer").click
+          end
+          expect(page).to_not have_selector "tr#c_#{customer2.id}"
+        }.to change{Customer.count}.by(-1)
       end
 
       it "allows updating of attributes" do

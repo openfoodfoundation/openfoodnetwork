@@ -1,4 +1,4 @@
-angular.module("admin.customers").factory "Customers", ($q, RequestMonitor, CustomerResource, CurrentShop) ->
+angular.module("admin.customers").factory "Customers", ($q, InfoDialog, RequestMonitor, CustomerResource, CurrentShop) ->
   new class Customers
     customers: []
 
@@ -14,6 +14,12 @@ angular.module("admin.customers").factory "Customers", ($q, RequestMonitor, Cust
       CustomerResource.destroy params, =>
         i = @customers.indexOf customer
         @customers.splice i, 1 unless i < 0
+      , (response) =>
+        errors = response.data.errors
+        if errors?
+          InfoDialog.open 'error', errors[0]
+        else
+          InfoDialog.open 'error', "Could not delete customer: #{customer.email}"
 
     index: (params) ->
       request = CustomerResource.index(params, (data) => @customers = data)
