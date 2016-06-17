@@ -16,15 +16,13 @@
       %label
         = t :producers_buy
       %p.trans-sentence
-        %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
-          %render-svg{path: "{{taxon.icon}}"}
-          %span{"ng-bind" => "::taxon.name"}
-
-    %div
-      %label Product properties
-      %p.trans-sentence
-        %span.fat-properties{"ng-repeat" => "property in producer.properties"}
-          %span{"ng-bind" => "property.presentation"}
+        %div
+          %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
+            %render-svg{path: "{{taxon.icon}}"}
+            %span{"ng-bind" => "::taxon.name"}
+        %div
+          %span.fat-properties{"ng-repeat" => "property in producer.properties"}
+            %span{"ng-bind" => "property.presentation"}
 
     %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
       &nbsp;
