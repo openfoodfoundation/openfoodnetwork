@@ -25,6 +25,9 @@ feature %q{
     product1.set_property 'Organic', 'NASAA 12345'
     product2.set_property 'Biodynamic', 'ABC123'
 
+    producer1.set_producer_property 'Local', 'Victoria'
+    producer2.set_producer_property 'Fair Trade', 'FT123'
+
     visit producers_path
   end
 
@@ -47,8 +50,13 @@ feature %q{
   it "shows all producers with expandable details" do
     page.should have_content producer1.name
     expand_active_table_node producer1.name
+
+    # -- Taxons
     page.should have_content 'Fruit'
-    page.should have_content 'Organic'
+
+    # -- Properties
+    page.should have_content 'Organic' # Product property
+    page.should have_content 'Local'   # Producer property
   end
 
   it "doesn't show invisible producers" do
