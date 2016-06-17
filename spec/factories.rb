@@ -105,10 +105,10 @@ FactoryGirl.define do
   end
 
   factory :exchange, :class => Exchange do
-    order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
-    sender      { FactoryGirl.create(:enterprise) }
-    receiver    { FactoryGirl.create(:enterprise) }
     incoming    false
+    order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
+    sender      { incoming ? FactoryGirl.create(:enterprise) : order_cycle.coordinator }
+    receiver    { incoming ? order_cycle.coordinator : FactoryGirl.create(:enterprise) }
   end
 
   factory :variant_override, :class => VariantOverride do
