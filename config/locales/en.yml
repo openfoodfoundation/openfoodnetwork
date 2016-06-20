@@ -237,7 +237,7 @@ en:
   address: Address
   address2: Address (contd.)
   city: City
-  state: County
+  state: State
   postcode: Postcode
   country: Country
   unauthorized: Unauthorized
@@ -821,8 +821,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   registration_detail_postcode: "Postcode:"
   registration_detail_postcode_placeholder: "e.g. 3070"
   registration_detail_postcode_error: "Postcode required"
-  registration_detail_state: "County:"
-  registration_detail_state_error: "County required"
+  registration_detail_state: "State:"
+  registration_detail_state_error: "State required"
   registration_detail_country: "Country:"
   registration_detail_country_error: "Please select a country"
   fees: "Fees"
