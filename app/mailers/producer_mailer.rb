@@ -16,7 +16,6 @@ class ProducerMailer < Spree::BaseMailer
       mail(to: @producer.email,
            from: @coordinator.email,
            subject: subject,
-           reply_to: @coordinator.email,
            cc: @coordinator.email)
     end
   end
