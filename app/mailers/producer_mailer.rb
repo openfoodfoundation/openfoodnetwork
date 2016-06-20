@@ -14,7 +14,7 @@ class ProducerMailer < Spree::BaseMailer
 
     if has_orders? order_cycle, producer
       mail(to: @producer.email,
-           from: @coordinator.email,
+           from: from_address,
            subject: subject,
            reply_to: @coordinator.email,
            cc: @coordinator.email)
