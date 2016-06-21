@@ -21,7 +21,7 @@
 %p.lead
   = t :email_signup_text
 %p
-  = t :email_signup_help_html, email: mail_to "#{ContentConfig.footer_email}"
+  = t :email_signup_help_html, email: mail_to("#{ContentConfig.footer_email}")
 
 = render 'shared/mailers/signoff'
 
