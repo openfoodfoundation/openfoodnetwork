@@ -132,71 +132,43 @@ module OpenFoodNetwork
       editable_variants_for_outgoing_exchanges_to(receiver).pluck(:id)
     end
 
-    def find_incoming_exchange(attrs)
-      @order_cycle.exchanges.
-      where(:sender_id => attrs[:enterprise_id], :receiver_id => @order_cycle.coordinator_id, :incoming => true).first
-    end
-
-    def find_outgoing_exchange(attrs)
-      @order_cycle.exchanges.
-      where(:sender_id => @order_cycle.coordinator_id, :receiver_id => attrs[:enterprise_id], :incoming => false).first
-    end
-
-    def persisted_variants_hash(exchange)
-      return {} unless exchange
-
-      # When we have permission to edit a variant, mark it for removal here, assuming it will be included again if that is what the use wants
-      # When we don't have permission to edit a variant and it is already in the exchange, keep it in the exchange.
-      method_name = "editable_variant_ids_for_#{ exchange.incoming? ? 'incoming' : 'outgoing' }_exchange_between"
-      editable = send(method_name, exchange.sender, exchange.receiver)
-      Hash[ exchange.variants.map { |v| [v.id, editable.exclude?(v.id)] } ]
+    def find_exchange(sender_id, receiver_id, incoming)
+      @order_cycle.exchanges.find_by_sender_id_and_receiver_id_and_incoming(sender_id, receiver_id, incoming)
     end
 
     def incoming_exchange_variant_ids(attrs)
-      exchange = find_incoming_exchange(attrs)
-      variants = persisted_variants_hash(exchange)
-
-      sender = exchange.andand.sender || Enterprise.find(attrs[:enterprise_id])
+      sender = Enterprise.find(attrs[:enterprise_id])
       receiver = @order_cycle.coordinator
-      permitted = editable_variant_ids_for_incoming_exchange_between(sender, receiver)
+      exchange = find_exchange(sender.id, receiver.id, true)
 
-      # Only change visibility for variants I have permission to edit
-      attrs[:variants].each do |variant_id, value|
-        variants[variant_id.to_i] = value  if permitted.include?(variant_id.to_i)
-      end
+      requested_ids = attrs[:variants].select{ |k,v| v }.keys.map(&:to_i) # Only the ids the user has requested
+      existing_ids = exchange.present? ? exchange.variants.pluck(:id) : [] # The ids that already exist
+      editable_ids = editable_variant_ids_for_incoming_exchange_between(sender, receiver) # The ids we are allowed to add/remove
 
-      variants_to_a variants
+      result = existing_ids
+
+      result |= (requested_ids & editable_ids) # add any requested & editable ids that are not yet in the exchange
+      result -= ((result & editable_ids) - requested_ids) # remove any editable ids that were not specifically mentioned in the request
+
+      result
     end
 
     def outgoing_exchange_variant_ids(attrs)
-      exchange = find_outgoing_exchange(attrs)
-      variants = persisted_variants_hash(exchange)
-
       sender = @order_cycle.coordinator
-      receiver = exchange.andand.receiver || Enterprise.find(attrs[:enterprise_id])
-      permitted = editable_variant_ids_for_outgoing_exchange_between(sender, receiver)
+      receiver = Enterprise.find(attrs[:enterprise_id])
+      exchange = find_exchange(sender.id, receiver.id, false)
 
-      # Only change visibility for variants I have permission to edit
-      attrs[:variants].each do |variant_id, value|
-        variant_id = variant_id.to_i
+      requested_ids = attrs[:variants].select{ |k,v| v }.keys.map(&:to_i) # Only the ids the user has requested
+      existing_ids = exchange.present? ? exchange.variants.pluck(:id) : [] # The ids that already exist
+      editable_ids = editable_variant_ids_for_outgoing_exchange_between(sender, receiver) # The ids we are allowed to add/remove
 
-        variants = update_outgoing_variants(variants, permitted, variant_id, value)
-      end
+      result = existing_ids
 
-      variants_to_a variants
-    end
+      result |= (requested_ids & editable_ids) # add any requested & editable ids that are not yet in the exchange
+      result -= (result - incoming_variant_ids) # remove any ids not in incoming exchanges
+      result -= ((result & editable_ids) - requested_ids) # remove any editable ids that were not specifically mentioned in the request
 
-    def update_outgoing_variants(variants, permitted, variant_id, value)
-      if !incoming_variant_ids.include? variant_id
-        # When a variant has been removed from incoming but remains
-        # in outgoing, remove it from outgoing too
-        variants[variant_id] = false
-
-      elsif permitted.include? variant_id
-        variants[variant_id] = value
-      end
-
-      variants
+      result
     end
 
     def incoming_variant_ids

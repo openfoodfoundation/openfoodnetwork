@@ -144,128 +144,122 @@ module OpenFoodNetwork
         end
       end
 
-      describe "finding alterable exchange variants" do
-        let(:coordinator_mock) { double(:enterprise) }
-        let(:oc) { double(:oc, coordinator: coordinator_mock ) }
+      describe "updating the list of variants for a given outgoing exchange" do
+        let!(:v1) { create(:variant) } # Not Existing + Request Add + Editable + Incoming
+        let!(:v2) { create(:variant) } # Not Existing + Request Add + Not Editable + Incoming
+        let!(:v3) { create(:variant) } # Existing + Request Add + Editable + Incoming
+        let!(:v4) { create(:variant) } # Existing + Not mentioned + Editable + Incoming
+        let!(:v5) { create(:variant) } # Existing + Request Remove + Editable + Incoming
+        let!(:v6) { create(:variant) } # Existing + Request Remove + Not Editable + Incoming
+        let!(:v7) { create(:variant) } # Existing + Request Add + Not Editable + Not Incoming
+        let!(:v8) { create(:variant) } # Existing + Request Add + Editable + Not Incoming
+        let!(:v9) { create(:variant) } # Not Existing + Request Add + Editable + Not Incoming
+        let!(:exchange) { create(:exchange, incoming: false, variant_ids: [v3.id, v4.id, v5.id, v6.id, v7.id, v8.id]) }
+        let!(:oc) { exchange.order_cycle }
+        let!(:enterprise) { exchange.receiver }
+        let!(:coordinator) { oc.coordinator }
         let!(:applicator) { OrderCycleFormApplicator.new(oc, user) }
-
-        describe "converting the existing variants of an exchange to a hash" do
-          context "when nil is passed in" do
-            let(:hash) { applicator.send(:persisted_variants_hash, nil) }
-
-            it "returns an empty hash" do
-              expect(hash).to eq({})
-            end
-          end
-
-          context "when an exchange is passed in" do
-            let(:v1) { create(:variant) }
-            let(:v2) { create(:variant) }
-            let(:v3) { create(:variant) }
-            let(:exchange) { create(:exchange, variants: [v1, v2, v3]) }
-            let(:hash) { applicator.send(:persisted_variants_hash, exchange) }
-
-            before do
-              allow(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between) { [ v1.id, v2.id ] }
-            end
-
-            it "returns a hash with variant ids as keys" do
-              expect(hash.length).to be 3
-              expect(hash.keys).to include v1.id, v2.id, v3.id
-             end
-
-             it "editable variant ids are set to false" do
-               expect(hash[v1.id]).to be false
-               expect(hash[v2.id]).to be false
-             end
-
-             it "and non-editable variant ids are set to true" do
-               expect(hash[v3.id]).to be true
-             end
-          end
+        let(:ids) do
+          applicator.send(:outgoing_exchange_variant_ids, {
+            :enterprise_id => enterprise.id,
+            :variants => {
+              "#{v1.id}" => true,
+              "#{v2.id}" => true,
+              "#{v3.id}" => true,
+              "#{v5.id}" => false,
+              "#{v6.id}" => false,
+              "#{v7.id}" => true,
+              "#{v8.id}" => true,
+              "#{v9.id}" => true
+            }
+          })
         end
 
-        context "where a matching exchange does not exist" do
-          let(:enterprise_mock) { double(:enterprise) }
 
-          before do
-            applicator.stub(:find_outgoing_exchange) { nil }
-            applicator.stub(:incoming_variant_ids) { [1, 2, 3, 4] }
-            expect(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between).
-            with(coordinator_mock, enterprise_mock) { [1, 2, 3] }
-          end
-
-          it "converts exchange variant ids hash to an array of ids" do
-            applicator.stub(:persisted_variants_hash) { {} }
-            expect(Enterprise).to receive(:find) { enterprise_mock }
-            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}})
-            expect(ids).to eq [1, 3]
-          end
-
-          it "restricts exchange variant ids to those editable by the current user" do
-            applicator.stub(:persisted_variants_hash) { {4 => true} }
-            expect(Enterprise).to receive(:find) { enterprise_mock }
-            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true, '4' => false}})
-            expect(ids).to eq [1, 3, 4]
-          end
-
-          it "overrides existing variants based on submitted data, when user has permission" do
-            applicator.stub(:persisted_variants_hash) { {2 => true} }
-            expect(Enterprise).to receive(:find) { enterprise_mock}
-            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}})
-            expect(ids).to eq [1, 3]
-          end
+        before do
+          allow(applicator).to receive(:incoming_variant_ids) { [v1.id, v2.id, v3.id, v4.id, v5.id, v6.id] }
+          allow(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between) { [v1.id, v3.id, v4.id, v5.id, v8.id, v9.id]}
         end
 
-        context "where a matching exchange exists" do
-          let(:enterprise_mock) { double(:enterprise) }
-          let(:exchange_mock) { double(:exchange) }
+        it "updates the list of variants for the exchange" do
+          # Adds variants that are editable
+          expect(ids).to include v1.id
 
-          before do
-            applicator.stub(:find_outgoing_exchange) { exchange_mock }
-            applicator.stub(:incoming_variant_ids) { [1, 2, 3, 4] }
-            allow(applicator).to receive(:editable_variant_ids_for_outgoing_exchange_between).
-            with(coordinator_mock, enterprise_mock) { [1, 2, 3] }
-          end
+          # Does not add variants that are not editable
+          expect(ids).to_not include v2.id
 
-          it "converts exchange variant ids hash to an array of ids" do
-            applicator.stub(:persisted_variants_hash) { {} }
-            expect(exchange_mock).to receive(:receiver) { enterprise_mock }
-            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}})
-            expect(ids).to eq [1, 3]
-          end
+          # Keeps existing variants, when they are explicitly mentioned in the request
+          expect(ids).to include v3.id
 
-          it "restricts exchange variant ids to those editable by the current user" do
-            applicator.stub(:persisted_variants_hash) { {4 => true} }
-            expect(exchange_mock).to receive(:receiver) { enterprise_mock }
-            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true, '4' => false}})
-            expect(ids).to eq [1, 3, 4]
-          end
+          # Removes existing variants that are editable, when they are not mentioned in the request
+          expect(ids).to_not include v4.id
 
-          it "overrides existing variants based on submitted data, when user has permission" do
-            applicator.stub(:persisted_variants_hash) { {2 => true} }
-            expect(exchange_mock).to receive(:receiver) { enterprise_mock }
-            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}})
-            expect(ids).to eq [1, 3]
-          end
+          # Removes existing variants that are editable, when the request explicitly removes them
+          expect(ids).to_not include v5.id
 
-          it "removes variants which the user has permission to remove and that are not included in the submitted data" do
-            allow(exchange_mock).to receive(:incoming?) { false }
-            allow(exchange_mock).to receive(:variants) { [double(:variant, id: 1), double(:variant, id: 2), double(:variant, id: 3)] }
-            allow(exchange_mock).to receive(:sender) { coordinator_mock }
-            allow(exchange_mock).to receive(:receiver) { enterprise_mock }
-            applicator.stub(:incoming_variant_ids) { [1, 2, 3] }
-            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '3' => true}})
-            expect(ids).to eq [1, 3]
-          end
+          # Keeps existing variants that are not editable
+          expect(ids).to include v6.id
 
-          it "removes variants which are not included in incoming exchanges" do
-            applicator.stub(:incoming_variant_ids) { [1, 2] }
-            applicator.stub(:persisted_variants_hash) { {3 => true} }
-            expect(exchange_mock).to receive(:receiver) { enterprise_mock }
-            ids = applicator.send(:outgoing_exchange_variant_ids, {:enterprise_id => 123, :variants => {'1' => true, '2' => false, '3' => true}})
-            expect(ids).to eq [1]
-          end
+          # Removes existing variants that are not in an incoming exchange, regardless of whether they are not editable
+          expect(ids).to_not include v7.id, v8.id
+
+          # Does not add variants that are not in an incoming exchange
+          expect(ids).to_not include v9.id
+        end
+      end
+
+      describe "updating the list of variants for a given incoming exchange" do
+        let!(:v1) { create(:variant) } # Not Existing + Request Add + Editable
+        let!(:v2) { create(:variant) } # Not Existing + Request Add + Not Editable
+        let!(:v3) { create(:variant) } # Existing + Request Add + Editable
+        let!(:v4) { create(:variant) } # Existing + Request Remove + Not Editable
+        let!(:v5) { create(:variant) } # Existing + Request Remove + Editable
+        let!(:v6) { create(:variant) } # Existing + Request Remove + Not Editable
+        let!(:v7) { create(:variant) } # Existing + Not mentioned + Editable
+        let!(:exchange) { create(:exchange, incoming: true, variant_ids: [v3.id, v4.id, v5.id, v6.id, v7.id]) }
+        let!(:oc) { exchange.order_cycle }
+        let!(:enterprise) { exchange.sender }
+        let!(:coordinator) { oc.coordinator }
+        let!(:applicator) { OrderCycleFormApplicator.new(oc, user) }
+        let(:ids) do
+          applicator.send(:incoming_exchange_variant_ids, {
+            :enterprise_id => enterprise.id,
+            :variants => {
+              "#{v1.id}" => true,
+              "#{v2.id}" => true,
+              "#{v3.id}" => true,
+              "#{v4.id}" => false,
+              "#{v5.id}" => false,
+              "#{v6.id}" => false
+            }
+          })
+        end
+
+        before do
+          allow(applicator).to receive(:editable_variant_ids_for_incoming_exchange_between) { [v1.id, v3.id, v5.id, v7.id]}
+        end
+
+        it "updates the list of variants for the exchange" do
+          # Adds variants that are editable
+          expect(ids).to include v1.id
+
+          # Does not add variants that are not editable
+          expect(ids).to_not include v2.id
+
+          # Keeps existing variants, if they are editable and requested
+          expect(ids).to include v3.id
+
+          # Keeps existing variants if they are non-editable, regardless of request
+          expect(ids).to include v4.id
+
+          # Removes existing variants that are editable, when the request explicitly removes them
+          expect(ids).to_not include v5.id
+
+          # Keeps existing variants that are not editable
+          expect(ids).to include v6.id
+
+          # Removes existing variants that are editable, when they are not mentioned in the request
+          expect(ids).to_not include v7.id
         end
       end
 
