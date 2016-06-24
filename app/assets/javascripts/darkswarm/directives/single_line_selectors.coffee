@@ -6,7 +6,7 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
     objects: "&"
     activeSelectors: "="
     selectorName: "@activeSelectors"
-  link: (scope,element,attrs) ->
+  link: (scope, element, attrs) ->
     scope.fitting = false
 
     scope.overFlowSelectors = ->
@@ -22,6 +22,13 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
         selector.active
       .map (selector) ->
         selector.object.id
+
+    scope.refit = ->
+      if scope.allSelectors?
+        scope.fitting = true
+        selector.fits = true for selector in scope.allSelectors
+        $timeout(loadWidths, 0, true).then ->
+          $timeout fit, 0, true
 
     # From: http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
     debouncer = (func, timeout) ->
@@ -62,11 +69,10 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
       scope.fitting = false
 
     scope.$watchCollection "allSelectors", ->
-      if scope.allSelectors?
-        scope.fitting = true
-        selector.fits = true for selector in scope.allSelectors
-        $timeout(loadWidths, 0, true).then ->
-          $timeout fit, 0, true
+      scope.refit()
+
+    scope.$on "filtersToggled", ->
+      scope.refit()
 
     $(window).resize debouncer (e) ->
       scope.fitting = true

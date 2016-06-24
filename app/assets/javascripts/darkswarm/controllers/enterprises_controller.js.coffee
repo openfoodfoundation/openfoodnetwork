@@ -21,6 +21,8 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
       Enterprises.calculateDistance query, $scope.firstNameMatch()
       $rootScope.$broadcast 'enterprisesChanged'
 
+  $scope.$watch "filtersActive", (value) ->
+    $scope.$broadcast 'filtersToggled'
 
   $rootScope.$on "enterprisesChanged", ->
     $scope.filterEnterprises()
