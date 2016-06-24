@@ -9,44 +9,12 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
   link: (scope, element, attrs) ->
     scope.fitting = false
 
-    scope.overFlowSelectors = ->
-      return [] unless scope.allSelectors?
-      $filter('filter')(scope.allSelectors, { fits: false })
-
-    scope.selectedOverFlowSelectors = ->
-      $filter('filter')(scope.overFlowSelectors(), { active: true })
-
-    # had to duplicate this to make overflow selectors work
-    scope.emit = ->
-      scope.activeSelectors = scope.allSelectors.filter (selector)->
-        selector.active
-      .map (selector) ->
-        selector.object.id
-
     scope.refit = ->
       if scope.allSelectors?
         scope.fitting = true
         selector.fits = true for selector in scope.allSelectors
         $timeout(loadWidths, 0, true).then ->
           $timeout fit, 0, true
-
-    # From: http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
-    debouncer = (func, timeout) ->
-      timeoutID = undefined
-      timeout = timeout or 50
-      ->
-        subject = this
-        args = arguments
-        clearTimeout timeoutID
-        timeoutID = setTimeout(->
-          func.apply subject, Array::slice.call(args)
-        , timeout)
-
-    loadWidths = ->
-      $(element).find("li").not(".more").each (i) ->
-        scope.allSelectors[i].width = $(this).outerWidth(true)
-        return null # So we don't exit the loop weirdly
-
 
     fit = ->
       used = $(element).find("li.more").outerWidth(true)
@@ -68,6 +36,39 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
                 available += selector.width
       scope.fitting = false
 
+    loadWidths = ->
+      $(element).find("li").not(".more").each (i) ->
+        scope.allSelectors[i].width = $(this).outerWidth(true)
+        return null # So we don't exit the loop weirdly
+
+    scope.overFlowSelectors = ->
+      return [] unless scope.allSelectors?
+      $filter('filter')(scope.allSelectors, { fits: false })
+
+    scope.selectedOverFlowSelectors = ->
+      $filter('filter')(scope.overFlowSelectors(), { active: true })
+
+    # had to duplicate this to make overflow selectors work
+    scope.emit = ->
+      scope.activeSelectors = scope.allSelectors.filter (selector)->
+        selector.active
+      .map (selector) ->
+        selector.object.id
+
+    # From: http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing
+    debouncer = (func, timeout) ->
+      timeoutID = undefined
+      timeout = timeout or 50
+      ->
+        subject = this
+        args = arguments
+        clearTimeout timeoutID
+        timeoutID = setTimeout(->
+          func.apply subject, Array::slice.call(args)
+        , timeout)
+
+
+    # -- Event management
     scope.$watchCollection "allSelectors", ->
       scope.refit()
 
