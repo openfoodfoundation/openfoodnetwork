@@ -201,7 +201,7 @@ class AbilityDecorator
       order.distributor.nil? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
     can [:admin, :bulk_management, :managed], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
-    can [:admin , :for_line_items], Enterprise
+    can [:admin, :visible], Enterprise
     can [:admin, :index, :create, :update, :destroy], :line_item
     can [:admin, :index, :create], Spree::LineItem
     can [:destroy, :update], Spree::LineItem do |item|

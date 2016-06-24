@@ -1,39 +1,36 @@
-- order_cycle = order_cycle_form.object
-- klass = "order-cycle-#{order_cycle.id} #{order_cycle_status_class order_cycle}"
+%tr{ class: "order-cycle-{{orderCycle.id}} {{orderCycle.status}}", ng: { repeat: 'orderCycle in orderCycles track by orderCycle.id' } }
+  %td
+    %a{ ng: { href: '{{orderCycle.edit_path}}' } }
+      {{ orderCycle.name }}
+  %td
+    %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at' }, datetimepicker: 'orderCycle.orders_open_at' }
+    %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at'}, disabled: true }
+  %td
+    %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at' }, datetimepicker: 'orderCycle.orders_close_at' }
+    %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at'}, disabled: true }
 
-%tr{class: klass}
-  %td= link_to order_cycle.name, main_app.edit_admin_order_cycle_path(order_cycle)
-  %td= order_cycle_form.text_field :orders_open_at, :class => "#{viewing_as_coordinator_of?(order_cycle) ? 'datetimepicker' : ''}", :value => order_cycle.orders_open_at, :disabled => !viewing_as_coordinator_of?(order_cycle)
-  %td= order_cycle_form.text_field :orders_close_at, :class => "#{viewing_as_coordinator_of?(order_cycle) ? 'datetimepicker' : ''}", :value => order_cycle.orders_close_at, :disabled => !viewing_as_coordinator_of?(order_cycle)
-
-  - unless order_cycles_simple_index
-    %td.suppliers
-      - suppliers = order_cycle.suppliers.merge(OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises)
-      - supplier_list = suppliers.map(&:name).sort.join ', '
-      - if suppliers.count > 3
-        %span{'ofn-with-tip' => supplier_list}
-          = suppliers.count
-          = t('.suppliers')
-      - else
-        = supplier_list
-    %td= order_cycle.coordinator.name
-    %td.distributors
-      - distributors = order_cycle.distributors.merge(OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, order_cycle).visible_enterprises)
-      - distributor_list = distributors.map(&:name).sort.join ', '
-      - if distributors.count > 3
-        %span{'ofn-with-tip' => distributor_list}
-          = distributors.count
-          = t('.distributors')
-      - else
-        = distributor_list
+  - unless simple_index
+    %td.producers
+      %span{'ofn-with-tip' => '{{ orderCycle.producerNames }}', ng: { show: 'orderCycle.producers.length > 3' } }
+        {{ orderCycle.producers.length }}
+        = t('.suppliers')
+      %span{ ng: { hide: 'orderCycle.producers.length > 3', bind: 'orderCycle.producerNames' } }
+    %td.coordinator
+      {{ orderCycle.coordinator.name }}
+    %td.shops
+      %span{'ofn-with-tip' => '{{ orderCycle.shopNames }}', ng: { show: 'orderCycle.shops.length > 3' } }
+        {{ orderCycle.shops.length }}
+        = t('.distributors')
+      %span{ ng: { hide: 'orderCycle.shops.length > 3', bind: 'orderCycle.shopNames' } }
 
   %td.products
-    %span= "#{order_cycle.variants.count} #{t('.variants')}"
+    %span
+      {{orderCycle.variant_count}}
+      = t('.variants')
 
   %td.actions
-    = link_to '', main_app.edit_admin_order_cycle_path(order_cycle), class: 'edit-order-cycle icon-edit no-text'
-  %td.actions
-    = link_to '', main_app.clone_admin_order_cycle_path(order_cycle), class: 'clone-order-cycle icon-copy no-text'
-  - if can_delete?(order_cycle)
-    %td.actions
-      = link_to '', main_app.admin_order_cycle_path(order_cycle), class: 'delete-order-cycle icon-trash no-text', :method => :delete,  data: { confirm: t(:are_you_sure) }
+    %a.edit-order-cycle.icon-edit.no-text{ ng: { href: '{{orderCycle.edit_path}}'} }
+  %td.actions{ ng: { if: 'orderCycle.viewing_as_coordinator' } }
+    %a.clone-order-cycle.icon-copy.no-text{ ng: { href: '{{orderCycle.clone_path}}'} }
+  %td.actions{ ng: { if: 'orderCycle.deletable && orderCycle.viewing_as_coordinator' } }
+    %a.delete-order-cycle.icon-trash.no-text{ ng: { href: '{{orderCycle.delete_path}}'}, data: { method: 'delete', confirm: t(:are_you_sure) } }

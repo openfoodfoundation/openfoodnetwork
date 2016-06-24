@@ -1,0 +1,4 @@
+%div.sixteen.columns.alpha.omega#loading{ ng: { cloak: true, if: 'RequestMonitor.loading' } }
+  %img.spinner{ src: "/assets/spinning-circles.svg" }
+  %h1{ ng: { hide: 'orderCycles.length > 0' } } LOADING ORDER CYCLES
+  %h1{ ng: { show: 'orderCycles.length > 0' } } LOADING...

@@ -105,10 +105,10 @@ module Admin
       end
     end
 
-    def for_line_items
+    def visible
       respond_to do |format|
         format.json do
-          render_as_json @collection, ams_prefix: 'basic', spree_current_user: spree_current_user
+          render_as_json @collection, ams_prefix: params[:ams_prefix] || 'basic', spree_current_user: spree_current_user
         end
       end
     end
@@ -156,7 +156,7 @@ module Admin
         else
           Enterprise.where("1=0")
         end
-      when :for_line_items
+      when :visible
         OpenFoodNetwork::Permissions.new(spree_current_user).visible_enterprises.ransack(params[:q]).result
       else
         # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
@@ -167,7 +167,7 @@ module Admin
     end
 
     def collection_actions
-      [:index, :for_order_cycle, :for_line_items, :bulk_update]
+      [:index, :for_order_cycle, :visible, :bulk_update]
     end
 
     def load_methods_and_fees

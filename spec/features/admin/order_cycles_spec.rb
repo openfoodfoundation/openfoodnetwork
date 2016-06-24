@@ -21,12 +21,15 @@ feature %q{
     oc1 = create(:order_cycle, name: '1')
     oc0 = create(:simple_order_cycle, name: '0',
                  orders_open_at: nil, orders_close_at: nil)
+    oc7 = create(:simple_order_cycle, name: '0',
+                orders_open_at: 2.months.ago, orders_close_at: 5.weeks.ago)
 
     # When I go to the admin order cycles page
     login_to_admin_section
     click_link 'Order Cycles'
 
     # Then the order cycles should be ordered correctly
+    expect(page).to have_selector "#listing_order_cycles tr td:first-child", count: 7
     page.all('#listing_order_cycles tr td:first-child').map(&:text).should ==
       ['0', '1', '2', '3', '4', '5', '6']
 
@@ -40,13 +43,12 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc6.id}.closed"
 
     # And I should see all the details for an order cycle
-    # (the table includes a hidden field between each row, making this nth-child(3) instead of 2)
-    within('table#listing_order_cycles tbody tr:nth-child(3)') do
+    within('table#listing_order_cycles tbody tr:nth-child(2)') do
       # Then I should see the basic fields
       page.should have_selector 'a', text: oc1.name
 
-      page.should have_selector "input[value='#{oc1.orders_open_at}']"
-      page.should have_selector "input[value='#{oc1.orders_close_at}']"
+      page.should have_input "oc#{oc1.id}[orders_open_at]", value: oc1.orders_open_at
+      page.should have_input "oc#{oc1.id}[orders_close_at]", value: oc1.orders_close_at
       page.should have_content oc1.coordinator.name
 
       # And I should see the suppliers and distributors
@@ -56,11 +58,16 @@ feature %q{
       # And I should see the number of variants
       page.should have_selector 'td.products', text: '2 variants'
     end
+
+    # I can load more order_cycles
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
+    click_button "Show 30 more days"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
   end
 
   context "with specific time" do
-    let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 06, 06, 00, 00) }
-    let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 00, 00) }
+    let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 06, 06, 00, 00).strftime("%F %T %z") }
+    let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 00, 00).strftime("%F %T %z") }
 
     scenario "creating an order cycle", js: true do
       page.driver.resize(1280, 2000)
@@ -150,16 +157,17 @@ feature %q{
       # Then my order cycle should have been created
       page.should have_content 'Your order cycle has been created.'
 
+      oc = OrderCycle.last
+
       page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_selector "input[value='#{order_cycle_opening_time}']"
-      page.should have_selector "input[value='#{order_cycle_closing_time}']"
+      page.should have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
+      page.should have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time
       page.should have_content 'My coordinator'
 
-      page.should have_selector 'td.suppliers', text: 'My supplier'
-      page.should have_selector 'td.distributors', text: 'My distributor'
+      page.should have_selector 'td.producers', text: 'My supplier'
+      page.should have_selector 'td.shops', text: 'My distributor'
 
       # And it should have some fees
-      oc = OrderCycle.last
       oc.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
       oc.coordinator_fees.should                         == [coordinator_fee]
       oc.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
@@ -284,34 +292,35 @@ feature %q{
       # Then my order cycle should have been updated
       page.should have_content 'Your order cycle has been updated.'
 
-      page.should have_selector 'a', text: 'Plums & Avos'
+      oc = OrderCycle.last
 
-      page.should have_selector "input[value='#{order_cycle_opening_time}']"
-      page.should have_selector "input[value='#{order_cycle_closing_time}']"
+      page.should have_selector 'a', text: 'Plums & Avos'
+      page.should have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
+      page.should have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time
       page.should have_content coordinator.name
 
-      page.should have_selector 'td.suppliers', text: 'My supplier'
-      page.should have_selector 'td.distributors', text: 'My distributor'
+      page.should have_selector 'td.producers', text: 'My supplier'
+      page.should have_selector 'td.shops', text: 'My distributor'
 
       # And my coordinator fees should have been configured
-      OrderCycle.last.coordinator_fee_ids.should match_array [coordinator_fee1.id, coordinator_fee2.id]
+      oc.coordinator_fee_ids.should match_array [coordinator_fee1.id, coordinator_fee2.id]
 
       # And my supplier fees should have been configured
-      OrderCycle.last.exchanges.incoming.last.enterprise_fee_ids.should == [supplier_fee2.id]
+      oc.exchanges.incoming.last.enterprise_fee_ids.should == [supplier_fee2.id]
 
       # And my distributor fees should have been configured
-      OrderCycle.last.exchanges.outgoing.last.enterprise_fee_ids.should == [distributor_fee2.id]
+      oc.exchanges.outgoing.last.enterprise_fee_ids.should == [distributor_fee2.id]
 
       # And my tags should have been save
-      OrderCycle.last.exchanges.outgoing.last.tag_list.should == ['wholesale']
+      oc.exchanges.outgoing.last.tag_list.should == ['wholesale']
 
       # And it should have some variants selected
       selected_initial_variants = initial_variants.take initial_variants.size - 1
-      OrderCycle.last.variants.map(&:id).should match_array(selected_initial_variants.map(&:id) + [v1.id, v2.id])
+      oc.variants.map(&:id).should match_array (selected_initial_variants.map(&:id) + [v1.id, v2.id])
 
       # And the collection details should have been updated
-      OrderCycle.last.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present
-      OrderCycle.last.exchanges.where(pickup_time: 'New time 1', pickup_instructions: 'New instructions 1').should be_present
+      oc.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present
+      oc.exchanges.where(pickup_time: 'New time 1', pickup_instructions: 'New instructions 1').should be_present
     end
   end
 
@@ -459,10 +468,10 @@ feature %q{
       all('input').last.set '2040-12-01 12:00:05'
     end
 
-    click_button 'Update'
+    click_button 'Save Changes'
 
     # Then my times should have been saved
-    flash_message.should == 'Order cycles have been updated.'
+    expect(page).to have_selector "#save-bar", text: "Order cycles have been updated."
     OrderCycle.order('id ASC').map { |oc| oc.orders_open_at.sec }.should == [0, 2, 4]
     OrderCycle.order('id ASC').map { |oc| oc.orders_close_at.sec }.should == [1, 3, 5]
   end
@@ -474,12 +483,14 @@ feature %q{
     # When I clone it
     login_to_admin_section
     click_link 'Order Cycles'
-    first('a.clone-order-cycle').click
-    flash_message.should == "Your order cycle #{oc.name} has been cloned."
+    within "tr.order-cycle-#{oc.id}" do
+      find('a.clone-order-cycle').click
+    end
+    expect(flash_message).to eq "Your order cycle #{oc.name} has been cloned."
 
     # Then I should have clone of the order cycle
     occ = OrderCycle.last
-    occ.name.should == "COPY OF #{oc.name}"
+    expect(occ.name).to eq "COPY OF #{oc.name}"
   end
 
 
@@ -586,10 +597,10 @@ feature %q{
         page.should_not have_content oc_for_other_user.name
 
         # The order cycle should show all enterprises in the order cycle
-        page.should have_selector 'td.suppliers',    text: supplier_managed.name
-        page.should have_selector 'td.distributors', text: distributor_managed.name
-        page.should have_selector 'td.suppliers',    text: supplier_unmanaged.name
-        page.should have_selector 'td.distributors', text: distributor_unmanaged.name
+        page.should have_selector 'td.producers', text: supplier_managed.name
+        page.should have_selector 'td.shops', text: distributor_managed.name
+        page.should have_selector 'td.producers', text: supplier_unmanaged.name
+        page.should have_selector 'td.shops', text: distributor_unmanaged.name
       end
 
       scenario "creating a new order cycle" do
@@ -707,8 +718,10 @@ feature %q{
         oc = create(:simple_order_cycle, coordinator: distributor_managed)
 
         click_link "Order Cycles"
-        first('a.clone-order-cycle').click
-        flash_message.should == "Your order cycle #{oc.name} has been cloned."
+        within "tr.order-cycle-#{oc.id}" do
+          find('a.clone-order-cycle').click
+        end
+        expect(flash_message).to eq "Your order cycle #{oc.name} has been cloned."
 
         # Then I should have clone of the order cycle
         occ = OrderCycle.last
@@ -907,12 +920,14 @@ feature %q{
 
       # Then my order cycle should have been created
       page.should have_content 'Your order cycle has been created.'
+
+      oc = OrderCycle.last
+
       page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_selector "input[value='#{Time.zone.local(2040, 10, 17, 06, 00, 00)}']"
-      page.should have_selector "input[value='#{Time.zone.local(2040, 10, 24, 17, 00, 00)}']"
+      page.should have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 06, 00, 00).strftime("%F %T %z")
+      page.should have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 00, 00).strftime("%F %T %z")
 
       # And it should have some variants selected
-      oc = OrderCycle.last
       oc.exchanges.incoming.first.variants.count.should == 2
       oc.exchanges.outgoing.first.variants.count.should == 2
 
@@ -995,12 +1010,13 @@ feature %q{
 
       # Then my order cycle should have been updated
       page.should have_content 'Your order cycle has been updated.'
+      oc = OrderCycle.last
+
       page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_selector "input[value='#{Time.zone.local(2040, 10, 17, 06, 00, 00)}']"
-      page.should have_selector "input[value='#{Time.zone.local(2040, 10, 24, 17, 00, 00)}']"
+      page.should have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 06, 00, 00).strftime("%F %T %z")
+      page.should have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 00, 00).strftime("%F %T %z")
 
       # And it should have a variant selected
-      oc = OrderCycle.last
       oc.exchanges.incoming.first.variants.should == [v2]
       oc.exchanges.outgoing.first.variants.should == [v2]
 

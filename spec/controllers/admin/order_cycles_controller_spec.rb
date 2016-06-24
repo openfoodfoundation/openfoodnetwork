@@ -16,28 +16,41 @@ module Admin
         let!(:oc1) { create(:simple_order_cycle, orders_close_at: 60.days.ago ) }
         let!(:oc2) { create(:simple_order_cycle, orders_close_at: 40.days.ago ) }
         let!(:oc3) { create(:simple_order_cycle, orders_close_at: 20.days.ago ) }
+        let!(:oc4) { create(:simple_order_cycle, orders_close_at: nil ) }
 
-        context "where show_more is set to true" do
-          it "loads all order cycles" do
-            spree_get :index, show_more: true
-            expect(assigns(:collection)).to include oc1, oc2, oc3
+        context "html" do
+          it "doesn't load any data" do
+            spree_get :index, format: :html
+            expect(assigns(:collection)).to be_empty
           end
         end
 
-        context "where show_more is not set" do
-          context "and q[orders_close_at_gt] is set" do
-            it "loads order cycles that closed within the past month" do
-              spree_get :index, q: { orders_close_at_gt: 45.days.ago }
-              expect(assigns(:collection)).to_not include oc1
-              expect(assigns(:collection)).to include oc2, oc3
+        context "json" do
+          context "where ransack conditions are specified" do
+            it "loads order cycles that closed within the past month, and orders without a close_at date" do
+              spree_get :index, format: :json
+              expect(assigns(:collection)).to_not include oc1, oc2
+              expect(assigns(:collection)).to include oc3, oc4
             end
           end
 
-          context "and q[orders_close_at_gt] is not set" do
-            it "loads order cycles that closed within the past month" do
-              spree_get :index
-              expect(assigns(:collection)).to_not include oc1, oc2
-              expect(assigns(:collection)).to include oc3
+          context "where q[orders_close_at_gt] is set" do
+            let(:q) { { orders_close_at_gt: 45.days.ago } }
+
+            it "loads order cycles that closed after the specified date, and orders without a close_at date" do
+              spree_get :index, format: :json, q: q
+              expect(assigns(:collection)).to_not include oc1
+              expect(assigns(:collection)).to include oc2, oc3, oc4
+            end
+
+            context "and other conditions are specified" do
+              before { q.merge!(id_not_in: [oc2.id, oc4.id]) }
+
+              it "loads order cycles that meet all conditions" do
+                spree_get :index, format: :json, q: q
+                expect(assigns(:collection)).to_not include oc1, oc2, oc4
+                expect(assigns(:collection)).to include oc3
+              end
             end
           end
         end

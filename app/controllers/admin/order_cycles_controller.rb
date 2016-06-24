@@ -76,9 +76,14 @@ module Admin
     def bulk_update
       @order_cycle_set = params[:order_cycle_set] && OrderCycleSet.new(params[:order_cycle_set])
       if @order_cycle_set.andand.save
-        redirect_to main_app.admin_order_cycles_path, notice: I18n.t(:order_cycles_bulk_update_notice)
+        respond_to do |format|
+          order_cycles = OrderCycle.where(id: params[:order_cycle_set][:collection_attributes].map{ |k,v| v[:id] })
+          format.json { render_as_json order_cycles, ams_prefix: 'index', current_user: spree_current_user }
+        end
       else
-        render :index
+        respond_to do |format|
+          format.json { render :json => {:success => false}  }
+        end
       end
     end
 
@@ -98,6 +103,7 @@ module Admin
 
     protected
     def collection
+      return Enterprise.where("1=0") unless json_request?
       ocs = if params[:as] == "distributor"
         OrderCycle.ransack(params[:q]).result.
           involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
@@ -120,14 +126,14 @@ module Admin
 
     private
     def load_data_for_index
-      @show_more = !!params[:show_more]
-      unless @show_more || params[:q].andand[:orders_close_at_gt].present?
+      if json_request?
         # Split ransack params into all those that currently exist and new ones to limit returned ocs to recent or undated
+        orders_close_at_gt = params[:q].andand.delete(:orders_close_at_gt) || 31.days.ago
         params[:q] = {
-          g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: 31.days.ago, orders_close_at_null: true } ]
+          g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: orders_close_at_gt, orders_close_at_null: true } ]
         }
+        @order_cycle_set = OrderCycleSet.new :collection => (@collection = collection)
       end
-      @order_cycle_set = OrderCycleSet.new :collection => (@collection = collection)
     end
 
     def require_coordinator
@@ -177,7 +183,7 @@ module Admin
     end
 
     def ams_prefix_whitelist
-      [:basic]
+      [:basic, :index]
     end
   end
 end
