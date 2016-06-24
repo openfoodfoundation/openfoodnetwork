@@ -92,6 +92,12 @@
   span.filter-label
     opacity: 0.75
 
+// singleLineSelectors directive provides a drop-down that can overlap
+// content. Ensure that the dropdown appears above the content.
+.filter-row
+  position: relative
+  z-index: 100
+
 .filter-shopfront
   &.taxon-selectors, &.property-selectors
     background: transparent
