@@ -58,8 +58,8 @@ module OrderCyclesHelper
     OrderCycle.active.with_distributor(@distributor).present?
   end
 
-  def order_cycles_simple_index
-    @order_cycles_simple_index ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
+  def simple_index
+    @simple_index ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
   end
 
   def order_cycles_simple_form

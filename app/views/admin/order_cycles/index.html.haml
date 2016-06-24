@@ -4,51 +4,14 @@
 = content_for :page_actions do
   %li#new_order_cycle_link
     = button_link_to t(:new_order_cycle), main_app.new_admin_order_cycle_path, icon: 'icon-plus', id: 'admin_new_order_cycle_link'
-  - if @show_more
-    %li
-      = button_link_to t(:label_less), main_app.admin_order_cycles_path
-  - else
-    %li
-      = button_link_to t(:label_more), main_app.admin_order_cycles_path(params: { show_more: true })
 
-= form_for @order_cycle_set, url: main_app.bulk_update_admin_order_cycles_path, html: {"ng-app" => "admin.orderCycles"} do |f|
-  %table.index#listing_order_cycles
-    %colgroup
-      %col
-      %col{'style' => 'width: 20%;'}
-      %col{'style' => 'width: 20%;'}
-      - unless order_cycles_simple_index
-        %col
-        %col
-        %col
-      %col
-      %col
-      %col
-      %col
 
-    %thead
-      %tr
-        %th
-          =t :name
-        %th
-          =t :open
-        %th
-          =t :close
-        - unless order_cycles_simple_index
-          %th
-            =t :supplier
-          %th
-            =t :coordinator
-          %th
-            =t :distributors
-        %th
-          =t :products
-        %th.actions
-        %th.actions
-        %th.actions
-
+%form{ name: 'order_cycles_form', ng: { app: "admin.orderCycles", controller: 'OrderCyclesCtrl' } }
+  %save-bar{ dirty: "order_cycles_form.$dirty", persist: "false" }
+    %input.red{ type: "button", value: t(:save_changes), ng: { click: "saveAll()", disabled: "!order_cycles_form.$dirty" } }
+  %table.index#listing_order_cycles{ ng: { show: 'orderCycles.length > 0' } }
+    = render 'admin/order_cycles/header' #, simple_index: simple_index
     %tbody
-      = f.fields_for :collection do |order_cycle_form|
-        = render 'admin/order_cycles/row', order_cycle_form: order_cycle_form
-
-  = f.submit t :update
+      = render 'admin/order_cycles/row' #, simple_index: simple_index
+  = render 'admin/order_cycles/loading_flash'
+  = render 'admin/order_cycles/show_more'

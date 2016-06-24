@@ -1,0 +1,33 @@
+%colgroup
+  %col
+  %col{'style' => 'width: 20%;'}
+  %col{'style' => 'width: 20%;'}
+  - unless simple_index
+    %col
+    %col
+    %col
+  %col
+  %col
+  %col
+  %col
+
+%thead
+  %tr
+    %th
+      =t :name
+    %th
+      =t :open
+    %th
+      =t :close
+    - unless simple_index
+      %th
+        =t :label_producers
+      %th
+        =t :coordinator
+      %th
+        =t :label_shops
+    %th
+      =t :products
+    %th.actions
+    %th.actions
+    %th.actions
