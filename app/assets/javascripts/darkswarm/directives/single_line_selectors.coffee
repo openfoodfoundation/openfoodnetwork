@@ -20,7 +20,7 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
     scope.emit = ->
       scope.activeSelectors = scope.allSelectors.filter (selector)->
         selector.active
-      .map (selector)->
+      .map (selector) ->
         selector.object.id
 
     # From: http://stackoverflow.com/questions/4298612/jquery-how-to-call-resize-event-only-once-its-finished-resizing

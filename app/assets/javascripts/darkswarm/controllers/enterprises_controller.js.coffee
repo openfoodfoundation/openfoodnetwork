@@ -30,7 +30,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
   # When filter settings change, this could change which name match is at the top, or even
   # result in no matches. This affects the reference point that the distance matches are
   # calculated from, so we need to recalculate distances.
-  $scope.$watch '[activeTaxons, shippingTypes, show_profiles]', ->
+  $scope.$watch '[activeTaxons, activeProperties, shippingTypes, show_profiles]', ->
     $timeout ->
       Enterprises.calculateDistance $scope.query, $scope.firstNameMatch()
       $rootScope.$broadcast 'enterprisesChanged'

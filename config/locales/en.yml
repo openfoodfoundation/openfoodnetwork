@@ -579,6 +579,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   producers_buy_at_html: "Shop for %{enterprise} products at:"
   producers_filter: Filter by
   producers_filter_type: Type
+  producers_filter_property: Property
   producers_title: Producers
   producers_headline: Find local producers
   producers_signup_title: Sign up as a producer
