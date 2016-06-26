@@ -2,15 +2,17 @@ angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, S
   $scope.RequestMonitor = RequestMonitor
   $scope.saveAll = -> OrderCycles.saveChanges($scope.order_cycles_form)
   $scope.ordersCloseAtLimit = -31 # days
+  $scope.involvingFilter = 0
 
   compileDataFor = (orderCycles) ->
     for orderCycle in orderCycles
       OrderCycles.linkToEnterprises(orderCycle)
-      orderCycle.producerNames = orderCycle.producers.map((producer) -> producer.name).join(", ")
-      orderCycle.shopNames = orderCycle.shops.map((shop) -> shop.name).join(", ")
+      orderCycle.involvedEnterpriseIDs = [orderCycle.coordinator.id]
+      orderCycle.producerNames = orderCycle.producers.map((producer) -> orderCycle.involvedEnterpriseIDs.push(producer.id); producer.name).join(", ")
+      orderCycle.shopNames = orderCycle.shops.map((shop) -> orderCycle.involvedEnterpriseIDs.push(shop.id); shop.name).join(", ")
 
   # NOTE: this is using the Enterprises service from the admin.enterprises module
-  RequestMonitor.load ($scope.enterprises = Enterprises.index(includeBlank: true, action: "visible", ams_prefix: "basic")).$promise
+  RequestMonitor.load ($scope.enterprises = Enterprises.index(action: "visible", ams_prefix: "basic")).$promise
   RequestMonitor.load ($scope.orderCycles = OrderCycles.index(ams_prefix: "index", "q[orders_close_at_gt]": "#{daysFromToday($scope.ordersCloseAtLimit)}")).$promise
   RequestMonitor.load $q.all([$scope.enterprises.$promise, $scope.orderCycles.$promise]).then -> compileDataFor($scope.orderCycles)
 

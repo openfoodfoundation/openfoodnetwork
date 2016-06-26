@@ -7,21 +7,21 @@ feature %q{
   include AuthenticationWorkflow
   include WebHelper
 
-  scenario "listing order cycles" do
+  scenario "listing and filtering order cycles" do
     # Given some order cycles (created in an arbitrary order)
-    oc4 = create(:simple_order_cycle, name: '4',
+    oc4 = create(:simple_order_cycle, name: 'oc4',
                  orders_open_at: 2.day.from_now, orders_close_at: 1.month.from_now)
-    oc2 = create(:simple_order_cycle, name: '2', orders_close_at: 1.month.from_now)
-    oc6 = create(:simple_order_cycle, name: '6',
+    oc2 = create(:simple_order_cycle, name: 'oc2', orders_close_at: 1.month.from_now)
+    oc6 = create(:simple_order_cycle, name: 'oc6',
                  orders_open_at: 1.month.ago, orders_close_at: 3.weeks.ago)
-    oc3 = create(:simple_order_cycle, name: '3',
+    oc3 = create(:simple_order_cycle, name: 'oc3',
                  orders_open_at: 1.day.from_now, orders_close_at: 1.month.from_now)
-    oc5 = create(:simple_order_cycle, name: '5',
+    oc5 = create(:simple_order_cycle, name: 'oc5',
                  orders_open_at: 1.month.ago, orders_close_at: 2.weeks.ago)
-    oc1 = create(:order_cycle, name: '1')
-    oc0 = create(:simple_order_cycle, name: '0',
+    oc1 = create(:order_cycle, name: 'oc1')
+    oc0 = create(:simple_order_cycle, name: 'oc0',
                  orders_open_at: nil, orders_close_at: nil)
-    oc7 = create(:simple_order_cycle, name: '0',
+    oc7 = create(:simple_order_cycle, name: 'oc7',
                 orders_open_at: 2.months.ago, orders_close_at: 5.weeks.ago)
 
     # When I go to the admin order cycles page
@@ -31,7 +31,7 @@ feature %q{
     # Then the order cycles should be ordered correctly
     expect(page).to have_selector "#listing_order_cycles tr td:first-child", count: 7
     page.all('#listing_order_cycles tr td:first-child').map(&:text).should ==
-      ['0', '1', '2', '3', '4', '5', '6']
+      ['oc0', 'oc1', 'oc2', 'oc3', 'oc4', 'oc5', 'oc6']
 
     # And the rows should have the correct classes
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}.undated"
@@ -63,6 +63,32 @@ feature %q{
     page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
     click_button "Show 30 more days"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
+
+    # I can filter order cycles by name
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    select2_select oc1.suppliers.first.name, from: "involving_filter"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    select2_select "Any Enterprise", from: "involving_filter"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+
+    # I can filter order cycle by involved enterprises
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    fill_in "query", with: oc0.name
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    fill_in "query", with: ''
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
   end
 
   context "with specific time" do
