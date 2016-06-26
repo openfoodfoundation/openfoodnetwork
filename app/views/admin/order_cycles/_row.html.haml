@@ -1,4 +1,4 @@
-%tr{ class: "order-cycle-{{orderCycle.id}} {{orderCycle.status}}", ng: { repeat: 'orderCycle in orderCycles track by orderCycle.id' } }
+%tr{ class: "order-cycle-{{orderCycle.id}} {{orderCycle.status}}", ng: { repeat: 'orderCycle in orderCycles | involving:involvingFilter | filter:{name: query} track by orderCycle.id' } }
   %td
     %a{ ng: { href: '{{orderCycle.edit_path}}' } }
       {{ orderCycle.name }}

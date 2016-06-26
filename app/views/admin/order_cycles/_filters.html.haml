@@ -1,0 +1,14 @@
+.filters.sixteen.columns.alpha.omega
+  .filter.four.columns.alpha
+    %label{ :for => 'query' }=t('admin.quick_search')
+    %br
+    %input.fullwidth{ :type => "text", :id => 'query', ng: { model: 'query' }, placeholder: "Search by Order Cycle name..." }
+  .filter_select.four.columns
+    %label{ :for => 'involving_filter' }=t('.involving')
+    %br
+    %input.ofn-select2.fullwidth{ :id => 'involving_filter', type: 'number', blank: "{id: 0, name: 'Any Enterprise'}", data: 'enterprises', ng: { model: 'involvingFilter' } }
+  .six.columns &nbsp;
+  .filter_clear.two.columns.omega
+    %label{ :for => 'clear_all_filters' }
+    %br
+    %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "#{t('admin.clear_all')}", ng: { click: "resetSelectFilters()" } }
