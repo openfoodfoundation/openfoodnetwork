@@ -135,7 +135,7 @@ feature %q{
       pm2
 
       visit spree.admin_payment_methods_path
-      page.all('td', text: 'Two').count.should == 1
+      page.should have_selector 'td', text: 'Two', count: 1
     end
 
 

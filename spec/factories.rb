@@ -105,10 +105,10 @@ FactoryGirl.define do
   end
 
   factory :exchange, :class => Exchange do
-    order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
-    sender      { FactoryGirl.create(:enterprise) }
-    receiver    { FactoryGirl.create(:enterprise) }
     incoming    false
+    order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
+    sender      { incoming ? FactoryGirl.create(:enterprise) : order_cycle.coordinator }
+    receiver    { incoming ? order_cycle.coordinator : FactoryGirl.create(:enterprise) }
   end
 
   factory :variant_override, :class => VariantOverride do
@@ -257,6 +257,12 @@ FactoryGirl.define do
       raise "taxed_product factory requires a zone" unless proxy.zone
       create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone)
     end
+  end
+
+  factory :producer_property, class: ProducerProperty do
+    value 'abc123'
+    producer { create(:supplier_enterprise) }
+    property
   end
 
   factory :customer, :class => Customer do

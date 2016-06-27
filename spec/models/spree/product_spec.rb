@@ -420,7 +420,7 @@ module Spree
         end
       end
 
-      context "when product has an inherit_properties value set to true" do
+      context "when product has an inherit_properties value set to false" do
         let(:supplier) { create(:supplier_enterprise) }
         let(:product) { create(:simple_product, supplier: supplier, inherits_properties: false) }
 

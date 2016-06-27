@@ -3,8 +3,8 @@
     %i.icon-check
     Actions
     %i{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
-  %div.menu{ 'ng-show' => "expanded", style: 'width: 200px' }
-    %a.menu_item{ 'ng-repeat' => "link in links", href: '{{link.url}}', target: "{{link.target || '_self'}}", data: { method: "{{ link.method || 'get' }}", confirm: "{{link.confirm}}" }, style: 'display: inline-block; width: 100%' }
-      %span{ :style => 'text-align: center; display: inline-block; width: 20%'}
+  %div.menu{ 'ng-show' => "expanded" }
+    %a.menu_item{ 'ng-repeat' => "link in links", href: '{{link.url}}', target: "{{link.target || '_self'}}", data: { method: "{{ link.method || 'get' }}", confirm: "{{link.confirm}}" } }
+      %span
         %i{ ng: { class: "link.icon" } }
-      %span{ style: "display: inline-block; width: auto"} {{ link.name }}
+      %span {{ link.name }}

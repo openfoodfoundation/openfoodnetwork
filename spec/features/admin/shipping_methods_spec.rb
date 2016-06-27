@@ -123,7 +123,7 @@ feature 'shipping methods' do
 
       visit spree.admin_shipping_methods_path
 
-      page.all('td', text: 'Two').count.should == 1
+      page.should have_selector 'td', text: 'Two', count: 1
     end
 
     pending "shows me only shipping methods for the enterprise I select" do

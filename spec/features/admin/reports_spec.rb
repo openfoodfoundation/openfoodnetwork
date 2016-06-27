@@ -124,7 +124,7 @@ feature %q{
       table.sort.should == [
         ["Hub", "Code", "First Name", "Last Name", "Supplier", "Product", "Variant", "Quantity", "TempControlled?"]
       ].sort
-      all('table#listing_orders tbody tr').count.should == 5 # Totals row per order
+      page.should have_selector 'table#listing_orders tbody tr', count: 5 # Totals row per order
     end
 
     scenario "Pack By Supplier" do
