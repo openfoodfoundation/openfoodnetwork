@@ -1,5 +1,4 @@
 fr:
-  weight_measurement_unit: "Poids (par kg)"
   devise:
     failure:
       invalid: |
