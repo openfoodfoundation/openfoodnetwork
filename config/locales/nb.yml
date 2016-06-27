@@ -598,3 +598,4 @@ nb:
   price_graph: "Prisgraf"
   included_tax: "inkludert avgift"
   remove_tax: "Fjern avgift"
+  weight_and_unit: "Vekt (per kg)"

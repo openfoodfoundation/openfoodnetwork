@@ -585,3 +585,4 @@ es:
   price_graph: "Gráfico de precios"
   included_tax: "Impuesto incluido"
   remove_tax: "Eliminar impuesto"
+  weight_and_unit: "Peso (por kg)"
