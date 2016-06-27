@@ -1,4 +1,11 @@
 es:
+  activerecord:
+    # Overridden here due to a bug in spree i18n (Issue #870)
+    weight_measurement_unit: "Peso (para kg)"
+    attributes:
+      spree/order:
+        payment_state: Estado para Pago
+        shipment_state: Estado para Envío 
   devise:
     failure:
       invalid: |

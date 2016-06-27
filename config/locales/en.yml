@@ -17,6 +17,7 @@
 en:
   activerecord:
     # Overridden here due to a bug in spree i18n (Issue #870)
+    weight_measurement_unit: "Weight (per kg)"
     attributes:
       spree/order:
         payment_state: Payment State
