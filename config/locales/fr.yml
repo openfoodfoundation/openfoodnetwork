@@ -599,3 +599,4 @@ fr:
   price_graph: "Légende détail du prix"
   included_tax: "Inclut TVA"
   remove_tax: "Retirer TVA"
+  weight_and_unit: "Poids (par kg)"

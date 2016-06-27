@@ -4,7 +4,7 @@ module OpenFoodNetwork
     attr_accessible :preferred_per_kg
 
     def self.description
-      "Weight (per kg)"
+      I18n.t('weight_and_unit')
     end
 
     def compute(object)
