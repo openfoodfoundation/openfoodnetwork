@@ -176,6 +176,16 @@ class Enterprise < ActiveRecord::Base
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end
   }
+  scope :relatives_of_one_union_others, lambda { |one, others|
+    where("
+      enterprises.id IN
+        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
+      OR enterprises.id IN
+        (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
+      OR enterprises.id IN
+        (?)
+    ", one, one, others)
+  }
 
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
@@ -221,19 +231,8 @@ class Enterprise < ActiveRecord::Base
   end
 
   def relatives_and_oc_producers(order_cycles)
-    enterprise_ids = []
-    order_cycles.each do |oc|
-      enterprise_ids += oc.exchanges.incoming.pluck :sender_id
-    end
-    Enterprise.where("
-      enterprises.id IN
-        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
-      OR enterprises.id IN
-        (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
-      OR enterprises.id IN
-        (?)
-      OR enterprises.id = ?
-    ", id, id, enterprise_ids, id)
+    enterprise_ids = Exchange.in_order_cycle(order_cycles).incoming.pluck :sender_id
+    Enterprise.relatives_of_one_union_others(id, enterprise_ids)
   end
 
   def relatives_including_self

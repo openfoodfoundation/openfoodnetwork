@@ -16,7 +16,8 @@ class EnterprisesController < BaseController
   def relatives
     respond_to do |format|
       format.json do
-        enterprises = Enterprise.find(params[:id]).andand.relatives.activated
+        enterprise = Enterprise.find(params[:id])
+        enterprises = enterprise.andand.relatives.andand.activated
         render(json: enterprises,
                each_serializer: Api::EnterpriseSerializer,
                data: OpenFoodNetwork::EnterpriseInjectionData.new)

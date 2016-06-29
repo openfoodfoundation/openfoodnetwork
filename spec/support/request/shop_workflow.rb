@@ -29,19 +29,24 @@ module ShopWorkflow
   end
 
   def add_variant_to_order_cycle(exchange, variant)
-    oc = exchange.order_cycle
-    supplier = variant.product.supplier
-    # An order cycle needs an incoming exchange for a supplier
-    # before having its products. Otherwise the data will be inconsistent and
-    # and not all needed enterprises are loaded into the shop page.
-    if oc.exchanges.from_enterprise(supplier).incoming.empty?
-      create(:exchange, order_cycle: oc, incoming: true,
-                        sender: supplier, receiver: oc.coordinator)
-    end
+    ensure_supplier_exchange(exchange, variant.product.supplier)
     exchange.variants << variant
   end
 
   def set_order_cycle(order, order_cycle)
     order.update_attribute(:order_cycle, order_cycle)
+  end
+
+  private
+
+  # An order cycle needs an incoming exchange for a supplier
+  # before having its products. Otherwise the data will be inconsistent and
+  # and not all needed enterprises are loaded into the shop page.
+  def ensure_supplier_exchange(exchange, supplier)
+    oc = exchange.order_cycle
+    if oc.exchanges.from_enterprise(supplier).incoming.empty?
+      create(:exchange, order_cycle: oc, incoming: true,
+                        sender: supplier, receiver: oc.coordinator)
+    end
   end
 end

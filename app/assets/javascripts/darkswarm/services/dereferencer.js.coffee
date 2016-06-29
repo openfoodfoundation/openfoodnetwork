@@ -7,7 +7,7 @@ Darkswarm.factory 'Dereferencer', ->
       unreferenced = []
       if source && target
         for object, i in source
-          key = if object then object.id else undefined
+          key = object?.id
           if data.hasOwnProperty(key)
             target[i] = data[key]
           else
