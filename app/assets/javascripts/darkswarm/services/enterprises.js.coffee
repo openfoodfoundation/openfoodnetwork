@@ -23,18 +23,14 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         @dereferenceEnterprise enterprise
 
     dereferenceEnterprise: (enterprise) ->
-      # keep a backup of enterprise ids
+      # keep unreferenced enterprise ids
       # in case we dereference again after adding more enterprises
-      if enterprise.hub_references
-        enterprise.hubs = enterprise.hub_references.slice()
-      else
-        enterprise.hub_references = enterprise.hubs.slice()
-      if enterprise.producer_references
-        enterprise.producers = enterprise.producer_references.slice()
-      else
-        enterprise.producer_references = enterprise.producers.slice()
-      Dereferencer.dereference enterprise.hubs, @enterprises_by_id
-      Dereferencer.dereference enterprise.producers, @enterprises_by_id
+      hubs = enterprise.unreferenced_hubs || enterprise.hubs
+      enterprise.unreferenced_hubs =
+        Dereferencer.dereference_from hubs, enterprise.hubs, @enterprises_by_id
+      producers = enterprise.unreferenced_producers || enterprise.producers
+      enterprise.unreferenced_producers =
+        Dereferencer.dereference_from producers, enterprise.producers, @enterprises_by_id
 
     dereferenceTaxons: ->
       for enterprise in @enterprises

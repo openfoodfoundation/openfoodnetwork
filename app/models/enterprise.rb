@@ -220,6 +220,22 @@ class Enterprise < ActiveRecord::Base
     ", self.id, self.id)
   end
 
+  def relatives_and_oc_producers(order_cycles)
+    enterprise_ids = []
+    order_cycles.each do |oc|
+      enterprise_ids += oc.exchanges.incoming.pluck :sender_id
+    end
+    Enterprise.where("
+      enterprises.id IN
+        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
+      OR enterprises.id IN
+        (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
+      OR enterprises.id IN
+        (?)
+      OR enterprises.id = ?
+    ", id, id, enterprise_ids, id)
+  end
+
   def relatives_including_self
     Enterprise.where(id: relatives.pluck(:id) | [id])
   end
