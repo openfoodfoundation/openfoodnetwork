@@ -94,4 +94,13 @@ module CheckoutHelper
     current_order.tokenized_permission.save!
     session[:access_token] = token
   end
+
+  def payment_method_price(method, order)
+    price = method.compute_amount(order)
+    if price == 0
+      t('checkout_method_free')
+    else
+      "{{ #{price} | localizeCurrency }}"
+    end
+  end
 end

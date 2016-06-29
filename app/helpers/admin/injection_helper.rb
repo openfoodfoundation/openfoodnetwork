@@ -23,6 +23,10 @@ module Admin
       admin_inject_json_ams_array "admin.paymentMethods", "paymentMethods", @payment_methods, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_payment_method
+      admin_inject_json_ams "admin.paymentMethods", "paymentMethod", @payment_method, Api::Admin::PaymentMethodSerializer
+    end
+
     def admin_inject_shipping_methods
       admin_inject_json_ams_array "admin.shippingMethods", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer
     end

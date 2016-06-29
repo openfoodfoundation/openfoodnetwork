@@ -1,0 +1,9 @@
+#info-dialog{ ng: { class: "dialog_class" } }
+  .message.clearfix.margin-bottom-30
+    .icon.text-center
+      %i.icon-exclamation-sign
+    .text
+      {{ message }}
+  .action-buttons.text-center
+    %button{ ng: { click: "close()" } }
+      OK

@@ -1,4 +1,4 @@
-tr.panel-toggle-row {
+tbody.panel-ctrl {
   td.panel-toggle{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -65,64 +65,60 @@ tr.panel-toggle-row {
   }
 
   &.expanded{
-    td {
-      border-bottom: 2px solid #444444;
+    >tr:not(.panel-row) {
+      >td {
+        border-bottom: 1px solid #6788a2;
 
-      &.selected {
-        background-color: #ffffff;
-        border-left: 2px solid #444444;
-        border-right: 2px solid #444444;
-        border-top: 2px solid #444444;
-        border-bottom: none;
-
-        &:hover {
+        &.selected {
           background-color: #ffffff;
-        }
+          border-left: 1px solid #6788a2;
+          border-right: 1px solid #6788a2;
+          border-top: 1px solid #6788a2;
+          border-bottom: none;
 
-        * {
-          color: #1b3c56;
-        }
+          &:hover {
+            background-color: #ffffff;
+          }
 
-        i.icon-status::before {
-          opacity: 1.0;
-        }
+          * {
+            color: #1b3c56;
+          }
 
-        i.icon-chevron::before {
-          content: "\f077";
+          i.icon-status::before {
+            opacity: 1.0;
+          }
+
+          i.icon-chevron::before {
+            content: "\f077";
+          }
         }
       }
     }
   }
-}
 
-tr.panel-row {
-  display: none;
-
-  &:hover {
-    td {
-      background-color: #ffffff;
+  tr.panel-row {
+    &:hover {
+      td {
+        background-color: #ffffff;
+      }
     }
-  }
 
-  >td {
-    border-color: #444444;
-    padding: 0;
-    .panel {
-      border-left: 1px solid #444444;
-      border-right: 1px solid #444444;
-      border-bottom: 1px solid #444444;
+    >td {
+      border-color: #6788a2;
+      padding: 0;
+      .panel {
+        .row{
+          margin: 0px -4px;
 
-      .row{
-        margin: 0px -4px;
+          padding: 20px 0px;
 
-        padding: 20px 0px;
+          .column.alpha, .columns.alpha {
+            padding-left: 20px;
+          }
 
-        .column.alpha, .columns.alpha {
-          padding-left: 20px;
-        }
-
-        .column.omega, .columns.omega {
-          padding-right: 20px;
+          .column.omega, .columns.omega {
+            padding-right: 20px;
+          }
         }
       }
     }

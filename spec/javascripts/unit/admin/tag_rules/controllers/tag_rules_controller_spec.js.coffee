@@ -7,6 +7,7 @@ describe "TagRulesCtrl", ->
     module('admin.tagRules')
     enterprise =
       id: 45
+      default_tag_group: { tags: "", rules: [{ id: 7, preferred_customer_tags: "trusted" }] }
       tag_groups: [
         { tags: "member", rules: [{ id: 1, preferred_customer_tags: "member" }, { id: 2, preferred_customer_tags: "member" }] },
         { tags: "volunteer", rules: [{ id: 3, preferred_customer_tags: "local" }] }
@@ -14,24 +15,27 @@ describe "TagRulesCtrl", ->
 
     inject ($rootScope, $controller) ->
       scope = $rootScope
+      scope.enterprise_form = jasmine.createSpyObj('enterprise_form', ['$setDirty'])
       ctrl = $controller 'TagRulesCtrl', {$scope: scope, enterprise: enterprise}
 
   describe "tagGroup start indices", ->
     it "updates on initialization", ->
-      expect(scope.tagGroups[0].startIndex).toEqual 0
-      expect(scope.tagGroups[1].startIndex).toEqual 2
+      expect(scope.tagGroups[0].startIndex).toEqual 1
+      expect(scope.tagGroups[1].startIndex).toEqual 3
 
   describe "adding a new tag group", ->
     beforeEach ->
       scope.addNewRuleTo(scope.tagGroups[0], "DiscountOrder")
 
     it "adds a new rule of the specified type to the rules array for the tagGroup", ->
+      expect(scope.enterprise_form.$setDirty).toHaveBeenCalled()
+
       expect(scope.tagGroups[0].rules.length).toEqual 3
       expect(scope.tagGroups[0].rules[2].type).toEqual "TagRule::DiscountOrder"
 
     it "updates tagGroup start indices", ->
-      expect(scope.tagGroups[0].startIndex).toEqual 0
-      expect(scope.tagGroups[1].startIndex).toEqual 3
+      expect(scope.tagGroups[0].startIndex).toEqual 1
+      expect(scope.tagGroups[1].startIndex).toEqual 4
 
   describe "deleting a tag group", ->
     describe "where the rule is not in the rule list for the tagGroup", ->
@@ -58,8 +62,8 @@ describe "TagRulesCtrl", ->
         expect(scope.tagGroups[0].rules.indexOf(rule)).toEqual -1
 
       it "updates tagGroup start indices", ->
-        expect(scope.tagGroups[0].startIndex).toEqual 0
-        expect(scope.tagGroups[1].startIndex).toEqual 1
+        expect(scope.tagGroups[0].startIndex).toEqual 1
+        expect(scope.tagGroups[1].startIndex).toEqual 2
 
     describe "without an id", ->
       rule = null
@@ -75,5 +79,5 @@ describe "TagRulesCtrl", ->
         expect(scope.tagGroups[0].rules.indexOf(rule)).toEqual -1
 
       it "updates tagGroup start indices", ->
-        expect(scope.tagGroups[0].startIndex).toEqual 0
-        expect(scope.tagGroups[1].startIndex).toEqual 1
+        expect(scope.tagGroups[0].startIndex).toEqual 1
+        expect(scope.tagGroups[1].startIndex).toEqual 2

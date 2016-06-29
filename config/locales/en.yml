@@ -116,6 +116,7 @@ en:
         valid_email_error: Please enter a valid email address
         add_a_new_customer_for: Add a new customer for %{shop_name}
         code: Code
+        duplicate_code: "This code is used already."
 
     products:
       bulk_edit:
@@ -869,12 +870,9 @@ Please follow the instructions there to make your enterprise visible on the Open
   admin_entreprise_groups_owner: "Owner"
   admin_entreprise_groups_on_front_page: "On front page ?"
   admin_entreprise_groups_entreprise: "Enterprises"
-  admin_entreprise_groups_primary_details: "Primary Details"
   admin_entreprise_groups_data_powertip: "The primary user responsible for this group."
   admin_entreprise_groups_data_powertip_logo: "This is the logo for the group"
   admin_entreprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
-  admin_entreprise_groups_about: "About"
-  admin_entreprise_groups_images: "Images"
   admin_entreprise_groups_contact: "Contact"
   admin_entreprise_groups_contact_phone_placeholder: "eg. 98 7654 3210"
   admin_entreprise_groups_contact_address1_placeholder: "eg. 123 High Street"
@@ -1041,6 +1039,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   properties: "Properties"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
+  payment_method_fee: "Transaction fee"
   enterprise_fees: "Enterprise Fees"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"

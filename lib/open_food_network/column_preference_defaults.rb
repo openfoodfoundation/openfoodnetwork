@@ -19,6 +19,7 @@ module OpenFoodNetwork
         on_demand:    { name: I18n.t("admin.on_demand?"),       visible: false },
         reset:        { name: I18n.t("#{node}.enable_reset?"),  visible: false },
         inheritance:  { name: I18n.t("#{node}.inherit?"),       visible: false },
+        tags:         { name: I18n.t("admin.tags"),             visible: false },
         visibility:   { name: I18n.t("#{node}.hide"),           visible: false }
       }
     end

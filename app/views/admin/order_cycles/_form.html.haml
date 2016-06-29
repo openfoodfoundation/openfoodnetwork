@@ -17,11 +17,8 @@
       %th Receival details
       %th Fees
       %th.actions
-  %tbody{'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
-    %tr{'class' => "supplier supplier-{{ exchange.enterprise_id }}"}
-      = render 'exchange_form', :f => f, :type => 'supplier'
-    %tr.products{'ng-show' => 'exchange.showProducts'}
-      = render 'exchange_supplied_products_form'
+  %tbody.panel-ctrl{ object: 'exchange', 'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
+    = render 'exchange_form', :f => f, :type => 'supplier'
 
 - if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
   = render 'add_exchange_form', f: f, type: 'supplier'
@@ -37,22 +34,18 @@
           %a{href: '#', 'ng-click' => "OrderCycle.toggleAllProducts('outgoing')"}
             %span{'ng-show' => "OrderCycle.showProducts['outgoing']"} Collapse all
             %span{'ng-hide' => "OrderCycle.showProducts['outgoing']"} Expand all
+      %th{ ng: { if: 'enterprises[exchange.enterprise_id].managed || order_cycle.viewing_as_coordinator' } } Tags
       %th Pickup / Delivery details
       %th Fees
       %th.actions
-  %tbody{'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
-    %tr{'class' => "distributor distributor-{{ exchange.enterprise_id }}"}
-      = render 'exchange_form', :f => f, :type => 'distributor'
-    %tr.products{'ng-show' => 'exchange.showProducts'}
-      = render 'exchange_distributed_products_form'
+  %tbody.panel-ctrl{ object: 'exchange', 'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
+    = render 'exchange_form', :f => f, :type => 'distributor'
+
 
 - if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
   = render 'add_exchange_form', f: f, type: 'distributor'
 
 .actions
-  - if @order_cycle.new_record?
-    = f.submit 'Create', 'ng-click' => "submit($event, '#{main_app.admin_order_cycles_path}')", 'ng-disabled' => '!loaded()'
-
   %span{'ng-hide' => 'loaded()'} Loading...
 
 

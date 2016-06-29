@@ -6,9 +6,8 @@
       %a.three.columns.omega.icon-plus.button.blue{ href: "#{main_app.new_admin_order_cycle_path}" }
         = t "spree_admin_enterprises_create_new"
     - else
-      %a.with-tip{ title: t(:spree_admin_order_cycles_tip) }
+      %a{ "ofn-with-tip" => t(:spree_admin_order_cycles_tip) }
         = t "admin.whats_this"
-      %a{ "ofn-with-tip" => "Order cycles determine when and where your products are available to customers." } What's this?
   %div.seven.columns.alpha.list
     - if @order_cycle_count > 0
       %div.seven.columns.alpha.list-item

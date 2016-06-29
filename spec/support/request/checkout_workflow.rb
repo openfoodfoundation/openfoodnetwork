@@ -8,7 +8,7 @@ module CheckoutWorkflow
   end
 
   def place_order
-    click_button "Place order now"
+    find("button", text: "Place order now").trigger "click"
   end
 
   def toggle_accordion(id)

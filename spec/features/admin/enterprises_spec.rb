@@ -61,6 +61,9 @@ feature %q{
   end
 
   scenario "editing an existing enterprise", js: true do
+    # Make the page long enough to avoid the save bar overlaying the form
+    page.driver.resize(1280, 1000)
+
     @enterprise = create(:enterprise)
     e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
@@ -355,6 +358,10 @@ feature %q{
       within("tbody#e_#{distributor1.id}") { click_link 'Manage' }
 
       fill_in 'enterprise_name', :with => 'Eaterprises'
+
+      # Because poltergist does not support form onchange event
+      # We need trigger the change manually
+      page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
       click_button 'Update'
 
       flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
@@ -367,6 +374,10 @@ feature %q{
         within("tbody#e_#{distributor3.id}") { click_link 'Manage' }
 
         fill_in 'enterprise_name', :with => 'Eaterprises'
+
+        # Because poltergist does not support form onchange event
+        # We need trigger the change manually
+        page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
         click_button 'Update'
 
         flash_message.should == 'Enterprise "Eaterprises" has been successfully updated!'
@@ -407,8 +418,14 @@ feature %q{
 
       # -- Update only
       select2_select "Certified Organic", from: 'enterprise_producer_properties_attributes_0_property_name'
+
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
+
+      # Because poltergist does not support form onchange event
+      # We need trigger the change manually
+      page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
       click_button 'Update'
+
       supplier1.producer_properties(true).count.should == 1
 
       # -- Destroy

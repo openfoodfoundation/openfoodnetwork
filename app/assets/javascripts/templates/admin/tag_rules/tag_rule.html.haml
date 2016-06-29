@@ -1,0 +1,50 @@
+%div{ id: "tr_{{tagGroup.startIndex + $index}}" }
+  %table
+    %colgroup
+      %col.text{ width: "35%" }
+      %col.inputs{ width: "55%" }
+      %col.actions{ width: "10%" }
+    %tr
+      %td
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_id",
+          name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][id]",
+          ng: { value: "rule.id" } }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_type",
+          name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][type]",
+          ng: { value: "rule.type" } }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_priority",
+          name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][priority]",
+          ng: { value: "tagGroup.startIndex + $index" } }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_is_default",
+          name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][is_default]",
+          ng: { value: "rule.is_default" } }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_customer_tags",
+          name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_customer_tags]",
+          ng: { value: "rule.preferred_customer_tags" } }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_{{opt[rule.type].taggable}}_tags",
+          name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_{{opt[rule.type].taggable}}_tags]",
+          ng: { value: "opt[rule.type].tagListFor(rule)" } }
+
+        %span.text-normal {{ opt[rule.type].textTop }}
+      %td
+        %tags-with-translation{ object: "rule", max: 1, "tags-attr" => "{{opt[rule.type].tagsAttr}}", "tag-list-attr" => "{{opt[rule.type].tagListAttr}}" }
+      %td.actions{ rowspan: 2 }
+        %a{ ng: { click: "deleteTagRule(tagGroup || defaultTagGroup, rule)" }, :class => "delete-tag-rule icon-trash no-text" }
+    %tr
+      %td
+        %span.text-normal {{ opt[rule.type].textBottom }}
+      %td
+        %div{ ng: { include: "opt[rule.type].inputTemplate"} }
+
+  %hr

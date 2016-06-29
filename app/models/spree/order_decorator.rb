@@ -1,6 +1,7 @@
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/distribution_change_validator'
 require 'open_food_network/feature_toggle'
+require 'open_food_network/tag_rule_applicator'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
   payload[:order].reload.update_distribution_charge!
@@ -178,10 +179,6 @@ Spree::Order.class_eval do
       if order_cycle
         OpenFoodNetwork::EnterpriseFeeCalculator.new.create_order_adjustments_for self
       end
-
-      if distributor.present? && customer.present?
-        distributor.apply_tag_rules_to(self, customer: customer)
-      end
     end
   end
 
@@ -206,11 +203,8 @@ Spree::Order.class_eval do
     adjustments.eligible.where("originator_type = ? AND source_type != ?", 'EnterpriseFee', 'Spree::LineItem').sum(&:amount)
   end
 
-  # Show payment methods for this distributor
-  def available_payment_methods
-    @available_payment_methods ||= Spree::PaymentMethod.available(:front_end).select do |pm|
-      (self.distributor && (pm.distributors.include? self.distributor))
-    end
+  def payment_fee
+    adjustments.payment_fee.map(&:amount).sum
   end
 
   # Does this order have shipments that can be shipped?
@@ -223,10 +217,6 @@ Spree::Order.class_eval do
     self.shipments.each do |s|
       s.ship if s.can_ship?
     end
-  end
-
-  def available_shipping_methods(display_on = nil)
-    Spree::ShippingMethod.all_available(self, display_on)
   end
 
   def shipping_tax

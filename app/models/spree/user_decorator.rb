@@ -38,7 +38,8 @@ Spree.user_class.class_eval do
   end
 
   def customer_of(enterprise)
-    customers.of(enterprise).first
+    return nil unless enterprise
+    customers.find_by_enterprise_id(enterprise)
   end
 
   def send_signup_confirmation

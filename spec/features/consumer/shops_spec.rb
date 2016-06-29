@@ -13,6 +13,7 @@ feature 'Shops', js: true do
   let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 
   before do
+    producer.set_producer_property 'Organic', 'NASAA 12345'
     visit shops_path
   end
 
@@ -36,9 +37,8 @@ feature 'Shops', js: true do
   it "should show closed shops after clicking the button" do
     create(:simple_product, distributors: [d1, d2])
     visit shops_path
-    click_link "Show closed shops"
-    page.should have_selector 'hub.inactive'
-    page.should have_selector 'hub.inactive',   text: d2.name
+    click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
+    page.should have_selector 'hub.inactive', text: d2.name
   end
 
   it "should link to the hub page" do
@@ -46,10 +46,31 @@ feature 'Shops', js: true do
     expect(page).to have_current_path enterprise_shop_path(distributor)
   end
 
-  it "should show hub producer modals" do
-    expand_active_table_node distributor.name
-    expect(page).to have_content producer.name
-    open_enterprise_modal producer
-    modal_should_be_open_for producer
+  describe "hub producer modal" do
+    let!(:product) { create(:simple_product, supplier: producer, taxons: [taxon]) }
+    let!(:taxon) { create(:taxon, name: 'Fruit') }
+    let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
+
+    it "should show hub producer modals" do
+      expand_active_table_node distributor.name
+      expect(page).to have_content producer.name
+      open_enterprise_modal producer
+      modal_should_be_open_for producer
+
+      within ".reveal-modal" do
+        expect(page).to have_content 'Fruit'   # Taxon
+        expect(page).to have_content 'Organic' # Producer property
+      end
+    end
+  end
+
+  def click_link_and_ensure(link_text, check)
+    # Buttons appear to be unresponsive for a while, so keep clicking them until content appears
+    using_wait_time 0.5 do
+      10.times do
+        click_link link_text
+        break if check.call
+      end
+    end
   end
 end

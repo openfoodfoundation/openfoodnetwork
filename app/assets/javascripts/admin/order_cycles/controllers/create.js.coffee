@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminCreateOrderCycleCtrl', ($scope, $filter, OrderCycle, Enterprise, EnterpriseFee, ocInstance, StatusMessage) ->
+  .controller 'AdminCreateOrderCycleCtrl', ($scope, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, ocInstance, StatusMessage) ->
     $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
@@ -10,6 +10,9 @@ angular.module('admin.orderCycles')
     $scope.order_cycle = OrderCycle.new({ coordinator_id: ocInstance.coordinator_id})
 
     $scope.StatusMessage = StatusMessage
+
+    $scope.$watch 'order_cycle_form.$dirty', (newValue) ->
+      StatusMessage.display 'notice', 'You have unsaved changes' if newValue
 
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
@@ -41,10 +44,6 @@ angular.module('admin.orderCycles')
     $scope.enterprisesWithFees = ->
       $scope.enterprises[id] for id in OrderCycle.participatingEnterpriseIds() when $scope.enterpriseFeesForEnterprise(id).length > 0
 
-    $scope.toggleProducts = ($event, exchange) ->
-      $event.preventDefault()
-      OrderCycle.toggleProducts(exchange)
-
     $scope.enterpriseFeesForEnterprise = (enterprise_id) ->
       EnterpriseFee.forEnterprise(parseInt(enterprise_id))
 
@@ -59,6 +58,7 @@ angular.module('admin.orderCycles')
     $scope.removeExchange = ($event, exchange) ->
       $event.preventDefault()
       OrderCycle.removeExchange(exchange)
+      $scope.order_cycle_form.$dirty = true
 
     $scope.addCoordinatorFee = ($event) ->
       $event.preventDefault()
@@ -81,4 +81,9 @@ angular.module('admin.orderCycles')
 
     $scope.submit = ($event, destination) ->
       $event.preventDefault()
+      StatusMessage.display 'progress', "Saving..."
       OrderCycle.create(destination)
+
+    $scope.cancel = (destination) ->
+      $window.location = destination
+

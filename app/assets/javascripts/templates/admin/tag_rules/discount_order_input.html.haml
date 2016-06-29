@@ -1,0 +1,7 @@
+%div
+  %input{ type: "number",
+    id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_calculator_attributes_preferred_flat_percent",
+    min: -100,
+    max: 100,
+    ng: { model: "rule.calculator.preferred_flat_percent" }, 'invert-number' => true }
+  %span.text-normal %

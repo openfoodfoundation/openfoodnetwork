@@ -106,6 +106,9 @@ feature "As a consumer I want to check out my cart", js: true do
       end
 
       context "using FilterShippingMethods" do
+        let(:user) { create(:user) }
+        let(:customer) { create(:customer, user: user, enterprise: distributor) }
+
         it "shows shipping methods allowed by the rule" do
           # No rules in effect
           toggle_shipping
@@ -118,18 +121,29 @@ feature "As a consumer I want to check out my cart", js: true do
             preferred_customer_tags: "local",
             preferred_shipping_method_tags: "local",
             preferred_matched_shipping_methods_visibility: 'visible')
+            create(:filter_shipping_methods_tag_rule,
+              enterprise: distributor,
+              is_default: true,
+              preferred_shipping_method_tags: "local",
+              preferred_matched_shipping_methods_visibility: 'hidden')
           visit checkout_path
           checkout_as_guest
 
-          # Rule in effect, disallows access to 'Local'
+          # Default rule in effect, disallows access to 'Local'
           page.should have_content "Frogs"
           page.should have_content "Donkeys"
           page.should_not have_content "Local"
 
-          customer = create(:customer, enterprise: distributor, tag_list: "local")
-          order.update_attribute(:customer_id, customer.id)
+          quick_login_as(user)
           visit checkout_path
-          checkout_as_guest
+
+          # Default rule in still effect, disallows access to 'Local'
+          page.should have_content "Frogs"
+          page.should have_content "Donkeys"
+          page.should_not have_content "Local"
+
+          customer.update_attribute(:tag_list, "local")
+          visit checkout_path
 
           # #local Customer can access 'Local' shipping method
           page.should have_content "Frogs"
@@ -286,7 +300,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
               # Does not show duplicate shipping fee
               visit checkout_path
-              page.all("th", text: "Shipping").count.should == 1
+              page.should have_selector "th", text: "Shipping", count: 1
             end
           end
         end

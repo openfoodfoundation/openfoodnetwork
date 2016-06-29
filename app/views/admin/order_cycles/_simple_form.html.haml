@@ -14,14 +14,11 @@
 %table.exchanges
   %tbody{ng: {repeat: "exchange in order_cycle.incoming_exchanges"}}
     %tr.products
-      = render 'exchange_supplied_products_form'
+      %td{ ng: { include: "'admin/panels/exchange_supplied_products.html'" } }
 
 %br/
 = label_tag 'Fees'
 = render 'coordinator_fees', f: f
 
 .actions
-  - if @order_cycle.new_record?
-    = f.submit 'Create', 'ng-click' => "submit($event, '#{main_app.admin_order_cycles_path}')", 'ng-disabled' => '!loaded()'
-
   %span{'ng-hide' => 'loaded()'} Loading...

@@ -105,10 +105,10 @@ FactoryGirl.define do
   end
 
   factory :exchange, :class => Exchange do
-    order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
-    sender      { FactoryGirl.create(:enterprise) }
-    receiver    { FactoryGirl.create(:enterprise) }
     incoming    false
+    order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
+    sender      { incoming ? FactoryGirl.create(:enterprise) : order_cycle.coordinator }
+    receiver    { incoming ? order_cycle.coordinator : FactoryGirl.create(:enterprise) }
   end
 
   factory :variant_override, :class => VariantOverride do
@@ -259,6 +259,12 @@ FactoryGirl.define do
     end
   end
 
+  factory :producer_property, class: ProducerProperty do
+    value 'abc123'
+    producer { create(:supplier_enterprise) }
+    property
+  end
+
   factory :customer, :class => Customer do
     email { Faker::Internet.email }
     enterprise
@@ -286,7 +292,19 @@ FactoryGirl.define do
     month { 1 + rand(12) }
   end
 
+  factory :filter_order_cycles_tag_rule, class: TagRule::FilterOrderCycles do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+  end
+
   factory :filter_shipping_methods_tag_rule, class: TagRule::FilterShippingMethods do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+  end
+
+  factory :filter_products_tag_rule, class: TagRule::FilterProducts do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+  end
+
+  factory :filter_payment_methods_tag_rule, class: TagRule::FilterPaymentMethods do
     enterprise { FactoryGirl.create :distributor_enterprise }
   end
 

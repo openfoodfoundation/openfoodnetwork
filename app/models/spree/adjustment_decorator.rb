@@ -12,6 +12,7 @@ module Spree
 
     scope :with_tax,        where('spree_adjustments.included_tax > 0')
     scope :without_tax,     where('spree_adjustments.included_tax = 0')
+    scope :payment_fee,     where(originator_type: 'Spree::PaymentMethod')
 
     attr_accessible :included_tax
 

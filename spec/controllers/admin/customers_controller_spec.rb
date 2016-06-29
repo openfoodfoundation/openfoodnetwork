@@ -69,12 +69,15 @@ describe Admin::CustomersController, type: :controller do
       let!(:customer) { create(:customer, enterprise: enterprise) }
 
       context "where I manage the customer's enterprise" do
+        render_views
+
         before do
           controller.stub spree_current_user: enterprise.owner
         end
 
         it "allows me to update the customer" do
           spree_put :update, format: :json, id: customer.id, customer: { email: 'new.email@gmail.com' }
+          expect(JSON.parse(response.body)["id"]).to eq customer.id
           expect(assigns(:customer)).to eq customer
           expect(customer.reload.email).to eq 'new.email@gmail.com'
         end

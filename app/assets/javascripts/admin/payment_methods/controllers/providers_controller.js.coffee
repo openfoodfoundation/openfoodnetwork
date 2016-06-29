@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "ProvidersCtrl", ($scope, paymentMethod) ->
+angular.module("admin.paymentMethods").controller "ProvidersCtrl", ($scope, paymentMethod) ->
   if paymentMethod.type
     $scope.include_html = "/admin/payment_methods/show_provider_preferences?" +
       "provider_type=#{paymentMethod.type};" +
