@@ -1,32 +1,32 @@
 %colgroup
-  %col
-  %col{'style' => 'width: 20%;'}
-  %col{'style' => 'width: 20%;'}
+  %col{ ng: { show: 'columns.name.visible' } }
+  %col{ ng: { show: 'columns.open.visible' }, style: 'width: 20%;' }
+  %col{ ng: { show: 'columns.close.visible' }, style: 'width: 20%;' }
   - unless simple_index
-    %col
-    %col
-    %col
-  %col
-  %col
-  %col
-  %col
+    %col{ ng: { show: 'columns.producers.visible' } }
+    %col{ ng: { show: 'columns.coordinator.visible' } }
+    %col{ ng: { show: 'columns.shops.visible' } }
+  %col{ ng: { show: 'columns.products.visible' } }
+  %col{ style: 'width: 5%;' }
+  %col{ style: 'width: 5%;' }
+  %col{ style: 'width: 5%;' }
 
 %thead
   %tr
-    %th
+    %th{ ng: { show: 'columns.name.visible' } }
       =t :name
-    %th
+    %th{ ng: { show: 'columns.open.visible' } }
       =t :open
-    %th
+    %th{ ng: { show: 'columns.close.visible' } }
       =t :close
     - unless simple_index
-      %th
+      %th{ ng: { show: 'columns.producers.visible' } }
         =t :label_producers
-      %th
+      %th{ ng: { show: 'columns.coordinator.visible' } }
         =t :coordinator
-      %th
+      %th{ ng: { show: 'columns.shops.visible' } }
         =t :label_shops
-    %th
+    %th{ ng: { show: 'columns.products.visible' } }
       =t :products
     %th.actions
     %th.actions

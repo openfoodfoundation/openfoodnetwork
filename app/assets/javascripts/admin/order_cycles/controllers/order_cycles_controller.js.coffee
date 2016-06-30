@@ -1,5 +1,6 @@
-angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, StatusMessage, RequestMonitor, OrderCycles, Enterprises) ->
+angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, Columns, StatusMessage, RequestMonitor, OrderCycles, Enterprises) ->
   $scope.RequestMonitor = RequestMonitor
+  $scope.columns = Columns.columns
   $scope.saveAll = -> OrderCycles.saveChanges($scope.order_cycles_form)
   $scope.ordersCloseAtLimit = -31 # days
   $scope.involvingFilter = 0

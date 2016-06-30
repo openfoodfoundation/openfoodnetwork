@@ -1,29 +1,29 @@
 %tr{ class: "order-cycle-{{orderCycle.id}} {{orderCycle.status}}", ng: { repeat: 'orderCycle in orderCycles | involving:involvingFilter | filter:{name: query} track by orderCycle.id' } }
-  %td
+  %td{ ng: { show: 'columns.name.visible' } }
     %a{ ng: { href: '{{orderCycle.edit_path}}' } }
       {{ orderCycle.name }}
-  %td
+  %td{ ng: { show: 'columns.open.visible' } }
     %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at' }, datetimepicker: 'orderCycle.orders_open_at' }
     %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at'}, disabled: true }
-  %td
+  %td{ ng: { show: 'columns.close.visible' } }
     %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at' }, datetimepicker: 'orderCycle.orders_close_at' }
     %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at'}, disabled: true }
 
   - unless simple_index
-    %td.producers
+    %td.producers{ ng: { show: 'columns.producers.visible' } }
       %span{'ofn-with-tip' => '{{ orderCycle.producerNames }}', ng: { show: 'orderCycle.producers.length > 3' } }
         {{ orderCycle.producers.length }}
         = t('.suppliers')
       %span{ ng: { hide: 'orderCycle.producers.length > 3', bind: 'orderCycle.producerNames' } }
-    %td.coordinator
+    %td.coordinator{ ng: { show: 'columns.coordinator.visible' } }
       {{ orderCycle.coordinator.name }}
-    %td.shops
+    %td.shops{ ng: { show: 'columns.shops.visible' } }
       %span{'ofn-with-tip' => '{{ orderCycle.shopNames }}', ng: { show: 'orderCycle.shops.length > 3' } }
         {{ orderCycle.shops.length }}
         = t('.distributors')
       %span{ ng: { hide: 'orderCycle.shops.length > 3', bind: 'orderCycle.shopNames' } }
 
-  %td.products
+  %td.products{ ng: { show: 'columns.products.visible' } }
     %span
       {{orderCycle.variant_count}}
       = t('.variants')
