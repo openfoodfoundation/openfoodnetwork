@@ -29,18 +29,11 @@ Darkswarm.directive 'mapSearch', ($timeout)->
 
       google.maps.event.addListener searchBox, "places_changed", ->
         places = searchBox.getPlaces()
-        return if places.length is 0
-        # For each place, get the icon, place name, and location.
-        markers = []
-        bounds = new google.maps.LatLngBounds()
-        for place in places
-          #map.setCenter place.geometry.location
+        for place in places when place.geometry.viewport?
           map.fitBounds place.geometry.viewport
-        #map.fitBounds bounds
 
       # Bias the SearchBox results towards places that are within the bounds of the
       # current map's viewport.
       google.maps.event.addListener map, "bounds_changed", ->
         bounds = map.getBounds()
         searchBox.setBounds bounds
-
