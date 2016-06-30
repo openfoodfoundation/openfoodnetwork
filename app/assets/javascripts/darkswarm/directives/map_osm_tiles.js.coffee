@@ -16,6 +16,6 @@ Darkswarm.directive 'mapOsmTiles', ($timeout) ->
             x = tilesPerGlobe + x
           # Wrap y (latitude) in a like manner if you want to enable vertical infinite scroll
           'http://tile.openstreetmap.org/' + zoom + '/' + x + '/' + coord.y + '.png'
-        tileSize: new (google.maps.Size)(256, 256)
+        tileSize: new google.maps.Size(256, 256)
         name: 'OpenStreetMap'
         maxZoom: 18
