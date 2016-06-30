@@ -82,5 +82,18 @@ module OpenFoodNetwork
         manage:   { name: I18n.t("#{node}.manage"),     visible: true }
       }
     end
+
+    def order_cycles_index_columns
+      node = "admin.order_cycles.index"
+      {
+        name:         { name: I18n.t("admin.name"),       visible: true },
+        open:         { name: I18n.t("open"),             visible: true },
+        close:        { name: I18n.t("close"),            visible: true },
+        producers:    { name: I18n.t("label_producers"),  visible: true },
+        coordinator:  { name: I18n.t("coordinator"),      visible: true },
+        shops:        { name: I18n.t("label_shops"),      visible: true },
+        products:     { name: I18n.t("products"),         visible: true }
+      }
+    end
   end
 end

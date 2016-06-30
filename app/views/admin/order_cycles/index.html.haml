@@ -8,8 +8,16 @@
   %li#new_order_cycle_link
     = button_link_to t(:new_order_cycle), main_app.new_admin_order_cycle_path, icon: 'icon-plus', id: 'admin_new_order_cycle_link'
 
+= admin_inject_column_preferences module: 'admin.orderCycles'
+
 %div{ ng: { controller: 'OrderCyclesCtrl' } }
   = render 'admin/order_cycles/filters'
+
+  %hr.divider
+
+  .row.controls{ ng: { show: "orderCycles.length > 0" } }
+    .thirteen.columns.alpha &nbsp;
+    %columns-dropdown{ action: "#{controller_name}_#{action_name}" }
 
   %form{ name: 'order_cycles_form' }
     %save-bar{ dirty: "order_cycles_form.$dirty", persist: "false" }
