@@ -6,6 +6,8 @@ class OrderCycle < ActiveRecord::Base
 
   has_many :exchanges, :dependent => :destroy
 
+  has_and_belongs_to_many :schedules, join_table: 'order_cycle_schedules'
+
   # TODO: DRY the incoming/outgoing clause used in several cases below
   # See Spree::Product definition, scopes variants and variants_including_master
   # This will require these accessors to be renamed
