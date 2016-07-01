@@ -10,7 +10,7 @@ Darkswarm.directive 'mapSearch', ($timeout) ->
       map = ctrl.getMap()
 
       searchBox = scope.createSearchBox map
-      scope.respondToSearch map, searchBox
+      scope.bindSearchResponse map, searchBox
       scope.biasResults map, searchBox
 
 
@@ -19,11 +19,16 @@ Darkswarm.directive 'mapSearch', ($timeout) ->
       map.controls[google.maps.ControlPosition.TOP_LEFT].push input
       return new google.maps.places.SearchBox(input)
 
-    scope.respondToSearch = (map, searchBox) ->
-      google.maps.event.addListener searchBox, "places_changed", ->
-        places = searchBox.getPlaces()
-        for place in places when place.geometry.viewport?
-          map.fitBounds place.geometry.viewport
+    scope.bindSearchResponse = (map, searchBox) ->
+      google.maps.event.addListener searchBox, "places_changed", =>
+        scope.showSearchResult map, searchBox
+
+    scope.showSearchResult = (map, searchBox) ->
+      places = searchBox.getPlaces()
+      for place in places when place.geometry.viewport?
+        map.fitBounds place.geometry.viewport
+        scope.$apply ->
+          model.$setViewValue elem.val()
 
     # Bias the SearchBox results towards places that are within the bounds of the
     # current map's viewport.
