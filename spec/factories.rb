@@ -259,6 +259,12 @@ FactoryGirl.define do
     end
   end
 
+  factory :producer_property, class: ProducerProperty do
+    value 'abc123'
+    producer { create(:supplier_enterprise) }
+    property
+  end
+
   factory :customer, :class => Customer do
     email { Faker::Internet.email }
     enterprise

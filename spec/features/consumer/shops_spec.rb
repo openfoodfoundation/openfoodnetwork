@@ -13,6 +13,7 @@ feature 'Shops', js: true do
   let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
 
   before do
+    producer.set_producer_property 'Organic', 'NASAA 12345'
     visit shops_path
   end
 
@@ -45,11 +46,22 @@ feature 'Shops', js: true do
     expect(page).to have_current_path enterprise_shop_path(distributor)
   end
 
-  it "should show hub producer modals" do
-    expand_active_table_node distributor.name
-    expect(page).to have_content producer.name
-    open_enterprise_modal producer
-    modal_should_be_open_for producer
+  describe "hub producer modal" do
+    let!(:product) { create(:simple_product, supplier: producer, taxons: [taxon]) }
+    let!(:taxon) { create(:taxon, name: 'Fruit') }
+    let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
+
+    it "should show hub producer modals" do
+      expand_active_table_node distributor.name
+      expect(page).to have_content producer.name
+      open_enterprise_modal producer
+      modal_should_be_open_for producer
+
+      within ".reveal-modal" do
+        expect(page).to have_content 'Fruit'   # Taxon
+        expect(page).to have_content 'Organic' # Producer property
+      end
+    end
   end
 
   def click_link_and_ensure(link_text, check)

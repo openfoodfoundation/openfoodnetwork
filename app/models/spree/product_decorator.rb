@@ -1,4 +1,5 @@
 require 'open_food_network/permalink_generator'
+require 'open_food_network/property_merge'
 
 Spree::Product.class_eval do
   include PermalinkGenerator
@@ -128,11 +129,7 @@ Spree::Product.class_eval do
     ps = product_properties.all
 
     if inherits_properties
-      supplier.producer_properties.each do |producer_property|
-        unless ps.find { |product_property| product_property.property.presentation == producer_property.property.presentation }
-          ps << producer_property
-        end
-      end
+      ps = OpenFoodNetwork::PropertyMerge.merge(ps, supplier.producer_properties)
     end
 
     ps.
