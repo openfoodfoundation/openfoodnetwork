@@ -202,6 +202,27 @@ module Admin
       end
     end
 
+    describe "copying settings" do
+      let!(:oc) { create :order_cycle }
+      let(:coordinator) { oc.coordinator }
+      let!(:oc2) { create :order_cycle, coordinator: coordinator}
+      
+      # Can't get auth to work when logged in as coordinator...
+      before do
+        login_as_admin
+      end
+
+      it "imports settings and products from another order cycle" do
+        spree_post :copy_settings, id: oc.id, oc_to_copy: oc2.id
+        oc.reload
+        oc2.products.each do |p|
+          expect(oc.products).to include p
+        end
+        expect(JSON.parse(response.body)["id"]).to eq oc.id
+
+      end
+
+    end
 
     describe "notifying producers" do
       let(:user) { create_enterprise_user }
