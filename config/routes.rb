@@ -69,6 +69,7 @@ Openfoodnetwork::Application.routes.draw do
       member do
         get :clone
         post :notify_producers
+        post :copy_settings
       end
     end
 

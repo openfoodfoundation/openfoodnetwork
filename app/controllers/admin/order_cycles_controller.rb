@@ -88,6 +88,12 @@ module Admin
     end
 
     def copy_settings
+      oc_to_copy = OrderCycle.find(params[:oc_to_copy])
+      if @order_cycle.copy_settings_from(oc_to_copy)
+        render_as_json @order_cycle, current_user: spree_current_user
+      else
+        render :json => {:success => false} 
+      end
     end
 
     # Send notifications to all producers who are part of the order cycle
