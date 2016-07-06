@@ -5,6 +5,10 @@ module InjectionHelper
     inject_json_ams "enterprises", Enterprise.activated.includes(address: :state).all, Api::EnterpriseSerializer, enterprise_injection_data
   end
 
+  def inject_enterprise_and_relatives
+    inject_json_ams "enterprises", current_distributor.relatives_including_self.activated.includes(address: :state).all, Api::EnterpriseSerializer, enterprise_injection_data
+  end
+
   def inject_shop_enterprises
     ocs = if current_order_cycle
             [current_order_cycle]
