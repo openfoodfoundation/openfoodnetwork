@@ -230,9 +230,9 @@ class Enterprise < ActiveRecord::Base
     ", self.id, self.id)
   end
 
-  def relatives_and_oc_producers(order_cycles)
+  def plus_relatives_and_oc_producers(order_cycles)
     oc_producer_ids = Exchange.in_order_cycle(order_cycles).incoming.pluck :sender_id
-    Enterprise.relatives_of_one_union_others(id, oc_producer_ids)
+    Enterprise.relatives_of_one_union_others(id, oc_producer_ids | [id])
   end
 
   def relatives_including_self
