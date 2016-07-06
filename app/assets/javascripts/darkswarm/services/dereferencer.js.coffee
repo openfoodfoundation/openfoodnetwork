@@ -7,10 +7,12 @@ Darkswarm.factory 'Dereferencer', ->
       unreferenced = []
       if source && target
         for object, i in source
+          # skip empty entries in sparse array
+          continue unless source.hasOwnProperty(i)
           key = object?.id
           if data.hasOwnProperty(key)
             target[i] = data[key]
           else
             delete target[i]
-            unreferenced[i] = source[i]
+            unreferenced[i] = object
       unreferenced

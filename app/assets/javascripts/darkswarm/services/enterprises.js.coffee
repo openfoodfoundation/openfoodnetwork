@@ -9,7 +9,6 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         @enterprises_by_id[enterprise.id] = enterprise
       # Replace enterprise and taxons ids with actual objects.
       @dereferenceEnterprises()
-      @dereferenceTaxons()
       @visible_enterprises = visibleFilter @enterprises
       @producers = @visible_enterprises.filter (enterprise)->
         enterprise.category in ["producer_hub", "producer_shop", "producer"]
@@ -23,19 +22,19 @@ Darkswarm.factory 'Enterprises', (enterprises, CurrentHub, Taxons, Dereferencer,
         @dereferenceEnterprise enterprise
 
     dereferenceEnterprise: (enterprise) ->
+      @dereferenceProperty(enterprise, 'hubs', @enterprises_by_id)
+      @dereferenceProperty(enterprise, 'producers', @enterprises_by_id)
+      @dereferenceProperty(enterprise, 'taxons', Taxons.taxons_by_id)
+      @dereferenceProperty(enterprise, 'supplied_taxons', Taxons.taxons_by_id)
+
+    dereferenceProperty: (enterprise, property, data) ->
       # keep unreferenced enterprise ids
       # in case we dereference again after adding more enterprises
-      hubs = enterprise.unreferenced_hubs || enterprise.hubs
-      enterprise.unreferenced_hubs =
-        Dereferencer.dereference_from hubs, enterprise.hubs, @enterprises_by_id
-      producers = enterprise.unreferenced_producers || enterprise.producers
-      enterprise.unreferenced_producers =
-        Dereferencer.dereference_from producers, enterprise.producers, @enterprises_by_id
-
-    dereferenceTaxons: ->
-      for enterprise in @enterprises
-        Dereferencer.dereference enterprise.taxons, Taxons.taxons_by_id
-        Dereferencer.dereference enterprise.supplied_taxons, Taxons.taxons_by_id
+      enterprise.unreferenced |= {}
+      collection = enterprise[property]
+      unreferenced = enterprise.unreferenced[property] || collection
+      enterprise.unreferenced[property] =
+        Dereferencer.dereference_from unreferenced, collection, data
 
     addEnterprises: (new_enterprises) ->
       return unless new_enterprises && new_enterprises.length
