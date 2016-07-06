@@ -3,6 +3,8 @@ class Customer < ActiveRecord::Base
 
   belongs_to :enterprise
   belongs_to :user, class_name: Spree.user_class
+  has_many :orders, class_name: Spree::Order
+  before_destroy :check_for_orders
 
   before_validation :downcase_email
   before_validation :empty_code
@@ -27,5 +29,11 @@ class Customer < ActiveRecord::Base
 
   def associate_user
     self.user = user || Spree::User.find_by_email(email)
+  end
+
+  def check_for_orders
+    return true unless orders.any?
+    errors[:base] << "Delete failed: customer has associated orders"
+    false
   end
 end

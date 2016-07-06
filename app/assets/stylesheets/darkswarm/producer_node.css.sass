@@ -5,7 +5,7 @@
   .active_table .active_table_node
 
     // Header row
-    @media all and (max-width: 640px) 
+    @media all and (max-width: 640px)
       .skinny-head
         background-color: $clr-turquoise-light
         @include border-radius-mixed(0.5em, 0.5em, 0, 0)
@@ -16,7 +16,7 @@
       .follow-icons
         &, & *
           font-size: 1.5rem
-        
+
 
     // Producer icons
     i.ofn-i_059-producer, i.ofn-i_060-producer-reversed
@@ -41,11 +41,11 @@
       &:hover, &:focus, &:active
         &.secondary
           color: #666
-          .hub-name, .button-address 
+          .hub-name, .button-address
             border-bottom: 1px solid #999
         &.primary
           color: $clr-brick-bright
-          .hub-name, .button-address 
+          .hub-name, .button-address
             border-bottom: 1px solid $clr-brick-bright
 
     p.word-wrap
@@ -55,6 +55,10 @@
 
     .fat-taxons
       background-color: $clr-turquoise-light
+
+    .fat-properties
+      background-color: $clr-turquoise-ultra-light
+      border: 1px solid $clr-turquoise-light
 
     .producer-name
       color: $clr-turquoise
@@ -72,7 +76,7 @@
           max-height: 160px
           width: auto
           &.left
-            padding: 0.25rem 1rem 0.25rem 0 
+            padding: 0.25rem 1rem 0.25rem 0
           &.right
             padding: 0.25rem 0.5rem 0.25rem 2rem
 
@@ -87,10 +91,7 @@
     &.closed
       .active_table_row.closed
         border: 1px solid transparent
-        @media all and (max-width: 640px) 
+        @media all and (max-width: 640px)
           border-color: $clr-turquoise-light
         &:hover, &:active, &:focus
           border-color: $clr-turquoise
-
-
-

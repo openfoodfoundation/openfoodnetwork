@@ -1,3 +1,5 @@
+require 'open_food_network/property_merge'
+
 class Api::EnterpriseSerializer < ActiveModel::Serializer
   # We reference this here because otherwise the serializer complains about its absence
   Api::IdSerializer
@@ -47,7 +49,7 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
-
+  has_many :properties, serializer: Api::PropertySerializer
 
   def taxons
     ids_to_objs options[:data].distributed_taxons[object.id]
@@ -55,6 +57,14 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   def supplied_taxons
     ids_to_objs options[:data].supplied_taxons[object.id]
+  end
+
+  def properties
+    # This results in 3 queries per enterprise
+    product_properties  = Spree::Property.applied_by(object)
+    producer_properties = object.properties
+
+    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
   end
 
   def pickup

@@ -216,6 +216,7 @@ module OpenFoodNetwork
           proc { |line_items| "" },
           proc { |line_items| "" },
           proc { |line_items| "" },
+          proc { |line_items| line_items.all? { |li| li.order.paid? } ? "Yes" : "No" },
 
           proc { |line_items| line_items.first.order.shipping_method.andand.name },
           proc { |line_items| rsa.call(line_items) ? 'Y' : 'N' },

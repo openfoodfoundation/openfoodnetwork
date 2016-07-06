@@ -13,6 +13,9 @@ feature 'Tag Rules', js: true do
     end
 
     it "allows creation of rules of each type" do
+      # Make the whole page visible
+      page.driver.resize(1280, 2000)
+
       click_link "Tag Rules"
 
       # Creating a new tag
@@ -120,6 +123,9 @@ feature 'Tag Rules', js: true do
     end
 
     it "saves changes to rules of each type" do
+      # Make the whole page visible
+      page.driver.resize(1280, 2000)
+
       click_link "Tag Rules"
 
       # Tag groups exist
@@ -228,6 +234,9 @@ feature 'Tag Rules', js: true do
     end
 
     it "deletes both default and customer rules from the database" do
+      # Make the whole page visible
+      page.driver.resize(1280, 2000)
+
       click_link "Tag Rules"
 
       expect do
