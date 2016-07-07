@@ -93,16 +93,4 @@ feature %q{
       page.should have_link shop.name
     end
   end
-
-
-  private
-
-  def toggle_filters
-    find('a.filterbtn').click
-  end
-
-  def toggle_filter(name)
-    page.find('span', text: name).click
-  end
-
 end
