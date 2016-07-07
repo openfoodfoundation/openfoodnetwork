@@ -38,7 +38,8 @@ Darkswarm.directive 'singleLineSelectors', ($timeout, $filter) ->
 
     loadWidths = ->
       $(element).find("li").not(".more").each (i) ->
-        scope.allSelectors[i].width = $(this).outerWidth(true)
+        if i < scope.allSelectors.length
+          scope.allSelectors[i].width = $(this).outerWidth(true)
         return null # So we don't exit the loop weirdly
 
     scope.overFlowSelectors = ->

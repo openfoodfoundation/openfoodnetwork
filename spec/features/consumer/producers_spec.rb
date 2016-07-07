@@ -55,6 +55,23 @@ feature %q{
       page.should_not have_content producer2.name
     end
 
+    describe "filtering by product property" do
+      it "filters" do
+        toggle_filters
+
+        toggle_filter 'Organic'
+
+        page.should     have_content producer1.name
+        page.should_not have_content producer2.name
+
+        toggle_filter 'Organic'
+        toggle_filter 'Biodynamic'
+
+        page.should_not have_content producer1.name
+        page.should     have_content producer2.name
+      end
+    end
+
     it "shows all producers with expandable details" do
       page.should have_content producer1.name
       expand_active_table_node producer1.name
