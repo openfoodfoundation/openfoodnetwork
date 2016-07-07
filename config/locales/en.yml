@@ -605,6 +605,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   register_title: Register
 
+  sell_title: "Sell"
+  sell_headline: "Sell food"
+  sell_motivation: "Here's why"
+  sell_producers: "Producers"
+  sell_shops: "Shops"
+  sell_groups: "Groups"
+
   shops_title: Shops
   shops_headline: Shopping, transformed.
   shops_text: Food grows in cycles, farmers harvest in cycles, and we order food in cycles. If you find an order cycle closed, check back soon.

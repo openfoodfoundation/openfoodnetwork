@@ -9,4 +9,8 @@ class HomeController < BaseController
       @num_orders = Spree::Order.complete.count
     end
   end
+
+  def sell
+  end
+
 end

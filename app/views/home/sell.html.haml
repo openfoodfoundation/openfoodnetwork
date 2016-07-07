@@ -1,0 +1,32 @@
+- content_for(:title) do
+  = t :sell_title
+
+#panes
+  #sell.pane
+    .row.header
+      .small-12.medium-12.columns.text-center
+        %h2
+          = t :sell_headline
+    .row.content
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %p.text-big
+          = t :sell_motivation
+
+  .pane
+    .row
+      .small-12.medium-4.columns.text-center
+        %h3= t :sell_producers
+        %a.button.transparent{href: signup_producers_path}
+          = t :register_title
+
+      .small-12.medium-4.columns.text-center
+        %h3= t :sell_shops
+        %a.button.transparent{href: signup_shops_path}
+          = t :register_title
+
+      .small-12.medium-4.columns.text-center
+        %h3= t :sell_groups
+        %a.button.transparent{href: signup_groups_path}
+          = t :register_title
+
+= render "shared/footer"
