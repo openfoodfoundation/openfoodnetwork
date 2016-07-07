@@ -121,7 +121,6 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    active_link_to (1.0.0)
     active_model_serializers (0.8.3)
       activemodel (>= 3.0)
     activemerchant (1.57.0)
@@ -202,10 +201,6 @@ GEM
     coffee-script-source (1.10.0)
     colorize (0.7.7)
     columnize (0.9.0)
-    comfortable_mexican_sofa (1.6.24)
-      active_link_to (~> 1.0.0)
-      paperclip (>= 2.3.0)
-      rails (>= 3.0.0)
     compass (1.0.3)
       chunky_png (~> 1.2)
       compass-core (~> 1.0.2)
@@ -659,7 +654,6 @@ DEPENDENCIES
   bugsnag
   capybara
   coffee-rails (~> 3.2.1)
-  comfortable_mexican_sofa
   compass-rails
   css_splitter
   custom_error_message!
@@ -734,5 +728,8 @@ DEPENDENCIES
   wicked_pdf
   wkhtmltopdf-binary
 
+RUBY VERSION
+   ruby 2.1.5p273
+
 BUNDLED WITH
-   1.11.2
+   1.12.5
