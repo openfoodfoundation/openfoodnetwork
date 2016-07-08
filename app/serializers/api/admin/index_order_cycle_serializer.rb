@@ -7,6 +7,8 @@ class Api::Admin::IndexOrderCycleSerializer < ActiveModel::Serializer
   attributes :coordinator, :producers, :shops, :viewing_as_coordinator
   attributes :edit_path, :clone_path, :delete_path
 
+  has_many :schedules, serializer: Api::Admin::IdNameSerializer
+
   def deletable
     can_delete?(object)
   end

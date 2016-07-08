@@ -185,6 +185,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
       OrderCycle.accessible_by(user).include? order_cycle
     end
+    can [:admin, :index, :create], Schedule
     can [:bulk_update, :clone, :destroy, :notify_producers], OrderCycle do |order_cycle|
       user.enterprises.include? order_cycle.coordinator
     end

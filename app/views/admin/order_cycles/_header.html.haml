@@ -1,5 +1,6 @@
 %colgroup
   %col{ ng: { show: 'columns.name.visible' } }
+  %col{ ng: { show: 'columns.schedule.visible' } }
   %col{ ng: { show: 'columns.open.visible' }, style: 'width: 20%;' }
   %col{ ng: { show: 'columns.close.visible' }, style: 'width: 20%;' }
   - unless simple_index
@@ -15,6 +16,8 @@
   %tr
     %th{ ng: { show: 'columns.name.visible' } }
       =t :name
+    %th{ ng: { show: 'columns.schedule.visible' } }
+      =t('admin.order_cycles.index.schedules')
     %th{ ng: { show: 'columns.open.visible' } }
       =t :open
     %th{ ng: { show: 'columns.close.visible' } }

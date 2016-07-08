@@ -105,13 +105,13 @@ module Admin
     def collection
       return Enterprise.where("1=0") unless json_request?
       ocs = if params[:as] == "distributor"
-        OrderCycle.ransack(params[:q]).result.
+        OrderCycle.preload(:schedules).ransack(params[:q]).result.
           involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
       elsif params[:as] == "producer"
-        OrderCycle.ransack(params[:q]).result.
+        OrderCycle.preload(:schedules).ransack(params[:q]).result.
           involving_managed_producers_of(spree_current_user).order('updated_at DESC')
       else
-        OrderCycle.ransack(params[:q]).result.accessible_by(spree_current_user)
+        OrderCycle.preload(:schedules).ransack(params[:q]).result.accessible_by(spree_current_user)
       end
 
       ocs.undated +
@@ -132,7 +132,7 @@ module Admin
         params[:q] = {
           g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: orders_close_at_gt, orders_close_at_null: true } ]
         }
-        @order_cycle_set = OrderCycleSet.new :collection => (@collection = collection)
+        @collection = collection
       end
     end
 

@@ -1,0 +1,28 @@
+#schedule-dialog {
+  #available-order-cycles, #selected-order-cycles {
+    text-align: left;
+    display: inline-block;
+    width: 45%;
+    height: 200px;
+    max-height: 300px;
+    width: 45%;
+
+    .order-cycles {
+      display: block;
+      border: 1px solid #dddddd;
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+
+      .order-cycle {
+        padding: 8px 5px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #cee1f4;
+        }
+      }
+    }
+  }
+}
