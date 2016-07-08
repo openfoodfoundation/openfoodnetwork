@@ -10,7 +10,7 @@
       .four.columns
         {{ oc.products }}
       .four.columns.alpha.omega.text-center
-        %input{ type: 'button', value: 'Copy products', ng: { click: "copyProducts()" } }
+        %input#copy_products{ type: 'button', value: 'Copy products', ng: { click: "copyProducts()" } }
 
   = form_for [main_app, :admin, @order_cycle] do |f|
     .row
