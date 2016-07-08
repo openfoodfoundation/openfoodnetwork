@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminEditOrderCycleCtrl', ($scope, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
+  .controller 'AdminEditOrderCycleCtrl', ($rootScope, $scope, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
@@ -91,3 +91,7 @@ angular.module('admin.orderCycles')
 
     $scope.cancel = (destination) ->
       $window.location = destination
+
+    $rootScope.$on 'refreshOC', (event, id) ->
+      console.log "caught"
+      $scope.order_cycle = OrderCycle.load(id)

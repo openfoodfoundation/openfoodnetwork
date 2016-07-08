@@ -685,6 +685,32 @@ feature %q{
         occ = OrderCycle.last
         occ.name.should == "COPY OF #{oc.name}"
       end
+
+      scenario "copying from another order cycle" do
+        oc = create(:simple_order_cycle, { suppliers: [supplier_managed], coordinator: distributor_managed, distributors: [distributor_managed], name: 'Order Cycle 1' } )
+        oc2 = create(:simple_order_cycle, coordinator: distributor_managed, name: 'Order Cycle 2')
+        v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
+        v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
+
+        # Incoming exchange
+        ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed, incoming: true).first
+        ex_in.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # Outgoing exchange
+        ex_out = oc.exchanges.where(sender_id: distributor_managed, receiver_id: distributor_managed, incoming: false).first
+        ex_out.update_attributes(variant_ids: [v1.id, v2.id])
+
+        visit edit_admin_order_cycle_path(oc2)
+        click_button 'Advanced Settings'
+        select2_select oc2.name, from: "oc_id"
+        page.find('#copy_products').trigger('click')
+
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page).to have_selector 'tr.supplier', count: 1
+
+        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
+        expect(page).to have_selector 'tr.distributor', count: 1
+      end
     end
 
     context "that is a manager of a participating producer" do
