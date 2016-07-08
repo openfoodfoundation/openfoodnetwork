@@ -176,6 +176,8 @@ Openfoodnetwork::Application.routes.draw do
       get :connect, on: :collection
       get :status, on: :collection
     end
+
+    resources :schedules, only: [:index, :create], format: :json
   end
 
   namespace :api do

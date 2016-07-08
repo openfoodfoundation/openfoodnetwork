@@ -2,6 +2,9 @@
   %td{ ng: { show: 'columns.name.visible' } }
     %a{ ng: { href: '{{orderCycle.edit_path}}' } }
       {{ orderCycle.name }}
+  %td{ ng: { show: 'columns.schedule.visible' } }
+    %a{ href: '#', 'schedule-dialog' => true, 'schedule-id' => 'schedule.id', ng: { repeat: 'schedule in orderCycle.schedules'} }
+      {{ schedule.name }}
   %td{ ng: { show: 'columns.open.visible' } }
     %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at' }, datetimepicker: 'orderCycle.orders_open_at' }
     %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at'}, disabled: true }

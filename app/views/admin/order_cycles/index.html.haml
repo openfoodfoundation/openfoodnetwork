@@ -5,6 +5,9 @@
   = "ng-app='admin.orderCycles'"
 
 = content_for :page_actions do
+  %li
+    %a.button.icon-plus#new-schedule{ href: "#", "schedule-dialog" => true }
+      = t('admin.order_cycles.index.new_schedule')
   %li#new_order_cycle_link
     = button_link_to t(:new_order_cycle), main_app.new_admin_order_cycle_path, icon: 'icon-plus', id: 'admin_new_order_cycle_link'
 
