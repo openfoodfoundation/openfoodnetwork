@@ -12,8 +12,8 @@ feature 'Groups', js: true do
     page.should have_content group.name
   end
 
-  it "renders enterprise modals for groups" do
-    visit groups_path
-    page.should have_content group.name
+  it "searches by URL" do
+    visit groups_path(anchor:  "/?query=xyzzy")
+    expect(page).to have_content "No groups found"
   end
 end
