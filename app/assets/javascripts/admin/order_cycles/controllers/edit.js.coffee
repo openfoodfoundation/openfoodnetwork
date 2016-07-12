@@ -93,5 +93,5 @@ angular.module('admin.orderCycles')
       $window.location = destination
 
     $rootScope.$on 'refreshOC', (event, id) ->
-      console.log "caught"
+      StatusMessage.display 'success', t "order_cycle_updated"
       $scope.order_cycle = OrderCycle.load(id)
