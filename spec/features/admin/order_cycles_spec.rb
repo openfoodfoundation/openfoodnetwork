@@ -723,7 +723,7 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc2)
         click_button 'Advanced Settings'
-        select2_select oc2.name, from: "oc_id"
+        select2_select 'bumarse', from: "oc_id"
         page.find('#copy_products').trigger('click')
 
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"

@@ -90,10 +90,7 @@ module Admin
     def copy_settings
       oc_to_copy = OrderCycle.find(params[:oc_to_copy])
       if @order_cycle.copy_settings_from(oc_to_copy)
-        respond_to do |format|
-          format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
-          format.json { render_as_json @order_cycle, current_user: spree_current_user }
-        end
+        render_as_json @order_cycle, current_user: spree_current_user 
       else
         render :json => {:success => false}
       end
