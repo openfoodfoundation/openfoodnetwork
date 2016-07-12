@@ -121,11 +121,6 @@ class OrderCycle < ActiveRecord::Base
     oc.name = "COPY OF #{oc.name}"
     oc.orders_open_at = oc.orders_close_at = nil
     OrderCycle.copy_fees_products_and_exchanges(self,oc)
-#    oc.coordinator_fee_ids = self.coordinator_fee_ids
-#    oc.preferred_product_selection_from_coordinator_inventory_only = self.preferred_product_selection_from_coordinator_inventory_only
-#    oc.save!
-#    self.exchanges.each { |e| e.clone!(oc) }
-#    oc.reload
   end
 
   def self.copy_fees_products_and_exchanges(from,to)
@@ -137,6 +132,7 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def copy_settings_from(oc)
+    exchanges.clear
     OrderCycle.copy_fees_products_and_exchanges(oc,self)
   end
 
