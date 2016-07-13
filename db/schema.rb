@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160713003535) do
+ActiveRecord::Schema.define(:version => 20160713013358) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20160713003535) do
     t.datetime "updated_at",      :null => false
     t.integer  "bill_address_id"
     t.integer  "ship_address_id"
+    t.string   "name"
   end
 
   add_index "customers", ["bill_address_id"], :name => "index_customers_on_bill_address_id"
