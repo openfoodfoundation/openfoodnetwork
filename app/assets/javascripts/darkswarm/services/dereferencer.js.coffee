@@ -13,6 +13,5 @@ Darkswarm.factory 'Dereferencer', ->
           if data.hasOwnProperty(key)
             target[i] = data[key]
           else
-            delete target[i]
             unreferenced[i] = object
       unreferenced
