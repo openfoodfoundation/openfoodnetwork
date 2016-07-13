@@ -64,6 +64,7 @@ en:
   free: "free"
   plus_tax: "plus GST"
   total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
+  business_model_configuration: "Business model configuration"
   say_no: "No"
   say_yes: "Yes"
 
