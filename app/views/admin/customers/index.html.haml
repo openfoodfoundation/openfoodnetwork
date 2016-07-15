@@ -37,6 +37,7 @@
       %img.spinner{ src: "/assets/spinning-circles.svg" }
       %h1
         =t :loading_customers
+
   .row{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length == 0'}
     %h1#no_results
       =t :no_customers_found
@@ -48,8 +49,9 @@
 
       %table.index#customers
         %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }
+        %col.name{ width: "20%", 'ng-show' => 'columns.code.visible' }
         %col.code{ width: "20%", 'ng-show' => 'columns.code.visible' }
-        %col.tags{ width: "50%", 'ng-show' => 'columns.tags.visible' }
+        %col.tags{ width: "30%", 'ng-show' => 'columns.tags.visible' }
         %col.actions{ width: "10%"}
         %thead
           %tr{ ng: { controller: "ColumnsCtrl" } }
@@ -57,6 +59,8 @@
               -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
             %th.email{ 'ng-show' => 'columns.email.visible' }
               %a{ :href => '', 'ng-click' => "predicate = 'customer.email'; reverse = !reverse" } Email
+            %th.name{ 'ng-show' => 'columns.name.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'customer.name'; reverse = !reverse" } Name
             %th.code{ 'ng-show' => 'columns.code.visible' }
               %a{ :href => '', 'ng-click' => "predicate = 'customer.code'; reverse = !reverse" } Code
             %th.tags{ 'ng-show' => 'columns.tags.visible' } Tags
@@ -67,6 +71,8 @@
           -# %td.bulk
             -# %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
           %td.email{ 'ng-show' => 'columns.email.visible', "ng-bind" => '::customer.email' }
+          %td.name{ 'ng-show' => 'columns.name.visible'}
+            %input{ type: 'text', name: 'name', ng: { model: 'customer.name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'name'}
           %td.code{ 'ng-show' => 'columns.code.visible' }
             %input{ type: 'text', name: 'code', ng: {model: 'customer.code', change: 'checkForDuplicateCodes()'}, "obj-for-update" => "customer", "attr-for-update" => "code" }
             %i.icon-warning-sign{ ng: {if: 'duplicate'} }

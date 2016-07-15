@@ -80,8 +80,10 @@ feature 'Customers' do
         within "tr#c_#{customer1.id}" do
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input[name=code].update-pending"
-        end
-        within "tr#c_#{customer1.id}" do
+
+          fill_in "name", with: "customer abc"
+          expect(page).to have_css "input[name=name].update-pending"
+
           find(:css, "tags-input .tags input").set "awesome\n"
           expect(page).to have_css ".tag_watcher.update-pending"
         end
@@ -89,18 +91,22 @@ feature 'Customers' do
 
         # Every says it updated
         expect(page).to have_css "input[name=code].update-success"
+        expect(page).to have_css "input[name=name].update-success"
         expect(page).to have_css ".tag_watcher.update-success"
 
         # And it actually did
         expect(customer1.reload.code).to eq "new-customer-code"
+        expect(customer1.reload.name).to eq "customer abc"
         expect(customer1.tag_list).to eq ["awesome"]
 
         # Clearing attributes
         within "tr#c_#{customer1.id}" do
           fill_in "code", with: ""
           expect(page).to have_css "input[name=code].update-pending"
-        end
-        within "tr#c_#{customer1.id}" do
+
+          fill_in "name", with: ""
+          expect(page).to have_css "input[name=name].update-pending"
+
           find("tags-input li.tag-item a.remove-button").trigger('click')
           expect(page).to have_css ".tag_watcher.update-pending"
         end
@@ -108,10 +114,12 @@ feature 'Customers' do
 
         # Every says it updated
         expect(page).to have_css "input[name=code].update-success"
+        expect(page).to have_css "input[name=name].update-success"
         expect(page).to have_css ".tag_watcher.update-success"
 
         # And it actually did
         expect(customer1.reload.code).to be nil
+        expect(customer1.reload.name).to eq ''
         expect(customer1.tag_list).to eq []
       end
 
