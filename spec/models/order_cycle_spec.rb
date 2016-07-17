@@ -445,9 +445,9 @@ describe OrderCycle do
     # to_h gives us a unique hash for each exchange
     # check that the clone has no additional exchanges
     occ.exchanges.size.should == oc.exchanges.size
-    # check that the clone has original exchanges 
+    # check that the clone has original exchanges
     occ.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex1["receiver_id"], ex1["sender_id"]]
-    occ.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex2["receiver_id"], ex2["sender_id"]] 
+    occ.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex2["receiver_id"], ex2["sender_id"]]
   end
 
   it "copies information from another order cycle" do
@@ -458,7 +458,6 @@ describe OrderCycle do
     ex2 = create(:exchange, order_cycle: oc)
     new_oc = create(:order_cycle)
     original_exchange = new_oc.exchanges.map(&:to_h).first
-    puts new_oc.exchanges.inspect
 
     new_oc.copy_settings_from(oc)
 
@@ -467,14 +466,12 @@ describe OrderCycle do
     new_oc.coordinator_fee_ids.should == oc.coordinator_fee_ids
     new_oc.preferred_product_selection_from_coordinator_inventory_only.should == oc.preferred_product_selection_from_coordinator_inventory_only
 
-    puts "after:"
-    puts new_oc.exchanges.inspect
     # check that the clone has original exchanges
     new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex1["receiver_id"], ex1["sender_id"]]
-    new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex2["receiver_id"], ex2["sender_id"]] 
+    new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex2["receiver_id"], ex2["sender_id"]]
 
     # Any existing exchanges are deleted
-    new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should_not include [original_exchange["receiver_id"], original_exchange["sender_id"]] 
+    new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should_not include [original_exchange["receiver_id"], original_exchange["sender_id"]]
 
   end
 
