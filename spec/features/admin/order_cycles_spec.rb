@@ -688,7 +688,7 @@ feature %q{
 
       scenario "copying from another order cycle" do
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed], coordinator: distributor_managed, distributors: [distributor_managed], name: 'Order Cycle 1' } )
-        oc2 = create(:simple_order_cycle, coordinator: distributor_managed, name: 'Order Cycle 2')
+        oc_new = create(:simple_order_cycle, coordinator: distributor_managed, name: 'Order Cycle 2')
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
 
@@ -700,11 +700,12 @@ feature %q{
         ex_out = oc.exchanges.where(sender_id: distributor_managed, receiver_id: distributor_managed, incoming: false).first
         ex_out.update_attributes(variant_ids: [v1.id, v2.id])
 
-        visit edit_admin_order_cycle_path(oc2)
+        visit edit_admin_order_cycle_path(oc_new)
         click_button 'Advanced Settings'
-        select2_select 'bumarse', from: "oc_id"
+        select2_select 'oc.name', from: "oc_id"
         page.find('#copy_products').trigger('click')
 
+        # Should now show the exchanges from the original oc
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector 'tr.supplier', count: 1
 

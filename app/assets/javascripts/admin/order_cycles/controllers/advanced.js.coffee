@@ -10,8 +10,6 @@ angular.module('admin.orderCycles').controller 'AdminAdvancedOrderCyclesCtrl', (
         url: "/admin/order_cycles/" + current_order_cycle_id + "/copy_settings"
         data: { oc_to_copy: $scope.order_cycle_to_copy.id }
       .success (response) ->
-        console.log "emit refresh"
-        console.log response
         $rootScope.$emit('refreshOC', response.id)
       .error (data, status) ->
         $timeout -> StatusMessage.display 'failure', 'Failed to copy products'
