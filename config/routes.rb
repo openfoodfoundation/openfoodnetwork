@@ -55,6 +55,7 @@ Openfoodnetwork::Application.routes.draw do
 
     member do
       get :shop
+      get :relatives
     end
   end
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
