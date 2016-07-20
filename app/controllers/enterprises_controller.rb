@@ -1,3 +1,5 @@
+require 'open_food_network/enterprise_injection_data'
+
 class EnterprisesController < BaseController
   layout "darkswarm"
   helper Spree::ProductsHelper
@@ -11,18 +13,28 @@ class EnterprisesController < BaseController
 
   respond_to :js, only: :permalink_checker
 
+  def relatives
+    respond_to do |format|
+      format.json do
+        enterprise = Enterprise.find(params[:id])
+        enterprises = enterprise.andand.relatives.andand.activated
+        render(json: enterprises,
+               each_serializer: Api::EnterpriseSerializer,
+               data: OpenFoodNetwork::EnterpriseInjectionData.new)
+      end
+    end
+  end
 
   def check_permalink
     return render text: params[:permalink], status: 409 if Enterprise.find_by_permalink params[:permalink]
 
-    path = Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
+    path = Rails.application.routes.recognize_path("/#{params[:permalink].to_s}")
     if path && path[:controller] == "cms_content"
       render text: params[:permalink], status: 200
     else
       render text: params[:permalink], status: 409
     end
   end
-
 
   private
 
