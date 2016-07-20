@@ -45,7 +45,7 @@ script:
 
 after_success:
   - >
-    if [ "$GITHUB_DEPLOY" = "true" -a "$TRAVIS_PULL_REQUEST" = "false" -a -n "$TRAVIS_BRANCH" -a -n "$GITHUB_API_SECRET" ]; then
+    if [ "$GITHUB_DEPLOY" = "true" -a "$TRAVIS_PULL_REQUEST" = "false" -a -n "$TRAVIS_BRANCH" -a "$TRAVIS_BRANCH" != "transifex" -a -n "$GITHUB_API_SECRET" ]; then
       description="`git show "$TRAVIS_BRANCH" -s --oneline --no-color`"
       data="{
         \"ref\":\"$TRAVIS_BRANCH\",
