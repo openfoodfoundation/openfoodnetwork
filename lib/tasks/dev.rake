@@ -5,8 +5,8 @@ namespace :openfoodnetwork do
 
     desc 'load sample data'
     task :load_sample_data => :environment do
-      require File.expand_path('../../../spec/factories', __FILE__)
-      require File.expand_path('../../../spec/support/spree/init', __FILE__)
+      require_relative '../../spec/factories'
+      require_relative '../../spec/support/spree/init'
       task_name = "openfoodnetwork:dev:load_sample_data"
 
       # -- Shipping / payment information

@@ -8,7 +8,7 @@ Knapsack.tracker.config({enable_time_offset_warning: false}) unless ENV['CI']
 Knapsack::Adapters::RSpecAdapter.bind
 
 ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../config/environment", __FILE__)
+require_relative "../config/environment"
 require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
