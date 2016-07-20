@@ -66,6 +66,7 @@ en:
   plus_tax: "plus GST"
   total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
   min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
+  business_model_configuration: "Business model configuration"
   say_no: "No"
   say_yes: "Yes"
   then: then

@@ -93,5 +93,24 @@ module OpenFoodNetwork
         end
       end
     end
+
+    describe "columns are aligned" do
+      let(:d1) { create(:distributor_enterprise) }
+      let(:oc1) { create(:simple_order_cycle) }
+      let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
+      let(:li1) { build(:line_item) }
+      let(:user) { create(:admin_user)}
+
+      before { o1.line_items << li1 }
+
+      it 'has aligned columsn' do
+        report_types = ["", "order_cycle_supplier_totals", "order_cycle_supplier_totals_by_distributor", "order_cycle_distributor_totals_by_supplier", "order_cycle_customer_totals"]
+
+        report_types.each do |report_type|
+          report = OrdersAndFulfillmentsReport.new user, report_type: report_type
+          report.header.size.should == report.columns.size
+        end
+      end
+    end
   end
 end

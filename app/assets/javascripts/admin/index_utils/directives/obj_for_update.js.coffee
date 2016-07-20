@@ -24,7 +24,7 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
       scope.savedValue = value
 
     scope.success = ->
-      switchClass( element, "update-success", ["update-pending", "update-error"], 3000 )
+      switchClass( element, "update-success", ["update-pending", "update-error"], 5000 )
 
     scope.pending = ->
       switchClass( element, "update-pending", ["update-error", "update-success"], false )
