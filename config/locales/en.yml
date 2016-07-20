@@ -118,6 +118,8 @@ en:
         add_a_new_customer_for: Add a new customer for %{shop_name}
         code: Code
         duplicate_code: "This code is used already."
+        bill_address: "Billing Address"
+        ship_address: "Shipping Address"
 
     products:
       bulk_edit:

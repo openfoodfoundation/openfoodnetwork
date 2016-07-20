@@ -270,6 +270,7 @@ FactoryGirl.define do
     enterprise
     code { SecureRandom.base64(150) }
     user
+    bill_address { create(:address) }
   end
 
   factory :billable_period do
