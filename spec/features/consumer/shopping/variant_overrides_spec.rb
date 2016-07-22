@@ -199,7 +199,7 @@ feature "shopping with variant overrides defined", js: true do
   def click_checkout
       show_cart
       wait_until_enabled 'li.cart a.button'
-      click_link 'Checkout now', match: :first
+      first(:link, 'Checkout now').click
   end
 
 end
