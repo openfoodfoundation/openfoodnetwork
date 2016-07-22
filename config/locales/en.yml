@@ -571,25 +571,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   modal_producers: "Producers"
   modal_producers_explained: "Our producers make all the delicious food you can shop for on the Open Food Network."
 
-  ocs_choice_hub: "Hub:"
-  ocs_choice_oc: "Order Cycle:"
-  ocs_choice_text: "You have not yet picked where you will get your order from."
-  ocs_closed_headline: Orders are currently closed for this hub
-  ocs_closed_time: "The last cycle closed %{time} ago."
-  ocs_closed_contact: "Please contact your hub directly to see if they accept late orders, or wait until the next cycle opens."
-  ocs_closed_opens: "The next order cycle opens in %{time}"
-  ocs_closed_email: "Email: %{email}"
-  ocs_closed_phone: "Phone: %{phone}"
-  ocs_pickup_time: "Your order will be ready on %{pickup_time}"
-  ocs_change_date: "Change Collection Date"
-  ocs_change_date_notice: "(This will reset your cart)"
-  ocs_close_time: "ORDERS CLOSE"
-  ocs_when_headline: When do you want your order?
-  ocs_when_text: No products are displayed until you select a date.
-  ocs_when_closing: "Closing On"
-  ocs_when_choose: "Choose Order Cycle"
-  ocs_list: "List View"
-
   producers_about: About us
   producers_buy: Shop for
   producers_contact: Contact
