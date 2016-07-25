@@ -94,4 +94,9 @@ angular.module('admin.orderCycles')
 
     $rootScope.$on 'refreshOC', (event, id) ->
       StatusMessage.display 'success', t "order_cycle_updated"
+      $scope.enterprises = Enterprise.index(order_cycle_id: id)
+      $scope.supplier_enterprises = Enterprise.producer_enterprises
+      $scope.distributor_enterprises = Enterprise.hub_enterprises
+      $scope.supplied_products = Enterprise.supplied_products
+      $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: id)
       $scope.order_cycle = OrderCycle.load(id)
