@@ -9,7 +9,9 @@
       }
       $("#advanced_settings").slideToggle()
     }
-    angular.bootstrap(document,['admin.orderCycles']);
+    angular.element(document).ready(function() {
+      angular.bootstrap(document, ['admin.orderCycles']);
+    });
 
   - if can? :notify_producers, @order_cycle
     %li
