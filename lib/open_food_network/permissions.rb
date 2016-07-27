@@ -128,14 +128,11 @@ module OpenFoodNetwork
     end
 
     def editable_schedules
-      Schedule.joins(:order_cycles).where(coordinator_id: managed_enterprises.pluck(:id)).select("DISTINCT schedules.*")
+      Schedule.joins(:order_cycles).where(order_cycles: { id: OrderCycle.managed_by(@user).pluck(:id) }).select("DISTINCT schedules.*")
     end
 
     def visible_schedules
-      managed_enterprise_ids = managed_enterprises.pluck(:id)
-      Schedule.joins(order_cycles: :exchanges)
-      .where('exchanges.sender_id IN (?) OR exchanges.receiver_id IN (?)', managed_enterprise_ids, managed_enterprise_ids)
-      .select("DISTINCT schedules.*")
+      Schedule.joins(:order_cycles).where(order_cycles: { id: OrderCycle.accessible_by(@user).pluck(:id) }).select("DISTINCT schedules.*")
     end
 
 

@@ -8,3 +8,4 @@
   .order-cycles
     .order-cycle{ ng: { repeat: 'orderCycle in selectedOrderCycles' } }
       {{ orderCycle.name }}
+.error{ ng: { repeat: "error in errors", bind: "error" } }

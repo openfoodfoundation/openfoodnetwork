@@ -1,19 +1,20 @@
 #schedule-dialog
   .text-normal.margin-bottom-30.text-center
-    = t('admin.order_cycles.index.add_a_new_schedule')
+    %span{ ng: { hide: 'schedule.id' } }= t('admin.order_cycles.index.adding_a_new_schedule')
+    %span{ ng: { show: 'schedule.id' } }= t('admin.order_cycles.index.updating_a_schedule')
 
-  %form{ name: 'schedule_form', novalidate: true, ng: { submit: "addSchedule()" }}
+  %form{ name: 'schedule_form', novalidate: true, ng: { submit: "submit()" }}
 
     .text-center.margin-bottom-20
-      %input.fullwidth{ type: 'text', name: 'name', required: true, placeholder: t('admin.order_cycles.index.schedule_name_placeholder'), ng: { model: "name" } }
-      %div{ ng: { show: "submitted && new_schedule_form.$pristine" } }
-        .error{ ng: { show: "(new_schedule_form.name.$error.required)" } }
+      %input.fullwidth{ type: 'text', name: 'name', required: true, placeholder: t('admin.order_cycles.index.schedule_name_placeholder'), ng: { model: "schedule.name" } }
+      %div{ ng: { show: "submitted && schedule_form.$pristine" } }
+        .error{ ng: { show: "(schedule_form.name.$error.required)" } }
           = t('admin.order_cycles.index.name_required_error')
-        .error{ ng: { repeat: "error in errors", bind: "error" } }
 
     .order-cycles-selector.text-center.margin-bottom-30
 
     .text-center
-      %input.button.icon-plus{ type: 'submit', value: t('admin.order_cycles.index.create_schedule') }
+      %input.button.icon-plus{ type: 'submit', value: t('admin.order_cycles.index.create_schedule'), ng: { hide: 'schedule.id' } }
+      %input.button.icon-plus{ type: 'submit', value: t('admin.order_cycles.index.update_schedule'), ng: { show: 'schedule.id' } }
       or
       %input.button.red.icon-remove{ type: 'button', value: t('actions.cancel'), ng: { click: 'close()' } }

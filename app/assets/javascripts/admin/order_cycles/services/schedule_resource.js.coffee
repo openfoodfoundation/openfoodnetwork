@@ -7,4 +7,6 @@ angular.module("admin.orderCycles").factory 'ScheduleResource', ($resource) ->
       method: 'POST'
     'update':
       method: 'PUT'
+      params:
+        id: '@id'
   })

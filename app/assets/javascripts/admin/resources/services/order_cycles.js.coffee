@@ -66,22 +66,3 @@ angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCy
 
     resetAttribute: (order_cycle, attribute) ->
       order_cycle[attribute] = @pristineByID[order_cycle.id][attribute]
-
-    linkAllToEnterprises: ->
-      for id, orderCycle of @orderCyclesByID
-        @linkToEnterprises(orderCycle)
-
-    linkToEnterprises: (orderCycle) ->
-      coordinator = Enterprises.enterprisesByID[orderCycle.coordinator.id]
-      orderCycle.coordinator = coordinator if coordinator?
-      for producer, i in orderCycle.producers
-        producer = Enterprises.enterprisesByID[producer.id]
-        orderCycle.producers[i] = producer if producer?
-      for shop, i in orderCycle.shops
-        shop = Enterprises.enterprisesByID[shop.id]
-        orderCycle.shops[i] = shop if shop?
-
-    linkToSchedules: (orderCycle) ->
-      for schedule, i in orderCycle.schedules
-        schedule = Schedules.byID[schedule.id]
-        orderCycle.schedules[i] = schedule if schedule?

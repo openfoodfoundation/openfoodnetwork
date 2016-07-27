@@ -133,6 +133,10 @@ FactoryGirl.define do
     receiver    { incoming ? order_cycle.coordinator : FactoryGirl.create(:enterprise) }
   end
 
+  factory :schedule, class: Schedule do
+    sequence(:name) { |n| "Schedule #{n}" }
+  end
+
   factory :variant_override, :class => VariantOverride do
     price         77.77
     count_on_hand 11111
