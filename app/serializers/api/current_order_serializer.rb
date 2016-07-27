@@ -6,6 +6,7 @@ class Api::CurrentOrderSerializer < ActiveModel::Serializer
   has_one :ship_address, serializer: Api::AddressSerializer
 
   has_many :line_items, serializer: Api::LineItemSerializer
+  has_many :finalised_line_items, serializer: Api::LineItemSerializer
 
   def payment_method_id
     object.payments.first.andand.payment_method_id

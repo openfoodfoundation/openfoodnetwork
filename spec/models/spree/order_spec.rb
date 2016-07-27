@@ -650,4 +650,36 @@ describe Spree::Order do
       end
     end
   end
+
+  describe "retrieving previously ordered items" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle) }
+    let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+
+    it "returns no items if nothing has been ordered" do
+      expect(order.finalised_line_items).to eq []
+    end
+
+    context "when no order has been finalised in this order cycle" do
+      let(:product) { create(:product) }
+
+      it "returns no items even though the cart contains items" do
+        order.add_variant(product.master, 1, 3)
+        expect(order.finalised_line_items).to eq []
+      end
+    end
+
+    context "when an order has been finalised in this order cycle" do
+      let!(:prev_order) { create(:completed_order_with_totals, distributor: distributor, order_cycle: order_cycle, user: order.user) }
+      let!(:prev_order2) { create(:completed_order_with_totals, distributor: distributor, order_cycle: order_cycle, user: order.user) }
+      let(:product) { create(:product) }
+
+      it "returns previous items" do
+        prev_order.add_variant(product.master, 1, 3)
+        prev_order2.reload # to get the right response from line_items
+        expect(order.finalised_line_items.length).to eq 3
+        expect(order.finalised_line_items).to match_array(prev_order.line_items + prev_order2.line_items)
+      end
+    end
+  end
 end

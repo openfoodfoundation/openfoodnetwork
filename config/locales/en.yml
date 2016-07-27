@@ -556,6 +556,9 @@ en:
       hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
   shared:
+    menu:
+      cart:
+        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
