@@ -97,6 +97,14 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       $(window).bind "beforeunload", ->
         t 'order_not_saved_yet'
 
+    line_items_finalised: =>
+      items = CurrentOrder.order.finalised_line_items
+      for line_item in items
+        line_item.variant.line_item = line_item
+        Variants.extend line_item.variant
+        line_item.variant.extended_name = @extendedVariantName(line_item.variant)
+      items
+
     total_item_count: =>
       @line_items.reduce (sum,li) ->
         sum = sum + li.quantity
