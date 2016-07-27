@@ -660,8 +660,11 @@ en:
       index:
         involving: Involving
         schedules: Schedules
-        add_a_new_schedule: Add a new schedule
+        adding_a_new_schedule: Adding A New Schedule
+        updating_a_schedule: Updating A Schedule
+        new_schedule: New Schedule
         create_schedule: Create Schedule
+        update_schedule: Update Schedule
         schedule_name_placeholder: Schedule Name
         name_required_error: Please enter a name for this schedule
       name_and_timing_form:

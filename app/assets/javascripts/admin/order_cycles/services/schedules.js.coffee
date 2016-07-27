@@ -1,11 +1,23 @@
-angular.module("admin.orderCycles").factory "Schedules", ($q, RequestMonitor, ScheduleResource) ->
+angular.module("admin.orderCycles").factory "Schedules", ($q, RequestMonitor, ScheduleResource, OrderCycles, Dereferencer) ->
   new class Schedules
     byID: {}
     # all: []
 
-    add: (params) ->
+    add: (params) =>
       ScheduleResource.create params, (schedule) =>
-        @byID[schedule.id] = schedule if schedule.id
+        @byID[schedule.id] = schedule if schedule.id?
+        Dereferencer.dereference(schedule.order_cycles, OrderCycles.orderCyclesByID)
+        orderCycle.schedules.push(schedule) for orderCycle in schedule.order_cycles
+
+    update: (params) =>
+      ScheduleResource.update params, (schedule) =>
+        if schedule.id?
+          Dereferencer.dereference(schedule.order_cycles, OrderCycles.orderCyclesByID)
+          for orderCycle in @byID[schedule.id].order_cycles when orderCycle.id not in schedule.order_cycle_ids
+            orderCycle.schedules.splice(i, 1) for s, i in orderCycle.schedules by -1 when s.id == schedule.id
+          for orderCycle in schedule.order_cycles when orderCycle.id not in @byID[schedule.id].order_cycle_ids
+            orderCycle.schedules.push(@byID[schedule.id])
+          angular.extend(@byID[schedule.id], schedule)
 
     # remove: (schedule) ->
     #   params = id: schedule.id
@@ -26,8 +38,3 @@ angular.module("admin.orderCycles").factory "Schedules", ($q, RequestMonitor, Sc
         # @all = data
       RequestMonitor.load(request.$promise)
       request
-
-    linkToOrderCycles: (schedule) ->
-      for orderCycle, i in schedule.orderCycles
-        orderCycle = OrderCycles.orderCyclesByID[orderCycle.id]
-        schedule.orderCycles[i] = orderCycle if orderCycle?

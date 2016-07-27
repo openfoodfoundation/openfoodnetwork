@@ -186,6 +186,9 @@ class AbilityDecorator
       OrderCycle.accessible_by(user).include? order_cycle
     end
     can [:admin, :index, :create], Schedule
+    can [:admin, :update], Schedule do |schedule|
+      OpenFoodNetwork::Permissions.new(user).editable_schedules.include? schedule
+    end
     can [:bulk_update, :clone, :destroy, :notify_producers], OrderCycle do |order_cycle|
       user.enterprises.include? order_cycle.coordinator
     end

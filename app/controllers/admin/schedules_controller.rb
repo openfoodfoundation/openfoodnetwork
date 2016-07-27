@@ -2,12 +2,16 @@ require 'open_food_network/permissions'
 
 module Admin
   class SchedulesController < ResourceController
+    before_filter :check_editable_order_cycle_ids, only: [:create, :update]
+
+    respond_to :json
 
     respond_override create: { json: {
-      success: lambda {
-        binding.pry
-        render_as_json @schedule, editable_schedule_ids: permissions.editable_schedules.pluck(:id)
-      },
+      success: lambda { render_as_json @schedule, editable_schedule_ids: permissions.editable_schedules.pluck(:id) },
+      failure: lambda { render json: { errors: @schedule.errors.full_messages }, status: :unprocessable_entity }
+    } }
+    respond_override update: { json: {
+      success: lambda { render_as_json @schedule, editable_schedule_ids: permissions.editable_schedules.pluck(:id) },
       failure: lambda { render json: { errors: @schedule.errors.full_messages }, status: :unprocessable_entity }
     } }
 
@@ -28,6 +32,15 @@ module Admin
 
     def collection_actions
       [:index]
+    end
+
+    def check_editable_order_cycle_ids
+      return unless params[:schedule][:order_cycle_ids]
+      requested = params[:schedule][:order_cycle_ids]
+      existing = @schedule.order_cycle_ids
+      permitted = OrderCycle.where(id: params[:schedule][:order_cycle_ids] + existing).merge(OrderCycle.managed_by(spree_current_user)).pluck(:id)
+      params[:schedule][:order_cycle_ids] |= (existing - permitted)
+      params[:schedule][:order_cycle_ids] -= (requested - permitted)
     end
 
     def permissions

@@ -1,0 +1,167 @@
+require 'spec_helper'
+
+describe Admin::SchedulesController, type: :controller do
+  include AuthenticationWorkflow
+
+  describe "index" do
+    let!(:coordinated_order_cycle) { create(:simple_order_cycle) }
+    let!(:managed_coordinator) { coordinated_order_cycle.coordinator }
+    let!(:other_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
+    let!(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle] ) }
+    let!(:uncoordinated_schedule) { create(:schedule, order_cycles: [other_order_cycle] ) }
+
+    context "html" do
+      context "where I manage an order cycle coordinator" do
+        before do
+          controller.stub spree_current_user: managed_coordinator.owner
+        end
+
+        it "returns an empty @collection" do
+          spree_get :index, format: :html
+          expect(assigns(:collection)).to eq []
+        end
+      end
+    end
+
+    context "json" do
+      context "where I manage an order cycle coordinator" do
+        before do
+          controller.stub spree_current_user: managed_coordinator.owner
+        end
+
+        let(:params) { { format: :json } }
+
+        it "scopes @collection to schedules containing order_cycles coordinated by enterprises I manage" do
+          spree_get :index, params
+          expect(assigns(:collection)).to eq [coordinated_schedule]
+        end
+
+        it "serializes the data" do
+          expect(ActiveModel::ArraySerializer).to receive(:new)
+          spree_get :index, params
+        end
+      end
+
+      context "where I manage an order cycle coordinator" do
+        it "returns an empty collection" do
+          spree_get :index, format: :json
+          expect(assigns(:collection)).to be_nil
+        end
+      end
+    end
+  end
+
+  describe "update" do
+    let(:user) { create(:user, enterprise_limit: 10) }
+    let!(:managed_coordinator) { create(:enterprise, owner: user) }
+    let!(:managed_enterprise) { create(:enterprise, owner: user) }
+    let!(:coordinated_order_cycle) { create(:simple_order_cycle, coordinator: managed_coordinator ) }
+    let!(:coordinated_order_cycle2) { create(:simple_order_cycle, coordinator: managed_enterprise ) }
+    let!(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise) ) }
+    let!(:uncoordinated_order_cycle2) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
+    let!(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle, uncoordinated_order_cycle] ) }
+    let!(:uncoordinated_schedule) { create(:schedule, order_cycles: [uncoordinated_order_cycle] ) }
+
+    context "json" do
+      context "where I manage at least one of the schedule's coordinators" do
+        render_views
+
+        before do
+          controller.stub spree_current_user: user
+        end
+
+        it "allows me to update basic information" do
+          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
+          expect(JSON.parse(response.body)["id"]).to eq coordinated_schedule.id
+          expect(JSON.parse(response.body)["name"]).to eq "my awesome schedule"
+          expect(assigns(:schedule)).to eq coordinated_schedule
+          expect(coordinated_schedule.reload.name).to eq 'my awesome schedule'
+        end
+
+        it "allows me to add/remove only order cycles I coordinate to/from the schedule" do
+          order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id ]
+          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: order_cycle_ids }
+          expect(assigns(:schedule)).to eq coordinated_schedule
+          # coordinated_order_cycle2 is added, uncoordinated_order_cycle is NOT removed
+          expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2, uncoordinated_order_cycle
+          # coordinated_order_cycle is removed, uncoordinated_order_cycle2 is NOT added
+          expect(coordinated_schedule.reload.order_cycles).to_not include coordinated_order_cycle, uncoordinated_order_cycle2
+        end
+      end
+
+      context "where I don't manage any of the schedule's coordinators" do
+        before do
+          controller.stub spree_current_user: uncoordinated_order_cycle2.coordinator.owner
+        end
+
+        it "prevents me from updating the schedule" do
+          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { name: "my awesome schedule" }
+          expect(response).to redirect_to spree.unauthorized_path
+          expect(assigns(:schedule)).to eq nil
+          expect(coordinated_schedule.name).to_not eq "my awesome schedule"
+        end
+      end
+    end
+  end
+
+  describe "create" do
+    let(:user) { create(:user) }
+    let!(:managed_coordinator) { create(:enterprise, owner: user) }
+    let!(:coordinated_order_cycle) { create(:simple_order_cycle, coordinator: managed_coordinator ) }
+    let!(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
+
+    def create_schedule(params)
+      spree_put :create, params
+    end
+
+    context "json" do
+      let(:params) { { format: :json, schedule: { name: 'new schedule' } } }
+
+      context 'as an enterprise user' do
+        before { allow(controller).to receive(:spree_current_user) { user } }
+
+        context "where no order cycles ids are provided" do
+          it "does not allow me to create the schedule" do
+            expect { create_schedule params }.to_not change(Schedule, :count)
+          end
+        end
+
+        context "where I manage at least one of the order cycles to be added to the schedules" do
+          before do
+            params[:schedule].merge!( order_cycle_ids: [coordinated_order_cycle.id, uncoordinated_order_cycle.id] )
+          end
+
+          it "allows me to create the schedule, adding only order cycles that I manage" do
+            expect { create_schedule params }.to change(Schedule, :count).by(1)
+            schedule = Schedule.last
+            expect(schedule.order_cycles).to include coordinated_order_cycle
+            expect(schedule.order_cycles).to_not include uncoordinated_order_cycle
+          end
+        end
+
+        context "where I don't manage any of the order cycles to be added to the schedules" do
+          before do
+            params[:schedule].merge!( order_cycle_ids: [uncoordinated_order_cycle.id] )
+          end
+
+          it "prevents me from creating the schedule" do
+            expect { create_schedule params }.to_not change(Schedule, :count)
+          end
+        end
+      end
+
+      context 'as an admin user' do
+        before do
+          allow(controller).to receive(:spree_current_user) { create(:admin_user) }
+          params[:schedule].merge!( order_cycle_ids: [coordinated_order_cycle.id, uncoordinated_order_cycle.id] )
+        end
+
+        it "allows me to create a schedule" do
+          expect { create_schedule params }.to change(Schedule, :count).by(1)
+          schedule = Schedule.last
+          expect(schedule.order_cycles).to include coordinated_order_cycle, uncoordinated_order_cycle
+        end
+      end
+    end
+  end
+end

@@ -1,14 +1,16 @@
 %tr{ class: "order-cycle-{{orderCycle.id}} {{orderCycle.status}}", ng: { repeat: 'orderCycle in orderCycles | involving:involvingFilter | filter:{name: query} track by orderCycle.id' } }
-  %td{ ng: { show: 'columns.name.visible' } }
+  %td.name{ ng: { show: 'columns.name.visible' } }
     %a{ ng: { href: '{{orderCycle.edit_path}}' } }
       {{ orderCycle.name }}
-  %td{ ng: { show: 'columns.schedule.visible' } }
-    %a{ href: '#', 'schedule-dialog' => true, 'schedule-id' => 'schedule.id', ng: { repeat: 'schedule in orderCycle.schedules'} }
-      {{ schedule.name }}
-  %td{ ng: { show: 'columns.open.visible' } }
+  %td.schedules{ ng: { show: 'columns.schedules.visible' } }
+    %span{ ng: { repeat: 'schedule in orderCycle.schedules'} }
+      %a{ 'schedule-dialog' => true, 'schedule-id' => '{{schedule.id}}' }
+        {{ schedule.name }}
+    %span{ ng: { show: 'orderCycle.schedules.length == 0'}} None
+  %td.orders_open_at{ ng: { show: 'columns.open.visible' } }
     %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at' }, datetimepicker: 'orderCycle.orders_open_at' }
     %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at'}, disabled: true }
-  %td{ ng: { show: 'columns.close.visible' } }
+  %td.orders_close_at{ ng: { show: 'columns.close.visible' } }
     %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at' }, datetimepicker: 'orderCycle.orders_close_at' }
     %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at'}, disabled: true }
 

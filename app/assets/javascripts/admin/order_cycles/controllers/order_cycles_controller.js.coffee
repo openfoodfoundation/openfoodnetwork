@@ -1,4 +1,4 @@
-angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, Columns, StatusMessage, RequestMonitor, OrderCycles, Enterprises, Schedules) ->
+angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, Columns, StatusMessage, RequestMonitor, OrderCycles, Enterprises, Schedules, Dereferencer) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.columns = Columns.columns
   $scope.saveAll = -> OrderCycles.saveChanges($scope.order_cycles_form)
@@ -7,10 +7,13 @@ angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, C
 
   compileData = ->
     for schedule in $scope.schedules
-      Schedules.linkToOrderCycles(schedule)
+      Dereferencer.dereference(schedule.order_cycles, OrderCycles.orderCyclesByID)
     for orderCycle in $scope.orderCycles
-      OrderCycles.linkToEnterprises(orderCycle)
-      OrderCycles.linkToSchedules(orderCycle)
+      coordinator = Enterprises.byID[orderCycle.coordinator.id]
+      orderCycle.coordinator = coordinator if coordinator?
+      Dereferencer.dereference(orderCycle.producers, Enterprises.byID)
+      Dereferencer.dereference(orderCycle.shops, Enterprises.byID)
+      Dereferencer.dereference(orderCycle.schedules, Schedules.byID)
       orderCycle.involvedEnterpriseIDs = [orderCycle.coordinator.id]
       orderCycle.producerNames = orderCycle.producers.map((producer) -> orderCycle.involvedEnterpriseIDs.push(producer.id); producer.name).join(", ")
       orderCycle.shopNames = orderCycle.shops.map((shop) -> orderCycle.involvedEnterpriseIDs.push(shop.id); shop.name).join(", ")
@@ -29,8 +32,8 @@ angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, C
     existingIDs = Object.keys(OrderCycles.orderCyclesByID)
     RequestMonitor.load (orderCycles = OrderCycles.index(ams_prefix: "index", "q[orders_close_at_gt]": "#{daysFromToday($scope.ordersCloseAtLimit)}", "q[id_not_in][]": existingIDs)).$promise
     orderCycles.$promise.then ->
-      compileData()
       $scope.orderCycles.push(orderCycle) for orderCycle in orderCycles
+      compileData()
 
 daysFromToday = (days) ->
   now = new Date
