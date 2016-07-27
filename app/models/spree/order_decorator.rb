@@ -195,6 +195,21 @@ Spree::Order.class_eval do
     line_items.map(&:variant)
   end
 
+  # Show already bought line items of this order cycle
+  def finalised_line_items
+    return [] unless order_cycle && user
+    orders = self.class.complete.where(user_id: user, order_cycle_id: order_cycle)
+    items = []
+    orders.each do |o|
+      items += o.line_items
+    end
+    scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+    items.each do |li|
+      scoper.scope(li.variant)
+    end
+    items
+  end
+
   def admin_and_handling_total
     adjustments.eligible.where("originator_type = ? AND source_type != ?", 'EnterpriseFee', 'Spree::LineItem').sum(&:amount)
   end
