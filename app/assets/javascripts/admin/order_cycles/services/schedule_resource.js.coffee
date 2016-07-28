@@ -9,4 +9,8 @@ angular.module("admin.orderCycles").factory 'ScheduleResource', ($resource) ->
       method: 'PUT'
       params:
         id: '@id'
+    'destroy':
+      method: 'DELETE'
+      params:
+        id: '@id'
   })

@@ -165,4 +165,36 @@ describe Admin::SchedulesController, type: :controller do
       end
     end
   end
+
+  describe "destroy" do
+    let(:user) { create(:user, enterprise_limit: 10) }
+    let(:managed_coordinator) { create(:enterprise, owner: user) }
+    let(:coordinated_order_cycle) { create(:simple_order_cycle, coordinator: managed_coordinator ) }
+    let(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise) ) }
+    let(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle, uncoordinated_order_cycle] ) }
+    let(:uncoordinated_schedule) { create(:schedule, order_cycles: [uncoordinated_order_cycle] ) }
+    let(:params) { { format: :json } }
+
+    context "json" do
+      context 'as an enterprise user' do
+        before { allow(controller).to receive(:spree_current_user) { user } }
+
+        context "where I manage at least one of the schedule's coordinators" do
+          before { params.merge!({id: coordinated_schedule.id}) }
+
+          it "allows me to destroy the schedule" do
+            expect { spree_delete :destroy, params }.to change(Schedule, :count).by(-1)
+          end
+        end
+
+        context "where I don't manage any of the schedule's coordinators" do
+          before { params.merge!({id: uncoordinated_schedule.id}) }
+
+          it "prevents me from destroying the schedule" do
+            expect { spree_delete :destroy, params }.to_not change(Schedule, :count)
+          end
+        end
+      end
+    end
+  end
 end

@@ -14,7 +14,10 @@
     .order-cycles-selector.text-center.margin-bottom-30
 
     .text-center
-      %input.button.icon-plus{ type: 'submit', value: t('admin.order_cycles.index.create_schedule'), ng: { hide: 'schedule.id' } }
-      %input.button.icon-plus{ type: 'submit', value: t('admin.order_cycles.index.update_schedule'), ng: { show: 'schedule.id' } }
+
+      %input.button{ type: 'submit', value: t('admin.order_cycles.index.create_schedule'), ng: { hide: 'schedule.id' } }
+      %input.button{ type: 'submit', value: t('admin.order_cycles.index.update_schedule'), ng: { show: 'schedule.id' } }
+      %span{ ng: { show: 'schedule.id' } } or
+      %input.button.red{ type: 'button', value: t('admin.order_cycles.index.delete_schedule'), ng: { show: 'schedule.id', click: 'delete()'} }
       or
-      %input.button.red.icon-remove{ type: 'button', value: t('actions.cancel'), ng: { click: 'close()' } }
+      %input.button{ type: 'button', value: t('actions.cancel'), ng: { click: 'close()' } }
