@@ -1,4 +1,4 @@
-angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCycleResource, StatusMessage) ->
+angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCycleResource, RequestMonitor, StatusMessage) ->
   new class OrderCycles
     all: []
     byID: {}
@@ -8,11 +8,10 @@ angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCy
       if $injector.has('orderCycles')
         @load($injector.get('orderCycles'))
 
-    index: (params={}, callback=null) ->
-      OrderCycleResource.index params, (data) =>
-        @load(data)
-        (callback || angular.noop)(data)
-        data
+    index: (params={}) ->
+      request = OrderCycleResource.index params, (data) => @load(data)
+      RequestMonitor.load(request.$promise)
+      request
 
     load: (orderCycles) ->
       for orderCycle in orderCycles when orderCycle.id not in Object.keys(@byID)
