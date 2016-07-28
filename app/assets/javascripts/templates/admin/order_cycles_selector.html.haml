@@ -1,11 +1,11 @@
 #available-order-cycles
   Available
-  .order-cycles
+  .order-cycles{ ui: { sortable: 'availableOptions' }, ng: { model: "availableOrderCycles" } }
     .order-cycle{ ng: { repeat: 'orderCycle in availableOrderCycles' } }
       {{ orderCycle.name }}
 #selected-order-cycles
   Selected
-  .order-cycles
+  .order-cycles{ ui: { sortable: 'selectedOptions' }, ng: { model: "selectedOrderCycles" } }
     .order-cycle{ ng: { repeat: 'orderCycle in selectedOrderCycles' } }
       {{ orderCycle.name }}
 .error{ ng: { repeat: "error in errors", bind: "error" } }

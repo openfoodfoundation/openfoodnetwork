@@ -36,7 +36,7 @@ describe "OrderCycles service", ->
       it "returns an array of orderCycles", ->
         expect(result).toDeepEqual response
 
-    describe "when no params are passed", ->
+    describe "when params are passed", ->
       beforeEach ->
         params = { someParam: 'someVal'}
         $httpBackend.expectGET('/admin/order_cycles.json?someParam=someVal').respond 200, response

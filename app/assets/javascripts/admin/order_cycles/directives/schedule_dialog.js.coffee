@@ -1,7 +1,8 @@
-angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compile, $injector, $templateCache, DialogDefaults, Schedules) ->
+angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compile, $injector, $templateCache, DialogDefaults, OrderCycles, Schedules) ->
   restrict: 'A'
   scope:
     scheduleId: '@'
+    showMore: '&'
   link: (scope, element, attr) ->
     # Link opening of dialog to click event on element
     element.bind 'click', (e) ->
@@ -10,6 +11,9 @@ angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compi
         id: existing?.id
         name: existing?.name || ''
         order_cycle_ids: existing?.order_cycle_ids || []
+      scope.selectedOrderCycles = []
+      scope.selectedOrderCycles.push orderCycle for orderCycle in (existing?.order_cycles || [])
+      scope.availableOrderCycles = (orderCycle for id, orderCycle of OrderCycles.byID when orderCycle.id not in scope.schedule.order_cycle_ids)
       scope.submitted = false
       scope.errors = []
       # Compile modal template
@@ -24,11 +28,16 @@ angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compi
       scope.template.dialog('close')
       return
 
+    scope.loadMore = ->
+      scope.showMore().then ->
+        scope.availableOrderCycles = (orderCycle for id, orderCycle of OrderCycles.byID when orderCycle.id not in scope.schedule.order_cycle_ids)
+
     scope.submit = ->
       scope.schedule_form.$setPristine()
       scope.submitted = true
       scope.errors = []
-      return scope.errors.push("Please select at least one order cycle") unless scope.schedule.order_cycle_ids.length > 0
+      return scope.errors.push("Please select at least one order cycle") unless scope.selectedOrderCycles.length > 0
+      scope.schedule.order_cycle_ids = scope.selectedOrderCycles.map (oc) -> oc.id
       if scope.schedule_form.$valid
         method = if scope.schedule.id? then Schedules.update else Schedules.add
         method(scope.schedule).$promise.then (data) ->
