@@ -7,7 +7,11 @@
     %label{ :for => 'involving_filter' }=t('.involving')
     %br
     %input.ofn-select2.fullwidth{ :id => 'involving_filter', type: 'number', blank: "{id: 0, name: 'Any Enterprise'}", data: 'enterprises', ng: { model: 'involvingFilter' } }
-  .six.columns &nbsp;
+  .filter_select.four.columns
+    %label{ :for => 'schedule_filter' }=t('admin.order_cycles.index.schedule')
+    %br
+    %input.ofn-select2.fullwidth{ :id => 'schedule_filter', type: 'number', blank: "{id: 0, name: 'Any Schedule'}", data: 'schedules', ng: { model: 'scheduleFilter' } }
+  .two.columns &nbsp;
   .filter_clear.two.columns.omega
     %label{ :for => 'clear_all_filters' }
     %br
