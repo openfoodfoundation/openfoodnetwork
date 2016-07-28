@@ -23,6 +23,7 @@ feature %q{
                  orders_open_at: nil, orders_close_at: nil)
     oc7 = create(:simple_order_cycle, name: 'oc7',
                 orders_open_at: 2.months.ago, orders_close_at: 5.weeks.ago)
+    schedule1 = create(:schedule, name: 'Schedule1', order_cycles: [oc1, oc3])
 
     # When I go to the admin order cycles page
     login_to_admin_section
@@ -64,7 +65,7 @@ feature %q{
     click_button "Show 30 more days"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
 
-    # I can filter order cycles by name
+    # I can filter order cycle by involved enterprises
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
@@ -77,7 +78,7 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
 
-    # I can filter order cycle by involved enterprises
+    # I can filter order cycles by name
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
@@ -89,6 +90,22 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+
+    # I can filter order cycle by schedule
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
+    select2_select schedule1.name, from: "schedule_filter"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
+    select2_select 'Any Schedule', from: "schedule_filter"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
   end
 
   context "with specific time" do
