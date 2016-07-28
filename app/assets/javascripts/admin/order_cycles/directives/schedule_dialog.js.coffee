@@ -28,6 +28,11 @@ angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compi
       scope.template.dialog('close')
       return
 
+    scope.delete = ->
+      if confirm(t('are_you_sure'))
+        Schedules.remove(scope.schedule).$promise.then (data) ->
+          scope.close()
+
     scope.loadMore = ->
       scope.showMore().then ->
         scope.availableOrderCycles = (orderCycle for id, orderCycle of OrderCycles.byID when orderCycle.id not in scope.schedule.order_cycle_ids)

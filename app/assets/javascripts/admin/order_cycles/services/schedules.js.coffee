@@ -20,17 +20,19 @@ angular.module("admin.orderCycles").factory "Schedules", ($q, RequestMonitor, Sc
             orderCycle.schedules.push(@byID[schedule.id])
           angular.extend(@byID[schedule.id], schedule)
 
-    # remove: (schedule) ->
-    #   params = id: schedule.id
-    #   ScheduleResource.destroy params, =>
-    #     i = @schedules.indexOf schedule
-    #     @schedules.splice i, 1 unless i < 0
-    #   , (response) =>
-    #     errors = response.data.errors
-    #     if errors?
-    #       InfoDialog.open 'error', errors[0]
-    #     else
-    #       InfoDialog.open 'error', "Could not delete schedule: #{schedule.email}"
+    remove: (schedule) ->
+      params = id: schedule.id
+      ScheduleResource.destroy params, =>
+        for orderCycle in @byID[schedule.id].order_cycles
+          if orderCycle.schedules # Only if we need to update the schedules
+            orderCycle.schedules.splice(i, 1) for s, i in orderCycle.schedules by -1 when s.id == schedule.id
+        delete @byID[schedule.id]
+      , (response) =>
+        errors = response.data.errors
+        if errors?
+          InfoDialog.open 'error', errors[0]
+        else
+          InfoDialog.open 'error', "Could not delete schedule: #{schedule.name}"
 
     index: ->
       request = ScheduleResource.index (data) =>

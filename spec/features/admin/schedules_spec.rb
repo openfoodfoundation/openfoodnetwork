@@ -81,5 +81,36 @@ feature 'Schedules', js: true do
         end
       end
     end
+
+    describe "deleting a schedule" do
+      it "immediately removes deleted schedules from order cycles" do
+        click_link 'Order Cycles'
+        within ".order-cycle-#{oc1.id} td.schedules" do
+          find('a', text: "Weekly").click
+        end
+
+        within "#schedule-dialog" do
+          click_button "Delete Schedule"
+        end
+
+        within ".order-cycle-#{oc1.id} td.schedules" do
+          expect(page).to have_no_selector "a", text: "Weekly"
+        end
+
+        within ".order-cycle-#{oc2.id} td.schedules" do
+          expect(page).to have_no_selector "a", text: "Weekly"
+        end
+
+        within ".order-cycle-#{oc3.id} td.schedules" do
+          expect(page).to have_no_selector "a", text: "Weekly"
+        end
+
+        expect(Schedule.find_by_id(weekly_schedule.id)).to be_nil
+        expect(oc1.schedules).to eq []
+        expect(oc2.schedules).to eq []
+        expect(oc3.schedules).to eq []
+        expect(oc4.schedules).to eq []
+      end
+    end
   end
 end
