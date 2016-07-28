@@ -36,7 +36,7 @@ angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compi
       scope.schedule_form.$setPristine()
       scope.submitted = true
       scope.errors = []
-      return scope.errors.push("Please select at least one order cycle") unless scope.selectedOrderCycles.length > 0
+      return scope.errors.push(t('admin.order_cycles.index.no_order_cycles_error')) unless scope.selectedOrderCycles.length > 0
       scope.schedule.order_cycle_ids = scope.selectedOrderCycles.map (oc) -> oc.id
       if scope.schedule_form.$valid
         method = if scope.schedule.id? then Schedules.update else Schedules.add

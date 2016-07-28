@@ -667,6 +667,7 @@ en:
         update_schedule: Update Schedule
         schedule_name_placeholder: Schedule Name
         name_required_error: Please enter a name for this schedule
+        no_order_cycles_error: Please select at least one order cycle (drag and drop)
       name_and_timing_form:
         name: Name
         orders_open: Orders open at
