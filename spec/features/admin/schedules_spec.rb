@@ -8,12 +8,11 @@ feature 'Schedules', js: true do
     let(:user) { create(:user) }
     let(:managed_enterprise) { create(:distributor_enterprise, owner: user) }
     let(:unmanaged_enterprise) { create(:distributor_enterprise) }
-    let!(:weekly_schedule) { create(:schedule, name: 'Weekly') }
-    let!(:fortnightly_schedule) { create(:schedule, name: 'Fortnightly') }
-    let!(:oc1) { create(:order_cycle, coordinator: managed_enterprise, name: 'oc1', schedules: [weekly_schedule]) }
-    let!(:oc2) { create(:order_cycle, coordinator: managed_enterprise, name: 'oc2', schedules: [weekly_schedule]) }
-    let!(:oc3) { create(:order_cycle, coordinator: managed_enterprise, name: 'oc3', schedules: [weekly_schedule]) }
-    let!(:oc4) { create(:order_cycle, coordinator: unmanaged_enterprise, name: 'oc4', schedules: [weekly_schedule]) }
+    let!(:oc1) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc1') }
+    let!(:oc2) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc2') }
+    let!(:oc3) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc3') }
+    let!(:oc4) { create(:simple_order_cycle, coordinator: unmanaged_enterprise, name: 'oc4') }
+    let!(:weekly_schedule) { create(:schedule, name: 'Weekly', order_cycles: [oc1, oc2, oc3, oc4]) }
 
     before { login_to_admin_as user }
 
@@ -52,11 +51,7 @@ feature 'Schedules', js: true do
     end
 
     describe "updating existing schedules" do
-      use_short_wait
-      before do
-        oc1.update_attributes(schedule_ids: [weekly_schedule.id, fortnightly_schedule.id])
-        oc3.update_attributes(schedule_ids: [weekly_schedule.id, fortnightly_schedule.id])
-      end
+      let!(:fortnightly_schedule) { create(:schedule, name: 'Fortnightly', order_cycles: [oc1, oc3]) }
 
       it "immediately shows updated schedule lists for order cycles" do
         click_link 'Order Cycles'

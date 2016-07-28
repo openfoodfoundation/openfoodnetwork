@@ -6,15 +6,16 @@ angular.module("admin.orderCycles").factory "Schedules", ($q, RequestMonitor, Sc
     add: (params) =>
       ScheduleResource.create params, (schedule) =>
         @byID[schedule.id] = schedule if schedule.id?
-        Dereferencer.dereference(schedule.order_cycles, OrderCycles.orderCyclesByID)
+        Dereferencer.dereference(schedule.order_cycles, OrderCycles.byID)
         orderCycle.schedules.push(schedule) for orderCycle in schedule.order_cycles
 
     update: (params) =>
       ScheduleResource.update params, (schedule) =>
         if schedule.id?
-          Dereferencer.dereference(schedule.order_cycles, OrderCycles.orderCyclesByID)
+          Dereferencer.dereference(schedule.order_cycles, OrderCycles.byID)
           for orderCycle in @byID[schedule.id].order_cycles when orderCycle.id not in schedule.order_cycle_ids
-            orderCycle.schedules.splice(i, 1) for s, i in orderCycle.schedules by -1 when s.id == schedule.id
+            if orderCycle.schedules # Only if we need to update the schedules
+              orderCycle.schedules.splice(i, 1) for s, i in orderCycle.schedules by -1 when s.id == schedule.id
           for orderCycle in schedule.order_cycles when orderCycle.id not in @byID[schedule.id].order_cycle_ids
             orderCycle.schedules.push(@byID[schedule.id])
           angular.extend(@byID[schedule.id], schedule)

@@ -59,7 +59,8 @@ describe Admin::SchedulesController, type: :controller do
     let!(:coordinated_order_cycle2) { create(:simple_order_cycle, coordinator: managed_enterprise ) }
     let!(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise) ) }
     let!(:uncoordinated_order_cycle2) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
-    let!(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle, uncoordinated_order_cycle] ) }
+    let!(:uncoordinated_order_cycle3) { create(:simple_order_cycle, coordinator: create(:enterprise)) }
+    let!(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle, uncoordinated_order_cycle, uncoordinated_order_cycle3] ) }
     let!(:uncoordinated_schedule) { create(:schedule, order_cycles: [uncoordinated_order_cycle] ) }
 
     context "json" do
@@ -79,11 +80,11 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         it "allows me to add/remove only order cycles I coordinate to/from the schedule" do
-          order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id ]
+          order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id, uncoordinated_order_cycle3.id ]
           spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: order_cycle_ids }
           expect(assigns(:schedule)).to eq coordinated_schedule
           # coordinated_order_cycle2 is added, uncoordinated_order_cycle is NOT removed
-          expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2, uncoordinated_order_cycle
+          expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2, uncoordinated_order_cycle, uncoordinated_order_cycle3
           # coordinated_order_cycle is removed, uncoordinated_order_cycle2 is NOT added
           expect(coordinated_schedule.reload.order_cycles).to_not include coordinated_order_cycle, uncoordinated_order_cycle2
         end

@@ -14,6 +14,7 @@
 //= require angular-resource
 //= require angular-animate
 //= require angular-sanitize
+//= require angular-ui
 //= require admin/spree_backend
 //= require admin/spree_auth
 //= require admin/spree_paypal_express

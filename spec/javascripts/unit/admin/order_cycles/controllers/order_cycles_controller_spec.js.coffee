@@ -41,7 +41,7 @@ describe "OrderCyclesCtrl", ->
 
     it "has not received/stored any data yet", ->
       expect(Enterprises.byID["5"]).toBeUndefined()
-      expect(OrderCycles.orderCyclesByID["4"]).toBeUndefined()
+      expect(OrderCycles.byID["4"]).toBeUndefined()
       expect(Schedules.byID["7"]).toBeUndefined()
 
   describe "after data is returned", ->
@@ -54,11 +54,11 @@ describe "OrderCyclesCtrl", ->
 
       it "stores enterprises, order cycle and schedules in a list that is accessible by id", ->
         expect(Enterprises.byID["5"]).toBeDefined()
-        expect(OrderCycles.orderCyclesByID["4"]).toBeDefined()
+        expect(OrderCycles.byID["4"]).toBeDefined()
         expect(Schedules.byID["7"]).toBeDefined()
 
       it "gets order cycles, with dereferenced coordinator, shops and producers, schedules", ->
-        oc = OrderCycles.orderCyclesByID["4"]
+        oc = OrderCycles.byID["4"]
         s = Schedules.byID["7"]
         expect(scope.orderCycles).toDeepEqual [oc]
         expect(oc.coordinator).toDeepEqual coordinator
