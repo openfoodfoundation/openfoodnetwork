@@ -1586,7 +1586,28 @@ Please follow the instructions there to make your enterprise visible on the Open
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
-    inventory: Inventaire
+    inventory: Inventory
+    zipcode: Postcode
+    orders:
+      bought:
+        item: "Already bought item"
+    shipment_states:
+      backorder: backorder
+      partial: partial
+      pending: pending
+      ready: ready
+      shipped: shipped
+    payment_states:
+      balance_due: balance due
+      completed: completed
+      checkout: checkout
+      credit_owed: credit owed
+      failed: failed
+      paid: paid
+      pending: pending
+      processing: processing
+      void: void
+      invalid: invalid
     order_mailer:
       invoice_email:
         hi: "Hi %{name}"
