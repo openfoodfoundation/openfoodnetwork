@@ -1551,6 +1551,9 @@ Please follow the instructions there to make your enterprise visible on the Open
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
     zipcode: Postcode
+    orders:
+      bought:
+        item: "Already bought item"
     shipment_states:
       backorder: backorder
       partial: partial
