@@ -98,7 +98,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
         t 'order_not_saved_yet'
 
     line_items_finalised: =>
-      items = CurrentOrder.order.finalised_line_items
+      items = CurrentOrder.order?.finalised_line_items || []
       for line_item in items
         line_item.variant.line_item = line_item
         Variants.extend line_item.variant
