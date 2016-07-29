@@ -21,6 +21,7 @@ end
 
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
+  has_many :properties, serializer: Api::PropertySerializer
 
   def orders_close_at
     options[:data].earliest_closing_times[object.id]
@@ -28,6 +29,14 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
 
   def active
     options[:data].active_distributors.andand.include? object
+  end
+
+  def properties
+    # This results in 3 queries per enterprise
+    product_properties  = Spree::Property.applied_by(object)
+    producer_properties = object.properties
+
+    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
   end
 end
 
@@ -49,22 +58,12 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
-  has_many :properties, serializer: Api::PropertySerializer
-
   def taxons
     ids_to_objs options[:data].distributed_taxons[object.id]
   end
 
   def supplied_taxons
     ids_to_objs options[:data].supplied_taxons[object.id]
-  end
-
-  def properties
-    # This results in 3 queries per enterprise
-    product_properties  = Spree::Property.applied_by(object)
-    producer_properties = object.properties
-
-    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
   end
 
   def pickup
