@@ -1060,6 +1060,9 @@ Please follow the instructions there to make your enterprise visible on the Open
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
 
   spree:
+    orders:
+      bought:
+        item: "Already bought item"
     shipment_states:
       backorder: backorder
       partial: partial
