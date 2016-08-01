@@ -4,6 +4,7 @@ angular.module('admin.orderCycles').controller 'AdminAdvancedOrderCyclesCtrl', (
   $scope.StatusMessage = StatusMessage
 
   $scope.copyProducts = ->
+    StatusMessage.display 'progress', t('admin.order_cycles.edit.copying_products')
     if angular.isDefined($scope.order_cycle_to_copy)
       $http
         method: "POST"
@@ -11,8 +12,8 @@ angular.module('admin.orderCycles').controller 'AdminAdvancedOrderCyclesCtrl', (
         data: { oc_to_copy: $scope.order_cycle_to_copy.id }
       .success (response) ->
         $rootScope.$emit('refreshOC', response.id)
-        $timeout -> StatusMessage.display 'progress', 'Copying products...'
+        $timeout -> t('admin.order_cycles.edit.products_copied')
       .error (data, status) ->
-        $timeout -> StatusMessage.display 'failure', 'Failed to copy products'
+        $timeout -> StatusMessage.display 'failure', t('admin.order_cycles.edit.failed_to_copy_products') + ': ' + status
     else
-      StatusMessage.display 'alert', 'Select an order cycle first.'
+      StatusMessage.display 'alert', t('admin.order_cycles.edit.select_an_order_cycle_first')
