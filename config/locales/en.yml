@@ -228,7 +228,6 @@ en:
         select_an_order_cycle_first: "Select an order cycle first."
         order_cycle_updated: "Order cycle updated."
 
-
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
