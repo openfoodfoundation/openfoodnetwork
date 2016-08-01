@@ -1,7 +1,0 @@
-/ replace_contents "[data-hook='homepage_products']"
-
-- if current_order_cycle
-  - if @products.empty?
-    %h6.search-results-title= t(:no_products_found)
-  - else
-    = render :partial => 'spree/shared/products', :locals => { :products => @products, :taxon => @taxon }

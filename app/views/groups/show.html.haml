@@ -67,7 +67,7 @@
                   .small-12.columns
                     .active_table
                       %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | searchEnterprises:query | taxons:activeTaxons)",
+                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | searchEnterprises:query | taxons:activeTaxons | properties:activeProperties)",
                       "ng-controller" => "GroupEnterpriseNodeCtrl",
                       "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
                       id: "{{producer.hash}}"}

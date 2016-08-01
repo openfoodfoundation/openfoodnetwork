@@ -8,7 +8,7 @@ Knapsack.tracker.config({enable_time_offset_warning: false}) unless ENV['CI']
 Knapsack::Adapters::RSpecAdapter.bind
 
 ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../config/environment", __FILE__)
+require_relative "../config/environment"
 require 'rspec/rails'
 require 'capybara'
 require 'database_cleaner'
@@ -103,6 +103,7 @@ RSpec.configure do |config|
   config.include Spree::Api::TestingSupport::Helpers, :type => :controller
   config.include OpenFoodNetwork::ControllerHelper, :type => :controller
   config.include OpenFoodNetwork::FeatureToggleHelper
+  config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::ProductsHelper
   config.include OpenFoodNetwork::DistributionHelper
