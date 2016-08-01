@@ -180,6 +180,11 @@ en:
         failed_to_copy_products: "Failed to copy products"
         select_an_order_cycle_first: "Select an order cycle first."
         order_cycle_updated: "Order cycle updated."
+        coordinators_inventory_only: "Co-ordinator's Inventory Only"
+        all_available_products: "All Available Products"
+        save_and_reload_page: "Save and reload page"
+        close: "Close"
+
 
 
     enterprise:

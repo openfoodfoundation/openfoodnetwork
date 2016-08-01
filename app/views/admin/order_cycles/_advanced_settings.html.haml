@@ -5,10 +5,9 @@
 
   .row
     .filter_select
-      %label.four.columns= t('admin.order_cycles.edit.copy_products_from')
+      %label.four.columns.alpha= t('admin.order_cycles.edit.copy_products_from')
       %select.select2.four.columns#oc_id{ 'ng-model' => 'order_cycle_to_copy.id', name: 'order_cycle_to_copy_id', ng: { options: 'order_cycle.id as order_cycle.name for (id, order_cycle) in order_cycles' } }
       .four.columns
-        {{ oc.products }}
       .four.columns.alpha.omega.text-center
         %input#copy_products{ type: 'button', value: 'Copy products', ng: { click: "copyProducts()" } }
 
@@ -17,14 +16,17 @@
       .four.columns.alpha
         = f.label "enterprise_preferred_product_selection_from_coordinator_inventory_only", t('admin.order_cycles.edit.choose_products_from')
         .with-tip{'data-powertip' => "You can opt to restrict all available products (both incoming and outgoing), to only those in #{@order_cycle.coordinator.name}'s inventory."}
-          %a What's this?
+          %a
+            =t ('admin.whats_this')
       .four.columns
         = f.radio_button :preferred_product_selection_from_coordinator_inventory_only, true
-        = f.label :preferred_product_selection_from_coordinator_inventory_only, "Coordinator's Inventory Only"
+        = f.label :preferred_product_selection_from_coordinator_inventory_only, t("admin.order_cycles.edit.coordinators_inventory_only")
       .four.columns.omega
         = f.radio_button :preferred_product_selection_from_coordinator_inventory_only, false
-        = f.label :preferred_product_selection_from_coordinator_inventory_only, "All Available Products"
+        = f.label :preferred_product_selection_from_coordinator_inventory_only, t("admin.order_cycles.edit.all_available_products")
       .four.columns.alpha.omega.text-center
-        %input{ type: 'submit', value: 'Save and Reload Page' }
-        or
-        %a{ href: "#", onClick: "toggleSettings()" } Close
+        %input{ type: 'submit', value: t('admin.order_cycles.edit.save_and_reload_page') }
+        %br
+        = t('or')
+        %a{ href: "#", onClick: "toggleSettings()" }
+          = t('admin.order_cycles.edit.close')
