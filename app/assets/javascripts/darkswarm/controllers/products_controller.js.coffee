@@ -1,18 +1,21 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart, Taxons, Properties) ->
+Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart, Taxons, Properties) ->
   $scope.Products = Products
   $scope.Cart = Cart
+  $scope.query = ""
   $scope.taxonSelectors = FilterSelectorsService.createSelectors()
   $scope.propertySelectors = FilterSelectorsService.createSelectors()
   $scope.filtersActive = true
-  $scope.limit = 3
+  $scope.limit = 10
   $scope.order_cycle = OrderCycle.order_cycle
 
   $scope.$watch "Products.loading", (newValue, oldValue) ->
     $scope.$broadcast("loadFilterSelectors") if !newValue
 
   $scope.incrementLimit = ->
-    if $scope.limit < Products.products.length
-      $scope.limit = $scope.limit + 1
+    $scope.limit += 10 if $scope.limit < Products.products.length
+
+  $scope.$watchGroup ['query','taxonSelectors','propertySelectors'], ->
+    $scope.limit = 10
 
   $scope.searchKeypress = (e)->
     code = e.keyCode || e.which

@@ -1,23 +1,23 @@
 .variants.row
   .small-12.medium-4.large-4.columns.variant-name
     .table-cell
-      .inline {{ variant.name_to_display }}
+      .inline {{ ::variant.name_to_display }}
       .bulk-buy.inline{"ng-if" => "::variant.product.group_buy"}
         %i.ofn-i_056-bulk><
         %em><
-          \ {{'bulk' | t}}
+          \ {{::'bulk' | t}}
 
   %ng-include{src: "'partials/shop_variant_no_group_buy.html'"}
   %ng-include{src: "'partials/shop_variant_with_group_buy.html'"}
 
   .small-3.medium-1.large-1.columns.variant-unit
     .table-cell
-      %em {{ variant.unit_to_display }}
+      %em {{ ::variant.unit_to_display }}
 
   .small-4.medium-2.large-2.columns.variant-price
     .table-cell.price
       %i.ofn-i_009-close
-      {{ variant.price_with_fees | localizeCurrency }}
+      {{  ::variant.price_with_fees | localizeCurrency }}
 
       -# Now in a template in app/assets/javascripts/templates !
       %price-breakdown{"price-breakdown" => "_", variant: "variant",
