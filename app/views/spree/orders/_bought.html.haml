@@ -1,4 +1,4 @@
-%div
+%div{ng: {controller: "EditOrderCtrl"}}
   %div
     %div
       .row
@@ -21,7 +21,7 @@
               %tbody
                 - @order.finalised_line_items.each do |line_item|
                   - variant = line_item.variant
-                  %tr.line-item{class: "variant-#{variant.id}"}
+                  %tr.line-item{class: "line-item-#{line_item.id} variant-#{variant.id}"}
                     %td.cart-item-description
 
                       %div.item-thumb-image
@@ -39,3 +39,5 @@
                       = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 
                     %td.cart-item-delete.text-center
+                      %a.delete{ng: {click: "deleteLineItem(#{line_item.id})"}}
+                        %i.delete.ofn-i_026-trash

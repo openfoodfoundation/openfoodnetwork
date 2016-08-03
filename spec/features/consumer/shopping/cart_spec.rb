@@ -84,5 +84,34 @@ feature "full-page cart", js: true do
         page.should have_content "Insufficient stock available, only 2 remaining"
       end
     end
+
+    context "when ordered in the same order cycle" do
+      let(:address) { create(:address) }
+      let(:user) { create(:user, bill_address: address, ship_address: address) }
+      let!(:prev_order1) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: user) }
+      let!(:prev_order2) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: user) }
+
+      before do
+        order.user = user
+        order.save
+        add_product_to_cart order, product_tax
+        quick_login_as user
+        visit spree.cart_path
+      end
+
+      it "shows already ordered line items" do
+        item1 = prev_order1.line_items.first
+        item2 = prev_order2.line_items.first
+        expect(page).to have_content item1.variant.name
+        expect(page).to have_content item2.variant.name
+        page.find(".line-item-#{item1.id} a.delete").click
+        expect(page).to have_no_content item1.variant.name
+        expect(page).to have_content item2.variant.name
+
+        visit spree.cart_path
+        expect(page).to have_no_content item1.variant.name
+        expect(page).to have_content item2.variant.name
+      end
+    end
   end
 end
