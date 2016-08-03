@@ -7,7 +7,7 @@ module OpenFoodNetwork
     private
 
     def self.features
-      {order_cycles: true}
+      {}
     end
   end
 end
