@@ -7,7 +7,7 @@ module OpenFoodNetwork
     private
 
     def self.features
-      {}
+      {connect_learn_homepage: false}
     end
   end
 end
