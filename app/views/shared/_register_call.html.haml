@@ -1,7 +1,22 @@
-%a.alert-cta{href: registration_path, target: "_blank"}
-  %h6
-    = t '.selling_on_ofn'
-    &nbsp;
-    %strong
-      = t '.register'
-      %i.ofn-i_054-point-right
+- if feature? :connect_learn_homepage
+  :css
+    .page-alert .alert-box { background-color: #f27052; }
+
+  .alert-cta
+    %h6
+      %strong
+        = link_to "Connect", "https://openfoodnetwork.org/au/connect/", target: '_blank'
+      and
+      %strong
+        = link_to "Learn", "https://openfoodnetwork.org/au/learn/", target: '_blank'
+
+
+- else
+  .alert-cta
+    %h6
+      %a{href: registration_path, target: "_blank"}
+        = t '.selling_on_ofn'
+        &nbsp;
+        %strong
+          = t '.register'
+          %i.ofn-i_054-point-right
