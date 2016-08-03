@@ -7,10 +7,7 @@ module OpenFoodNetwork
     private
 
     def self.features
-      {eaterprises: true,
-       local_organics: false,
-       order_cycles: true,
-       enterprises_distributor_info_rich_text: true}
+      {order_cycles: true}
     end
   end
 end
