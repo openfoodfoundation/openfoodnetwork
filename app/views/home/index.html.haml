@@ -3,7 +3,7 @@
 
 
 %div{"ng-controller" => "HomeCtrl"}
-  = render partial: "shared/menu/alert"
+  = render "shared/menu/alert"
 
   #tagline
     .row
@@ -17,9 +17,9 @@
 
 
   #panes
-    = render partial: "home/brandstory"
-    = render partial: "home/system"
-    = render partial: "home/cta"
-    = render partial: "home/stats"
+    = render "home/brandstory"
+    = render "home/system"
+    = render "home/cta"
+    = render "home/stats"
 
-  = render partial: "shared/footer"
+  = render "shared/footer"
