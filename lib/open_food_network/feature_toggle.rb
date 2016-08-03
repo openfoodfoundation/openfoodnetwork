@@ -1,7 +1,7 @@
 module OpenFoodNetwork
   class FeatureToggle
     def self.enabled? feature
-      features[feature]
+      features.with_indifferent_access[feature]
     end
 
     private
