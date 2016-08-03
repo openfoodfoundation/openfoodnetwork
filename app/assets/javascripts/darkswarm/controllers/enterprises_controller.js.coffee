@@ -1,4 +1,4 @@
-Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
+Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location, Enterprises, Search, $document, HashNavigation, FilterSelectorsService, EnterpriseModal, enterpriseMatchesNameQueryFilter, distanceWithinKmFilter) ->
   $scope.Enterprises = Enterprises
   $scope.producers_to_filter = Enterprises.producers
   $scope.filterSelectors = FilterSelectorsService.createSelectors()
@@ -20,6 +20,10 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
     $timeout ->
       Enterprises.calculateDistance query, $scope.firstNameMatch()
       $rootScope.$broadcast 'enterprisesChanged'
+
+  $timeout ->
+    if $location.search()['show_closed']?
+      $scope.showClosedShops()
 
   $scope.$watch "filtersActive", (value) ->
     $scope.$broadcast 'filtersToggled'
@@ -71,6 +75,8 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, Enterpris
 
   $scope.showClosedShops = ->
     delete $scope.filterExpression['active']
+    $location.search('show_closed', '1')
 
   $scope.hideClosedShops = ->
     $scope.filterExpression['active'] = true
+    $location.search('show_closed', null)
