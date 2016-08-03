@@ -102,7 +102,6 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       for line_item in items
         line_item.variant.line_item = line_item
         Variants.extend line_item.variant
-        line_item.variant.extended_name = @extendedVariantName(line_item.variant)
       items
 
     total_item_count: =>
