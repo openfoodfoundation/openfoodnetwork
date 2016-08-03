@@ -42,6 +42,8 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  resources :line_items, only: [:destroy]
+
   resources :groups, only: [:index, :show] do
     collection do
       get :signup
@@ -253,5 +255,7 @@ Spree::Core::Engine.routes.prepend do
     get :clear, :on => :collection
     get :order_cycle_expired, :on => :collection
   end
+
+  resources :line_items, only: [:destroy]
 
 end
