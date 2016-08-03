@@ -4,7 +4,6 @@
 @import animations
 @import variables
 
-
 // Styling for big panes on homepage \\
 #panes
   .pane
@@ -24,6 +23,12 @@
 
 #brand-story.pane, #cta.pane, #shops.pane
   @include tiledPane
+
+#connect.pane
+  @include groupsbg
+
+#learn.pane
+  @include hubsbg
 
 #stats.pane
   background-image: url("/assets/home/background-blurred-oranges.jpg")
@@ -93,10 +98,6 @@
     color: $brand-colour
     @media all and (max-width: 640px)
       font-size: 45px
-
-
-  a
-    color: $brand-colour
 
   .home-icon-box-bottom
     margin-top: 1rem

@@ -8,8 +8,16 @@
 
   #panes
     = render "home/brandstory"
-    = render "home/system"
-    = render "home/cta"
+
+    - if feature? :connect_learn_homepage
+      = render "home/learn"
+      = render "home/connect"
+      = render "home/system"
+    - else
+      = render "home/system"
+      = render "home/cta"
+
     = render "home/stats"
+
 
   = render "shared/footer"
