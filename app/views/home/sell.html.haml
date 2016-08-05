@@ -12,21 +12,39 @@
         %p.text-big
           = t :sell_motivation
 
-  .pane
+  #sell-detail.pane
     .row
       .small-12.medium-4.columns.text-center
         %h3= t :sell_producers
+        %p
+          = t :sell_producers_detail
+          %a{href: "https://openfoodnetwork.org/user-guide/"}= t(:sell_user_guide)
         %a.button.transparent{href: signup_producers_path}
           = t :register_title
 
       .small-12.medium-4.columns.text-center
-        %h3= t :sell_shops
+        %h3= t :sell_hubs
+        %p
+          = t :sell_hubs_detail
+          %a{href: "https://openfoodnetwork.org/user-guide/"}= t(:sell_user_guide)
         %a.button.transparent{href: signup_shops_path}
           = t :register_title
 
       .small-12.medium-4.columns.text-center
         %h3= t :sell_groups
+        %p
+          = t :sell_groups_detail
+          %a{href: "https://openfoodnetwork.org/user-guide/"}= t(:sell_user_guide)
         %a.button.transparent{href: signup_groups_path}
           = t :register_title
+
+    .row
+      .small-12.medium-12.columns.text-center
+        %p= t :sell_listing_price
+
+        %p
+          = t :sell_embed
+          %a{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true}
+            = t :sell_ask_services
 
 = render "shared/footer"
