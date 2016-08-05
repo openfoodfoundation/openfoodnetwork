@@ -1,5 +1,51 @@
 #edit-address-dialog
-  h2 'Edit Address'
-  #countries
-    = 1+1
+  %h2 Edit Shipping Address
+  %form{ name: 'edit_address_form', novalidate: true, ng: { submit: 'editAddress()'}}
+    .row
+      Required fields are denoted with an asterisk (
+      %span.required *
+      )
+    %table.no-borders
+      %tr
+        %td
+          Address1
+          %span.required *
+        %td
+          %input{ type: 'text', name: 'address1', required: true, ng: { model: 'address1'} }
+      %tr
+        %td
+          Address2:
+        %td
+          %input{ type: 'text', name: 'address2', ng: { model: 'address2'} }
+      %tr
+        %td
+          Phone:
+        %td
+          %input{ type: 'text', name: 'phone', required: true, ng: { model: 'phone'} }
+      %tr
+        %td
+          City:
+        %td
+          %input{ type: 'text', name: 'city', required: true, ng: { model: 'city'} }
+      %tr
+        %td
+          Zipcode:
+        %td
+          %input{ type: 'text', name: 'zipcode', required: true, ng: { model: 'zipcode'} }
+      %tr
+        %td
+          Country:
+        %td
+          %select{name: 'country', required: true, ng: {model: 'country', options: 'country as country.name for country in availableCountries track by country.id'}}
+            %option{value: ''} Select Country
+      %tr
+        %td
+          State:
+        %td
+          %select{name: 'state', required: true, ng: {model: 'state', options: 'state as state.name for state in states track by state.id'}}
+            %option{value: ''} Select State
+
+    .text-center
+      %input.button.red.icon-plus{ type: 'submit', value: 'Update Address'}
+
 
