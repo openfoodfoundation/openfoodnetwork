@@ -1,16 +1,13 @@
 module OpenFoodNetwork
   class FeatureToggle
     def self.enabled? feature
-      features[feature]
+      features.with_indifferent_access[feature]
     end
 
     private
 
     def self.features
-      {eaterprises: true,
-       local_organics: false,
-       order_cycles: true,
-       enterprises_distributor_info_rich_text: true}
+      {connect_learn_homepage: false}
     end
   end
 end

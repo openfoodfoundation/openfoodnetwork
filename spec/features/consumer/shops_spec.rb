@@ -75,6 +75,19 @@ feature 'Shops', js: true do
     end
   end
 
+  describe "viewing closed shops by URL" do
+    before do
+      d1
+      d2
+      visit shops_path(anchor: "/?show_closed=1")
+    end
+
+    it "shows closed shops" do
+      #click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
+      page.should have_selector 'hub.inactive', text: d2.name
+    end
+  end
+
 
   private
 

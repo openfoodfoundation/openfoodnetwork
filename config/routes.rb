@@ -15,6 +15,7 @@ Openfoodnetwork::Application.routes.draw do
   get "/discourse/sso", to: "discourse_sso#sso"
 
   get "/map", to: "map#index", as: :map
+  get "/sell", to: "home#sell", as: :sell
 
   get "/register", to: "registration#index", as: :registration
   get "/register/auth", to: "registration#authenticate", as: :registration_auth
