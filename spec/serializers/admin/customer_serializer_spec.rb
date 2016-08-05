@@ -12,7 +12,8 @@ describe Api::Admin::CustomerSerializer do
     expect(tags[0]).to eq({ "text" => 'one', "rules" => nil })
     expect(tags[1]).to eq({ "text" => 'two', "rules" => 1 })
 
-    expect(result['bill_address']).to eq customer.bill_address.address1
+    expect(result['bill_address']['id']).to eq customer.bill_address.id
+    expect(result['bill_address']['address1']).to eq customer.bill_address.address1
     expect(result['ship_address']).to be nil
   end
 end
