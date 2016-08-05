@@ -315,10 +315,8 @@ en:
 
   footer_nav_headline: "Navigate"
   footer_join_headline: "Join us"
-  footer_join_producers: "Producers sign-up"
-  footer_join_hubs: "Hubs sign-up"
-  footer_join_groups: "Groups sign-up"
-  footer_join_partners: "Food systems partners"
+  footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
+  footer_join_cta: "Tell me more!"
 
   footer_legal_call: "Read our"
   footer_legal_tos: "Terms and conditions"
