@@ -11,7 +11,15 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       for line_item in @line_items
         line_item.variant.line_item = line_item
         Variants.register line_item.variant
-        line_item.variant.extended_name = @extendedVariantName(line_item.variant)
+
+    adjust: (line_item) =>
+      line_item.total_price = line_item.variant.price_with_fees * line_item.quantity
+      if line_item.quantity > 0
+        @line_items.push line_item unless line_item in @line_items
+      else
+        index = @line_items.indexOf(line_item)
+        @line_items.splice(index, 1) if index >= 0
+      @orderChanged()
 
     orderChanged: =>
       @unsaved()
@@ -48,7 +56,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       # TODO: These changes to quantity/max_quantity trigger another cart update, which
       #       is unnecessary.
 
-      for li in @line_items_present()
+      for li in @line_items when li.quantity > 0
         if stockLevels[li.variant.id]?
           li.variant.count_on_hand = stockLevels[li.variant.id].on_hand
           if li.quantity > li.variant.count_on_hand
@@ -67,7 +75,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
 
     data: =>
       variants = {}
-      for li in @line_items_present()
+      for li in @line_items when li.quantity > 0
         variants[li.variant.id] =
           quantity: li.quantity
           max_quantity: li.max_quantity
@@ -89,45 +97,21 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       $(window).bind "beforeunload", ->
         t 'order_not_saved_yet'
 
-    line_items_present: =>
-      @line_items.filter (li)->
-        li.quantity > 0
-
     total_item_count: =>
-      @line_items_present().reduce (sum,li) ->
+      @line_items.reduce (sum,li) ->
         sum = sum + li.quantity
       , 0
 
     empty: =>
-      @line_items_present().length == 0
+      @line_items.length == 0
 
     total: =>
-      @line_items_present().map (li)->
-        li.variant.totalPrice()
+      @line_items.map (li)->
+        li.total_price
       .reduce (t, price)->
         t + price
       , 0
 
-    register_variant: (variant)=>
-      exists = @line_items.some (li)-> li.variant == variant
-      @create_line_item(variant) unless exists
-
     clear: ->
       @line_items = []
       storage.clearAll() # One day this will have to be moar GRANULAR
-
-    create_line_item: (variant)->
-      variant.extended_name = @extendedVariantName(variant)
-      variant.line_item =
-        variant: variant
-        quantity: null
-        max_quantity: null
-      @line_items.push variant.line_item
-
-    extendedVariantName: (variant) =>
-      if variant.product_name == variant.name_to_display
-        variant.product_name
-      else
-        name =  "#{variant.product_name} - #{variant.name_to_display}"
-        name += " (#{variant.options_text})" if variant.options_text
-        name

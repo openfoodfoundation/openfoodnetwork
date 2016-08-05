@@ -17,8 +17,7 @@
         %a.button.primary.tiny{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
           = t 'checkout'
       %table
-        %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items_present()",
-        "ng-controller" => "LineItemCtrl", "id" => "cart-variant-{{ line_item.variant.id }}"}
+        %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items", "id" => "cart-variant-{{ line_item.variant.id }}"}
           %td
             %small
               %strong
@@ -33,9 +32,9 @@
             %small
               \=
               %strong
-                .total-price.right {{ line_item.variant.totalPrice() | localizeCurrency }}
+                .total-price.right {{ line_item.total_price | localizeCurrency }}
 
-      %table{"ng-show" => "Cart.line_items_present().length > 0"}
+      %table{"ng-show" => "Cart.line_items.length > 0"}
         %tr.total-cart
           %td
             %em
