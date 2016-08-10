@@ -1,7 +1,8 @@
-%a.alert-cta{href: registration_path, target: "_blank"}
+.alert-cta
   %h6
-    = t '.selling_on_ofn'
-    &nbsp;
-    %strong
-      = t '.register'
-      %i.ofn-i_054-point-right
+    %a{href: registration_path, target: "_blank"}
+      = t '.selling_on_ofn'
+      &nbsp;
+      %strong
+        = t '.register'
+        %i.ofn-i_054-point-right

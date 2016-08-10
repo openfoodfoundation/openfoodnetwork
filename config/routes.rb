@@ -15,9 +15,14 @@ Openfoodnetwork::Application.routes.draw do
   get "/discourse/sso", to: "discourse_sso#sso"
 
   get "/map", to: "map#index", as: :map
+  get "/sell", to: "home#sell", as: :sell
 
   get "/register", to: "registration#index", as: :registration
   get "/register/auth", to: "registration#authenticate", as: :registration_auth
+
+  # Redirects to global website
+  get "/connect", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/connect/")
+  get "/learn", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/learn/")
 
   resource :shop, controller: "shop" do
     get :products

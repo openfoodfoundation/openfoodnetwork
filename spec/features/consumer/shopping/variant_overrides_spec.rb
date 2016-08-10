@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "shopping with variant overrides defined", js: true do
+feature "shopping with variant overrides defined", js: true, retry: 3 do
   include AuthenticationWorkflow
   include WebHelper
   include ShopWorkflow
@@ -191,7 +191,7 @@ feature "shopping with variant overrides defined", js: true do
     within "#payment" do
       choose pm.name
     end
-    
+
     place_order
     expect(page).to have_content "Your order has been processed successfully"
   end
@@ -199,7 +199,7 @@ feature "shopping with variant overrides defined", js: true do
   def click_checkout
       show_cart
       wait_until_enabled 'li.cart a.button'
-      click_link 'Checkout now', match: :first
+      first(:link, 'Checkout now').click
   end
 
 end

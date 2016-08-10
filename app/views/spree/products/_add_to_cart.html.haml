@@ -7,7 +7,7 @@
   - elsif !distributor_available_for?(order, @product)
     = render 'add_to_cart_distributor_unavailable'
 
-  - elsif !order_cycle_available_for?(order, @product) and order_cycles_enabled?
+  - elsif !order_cycle_available_for?(order, @product)
     = render 'add_to_cart_order_cycle_unavailable'
 
   - else
