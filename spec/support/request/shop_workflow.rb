@@ -16,7 +16,7 @@ module ShopWorkflow
     ApplicationController.any_instance.stub(:session).and_return({order_id: order.id, access_token: order.token})
   end
 
-  def add_product_to_cart
+  def add_product_to_cart(order, product)
     populator = Spree::OrderPopulator.new(order, order.currency)
     populator.populate(variants: {product.variants.first.id => 1})
 

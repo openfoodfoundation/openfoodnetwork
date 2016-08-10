@@ -19,7 +19,7 @@ feature "full-page cart", js: true do
     before do
       add_enterprise_fee enterprise_fee
       set_order order
-      add_product_to_cart
+      add_product_to_cart order, product
       visit spree.cart_path
     end
 
