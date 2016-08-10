@@ -13,16 +13,35 @@ feature "full-page cart", js: true do
     let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product_tax.variants.first, product_fee.variants.first]) }
     let(:enterprise_fee) { create(:enterprise_fee, amount: 11.00, tax_category: product_tax.tax_category) }
     let(:product_tax) { create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1) }
-    let(:product_fee) { create(:simple_product, supplier: supplier, price: 0.86) }
+    let(:product_fee) { create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100) }
     let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
     before do
-      add_enterprise_fee enterprise_fee
       set_order order
+    end
+
+    describe "fees" do
+      let(:percentage_fee) { create(:enterprise_fee, calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20)) }
+
+      before do
+        add_enterprise_fee percentage_fee
+        add_product_to_cart order, product_fee, quantity: 8
+        visit spree.cart_path
+      end
+
+      it "rounds fee calculations correctly" do
+        # $0.86 + 20% = $1.032
+        # Fractional cents should be immediately rounded down and not carried through
+        expect(page).to have_selector '.cart-item-price',         text: '$1.03'
+        expect(page).to have_selector '.cart-item-total',         text: '$8.24'
+        expect(page).to have_selector '.order-total.item-total',  text: '$8.24'
+        expect(page).to have_selector '.order-total.grand-total', text: '$8.24'
+      end
     end
 
     describe "tax" do
       before do
+        add_enterprise_fee enterprise_fee
         add_product_to_cart order, product_tax
         visit spree.cart_path
       end
