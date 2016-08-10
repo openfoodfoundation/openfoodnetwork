@@ -91,17 +91,17 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       page.should have_field "order[line_items_attributes][0][quantity]", with: '2'
       page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-total", text: '$122.22'
 
-      page.should have_selector "#edit-cart .item-total", text: '$122.21'
-      page.should have_selector "#edit-cart .grand-total", text: '$122.21'
+      page.should have_selector "#edit-cart .item-total", text: '$122.22'
+      page.should have_selector "#edit-cart .grand-total", text: '$122.22'
     end
 
     it "shows the correct prices in the checkout" do
       fill_in "variants[#{v1.id}]", with: "2"
       click_checkout
 
-      page.should have_selector 'form.edit_order .cart-total', text: '$122.21'
+      page.should have_selector 'form.edit_order .cart-total', text: '$122.22'
       page.should have_selector 'form.edit_order .shipping', text: '$0.00'
-      page.should have_selector 'form.edit_order .total', text: '$122.21'
+      page.should have_selector 'form.edit_order .total', text: '$122.22'
     end
   end
 
@@ -115,7 +115,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
 
       o = Spree::Order.complete.last
       o.line_items.first.price.should == 55.55
-      o.total.should == 122.21
+      o.total.should == 122.22
     end
 
     it "subtracts stock from the override" do
