@@ -6,6 +6,13 @@ module Spree
         where('spree_product_properties.product_id IN (?)', enterprise.supplied_product_ids)
     }
 
+    scope :sold_by, ->(shop) {
+      joins(products: {variants: {exchanges: :order_cycle}}).
+        merge(Exchange.outgoing).
+        merge(Exchange.to_enterprise(shop)).
+        merge(OrderCycle.active)
+    }
+
     after_save :refresh_products_cache
 
     # When a Property is destroyed, dependent-destroy will destroy all ProductProperties,
