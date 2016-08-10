@@ -1,5 +1,5 @@
 #edit-address-dialog
-  %h2 Edit Shipping Address
+  %h2 {{ current_address === 'bill_address' ?  'Edit Billing Address' : 'Edit Shipping Address'}}
   %form{ name: 'edit_address_form', novalidate: true, ng: { submit: 'updateAddress()'}}
     .row
       Required fields are denoted with an asterisk (

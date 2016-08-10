@@ -14,4 +14,8 @@ angular.module("admin.customers").factory 'CustomerResource', ($resource) ->
       method: 'DELETE'
       params:
         id: '@id'
+    'update':
+      method: 'PUT'
+      params:
+        id: '@id'
   })

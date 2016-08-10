@@ -25,3 +25,11 @@ angular.module("admin.customers").factory "Customers", ($q, InfoDialog, RequestM
       request = CustomerResource.index(params, (data) => @customers = data)
       RequestMonitor.load(request.$promise)
       request.$promise
+
+    update: (address, customer, current_address) ->
+      params =
+        id: customer.id
+        customer:
+          "#{current_address}_attributes": address
+      CustomerResource.update params
+
