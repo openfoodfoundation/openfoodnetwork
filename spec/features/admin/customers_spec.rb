@@ -150,6 +150,52 @@ feature 'Customers' do
         expect(customer2.reload.code).to be nil
       end
 
+      describe 'updating a customer addresses' do
+        before do
+          select2_select managed_distributor2.name, from: "shop_id"
+        end
+
+        it 'updates the existing billing address' do
+          expect(page).to have_content 'BILLING ADDRESS'
+
+          first('#bill-address-link').click
+
+          expect(page).to have_content 'Edit Billing Address'
+          fill_in 'address1', with: "New Address1"
+          click_button 'Update Address'
+
+          expect(page).to have_link 'New Address1'
+
+          RackRequestBlocker.wait_for_requests_complete
+
+          expect(customer4.reload.bill_address.address1).to eq 'New Address1'
+        end
+
+        it 'creates a new shipping address' do
+          expect(page).to have_content 'SHIPPING ADDRESS'
+
+          first('#ship-address-link').click
+          expect(page).to have_content 'Edit Shipping Address'
+
+          fill_in 'address1', with: "New Address1"
+          fill_in 'phone', with: "12345678"
+          fill_in 'city', with: "Melbourne"
+          fill_in 'zipcode', with: "3000"
+
+          select 'Australia', from: 'country'
+          select 'Victoria', from: 'state'
+          click_button 'Update Address'
+
+          RackRequestBlocker.wait_for_requests_complete
+
+          ship_address = customer4.reload.ship_address
+
+          expect(ship_address.address1).to eq 'New Address1'
+          expect(ship_address.phone).to eq '12345678'
+          expect(ship_address.city).to eq 'Melbourne'
+        end
+      end
+
       describe "creating a new customer" do
         context "when no shop has been selected" do
           it "asks the user to select a shop" do
