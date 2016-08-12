@@ -5,6 +5,8 @@
       Required fields are denoted with an asterisk (
       %span.required *
       )
+    .error{ ng: { repeat: "error in errors", bind: "error" } }
+
     %table.no-borders
       %tr
         %td
@@ -14,33 +16,38 @@
           %input{ type: 'text', name: 'address1', required: true, ng: { model: 'address.address1'} }
       %tr
         %td
-          Address2:
+          Address2
         %td
           %input{ type: 'text', name: 'address2', ng: { model: 'address.address2'} }
       %tr
         %td
-          Phone:
+          Phone
+          %span.required *
         %td
           %input{ type: 'text', name: 'phone', required: true, ng: { model: 'address.phone'} }
       %tr
         %td
-          City:
+          City
+          %span.required *
         %td
           %input{ type: 'text', name: 'city', required: true, ng: { model: 'address.city'} }
       %tr
         %td
-          Zipcode:
+          Zipcode
+          %span.required *
         %td
           %input{ type: 'text', name: 'zipcode', required: true, ng: { model: 'address.zipcode'} }
       %tr
         %td
-          Country:
+          Country
+          %span.required *
         %td
           %select{name: 'country', required: true, ng: {model: 'address.country_id', options: 'country.id as country.name for country in availableCountries'}}
             %option{value: ''} Select Country
       %tr
         %td
-          State:
+          State
+          %span.required *
         %td
           %select{name: 'state', required: true, ng: {model: 'address.state_id', options: 'state.id as state.name for state in states'}}
             %option{value: ''} Select State

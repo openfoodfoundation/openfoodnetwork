@@ -2,16 +2,21 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
   restrict: 'A'
   scope: true
   link: (scope, element, attr) ->
+    scope.errors = []
+
     scope.$watch 'address.country_id', (newVal) ->
       if newVal
         scope.states = scope.filter_states(newVal)
 
     scope.updateAddress = ->
       scope.edit_address_form.$setPristine()
+      if scope.edit_address_form.$valid
+        Customers.update(scope.address, scope.customer, scope.current_address).$promise.then (data) ->
+          scope.customer = data
+          template.dialog('close')
+      else
+        scope.errors.push("Sorry! Please input all of the required fields!")
 
-      Customers.update(scope.address, scope.customer, scope.current_address).$promise.then (data) ->
-        scope.customer = data
-        template.dialog('close')
 
     template = $compile($templateCache.get('admin/edit_address_dialog.html'))(scope)
     template.dialog(DialogDefaults)
