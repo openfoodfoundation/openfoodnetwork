@@ -1,4 +1,4 @@
-angular.module("admin.customers").directive 'editAddressDialog', ($compile, $templateCache, $filter, DialogDefaults, Customers) ->
+angular.module("admin.customers").directive 'editAddressDialog', ($compile, $templateCache, $filter, DialogDefaults, Customers, StatusMessage) ->
   restrict: 'A'
   scope: true
   link: (scope, element, attr) ->
@@ -14,6 +14,7 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
         Customers.update(scope.address, scope.customer, scope.current_address).$promise.then (data) ->
           scope.customer = data
           template.dialog('close')
+          StatusMessage.display('success', "Address updated successfully.")
       else
         scope.errors.push("Sorry! Please input all of the required fields!")
 

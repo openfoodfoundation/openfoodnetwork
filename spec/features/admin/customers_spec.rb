@@ -164,9 +164,8 @@ feature 'Customers' do
           fill_in 'address1', with: "New Address1"
           click_button 'Update Address'
 
+          expect(page).to have_content 'Address updated successfully.'
           expect(page).to have_link 'New Address1'
-
-          RackRequestBlocker.wait_for_requests_complete
 
           expect(customer4.reload.bill_address.address1).to eq 'New Address1'
         end
@@ -186,7 +185,8 @@ feature 'Customers' do
           select 'Victoria', from: 'state'
           click_button 'Update Address'
 
-          RackRequestBlocker.wait_for_requests_complete
+          expect(page).to have_content 'Address updated successfully.'
+          expect(page).to have_link 'New Address1'
 
           ship_address = customer4.reload.ship_address
 
