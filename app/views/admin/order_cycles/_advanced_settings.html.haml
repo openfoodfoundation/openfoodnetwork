@@ -4,12 +4,12 @@
       %h3= t('.title')
 
   .row
-    .filter_select
-      %label.four.columns.alpha= t('admin.order_cycles.edit.copy_products_from')
-      %select.select2.four.columns#oc_id{ 'ng-model' => 'order_cycle_to_copy.id', name: 'order_cycle_to_copy_id', ng: { options: 'order_cycle.id as order_cycle.name for (id, order_cycle) in order_cycles' } }
-      .four.columns
-      .four.columns.alpha.omega.text-center
-        %input#copy_products{ type: 'button', value: 'Copy products', ng: { click: "copyProducts()" } }
+    .four-columns.alpha
+      %label.four.columns.alpha= t('admin.order_cycles.edit.copy_products_and_fees_from')
+    .four.columns.filter-select
+      %input.ofn-select2.fullwidth#oc_id{ ng: { model: 'order_cycle_to_copy.id' }, name: 'order_cycle_to_copy_id', data: 'order_cycles' }
+    .four.columns
+      %input#copy_products{ type: 'button', value: "#{t('admin.order_cycles.edit.copy_now')}", ng: { click: "copyProducts()" } }
 
   = form_for [main_app, :admin, @order_cycle] do |f|
     .row
@@ -23,7 +23,8 @@
       .four.columns.omega
         = f.radio_button :preferred_product_selection_from_coordinator_inventory_only, false
         = f.label :preferred_product_selection_from_coordinator_inventory_only, t('.preferred_product_selection_from_coordinator_inventory_only_all')
-      .four.columns.alpha.omega.text-center
+    .row
+      .sixteen.columns.alpha.omega.text-center
         %input{ type: 'submit', value: t('.save_reload') }
         %br
         = t('or')
