@@ -176,8 +176,11 @@ en:
       edit:
         choose_products_from: "Choose Products From:"
         copy_prefix: "COPY OF"
-        copying_products: "Copying products..."
-        failed_to_copy_products: "Failed to copy products"
+        copy_products_and_fees_from: "Copy products and fees from"
+        copy_now: "Copy Now"
+        copying_products_and_fees: "Copying products and fees..."
+        failed_to_copy_products_and_fees: "Failed to copy products"
+        products_and_fees_copied_refreshing: "Products and fees copied. Refreshing..."
         select_an_order_cycle_first: "Select an order cycle first."
         order_cycle_updated: "Order cycle updated."
         coordinators_inventory_only: "Co-ordinator's Inventory Only"
