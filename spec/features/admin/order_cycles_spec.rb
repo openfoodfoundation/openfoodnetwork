@@ -708,7 +708,6 @@ feature %q{
       end
 
       scenario "copying from another order cycle" do
-        pending("trouble getting this test to work")
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed], coordinator: distributor_managed, distributors: [distributor_managed], name: 'Order Cycle 1' } )
         oc_new = create(:simple_order_cycle, coordinator: distributor_managed, name: 'Order Cycle 2')
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
@@ -724,13 +723,13 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc_new)
         click_button 'Advanced Settings'
-        ### Don't think this next part works...
         select2_select oc.name, from: "oc_id"
         page.find('#copy_products').click
-        # expect{page.find('#copy_products').click}.to change{OrderCycle.find(oc_new.id).exchanges.size}.by(oc.exchanges.size)
+        expect(page).to have_content "Copying products and fees"
+        #expect{page.find('#copy_products').click}.to change{OrderCycle.find(oc_new.id).exchanges.size}.by(oc.exchanges.size)
         # Should now show the exchanges from the original oc
-        save_and_open_page
 
+        expect(page).to have_content "Products and fees copied"
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector 'tr.supplier', count: 1
 
