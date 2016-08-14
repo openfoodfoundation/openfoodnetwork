@@ -466,9 +466,11 @@ describe OrderCycle do
     new_oc.coordinator_fee_ids.should == oc.coordinator_fee_ids
     new_oc.preferred_product_selection_from_coordinator_inventory_only.should == oc.preferred_product_selection_from_coordinator_inventory_only
 
-    # check that the clone has original exchanges
+    # check that the copy has original exchanges
     new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex1["receiver_id"], ex1["sender_id"]]
     new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex2["receiver_id"], ex2["sender_id"]]
+
+    new_oc.exchanges.size.should eq oc.exchanges.size
 
     # Any existing exchanges are deleted
     new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should_not include [original_exchange["receiver_id"], original_exchange["sender_id"]]
