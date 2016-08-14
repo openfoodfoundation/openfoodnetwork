@@ -712,6 +712,10 @@ feature %q{
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector 'tr.supplier', count: 1
 
+#        page.all('table.exchanges a span', text: 'Expand all').each do |link|
+#          link.click
+#        end
+#        save_and_open_page
         expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
         expect(page).to have_selector 'tr.distributor', count: 1
       end
