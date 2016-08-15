@@ -93,6 +93,7 @@ angular.module('admin.orderCycles')
       $window.location = destination
 
     $rootScope.$on 'refreshOC', (event, id) ->
+      Enterprise.supplied_products = []
       $scope.enterprises = Enterprise.index(order_cycle_id: id)
       $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: id)
       $scope.order_cycle = OrderCycle.load(id)
