@@ -1,5 +1,5 @@
 angular.module('admin.orderCycles').controller 'AdminAdvancedOrderCyclesCtrl', ($rootScope, $scope, $location, $timeout, $http, OrderCycles, StatusMessage) ->
-  current_order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
+  $scope.current_order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
   $scope.order_cycles = OrderCycles.index(ams_prefix: "basic")
   $scope.StatusMessage = StatusMessage
 
@@ -8,7 +8,7 @@ angular.module('admin.orderCycles').controller 'AdminAdvancedOrderCyclesCtrl', (
     if angular.isDefined($scope.order_cycle_to_copy)
       $http
         method: "POST"
-        url: "/admin/order_cycles/" + current_order_cycle_id + "/copy_settings"
+        url: "/admin/order_cycles/" + $scope.current_order_cycle_id + "/copy_settings"
         data: { oc_to_copy: $scope.order_cycle_to_copy.id }
       .success (response) ->
         $rootScope.$emit('refreshOC', response.id)
