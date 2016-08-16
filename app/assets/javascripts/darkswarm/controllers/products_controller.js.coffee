@@ -1,18 +1,41 @@
-Darkswarm.controller "ProductsCtrl", ($scope, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart, Taxons, Properties) ->
+Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, OrderCycle, FilterSelectorsService, Cart, Taxons, Properties) ->
   $scope.Products = Products
   $scope.Cart = Cart
+  $scope.query = ""
   $scope.taxonSelectors = FilterSelectorsService.createSelectors()
   $scope.propertySelectors = FilterSelectorsService.createSelectors()
   $scope.filtersActive = true
-  $scope.limit = 3
+  $scope.limit = 10
   $scope.order_cycle = OrderCycle.order_cycle
+  # $scope.infiniteDisabled = true
+
+  # All of this logic basically just replicates the functionality filtering an ng-repeat
+  # except that it allows us to filter a separate list before rendering, meaning that
+  # we can get much better performance when applying filters by resetting the limit on the
+  # number of products being rendered each time a filter is changed.
 
   $scope.$watch "Products.loading", (newValue, oldValue) ->
+    $scope.updateFilteredProducts()
     $scope.$broadcast("loadFilterSelectors") if !newValue
 
   $scope.incrementLimit = ->
     if $scope.limit < Products.products.length
-      $scope.limit = $scope.limit + 1
+      $scope.limit += 10
+      $scope.updateVisibleProducts()
+
+  $scope.$watch 'query', -> $scope.updateFilteredProducts()
+  $scope.$watchCollection 'activeTaxons', -> $scope.updateFilteredProducts()
+  $scope.$watchCollection 'activeProperties', -> $scope.updateFilteredProducts()
+
+  $scope.updateFilteredProducts = ->
+    $scope.limit = 10
+    f1 = $filter('products')(Products.products, $scope.query)
+    f2 = $filter('taxons')(f1, $scope.activeTaxons)
+    $scope.filteredProducts = $filter('properties')(f2, $scope.activeProperties)
+    $scope.updateVisibleProducts()
+
+  $scope.updateVisibleProducts = ->
+    $scope.visibleProducts = $filter('limitTo')($scope.filteredProducts, $scope.limit)
 
   $scope.searchKeypress = (e)->
     code = e.keyCode || e.which

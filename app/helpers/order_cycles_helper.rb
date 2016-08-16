@@ -67,10 +67,6 @@ module OrderCyclesHelper
     @order_cycles_simple_form ||= @order_cycle.coordinator.sells == 'own'
   end
 
-  def order_cycles_enabled?
-    OpenFoodNetwork::FeatureToggle.enabled? :order_cycles
-  end
-
   def pickup_time(order_cycle = current_order_cycle)
     order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time
   end
