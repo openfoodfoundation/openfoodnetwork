@@ -7,7 +7,7 @@
     .four-columns.alpha
       %label.four.columns.alpha= t('admin.order_cycles.edit.copy_products_and_fees_from')
     .four.columns.filter-select
-      %input.ofn-select2.fullwidth#oc_id{ ng: { model: 'order_cycle_to_copy.id' }, name: 'order_cycle_to_copy_id', data: 'order_cycles | filter:{id: "!"+current_order_cycle_id}' }
+      %input.ofn-select2.fullwidth#oc_id{ ng: { model: 'order_cycle_to_copy.id' }, name: 'order_cycle_to_copy_id', data: "order_cycles | filter:{id: '!'+#(@order_cycle.id}" }
     .four.columns
       %input#copy_products{ type: 'button', value: "#{t('admin.order_cycles.edit.copy_now')}", ng: { click: "copyProducts()" } }
 
