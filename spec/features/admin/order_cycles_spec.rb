@@ -726,17 +726,12 @@ feature %q{
         select2_select oc.name, from: "oc_id"
         page.find('#copy_products').click
         expect(page).to have_content "Copying products and fees"
-        #expect{page.find('#copy_products').click}.to change{OrderCycle.find(oc_new.id).exchanges.size}.by(oc.exchanges.size)
         # Should now show the exchanges from the original oc
 
         expect(page).to have_content "Products and fees copied"
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector 'tr.supplier', count: 1
 
-#        page.all('table.exchanges a span', text: 'Expand all').each do |link|
-#          link.click
-#        end
-#        save_and_open_page
         expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
         expect(page).to have_selector 'tr.distributor', count: 1
       end

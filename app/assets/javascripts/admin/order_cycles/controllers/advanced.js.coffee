@@ -1,5 +1,6 @@
-angular.module('admin.orderCycles').controller 'AdminAdvancedOrderCyclesCtrl', ($rootScope, $scope, $location, $timeout, $http, OrderCycles, StatusMessage) ->
+angular.module('admin.orderCycles').controller 'AdminAdvancedOrderCyclesCtrl', ($rootScope, $scope, $location, $timeout, $http, OrderCycles, OrderCycle, StatusMessage) ->
   current_order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
+  order_cycle = OrderCycle.load(current_order_cycle_id)
   $scope.order_cycles = OrderCycles.index(ams_prefix: "basic", 'q[id_not_eq]': current_order_cycle_id)
   $scope.StatusMessage = StatusMessage
 
