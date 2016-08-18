@@ -68,6 +68,19 @@ module Spree
         it "doesn't return the property from a closed order cycle" do
           expect(Property.sold_by(shop)).not_to include property_closed_oc
         end
+
+        context "with another product in the order cycle" do
+          let!(:product2) { create(:simple_product) }
+          let!(:oc) { create(:simple_order_cycle, distributors: [shop], variants: [product.variants.first, product2.variants.first]) }
+
+          before do
+            product2.set_property 'Organic', 'NASAA 12345'
+          end
+
+          it "doesn't return duplicates" do
+            expect(Property.sold_by(shop).to_a.count).to eq 1
+          end
+        end
       end
     end
 

@@ -10,7 +10,8 @@ module Spree
       joins(products: {variants: {exchanges: :order_cycle}}).
         merge(Exchange.outgoing).
         merge(Exchange.to_enterprise(shop)).
-        merge(OrderCycle.active)
+        merge(OrderCycle.active).
+        select('DISTINCT spree_properties.*')
     }
 
     after_save :refresh_products_cache
