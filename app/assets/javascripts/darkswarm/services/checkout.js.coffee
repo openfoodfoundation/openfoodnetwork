@@ -3,7 +3,7 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
     errors: {}
     secrets: {}
     order: CurrentOrder.order
-    ship_address_same_as_billing: true
+    ship_address_same_as_billing: 'YES'
 
     submit: ->
       Loading.message = t 'submitting_order'
@@ -33,7 +33,7 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
           else
             # Ignore everything else
 
-      if @ship_address_same_as_billing
+      if @ship_address_same_as_billing == 'YES'
         munged_order.ship_address_attributes = munged_order.bill_address_attributes
         # If the order already has a ship and bill address (as with logged in users with
         # past orders), and we don't remove id here, then this will set the wrong id for

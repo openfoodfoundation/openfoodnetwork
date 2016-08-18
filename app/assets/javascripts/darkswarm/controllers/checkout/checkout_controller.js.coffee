@@ -9,9 +9,10 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, Cu
   for field in $scope.fieldsToBind
     storage.bind $scope, "Checkout.order.#{field}",
       storeName: "#{prefix}_#{field}"
+
   storage.bind $scope, "Checkout.ship_address_same_as_billing",
     storeName: "#{prefix}_sameasbilling"
-    defaultValue: true
+    defaultValue: 'YES'
 
   $scope.order = Checkout.order # Ordering is important
   $scope.secrets = Checkout.secrets

@@ -126,9 +126,9 @@ describe 'Checkout service', ->
       expect(Checkout.preprocess().ship_address).toBe(undefined)
 
     it "munges the order attributes to clone ship address from bill address", ->
-      Checkout.ship_address_same_as_billing = false
+      Checkout.ship_address_same_as_billing = 'NO'
       expect(Checkout.preprocess().ship_address_attributes).toEqual(orderData.ship_address)
-      Checkout.ship_address_same_as_billing = true
+      Checkout.ship_address_same_as_billing = 'YES'
       expect(Checkout.preprocess().ship_address_attributes).toEqual(orderData.bill_address)
 
     it "creates attributes for card fields", ->

@@ -13,7 +13,7 @@
       "ng-class" => "{valid: shipping.$valid, open: accordion.shipping}"}
       = render 'checkout/accordion_heading'
 
-      .small-12.columns.medium-6.columns.large-6.columns
+      .small-12.columns
         %label{"ng-repeat" => "method in ShippingMethods.shipping_methods"}
           %input{type: :radio,
             required: true,
@@ -30,7 +30,7 @@
           = "{{ fieldErrors('order.shipping_method_id') }}"
 
         %label{"ng-if" => "Checkout.requireShipAddress()"}
-          %input{type: :checkbox, "ng-model" => "Checkout.ship_address_same_as_billing"}
+          %input{type: :checkbox, "ng-model" => "Checkout.ship_address_same_as_billing", "ng-true-value" => "'YES'", "ng-false-value" => "'NO'"}
           = t :checkout_address_same
 
       .small-12.columns.medium-6.columns.large-6.columns

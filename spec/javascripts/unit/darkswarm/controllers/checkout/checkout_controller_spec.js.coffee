@@ -62,7 +62,7 @@ describe "CheckoutCtrl", ->
         console.log prefix
         field = scope.fieldsToBind[0]
         expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.order.#{field}", {storeName: "#{prefix}_#{field}"})
-        expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: true})
+        expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: 'YES'})
 
       it "it can retrieve data from localstorage", ->
         prefix = "order_#{scope.order.id}#{CurrentUser.id or ""}#{CurrentHubMock.hub.id}"
