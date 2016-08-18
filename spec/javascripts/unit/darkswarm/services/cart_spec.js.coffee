@@ -33,18 +33,19 @@ describe 'Cart service', ->
   it "generates extended variant names", ->
     expect(Cart.line_items[0].variant.extended_name).toEqual "name"
 
-  it "creates and backreferences new line items if necessary", ->
-    Cart.register_variant(v2 = {id: 2})
-    expect(Cart.line_items[1].variant).toBe v2
-    expect(Cart.line_items[1].variant.line_item).toBe Cart.line_items[1]
-
-  it "returns a list of items actually in the cart", ->
-    expect(Cart.line_items_present()).toEqual []
+  it "adds item to and removes items from the cart", ->
+    Cart.line_items = []
+    expect(Cart.line_items.length).toEqual 0
     order.line_items[0].quantity = 1
-    expect(Cart.line_items_present().length).toEqual
+    expect(Cart.line_items.length).toEqual 0
+    Cart.adjust(order.line_items[0])
+    expect(Cart.line_items.length).toEqual 1
+    order.line_items[0].quantity = 0
+    expect(Cart.line_items.length).toEqual 1
+    Cart.adjust(order.line_items[0])
+    expect(Cart.line_items.length).toEqual 0
 
   it "sums the quantity of each line item for cart total", ->
-    expect(Cart.line_items_present()).toEqual []
     order.line_items[0].quantity = 2
     expect(Cart.total_item_count()).toEqual 2
 
@@ -130,62 +131,62 @@ describe 'Cart service', ->
     describe "when an item is out of stock", ->
       it "reduces the quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 5}
+        Cart.line_items = [li]
         stockLevels = {1: {quantity: 0, max_quantity: 0, on_hand: 0}}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.quantity).toEqual 0
         expect(li.max_quantity).toBeUndefined()
 
       it "reduces the max_quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 5, max_quantity: 6}
+        Cart.line_items = [li]
         stockLevels = {1: {quantity: 0, max_quantity: 0, on_hand: 0}}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.max_quantity).toEqual 0
 
       it "resets the count on hand available", ->
         li = {variant: {id: 1, count_on_hand: 10}, quantity: 5}
+        Cart.line_items = [li]
         stockLevels = {1: {quantity: 0, max_quantity: 0, on_hand: 0}}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.variant.count_on_hand).toEqual 0
 
     describe "when the quantity available is less than that requested", ->
       it "reduces the quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 6}
+        Cart.line_items = [li]
         stockLevels = {1: {quantity: 5, on_hand: 5}}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.quantity).toEqual 5
         expect(li.max_quantity).toBeUndefined()
 
       it "does not reduce the max_quantity in the cart", ->
         li = {variant: {id: 1}, quantity: 6, max_quantity: 7}
+        Cart.line_items = [li]
         stockLevels = {1: {quantity: 5, max_quantity: 5, on_hand: 5}}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.max_quantity).toEqual 7
 
       it "resets the count on hand available", ->
         li = {variant: {id: 1}, quantity: 6}
+        Cart.line_items = [li]
         stockLevels = {1: {quantity: 5, on_hand: 6}}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.variant.count_on_hand).toEqual 6
 
     describe "when the client-side quantity has been increased during the request", ->
       it "does not reset the quantity", ->
         li = {variant: {id: 1}, quantity: 6}
+        Cart.line_items = [li]
         stockLevels = {1: {quantity: 5, on_hand: 6}}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.quantity).toEqual 6
         expect(li.max_quantity).toBeUndefined()
 
       it "does not reset the max_quantity", ->
         li = {variant: {id: 1}, quantity: 5, max_quantity: 7}
+        Cart.line_items = [li]
         stockLevels = {1: {quantity: 5, max_quantity: 6, on_hand: 7}}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
         Cart.compareAndNotifyStockLevels stockLevels
         expect(li.quantity).toEqual 5
         expect(li.max_quantity).toEqual 7
@@ -193,14 +194,14 @@ describe 'Cart service', ->
     describe "when the client-side quantity has been changed from 0 to 1 during the request", ->
       it "does not reset the quantity", ->
         li = {variant: {id: 1}, quantity: 1}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
+        Cart.line_items = [li]
         Cart.compareAndNotifyStockLevels {}
         expect(li.quantity).toEqual 1
         expect(li.max_quantity).toBeUndefined()
 
       it "does not reset the max_quantity", ->
         li = {variant: {id: 1}, quantity: 1, max_quantity: 1}
-        spyOn(Cart, 'line_items_present').and.returnValue [li]
+        Cart.line_items = [li]
         Cart.compareAndNotifyStockLevels {}
         expect(li.quantity).toEqual 1
         expect(li.max_quantity).toEqual 1
@@ -222,23 +223,3 @@ describe 'Cart service', ->
     expect(Cart.line_items).not.toEqual []
     Cart.clear()
     expect(Cart.line_items).toEqual []
-
-  describe "generating an extended variant name", ->
-    it "returns the product name when it is the same as the variant name", ->
-      variant = {product_name: 'product_name', name_to_display: 'product_name'}
-      expect(Cart.extendedVariantName(variant)).toEqual "product_name"
-
-    describe "when the product name and the variant name differ", ->
-      it "returns a combined name when there is no options text", ->
-        variant =
-          product_name: 'product_name'
-          name_to_display: 'name_to_display'
-        expect(Cart.extendedVariantName(variant)).toEqual "product_name - name_to_display"
-
-      it "returns a combined name when there is some options text", ->
-        variant =
-          product_name: 'product_name'
-          name_to_display: 'name_to_display'
-          options_text: 'options_text'
-
-        expect(Cart.extendedVariantName(variant)).toEqual "product_name - name_to_display (options_text)"

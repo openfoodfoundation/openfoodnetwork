@@ -34,7 +34,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
     it "shows the producers for a distributor" do
       exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id)
-      exchange.variants << variant
+      add_variant_to_order_cycle(exchange, variant)
 
       visit shop_path
       find("#tab_producers a").click
@@ -68,7 +68,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         it "shows products after selecting an order cycle" do
           variant.update_attribute(:display_name, "kitten")
           variant.update_attribute(:display_as, "rabbit")
-          exchange1.variants << variant ## add product to exchange
+          add_variant_to_order_cycle(exchange1, variant)
           visit shop_path
           page.should_not have_content product.name
           Spree::Order.last.order_cycle.should == nil
@@ -89,8 +89,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
           it "shows the correct fees after selecting and changing an order cycle" do
             enterprise_fee = create(:enterprise_fee, amount: 1001)
             exchange2.enterprise_fees << enterprise_fee
-            exchange2.variants << variant
-            exchange1.variants << variant
+            add_variant_to_order_cycle(exchange2, variant)
+            add_variant_to_order_cycle(exchange1, variant)
 
             # -- Selecting an order cycle
             visit shop_path
@@ -116,8 +116,8 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
           describe "declining to clear the cart" do
             before do
-              exchange2.variants << variant
-              exchange1.variants << variant
+              add_variant_to_order_cycle(exchange2, variant)
+              add_variant_to_order_cycle(exchange1, variant)
 
               visit shop_path
               select "turtles", from: "order_cycle_id"
@@ -147,9 +147,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       before do
         exchange.update_attribute :pickup_time, "frogs"
-        exchange.variants << variant
-        exchange.variants << variant1
-        exchange.variants << variant2
+        add_variant_to_order_cycle(exchange, variant)
+        add_variant_to_order_cycle(exchange, variant1)
+        add_variant_to_order_cycle(exchange, variant2)
         order.order_cycle = oc1
       end
 

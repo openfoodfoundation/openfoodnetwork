@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160527012603) do
+ActiveRecord::Schema.define(:version => 20160707023818) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -58,123 +58,6 @@ ActiveRecord::Schema.define(:version => 20160527012603) do
   end
 
   add_index "carts", ["user_id"], :name => "index_carts_on_user_id"
-
-  create_table "cms_blocks", :force => true do |t|
-    t.integer  "page_id",    :null => false
-    t.string   "identifier", :null => false
-    t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "cms_blocks", ["page_id", "identifier"], :name => "index_cms_blocks_on_page_id_and_identifier"
-
-  create_table "cms_categories", :force => true do |t|
-    t.integer "site_id",          :null => false
-    t.string  "label",            :null => false
-    t.string  "categorized_type", :null => false
-  end
-
-  add_index "cms_categories", ["site_id", "categorized_type", "label"], :name => "index_cms_categories_on_site_id_and_categorized_type_and_label", :unique => true
-
-  create_table "cms_categorizations", :force => true do |t|
-    t.integer "category_id",      :null => false
-    t.string  "categorized_type", :null => false
-    t.integer "categorized_id",   :null => false
-  end
-
-  add_index "cms_categorizations", ["category_id", "categorized_type", "categorized_id"], :name => "index_cms_categorizations_on_cat_id_and_catd_type_and_catd_id", :unique => true
-
-  create_table "cms_files", :force => true do |t|
-    t.integer  "site_id",                                          :null => false
-    t.integer  "block_id"
-    t.string   "label",                                            :null => false
-    t.string   "file_file_name",                                   :null => false
-    t.string   "file_content_type",                                :null => false
-    t.integer  "file_file_size",                                   :null => false
-    t.string   "description",       :limit => 2048
-    t.integer  "position",                          :default => 0, :null => false
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
-  end
-
-  add_index "cms_files", ["site_id", "block_id"], :name => "index_cms_files_on_site_id_and_block_id"
-  add_index "cms_files", ["site_id", "file_file_name"], :name => "index_cms_files_on_site_id_and_file_file_name"
-  add_index "cms_files", ["site_id", "label"], :name => "index_cms_files_on_site_id_and_label"
-  add_index "cms_files", ["site_id", "position"], :name => "index_cms_files_on_site_id_and_position"
-
-  create_table "cms_layouts", :force => true do |t|
-    t.integer  "site_id",                       :null => false
-    t.integer  "parent_id"
-    t.string   "app_layout"
-    t.string   "label",                         :null => false
-    t.string   "identifier",                    :null => false
-    t.text     "content"
-    t.text     "css"
-    t.text     "js"
-    t.integer  "position",   :default => 0,     :null => false
-    t.boolean  "is_shared",  :default => false, :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
-  add_index "cms_layouts", ["parent_id", "position"], :name => "index_cms_layouts_on_parent_id_and_position"
-  add_index "cms_layouts", ["site_id", "identifier"], :name => "index_cms_layouts_on_site_id_and_identifier", :unique => true
-
-  create_table "cms_pages", :force => true do |t|
-    t.integer  "site_id",                           :null => false
-    t.integer  "layout_id"
-    t.integer  "parent_id"
-    t.integer  "target_page_id"
-    t.string   "label",                             :null => false
-    t.string   "slug"
-    t.string   "full_path",                         :null => false
-    t.text     "content"
-    t.integer  "position",       :default => 0,     :null => false
-    t.integer  "children_count", :default => 0,     :null => false
-    t.boolean  "is_published",   :default => true,  :null => false
-    t.boolean  "is_shared",      :default => false, :null => false
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-  end
-
-  add_index "cms_pages", ["parent_id", "position"], :name => "index_cms_pages_on_parent_id_and_position"
-  add_index "cms_pages", ["site_id", "full_path"], :name => "index_cms_pages_on_site_id_and_full_path"
-
-  create_table "cms_revisions", :force => true do |t|
-    t.string   "record_type", :null => false
-    t.integer  "record_id",   :null => false
-    t.text     "data"
-    t.datetime "created_at"
-  end
-
-  add_index "cms_revisions", ["record_type", "record_id", "created_at"], :name => "index_cms_revisions_on_record_type_and_record_id_and_created_at"
-
-  create_table "cms_sites", :force => true do |t|
-    t.string  "label",                          :null => false
-    t.string  "identifier",                     :null => false
-    t.string  "hostname",                       :null => false
-    t.string  "path"
-    t.string  "locale",      :default => "en",  :null => false
-    t.boolean "is_mirrored", :default => false, :null => false
-  end
-
-  add_index "cms_sites", ["hostname"], :name => "index_cms_sites_on_hostname"
-  add_index "cms_sites", ["is_mirrored"], :name => "index_cms_sites_on_is_mirrored"
-
-  create_table "cms_snippets", :force => true do |t|
-    t.integer  "site_id",                       :null => false
-    t.string   "label",                         :null => false
-    t.string   "identifier",                    :null => false
-    t.text     "content"
-    t.integer  "position",   :default => 0,     :null => false
-    t.boolean  "is_shared",  :default => false, :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
-  add_index "cms_snippets", ["site_id", "identifier"], :name => "index_cms_snippets_on_site_id_and_identifier", :unique => true
-  add_index "cms_snippets", ["site_id", "position"], :name => "index_cms_snippets_on_site_id_and_position"
 
   create_table "column_preferences", :force => true do |t|
     t.integer  "user_id",     :null => false
@@ -694,9 +577,9 @@ ActiveRecord::Schema.define(:version => 20160527012603) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end
@@ -1223,25 +1106,6 @@ ActiveRecord::Schema.define(:version => 20160527012603) do
   add_foreign_key "billable_periods", "spree_users", name: "bill_items_owner_id_fk", column: "owner_id"
 
   add_foreign_key "carts", "spree_users", name: "carts_user_id_fk", column: "user_id"
-
-  add_foreign_key "cms_blocks", "cms_pages", name: "cms_blocks_page_id_fk", column: "page_id"
-
-  add_foreign_key "cms_categories", "cms_sites", name: "cms_categories_site_id_fk", column: "site_id", dependent: :delete
-
-  add_foreign_key "cms_categorizations", "cms_categories", name: "cms_categorizations_category_id_fk", column: "category_id"
-
-  add_foreign_key "cms_files", "cms_blocks", name: "cms_files_block_id_fk", column: "block_id"
-  add_foreign_key "cms_files", "cms_sites", name: "cms_files_site_id_fk", column: "site_id"
-
-  add_foreign_key "cms_layouts", "cms_layouts", name: "cms_layouts_parent_id_fk", column: "parent_id"
-  add_foreign_key "cms_layouts", "cms_sites", name: "cms_layouts_site_id_fk", column: "site_id", dependent: :delete
-
-  add_foreign_key "cms_pages", "cms_layouts", name: "cms_pages_layout_id_fk", column: "layout_id"
-  add_foreign_key "cms_pages", "cms_pages", name: "cms_pages_parent_id_fk", column: "parent_id"
-  add_foreign_key "cms_pages", "cms_pages", name: "cms_pages_target_page_id_fk", column: "target_page_id"
-  add_foreign_key "cms_pages", "cms_sites", name: "cms_pages_site_id_fk", column: "site_id", dependent: :delete
-
-  add_foreign_key "cms_snippets", "cms_sites", name: "cms_snippets_site_id_fk", column: "site_id", dependent: :delete
 
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"

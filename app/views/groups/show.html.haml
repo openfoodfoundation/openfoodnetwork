@@ -40,6 +40,7 @@
               .map-container
                 %map{"ng-if" => "(isActive(\'/map\') && (mapShowed = true)) || mapShowed"}
                   %google-map{options: "map.additional_options", center: "map.center", zoom: "map.zoom", styles: "map.styles", draggable: "true"}
+                    %map-osm-tiles
                     %map-search
                     %markers{models: "mapMarkers", fit: "true",
                     coords: "'self'", icon: "'icon'", click: "'reveal'"}
@@ -66,7 +67,7 @@
                   .small-12.columns
                     .active_table
                       %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | searchEnterprises:query | taxons:activeTaxons)",
+                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | searchEnterprises:query | taxons:activeTaxons | properties:activeProperties)",
                       "ng-controller" => "GroupEnterpriseNodeCtrl",
                       "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
                       id: "{{producer.hash}}"}

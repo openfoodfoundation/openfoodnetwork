@@ -27,56 +27,70 @@ feature %q{
 
     producer1.set_producer_property 'Local', 'Victoria'
     producer2.set_producer_property 'Fair Trade', 'FT123'
-
-    visit producers_path
   end
 
 
-  it "filters by taxon" do
-    toggle_filters
-
-    toggle_filter 'Vegetables'
-
-    page.should_not have_content producer1.name
-    page.should     have_content producer2.name
-
-    toggle_filter 'Vegetables'
-    toggle_filter 'Fruit'
-
-    page.should     have_content producer1.name
-    page.should_not have_content producer2.name
+  it "searches by URL" do
+    visit producers_path(anchor: "/?query=xyzzy")
+    expect(page).to have_content "Sorry, no results found for xyzzy"
   end
 
-  it "shows all producers with expandable details" do
-    page.should have_content producer1.name
-    expand_active_table_node producer1.name
+  context "on the producers page" do
+    before do
+      visit producers_path
+    end
 
-    # -- Taxons
-    page.should have_content 'Fruit'
+    it "filters by taxon" do
+      toggle_filters
 
-    # -- Properties
-    page.should have_content 'Organic' # Product property
-    page.should have_content 'Local'   # Producer property
+      toggle_filter 'Vegetables'
+
+      page.should_not have_content producer1.name
+      page.should     have_content producer2.name
+
+      toggle_filter 'Vegetables'
+      toggle_filter 'Fruit'
+
+      page.should     have_content producer1.name
+      page.should_not have_content producer2.name
+    end
+
+    describe "filtering by product property" do
+      it "filters" do
+        toggle_filters
+
+        toggle_filter 'Organic'
+
+        page.should     have_content producer1.name
+        page.should_not have_content producer2.name
+
+        toggle_filter 'Organic'
+        toggle_filter 'Biodynamic'
+
+        page.should_not have_content producer1.name
+        page.should     have_content producer2.name
+      end
+    end
+
+    it "shows all producers with expandable details" do
+      page.should have_content producer1.name
+      expand_active_table_node producer1.name
+
+      # -- Taxons
+      page.should have_content 'Fruit'
+
+      # -- Properties
+      page.should have_content 'Organic' # Product property
+      page.should have_content 'Local'   # Producer property
+    end
+
+    it "doesn't show invisible producers" do
+      page.should_not have_content invisible_producer.name
+    end
+
+    it "links to places to buy produce" do
+      expand_active_table_node producer1.name
+      page.should have_link shop.name
+    end
   end
-
-  it "doesn't show invisible producers" do
-    page.should_not have_content invisible_producer.name
-  end
-
-  it "links to places to buy produce" do
-    expand_active_table_node producer1.name
-    page.should have_link shop.name
-  end
-
-
-  private
-
-  def toggle_filters
-    find('a.filterbtn').click
-  end
-
-  def toggle_filter(name)
-    page.find('span', text: name).click
-  end
-
 end

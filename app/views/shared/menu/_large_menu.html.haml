@@ -17,14 +17,25 @@
         %a{href: main_app.producers_path}
           %span.nav-primary
             = t 'label_producers'
-      %li
-        %a{href: main_app.groups_path}
-          %span.nav-primary
-            = t 'label_groups'
-      %li
-        %a{href: ContentConfig.footer_about_url}
-          %span.nav-primary
-            = t 'label_about'
+      - if feature? :connect_learn_homepage
+        %li
+          %a{href: "https://openfoodnetwork.org/au/connect/"}
+            %span.nav-primary
+              = t 'label_connect'
+        %li
+          %a{href: "https://openfoodnetwork.org/au/learn/"}
+            %span.nav-primary
+              = t 'label_learn'
+      - else
+        %li
+          %a{href: main_app.groups_path}
+            %span.nav-primary
+              = t 'label_groups'
+        %li
+          %a{href: ContentConfig.footer_about_url}
+            %span.nav-primary
+              = t 'label_about'
+
     %ul.right
       - if spree_current_user.nil?
         = render 'shared/signed_out'

@@ -5,7 +5,12 @@ module Spree
     after_save :ensure_correct_adjustment, :update_order
 
     def ensure_correct_adjustment
-      if adjustment
+      # Don't charge for invalid payments.
+      # PayPalExpress always creates a payment that is invalidated later.
+      # Unknown: What about failed payments?
+      if state == "invalid"
+        adjustment.andand.destroy
+      elsif adjustment
         adjustment.originator = payment_method
         adjustment.label = adjustment_label
         adjustment.save

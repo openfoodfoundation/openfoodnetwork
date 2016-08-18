@@ -170,3 +170,23 @@
   // W3C
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gradient-clr1', endColorstr='$gradient-clr2',GradientType=0 )
   // IE6-8
+
+
+@mixin producersbg
+  background-color: lighten($clr-turquoise, 68%)
+  background-image: url("/assets/producers.svg")
+  background-position: center 50px
+  background-repeat: no-repeat
+  background-size: 922px 763px
+
+@mixin hubsbg
+  background-color: $brand-colour
+  background-image: url("/assets/hubs-bg.jpg")
+  background-position: center center
+
+@mixin groupsbg
+  background-color: lighten($clr-brick, 56%)
+  background-image: url("/assets/groups.svg")
+  background-position: center 50px
+  background-repeat: no-repeat
+  background-size:  922px 922px

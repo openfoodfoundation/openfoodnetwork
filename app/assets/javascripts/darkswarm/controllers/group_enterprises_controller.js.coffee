@@ -8,3 +8,6 @@ Darkswarm.controller "GroupEnterprisesCtrl", ($scope, Search, FilterSelectorsSer
 
   $scope.$watch "query", (query)->
     Search.search query
+
+  $scope.$watch "filtersActive", (value) ->
+    $scope.$broadcast 'filtersToggled'

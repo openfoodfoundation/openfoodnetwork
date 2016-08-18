@@ -17,7 +17,6 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
         @extend()
         @dereference()
         @registerVariants()
-        @registerVariantsWithCart()
         @loading = false
 
     extend: ->
@@ -44,15 +43,7 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
     registerVariants: ->
       for product in @products
         if product.variants
-          product.variants = (Variants.register variant for variant in product.variants)
-          variant.product = product for variant in product.variants
-        if product.master
-          product.master.product = product
-          product.master = Variants.register product.master
-
-    registerVariantsWithCart: ->
-      for product in @products
-        if product.variants
-          for variant in product.variants
-            Cart.register_variant variant
-        Cart.register_variant product.master if product.master
+          product.variants = for variant in product.variants
+            variant = Variants.register variant
+            variant.product = product
+            variant

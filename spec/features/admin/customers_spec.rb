@@ -60,7 +60,7 @@ feature 'Customers' do
         create(:order, customer: customer1)
         expect{
           within "tr#c_#{customer1.id}" do
-            find("a.delete-customer").click
+            find("a.delete-customer").trigger('click')
           end
           expect(page).to have_selector "#info-dialog .text", text: "Delete failed: customer has associated orders"
           click_button "OK"
@@ -115,7 +115,7 @@ feature 'Customers' do
         expect(customer1.tag_list).to eq []
       end
 
-      it "prevents duplicate codes from being saved" do
+      it "prevents duplicate codes from being saved", retry: 3 do
         select2_select managed_distributor1.name, from: "shop_id"
 
         within "tr#c_#{customer1.id}" do

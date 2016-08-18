@@ -6,6 +6,7 @@ module CheckoutHelper
     # Remove empty tax adjustments and (optionally) shipping fees
     adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' && a.amount == 0 }
     adjustments.reject! { |a| a.originator_type == 'Spree::ShippingMethod' } if exclude.include? :shipping
+    adjustments.reject! { |a| a.originator_type == 'Spree::PaymentMethod' } if exclude.include? :payment
     adjustments.reject! { |a| a.source_type == 'Spree::LineItem' } if exclude.include? :line_item
 
     enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }

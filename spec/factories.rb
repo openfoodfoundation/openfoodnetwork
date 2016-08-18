@@ -383,39 +383,3 @@ FactoryGirl.modify do
     end
   end
 end
-
-
-# -- CMS
-FactoryGirl.define do
-  factory :cms_site, :class => Cms::Site do
-    identifier 'open-food-network'
-    label      'Open Food Network'
-    hostname   'localhost'
-  end
-
-  factory :cms_layout, :class => Cms::Layout do
-    site { Cms::Site.first || create(:cms_site) }
-    label 'layout'
-    identifier 'layout'
-    content '{{ cms:page:content:text }}'
-  end
-
-  factory :cms_page, :class => Cms::Page do
-    site { Cms::Site.first || create(:cms_site) }
-    label 'page'
-    sequence(:slug) { |n| "page-#{n}" }
-    layout { Cms::Layout.first || create(:cms_layout) }
-
-    # Pass content through to block, where it is stored
-    after(:create) do |cms_page, evaluator|
-      cms_page.blocks.first.update_attribute(:content, evaluator.content)
-      cms_page.save! # set_cached_content
-    end
-  end
-
-  factory :cms_block, :class => Cms::Block do
-    page { Cms::Page.first || create(:cms_page) }
-    identifier 'block'
-    content 'hello, block'
-  end
-end
