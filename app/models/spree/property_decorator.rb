@@ -1,5 +1,7 @@
 module Spree
   Property.class_eval do
+    has_many :producer_properties
+
     scope :applied_by, ->(enterprise) {
       select('DISTINCT spree_properties.*').
         joins(:product_properties).
@@ -13,6 +15,7 @@ module Spree
         merge(OrderCycle.active).
         select('DISTINCT spree_properties.*')
     }
+
 
     after_save :refresh_products_cache
 

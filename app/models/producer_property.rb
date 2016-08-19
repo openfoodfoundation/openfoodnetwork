@@ -8,6 +8,15 @@ class ProducerProperty < ActiveRecord::Base
   after_destroy :refresh_products_cache_from_destroy
 
 
+  scope :sold_by, ->(shop) {
+    joins(producer: {supplied_products: {variants: {exchanges: :order_cycle}}}).
+      merge(Exchange.outgoing).
+      merge(Exchange.to_enterprise(shop)).
+      merge(OrderCycle.active).
+      select('DISTINCT producer_properties.*')
+  }
+
+
   def property_name
     property.name if property
   end
