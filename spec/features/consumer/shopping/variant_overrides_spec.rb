@@ -28,7 +28,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
   let!(:vo4) { create(:variant_override, hub: hub, variant: v4, count_on_hand: 3, default_stock: nil, resettable: false) }
   let!(:vo5) { create(:variant_override, hub: hub, variant: v5, count_on_hand: 0, default_stock: nil, resettable: false) }
   let!(:vo6) { create(:variant_override, hub: hub, variant: v6, count_on_hand: 6, default_stock: nil, resettable: false) }
-  let(:ef) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)) }
+  let(:ef) { create(:enterprise_fee, enterprise: hub, fee_type: 'packing', calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 10)) }
 
   before do
     outgoing_exchange.variants = [v1, v2, v3, v4, v5, v6]
