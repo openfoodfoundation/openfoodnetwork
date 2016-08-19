@@ -21,7 +21,7 @@
             %render-svg{path: "{{taxon.icon}}"}
             %span{"ng-bind" => "::taxon.name"}
         %div
-          %span.fat-properties{"ng-repeat" => "property in producer.properties"}
+          %span.fat-properties{"ng-repeat" => "property in producer.supplied_properties"}
             %span{"ng-bind" => "property.presentation"}
 
     %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}

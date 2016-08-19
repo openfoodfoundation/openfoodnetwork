@@ -21,7 +21,7 @@ end
 
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :orders_close_at, :active
-  has_many :properties, serializer: Api::PropertySerializer
+  has_many :supplied_properties, serializer: Api::PropertySerializer
 
   def orders_close_at
     options[:data].earliest_closing_times[object.id]
@@ -31,7 +31,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
     options[:data].active_distributors.andand.include? object
   end
 
-  def properties
+  def supplied_properties
     # This results in 3 queries per enterprise
     product_properties  = Spree::Property.applied_by(object)
     producer_properties = object.properties

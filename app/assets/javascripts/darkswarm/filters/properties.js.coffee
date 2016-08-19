@@ -1,5 +1,5 @@
-Darkswarm.filter 'properties', ()->
-  # Filter anything that responds to object.properties
+Darkswarm.filter 'properties', ->
+  # Filter anything that responds to object.supplied_properties
   (objects, ids) ->
     objects ||= []
     ids ?= []
@@ -7,10 +7,6 @@ Darkswarm.filter 'properties', ()->
       # No properties selected, pass all objects through.
       objects
     else
-      objects.filter (obj)->
-        properties = obj.properties
-        # Combine object properties with supplied properties, if they exist.
-        # properties = properties.concat obj.supplied_properties if obj.supplied_properties
-        # Match property array.
-        properties.some (property)->
+      objects.filter (obj) ->
+        obj.supplied_properties.some (property) ->
           property.id in ids
