@@ -29,12 +29,14 @@ module Openfoodnetwork
       app.config.spree.calculators.shipping_methods << OpenFoodNetwork::Calculator::Weight
 
       app.config.spree.calculators.enterprise_fees = [Spree::Calculator::FlatPercentItemTotal,
+                                                      Calculator::FlatPercentPerItem,
                                                       Spree::Calculator::FlatRate,
                                                       Spree::Calculator::FlexiRate,
                                                       Spree::Calculator::PerItem,
                                                       Spree::Calculator::PriceSack,
                                                       OpenFoodNetwork::Calculator::Weight]
       app.config.spree.calculators.payment_methods = [Spree::Calculator::FlatPercentItemTotal,
+                                                      Calculator::FlatPercentPerItem,
                                                       Spree::Calculator::FlatRate,
                                                       Spree::Calculator::FlexiRate,
                                                       Spree::Calculator::PerItem,

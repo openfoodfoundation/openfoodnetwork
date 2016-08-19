@@ -911,6 +911,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   tax_category: "Tax Category"
   calculator: "Calculator"
   calculator_values: "Calculator values"
+  flat_percent_per_item: "Flat Percent (per item)"
   new_order_cycles: "New Order Cycles"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   edit_order_cycle: "Edit Order Cycle"

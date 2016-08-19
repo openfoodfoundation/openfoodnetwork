@@ -21,7 +21,7 @@ feature "full-page cart", js: true do
     end
 
     describe "fees" do
-      let(:percentage_fee) { create(:enterprise_fee, calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20)) }
+      let(:percentage_fee) { create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 20)) }
 
       before do
         add_enterprise_fee percentage_fee
