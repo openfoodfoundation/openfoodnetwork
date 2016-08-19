@@ -56,12 +56,36 @@ feature 'Shops', js: true do
       expect(page).to have_current_path enterprise_shop_path(distributor)
     end
 
+    describe "property badges" do
+      let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
+      let(:product) { create(:simple_product, supplier: producer) }
+
+      before do
+        product.set_property 'Local', 'XYZ 123'
+      end
+
+      it "shows property badges" do
+        # Given a shop with a product with a property
+        # And the product's producer has a producer property
+
+        # When I go to the shops path
+        visit shops_path
+
+        # And I open the shop
+        expand_active_table_node distributor.name
+
+        # Then I should see both properties
+        expect(page).to have_content 'Local'   # Product property
+        expect(page).to have_content 'Organic' # Producer property
+      end
+    end
+
     describe "hub producer modal" do
       let!(:product) { create(:simple_product, supplier: producer, taxons: [taxon]) }
       let!(:taxon) { create(:taxon, name: 'Fruit') }
       let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
 
-      it "should show hub producer modals" do
+      it "shows hub producer modals" do
         expand_active_table_node distributor.name
         expect(page).to have_content producer.name
         open_enterprise_modal producer
