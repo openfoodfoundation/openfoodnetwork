@@ -50,6 +50,8 @@ class CheckoutController < Spree::CheckoutController
       else
         update_failed
       end
+
+      set_default_address_for_user
     else
       update_failed
     end
@@ -57,6 +59,12 @@ class CheckoutController < Spree::CheckoutController
 
 
   private
+
+  def set_default_address_for_user
+    spree_current_user.set_bill_address(@order.bill_address.clone) if params[:order][:default_bill_address] == 'YES'
+    spree_current_user.set_ship_address(@order.ship_address.clone) if params[:order][:default_ship_address] == 'YES'
+  end
+
 
   def check_order_for_phantom_fees
     phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id').

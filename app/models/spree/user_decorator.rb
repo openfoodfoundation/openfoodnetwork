@@ -76,6 +76,16 @@ Spree.user_class.class_eval do
     data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
   end
 
+  def set_bill_address(address)
+    self.bill_address = address
+    self.save
+  end
+
+  def set_ship_address(address)
+    self.ship_address = address
+    self.save
+  end
+
   private
 
   def limit_owned_enterprises

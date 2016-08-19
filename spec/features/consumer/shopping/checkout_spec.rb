@@ -61,6 +61,50 @@ feature "As a consumer I want to check out my cart", js: true do
         page.should have_content "An item in your cart has become unavailable"
       end
     end
+    context 'login in as user' do
+      let(:user) { create(:user) }
+
+      before do
+        quick_login_as(user)
+        visit checkout_path
+
+        toggle_shipping
+        choose sm1.name
+        toggle_payment
+        choose pm1.name
+        toggle_details
+        within "#details" do
+          fill_in "First Name", with: "Will"
+          fill_in "Last Name", with: "Marshall"
+          fill_in "Email", with: "test@test.com"
+          fill_in "Phone", with: "0468363090"
+        end
+        toggle_billing
+        check "Save as default billing address"
+        within "#billing" do
+          fill_in "City", with: "Melbourne"
+          fill_in "Postcode", with: "3066"
+          fill_in "Address", with: "123 Your Face"
+          select "Australia", from: "Country"
+          select "Victoria", from: "State"
+        end
+
+        toggle_shipping
+        check "Shipping address same as billing address?"
+        check "Save as default shipping address"
+      end
+
+      it "sets user's default billing address and shipping address" do
+        user.bill_address.should be_nil
+        user.ship_address.should be_nil
+
+        place_order
+        page.should have_content "Your order has been processed successfully"
+
+        user.reload.bill_address.address1.should eq '123 Your Face'
+        user.reload.ship_address.address1.should eq '123 Your Face'
+      end
+    end
 
     context "on the checkout page" do
       before do
@@ -71,6 +115,11 @@ feature "As a consumer I want to check out my cart", js: true do
       it "shows the current distributor" do
         visit checkout_path
         page.should have_content distributor.name
+      end
+
+      it 'does not show the save as defalut address checkbox' do
+        page.should_not have_content "Save as default billing address"
+        page.should_not have_content "Save as default shipping address"
       end
 
       it "shows a breakdown of the order price" do
@@ -242,6 +291,10 @@ feature "As a consumer I want to check out my cart", js: true do
           it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
             place_order
             page.should have_content "Your order has been processed successfully"
+          end
+
+          it 'sets default billing and shipping address after the order processed successfully' do
+
           end
 
           it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do

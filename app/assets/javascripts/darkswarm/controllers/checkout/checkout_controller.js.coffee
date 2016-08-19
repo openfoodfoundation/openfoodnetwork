@@ -14,6 +14,14 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, Cu
     storeName: "#{prefix}_sameasbilling"
     defaultValue: 'YES'
 
+  storage.bind $scope, "Checkout.default_bill_address",
+    storeName: "#{prefix}_defaultasbilladdress"
+    defaultValue: 'NO'
+
+  storage.bind $scope, "Checkout.default_ship_address",
+    storeName: "#{prefix}_defaultasshipaddress"
+    defaultValue: 'NO'
+
   $scope.order = Checkout.order # Ordering is important
   $scope.secrets = Checkout.secrets
 

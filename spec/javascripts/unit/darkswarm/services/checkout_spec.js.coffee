@@ -131,6 +131,16 @@ describe 'Checkout service', ->
       Checkout.ship_address_same_as_billing = 'YES'
       expect(Checkout.preprocess().ship_address_attributes).toEqual(orderData.bill_address)
 
+    it "munges the default as billing address and shipping address", ->
+      expect(Checkout.preprocess().default_bill_address).toEqual('NO')
+      expect(Checkout.preprocess().default_ship_address).toEqual('NO')
+
+      Checkout.default_bill_address = 'YES'
+      Checkout.default_ship_address = 'YES'
+
+      expect(Checkout.preprocess().default_bill_address).toEqual('YES')
+      expect(Checkout.preprocess().default_ship_address).toEqual('YES')
+
     it "creates attributes for card fields", ->
       source_attributes = Checkout.preprocess().payments_attributes[0].source_attributes
       expect(source_attributes).toBeDefined()

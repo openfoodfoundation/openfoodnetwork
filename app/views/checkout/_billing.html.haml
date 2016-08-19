@@ -12,7 +12,13 @@
     %accordion-group{"is-open" => "accordion.billing",
       "ng-class" => "{valid: billing.$valid, open: accordion.billing}"}
       = render 'checkout/accordion_heading'
-      
+
+      - if spree_current_user
+        .small-12.columns
+          %label
+            %input{type: :checkbox, "ng-model" => "Checkout.default_bill_address", "ng-true-value" => "'YES'", "ng-false-value" => "'NO'"}
+            = t :checkout_default_bill_address
+
       = f.fields_for :bill_address, @order.bill_address do |ba|
         .row
           .small-12.columns
