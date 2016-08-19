@@ -8,5 +8,6 @@ Darkswarm.filter 'properties', ->
       objects
     else
       objects.filter (obj) ->
-        obj.supplied_properties.some (property) ->
+        properties = obj.supplied_properties || obj.properties
+        properties.some (property) ->
           property.id in ids
