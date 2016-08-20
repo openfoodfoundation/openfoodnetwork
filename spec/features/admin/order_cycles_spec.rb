@@ -702,6 +702,7 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc_new)
         click_button 'Advanced Settings'
+        expect(page).to have_selector('div.loaded')
         select2_select oc.name, from: "oc_id"
         page.find('#copy_products').click
         expect(page).to have_content "Copying products and fees"
