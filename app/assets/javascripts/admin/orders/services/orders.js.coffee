@@ -1,12 +1,12 @@
 angular.module("admin.orders").factory 'Orders', ($q, OrderResource) ->
   new class Orders
-    ordersByID: {}
+    byID: {}
     pristineByID: {}
 
     index: (params={}, callback=null) ->
     	OrderResource.index params, (data) =>
         for order in data
-          @ordersByID[order.id] = order
+          @byID[order.id] = order
           @pristineByID[order.id] = angular.copy(order)
 
         (callback || angular.noop)(data)

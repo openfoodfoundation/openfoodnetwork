@@ -1,12 +1,21 @@
-angular.module("admin.orderCycles").factory 'OrderCycles', ($q, OrderCycleResource) ->
+angular.module("admin.orderCycles").factory 'OrderCycles', ($q, $injector, OrderCycleResource) ->
   new class OrderCycles
-    orderCyclesByID: {}
+    all: []
+    byID: {}
     pristineByID: {}
+
+    constructor: ->
+      if $injector.has('orderCycles')
+        for orderCycle in $injector.get('orderCycles')
+          @all.push orderCycle
+          @byID[orderCycle.id] = orderCycle
+          @pristineByID[orderCycle.id] = angular.copy(orderCycle)
+
 
     index: (params={}, callback=null) ->
       OrderCycleResource.index(params, (data) =>
         for orderCycle in data
-          @orderCyclesByID[orderCycle.id] = orderCycle
+          @byID[orderCycle.id] = orderCycle
           @pristineByID[orderCycle.id] = angular.copy(orderCycle)
 
         (callback || angular.noop)(data)

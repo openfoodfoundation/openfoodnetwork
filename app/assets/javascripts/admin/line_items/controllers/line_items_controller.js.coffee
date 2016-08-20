@@ -22,8 +22,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.refreshData = ->
     unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == 0
-      $scope.startDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].first_order
-      $scope.endDate = OrderCycles.orderCyclesByID[$scope.orderCycleFilter].last_order
+      $scope.startDate = OrderCycles.byID[$scope.orderCycleFilter].first_order
+      $scope.endDate = OrderCycles.byID[$scope.orderCycleFilter].last_order
 
     RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{parseDate($scope.startDate)}", "q[completed_at_lt]": "#{parseDate($scope.endDate)}")
     RequestMonitor.load $scope.lineItems = LineItems.index("q[order][state_not_eq]": "canceled", "q[order][completed_at_not_null]": "true", "q[order][completed_at_gt]": "#{parseDate($scope.startDate)}", "q[order][completed_at_lt]": "#{parseDate($scope.endDate)}")
@@ -34,12 +34,12 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       RequestMonitor.load $scope.suppliers = Enterprises.index(action: "for_line_items", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
     RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise]).then ->
-      Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.enterprisesByID
-      Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.orderCyclesByID
+      Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
+      Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
 
     RequestMonitor.load $q.all([$scope.orders.$promise, $scope.suppliers.$promise, $scope.lineItems.$promise]).then ->
-      Dereferencer.dereferenceAttr $scope.lineItems, "supplier", Enterprises.enterprisesByID
-      Dereferencer.dereferenceAttr $scope.lineItems, "order", Orders.ordersByID
+      Dereferencer.dereferenceAttr $scope.lineItems, "supplier", Enterprises.byID
+      Dereferencer.dereferenceAttr $scope.lineItems, "order", Orders.byID
       $scope.bulk_order_form.$setPristine()
       StatusMessage.clear()
       unless $scope.initialized
