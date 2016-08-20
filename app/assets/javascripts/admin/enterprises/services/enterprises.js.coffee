@@ -1,12 +1,12 @@
 angular.module("admin.enterprises").factory 'Enterprises', ($q, EnterpriseResource) ->
   new class Enterprises
-    enterprisesByID: {}
+    byID: {}
     pristineByID: {}
 
     index: (params={}, callback=null) ->
       EnterpriseResource.index(params, (data) =>
         for enterprise in data
-          @enterprisesByID[enterprise.id] = enterprise
+          @byID[enterprise.id] = enterprise
           @pristineByID[enterprise.id] = angular.copy(enterprise)
         (callback || angular.noop)(data)
         data
