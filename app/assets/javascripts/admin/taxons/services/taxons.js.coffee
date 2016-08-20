@@ -1,19 +1,20 @@
 angular.module("admin.taxons").factory "Taxons", (taxons, $filter) ->
   new class Taxons
-    taxons: taxons
-    taxonsByID: {}
+    all: []
+    byID: {}
 
     constructor: ->
-      for taxon in @taxons
-        @taxonsByID[taxon.id] = taxon
+      for taxon in taxons
+        @all.push taxon
+        @byID[taxon.id] = taxon
 
     # For finding a single Taxon
     findByID: (id) ->
-      @taxonsByID[id]
+      @byID[id]
 
     # For finding multiple Taxons represented by comma delimited string
     findByIDs: (ids) ->
-      @taxonsByID[taxon_id] for taxon_id in ids.split(",") when @taxonsByID[taxon_id]
+      @byID[taxon_id] for taxon_id in ids.split(",") when @byID[taxon_id]
 
     findByTerm: (term) ->
-      $filter('filter')(@taxons, term)
+      $filter('filter')(@all, term)

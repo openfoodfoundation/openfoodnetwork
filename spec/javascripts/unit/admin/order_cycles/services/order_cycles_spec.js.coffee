@@ -26,9 +26,9 @@ describe "OrderCycles service", ->
         result = OrderCycles.index()
         $httpBackend.flush()
 
-      it "stores returned data in @orderCyclesByID, with ids as keys", ->
+      it "stores returned data in @byID, with ids as keys", ->
         # OrderCycleResource returns instances of Resource rather than raw objects
-        expect(OrderCycles.orderCyclesByID).toDeepEqual { 5: response[0] }
+        expect(OrderCycles.byID).toDeepEqual { 5: response[0] }
 
       it "stores returned data in @pristineByID, with ids as keys", ->
         expect(OrderCycles.pristineByID).toDeepEqual { 5: response[0] }
