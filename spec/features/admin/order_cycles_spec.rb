@@ -1007,7 +1007,6 @@ feature %q{
 
       # And it should have the fee
       oc.coordinator_fees.should == [fee2]
-
       # And my pickup time and instructions should have been saved
       ex = oc.exchanges.outgoing.first
       ex.pickup_time.should == 'xy'

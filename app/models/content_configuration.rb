@@ -34,6 +34,8 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   # Footer
   preference :footer_logo, :file
   has_attached_file :footer_logo, default_url: "/assets/ofn-logo-footer.png"
+
+  #Other
   preference :footer_facebook_url, :string, default: "https://www.facebook.com/OpenFoodNet"
   preference :footer_twitter_url, :string, default: "https://twitter.com/OpenFoodNet"
   preference :footer_instagram_url, :string, default: ""
@@ -41,6 +43,7 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   preference :footer_googleplus_url, :string, default: ""
   preference :footer_pinterest_url, :string, default: ""
   preference :footer_email, :string, default: "hello@openfoodnetwork.org"
+  preference :community_forum_url, :string, default: "http://community.openfoodnetwork.org"
   preference :footer_links_md, :text, default: <<-EOS
 [Newsletter sign-up](/)
 
