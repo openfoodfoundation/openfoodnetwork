@@ -18,6 +18,7 @@
 //= require admin/spree_auth
 //= require admin/spree_paypal_express
 //= require ../shared/ng-infinite-scroll.min.js
+//= require ../shared/ui-grid.min.js
 //= require ../shared/ng-tags-input.min.js
 //= require angular-rails-templates
 //= require_tree ../templates/admin
@@ -37,6 +38,7 @@
 //= require ./payment_methods/payment_methods
 //= require ./products/products
 //= require ./resources/resources
+//= require ./reports/reports
 //= require ./shipping_methods/shipping_methods
 //= require ./side_menu/side_menu
 //= require ./tag_rules/tag_rules
