@@ -1,4 +1,4 @@
-angular.module("admin.orderCycles").factory 'OrderCycleResource', ($resource) ->
+angular.module("admin.resources").factory 'OrderCycleResource', ($resource) ->
   $resource('/admin/order_cycles/:id/:action.json', {}, {
     'index':
       method: 'GET'

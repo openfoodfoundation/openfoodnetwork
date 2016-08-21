@@ -1,4 +1,4 @@
-angular.module("admin.enterprises").factory 'Enterprises', ($q, EnterpriseResource) ->
+angular.module("admin.resources").factory 'Enterprises', ($q, EnterpriseResource) ->
   new class Enterprises
     byID: {}
     pristineByID: {}
