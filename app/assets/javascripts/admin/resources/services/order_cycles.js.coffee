@@ -1,4 +1,4 @@
-angular.module("admin.orderCycles").factory 'OrderCycles', ($q, $injector, OrderCycleResource) ->
+angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCycleResource) ->
   new class OrderCycles
     all: []
     byID: {}

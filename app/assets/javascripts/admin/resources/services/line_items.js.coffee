@@ -1,4 +1,4 @@
-angular.module("admin.lineItems").factory 'LineItems', ($q, LineItemResource) ->
+angular.module("admin.resources").factory 'LineItems', ($q, LineItemResource) ->
   new class LineItems
     byID: {}
     pristineByID: {}

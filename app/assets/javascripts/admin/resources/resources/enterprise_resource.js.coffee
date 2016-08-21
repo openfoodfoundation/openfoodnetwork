@@ -1,4 +1,4 @@
-angular.module("admin.enterprises").factory 'EnterpriseResource', ($resource) ->
+angular.module("admin.resources").factory 'EnterpriseResource', ($resource) ->
   ignoredAttrs = ->
     ["$$hashKey", "producer", "package", "producerError", "packageError", "status"]
 
