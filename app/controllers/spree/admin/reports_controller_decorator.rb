@@ -208,31 +208,37 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_fulfillment
-    # -- Prepare Date Params
-    prepare_date_params params
+    if request.format.json?
+      # -- Prepare Date Params
+      prepare_date_params params
+      @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
+      render json: @report.table_items, each_serializer: Api::Admin::Reports::LineItemSerializer
+    else
+      prepare_date_params params
 
-    # -- Prepare Form Options
-    permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-    # My distributors and any distributors distributing products I supply
-    @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
-    # My suppliers and any suppliers supplying products I distribute
-    @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
+      # -- Prepare Form Options
+      permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+      # My distributors and any distributors distributing products I supply
+      @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
+      # My suppliers and any suppliers supplying products I distribute
+      @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
-    @order_cycles = OrderCycle.active_or_complete.
-    involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
+      @order_cycles = OrderCycle.active_or_complete.
+      involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
-    @report_types = REPORT_TYPES[:orders_and_fulfillment]
-    @report_type = params[:report_type]
+      @report_types = REPORT_TYPES[:orders_and_fulfillment]
+      @report_type = params[:report_type]
 
-    @include_blank = 'All'
+      @include_blank = 'All'
 
-    # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
-    order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
-    @table = order_grouper.table(@report.table_items)
-    csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+      # -- Build Report with Order Grouper
+      @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
+      order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
+      @table = order_grouper.table(@report.table_items)
+      csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
 
-    render_report(@report.header, @table, params[:csv], csv_file_name)
+      render_report(@report.header, @table, params[:csv], csv_file_name)
+    end
 
   end
 
