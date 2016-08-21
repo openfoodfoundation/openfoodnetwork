@@ -1,4 +1,4 @@
-angular.module("admin.lineItems").factory 'LineItemResource', ($resource) ->
+angular.module("admin.resources").factory 'LineItemResource', ($resource) ->
   $resource('/admin/:orders/:order_number/line_items/:id.json', {}, {
     'index':
       method: 'GET'
