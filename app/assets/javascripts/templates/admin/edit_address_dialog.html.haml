@@ -22,12 +22,6 @@
           %input{ type: 'text', name: 'address2', ng: { model: 'address.address2'} }
       %tr
         %td
-          = t('spree.phone')
-          %span.required *
-        %td
-          %input{ type: 'text', name: 'phone', required: true, ng: { model: 'address.phone'} }
-      %tr
-        %td
           = t('spree.city')
           %span.required *
         %td
@@ -54,8 +48,14 @@
           %select{name: 'state', required: true, ng: {model: 'address.state_id', options: 'state.id as state.name for state in states'}}
             %option{value: ''}
               = t('admin.customers.index.select_state')
+      %tr
+        %td
+          = t('spree.phone')
+          %span.required *
+        %td
+          %input{ type: 'text', name: 'phone', required: true, ng: { model: 'address.phone'} }
 
     .text-center
-      %input.button.red.icon-plus{ type: 'submit', value: 'Update Address'}
+      %input.button.red.icon-plus{ type: 'submit', value: t('admin.customers.index.update_address')}
 
 
