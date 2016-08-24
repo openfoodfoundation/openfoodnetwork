@@ -1063,6 +1063,17 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.integer  "zone_members_count", :default => 0
   end
 
+  create_table "standing_line_items", :force => true do |t|
+    t.integer  "standing_order_id", :null => false
+    t.integer  "variant_id",        :null => false
+    t.integer  "quantity",          :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "standing_line_items", ["standing_order_id"], :name => "index_standing_line_items_on_standing_order_id"
+  add_index "standing_line_items", ["variant_id"], :name => "index_standing_line_items_on_variant_id"
+
   create_table "standing_orders", :force => true do |t|
     t.integer  "shop_id",            :null => false
     t.integer  "customer_id",        :null => false
@@ -1308,6 +1319,9 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
   add_foreign_key "spree_variants", "spree_products", name: "spree_variants_product_id_fk", column: "product_id"
 
   add_foreign_key "spree_zone_members", "spree_zones", name: "spree_zone_members_zone_id_fk", column: "zone_id"
+
+  add_foreign_key "standing_line_items", "spree_variants", name: "oc_standing_line_items_variant_id_fk", column: "variant_id"
+  add_foreign_key "standing_line_items", "standing_orders", name: "oc_standing_line_items_standing_order_id_fk"
 
   add_foreign_key "standing_orders", "customers", name: "oc_standing_orders_customer_id_fk"
   add_foreign_key "standing_orders", "enterprises", name: "oc_standing_orders_shop_id_fk", column: "shop_id"
