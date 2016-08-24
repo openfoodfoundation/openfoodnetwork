@@ -8,6 +8,10 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
     object.tag_list.join(",")
   end
 
+  def name
+    object.name.blank? ? object.bill_address.andand.full_name : object.name
+  end
+
   def tags
     object.tag_list.map do |tag|
       tag_rule_map = options[:tag_rule_mapping][tag]

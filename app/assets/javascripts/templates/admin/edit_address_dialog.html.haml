@@ -11,6 +11,18 @@
     %table.no-borders
       %tr
         %td{style: 'width: 30%'}
+          = t('spree.firstname')
+          %span.required *
+        %td
+          %input{ type: 'text', name: 'firstname', required: true, ng: { model: 'address.firstname'} }
+      %tr
+        %td
+          = t('spree.lastname')
+          %span.required *
+        %td
+          %input{ type: 'text', name: 'lastname', required: true, ng: { model: 'address.lastname'} }
+      %tr
+        %td
           = t('spree.street_address')
           %span.required *
         %td

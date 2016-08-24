@@ -176,6 +176,8 @@ feature 'Customers' do
           first('#ship-address-link').click
           expect(page).to have_content 'Edit Shipping Address'
 
+          fill_in 'firstname', with: "First"
+          fill_in 'lastname', with: "Last"
           fill_in 'address1', with: "New Address1"
           fill_in 'phone', with: "12345678"
           fill_in 'city', with: "Melbourne"
@@ -190,6 +192,8 @@ feature 'Customers' do
 
           ship_address = customer4.reload.ship_address
 
+          expect(ship_address.firstname).to eq 'First'
+          expect(ship_address.lastname).to eq 'Last'
           expect(ship_address.address1).to eq 'New Address1'
           expect(ship_address.phone).to eq '12345678'
           expect(ship_address.city).to eq 'Melbourne'
