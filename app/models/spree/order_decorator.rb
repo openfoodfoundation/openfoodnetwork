@@ -289,7 +289,8 @@ Spree::Order.class_eval do
 
   def ensure_customer
     unless associate_customer
-      self.customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user)
+      customer_name = bill_address.andand.full_name
+      self.customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user, name: customer_name, bill_address: bill_address.andand.clone, ship_address: ship_address.andand.clone)
     end
   end
 end
