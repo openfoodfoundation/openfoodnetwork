@@ -26,10 +26,10 @@ angular.module("admin.customers").factory "Customers", ($q, InfoDialog, RequestM
       RequestMonitor.load(request.$promise)
       request.$promise
 
-    update: (address, customer, current_address) ->
+    update: (address, customer, addressType) ->
       params =
         id: customer.id
         customer:
-          "#{current_address}_attributes": address
+          "#{addressType}_attributes": address
       CustomerResource.update params
 

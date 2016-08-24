@@ -11,12 +11,12 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
     scope.updateAddress = ->
       scope.edit_address_form.$setPristine()
       if scope.edit_address_form.$valid
-        Customers.update(scope.address, scope.customer, scope.current_address).$promise.then (data) ->
+        Customers.update(scope.address, scope.customer, scope.addressType).$promise.then (data) ->
           scope.customer = data
           template.dialog('close')
-          StatusMessage.display('success', "Address updated successfully.")
+          StatusMessage.display('success', t('admin.customers.index.update_address_success'))
       else
-        scope.errors.push("Sorry! Please input all of the required fields!")
+        scope.errors.push(t('admin.customers.index.update_address_error'))
 
 
     template = $compile($templateCache.get('admin/edit_address_dialog.html'))(scope)
@@ -24,10 +24,10 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
 
     element.bind 'click', (e) ->
       if e.target.id == 'bill-address-link'
-        scope.current_address = 'bill_address'
+        scope.addressType = 'bill_address'
       else
-        scope.current_address = 'ship_address'
-      scope.address = scope.customer[scope.current_address]
+        scope.addressType = 'ship_address'
+      scope.address = scope.customer[scope.addressType]
 
       template.dialog('open')
       scope.$apply()

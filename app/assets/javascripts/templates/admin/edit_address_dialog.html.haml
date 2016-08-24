@@ -1,8 +1,9 @@
 #edit-address-dialog
-  %h2 {{ current_address === 'bill_address' ?  'Edit Billing Address' : 'Edit Shipping Address'}}
+  %h2 {{ addressType === 'bill_address' ?  "#{t('admin.customers.index.edit_bill_address')}" : "#{t('admin.customers.index.edit_ship_address')}" }}
   %form{ name: 'edit_address_form', novalidate: true, ng: { submit: 'updateAddress()'}}
     .row
-      Required fields are denoted with an asterisk (
+      = t('admin.customers.index.required_fileds')
+      (
       %span.required *
       )
     .error{ ng: { repeat: "error in errors", bind: "error" } }
@@ -43,14 +44,16 @@
           %span.required *
         %td
           %select{name: 'country', required: true, ng: {model: 'address.country_id', options: 'country.id as country.name for country in availableCountries'}}
-            %option{value: ''} Select Country
+            %option{value: ''}
+              = t('admin.customers.index.select_country')
       %tr
         %td
           = t('spree.state')
           %span.required *
         %td
           %select{name: 'state', required: true, ng: {model: 'address.state_id', options: 'state.id as state.name for state in states'}}
-            %option{value: ''} Select State
+            %option{value: ''}
+              = t('admin.customers.index.select_state')
 
     .text-center
       %input.button.red.icon-plus{ type: 'submit', value: 'Update Address'}

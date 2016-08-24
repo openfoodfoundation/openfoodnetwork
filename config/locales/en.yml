@@ -120,6 +120,14 @@ en:
         duplicate_code: "This code is used already."
         bill_address: "Billing Address"
         ship_address: "Shipping Address"
+        update_address_success: 'Address updated successfully.'
+        update_address_error: 'Sorry! Please input all of the required fields!'
+        edit_bill_address: 'Edit Billing Address'
+        edit_ship_address: 'Edit Shipping Address'
+        required_fileds: 'Required fields are denoted with an asterisk '
+        select_country: 'Select Country'
+        select_state: 'Select State'
+        edit: 'Edit'
 
     products:
       bulk_edit:
