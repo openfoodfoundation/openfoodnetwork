@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").directive "datepicker", ->
+angular.module("admin.utils").directive "datepicker", ->
   require: "ngModel"
   link: (scope, element, attrs, ngModel) ->
     element.datepicker

@@ -1,0 +1,5 @@
+= admin_inject_json_ams "admin.standingOrders", "standingOrder", @standing_order, Api::Admin::StandingOrderSerializer
+= admin_inject_json_ams_array "admin.standingOrders", "customers", @customers, Api::Admin::CustomerSerializer
+= admin_inject_json_ams_array "admin.standingOrders", "schedules", @schedules, Api::Admin::IdNameSerializer
+= admin_inject_json_ams_array "admin.standingOrders", "paymentMethods", @payment_methods, Api::Admin::IdNameSerializer
+= admin_inject_json_ams_array "admin.standingOrders", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer

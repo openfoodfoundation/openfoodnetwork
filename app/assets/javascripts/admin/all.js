@@ -40,6 +40,7 @@
 //= require ./resources/resources
 //= require ./shipping_methods/shipping_methods
 //= require ./side_menu/side_menu
+//= require ./standing_orders/standing_orders
 //= require ./tag_rules/tag_rules
 //= require ./taxons/taxons
 //= require ./utils/utils
