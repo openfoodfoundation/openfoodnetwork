@@ -4,4 +4,6 @@ class Schedule < ActiveRecord::Base
   attr_accessible :name, :order_cycle_ids
 
   validates :order_cycles, presence: true
+
+  scope :with_coordinator, lambda { |enterprise| joins(:order_cycles).where('coordinator_id = ?', enterprise.id).select('DISTINCT schedules.*') }
 end

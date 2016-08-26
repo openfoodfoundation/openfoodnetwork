@@ -1,0 +1,53 @@
+-# = render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise }
+
+- content_for :page_title do
+  New Standing Order
+
+-# - content_for :page_actions do
+-#   %li= button_link_to "Back to standing orders list", main_app.admin_standing_orders_path, icon: 'icon-arrow-left'
+
+= render 'data'
+
+%form.margin-bottom-50{ name: 'standing_order_form', ng: { app: 'admin.standingOrders', controller: 'StandingOrderController' } }
+  %save-bar{ dirty: "standing_order_form.$dirty" }
+    %input.red{ type: "submit", ng: { click: "save()", disabled: "!standing_order_form.$dirty", value: "'Save'" } }
+    -# %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? 'Cancel' : 'Close'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
+
+  .row
+    .four.columns.alpha
+      Customer
+    .four.columns
+      %input.ofn-select2.fullwidth#customer_id{ name: 'customer_id', type: 'number', data: 'customers', text: 'email', ng: { model: 'standingOrder.customer_id' } }
+      .error{ ng: { repeat: 'error in errors.customer', show: 'standing_order_form.customer_id.$pristine' } } {{ error }}
+    .four.columns
+      Schedule
+    .four.columns.omega
+      %input.ofn-select2.fullwidth#schedule_id{ name: 'schedule_id', type: 'number', data: 'schedules', ng: { model: 'standingOrder.schedule_id' } }
+      .error{ ng: { repeat: 'error in errors.schedule', show: 'standing_order_form.schedule_id.$pristine'} } {{ error }}
+
+  .row
+    .four.columns.alpha
+      Payment Method
+    .four.columns
+      %input.ofn-select2.fullwidth#payment_method_id{ name: 'payment_method_id',type: 'number', data: 'paymentMethods', ng: { model: 'standingOrder.payment_method_id' } }
+      .error{ ng: { repeat: 'error in errors.payment_method', show: 'standing_order_form.payment_method_id.$pristine' } } {{ error }}
+    .four.columns
+      Shipping Method
+    .four.columns.omega
+      %input.ofn-select2.fullwidth#shipping_method_id{ name: 'shipping_method_id', type: 'number', data: 'shippingMethods', ng: { model: 'standingOrder.shipping_method_id' } }
+      .error{ ng: { repeat: 'error in errors.shipping_method', show: 'standing_order_form.shipping_method_id.$pristine' } } {{ error }}
+
+  .row
+    .four.columns.alpha
+      Begins At
+    .four.columns
+      %input.fullwidth#begins_at{ name: 'begins_at', type: 'text', placeholder: 'Select A Date', datepicker: 'standingOrder.begins_at', ng: { model: 'standingOrder.begins_at' } }
+      .error{ ng: { repeat: 'error in errors.begins_at', show: 'standing_order_form.begins_at.$pristine' } } {{ error }}
+    .four.columns
+      Ends at
+    .four.columns.omega
+      %input.fullwidth#ends_at{ name: 'ends_at', type: 'text', placeholder: 'Optional', datepicker: 'standingOrder.begins_at', ng: { model: 'standingOrder.ends_at' } }
+      .error{ ng: { repeat: 'error in errors.ends_at', show: 'standing_order_form.ends_at.$pristine' } } {{ error }}
+
+
+  -# = render 'spree/admin/orders/add_product'
