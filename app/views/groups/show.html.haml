@@ -88,13 +88,13 @@
                       = t :groups_hubs
 
                 = render "shared/components/enterprise_search"
-                = render "hub_filters"
+                = render "shops/filters", resource: "group_hubs", property_filters: "| searchEnterprises:query | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles"
 
                 .row
                   .small-12.columns
                     .active_table
                       %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
-                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | properties:activeProperties:'distributed_properties' | orderBy:['-active', '+orders_close_at'])",
+                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | searchEnterprises:query | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | properties:activeProperties:'distributed_properties' | orderBy:['-active', '+orders_close_at'])",
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
                       "ng-controller" => "GroupEnterpriseNodeCtrl"}
                         .small-12.columns
