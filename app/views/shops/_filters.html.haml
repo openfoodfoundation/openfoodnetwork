@@ -1,7 +1,7 @@
 .row
-  = render partial: 'shared/components/filter_controls'
+  = render 'shared/components/filter_controls'
   -# .small-12.medium-6.columns &nbsp;
-  = render partial: 'shared/components/show_profiles'
+  = render 'shared/components/show_profiles'
 
 .row.animate-show{"ng-show" => "filtersActive"}
   .small-12.columns
@@ -19,4 +19,4 @@
           = t :hubs_filter_delivery
         %shipping-type-selector
 
-= render partial: 'shared/components/filter_box'
+= render 'shared/components/filter_box'

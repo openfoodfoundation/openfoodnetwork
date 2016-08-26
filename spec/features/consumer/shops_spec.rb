@@ -47,7 +47,7 @@ feature 'Shops', js: true do
     it "should show closed shops after clicking the button" do
       create(:simple_product, distributors: [d1, d2])
       visit shops_path
-      click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
+      click_link_and_ensure("Show Closed Shops", -> { page.has_selector? 'hub.inactive' })
       page.should have_selector 'hub.inactive', text: d2.name
     end
 

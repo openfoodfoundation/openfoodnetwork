@@ -98,8 +98,8 @@
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
                       "ng-controller" => "GroupEnterpriseNodeCtrl"}
                         .small-12.columns
-                          = render partial: 'home/skinny'
-                          = render partial: 'home/fat'
+                          = render 'shops/skinny'
+                          = render 'shops/fat'
 
                       = render partial: 'shared/components/enterprise_no_results'
 
