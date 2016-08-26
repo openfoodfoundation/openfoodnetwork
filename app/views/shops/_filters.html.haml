@@ -25,6 +25,6 @@
             = t :hubs_filter_by
           = t :hubs_filter_property
         .filter-shopfront.property-selectors
-          %single-line-selectors{ selectors: "filterSelectors", objects: "visibleMatches | filter:filterExpression | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | propertiesOf", "active-selectors" => "activeProperties"}
+          %single-line-selectors{ selectors: "filterSelectors", objects: "visibleMatches | filter:filterExpression | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | propertiesOf:'distributed_properties'", "active-selectors" => "activeProperties"}
 
 = render 'shared/components/filter_box'
