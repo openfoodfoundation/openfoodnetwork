@@ -56,6 +56,36 @@ feature 'Shops', js: true do
       expect(page).to have_current_path enterprise_shop_path(distributor)
     end
 
+    describe "filtering by product property" do
+      let!(:order_cycle) { create(:simple_order_cycle, distributors: [d1, d2], coordinator: create(:distributor_enterprise)) }
+      let(:p1) { create(:simple_product, supplier: producer) }
+      let(:p2) { create(:simple_product, supplier: create(:supplier_enterprise)) }
+      let(:ex_d1) { order_cycle.exchanges.outgoing.where(receiver_id: d1).first }
+      let(:ex_d2) { order_cycle.exchanges.outgoing.where(receiver_id: d2).first }
+
+      before do
+        p2.set_property 'Local', 'XYZ 123'
+
+        ex_d1.variants << p1.variants.first
+        ex_d2.variants << p2.variants.first
+      end
+
+      it "filters" do
+        toggle_filters
+
+        toggle_filter 'Organic'
+
+        expect(page).to     have_content d1.name
+        expect(page).not_to have_content d2.name
+
+        toggle_filter 'Organic'
+        toggle_filter 'Local'
+
+        expect(page).not_to have_content d1.name
+        expect(page).to     have_content d2.name
+      end
+    end
+
     describe "property badges" do
       let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
       let(:product) { create(:simple_product, supplier: producer) }

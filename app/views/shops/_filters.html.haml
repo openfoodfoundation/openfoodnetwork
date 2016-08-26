@@ -3,7 +3,7 @@
   -# .small-12.medium-6.columns &nbsp;
   = render 'shared/components/show_profiles'
 
-.row.animate-show{"ng-show" => "filtersActive"}
+.row.animate-show.filter-row{"ng-show" => "filtersActive"}
   .small-12.columns
     .row.filter-box
       .small-12.large-9.columns
@@ -18,5 +18,13 @@
             = t :hubs_filter_by
           = t :hubs_filter_delivery
         %shipping-type-selector
+
+      .small-12.large-12.columns
+        %h5.tdhead
+          .light
+            = t :hubs_filter_by
+          = t :hubs_filter_property
+        .filter-shopfront.property-selectors
+          %single-line-selectors{ selectors: "filterSelectors", objects: "visibleMatches | filter:filterExpression | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | propertiesOf", "active-selectors" => "activeProperties"}
 
 = render 'shared/components/filter_box'
