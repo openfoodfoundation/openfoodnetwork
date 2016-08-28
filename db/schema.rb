@@ -1042,6 +1042,14 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "zone_members_count", :default => 0
   end
 
+  create_table "stripe_accounts", :force => true do |t|
+    t.string   "stripe_user_id"
+    t.string   "stripe_publishable_key"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.integer  "enterprise_id"
+  end
+
   create_table "suburbs", :force => true do |t|
     t.string  "name"
     t.string  "postcode"

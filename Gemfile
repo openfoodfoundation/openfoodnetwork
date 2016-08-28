@@ -19,6 +19,7 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '1-3-stable'
 # - Change type of password from string to password to hide it in the form
 gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "hide-password"
 #gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
+gem 'stripe', '~>1.51.0'
 
 gem 'delayed_job_active_record'
 gem 'daemons'
