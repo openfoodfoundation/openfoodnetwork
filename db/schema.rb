@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160921060442) do
+ActiveRecord::Schema.define(:version => 20160828115018) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -583,9 +583,9 @@ ActiveRecord::Schema.define(:version => 20160921060442) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end
@@ -1037,6 +1037,14 @@ ActiveRecord::Schema.define(:version => 20160921060442) do
     t.datetime "updated_at",                            :null => false
     t.boolean  "default_tax",        :default => false
     t.integer  "zone_members_count", :default => 0
+  end
+
+  create_table "stripe_accounts", :force => true do |t|
+    t.string   "stripe_user_id"
+    t.string   "stripe_publishable_key"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.integer  "enterprise_id"
   end
 
   create_table "suburbs", :force => true do |t|
