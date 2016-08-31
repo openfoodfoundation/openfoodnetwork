@@ -14,6 +14,7 @@ feature %q{
     @order_cycle = create(:simple_order_cycle, name: 'One', distributors: [@distributor], variants: [@product.variants.first])
 
     @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
+    @customer = create(:customer, enterprise: @distributor, email: @user.email, user: @user, ship_address: create(:address))
 
     # ensure order has a payment to capture
     @order.finalize!
@@ -137,14 +138,14 @@ feature %q{
     within('h1.page-title') { page.should have_content "Customer Details" }
 
     # And I select that customer's email address and save the order
-    targetted_select2_search @order.user.email, from: '#customer_search', dropdown_css: '.select2-drop'
+    targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
     click_button 'Continue'
     within('h1.page-title') { page.should have_content "Shipments" }
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
-    order.ship_address.lastname.should == 'Ship'
-    order.bill_address.lastname.should == 'Bill'
+    order.ship_address.lastname.should == @customer.ship_address.lastname
+    order.bill_address.lastname.should == @customer.bill_address.lastname
   end
 
   scenario "capture multiple payments from the orders index page" do

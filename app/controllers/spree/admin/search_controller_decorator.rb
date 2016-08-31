@@ -18,8 +18,7 @@ Spree::Admin::SearchController.class_eval do
 
   def customers
     @customers = Customer.ransack({m: 'or', email_start: params[:q], name_start: params[:q]})
-                        .result(distinct: true)
-                        .where(enterprise_id: params[:distributor_id])
+                        .result.where(enterprise_id: params[:distributor_id])
 
     render json: @customers, each_serializer: Api::Admin::CustomerSerializer
   end
