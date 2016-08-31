@@ -1,11 +1,12 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminEditOrderCycleCtrl', ($scope, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
+  .controller 'AdminEditOrderCycleCtrl', ($scope, $filter, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor) ->
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: order_cycle_id)
+    $scope.schedules = Schedules.index()
 
     $scope.OrderCycle = OrderCycle
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
@@ -19,7 +20,7 @@ angular.module('admin.orderCycles')
       StatusMessage.setValidation(isValid)
 
     $scope.loaded = ->
-      Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
+      Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded && !RequestMonitor.loading
 
     $scope.suppliedVariants = (enterprise_id) ->
       Enterprise.suppliedVariants(enterprise_id)

@@ -59,14 +59,17 @@ describe 'OrderCycle controllers', ->
       expect(scope.order_cycle).toEqual('my order cycle')
 
     describe 'Reporting when all resources are loaded', ->
-      it 'returns true when Enterprise and EnterpriseFee are loaded', ->
-        Enterprise.loaded = EnterpriseFee.loaded = OrderCycle.loaded = true
+      beforeEach inject (RequestMonitor) ->
+        RequestMonitor.loading = false
+        Enterprise.loaded = true
+        EnterpriseFee.loaded = true
+        OrderCycle.loaded = true
+
+      it 'returns true when all resources are loaded', ->
         expect(scope.loaded()).toBe(true)
 
       it 'returns false otherwise', ->
-        Enterprise.loaded = true
         EnterpriseFee.loaded = false
-        OrderCycle.loaded = true
         expect(scope.loaded()).toBe(false)
 
     it "delegates suppliedVariants to Enterprise", ->
@@ -220,14 +223,17 @@ describe 'OrderCycle controllers', ->
       expect(OrderCycle.load).toHaveBeenCalledWith('27')
 
     describe 'Reporting when all resources are loaded', ->
-      it 'returns true when Enterprise, EnterpriseFee and OrderCycle are loaded', ->
-        Enterprise.loaded = EnterpriseFee.loaded = OrderCycle.loaded = true
+      beforeEach inject (RequestMonitor) ->
+        RequestMonitor.loading = false
+        Enterprise.loaded = true
+        EnterpriseFee.loaded = true
+        OrderCycle.loaded = true
+
+      it 'returns true when all resources are loaded', ->
         expect(scope.loaded()).toBe(true)
 
       it 'returns false otherwise', ->
-        Enterprise.loaded = true
-        EnterpriseFee.loaded = true
-        OrderCycle.loaded = false
+        EnterpriseFee.loaded = false
         expect(scope.loaded()).toBe(false)
 
     it "delegates suppliedVariants to Enterprise", ->

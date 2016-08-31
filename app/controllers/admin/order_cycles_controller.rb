@@ -1,4 +1,4 @@
-require 'open_food_network/order_cycle_permissions'
+require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_form_applicator'
 
 module Admin
@@ -9,6 +9,7 @@ module Admin
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
     before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
+    before_filter :check_editable_schedule_ids, only: [:create, :update]
     around_filter :protect_invalid_destroy, only: :destroy
 
     def index
@@ -180,6 +181,17 @@ module Admin
           end
         end
       end
+    end
+
+    def check_editable_schedule_ids
+      return unless params[:order_cycle][:schedule_ids]
+      requested = params[:order_cycle][:schedule_ids].map(&:to_i)
+      existing = @order_cycle.schedule_ids
+      permitted = Schedule.where(id: requested | existing).merge(OpenFoodNetwork::Permissions.new(spree_current_user).editable_schedules).pluck(:id)
+      result = existing
+      result |= (requested & permitted) # add any requested & permitted ids
+      result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
+      params[:order_cycle][:schedule_ids] = result
     end
 
     def ams_prefix_whitelist

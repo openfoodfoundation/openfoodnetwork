@@ -26,3 +26,18 @@
       = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at', 'ng-disabled' => '!loaded()'
     - else
       {{ order_cycle.orders_close_at }}
+
+.row
+  .two.columns.alpha
+    = f.label :schedule_ids, t('admin.order_cycles.schedules')
+  .twelve.columns
+    - if viewing_as_coordinator_of?(@order_cycle)
+      %input.fullwidth.ofn-select2#schedule_ids{ name: 'order_cycle[schedule_ids]',
+        data: 'schedules',
+        multiple: 'true',
+        filter: '{viewing_as_coordinator: true}',
+        ng: { model: 'order_cycle.schedule_ids' } }
+    - else
+      %schedule-list{ 'order-cycle' => 'order_cycle' }
+  .two.columns.omega
+    &nbsp;
