@@ -1,0 +1,5 @@
+/ replace "code[erb-loud]:contains('hidden_field_tag :customer_search')"
+
+= hidden_field_tag :customer_search_override,  nil, :class => 'fullwidth title'
+
+= hidden_field_tag :distributor_id,  @order.distributor_id
