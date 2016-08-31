@@ -439,7 +439,10 @@ feature %q{
       end
 
       within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+
       click_button 'Update'
+
+      expect(page).to have_content 'Enterprise "First Supplier" has been successfully updated!'
       supplier1.producer_properties(true).should be_empty
     end
   end
