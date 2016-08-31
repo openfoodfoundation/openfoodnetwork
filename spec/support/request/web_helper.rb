@@ -163,6 +163,11 @@ module WebHelper
     targetted_select2(value, options)
   end
 
+  def multi_select2_select(value, options)
+    find("#s2id_#{options[:from]}").find('ul li.select2-search-field').click
+    select_select2_result(value)
+  end
+
   # Deprecated: Use have_select2 instead (spec/support/matchers/select2_matchers.rb)
   def have_select2_option(value, options)
     container = options[:dropdown_css] || ".select2-with-searchbox"

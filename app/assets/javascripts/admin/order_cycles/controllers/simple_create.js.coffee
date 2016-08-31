@@ -1,6 +1,7 @@
-angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, ocInstance) ->
+angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl", ($scope, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage, Schedules, RequestMonitor, ocInstance) ->
   $scope.StatusMessage = StatusMessage
   $scope.OrderCycle = OrderCycle
+  $scope.schedules = Schedules.index()
   $scope.order_cycle = OrderCycle.new {coordinator_id: ocInstance.coordinator_id}, =>
     # TODO: make this a get method, which only fetches one enterprise
     $scope.enterprises = Enterprise.index {coordinator_id: ocInstance.coordinator_id}, (enterprises) =>
@@ -26,7 +27,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleCreateOrderCycleCtrl"
     OrderCycle.order_cycle.coordinator_id = enterprise.id
 
   $scope.loaded = ->
-    Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
+    Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded && !RequestMonitor.loading
 
   $scope.removeDistributionOfVariant = angular.noop
 

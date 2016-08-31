@@ -33,6 +33,10 @@ feature 'Schedules', js: true do
           click_button "Create Schedule"
         end
 
+        find("div#columns-dropdown", :text => "COLUMNS").click
+        find("div#columns-dropdown div.menu div.menu_item", text: "Schedules").click
+        find("div#columns-dropdown", :text => "COLUMNS").click
+
         within ".order-cycle-#{oc1.id} td.schedules" do
           expect(page).to have_selector "a", text: "Weekly"
           expect(page).to have_selector "a", text: "Fortnightly"
@@ -55,6 +59,10 @@ feature 'Schedules', js: true do
 
       it "immediately shows updated schedule lists for order cycles" do
         click_link 'Order Cycles'
+
+        find("div#columns-dropdown", :text => "COLUMNS").click
+        find("div#columns-dropdown div.menu div.menu_item", text: "Schedules").click
+        find("div#columns-dropdown", :text => "COLUMNS").click
 
         within ".order-cycle-#{oc1.id} td.schedules" do
           find('a', text: "Weekly").click
@@ -85,6 +93,11 @@ feature 'Schedules', js: true do
     describe "deleting a schedule" do
       it "immediately removes deleted schedules from order cycles" do
         click_link 'Order Cycles'
+
+        find("div#columns-dropdown", :text => "COLUMNS").click
+        find("div#columns-dropdown div.menu div.menu_item", text: "Schedules").click
+        find("div#columns-dropdown", :text => "COLUMNS").click
+
         within ".order-cycle-#{oc1.id} td.schedules" do
           find('a', text: "Weekly").click
         end

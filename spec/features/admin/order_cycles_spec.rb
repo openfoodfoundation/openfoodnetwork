@@ -43,6 +43,11 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc5.id}.closed"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc6.id}.closed"
 
+    first("div#columns-dropdown", :text => "COLUMNS").click
+    first("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
+    first("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
+    first("div#columns-dropdown", :text => "COLUMNS").click
+
     # And I should see all the details for an order cycle
     within('table#listing_order_cycles tbody tr:nth-child(2)') do
       # Then I should see the basic fields
@@ -202,6 +207,11 @@ feature %q{
 
       oc = OrderCycle.last
 
+      find("div#columns-dropdown", :text => "COLUMNS").click
+      find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
+      find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
+      find("div#columns-dropdown", :text => "COLUMNS").click
+
       page.should have_selector 'a', text: 'Plums & Avos'
       page.should have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
       page.should have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time
@@ -336,6 +346,11 @@ feature %q{
       page.should have_content 'Your order cycle has been updated.'
 
       oc = OrderCycle.last
+
+      find("div#columns-dropdown", :text => "COLUMNS").click
+      find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
+      find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
+      find("div#columns-dropdown", :text => "COLUMNS").click
 
       page.should have_selector 'a', text: 'Plums & Avos'
       page.should have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
@@ -605,6 +620,7 @@ feature %q{
     let!(:variant_managed) { product_managed.variants.first }
     let!(:product_permitted) { create(:product, supplier: supplier_permitted) }
     let!(:variant_permitted) { product_permitted.variants.first }
+    let!(:schedule) { create(:schedule, name: 'Schedule1', order_cycles: [create(:simple_order_cycle, coordinator: distributor_managed)]) }
 
     before do
       # Relationships required for interface to work
@@ -639,6 +655,12 @@ feature %q{
         page.should have_content oc_user_coordinating.name
         page.should_not have_content oc_for_other_user.name
 
+
+        find("div#columns-dropdown", :text => "COLUMNS").click
+        find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
+        find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
+        find("div#columns-dropdown", :text => "COLUMNS").click
+
         # The order cycle should show all enterprises in the order cycle
         page.should have_selector 'td.producers', text: supplier_managed.name
         page.should have_selector 'td.shops', text: distributor_managed.name
@@ -656,6 +678,7 @@ feature %q{
         fill_in 'order_cycle_name', with: 'My order cycle'
         fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
         fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
+        multi_select2_select schedule.name, from: 'schedule_ids'
 
         select 'Managed supplier', from: 'new_supplier_id'
         click_button 'Add supplier'
@@ -699,6 +722,7 @@ feature %q{
         order_cycle.suppliers.should match_array [supplier_managed, supplier_permitted]
         order_cycle.coordinator.should == distributor_managed
         order_cycle.distributors.should match_array [distributor_managed, distributor_permitted]
+        order_cycle.schedules.should == [schedule]
         exchange = order_cycle.exchanges.outgoing.to_enterprise(distributor_managed).first
         exchange.tag_list.should == ["wholesale"]
       end
@@ -741,6 +765,9 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc)
 
+        expect(page).to have_field 'order_cycle_name', with: oc.name
+        multi_select2_select schedule.name, from: 'schedule_ids'
+
         # When I remove all the exchanges and save
         page.find("tr.supplier-#{supplier_managed.id} a.remove-exchange").click
         page.find("tr.supplier-#{supplier_permitted.id} a.remove-exchange").click
@@ -755,6 +782,7 @@ feature %q{
         oc.suppliers.should == [supplier_unmanaged]
         oc.coordinator.should == distributor_managed
         oc.distributors.should == [distributor_unmanaged]
+        oc.schedules.should == [schedule]
       end
 
       scenario "cloning an order cycle" do

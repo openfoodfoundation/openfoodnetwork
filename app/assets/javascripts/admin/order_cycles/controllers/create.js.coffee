@@ -1,10 +1,11 @@
 angular.module('admin.orderCycles')
-  .controller 'AdminCreateOrderCycleCtrl', ($scope, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, ocInstance, StatusMessage) ->
+  .controller 'AdminCreateOrderCycleCtrl', ($scope, $filter, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, ocInstance, StatusMessage) ->
     $scope.enterprises = Enterprise.index(coordinator_id: ocInstance.coordinator_id)
     $scope.supplier_enterprises = Enterprise.producer_enterprises
     $scope.distributor_enterprises = Enterprise.hub_enterprises
     $scope.supplied_products = Enterprise.supplied_products
     $scope.enterprise_fees = EnterpriseFee.index(coordinator_id: ocInstance.coordinator_id)
+    $scope.schedules = Schedules.index()
 
     $scope.OrderCycle = OrderCycle
     $scope.order_cycle = OrderCycle.new({ coordinator_id: ocInstance.coordinator_id})
@@ -18,7 +19,7 @@ angular.module('admin.orderCycles')
       StatusMessage.setValidation(isValid)
 
     $scope.loaded = ->
-      Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
+      Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded && !RequestMonitor.loading
 
     $scope.suppliedVariants = (enterprise_id) ->
       Enterprise.suppliedVariants(enterprise_id)
@@ -89,4 +90,3 @@ angular.module('admin.orderCycles')
 
     $scope.cancel = (destination) ->
       $window.location = destination
-

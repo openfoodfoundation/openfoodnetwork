@@ -87,12 +87,12 @@ module OpenFoodNetwork
       node = "admin.order_cycles.index"
       {
         name:         { name: I18n.t("admin.name"),         visible: true },
-        schedules:    { name: I18n.t("#{node}.schedules"),  visible: true },
+        schedules:    { name: I18n.t("#{node}.schedules"),  visible: false },
         open:         { name: I18n.t("open"),               visible: true },
         close:        { name: I18n.t("close"),              visible: true },
-        producers:    { name: I18n.t("label_producers"),    visible: true },
+        producers:    { name: I18n.t("label_producers"),    visible: false },
         coordinator:  { name: I18n.t("coordinator"),        visible: true },
-        shops:        { name: I18n.t("label_shops"),        visible: true },
+        shops:        { name: I18n.t("label_shops"),        visible: false },
         products:     { name: I18n.t("products"),           visible: true }
       }
     end
