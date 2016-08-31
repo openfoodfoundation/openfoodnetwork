@@ -1,3 +1,5 @@
+require_relative '../gateway_decorator'
+
 module Spree
   class Gateway::PayPalExpress < Gateway
     # Something odd is happening with class inheritance here, this class (defined in spree_paypal_express gem)
