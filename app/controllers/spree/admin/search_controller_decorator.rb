@@ -16,14 +16,18 @@ Spree::Admin::SearchController.class_eval do
     render :users
   end
 
-  def users_with_customers_ams
-    enterprise_ids = spree_current_user.enterprises.map &:id
-
-    customers = Customer.ransack({m: 'or', email_start: params[:q], name_start: params[:q]})
+  def customers
+    @customers = Customer.ransack({m: 'or', email_start: params[:q], name_start: params[:q]})
                         .result(distinct: true)
-                        .where(enterprise_id: enterprise_ids)
+                        .where(enterprise_id: params[:distributor_id])
 
-    render json: customers, each_serializer: Api::Admin::CustomerSerializer
+    render json: @customers, each_serializer: Api::Admin::CustomerSerializer
   end
-  alias_method_chain :users, :customers_ams
+
+  def users_with_ams
+    users_without_ams
+    render json: @users, each_serializer: Api::Admin::UserSerializer
+  end
+
+  alias_method_chain :users, :ams
 end

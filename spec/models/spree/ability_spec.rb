@@ -498,7 +498,7 @@ module Spree
         end
 
         it "should have the ability to search for users which share management of its enterprises" do
-          should have_ability([:admin, :known_users, :users], for: :search)
+          should have_ability([:admin, :known_users, :customers], for: :search)
           should_not have_ability([:users], for: :search)
         end
       end
