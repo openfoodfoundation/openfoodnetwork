@@ -3,7 +3,8 @@ angular.module("admin.indexUtils").factory 'Dereferencer', ->
     dereference: (array, data)->
       if array
         for object, i in array
-          array[i] = data[object.id]
+          match = data[object.id]
+          array[i] = match if match?
 
     dereferenceAttr: (array, attr, data)->
       if array

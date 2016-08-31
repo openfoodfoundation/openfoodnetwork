@@ -31,17 +31,17 @@
       %label{ :for => 'supplier_filter' }
         = t("admin.producer")
       %br
-      %select{ :class => "three columns alpha", :id => 'supplier_filter', 'select2-min-search' => 5, 'ng-model' => 'supplierFilter', 'ng-options' => 's.id as s.name for s in suppliers' }
+      %input#supplier_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'suppliers', blank: "{ id: 0, name: 'All' }", ng: { model: 'supplierFilter' } }
     .filter_select{ :class => "three columns" }
       %label{ :for => 'distributor_filter' }
         = t("admin.shop")
       %br
-      %select{ :class => "three columns alpha", :id => 'distributor_filter', 'select2-min-search' => 5, 'ng-model' => 'distributorFilter', 'ng-options' => 'd.id as d.name for d in distributors'}
+      %input#distributor_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'distributors', blank: "{ id: 0, name: 'All' }", ng: { model: 'distributorFilter' } }
     .filter_select{ :class => "three columns" }
       %label{ :for => 'order_cycle_filter' }
         = t("admin.order_cycle")
       %br
-      %select{ :class => "three columns alpha", :id => 'order_cycle_filter', 'select2-min-search' => 5, 'ng-model' => 'orderCycleFilter', 'ng-options' => 'oc.id as oc.name for oc in orderCycles', 'confirm-change' => "confirmRefresh()", 'ng-change' => 'refreshData()'}
+      %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', blank: "{ id: 0, name: 'All' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter', change: 'refreshData()' } }
     .filter_clear{ :class => "two columns omega" }
       %label{ :for => 'clear_all_filters' }
       %br

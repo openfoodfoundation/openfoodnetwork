@@ -12,7 +12,9 @@ angular.module("admin.indexUtils").directive "ofnSelect2", ($sanitize, $timeout,
     $timeout ->
       scope.text ||= 'name'
       scope.filter ||= -> true
+
       scope.data.unshift(scope.blank) if scope.blank? && typeof scope.blank is "object"
+
 
       item.name = $sanitize(item.name) for item in scope.data
       element.select2
