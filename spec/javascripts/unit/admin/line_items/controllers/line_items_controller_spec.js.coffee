@@ -63,17 +63,17 @@ describe "LineItemsCtrl", ->
       $timeout.flush()
 
     describe "initialisation", ->
-      it "gets suppliers, adds a blank option as the first in the list", ->
-        expect(scope.suppliers).toDeepEqual [ { id : '0', name : 'All' }, supplier ]
+      it "gets suppliers", ->
+        expect(scope.suppliers).toDeepEqual [supplier ]
 
-      it "gets distributors, adds a blank option as the first in the list", ->
-        expect(scope.distributors).toDeepEqual [ { id : '0', name : 'All' }, distributor ]
+      it "gets distributors", ->
+        expect(scope.distributors).toDeepEqual [ distributor ]
 
       it "stores enterprises in an list that is accessible by id", ->
         expect(Enterprises.enterprisesByID[1]).toDeepEqual supplier
 
-      it "gets order cycles, adds a blank option as the first in the list", ->
-        expect(scope.orderCycles).toDeepEqual [ { id : '0', name : 'All' }, orderCycle ]
+      it "gets order cycles", ->
+        expect(scope.orderCycles).toDeepEqual [ orderCycle ]
 
       it "gets orders, with dereferenced order cycles and distributors", ->
         expect(scope.orders).toDeepEqual [ { id: 9, order_cycle: orderCycle, distributor: distributor, number: "R123456" } ]
@@ -85,9 +85,9 @@ describe "LineItemsCtrl", ->
         expect(scope.RequestMonitor.loading).toBe false
 
       it "resets the select filters", ->
-        expect(scope.distributorFilter).toBe '0'
-        expect(scope.supplierFilter).toBe '0'
-        expect(scope.orderCycleFilter).toBe '0'
+        expect(scope.distributorFilter).toBe 0
+        expect(scope.supplierFilter).toBe 0
+        expect(scope.orderCycleFilter).toBe 0
         expect(scope.quickSearch).toBe = ""
 
       it "resets the form state to pristine", ->

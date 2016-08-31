@@ -37,25 +37,14 @@ describe "Enterprises service", ->
         expect(result).toDeepEqual response
 
     describe "when params are passed", ->
-      describe "where includeBlank param is truthy", ->
-        beforeEach ->
-          params = {includeBlank: true, someParam: 'someVal'}
-          $httpBackend.expectGET('/admin/enterprises.json?someParam=someVal').respond 200, response
-          result = Enterprises.index(params)
-          $httpBackend.flush()
+      beforeEach ->
+        params = { someParam: 'someVal'}
+        $httpBackend.expectGET('/admin/enterprises.json?someParam=someVal').respond 200, response
+        result = Enterprises.index(params)
+        $httpBackend.flush()
 
-        it "returns an array of enterprises, with a blank option appended to the beginning", ->
-          expect(result).toDeepEqual [{id: '0', name: 'All'} ,{ id: 5, name: 'Enterprise 1'}]
-
-      describe "where includeBlank param is falsey", ->
-        beforeEach ->
-          params = {includeBlank: false, someParam: 'someVal'}
-          $httpBackend.expectGET('/admin/enterprises.json?someParam=someVal').respond 200, response
-          result = Enterprises.index(params)
-          $httpBackend.flush()
-
-        it "returns an array of enterprises, with a blank option appended to the beginning", ->
-          expect(result).toDeepEqual response
+      it "returns an array of enterprises", ->
+        expect(result).toDeepEqual response
 
 
   describe "#save", ->
