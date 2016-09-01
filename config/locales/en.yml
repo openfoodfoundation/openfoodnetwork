@@ -129,6 +129,7 @@ en:
         select_state: 'Select State'
         edit: 'Edit'
         update_address: 'Update Address'
+        confirm_delete: 'Sure to delete?'
 
     products:
       bulk_edit:

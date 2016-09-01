@@ -4,7 +4,6 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
   $scope.RequestMonitor = RequestMonitor
   $scope.submitAll = pendingChanges.submitAll
   $scope.add = Customers.add
-  $scope.deleteCustomer = Customers.remove
   $scope.customerLimit = 20
   $scope.columns = Columns.columns
 
@@ -20,6 +19,10 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
         $scope.customers = data
 
   $scope.shop_id = shops[0].id if shops.length == 1
+
+  $scope.deleteCustomer = (customer) ->
+    if confirm(t('admin.customers.index.confirm_delete'))
+      Customers.remove(customer)
 
   $scope.checkForDuplicateCodes = ->
     delete this.customer.code unless this.customer.code
