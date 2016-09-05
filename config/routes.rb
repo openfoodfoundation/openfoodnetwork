@@ -52,6 +52,8 @@ Openfoodnetwork::Application.routes.draw do
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
+  get '/stripe/callback', :to => 'enterprise#stripe_connect' 
+
   resources :enterprises do
     collection do
       post :search
