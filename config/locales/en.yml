@@ -202,6 +202,11 @@ en:
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Require customers to login"
 
+    mail_methods:
+      send_from_enterprise_address: "Send emails to producers from the co-ordinating enterprise address."
+      caveat: "May be overriden by other SMTP settings."
+
+
   home:
     hubs:
       show_closed_shops: "Show closed shops"
