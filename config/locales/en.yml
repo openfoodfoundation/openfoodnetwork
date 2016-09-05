@@ -208,6 +208,11 @@ en:
           allow_guest_orders_false: "Require login to order"
           allow_guest_orders_true: "Allow guest checkout"
 
+    mail_methods:
+      send_from_enterprise_address: "Send emails to producers from the co-ordinating enterprise address."
+      caveat: "May be overriden by other SMTP settings."
+
+
   home:
     hubs:
       show_closed_shops: "Show closed shops"

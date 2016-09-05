@@ -15,7 +15,9 @@
           = f.label :preferred_enable_mail_delivery, t(:enable_mail_delivery)
         .field
           = f.check_box :preferred_send_from_enterprise_address, {:style => "vertical-align:middle;"}
-          = f.label :preferred_send_from_enterprise_address, t(:send_from_enterprise_address)
+          = f.label :preferred_send_from_enterprise_address, t('admin.mail_methods.send_from_enterprise_address')
+          %span.info
+            = t('admin.mail_methods.caveat')
         .field
           = f.label :preferred_mails_from, t(:send_mails_as)
           %br/
