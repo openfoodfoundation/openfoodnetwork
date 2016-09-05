@@ -53,8 +53,18 @@ describe ProducerMailer do
     ActionMailer::Base.deliveries.count.should == 1
   end
 
-  it "sets a from of the enterprise email" do
-    mail.from.should == [s1.email]
+  it "sets a from of the instance email by default" do
+    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
+    mail.from.should == [Spree::Config.emails_sent_from]
+  end
+
+  it "sets a from of the coordinator email" do
+    ActionMailer::Base.deliveries.clear
+    Spree::MailMethod.create(environment: :test, active: true)
+    Spree::MailMethod.current.prefers_send_from_enterprise_address = true
+    ProducerMailer.order_cycle_report(s1, order_cycle).deliver
+    mail = ActionMailer::Base.deliveries.last
+    mail.from.should == [order_cycle.coordinator.email]
   end
 
   it "includes receival instructions" do
