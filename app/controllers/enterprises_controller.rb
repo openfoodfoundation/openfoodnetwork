@@ -38,6 +38,22 @@ class EnterprisesController < BaseController
     end
   end
 
+
+  def stripe_connect
+    if params["code"]
+      # Get the deets from Stripe
+
+      stripe_account = StripeAccount.new(stripe_user_id: params["stripe_user_id"], stripe_publishable_key: params["stripe_publishable_key"], enterprise: self) 
+      if stripe_account.save
+        render_json stripe_account
+      else
+        render text "Failed to save Stripe token", status: 500
+      end
+    else
+      render text params["error_description"], status: 500
+    end
+  end
+
   private
 
   def clean_permalink

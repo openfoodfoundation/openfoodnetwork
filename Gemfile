@@ -14,6 +14,8 @@ gem 'spree', github: 'openfoodfoundation/spree', branch: 'spree-upgrade-step1c'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '1-3-stable'
 
+gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
+
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
