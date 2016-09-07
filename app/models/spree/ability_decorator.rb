@@ -137,6 +137,9 @@ class AbilityDecorator
     end
 
     can [:create], Spree::Variant
+    can [:price_estimate], Spree::Variant do |variant|
+      OpenFoodNetwork::Permissions.new(user).visible_products.include? variant.product
+    end
     can [:admin, :index, :read, :edit, :update, :search, :delete, :destroy], Spree::Variant do |variant|
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? variant.product.supplier
     end
@@ -252,7 +255,7 @@ class AbilityDecorator
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
-    can [:admin, :new, :create], StandingOrder
+    can [:admin, :new, :create, :indicative_variant], StandingOrder
   end
 
   def add_relationship_management_abilities(user)

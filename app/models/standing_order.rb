@@ -15,7 +15,7 @@ class StandingOrder < ActiveRecord::Base
   validate :ends_at_after_begins_at
 
  def ends_at_after_begins_at
-   if ends_at.present? && ends_at <= begins_at
+   if begins_at.present? && ends_at.present? && ends_at <= begins_at
      errors.add(:ends_at, "must be after begins at")
    end
  end

@@ -6,4 +6,8 @@ class Schedule < ActiveRecord::Base
   validates :order_cycles, presence: true
 
   scope :with_coordinator, lambda { |enterprise| joins(:order_cycles).where('coordinator_id = ?', enterprise.id).select('DISTINCT schedules.*') }
+
+  def current_or_next_order_cycle
+    order_cycles.order('orders_close_at ASC').first
+  end
 end
