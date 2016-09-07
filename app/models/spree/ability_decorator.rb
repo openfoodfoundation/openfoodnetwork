@@ -101,10 +101,6 @@ class AbilityDecorator
     can [:print], Spree::Order do |order|
       order.user == user
     end
-
-    can [:admin, :bulk_update], ColumnPreference do |column_preference|
-      column_preference.user == user
-    end
   end
 
   def add_product_management_abilities(user)
@@ -222,6 +218,7 @@ class AbilityDecorator
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    can [:admin, :index], :tag
   end
 
 

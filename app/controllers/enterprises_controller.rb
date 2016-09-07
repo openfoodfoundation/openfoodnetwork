@@ -37,6 +37,7 @@ class EnterprisesController < BaseController
     end
   end
 
+
   private
 
   def clean_permalink
@@ -53,16 +54,6 @@ class EnterprisesController < BaseController
     distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
     order = current_order(true)
 
-    reset_distributor(order, distributor)
-
-    reset_user_and_customer(order) if try_spree_current_user
-
-    reset_order_cycle(order, distributor)
-
-    order.save!
-  end
-
-  def reset_distributor(order, distributor)
     if order.distributor && order.distributor != distributor
       order.empty!
       order.set_order_cycle! nil

@@ -53,6 +53,23 @@ module Admin
       end
     end
 
+    # copy of Spree::Admin::ResourceController without flash notice
+    def destroy
+      invoke_callbacks(:destroy, :before)
+      if @object.destroy
+        invoke_callbacks(:destroy, :after)
+        respond_with(@object) do |format|
+          format.html { redirect_to location_after_destroy }
+          format.js   { render partial: "spree/admin/shared/destroy" }
+        end
+      else
+        invoke_callbacks(:destroy, :fails)
+        respond_with(@object) do |format|
+          format.html { redirect_to location_after_destroy }
+        end
+      end
+    end
+
     private
 
     def collection
