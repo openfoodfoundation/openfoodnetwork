@@ -28,7 +28,7 @@ module Openfoodnetwork
     initializer "spree.register.calculators" do |app|
       app.config.spree.calculators.shipping_methods << OpenFoodNetwork::Calculator::Weight
 
-      app.config.spree.calculators.enterprise_fees = [Spree::Calculator::FlatPercentItemTotal,
+      app.config.spree.calculators.enterprise_fees = [Calculator::FlatPercentPerItem,
                                                       Spree::Calculator::FlatRate,
                                                       Spree::Calculator::FlexiRate,
                                                       Spree::Calculator::PerItem,

@@ -15,11 +15,15 @@ describe "CustomersCtrl", ->
       { name: "Shop 3", id: 3 }
     ]
 
+    availableCountries = [
+      {id: 109, name: "Australia", states: [{id: 55, name: "ACT", abbr: "ACT"}]}
+    ]
+
 
     inject ($controller, $rootScope, _CustomerResource_, $httpBackend) ->
       scope = $rootScope
       http = $httpBackend
-      $controller 'customersCtrl', {$scope: scope, CustomerResource: _CustomerResource_, shops: shops}
+      $controller 'customersCtrl', {$scope: scope, CustomerResource: _CustomerResource_, shops: shops, availableCountries: availableCountries}
     jasmine.addMatchers
       toDeepEqual: (util, customEqualityTesters) ->
         compare: (actual, expected) ->

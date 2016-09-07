@@ -1,5 +1,8 @@
 class Api::Admin::CustomerSerializer < ActiveModel::Serializer
-  attributes :id, :email, :enterprise_id, :user_id, :code, :tags, :tag_list
+  attributes :id, :email, :enterprise_id, :user_id, :code, :tags, :tag_list, :name
+
+  has_one :ship_address, serializer: Api::AddressSerializer
+  has_one :bill_address, serializer: Api::AddressSerializer
 
   def tag_list
     object.tag_list.join(",")

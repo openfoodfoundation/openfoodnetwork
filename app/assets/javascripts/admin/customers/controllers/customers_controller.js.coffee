@@ -1,6 +1,6 @@
-angular.module("admin.customers").controller "customersCtrl", ($scope, CustomerResource, TagsResource, $q, Columns, pendingChanges, shops) ->
-  $scope.shop = {}
+angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filter, Customers, TagRuleResource, CurrentShop, RequestMonitor, Columns, pendingChanges, shops, availableCountries) ->
   $scope.shops = shops
+  $scope.availableCountries = availableCountries
   $scope.RequestMonitor = RequestMonitor
   $scope.submitAll = pendingChanges.submitAll
   $scope.add = Customers.add

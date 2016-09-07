@@ -18,7 +18,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
   before do
     set_order order
-    add_product_to_cart
+    add_product_to_cart order, product
   end
 
   it "does not not render the login form when logged in" do

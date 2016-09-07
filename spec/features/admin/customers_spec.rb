@@ -80,8 +80,10 @@ feature 'Customers' do
         within "tr#c_#{customer1.id}" do
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input[name=code].update-pending"
-        end
-        within "tr#c_#{customer1.id}" do
+
+          fill_in "name", with: "customer abc"
+          expect(page).to have_css "input[name=name].update-pending"
+
           find(:css, "tags-input .tags input").set "awesome\n"
           expect(page).to have_css ".tag_watcher.update-pending"
         end
@@ -89,18 +91,22 @@ feature 'Customers' do
 
         # Every says it updated
         expect(page).to have_css "input[name=code].update-success"
+        expect(page).to have_css "input[name=name].update-success"
         expect(page).to have_css ".tag_watcher.update-success"
 
         # And it actually did
         expect(customer1.reload.code).to eq "new-customer-code"
+        expect(customer1.reload.name).to eq "customer abc"
         expect(customer1.tag_list).to eq ["awesome"]
 
         # Clearing attributes
         within "tr#c_#{customer1.id}" do
           fill_in "code", with: ""
           expect(page).to have_css "input[name=code].update-pending"
-        end
-        within "tr#c_#{customer1.id}" do
+
+          fill_in "name", with: ""
+          expect(page).to have_css "input[name=name].update-pending"
+
           find("tags-input li.tag-item a.remove-button").trigger('click')
           expect(page).to have_css ".tag_watcher.update-pending"
         end
@@ -108,10 +114,12 @@ feature 'Customers' do
 
         # Every says it updated
         expect(page).to have_css "input[name=code].update-success"
+        expect(page).to have_css "input[name=name].update-success"
         expect(page).to have_css ".tag_watcher.update-success"
 
         # And it actually did
         expect(customer1.reload.code).to be nil
+        expect(customer1.reload.name).to eq ''
         expect(customer1.tag_list).to eq []
       end
 
@@ -140,6 +148,52 @@ feature 'Customers' do
 
         expect(customer1.reload.code).to eq "new-customer-code"
         expect(customer2.reload.code).to be nil
+      end
+
+      describe 'updating a customer addresses' do
+        before do
+          select2_select managed_distributor2.name, from: "shop_id"
+        end
+
+        it 'updates the existing billing address' do
+          expect(page).to have_content 'BILLING ADDRESS'
+
+          first('#bill-address-link').click
+
+          expect(page).to have_content 'Edit Billing Address'
+          fill_in 'address1', with: "New Address1"
+          click_button 'Update Address'
+
+          expect(page).to have_content 'Address updated successfully.'
+          expect(page).to have_link 'New Address1'
+
+          expect(customer4.reload.bill_address.address1).to eq 'New Address1'
+        end
+
+        it 'creates a new shipping address' do
+          expect(page).to have_content 'SHIPPING ADDRESS'
+
+          first('#ship-address-link').click
+          expect(page).to have_content 'Edit Shipping Address'
+
+          fill_in 'address1', with: "New Address1"
+          fill_in 'phone', with: "12345678"
+          fill_in 'city', with: "Melbourne"
+          fill_in 'zipcode', with: "3000"
+
+          select 'Australia', from: 'country'
+          select 'Victoria', from: 'state'
+          click_button 'Update Address'
+
+          expect(page).to have_content 'Address updated successfully.'
+          expect(page).to have_link 'New Address1'
+
+          ship_address = customer4.reload.ship_address
+
+          expect(ship_address.address1).to eq 'New Address1'
+          expect(ship_address.phone).to eq '12345678'
+          expect(ship_address.city).to eq 'Melbourne'
+        end
       end
 
       describe "creating a new customer" do

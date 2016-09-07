@@ -4,9 +4,13 @@
       %label
         = t :hubs_buy
       .trans-sentence
-        %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
-          %render-svg{path: "{{taxon.icon}}"}
-          %span{"ng-bind" => "::taxon.name"}
+        %div
+          %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
+            %render-svg{path: "{{taxon.icon}}"}
+            %span{"ng-bind" => "::taxon.name"}
+        %div
+          %span.fat-properties{"ng-repeat" => "property in hub.distributed_properties"}
+            %span{"ng-bind" => "property.presentation"}
     %div.show-for-medium-up{"ng-if" => "::hub.taxons.length==0"}
       &nbsp;
   .columns.small-12.medium-3.large-2.fat

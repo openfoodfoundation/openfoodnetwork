@@ -12,6 +12,7 @@
 
 = admin_inject_column_preferences module: 'admin.customers'
 = admin_inject_shops
+= admin_inject_available_countries
 
 %div{ ng: { controller: 'customersCtrl' } }
   .row.filters
@@ -37,6 +38,7 @@
       %img.spinner{ src: "/assets/spinning-circles.svg" }
       %h1
         =t :loading_customers
+
   .row{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length == 0'}
     %h1#no_results
       =t :no_customers_found
@@ -48,18 +50,25 @@
 
       %table.index#customers
         %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }
-        %col.code{ width: "20%", 'ng-show' => 'columns.code.visible' }
-        %col.tags{ width: "50%", 'ng-show' => 'columns.tags.visible' }
+        %col.name{ width: "20%", 'ng-show' => 'columns.name.visible' }
+        %col.code{ width: "10%", 'ng-show' => 'columns.code.visible' }
+        %col.tags{ width: "20%", 'ng-show' => 'columns.tags.visible' }
+        %col.bill_address{ width: "10%", 'ng-show' => 'columns.bill_address.visible' }
+        %col.ship_address{ width: "10%", 'ng-show' => 'columns.ship_address.visible' }
         %col.actions{ width: "10%"}
         %thead
           %tr{ ng: { controller: "ColumnsCtrl" } }
             -# %th.bulk
               -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
             %th.email{ 'ng-show' => 'columns.email.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'customer.email'; reverse = !reverse" } Email
+              %a{ :href => '', 'ng-click' => "predicate = 'customer.email'; reverse = !reverse" }=t('admin.email')
+            %th.name{ 'ng-show' => 'columns.name.visible' }
+              %a{ :href => '', 'ng-click' => "predicate = 'customer.name'; reverse = !reverse" }=t('admin.name')
             %th.code{ 'ng-show' => 'columns.code.visible' }
-              %a{ :href => '', 'ng-click' => "predicate = 'customer.code'; reverse = !reverse" } Code
-            %th.tags{ 'ng-show' => 'columns.tags.visible' } Tags
+              %a{ :href => '', 'ng-click' => "predicate = 'customer.code'; reverse = !reverse" }=t('admin.customers.index.code')
+            %th.tags{ 'ng-show' => 'columns.tags.visible' }=t('admin.tags')
+            %th.bill_address{ 'ng-show' => 'columns.bill_address.visible' }=t('admin.customers.index.bill_address')
+            %th.ship_address{ 'ng-show' => 'columns.ship_address.visible' }=t('admin.customers.index.ship_address')
             %th.actions
               Ask?&nbsp;
               %input{ :type => 'checkbox', 'ng-model' => "confirmDelete" }
@@ -67,6 +76,8 @@
           -# %td.bulk
             -# %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'customer.checked' }
           %td.email{ 'ng-show' => 'columns.email.visible', "ng-bind" => '::customer.email' }
+          %td.name{ 'ng-show' => 'columns.name.visible'}
+            %input{ type: 'text', name: 'name', ng: { model: 'customer.name' }, 'obj-for-update' => 'customer', 'attr-for-update' => 'name'}
           %td.code{ 'ng-show' => 'columns.code.visible' }
             %input{ type: 'text', name: 'code', ng: {model: 'customer.code', change: 'checkForDuplicateCodes()'}, "obj-for-update" => "customer", "attr-for-update" => "code" }
             %i.icon-warning-sign{ ng: {if: 'duplicate'} }
@@ -74,6 +85,10 @@
           %td.tags{ 'ng-show' => 'columns.tags.visible' }
             .tag_watcher{ 'obj-for-update' => "customer", "attr-for-update" => "tag_list"}
               %tags_with_translation{ object: 'customer', 'find-tags' => 'findTags(query)' }
+          %td.bill_address{ 'ng-show' => 'columns.bill_address.visible' }
+            %a{ id: 'bill-address-link', href: '#', "ng-bind" => "customer.bill_address ? customer.bill_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15", 'edit-address-dialog' => true }
+          %td.ship_address{ 'ng-show' => 'columns.ship_address.visible' }
+            %a{ id: 'ship-address-link', href: '#', "ng-bind" => "customer.ship_address ? customer.ship_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15", 'edit-address-dialog' => true }
           %td.actions
             %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
 

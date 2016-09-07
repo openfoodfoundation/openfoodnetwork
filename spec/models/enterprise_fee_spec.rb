@@ -75,7 +75,7 @@ describe EnterpriseFee do
 
       it "returns fees with any other calculator" do
         ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
-        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlatPercentItemTotal.new)
+        ef2 = create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new)
         ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
         ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
 
@@ -93,7 +93,7 @@ describe EnterpriseFee do
 
       it "does not return fees with any other calculator" do
         ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
-        ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlatPercentItemTotal.new)
+        ef2 = create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new)
         ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
         ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
 

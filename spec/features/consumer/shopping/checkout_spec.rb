@@ -22,7 +22,7 @@ feature "As a consumer I want to check out my cart", js: true do
 
     add_enterprise_fee enterprise_fee
     set_order order
-    add_product_to_cart
+    add_product_to_cart order, product
   end
 
   describe "with shipping and payment methods" do

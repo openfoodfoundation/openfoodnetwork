@@ -18,6 +18,26 @@ describe Customer, type: :model do
     end
   end
 
+  describe 'update shipping address' do
+    let(:customer) { create(:customer) }
+
+    it 'updates the shipping address' do
+      expect(customer.shipping_address).to be_nil
+
+      ship_address = {zipcode: "3127",
+                      city: "Melbourne",
+                      state_id: 1,
+                      phone: "455500146",
+                      address1: "U 3/32 Florence Road Surrey Hills2",
+                      country_id: 1}
+      customer.update_attributes!(ship_address_attributes: ship_address)
+
+      expect(customer.ship_address.city).to eq 'Melbourne'
+      expect(customer.ship_address.firstname).to eq 'unused'
+      expect(customer.ship_address.lastname).to eq 'unused'
+    end
+  end
+
   describe 'creation callbacks' do
     let!(:user1) { create(:user) }
     let!(:user2) { create(:user) }

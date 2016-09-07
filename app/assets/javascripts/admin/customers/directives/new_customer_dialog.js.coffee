@@ -1,4 +1,4 @@
-angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $injector, $templateCache, DialogDefaults, CurrentShop, Customers) ->
+angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $templateCache, DialogDefaults, CurrentShop, Customers) ->
   restrict: 'A'
   scope: true
   link: (scope, element, attr) ->
