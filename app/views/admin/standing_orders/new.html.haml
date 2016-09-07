@@ -49,5 +49,6 @@
       %input.fullwidth#ends_at{ name: 'ends_at', type: 'text', placeholder: 'Optional', datepicker: 'standingOrder.begins_at', ng: { model: 'standingOrder.ends_at' } }
       .error{ ng: { repeat: 'error in errors.ends_at', show: 'standing_order_form.ends_at.$pristine' } } {{ error }}
 
+  = render 'autocomplete'
 
-  -# = render 'spree/admin/orders/add_product'
+  = render 'items'

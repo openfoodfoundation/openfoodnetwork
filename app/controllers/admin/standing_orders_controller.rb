@@ -1,6 +1,6 @@
 module Admin
   class StandingOrdersController < ResourceController
-    before_filter :load_enterprise, only: [:new]
+    before_filter :load_shop, only: [:new]
 
     respond_to :json
 
@@ -10,16 +10,17 @@ module Admin
     } }
 
     def new
-      @customers = Customer.of(@enterprise)
-      @schedules = Schedule.with_coordinator(@enterprise)
-      @payment_methods = Spree::PaymentMethod.for_distributor(@enterprise)
-      @shipping_methods = Spree::ShippingMethod.for_distributor(@enterprise)
+      @standing_order = StandingOrder.new(shop: @shop)
+      @customers = Customer.of(@shop)
+      @schedules = Schedule.with_coordinator(@shop)
+      @payment_methods = Spree::PaymentMethod.for_distributor(@shop)
+      @shipping_methods = Spree::ShippingMethod.for_distributor(@shop)
     end
 
     private
 
-    def load_enterprise
-      @enterprise = Enterprise.find_by_permalink! params[:enterprise_id]
+    def load_shop
+      @shop = Enterprise.find(params[:shop_id])
     end
 
     def json_errors

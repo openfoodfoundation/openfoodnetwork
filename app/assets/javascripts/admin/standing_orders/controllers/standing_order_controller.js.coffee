@@ -4,14 +4,21 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
   $scope.schedules = schedules
   $scope.paymentMethods = paymentMethods
   $scope.shippingMethods = shippingMethods
-  $scope.errors = {}
+  $scope.errors = StandingOrder.errors
+  $scope.newItem = { variant_id: 0, quantity: 1 }
+  $scope.distributor_id = $scope.standingOrder.shop_id # variant selector requires distributor_id
 
   $scope.save = ->
-    StatusMessage.display 'progress', 'Saving...'
     $scope.standing_order_form.$setPristine()
-    delete $scope.errors[k] for k, v of $scope.errors
-    $scope.standingOrder.$save().then (response) ->
-      StatusMessage.display 'success', 'Saved'
-    , (response) ->
-      StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
-      $scope.errors = response.data.errors
+    StandingOrder.save()
+
+  $scope.addStandingLineItem = ->
+    StandingOrder.buildItem($scope.newItem)
+
+  $scope.estimatedSubtotal = ->
+    $scope.standingOrder.standing_line_items.reduce (subtotal, item) ->
+      item.price_with_fees * item.quantity
+    , 0
+
+  $scope.estimatedTotal = ->
+    $scope.estimatedSubtotal()
