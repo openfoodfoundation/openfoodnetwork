@@ -76,8 +76,12 @@
       %span.error{ ng: { show: "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" } }
         Please choose one of the options above.
       - if @enterprise.sells == 'unspecified' && @enterprise.shop_trial_start_date.nil?
-        %input.button.big{ type: 'submit', value: 'Start 30 Day Trial', ng: { click: "submit(change_type)", show: "sells=='own' || sells=='any'" } }
-        %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)", hide: "sells=='own' || sells=='any'" } }
+        -if free_use?
+          %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)" } }
+        - else
+          - trial_length = Spree::Config[:shop_trial_length_days]
+          %input.button.big{ type: 'submit', value: "Start #{trial_length}-Day Shop Trial", ng: { click: "submit(change_type)", show: "sells=='own' || sells=='any'" } }
+          %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)", hide: "sells=='own' || sells=='any'" } }
       - elsif @enterprise.sells == 'unspecified'
         %input.button.big{ type: 'submit', value: 'Select and continue', ng: { click: "submit(change_type)" } }
       - else
