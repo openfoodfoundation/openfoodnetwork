@@ -2,11 +2,10 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
   new class Checkout
     errors: {}
     secrets: {}
-    order: CurrentOrder.order
+    order: CurrentOrder.getOrder()
     ship_address_same_as_billing: 'YES'
     default_bill_address: 'NO'
     default_ship_address: 'NO'
-
 
     submit: ->
       Loading.message = t 'submitting_order'

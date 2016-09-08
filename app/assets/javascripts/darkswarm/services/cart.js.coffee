@@ -4,8 +4,8 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
     dirty: false
     update_running: false
     update_enqueued: false
-    order: CurrentOrder.order
-    line_items: CurrentOrder.order?.line_items || []
+    order: CurrentOrder.getOrder()
+    line_items: CurrentOrder.getOrder()?.line_items || []
 
     constructor: ->
       for line_item in @line_items
