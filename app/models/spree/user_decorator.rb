@@ -77,13 +77,19 @@ Spree.user_class.class_eval do
   end
 
   def set_bill_address(address)
-    self.bill_address = address
-    self.save
+    if self.bill_address
+      self.bill_address.update_attributes(address.clone.attributes)
+    else
+      self.update_attribute(:bill_address, address.clone)
+    end
   end
 
   def set_ship_address(address)
-    self.ship_address = address
-    self.save
+    if self.ship_address
+      self.ship_address.update_attributes(address.clone.attributes)
+    else
+      self.update_attribute(:ship_address, address.clone)
+    end
   end
 
   private
