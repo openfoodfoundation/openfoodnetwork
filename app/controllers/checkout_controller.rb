@@ -38,20 +38,21 @@ class CheckoutController < Spree::CheckoutController
         end
       end
       if @order.state == "complete" ||  @order.completed?
+        set_default_bill_address
+        set_default_ship_address
+
         flash[:success] = t(:order_processed_successfully)
-          respond_to do |format|
-            format.html do
-              respond_with(@order, :location => order_path(@order))
-            end
-            format.js do
-              render json: {path: order_path(@order)}, status: 200
-            end
+        respond_to do |format|
+          format.html do
+            respond_with(@order, :location => order_path(@order))
           end
+          format.js do
+            render json: {path: order_path(@order)}, status: 200
+          end
+        end
       else
         update_failed
       end
-
-      set_default_address_for_user
     else
       update_failed
     end
@@ -60,11 +61,22 @@ class CheckoutController < Spree::CheckoutController
 
   private
 
-  def set_default_address_for_user
-    spree_current_user.set_bill_address(@order.bill_address.clone) if params[:order][:default_bill_address] == 'YES'
-    spree_current_user.set_ship_address(@order.ship_address.clone) if params[:order][:default_ship_address] == 'YES'
+  def set_default_bill_address
+    if params[:order][:default_bill_address] == 'YES'
+      new_bill_address = @order.bill_address.clone
+      spree_current_user.set_bill_address(new_bill_address)
+      @order.customer.update_attribute(:bill_address, new_bill_address) unless @order.customer.bill_address
+    end
+
   end
 
+  def set_default_ship_address
+    if params[:order][:default_ship_address] == 'YES'
+      new_ship_address = @order.ship_address.clone
+      spree_current_user.set_ship_address(new_ship_address)
+      @order.customer.update_attribute(:ship_address, new_ship_address) unless @order.customer.ship_address
+    end
+  end
 
   def check_order_for_phantom_fees
     phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id').

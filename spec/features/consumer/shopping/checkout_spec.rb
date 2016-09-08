@@ -84,7 +84,7 @@ feature "As a consumer I want to check out my cart", js: true do
         within "#billing" do
           fill_in "City", with: "Melbourne"
           fill_in "Postcode", with: "3066"
-          fill_in "Address", with: "123 Your Face"
+          fill_in "Address", with: "123 Your Head"
           select "Australia", from: "Country"
           select "Victoria", from: "State"
         end
@@ -98,11 +98,20 @@ feature "As a consumer I want to check out my cart", js: true do
         user.bill_address.should be_nil
         user.ship_address.should be_nil
 
+        order.bill_address.should be_nil
+        order.ship_address.should be_nil
+
         place_order
         page.should have_content "Your order has been processed successfully"
 
-        user.reload.bill_address.address1.should eq '123 Your Face'
-        user.reload.ship_address.address1.should eq '123 Your Face'
+        order.reload.bill_address.address1.should eq '123 Your Head'
+        order.reload.ship_address.address1.should eq '123 Your Head'
+
+        order.customer.bill_address.address1.should eq '123 Your Head'
+        order.customer.ship_address.address1.should eq '123 Your Head'
+
+        user.reload.bill_address.address1.should eq '123 Your Head'
+        user.reload.ship_address.address1.should eq '123 Your Head'
       end
     end
 
@@ -291,10 +300,6 @@ feature "As a consumer I want to check out my cart", js: true do
           it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
             place_order
             page.should have_content "Your order has been processed successfully"
-          end
-
-          it 'sets default billing and shipping address after the order processed successfully' do
-
           end
 
           it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do

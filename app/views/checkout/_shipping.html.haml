@@ -34,7 +34,7 @@
           = t :checkout_address_same
 
         - if spree_current_user
-          %label
+          %label{"ng-if" => "Checkout.requireShipAddress()"}
             %input{type: :checkbox, "ng-model" => "Checkout.default_ship_address", "ng-true-value" => "'YES'", "ng-false-value" => "'NO'"}
             = t :checkout_default_ship_address
 
