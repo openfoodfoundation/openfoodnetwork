@@ -156,7 +156,7 @@ class CheckoutController < Spree::CheckoutController
     last_used_bill_address = lua.last_used_bill_address.andand.clone
     last_used_ship_address = lua.last_used_ship_address.andand.clone
 
-    preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user.respond_to?(:bill_address) && spree_current_user.respond_to?(:ship_address)
+    preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address
     @order.bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
     @order.ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default
   end
