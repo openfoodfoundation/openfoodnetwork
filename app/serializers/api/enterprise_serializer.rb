@@ -42,8 +42,8 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
 
   def distributed_properties
     # This results in 3 queries per enterprise
-    product_properties  = Spree::Property.sold_by(object)
-    ids = ProducerProperty.sold_by(object).pluck(:property_id)
+    product_properties  = Spree::Property.currently_sold_by(object)
+    ids = ProducerProperty.currently_sold_by(object).pluck(:property_id)
     producer_properties = Spree::Property.where(id: ids)
 
     OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties

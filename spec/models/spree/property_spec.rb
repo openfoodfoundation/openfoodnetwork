@@ -31,7 +31,7 @@ module Spree
         end
       end
 
-      describe ".sold_by" do
+      describe ".currently_sold_by" do
         let!(:shop) { create(:distributor_enterprise) }
         let!(:shop_other) { create(:distributor_enterprise) }
         let!(:product) { create(:simple_product) }
@@ -54,19 +54,19 @@ module Spree
         end
 
         it "returns the property" do
-          expect(Property.sold_by(shop)).to eq [property]
+          expect(Property.currently_sold_by(shop)).to eq [property]
         end
 
         it "doesn't return the property from another exchange" do
-          expect(Property.sold_by(shop)).not_to include property_other_ex
+          expect(Property.currently_sold_by(shop)).not_to include property_other_ex
         end
 
         it "doesn't return the property with no order cycle" do
-          expect(Property.sold_by(shop)).not_to include property_no_oc
+          expect(Property.currently_sold_by(shop)).not_to include property_no_oc
         end
 
         it "doesn't return the property from a closed order cycle" do
-          expect(Property.sold_by(shop)).not_to include property_closed_oc
+          expect(Property.currently_sold_by(shop)).not_to include property_closed_oc
         end
 
         context "with another product in the order cycle" do
@@ -78,7 +78,7 @@ module Spree
           end
 
           it "doesn't return duplicates" do
-            expect(Property.sold_by(shop).to_a.count).to eq 1
+            expect(Property.currently_sold_by(shop).to_a.count).to eq 1
           end
         end
       end
