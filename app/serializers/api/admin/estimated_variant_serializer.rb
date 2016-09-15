@@ -1,8 +1,12 @@
 class Api::Admin::EstimatedVariantSerializer < ActiveModel::Serializer
-  attributes :id, :product_name, :full_name, :price_with_fees
+  attributes :variant_id, :description, :price_with_fees
 
-  def product_name
-    object.product.name
+  def variant_id
+    object.id
+  end
+
+  def description
+    "#{object.product.name} - #{object.full_name}"
   end
 
   def price_with_fees

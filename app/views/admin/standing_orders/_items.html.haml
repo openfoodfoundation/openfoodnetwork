@@ -14,8 +14,8 @@
         %span= t(:total)
       %th.orders-actions.actions
   %tbody
-    %tr{ ng: { repeat: 'item in standingOrder.standing_line_items', class: { even: 'even', odd: 'odd' } } }
-      %td.description {{ item.product_name }} - {{ item.full_name }}
+    %tr.item{ ng: { repeat: 'item in standingOrder.standing_line_items', class: { even: 'even', odd: 'odd' } } }
+      %td.description {{ item.description }}
       %td.price.align-center {{ item.price_with_fees | currency }}
       %td.qty
         %input.qty{ name: 'quantity', type: 'number', min: 0, ng: { model: 'item.quantity' } }

@@ -255,7 +255,10 @@ class AbilityDecorator
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
-    can [:admin, :new, :create, :indicative_variant], StandingOrder
+    can [:admin, :new, :indicative_variant], StandingOrder
+    can [:create], StandingOrder do |standing_order|
+      user.enterprises.include?(standing_order.shop)
+    end
   end
 
   def add_relationship_management_abilities(user)

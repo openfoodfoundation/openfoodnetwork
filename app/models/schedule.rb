@@ -1,5 +1,6 @@
 class Schedule < ActiveRecord::Base
   has_and_belongs_to_many :order_cycles, join_table: 'order_cycle_schedules'
+  has_many :coordinators, uniq: true, through: :order_cycles
 
   attr_accessible :name, :order_cycle_ids
 
