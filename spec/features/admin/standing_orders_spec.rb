@@ -27,6 +27,17 @@ feature 'Standing Orders' do
       select2_select payment_method.name, from: 'payment_method_id'
       select2_select shipping_method.name, from: 'shipping_method_id'
 
+      # Adding a product and getting a price estimate
+      targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+      fill_in 'add_quantity', with: 2
+      click_link 'Add'
+      within 'table#standing-line-items tr.item', match: :first do
+        expect(page).to have_selector 'td.description', text: "#{product.name} - #{variant.full_name}"
+        expect(page).to have_selector 'td.price', text: "$13.75"
+        expect(page).to have_input 'quantity', with: "2"
+        expect(page).to have_selector 'td.total', text: "$27.50"
+      end
+
       # No date filled out, so error returned
       expect{
         click_button('Save')
@@ -42,22 +53,18 @@ feature 'Standing Orders' do
         expect(page).to have_content 'Saved'
       }.to change(StandingOrder, :count).by(1)
 
+      # Basic properties of standing order are set
       standing_order = StandingOrder.last
       expect(standing_order.customer).to eq customer
       expect(standing_order.schedule).to eq schedule
       expect(standing_order.payment_method).to eq payment_method
       expect(standing_order.shipping_method).to eq shipping_method
-    end
 
-    it "I can select a product to the list and get a price estimate" do
-      visit new_admin_standing_order_path(shop_id: shop.id)
-
-      select2_select schedule.name, from: 'schedule_id'
-      targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
-      click_link 'Add'
-
-      expect(page).to have_selector 'table#standing-line-items td.description', text: "#{product.name} - #{variant.full_name}"
-      expect(page).to have_selector 'table#standing-line-items td.price', text: "$13.75"
+      # Standing Line Items are created
+      expect(standing_order.standing_line_items.count).to eq 1
+      standing_line_item = standing_order.standing_line_items.first
+      expect(standing_line_item.variant).to eq variant
+      expect(standing_line_item.quantity).to eq 2
     end
   end
 end

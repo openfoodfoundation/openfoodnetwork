@@ -110,8 +110,7 @@ module Spree
 
                   json_response = JSON.parse(response.body)
                   expect(json_response['price_with_fees']).to eq 18.5
-                  expect(json_response['product_name']).to eq variant.product.name
-                  expect(json_response['full_name']).to eq '100g'
+                  expect(json_response['description']).to eq "#{variant.product.name} - 100g"
                 end
               end
             end

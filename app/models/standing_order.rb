@@ -4,19 +4,34 @@ class StandingOrder < ActiveRecord::Base
   belongs_to :schedule
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod'
   belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
-  has_many :standing_line_items
+  has_many :standing_line_items, inverse_of: :standing_order
 
-  validates :shop, presence: true
-  validates :customer, presence: true
-  validates :schedule, presence: true
-  validates :shipping_method, presence: true
-  validates :payment_method, presence: true
-  validates :begins_at, presence: true
+  accepts_nested_attributes_for :standing_line_items
+
+  validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method, :begins_at
   validate :ends_at_after_begins_at
+  validate :standing_line_items_available
+  validate :check_associations
 
- def ends_at_after_begins_at
-   if begins_at.present? && ends_at.present? && ends_at <= begins_at
-     errors.add(:ends_at, "must be after begins at")
-   end
- end
+  def ends_at_after_begins_at
+    if begins_at.present? && ends_at.present? && ends_at <= begins_at
+      errors.add(:ends_at, "must be after begins at")
+    end
+  end
+
+  def check_associations
+    errors[:customer] << "Customer does not belong to the #{shop.name}" unless customer.andand.enterprise == shop
+    errors[:schedule] << "Schedule is not coordinated by #{shop.name}" unless schedule.andand.coordinators.andand.include? shop
+    errors[:payment_method] << "Payment Method is not available to #{shop.name}" unless payment_method.andand.distributors.andand.include? shop
+    errors[:shipping_method] << "Shipping Method is not available to #{shop.name}" unless shipping_method.andand.distributors.andand.include? shop
+  end
+
+  def standing_line_items_available
+    standing_line_items.each do |sli|
+      unless sli.available_from?(shop_id, schedule_id)
+        name = "#{sli.variant.product.name} - #{sli.variant.full_name}"
+        errors[:base] << "#{name} is not available from the selected schedule"
+      end
+    end
+  end
 end
