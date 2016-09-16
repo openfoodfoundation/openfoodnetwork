@@ -179,8 +179,10 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :schedules, only: [:index, :create, :update, :destroy], format: :json
 
-    resources :standing_orders, only: [:new, :create] do
-      get :indicative_variant, on: :collection, format: :json
+    resources :standing_orders, only: [:new, :create]
+
+    resources :standing_line_items, only: [], format: :json do
+      post :build, on: :collection
     end
   end
 
@@ -292,10 +294,6 @@ Spree::Core::Engine.routes.prepend do
       get :print, on: :member
       get :print_ticket, on: :member
       get :managed, on: :collection
-    end
-
-    resources :variants, only: [], format: :json do
-      get :price_estimate, on: :member
     end
   end
 

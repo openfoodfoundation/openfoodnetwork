@@ -53,6 +53,14 @@ feature 'Standing Orders' do
         expect(page).to have_content 'Saved'
       }.to change(StandingOrder, :count).by(1)
 
+      # Prices are shown
+      within 'table#standing-line-items tr.item', match: :first do
+        expect(page).to have_selector 'td.description', text: "#{product.name} - #{variant.full_name}"
+        expect(page).to have_selector 'td.price', text: "$13.75"
+        expect(page).to have_input 'quantity', with: "2"
+        expect(page).to have_selector 'td.total', text: "$27.50"
+      end
+
       # Basic properties of standing order are set
       standing_order = StandingOrder.last
       expect(standing_order.customer).to eq customer

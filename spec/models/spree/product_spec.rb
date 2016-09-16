@@ -388,6 +388,26 @@ module Spree
           expect(products).to_not include new_variant.product, hidden_variant.product
         end
       end
+
+      describe 'stockable_by' do
+        let(:shop) { create(:distributor_enterprise) }
+        let(:add_to_oc_producer) { create(:supplier_enterprise) }
+        let(:other_producer) { create(:supplier_enterprise) }
+        let!(:p1) { create(:simple_product, supplier: shop ) }
+        let!(:p2) { create(:simple_product, supplier: add_to_oc_producer ) }
+        let!(:p3) { create(:simple_product, supplier: other_producer ) }
+
+        before do
+          create(:enterprise_relationship, parent: add_to_oc_producer, child: shop, permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: other_producer, child: shop, permissions_list: [:manage_products])
+        end
+
+        it 'shows products produced by the enterprise and any producers granting P-OC' do
+          stockable_products = Spree::Product.stockable_by(shop)
+          expect(stockable_products).to include p1, p2
+          expect(stockable_products).to_not include p3
+        end
+      end
     end
 
     describe "finders" do

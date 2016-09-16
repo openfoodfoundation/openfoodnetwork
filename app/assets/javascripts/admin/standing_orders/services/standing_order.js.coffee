@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").factory "StandingOrder", ($injector, $http, StatusMessage, StandingOrderResource) ->
+angular.module("admin.standingOrders").factory "StandingOrder", ($injector, $http, StatusMessage, InfoDialog, StandingOrderResource) ->
   new class StandingOrder
     standingOrder: new StandingOrderResource()
     errors: {}
@@ -10,13 +10,11 @@ angular.module("admin.standingOrders").factory "StandingOrder", ($injector, $htt
     buildItem: (item) ->
       return false unless item.variant_id > 0
       return false unless item.quantity > 0
-      estimate_query = "/admin/variants/#{item.variant_id}/price_estimate?"
-      estimate_query += "shop_id=#{@standingOrder.shop_id};schedule_id=#{@standingOrder.schedule_id}"
-      $http.get(estimate_query).then (response) =>
-        angular.extend(response.data, item) # Add variant_id and qty
+      data = angular.extend({}, item, { shop_id: @standingOrder.shop_id, schedule_id: @standingOrder.schedule_id })
+      $http.post("/admin/standing_line_items/build", data).then (response) =>
         @standingOrder.standing_line_items.push response.data
       , (response) =>
-        alert(response.data.errors)
+        InfoDialog.open 'error', response.data.errors[0]
 
     save: ->
       StatusMessage.display 'progress', 'Saving...'
