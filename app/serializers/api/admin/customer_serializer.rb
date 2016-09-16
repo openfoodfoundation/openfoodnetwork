@@ -9,7 +9,7 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   end
 
   def name
-    object.name.blank? ? object.bill_address.andand.full_name : object.name
+    object.name || object.bill_address.andand.full_name
   end
 
   def tags

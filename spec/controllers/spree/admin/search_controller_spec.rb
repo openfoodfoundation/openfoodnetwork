@@ -37,21 +37,36 @@ describe Spree::Admin::SearchController do
       let!(:customer_2) { create(:customer, enterprise: enterprise, name: 'test2') }
       let!(:customer_3) { create(:customer, email: 'test3@email.com') }
 
-      before do
-        spree_get :customers, q: "test", distributor_id: enterprise.id
-        @results = JSON.parse(response.body)
-      end
-
-      describe 'when search query matches the email or name' do
-        it 'returns a list of customers of the enterprise' do
-          expect(@results.size).to eq 2
-
-          expect(@results.find { |c| c['id'] == customer_1.id}).to be_true
-          expect(@results.find { |c| c['id'] == customer_2.id}).to be_true
+      describe 'when search owned enterprises' do
+        before do
+          spree_get :customers, q: "test", distributor_id: enterprise.id
+          @results = JSON.parse(response.body)
         end
 
-        it 'does not return the customer of other enterprises' do
-          expect(@results.find { |c| c['id'] == customer_3.id}).to be_false
+        describe 'when search query matches the email or name' do
+          it 'returns a list of customers of the enterprise' do
+            expect(@results.size).to eq 2
+
+            expect(@results.find { |c| c['id'] == customer_1.id}).to be_true
+            expect(@results.find { |c| c['id'] == customer_2.id}).to be_true
+          end
+
+          it 'does not return the customer of other enterprises' do
+            expect(@results.find { |c| c['id'] == customer_3.id}).to be_false
+            p customer_3
+            p enterprise
+          end
+        end
+      end
+
+      describe 'when search in unmanaged enterprise' do
+        before do
+          spree_get :customers, q: "test", distributor_id: customer_3.enterprise_id
+          @results = JSON.parse(response.body)
+        end
+
+        it 'returns empty array' do
+          expect(@results).to eq []
         end
       end
     end
