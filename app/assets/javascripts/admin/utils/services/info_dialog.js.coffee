@@ -1,4 +1,4 @@
-angular.module("admin.customers").factory 'InfoDialog', ($rootScope, $compile, $injector, $templateCache, DialogDefaults) ->
+angular.module("admin.utils").factory 'InfoDialog', ($rootScope, $compile, $injector, $templateCache, DialogDefaults) ->
   new class InfoDialog
     open: (type, message) ->
       scope = $rootScope.$new()
