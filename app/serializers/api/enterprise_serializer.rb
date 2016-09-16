@@ -20,6 +20,8 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
 end
 
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
+  include SerializerHelper
+
   attributes :orders_close_at, :active
   has_many :supplied_properties, serializer: Api::PropertySerializer
   has_many :distributed_properties, serializer: Api::PropertySerializer
@@ -59,6 +61,8 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
+  include SerializerHelper
+
   cached
   #delegate :cache_key, to: :object
 
@@ -160,13 +164,5 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
       :producer => "ofn-i_059-producer",
     }
     icon_fonts[object.category]
-  end
-
-
-  private
-
-  def ids_to_objs(ids)
-    return [] if ids.blank?
-    ids.map { |id| {id: id} }
   end
 end
