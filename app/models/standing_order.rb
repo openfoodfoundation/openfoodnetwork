@@ -20,10 +20,10 @@ class StandingOrder < ActiveRecord::Base
   end
 
   def check_associations
-    errors[:customer] << "Customer does not belong to the #{shop.name}" unless customer.andand.enterprise == shop
-    errors[:schedule] << "Schedule is not coordinated by #{shop.name}" unless schedule.andand.coordinators.andand.include? shop
-    errors[:payment_method] << "Payment Method is not available to #{shop.name}" unless payment_method.andand.distributors.andand.include? shop
-    errors[:shipping_method] << "Shipping Method is not available to #{shop.name}" unless shipping_method.andand.distributors.andand.include? shop
+    errors[:customer] << "does not belong to #{shop.name}" if customer && customer.enterprise != shop
+    errors[:schedule] << "is not coordinated by #{shop.name}" if schedule && schedule.coordinators.exclude?(shop)
+    errors[:payment_method] << "is not available to #{shop.name}" if payment_method && payment_method.distributors.exclude?(shop)
+    errors[:shipping_method] << "is not available to #{shop.name}" if shipping_method && shipping_method.distributors.exclude?(shop)
   end
 
   def standing_line_items_available
