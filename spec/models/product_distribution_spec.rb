@@ -78,7 +78,7 @@ describe ProductDistribution do
       it "returns the adjustment when present" do
         pd = create(:product_distribution)
         line_item = create(:line_item)
-        adjustment = pd.enterprise_fee.create_locked_adjustment('foo', line_item.order, line_item, true)
+        adjustment = pd.enterprise_fee.create_adjustment('foo', line_item.order, line_item, true)
 
         pd.send(:adjustment_for, line_item).should == adjustment
       end
@@ -86,8 +86,8 @@ describe ProductDistribution do
       it "raises an error when there are multiple adjustments for this enterprise fee" do
         pd = create(:product_distribution)
         line_item = create(:line_item)
-        pd.enterprise_fee.create_locked_adjustment('one', line_item.order, line_item, true)
-        pd.enterprise_fee.create_locked_adjustment('two', line_item.order, line_item, true)
+        pd.enterprise_fee.create_adjustment('one', line_item.order, line_item, true)
+        pd.enterprise_fee.create_adjustment('two', line_item.order, line_item, true)
 
         expect do
           pd.send(:adjustment_for, line_item)

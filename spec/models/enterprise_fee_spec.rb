@@ -170,7 +170,7 @@ describe EnterpriseFee do
       order.adjustments.create({:amount => 12.34,
                                 :source => order,
                                 :originator => tax_rate,
-                                :locked => true,
+                                :state => 'closed',
                                 :label => 'hello' }, :without_protection => true)
 
       expect do
