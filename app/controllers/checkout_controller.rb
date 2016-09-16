@@ -63,18 +63,26 @@ class CheckoutController < Spree::CheckoutController
 
   def set_default_bill_address
     if params[:order][:default_bill_address] == 'YES'
-      new_bill_address = @order.bill_address.clone
-      spree_current_user.set_bill_address(new_bill_address)
-      @order.customer.bill_address.andand.update_attributes(new_bill_address.attributes)
+      new_bill_address = @order.bill_address.clone.attributes
+
+      user_bill_address_id = spree_current_user.bill_address.andand.id
+      spree_current_user.update_attributes(bill_address_attributes: new_bill_address.merge('id' => user_bill_address_id))
+
+      customer_bill_address_id = @order.customer.bill_address.andand.id
+      @order.customer.update_attributes(bill_address_attributes: new_bill_address.merge('id' => customer_bill_address_id))
     end
 
   end
 
   def set_default_ship_address
     if params[:order][:default_ship_address] == 'YES'
-      new_ship_address = @order.ship_address.clone
-      spree_current_user.set_ship_address(new_ship_address)
-      @order.customer.ship_address.andand.update_attributes(new_ship_address.attributes)
+      new_ship_address = @order.ship_address.clone.attributes
+
+      user_ship_address_id = spree_current_user.ship_address.andand.id
+      spree_current_user.update_attributes!(ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id))
+
+      customer_ship_address_id = @order.customer.ship_address.andand.id
+      @order.customer.update_attributes(ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id))
     end
   end
 

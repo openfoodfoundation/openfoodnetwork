@@ -14,7 +14,10 @@ Spree.user_class.class_eval do
 
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 
-  attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit
+  accepts_nested_attributes_for :bill_address
+  accepts_nested_attributes_for :ship_address
+
+  attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit, :bill_address_attributes, :ship_address_attributes
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
@@ -74,22 +77,6 @@ Spree.user_class.class_eval do
     data_array = complete_orders_by_distributor.to_a
     remove_payments_in_checkout(data_array)
     data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
-  end
-
-  def set_bill_address(address)
-    if self.bill_address
-      self.bill_address.update_attributes(address.clone.attributes)
-    else
-      self.update_attribute(:bill_address, address.clone)
-    end
-  end
-
-  def set_ship_address(address)
-    if self.ship_address
-      self.ship_address.update_attributes(address.clone.attributes)
-    else
-      self.update_attribute(:ship_address, address.clone)
-    end
   end
 
   private
