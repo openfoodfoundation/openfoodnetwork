@@ -401,12 +401,12 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.datetime "created_at",                                                       :null => false
     t.datetime "updated_at",                                                       :null => false
     t.boolean  "mandatory"
-    t.boolean  "locked"
     t.integer  "originator_id"
     t.string   "originator_type"
     t.boolean  "eligible",                                       :default => true
     t.string   "adjustable_type"
     t.decimal  "included_tax",    :precision => 10, :scale => 2, :default => 0.0,  :null => false
+    t.string   "state"
   end
 
   add_index "spree_adjustments", ["adjustable_id"], :name => "index_adjustments_on_order_id"
@@ -586,9 +586,9 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end
