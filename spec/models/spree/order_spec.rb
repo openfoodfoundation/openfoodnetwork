@@ -140,7 +140,7 @@ describe Spree::Order do
     it "returns the sum of eligible enterprise fee adjustments" do
       ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_locked_adjustment("adjustment", o, o, true)
+      a = ef.create_adjustment("adjustment", o, o, true)
 
       o.admin_and_handling_total.should == 123.45
     end
@@ -148,7 +148,7 @@ describe Spree::Order do
     it "does not include ineligible adjustments" do
       ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_locked_adjustment("adjustment", o, o, true)
+      a = ef.create_adjustment("adjustment", o, o, true)
 
       a.update_column :eligible, false
 

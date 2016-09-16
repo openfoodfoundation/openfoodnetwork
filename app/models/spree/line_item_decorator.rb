@@ -60,7 +60,7 @@ Spree::LineItem.class_eval do
   end
 
   def price_with_adjustments
-    # EnterpriseFee#create_locked_adjustment applies adjustments on line items to their parent order,
+    # EnterpriseFee#create_adjustment applies adjustments on line items to their parent order,
     # so line_item.adjustments returns an empty array
     return 0 if quantity == 0
     (price + order.adjustments.where(source_id: id).sum(&:amount) / quantity).round(2)
