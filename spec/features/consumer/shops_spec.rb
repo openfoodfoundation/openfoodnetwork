@@ -88,6 +88,35 @@ feature 'Shops', js: true do
       end
     end
 
+    describe "taxon badges" do
+      let!(:closed_oc) { create(:closed_order_cycle, distributors: [shop], variants: [p_closed.variants.first]) }
+      let!(:p_closed) { create(:simple_product, taxons: [taxon_closed]) }
+      let(:shop) { create(:distributor_enterprise) }
+      let(:taxon_closed) { create(:taxon, name: 'Closed') }
+
+      describe "open shops" do
+        let!(:open_oc) { create(:open_order_cycle, distributors: [shop], variants: [p_open.variants.first]) }
+        let!(:p_open) { create(:simple_product, taxons: [taxon_open]) }
+        let(:taxon_open) { create(:taxon, name: 'Open') }
+
+        it "shows taxons for open order cycles only" do
+          visit shops_path
+          expand_active_table_node shop.name
+          expect(page).to     have_selector '.fat-taxons', text: 'Open'
+          expect(page).not_to have_selector '.fat-taxons', text: 'Closed'
+        end
+      end
+
+      describe "closed shops" do
+        it "shows taxons for any order cycle" do
+          visit shops_path
+          click_link 'Show Closed Shops'
+          expand_active_table_node shop.name
+          expect(page).to have_selector '.fat-taxons', text: 'Closed'
+        end
+      end
+    end
+
     describe "property badges" do
       let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
       let(:product) { create(:simple_product, supplier: producer) }

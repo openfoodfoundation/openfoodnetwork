@@ -23,6 +23,7 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   include SerializerHelper
 
   attributes :orders_close_at, :active
+  attributes :taxons, :supplied_taxons
   has_many :supplied_properties, serializer: Api::PropertySerializer
   has_many :distributed_properties, serializer: Api::PropertySerializer
 
@@ -58,6 +59,18 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
 
     OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
   end
+
+  def taxons
+    if active
+      ids_to_objs options[:data].current_distributed_taxons[object.id]
+    else
+      ids_to_objs options[:data].all_distributed_taxons[object.id]
+    end
+  end
+
+  def supplied_taxons
+    ids_to_objs options[:data].supplied_taxons[object.id]
+  end
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
@@ -77,16 +90,7 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     :email_address, :hash, :logo, :promo_image, :path, :pickup, :delivery,
     :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
 
-  attributes :taxons, :supplied_taxons
-
   has_one :address, serializer: Api::AddressSerializer
-  def taxons
-    ids_to_objs options[:data].distributed_taxons[object.id]
-  end
-
-  def supplied_taxons
-    ids_to_objs options[:data].supplied_taxons[object.id]
-  end
 
   def pickup
     services = options[:data].shipping_method_services[object.id]

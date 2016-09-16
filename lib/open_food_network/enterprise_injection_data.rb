@@ -20,8 +20,12 @@ module OpenFoodNetwork
       @supplied_taxons ||= Spree::Taxon.supplied_taxons
     end
 
-    def distributed_taxons
-      @distributed_taxons ||= Spree::Taxon.distributed_taxons
+    def all_distributed_taxons
+      @all_distributed_taxons ||= Spree::Taxon.distributed_taxons(:all)
+    end
+
+    def current_distributed_taxons
+      @current_distributed_taxons ||= Spree::Taxon.distributed_taxons(:current)
     end
   end
 end
