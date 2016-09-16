@@ -32,6 +32,9 @@ Spree::Taxon.class_eval do
   end
 
   # Find all the taxons of distributed products for each enterprise, indexed by enterprise.
+  # May return :all taxons (distributed in open and closed order cycles),
+  # or :current taxons (distributed in an open order cycle).
+  #
   # Format: {enterprise_id => [taxon_id, ...]}
   def self.distributed_taxons(which_taxons=:all)
     # TODO: Why can't we merge(Spree::Product.with_order_cycles_inner) here?
@@ -39,6 +42,8 @@ Spree::Taxon.class_eval do
       joins(products: {variants_including_master: {exchanges: :order_cycle}}).
       merge(Exchange.outgoing).
       select('spree_taxons.*, exchanges.receiver_id AS enterprise_id')
+
+    taxons = taxons.merge(OrderCycle.active) if which_taxons == :current
 
     taxons.inject({}) do |ts, t|
       ts[t.enterprise_id.to_i] ||= Set.new
