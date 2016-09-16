@@ -10,7 +10,7 @@ feature %q{
   background do
     @user = create(:user)
     @product = create(:simple_product)
-    @distributor = create(:distributor_enterprise, charges_sales_tax: true)
+    @distributor = create(:distributor_enterprise, owner: @user, charges_sales_tax: true)
     @order_cycle = create(:simple_order_cycle, name: 'One', distributors: [@distributor], variants: [@product.variants.first])
 
     @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
@@ -126,7 +126,9 @@ feature %q{
     @order.save!
 
     # When I create a new order
-    login_to_admin_section
+    quick_login_as @user
+    visit spree.admin_path
+
     visit '/admin/orders'
     click_link 'New Order'
     select2_select @distributor.name, from: 'order_distributor_id'

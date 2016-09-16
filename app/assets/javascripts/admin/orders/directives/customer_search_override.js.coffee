@@ -1,7 +1,6 @@
 angular.module("admin.orders").directive 'customerSearchOverride', ->
   restrict: 'C'
   link: (scope, element, attr) ->
-    console.log('customerSearchOverride C')
     formatCustomerResult = (customer) ->
       customerTemplate
         customer: customer
@@ -40,7 +39,6 @@ angular.module("admin.orders").directive 'customerSearchOverride', ->
           ]
           attribute_wrapper = '#order_' + address + '_attributes_'
           if data  # modified
-            console.log('xiebing')
             _.each address_parts, (part) ->
               $(attribute_wrapper + part).val data[part]
               return
