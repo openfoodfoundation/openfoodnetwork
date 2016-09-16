@@ -158,8 +158,10 @@ class CheckoutController < Spree::CheckoutController
 
     preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user
 
-    @order.bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
-    @order.ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default
+    customer_preferred_bill_address, customer_preferred_ship_address = @order.customer.bill_address, @order.customer.ship_address if @order.customer
+
+    @order.bill_address ||= customer_preferred_bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
+    @order.ship_address ||= customer_preferred_ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default
   end
 
   def after_payment
