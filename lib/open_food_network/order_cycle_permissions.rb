@@ -118,7 +118,10 @@ module OpenFoodNetwork
       return Spree::Variant.where("1=0") unless @order_cycle
 
       if user_manages_coordinator_or(hub)
+        # TODO: Use variants_stockable_by(hub) for this?
+
         # Any variants produced by the coordinator, for outgoing exchanges with itself
+        # TODO: isn't this completely redundant given the assignment of hub_variants below?
         coordinator_variants = []
         if hub == @coordinator
           coordinator_variants = Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', @coordinator)

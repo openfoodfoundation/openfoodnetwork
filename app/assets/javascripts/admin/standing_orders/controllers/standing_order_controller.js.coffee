@@ -17,7 +17,7 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
 
   $scope.estimatedSubtotal = ->
     $scope.standingOrder.standing_line_items.reduce (subtotal, item) ->
-      item.price_with_fees * item.quantity
+      item.price_estimate * item.quantity
     , 0
 
   $scope.estimatedTotal = ->

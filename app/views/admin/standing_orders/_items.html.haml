@@ -16,10 +16,10 @@
   %tbody
     %tr.item{ ng: { repeat: 'item in standingOrder.standing_line_items', class: { even: 'even', odd: 'odd' } } }
       %td.description {{ item.description }}
-      %td.price.align-center {{ item.price_with_fees | currency }}
+      %td.price.align-center {{ item.price_estimate | currency }}
       %td.qty
         %input.qty{ name: 'quantity', type: 'number', min: 0, ng: { model: 'item.quantity' } }
-      %td.total.align-center {{ (item.price_with_fees * item.quantity) | currency }}
+      %td.total.align-center {{ (item.price_estimate * item.quantity) | currency }}
       %td.actions
         %a.delete-resource.icon_link.with-tip.icon-trash.no-text{ data: { confirm: "Are you sure?" }, :href => "javascript:void(0)" }
   %tbody#subtotal.no-border-top{"data-hook" => "admin_order_form_subtotal"}

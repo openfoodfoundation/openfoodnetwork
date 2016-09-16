@@ -42,6 +42,13 @@ Spree::Variant.class_eval do
       select('DISTINCT spree_variants.*')
   }
 
+  scope :in_schedule, lambda { |schedule|
+    joins(exchanges: { order_cycle: :schedule}).
+    merge(Exchange.outgoing).
+    where(schedules: { id: schedule}).
+    select('DISTINCT spree_variants.*')
+  }
+
   scope :for_distribution, lambda { |order_cycle, distributor|
     where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor))
   }
@@ -57,6 +64,11 @@ Spree::Variant.class_eval do
   }
 
   localize_number :price, :cost_price, :weight
+
+  scope :stockable_by, lambda { |enterprise|
+    return where("1=0") unless enterprise.present?
+    joins(:product).where(spree_products: { id: Spree::Product.stockable_by(enterprise).pluck(:id) })
+  }
 
   # Define sope as class method to allow chaining with other scopes filtering id.
   # In Rails 3, merging two scopes on the same column will consider only the last scope.

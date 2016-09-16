@@ -5,7 +5,11 @@ module Admin
     respond_to :json
 
     respond_override create: { json: {
-      success: lambda { render_as_json @standing_order },
+      success: lambda {
+        shop, next_oc = @standing_order.shop, @standing_order.schedule.current_or_next_order_cycle
+        fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc) if shop && next_oc
+        render_as_json @standing_order, fee_calculator: fee_calculator
+      },
       failure: lambda { render json: { errors: json_errors }, status: :unprocessable_entity }
     } }
 

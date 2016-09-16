@@ -141,7 +141,7 @@ FactoryGirl.define do
   factory :standing_order, :class => StandingOrder do
     shop { FactoryGirl.create :enterprise }
     schedule
-    customer
+    customer { create(:customer, enterprise: shop) }
     payment_method
     shipping_method
     begins_at { 1.month.ago }
