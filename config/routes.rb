@@ -61,7 +61,7 @@ Openfoodnetwork::Application.routes.draw do
   post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'
   post 'embedded_shopfront/disable', to: 'application#disable_embedded_styles'
 
-  get '/stripe/callback', :to => 'enterprise#stripe_connect'
+  get '/stripe/callback', :to => 'admin/enterprises#stripe_connect_callback'
 
   resources :enterprises do
     collection do
@@ -95,6 +95,8 @@ Openfoodnetwork::Application.routes.draw do
         get :for_line_items
         post :bulk_update, as: :bulk_update
       end
+
+      get "/stripe_connect", to: "enterprises#stripe_connect"
 
       member do
         get :welcome
