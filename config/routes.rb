@@ -52,7 +52,7 @@ Openfoodnetwork::Application.routes.draw do
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
-  get '/stripe/callback', :to => 'enterprise#stripe_connect' 
+  get '/stripe/callback', :to => 'admin/enterprises#stripe_connect_callback' 
 
   resources :enterprises do
     collection do
@@ -86,6 +86,8 @@ Openfoodnetwork::Application.routes.draw do
         get :for_line_items
         post :bulk_update, as: :bulk_update
       end
+
+      get "/stripe_connect", to: "enterprises#stripe_connect"
 
       member do
         get :welcome
