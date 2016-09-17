@@ -14,8 +14,8 @@ module Admin
       options
     )
 
-    def get_stripe_token(code, options={params: {scope: 'read_write'}})
-      StripeHelper.client.get_token(code, options)
+    def get_stripe_token(code, options={scope: 'read_write'})
+      StripeHelper.client.auth_code.get_token(code, options)
     end
 
     def authorize_stripe(enterprise_id, options={})
