@@ -119,12 +119,20 @@ module Admin
     end
 
     def stripe_connect_callback
+      # Check CSRF?
       if params["code"]
         # Get the deets from Stripe
+        response_params = get_stripe_token(params["code"]).params
+        # Get the Enterprise
+        state = JSON.parse(params["state"].gsub("=>",":"))
+        @enterprise = Enterprise.find_by_permalink(state["enterprise_id"])
 
-        stripe_account = StripeAccount.new(stripe_user_id: params["stripe_user_id"], stripe_publishable_key: params["stripe_publishable_key"], enterprise: enterprise)
+        stripe_account = StripeAccount.new(stripe_user_id: response_params["stripe_user_id"], stripe_publishable_key: response_params["stripe_publishable_key"], enterprise: @enterprise)
         if stripe_account.save
-          render json: stripe_account
+          respond_to do |format|
+            format.html { redirect_to main_app.edit_admin_enterprise_path(@enterprise), notice: "Stripe account connected successfully."}
+            format.json { render json: stripe_account }
+          end
         else
           render text: "Failed to save Stripe token", status: 500
         end
