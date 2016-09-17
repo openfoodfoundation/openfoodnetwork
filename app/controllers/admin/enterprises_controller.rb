@@ -23,6 +23,7 @@ module Admin
     helper 'spree/products'
     include ActionView::Helpers::TextHelper
     include OrderCyclesHelper
+    include Admin::StripeHelper
 
     def index
       respond_to do |format|
@@ -110,6 +111,25 @@ module Admin
         format.json do
           render_as_json @collection, ams_prefix: 'basic', spree_current_user: spree_current_user
         end
+      end
+    end
+
+    def stripe_connect
+      redirect_to authorize_stripe(params[:enterprise_id]) # csrf: form_authenticity_token)
+    end
+
+    def stripe_connect_callback
+      if params["code"]
+        # Get the deets from Stripe
+
+        stripe_account = StripeAccount.new(stripe_user_id: params["stripe_user_id"], stripe_publishable_key: params["stripe_publishable_key"], enterprise: enterprise)
+        if stripe_account.save
+          render json: stripe_account
+        else
+          render text: "Failed to save Stripe token", status: 500
+        end
+      else
+        render text: params["error_description"], status: 500
       end
     end
 
