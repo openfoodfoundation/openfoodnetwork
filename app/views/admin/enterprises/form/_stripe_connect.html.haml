@@ -1,0 +1,6 @@
+-# if @enterprise.has_stripe_connection?
+    -# Display Stripe account details
+-# else
+
+%a.stripe-connect{href: 'stripe_connect'}
+    .span= t :connect_with_stripe
