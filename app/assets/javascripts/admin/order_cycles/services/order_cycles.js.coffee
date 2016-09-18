@@ -1,11 +1,9 @@
-angular.module("admin.orderCycles").factory 'OrderCycles', ($q, OrderCycleResource, blankOption) ->
+angular.module("admin.orderCycles").factory 'OrderCycles', ($q, OrderCycleResource) ->
   new class OrderCycles
     orderCyclesByID: {}
     pristineByID: {}
 
     index: (params={}, callback=null) ->
-      includeBlank = !!params['includeBlank']
-      delete params['includeBlank']
       OrderCycleResource.index(params, (data) =>
         for orderCycle in data
           @orderCyclesByID[orderCycle.id] = orderCycle
@@ -13,7 +11,6 @@ angular.module("admin.orderCycles").factory 'OrderCycles', ($q, OrderCycleResour
 
         (callback || angular.noop)(data)
 
-        data.unshift(blankOption()) if includeBlank
         data
       )
 
