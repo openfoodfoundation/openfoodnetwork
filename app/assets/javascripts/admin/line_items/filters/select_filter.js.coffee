@@ -1,4 +1,4 @@
-angular.module("admin.lineItems").filter "selectFilter", (blankOption, RequestMonitor) ->
+angular.module("admin.lineItems").filter "selectFilter", (RequestMonitor) ->
     return (lineItems,selectedSupplier,selectedDistributor,selectedOrderCycle) ->
       filtered = []
       unless RequestMonitor.loading

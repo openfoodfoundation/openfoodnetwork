@@ -1,4 +1,4 @@
-angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout, $http, $q, StatusMessage, Columns, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, blankOption, VariantUnitManager, RequestMonitor) ->
+angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout, $http, $q, StatusMessage, Columns, Dereferencer, Orders, LineItems, Enterprises, OrderCycles, VariantUnitManager, RequestMonitor) ->
   $scope.initialized = false
   $scope.RequestMonitor = RequestMonitor
   $scope.filteredLineItems = []
