@@ -5,16 +5,18 @@ angular.module("admin.resources").factory 'LineItems', ($q, LineItemResource) ->
 
     index: (params={}, callback=null) ->
     	LineItemResource.index params, (data) =>
-        @resetData()
-        for lineItem in data
-          @byID[lineItem.id] = lineItem
-          @pristineByID[lineItem.id] = angular.copy(lineItem)
-
+        @load(data)
         (callback || angular.noop)(data)
 
     resetData: ->
       @byID = {}
       @pristineByID = {}
+
+    load: (lineItems) ->
+      @resetData()
+      for lineItem in lineItems
+        @byID[lineItem.id] = lineItem
+        @pristineByID[lineItem.id] = angular.copy(lineItem)
 
     saveAll: ->
       for id, lineItem of @byID

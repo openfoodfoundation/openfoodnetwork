@@ -6,22 +6,19 @@ angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCy
 
     constructor: ->
       if $injector.has('orderCycles')
-        for orderCycle in $injector.get('orderCycles')
-          @all.push orderCycle
-          @byID[orderCycle.id] = orderCycle
-          @pristineByID[orderCycle.id] = angular.copy(orderCycle)
-
+        @load($injector.get('orderCycles'))
 
     index: (params={}, callback=null) ->
-      OrderCycleResource.index(params, (data) =>
-        for orderCycle in data
-          @byID[orderCycle.id] = orderCycle
-          @pristineByID[orderCycle.id] = angular.copy(orderCycle)
-
+      OrderCycleResource.index params, (data) =>
+        @load(data)
         (callback || angular.noop)(data)
-
         data
-      )
+
+    load: (orderCycles) ->
+      for orderCycle in orderCycles
+        @all.push orderCycle
+        @byID[orderCycle.id] = orderCycle
+        @pristineByID[orderCycle.id] = angular.copy(orderCycle)
 
     save: (order_cycle) ->
       deferred = $q.defer()
