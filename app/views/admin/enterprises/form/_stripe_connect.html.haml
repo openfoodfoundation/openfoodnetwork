@@ -1,6 +1,7 @@
--# if @enterprise.has_stripe_connection?
-    -# Display Stripe account details
--# else
-
-%a.stripe-connect{href: 'stripe_connect'}
+- if stripe_account = @enterprise.stripe_account
+  = t :stripe_account_connected
+  = stripe_account.inspect
+  .span (Link to disconnect Stripe Acct)
+- else
+  %a.stripe-connect{href: 'stripe_connect'}
     .span= t :connect_with_stripe
