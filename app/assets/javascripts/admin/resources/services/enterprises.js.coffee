@@ -4,13 +4,15 @@ angular.module("admin.resources").factory 'Enterprises', ($q, EnterpriseResource
     pristineByID: {}
 
     index: (params={}, callback=null) ->
-      EnterpriseResource.index(params, (data) =>
-        for enterprise in data
-          @byID[enterprise.id] = enterprise
-          @pristineByID[enterprise.id] = angular.copy(enterprise)
+      EnterpriseResource.index params, (data) =>
+        @load(data)
         (callback || angular.noop)(data)
         data
-      )
+
+    load: (enterprises) ->
+      for enterprise in enterprises
+        @byID[enterprise.id] = enterprise
+        @pristineByID[enterprise.id] = angular.copy(enterprise)
 
     save: (enterprise) ->
       deferred = $q.defer()
