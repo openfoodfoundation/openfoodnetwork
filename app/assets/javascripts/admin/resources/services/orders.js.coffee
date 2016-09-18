@@ -5,11 +5,13 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource) ->
 
     index: (params={}, callback=null) ->
     	OrderResource.index params, (data) =>
-        for order in data
-          @byID[order.id] = order
-          @pristineByID[order.id] = angular.copy(order)
-
+        @load(data)
         (callback || angular.noop)(data)
+
+    load: (orders) ->
+      for order in orders
+        @byID[order.id] = order
+        @pristineByID[order.id] = angular.copy(order)
 
     save: (order) ->
       deferred = $q.defer()
