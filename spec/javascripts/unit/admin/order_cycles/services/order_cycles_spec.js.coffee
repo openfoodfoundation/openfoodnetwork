@@ -37,25 +37,14 @@ describe "OrderCycles service", ->
         expect(result).toDeepEqual response
 
     describe "when no params are passed", ->
-      describe "where includeBlank param is truthy", ->
-        beforeEach ->
-          params = {includeBlank: true, someParam: 'someVal'}
-          $httpBackend.expectGET('/admin/order_cycles.json?someParam=someVal').respond 200, response
-          result = OrderCycles.index(params)
-          $httpBackend.flush()
+      beforeEach ->
+        params = { someParam: 'someVal'}
+        $httpBackend.expectGET('/admin/order_cycles.json?someParam=someVal').respond 200, response
+        result = OrderCycles.index(params)
+        $httpBackend.flush()
 
-        it "returns an array of orderCycles", ->
-          expect(result).toDeepEqual [{id: '0', name: 'All'} ,{ id: 5, name: 'OrderCycle 1'}]
-
-      describe "where includeBlank param is falsey", ->
-        beforeEach ->
-          params = {includeBlank: false, someParam: 'someVal'}
-          $httpBackend.expectGET('/admin/order_cycles.json?someParam=someVal').respond 200, response
-          result = OrderCycles.index(params)
-          $httpBackend.flush()
-
-        it "returns an array of orderCycles", ->
-          expect(result).toDeepEqual response
+      it "returns an array of orderCycles", ->
+        expect(result).toDeepEqual response
 
 
   describe "#save", ->
