@@ -47,74 +47,13 @@ feature 'Shops', js: true do
     it "should show closed shops after clicking the button" do
       create(:simple_product, distributors: [d1, d2])
       visit shops_path
-      click_link_and_ensure("Show Closed Shops", -> { page.has_selector? 'hub.inactive' })
+      click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
       page.should have_selector 'hub.inactive', text: d2.name
     end
 
     it "should link to the hub page" do
       follow_active_table_node distributor.name
       expect(page).to have_current_path enterprise_shop_path(distributor)
-    end
-
-    describe "filtering by product property" do
-      let!(:order_cycle) { create(:simple_order_cycle, distributors: [d1, d2], coordinator: create(:distributor_enterprise)) }
-      let!(:p1) { create(:simple_product, supplier: producer) }
-      let!(:p2) { create(:simple_product, supplier: create(:supplier_enterprise)) }
-      let(:ex_d1) { order_cycle.exchanges.outgoing.where(receiver_id: d1).first }
-      let(:ex_d2) { order_cycle.exchanges.outgoing.where(receiver_id: d2).first }
-
-      before do
-        p2.set_property 'Local', 'XYZ 123'
-
-        ex_d1.variants << p1.variants.first
-        ex_d2.variants << p2.variants.first
-
-        visit shops_path
-      end
-
-      it "filters" do
-        toggle_filters
-
-        toggle_filter 'Organic'
-
-        expect(page).to     have_content d1.name
-        expect(page).not_to have_content d2.name
-
-        toggle_filter 'Organic'
-        toggle_filter 'Local'
-
-        expect(page).not_to have_content d1.name
-        expect(page).to     have_content d2.name
-      end
-    end
-
-    describe "taxon badges" do
-      let!(:closed_oc) { create(:closed_order_cycle, distributors: [shop], variants: [p_closed.variants.first]) }
-      let!(:p_closed) { create(:simple_product, taxons: [taxon_closed]) }
-      let(:shop) { create(:distributor_enterprise) }
-      let(:taxon_closed) { create(:taxon, name: 'Closed') }
-
-      describe "open shops" do
-        let!(:open_oc) { create(:open_order_cycle, distributors: [shop], variants: [p_open.variants.first]) }
-        let!(:p_open) { create(:simple_product, taxons: [taxon_open]) }
-        let(:taxon_open) { create(:taxon, name: 'Open') }
-
-        it "shows taxons for open order cycles only" do
-          visit shops_path
-          expand_active_table_node shop.name
-          expect(page).to     have_selector '.fat-taxons', text: 'Open'
-          expect(page).not_to have_selector '.fat-taxons', text: 'Closed'
-        end
-      end
-
-      describe "closed shops" do
-        it "shows taxons for any order cycle" do
-          visit shops_path
-          click_link 'Show Closed Shops'
-          expand_active_table_node shop.name
-          expect(page).to have_selector '.fat-taxons', text: 'Closed'
-        end
-      end
     end
 
     describe "property badges" do

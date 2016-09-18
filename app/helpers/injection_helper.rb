@@ -45,7 +45,7 @@ module InjectionHelper
   end
 
   def inject_properties
-    inject_json_ams "properties", Spree::Property.all, Api::PropertySerializer
+    inject_json_ams "properties", Spree::Property.all, Api::IdNameSerializer
   end
 
   def inject_currency_config

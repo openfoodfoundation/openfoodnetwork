@@ -20,10 +20,7 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
 end
 
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
-  include SerializerHelper
-
   attributes :orders_close_at, :active
-  attributes :taxons, :supplied_taxons
   has_many :supplied_properties, serializer: Api::PropertySerializer
   has_many :distributed_properties, serializer: Api::PropertySerializer
 
@@ -45,37 +42,15 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
 
   def distributed_properties
     # This results in 3 queries per enterprise
-
-    if active
-      product_properties  = Spree::Property.currently_sold_by(object)
-      producer_property_ids = ProducerProperty.currently_sold_by(object).pluck(:property_id)
-
-    else
-      product_properties  = Spree::Property.ever_sold_by(object)
-      producer_property_ids = ProducerProperty.ever_sold_by(object).pluck(:property_id)
-    end
-
-    producer_properties = Spree::Property.where(id: producer_property_ids)
+    product_properties  = Spree::Property.sold_by(object)
+    ids = ProducerProperty.sold_by(object).pluck(:property_id)
+    producer_properties = Spree::Property.where(id: ids)
 
     OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
-  end
-
-  def taxons
-    if active
-      ids_to_objs options[:data].current_distributed_taxons[object.id]
-    else
-      ids_to_objs options[:data].all_distributed_taxons[object.id]
-    end
-  end
-
-  def supplied_taxons
-    ids_to_objs options[:data].supplied_taxons[object.id]
   end
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
-  include SerializerHelper
-
   cached
   #delegate :cache_key, to: :object
 
@@ -90,7 +65,16 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     :email_address, :hash, :logo, :promo_image, :path, :pickup, :delivery,
     :icon, :icon_font, :producer_icon_font, :category, :producers, :hubs
 
+  attributes :taxons, :supplied_taxons
+
   has_one :address, serializer: Api::AddressSerializer
+  def taxons
+    ids_to_objs options[:data].distributed_taxons[object.id]
+  end
+
+  def supplied_taxons
+    ids_to_objs options[:data].supplied_taxons[object.id]
+  end
 
   def pickup
     services = options[:data].shipping_method_services[object.id]
@@ -168,5 +152,13 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
       :producer => "ofn-i_059-producer",
     }
     icon_fonts[object.category]
+  end
+
+
+  private
+
+  def ids_to_objs(ids)
+    return [] if ids.blank?
+    ids.map { |id| {id: id} }
   end
 end
