@@ -79,7 +79,7 @@ class CheckoutController < Spree::CheckoutController
       new_ship_address = @order.ship_address.clone.attributes
 
       user_ship_address_id = spree_current_user.ship_address.andand.id
-      spree_current_user.update_attributes!(ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id))
+      spree_current_user.update_attributes(ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id))
 
       customer_ship_address_id = @order.customer.ship_address.andand.id
       @order.customer.update_attributes(ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id))
