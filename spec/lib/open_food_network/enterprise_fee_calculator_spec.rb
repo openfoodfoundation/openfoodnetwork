@@ -66,7 +66,7 @@ module OpenFoodNetwork
         end
 
         describe "summing percentage fees for the variant" do
-          let!(:enterprise_fee1) { create(:enterprise_fee, amount: 20, fee_type: "admin", calculator: Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 20)) }
+          let!(:enterprise_fee1) { create(:enterprise_fee, amount: 20, fee_type: "admin", calculator: ::Calculator::FlatPercentPerItem.new(preferred_flat_percent: 20)) }
           let!(:exchange) { create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false,
                                    enterprise_fees: [enterprise_fee1], variants: [product1.master]) }
 

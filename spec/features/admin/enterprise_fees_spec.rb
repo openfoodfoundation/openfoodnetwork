@@ -77,13 +77,13 @@ feature %q{
     page.should have_select "enterprise_fee_set_collection_attributes_0_fee_type", selected: 'Admin'
     page.should have_selector "input[value='Greetings!']"
     page.should have_select 'enterprise_fee_set_collection_attributes_0_tax_category_id', selected: 'Inherit From Product'
-    page.should have_selector "option[selected]", text: 'Flat Percent'
+    page.should have_selector "option[selected]", text: 'Flat Percent (per item)'
 
     fee.reload
     fee.enterprise.should == enterprise
     fee.name.should == 'Greetings!'
     fee.fee_type.should == 'admin'
-    fee.calculator_type.should == "Spree::Calculator::FlatPercentItemTotal"
+    fee.calculator_type.should == "Calculator::FlatPercentPerItem"
 
     # Sets tax_category and inherits_tax_category
     fee.tax_category.should == nil

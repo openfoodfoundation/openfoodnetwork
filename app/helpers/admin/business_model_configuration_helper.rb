@@ -16,6 +16,10 @@ module Admin
 
     private
 
+    def free_use?
+      Spree::Config[:account_invoices_monthly_fixed] == 0 && Spree::Config[:account_invoices_monthly_rate] == 0
+    end
+
     def fixed_description
       fixed_amount = Spree::Money.new(Spree::Config[:account_invoices_monthly_fixed], {currency: Spree::Config[:currency]} ).rounded
       monthly_bill_includes_fixed? ? "#{fixed_amount}" : ""

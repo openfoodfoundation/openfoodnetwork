@@ -39,6 +39,10 @@ module Admin
       admin_inject_json_ams_array ngModule, "shops", @shops, Api::Admin::IdNameSerializer
     end
 
+    def admin_inject_available_countries(ngModule='admin.customers')
+      admin_inject_json_ams_array ngModule, 'availableCountries', available_countries, Api::CountrySerializer
+    end
+
     def admin_inject_hubs(opts={module: 'ofn.admin'})
       admin_inject_json_ams_array opts[:module], "hubs", @hubs, Api::Admin::IdNameSerializer
     end

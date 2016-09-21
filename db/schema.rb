@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160707023818) do
+ActiveRecord::Schema.define(:version => 20160819065331) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -79,16 +79,21 @@ ActiveRecord::Schema.define(:version => 20160707023818) do
   add_index "coordinator_fees", ["order_cycle_id"], :name => "index_coordinator_fees_on_order_cycle_id"
 
   create_table "customers", :force => true do |t|
-    t.string   "email",         :null => false
-    t.integer  "enterprise_id", :null => false
+    t.string   "email",           :null => false
+    t.integer  "enterprise_id",   :null => false
     t.string   "code"
     t.integer  "user_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "bill_address_id"
+    t.integer  "ship_address_id"
+    t.string   "name"
   end
 
+  add_index "customers", ["bill_address_id"], :name => "index_customers_on_bill_address_id"
   add_index "customers", ["email"], :name => "index_customers_on_email"
   add_index "customers", ["enterprise_id", "code"], :name => "index_customers_on_enterprise_id_and_code", :unique => true
+  add_index "customers", ["ship_address_id"], :name => "index_customers_on_ship_address_id"
   add_index "customers", ["user_id"], :name => "index_customers_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
@@ -577,9 +582,9 @@ ActiveRecord::Schema.define(:version => 20160707023818) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
+    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end
@@ -1111,6 +1116,8 @@ ActiveRecord::Schema.define(:version => 20160707023818) do
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
 
   add_foreign_key "customers", "enterprises", name: "customers_enterprise_id_fk"
+  add_foreign_key "customers", "spree_addresses", name: "customers_bill_address_id_fk", column: "bill_address_id"
+  add_foreign_key "customers", "spree_addresses", name: "customers_ship_address_id_fk", column: "ship_address_id"
   add_foreign_key "customers", "spree_users", name: "customers_user_id_fk", column: "user_id"
 
   add_foreign_key "distributors_payment_methods", "enterprises", name: "distributors_payment_methods_distributor_id_fk", column: "distributor_id"

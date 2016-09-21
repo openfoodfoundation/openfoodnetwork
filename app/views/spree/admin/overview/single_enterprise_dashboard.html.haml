@@ -1,11 +1,11 @@
 - content_for :page_title do
-  %h1
-    = @enterprise.name
-    %span.small<
-      = "(#{enterprise_type_name(@enterprise)})"
+  = @enterprise.name
+  %span.small<
+    = "(#{enterprise_type_name(@enterprise)})"
 
 - content_for :page_actions do
-  = render 'admin/shared/user_guide_link'
+  %li#user_guide_link
+    = render 'admin/shared/user_guide_link'
 
   :javascript
     function toggleType(){
@@ -17,7 +17,7 @@
       }
       $("#package_selection").slideToggle()
     }
-  #package_button
+  %li#package_button
     %button#toggle_type{ onClick: 'toggleType()' }
       = t "change_package"
       %i.icon-chevron-down
@@ -98,3 +98,5 @@
         %a.button.bottom{href: main_app.admin_order_cycles_path}
           = t "manage_order_cycles"
           %span.icon-arrow-right
+
+= render 'spree/admin/shared/trial_progress_bar', enterprise: @enterprise

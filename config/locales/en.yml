@@ -118,6 +118,16 @@ en:
         add_a_new_customer_for: Add a new customer for %{shop_name}
         code: Code
         duplicate_code: "This code is used already."
+        bill_address: "Billing Address"
+        ship_address: "Shipping Address"
+        update_address_success: 'Address updated successfully.'
+        update_address_error: 'Sorry! Please input all of the required fields!'
+        edit_bill_address: 'Edit Billing Address'
+        edit_ship_address: 'Edit Shipping Address'
+        required_fileds: 'Required fields are denoted with an asterisk '
+        select_country: 'Select Country'
+        select_state: 'Select State'
+        edit: 'Edit'
 
     products:
       bulk_edit:
@@ -411,6 +421,7 @@ en:
   email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
   email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next.
 %{link}"
+  join_community: "Join the community"
   email_help: "If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!"
   email_confirmation_greeting: "Hi, %{contact}!"
   email_confirmation_profile_created: "A profile for %{name} has been successfully created!
@@ -458,7 +469,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_signup_text: "Thanks for joining the network.
   If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food!
   If you are a producer or food enterprise, we are excited to have you as a part of the network."
-  email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at"
+  email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
 
   producer_mail_greeting: "Dear"
   producer_mail_text_before: "We now have all the consumer orders for the next food drop."
@@ -900,6 +911,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   tax_category: "Tax Category"
   calculator: "Calculator"
   calculator_values: "Calculator values"
+  flat_percent_per_item: "Flat Percent (per item)"
   new_order_cycles: "New Order Cycles"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   edit_order_cycle: "Edit Order Cycle"

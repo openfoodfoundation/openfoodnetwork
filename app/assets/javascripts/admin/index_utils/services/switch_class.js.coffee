@@ -1,5 +1,5 @@
 angular.module("admin.indexUtils").factory "switchClass", ($timeout) ->
-  return (element,classToAdd,removeClasses,timeout) ->
+  return (element, classToAdd, removeClasses, timeout) ->
     $timeout.cancel element.timeout if element.timeout
     element.removeClass className for className in removeClasses
     element.addClass classToAdd
