@@ -3,9 +3,6 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
     errors: {}
     secrets: {}
     order: CurrentOrder.order
-    ship_address_same_as_billing: true
-    default_bill_address: false
-    default_ship_address: false
 
     submit: ->
       Loading.message = t 'submitting_order'
@@ -22,8 +19,8 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
       munged_order =
-        default_bill_address: @default_bill_address
-        default_ship_address: @default_ship_address
+        default_bill_address: !!@default_bill_address
+        default_ship_address: !!@default_ship_address
 
       for name, value of @order # Clone all data from the order JSON object
         switch name
@@ -38,7 +35,7 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
           else
             # Ignore everything else
 
-      if @ship_address_same_as_billing == 'YES'
+      if @ship_address_same_as_billing
         munged_order.ship_address_attributes = munged_order.bill_address_attributes
         # If the order already has a ship and bill address (as with logged in users with
         # past orders), and we don't remove id here, then this will set the wrong id for

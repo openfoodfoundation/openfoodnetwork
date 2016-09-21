@@ -1,4 +1,4 @@
-Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, CurrentHub) ->
+Darkswarm.controller "CheckoutCtrl", ($scope, localStorageService, Checkout, CurrentUser, CurrentHub) ->
   $scope.Checkout = Checkout
   $scope.submitted = false
 
@@ -7,20 +7,11 @@ Darkswarm.controller "CheckoutCtrl", ($scope, storage, Checkout, CurrentUser, Cu
   prefix = "order_#{Checkout.order.id}#{CurrentUser.id or ""}#{CurrentHub.hub.id}"
 
   for field in $scope.fieldsToBind
-    storage.bind $scope, "Checkout.order.#{field}",
-      storeName: "#{prefix}_#{field}"
+    localStorageService.bind $scope, "Checkout.order.#{field}", Checkout.order[field], "#{prefix}_#{field}"
 
-  storage.bind $scope, "Checkout.ship_address_same_as_billing",
-    storeName: "#{prefix}_sameasbilling"
-    defaultValue: true
-
-  storage.bind $scope, "Checkout.default_bill_address",
-    storeName: "#{prefix}_defaultasbilladdress"
-    defaultValue: false
-
-  storage.bind $scope, "Checkout.default_ship_address",
-    storeName: "#{prefix}_defaultasshipaddress"
-    defaultValue: false
+  localStorageService.bind $scope, "Checkout.ship_address_same_as_billing", true, "#{prefix}_sameasbilling"
+  localStorageService.bind $scope, "Checkout.default_bill_address", false, "#{prefix}_defaultasbilladdress"
+  localStorageService.bind $scope, "Checkout.default_ship_address", false, "#{prefix}_defaultasshipaddress"
 
   $scope.order = Checkout.order # Ordering is important
   $scope.secrets = Checkout.secrets
