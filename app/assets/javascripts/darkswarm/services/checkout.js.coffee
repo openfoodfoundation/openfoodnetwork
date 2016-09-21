@@ -3,9 +3,9 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
     errors: {}
     secrets: {}
     order: CurrentOrder.order
-    ship_address_same_as_billing: 'YES'
-    default_bill_address: 'NO'
-    default_ship_address: 'NO'
+    ship_address_same_as_billing: true
+    default_bill_address: false
+    default_ship_address: false
 
     submit: ->
       Loading.message = t 'submitting_order'

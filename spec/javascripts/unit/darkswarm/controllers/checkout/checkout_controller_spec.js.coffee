@@ -62,9 +62,9 @@ describe "CheckoutCtrl", ->
 
         field = scope.fieldsToBind[0]
         expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.order.#{field}", {storeName: "#{prefix}_#{field}"})
-        expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: 'YES'})
-        expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.default_bill_address", {storeName: "#{prefix}_defaultasbilladdress", defaultValue: 'NO'})
-        expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.default_ship_address", {storeName: "#{prefix}_defaultasshipaddress", defaultValue: 'NO'})
+        expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.ship_address_same_as_billing", {storeName: "#{prefix}_sameasbilling", defaultValue: true})
+        expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.default_bill_address", {storeName: "#{prefix}_defaultasbilladdress", defaultValue: false})
+        expect(storage.bind).toHaveBeenCalledWith(scope, "Checkout.default_ship_address", {storeName: "#{prefix}_defaultasshipaddress", defaultValue: false})
 
 
       it "it can retrieve data from localstorage", ->

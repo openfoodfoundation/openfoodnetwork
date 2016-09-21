@@ -62,7 +62,7 @@ class CheckoutController < Spree::CheckoutController
   private
 
   def set_default_bill_address
-    if params[:order][:default_bill_address] == 'YES'
+    if params[:order][:default_bill_address]
       new_bill_address = @order.bill_address.clone.attributes
 
       user_bill_address_id = spree_current_user.bill_address.andand.id
@@ -75,7 +75,7 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def set_default_ship_address
-    if params[:order][:default_ship_address] == 'YES'
+    if params[:order][:default_ship_address]
       new_ship_address = @order.ship_address.clone.attributes
 
       user_ship_address_id = spree_current_user.ship_address.andand.id

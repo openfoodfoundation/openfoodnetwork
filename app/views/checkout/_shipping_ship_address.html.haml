@@ -1,6 +1,6 @@
 .small-12.columns
   #ship_address{"ng-if" => "Checkout.requireShipAddress()"}
-    %div.visible{"ng-if" => "Checkout.ship_address_same_as_billing === 'NO'"}
+    %div.visible{"ng-if" => "!Checkout.ship_address_same_as_billing"}
       .row
         .small-6.columns
           = validated_input "First Name", "order.ship_address.firstname", "ofn-focus" => "accordion['shipping']"

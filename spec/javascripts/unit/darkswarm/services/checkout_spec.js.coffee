@@ -126,20 +126,20 @@ describe 'Checkout service', ->
       expect(Checkout.preprocess().ship_address).toBe(undefined)
 
     it "munges the order attributes to clone ship address from bill address", ->
-      Checkout.ship_address_same_as_billing = 'NO'
+      Checkout.ship_address_same_as_billing = false
       expect(Checkout.preprocess().ship_address_attributes).toEqual(orderData.ship_address)
-      Checkout.ship_address_same_as_billing = 'YES'
+      Checkout.ship_address_same_as_billing = true
       expect(Checkout.preprocess().ship_address_attributes).toEqual(orderData.bill_address)
 
     it "munges the default as billing address and shipping address", ->
-      expect(Checkout.preprocess().default_bill_address).toEqual('NO')
-      expect(Checkout.preprocess().default_ship_address).toEqual('NO')
+      expect(Checkout.preprocess().default_bill_address).toEqual(false)
+      expect(Checkout.preprocess().default_ship_address).toEqual(false)
 
-      Checkout.default_bill_address = 'YES'
-      Checkout.default_ship_address = 'YES'
+      Checkout.default_bill_address = true
+      Checkout.default_ship_address = true
 
-      expect(Checkout.preprocess().default_bill_address).toEqual('YES')
-      expect(Checkout.preprocess().default_ship_address).toEqual('YES')
+      expect(Checkout.preprocess().default_bill_address).toEqual(true)
+      expect(Checkout.preprocess().default_ship_address).toEqual(true)
 
     it "creates attributes for card fields", ->
       source_attributes = Checkout.preprocess().payments_attributes[0].source_attributes
