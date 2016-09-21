@@ -53,6 +53,7 @@ class AbilityDecorator
   # New users can create an enterprise, and gain other permissions from doing this.
   def add_base_abilities(user)
     can [:create], Enterprise
+    can [:edit_address], Spree.user_class
   end
 
   def add_group_management_abilities(user)

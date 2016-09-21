@@ -266,6 +266,10 @@ en:
   on_demand: On demand
   none: None
 
+  my_addresses: 'My Addresses'
+  billing_address: 'Billing Address'
+  shipping_address: 'Shipping Address'
+
   label_shops: "Shops"
   label_map: "Map"
   label_producers: "Producers"

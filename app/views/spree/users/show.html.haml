@@ -8,25 +8,25 @@
         = @user.email
         (#{link_to t(:edit), spree.edit_account_path})
       %hr
-      %h3= 'My Addresses'
+      %h3= t(:my_addresses)
       .row
         .large-6.columns
-          %h5= 'Billing Address'
+          %h5= t(:billing_address)
           .pad
             %p.text-small
               = @user.bill_address.firstname + " " + @user.bill_address.lastname
-              (#{link_to t(:edit), spree.edit_account_path})
+              (#{link_to t(:edit), '/account/edit_address'})
               %br
               = @user.bill_address.full_address
               %br
               = @user.bill_address.phone
 
         .large-6.columns
-          %h5= 'Shipping Address'
+          %h5= t(:shipping_address)
           .pad
             %p.text-small
               = @user.bill_address.firstname + " " + @user.bill_address.lastname
-              (#{link_to t(:edit), spree.edit_account_path})
+              (#{link_to t(:edit), '/account/edit_address'})
               %br
               = @user.bill_address.full_address
               %br
