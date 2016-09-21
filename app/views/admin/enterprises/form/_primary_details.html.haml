@@ -50,17 +50,6 @@
   .five.columns.omega
     = f.radio_button :visible, false
     = f.label :visible, "Not Visible", :value => "false"
-.row
-  .three.columns.alpha
-    %label= t '.shopfront_requires_login'
-    %div{'ofn-with-tip' => t('.shopfront_requires_login_tip')}
-      %a= t 'admin.whats_this'
-  .two.columns
-    = f.radio_button :require_login, false
-    = f.label :require_login, t('.shopfront_requires_login_false'), value: :false
-  .five.columns.omega
-    = f.radio_button :require_login, true
-    = f.label :require_login, t('.shopfront_requires_login_true'), value: :true
 .permalink{ ng: { controller: "permalinkCtrl" } }
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha

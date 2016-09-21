@@ -196,7 +196,7 @@ en:
         status: Status
         manage: Manage
       form:
-        primary_details:
+        shop_preferences:
           shopfront_requires_login: "Shopfront requires login?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront."
           shopfront_requires_login_false: "Public"

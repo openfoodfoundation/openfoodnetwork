@@ -33,3 +33,15 @@
     .five.columns.omega
       = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_close_at, { 'ng-model' => 'Enterprise.preferred_shopfront_order_cycle_order' }
       = label :enterprise, :preferred_shopfront_order_cycle_order_orders_close_at, "Close Date"
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      %label= t '.shopfront_requires_login'
+      %div{'ofn-with-tip' => t('.shopfront_requires_login_tip')}
+        %a= t 'admin.whats_this'
+    .three.columns
+      = f.radio_button :require_login, false
+      = f.label :require_login, t('.shopfront_requires_login_false'), value: :false
+    .five.columns.omega
+      = f.radio_button :require_login, true
+      = f.label :require_login, t('.shopfront_requires_login_true'), value: :true
