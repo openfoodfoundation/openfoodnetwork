@@ -1,13 +1,16 @@
-angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http, Enterprises, OrderCycles, LineItems) ->
+angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http, Enterprises, OrderCycles, LineItems, Orders, Products, Variants) ->
   $scope.enterprises = Enterprises.all
   $scope.orderCycles = OrderCycles.all
 
   $scope.gridOptions =
+    enableSorting: true
     columnDefs: [
-      { field: 'product.producer.name', displayName: 'Producer',  width: '20%' }
-      { field: 'product.name',          displayName: 'Product',  width: '20%' }
+      { field: 'id',                    displayName: 'ID',       width: '20%' }
+      { field: 'order.number',          displayName: 'Order',    width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }}
+      { field: 'product.producer.name', displayName: 'Producer', width: '10%' }
+      { field: 'product.name',          displayName: 'Product',  width: '10%' }
       { field: 'full_name',             displayName: 'Variant',  width: '40%' }
-      { field: 'quantity',              displayName: 'Quantity',  width: '20%' }
+      { field: 'quantity',              displayName: 'Quantity', width: '20%' }
       # { field: '',  displayName: 'Quantity',  width: '80%' }
       # { field: 'product.name',  displayName: 'Quantity',  width: '80%' }
       # { field: 'product.name',  displayName: 'Quantity',  width: '80%' }
@@ -27,10 +30,10 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
   # ["Producer", "Product", "Variant", "Amount", "Total Units", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
 
 
-  data = $http.get('/admin/reports/orders_and_fulfillment.json').then (response) ->
-    LineItems.load response.data.line_items
-    Orders.load response.data.orders
-    Products.load response.data.products
-    Variants.load response.data.variants
-    Linker.lineItemsToOrders()
+  data = $http.get('/admin/reports/orders_and_fulfillment.json').success (data) ->
+    LineItems.load data.line_items
+    Orders.load data.orders
+    Products.load data.products
+    Variants.load data.variants
+    LineItems.linkToOrders()
     $scope.gridOptions.data = LineItems.all

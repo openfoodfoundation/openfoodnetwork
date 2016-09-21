@@ -18,6 +18,8 @@ Spree::Admin::ReportsController.class_eval do
 
   include Spree::ReportsHelper
 
+  respond_to :json
+
   REPORT_TYPES = {
     orders_and_fulfillment: [
       ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
@@ -212,7 +214,17 @@ Spree::Admin::ReportsController.class_eval do
       # -- Prepare Date Params
       prepare_date_params params
       @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
-      render json: @report.table_items, each_serializer: Api::Admin::Reports::LineItemSerializer
+      line_items = @report.table_items
+      orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')
+      variants = Spree::Variant.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_variants.*')
+      products = Spree::Product.joins(:variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
+      line_items = ActiveModel::ArraySerializer.new(line_items, each_serializer: Api::Admin::Reports::LineItemSerializer)
+      orders = ActiveModel::ArraySerializer.new(orders, each_serializer: Api::Admin::Reports::OrderSerializer)
+      variants = ActiveModel::ArraySerializer.new(variants, each_serializer: Api::Admin::Reports::VariantSerializer)
+      products = ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::Reports::ProductSerializer)
+
+      report_data = { line_items: line_items, orders: orders, variants: variants, products: products }
+      render json: report_data
     else
       prepare_date_params params
 
