@@ -7,6 +7,33 @@
       .account-summary{"data-hook" => "account_summary"}
         = @user.email
         (#{link_to t(:edit), spree.edit_account_path})
+      %hr
+      %h3= 'My Addresses'
+      .row
+        .large-6.columns
+          %h5= 'Billing Address'
+          .pad
+            %p.text-small
+              = @user.bill_address.firstname + " " + @user.bill_address.lastname
+              (#{link_to t(:edit), spree.edit_account_path})
+              %br
+              = @user.bill_address.full_address
+              %br
+              = @user.bill_address.phone
+
+        .large-6.columns
+          %h5= 'Shipping Address'
+          .pad
+            %p.text-small
+              = @user.bill_address.firstname + " " + @user.bill_address.lastname
+              (#{link_to t(:edit), spree.edit_account_path})
+              %br
+              = @user.bill_address.full_address
+              %br
+              = @user.bill_address.phone
+
+      %hr
+
       %h3= t(:my_orders)
       .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
         .row

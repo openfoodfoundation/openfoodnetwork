@@ -4,5 +4,8 @@
     %h1= t(:editing_user)
     = form_for Spree::User.new, :as => @user, :url => spree.user_path(@user), :method => :put do |f|
       = render :partial => 'spree/shared/user_form', :locals => { :f => f }
+
+      = f.fields_for :bill_address, @user.bill_address do |ba|
+        = ba.text_field :firstname
       %p
         = f.submit t(:update), :class => 'button primary'
