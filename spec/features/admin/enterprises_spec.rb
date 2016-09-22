@@ -90,6 +90,10 @@ feature %q{
     expect(page).to have_checked_field "enterprise_require_login_false"
     choose "Require customers to login"
 
+    # Require login for checkout
+    expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
+    choose "Require login to order"
+
     within (".side_menu") { click_link "Users" }
     select2_search user.email, from: 'Owner'
 
@@ -191,6 +195,7 @@ feature %q{
     page.should have_content 'This is my shopfront message.'
     page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
     expect(page).to have_checked_field "enterprise_require_login_true"
+    expect(page).to have_checked_field "enterprise_allow_guest_orders_false"
   end
 
   describe "producer properties" do

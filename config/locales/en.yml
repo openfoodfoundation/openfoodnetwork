@@ -201,6 +201,10 @@ en:
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront."
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Require customers to login"
+          allow_guest_orders: "Guest orders"
+          allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
+          allow_guest_orders_false: "Require login to order"
+          allow_guest_orders_true: "Allow checkout as guest"
 
   home:
     hubs:

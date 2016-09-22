@@ -45,3 +45,15 @@
     .five.columns.omega
       = f.radio_button :require_login, true
       = f.label :require_login, t('.shopfront_requires_login_true'), value: :true
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      %label= t '.allow_guest_orders'
+      %div{'ofn-with-tip' => t('.allow_guest_orders_tip')}
+        %a= t 'admin.whats_this'
+    .three.columns
+      = f.radio_button :allow_guest_orders, false
+      = f.label :allow_guest_orders, t('.allow_guest_orders_false'), value: :false
+    .five.columns.omega
+      = f.radio_button :allow_guest_orders, true
+      = f.label :allow_guest_orders, t('.allow_guest_orders_true'), value: :true
