@@ -8,6 +8,7 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
   $scope.newItem = { variant_id: 0, quantity: 1 }
   $scope.distributor_id = $scope.standingOrder.shop_id # variant selector requires distributor_id
   $scope.view = if $scope.standingOrder.id? then 'review' else 'details'
+  $scope.stepTitles = { details: '1. Basic Details', products: '2. Add Products', review: '3. Review & Finalise' }
 
   $scope.save = ->
     $scope.standing_order_form.$setPristine()

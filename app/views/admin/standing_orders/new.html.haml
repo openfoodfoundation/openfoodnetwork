@@ -6,5 +6,7 @@
 -# - content_for :page_actions do
 -#   %li= button_link_to "Back to standing orders list", main_app.admin_standing_orders_path, icon: 'icon-arrow-left'
 
-= render 'data'
-= render 'form'
+%div{ ng: { app: 'admin.standingOrders', controller: 'StandingOrderController', cloak: true } }
+  = render 'data'
+  = render 'wizard_progress'
+  = render 'form'
