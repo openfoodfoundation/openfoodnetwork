@@ -20,4 +20,14 @@ describe CheckoutHelper do
       helper.display_checkout_tax_total(order).should == Spree::Money.new(123.45, currency: 'AUD')
     end
   end
+
+  it "knows if guests can checkout" do
+    distributor = create(:distributor_enterprise)
+    order = create(:order, distributor: distributor)
+    helper.stub(:current_order) { order }
+    expect(helper.guest_checkout_allowed?).to be true
+
+    order.distributor.allow_guest_orders = false
+    expect(helper.guest_checkout_allowed?).to be false
+  end
 end
