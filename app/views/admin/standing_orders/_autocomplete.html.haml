@@ -2,7 +2,7 @@
 
 #add-line-item
   %fieldset
-    %legend{ align: 'center'}= t(:add_product)
+    %legend{ align: 'center'}= t(:products)
     .field.ten.columns.alpha.field
       = label_tag :add_product_name, t(:name_or_sku)
       %input#add_variant_id.variant_autocomplete.fullwidth{ type: 'number', ng: { model: 'newItem.variant_id' } }
