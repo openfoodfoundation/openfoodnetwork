@@ -3,9 +3,11 @@ label.disabled {
   pointer-events: none;
 }
 
-input[type='button']:disabled {
-  background-color: #c3c3c3;
-  color: #ffffff;
+input[type='button'], input[type='submit'] {
+  &:disabled {
+    background-color: #c3c3c3;
+    color: #ffffff;
+  }
 }
 
 .select2-container-disabled {
