@@ -14,23 +14,23 @@
           %h5= t(:billing_address)
           .pad
             %p.text-small
-              = @user.bill_address.firstname + " " + @user.bill_address.lastname
-              (#{link_to t(:edit), '/account/edit_address'})
+              = "#{@user.bill_address.andand.firstname}  #{@user.bill_address.andand.lastname}"
+              #{link_to t(:edit), '/account/edit_address?type=bill_address'}
               %br
-              = @user.bill_address.full_address
+              = @user.bill_address.andand.full_address
               %br
-              = @user.bill_address.phone
+              = @user.bill_address.andand.phone
 
         .large-6.columns
           %h5= t(:shipping_address)
           .pad
             %p.text-small
-              = @user.bill_address.firstname + " " + @user.bill_address.lastname
-              (#{link_to t(:edit), '/account/edit_address'})
+              = "#{@user.ship_address.andand.firstname}  #{@user.ship_address.andand.lastname}"
+              #{link_to t(:edit), '/account/edit_address?type=ship_address'}
               %br
-              = @user.bill_address.full_address
+              = @user.ship_address.andand.full_address
               %br
-              = @user.bill_address.phone
+              = @user.ship_address.andand.phone
 
       %hr
 

@@ -4,6 +4,6 @@ Spree::UsersController.class_eval do
   prepend_before_filter :load_object, :only => [:edit_address, :show, :edit, :update]
 
   def edit_address
-    render :edit
+    render :edit_address
   end
 end

@@ -1,0 +1,36 @@
+.darkswarm
+  .row
+    = render :partial => 'spree/shared/error_messages', :locals => { :target => @user }
+  .row
+    .small-12.medium-6.medium-offset-3.columns
+      %h1.text-center Edit User Addresses
+      = form_for Spree::User.new, :as => @user, :url => spree.user_path(@user), :method => :put do |f|
+        - address_type = params[:type].to_sym
+        - address = @user.try(address_type) || @user.send("build_#{params[:type]}".to_sym)
+        = f.fields_for address_type, address do |a|
+          = a.label :firstname
+          = a.text_field :firstname
+
+          = a.label :lastname
+          = a.text_field :lastname
+
+          = a.label :address1
+          = a.text_field :address1
+
+          = a.label :address2
+          = a.text_field :address2
+
+          = a.label :city
+          = a.text_field :city
+
+          = a.label :zipcode
+          = a.text_field :zipcode
+
+          = a.label :state_id
+          = a.collection_select(:state_id, a.object.country.states, :id, :name)
+
+          = a.label :country_id
+          = a.collection_select(:country_id, available_countries, :id, :name)
+
+        %p
+          = f.submit t(:update), :class => 'button primary'
