@@ -27,7 +27,16 @@ feature 'Standing Orders' do
       select2_select payment_method.name, from: 'payment_method_id'
       select2_select shipping_method.name, from: 'shipping_method_id'
 
+      # No date filled out, so error returned
       click_button('Next')
+      expect(page).to have_content 'can\'t be blank'
+      expect(page).to have_content 'Oops! There seems to be a problem...'
+      fill_in 'begins_at', with: Date.today.strftime('%F')
+
+      click_button('Next')
+      expect(page).to have_content 'NAME OR SKU'
+      click_button('Next')
+      expect(page).to have_content 'Please add at least one product'
 
       # Adding a product and getting a price estimate
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
@@ -42,16 +51,6 @@ feature 'Standing Orders' do
 
       click_button('Next')
 
-      # No date filled out, so error returned
-      expect{
-        click_button('Save')
-        expect(page).to have_content 'Oh no! I was unable to save your changes.'
-      }.to_not change(StandingOrder, :count)
-
-      expect(page).to have_content 'Begins at can\'t be blank'
-      fill_in 'begins_at', with: Date.today.strftime('%F')
-
-      # Date filled out, so submit should be successful
       expect{
         click_button('Save')
         expect(page).to have_content 'Saved'

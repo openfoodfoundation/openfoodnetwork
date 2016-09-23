@@ -1,4 +1,4 @@
-input.ng-invalid {
+input.ng-invalid.ng-dirty {
   border: solid 1px red;
 
   &.update-pending {
@@ -9,4 +9,3 @@ input.ng-invalid {
 select.ng-invalid {
   border: solid 1px red;
 }
-
