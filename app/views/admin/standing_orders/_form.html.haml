@@ -1,10 +1,13 @@
 %form.margin-bottom-50{ name: 'standing_order_form', ng: { app: 'admin.standingOrders', controller: 'StandingOrderController' } }
   %save-bar{ dirty: "standing_order_form.$dirty" }
-    %input.red{ type: "submit", ng: { click: "save()", disabled: "!standing_order_form.$dirty", value: "'Save'" } }
+    %input{ type: "submit", ng: { click: "back()", hide: "view == 'details' || view == 'review'", disabled: "!standing_order_form.$dirty", value: "'Back'" } }
+    %input.red{ type: "submit", ng: { click: "next()", hide: "view == 'review'", disabled: "!standing_order_form.$dirty", value: "'Next'" } }
+    %input.red{ type: "submit", ng: { click: "save()", show: "view == 'review'", disabled: "!standing_order_form.$dirty", value: "'Save'" } }
     -# %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? 'Cancel' : 'Close'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
 
-  = render 'details'
+  .details{ ng: { show: "['details','review'].indexOf(view) >= 0" } }
+    = render 'details'
 
-  = render 'autocomplete'
-
-  = render 'items'
+  .products{ ng: { show: "['products','review'].indexOf(view) >= 0" } }
+    = render 'autocomplete'
+    = render 'items'

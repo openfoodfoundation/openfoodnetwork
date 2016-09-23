@@ -27,6 +27,8 @@ feature 'Standing Orders' do
       select2_select payment_method.name, from: 'payment_method_id'
       select2_select shipping_method.name, from: 'shipping_method_id'
 
+      click_button('Next')
+
       # Adding a product and getting a price estimate
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
       fill_in 'add_quantity', with: 2
@@ -37,6 +39,8 @@ feature 'Standing Orders' do
         expect(page).to have_input 'quantity', with: "2"
         expect(page).to have_selector 'td.total', text: "$27.50"
       end
+
+      click_button('Next')
 
       # No date filled out, so error returned
       expect{
