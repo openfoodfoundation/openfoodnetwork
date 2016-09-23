@@ -1,35 +1,37 @@
-.row
-  .four.columns.alpha.field
-    Customer
-  .four.columns.field
-    %input.ofn-select2.fullwidth#customer_id{ name: 'customer_id', type: 'number', data: 'customers', text: 'email', ng: { model: 'standingOrder.customer_id' } }
-    .error{ ng: { repeat: 'error in errors.customer', show: 'standing_order_form.customer_id.$pristine' } } {{ error }}
-  .four.columns.field
-    Schedule
-  .four.columns.omega.field
-    %input.ofn-select2.fullwidth#schedule_id{ name: 'schedule_id', type: 'number', data: 'schedules', ng: { model: 'standingOrder.schedule_id' } }
-    .error{ ng: { repeat: 'error in errors.schedule', show: 'standing_order_form.schedule_id.$pristine'} } {{ error }}
+%fieldset
+  %legend{ align: 'center'}= t("admin.standing_orders.form.details")
+  .row
+    .four.columns.alpha.field
+      Customer
+    .four.columns.field
+      %input.ofn-select2.fullwidth#customer_id{ name: 'customer_id', type: 'number', data: 'customers', text: 'email', ng: { model: 'standingOrder.customer_id' } }
+      .error{ ng: { repeat: 'error in errors.customer', show: 'standing_order_form.customer_id.$pristine' } } {{ error }}
+    .four.columns.field
+      Schedule
+    .four.columns.omega.field
+      %input.ofn-select2.fullwidth#schedule_id{ name: 'schedule_id', type: 'number', data: 'schedules', ng: { model: 'standingOrder.schedule_id' } }
+      .error{ ng: { repeat: 'error in errors.schedule', show: 'standing_order_form.schedule_id.$pristine'} } {{ error }}
 
-.row
-  .four.columns.alpha.field
-    Payment Method
-  .four.columns.field
-    %input.ofn-select2.fullwidth#payment_method_id{ name: 'payment_method_id',type: 'number', data: 'paymentMethods', ng: { model: 'standingOrder.payment_method_id' } }
-    .error{ ng: { repeat: 'error in errors.payment_method', show: 'standing_order_form.payment_method_id.$pristine' } } {{ error }}
-  .four.columns.field
-    Shipping Method
-  .four.columns.omega.field
-    %input.ofn-select2.fullwidth#shipping_method_id{ name: 'shipping_method_id', type: 'number', data: 'shippingMethods', ng: { model: 'standingOrder.shipping_method_id' } }
-    .error{ ng: { repeat: 'error in errors.shipping_method', show: 'standing_order_form.shipping_method_id.$pristine' } } {{ error }}
+  .row
+    .four.columns.alpha.field
+      Payment Method
+    .four.columns.field
+      %input.ofn-select2.fullwidth#payment_method_id{ name: 'payment_method_id',type: 'number', data: 'paymentMethods', ng: { model: 'standingOrder.payment_method_id' } }
+      .error{ ng: { repeat: 'error in errors.payment_method', show: 'standing_order_form.payment_method_id.$pristine' } } {{ error }}
+    .four.columns.field
+      Shipping Method
+    .four.columns.omega.field
+      %input.ofn-select2.fullwidth#shipping_method_id{ name: 'shipping_method_id', type: 'number', data: 'shippingMethods', ng: { model: 'standingOrder.shipping_method_id' } }
+      .error{ ng: { repeat: 'error in errors.shipping_method', show: 'standing_order_form.shipping_method_id.$pristine' } } {{ error }}
 
-.row
-  .four.columns.alpha.field
-    Begins At
-  .four.columns.field
-    %input.fullwidth#begins_at{ name: 'begins_at', type: 'text', placeholder: 'Select A Date', datepicker: 'standingOrder.begins_at', ng: { model: 'standingOrder.begins_at' } }
-    .error{ ng: { repeat: 'error in errors.begins_at', show: 'standing_order_form.begins_at.$pristine' } } {{ error }}
-  .four.columns.field
-    Ends at
-  .four.columns.omega.field
-    %input.fullwidth#ends_at{ name: 'ends_at', type: 'text', placeholder: 'Optional', datepicker: 'standingOrder.begins_at', ng: { model: 'standingOrder.ends_at' } }
-    .error{ ng: { repeat: 'error in errors.ends_at', show: 'standing_order_form.ends_at.$pristine' } } {{ error }}
+  .row
+    .four.columns.alpha.field
+      Begins At
+    .four.columns.field
+      %input.fullwidth#begins_at{ name: 'begins_at', type: 'text', placeholder: 'Select A Date', datepicker: 'standingOrder.begins_at', ng: { model: 'standingOrder.begins_at' } }
+      .error{ ng: { repeat: 'error in errors.begins_at', show: 'standing_order_form.begins_at.$pristine' } } {{ error }}
+    .four.columns.field
+      Ends at
+    .four.columns.omega.field
+      %input.fullwidth#ends_at{ name: 'ends_at', type: 'text', placeholder: 'Optional', datepicker: 'standingOrder.begins_at', ng: { model: 'standingOrder.ends_at' } }
+      .error{ ng: { repeat: 'error in errors.ends_at', show: 'standing_order_form.ends_at.$pristine' } } {{ error }}

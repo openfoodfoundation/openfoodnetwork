@@ -782,6 +782,10 @@ en:
       packing:
         name: Packing Reports
 
+    standing_orders:
+      details:
+        details: 'Details'
+
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
