@@ -1,4 +1,4 @@
-%form.margin-bottom-50{ name: 'standing_order_form', novalidate: true, ng: { app: 'admin.standingOrders', controller: 'StandingOrderController', submit: 'save()' } }
+%form.margin-bottom-50{ name: 'standing_order_form', novalidate: true, ng: { submit: 'save()' } }
   %save-bar{ dirty: "standing_order_form.$dirty", persist: 'true', ng: { show: "view == 'review'" } }
     %input.red{ type: "submit", value: "Save" }
 
