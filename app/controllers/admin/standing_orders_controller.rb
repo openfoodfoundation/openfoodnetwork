@@ -23,6 +23,10 @@ module Admin
 
     private
 
+    def collection
+      StandingOrder.where("1=0")
+    end
+
     def load_shop
       @shop = Enterprise.find(params[:shop_id])
     end

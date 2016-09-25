@@ -179,7 +179,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :schedules, only: [:index, :create, :update, :destroy], format: :json
 
-    resources :standing_orders, only: [:new, :create]
+    resources :standing_orders, only: [:index, :new, :create]
 
     resources :standing_line_items, only: [], format: :json do
       post :build, on: :collection
