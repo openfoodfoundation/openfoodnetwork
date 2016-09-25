@@ -44,7 +44,6 @@
 
         %p
           = t :sell_embed
-          %a{href: "hello@openfoodnetwork.org".reverse, target: '_blank', mailto: true}
-            = t :sell_ask_services
+          = mail_to ContentConfig.footer_email, t(:sell_ask_services)
 
 = render "shared/footer"
