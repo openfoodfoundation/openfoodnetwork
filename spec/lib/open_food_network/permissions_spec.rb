@@ -392,5 +392,16 @@ module OpenFoodNetwork
         end
       end
     end
+
+    describe "finding visible standing orders" do
+      let!(:so1) { create(:standing_order) }
+      let!(:so2) { create(:standing_order) }
+
+      it "returns standing orders placed with managed shops" do
+        expect(permissions).to receive(:managed_enterprises) { [so1.shop] }
+
+        expect(permissions.visible_standing_orders).to eq [so1]
+      end
+    end
   end
 end

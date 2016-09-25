@@ -140,10 +140,10 @@ FactoryGirl.define do
 
   factory :standing_order, :class => StandingOrder do
     shop { FactoryGirl.create :enterprise }
-    schedule
+    schedule { FactoryGirl.create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
     customer { create(:customer, enterprise: shop) }
-    payment_method
-    shipping_method
+    payment_method { create(:payment_method, distributors: [shop]) }
+    shipping_method { create(:shipping_method, distributors: [shop]) }
     begins_at { 1.month.ago }
   end
 
