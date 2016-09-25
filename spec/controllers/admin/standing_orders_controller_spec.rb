@@ -3,6 +3,40 @@ require 'spec_helper'
 describe Admin::StandingOrdersController, type: :controller do
   include AuthenticationWorkflow
 
+
+  describe 'index' do
+    context 'html' do
+      let(:params) { { format: :html } }
+
+      context 'as an regular user' do
+        let!(:user) { create(:user) }
+
+        before do
+          allow(controller).to receive(:spree_current_user) { user }
+        end
+
+        it 'renders the index page' do
+          spree_get :index, params
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+
+      context 'as an enterprise user' do
+        let!(:user) { create(:user) }
+        let!(:enterprise) { create(:enterprise, owner: user) }
+
+        before do
+          allow(controller).to receive(:spree_current_user) { user }
+        end
+
+        it 'renders the index page' do
+          spree_get :index, params
+          expect(response).to render_template 'index'
+        end
+      end
+    end
+  end
+
   describe 'new' do
     let!(:user) { create(:user) }
     let!(:shop) { create(:distributor_enterprise, owner: user) }
