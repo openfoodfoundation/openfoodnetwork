@@ -1,18 +1,17 @@
 %form.margin-bottom-50{ name: 'standing_order_form', novalidate: true, ng: { submit: 'save()' } }
   %save-bar{ dirty: "standing_order_form.$dirty", persist: 'true', ng: { show: "view == 'review'" } }
-    %input.red{ type: "submit", value: "Save" }
+    %input.red{ type: "submit", value: t('admin.standing_orders.create') }
 
   .details{ ng: { show: "['details','review'].indexOf(view) >= 0" } }
     %ng-form{ name: 'standing_order_details_form', ng: { controller: 'DetailsController' } }
       %save-bar{ dirty: "standing_order_details_form.$dirty", persist: 'true', ng: { hide: "view == 'review'" } }
-        %input{ type: "button", value: 'Back', ng: { click: "back()" } }
-        %input.red{ type: "button", value: 'Next', ng: { click: 'next()' } }
+        %input.red{ type: "button", value: t(:next), ng: { click: 'next()' } }
       = render 'details'
 
   .products{ ng: { show: "['products','review'].indexOf(view) >= 0" } }
     %ng-form{ name: 'standing_order_products_form', ng: { controller: 'ProductsController' } }
       %save-bar{ dirty: "standing_order_products_form.$dirty", persist: 'true', ng: { hide: "view == 'review'" } }
-        %input{ type: "button", value: 'Back', ng: { click: "back()" } }
-        %input.red{ type: "button", value: 'Next', ng: { click: 'next()' } }
+        %input{ type: "button", value: t(:back), ng: { click: "back()" } }
+        %input.red{ type: "button", value: t(:next), ng: { click: 'next()' } }
     = render 'autocomplete'
     = render 'products'
