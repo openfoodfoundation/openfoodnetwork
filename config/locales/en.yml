@@ -188,18 +188,24 @@ en:
     create_and_add_another: "Create and Add Another"
   admin:
     # Common properties / models
+    begins_at: Begins At
+    customer: Customer
     date: Date
     email: Email
+    ends_at: Ends At
     name: Name
     on_hand: On Hand
     on_demand: On Demand
     on_demand?: On Demand?
     order_cycle: Order Cycle
+    payment_method: Payment Method
     phone: Phone
     price: Price
     producer: Producer
     product: Product
     quantity: Quantity
+    schedule: Schedule
+    shipping_method: Shipping Method
     shop: Shop
     sku: SKU
     tags: Tags
@@ -221,6 +227,7 @@ en:
     clear: Clear
     show_more: Show more
     show_n_more: Show %{num} more
+    choose: "Choose..."
 
     columns: Columns
     actions: Actions
@@ -783,8 +790,15 @@ en:
         name: Packing Reports
 
     standing_orders:
+      new: New Standing Order
+      create: Create Standing Order
+      steps:
+        details: 1. Basic Details
+        products: 2. Add Products
+        review: 3. Review & Save
       details:
-        details: 'Details'
+        details: Details
+        invalid_error: Oops! Please fill in all of the required fields...
 
     stripe_connect_settings:
       edit:

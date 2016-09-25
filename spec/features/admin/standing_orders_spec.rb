@@ -30,7 +30,7 @@ feature 'Standing Orders' do
       # No date filled out, so error returned
       click_button('Next')
       expect(page).to have_content 'can\'t be blank'
-      expect(page).to have_content 'Oops! There seems to be a problem...'
+      expect(page).to have_content 'Oops! Please fill in all of the required fields...'
       fill_in 'begins_at', with: Date.today.strftime('%F')
 
       click_button('Next')
@@ -52,7 +52,7 @@ feature 'Standing Orders' do
       click_button('Next')
 
       expect{
-        click_button('Save')
+        click_button('Create Standing Order')
         expect(page).to have_content 'Saved'
       }.to change(StandingOrder, :count).by(1)
 

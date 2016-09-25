@@ -7,4 +7,4 @@ angular.module("admin.standingOrders").controller "DetailsController", ($scope, 
       StatusMessage.clear()
       $scope.setView('products')
     else
-      StatusMessage.display 'failure', 'Oops! There seems to be a problem...'
+      StatusMessage.display 'failure', t('admin.standing_orders.details.invalid_error')
