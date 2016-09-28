@@ -7,7 +7,7 @@ feature %q{
 }, js: true do
   include UIComponentHelper
   include AuthenticationWorkflow
-  let!(:user) { create(:user)}
+  let!(:user) { create(:user, bill_address: create(:address))}
   let!(:user2) {create(:user)}
   let!(:distributor1) { create(:distributor_enterprise) }
   let!(:distributor2) { create(:distributor_enterprise) }
@@ -57,6 +57,35 @@ feature %q{
 
     it "displays an appropriate message" do
       expect(page).to have_content {t :you_have_no_orders_yet}
+    end
+  end
+
+  context 'editing user addresses' do
+    before do
+      visit '/account/edit_address'
+    end
+    it 'shows billing address in the form' do
+      expect(page).to have_field('user[bill_address_attributes][firstname]', with: user.bill_address.firstname)
+      expect(page).to have_field('user[bill_address_attributes][address1]', with: user.bill_address.address1)
+      expect(page).to have_field('user[bill_address_attributes][phone]', with: user.bill_address.phone)
+
+      expect(page).to have_field('user[bill_address_attributes][state_id]', with: user.bill_address.state_id)
+      expect(page).to have_field('user[bill_address_attributes][country_id]', with: user.bill_address.country_id)
+    end
+
+    it 'updates shipping address' do
+      fill_in('user[ship_address_attributes][firstname]', with: 'John')
+      fill_in('user[ship_address_attributes][lastname]', with: 'Doe')
+      fill_in('user[ship_address_attributes][address1]', with: '11 Lovely Street')
+      fill_in('user[ship_address_attributes][phone]', with: '123-456-7890')
+      fill_in('user[ship_address_attributes][city]', with: 'Merbourne')
+      fill_in('user[ship_address_attributes][zipcode]', with: '3127')
+
+      click_button('Update')
+
+      expect(page).to have_content '11 Lovely Street'
+      expect(page).to have_content 'Merbourne'
+      expect(page).to have_content '3127'
     end
   end
 
