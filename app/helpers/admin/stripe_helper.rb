@@ -1,13 +1,19 @@
+require File.join(Rails.root, '/lib/oauth2/strategy/deauthorize')
+require File.join(Rails.root, '/lib/oauth2/client')
+require 'oauth2'
 module Admin
   module StripeHelper
     class << self
       attr_accessor :client, :options
     end
+
     @options = {
       :site => 'https://connect.stripe.com',
       :authorize_url => '/oauth/authorize',
+      :deauthorize_url => '/oauth/deauthorize',
       :token_url => '/oauth/token'
     }
+
     @client = OAuth2::Client.new(
       ENV['STRIPE_CLIENT_ID'],
       ENV['STRIPE_INSTANCE_SECRET_KEY'],
@@ -22,6 +28,13 @@ module Admin
       options = options.merge({enterprise_id: enterprise_id})
       # State param will be passed back after auth
       StripeHelper.client.auth_code.authorize_url(state: options)
+    end
+
+    def deauthorize_stripe(account_id)
+      stripe_account = StripeAccount.find(account_id)
+      if stripe_account
+        response = StripeHelper.client.deauthorize(stripe_account.stripe_user_id).deauthorize_request
+      end
     end
   end
 end
