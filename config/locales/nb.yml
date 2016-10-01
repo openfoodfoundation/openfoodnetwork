@@ -90,6 +90,16 @@ nb:
         add_a_new_customer_for: Legge til en ny kunde for %{shop_name}
         code: kode
         duplicate_code: "Denne koden er allerede brukt."
+        bill_address: "Fakturaadresse"
+        ship_address: "Leveringsstatus"
+        update_address_success: 'Adresse oppdatert.'
+        update_address_error: 'Beklager! Vennligst skriv alle de obligatoriske feltene!'
+        edit_bill_address: 'Rediger fakturaadresse'
+        edit_ship_address: 'Rediger leveringsadresse'
+        required_fileds: 'Obligatoriske felt er merket med en stjerne'
+        select_country: 'velg landet'
+        select_state: 'Velg Fylket'
+        edit: 'Redigere'
     products:
       bulk_edit:
         unit: Enhet
@@ -347,6 +357,7 @@ nb:
   email_userguide_html: "Brukerhåndboken med detaljert støtte om hvordan man kommer i gang som Produsent eller Hub finnes her: %{link}"
   email_admin_html: "Du kan administrere din konto ved å logge inn på %{link} eller ved klikke på tannhjulet øverst til høyre på hjemmesiden og velge Administrasjon."
   email_community_html: "Vi har også et online forum for diskusjon relatert til OFN programvaren og de forskjellige utfordringene med å drive et matfirma. Vi oppfordrer deg til å bli med. Vi utvikler oss hele tiden og dine innspill til dette forumet vil forme det som skjer videre. %{link}"
+  join_community: "Bli med"
   email_help: "Hvis du har problemer, sjekk vår FAQ, utforsk forumet eller skriv et 'Support'-emne og noen vil hjelpe deg!"
   email_confirmation_greeting: "Hei, %{contact}!"
   email_confirmation_profile_created: "En profil for %{name} har blitt opprettet! For å aktivere din profil må du bekrefte denne epostadressen."
@@ -388,7 +399,7 @@ nb:
   email_signup_email: Din innloggingsepost er
   email_signup_shop_html: "Du kan begynne å handle på nett nå på %{link}."
   email_signup_text: "Takk for at du ble med i nettverket. Hvis du er kunde ser vi frem til å vise deg mange fantastiske bønder, flotte mathubs og deilig mat! Hvis du er produsent eller selskap er vi glade for å ha deg som en del av nettverket."
-  email_signup_help_html: "Vi tar i mot alle dine spørsmål og tilbakemeldinger; du kan bruke <em>Send tilbakemelding</em>-knappen på nettsiden eller sende oss en epost på"
+  email_signup_help_html: "Vi tar imot alle dine spørsmål og tilbakemeldinger; du kan bruke <em> Send tilbakemelding </em> på nettside eller email oss på %{email}"
   producer_mail_greeting: "Kjære"
   producer_mail_text_before: "Alle dine kunderbestillinger er klar."
   producer_mail_order_text: "Her er en oppsummering av bestillingene:"
@@ -797,6 +808,7 @@ nb:
   tax_category: "Avgiftskategori"
   calculator: "Kalkulator"
   calculator_values: "Kalkulatorverdier"
+  flat_percent_per_item: "Prosent (per stk)"
   new_order_cycles: "Nye Bestillingsrunder"
   select_a_coordinator_for_your_order_cycle: "Velg en koordinator for denne syklus"
   edit_order_cycle: "Endre Bestillingsrunde"
