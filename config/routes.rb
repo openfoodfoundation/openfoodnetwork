@@ -53,6 +53,7 @@ Openfoodnetwork::Application.routes.draw do
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
   get '/stripe/callback', :to => 'admin/enterprises#stripe_connect_callback'
+  get '/stripe/webhook', :to => 'admin/stripe_accounts#destroy_from_webhook'
 
   resources :enterprises do
     collection do
