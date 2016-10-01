@@ -1,7 +1,6 @@
-- if stripe_account = @enterprise.stripe_account
+- if @stripe_account = @enterprise.stripe_account
   = t :stripe_account_connected
-  = stripe_account.inspect
-  .span (Link to disconnect Stripe Acct)
+  = link_to 'Delete', main_app.admin_enterprise_stripe_account_path(@enterprise,@stripe_account), method: :delete
 - else
   %a.stripe-connect{href: 'stripe_connect'}
     .span= t :connect_with_stripe

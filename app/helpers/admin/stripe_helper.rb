@@ -3,6 +3,7 @@ require File.join(Rails.root, '/lib/oauth2/client')
 require 'oauth2'
 module Admin
   module StripeHelper
+
     class << self
       attr_accessor :client, :options
     end
@@ -34,7 +35,11 @@ module Admin
       stripe_account = StripeAccount.find(account_id)
       if stripe_account
         response = StripeHelper.client.deauthorize(stripe_account.stripe_user_id).deauthorize_request
+        if response # Response from OAuth2 only returned if successful
+          stripe_account.destroy
+        end
       end
     end
+
   end
 end
