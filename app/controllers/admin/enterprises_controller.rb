@@ -141,6 +141,15 @@ module Admin
       end
     end
 
+    def stripe_disconnect
+      if deauthorize_stripe(params[:account_id])
+        respond_to do |format|
+          format.html { redirect_to main_app.edit_admin_enterprise_path(@enterprise), notice: "Stripe account disconnected."}
+          format.json { render json: "Disconnected" }
+        end
+      end
+    end
+
     protected
 
     def build_resource_with_address
