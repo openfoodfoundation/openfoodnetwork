@@ -20,6 +20,8 @@ module Admin
       ENV['STRIPE_INSTANCE_SECRET_KEY'],
       options
     )
+    # Stripe ruby bindings used for non-Connect functionality
+    Stripe.api_key = ENV['STRIPE_INSTANCE_SECRET_KEY']
 
     def get_stripe_token(code, options={scope: 'read_write'})
       StripeHelper.client.auth_code.get_token(code, options)
@@ -41,5 +43,9 @@ module Admin
       end
     end
 
+    def fetch_event_from_stripe(request)
+      event_json = JSON.parse(request.body.read)
+      JSON.parse(Stripe::Event.retrieve(event_json["id"]))
+    end
   end
 end
