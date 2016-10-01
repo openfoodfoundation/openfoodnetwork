@@ -15,17 +15,17 @@ describe Admin::StripeHelper do
 
   context "Disconnecting an account" do
     it "doesn't destroy the database record if the Stripe API disconnect failed" do
-      disconnection = Admin::StripeHelper.client
+      Admin::StripeHelper.client
         .deauthorize(stripe_account.stripe_user_id)
         .stub(:deauthorize_request)
         .and_return(nil)
 
       deauthorize_stripe(stripe_account.id)
-      StripeAccount.last.should eq stripe_account
+      expect(StripeAccount.all).to include(stripe_account)
     end
 
     it "destroys the record if the Stripe API disconnect succeeds" do
-      disconnection = Admin::StripeHelper.client
+      Admin::StripeHelper.client
         .deauthorize(stripe_account.stripe_user_id)
         .stub(:deauthorize_request)
         .and_return("something truthy")
@@ -33,5 +33,6 @@ describe Admin::StripeHelper do
       deauthorize_stripe(stripe_account.id)
       expect(StripeAccount.all).not_to include(stripe_account)
     end
+
   end
 end

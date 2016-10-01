@@ -66,6 +66,7 @@ Openfoodnetwork::Application.routes.draw do
   post 'embedded_shopfront/disable', to: 'application#disable_embedded_styles'
 
   get '/stripe/callback', :to => 'admin/enterprises#stripe_connect_callback'
+  get '/stripe/webhook', :to => 'admin/stripe_accounts#destroy_from_webhook'
 
   resources :enterprises do
     collection do
