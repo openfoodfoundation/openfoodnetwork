@@ -362,6 +362,12 @@ FactoryGirl.define do
       tr.calculator = Spree::Calculator::FlatPercentItemTotal.new(calculable: tr)
     end
   end
+
+  factory :stripe_account do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+    stripe_user_id "abc123"
+    stripe_publishable_key "xyz456"
+  end
 end
 
 
