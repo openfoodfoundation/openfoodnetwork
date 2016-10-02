@@ -1,6 +1,6 @@
-require File.join(Rails.root, '/lib/oauth2/strategy/deauthorize')
-require File.join(Rails.root, '/lib/oauth2/client')
-require 'oauth2'
+# require File.join(Rails.root, '/lib/oauth2/strategy/deauthorize')
+# require File.join(Rails.root, '/lib/oauth2/client')
+# require 'oauth2'
 module Admin
   module StripeHelper
 
