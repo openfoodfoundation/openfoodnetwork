@@ -36,8 +36,13 @@ module Admin
     def deauthorize_stripe(account_id)
       stripe_account = StripeAccount.find(account_id)
       if stripe_account
-        response = StripeHelper.client.deauthorize(stripe_account.stripe_user_id).deauthorize_request
-        if response # Response from OAuth2 only returned if successful
+        # If the account is only connected to one Enterprise, make a request to remove it on the Stripe side
+        if StripeAccount.where(stripe_user_id: stripe_account.stripe_user_id).size == 1
+          response = StripeHelper.client.deauthorize(stripe_account.stripe_user_id).deauthorize_request
+          if response # Response from OAuth2 only returned if successful
+            stripe_account.destroy
+          end
+        else
           stripe_account.destroy
         end
       end
