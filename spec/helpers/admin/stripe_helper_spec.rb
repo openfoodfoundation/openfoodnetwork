@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe Admin::StripeHelper do
   let!(:enterprise) { create(:enterprise) }
+  let!(:enterprise2) { create(:enterprise) }
   let!(:stripe_account) { create(:stripe_account, enterprise: enterprise) }
+
   it "calls the Stripe API to get a token" do
     expect(Admin::StripeHelper.client.auth_code).to receive(:get_token).with("abc",{scope: "read_write"})
     helper.get_stripe_token("abc")
@@ -32,6 +34,12 @@ describe Admin::StripeHelper do
 
       deauthorize_stripe(stripe_account.id)
       expect(StripeAccount.all).not_to include(stripe_account)
+    end
+
+    it "Doesn't make a Stripe API disconnection request if the account is also associated with another Enterprise" do
+      another_stripe_account = create(:stripe_account, enterprise: enterprise2, stripe_user_id: stripe_account.stripe_user_id)
+      expect(Admin::StripeHelper.client.deauthorize(stripe_account.stripe_user_id)).not_to receive(:deauthorize_request)
+      deauthorize_stripe(stripe_account.id)
     end
 
   end
