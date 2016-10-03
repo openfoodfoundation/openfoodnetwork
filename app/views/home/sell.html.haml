@@ -44,6 +44,6 @@
 
         %p
           = t :sell_embed
-          = mail_to ContentConfig.footer_email, t(:sell_ask_services)
+          = mail_to ContentConfig.footer_email.reverse, t(:sell_ask_services)
 
 = render "shared/footer"
