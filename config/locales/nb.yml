@@ -1,25 +1,8 @@
-# English language file
-# ---------------------
-#
-# This is the source language file maintained by the Australian OFN team.
-# Visit Transifex to translate this file into other languages:
-#
-#   https://www.transifex.com/open-food-foundation/open-food-network/
-#
-# If you translate this file in a text editor, please share your results with us by
-#
-# - uploading the file to Transifex or
-# - opening a pull request at GitHub.
-#
-#
-# See http://community.openfoodnetwork.org/t/localisation-ofn-in-your-language/397
-
 nb:
   activerecord:
-    # Overridden here due to a bug in spree i18n (Issue #870)
     attributes:
       spree/order:
-        payment_state: Betalingsstatus
+        payment_state: Betallingsstatus
         shipment_state: Sendingsstatus
   devise:
     failure:
@@ -37,13 +20,12 @@ nb:
       subject: "Vennligst bekreft e-postadressen til %{enterprise}"
     welcome:
       subject: "%{enterprise} er nå på %{sitename}"
-  home: "OFN"
   title: Open Food Network
   welcome_to: 'Velkommen til '
   site_meta_description: "Vi begynner fra grunnen. Med bønder og dyrkere klare til å fortelle sine historier, stolt og virkelig. Med distributører klare til å koble mennesker med produkter på en rettferdig og ærlig måte. Med kunder som tror på at ukentlige innkjøpsrutiner kan..."
   search_by_name: Søk på navn eller sted...
   producers: 'Norske Produsenter'
-  producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network. #FIXME
+  producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
   charges_sales_tax: MVA-pliktig?
   print_invoice: "Skriv ut Faktura"
   send_invoice: "Send Faktura"
@@ -70,12 +52,8 @@ nb:
   say_no: "Nei"
   say_yes: "Ja"
   then: vil
-
   sort_order_cycles_on_shopfront_by: "Sorter Bestillingsrunder i Butikkvindu etter"
-
-
   admin:
-    # Common properties / models
     date: Dato
     email: Epost
     name: Navn
@@ -92,23 +70,17 @@ nb:
     sku: SKU
     tags: Merker
     variant: Variant
-
-    # General form elements
     quick_search: Hurtigsøk
     clear_all: Fjern Alt
     start_date: "Startdato"
     end_date: "Sluttdato"
-
     columns: Kolonner
     actions: Handlinger
     viewing: "Viser: %{current_view_name}"
-
     whats_this: Hva er dette?
-
     tag_has_rules: "Gjeldende regler for denne merkelappen: %{num}"
     has_one_rule: "har én regel"
     has_n_rules: "har %{num} regler"
-
     customers:
       index:
         add_customer: "Legge til kunde"
@@ -118,7 +90,6 @@ nb:
         add_a_new_customer_for: Legge til en ny kunde for %{shop_name}
         code: kode
         duplicate_code: "Denne koden er allerede brukt."
-
     products:
       bulk_edit:
         unit: Enhet
@@ -128,7 +99,6 @@ nb:
         inherits_properties?: Arver Egenskaper?
         available_on: Tilgjengelig på
         av_on: "Til. på"
-
     variant_overrides:
       index:
         title: Varelager
@@ -149,7 +119,6 @@ nb:
         inventory_powertip: Dette er ditt varelager. For å legge til lageret, velg 'Nye Produkter' fra Visningslisten.
         hidden_powertip: Disse produktene har blitt skjult fra ditt varelager og vil ikke være tilgjengelig for å legge til din butikk. Du kan klikke "Legg til" for å legge et produkt til ditt varelager.
         new_powertip: Disse produktene er tilgjengelige for å bli lagt til ditt varelager. Klikk "Legg til" for å legge et produkt til lageret ditt, eller "Skjul" for å skjule det fra visning. Du kan alltids ombestemme deg senere!
-
     orders:
       bulk_management:
         tip: "Bruk denne siden for å endre produktantall på tvers av flere bestillinger. Produkter kan også fjernes fra bestillinger helt, hvis påkrevd."
@@ -160,7 +129,7 @@ nb:
         product_unit: "Produkt: Enhet"
         weight_volume: "Vekt/Volum"
         ask: "Spør?"
-        page_title: "Bulk Order Management"
+        page_title: "Bulk ordrehåndtering"
         actions_delete: "Slett Valgte"
         loading: "Laster bestillinger"
         no_results: "Fant ingen bestillinger."
@@ -171,14 +140,11 @@ nb:
         max_fulfilled_units: "Max Oppfylte Enheter"
         order_error: "Noen feil må løses før du kan oppdatere bestillinger.\nAlle felt med røde kanter inneholder feil."
         variants_without_unit_value: "ADVARSEL: Noen varianter mangler enhetsverdi"
-
     order_cycles:
       edit:
         choose_products_from: "Velg Produkter Fra:"
-
     enterprise:
       select_outgoing_oc_products_from: Velg utgående bestillingsrundeprodukter fra
-
     enterprises:
       index:
         producer?: Produsent?
@@ -191,7 +157,6 @@ nb:
           shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller ikke."
           shopfront_requires_login_false: "Offentlig"
           shopfront_requires_login_true: "Krev at kunder logger inn"
-
   home:
     hubs:
       show_closed_shops: "Vis stengte butikker"
@@ -209,19 +174,16 @@ nb:
       require_customer_login: "Denne butikken er kun for kunder."
       require_login_html: "Vennligst %{login} hvis du allerede har en konto. Hvis ikke, %{register} for å bli kunde."
       require_customer_html: "Vennligst %{contact} %{enterprise} for å bli kunde."
-
-  # Printable Invoice Columns
   invoice_column_item: "Vare"
   invoice_column_qty: "Mengde"
   invoice_column_tax: "MVA"
   invoice_column_price: "Pris"
-
-  logo: "Logo (640x130)" #FIXME
-  logo_mobile: "Mobil logo (75x26)" #FIXME
-  logo_mobile_svg: "Mobil logo (SVG)" #FIXME
+  logo: "Logo (640x130)"
+  logo_mobile: "Mobil logo (75x26)"
+  logo_mobile_svg: "Mobil logo (SVG)"
   home_hero: "Heltebilde"
   home_show_stats: "Vis statistikk"
-  footer_logo: "Logo (220x76)" #FIXME
+  footer_logo: "Logo (220x76)"
   footer_facebook_url: "Facebook URL"
   footer_twitter_url: "Twitter URL"
   footer_instagram_url: "Instagram URL"
@@ -232,7 +194,6 @@ nb:
   footer_links_md: "Linker"
   footer_about_url: "Om URL"
   footer_tos_url: "Vilkår URL"
-
   name: Navn
   first_name: Fornavn
   last_name: Etternavn
@@ -249,12 +210,13 @@ nb:
   terms_of_service: "Vilkår"
   on_demand: Ved forespørsel
   none: Ingen
-
   label_shops: "Butikker"
   label_map: "Kart"
   label_producers: "Produsenter"
   label_groups: "Grupper"
   label_about: "Om"
+  label_connect: "Koble til"
+  label_learn: "Lære"
   label_shopping: "Handle"
   label_login: "Logg inn"
   label_logout: "Logg ut"
@@ -265,7 +227,6 @@ nb:
   label_more: "Vis mer"
   label_less: "Vis mindre"
   label_notices: "Meldinger"
-
   items: "varer"
   cart_headline: "Din handlekurv"
   total: "Sum"
@@ -273,11 +234,9 @@ nb:
   cart_updating: "Oppdaterer handlekurv..."
   cart_empty: "Handlekurven er tom"
   cart_edit: "Rediger handlekurv"
-
   card_number: Kortnummer
   card_securitycode: "Sikkerhetskode"
   card_expiry_date: Utløpsdato
-
   ofn_cart_headline: "Gjeldende handlekurv for:"
   ofn_cart_distributor: "Distributør:"
   ofn_cart_oc: "Bestillingsrunde:"
@@ -286,45 +245,34 @@ nb:
   ofn_cart_product: "Produkt:"
   ofn_cart_quantitiy: "Antall:"
   ofn_cart_send: "Kjøp"
-
   ie_warning_headline: "Din nettleser er for gammel :-("
   ie_warning_text: "For den beste opplevelsen med Open Food Network anbefaler vi på det sterkeste å oppgradere nettleseren din:"
   ie_warning_chrome: Last ned Chrome
   ie_warning_firefox: Last ned Firefox
   ie_warning_ie: Oppgrader Internet Explorer
   ie_warning_other: "Kan ikke oppgradere nettleseren din? Prøv Open Food Network på smart-telefonen din :-)"
-
   footer_global_headline: "OFN Globalt"
   footer_global_home: "Hjem"
   footer_global_news: "Nyheter"
   footer_global_about: "Om"
   footer_global_contact: "Kontakt"
-
   footer_sites_headline: "OFN nettsteder"
   footer_sites_developer: "Utvikler"
   footer_sites_community: "Forum"
   footer_sites_userguide: "Brukerhåndbok"
-
   footer_secure: "Sikker og klarert."
   footer_secure_text: "Open Food Network bruker SSL-kryptering (2048 bit RSA) overalt for å holde handlingen og betalingen din privat. Våre servere lagrer ikke kortopplysninger og betalinger behandles av PCI-kompatible tjenester."
-
   footer_contact_headline: "Hold kontakten"
   footer_contact_email: "Send oss en epost"
-
   footer_nav_headline: "Naviger"
   footer_join_headline: "Bli med"
-  footer_join_producers: "Bli med som Produsent"
-  footer_join_hubs: "Bli med som Hub"
-  footer_join_groups: "Bli med som Gruppe"
-  footer_join_partners: "Samarbeidspartnere"
-
+  footer_join_body: "Opprette en profil, butikk eller gruppe på Open Food Network."
+  footer_join_cta: "Fortell meg mer!"
   footer_legal_call: "Les våre"
   footer_legal_tos: "Vilkår og betingelser"
   footer_legal_visit: "Finn oss på"
   footer_legal_text_html: "Open Food Network er en plattform med fri og åpen kildekode. Vårt innhold er lisensiert med %{content_license} og vår kode med %{code_license}."
-
   home_shop: Handle nå
-
   brandstory_headline: "Food, unincorporated."
   brandstory_intro: "Noen ganger er det best å fikse systemet ved å starte et nytt..."
   brandstory_part1: "Vi begynner fra grunnen. Med bønder og dyrkere klare til å fortelle sine historier, stolt og virkelig. Med distributører klare til å koble mennesker med produkter på en rettferdig og ærlig måte. Med kjøpere som tror på at ukentlige innkjøpsrutiner kan bidra til å forandre verden."
@@ -333,24 +281,24 @@ nb:
   brandstory_part4: "Det fungerer overalt. Det forandrer alt."
   brandstory_part5_strong: "Vi kaller det Open Food Network."
   brandstory_part6: "Alle er vi glad i mat. Nå kan vi elske vårt matsystem også."
-
-  system_headline: "Slik fungerer det."
+  learn_body: "See på modeller, historier og ressurser for å støtte deg å utvikle en god mat bedrift eller organisasjon. Finne opplæring, arrangement og andre muligheter til å lære fra andre."
+  learn_cta: "Bli Inspirert"
+  connect_body: "Søk i vår katalog av produsenter, hubs og grupper for å finne god mat nær deg. Vise din bedrift eller organisasjon på OFN slik at kjøpere kan finne deg. Bli med i fellesskapet for å få råd og løse problemer sammen."
+  connect_cta: "Utforske"
+  system_headline: "Shopping - slik virker det."
   system_step1: "1. Søk"
   system_step1_text: "Søk blant våre mangfoldige, uavhengige butikker for lokal mat i sesong. Søk i nabolag og matkategori, eller om du foretrekker levering eller å hente selv."
   system_step2: "2. Handle"
   system_step2_text: "Endre dine kjøpevaner med rimelig lokal mat fra mangfoldige produsenter og hubs. Oppdag historiene bak maten din og de som lager den!"
   system_step3: "3. Hent / Få det levert"
   system_step3_text: "Vent på din levering, eller besøk produsenten eller hub'en for en mer personlig kobling til maten din. Mathandling så mangfoldig slik det var ment fra naturens side."
-
   cta_headline: "Handling som gjør verden til et bedre sted."
   cta_label: "Jeg er klar"
-
   stats_headline: "Vi skaper et nytt matsystem."
   stats_producers: "matprodusenter"
   stats_shops: "matbutikker"
   stats_shoppers: "matkunder"
   stats_orders: "matbestillinger"
-
   checkout_title: Kasse
   checkout_now: Gå til kassen
   checkout_order_ready: Bestilling klar for
@@ -372,7 +320,6 @@ nb:
   checkout_shipping_price: Levering
   checkout_total_price: Sum
   checkout_back_to_cart: "Tilbake til Handlekurv"
-
   order_paid: BETALT
   order_not_paid: IKKE BETALT
   order_total: Sum bestilling
@@ -388,15 +335,12 @@ nb:
   order_includes_tax: (inkludert MVA)
   order_payment_paypal_successful: Din betaling via PayPal har blitt godkjent.
   order_hub_info: Hub info
-
   unsaved_changes_warning: "Ulagrede endringer finnes og vil gå tapt hvis du fortsetter."
   unsaved_changes_error: "Felt med røde kanter inneholder feil."
-
   products: "Produkter"
   products_in: "i %{oc}"
   products_at: "hos %{distributor}"
   products_elsewhere: "Produkter funnet andre steder"
-
   email_welcome: "Velkommen"
   email_confirmed: "Takk for at du bekrefter din epostadresse"
   email_registered: "er nå en del av"
@@ -414,7 +358,6 @@ nb:
   email_contact: "Send oss en epost:"
   email_signoff: "Mvh,"
   email_signature: "%{sitename} Team"
-
   email_confirm_customer_greeting: "Hei %{name},"
   email_confirm_customer_intro_html: "Takk for at du handler hos <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "Ordrebekreftelse <strong>#%{number}</strong>"
@@ -439,7 +382,6 @@ nb:
   email_shipping_collection_time: "Klar for henting:"
   email_shipping_collection_instructions: "Henteinstruksjoner:"
   email_special_instructions: "Dine kommentarer:"
-
   email_signup_greeting: Hei!
   email_signup_welcome: "Velkommen til %{sitename}!"
   email_signup_login: Din innlogging
@@ -447,14 +389,11 @@ nb:
   email_signup_shop_html: "Du kan begynne å handle på nett nå på %{link}."
   email_signup_text: "Takk for at du ble med i nettverket. Hvis du er kunde ser vi frem til å vise deg mange fantastiske bønder, flotte mathubs og deilig mat! Hvis du er produsent eller selskap er vi glade for å ha deg som en del av nettverket."
   email_signup_help_html: "Vi tar i mot alle dine spørsmål og tilbakemeldinger; du kan bruke <em>Send tilbakemelding</em>-knappen på nettsiden eller sende oss en epost på"
-
   producer_mail_greeting: "Kjære"
   producer_mail_text_before: "Alle dine kunderbestillinger er klar."
   producer_mail_order_text: "Her er en oppsummering av bestillingene:"
   producer_mail_delivery_instructions: "Henting / leveringsdetaljer :"
-  producer_mail_text_after: ""
   producer_mail_signoff: "Med vennlig hilsen"
-
   shopping_oc_closed: Stengt for bestilling
   shopping_oc_closed_description: "Vent til neste runde åpner (eller kontakt oss direkte for å se om vi tar i mot sene bestillinger)"
   shopping_oc_last_closed: "Den siste runden stengte for %{distance_of_time} siden"
@@ -466,11 +405,9 @@ nb:
   shopping_contact_social: "Følg"
   shopping_groups_part_of: "er en del av:"
   shopping_producers_of_hub: "%{hub}s produsenter:"
-
   enterprises_next_closing: "Neste runde stenger"
   enterprises_ready_for: "Klar til"
   enterprises_choose: "Velg når du ønsker din bestilling:"
-
   hubs_buy: "Handle:"
   hubs_shopping_here: "Handler her"
   hubs_orders_closed: "Stengt for bestilling"
@@ -486,7 +423,6 @@ nb:
   hubs_intro: Handle lokalt
   hubs_distance: Nærmest
   hubs_distance_filter: "Vis meg butikker nær %{location}"
-
   products_clear_all: Fjern alt
   products_showing: "Viser:"
   products_with: med
@@ -501,21 +437,17 @@ nb:
   products_update_error_msg: "Lagring mislyktes."
   products_update_error_data: "Lagring mislyktes på grunn av ugyldige data:"
   products_changes_saved: "Endringene er lagret."
-
   search_no_results_html: "Beklager, ingen treff på %{query}. Prøv på nytt?"
-
   components_profiles_popover: "Profiler har ikke butikkvindu på Open Food Network men kan ha sin egen fysiske butikk eller nettbutikk et annet sted"
   components_profiles_show: "Vis profiler"
   components_filters_nofilters: "Ingen filter"
   components_filters_clearfilters: "Fjern alle filtre"
-
   groups_title: Grupper
   groups_headline: Grupper / regioner
   groups_text: "Hver prodsent er unik. Hver forretning har noe annet å tilby. Våre grupper er kollektiv av produsenter, hubs og distributører som deler noe i fellesskap som lokasjon, bondens marked eller filosofi. Dette gjør din handleopplevelse enklere. Så utforsk våre grupper og la de gjøre forberedelsene for deg."
   groups_search: "Søk på navn eller nøkkelord"
   groups_no_groups: "Fant ingen grupper"
   groups_about: "Om oss"
-
   groups_producers: "Våre produsenter"
   groups_hubs: "Våre hubs"
   groups_contact_web: Kontakt
@@ -542,18 +474,14 @@ nb:
   groups_signup_contact: Klar for å snakke sammen?
   groups_signup_contact_text: "Ta kontakt for å oppdage hva OFN kan gjøre for deg:"
   groups_signup_detail: "Her er detaljene."
-
   login_invalid: "Ugyldig epost eller passord"
-
   modal_hubs: "Mathubs"
   modal_hubs_abstract: Våre hubs er kontaktpunkt mellom deg og menneskene som lager maten din!
   modal_hubs_content1: Du kan søke etter en passende hub på lokasjon eller navn. Noen hubs har flere hentepunkt hvor du kan plukke opp det du har kjøpt, og noen tilbyr også levering. Hver mathub er en butikk med uavhengig drift og logistikk - så det vil være forskjeller mellom huber.
   modal_hubs_content2: Du kan kun handle hos en hub om gangen.
-
   modal_groups: "Grupper / Regioner"
   modal_groups_content1: Dette er organisasjonene og hub-koblingene som utgjør Open Food Network.
   modal_groups_content2: Noen grupper er klynger basert på lokalnivå eller regionnivå, andre har ingen geografiske likheter.
-
   modal_how: "Slik fungerer det"
   modal_how_shop: Handle på Open Food Network
   modal_how_shop_explained: Søk etter en mathub nær deg for å begynne å handle! Du kan se detaljer for hver mathub for å se hvilke godbiter som finnes, og klikk deg videre for å handle. (Du kan kun handle hos en mathub om gangen).
@@ -561,29 +489,8 @@ nb:
   modal_how_pickup_explained: Noen mathubs leverer på døren, mens andre krever at du henter varene du har kjøpt. Du kan se hvilke alternativ som er tilgjengelige på hjemmesiden, og velge hvilket du ønsker på handle- og betalingssidene. Levering koster mer, og prisene varierer fra hub til hub. Hver mathub er en forretning med uavhengig drift og logistikk - så variasjoner mellom hubs er naturlig.
   modal_how_more: Finn ut mer
   modal_how_more_explained: "Hvis du ønsker å lære mer om Open Food Network, hvordan det fungerer og ta del, sjekk ut:"
-
   modal_producers: "Produsenter"
   modal_producers_explained: "Våre produsenter lager all den herlige maten du kan handle på Open Food Network."
-
-  ocs_choice_hub: "Hub:"
-  ocs_choice_oc: "Bestillingsrunde:"
-  ocs_choice_text: "Du har ennå ikke valgt hvor du vil handle fra."
-  ocs_closed_headline: Bestillinger er for tiden stengt for denne huben
-  ocs_closed_time: "Den siste runden stengte for %{time} siden."
-  ocs_closed_contact: "Vennligst kontakt din hub direkte for å se om de godtar sene bestillinger, eller vent til neste runde åpner."
-  ocs_closed_opens: "Den neste bestillingsrunden åpner om %{time}"
-  ocs_closed_email: "Epost: %{email}"
-  ocs_closed_phone: "Telefon: %{phone}"
-  ocs_pickup_time: "Din bestilling vil være klar %{pickup_time}"
-  ocs_change_date: "Endre hentedato"
-  ocs_change_date_notice: "(Dette nullstiller kurven din)"
-  ocs_close_time: "BESTILLINGER STENGER"
-  ocs_when_headline: Når ønsker du bestillingen din?
-  ocs_when_text: Ingen varer vises før du velger en dato.
-  ocs_when_closing: "Stenger"
-  ocs_when_choose: "Velg Bestillingsrunde"
-  ocs_list: "Listevisning"
-
   producers_about: Om oss
   producers_buy: Handle
   producers_contact: Kontakt
@@ -592,6 +499,7 @@ nb:
   producers_buy_at_html: "Handle produkter fra %{enterprise} hos:"
   producers_filter: Filtrer på
   producers_filter_type: Type
+  producers_filter_property: Egenskape
   producers_title: Produsenter
   producers_headline: Finn lokale produsenter
   producers_signup_title: Bli med som produsent
@@ -603,8 +511,6 @@ nb:
   producers_signup_cta_headline: Bli med nå!
   producers_signup_cta_action: Bli med nå
   producers_signup_detail: Detaljene.
-  producer: Producer
-
   products_item: Vare
   products_description: Beskrivelse
   products_variant: Variant
@@ -612,9 +518,20 @@ nb:
   products_available: Tilgjengelig?
   products_producer: "Produsent"
   products_price: "Pris"
-
   register_title: Registrer
-
+  sell_title: "Registrer"
+  sell_headline: "Bli med på Open Food Network!"
+  sell_motivation: "Vis frem maten din."
+  sell_producers: "Produsenter"
+  sell_hubs: "Hubs"
+  sell_groups: "Grupper"
+  sell_producers_detail: "Sette opp en profil for virksomheten din på OFN i løpet av noen få minutter. Når som helst kan du oppgradere din profil til en nettbutikk og selger produkter direkte til kunder."
+  sell_hubs_detail: "Sette opp en profil for virksomheten eller organisasjonen din på OFN. Når som helst kan du oppgradere din profil til en multi-produsent butikk."
+  sell_groups_detail: "Definere en skreddersydd katalog av bedrifter (produsenter og andre foretak) eller organisasjonen."
+  sell_user_guide: "Finn ut mer i brukerhåndboken."
+  sell_listing_price: "En profil på OFN er gratis. Les mer om hvor mye det koster å åpne en butikk på OFN eller å sette opp en gruppenettverk for organisasjonen din eller ditt regionale nettverk."
+  sell_embed: "Vi kan også bygge inn en OFN butikk i din egen skreddersydde nettside eller bygge en tilpasset lokalmat nettverk nettside for din region."
+  sell_ask_services: "Spør oss om ØFN tjenester."
   shops_title: Butikker
   shops_headline: Handling på en ny måte.
   shops_text: Mat gror i syklus, bønder høster i syklus, og vi bestiller mat i syklus. Hvis du møter en stengt bestillingsrunde, sjekk igjen snart.
@@ -627,7 +544,6 @@ nb:
   shops_signup_help: Vi er klar til å hjelpe.
   shops_signup_help_text: Du trenger bedre resultater. Du trenger nye kunder og logistikkpartnere. Du trenger å få din historie fortalt hos grossister, i dagligvaren og rundt kjøkkenbordet.
   shops_signup_detail: Detaljene.
-
   orders_fees: Gebyrer...
   orders_edit_title: Handlekurv
   orders_edit_headline: Din handlekurv
@@ -647,7 +563,6 @@ nb:
   orders_show_title: Ordrebekreftelse
   orders_show_time: Bestilling klar for
   orders_show_number: Ordrebekreftelse
-
   products_cart_distributor_choice: "Distributør for bestillingen:"
   products_cart_distributor_change: "Din distributør for denne ordren vil bli endret til %{name} hvis du legger til dette produktet i handlekurven din."
   products_cart_distributor_is: "Din distributør for denne ordren er %{name}."
@@ -660,13 +575,9 @@ nb:
   products_max_quantity: Max mengde
   products_distributor: Distributør
   products_distributor_info: Når du velger en distributør for din bestilling, vil deres adresse og hentetider vises her.
-
   shop_trial_length: "Lengden av prøveperioden (dager)"
   shop_trial_expires_in: "Din prøveperiode på butikkfront går ut om "
   shop_trial_expired_notice: "Gode nyheter! Vi har bestemt å forlenge butikkprøveperioder inntil ytterligere beskjed."
-
-
-  # keys used in javascript
   password: Passord
   remember_me: Husk meg
   are_you_sure: "er du sikker?"
@@ -717,7 +628,6 @@ nb:
   forgot_password: "Glemt passord?"
   password_reset_sent: "En epost med instruksjoner om å nullstille passordet har blitt sendt!"
   reset_password: "Tilbakestill passord"
-  registration_greeting: "Greetings!"
   who_is_managing_enterprise: "Hvem er ansvarlig for å administrere %{enterprise}?"
   enterprise_contact: "Primærkontakt"
   enterprise_contact_required: "Du må oppgi en primærkontakt."
@@ -827,7 +737,6 @@ nb:
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
-  contact: "Contact"
   follow: "Følg"
   shop_for_products_html: "Handle produkter fra <span class=\"turquoise\">%{enterprise}</span> på:"
   change_shop: "Endre butikk til:"
@@ -840,10 +749,9 @@ nb:
   fundraising_fee: "innsamlingsaksjon"
   price_graph: "Prisgraf"
   included_tax: "inkludert avgift"
-  remove_tax: "Remove tax"
   balance: "Balanse"
   transaction: "Transaksjon"
-  transaction_date: "Dato" #Transaction is only in key to avoid conflict with :date
+  transaction_date: "Dato"
   payment_state: "Betallingsstatus"
   shipping_state: "Leveringsstatus"
   value: "Verdi"
@@ -885,8 +793,6 @@ nb:
   supplier: "Leverandør"
   coordinator: "Koordinator"
   distributor: "Distributør"
-  product: "Products"
-  enterprise_fees: "Enterprise Fees"
   fee_type: "Avfgiftstype"
   tax_category: "Avgiftskategori"
   calculator: "Kalkulator"
@@ -936,7 +842,6 @@ nb:
   spree_admin_enterprises_producers_total_products: "Alle Produkter"
   spree_admin_enterprises_producers_active_products: "Aktive Produkter"
   spree_admin_enterprises_producers_order_cycles: "Produkter i Bestillingsrunder"
-  spree_admin_enterprises_producers_order_cycles_title: ""
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_tabs_producers: "PRODUSENTER"
   spree_admin_enterprises_producers_manage_order_cycles: "ADMINISTRER BESTILLINGSRUNDER"
@@ -982,7 +887,7 @@ nb:
   hub_sidebar_blue: "blå"
   hub_sidebar_red: "rød"
   shop_trial_in_progress: "Din prøveperiode på butikkfront går ut om %{days}."
-  shop_trial_expired: "Gode nyheter! Vi har bestemt å forlenge butikkprøveperioder inntil ytterligere beskjed (sannsynligvis rundt mars 2015)." #FIXME
+  shop_trial_expired: "Gode nyheter! Vi har bestemt å forlenge butikkprøveperioder inntil ytterligere beskjed (sannsynligvis rundt mars 2015)."
   report_customers_distributor: "Distributør"
   report_customers_supplier: "Leverandør"
   report_customers_cycle: "Bestillingsrunde"
@@ -1016,14 +921,12 @@ nb:
   unsaved_changes_confirmation: "Ulagrede endringer vil gå tapt. Fortsett likevel?"
   one_product_unsaved: "Endringer i ett produkt er fortsatt ulagret."
   products_unsaved: "Endringer i %{n} produkter er fortsatt ulagret."
-  add_manager: "Add a manager"
   is_already_manager: "er allerede administrator!"
   no_change_to_save: "Ingen endring å lagre"
   add_manager: "Legg til administrator"
-  users:  "Brukere"
+  users: "Brukere"
   about: "Om"
   images: "Bilder"
-  contact: "Contact"
   web: "Nett"
   primary_details: "Primærdetaljer"
   adrdress: "Adresse"
@@ -1043,7 +946,6 @@ nb:
   validation_msg_product_category_cant_be_blank: "^Produktkategori kan ikke være blank"
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"
   validation_msg_is_associated_with_an_exising_customer: "er assosiert med en eksisterende kunde"
-
   spree:
     shipment_states:
       backorder: restordre
