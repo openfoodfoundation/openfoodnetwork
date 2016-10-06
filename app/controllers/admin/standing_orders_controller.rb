@@ -1,3 +1,5 @@
+require 'open_food_network/permissions'
+
 module Admin
   class StandingOrdersController < ResourceController
     before_filter :load_shop, only: [:new]
@@ -13,6 +15,13 @@ module Admin
       failure: lambda { render json: { errors: json_errors }, status: :unprocessable_entity }
     } }
 
+    def index
+      respond_to do |format|
+        format.html
+        format.json { render_as_json @collection, ams_prefix: params[:ams_prefix] }
+      end
+    end
+
     def new
       @standing_order.shop = @shop
       @customers = Customer.of(@shop)
@@ -23,8 +32,18 @@ module Admin
 
     private
 
+    def permissions
+      return @permissions unless @permissions.nil?
+      @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+    end
+
     def collection
-      StandingOrder.where("1=0")
+      if request.format.json?
+        permissions.editable_standing_orders.ransack(params[:q]).result
+        .preload([:shop,:customer,:payment_method,:shipping_method])
+      else
+        StandingOrder.where("1=0")
+      end
     end
 
     def load_shop

@@ -3,18 +3,19 @@ require 'spec_helper'
 describe Admin::StandingOrdersController, type: :controller do
   include AuthenticationWorkflow
 
-
   describe 'index' do
+    let!(:user) { create(:user) }
+    let!(:shop) { create(:distributor_enterprise) }
+    let!(:standing_order) { create(:standing_order, shop: shop) }
+
+    before do
+      allow(controller).to receive(:spree_current_user) { user }
+    end
+
     context 'html' do
       let(:params) { { format: :html } }
 
-      context 'as an regular user' do
-        let!(:user) { create(:user) }
-
-        before do
-          allow(controller).to receive(:spree_current_user) { user }
-        end
-
+      context 'as a regular user' do
         it 'renders the index page' do
           spree_get :index, params
           expect(response).to redirect_to spree.unauthorized_path
@@ -22,16 +23,34 @@ describe Admin::StandingOrdersController, type: :controller do
       end
 
       context 'as an enterprise user' do
-        let!(:user) { create(:user) }
-        let!(:enterprise) { create(:enterprise, owner: user) }
+        before { shop.update_attributes(owner: user) }
 
-        before do
-          allow(controller).to receive(:spree_current_user) { user }
-        end
-
-        it 'renders the index page' do
+        it 'renders the index page without loading any data' do
           spree_get :index, params
           expect(response).to render_template 'index'
+          expect(assigns(:collection)).to eq []
+        end
+      end
+    end
+
+    context 'json' do
+      let(:params) { { format: :json } }
+
+      context 'as a regular user' do
+        it 'renders the index page' do
+          spree_get :index, params
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+
+      context 'as an enterprise user' do
+        before { shop.update_attributes(owner: user) }
+
+        it 'renders the collection as json' do
+          spree_get :index, params
+          json_response = JSON.parse(response.body)
+          expect(json_response.count).to be 1
+          expect(json_response[0]['id']).to eq standing_order.id
         end
       end
     end
