@@ -25,10 +25,11 @@ describe Admin::StandingOrdersController, type: :controller do
       context 'as an enterprise user' do
         before { shop.update_attributes(owner: user) }
 
-        it 'renders the index page without loading any data' do
+        it 'renders the index page with appropriate data' do
           spree_get :index, params
           expect(response).to render_template 'index'
-          expect(assigns(:collection)).to eq []
+          expect(assigns(:collection)).to eq [] # No collection loaded
+          expect(assigns(:shops)).to eq [shop] # Shops are loaded
         end
       end
     end
