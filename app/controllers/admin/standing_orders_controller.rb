@@ -72,5 +72,9 @@ module Admin
     def build_resource
       StandingOrder.new(shop_id: params[:standing_order].andand[:shop_id])
     end
+
+    def ams_prefix_whitelist
+      [:index]
+    end
   end
 end

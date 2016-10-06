@@ -1,4 +1,10 @@
 - content_for :page_title do
   = t('admin.standing_orders.standing_orders')
 
-Listing Standing Orders
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.standingOrders'"
+
+= admin_inject_column_preferences module: 'admin.standingOrders'
+
+%div{ ng: { controller: 'StandingOrdersController' } }
+  = render 'table'
