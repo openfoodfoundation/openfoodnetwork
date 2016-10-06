@@ -3,6 +3,7 @@ require 'open_food_network/permissions'
 module Admin
   class StandingOrdersController < ResourceController
     before_filter :load_shop, only: [:new]
+    before_filter :load_shops, only: [:index]
     before_filter :wrap_sli_attrs, only: [:create]
     respond_to :json
 
@@ -48,6 +49,10 @@ module Admin
 
     def load_shop
       @shop = Enterprise.find(params[:shop_id])
+    end
+
+    def load_shops
+      @shops = Enterprise.managed_by(spree_current_user).is_distributor
     end
 
     def json_errors
