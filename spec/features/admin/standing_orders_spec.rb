@@ -11,10 +11,12 @@ feature 'Standing Orders' do
     before { quick_login_as user }
 
     context 'listing standing orders' do
+      let!(:standing_order) { create(:standing_order, shop: shop) }
+
       it "passes the smoke test" do
         visit admin_standing_orders_path
 
-        expect(page).to have_content 'Listing Standing Orders'
+        expect(page).to have_selector 'table#standing_orders td.customer', text: standing_order.customer.email
       end
     end
 

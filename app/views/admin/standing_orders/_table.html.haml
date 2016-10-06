@@ -1,0 +1,26 @@
+%table.index#standing_orders
+  %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }
+  %col.schedule{ width: "20%", 'ng-show' => 'columns.name.visible' }
+  -# %col.actions
+  %thead
+    %tr
+      -# %th.bulk
+        -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
+      %th.customer{ ng: { show: 'columns.customer.visible' } }
+        = t('admin.customer')
+      %th.schedule{ ng: { show: 'columns.customer.visible',  } }
+        = t('admin.schedule')
+      %th.payment_method{ ng: { show: 'columns.payment_method.visible',  } }
+        = t('admin.payment_method')
+      %th.shipping_method{ ng: { show: 'columns.shipping_method.visible',  } }
+        = t('admin.shipping_method')
+      -# %th.actions
+      -#   &nbsp;
+  %tr.standing_order{ :id => "so_{{standingOrder.id}}", ng: { repeat: "standingOrder in standingOrders", class: { even: "'even'", odd: "'odd'" } } }
+    %td.customer{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer.email' } }
+    %td.schedule{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule.name' } }
+    %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::standingOrder.payment_method.name' } }
+    %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::standingOrder.shipping_method.name' } }
+    -# %td.actions
+    -#   %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{standingOrder.edit_path}}'} }
+    -#   %a.delete-standing-order.icon-trash.no-text{ ng: { href: '{{standingOrder.delete_path}}'}, data: { method: 'delete', confirm: "Are you sure?" } }
