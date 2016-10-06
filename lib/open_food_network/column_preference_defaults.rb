@@ -96,5 +96,15 @@ module OpenFoodNetwork
         products:     { name: I18n.t("products"),           visible: true }
       }
     end
+
+    def standing_orders_index_columns
+      node = "admin.standing_orders.index"
+      {
+        customer:         { name: I18n.t("admin.customer"),         visible: true },
+        schedule:         { name: I18n.t("admin.schedule"),         visible: true },
+        payment_method:   { name: I18n.t("admin.payment_method"),   visible: false },
+        shipping_method:  { name: I18n.t("admin.shipping_method"),  visible: false }
+      }
+    end
   end
 end
