@@ -1,6 +1,7 @@
 %table.index#standing_orders
   %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }
   %col.schedule{ width: "15%", 'ng-show' => 'columns.schedule.visible' }
+  %col.items{ width: "15%", 'ng-show' => 'columns.items.visible' }
   %col.begins_on{ width: "15%", 'ng-show' => 'columns.begins_on.visible' }
   %col.ends_on{ width: "15%", 'ng-show' => 'columns.ends_on.visible' }
   %col.payment_method{ width: "20%", 'ng-show' => 'columns.payment_method.visible' }
@@ -14,6 +15,8 @@
         = t('admin.customer')
       %th.schedule{ ng: { show: 'columns.schedule.visible',  } }
         = t('admin.schedule')
+      %th.items{ ng: { show: 'columns.items.visible',  } }
+        = t('admin.items')
       %th.begins_on{ ng: { show: 'columns.begins_on.visible',  } }
         = t('admin.begins_on')
       %th.ends_on{ ng: { show: 'columns.ends_on.visible',  } }
@@ -27,6 +30,7 @@
   %tr.standing_order{ :id => "so_{{standingOrder.id}}", ng: { repeat: "standingOrder in standingOrders | filter:query", class: { even: "'even'", odd: "'odd'" } } }
     %td.customer{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer.email' } }
     %td.schedule{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule.name' } }
+    %td.items{ ng: { show: 'columns.items.visible', bind: '::standingOrder.item_count' } }
     %td.begins_on{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_on' } }
     %td.ends_on{ ng: { show: 'columns.ends_on.visible', bind: '::standingOrder.ends_on' } }
     %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::standingOrder.payment_method.name' } }

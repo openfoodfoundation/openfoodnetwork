@@ -102,6 +102,7 @@ module OpenFoodNetwork
       {
         customer:         { name: I18n.t("admin.customer"),         visible: true },
         schedule:         { name: I18n.t("admin.schedule"),         visible: true },
+        items:            { name: I18n.t("items"),                  visible: true },
         begins_on:        { name: I18n.t("admin.begins_on"),        visible: true },
         ends_on:          { name: I18n.t("admin.ends_on"),          visible: true },
         payment_method:   { name: I18n.t("admin.payment_method"),   visible: false },
