@@ -1,10 +1,9 @@
 .row.filters
   .sixteen.columns.alpha.omega
     .filter_select.five.columns.alpha
-      &nbsp;
-      -# %label{ :for => 'quick_search', ng: {class: '{disabled: !shop_id}'} }=t('admin.quick_search')
-      -# %br
-      -# %input.fullwidth{ :type => "text", :id => 'quick_search', ng: { model: 'quickSearch', disabled: '!shop_id' }, :placeholder => "Search by email..." }
+      %label{ :for => 'query', ng: {class: '{disabled: !shop_id}'} }=t('admin.quick_search')
+      %br
+      %input.fullwidth{ :type => "text", :id => 'query', ng: { model: 'query', disabled: '!shop_id'}, :placeholder => "Search by email..." }
     .filter_select.four.columns
       %label{ :for => 'shop_id', ng: { bind: "shop_id ? '#{t('admin.shop')}' : '#{t('admin.variant_overrides.index.select_a_shop')}'" } }
       %br
