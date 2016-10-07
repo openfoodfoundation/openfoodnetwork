@@ -28,11 +28,11 @@
       -# %th.actions
       -#   &nbsp;
   %tr.standing_order{ :id => "so_{{standingOrder.id}}", ng: { repeat: "standingOrder in standingOrders | filter:query", class: { even: "'even'", odd: "'odd'" } } }
-    %td.customer{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer.email' } }
-    %td.schedule{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule.name' } }
-    %td.items{ ng: { show: 'columns.items.visible', bind: '::standingOrder.item_count' } }
-    %td.begins_on{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_on' } }
-    %td.ends_on{ ng: { show: 'columns.ends_on.visible', bind: '::standingOrder.ends_on' } }
+    %td.customer.text-center{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer.email' } }
+    %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule.name' } }
+    %td.items.text-center{ ng: { show: 'columns.items.visible', bind: '::standingOrder.item_count' } }
+    %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_on' } }
+    %td.ends_on.text-center{ ng: { show: 'columns.ends_on.visible', bind: '::standingOrder.ends_on' } }
     %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::standingOrder.payment_method.name' } }
     %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::standingOrder.shipping_method.name' } }
     -# %td.actions
