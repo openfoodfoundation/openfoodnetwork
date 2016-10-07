@@ -5,6 +5,8 @@
   = "ng-app='admin.standingOrders'"
 
 = admin_inject_column_preferences module: 'admin.standingOrders'
+= render 'data'
 
 %div{ ng: { controller: 'StandingOrdersController' } }
+  = render 'filters'
   = render 'table'

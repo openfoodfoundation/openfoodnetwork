@@ -7,16 +7,30 @@ feature 'Standing Orders' do
   context "as an enterprise user", js: true do
     let!(:user) { create_enterprise_user(enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise, owner: user) }
+    let!(:shop2) { create(:distributor_enterprise, owner: user) }
+    let!(:shop_unmanaged) { create(:distributor_enterprise) }
 
     before { quick_login_as user }
 
     context 'listing standing orders' do
       let!(:standing_order) { create(:standing_order, shop: shop) }
+      let!(:standing_order2) { create(:standing_order, shop: shop2) }
+      let!(:standing_order_unmanaged) { create(:standing_order, shop: shop_unmanaged) }
 
       it "passes the smoke test" do
         visit admin_standing_orders_path
 
-        expect(page).to have_selector 'table#standing_orders td.customer', text: standing_order.customer.email
+        expect(page).to have_select2 "shop_id", with_options: [shop.name, shop2.name], without_options: [shop_unmanaged.name]
+
+        select2_select shop2.name, from: "shop_id"
+
+        # Loads standing orders for that shop
+        expect(page).to have_selector "tr#so_#{standing_order2.id}"
+        expect(page).to have_no_selector "tr#so_#{standing_order.id}"
+        expect(page).to have_no_selector "tr#so_#{standing_order_unmanaged.id}"
+        within "tr#so_#{standing_order2.id}" do
+          expect(page).to have_selector "td.customer", text: standing_order2.customer.email
+        end
       end
     end
 
