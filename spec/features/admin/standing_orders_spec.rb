@@ -43,12 +43,20 @@ feature 'Standing Orders' do
           expect(page).to have_selector "td.customer", text: standing_order.customer.email
         end
 
-        # Filters standing orders according to query
+        # Using the Quick Search
         expect(page).to have_selector "tr#so_#{standing_order.id}"
         fill_in 'query', with: 'blah blah blah'
         expect(page).to have_no_selector "tr#so_#{standing_order.id}"
         fill_in 'query', with: ''
         expect(page).to have_selector "tr#so_#{standing_order.id}"
+
+        # Toggling columns
+        expect(page).to have_selector "th.customer"
+        expect(page).to have_content standing_order.customer.email
+        first("div#columns-dropdown", :text => "COLUMNS").click
+        first("div#columns-dropdown div.menu div.menu_item", text: "Customer").click
+        expect(page).to_not have_selector "th.customer"
+        expect(page).to_not have_content standing_order.customer.email
       end
     end
 
