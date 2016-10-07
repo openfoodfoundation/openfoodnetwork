@@ -13,10 +13,10 @@ class Api::Admin::IndexStandingOrderSerializer < ActiveModel::Serializer
   end
 
   def begins_on
-    object.begins_at.strftime('%b %d, %Y')
+    object.begins_at.strftime('%a, %b %d, %Y')
   end
 
   def ends_on
-    object.ends_at.andand.strftime('%b %d, %Y') || I18n.t(:ongoing)
+    object.ends_at.andand.strftime('%a, %b %d, %Y') || I18n.t(:ongoing)
   end
 end
