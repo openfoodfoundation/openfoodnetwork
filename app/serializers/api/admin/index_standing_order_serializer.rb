@@ -1,5 +1,5 @@
 class Api::Admin::IndexStandingOrderSerializer < ActiveModel::Serializer
-  attributes :id, :begins_at, :ends_at
+  attributes :id, :begins_on, :ends_on
 
   has_one :shop, serializer: Api::Admin::IdNameSerializer
   has_one :customer, serializer: Api::Admin::IdEmailSerializer # Remove IdEmailSerializer if no longer user here
@@ -7,11 +7,11 @@ class Api::Admin::IndexStandingOrderSerializer < ActiveModel::Serializer
   has_one :payment_method, serializer: Api::Admin::IdNameSerializer
   has_one :shipping_method, serializer: Api::Admin::IdNameSerializer
 
-  def begins_at
-    object.begins_at.andand.strftime('%F')
+  def begins_on
+    object.begins_at.strftime('%b %d, %Y')
   end
 
-  def ends_at
-    object.ends_at.andand.strftime('%F')
+  def ends_on
+    object.ends_at.andand.strftime('%b %d, %Y') || I18n.t(:ongoing)
   end
 end
