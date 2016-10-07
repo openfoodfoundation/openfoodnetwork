@@ -24,7 +24,7 @@ feature 'Standing Orders' do
 
         select2_select shop2.name, from: "shop_id"
 
-        # Loads standing orders for that shop
+        # Loads the right standing orders
         expect(page).to have_selector "tr#so_#{standing_order2.id}"
         expect(page).to have_no_selector "tr#so_#{standing_order.id}"
         expect(page).to have_no_selector "tr#so_#{standing_order_unmanaged.id}"
@@ -32,12 +32,23 @@ feature 'Standing Orders' do
           expect(page).to have_selector "td.customer", text: standing_order2.customer.email
         end
 
-        # Filters standing orders according to query
-        expect(page).to have_selector "tr#so_#{standing_order2.id}"
-        fill_in 'query', with: 'blah blah blah'
+        # Changing Shops
+        select2_select shop.name, from: "shop_id"
+
+        # Loads the right standing orders
+        expect(page).to have_selector "tr#so_#{standing_order.id}"
         expect(page).to have_no_selector "tr#so_#{standing_order2.id}"
+        expect(page).to have_no_selector "tr#so_#{standing_order_unmanaged.id}"
+        within "tr#so_#{standing_order.id}" do
+          expect(page).to have_selector "td.customer", text: standing_order.customer.email
+        end
+
+        # Filters standing orders according to query
+        expect(page).to have_selector "tr#so_#{standing_order.id}"
+        fill_in 'query', with: 'blah blah blah'
+        expect(page).to have_no_selector "tr#so_#{standing_order.id}"
         fill_in 'query', with: ''
-        expect(page).to have_selector "tr#so_#{standing_order2.id}"
+        expect(page).to have_selector "tr#so_#{standing_order.id}"
       end
     end
 
