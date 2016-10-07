@@ -16,7 +16,7 @@
         = t('admin.shipping_method')
       -# %th.actions
       -#   &nbsp;
-  %tr.standing_order{ :id => "so_{{standingOrder.id}}", ng: { repeat: "standingOrder in standingOrders", class: { even: "'even'", odd: "'odd'" } } }
+  %tr.standing_order{ :id => "so_{{standingOrder.id}}", ng: { repeat: "standingOrder in standingOrders | filter:query", class: { even: "'even'", odd: "'odd'" } } }
     %td.customer{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer.email' } }
     %td.schedule{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule.name' } }
     %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::standingOrder.payment_method.name' } }

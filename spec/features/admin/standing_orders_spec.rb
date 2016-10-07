@@ -31,6 +31,13 @@ feature 'Standing Orders' do
         within "tr#so_#{standing_order2.id}" do
           expect(page).to have_selector "td.customer", text: standing_order2.customer.email
         end
+
+        # Filters standing orders according to query
+        expect(page).to have_selector "tr#so_#{standing_order2.id}"
+        fill_in 'query', with: 'blah blah blah'
+        expect(page).to have_no_selector "tr#so_#{standing_order2.id}"
+        fill_in 'query', with: ''
+        expect(page).to have_selector "tr#so_#{standing_order2.id}"
       end
     end
 
