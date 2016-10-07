@@ -4,7 +4,7 @@ describe Admin::StandingOrdersController, type: :controller do
   include AuthenticationWorkflow
 
   describe 'index' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
     let!(:standing_order) { create(:standing_order, shop: shop) }
 
@@ -46,12 +46,27 @@ describe Admin::StandingOrdersController, type: :controller do
 
       context 'as an enterprise user' do
         before { shop.update_attributes(owner: user) }
+        let!(:shop2) { create(:distributor_enterprise, owner: user) }
+        let!(:standing_order2) { create(:standing_order, shop: shop2) }
 
         it 'renders the collection as json' do
           spree_get :index, params
           json_response = JSON.parse(response.body)
-          expect(json_response.count).to be 1
-          expect(json_response[0]['id']).to eq standing_order.id
+          expect(json_response.count).to be 2
+          expect(json_response.map{ |so| so['id'] }).to include standing_order.id, standing_order2.id
+        end
+
+        context "when ransack predicates are submitted" do
+          before { params.merge!(q: { shop_id_eq: shop2.id }) }
+
+          it "restricts the list of standing orders" do
+            spree_get :index, params
+            json_response = JSON.parse(response.body)
+            expect(json_response.count).to be 1
+            ids = json_response.map{ |so| so['id'] }
+            expect(ids).to include standing_order2.id
+            expect(ids).to_not include standing_order.id
+          end
         end
       end
     end
