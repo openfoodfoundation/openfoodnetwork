@@ -90,6 +90,16 @@ fr:
         add_a_new_customer_for: Ajouter un nouvel acheteur pour %{shop_name}
         code: Code
         duplicate_code: "Ce code est déjà utilisé."
+        bill_address: "Adresse de facturation"
+        ship_address: "Adresse de livraison"
+        update_address_success: 'Adresse mise à jour avec succès.'
+        update_address_error: 'Oups! Vueillez remplir tous les champs obligatoires!'
+        edit_bill_address: 'Modifier l''adresse de facturation'
+        edit_ship_address: 'Modifier l''adresse de livraison'
+        required_fileds: 'Les champs obligatoires sont indiqués avec un astérisque *'
+        select_country: 'Choisir le pays'
+        select_state: 'Choisir le département'
+        edit: 'Modifier'
     products:
       bulk_edit:
         unit: Unité
@@ -347,6 +357,7 @@ fr:
   email_userguide_html: "Le Guide Utilisateur expliquant comment mettre en place son profil producteur ou son hub est accessible ici: %{link}"
   email_admin_html: "Vous pouvez gérer votre compte en vous connectant ici %{link} ou en cliquant sur la roue en haut à droite de la page d'accueil et en sélectionnant Administration."
   email_community_html: "Nous avons aussi un forum de discussion en ligne (en anglais) pour échanger avec la communauté sur des questions liées au logiciel OFN et aux défis de la gestion d'un food hub.  Nous vous invitons à y participer. Nous sommes en constante évolution et vos contributions à ce forum vont façonner les prochaines étapes. %{link}"
+  join_community: "Rejoindre la communauté"
   email_help: "En cas de difficulté, consultez notre FAQ, parcourez le forum (en anglais) ou postez un message dans la section 'Support' et quelqu'un viendra vous aider!"
   email_confirmation_greeting: "Bonjour %{contact}!"
   email_confirmation_profile_created: "Le profil pour %{name} a été créé avec succès! Pour activer votre Profil nous devons vérifier cette adresse email."
@@ -388,7 +399,7 @@ fr:
   email_signup_email: Votre email de connexion est
   email_signup_shop_html: "Vous pouvez maintenant commencer vos achats sur %{link}."
   email_signup_text: "Merci d'avoir rejoint le réseau. Si vous êtes un client, nous sommes impatients de vous faire découvrir de nombreux agriculteurs fantastiques, de merveilleux hubs de distribution et des plats délicieux! Si vous êtes un producteur ou autre entreprise alimentaire, nous sommes ravis de vous compter parmi les membres du réseau."
-  email_signup_help_html: "Vos questions et suggestions sont les bienvenues; vous pouvez utiliser le bouton <em>Envoyer un commentaire</em> sur le site ou envoyez-nous un email à"
+  email_signup_help_html: "Vos questions et feedbacks sont les bienvenus! Cliquez sur le bouton <em>Envoyer un commentaire</em> sur le site ou envoyez-nous un email à %{email}"
   producer_mail_greeting: "Cher(ère)"
   producer_mail_text_before: "Nous avons reçu toutes les commandes pour la prochaine livraison."
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
@@ -797,6 +808,7 @@ fr:
   tax_category: "TVA applicable"
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
+  flat_percent_per_item: "Montant net (par produit)"
   new_order_cycles: "Nouveau cycle de vente"
   select_a_coordinator_for_your_order_cycle: "Choisissez un coordinateur pour votre cycle de vente"
   edit_order_cycle: "Modifier le cycle de vente"
