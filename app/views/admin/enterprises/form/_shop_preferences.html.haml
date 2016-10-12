@@ -57,3 +57,15 @@
     .five.columns.omega
       = f.radio_button :allow_guest_orders, false
       = f.label :allow_guest_orders, t('.allow_guest_orders_false'), value: :false
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      %label= t '.allow_order_changes'
+      %div{'ofn-with-tip' => t('.allow_order_changes_tip')}
+        %a= t 'admin.whats_this'
+    .three.columns
+      = f.radio_button :allow_order_changes, false
+      = f.label :allow_order_changes, t('.allow_order_changes_false'), value: :false
+    .five.columns.omega
+      = f.radio_button :allow_order_changes, true
+      = f.label :allow_order_changes, t('.allow_order_changes_true'), value: :true
