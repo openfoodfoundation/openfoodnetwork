@@ -373,6 +373,10 @@ en:
           allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
           allow_guest_orders_false: "Require login to order"
           allow_guest_orders_true: "Allow guest checkout"
+          allow_order_changes: "Change orders"
+          allow_order_changes_tip: "Allow customers to change their order as long the order cycle is open."
+          allow_order_changes_false: "Placed orders cannot be changed"
+          allow_order_changes_true: "Customers can remove items from an order of an open order cycle"
           shopfront_message_placeholder: >
             An optional explanation for customers detailing how your shopfront works,
             to be displayed above the product list on your shop page.
