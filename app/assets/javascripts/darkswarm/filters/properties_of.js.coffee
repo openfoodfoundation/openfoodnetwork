@@ -1,12 +1,12 @@
 Darkswarm.filter 'propertiesOf', ->
-  (objects) ->
+  (objects, source) ->
+    source ||= 'properties'
+    return {} unless source in ['properties', 'supplied_properties', 'distributed_properties']
+
     properties = {}
     for object in objects
-      if object.supplied_properties?
-        for property in object.supplied_properties
-          properties[property.id] = property
-      else
-        for property in object.properties
+      if object[source]?
+        for property in object[source]
           properties[property.id] = property
 
     properties

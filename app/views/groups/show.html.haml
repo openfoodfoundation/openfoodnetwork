@@ -60,23 +60,23 @@
                   .small-12.columns
                     %h1
                       = t :groups_producers
-                = render partial: "shared/components/enterprise_search"
-                = render partial: "producers/filters"
+                = render "shared/components/enterprise_search"
+                = render "producers/filters"
 
                 .row
                   .small-12.columns
                     .active_table
                       %producer.active_table_node.row.animate-repeat{id: "{{producer.path}}",
-                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | searchEnterprises:query | taxons:activeTaxons | properties:activeProperties)",
+                      "ng-repeat" => "producer in filteredEnterprises = (group_producers | searchEnterprises:query | taxons:activeTaxons | properties:activeProperties:'supplied_properties')",
                       "ng-controller" => "GroupEnterpriseNodeCtrl",
                       "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !producer.active}",
                       id: "{{producer.hash}}"}
 
                         .small-12.columns
-                          = render partial: 'producers/skinny'
-                          = render partial: 'producers/fat'
+                          = render "producers/skinny"
+                          = render "producers/fat"
 
-                      = render partial: 'shared/components/enterprise_no_results'
+                      = render 'shared/components/enterprise_no_results'
 
             %tab{heading: t(:groups_hubs),
                 active: "tabs.hubs.active",
@@ -87,24 +87,24 @@
                     %h1
                       = t :groups_hubs
 
-                = render partial: "shared/components/enterprise_search"
-                = render partial: "hub_filters"
+                = render "shared/components/enterprise_search"
+                = render "shops/filters", resource: "group_hubs", property_filters: "| searchEnterprises:query | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles"
 
                 .row
                   .small-12.columns
                     .active_table
                       %hub.active_table_node.row.animate-repeat{id: "{{hub.hash}}",
-                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | searchEnterprises:query  | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+orders_close_at'])",
+                      "ng-repeat" => "hub in filteredEnterprises = (group_hubs | searchEnterprises:query | taxons:activeTaxons | shipping:shippingTypes | showHubProfiles:show_profiles | properties:activeProperties:'distributed_properties' | orderBy:['-active', '+orders_close_at'])",
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
                       "ng-controller" => "GroupEnterpriseNodeCtrl"}
                         .small-12.columns
-                          = render partial: 'home/skinny'
-                          = render partial: 'home/fat'
+                          = render 'shops/skinny'
+                          = render 'shops/fat'
 
-                      = render partial: 'shared/components/enterprise_no_results'
+                      = render 'shared/components/enterprise_no_results'
 
       .small-12.medium-12.large-3.columns
-        = render partial: 'contact'
+        = render 'contact'
 
   .small-12.columns.pad-top
     .row.pad-top
@@ -122,4 +122,4 @@
         %p
           &nbsp;
 
-= render partial: "shared/footer"
+= render "shared/footer"

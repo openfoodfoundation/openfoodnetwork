@@ -8,12 +8,16 @@ module Spree
         where('spree_product_properties.product_id IN (?)', enterprise.supplied_product_ids)
     }
 
-    scope :sold_by, ->(shop) {
+    scope :ever_sold_by, ->(shop) {
       joins(products: {variants: {exchanges: :order_cycle}}).
         merge(Exchange.outgoing).
         merge(Exchange.to_enterprise(shop)).
-        merge(OrderCycle.active).
         select('DISTINCT spree_properties.*')
+    }
+
+    scope :currently_sold_by, ->(shop) {
+      ever_sold_by(shop).
+        merge(OrderCycle.active)
     }
 
 

@@ -7,14 +7,14 @@
         = t :hubs_intro
 
   = render "shared/components/enterprise_search"
-  = render "home/filters"
+  = render "filters"
 
   .row
     .small-12.columns
       .name-matches{"ng-show" => "nameMatchesFiltered.length > 0"}
         %h2
           = t :hubs_matches
-        = render "home/hubs_table", enterprises: "nameMatches"
+        = render "hubs_table", enterprises: "nameMatches"
 
       .distance-matches{"ng-if" => "nameMatchesFiltered.length == 0 || distanceMatchesShown"}
         %h2{"ng-show" => "nameMatchesFiltered.length > 0 || query.length > 0"}
@@ -22,7 +22,7 @@
           %span{"ng-show" => "nameMatchesFiltered.length > 0"} {{ nameMatchesFiltered[0].name }}...
           %span{"ng-hide" => "nameMatchesFiltered.length > 0"} {{ query }}...
 
-        = render "home/hubs_table", enterprises: "distanceMatches"
+        = render "hubs_table", enterprises: "distanceMatches"
 
       .show-distance-matches{"ng-show" => "nameMatchesFiltered.length > 0 && !distanceMatchesShown"}
         %a{href: "", "ng-click" => "showDistanceMatches()"}
