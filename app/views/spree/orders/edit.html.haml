@@ -44,4 +44,6 @@
                 = t :orders_edit_checkout
                 %i.ofn-i_007-caret-right
 
+    = render 'bought' if @order.finalised_line_items.present?
+
 = render partial: "shared/footer"

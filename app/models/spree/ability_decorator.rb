@@ -4,6 +4,7 @@ class AbilityDecorator
   # All abilites are allocated from this initialiser, currently in 5 chunks.
   # Spree also defines other abilities.
   def initialize(user)
+    add_shopping_abilities user
     add_base_abilities user if is_new_user? user
     add_enterprise_management_abilities user if can_manage_enterprises? user
     add_group_management_abilities user if can_manage_groups? user
@@ -48,6 +49,12 @@ class AbilityDecorator
 
   def can_manage_relationships?(user)
     can_manage_enterprises? user
+  end
+
+  def add_shopping_abilities(user)
+    can [:destroy], Spree::LineItem do |item|
+      item.andand.order.andand.order_cycle.andand.open? && item.order.user_id == user.id
+    end
   end
 
   # New users can create an enterprise, and gain other permissions from doing this.
@@ -180,6 +187,7 @@ class AbilityDecorator
     can [:admin , :for_line_items], Enterprise
     can [:admin, :index, :create], Spree::LineItem
     can [:destroy, :update], Spree::LineItem do |item|
+      order = item.order
       user.admin? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
 

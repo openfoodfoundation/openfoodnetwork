@@ -1,0 +1,43 @@
+%div{ng: {controller: "EditOrderCtrl"}}
+  %div
+    %div
+      .row
+        .row
+          .columns.large-12
+            %table{style: "width: 100%; margin-top: 2em"}
+              %col{halign: "left", valign: "middle", width: "60%"}/
+              %col{halign: "left", valign: "middle", width: "15%"}/
+              %col{halign: "center", valign: "middle", width: "10%"}/
+              %col{halign: "center", valign: "middle", width: "10%"}/
+              %col{halign: "center", valign: "middle", width: "5%"}/
+              %thead
+                %tr
+                  %th.cart-item-description-header= t('.item')
+                  %th.cart-item-price-header.text-right= t(:price)
+                  %th.text-center.cart-item-quantity-header= t(:qty)
+                  %th.cart-item-total-header.text-right= t(:total)
+                  %th.cart-item-delete-header
+
+              %tbody
+                - @order.finalised_line_items.each do |line_item|
+                  - variant = line_item.variant
+                  %tr.line-item{class: "line-item-#{line_item.id} variant-#{variant.id}"}
+                    %td.cart-item-description
+
+                      %div.item-thumb-image
+                        - if variant.images.length == 0
+                          = link_to mini_image(variant.product), variant.product
+                        - else
+                          = link_to image_tag(variant.images.first.attachment.url(:mini)), variant.product
+
+                      = render 'spree/shared/line_item_name', line_item: line_item
+                    %td.text-right.cart-item-price
+                      = line_item.single_display_amount_with_adjustments.to_html
+                    %td.text-center.cart-item-quantity
+                      = line_item.quantity
+                    %td.cart-item-total.text-right
+                      = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
+
+                    %td.cart-item-delete.text-center
+                      %a.delete{ng: {click: "deleteLineItem(#{line_item.id})"}}
+                        %i.delete.ofn-i_026-trash
