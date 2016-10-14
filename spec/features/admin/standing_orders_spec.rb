@@ -86,6 +86,23 @@ feature 'Standing Orders' do
         fill_in 'begins_at', with: Date.today.strftime('%F')
 
         click_button('Next')
+        expect(page).to have_content 'BILLING ADDRESS'
+        click_button('Next')
+        expect(page).to have_content 'can\'t be blank', count: 16
+
+        # Setting the shipping and billing addresses
+        [:bill_address, :ship_address].each do |type|
+          fill_in "#{type}_firstname", with: 'Freda'
+          fill_in "#{type}_lastname", with: 'Figapple'
+          fill_in "#{type}_address1", with: '7 Tempany Lane'
+          fill_in "#{type}_city", with: 'Natte Yallock'
+          fill_in "#{type}_zipcode", with: '3465'
+          fill_in "#{type}_phone", with: '0400 123 456'
+          select2_select "Australia", from: "#{type}_country_id"
+          select2_select "Victoria", from: "#{type}_state_id"
+        end
+
+        click_button('Next')
         expect(page).to have_content 'NAME OR SKU'
         click_button('Next')
         expect(page).to have_content 'Please add at least one product'
@@ -122,6 +139,8 @@ feature 'Standing Orders' do
         expect(standing_order.schedule).to eq schedule
         expect(standing_order.payment_method).to eq payment_method
         expect(standing_order.shipping_method).to eq shipping_method
+        expect(standing_order.bill_address.firstname).to eq 'Freda'
+        expect(standing_order.ship_address.firstname).to eq 'Freda'
 
         # Standing Line Items are created
         expect(standing_order.standing_line_items.count).to eq 1

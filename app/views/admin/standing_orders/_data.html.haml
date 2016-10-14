@@ -4,3 +4,4 @@
 = admin_inject_json_ams_array "admin.standingOrders", "schedules", @schedules, Api::Admin::IdNameSerializer if @schedules
 = admin_inject_json_ams_array "admin.standingOrders", "paymentMethods", @payment_methods, Api::Admin::IdNameSerializer if @payment_methods
 = admin_inject_json_ams_array "admin.standingOrders", "shippingMethods", @shipping_methods, Api::Admin::IdNameSerializer if @shipping_methods
+= admin_inject_available_countries(module: "admin.standingOrders")

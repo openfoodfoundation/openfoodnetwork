@@ -8,6 +8,13 @@
         %input.red{ type: "button", value: t(:next), ng: { click: 'next()' } }
       = render 'details'
 
+  .address{ ng: { show: "['address','review'].indexOf(view) >= 0" } }
+    %ng-form{ name: 'standing_order_address_form', ng: { controller: 'AddressController' } }
+      %save-bar{ dirty: "standing_order_address_form.$dirty", persist: 'true', ng: { hide: "view == 'review'" } }
+        %input{ type: "button", value: t(:back), ng: { click: "back()" } }
+        %input.red{ type: "button", value: t(:next), ng: { click: 'next()' } }
+      = render 'address'
+
   .products{ ng: { show: "['products','review'].indexOf(view) >= 0" } }
     %ng-form{ name: 'standing_order_products_form', ng: { controller: 'ProductsController' } }
       %save-bar{ dirty: "standing_order_products_form.$dirty", persist: 'true', ng: { hide: "view == 'review'" } }

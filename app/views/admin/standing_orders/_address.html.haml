@@ -1,0 +1,91 @@
+.row
+  .seven.columns.alpha
+    %fieldset.no-border-bottom
+      %legend{ align: 'center'}= t(:bill_address)
+      .field
+        %label{ for: 'bill_address_firstname'}= t(:first_name)
+        %input.fullwidth#bill_address_firstname{ name: 'bill_address_firstname', type: 'text', required: true, ng: { model: "standingOrder.bill_address.firstname" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.bill_address_firstname.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: "error in errors['bill_address.firstname']", show: 'standing_order_address_form.bill_address_firstname.$pristine' } } {{ error }}
+      .field
+        %label{ for: 'bill_address_lastname'}= t(:last_name)
+        %input.fullwidth#bill_address_lastname{ name: 'bill_address_lastname', type: 'text', required: true, ng: { model: "standingOrder.bill_address.lastname" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.bill_address_lastname.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: "error in errors['bill_address.lastname']", show: 'standing_order_address_form.bill_address_lastname.$pristine' } } {{ error }}
+      .field
+        %label{ for: 'bill_address_address1'}= t(:address)
+        %input.fullwidth#bill_address_address1{ name: 'bill_address_address1', type: 'text', required: true, ng: { model: "standingOrder.bill_address.address1" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.bill_address_address1.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: "error in errors['bill_address.address1']", show: 'standing_order_address_form.bill_address_address1.$pristine' } } {{ error }}
+      .field
+        %label{ for: 'bill_address_city'}= t(:suburb)
+        %input.fullwidth#bill_address_city{ name: 'bill_address_city', type: 'text', required: true, ng: { model: "standingOrder.bill_address.city" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.bill_address_city.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.bill_address.city', show: 'standing_order_address_form.bill_address_city.$pristine' } } {{ error }}
+      .field
+        %label{ for: "bill_address_zipcode"}= t(:postcode)
+        %input.fullwidth#bill_address_zipcode{ name: 'bill_address_zipcode', type: 'text', required: true, ng: { model: "standingOrder.bill_address.zipcode" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.bill_address_zipcode.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.bill_address.zipcode', show: 'standing_order_address_form.bill_address_zipcode.$pristine' } } {{ error }}
+      .field
+        %label{ for: "bill_address_phone"}= t(:phone)
+        %input.fullwidth#bill_address_phone{ name: 'bill_address_phone', type: 'text', required: true, ng: { model: "standingOrder.bill_address.phone" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.bill_address_phone.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.bill_address.phone', show: 'standing_order_address_form.bill_address_phone.$pristine' } } {{ error }}
+      .field
+        %label{ for: "bill_address_country_id"}= t(:country)
+        %input.ofn-select2.fullwidth#bill_address_country_id{ name: 'bill_address_country_id', type: 'number', data: 'countries', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.bill_address.country_id' } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.bill_address_country_id.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.bill_address.country', show: 'standing_order_address_form.bill_address_country_id.$pristine' } } {{ error }}
+      .field
+        %label{ for: "bill_address_state_id"}= t(:state)
+        %input.ofn-select2.fullwidth#bill_address_state_id{ name: 'bill_address_state_id', type: 'number', data: 'billStates', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.bill_address.state_id' } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.bill_address_state_id.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.bill_address.state', show: 'standing_order_address_form.bill_address_state_id.$pristine' } } {{ error }}
+
+
+  .two.columns
+    &nbsp;
+  .seven.columns.omega
+    %fieldset.no-border-bottom
+      %legend{ align: 'center'}= t(:ship_address)
+      .field
+        %label{ for: 'ship_address_firstname'}= t(:first_name)
+        %input.fullwidth#ship_address_firstname{ name: 'ship_address_firstname', type: 'text', required: true, ng: { model: "standingOrder.ship_address.firstname" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_firstname.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: "error in errors['ship_address.firstname']", show: 'standing_order_address_form.ship_address_firstname.$pristine' } } {{ error }}
+      .field
+        %label{ for: 'ship_address_lastname'}= t(:last_name)
+        %input.fullwidth#ship_address_lastname{ name: 'ship_address_lastname', type: 'text', required: true, ng: { model: "standingOrder.ship_address.lastname" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_lastname.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: "error in errors['ship_address.lastname']", show: 'standing_order_address_form.ship_address_lastname.$pristine' } } {{ error }}
+      .field
+        %label{ for: 'ship_address_address1'}= t(:address)
+        %input.fullwidth#ship_address_address1{ name: 'ship_address_address1', type: 'text', required: true, ng: { model: "standingOrder.ship_address.address1" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_address1.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: "error in errors['ship_address.address1']", show: 'standing_order_address_form.ship_address_address1.$pristine' } } {{ error }}
+      .field
+        %label{ for: 'ship_address_city'}= t(:suburb)
+        %input.fullwidth#ship_address_city{ name: 'ship_address_city', type: 'text', required: true, ng: { model: "standingOrder.ship_address.city" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_city.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.ship_address.city', show: 'standing_order_address_form.ship_address_city.$pristine' } } {{ error }}
+      .field
+        %label{ for: "ship_address_zipcode"}= t(:potcode)
+        %input.fullwidth#ship_address_zipcode{ name: 'ship_address_zipcode', type: 'text', required: true, ng: { model: "standingOrder.ship_address.zipcode" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_zipcode.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.ship_address.zipcode', show: 'standing_order_address_form.ship_address_zipcode.$pristine' } } {{ error }}
+      .field
+        %label{ for: "ship_address_phone"}= t(:phone)
+        %input.fullwidth#ship_address_phone{ name: 'ship_address_phone', type: 'text', required: true, ng: { model: "standingOrder.ship_address.phone" } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_phone.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.ship_address.phone', show: 'standing_order_address_form.ship_address_phone.$pristine' } } {{ error }}
+      .field
+        %label{ for: "ship_address_country_id"}= t(:country)
+        %input.ofn-select2.fullwidth#ship_address_country_id{ name: 'ship_address_country_id', type: 'number', data: 'countries', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.ship_address.country_id' } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_country_id.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.ship_address.country', show: 'standing_order_address_form.ship_address_country_id.$pristine' } } {{ error }}
+      .field
+        %label{ for: "ship_address_state_id"}= t(:state)
+        %input.ofn-select2.fullwidth#ship_address_state_id{ name: 'ship_address_state_id', type: 'number', data: 'shipStates', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.ship_address.state_id' } }
+        .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_state_id.$error.required' } }= t(:error_required)
+        .error{ ng: { repeat: 'error in errors.ship_address.state', show: 'standing_order_address_form.ship_address_state_id.$pristine' } } {{ error }}

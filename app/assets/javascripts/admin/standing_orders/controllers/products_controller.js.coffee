@@ -6,4 +6,4 @@ angular.module("admin.standingOrders").controller "ProductsController", ($scope,
     else
       StatusMessage.display 'failure', 'Please add at least one product'
 
-  $scope.back = -> $scope.setView('details')
+  $scope.back = -> $scope.setView('address')

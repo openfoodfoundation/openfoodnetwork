@@ -159,6 +159,7 @@ describe Admin::StandingOrdersController, type: :controller do
       end
 
       context 'when I submit valid and complete params' do
+        let!(:address) { create(:address) }
         before do
           params[:standing_order].merge!({
             schedule_id: schedule.id,
@@ -167,6 +168,10 @@ describe Admin::StandingOrdersController, type: :controller do
             shipping_method_id: shipping_method.id,
             begins_at: 2.days.ago,
             ends_at: 3.months.from_now
+          })
+          params.merge!({
+            bill_address: address.attributes.except('id'),
+            ship_address: address.attributes.except('id')
           })
         end
 
@@ -177,6 +182,8 @@ describe Admin::StandingOrdersController, type: :controller do
           expect(standing_order.customer).to eq customer
           expect(standing_order.payment_method).to eq payment_method
           expect(standing_order.shipping_method).to eq shipping_method
+          expect(standing_order.bill_address.firstname).to eq address.firstname
+          expect(standing_order.ship_address.firstname).to eq address.firstname
         end
 
         context 'with standing_line_items params' do
