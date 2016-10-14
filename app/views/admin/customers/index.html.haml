@@ -10,9 +10,9 @@
     %a.button.icon-plus#new-customer{ href: "#", "new-customer-dialog" => true }
       = t('admin.customers.index.new_customer')
 
-= admin_inject_column_preferences module: 'admin.customers'
-= admin_inject_shops
-= admin_inject_available_countries
+= admin_inject_column_preferences(module: 'admin.customers')
+= admin_inject_shops(module: 'admin.customers')
+= admin_inject_available_countries(module: 'admin.customers')
 
 %div{ ng: { controller: 'customersCtrl' } }
   .row.filters
