@@ -35,19 +35,23 @@ module Admin
       admin_inject_json_ams "admin.shippingMethods", "shippingMethod", @shipping_method, Api::Admin::ShippingMethodSerializer
     end
 
-    def admin_inject_shops(ngModule='admin.customers')
-      admin_inject_json_ams_array ngModule, "shops", @shops, Api::Admin::IdNameSerializer
+    def admin_inject_shops(opts={})
+      opts.reverse_merge!(module: 'admin.customers')
+      admin_inject_json_ams_array opts[:module], "shops", @shops, Api::Admin::IdNameSerializer
     end
 
-    def admin_inject_available_countries(ngModule='admin.customers')
-      admin_inject_json_ams_array ngModule, 'availableCountries', available_countries, Api::CountrySerializer
+    def admin_inject_available_countries(opts={})
+      opts.reverse_merge!(module: 'admin.customers')
+      admin_inject_json_ams_array opts[:module], 'availableCountries', available_countries, Api::CountrySerializer
     end
 
-    def admin_inject_hubs(opts={module: 'ofn.admin'})
+    def admin_inject_hubs(opts={})
+      opts.reverse_merge!(module: 'ofn.admin')
       admin_inject_json_ams_array opts[:module], "hubs", @hubs, Api::Admin::IdNameSerializer
     end
 
-    def admin_inject_producers(opts={module: 'ofn.admin'})
+    def admin_inject_producers(opts={})
+      opts.reverse_merge!(module: 'ofn.admin')
       admin_inject_json_ams_array opts[:module], "producers", @producers, Api::Admin::IdNameSerializer
     end
 
