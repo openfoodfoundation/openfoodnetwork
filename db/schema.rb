@@ -1084,11 +1084,15 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.datetime "ends_at"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.integer  "bill_address_id",    :null => false
+    t.integer  "ship_address_id",    :null => false
   end
 
+  add_index "standing_orders", ["bill_address_id"], :name => "index_standing_orders_on_bill_address_id"
   add_index "standing_orders", ["customer_id"], :name => "index_standing_orders_on_customer_id"
   add_index "standing_orders", ["payment_method_id"], :name => "index_standing_orders_on_payment_method_id"
   add_index "standing_orders", ["schedule_id"], :name => "index_standing_orders_on_schedule_id"
+  add_index "standing_orders", ["ship_address_id"], :name => "index_standing_orders_on_ship_address_id"
   add_index "standing_orders", ["shipping_method_id"], :name => "index_standing_orders_on_shipping_method_id"
   add_index "standing_orders", ["shop_id"], :name => "index_standing_orders_on_shop_id"
 
@@ -1326,6 +1330,8 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
   add_foreign_key "standing_orders", "customers", name: "oc_standing_orders_customer_id_fk"
   add_foreign_key "standing_orders", "enterprises", name: "oc_standing_orders_shop_id_fk", column: "shop_id"
   add_foreign_key "standing_orders", "schedules", name: "oc_standing_orders_schedule_id_fk"
+  add_foreign_key "standing_orders", "spree_addresses", name: "standing_orders_bill_address_id_fk", column: "bill_address_id"
+  add_foreign_key "standing_orders", "spree_addresses", name: "standing_orders_ship_address_id_fk", column: "ship_address_id"
   add_foreign_key "standing_orders", "spree_payment_methods", name: "oc_standing_orders_payment_method_id_fk", column: "payment_method_id"
   add_foreign_key "standing_orders", "spree_shipping_methods", name: "oc_standing_orders_shipping_method_id_fk", column: "shipping_method_id"
 

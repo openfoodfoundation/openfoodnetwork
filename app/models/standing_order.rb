@@ -4,11 +4,17 @@ class StandingOrder < ActiveRecord::Base
   belongs_to :schedule
   belongs_to :shipping_method, class_name: 'Spree::ShippingMethod'
   belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
+  belongs_to :bill_address, foreign_key: :bill_address_id, class_name: Spree::Address
+  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: Spree::Address
   has_many :standing_line_items, inverse_of: :standing_order
 
-  accepts_nested_attributes_for :standing_line_items
+  alias_attribute :billing_address, :bill_address
+  alias_attribute :shipping_address, :ship_address
 
-  validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method, :begins_at
+  accepts_nested_attributes_for :standing_line_items, :bill_address, :ship_address
+
+  validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method
+  validates_presence_of :billing_address, :shipping_address, :begins_at
   validate :ends_at_after_begins_at
   validate :standing_line_items_available
   validate :check_associations
