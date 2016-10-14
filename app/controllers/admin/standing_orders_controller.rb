@@ -4,7 +4,7 @@ module Admin
   class StandingOrdersController < ResourceController
     before_filter :load_shop, only: [:new]
     before_filter :load_shops, only: [:index]
-    before_filter :wrap_sli_attrs, only: [:create]
+    before_filter :wrap_nested_attrs, only: [:create]
     respond_to :json
 
     respond_override create: { json: {
@@ -25,6 +25,8 @@ module Admin
 
     def new
       @standing_order.shop = @shop
+      @standing_order.bill_address = Spree::Address.new
+      @standing_order.ship_address = Spree::Address.new
       @customers = Customer.of(@shop)
       @schedules = Schedule.with_coordinator(@shop)
       @payment_methods = Spree::PaymentMethod.for_distributor(@shop)
@@ -63,12 +65,18 @@ module Admin
     end
 
     # Wrap :standing_line_items_attributes in :standing_order root
-    def wrap_sli_attrs
+    def wrap_nested_attrs
       if params[:standing_line_items].is_a? Array
         attributes = params[:standing_line_items].map do |sli|
           sli.slice(*StandingLineItem.attribute_names)
         end
         params[:standing_order][:standing_line_items_attributes] = attributes
+      end
+      if bill_address_attrs = params[:bill_address]
+        params[:standing_order][:bill_address_attributes] = bill_address_attrs.slice(*Spree::Address.attribute_names)
+      end
+      if ship_address_attrs = params[:ship_address]
+        params[:standing_order][:ship_address_attributes] = ship_address_attrs.slice(*Spree::Address.attribute_names)
       end
     end
 

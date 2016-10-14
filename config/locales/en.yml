@@ -121,6 +121,8 @@ en:
   say_yes: "Yes"
   then: then
   ongoing: Ongoing
+  bill_address: Billing Address
+  ship_address: Shipping Address
   sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
   required_fields: Required fields are denoted with an asterisk
   select_continue: Select and Continue
@@ -781,8 +783,9 @@ en:
       create: Create Standing Order
       steps:
         details: 1. Basic Details
-        products: 2. Add Products
-        review: 3. Review & Save
+        address: 2. Address
+        products: 3. Add Products
+        review: 4. Review & Save
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
