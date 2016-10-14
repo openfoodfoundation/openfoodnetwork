@@ -73,6 +73,14 @@ describe StandingOrder, type: :model do
       end
     end
 
+    it "requires a billing_address" do
+      expect(subject).to validate_presence_of :billing_address
+    end
+
+    it "requires a shipping_address" do
+      expect(subject).to validate_presence_of :shipping_address
+    end
+
     it "requires a begins_at date" do
       expect(subject).to validate_presence_of :begins_at
     end

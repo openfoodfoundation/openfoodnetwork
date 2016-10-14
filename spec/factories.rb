@@ -142,6 +142,8 @@ FactoryGirl.define do
     shop { FactoryGirl.create :enterprise }
     schedule { FactoryGirl.create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
     customer { create(:customer, enterprise: shop) }
+    bill_address { create(:address) }
+    ship_address { create(:address) }
     payment_method { create(:payment_method, distributors: [shop]) }
     shipping_method { create(:shipping_method, distributors: [shop]) }
     begins_at { 1.month.ago }
