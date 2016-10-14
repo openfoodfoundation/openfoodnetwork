@@ -402,7 +402,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         o.save!
       end
 
-      it "checks out successfully" do
+      it "checks out successfully", retry: 3 do
         visit checkout_path
         checkout_as_guest
         choose sm2.name
