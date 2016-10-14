@@ -270,6 +270,10 @@ Spree::Order.class_eval do
     Delayed::Job.enqueue ConfirmOrderJob.new(id) unless account_invoice?
   end
 
+  def can_remove_items?(user)
+    user_id == user.id && distributor.andand.allow_order_changes? && order_cycle.andand.open?
+  end
+
   private
 
   def shipping_address_from_distributor

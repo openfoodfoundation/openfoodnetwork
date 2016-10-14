@@ -94,6 +94,8 @@ feature "full-page cart", js: true do
       before do
         order.user = user
         order.save
+        order.distributor.allow_order_changes = true
+        order.distributor.save
         add_product_to_cart order, product_tax
         quick_login_as user
         visit spree.cart_path
