@@ -11,7 +11,10 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
 
   $scope.save = ->
     $scope.standing_order_form.$setPristine()
-    StandingOrder.save()
+    if $scope.standingOrder.id?
+      StandingOrder.update()
+    else
+      StandingOrder.create()
 
   $scope.setView = (view) -> $scope.view = view
 
@@ -22,7 +25,7 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
 
   $scope.estimatedSubtotal = ->
     $scope.standingOrder.standing_line_items.reduce (subtotal, item) ->
-      item.price_estimate * item.quantity
+      subtotal += item.price_estimate * item.quantity
     , 0
 
   $scope.estimatedTotal = ->

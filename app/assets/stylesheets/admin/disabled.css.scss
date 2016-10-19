@@ -12,4 +12,8 @@ input[type='button'], input[type='submit'] {
 
 .select2-container-disabled {
   pointer-events: none;
+
+  .select2-choice > .select2-chosen {
+    color: #a1a1a1;
+  }
 }

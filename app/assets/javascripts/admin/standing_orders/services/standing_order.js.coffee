@@ -16,10 +16,19 @@ angular.module("admin.standingOrders").factory "StandingOrder", ($injector, $htt
       , (response) =>
         InfoDialog.open 'error', response.data.errors[0]
 
-    save: ->
+    create: ->
       StatusMessage.display 'progress', 'Saving...'
       delete @errors[k] for k, v of @errors
       @standingOrder.$save().then (response) =>
+        StatusMessage.display 'success', 'Saved'
+      , (response) =>
+        StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
+        angular.extend(@errors, response.data.errors)
+
+    update: ->
+      StatusMessage.display 'progress', 'Saving...'
+      delete @errors[k] for k, v of @errors
+      @standingOrder.$update().then (response) =>
         StatusMessage.display 'success', 'Saved'
       , (response) =>
         StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'

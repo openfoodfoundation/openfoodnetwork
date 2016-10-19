@@ -2,17 +2,19 @@ require 'open_food_network/permissions'
 
 module Admin
   class StandingOrdersController < ResourceController
-    before_filter :load_shop, only: [:new]
     before_filter :load_shops, only: [:index]
-    before_filter :wrap_nested_attrs, only: [:create]
+    before_filter :load_form_data, only: [:new, :edit]
+    before_filter :strip_banned_attrs, only: [:update]
+    before_filter :wrap_nested_attrs, only: [:create, :update]
     respond_to :json
 
     respond_override create: { json: {
-      success: lambda {
-        shop, next_oc = @standing_order.shop, @standing_order.schedule.current_or_next_order_cycle
-        fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc) if shop && next_oc
-        render_as_json @standing_order, fee_calculator: fee_calculator
-      },
+      success: lambda { render_as_json @standing_order, fee_calculator: fee_calculator },
+      failure: lambda { render json: { errors: json_errors }, status: :unprocessable_entity }
+    } }
+
+    respond_override update: { json: {
+      success: lambda { render_as_json @standing_order, fee_calculator: fee_calculator },
       failure: lambda { render json: { errors: json_errors }, status: :unprocessable_entity }
     } }
 
@@ -24,13 +26,8 @@ module Admin
     end
 
     def new
-      @standing_order.shop = @shop
       @standing_order.bill_address = Spree::Address.new
       @standing_order.ship_address = Spree::Address.new
-      @customers = Customer.of(@shop)
-      @schedules = Schedule.with_coordinator(@shop)
-      @payment_methods = Spree::PaymentMethod.for_distributor(@shop)
-      @shipping_methods = Spree::ShippingMethod.for_distributor(@shop)
     end
 
     private
@@ -49,12 +46,22 @@ module Admin
       end
     end
 
-    def load_shop
-      @shop = Enterprise.find(params[:shop_id])
-    end
-
     def load_shops
       @shops = Enterprise.managed_by(spree_current_user).is_distributor
+    end
+
+    def load_form_data
+      @customers = Customer.of(@standing_order.shop)
+      @schedules = Schedule.with_coordinator(@standing_order.shop)
+      @payment_methods = Spree::PaymentMethod.for_distributor(@standing_order.shop)
+      @shipping_methods = Spree::ShippingMethod.for_distributor(@standing_order.shop)
+      @fee_calculator = fee_calculator
+    end
+
+    def fee_calculator
+      shop, next_oc = @standing_order.shop, @standing_order.schedule.andand.current_or_next_order_cycle
+      return nil unless shop && next_oc
+      OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc)
     end
 
     def json_errors
@@ -80,10 +87,15 @@ module Admin
       end
     end
 
+    def strip_banned_attrs
+      params[:standing_order].delete :schedule_id
+      params[:standing_order].delete :customer_id
+    end
+
     # Overriding Spree method to load data from params here so that
     # we can authorise #create using an object with required attributes
     def build_resource
-      StandingOrder.new(shop_id: params[:standing_order].andand[:shop_id])
+      StandingOrder.new(params[:standing_order])
     end
 
     def ams_prefix_whitelist

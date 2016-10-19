@@ -3,13 +3,13 @@
   .row
     .seven.columns.alpha.field
       %label{ for: 'customer_id'}= t('admin.customer')
-      %input.ofn-select2.fullwidth#customer_id{ name: 'customer_id', type: 'number', data: 'customers', text: 'email', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.customer_id' } }
+      %input.ofn-select2.fullwidth#customer_id{ name: 'customer_id', type: 'number', data: 'customers', text: 'email', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.customer_id', disabled: 'standingOrder.id' } }
       .error{ ng: { show: 'submitted && standing_order_details_form.customer_id.$error.required' } }= t(:error_required)
       .error{ ng: { repeat: 'error in errors.customer', show: 'standing_order_details_form.customer_id.$pristine' } } {{ error }}
     .two.columns &nbsp;
     .seven.columns.omega.field
       %label{ for: 'schedule_id'}= t('admin.schedule')
-      %input.ofn-select2.fullwidth#schedule_id{ name: 'schedule_id', type: 'number', data: 'schedules', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.schedule_id' } }
+      %input.ofn-select2.fullwidth#schedule_id{ name: 'schedule_id', type: 'number', data: 'schedules', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.schedule_id', disabled: 'standingOrder.id' } }
       .error{ ng: { show: 'submitted && standing_order_details_form.schedule_id.$error.required' } }= t(:error_required)
       .error{ ng: { repeat: 'error in errors.schedule', show: 'standing_order_details_form.schedule_id.$pristine'} } {{ error }}
 
