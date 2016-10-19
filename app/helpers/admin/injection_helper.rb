@@ -120,7 +120,7 @@ module Admin
     end
 
     def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})
-      json = serializer.new(data, scope: spree_current_user).to_json
+      json = serializer.new(data, {scope: spree_current_user}.merge(opts)).to_json
       render partial: "admin/json/injection_ams", locals: {ngModule: ngModule, name: name, json: json}
     end
 

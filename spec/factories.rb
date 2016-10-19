@@ -149,6 +149,12 @@ FactoryGirl.define do
     begins_at { 1.month.ago }
   end
 
+  factory :standing_line_item, :class => StandingLineItem do
+    standing_order
+    variant
+    quantity 1
+  end
+
   factory :variant_override, :class => VariantOverride do
     price         77.77
     count_on_hand 11111

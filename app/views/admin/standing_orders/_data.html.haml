@@ -1,4 +1,4 @@
-= admin_inject_json_ams "admin.standingOrders", "standingOrder", @standing_order, Api::Admin::StandingOrderSerializer if @standing_order
+= admin_inject_json_ams "admin.standingOrders", "standingOrder", @standing_order, Api::Admin::StandingOrderSerializer, fee_calculator: @fee_calculator if @standing_order
 = admin_inject_json_ams_array "admin.standingOrders", "shops", @shops, Api::Admin::IdNameSerializer if @shops
 = admin_inject_json_ams_array "admin.standingOrders", "customers", @customers, Api::Admin::IdEmailSerializer if @customers
 = admin_inject_json_ams_array "admin.standingOrders", "schedules", @schedules, Api::Admin::IdNameSerializer if @schedules
