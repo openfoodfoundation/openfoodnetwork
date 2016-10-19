@@ -181,7 +181,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :standing_orders, only: [:index, :new, :create, :edit, :update]
 
-    resources :standing_line_items, only: [], format: :json do
+    resources :standing_line_items, only: [:destroy], format: :json do
       post :build, on: :collection
     end
   end
