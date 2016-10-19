@@ -16,6 +16,10 @@ angular.module("admin.standingOrders").factory "StandingOrder", ($injector, $htt
       , (response) =>
         InfoDialog.open 'error', response.data.errors[0]
 
+    removeItem: (item) ->
+      index = @standingOrder.standing_line_items.indexOf(item)
+      @standingOrder.standing_line_items.splice(index,1)
+
     create: ->
       StatusMessage.display 'progress', 'Saving...'
       delete @errors[k] for k, v of @errors

@@ -21,7 +21,12 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
   $scope.stepTitleFor = (step) -> t("admin.standing_orders.steps.#{step}")
 
   $scope.addStandingLineItem = ->
+    $scope.standing_order_form.$setDirty()
     StandingOrder.buildItem($scope.newItem)
+
+  $scope.removeStandingLineItem = (item) ->
+    $scope.standing_order_form.$setDirty()
+    StandingOrder.removeItem(item)
 
   $scope.estimatedSubtotal = ->
     $scope.standingOrder.standing_line_items.reduce (subtotal, item) ->
