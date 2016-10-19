@@ -3,8 +3,7 @@ describe Api::Admin::CustomerSerializer do
   let!(:tag_rule) { create(:tag_rule, enterprise: customer.enterprise, preferred_customer_tags: "two") }
 
   it "serializes a customer" do
-    tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: customer.enterprise_id))
-    serializer = Api::Admin::CustomerSerializer.new customer, tag_rule_mapping: tag_rule_mapping
+    serializer = Api::Admin::CustomerSerializer.new customer
     result = JSON.parse(serializer.to_json)
     expect(result['email']).to eq customer.email
     tags = result['tags']

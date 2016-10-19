@@ -19,11 +19,24 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
         $scope.customers_form.$setPristine()
         $scope.customers = data
 
-  $scope.shop_id = shops[0].id if shops.length == 1
+  $scope.findTags = (query) ->
+    defer = $q.defer()
+    params =
+      enterprise_id: $scope.shop.id
+    TagsResource.index params, (data) =>
+      filtered = data.filter (tag) ->
+        tag.text.toLowerCase().indexOf(query.toLowerCase()) != -1
+      defer.resolve filtered
+    defer.promise
 
-  $scope.checkForDuplicateCodes = ->
-    delete this.customer.code unless this.customer.code
-    this.duplicate = $scope.isDuplicateCode(this.customer.code)
+  $scope.add = (email) ->
+    params =
+      enterprise_id: $scope.shop.id
+      email: email
+    CustomerResource.create params, (customer) =>
+      if customer.id
+        $scope.customers.push customer
+        $scope.quickSearch = customer.email
 
   $scope.isDuplicateCode = (code) ->
     return false unless code

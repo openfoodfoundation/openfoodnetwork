@@ -20,35 +20,38 @@ Darkswarm.directive 'mapSearch', ($timeout, Search) ->
     $timeout =>
       map = ctrl.getMap()
 
-      searchBox = scope.createSearchBox map
-      scope.bindSearchResponse map, searchBox
-      scope.biasResults map, searchBox
-      scope.performUrlSearch map
+      # Use OSM tiles server
+      map.mapTypes.set 'OSM', new (google.maps.ImageMapType)(
+        getTileUrl: (coord, zoom) ->
+          # "Wrap" x (logitude) at 180th meridian properly
+          # NB: Don't touch coord.x because coord param is by reference, and changing its x property breakes something in Google's lib
+          tilesPerGlobe = 1 << zoom
+          x = coord.x % tilesPerGlobe
+          if x < 0
+            x = tilesPerGlobe + x
+          # Wrap y (latitude) in a like manner if you want to enable vertical infinite scroll
+          'http://tile.openstreetmap.org/' + zoom + '/' + x + '/' + coord.y + '.png'
+        tileSize: new (google.maps.Size)(256, 256)
+        name: 'OpenStreetMap'
+        maxZoom: 18)
 
-    scope.createSearchBox = (map) ->
-      map.controls[google.maps.ControlPosition.TOP_LEFT].push scope.input
-      return new google.maps.places.SearchBox(scope.input)
+      input = (document.getElementById("pac-input"))
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push input
+      searchBox = new google.maps.places.SearchBox((input))
 
-    scope.bindSearchResponse = (map, searchBox) ->
-      google.maps.event.addListener searchBox, "places_changed", =>
-        scope.showSearchResult map, searchBox
+      google.maps.event.addListener searchBox, "places_changed", ->
+        places = searchBox.getPlaces()
+        return if places.length is 0
+        # For each place, get the icon, place name, and location.
+        markers = []
+        bounds = new google.maps.LatLngBounds()
+        for place in places
+          #map.setCenter place.geometry.location
+          map.fitBounds place.geometry.viewport
+        #map.fitBounds bounds
 
-    scope.showSearchResult = (map, searchBox) ->
-      places = searchBox.getPlaces()
-      for place in places when place.geometry.viewport?
-        map.fitBounds place.geometry.viewport
-        scope.$apply ->
-          model.$setViewValue elem.val()
-
-    # When the map loads, and we have a search from ?query, perform that search
-    scope.performUrlSearch = (map) ->
-      google.maps.event.addListenerOnce map, "idle", =>
-        google.maps.event.trigger(scope.input, 'focus');
-        google.maps.event.trigger(scope.input, 'keydown', {keyCode: 13});
-
-    # Bias the SearchBox results towards places that are within the bounds of the
-    # current map's viewport.
-    scope.biasResults = (map, searchBox) ->
+      # Bias the SearchBox results towards places that are within the bounds of the
+      # current map's viewport.
       google.maps.event.addListener map, "bounds_changed", ->
         bounds = map.getBounds()
         searchBox.setBounds bounds

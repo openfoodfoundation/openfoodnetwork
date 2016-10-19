@@ -56,7 +56,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       # TODO: These changes to quantity/max_quantity trigger another cart update, which
       #       is unnecessary.
 
-      for li in @line_items when li.quantity > 0
+      for li in @line_items_present()
         if stockLevels[li.variant.id]?
           li.variant.count_on_hand = stockLevels[li.variant.id].on_hand
           if li.quantity > li.variant.count_on_hand
@@ -65,6 +65,9 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
           if li.variant.count_on_hand == 0 && li.max_quantity > li.variant.count_on_hand
             li.max_quantity = li.variant.count_on_hand
             scope.variants.push(li.variant) unless li.variant in scope.variants
+
+      if scope.variants.length > 0
+        $modal.open(templateUrl: "out_of_stock.html", scope: scope, windowClass: 'out-of-stock-modal')
 
       if scope.variants.length > 0
         $modal.open(templateUrl: "out_of_stock.html", scope: scope, windowClass: 'out-of-stock-modal')

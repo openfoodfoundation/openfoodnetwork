@@ -12,17 +12,27 @@ class ProducerMailer < Spree::BaseMailer
 
     subject = "[#{Spree::Config.site_name}] Order cycle report for #{producer.name}"
 
+    # Set from address to the coordinator (optional)
+    if Spree::MailMethod.current
+      if Spree::MailMethod.current.prefers_send_from_enterprise_address?
+        from_email = @coordinator.email
+      else
+        from_email = from_address
+      end
+    end
+    from_email ||= from_address
+
     if has_orders? order_cycle, producer
       mail(to: @producer.email,
-           from: from_address,
+           from: from_email,
            subject: subject,
-           reply_to: @coordinator.email,
            cc: @coordinator.email)
     end
   end
 
 
   private
+
 
   def has_orders?(order_cycle, producer)
     line_items_from(order_cycle, producer).any?

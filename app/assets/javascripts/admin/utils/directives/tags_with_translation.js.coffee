@@ -6,10 +6,6 @@ angular.module("admin.utils").directive "tagsWithTranslation", ($timeout) ->
     tagsAttr: "@?"
     tagListAttr: "@?"
     findTags: "&"
-    form: '=?'
-    onTagAdded: "&"
-    onTagRemoved: "&"
-    max: "="
   link: (scope, element, attrs) ->
     scope.findTags = undefined unless attrs.hasOwnProperty("findTags")
     scope.limitReached = false
