@@ -62,11 +62,13 @@ feature 'Standing Orders' do
 
     context 'creating a new standing order' do
       let!(:customer) { create(:customer, enterprise: shop) }
-      let!(:product) { create(:product, supplier: shop) }
-      let!(:variant) { create(:variant, product: product, unit_value: '100', price: 12.00, option_values: []) }
+      let!(:product1) { create(:product, supplier: shop) }
+      let!(:product2) { create(:product, supplier: shop) }
+      let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
+      let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
-      let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant], enterprise_fees: [enterprise_fee]) }
+      let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
       let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
       let!(:payment_method) { create(:payment_method, distributors: [shop]) }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
@@ -108,17 +110,31 @@ feature 'Standing Orders' do
         expect(page).to have_content 'Please add at least one product'
 
         # Adding a product and getting a price estimate
-        targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+        targetted_select2_search product1.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 2
         click_link 'Add'
         within 'table#standing-line-items tr.item', match: :first do
-          expect(page).to have_selector 'td.description', text: "#{product.name} - #{variant.full_name}"
+          expect(page).to have_selector 'td.description', text: "#{product1.name} - #{variant1.full_name}"
           expect(page).to have_selector 'td.price', text: "$13.75"
           expect(page).to have_input 'quantity', with: "2"
           expect(page).to have_selector 'td.total', text: "$27.50"
         end
 
         click_button('Next')
+
+        # Deleting the existing product and adding a new product
+        within 'table#standing-line-items tr.item', match: :first do
+          accept_alert "Are you sure?" do find("a.delete-item").click end
+        end
+        targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+        fill_in 'add_quantity', with: 3
+        click_link 'Add'
+        within 'table#standing-line-items tr.item', match: :first do
+          expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
+          expect(page).to have_selector 'td.price', text: "$7.75"
+          expect(page).to have_input 'quantity', with: "3"
+          expect(page).to have_selector 'td.total', text: "$23.25"
+        end
 
         expect{
           click_button('Create Standing Order')
@@ -127,10 +143,10 @@ feature 'Standing Orders' do
 
         # Prices are shown
         within 'table#standing-line-items tr.item', match: :first do
-          expect(page).to have_selector 'td.description', text: "#{product.name} - #{variant.full_name}"
-          expect(page).to have_selector 'td.price', text: "$13.75"
-          expect(page).to have_input 'quantity', with: "2"
-          expect(page).to have_selector 'td.total', text: "$27.50"
+          expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
+          expect(page).to have_selector 'td.price', text: "$7.75"
+          expect(page).to have_input 'quantity', with: "3"
+          expect(page).to have_selector 'td.total', text: "$23.25"
         end
 
         # Basic properties of standing order are set
@@ -145,8 +161,8 @@ feature 'Standing Orders' do
         # Standing Line Items are created
         expect(standing_order.standing_line_items.count).to eq 1
         standing_line_item = standing_order.standing_line_items.first
-        expect(standing_line_item.variant).to eq variant
-        expect(standing_line_item.quantity).to eq 2
+        expect(standing_line_item.variant).to eq variant2
+        expect(standing_line_item.quantity).to eq 3
       end
 
       context 'editing an existing standing order' do
