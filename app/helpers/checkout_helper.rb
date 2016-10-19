@@ -1,4 +1,8 @@
 module CheckoutHelper
+  def guest_checkout_allowed?
+    current_order.distributor.allow_guest_orders?
+  end
+
   def checkout_adjustments_for(order, opts={})
     adjustments = order.adjustments.eligible
     exclude = opts[:exclude] || {}

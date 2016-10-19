@@ -34,7 +34,12 @@ module OpenFoodNetwork
       match do |event_proc|
         last_job_id_before = Delayed::Job.last.andand.id || 0
 
-        event_proc.call
+        begin
+          event_proc.call
+        rescue StandardError => e
+          @exception = e
+          raise e
+        end
 
         @jobs_created = Delayed::Job.where('id > ?', last_job_id_before)
 
@@ -57,11 +62,11 @@ module OpenFoodNetwork
       end
 
       failure_message_for_should do |event_proc|
-        "expected #{klass} to be enqueued matching #{options.inspect} (#{@jobs_created.andand.count || '???'} others enqueued)"
+        @exception || "expected #{klass} to be enqueued matching #{options.inspect} (#{@jobs_created.count} others enqueued)"
       end
 
       failure_message_for_should_not do |event_proc|
-        "expected #{klass} to not be enqueued matching #{options.inspect}"
+        @exception || "expected #{klass} to not be enqueued matching #{options.inspect}"
       end
     end
   end

@@ -4,11 +4,16 @@
       %h3.pad-top
         = t :checkout_headline
   .row.pad-top
-    .small-5.columns.text-center
-      %button.primary.expand{"auth" => "login"}
-        = t :label_login
-    .small-2.columns.text-center
-      %p.pad-top= "-#{t :action_or}-"
-    .small-5.columns.text-center
-      %button.neutral-btn.dark.expand{"ng-click" => "enabled = true"}
-        = t :checkout_as_guest
+    -if guest_checkout_allowed?
+      .small-5.columns.text-center
+        %button.primary.expand{"auth" => "login"}
+          = t :label_login
+      .small-2.columns.text-center
+        %p.pad-top= "-#{t :action_or}-"
+      .small-5.columns.text-center
+        %button.neutral-btn.dark.expand{"ng-click" => "enabled = true"}
+          = t :checkout_as_guest
+    -else
+      .small-6.columns.small-centered
+        %button.primary.expand{"auth" => "login"}
+          = t :label_login
