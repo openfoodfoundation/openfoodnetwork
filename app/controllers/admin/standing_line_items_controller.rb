@@ -7,6 +7,11 @@ module Admin
 
     respond_to :json
 
+    respond_override destroy: { json: {
+      success: lambda { render nothing: true, :status => 204 },
+      failure: lambda { render json: { errors: @standing_line_item.errors.full_messages }, status: :unprocessable_entity }
+    } }
+
     def build
       return render json: { errors: ['Unauthorised'] }, status: :unauthorized unless @shop
       if @variant

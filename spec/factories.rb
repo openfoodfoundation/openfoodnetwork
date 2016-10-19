@@ -149,6 +149,15 @@ FactoryGirl.define do
     begins_at { 1.month.ago }
   end
 
+  factory :standing_order_with_items, parent: :standing_order do |standing_order|
+    standing_line_items { create_list(:standing_line_item, 3) }
+    before(:create) do |standing_order, proxy|
+      oc = standing_order.schedule.order_cycles.first
+      ex = create(:exchange, :order_cycle => oc, :sender => standing_order.shop, :receiver => standing_order.shop, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
+      standing_order.standing_line_items.each { |sli| ex.variants << sli.variant }
+    end
+  end
+
   factory :standing_line_item, :class => StandingLineItem do
     standing_order
     variant
