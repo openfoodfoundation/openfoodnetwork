@@ -21,7 +21,7 @@
         %input.qty{ name: 'quantity', type: 'number', min: 0, ng: { model: 'item.quantity' } }
       %td.total.align-center {{ (item.price_estimate * item.quantity) | currency }}
       %td.actions
-        %a.delete-item.icon-trash.no-text{ ng: { click: 'removeStandingLineItem(item)'}, data: { confirm: "Are you sure?" }, :href => "javascript:void(0)" }
+        %a.delete-item.icon-trash.no-text{ ng: { click: 'removeStandingLineItem(item)'}, :href => "javascript:void(0)" }
   %tbody#subtotal.no-border-top{"data-hook" => "admin_order_form_subtotal"}
     %tr#subtotal-row
       %td{:colspan => "3"}

@@ -25,8 +25,9 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
     StandingOrder.buildItem($scope.newItem)
 
   $scope.removeStandingLineItem = (item) ->
-    $scope.standing_order_form.$setDirty()
-    StandingOrder.removeItem(item)
+    if confirm(t('are_you_sure'))
+      $scope.standing_order_form.$setDirty()
+      StandingOrder.removeItem(item)
 
   $scope.estimatedSubtotal = ->
     $scope.standingOrder.standing_line_items.reduce (subtotal, item) ->
