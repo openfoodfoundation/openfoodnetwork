@@ -8,6 +8,8 @@ class StandingOrder < ActiveRecord::Base
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: Spree::Address
   has_many :standing_line_items, inverse_of: :standing_order
   has_many :order_cycles, through: :schedule
+  has_many :standing_order_orders
+  has_many :orders, through: :standing_order_orders
 
   alias_attribute :billing_address, :bill_address
   alias_attribute :shipping_address, :ship_address
