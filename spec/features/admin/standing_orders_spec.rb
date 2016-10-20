@@ -212,12 +212,24 @@ feature 'Standing Orders' do
             expect(page).to have_selector 'td.total', text: "$7.75"
           end
 
+          expect(page).to have_selector '#order_form_total', text: "$35.25"
+
+          # Remove variant1 from the standing order
+          within '#sli_0', match: :first do
+            accept_alert "Are you sure?" do find("a.delete-item").click end
+          end
+
+          # Total should be $35.25
+          expect(page).to have_selector '#order_form_total', text: "$7.75"
+
           click_button 'Save Changes'
           expect(page).to have_content 'Saved'
 
           # Total should be $35.25
-          expect(page).to have_selector '#order_form_total', text: "$35.25"
-          expect(standing_order.reload.standing_line_items.length).to eq 2
+          expect(page).to have_selector '#order_form_total', text: "$7.75"
+          expect(page).to have_selector 'tr.item', count: 1
+          expect(standing_order.reload.standing_line_items.length).to eq 1
+          expect(standing_order.standing_line_items.first.variant).to eq variant2
         end
       end
     end

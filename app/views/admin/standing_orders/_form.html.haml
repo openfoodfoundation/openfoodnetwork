@@ -1,6 +1,7 @@
 %form.margin-bottom-50{ name: 'standing_order_form', novalidate: true, ng: { submit: 'save()' } }
   %save-bar{ dirty: "standing_order_form.$dirty", persist: 'true', ng: { show: "view == 'review'" } }
-    %input.red{ type: "submit", ng: { value: "standingOrder.id ? '#{t(:save_changes)}' : '#{t('admin.standing_orders.create')}'" } }
+    %input.red{ type: "submit", value: "#{t('admin.standing_orders.create')}", ng: { hide: "standingOrder.id" } }
+    %input.red{ type: "submit", value: "#{t(:save_changes)}", ng: { show: "standingOrder.id", disabled: 'standing_order_form.$pristine' } }
 
   .details{ ng: { show: "['details','review'].indexOf(view) >= 0" } }
     %ng-form{ name: 'standing_order_details_form', ng: { controller: 'DetailsController' } }
