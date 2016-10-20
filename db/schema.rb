@@ -1074,6 +1074,17 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
   add_index "standing_line_items", ["standing_order_id"], :name => "index_standing_line_items_on_standing_order_id"
   add_index "standing_line_items", ["variant_id"], :name => "index_standing_line_items_on_variant_id"
 
+  create_table "standing_order_orders", :force => true do |t|
+    t.integer  "standing_order_id", :null => false
+    t.integer  "order_id",          :null => false
+    t.datetime "cancelled_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "standing_order_orders", ["order_id"], :name => "index_standing_order_orders_on_order_id", :unique => true
+  add_index "standing_order_orders", ["standing_order_id"], :name => "index_standing_order_orders_on_standing_order_id"
+
   create_table "standing_orders", :force => true do |t|
     t.integer  "shop_id",            :null => false
     t.integer  "customer_id",        :null => false
@@ -1326,6 +1337,9 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
 
   add_foreign_key "standing_line_items", "spree_variants", name: "oc_standing_line_items_variant_id_fk", column: "variant_id"
   add_foreign_key "standing_line_items", "standing_orders", name: "oc_standing_line_items_standing_order_id_fk"
+
+  add_foreign_key "standing_order_orders", "spree_orders", name: "order_id_fk", column: "order_id"
+  add_foreign_key "standing_order_orders", "standing_orders", name: "standing_order_id_fk"
 
   add_foreign_key "standing_orders", "customers", name: "oc_standing_orders_customer_id_fk"
   add_foreign_key "standing_orders", "enterprises", name: "oc_standing_orders_shop_id_fk", column: "shop_id"
