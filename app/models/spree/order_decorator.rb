@@ -15,7 +15,7 @@ Spree::Order.class_eval do
 
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
-  attr_accessible :order_cycle_id, :distributor_id
+  attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
   before_validation :shipping_address_from_distributor
   before_validation :associate_customer, unless: :customer_id?
