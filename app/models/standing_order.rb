@@ -1,4 +1,8 @@
+require 'open_food_network/standing_order_updater'
+
 class StandingOrder < ActiveRecord::Base
+  include OpenFoodNetwork::StandingOrderUpdater
+
   belongs_to :shop, class_name: 'Enterprise'
   belongs_to :customer
   belongs_to :schedule
@@ -21,6 +25,8 @@ class StandingOrder < ActiveRecord::Base
   validate :ends_at_after_begins_at
   validate :standing_line_items_available
   validate :check_associations
+
+  after_save :update_orders!
 
   def ends_at_after_begins_at
     if begins_at.present? && ends_at.present? && ends_at <= begins_at
