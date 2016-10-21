@@ -78,6 +78,8 @@ feature 'Customers' do
         select2_select managed_distributor1.name, from: "shop_id"
 
         within "tr#c_#{customer1.id}" do
+          find_field('name').value.should eq 'John Doe'
+
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input[name=code].update-pending"
 
@@ -161,6 +163,10 @@ feature 'Customers' do
           first('#bill-address-link').click
 
           expect(page).to have_content 'Edit Billing Address'
+
+          expect(page).to have_select('country', selected: 'Australia')
+          expect(page).to have_select('state', selected: 'Victoria')
+
           fill_in 'address1', with: "New Address1"
           click_button 'Update Address'
 
