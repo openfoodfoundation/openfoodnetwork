@@ -49,17 +49,21 @@
           = t('spree.country')
           %span.required *
         %td
-          %select{name: 'country', required: true, ng: {model: 'address.country_id', options: 'country.id as country.name for country in availableCountries'}}
+          %select{ name: 'country', required: true, ng: { model: 'address.country_id' } }
             %option{value: ''}
               = t('admin.customers.index.select_country')
+            %option{ ng: { repeat: 'country in availableCountries' }, value: '{{country.id}}' }
+              {{country.name}}
       %tr
         %td
           = t('spree.state')
           %span.required *
         %td
-          %select{name: 'state', required: true, ng: {model: 'address.state_id', options: 'state.id as state.name for state in states'}}
+          %select{ name: 'state', required: true, ng: { model: 'address.state_id' } }
             %option{value: ''}
               = t('admin.customers.index.select_state')
+            %option{ ng: { repeat: 'state in states' }, value: '{{state.id}}' }
+              {{state.name}}
       %tr
         %td
           = t('spree.phone')
