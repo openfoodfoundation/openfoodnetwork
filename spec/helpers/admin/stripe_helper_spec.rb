@@ -10,8 +10,10 @@ describe Admin::StripeHelper do
     helper.get_stripe_token("abc")
   end
 
-  it "calls the Stripe API for authorization, passing the enterprise in the state param" do
-    expect(Admin::StripeHelper.client.auth_code).to receive(:authorize_url).with({state: {enterprise_id: "enterprise-permalink"}})
+  it "calls the Stripe API for authorization, passing appropriate JWT in the state param" do
+    expect(Admin::StripeHelper.client.auth_code).to receive(:authorize_url).with({
+      state: JWT.encode({enterprise_id: "enterprise-permalink"}, Openfoodnetwork::Application.config.secret_token)
+    })
     helper.authorize_stripe("enterprise-permalink")
   end
 
@@ -40,6 +42,10 @@ describe Admin::StripeHelper do
       another_stripe_account = create(:stripe_account, enterprise: enterprise2, stripe_user_id: stripe_account.stripe_user_id)
       expect(Admin::StripeHelper.client.deauthorize(stripe_account.stripe_user_id)).not_to receive(:deauthorize_request)
       deauthorize_stripe(stripe_account.id)
+    end
+
+    it "encodes and decodes JWT" do
+      jwt_decode(jwt_encode({test: "string"})).should eq({"test" => "string"})
     end
 
   end

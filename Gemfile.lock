@@ -752,6 +752,7 @@ DEPENDENCIES
   jquery-migrate-rails
   jquery-rails
   json_spec
+  jwt (~> 1.5)
   knapsack
   letter_opener
   momentjs-rails
