@@ -29,8 +29,9 @@ module Admin
 
     def authorize_stripe(enterprise_id, options={})
       options = options.merge({enterprise_id: enterprise_id})
+      jwt = jwt_encode options
       # State param will be passed back after auth
-      StripeHelper.client.auth_code.authorize_url(state: options)
+      StripeHelper.client.auth_code.authorize_url(state: jwt)
     end
 
     def deauthorize_stripe(account_id)
@@ -51,6 +52,15 @@ module Admin
     def fetch_event_from_stripe(request)
       event_json = JSON.parse(request.body.read)
       JSON.parse(Stripe::Event.retrieve(event_json["id"]))
+    end
+
+    private
+    def jwt_encode payload
+      JWT.encode(payload, Openfoodnetwork::Application.config.secret_token)
+    end
+
+    def jwt_decode token
+      JWT.decode(token, Openfoodnetwork::Application.config.secret_token)[0] # only returns the original payload
     end
   end
 end
