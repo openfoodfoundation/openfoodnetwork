@@ -120,7 +120,9 @@ module Admin
 
     def stripe_connect_callback
       if params["code"]
-        state = JSON.parse(params["state"].gsub("=>",":"))
+        state = jwt_decode(params["state"])
+        redirect_to unauthorized unless state.keys.include? "enterprise_id"
+        
         # Get the Enterprise
         @enterprise = Enterprise.find_by_permalink(state["enterprise_id"])
 
