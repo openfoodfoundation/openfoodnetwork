@@ -456,6 +456,11 @@ en:
     shared:
       user_guide_link:
         user_guide: User Guide
+        stripe_connect:
+          connect_with_stripe: "Connect with Stripe"
+          stripe_connect_info: "Connect your Stripe account by clicking the button below. This will allow Open Food Network to charge your customers on your behalf. You will need to maintain your Stripe account, pay Stripe fees and handle any chargebacks and customer service."
+          stripe_account_connected: "Stripe account connected."
+          disconnect: "Disconnect account"
 
   home:
     hubs:
