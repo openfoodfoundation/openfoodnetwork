@@ -239,6 +239,12 @@ en-GB:
           allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
           allow_guest_orders_false: "Require login to order"
           allow_guest_orders_true: "Allow guest checkout"
+          shopfront_requires_login_true: "Require customers to login"
+        stripe_connect:
+          connect_with_stripe: "Connect with Stripe"
+          stripe_connect_info: "Connect your Stripe account by clicking the button. This will allow Open Food Network to charge your customers on your behalf. You will need to maintain your Stripe account, pay Stripe fees and handle any chargebacks and customer service."
+          stripe_account_connected: "Stripe account connected."
+          disconnect: "Disconnect account"
   home:
     hubs:
       show_closed_shops: "Show closed shops"
