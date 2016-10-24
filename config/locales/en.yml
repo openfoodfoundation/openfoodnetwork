@@ -519,6 +519,11 @@ en:
           close_date: Close Date
         social:
           twitter_placeholder: eg. @the_prof
+        stripe_connect:
+          connect_with_stripe: "Connect with Stripe"
+          stripe_connect_info: "Connect your Stripe account by clicking the button below. This will allow Open Food Network to charge your customers on your behalf. You will need to maintain your Stripe account, pay Stripe fees and handle any chargebacks and customer service."
+          stripe_account_connected: "Stripe account connected."
+          disconnect: "Disconnect account"
         tag_rules:
           default_rules:
             by_default: By Default

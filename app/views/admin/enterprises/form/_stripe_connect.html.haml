@@ -3,4 +3,12 @@
   = link_to 'Delete', main_app.admin_enterprise_stripe_account_path(@enterprise,@stripe_account), method: :delete
 - else
   %a.stripe-connect{href: 'stripe_connect'}
-    .span= t :connect_with_stripe
+    .stripe-info
+      -# Recommended info to impart (from Stripe Connect docs):
+      -# indicate to the user what you’re responsible for and what they’ll be expected to do. It’s particularly important to communicate:
+      -# That they’ll need to create and maintain their Stripe account.
+      -# That they’ll need to handle chargebacks and all customer service issues.
+      -# Who is responsible for paying the Stripe fees.
+      -# What, if any, fees the platform charges.
+      =t :stripe_connect_info
+      %span= t :connect_with_stripe
