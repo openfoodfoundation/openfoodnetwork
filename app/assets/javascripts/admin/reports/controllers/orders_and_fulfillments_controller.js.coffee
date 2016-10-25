@@ -1,4 +1,4 @@
-angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http, Enterprises, OrderCycles, LineItems, Orders, Products, Variants) ->
+angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http, $filter, Enterprises, OrderCycles, LineItems, Orders, Products, Variants) ->
   $scope.enterprises = Enterprises.all
   $scope.orderCycles = OrderCycles.all
 
@@ -9,7 +9,7 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
     enableColumnResizing: true
     columnDefs: [
       { field: 'id',                    displayName: 'ID',       width: '10%' }
-      { field: 'order.number',          displayName: 'Order',    width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }}
+      { field: 'number',                displayName: 'Order',    width: '20%' }
       # { field: 'product.producer.name', displayName: 'Producer', width: '10%' }
       { field: 'product.name',          displayName: 'Product',  width: '20%' }
       { field: 'full_name',             displayName: 'Variant',  width: '25%' }
@@ -40,4 +40,9 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
     Products.load data.products
     Variants.load data.variants
     LineItems.linkToOrders()
-    $scope.gridOptions.data = LineItems.all
+    order.$$treeLevel = 0 for order in Orders.all
+    # lineItem.$$treeLevel = 1 for lineItem in LineItems.all
+    data = $filter('orderBy')(LineItems.all.concat(Orders.all), [(item) ->
+      if item.order? then item.order.id else item.id
+    , "$$treeLevel"])
+    $scope.gridOptions.data = data
