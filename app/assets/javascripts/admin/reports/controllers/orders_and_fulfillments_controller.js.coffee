@@ -4,13 +4,17 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
 
   $scope.gridOptions =
     enableSorting: true
+    enableGridMenu: true
+    enableFiltering: true
+    enableColumnResizing: true
     columnDefs: [
-      { field: 'id',                    displayName: 'ID',       width: '20%' }
+      { field: 'id',                    displayName: 'ID',       width: '10%' }
       { field: 'order.number',          displayName: 'Order',    width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }}
-      { field: 'product.producer.name', displayName: 'Producer', width: '10%' }
-      { field: 'product.name',          displayName: 'Product',  width: '10%' }
-      { field: 'full_name',             displayName: 'Variant',  width: '40%' }
-      { field: 'quantity',              displayName: 'Quantity', width: '20%' }
+      # { field: 'product.producer.name', displayName: 'Producer', width: '10%' }
+      { field: 'product.name',          displayName: 'Product',  width: '20%' }
+      { field: 'full_name',             displayName: 'Variant',  width: '25%' }
+      { field: 'quantity',              displayName: 'Qty', width: '5%' }
+      { field: 'price',                 displayName: 'Price',    width: '15%' }
       # { field: '',  displayName: 'Quantity',  width: '80%' }
       # { field: 'product.name',  displayName: 'Quantity',  width: '80%' }
       # { field: 'product.name',  displayName: 'Quantity',  width: '80%' }
