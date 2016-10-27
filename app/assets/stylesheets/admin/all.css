@@ -10,9 +10,10 @@
  *= require shared/jquery-ui-timepicker-addon
  *= require shared/textAngular
  *= require shared/ng-tags-input.min
+ *= require shared/ui-grid.min
 
  *= require_self
  *= require_tree .
- *= require shared/ui-grid.min
+
 
 */
