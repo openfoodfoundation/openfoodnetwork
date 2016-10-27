@@ -1,0 +1,9 @@
+.row
+  .alpha.two.columns= label_tag nil, t(:date_range)
+  .omega.fourteen.columns
+    = label_tag nil, t(:start), :class => 'inline'
+    %input.datepicker-from{ type: 'text', datepicker: 'q.completed_at_gt', ng: { model: 'q.completed_at_gt' } }
+    %span.range-divider
+      %i.icon-arrow-right
+    %input.datepicker-to{ type: 'text', datepicker: 'q.completed_at_lt', ng: { model: 'q.completed_at_lt' } }
+    = label_tag nil, t(:end), :class => 'inline'

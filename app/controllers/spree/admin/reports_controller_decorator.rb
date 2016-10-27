@@ -221,9 +221,9 @@ Spree::Admin::ReportsController.class_eval do
       # -- Prepare Form Options
       permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
       # My distributors and any distributors distributing products I supply
-      @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
+      @shops = permissions.visible_enterprises_for_order_reports.is_distributor
       # My suppliers and any suppliers supplying products I distribute
-      @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
+      @producers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
       @order_cycles = OrderCycle.active_or_complete.
         involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
@@ -235,11 +235,6 @@ Spree::Admin::ReportsController.class_eval do
 
       # -- Build Report with Order Grouper
       @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
-      order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
-      @table = order_grouper.table(@report.table_items)
-      csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
-
-      render_report(@report.header, @table, params[:csv], csv_file_name)
     end
   end
 
