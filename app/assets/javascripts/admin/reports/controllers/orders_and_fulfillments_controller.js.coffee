@@ -3,6 +3,10 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
   $scope.producers = producers
   $scope.orderCycles = OrderCycles.all
   $scope.gridOptions = OrdersAndFulfillmentsReport.gridOptions()
+  $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
+
+  $scope.downloadAsCSV = ->
+    $scope.gridApi.exporter.csvExport('all','visible')
 
   $scope.load = ->
     params = {}
