@@ -24,11 +24,11 @@
       .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, @report_type))
 
     .row
-      = check_box_tag :csv
-      = label_tag :csv, t(:report_customers_csv)
+      = submit_tag t(:search)
 
-    .row
-    = submit_tag t(:search)
+    %hr.fullwidth
+    .row.text-right
+      %button{ ng: { click: 'downloadAsCSV()' } } Download As CSV
 
   %br
   %br
