@@ -1,4 +1,4 @@
-- address = @user.try(address_type) || @user.send("build_#{params[:type]}".to_sym)
+- address = @user.try(address_type)
 = f.fields_for address_type, address do |a|
   = a.label :firstname
   = a.text_field :firstname

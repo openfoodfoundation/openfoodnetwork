@@ -269,6 +269,8 @@ en:
   my_addresses: 'My Addresses'
   billing_address: 'Billing Address'
   shipping_address: 'Shipping Address'
+  edit_billing_address: 'Edit Billing Address'
+  edit_shipping_address: 'Edit Shipping Address'
 
   label_shops: "Shops"
   label_map: "Map"

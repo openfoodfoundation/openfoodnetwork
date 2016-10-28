@@ -49,7 +49,7 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   get '/account/edit_address', :to => 'spree/users#edit_address'
-  put '/account/update_address', :to => 'spree/users#update_address', :as => :update_user_address
+  put '/account/update_address', :to => 'spree/users#update_address'
 
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout

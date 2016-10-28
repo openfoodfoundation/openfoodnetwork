@@ -4,10 +4,10 @@ Spree::UsersController.class_eval do
   prepend_before_filter :load_object, :only => [:edit_address, :update_address, :show, :edit, :update]
 
   def edit_address
-    unless @user.ship_address
-      @user.ship_address = Spree::Address.new
-      @user.ship_address.country = Spree::Country.find_by_id(Spree::Config[:default_country_id])
-    end
+    country_id = Spree::Config[:default_country_id]
+    @user.build_ship_address(country_id: country_id) unless @user.ship_address
+    @user.build_bill_address(country_id: country_id) unless @user.bill_address
+
     render :edit_address
   end
 
