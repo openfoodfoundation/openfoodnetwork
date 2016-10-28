@@ -8,10 +8,10 @@
         = @user.email
         (#{link_to t(:edit), spree.edit_account_path})
       %hr
-      %h3= t(:my_addresses)
+      %h3= t('.my_addresses')
       .row
         .large-6.columns
-          %h5= t(:billing_address)
+          %h5= t('.billing_address')
 
           %p.text-small
             = @user.bill_address.andand.full_name
@@ -23,7 +23,7 @@
             = link_to t(:edit), main_app.account_edit_address_path
 
         .large-6.columns
-          %h5= t(:shipping_address)
+          %h5= t('.shipping_address')
           %p.text-small
             = @user.ship_address.andand.full_name
             %br

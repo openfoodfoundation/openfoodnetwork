@@ -82,6 +82,7 @@ feature %q{
       fill_in('user[ship_address_attributes][zipcode]', with: '3127')
 
       click_button('Update')
+      expect(page).to have_content 'My Addresses'
 
       expect(page).to have_content '11 Lovely Street'
       expect(page).to have_content 'Merbourne'
