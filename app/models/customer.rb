@@ -16,7 +16,6 @@ class Customer < ActiveRecord::Base
 
   before_validation :downcase_email
   before_validation :empty_code
-  before_validation :set_unused_address_fields
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
@@ -34,11 +33,6 @@ class Customer < ActiveRecord::Base
 
   def empty_code
     self.code = nil if code.blank?
-  end
-
-  def set_unused_address_fields
-    bill_address.firstname = bill_address.lastname = 'unused' if bill_address.present?
-    ship_address.firstname = ship_address.lastname = 'unused' if ship_address.present?
   end
 
   def associate_user

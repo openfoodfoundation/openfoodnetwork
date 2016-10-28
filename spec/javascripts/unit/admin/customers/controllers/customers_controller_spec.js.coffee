@@ -73,6 +73,9 @@ describe "CustomersCtrl", ->
         expect(scope.customers).toDeepEqual customers
 
     describe "scope.deleteCustomer", ->
+      beforeEach ->
+        spyOn(window, 'confirm').and.returnValue(true)
+
       it "deletes a customer", ->
         expect(scope.customers.length).toBe 2
         customer = scope.customers[0]

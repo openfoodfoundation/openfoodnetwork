@@ -38,15 +38,18 @@ class CheckoutController < Spree::CheckoutController
         end
       end
       if @order.state == "complete" ||  @order.completed?
+        set_default_bill_address
+        set_default_ship_address
+
         flash[:success] = t(:order_processed_successfully)
-          respond_to do |format|
-            format.html do
-              respond_with(@order, :location => order_path(@order))
-            end
-            format.js do
-              render json: {path: order_path(@order)}, status: 200
-            end
+        respond_to do |format|
+          format.html do
+            respond_with(@order, :location => order_path(@order))
           end
+          format.js do
+            render json: {path: order_path(@order)}, status: 200
+          end
+        end
       else
         update_failed
       end
@@ -57,6 +60,31 @@ class CheckoutController < Spree::CheckoutController
 
 
   private
+
+  def set_default_bill_address
+    if params[:order][:default_bill_address]
+      new_bill_address = @order.bill_address.clone.attributes
+
+      user_bill_address_id = spree_current_user.bill_address.andand.id
+      spree_current_user.update_attributes(bill_address_attributes: new_bill_address.merge('id' => user_bill_address_id))
+
+      customer_bill_address_id = @order.customer.bill_address.andand.id
+      @order.customer.update_attributes(bill_address_attributes: new_bill_address.merge('id' => customer_bill_address_id))
+    end
+
+  end
+
+  def set_default_ship_address
+    if params[:order][:default_ship_address]
+      new_ship_address = @order.ship_address.clone.attributes
+
+      user_ship_address_id = spree_current_user.ship_address.andand.id
+      spree_current_user.update_attributes(ship_address_attributes: new_ship_address.merge('id' => user_ship_address_id))
+
+      customer_ship_address_id = @order.customer.ship_address.andand.id
+      @order.customer.update_attributes(ship_address_attributes: new_ship_address.merge('id' => customer_ship_address_id))
+    end
+  end
 
   def check_order_for_phantom_fees
     phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id').
@@ -136,9 +164,12 @@ class CheckoutController < Spree::CheckoutController
     last_used_bill_address = lua.last_used_bill_address.andand.clone
     last_used_ship_address = lua.last_used_ship_address.andand.clone
 
-    preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user.respond_to?(:bill_address) && spree_current_user.respond_to?(:ship_address)
-    @order.bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
-    @order.ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default
+    preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user
+
+    customer_preferred_bill_address, customer_preferred_ship_address = @order.customer.bill_address, @order.customer.ship_address if @order.customer
+
+    @order.bill_address ||= customer_preferred_bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
+    @order.ship_address ||= customer_preferred_ship_address ||= preferred_ship_address || last_used_ship_address || Spree::Address.default
   end
 
   def after_payment

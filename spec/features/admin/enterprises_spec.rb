@@ -85,9 +85,12 @@ feature %q{
     page.should have_selector '.available'
     choose 'Own'
 
-    # Require login to view shopfront
+    # Require login to view shopfront or for checkout
+    within(".side_menu") { click_link "Shop Preferences" }
     expect(page).to have_checked_field "enterprise_require_login_false"
-    choose "Require customers to login"
+    expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
+    choose "Visible to registered customers only"
+    expect(page).to have_no_checked_field "enterprise_require_login_false"
 
     within (".side_menu") { click_link "Users" }
     select2_search user.email, from: 'Owner'
@@ -170,7 +173,6 @@ feature %q{
     @enterprise.reload
     expect(@enterprise.owner).to eq user
     expect(page).to have_checked_field "enterprise_visible_true"
-    expect(page).to have_checked_field "enterprise_require_login_true"
 
     click_link "Business Details"
     page.should have_checked_field "enterprise_charges_sales_tax_true"
@@ -190,6 +192,7 @@ feature %q{
     click_link "Shop Preferences"
     page.should have_content 'This is my shopfront message.'
     page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
+    expect(page).to have_checked_field "enterprise_require_login_true"
   end
 
   describe "producer properties" do

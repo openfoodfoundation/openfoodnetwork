@@ -4,6 +4,29 @@ describe Spree.user_class do
   describe "associations" do
     it { should have_many(:owned_enterprises) }
 
+    describe "addresses" do
+      let(:user) { create(:user, bill_address: create(:address)) }
+
+      it 'updates billing address with new address' do
+        old_bill_address = user.bill_address
+        new_bill_address = create(:address, firstname: 'abc')
+
+        user.update_attributes(bill_address_attributes: new_bill_address.clone.attributes.merge('id' => old_bill_address.id))
+
+        expect(user.bill_address.id).to eq old_bill_address.id
+        expect(user.bill_address.firstname).to eq new_bill_address.firstname
+      end
+
+      it 'creates new shipping address' do
+        new_ship_address = create(:address, firstname: 'abc')
+
+        user.update_attributes(ship_address_attributes: new_ship_address.clone.attributes)
+
+        expect(user.ship_address.id).not_to eq new_ship_address.id
+        expect(user.ship_address.firstname).to eq new_ship_address.firstname
+      end
+    end
+
     describe "enterprise ownership" do
       let(:u1) { create(:user, enterprise_limit: 2) }
       let(:u2) { create(:user, enterprise_limit: 1) }
