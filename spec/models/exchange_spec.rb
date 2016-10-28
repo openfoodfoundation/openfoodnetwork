@@ -106,6 +106,23 @@ describe Exchange do
     end
   end
 
+  describe "receiver" do
+    let(:exchange) { create(:exchange) }
+    let(:enterprise) { create(:enterprise) }
+
+    it "should be touched on change" do
+      expect { exchange.touch }.to change(exchange.receiver, :updated_at)
+    end
+
+    it "should be touched on create" do
+      expect { create(:exchange, receiver: enterprise) }.to change(enterprise, :updated_at)
+    end
+
+    it "should be touched on destroy" do
+      expect { exchange.destroy }.to change(exchange.receiver, :updated_at)
+    end
+  end
+
   describe "scopes" do
     let(:supplier) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise, is_primary_producer: true) }
