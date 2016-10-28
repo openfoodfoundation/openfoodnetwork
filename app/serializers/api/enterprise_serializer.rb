@@ -23,8 +23,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   include SerializerHelper
 
   attributes :orders_close_at, :active
-  has_many :supplied_properties, serializer: Api::PropertySerializer
-  has_many :distributed_properties, serializer: Api::PropertySerializer
 
   def orders_close_at
     options[:data].earliest_closing_times[object.id]
@@ -32,31 +30,6 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
 
   def active
     options[:data].active_distributors.andand.include? object
-  end
-
-  def supplied_properties
-    # This results in 3 queries per enterprise
-    product_properties  = Spree::Property.applied_by(object)
-    producer_properties = object.properties
-
-    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
-  end
-
-  def distributed_properties
-    # This results in 3 queries per enterprise
-
-    if active
-      product_properties  = Spree::Property.currently_sold_by(object)
-      producer_property_ids = ProducerProperty.currently_sold_by(object).pluck(:property_id)
-
-    else
-      product_properties  = Spree::Property.ever_sold_by(object)
-      producer_property_ids = ProducerProperty.ever_sold_by(object).pluck(:property_id)
-    end
-
-    producer_properties = Spree::Property.where(id: producer_property_ids)
-
-    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
   end
 end
 
@@ -80,6 +53,9 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
+
+  has_many :supplied_properties, serializer: Api::PropertySerializer
+  has_many :distributed_properties, serializer: Api::PropertySerializer
 
   def pickup
     services = options[:data].shipping_method_services[object.id]
@@ -131,6 +107,31 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
 
   def supplied_taxons
     ids_to_objs options[:data].supplied_taxons[object.id]
+  end
+
+  def supplied_properties
+    # This results in 3 queries per enterprise
+    product_properties  = Spree::Property.applied_by(object)
+    producer_properties = object.properties
+
+    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
+  end
+
+  def distributed_properties
+    # This results in 3 queries per enterprise
+
+    if active
+      product_properties  = Spree::Property.currently_sold_by(object)
+      producer_property_ids = ProducerProperty.currently_sold_by(object).pluck(:property_id)
+
+    else
+      product_properties  = Spree::Property.ever_sold_by(object)
+      producer_property_ids = ProducerProperty.ever_sold_by(object).pluck(:property_id)
+    end
+
+    producer_properties = Spree::Property.where(id: producer_property_ids)
+
+    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
   end
 
   def active
