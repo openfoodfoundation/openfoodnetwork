@@ -12,7 +12,7 @@
       %tbody
         - order = current_order(false)
         - validator = DistributionChangeValidator.new(order)
-        - Enterprise.distributing_product(@product).each do |distributor|
+        - Enterprise.distributing_products(@product).each do |distributor|
           - if !order.nil? && distributor == order.distributor
             %tr.odd
               %td

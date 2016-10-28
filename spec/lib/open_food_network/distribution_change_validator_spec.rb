@@ -87,7 +87,7 @@ describe DistributionChangeValidator do
       enterprise_with_some_variants.stub(:distributed_variants) { [variant1, variant3] } # Only some variants
       enterprise_with_some_plus_extras = double(:enterprise)
       enterprise_with_some_plus_extras.stub(:distributed_variants) { [variant1, variant2, variant3, variant4] } # Only some variants, plus extras
-      
+
       subject.available_distributors([enterprise_with_some_variants]).should_not include enterprise_with_some_variants
       subject.available_distributors([enterprise_with_some_plus_extras]).should_not include enterprise_with_some_plus_extras
     end
@@ -97,10 +97,10 @@ describe DistributionChangeValidator do
       order.stub(:line_item_variants) { line_item_variants }
       enterprise = double(:enterprise)
       enterprise.stub(:distributed_variants) { [variant1, variant2, variant3, variant4, variant5] } # Excess variants
-      
+
       subject.available_distributors([enterprise]).should == [enterprise]
     end
-    
+
     it "matches no enterprises when none are provided" do
       subject.available_distributors([]).should == []
     end
@@ -201,7 +201,7 @@ describe DistributionChangeValidator do
   describe "finding available distributors for a product" do
     it "returns enterprises distributing the product when there's no order" do
       subject = DistributionChangeValidator.new(nil)
-      Enterprise.stub(:distributing_product).and_return([1, 2, 3])
+      Enterprise.stub(:distributing_products).and_return([1, 2, 3])
       subject.should_receive(:available_distributors).never
 
       subject.available_distributors_for(product).should == [1, 2, 3]
@@ -209,7 +209,7 @@ describe DistributionChangeValidator do
 
     it "returns enterprises distributing the product when there's no order items" do
       order.stub(:line_items) { [] }
-      Enterprise.stub(:distributing_product).and_return([1, 2, 3])
+      Enterprise.stub(:distributing_products).and_return([1, 2, 3])
       subject.should_receive(:available_distributors).never
 
       subject.available_distributors_for(product).should == [1, 2, 3]
@@ -217,7 +217,7 @@ describe DistributionChangeValidator do
 
     it "filters by available distributors when there are order items" do
       order.stub(:line_items) { [1, 2, 3] }
-      Enterprise.stub(:distributing_product).and_return([1, 2, 3])
+      Enterprise.stub(:distributing_products).and_return([1, 2, 3])
       subject.should_receive(:available_distributors).and_return([2])
 
       subject.available_distributors_for(product).should == [2]

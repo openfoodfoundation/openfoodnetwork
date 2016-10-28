@@ -215,7 +215,7 @@ Spree::Product.class_eval do
   end
 
   def touch_distributors
-    Enterprise.distributing_product(self).each(&:touch)
+    Enterprise.distributing_products(self).each(&:touch)
   end
 
   def add_primary_taxon_to_taxons
