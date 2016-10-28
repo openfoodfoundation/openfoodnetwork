@@ -9,9 +9,24 @@ describe Enterprise do
       describe "with a supplied product" do
         let(:product) { create(:simple_product, supplier: enterprise) }
         let!(:classification) { create(:classification, taxon: taxon, product: product) }
+        let(:property) { product.product_properties.last }
+        let(:producer_property) { enterprise.producer_properties.last }
+
+        before do
+          product.set_property 'Organic', 'NASAA 12345'
+          enterprise.set_producer_property 'Biodynamic', 'ASDF 4321'
+        end
 
         it "touches enterprise when a classification on that product changes" do
           expect { classification.save! }.to change { enterprise.updated_at }
+        end
+
+        it "touches enterprise when a property on that product changes" do
+          expect { property.save! }.to change { enterprise.reload.updated_at }
+        end
+
+        it "touches enterprise when a producer property on that product changes" do
+          expect { producer_property.save! }.to change { enterprise.reload.updated_at }
         end
       end
 
