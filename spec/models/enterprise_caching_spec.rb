@@ -17,11 +17,16 @@ describe Enterprise do
 
       describe "with a distributed product" do
         let(:product) { create(:simple_product) }
-        let!(:oc) { create(:simple_order_cycle, distributors: [enterprise], variants: [product.master]) }
+        let(:oc) { create(:simple_order_cycle, distributors: [enterprise], variants: [product.variants.first]) }
         let!(:classification) { create(:classification, taxon: taxon, product: product) }
 
         it "touches enterprise when a classification on that product changes" do
+          oc
           expect { classification.save! }.to change { enterprise.reload.updated_at }
+        end
+
+        it "touches enterprise when the product's variant is added to order cycle" do
+          expect { oc }.to change { enterprise.reload.updated_at }
         end
       end
 
