@@ -87,6 +87,7 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
+  after_touch :touch_distributors
   after_create :relate_to_owners_enterprises
   # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
   after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
@@ -468,5 +469,9 @@ class Enterprise < ActiveRecord::Base
 
   def initialize_permalink
     self.permalink = Enterprise.find_available_permalink(name)
+  end
+
+  def touch_distributors
+    Enterprise.distributing_product(self.supplied_products).each(&:touch)
   end
 end
