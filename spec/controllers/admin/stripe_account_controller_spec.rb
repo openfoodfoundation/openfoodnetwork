@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Admin::StripeAccountsController, type: :controller do
+
   it "deletes Stripe accounts in response to a webhook" do
     # https://stripe.com/docs/api#retrieve_event
     allow(controller).to receive(:fetch_event_from_stripe)
