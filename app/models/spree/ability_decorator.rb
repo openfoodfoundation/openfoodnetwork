@@ -118,6 +118,9 @@ class AbilityDecorator
     can [:admin, :bulk_update], ColumnPreference do |column_preference|
       column_preference.user == user
     end
+
+    # Not sure how to restrict these methods to a non-resource Controller
+    can [:stripe_connect, :stripe_connect_callback, :stripe_disconnect], :all
   end
 
   def add_product_management_abilities(user)
