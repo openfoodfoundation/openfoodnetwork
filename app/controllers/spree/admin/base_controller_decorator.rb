@@ -37,7 +37,7 @@ Spree::Admin::BaseController.class_eval do
       redirect_to '/unauthorized'
     else
       store_location
-      redirect_to root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+      redirect_to root_path(anchor: "login?after_login=#{request.env.fullpath}")
     end
   end
 

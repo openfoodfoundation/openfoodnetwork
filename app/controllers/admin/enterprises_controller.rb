@@ -121,13 +121,19 @@ module Admin
     def stripe_connect_callback
       if params["code"]
         state = jwt_decode(params["state"])
-        redirect_to unauthorized unless state.keys.include? "enterprise_id"
-        
+        unless state.keys.include? "enterprise_id"
+          redirect_to '/unauthorized' and return
+        end
+
         # Get the Enterprise
         @enterprise = Enterprise.find_by_permalink(state["enterprise_id"])
-
         # Get the deets from Stripe
         response_params = get_stripe_token(params["code"]).params
+
+        unless spree_current_user.enterprises.include? @enterprise
+          deauthorize_request_for_stripe_id(response_params["stripe_user_id"])
+          redirect_to '/unauthorized' and return
+        end
 
         stripe_account = StripeAccount.new(stripe_user_id: response_params["stripe_user_id"], stripe_publishable_key: response_params["stripe_publishable_key"], enterprise: @enterprise)
         if stripe_account.save
