@@ -39,7 +39,7 @@ module Admin
       if stripe_account
         # If the account is only connected to one Enterprise, make a request to remove it on the Stripe side
         if StripeAccount.where(stripe_user_id: stripe_account.stripe_user_id).size == 1
-          response = StripeHelper.client.deauthorize(stripe_account.stripe_user_id).deauthorize_request
+          response = deauthorize_request_for_stripe_id(stripe_account.stripe_user_id)
           if response # Response from OAuth2 only returned if successful
             stripe_account.destroy
           end
@@ -52,6 +52,10 @@ module Admin
     def fetch_event_from_stripe(request)
       event_json = JSON.parse(request.body.read)
       JSON.parse(Stripe::Event.retrieve(event_json["id"]))
+    end
+
+    def deauthorize_request_for_stripe_id(id)
+      StripeHelper.client.deauthorize(id).deauthorize_request
     end
 
     private
