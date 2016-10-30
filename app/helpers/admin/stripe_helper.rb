@@ -60,11 +60,11 @@ module Admin
 
     private
     def jwt_encode payload
-      JWT.encode(payload, Openfoodnetwork::Application.config.secret_token)
+      JWT.encode(payload, Openfoodnetwork::Application.config.secret_token, 'HS256')
     end
 
     def jwt_decode token
-      JWT.decode(token, Openfoodnetwork::Application.config.secret_token)[0] # only returns the original payload
+      JWT.decode(token, Openfoodnetwork::Application.config.secret_token, 'HS256')[0] # only returns the original payload
     end
   end
 end
