@@ -160,6 +160,16 @@ module Admin
             response.status.should be 500
           end
 
+          it "redirects to login with the query params in case of session problems" do
+            controller.stub spree_current_user: nil
+            params = {this: "that"}
+            spree_get :stripe_connect_callback, params
+            # This is the correct redirect - but not sure it actually works since the redirect
+            # is ultimately handled in Angular, which presumably doesn't know which controller to
+            # use for the action
+            response.should redirect_to root_path(anchor: "login?after_login=/?action=stripe_connect&this=that")
+          end
+
           it "redirects to unauthorized if the callback state param is invalid" do
              controller.stub spree_current_user: distributor_manager
              payload = {junk: "Ssfs"}
@@ -191,7 +201,6 @@ module Admin
 
             expect{spree_get :stripe_connect_callback, params}.to change{StripeAccount.all.length}.by 1
             StripeAccount.last.enterprise_id.should eq distributor.id
-
           end
 
         end

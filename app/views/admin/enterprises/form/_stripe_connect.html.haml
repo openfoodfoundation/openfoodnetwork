@@ -3,8 +3,8 @@
     .row
       = t('.stripe_account_connected')
     .row
-      %a.button{href: "#{link_to t('.disconnect'), main_app.admin_enterprise_stripe_account_path(@enterprise,@stripe_account), method: :delete}"}
-        =t('.disconnect')
+      .button
+        =link_to t('.disconnect'), main_app.admin_enterprise_stripe_account_path(@enterprise,@stripe_account), method: :delete
 - else
   .row.stripe-info
     .six.columns.alpha
