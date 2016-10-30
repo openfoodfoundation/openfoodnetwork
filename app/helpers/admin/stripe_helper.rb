@@ -64,7 +64,7 @@ module Admin
     end
 
     def jwt_decode token
-      JWT.decode(token, Openfoodnetwork::Application.config.secret_token, 'HS256')[0] # only returns the original payload
+      JWT.decode(token, Openfoodnetwork::Application.config.secret_token, true, algorithm: 'HS256')[0] # only returns the original payload
     end
   end
 end

@@ -12,7 +12,7 @@ describe Admin::StripeHelper do
 
   it "calls the Stripe API for authorization, passing appropriate JWT in the state param" do
     expect(Admin::StripeHelper.client.auth_code).to receive(:authorize_url).with({
-      state: JWT.encode({enterprise_id: "enterprise-permalink"}, Openfoodnetwork::Application.config.secret_token)
+      state: JWT.encode({enterprise_id: "enterprise-permalink"}, Openfoodnetwork::Application.config.secret_token, 'HS256')
     })
     helper.authorize_stripe("enterprise-permalink")
   end
