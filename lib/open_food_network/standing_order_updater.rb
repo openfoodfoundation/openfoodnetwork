@@ -23,6 +23,10 @@ module OpenFoodNetwork
       end
     end
 
+    def future_and_undated_orders
+      orders.joins(:order_cycle).merge(OrderCycle.not_closed)
+    end
+
     private
 
     def create_order_for(order_cycle_id)
