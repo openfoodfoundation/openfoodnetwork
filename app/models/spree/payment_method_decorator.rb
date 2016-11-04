@@ -1,4 +1,6 @@
 Spree::PaymentMethod.class_eval do
+  include Spree::Core::CalculatedAdjustments
+
   Spree::PaymentMethod::DISPLAY = [:both, :front_end, :back_end]
 
   acts_as_taggable
@@ -6,8 +8,6 @@ Spree::PaymentMethod.class_eval do
   has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
 
   attr_accessible :distributor_ids, :tag_list
-
-  calculated_adjustments
 
   after_initialize :init
 
@@ -39,7 +39,10 @@ Spree::PaymentMethod.class_eval do
   }
 
   def init
-    self.class.calculated_adjustments unless reflections.keys.include? :calculator
+    unless reflections.keys.include? :calculator
+      include Spree::Core::CalculatedAdjustments
+    end
+
     self.calculator ||= Spree::Calculator::FlatRate.new(preferred_amount: 0)
   end
 

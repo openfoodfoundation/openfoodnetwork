@@ -1,4 +1,6 @@
 class EnterpriseFee < ActiveRecord::Base
+  include Spree::Core::CalculatedAdjustments
+
   belongs_to :enterprise
   belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
 
@@ -12,9 +14,6 @@ class EnterpriseFee < ActiveRecord::Base
   after_save :refresh_products_cache
   # After destroy, the products cache is refreshed via the after_destroy hook for
   # coordinator_fees and exchange_fees
-
-
-  calculated_adjustments
 
 
   attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :inherits_tax_category
