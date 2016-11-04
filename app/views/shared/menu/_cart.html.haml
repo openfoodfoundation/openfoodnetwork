@@ -49,10 +49,10 @@
         %a.button.primary.tiny{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
           = t 'checkout'
       - if show_bought_items?
-        %h5{"ng-if" => "Cart.line_items_finalised().length", style: 'margin-top: 1em'}
+        %h5{"ng-if" => "Cart.line_items_finalised.length", style: 'margin-top: 1em'}
           = t '.already_ordered_products'
         %table
-          %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items_finalised()",
+          %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items_finalised",
           "id" => "cart-variant-{{ line_item.variant.id }}"}
             %td
               %small

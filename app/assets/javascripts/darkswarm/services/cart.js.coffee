@@ -1,4 +1,4 @@
-Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, localStorageService)->
+Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, $resource, localStorageService) ->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
@@ -6,11 +6,15 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
     update_enqueued: false
     order: CurrentOrder.order
     line_items: CurrentOrder.order?.line_items || []
+    line_items_finalised: CurrentOrder.order?.finalised_line_items || []
 
     constructor: ->
       for line_item in @line_items
         line_item.variant.line_item = line_item
         Variants.register line_item.variant
+      for line_item in @line_items_finalised
+        line_item.variant.line_item = line_item
+        Variants.extend line_item.variant
 
     adjust: (line_item) =>
       line_item.total_price = line_item.variant.price_with_fees * line_item.quantity
@@ -97,13 +101,6 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       $(window).bind "beforeunload", ->
         t 'order_not_saved_yet'
 
-    line_items_finalised: =>
-      items = CurrentOrder.order?.finalised_line_items || []
-      for line_item in items
-        line_item.variant.line_item = line_item
-        Variants.extend line_item.variant
-      items
-
     total_item_count: =>
       @line_items.reduce (sum,li) ->
         sum = sum + li.quantity
@@ -122,3 +119,11 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
     clear: ->
       @line_items = []
       localStorageService.clearAll() # One day this will have to be moar GRANULAR
+
+    reloadFinalisedLineItems: =>
+      @line_items_finalised = []
+      $resource("/line_items").query (items) =>
+        for line_item in items
+          line_item.variant.line_item = line_item
+          Variants.extend line_item.variant
+        @line_items_finalised = items

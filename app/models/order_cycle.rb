@@ -250,6 +250,18 @@ class OrderCycle < ActiveRecord::Base
     OpenFoodNetwork::ProductsCache.order_cycle_changed self
   end
 
+  def items_bought_by_user(user, distributor)
+    orders = Spree::Order.complete.where(user_id: user, order_cycle_id: self)
+    items = []
+    orders.each do |o|
+      items += o.line_items
+    end
+    scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+    items.each do |li|
+      scoper.scope(li.variant)
+    end
+    items
+  end
 
   private
 
