@@ -467,6 +467,8 @@ class Enterprise < ActiveRecord::Base
   end
 
   def touch_distributors
-    Enterprise.distributing_products(self.supplied_products).each(&:touch)
+    Enterprise.distributing_products(self.supplied_products).
+      where('enterprises.id != ?', self.id).
+      each(&:touch)
   end
 end
