@@ -1,5 +1,5 @@
 require 'ffaker'
-require 'spree/core/testing_support/factories'
+require 'spree/testing_support/factories'
 
 # http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
 #
