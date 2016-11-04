@@ -10,11 +10,17 @@ describe LineItemsController do
     item.order.save
     item
   end
-  let(:distributor) do
-    distributor = create(:distributor_enterprise)
-    item.order.distributor = distributor
-    item.order.save
-    distributor
+
+  it "lists bought items" do
+    item.order.finalize!
+    controller.stub spree_current_user: item.order.user
+    controller.stub current_order_cycle: item_with_oc.order.order_cycle
+    controller.stub current_distributor: item_with_oc.order.distributor
+    get :index, { format: :json }
+    expect(response.status).to eq 200
+    json_response = JSON.parse(response.body)
+    expect(json_response.length).to eq 1
+    expect(json_response[0]['id']).to eq item.id
   end
 
   it "fails without line item id" do

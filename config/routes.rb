@@ -42,7 +42,7 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
-  resources :line_items, only: [:destroy]
+  resources :line_items, only: [:index, :destroy]
 
   resources :groups, only: [:index, :show] do
     collection do

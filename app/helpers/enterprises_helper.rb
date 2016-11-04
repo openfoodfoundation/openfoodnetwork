@@ -90,6 +90,6 @@ module EnterprisesHelper
   end
 
   def show_bought_items?
-    current_order.andand.distributor.andand.allow_order_changes? && current_order.finalised_line_items.present?
+    current_order.andand.distributor.andand.allow_order_changes?
   end
 end
