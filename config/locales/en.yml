@@ -1553,7 +1553,7 @@ Please follow the instructions there to make your enterprise visible on the Open
     zipcode: Postcode
     orders:
       bought:
-        item: "Already bought item"
+        item: "Already ordered in this order cycle"
     shipment_states:
       backorder: backorder
       partial: partial
