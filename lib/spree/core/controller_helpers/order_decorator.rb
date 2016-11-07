@@ -13,18 +13,17 @@ Spree::Core::ControllerHelpers::Order.class_eval do
   end
   alias_method_chain :current_order, :scoped_variants
 
-
-  # Override definition in spree/auth/app/controllers/spree/base_controller_decorator.rb
-  # Do not attempt to merge incomplete and current orders. Instead, destroy the incomplete orders.
   def set_current_order
     if user = try_spree_current_user
       last_incomplete_order = user.last_incomplete_spree_order
-
       if session[:order_id].nil? && last_incomplete_order
         session[:order_id] = last_incomplete_order.id
-
       elsif current_order && last_incomplete_order && current_order != last_incomplete_order
-        last_incomplete_order.destroy
+        if current_order.distributor == last_incomplete_order.distributor && current_order.order_cycle == last_incomplete_order.order_cycle && current_order.line_items.empty?
+          current_order(true).merge!(last_incomplete_order)
+        else
+          last_incomplete_order.destroy
+        end
       end
     end
   end
