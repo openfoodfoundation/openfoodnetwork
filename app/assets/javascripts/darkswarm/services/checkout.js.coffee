@@ -3,7 +3,6 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
     errors: {}
     secrets: {}
     order: CurrentOrder.order
-    ship_address_same_as_billing: true
 
     submit: ->
       Loading.message = t 'submitting_order'
@@ -19,7 +18,10 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
 
     # Rails wants our Spree::Address data to be provided with _attributes
     preprocess: ->
-      munged_order = {}
+      munged_order =
+        default_bill_address: !!@default_bill_address
+        default_ship_address: !!@default_ship_address
+
       for name, value of @order # Clone all data from the order JSON object
         switch name
           when "bill_address"

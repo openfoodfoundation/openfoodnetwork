@@ -55,15 +55,15 @@ module OpenFoodNetwork
     end
 
     def delivery_row(order)
-      ba = order.billing_address
+      sa = order.shipping_address
       da = order.distributor.andand.address
-      [ba.firstname,
-       ba.lastname,
+      [sa.firstname,
+       sa.lastname,
        order.distributor.andand.name,
        customer_code(order.email),
-       "#{ba.address1} #{ba.address2} #{ba.city}",
-       ba.zipcode,
-       ba.phone,
+       "#{sa.address1} #{sa.address2} #{sa.city}",
+       sa.zipcode,
+       sa.phone,
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.amount,

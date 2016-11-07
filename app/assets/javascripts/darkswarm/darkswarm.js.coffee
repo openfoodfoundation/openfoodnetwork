@@ -1,6 +1,6 @@
 window.Darkswarm = angular.module("Darkswarm", ["ngResource",
   'mm.foundation',
-  'angularLocalStorage',
+  'LocalStorageModule',
   'infinite-scroll',
   'angular-flash.service',
   'templates',

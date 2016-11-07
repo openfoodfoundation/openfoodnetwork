@@ -1,11 +1,8 @@
-Darkswarm.controller "AccordionCtrl", ($scope, storage, $timeout, $document, CurrentHub) ->
-  $scope.accordion = 
-    details: true 
-    billing: false
-    shipping: false
-    payment: false
+Darkswarm.controller "AccordionCtrl", ($scope, localStorageService, $timeout, $document, CurrentHub) ->
+  key = "accordion_#{$scope.order.id}#{CurrentHub.hub.id}#{$scope.order.user_id}"
+  value = if localStorageService.get(key) then {} else { details: true, billing: false, shipping: false, payment: false }
+  localStorageService.bind $scope, "accordion", value, key
   $scope.accordionSections = ["details", "billing", "shipping", "payment"]
-  storage.bind $scope, "accordion", {storeName: "accordion_#{$scope.order.id}#{CurrentHub.hub.id}#{$scope.order.user_id}"}
 
   $scope.show = (section)->
     $scope.accordion[section] = true

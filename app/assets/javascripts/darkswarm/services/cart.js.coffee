@@ -1,4 +1,4 @@
-Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, storage)->
+Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, localStorageService)->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
@@ -114,4 +114,4 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
 
     clear: ->
       @line_items = []
-      storage.clearAll() # One day this will have to be moar GRANULAR
+      localStorageService.clearAll() # One day this will have to be moar GRANULAR

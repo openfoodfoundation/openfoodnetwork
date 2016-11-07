@@ -1,4 +1,4 @@
-Darkswarm.directive "ofnChangeOrderCycle", (OrderCycle, Cart, storage) ->
+Darkswarm.directive "ofnChangeOrderCycle", (OrderCycle, Cart) ->
   # Compares chosen order cycle with pre-set OrderCycle. Will trigger
   # a confirmation if they are different, and Cart isn't empty
   restrict: "A"

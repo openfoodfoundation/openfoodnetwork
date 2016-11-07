@@ -128,6 +128,8 @@ en:
         select_country: 'Select Country'
         select_state: 'Select State'
         edit: 'Edit'
+        update_address: 'Update Address'
+        confirm_delete: 'Sure to delete?'
 
     products:
       bulk_edit:
@@ -380,7 +382,9 @@ en:
   checkout_as_guest: "Checkout as guest"
   checkout_details: "Your details"
   checkout_billing: "Billing info"
+  checkout_default_bill_address: "Save as default billing address"
   checkout_shipping: Shipping info
+  checkout_default_ship_address: "Save as default shipping address"
   checkout_method_free: Free
   checkout_address_same: Shipping address same as billing address?
   checkout_ready_for: "Ready for:"
@@ -1070,6 +1074,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
 
   spree:
+    zipcode: Postcode
     shipment_states:
       backorder: backorder
       partial: partial
