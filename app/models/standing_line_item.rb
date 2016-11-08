@@ -10,7 +10,7 @@ class StandingLineItem < ActiveRecord::Base
   validates :variant, presence: true
   validates :quantity, { presence: true, numericality: { only_integer: true } }
 
-  before_save :update_line_items! # In OpenFoodNetwork::StandingLineItemUpdater
+  # before_save :update_line_items! # In OpenFoodNetwork::StandingLineItemUpdater
 
   def available_from?(shop, schedule)
     Spree::Variant.joins(exchanges: { order_cycle: :schedules})

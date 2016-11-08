@@ -8,16 +8,6 @@ module Admin
     before_filter :wrap_nested_attrs, only: [:create, :update]
     respond_to :json
 
-    respond_override create: { json: {
-      success: lambda { render_as_json @standing_order, fee_calculator: fee_calculator },
-      failure: lambda { render json: { errors: json_errors }, status: :unprocessable_entity }
-    } }
-
-    respond_override update: { json: {
-      success: lambda { render_as_json @standing_order, fee_calculator: fee_calculator },
-      failure: lambda { render json: { errors: json_errors }, status: :unprocessable_entity }
-    } }
-
     def index
       respond_to do |format|
         format.html
@@ -28,6 +18,24 @@ module Admin
     def new
       @standing_order.bill_address = Spree::Address.new
       @standing_order.ship_address = Spree::Address.new
+    end
+
+    def create
+      form = StandingOrderForm.new(@standing_order, params[:standing_order])
+      if form.save
+        render_as_json @standing_order, fee_calculator: fee_calculator
+      else
+        render json: { errors: form.json_errors }, status: :unprocessable_entity
+      end
+    end
+
+    def update
+      form = StandingOrderForm.new(@standing_order, params[:standing_order])
+      if form.save
+        render_as_json @standing_order, fee_calculator: fee_calculator
+      else
+        render json: { errors: form.json_errors }, status: :unprocessable_entity
+      end
     end
 
     private
@@ -62,13 +70,6 @@ module Admin
       shop, next_oc = @standing_order.shop, @standing_order.schedule.andand.current_or_next_order_cycle
       return nil unless shop && next_oc
       OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc)
-    end
-
-    def json_errors
-      @object.errors.messages.inject({}) do |errors, (k,v)|
-        errors[k] = v.map{ |msg| @object.errors.full_message(k,msg) }
-        errors
-      end
     end
 
     # Wrap :standing_line_items_attributes in :standing_order root

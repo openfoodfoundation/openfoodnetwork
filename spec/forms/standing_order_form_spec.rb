@@ -1,7 +1,5 @@
-require 'open_food_network/standing_order_updater'
-
 module OpenFoodNetwork
-  describe StandingOrderUpdater do
+  describe StandingOrderForm do
     describe "creating a new standing order" do
       let!(:shop) { create(:distributor_enterprise) }
       let!(:customer) { create(:customer, enterprise: shop) }
@@ -22,24 +20,29 @@ module OpenFoodNetwork
       let!(:payment_method) { create(:payment_method, distributors: [shop]) }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
       let!(:address) { create(:address) }
+      let(:standing_order) { StandingOrder.new }
 
-      let!(:standing_order) { StandingOrder.create({
-        shop: shop,
-        customer: customer,
-        schedule: schedule,
-        bill_address: address.clone,
-        ship_address: address.clone,
-        payment_method: payment_method,
-        shipping_method: shipping_method,
+      let!(:params) { {
+        shop_id: shop.id,
+        customer_id: customer.id,
+        schedule_id: schedule.id,
+        bill_address_attributes: address.clone.attributes,
+        ship_address_attributes: address.clone.attributes,
+        payment_method_id: payment_method.id,
+        shipping_method_id: shipping_method.id,
         begins_at: 2.weeks.ago,
         standing_line_items_attributes: [
-          {variant: variant1, quantity: 1},
-          {variant: variant2, quantity: 2},
-          {variant: variant3, quantity: 3}
+          {variant_id: variant1.id, quantity: 1},
+          {variant_id: variant2.id, quantity: 2},
+          {variant_id: variant3.id, quantity: 3}
         ]
-      }) }
+      } }
+
+      let(:form) { StandingOrderForm.new(standing_order, params) }
 
       it "creates orders for each order cycle in the schedule" do
+        form.save
+
         expect(standing_order.orders.count).to be 3
 
         # Add line items for variants that aren't yet available from the order cycle
@@ -58,24 +61,38 @@ module OpenFoodNetwork
 
     describe "changing the shipping method" do
       let(:standing_order) { create(:standing_order_with_items) }
-      let!(:order) { standing_order.orders.first }
-      let!(:new_shipping_method) { create(:shipping_method, distributors: [standing_order.shop]) }
+      let(:shipping_method) { standing_order.shipping_method }
+      let(:new_shipping_method) { create(:shipping_method, distributors: [standing_order.shop]) }
+      let(:order) { standing_order.orders.first }
+      let(:params) { { shipping_method_id: new_shipping_method.id } }
+      let(:form) { StandingOrderForm.new(standing_order, params) }
 
       context "when the shipping method on an order is the same as the standing order" do
+        before { form.send(:initialise_orders!) }
+
         it "updates the shipping_method on the order and on shipments" do
-          standing_order.update_attributes(shipping_method: new_shipping_method)
-          expect(order.reload.shipping_method).to eq new_shipping_method
-          expect(order.reload.shipments.first.shipping_method).to eq new_shipping_method
+          expect(order.shipments.first.shipping_method).to eq shipping_method
+          form.save
+          expect(order.shipping_method).to eq new_shipping_method
+          expect(order.shipments.first.shipping_method).to eq new_shipping_method
         end
       end
 
       context "when the shipping method on a shipment is not the same as the standing order" do
-        let!(:changed_shipping_method) { create(:shipping_method) }
-        before { order.shipments.first.update_attributes(shipping_method: changed_shipping_method) }
+        let(:changed_shipping_method) { create(:shipping_method) }
 
-        it "updates the shipping_method on the order but not on pre-altered shipments" do
-          standing_order.update_attributes(shipping_method: new_shipping_method)
-          expect(order.reload.shipping_method).to eq new_shipping_method
+        before do
+          form.send(:initialise_orders!)
+          # Updating the shipping method on a shipment updates the shipping method on the order,
+          # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
+          # behaviour.
+          order.shipments.first.update_attributes(shipping_method_id: changed_shipping_method.id)
+          order.update_attributes(shipping_method_id: changed_shipping_method.id)
+          form.save
+        end
+
+        it "does not update the shipping_method on the standing order or on the pre-altered shipment" do
+          expect(order.reload.shipping_method).to eq changed_shipping_method
           expect(order.reload.shipments.first.shipping_method).to eq changed_shipping_method
         end
       end
@@ -83,13 +100,18 @@ module OpenFoodNetwork
 
     describe "changing the payment method" do
       let(:standing_order) { create(:standing_order_with_items) }
-      let!(:order) { standing_order.orders.first }
-      let!(:payment_method) { standing_order.payment_method }
-      let!(:new_payment_method) { create(:payment_method, distributors: [standing_order.shop]) }
+      let(:order) { standing_order.orders.first }
+      let(:payment_method) { standing_order.payment_method }
+      let(:new_payment_method) { create(:payment_method, distributors: [standing_order.shop]) }
+      let(:params) { { payment_method_id: new_payment_method.id } }
+      let(:form) { StandingOrderForm.new(standing_order, params) }
 
       context "when the payment method on an order is the same as the standing order" do
-        it "updates the payment_method on payments" do
-          standing_order.update_attributes(payment_method: new_payment_method)
+        before { form.send(:initialise_orders!) }
+
+        it "voids existing payments and creates a new payment with the relevant payment method" do
+          expect(order.payments.reload.first.payment_method).to eq payment_method
+          form.save
           payments = order.reload.payments
           expect(payments.count).to be 2
           expect(payments.with_state('void').count).to be 1
@@ -100,11 +122,15 @@ module OpenFoodNetwork
       end
 
       context "when the payment method on a payment is not the same as the standing order" do
-        let!(:changed_payment_method) { create(:payment_method) }
-        before { order.payments.first.update_attribute(:payment_method, changed_payment_method) }
+        let(:changed_payment_method) { create(:payment_method) }
 
-        it "does not update the payment_method on pre-altered payments" do
-          standing_order.update_attributes(payment_method: new_payment_method)
+        before do
+          form.send(:initialise_orders!)
+          order.payments.first.update_attribute(:payment_method_id, changed_payment_method.id)
+          form.save
+        end
+
+        it "keeps pre-altered payments" do
           payments = order.reload.payments
           expect(payments.count).to be 1
           expect(payments.first.payment_method).to eq changed_payment_method
