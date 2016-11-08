@@ -24,21 +24,8 @@ class StandingOrderForm
       orders.update_all(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
 
       orders.each do |order|
-        if shipping_method_id_changed?
-          shipment = order.shipments.with_state('pending').where(shipping_method_id: shipping_method_id_was).last
-          if shipment
-            shipment.update_attributes(shipping_method_id: shipping_method_id)
-            order.update_attribute(:shipping_method_id, shipping_method_id)
-          end
-        end
-
-        if payment_method_id_changed?
-          payment = order.payments.with_state('checkout').where(payment_method_id: payment_method_id_was).last
-          if payment
-            payment.andand.void_transaction!
-            create_payment_for(order)
-          end
-        end
+        update_shipment_for(order) if shipping_method_id_changed?
+        update_payment_for(order) if payment_method_id_changed?
       end
 
       standing_order.save
@@ -78,6 +65,22 @@ class StandingOrderForm
 
   def create_payment_for(order)
     order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)
+  end
+
+  def update_payment_for(order)
+    payment = order.payments.with_state('checkout').where(payment_method_id: payment_method_id_was).last
+    if payment
+      payment.andand.void_transaction!
+      create_payment_for(order)
+    end
+  end
+
+  def update_shipment_for(order)
+    shipment = order.shipments.with_state('pending').where(shipping_method_id: shipping_method_id_was).last
+    if shipment
+      shipment.update_attributes(shipping_method_id: shipping_method_id)
+      order.update_attribute(:shipping_method_id, shipping_method_id)
+    end
   end
 
   def initialise_orders!
