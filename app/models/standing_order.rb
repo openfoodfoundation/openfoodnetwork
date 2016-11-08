@@ -1,10 +1,4 @@
-require 'open_food_network/standing_order_updater'
-
 class StandingOrder < ActiveRecord::Base
-  include OpenFoodNetwork::StandingOrderUpdater
-
-  before_save :update_orders!
-
   belongs_to :shop, class_name: 'Enterprise'
   belongs_to :customer
   belongs_to :schedule
