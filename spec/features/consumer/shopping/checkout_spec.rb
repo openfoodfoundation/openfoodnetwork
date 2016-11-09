@@ -113,6 +113,24 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         user.reload.bill_address.address1.should eq '123 Your Head'
         user.reload.ship_address.address1.should eq '123 Your Head'
       end
+
+      it "it doesn't tell about previous orders" do
+        expect(page).to_not have_content("You have an order for this order cycle already.")
+      end
+
+      context "with previous orders" do
+        let!(:prev_order) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: order.user) }
+
+        before do
+          order.distributor.allow_order_changes = true
+          order.distributor.save
+        end
+
+        it "informs about previous orders" do
+          visit checkout_path
+          expect(page).to have_content("You have an order for this order cycle already.")
+        end
+      end
     end
 
     context "on the checkout page" do

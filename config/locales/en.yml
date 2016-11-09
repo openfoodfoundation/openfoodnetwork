@@ -550,6 +550,15 @@ en:
         invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
         enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
 
+# Frontend views
+#
+# These keys are referenced relatively like `t('.message')` in
+# app/views/checkout/_already_ordered.html.haml.
+#
+  checkout:
+    already_ordered:
+      cart: "cart"
+      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
   home:
     hubs:
       show_closed_shops: "Show closed shops"
