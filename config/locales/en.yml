@@ -529,6 +529,7 @@ en:
   shared:
     menu:
       cart:
+        checkout: "Checkout now"
         already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
@@ -627,7 +628,6 @@ en:
   items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
-  checkout: "Checkout now"
   cart_updating: "Updating cart..."
   cart_empty: "Cart empty"
   cart_edit: "Edit your cart"
