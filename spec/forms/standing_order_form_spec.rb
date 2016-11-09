@@ -140,10 +140,13 @@ module OpenFoodNetwork
 
     describe "changing the quantity of a line item" do
       let(:standing_order) { create(:standing_order_with_items) }
+      let(:sli) { standing_order.standing_line_items.first }
+      let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 4} ] } }
+      let(:form) { StandingOrderForm.new(standing_order, params) }
+
+      before { form.save }
 
       it "updates the quantity on all orders" do
-        sli = standing_order.standing_line_items.first
-        sli.update_attribute(:quantity, 4)
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
         expect(line_items.map(&:quantity)).to eq [4]
       end
