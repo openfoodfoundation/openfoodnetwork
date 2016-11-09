@@ -12,7 +12,7 @@ gem 'nokogiri', '>= 1.6.7.1'
 gem 'pg'
 gem 'spree', github: 'openfoodfoundation/spree', branch: 'spree-upgrade-step-3'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
-gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '1-3-stable'
+gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch: 'spree-upgrade-intermediate'
 
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
