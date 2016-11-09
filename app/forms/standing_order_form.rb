@@ -6,7 +6,7 @@ class StandingOrderForm
   attr_accessor :standing_order, :params
 
   delegate :orders, :order_cycles, :bill_address, :ship_address, :standing_line_items, to: :standing_order
-  delegate :shop, :shop_id, :customer, :customer_id, to: :standing_order
+  delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :standing_order_orders, to: :standing_order
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
   delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
 
@@ -20,6 +20,7 @@ class StandingOrderForm
       @standing_order.assign_attributes(params)
 
       initialise_orders!
+      remove_obsolete_orders!
 
       orders.update_all(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
 
@@ -95,7 +96,25 @@ class StandingOrderForm
   end
 
   def uninitialised_order_cycle_ids
-    order_cycles.pluck(:id) - orders.map(&:order_cycle_id)
+    not_closed_in_range_order_cycles.pluck(:id) - orders.map(&:order_cycle_id)
+  end
+
+  def remove_obsolete_orders!
+    standing_order_orders.where(order_id: obsolete_orders).destroy_all
+  end
+
+  def obsolete_orders
+    in_range_order_cycle_ids = in_range_order_cycles.pluck(:id)
+    return orders unless in_range_order_cycle_ids.any?
+    orders.where('order_cycle_id NOT IN (?)', in_range_order_cycle_ids)
+  end
+
+  def not_closed_in_range_order_cycles
+    in_range_order_cycles.merge(OrderCycle.not_closed)
+  end
+
+  def in_range_order_cycles
+    order_cycles.where('orders_close_at >= ? AND orders_close_at <= ?', begins_at, ends_at || 100.years.from_now)
   end
 
   def changed_standing_line_items
