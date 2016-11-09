@@ -37,6 +37,12 @@ Spree::Admin::LineItemsController.class_eval do
 
   private
 
+  def render_order_form
+    respond_to do |format|
+      format.html { render 'spree/admin/orders/form', order: @order.reload }
+    end
+  end
+
   def load_order
     @order = Spree::Order.find_by_number!(params[:order_id])
     authorize! :update, @order
