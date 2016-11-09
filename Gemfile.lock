@@ -14,12 +14,12 @@ GIT
 
 GIT
   remote: git://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 840d973cd5bd3250b17674a624dad494aeb09eb3
-  branch: hide-password
+  revision: 8d95f4544c682634812becaf50999fba0cd04df0
+  branch: spree-upgrade-intermediate
   specs:
     spree_paypal_express (2.0.3)
       paypal-sdk-merchant (= 1.106.1)
-      spree_core (~> 1.3.4)
+      spree_core (~> 1.3.99)
 
 GIT
   remote: git://github.com/openfoodfoundation/ofn-qz.git
@@ -678,7 +678,7 @@ GEM
       chronic (>= 0.6.3)
     wicked_pdf (1.1.0)
     wkhtmltopdf-binary (0.12.3.1)
-    xml-simple (1.1.4)
+    xml-simple (1.1.5)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
