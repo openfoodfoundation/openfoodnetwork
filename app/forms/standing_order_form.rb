@@ -28,6 +28,10 @@ class StandingOrderForm
         update_payment_for(order) if payment_method_id_changed?
       end
 
+      changed_standing_line_items.each do |sli|
+        updateable_line_items(sli).update_all(quantity: sli.quantity)
+      end
+
       standing_order.save
     end
   end
@@ -42,7 +46,8 @@ class StandingOrderForm
   private
 
   def future_and_undated_orders
-    orders.joins(:order_cycle).merge(OrderCycle.not_closed)
+    return @future_and_undated_orders unless @future_and_undated_orders.nil?
+    @future_and_undated_orders = orders.joins(:order_cycle).merge(OrderCycle.not_closed)
   end
 
   def create_order_for(order_cycle_id)
@@ -91,5 +96,17 @@ class StandingOrderForm
 
   def uninitialised_order_cycle_ids
     order_cycles.pluck(:id) - orders.map(&:order_cycle_id)
+  end
+
+  def changed_standing_line_items
+    standing_line_items.select(&:changed?)
+  end
+
+  def updateable_line_items(sli)
+    line_items_from_future_and_undated_orders(sli.variant_id).where(quantity: sli.quantity_was)
+  end
+
+  def line_items_from_future_and_undated_orders(variant_id)
+    Spree::LineItem.where(order_id: future_and_undated_orders, variant_id: variant_id)
   end
 end
