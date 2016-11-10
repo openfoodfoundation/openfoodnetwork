@@ -6,5 +6,10 @@ class StandingOrderPlacementJob
   end
 
   def perform
+    orders
+  end
+
+  def orders
+    Spree::Order.incomplete.where(order_cycle_id: order_cycle).joins(:standing_order)
   end
 end
