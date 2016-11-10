@@ -10,7 +10,7 @@ class StandingOrderForm
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
   delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
 
-  def initialize(standing_order, params)
+  def initialize(standing_order, params={})
     @standing_order = standing_order
     @params = params
   end

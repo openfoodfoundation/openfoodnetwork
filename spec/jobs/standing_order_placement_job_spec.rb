@@ -28,4 +28,17 @@ describe StandingOrderPlacementJob do
       expect(orders).to_not include order1, order3, order4
     end
   end
+
+  describe "performing the job" do
+    before do
+      form = StandingOrderForm.new(standing_order1)
+      form.send(:initialise_orders!)
+    end
+
+    it "processes orders to completion" do
+      order = standing_order1.orders.first
+      expect{job.perform}.to change{order.reload.completed_at}.from(nil)
+      expect(order.completed_at).to be_within(5.seconds).of Time.now
+    end
+  end
 end
