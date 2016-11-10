@@ -12,6 +12,8 @@ Spree::Order.class_eval do
   belongs_to :distributor, class_name: 'Enterprise'
   belongs_to :cart
   belongs_to :customer
+  has_one :standing_order_order
+  has_one :standing_order, through: :standing_order_order
 
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
