@@ -1,7 +1,8 @@
 class OrderCycleOpenCloseJob
   def perform
+    order_cycles = recently_opened_order_cycles.all
     recently_opened_order_cycles.update_all(standing_orders_placed_at: Time.now)
-    recently_opened_order_cycles.each do |order_cycle|
+    order_cycles.each do |order_cycle|
       Delayed::Job.enqueue(StandingOrderPlacementJob.new(order_cycle))
     end
   end
