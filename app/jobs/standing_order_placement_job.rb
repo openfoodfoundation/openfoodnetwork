@@ -6,10 +6,31 @@ class StandingOrderPlacementJob
   end
 
   def perform
-    orders
+    orders.each do |order|
+      process(order)
+    end
   end
 
+  private
+
   def orders
-    Spree::Order.incomplete.where(order_cycle_id: order_cycle).joins(:standing_order)
+    Spree::Order.incomplete.where(order_cycle_id: order_cycle).joins(:standing_order).readonly(false)
+  end
+
+  def process(order)
+    while order.state != "complete"
+      if order.errors.any?
+        Bugsnag.notify(RuntimeError.new("StandingOrderPlacementError"), {
+          job: "StandingOrderPlacement",
+          error: "Cannot process order due to errors",
+          data: {
+            errors: order.errors.full_messages
+          }
+        })
+        break
+      else
+        order.next
+      end
+    end
   end
 end
