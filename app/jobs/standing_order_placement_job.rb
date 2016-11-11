@@ -18,7 +18,7 @@ class StandingOrderPlacementJob
   end
 
   def process(order)
-    while order.state != "complete"
+    until order.completed?
       if order.errors.any?
         Bugsnag.notify(RuntimeError.new("StandingOrderPlacementError"), {
           job: "StandingOrderPlacement",
@@ -29,7 +29,7 @@ class StandingOrderPlacementJob
         })
         break
       else
-        order.next
+        order.next!
       end
     end
   end

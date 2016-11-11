@@ -781,4 +781,41 @@ describe Spree::Order do
       expect(order.checkout_steps).to_not include "confirm"
     end
   end
+
+  describe "finding pending_payments" do
+    let!(:order) { create(:order, order_cycle: create(:simple_order_cycle, orders_close_at: nil) ) }
+    let!(:payment) { create(:payment, order: order, state: 'checkout') }
+
+    context "when the order is not a standing order" do
+      it "returns the payments on the order" do
+        expect(order.reload.pending_payments).to eq [payment]
+      end
+    end
+
+    context "when the order is a standing order" do
+      let!(:standing_order) { create(:standing_order, orders: [order]) }
+
+      context "and order_cycle has no order_close_at set" do
+        it "returns the payments on the order" do
+          expect(order.reload.pending_payments).to eq [payment]
+        end
+      end
+
+      context "and the order_cycle has closed" do
+        before { order.order_cycle.update_attributes(orders_close_at: 5.minutes.ago)}
+
+        it "returns the payments on the order" do
+          expect(order.reload.pending_payments).to eq [payment]
+        end
+      end
+
+      context "and the order_cycle has not yet closed" do
+        before { order.order_cycle.update_attributes(orders_close_at: 5.minutes.from_now)}
+
+        it "returns an empty array" do
+          expect(order.reload.pending_payments).to eq []
+        end
+      end
+    end
+  end
 end
