@@ -30,15 +30,18 @@ describe StandingOrderPlacementJob do
   end
 
   describe "performing the job" do
+    let(:order) { standing_order1.orders.first }
+
     before do
       form = StandingOrderForm.new(standing_order1)
       form.send(:initialise_orders!)
+      expect_any_instance_of(Spree::Payment).to_not receive(:process!)
     end
 
-    it "processes orders to completion" do
-      order = standing_order1.orders.first
+    it "moves orders to completion, but does not process the payment" do
       expect{job.perform}.to change{order.reload.completed_at}.from(nil)
       expect(order.completed_at).to be_within(5.seconds).of Time.now
+      expect(order.payments.first.state).to eq "checkout"
     end
   end
 end

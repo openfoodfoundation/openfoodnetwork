@@ -117,6 +117,10 @@ class OrderCycle < ActiveRecord::Base
     ]
   end
 
+  def active?
+    orders_open_at < Time.zone.now && orders_close_at > Time.zone.now
+  end
+
   def clone!
     oc = self.dup
     oc.name = "COPY OF #{oc.name}"
