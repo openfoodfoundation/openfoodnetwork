@@ -47,6 +47,7 @@ Spree::LineItem.class_eval do
 
 
   def cap_quantity_at_stock!
+    scoper.scope(variant)
     update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
   end
 
@@ -129,7 +130,7 @@ Spree::LineItem.class_eval do
   def scoper
 	  return @scoper unless @scoper.nil?
 	  @scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
-	end
+  end
 
   def calculate_final_weight_volume
     if final_weight_volume.present? && quantity_was > 0

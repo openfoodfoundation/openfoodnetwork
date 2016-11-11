@@ -75,6 +75,19 @@ module Spree
         li.quantity.should == 10
         li.max_quantity.should == 10
       end
+
+      context "when a variant override is in place" do
+        let!(:hub) { create(:distributor_enterprise) }
+
+        before { li.order.update_attributes(distributor_id: hub.id) }
+
+        let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 2) }
+
+        it "caps quantity to override stock level" do
+          li.cap_quantity_at_stock!
+          li.quantity.should == 2
+        end
+      end
     end
 
     describe "tracking stock when quantity is changed" do
