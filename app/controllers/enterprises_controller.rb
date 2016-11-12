@@ -18,7 +18,7 @@ class EnterprisesController < BaseController
   def relatives
     respond_to do |format|
       format.json do
-        enterprises = enterprise.andand.relatives.andand.activated
+        enterprises = @enterprise.andand.relatives.andand.activated
         render(json: enterprises,
                each_serializer: Api::EnterpriseSerializer,
                data: OpenFoodNetwork::EnterpriseInjectionData.new)
@@ -43,7 +43,7 @@ class EnterprisesController < BaseController
   private
 
   def set_enterprise
-    enterprise = Enterprise.find(params[:id])
+    @enterprise = Enterprise.find(params[:id])
   end
 
   def clean_permalink
