@@ -147,11 +147,12 @@ module Admin
         describe "stripe connect" do
           it "redirects to Stripe" do
             controller.stub spree_current_user: distributor_manager
+            Admin::StripeHelper.client.stub id: "abc"
             spree_get :stripe_connect
             ['https://connect.stripe.com/oauth/authorize',
               'response_type=code',
               'state=',
-              'client_id='].each{|element| response.location.should match element}
+              'client_id=abc'].each{|element| response.location.should match element}
           end
 
           it "returns 500 on callback if the response code is not provided" do
@@ -200,7 +201,6 @@ module Admin
             payload = {enterprise_id: distributor.permalink}
             params = {state: JWT.encode(payload, Openfoodnetwork::Application.config.secret_token),
                         code: "code"}
-
             expect{spree_get :stripe_connect_callback, params}.to change{StripeAccount.all.length}.by 1
             StripeAccount.last.enterprise_id.should eq distributor.id
           end

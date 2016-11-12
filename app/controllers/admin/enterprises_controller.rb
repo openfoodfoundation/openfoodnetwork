@@ -131,7 +131,7 @@ module Admin
         response_params = get_stripe_token(params["code"]).params
 
         # In case of a problem, need to also issue a request to disconnect the account from Stripe
-        if !(spree_current_user.owned_enterprises.include? @enterprise) && !(spree_current_user.admin?)
+        if !(spree_current_user.enterprises.include? @enterprise) && !(spree_current_user.admin?)
           deauthorize_request_for_stripe_id(response_params["stripe_user_id"])
           redirect_to '/unauthorized' and return
         end
