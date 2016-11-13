@@ -125,6 +125,18 @@ Spree::LineItem.class_eval do
     Spree::InventoryUnit.decrease(order, variant, quantity)
   end
 
+  # MONKEYPATCH of Spree method
+  # Enables scoping of variant to hub/shop, so we check stock against relevant overrides if they exist
+  def sufficient_stock?
+    scoper.scope(variant) # This line added
+    return true if Spree::Config[:allow_backorders]
+    if new_record? || !order.completed?
+      variant.on_hand >= quantity
+    else
+      variant.on_hand >= (quantity - self.changed_attributes['quantity'].to_i)
+    end
+  end
+
   private
 
   def scoper

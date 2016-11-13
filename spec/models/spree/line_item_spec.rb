@@ -140,6 +140,37 @@ module Spree
       end
     end
 
+    describe "determining if sufficient stock is present" do
+      let!(:v) { create(:variant, on_demand: false, on_hand: 10) }
+      let!(:li) { create(:line_item, variant: v, quantity: 5, max_quantity: 5) }
+      let!(:hub) { create(:distributor_enterprise) }
+
+      before do
+        Spree::Config.set allow_backorders: false
+        li.order.update_attributes(distributor_id: hub.id)
+      end
+
+      context "when no variant override is in place" do
+        it "uses stock level on the variant" do
+          expect(li.sufficient_stock?).to be_true
+          v.update_attributes(on_hand: 4)
+          expect(li.sufficient_stock?).to be_false
+        end
+      end
+
+      context "when a variant override is in place" do
+        let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 5) }
+
+        it "uses stock level on the override" do
+          expect(li.sufficient_stock?).to be_true
+          v.update_attributes(on_hand: 4)
+          expect(li.sufficient_stock?).to be_true
+          vo.update_attributes(count_on_hand: 4)
+          expect(li.sufficient_stock?).to be_false
+        end
+      end
+    end
+
     describe "calculating price with adjustments" do
       it "does not return fractional cents" do
         li = LineItem.new
