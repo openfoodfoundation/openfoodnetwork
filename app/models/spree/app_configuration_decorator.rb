@@ -28,4 +28,7 @@ Spree::AppConfiguration.class_eval do
 
   # External services
   preference :bugherd_api_key, :string, default: nil
+
+  # State display
+  preference :state_display, :string, default: "abbr"
 end
