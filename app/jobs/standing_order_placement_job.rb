@@ -18,6 +18,7 @@ class StandingOrderPlacementJob
   end
 
   def process(order)
+    changes = cap_quantity_and_store_changes(order) unless order.completed?
     until order.completed?
       if order.errors.any?
         Bugsnag.notify(RuntimeError.new("StandingOrderPlacementError"), {
@@ -32,6 +33,7 @@ class StandingOrderPlacementJob
         order.next!
       end
     end
+    send_placement_email(order, changes)
   end
 
   def cap_quantity_and_store_changes(order)
@@ -42,5 +44,9 @@ class StandingOrderPlacementJob
       line_item.cap_quantity_at_stock!
       { line_item: line_item, quantity_was: quantity_was }
     end
+  end
+
+  def send_placement_email(order, changes)
+    # Nothing yet
   end
 end
