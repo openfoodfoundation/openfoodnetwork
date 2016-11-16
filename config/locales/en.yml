@@ -850,6 +850,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   registration_detail_state_error: "State required"
   registration_detail_country: "Country:"
   registration_detail_country_error: "Please select a country"
+  registration_detail_state_label: "abbr"
   fees: "Fees"
   item_cost: "Item cost"
   bulk: "Bulk"
