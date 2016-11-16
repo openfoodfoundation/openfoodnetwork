@@ -732,6 +732,7 @@ nb:
   registration_detail_state_error: "Fylke kreves"
   registration_detail_country: "Land:"
   registration_detail_country_error: "Vennligst velg et land"
+  registration_detail_state_label: "name"
   fees: "Gebyrer"
   item_cost: "Varepris"
   bulk: "Bulk"
