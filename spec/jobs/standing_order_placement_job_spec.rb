@@ -29,6 +29,33 @@ describe StandingOrderPlacementJob do
     end
   end
 
+  describe "processing an order containing items with insufficient stock" do
+    let(:order) { create(:order, order_cycle: order_cycle1) }
+    let(:variant1) { create(:variant, count_on_hand: 5) }
+    let(:variant2) { create(:variant, count_on_hand: 2) }
+    let(:variant3) { create(:variant, count_on_hand: 0) }
+    let(:line_item1) { create(:line_item, order: order, variant: variant1, quantity: 5) }
+    let(:line_item2) { create(:line_item, order: order, variant: variant2, quantity: 2) }
+    let(:line_item3) { create(:line_item, order: order, variant: variant3, quantity: 0) }
+
+    before do
+      line_item1.update_attribute(:quantity, 3)
+      line_item2.update_attribute(:quantity, 3)
+      line_item3.update_attribute(:quantity, 3)
+    end
+
+    it "caps quantity at the stock level, and reports the change" do
+      changes = job.send(:cap_quantity_and_store_changes, order.reload)
+      expect(line_item1.reload.quantity).to be 3 # not capped
+      expect(line_item2.reload.quantity).to be 2 # capped
+      expect(line_item3.reload.quantity).to be 0 # capped
+      expect(changes).to eq [
+        { line_item: line_item2, quantity_was: 3},
+        { line_item: line_item3, quantity_was: 3}
+      ]
+    end
+  end
+
   describe "performing the job" do
     let(:order) { standing_order1.orders.first }
 
