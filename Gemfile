@@ -110,7 +110,7 @@ group :test, :development do
   gem 'capybara', '>= 2.15.4'
   gem 'database_cleaner', '0.7.1', require: false
   gem 'awesome_print'
-  gem 'letter_opener'
+  gem 'letter_opener', '>= 1.4.1'
   gem 'timecop'
   gem 'poltergeist', '>= 1.16.0'
   gem 'rspec-retry'
