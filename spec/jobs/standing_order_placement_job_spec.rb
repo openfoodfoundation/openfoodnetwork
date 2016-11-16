@@ -49,10 +49,8 @@ describe StandingOrderPlacementJob do
       expect(line_item1.reload.quantity).to be 3 # not capped
       expect(line_item2.reload.quantity).to be 2 # capped
       expect(line_item3.reload.quantity).to be 0 # capped
-      expect(changes).to eq [
-        { line_item: line_item2, quantity_was: 3},
-        { line_item: line_item3, quantity_was: 3}
-      ]
+      expect(changes[line_item2.id]).to be 3
+      expect(changes[line_item3.id]).to be 3
     end
   end
 

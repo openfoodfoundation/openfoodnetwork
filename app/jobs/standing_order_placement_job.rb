@@ -38,11 +38,10 @@ class StandingOrderPlacementJob
 
   def cap_quantity_and_store_changes(order)
     insufficient_stock_lines = order.insufficient_stock_lines
-    return [] unless insufficient_stock_lines.present?
-    insufficient_stock_lines.map do |line_item|
-      quantity_was = line_item.quantity
+    return {} unless insufficient_stock_lines.present?
+    insufficient_stock_lines.each_with_object({}) do |line_item, changes|
+      changes[line_item.id] = line_item.quantity
       line_item.cap_quantity_at_stock!
-      { line_item: line_item, quantity_was: quantity_was }
     end
   end
 
