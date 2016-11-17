@@ -50,7 +50,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   has_one :supplier, serializer: Api::IdSerializer
 
   def description
-    strip_tags object.description
+    sanitize(object.description, options = {tags: "p, b, strong, em, i"}).html_safe
   end
 
   def properties_with_values

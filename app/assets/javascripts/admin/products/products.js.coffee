@@ -1,1 +1,1 @@
-angular.module("admin.products", ["admin.utils"])
+angular.module("admin.products", ["textAngular", "admin.utils"])
