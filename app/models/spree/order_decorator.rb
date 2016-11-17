@@ -293,7 +293,9 @@ Spree::Order.class_eval do
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   # And separately, to skip sending confirmation email completely for user invoice orders
   def deliver_order_confirmation_email
-    Delayed::Job.enqueue ConfirmOrderJob.new(id) unless account_invoice?
+    unless account_invoice? || standing_order.present?
+      Delayed::Job.enqueue ConfirmOrderJob.new(id)
+    end
   end
 
   def changes_allowed?

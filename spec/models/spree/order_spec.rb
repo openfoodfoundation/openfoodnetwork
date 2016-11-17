@@ -572,6 +572,14 @@ describe Spree::Order do
         order.deliver_order_confirmation_email
       end.to_not enqueue_job ConfirmOrderJob
     end
+
+    it "does not send confirmation emails when the order belongs to a standing order" do
+      create(:standing_order_with_items, orders: [order])
+
+      expect do
+        order.deliver_order_confirmation_email
+      end.to_not enqueue_job ConfirmOrderJob
+    end
   end
 
   describe "associating a customer" do
