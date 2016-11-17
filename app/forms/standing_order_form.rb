@@ -30,7 +30,7 @@ class StandingOrderForm
       end
 
       changed_standing_line_items.each do |sli|
-        updateable_line_items(sli).update_all(quantity: sli.quantity)
+        updateable_line_items(sli).update_all(quantity: sli.quantity) # Avoid validation
       end
 
       standing_order.save
@@ -60,7 +60,8 @@ class StandingOrderForm
       shipping_method_id: shipping_method_id,
     })
     standing_line_items.each do |sli|
-      order.line_items.create(variant_id: sli.variant_id, quantity: sli.quantity)
+      line_item = order.line_items.create(variant_id: sli.variant_id, quantity: 0)
+      line_item.update_attribute(:quantity, sli.quantity) # Avoid validation
     end
     order.update_attributes(bill_address: bill_address.dup, ship_address: ship_address.dup)
     order.update_distribution_charge!
