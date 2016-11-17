@@ -8,7 +8,7 @@ module OpenFoodNetwork
       let!(:product3) { create(:product, supplier: shop) }
       let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
       let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
-      let!(:variant3) { create(:variant, product: product2, unit_value: '1000', price: 2.50, option_values: []) }
+      let!(:variant3) { create(:variant, product: product2, unit_value: '1000', price: 2.50, option_values: [], count_on_hand: 1) }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 9.days.ago, orders_close_at: 2.day.ago) }
       let!(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.day.ago, orders_close_at: 5.days.from_now) }
@@ -44,6 +44,7 @@ module OpenFoodNetwork
       let(:form) { StandingOrderForm.new(standing_order, params) }
 
       it "creates orders for each order cycle in the schedule" do
+        Spree::Config.set allow_backorders: false
         form.save
 
         expect(standing_order.orders.count).to be 2
@@ -53,9 +54,11 @@ module OpenFoodNetwork
         expect(order1).to be nil
 
         # Currently open order cycle, closing after begins_at and before ends_at
+        # Note: Quantity for variant3 is 3, despite available stock being 1
         order2 = standing_order.orders.find_by_order_cycle_id(order_cycle2.id)
         expect(order2).to be_a Spree::Order
         expect(order2.line_items.count).to be 3
+        expect(order2.line_items.find_by_variant_id(variant3.id).quantity).to be 3
         expect(order2.shipments.count).to be 1
         expect(order2.shipments.first.shipping_method).to eq shipping_method
         expect(order2.payments.count).to be 1
@@ -65,10 +68,12 @@ module OpenFoodNetwork
         expect(order2.completed?).to be false
 
         # Future order cycle, closing after begins_at and before ends_at
-        # Add line items for variants that aren't yet available from the order cycle
+        # Adds line items for variants that aren't yet available from the order cycle
+        # Note: Quantity for variant3 is 3, despite available stock being 1
         order3 = standing_order.orders.find_by_order_cycle_id(order_cycle3.id)
         expect(order3).to be_a Spree::Order
         expect(order3.line_items.count).to be 3
+        expect(order2.line_items.find_by_variant_id(variant3.id).quantity).to be 3
         expect(order3.shipments.count).to be 1
         expect(order3.shipments.first.shipping_method).to eq shipping_method
         expect(order3.payments.count).to be 1
