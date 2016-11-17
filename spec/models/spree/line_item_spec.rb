@@ -480,6 +480,42 @@ module Spree
           li.option_values.should     include ov_new
         end
       end
+
+      describe "calculating unit_value" do
+        let(:v) { create(:variant, unit_value: 10) }
+        let(:li) { create(:line_item, variant: v, quantity: 5) }
+
+        context "when the quantity is greater than zero" do
+          context "and final_weight_volume has not been changed" do
+            it "returns the unit_value of the variant" do
+              # Though note that this has been calculated
+              # backwards from the final_weight_volume
+              expect(li.unit_value).to eq 10
+            end
+          end
+
+          context "and final_weight_volume has been changed" do
+            before { li.update_attribute(:final_weight_volume, 35) }
+            it "returns the unit_value of the variant" do
+              expect(li.unit_value).to eq 7
+            end
+          end
+
+          context "and final_weight_volume is nil" do
+            before { li.update_attribute(:final_weight_volume, nil) }
+            it "returns the unit_value of the variant" do
+              expect(li.unit_value).to eq 10
+            end
+          end
+        end
+
+        context "when the quantity is zero" do
+          before { li.update_attribute(:quantity, 0) }
+          it "returns the unit_value of the variant" do
+            expect(li.unit_value).to eq 10
+          end
+        end
+      end
     end
 
     describe "deleting unit option values" do

@@ -93,8 +93,8 @@ Spree::LineItem.class_eval do
   end
 
   def unit_value
-    return 0 if quantity == 0
-    (final_weight_volume || 0) / quantity
+    return variant.unit_value if quantity == 0 || !final_weight_volume
+    final_weight_volume / quantity
   end
 
   # MONKEYPATCH of Spree method
