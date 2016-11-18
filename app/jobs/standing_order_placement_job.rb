@@ -46,6 +46,6 @@ class StandingOrderPlacementJob
   end
 
   def send_placement_email(order, changes)
-    # Nothing yet
+    Spree::OrderMailer.standing_order_placement_email(order, changes).deliver
   end
 end
