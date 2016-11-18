@@ -39,6 +39,7 @@ describe StandingOrderPlacementJob do
     let(:line_item3) { create(:line_item, order: order, variant: variant3, quantity: 0) }
 
     before do
+      Spree::Config.set(:allow_backorders, false)
       line_item1.update_attribute(:quantity, 3)
       line_item2.update_attribute(:quantity, 3)
       line_item3.update_attribute(:quantity, 3)
