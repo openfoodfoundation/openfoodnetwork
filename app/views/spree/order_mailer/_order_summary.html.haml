@@ -19,7 +19,11 @@
           %small
             %em= raw(item.variant.product.supplier.name)
         %td{:align => "right"}
+          - if @changes && @changes[item.id].present?
+            %del.quantity_was= @changes[item.id]
           = item.quantity
+          -# Report changes made to standing orders
+
         %td{:align => "right"}
           = item.display_amount_with_adjustments
   %tfoot

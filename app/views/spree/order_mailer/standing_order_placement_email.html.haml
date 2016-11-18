@@ -1,0 +1,30 @@
+%table.social.white-bg{:width => "100%"}
+  %tr
+    %td
+      %table.column{:align => "left"}
+        %tr
+          %td
+            %h3
+              = t :email_confirm_customer_greeting, name: @order.bill_address.firstname
+            %h4
+              = t :email_placement_intro_html, distributor: @order.distributor.name
+      %table.column{:align => "left"}
+        %tr
+          %td{:align => "right"}
+            %img.float-right{:src => "#{@order.distributor.logo.url(:medium)}"}/
+      %span.clear
+
+%p &nbsp;
+%h4
+  = t :email_confirm_customer_number_html, number: @order.number
+%p
+  = t :email_placement_details_html, distributor: @order.distributor.name
+
+- if @changes.any?
+  %p.callout
+    = t :email_placement_changes
+= render 'order_summary'
+= render 'payment'
+= render 'shipping'
+= render 'special_instructions'
+= render 'signoff'
