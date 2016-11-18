@@ -43,10 +43,10 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc5.id}.closed"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc6.id}.closed"
 
-    first("div#columns-dropdown", :text => "COLUMNS").click
-    first("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
-    first("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
-    first("div#columns-dropdown", :text => "COLUMNS").click
+    find("div#columns-dropdown", :text => "COLUMNS").click
+    find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
+    find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
+    find("div#columns-dropdown", :text => "COLUMNS").click
 
     # And I should see all the details for an order cycle
     within('table#listing_order_cycles tbody tr:nth-child(2)') do
