@@ -49,21 +49,20 @@
           {{ 'spree.country' | t }}
           %span.required *
         %td
-          %select{ name: 'country', required: true, ng: { model: 'address.country_id' } }
-            %option{value: ''}
-              {{ 'admin.customers.index.select_country' | t }}
-            %option{ ng: { repeat: 'country in availableCountries' }, value: '{{country.id}}' }
-              {{country.name}}
+          %input.ofn-select2.fullwidth#country_id{ type: 'number',
+          name: 'country_id', required: true,
+          placeholder: "{{ 'admin.customers.index.select_country' | t }}",
+          data: 'availableCountries', ng: { model: 'address.country_id' } }
       %tr
         %td
           {{ 'spree.state' | t }}
           %span.required *
         %td
-          %select{ name: 'state', required: true, ng: { model: 'address.state_id' } }
-            %option{value: ''}
-              {{ 'admin.customers.index.select_state' | t }}
-            %option{ ng: { repeat: 'state in states' }, value: '{{state.id}}' }
-              {{state.name}}
+          %input.ofn-select2.fullwidth#state_id{ type: 'number',
+          name: 'state_id', required: true,
+          placeholder: "{{ 'admin.customers.index.select_state' | t }}",
+          data: 'states', ng: { model: 'address.state_id' } }
+
       %tr
         %td
           {{ 'spree.phone' | t }}
@@ -73,5 +72,3 @@
 
     .text-center
       %input.button.red.icon-plus{ type: 'submit', value: t('admin.customers.index.update_address')}
-
-

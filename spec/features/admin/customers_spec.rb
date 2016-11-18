@@ -168,8 +168,8 @@ feature 'Customers' do
 
           expect(page).to have_content 'Edit Billing Address'
 
-          expect(page).to have_select('country', selected: 'Australia')
-          expect(page).to have_select('state', selected: 'Victoria')
+          expect(page).to have_select2 'country_id', selected: 'Australia'
+          expect(page).to have_select2 'state_id', selected: 'Victoria'
 
           fill_in 'address1', with: "New Address1"
           click_button 'Update Address'
@@ -193,8 +193,8 @@ feature 'Customers' do
           fill_in 'city', with: "Melbourne"
           fill_in 'zipcode', with: "3000"
 
-          select 'Australia', from: 'country'
-          select 'Victoria', from: 'state'
+          select2_select 'Australia', from: 'country_id'
+          select2_select 'Victoria', from: 'state_id'
           click_button 'Update Address'
 
           expect(page).to have_content 'Address updated successfully.'

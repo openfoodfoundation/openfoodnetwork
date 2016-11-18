@@ -86,9 +86,9 @@
             .tag_watcher{ 'obj-for-update' => "customer", "attr-for-update" => "tag_list"}
               %tags_with_translation{ object: 'customer', 'find-tags' => 'findTags(query)' }
           %td.bill_address{ 'ng-show' => 'columns.bill_address.visible' }
-            %a{ id: 'bill-address-link', href: '#', "ng-bind" => "customer.bill_address ? customer.bill_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15", 'edit-address-dialog' => true }
+            %a{ id: 'bill-address-link', href: 'javascript:void(0)', "ng-bind" => "customer.bill_address ? customer.bill_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15", 'edit-address-dialog' => true }
           %td.ship_address{ 'ng-show' => 'columns.ship_address.visible' }
-            %a{ id: 'ship-address-link', href: '#', "ng-bind" => "customer.ship_address ? customer.ship_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15", 'edit-address-dialog' => true }
+            %a{ id: 'ship-address-link', href: 'javascript:void(0)', "ng-bind" => "customer.ship_address ? customer.ship_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15", 'edit-address-dialog' => true }
           %td.actions
             %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
 
