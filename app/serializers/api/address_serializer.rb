@@ -9,12 +9,4 @@ class Api::AddressSerializer < ActiveModel::Serializer
   def state_name
     object.state.andand.abbr
   end
-
-  def state_id
-    object.state_id.andand.to_s
-  end
-
-  def country_id
-    object.country_id.andand.to_s
-  end
 end
