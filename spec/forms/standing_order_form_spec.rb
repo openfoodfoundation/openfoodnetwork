@@ -88,6 +88,26 @@ module OpenFoodNetwork
       end
     end
 
+    describe "making a change that causes an error" do
+      let(:standing_order) { create(:standing_order_with_items) }
+      let(:shipping_method) { standing_order.shipping_method }
+      let(:invalid_shipping_method) { create(:shipping_method, distributors: [create(:enterprise)]) }
+      let(:order) { standing_order.orders.first }
+      let(:params) { { shipping_method_id: invalid_shipping_method.id } }
+      let(:form) { StandingOrderForm.new(standing_order, params) }
+
+      before do
+        form.send(:initialise_orders!)
+        form.save
+      end
+
+      it "does not update standing_order or associated orders" do
+        expect(order.shipping_method).to eq shipping_method
+        expect(order.shipments.first.shipping_method).to eq shipping_method
+        expect(form.json_errors.keys).to eq [:shipping_method]
+      end
+    end
+
     describe "changing the shipping method" do
       let(:standing_order) { create(:standing_order_with_items) }
       let(:shipping_method) { standing_order.shipping_method }
