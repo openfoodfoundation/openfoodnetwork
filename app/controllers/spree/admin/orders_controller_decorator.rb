@@ -4,11 +4,7 @@ Spree::Admin::OrdersController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   helper CheckoutHelper
   before_filter :load_spree_api_key, :only => :bulk_management
-
-  # We need to add expections for collection actions other than :index here
-  # because spree_auth_devise causes load_order to be called, which results
-  # in an auth failure as the @order object is nil for collection actions
-  before_filter :check_authorization, except: [:bulk_management, :managed]
+  before_filter :load_order, only: %i[show edit update fire resend invoice print]
 
   before_filter :load_distribution_choices, only: [:new, :edit, :update]
 
