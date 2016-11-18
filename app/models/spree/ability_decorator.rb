@@ -1,7 +1,7 @@
 class AbilityDecorator
   include CanCan::Ability
 
-  # All abilites are allocated from this initialiser, currently in 5 chunks.
+  # All abilites are allocated from this initialiser.
   # Spree also defines other abilities.
   def initialize(user)
     add_shopping_abilities user
@@ -193,6 +193,7 @@ class AbilityDecorator
     end
     can [:admin, :bulk_management, :managed], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
     can [:admin , :for_line_items], Enterprise
+    can [:admin, :index, :create, :update, :destroy], :line_item
     can [:admin, :index, :create], Spree::LineItem
     can [:destroy, :update], Spree::LineItem do |item|
       order = item.order
