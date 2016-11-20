@@ -217,6 +217,7 @@ text-angular {
   }
   .ta-scroll-window.form-control {
     min-height: 100px;
+    box-shadow: none !important;
   }
   .btn-group {
     display: inline;
@@ -224,6 +225,10 @@ text-angular {
     button {
       padding: 5px 10px;
       margin-right: 0.25em;
+    }
+    button.active:not(:hover) {
+      box-shadow: 0 0 0.7em rgba(0,0,0,0.3) inset;
+      background-color: #4583bf;
     }
   }
 }
