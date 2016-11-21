@@ -743,6 +743,7 @@ fr:
   registration_detail_state_error: "Veuillez saisir un Département"
   registration_detail_country: "Pays:"
   registration_detail_country_error: "Veuillez saisir une Pays"
+  registration_detail_state_label: "name"
   fees: "Frais"
   item_cost: "Coût du produit"
   bulk: "Vrac"
