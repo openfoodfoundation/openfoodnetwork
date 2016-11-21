@@ -1,0 +1,5 @@
+/ replace "tr[data-hook='product_properties_header']"
+%tr{"data-hook" => "product_properties_header"}
+  %th{:colspan => "2"}= t(:property_name)
+  %th= t(:description)
+  %th.actions

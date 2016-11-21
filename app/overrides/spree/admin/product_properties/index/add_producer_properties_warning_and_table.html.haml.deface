@@ -10,7 +10,7 @@
     %thead
       %tr{"data-hook" => "producer_properties_header"}
         %th= t(:inherited_property)
-        %th= t(:value)
+        %th= t(:description)
         %th.actions
     %tbody#producer_properties{"data-hook" => ""}
       - @product.supplier.producer_properties.each do |producer_property|
