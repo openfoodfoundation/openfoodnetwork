@@ -125,7 +125,7 @@ feature 'Customers' do
         expect(customer1.tag_list).to eq []
       end
 
-      it "prevents duplicate codes from being saved", retry: 3 do
+      it "prevents duplicate codes from being saved" do
         select2_select managed_distributor1.name, from: "shop_id"
 
         within "tr#c_#{customer1.id}" do
