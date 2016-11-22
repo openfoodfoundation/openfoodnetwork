@@ -18,7 +18,9 @@ feature 'Standing Orders' do
       let!(:standing_order_unmanaged) { create(:standing_order, shop: shop_unmanaged) }
 
       it "passes the smoke test" do
-        visit admin_standing_orders_path
+        visit spree.admin_path
+        click_link 'Orders'
+        click_link 'Standing Orders'
 
         expect(page).to have_select2 "shop_id", with_options: [shop.name, shop2.name], without_options: [shop_unmanaged.name]
 
