@@ -2,5 +2,6 @@
   <ul id="sub_nav" data-hook="admin_order_sub_tabs" class="inline-menu">
     <%= tab :orders, :match_path => '/orders' %>
     <%= tab :bulk_order_management, :match_path => '/orders/bulk_management' %>
+    <%= tab :standing_orders, :match_path => '/standing_orders', url: main_app.admin_standing_orders_path %>
   </ul>
 <% end %>
