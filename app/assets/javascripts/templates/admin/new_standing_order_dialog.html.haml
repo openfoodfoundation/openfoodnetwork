@@ -1,0 +1,14 @@
+#new-standing_order-dialog
+  .text-normal.margin-bottom-30.text-center
+    = t('admin.standing_orders.index.please_select_a_shop')
+
+  %form{ name: 'new_standing_order_form', novalidate: true, ng: { submit: "newStandingOrder()" }}
+
+    .text-center.margin-bottom-30
+      %input.ofn-select2.fullwidth#new_standing_order_shop_id{ ng: { model: 'shop_id' }, required: true, name: 'shop_id', data: 'shops' }
+      %div{ ng: { show: "submitted && new_standing_order_form.$pristine" } }
+        .error{ ng: { show: "new_standing_order_form.shop_id.$error.required" } }
+          = t('admin.standing_orders.index.please_select_a_shop')
+
+    .text-center
+      %input.button.red.icon-plus{ type: 'submit', value: t('continue') }

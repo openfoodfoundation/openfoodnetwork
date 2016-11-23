@@ -76,7 +76,10 @@ feature 'Standing Orders' do
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
 
       it "passes the smoke test" do
-        visit new_admin_standing_order_path(standing_order: { shop_id: shop.id })
+        visit admin_standing_orders_path
+        click_link 'New Standing Order'
+        select2_select shop.name, from: 'new_standing_order_shop_id'
+        click_button 'Continue'
 
         select2_select customer.email, from: 'customer_id'
         select2_select schedule.name, from: 'schedule_id'

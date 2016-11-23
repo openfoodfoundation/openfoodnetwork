@@ -798,6 +798,8 @@ en:
       standing_orders: Standing Orders
       new: New Standing Order
       create: Create Standing Order
+      index:
+        please_select_a_shop: Please select a shop
       steps:
         details: 1. Basic Details
         address: 2. Address
