@@ -4,6 +4,11 @@
 - content_for :app_wrapper_attrs do
   = "ng-app='admin.standingOrders'"
 
+- content_for :page_actions do
+  %li
+    %a.button.icon-plus#new-standing-order{ href: "javascript:void(0)", "new-standing-order-dialog" => true }
+      = t('admin.standing_orders.new')
+
 = admin_inject_column_preferences module: 'admin.standingOrders'
 = render 'data'
 
