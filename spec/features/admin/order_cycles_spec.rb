@@ -409,11 +409,11 @@ feature %q{
   end
 
 
-  scenario "updating many order cycle opening/closing times at once" do
+  scenario "updating many order cycle opening/closing times at once", js: true do
     # Given three order cycles
     oc1 = create(:simple_order_cycle)
     oc2 = create(:simple_order_cycle)
-    oc3 = create(:simple_order_cycle)
+    oc3 = create(:simple_order_cycle, orders_open_at: Time.zone.local(2040, 12, 12, 12, 12, 12))
 
     # When I go to the order cycles page
     login_to_admin_section
@@ -430,7 +430,28 @@ feature %q{
       all('input').last.set '2040-12-01 12:00:03'
     end
 
+    # And I fill in a time using the datepicker
     within("tr.order-cycle-#{oc3.id}") do
+      # When I trigger the datepicker
+      find('img.ui-datepicker-trigger', match: :first).click
+    end
+
+    within("#ui-datepicker-div") do
+      # Then it should display the correct date/time
+      expect(page).to have_selector 'span.ui-datepicker-month', text: 'DECEMBER'
+      expect(page).to have_selector 'span.ui-datepicker-year', text: '2040'
+      expect(page).to have_selector 'a.ui-state-active', text: '12'
+
+      # When I fill in a new date/time
+      click_link '1'
+      click_button 'Done'
+    end
+
+    within("tr.order-cycle-#{oc3.id}") do
+      # Then that date/time should appear on the form
+      expect(all('input').first.value).to eq '2040-12-01 00:00'
+
+      # Manually fill out time
       all('input').first.set '2040-12-01 12:00:04'
       all('input').last.set '2040-12-01 12:00:05'
     end

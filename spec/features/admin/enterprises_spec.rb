@@ -77,7 +77,7 @@ feature %q{
 
     visit '/admin/enterprises'
     within "tr.enterprise-#{@enterprise.id}" do
-      all("a", text: 'Edit Profile').first.click
+      first("a", text: 'Edit Profile').trigger 'click'
     end
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
@@ -210,8 +210,8 @@ feature %q{
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "NASAA 12345"
       click_button 'Update'
 
-      # Then I should be returned to the enterprises page
-      page.should have_selector '#listing_enterprises a', text: s.name
+      # Then I should remain on the producer properties page
+      expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
 
       # And the producer should have the property
       s.producer_properties(true).count.should == 1
@@ -233,8 +233,8 @@ feature %q{
       fill_in 'enterprise_producer_properties_attributes_0_value', with: "Shininess"
       click_button 'Update'
 
-      # Then I should be returned to the enterprises
-      page.should have_selector '#listing_enterprises a', text: s.name
+      # Then I should remain on the producer properties page
+      expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
 
       # And the property should be updated
       s.producer_properties(true).count.should == 1
@@ -254,9 +254,10 @@ feature %q{
       # And I remove the property
       page.should have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
       within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+      click_button 'Update'
 
       # Then the property should have been removed
-      page.should_not have_selector '#progress'
+      expect(current_path).to eq main_app.admin_enterprise_producer_properties_path(s)
       page.should_not have_field 'enterprise_producer_properties_attributes_0_property_name', with: 'Certified Organic'
       s.producer_properties(true).should be_empty
     end
@@ -438,7 +439,10 @@ feature %q{
       end
 
       within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
-      page.should_not have_selector '#progress'
+
+      click_button 'Update'
+
+      expect(page).to have_content 'Enterprise "First Supplier" has been successfully updated!'
       supplier1.producer_properties(true).should be_empty
     end
   end

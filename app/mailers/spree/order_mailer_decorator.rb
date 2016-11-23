@@ -3,6 +3,13 @@ Spree::OrderMailer.class_eval do
   helper CheckoutHelper
   helper SpreeCurrencyHelper
 
+  def cancel_email(order, resend = false)
+    @order = find_order(order)
+    subject = (resend ? "[#{t(:resend).upcase}] " : '')
+    subject += "#{Spree::Config[:site_name]} #{t('order_mailer.cancel_email.subject')} ##{order.number}"
+    mail(to: order.email, from: from_address, subject: subject)
+  end
+
   def confirm_email_for_customer(order, resend = false)
     find_order(order) # Finds an order instance from an id
     subject = (resend ? "[#{t(:resend).upcase}] " : '')
@@ -30,5 +37,9 @@ Spree::OrderMailer.class_eval do
          :from => from_address,
          :subject => subject,
          :reply_to => @order.distributor.email)
+  end
+
+  def find_order(order)
+    @order = order.respond_to?(:id) ? order : Spree::Order.find(order)
   end
 end

@@ -78,6 +78,7 @@ class Enterprise < ActiveRecord::Base
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
 
+
   before_save :confirmation_check, if: lambda { email_changed? }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
@@ -92,6 +93,7 @@ class Enterprise < ActiveRecord::Base
   after_create :send_welcome_email, if: lambda { email_is_known? }
 
   after_rollback :restore_permalink
+
 
   scope :by_name, order('name')
   scope :visible, where(visible: true)
