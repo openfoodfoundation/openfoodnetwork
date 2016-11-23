@@ -519,7 +519,7 @@ feature %q{
 
     within("tr.order-cycle-#{oc3.id}") do
       # Then that date/time should appear on the form
-      expect(all('input').first.value).to eq '2040-12-01 00:00'
+      expect(all('input').first.value).to eq '2040-12-01 00:00:00'
 
       # Manually fill out time
       all('input').first.set '2040-12-01 12:00:04'
