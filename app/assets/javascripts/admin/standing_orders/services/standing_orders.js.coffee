@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").factory 'StandingOrders', ($q, StandingOrderResource) ->
+angular.module("admin.standingOrders").factory 'StandingOrders', ($q, StandingOrderResource, StandingOrder) ->
   new class StandingOrders
     byID: {}
     pristineByID: {}
@@ -9,5 +9,6 @@ angular.module("admin.standingOrders").factory 'StandingOrders', ($q, StandingOr
 
     load: (standingOrders) ->
       for standingOrder in standingOrders
+        standingOrder = new StandingOrder(standingOrder)
         @byID[standingOrder.id] = standingOrder
         @pristineByID[standingOrder.id] = angular.copy(standingOrder)
