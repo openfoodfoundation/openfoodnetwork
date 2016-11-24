@@ -3,29 +3,16 @@ require 'spec_helper'
 feature %q{
   As a backend user
   I want to be given information about the state of my enterprises, products and order cycles
-} , js: true do
+}, js: true do
   include AuthenticationWorkflow
   include AuthorizationHelpers
   include WebHelper
 
-  stub_authorization!
-
   context "as an enterprise user" do
-    before :each do
+    before do
       @enterprise_user = create_enterprise_user
       Spree::Admin::OverviewController.any_instance.stub(:spree_current_user).and_return @enterprise_user
       quick_login_as @enterprise_user
-    end
-
-    context "with no enterprises" do
-      it "prompts the user to create a new enteprise" do
-        visit '/admin'
-        page.should have_selector ".dashboard_item#enterprises h3", text: "My Enterprises"
-        page.should have_selector ".dashboard_item#enterprises .list-item", text: "You don't have any enterprises yet"
-        page.should have_selector ".dashboard_item#enterprises .button.bottom", text: "CREATE A NEW ENTERPRISE"
-        page.should_not have_selector ".dashboard_item#products"
-        page.should_not have_selector ".dashboard_item#order_cycles"
-      end
     end
 
     context "with an enterprise" do
