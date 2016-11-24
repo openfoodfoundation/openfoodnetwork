@@ -1,4 +1,4 @@
-angular.module("admin.customers").factory 'CustomerResource', ($resource) ->
+angular.module("admin.resources").factory 'CustomerResource', ($resource) ->
   $resource('/admin/customers/:id.json', {}, {
     'index':
       method: 'GET'
