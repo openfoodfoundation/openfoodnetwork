@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").controller "StandingOrderController", ($scope, StatusMessage, StandingOrder, customers, schedules, paymentMethods, shippingMethods) ->
+angular.module("admin.standingOrders").controller "StandingOrderController", ($scope, StandingOrder, customers, schedules, paymentMethods, shippingMethods) ->
   $scope.standingOrder = StandingOrder.standingOrder
   $scope.customers = customers
   $scope.schedules = schedules
