@@ -3,29 +3,16 @@ require 'spec_helper'
 feature %q{
   As a backend user
   I want to be given information about the state of my enterprises, products and order cycles
-} , js: true do
+}, js: true do
   include AuthenticationWorkflow
   include AuthorizationHelpers
   include WebHelper
 
-  stub_authorization!
-
   context "as an enterprise user" do
-    before :each do
+    before do
       @enterprise_user = create_enterprise_user
       Spree::Admin::OverviewController.any_instance.stub(:spree_current_user).and_return @enterprise_user
       quick_login_as @enterprise_user
-    end
-
-    context "with no enterprises" do
-      it "prompts the user to create a new enteprise" do
-        visit '/admin'
-        page.should have_selector ".dashboard_item#enterprises h3", text: "My Enterprises"
-        page.should have_selector ".dashboard_item#enterprises .list-item", text: "You don't have any enterprises yet"
-        page.should have_selector ".dashboard_item#enterprises .button.bottom", text: "CREATE A NEW ENTERPRISE"
-        page.should_not have_selector ".dashboard_item#products"
-        page.should_not have_selector ".dashboard_item#order_cycles"
-      end
     end
 
     context "with an enterprise" do
@@ -123,5 +110,45 @@ feature %q{
         end
       end
     end
+
+    context "with the spree dash configured" do
+      let(:d1) { create(:distributor_enterprise) }
+
+      before do
+        stub_jirafe
+        @enterprise_user.enterprise_roles.build(enterprise: d1).save
+      end
+
+      around do |example|
+        with_dash_configured { example.run }
+      end
+
+      it "has permission to sync analytics" do
+        visit '/admin'
+        expect(page).to have_content d1.name
+      end
+    end
+  end
+
+  private
+
+  def stub_jirafe
+    stub_request(:post, "https://api.jirafe.com/v1/applications/abc123/resources?token=").
+      to_return(:status => 200, :body => "", :headers => {})
+  end
+
+  def with_dash_configured(&block)
+    Spree::Dash::Config.preferred_app_id = 'abc123'
+    Spree::Dash::Config.preferred_site_id = 'abc123'
+    Spree::Dash::Config.preferred_token = 'abc123'
+    expect(Spree::Dash::Config.configured?).to be true
+
+    block.call
+
+  ensure
+    Spree::Dash::Config.preferred_app_id = nil
+    Spree::Dash::Config.preferred_site_id = nil
+    Spree::Dash::Config.preferred_token = nil
+    expect(Spree::Dash::Config.configured?).to be false
   end
 end
