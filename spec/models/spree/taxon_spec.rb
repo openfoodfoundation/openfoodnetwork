@@ -7,7 +7,7 @@ module Spree
     let!(:t2) { create(:taxon) }
 
     describe "callbacks" do
-      let!(:p2) { create(:simple_product, taxons: [t1]) }
+      let!(:p2) { create(:simple_product, taxons: [t1], primary_taxon: t2) }
 
       it "refreshes the products cache on save" do
         expect(OpenFoodNetwork::ProductsCache).to receive(:product_changed).with(p2)
