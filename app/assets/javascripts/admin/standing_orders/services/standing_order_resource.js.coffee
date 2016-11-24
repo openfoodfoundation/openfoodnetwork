@@ -1,5 +1,5 @@
-angular.module("admin.standingOrders").factory 'StandingOrderResource', ($resource) ->
-  $resource('/admin/standing_orders/:id/:action.json', {}, {
+angular.module("admin.standingOrders").factory 'StandingOrderResource', ($resource, StandingOrderPrototype) ->
+  resource = $resource('/admin/standing_orders/:id/:action.json', {}, {
     'index':
       method: 'GET'
       isArray: true
@@ -8,3 +8,7 @@ angular.module("admin.standingOrders").factory 'StandingOrderResource', ($resour
       params:
         id: '@id'
   })
+
+  angular.extend(resource.prototype, StandingOrderPrototype)
+
+  resource

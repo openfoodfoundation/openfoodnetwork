@@ -21,4 +21,5 @@
       %save-bar{ dirty: "standing_order_products_form.$dirty", persist: 'true', ng: { hide: "view == 'review'" } }
         %input{ type: "button", value: t(:back), ng: { click: "back()" } }
         %input.red{ type: "button", value: t(:next), ng: { click: 'next()' } }
+    = render :partial => "spree/admin/variants/autocomplete", :formats => :js
     = render 'products'

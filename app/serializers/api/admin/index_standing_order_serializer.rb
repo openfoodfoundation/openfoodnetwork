@@ -1,12 +1,12 @@
 class Api::Admin::IndexStandingOrderSerializer < ActiveModel::Serializer
-  attributes :id, :item_count, :begins_on, :ends_on, :edit_path
+  attributes :id, :item_count, :begins_on, :ends_on, :edit_path, :shop_id, :schedule_id
 
   has_one :shop, serializer: Api::Admin::IdNameSerializer
   has_one :customer, serializer: Api::Admin::IdEmailSerializer # Remove IdEmailSerializer if no longer user here
   has_one :schedule, serializer: Api::Admin::IdNameSerializer
   has_one :payment_method, serializer: Api::Admin::IdNameSerializer
   has_one :shipping_method, serializer: Api::Admin::IdNameSerializer
-  has_many :standing_line_items, serializer: Api::Admin::IdSerializer
+  has_many :standing_line_items, serializer: Api::Admin::StandingLineItemSerializer
 
   def item_count
     object.standing_line_items.sum(&:quantity)

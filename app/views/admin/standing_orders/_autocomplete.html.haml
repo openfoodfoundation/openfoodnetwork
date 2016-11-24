@@ -1,14 +1,20 @@
-= render :partial => "spree/admin/variants/autocomplete", :formats => :js
-
 #add-line-item
   %fieldset
     %legend{ align: 'center'}= t(:products)
-    .field.ten.columns.alpha.field
-      = label_tag :add_product_name, t(:name_or_sku)
-      %input#add_variant_id.variant_autocomplete.fullwidth{ type: 'number', ng: { model: 'newItem.variant_id' } }
-    .field.three.columns.field
-      = label_tag :add_quantity, t(:qty)
-      %input#add_quantity.fullwidth{ type: 'number', min: 1, ng: { model: 'newItem.quantity' } }
-    .three.columns.omega.actions
-      %a.icon-plus.button.fullwidth{ href: 'javascript:void(0)', method: :post, ng: { click: 'addStandingLineItem()' } }
-        = t(:add)
+    %table.no-borders
+      %col{ width: '60%' }
+      %col{ width: '20%' }
+      %col{ width: '20%' }
+      %tr
+        %td{ style: "vertical-align:top" }
+          .field
+            = label_tag :add_product_name, t(:name_or_sku)
+            %input#add_variant_id.variant_autocomplete.fullwidth{ type: 'number', ng: { model: 'newItem.variant_id' } }
+        %td{ style: "vertical-align:top" }
+          .field
+            = label_tag :add_quantity, t(:qty)
+            %input#add_quantity.fullwidth{ type: 'number', min: 1, ng: { model: 'newItem.quantity' } }
+        %td{ style: "vertical-align:top" }
+          .actions
+            %a.icon-plus.button.fullwidth{ href: 'javascript:void(0)', method: :post, ng: { click: 'addStandingLineItem()' } }
+              = t(:add)
