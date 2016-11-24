@@ -911,7 +911,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
   spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
   spree_admin_overview_action_required: "Action Required"
-  spree_admin_overview_check_your_inbox: "Please check you inbox for furher instructions. Thanks!"
+  spree_admin_overview_check_your_inbox: "Please check you inbox for further instructions. Thanks!"
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   your_profil_live: "Your profile live"
