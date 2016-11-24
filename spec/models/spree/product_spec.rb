@@ -170,6 +170,11 @@ module Spree
         product.save
       end
 
+      it "refreshes the products cache on delete" do
+        expect(OpenFoodNetwork::ProductsCache).to receive(:product_deleted).with(product)
+        product.delete
+      end
+
       # On destroy, all distributed variants are refreshed by a Variant around_destroy
       # callback, so we don't need to do anything on the product model.
     end

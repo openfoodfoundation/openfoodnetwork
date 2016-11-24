@@ -187,9 +187,11 @@ Spree::Product.class_eval do
 
   def delete_with_delete_from_order_cycles
     transaction do
-      delete_without_delete_from_order_cycles
+      OpenFoodNetwork::ProductsCache.product_deleted(self) do
+        ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master_and_deleted).destroy_all
 
-      ExchangeVariant.where('exchange_variants.variant_id IN (?)', self.variants_including_master_and_deleted).destroy_all
+        delete_without_delete_from_order_cycles
+      end
     end
   end
   alias_method_chain :delete, :delete_from_order_cycles

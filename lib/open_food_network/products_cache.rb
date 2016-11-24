@@ -28,6 +28,15 @@ module OpenFoodNetwork
       end
     end
 
+    def self.product_deleted(product, &block)
+      exchanges = exchanges_featuring_variants(product.reload.variants).to_a
+
+      block.call
+
+      exchanges.each do |exchange|
+        refresh_cache exchange.receiver, exchange.order_cycle
+      end
+    end
 
     def self.variant_override_changed(variant_override)
       exchanges_featuring_variants(variant_override.variant, distributor: variant_override.hub).each do |exchange|
