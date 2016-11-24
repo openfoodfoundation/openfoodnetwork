@@ -1,5 +1,12 @@
 angular.module("admin.standingOrders").factory "StandingOrder", ($injector, $http, StatusMessage, InfoDialog, StandingOrderResource) ->
-  instanceMethods =
+  class StandingOrder extends StandingOrderResource
+    errors: {}
+
+    constructor: (obj={}) ->
+      angular.extend(@, obj)
+      if $injector.has('standingOrder')
+        angular.extend(@, $injector.get('standingOrder'))
+
     buildItem: (item) ->
       return false unless item.variant_id > 0
       return false unless item.quantity > 0
@@ -19,19 +26,10 @@ angular.module("admin.standingOrders").factory "StandingOrder", ($injector, $htt
       else
         @standing_line_items.splice(index,1)
 
-  new class StandingOrder
-    standingOrder: new StandingOrderResource()
-    errors: {}
-
-    constructor: ->
-      if $injector.has('standingOrder')
-        angular.extend(@standingOrder, $injector.get('standingOrder'), instanceMethods)
-
     create: ->
       StatusMessage.display 'progress', 'Saving...'
       delete @errors[k] for k, v of @errors
-      @standingOrder.$save().then (response) =>
-        angular.extend(@standingOrder, instanceMethods)
+      @$save().then (response) =>
         StatusMessage.display 'success', 'Saved'
       , (response) =>
         StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
@@ -40,8 +38,7 @@ angular.module("admin.standingOrders").factory "StandingOrder", ($injector, $htt
     update: ->
       StatusMessage.display 'progress', 'Saving...'
       delete @errors[k] for k, v of @errors
-      @standingOrder.$update().then (response) =>
-        angular.extend(@standingOrder, instanceMethods)
+      @$update().then (response) =>
         StatusMessage.display 'success', 'Saved'
       , (response) =>
         StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
