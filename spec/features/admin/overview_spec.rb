@@ -110,5 +110,45 @@ feature %q{
         end
       end
     end
+
+    context "with the spree dash configured" do
+      let(:d1) { create(:distributor_enterprise) }
+
+      before do
+        stub_jirafe
+        @enterprise_user.enterprise_roles.build(enterprise: d1).save
+      end
+
+      around do |example|
+        with_dash_configured { example.run }
+      end
+
+      it "has permission to sync analytics" do
+        visit '/admin'
+        expect(page).to have_content d1.name
+      end
+    end
+  end
+
+  private
+
+  def stub_jirafe
+    stub_request(:post, "https://api.jirafe.com/v1/applications/abc123/resources?token=").
+      to_return(:status => 200, :body => "", :headers => {})
+  end
+
+  def with_dash_configured(&block)
+    Spree::Dash::Config.preferred_app_id = 'abc123'
+    Spree::Dash::Config.preferred_site_id = 'abc123'
+    Spree::Dash::Config.preferred_token = 'abc123'
+    expect(Spree::Dash::Config.configured?).to be true
+
+    block.call
+
+  ensure
+    Spree::Dash::Config.preferred_app_id = nil
+    Spree::Dash::Config.preferred_site_id = nil
+    Spree::Dash::Config.preferred_token = nil
+    expect(Spree::Dash::Config.configured?).to be false
   end
 end
