@@ -7,3 +7,8 @@ angular.module("admin.standingOrders").controller "StandingOrdersController", ($
     if $scope.shop_id?
       # CurrentShop.shop = $filter('filter')($scope.shops, {id: $scope.shop_id})[0]
       $scope.standingOrders = StandingOrders.index("q[shop_id_eq]": $scope.shop_id, ams_prefix: 'index')
+
+  $scope.itemCount = (standingOrder) ->
+    standingOrder.standing_line_items.reduce (sum, sli) ->
+      return sum + sli.quantity
+    , 0

@@ -32,7 +32,7 @@ module Admin
     def update
       form = StandingOrderForm.new(@standing_order, params[:standing_order])
       if form.save
-        render_as_json @standing_order, fee_calculator: fee_calculator
+        render_as_json @standing_order, ams_prefix: params[:ams_prefix], fee_calculator: fee_calculator
       else
         render json: { errors: form.json_errors }, status: :unprocessable_entity
       end
