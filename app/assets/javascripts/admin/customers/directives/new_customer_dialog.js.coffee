@@ -12,7 +12,10 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $tem
       scope.submitted = true
       scope.errors = []
       if scope.new_customer_form.$valid
-        Customers.add(scope.email).$promise.then (data) ->
+        params =
+          enterprise_id: CurrentShop.shop.id
+          email: scope.email
+        Customers.add(params).$promise.then (data) ->
           if data.id
             scope.email = ""
             scope.submitted = false
