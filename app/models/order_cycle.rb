@@ -115,10 +115,9 @@ class OrderCycle < ActiveRecord::Base
     ]
   end
 
-
   def clone!
     oc = self.dup
-    oc.name = I18n.t('admin.order_cycles.edit.copy_prefix') + " #{oc.name}"
+    oc.name = I18n.t('models.order_cycle.duplicated_name', name: name)
     oc.orders_open_at = oc.orders_close_at = nil
     oc.copy_fees_products_and_exchanges_from(self)
   end

@@ -82,6 +82,10 @@ en:
   show_all: Show all
   cancel: Cancel
 
+  models:
+    order_cycle:
+      duplicated_name: "COPY OF %{name}"
+
   admin:
     # Common properties / models
     date: Date
@@ -222,7 +226,6 @@ en:
     order_cycles:
       edit:
         choose_products_from: "Choose Products From:"
-        copy_prefix: "COPY OF"
         copy_products_and_fees_from: "Copy products and fees from"
         copy_now: "Copy Now"
         copying_products_and_fees: "Copying products and fees..."
