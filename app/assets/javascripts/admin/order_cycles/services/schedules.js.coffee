@@ -1,7 +1,16 @@
-angular.module("admin.orderCycles").factory "Schedules", ($q, RequestMonitor, ScheduleResource, OrderCycles, Dereferencer) ->
+angular.module("admin.orderCycles").factory "Schedules", ($q, $injector, RequestMonitor, ScheduleResource, OrderCycles, Dereferencer) ->
   new class Schedules
-    byID: {}
     # all: []
+    byID: {}
+
+    constructor: ->
+      if $injector.has('schedules')
+        @load($injector.get('schedules'))
+
+    load: (schedules) ->
+      for schedule in schedules
+        # @all.push schedule
+        @byID[schedule.id] = schedule
 
     add: (params) =>
       ScheduleResource.create params, (schedule) =>
@@ -35,9 +44,6 @@ angular.module("admin.orderCycles").factory "Schedules", ($q, RequestMonitor, Sc
           InfoDialog.open 'error', "Could not delete schedule: #{schedule.name}"
 
     index: ->
-      request = ScheduleResource.index (data) =>
-        @byID[schedule.id] = schedule for schedule in data
-        data
-        # @all = data
+      request = ScheduleResource.index (data) => @load(data)
       RequestMonitor.load(request.$promise)
       request
