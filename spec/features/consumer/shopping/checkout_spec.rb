@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-feature "As a consumer I want to check out my cart", js: true do
+feature "As a consumer I want to check out my cart", js: true, retry: 3 do
   include AuthenticationWorkflow
   include ShopWorkflow
   include CheckoutWorkflow
