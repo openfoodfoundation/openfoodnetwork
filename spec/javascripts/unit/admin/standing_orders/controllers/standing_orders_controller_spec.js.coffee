@@ -27,7 +27,7 @@ describe "StandingOrdersCtrl", ->
     expect(scope.shop_id).toEqual null
 
   describe "setting shop_id on scope", ->
-    standingOrder = { id: 5, customer_id: 3, schedule_id: 1}
+    standingOrder = { errors: {}, id: 5, customer_id: 3, schedule_id: 1 }
     standingOrders = [standingOrder]
 
     beforeEach ->
