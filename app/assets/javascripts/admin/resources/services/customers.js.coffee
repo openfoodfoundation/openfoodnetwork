@@ -27,6 +27,7 @@ angular.module("admin.resources").factory "Customers", ($q, InfoDialog, RequestM
           InfoDialog.open 'error', "Could not delete customer: #{customer.email}"
 
     index: (params) ->
+      @clear()
       request = CustomerResource.index(params, (data) => @load(data))
       RequestMonitor.load(request.$promise)
       request.$promise
@@ -43,3 +44,6 @@ angular.module("admin.resources").factory "Customers", ($q, InfoDialog, RequestM
         customer:
           "#{addressType}_attributes": address
       CustomerResource.update params
+
+    clear: ->
+      @all.length = 0
