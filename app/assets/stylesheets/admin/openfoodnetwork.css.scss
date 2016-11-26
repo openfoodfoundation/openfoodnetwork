@@ -203,6 +203,9 @@ text-angular {
   .ta-scroll-window > .ta-bind {
     max-height: 400px;
     min-height: 100px;
+    p {
+      margin-bottom: 1.5em;
+    }
   }
   .ta-scroll-window.form-control {
     min-height: 100px;
@@ -214,6 +217,7 @@ text-angular {
       padding: 5px 10px;
     }
   }
+
 }
 
 span.required {
