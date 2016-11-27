@@ -15,20 +15,32 @@
 
 :javascript
   $(function(){
+
     var initial = #{@enterprise.id};
     var switcher = $('#enterprise_switcher');
+    var confirm_message = "There are unsaved changed on this page. Continue without saving?";
 
+    //Enterprise switcher dropdown
     switcher.on('change', function(){
-
       if($('form.edit_enterprise').hasClass('ng-dirty')) {
-        if(!confirm("There are unsaved changed on this page. Continue without saving?")) {
-          switcher.select2('val', initial);
+        if(!confirm(confirm_message)) {
+          switcher.select2('val', initial); //Reset dropdown if cancelled
           return;
         }
       }
 
+      $(window).unbind("beforeunload"); //Don't ask twice if leaving
       window.location.href = $('#enterprise_switcher option:selected').attr('data-url');
 
+    });
+
+    //Confirmation message if navigating away from the page with unsaved changes
+    $(window).bind('beforeunload', function(){
+      if($('form.edit_enterprise').hasClass('ng-dirty')) {
+        //The message behaviour on 'beforeunload' events may be overridden by some browsers,
+        //but a similar message should be displayed.
+        return confirm_message;
+      }
     });
 
   });
