@@ -47,7 +47,7 @@ feature 'Shops', js: true do
     it "should show closed shops after clicking the button" do
       create(:simple_product, distributors: [d1, d2])
       visit shops_path
-      click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
+      click_link_and_ensure("Show Closed Shops", -> { page.has_selector? 'hub.inactive' })
       page.should have_selector 'hub.inactive', text: d2.name
     end
 
@@ -55,46 +55,108 @@ feature 'Shops', js: true do
       follow_active_table_node distributor.name
       expect(page).to have_current_path enterprise_shop_path(distributor)
     end
+  end
 
-    describe "property badges" do
-      let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
-      let(:product) { create(:simple_product, supplier: producer) }
+  describe "filtering by product property" do
+    let!(:order_cycle) { create(:simple_order_cycle, distributors: [d1, d2], coordinator: create(:distributor_enterprise)) }
+    let!(:p1) { create(:simple_product, supplier: producer) }
+    let!(:p2) { create(:simple_product, supplier: create(:supplier_enterprise)) }
+    let(:ex_d1) { order_cycle.exchanges.outgoing.where(receiver_id: d1).first }
+    let(:ex_d2) { order_cycle.exchanges.outgoing.where(receiver_id: d2).first }
 
-      before do
-        product.set_property 'Local', 'XYZ 123'
-      end
+    before do
+      ex_d1.variants << p1.variants.first
+      ex_d2.variants << p2.variants.first
 
-      it "shows property badges" do
-        # Given a shop with a product with a property
-        # And the product's producer has a producer property
+      p2.set_property 'Local', 'XYZ 123'
 
-        # When I go to the shops path
+      visit shops_path
+    end
+
+    it "filters" do
+      toggle_filters
+
+      toggle_filter 'Organic'
+
+      expect(page).to     have_content d1.name
+      expect(page).not_to have_content d2.name
+
+      toggle_filter 'Organic'
+      toggle_filter 'Local'
+
+      expect(page).not_to have_content d1.name
+      expect(page).to     have_content d2.name
+    end
+  end
+
+  describe "taxon badges" do
+    let!(:closed_oc) { create(:closed_order_cycle, distributors: [shop], variants: [p_closed.variants.first]) }
+    let!(:p_closed) { create(:simple_product, taxons: [taxon_closed]) }
+    let(:shop) { create(:distributor_enterprise) }
+    let(:taxon_closed) { create(:taxon, name: 'Closed') }
+
+    describe "open shops" do
+      let!(:open_oc) { create(:open_order_cycle, distributors: [shop], variants: [p_open.variants.first]) }
+      let!(:p_open) { create(:simple_product, taxons: [taxon_open]) }
+      let(:taxon_open) { create(:taxon, name: 'Open') }
+
+      it "shows taxons for open order cycles only" do
         visit shops_path
-
-        # And I open the shop
-        expand_active_table_node distributor.name
-
-        # Then I should see both properties
-        expect(page).to have_content 'Local'   # Product property
-        expect(page).to have_content 'Organic' # Producer property
+        expand_active_table_node shop.name
+        expect(page).to     have_selector '.fat-taxons', text: 'Open'
+        expect(page).not_to have_selector '.fat-taxons', text: 'Closed'
       end
     end
 
-    describe "hub producer modal" do
-      let!(:product) { create(:simple_product, supplier: producer, taxons: [taxon]) }
-      let!(:taxon) { create(:taxon, name: 'Fruit') }
-      let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
+    describe "closed shops" do
+      it "shows taxons for any order cycle" do
+        visit shops_path
+        click_link 'Show Closed Shops'
+        expand_active_table_node shop.name
+        expect(page).to have_selector '.fat-taxons', text: 'Closed'
+      end
+    end
+  end
 
-      it "shows hub producer modals" do
-        expand_active_table_node distributor.name
-        expect(page).to have_content producer.name
-        open_enterprise_modal producer
-        modal_should_be_open_for producer
+  describe "property badges" do
+    let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
+    let(:product) { create(:simple_product, supplier: producer) }
 
-        within ".reveal-modal" do
-          expect(page).to have_content 'Fruit'   # Taxon
-          expect(page).to have_content 'Organic' # Producer property
-        end
+    before do
+      product.set_property 'Local', 'XYZ 123'
+    end
+
+    it "shows property badges" do
+      # Given a shop with a product with a property
+      # And the product's producer has a producer property
+
+      # When I go to the shops path
+      visit shops_path
+
+      # And I open the shop
+      expand_active_table_node distributor.name
+
+      # Then I should see both properties
+      expect(page).to have_content 'Local'   # Product property
+      expect(page).to have_content 'Organic' # Producer property
+    end
+  end
+
+  describe "hub producer modal" do
+    let!(:product) { create(:simple_product, supplier: producer, taxons: [taxon]) }
+    let!(:taxon) { create(:taxon, name: 'Fruit') }
+    let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product.variants.first]) }
+
+    it "shows hub producer modals" do
+      visit shops_path
+      expand_active_table_node distributor.name
+      expect(page).to have_content producer.name
+      open_enterprise_modal producer
+      modal_should_be_open_for producer
+
+      within ".reveal-modal" do
+        expect(page).to have_content 'Fruit'   # Taxon
+        expect(page).to have_content 'Organic' # Producer property
       end
     end
   end

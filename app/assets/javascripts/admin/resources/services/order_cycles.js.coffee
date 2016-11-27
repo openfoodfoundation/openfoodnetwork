@@ -1,21 +1,24 @@
-angular.module("admin.orderCycles").factory 'OrderCycles', ($q, OrderCycleResource, blankOption) ->
+angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCycleResource) ->
   new class OrderCycles
-    orderCyclesByID: {}
+    all: []
+    byID: {}
     pristineByID: {}
 
+    constructor: ->
+      if $injector.has('orderCycles')
+        @load($injector.get('orderCycles'))
+
     index: (params={}, callback=null) ->
-      includeBlank = !!params['includeBlank']
-      delete params['includeBlank']
-      OrderCycleResource.index(params, (data) =>
-        for orderCycle in data
-          @orderCyclesByID[orderCycle.id] = orderCycle
-          @pristineByID[orderCycle.id] = angular.copy(orderCycle)
-
+      OrderCycleResource.index params, (data) =>
+        @load(data)
         (callback || angular.noop)(data)
-
-        data.unshift(blankOption()) if includeBlank
         data
-      )
+
+    load: (orderCycles) ->
+      for orderCycle in orderCycles
+        @all.push orderCycle
+        @byID[orderCycle.id] = orderCycle
+        @pristineByID[orderCycle.id] = angular.copy(orderCycle)
 
     save: (order_cycle) ->
       deferred = $q.defer()

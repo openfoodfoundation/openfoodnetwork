@@ -87,6 +87,7 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
+  after_touch :touch_distributors
   after_create :relate_to_owners_enterprises
   # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
   after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
@@ -161,12 +162,7 @@ class Enterprise < ActiveRecord::Base
     select('DISTINCT enterprises.*')
   }
 
-  scope :distributing_product, lambda { |product|
-    with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
-    where('product_distributions.product_id = ? OR spree_variants.product_id = ?', product, product).
-    select('DISTINCT enterprises.*')
-  }
-  scope :distributing_any_product_of, lambda { |products|
+  scope :distributing_products, lambda { |products|
     with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
     where('product_distributions.product_id IN (?) OR spree_variants.product_id IN (?)', products, products).
     select('DISTINCT enterprises.*')
@@ -468,5 +464,11 @@ class Enterprise < ActiveRecord::Base
 
   def initialize_permalink
     self.permalink = Enterprise.find_available_permalink(name)
+  end
+
+  def touch_distributors
+    Enterprise.distributing_products(self.supplied_products).
+      where('enterprises.id != ?', self.id).
+      each(&:touch)
   end
 end

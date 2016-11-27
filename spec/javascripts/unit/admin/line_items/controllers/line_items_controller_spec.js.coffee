@@ -70,7 +70,7 @@ describe "LineItemsCtrl", ->
         expect(scope.distributors).toDeepEqual [ distributor ]
 
       it "stores enterprises in an list that is accessible by id", ->
-        expect(Enterprises.enterprisesByID[1]).toDeepEqual supplier
+        expect(Enterprises.byID[1]).toDeepEqual supplier
 
       it "gets order cycles", ->
         expect(scope.orderCycles).toDeepEqual [ orderCycle ]

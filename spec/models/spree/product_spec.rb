@@ -33,9 +33,10 @@ module Spree
       end
 
       it "defaults available_on to now" do
-        Timecop.freeze
-        product = Product.new
-        product.available_on.should == Time.zone.now
+        Timecop.freeze do
+          product = Product.new
+          product.available_on.should == Time.zone.now
+        end
       end
 
       describe "tax category" do
@@ -170,8 +171,28 @@ module Spree
         product.save
       end
 
+      it "refreshes the products cache on delete" do
+        expect(OpenFoodNetwork::ProductsCache).to receive(:product_deleted).with(product)
+        product.delete
+      end
+
       # On destroy, all distributed variants are refreshed by a Variant around_destroy
       # callback, so we don't need to do anything on the product model.
+
+      describe "touching affected enterprises when the product is deleted" do
+        let(:product) { create(:simple_product) }
+        let(:supplier) { product.supplier }
+        let(:distributor) { create(:distributor_enterprise) }
+        let!(:oc) { create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first]) }
+
+        it "touches the supplier" do
+          expect { product.delete }.to change { supplier.reload.updated_at }
+        end
+
+        it "touches all distributors" do
+          expect { product.delete }.to change { distributor.reload.updated_at }
+        end
+      end
     end
 
     describe "scopes" do
