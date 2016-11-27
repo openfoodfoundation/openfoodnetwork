@@ -53,7 +53,6 @@ feature "Registration", js: true do
       expect(e.sells).to eq "unspecified"
       expect(e.is_primary_producer).to eq true
       expect(e.contact).to eq "Saskia Munroe"
-
       
       # Filling in about
       fill_in 'enterprise_description', with: 'Short description'
