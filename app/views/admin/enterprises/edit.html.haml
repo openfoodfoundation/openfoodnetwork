@@ -5,9 +5,30 @@
   = @enterprise.name
 
 - content_for :page_actions do
+  %li= select :enterprise, :id, options_for_select(managed_enterprises.collect {|e| [e.name, e.id, {'data-url' => "#{main_app.edit_admin_enterprise_path(e.permalink)}"}]}, @enterprise.id ), {}, {:id => 'enterprise_switcher', :class => 'select2'}
   %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
 
 
 = render 'admin/enterprises/form_data'
 
 = render 'admin/enterprises/ng_form', action: 'edit'
+
+:javascript
+  $(function(){
+    var initial = #{@enterprise.id};
+    var switcher = $('#enterprise_switcher');
+
+    switcher.on('change', function(){
+
+      if($('form.edit_enterprise').hasClass('ng-dirty')) {
+        if(!confirm("There are unsaved changed on this page. Continue without saving?")) {
+          switcher.select2('val', initial);
+          return;
+        }
+      }
+
+      window.location.href = $('#enterprise_switcher option:selected').attr('data-url');
+
+    });
+
+  });
