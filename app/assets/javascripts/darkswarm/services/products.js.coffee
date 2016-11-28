@@ -24,6 +24,10 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
         if product.variants?.length > 0
           prices = (v.price for v in product.variants)
           product.price = Math.min.apply(null, prices)
+          if product.variants.length > 1
+            angular.forEach product.variants, (item, key) ->
+              if product.name != item.name_to_display
+                product.variant_names += item.name_to_display
         product.hasVariants = product.variants?.length > 0
 
         product.primaryImage = product.images[0]?.small_url if product.images
