@@ -102,6 +102,7 @@ en:
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
+    description: Description
 
     whats_this: What's this?
 
@@ -140,6 +141,9 @@ en:
         inherits_properties?: Inherits Properties?
         available_on: Available On
         av_on: "Av. On"
+      properties:
+        property_name: Property Name
+        inherited_property: Inherited Property
 
     variant_overrides:
       index:
