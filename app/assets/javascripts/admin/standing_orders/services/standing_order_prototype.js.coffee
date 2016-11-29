@@ -1,7 +1,7 @@
 angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http, InfoDialog, StatusMessage) ->
   errors: {}
 
-  buildItem: (item, ams_prefix) ->
+  buildItem: (item) ->
     return false unless item.variant_id > 0
     return false unless item.quantity > 0
     data = angular.extend({}, item, { shop_id: @shop_id, schedule_id: @schedule_id })

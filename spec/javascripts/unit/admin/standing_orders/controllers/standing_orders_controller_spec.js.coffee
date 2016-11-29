@@ -31,7 +31,7 @@ describe "StandingOrdersCtrl", ->
     standingOrders = [standingOrder]
 
     beforeEach ->
-      http.expectGET('/admin/standing_orders.json?ams_prefix=index&q%5Bshop_id_eq%5D=3').respond 200, standingOrders
+      http.expectGET('/admin/standing_orders.json?q%5Bshop_id_eq%5D=3').respond 200, standingOrders
       scope.$apply -> scope.shop_id = 3
       http.flush()
 

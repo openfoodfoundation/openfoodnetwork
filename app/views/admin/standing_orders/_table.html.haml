@@ -36,14 +36,14 @@
         &nbsp;
   %tbody.panel-ctrl{ object: 'standingOrder', ng: { repeat: "standingOrder in standingOrders | filter:query" } }
     %tr.standing_order{ :id => "so_{{standingOrder.id}}", class: { even: "'even'", odd: "'odd'" } }
-      %td.customer.text-center{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer.email' } }
-      %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule.name' } }
+      %td.customer.text-center{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer_email' } }
+      %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule_name' } }
       %td.items.panel-toggle.text-center{ name: 'products', ng: { show: 'columns.items.visible' } }
         %h5{ ng: { bind: 'itemCount(standingOrder)' } }
-      %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_on' } }
-      %td.ends_on.text-center{ ng: { show: 'columns.ends_on.visible', bind: '::standingOrder.ends_on' } }
-      %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::standingOrder.payment_method.name' } }
-      %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::standingOrder.shipping_method.name' } }
+      %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_at' } }
+      %td.ends_on.text-center{ ng: { show: 'columns.ends_on.visible', bind: '::standingOrder.ends_at' } }
+      %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[standingOrder.payment_method_id].name' } }
+      %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[standingOrder.shipping_method_id].name' } }
       %td.actions
         %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{standingOrder.edit_path}}'} }
       -#   %a.delete-standing-order.icon-trash.no-text{ ng: { href: '{{standingOrder.delete_path}}'}, data: { method: 'delete', confirm: "Are you sure?" } }
