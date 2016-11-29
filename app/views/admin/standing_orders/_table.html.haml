@@ -3,7 +3,16 @@
   %form{ name: 'standing_order_form', ng: { controller: 'ProductsPanelController' } }
     %div{ style: 'width: 90%; margin: auto;' }
       = render 'products'
-    %button{ ng: { click: 'standingOrder.update()'} } Save
+      %a.button.update.fullwidth{ ng: { class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
+        %span{ ng: {hide: "saved() || saving" } }
+          SAVE
+          %i.icon-save
+        %span{ ng: {show: "saved() && !saving" } }
+          SAVED
+          %i.icon-ok-sign
+        %span{ ng: {show: "saving" } }
+          SAVING
+          %i.icon-refresh
 
 %table.index#standing_orders
   %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }

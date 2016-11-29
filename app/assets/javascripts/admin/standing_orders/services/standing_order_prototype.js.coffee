@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http, InfoDialog, StatusMessage) ->
+angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http, $injector, InfoDialog, StatusMessage) ->
   errors: {}
 
   buildItem: (item) ->
@@ -14,6 +14,7 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
     index = @standing_line_items.indexOf(item)
     if item.id?
       $http.delete("/admin/standing_line_items/#{item.id}").then (response) =>
+        $injector.get('StandingOrders').afterRemoveItem(@id, item.id) if $injector.has('StandingOrders')
         @standing_line_items.splice(index,1)
       , (response) ->
         InfoDialog.open 'error', response.data.errors[0]
@@ -25,6 +26,7 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
     delete @errors[k] for k, v of @errors
     @$save().then (response) =>
       StatusMessage.display 'success', 'Saved'
+      $injector.get('StandingOrders').afterCreate(@id) if $injector.has('StandingOrders')
     , (response) =>
       StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
       angular.extend(@errors, response.data.errors)
@@ -34,6 +36,7 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
     delete @errors[k] for k, v of @errors
     @$update().then (response) =>
       StatusMessage.display 'success', 'Saved'
+      $injector.get('StandingOrders').afterUpdate(@id) if $injector.has('StandingOrders')
     , (response) =>
       StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
       angular.extend(@errors, response.data.errors)
