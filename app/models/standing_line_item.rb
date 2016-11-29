@@ -11,4 +11,6 @@ class StandingLineItem < ActiveRecord::Base
     .where(id: variant_id, schedules: { id: schedule}, exchanges: { incoming: false, receiver_id: shop })
     .any?
   end
+
+  default_scope order('id ASC')
 end
