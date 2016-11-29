@@ -9,8 +9,12 @@ module Admin
     respond_to :json
 
     def index
+
       respond_to do |format|
-        format.html
+        format.html do
+          @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user)
+          @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user)
+        end
         format.json { render_as_json @collection, ams_prefix: params[:ams_prefix] }
       end
     end
@@ -48,7 +52,7 @@ module Admin
     def collection
       if request.format.json?
         permissions.editable_standing_orders.ransack(params[:q]).result
-        .preload([:shop,:customer,:payment_method,:shipping_method,:standing_line_items])
+        .preload([:shop,:customer,:schedule,:standing_line_items, :ship_address, :bill_address])
       else
         StandingOrder.where("1=0")
       end
