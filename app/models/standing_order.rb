@@ -22,6 +22,14 @@ class StandingOrder < ActiveRecord::Base
   validate :standing_line_items_available
   validate :check_associations
 
+  def closed_standing_order_orders
+    standing_order_orders.closed
+  end
+
+  def not_closed_standing_order_orders
+    standing_order_orders.not_closed
+  end
+
   def ends_at_after_begins_at
     if begins_at.present? && ends_at.present? && ends_at <= begins_at
       errors.add(:ends_at, "must be after begins at")
