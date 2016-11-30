@@ -6,7 +6,9 @@ class Api::Admin::StandingLineItemSerializer < ActiveModel::Serializer
   end
 
   def price_estimate
-    if options[:fee_calculator]
+    if object.price_estimate
+      object.price_estimate
+    elsif options[:fee_calculator]
       (object.variant.price + options[:fee_calculator].indexed_fees_for(object.variant)).to_f
     else
       "?"

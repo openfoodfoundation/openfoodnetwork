@@ -217,5 +217,57 @@ module OpenFoodNetwork
         expect(line_items.map(&:quantity)).to eq [4]
       end
     end
+
+    describe "validating price_estimates on standing line items" do
+      let(:params) { { } }
+      let(:form) { StandingOrderForm.new(nil, params) }
+
+      context "when line_item params are present" do
+        before { allow(form).to receive(:price_estimate_for) }
+
+        it "does nothing" do
+          form.send(:validate_price_estimates)
+          expect(form.params[:standing_line_items_attributes]).to be nil
+        end
+      end
+
+      context "when line_item params are present" do
+        before do
+          params[:standing_line_items_attributes] = [ { id: 1, price_estimate: 2.50 }, { id: 2, price_estimate: 3.50 }]
+        end
+
+        context "when no fee calculator is present" do
+          before { allow(form).to receive(:price_estimate_for) }
+
+          it "clears price estimates on all standing line item attributes" do
+            form.send(:validate_price_estimates)
+            attrs = form.params[:standing_line_items_attributes]
+            expect(attrs.first.keys).to_not include :price_estimate
+            expect(attrs.last.keys).to_not include :price_estimate
+            expect(form).to_not have_received(:price_estimate_for)
+          end
+        end
+
+        context "when a fee calculator is present" do
+          let(:variant) { create(:variant) }
+          let(:fee_calculator) { double(:fee_calculator) }
+
+          before do
+            allow(form).to receive(:fee_calculator) { fee_calculator }
+            allow(form).to receive(:price_estimate_for) { 5.30 }
+            params[:standing_line_items_attributes].first[:variant_id] = variant.id
+          end
+
+          it "clears price estimates on standing line item attributes without variant ids" do
+            form.send(:validate_price_estimates)
+            attrs = form.params[:standing_line_items_attributes]
+            expect(attrs.first.keys).to include :price_estimate
+            expect(attrs.last.keys).to_not include :price_estimate
+            expect(attrs.first[:price_estimate]).to eq 5.30
+            expect(form).to have_received(:price_estimate_for).with(variant)
+          end
+        end
+      end
+    end
   end
 end
