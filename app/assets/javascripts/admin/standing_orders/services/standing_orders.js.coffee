@@ -13,11 +13,14 @@ angular.module("admin.standingOrders").factory 'StandingOrders', ($q, StandingOr
         @pristineByID[standingOrder.id] = angular.copy(standingOrder)
 
     afterCreate: (id) ->
+      return unless @byID[id]?
       @pristineByID[id] = angular.copy(@byID[id])
 
     afterUpdate: (id) ->
+      return unless @byID[id]?
       @pristineByID[id] = angular.copy(@byID[id])
 
     afterRemoveItem: (id, deletedItemID) ->
+      return unless @pristineByID[id]?
       for item, i in @pristineByID[id].standing_line_items when item.id == deletedItemID
         @pristineByID[id].standing_line_items.splice(i, 1)
