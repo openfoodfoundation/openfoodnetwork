@@ -3,20 +3,22 @@ class StandingOrderForm
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :standing_order, :params
+  attr_accessor :standing_order, :params, :fee_calculator
 
   delegate :orders, :order_cycles, :bill_address, :ship_address, :standing_line_items, to: :standing_order
   delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :standing_order_orders, to: :standing_order
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
   delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
 
-  def initialize(standing_order, params={})
+  def initialize(standing_order, params={}, fee_calculator=nil)
     @standing_order = standing_order
     @params = params
+    @fee_calculator = fee_calculator
   end
 
   def save
     @standing_order.transaction do
+      validate_price_estimates
       @standing_order.assign_attributes(params)
 
       initialise_orders!
@@ -128,5 +130,26 @@ class StandingOrderForm
 
   def line_items_from_future_and_undated_orders(variant_id)
     Spree::LineItem.where(order_id: future_and_undated_orders, variant_id: variant_id)
+  end
+
+  def validate_price_estimates
+    item_attributes = params[:standing_line_items_attributes]
+    return unless item_attributes.present?
+    if fee_calculator
+      item_attributes.each do |item_attrs|
+        if variant = Spree::Variant.find_by_id(item_attrs[:variant_id])
+          item_attrs[:price_estimate] = price_estimate_for(variant)
+        else
+          item_attrs.delete(:price_estimate)
+        end
+      end
+    else
+      item_attributes.each { |item_attrs| item_attrs.delete(:price_estimate) }
+    end
+  end
+
+  def price_estimate_for(variant)
+    fees = fee_calculator.indexed_fees_for(variant)
+    (variant.price + fees).to_d
   end
 end

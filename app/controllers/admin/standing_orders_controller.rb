@@ -9,7 +9,6 @@ module Admin
     respond_to :json
 
     def index
-
       respond_to do |format|
         format.html do
           @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user)
@@ -25,7 +24,7 @@ module Admin
     end
 
     def create
-      form = StandingOrderForm.new(@standing_order, params[:standing_order])
+      form = StandingOrderForm.new(@standing_order, params[:standing_order], fee_calculator)
       if form.save
         render_as_json @standing_order, fee_calculator: fee_calculator
       else
@@ -34,7 +33,7 @@ module Admin
     end
 
     def update
-      form = StandingOrderForm.new(@standing_order, params[:standing_order])
+      form = StandingOrderForm.new(@standing_order, params[:standing_order], fee_calculator)
       if form.save
         render_as_json @standing_order, ams_prefix: params[:ams_prefix], fee_calculator: fee_calculator
       else
