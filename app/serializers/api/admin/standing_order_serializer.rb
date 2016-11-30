@@ -23,6 +23,7 @@ class Api::Admin::StandingOrderSerializer < ActiveModel::Serializer
   end
 
   def edit_path
+    return '' unless object.id
     edit_admin_standing_order_path(object)
   end
 end
