@@ -1,5 +1,7 @@
 angular.module("admin.orders").directive 'customerSearchOverride', ->
   restrict: 'C'
+  scope:
+    distributorId: '@'
   link: (scope, element, attr) ->
     formatCustomerResult = (customer) ->
       customerTemplate
@@ -9,13 +11,14 @@ angular.module("admin.orders").directive 'customerSearchOverride', ->
 
     element.select2
       placeholder: Spree.translations.choose_a_customer
+      minimumInputLength: 3
       ajax:
         url: '/admin/search/customers.json'
         datatype: 'json'
         data: (term, page) ->
           {
             q: term
-            distributor_id: $('#distributor_id').val()  # modified
+            distributor_id: scope.distributorId  # modified
           }
         results: (data, page) ->
           { results: data }
