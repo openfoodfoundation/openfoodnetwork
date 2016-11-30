@@ -101,11 +101,4 @@ RSpec::Matchers.define :have_select2 do |id, options={}|
       find("a.select2-choice").text == text
     end
   end
-
-  def with_select2_open(from)
-    open_select2 from
-    r = yield
-    close_select2 from
-    r
-  end
 end

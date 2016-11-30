@@ -723,7 +723,16 @@ feature %q{
 
         visit edit_admin_order_cycle_path(oc_new)
         click_button 'Advanced Settings'
-        expect(page).to have_selector('div.loaded')
+
+        # Wait until the order cycles are loaded.
+        # The items in a select2 don't update on ng-model updates.
+        # We need to open and close the dropdown in each wait cycle.
+        # Before you copy this, create a helper.
+        wait_until do
+          with_select2_open '#s2id_oc_id' do
+            page.all("div.select2-drop-active ul.select2-results li", text: oc.name).any?
+          end
+        end
         select2_select oc.name, from: "oc_id"
         page.find('#copy_products').click
         expect(page).to have_content "Copying products and fees"

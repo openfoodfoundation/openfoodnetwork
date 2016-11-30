@@ -7,10 +7,6 @@ angular.module('admin.orderCycles').controller 'AdminAdvancedOrderCyclesCtrl', (
   )
   $scope.StatusMessage = StatusMessage
 
-  # This is only really here to make Capybara wait for the the search box to be populated in tests
-  $scope.selection_loaded = ->
-    if $scope.order_cycles.length > 0 then "loaded" else "loading"
-
   $scope.copyProducts = ->
     StatusMessage.display 'progress', t('admin.order_cycles.edit.copying_products_and_fees')
     if angular.isDefined($scope.order_cycle_to_copy)

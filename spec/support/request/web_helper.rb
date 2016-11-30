@@ -170,6 +170,13 @@ module WebHelper
     page.evaluate_script "jQuery('#{selector}').select2('close');"
   end
 
+  def with_select2_open(from)
+    open_select2 from
+    r = yield
+    close_select2 from
+    r
+  end
+
   private
   def wait_for_ajax
     wait_until { page.evaluate_script("$.active") == 0 }
