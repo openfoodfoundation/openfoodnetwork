@@ -142,7 +142,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
     describe "after selecting an order cycle with products visible" do
       let(:variant1) { create(:variant, product: product, price: 20) }
-      let(:variant2) { create(:variant, product: product, price: 30) }
+      let(:variant2) { create(:variant, product: product, price: 30, display_name: "Badgers") }
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
 
       before do
@@ -171,6 +171,19 @@ feature "As a consumer I want to shop with a distributor", js: true do
         # Product price should be listed as the lesser of these
         page.should have_price "$43.00"
       end
+
+      it "search results return products where the search term matches one of the product's variant names" do
+        visit shop_path
+        select "frogs", :from => "order_cycle_id"
+        fill_in "search", with: "Badg"
+
+        within('div.pad-top') do
+          page.should have_content product.name
+          page.should have_content variant2.display_name
+        end
+
+      end
+
     end
 
     describe "group buy products" do
