@@ -242,6 +242,24 @@ module OpenFoodNetwork
       end
     end
 
+    describe "removing an existing line item" do
+      let(:standing_order) { create(:standing_order_with_items) }
+      let(:sli) { standing_order.standing_line_items.first }
+      let(:variant) { sli.variant}
+      let(:params) { { standing_line_items_attributes: [ { id: sli.id, _destroy: true } ] } }
+      let(:form) { StandingOrderForm.new(standing_order, params) }
+
+      before { form.send(:initialise_orders!) }
+
+      it "removes the line item and updates totals on all orders" do
+        expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+        form.save
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
+        expect(line_items.count).to be 0
+        expect(standing_order.orders.first.reload.total.to_f).to eq 39.98
+      end
+    end
+
     describe "validating price_estimates on standing line items" do
       let(:params) { { } }
       let(:form) { StandingOrderForm.new(nil, params) }

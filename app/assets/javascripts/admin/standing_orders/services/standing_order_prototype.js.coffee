@@ -11,15 +11,7 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
       InfoDialog.open 'error', response.data.errors[0]
 
   removeItem: (item) ->
-    index = @standing_line_items.indexOf(item)
-    if item.id?
-      $http.delete("/admin/standing_line_items/#{item.id}").then (response) =>
-        $injector.get('StandingOrders').afterRemoveItem(@id, item.id) if $injector.has('StandingOrders')
-        @standing_line_items.splice(index,1)
-      , (response) ->
-        InfoDialog.open 'error', response.data.errors[0]
-    else
-      @standing_line_items.splice(index,1)
+    item._destroy = true
 
   create: ->
     StatusMessage.display 'progress', 'Saving...'

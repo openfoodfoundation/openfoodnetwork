@@ -17,9 +17,9 @@ class StandingOrderForm
   end
 
   def save
-    @standing_order.transaction do
+    standing_order.transaction do
       validate_price_estimates
-      @standing_order.assign_attributes(params)
+      standing_order.assign_attributes(params)
 
       initialise_orders!
       remove_obsolete_orders!
@@ -42,6 +42,10 @@ class StandingOrderForm
         end
       end
 
+      standing_line_items.select(&:marked_for_destruction?).each do |sli|
+        updateable_line_items(sli).destroy_all
+      end
+
       future_and_undated_orders.each(&:save)
 
       standing_order.save
@@ -49,8 +53,8 @@ class StandingOrderForm
   end
 
   def json_errors
-    @standing_order.errors.messages.inject({}) do |errors, (k,v)|
-      errors[k] = v.map{ |msg| @standing_order.errors.full_message(k,msg) }
+    standing_order.errors.messages.inject({}) do |errors, (k,v)|
+      errors[k] = v.map{ |msg| standing_order.errors.full_message(k,msg) }
       errors
     end
   end

@@ -14,7 +14,7 @@
         %span= t(:total)
       %th.orders-actions.actions
   %tbody
-    %tr.item{ id: "sli_{{$index}}", ng: { repeat: 'item in standingOrder.standing_line_items', class: { even: 'even', odd: 'odd' } } }
+    %tr.item{ id: "sli_{{$index}}", ng: { repeat: "item in standingOrder.standing_line_items | filter:{ _destroy: '!true' }", class: { even: 'even', odd: 'odd' } } }
       %td.description {{ item.description }}
       %td.price.align-center {{ item.price_estimate | currency }}
       %td.qty
