@@ -210,11 +210,35 @@ module OpenFoodNetwork
       let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 4} ] } }
       let(:form) { StandingOrderForm.new(standing_order, params) }
 
-      before { form.save }
+      before { form.send(:initialise_orders!) }
 
-      it "updates the quantity on all orders" do
+      it "updates the line_item quantities and totals on all orders" do
+        expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+        form.save
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
         expect(line_items.map(&:quantity)).to eq [4]
+        expect(standing_order.orders.first.reload.total.to_f).to eq 119.94
+      end
+    end
+
+    describe "adding a new line item" do
+      let!(:standing_order) { create(:standing_order_with_items) }
+      let!(:variant) { create(:variant) }
+      let!(:order_cycle) { standing_order.schedule.order_cycles.first }
+      let!(:params) { { standing_line_items_attributes: [ { id: nil, variant_id: variant.id, quantity: 1} ] } }
+      let!(:form) { StandingOrderForm.new(standing_order, params) }
+
+      before do
+        order_cycle.variants << variant
+        form.send(:initialise_orders!)
+      end
+
+      it "add the line item and updates the total on all orders" do
+        expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+        form.save
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
+        expect(line_items.map(&:quantity)).to eq [1]
+        expect(standing_order.orders.first.reload.total.to_f).to eq 79.96
       end
     end
 
