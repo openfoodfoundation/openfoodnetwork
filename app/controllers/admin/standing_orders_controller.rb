@@ -51,7 +51,7 @@ module Admin
     def collection
       if request.format.json?
         permissions.editable_standing_orders.ransack(params[:q]).result
-        .preload([:shop,:customer,:schedule,:standing_line_items, :ship_address, :bill_address])
+        .preload([:shop,:customer,:schedule,:standing_line_items,:ship_address,:bill_address,standing_order_orders: {order: :order_cycle}])
       else
         StandingOrder.where("1=0")
       end
