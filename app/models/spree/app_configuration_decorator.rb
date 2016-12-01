@@ -4,6 +4,10 @@ Spree::AppConfiguration.class_eval do
   # we can allow to be modified in the UI by adding appropriate form
   # elements to existing or new configuration pages.
 
+  # Terms of Service Preferences
+  preference :enterprises_require_tos, :boolean, default: false
+  preference :enterprise_tos_link, :string, default: "/Terms-of-service.pdf"
+
   # Tax Preferences
   preference :products_require_tax_category, :boolean, default: false
   preference :shipping_tax_rate, :decimal, default: 0
