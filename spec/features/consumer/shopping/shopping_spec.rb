@@ -172,7 +172,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         page.should have_price "$43.00"
       end
 
-      it "search results return products where the search term matches one of the product's variant names" do
+      it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
         select "frogs", :from => "order_cycle_id"
         fill_in "search", with: "Badg"
