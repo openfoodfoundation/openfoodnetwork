@@ -32,3 +32,11 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
     , (response) =>
       StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
       angular.extend(@errors, response.data.errors)
+
+
+  cancelOrder: (order) ->
+    if order.id?
+      $http.put("/admin/standing_order_orders/#{order.id}/cancel").then (response) =>
+        angular.extend(order,response.data)
+      , (response) ->
+        InfoDialog.open 'error', response.data.errors[0]

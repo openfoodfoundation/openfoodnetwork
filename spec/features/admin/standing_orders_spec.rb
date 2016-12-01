@@ -13,9 +13,16 @@ feature 'Standing Orders' do
     before { quick_login_as user }
 
     context 'listing standing orders' do
-      let!(:standing_order) { create(:standing_order, shop: shop) }
-      let!(:standing_order2) { create(:standing_order, shop: shop2) }
-      let!(:standing_order_unmanaged) { create(:standing_order, shop: shop_unmanaged) }
+      let!(:standing_order) { create(:standing_order_with_items, shop: shop) }
+      let!(:standing_order2) { create(:standing_order_with_items, shop: shop2) }
+      let!(:standing_order_unmanaged) { create(:standing_order_with_items, shop: shop_unmanaged) }
+
+      before do
+        # initialise standing orders
+        StandingOrderForm.new(standing_order).send(:initialise_orders!)
+        StandingOrderForm.new(standing_order2).send(:initialise_orders!)
+        StandingOrderForm.new(standing_order_unmanaged).send(:initialise_orders!)
+      end
 
       it "passes the smoke test" do
         visit spree.admin_path
@@ -59,6 +66,30 @@ feature 'Standing Orders' do
         first("div#columns-dropdown div.menu div.menu_item", text: "Customer").click
         expect(page).to_not have_selector "th.customer"
         expect(page).to_not have_content standing_order.customer.email
+
+        # Viewing Orders
+        within "tr#so_#{standing_order.id}" do
+          expect(page).to have_selector "td.orders.panel-toggle", text: 1
+          page.find("td.orders.panel-toggle").trigger('click')
+        end
+
+        # save_screenshot '/Users/rob/Desktop/ss1.png'
+        # expect(page).to have_selector ".standing-order-orders"
+
+        within ".standing-order-orders" do
+          expect(page).to have_selector "tr.standing_order_order", count: 1
+
+          # Cancelling an order
+          standing_order_order = standing_order.standing_order_orders.first
+          within "tr#o_#{standing_order_order.id}" do
+            expect(page).to_not have_content 'CANCELLED'
+            accept_alert 'Are you sure?' do
+              find("a.cancel-order").trigger('click')
+            end
+            expect(page).to have_content 'CANCELLED'
+            expect(standing_order_order.reload.cancelled_at).to be_within(5.seconds).of Time.now
+          end
+        end
       end
     end
 

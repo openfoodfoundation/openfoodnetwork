@@ -33,8 +33,8 @@
         = t('admin.shipping_method')
       %th.actions
         &nbsp;
-  %tbody.panel-ctrl{ object: 'standingOrder', ng: { repeat: "standingOrder in standingOrders | filter:query" } }
-    %tr.standing_order{ :id => "so_{{standingOrder.id}}", class: { even: "'even'", odd: "'odd'" } }
+  %tbody.panel-ctrl{ object: 'standingOrder', ng: { repeat: "standingOrder in standingOrders | filter:query track by standingOrder.id" } }
+    %tr.standing_order{ :id => "so_{{standingOrder.id}}", ng: { class: { even: "'even'", odd: "'odd'" } } }
       %td.customer.text-center{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer_email' } }
       %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule_name' } }
       %td.items.panel-toggle.text-center{ name: 'products', ng: { show: 'columns.items.visible' } }
