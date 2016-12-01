@@ -35,6 +35,15 @@ class StandingOrderForm
         updateable_line_items(sli).update_all(quantity: sli.quantity) # Avoid validation
       end
 
+      new_standing_line_items.each do |sli|
+        future_and_undated_orders.each do |order|
+          line_item = order.line_items.create(variant_id: sli.variant_id, quantity: 0)
+          line_item.update_attribute(:quantity, sli.quantity) # Avoid validation
+        end
+      end
+
+      future_and_undated_orders.each(&:save)
+
       standing_order.save
     end
   end
@@ -50,7 +59,7 @@ class StandingOrderForm
 
   def future_and_undated_orders
     return @future_and_undated_orders unless @future_and_undated_orders.nil?
-    @future_and_undated_orders = orders.joins(:order_cycle).merge(OrderCycle.not_closed)
+    @future_and_undated_orders = orders.joins(:order_cycle).merge(OrderCycle.not_closed).readonly(false)
   end
 
   def create_order_for(order_cycle_id)
@@ -121,7 +130,11 @@ class StandingOrderForm
   end
 
   def changed_standing_line_items
-    standing_line_items.select(&:changed?)
+    standing_line_items.select{ |sli| sli.changed? && sli.persisted? }
+  end
+
+  def new_standing_line_items
+    standing_line_items.select(&:new_record?)
   end
 
   def updateable_line_items(sli)
