@@ -95,30 +95,4 @@ describe Admin::StandingLineItemsController, type: :controller do
       end
     end
   end
-
-  describe "destroy" do
-    let!(:standing_order) { create(:standing_order_with_items) }
-    let!(:item) { standing_order.standing_line_items.first }
-    let!(:user) { create(:user) }
-    let(:params) { { format: :json, id: item.id } }
-
-    context 'as an enterprise user' do
-      before { allow(controller).to receive(:spree_current_user) { user } }
-
-      context "that does not manage the relevant shop" do
-        it "returns an error" do
-          spree_post :destroy, params
-          expect(response).to redirect_to spree.unauthorized_path
-        end
-      end
-
-      context 'that manages that relevant shop' do
-        before { standing_order.shop.update_attributes(owner: user) }
-
-        it 'removes the item' do
-          expect{ spree_post :destroy, params }.to change{standing_order.standing_line_items.count}.by(-1)
-        end
-      end
-    end
-  end
 end

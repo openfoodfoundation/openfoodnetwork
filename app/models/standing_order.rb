@@ -14,7 +14,8 @@ class StandingOrder < ActiveRecord::Base
   alias_attribute :billing_address, :bill_address
   alias_attribute :shipping_address, :ship_address
 
-  accepts_nested_attributes_for :standing_line_items, :bill_address, :ship_address
+  accepts_nested_attributes_for :standing_line_items, allow_destroy: true
+  accepts_nested_attributes_for :bill_address, :ship_address
 
   validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method
   validates_presence_of :billing_address, :shipping_address, :begins_at

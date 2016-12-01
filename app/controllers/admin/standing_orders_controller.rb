@@ -79,7 +79,7 @@ module Admin
     def wrap_nested_attrs
       if params[:standing_line_items].is_a? Array
         attributes = params[:standing_line_items].map do |sli|
-          sli.slice(*StandingLineItem.attribute_names)
+          sli.slice(*StandingLineItem.attribute_names + ["_destroy"])
         end
         params[:standing_order][:standing_line_items_attributes] = attributes
       end

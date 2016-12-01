@@ -129,7 +129,7 @@ feature 'Standing Orders' do
 
         # Deleting the existing product and adding a new product
         within 'table#standing-line-items tr.item', match: :first do
-          accept_alert "Are you sure?" do find("a.delete-item").click end
+          find("a.delete-item").click
         end
         targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 3
@@ -221,7 +221,7 @@ feature 'Standing Orders' do
 
           # Remove variant1 from the standing order
           within '#sli_0', match: :first do
-            accept_alert "Are you sure?" do find("a.delete-item").click end
+            find("a.delete-item").click
           end
 
           # Total should be $35.25
