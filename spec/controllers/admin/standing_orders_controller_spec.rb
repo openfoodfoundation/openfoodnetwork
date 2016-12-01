@@ -16,7 +16,7 @@ describe Admin::StandingOrdersController, type: :controller do
       let(:params) { { format: :html } }
 
       context 'as a regular user' do
-        it 'renders the index page' do
+        it 'redirects to unauthorized' do
           spree_get :index, params
           expect(response).to redirect_to spree.unauthorized_path
         end
@@ -38,7 +38,7 @@ describe Admin::StandingOrdersController, type: :controller do
       let(:params) { { format: :json } }
 
       context 'as a regular user' do
-        it 'renders the index page' do
+        it 'redirects to unauthorized' do
           spree_get :index, params
           expect(response).to redirect_to spree.unauthorized_path
         end
