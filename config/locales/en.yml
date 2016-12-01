@@ -1341,6 +1341,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   shops_signup_help_text: You need a better return. You need new buyers and logistics partners. You need your story told across wholesale, retail, and the kitchen table.
   shops_signup_detail: Here's the detail.
 
+  orders: Orders
   orders_fees: Fees...
   orders_edit_title: Shopping Cart
   orders_edit_headline: Your shopping cart

@@ -1,11 +1,13 @@
 = render 'products_panel'
+= render 'orders_panel'
 
 %table.index#standing_orders
   %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }
   %col.schedule{ width: "15%", 'ng-show' => 'columns.schedule.visible' }
   %col.items{ width: "15%", 'ng-show' => 'columns.items.visible' }
-  %col.begins_on{ width: "15%", 'ng-show' => 'columns.begins_on.visible' }
-  %col.ends_on{ width: "15%", 'ng-show' => 'columns.ends_on.visible' }
+  %col.orders{ width: "15%", 'ng-show' => 'columns.orders.visible' }
+  %col.begins_on{ width: "10%", 'ng-show' => 'columns.begins_on.visible' }
+  %col.ends_on{ width: "10%", 'ng-show' => 'columns.ends_on.visible' }
   %col.payment_method{ width: "20%", 'ng-show' => 'columns.payment_method.visible' }
   %col.shipping_method{ width: "20%", 'ng-show' => 'columns.shipping_method.visible' }
   %col.actions{ width: "5%" }
@@ -19,6 +21,8 @@
         = t('admin.schedule')
       %th.items{ ng: { show: 'columns.items.visible',  } }
         = t('admin.items')
+      %th.orders{ ng: { show: 'columns.orders.visible',  } }
+        = t('orders')
       %th.begins_on{ ng: { show: 'columns.begins_on.visible',  } }
         = t('admin.begins_on')
       %th.ends_on{ ng: { show: 'columns.ends_on.visible',  } }
@@ -35,6 +39,8 @@
       %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule_name' } }
       %td.items.panel-toggle.text-center{ name: 'products', ng: { show: 'columns.items.visible' } }
         %h5{ ng: { bind: 'itemCount(standingOrder)' } }
+      %td.orders.panel-toggle.text-center{ name: 'orders', ng: { show: 'columns.orders.visible' } }
+        %h5{ ng: { bind: 'standingOrder.not_closed_standing_order_orders.length + standingOrder.closed_standing_order_orders.length' } }
       %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_at' } }
       %td.ends_on.text-center{ ng: { show: 'columns.ends_on.visible', bind: '::standingOrder.ends_at' } }
       %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[standingOrder.payment_method_id].name' } }
@@ -43,4 +49,4 @@
         %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{standingOrder.edit_path}}'} }
       -#   %a.delete-standing-order.icon-trash.no-text{ ng: { href: '{{standingOrder.delete_path}}'}, data: { method: 'delete', confirm: "Are you sure?" } }
 
-    %tr.panel-row{ object: "standingOrder", panels: "{products: 'standing_order_products'}" }
+    %tr.panel-row{ object: "standingOrder", panels: "{products: 'standing_order_products', orders: 'standing_order_orders'}" }
