@@ -11,6 +11,7 @@ module Admin
     def index
       respond_to do |format|
         format.html do
+          @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
           @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user)
           @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user)
         end
