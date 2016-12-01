@@ -1,24 +1,25 @@
 %script{ type: "text/ng-template", id: "admin/panels/standing_order_orders.html" }
-  %form{ name: 'standing_order_form', ng: { controller: 'OrdersPanelController' } }
-    %div{ style: 'width: 90%; margin: auto;' }
-      %table
-        %col{ style: 'width: 20%' }
-        %col{ style: 'width: 20%' }
-        %col{ style: 'width: 20%' }
-        %col{ style: 'width: 20%' }
-        %col{ style: 'width: 20%' }
-        %thead
-          %th Number
-          %th OC
-          %th Status
-          %th Total
-          %th.actions
-        %tbody
-          %tr{ ng: { repeat: 'order in standingOrder.not_closed_standing_order_orders' } }
-            %td
-              %a{ ng: { href: "{{::order.edit_path}}", bind: '::order.number' }, target: '_blank' }
-            %td{ ng: { bind: '::orderCyclesByID[order.order_cycle_id].name' } }
-            %td{ ng: { bind: '::order.status' } }
-            %td{ ng: { bind: '::order.total' } }
-            %td.actions
-              &nbsp;
+  %form.margin-top-30{ name: 'standing_order_form', ng: { controller: 'OrdersPanelController' } }
+    .row.standing-order-orders
+      .fourteen.columns.offset-by-one
+        %table
+          %col{ style: 'width: 25%' }
+          %col{ style: 'width: 25%' }
+          %col{ style: 'width: 25%' }
+          %col{ style: 'width: 15%' }
+          %col{ style: 'width: 10%' }
+          %thead
+            %th= t('admin.standing_orders.orders.number')
+            %th= t('admin.order_cycle')
+            %th= t('admin.standing_orders.orders.status')
+            %th= t('total')
+            %th.actions
+          %tbody
+            %tr.standing_order_order{ :id => "o_{{order.id}}", ng: { repeat: 'order in standingOrder.not_closed_standing_order_orders' } }
+              %td
+                %a{ ng: { href: "{{::order.edit_path}}", bind: '::order.number' }, target: '_blank' }
+              %td{ ng: { bind: '::orderCyclesByID[order.order_cycle_id].name' } }
+              %td.text-center{ ng: { bind: 'order.status' } }
+              %td.text-center{ ng: { bind: 'order.total' } }
+              %td.actions
+                %a.cancel-order.icon-remove.no-text{ href: 'javascript:void(0)', ng: { click: "cancelOrder(order)" }, 'ofn-with-tip' => t(:cancel_order) }

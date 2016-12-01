@@ -792,6 +792,9 @@ en:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
+      orders:
+        number: Number
+        status: Status
 
     stripe_connect_settings:
       edit:

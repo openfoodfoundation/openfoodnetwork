@@ -184,6 +184,10 @@ Openfoodnetwork::Application.routes.draw do
     resources :standing_line_items, only: [], format: :json do
       post :build, on: :collection
     end
+
+    resources :standing_order_orders, only: [], format: :json do
+      put :cancel, on: :member
+    end
   end
 
   namespace :api do
