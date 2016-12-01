@@ -17,7 +17,7 @@
           %tr{ ng: { repeat: 'order in standingOrder.not_closed_standing_order_orders' } }
             %td
               %a{ ng: { href: "{{::order.edit_path}}", bind: '::order.number' }, target: '_blank' }
-            %td{ ng: { bind: '::OrderCycles.byID[order.order_cycle_id].name' } }
+            %td{ ng: { bind: '::orderCyclesByID[order.order_cycle_id].name' } }
             %td{ ng: { bind: '::order.status' } }
             %td{ ng: { bind: '::order.total' } }
             %td.actions
