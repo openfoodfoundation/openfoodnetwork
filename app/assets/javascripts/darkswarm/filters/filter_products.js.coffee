@@ -5,4 +5,4 @@ Darkswarm.filter 'products', (Matcher) ->
     return products if text == ""
     products.filter (product) =>
       propertiesToMatch = [product.name, product.variant_names, product.supplier.name, product.primary_taxon.name]
-      Matcher.match propertiesToMatch, text
+      Matcher.matchBeginning propertiesToMatch, text
