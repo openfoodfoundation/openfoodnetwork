@@ -5,6 +5,10 @@ angular.module("admin.standingOrders").controller "OrdersPanelController", ($sco
     if confirm(t('are_you_sure'))
       $scope.standingOrder.cancelOrder(order)
 
+  $scope.resumeOrder = (order) ->
+    if confirm(t('are_you_sure'))
+      $scope.standingOrder.resumeOrder(order)
+
   $scope.orderCycleName = (id) ->
     OrderCycles.byID[id].name
 
