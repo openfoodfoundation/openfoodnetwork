@@ -12,8 +12,6 @@ feature "Registration", js: true do
       visit registration_path
 
       expect(Spree::Config.enterprises_require_tos).to eq false
-      Spree::Config[:enterprises_require_tos].should be false
-
       expect(URI.parse(current_url).path).to eq registration_auth_path
 
       page.has_selector? "dd", text: "Login"
@@ -157,14 +155,6 @@ feature "Registration", js: true do
       end
     end
     expect(page).to have_content content
-  end
-
-  def wait_for(element)
-    using_wait_time 0.5 do
-      10.times do
-        break if page.has_selector? element
-      end
-    end
   end
 
   def click_and_ensure(type, text, check)
