@@ -420,12 +420,14 @@ feature %q{
     end
 
     context "using date restriction controls" do
-      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: (Date.current - 8).strftime("%F %T") ) }
-      let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: (Date.current + 2).strftime("%F %T") ) }
+      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.today - 7.days - 1.second) }
+      let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.today - 7.days) }
+      let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day) }
+      let!(:o4) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day + 1.second) }
       let!(:li1) { create(:line_item, order: o1, :quantity => 1 ) }
       let!(:li2) { create(:line_item, order: o2, :quantity => 2 ) }
       let!(:li3) { create(:line_item, order: o3, :quantity => 3 ) }
+      let!(:li4) { create(:line_item, order: o4, :quantity => 4 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -433,29 +435,31 @@ feature %q{
 
       it "displays date fields for filtering orders, with default values set" do
         # use Date.current since Date.today is without timezone
-        today = Date.current
+        today = Time.zone.today
         one_week_ago = today.prev_day(7).strftime("%F")
-        tonight = today.next_day.strftime("%F")
         expect(page).to have_field "start_date_filter", with: one_week_ago
-        expect(page).to have_field "end_date_filter", with: tonight
+        expect(page).to have_field "end_date_filter", with: today.strftime("%F")
       end
 
       it "only loads line items whose orders meet the date restriction criteria" do
         expect(page).to have_no_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
-        expect(page).to have_no_selector "tr#li_#{li3.id}"
+        expect(page).to have_selector "tr#li_#{li3.id}"
+        expect(page).to have_no_selector "tr#li_#{li4.id}"
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
-        fill_in "start_date_filter", :with => (Date.current - 9).strftime("%F")
-        expect(page).to have_selector "tr#li_#{li1.id}"
-        expect(page).to have_selector "tr#li_#{li2.id}"
-        expect(page).to have_no_selector "tr#li_#{li3.id}"
-
-        fill_in "end_date_filter", :with => (Date.current + 3).strftime("%F")
+        fill_in "start_date_filter", :with => (Time.zone.today - 8.days).strftime("%F")
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
+        expect(page).to have_no_selector "tr#li_#{li4.id}"
+
+        fill_in "end_date_filter", :with => (Time.zone.today + 1.day).strftime("%F")
+        expect(page).to have_selector "tr#li_#{li1.id}"
+        expect(page).to have_selector "tr#li_#{li2.id}"
+        expect(page).to have_selector "tr#li_#{li3.id}"
+        expect(page).to have_selector "tr#li_#{li4.id}"
       end
 
       context "when the form is dirty" do

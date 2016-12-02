@@ -3,8 +3,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.RequestMonitor = RequestMonitor
   $scope.filteredLineItems = []
   $scope.confirmDelete = true
-  $scope.startDate = formatDate daysFromToday -7
-  $scope.endDate = formatDate daysFromToday 1
+  $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
+  $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
   $scope.bulkActions = [ { name: t("admin.orders.bulk_management.actions_delete"), callback: 'deleteLineItems' } ]
   $scope.selectedUnitsProduct = {}
   $scope.selectedUnitsVariant = {}
@@ -22,15 +22,15 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.refreshData = ->
     unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == 0
-      $scope.startDate = OrderCycles.byID[$scope.orderCycleFilter].first_order
-      $scope.endDate = OrderCycles.byID[$scope.orderCycleFilter].last_order
+      $scope.startDate = moment(OrderCycles.byID[$scope.orderCycleFilter].first_order).format('YYYY-MM-DD')
+      $scope.endDate = moment(OrderCycles.byID[$scope.orderCycleFilter].last_order).startOf('day').format('YYYY-MM-DD')
 
-    RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gt]": "#{parseDate($scope.startDate)}", "q[completed_at_lt]": "#{parseDate($scope.endDate)}")
-    RequestMonitor.load $scope.lineItems = LineItems.index("q[order][state_not_eq]": "canceled", "q[order][completed_at_not_null]": "true", "q[order][completed_at_gt]": "#{parseDate($scope.startDate)}", "q[order][completed_at_lt]": "#{parseDate($scope.endDate)}")
+    RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gteq]": "#{moment($scope.startDate).format()}", "q[completed_at_lt]": "#{moment($scope.endDate).add(1,'day').format()}")
+    RequestMonitor.load $scope.lineItems = LineItems.index("q[order][state_not_eq]": "canceled", "q[order][completed_at_not_null]": "true", "q[order][completed_at_gteq]": "#{moment($scope.startDate).format()}", "q[order][completed_at_lt]": "#{moment($scope.endDate).add(1,'day').format()}")
 
     unless $scope.initialized
       RequestMonitor.load $scope.distributors = Enterprises.index(action: "visible", ams_prefix: "basic", "q[sells_in][]": ["own", "any"])
-      RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{daysFromToday(-90)}")
+      RequestMonitor.load $scope.orderCycles = OrderCycles.index(ams_prefix: "basic", as: "distributor", "q[orders_close_at_gt]": "#{moment().subtract(90,'days').format()}")
       RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
     RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise]).then ->
@@ -142,31 +142,3 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if lineItem.quantity > 0
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
-
-daysFromToday = (days) ->
-  now = new Date
-  now.setHours(0)
-  now.setMinutes(0)
-  now.setSeconds(0)
-  now.setDate( now.getDate() + days )
-  now
-
-formatDate = (date) ->
-  year = date.getFullYear()
-  month = twoDigitNumber date.getMonth() + 1
-  day = twoDigitNumber date.getDate()
-  return year + "-" + month + "-" + day
-
-formatTime = (date) ->
-  hours = twoDigitNumber date.getHours()
-  mins = twoDigitNumber date.getMinutes()
-  secs = twoDigitNumber date.getSeconds()
-  return hours + ":" + mins + ":" + secs
-
-parseDate = (dateString) ->
-  new Date(Date.parse(dateString))
-
-twoDigitNumber = (number) ->
-  twoDigits =  "" + number
-  twoDigits = ("0" + number) if number < 10
-  twoDigits

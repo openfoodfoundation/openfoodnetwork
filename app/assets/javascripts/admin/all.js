@@ -20,6 +20,7 @@
 //= require admin/spree_paypal_express
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ng-tags-input.min.js
+//= require moment
 //= require angular-rails-templates
 //= require_tree ../templates/admin
 //= require ./admin_ofn
