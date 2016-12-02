@@ -24,4 +24,13 @@ class StandingOrderOrder < ActiveRecord::Base
       true
     end
   end
+
+  def resume
+    return false unless order.order_cycle.orders_close_at > Time.zone.now
+    transaction do
+      self.update_column(:cancelled_at, nil)
+      order.send('resume')
+      true
+    end
+  end
 end
