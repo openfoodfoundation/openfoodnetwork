@@ -23,9 +23,13 @@ describe "LineItemsCtrl", ->
     LineItems = _LineItems_
     OrderCycles = _OrderCycles_
     VariantUnitManager = _VariantUnitManager_
-    spyOn(window, "daysFromToday").and.returnValue "SomeDate"
-    spyOn(window, "formatDate").and.returnValue "SomeDate"
-    spyOn(window, "parseDate").and.returnValue "SomeDate"
+    momentMock = jasmine.createSpyObj('moment', ['format', 'startOf', 'endOf', 'subtract', 'add'])
+    spyOn(window,"moment").and.returnValue momentMock
+    momentMock.startOf.and.returnValue momentMock
+    momentMock.endOf.and.returnValue momentMock
+    momentMock.subtract.and.returnValue momentMock
+    momentMock.add.and.returnValue momentMock
+    momentMock.format.and.returnValue "SomeDate"
 
     supplier = { id: 1, name: "Supplier" }
     distributor = { id: 5, name: "Distributor" }
@@ -33,8 +37,8 @@ describe "LineItemsCtrl", ->
     order = { id: 9, order_cycle: { id: 4 }, distributor: { id: 5 }, number: "R123456" }
     lineItem = { id: 7, quantity: 3, order: { id: 9 }, supplier: { id: 1 } }
 
-    httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_gt%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond [order]
-    httpBackend.expectGET("/admin/bulk_line_items.json?q%5Border%5D%5Bcompleted_at_gt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
+    httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_gteq%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond [order]
+    httpBackend.expectGET("/admin/bulk_line_items.json?q%5Border%5D%5Bcompleted_at_gteq%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
     httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bis_primary_producer_eq%5D=true").respond [supplier]
@@ -332,34 +336,3 @@ describe "LineItemsCtrl", ->
           ]
           scope.updateOnQuantity(scope.filteredLineItems[0])
           expect(scope.filteredLineItems[0].final_weight_volume).toEqual 1000
-
-
-describe "Auxiliary functions", ->
-  describe "getting a zero filled two digit number", ->
-    it "returns the number as a string if its value is greater than or equal to 10", ->
-      expect(twoDigitNumber(10)).toEqual "10"
-      expect(twoDigitNumber(15)).toEqual "15"
-      expect(twoDigitNumber(99)).toEqual "99"
-
-    it "returns the number formatted as a zero filled string if its value is less than 10", ->
-      expect(twoDigitNumber(0)).toEqual "00"
-      expect(twoDigitNumber(1)).toEqual "01"
-      expect(twoDigitNumber(9)).toEqual "09"
-
-  describe "formatting dates and times", ->
-    date = null
-
-    beforeEach ->
-      date = new Date
-      date.setYear(2010)
-      date.setMonth(4) # Zero indexed, so 4 is May
-      date.setDate(15)
-      date.setHours(5)
-      date.setMinutes(10)
-      date.setSeconds(30)
-
-    it "returns a date formatted as yyyy-mm-dd", ->
-      expect(formatDate(date)).toEqual "2010-05-15"
-
-    it "returns a time formatted as hh-MM:ss", ->
-      expect(formatTime(date)).toEqual "05:10:30"
