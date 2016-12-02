@@ -12,8 +12,8 @@ describe StandingOrderOrder, type: :model do
       context "and the order has already been completed" do
         let(:order) { create(:completed_order_with_totals, order_cycle: order_cycle) }
 
-        it "sets cancelled_at to the current time, and cancels the order" do
-          standing_order_order.cancel
+        it "returns true and sets cancelled_at to the current time, and cancels the order" do
+          expect(standing_order_order.cancel).to be true
           expect(standing_order_order.reload.cancelled_at).to be_within(5.seconds).of Time.now
           expect(order.reload.state).to eq 'canceled'
         end
@@ -22,8 +22,8 @@ describe StandingOrderOrder, type: :model do
       context "and the order has not already been completed" do
         let(:order) { create(:order, order_cycle: order_cycle) }
 
-        it "just sets cancelled at to the current time" do
-          standing_order_order.cancel
+        it "returns true and sets cancelled at to the current time" do
+          expect(standing_order_order.cancel).to be true
           expect(standing_order_order.reload.cancelled_at).to be_within(5.seconds).of Time.now
           expect(order.reload.state).to eq 'cart'
         end
@@ -34,8 +34,8 @@ describe StandingOrderOrder, type: :model do
       let(:order) { create(:order, order_cycle: order_cycle) }
 
       before { order_cycle.update_attributes(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
-      it "does nothing" do
-        standing_order_order.cancel
+      it "returns false and does nothing" do
+        expect(standing_order_order.cancel).to eq false
         expect(standing_order_order.reload.cancelled_at).to be nil
         expect(order.reload.state).to eq 'cart'
       end

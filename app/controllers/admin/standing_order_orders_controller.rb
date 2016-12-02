@@ -9,7 +9,7 @@ module Admin
         end
       else
         respond_with(@standing_order_order) do |format|
-          format.json { render json: { errors: @standing_order_order.errors.full_messages }, status: :unprocessable_entity }
+          format.json { render json: { errors: [t(:could_not_cancel_the_order)] }, status: :unprocessable_entity }
         end
       end
     end

@@ -6,7 +6,8 @@ describe Admin::StandingOrderOrdersController, type: :controller do
   describe 'cancel' do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
-    let!(:order) { create(:order, order_cycle: create(:simple_order_cycle)) }
+    let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
+    let!(:order) { create(:order, order_cycle: order_cycle) }
     let!(:standing_order) { create(:standing_order_with_items, shop: shop, orders: [order]) }
     let!(:standing_order_order) { standing_order.standing_order_orders.first }
 
@@ -38,12 +39,24 @@ describe Admin::StandingOrderOrdersController, type: :controller do
         context "with authorisation" do
           before { shop.update_attributes(owner: user) }
 
-          it 'renders the cancelled standing_order_order as json' do
-            spree_get :cancel, params
-            json_response = JSON.parse(response.body)
-            expect(json_response['status']).to eq "cancelled"
-            expect(json_response['id']).to eq standing_order_order.id
-            expect(standing_order_order.reload.cancelled_at).to be_within(5.seconds).of Time.now
+          context "when cancellation succeeds" do
+            it 'renders the cancelled standing_order_order as json' do
+              spree_get :cancel, params
+              json_response = JSON.parse(response.body)
+              expect(json_response['status']).to eq "cancelled"
+              expect(json_response['id']).to eq standing_order_order.id
+              expect(standing_order_order.reload.cancelled_at).to be_within(5.seconds).of Time.now
+            end
+          end
+
+          context "when cancellation fails" do
+            before { order_cycle.update_attributes(orders_close_at: 1.day.ago) }
+
+            it "shows an error" do
+              spree_get :cancel, params
+              json_response = JSON.parse(response.body)
+              expect(json_response['errors']).to eq ['Could not cancel the order']
+            end
           end
         end
       end
