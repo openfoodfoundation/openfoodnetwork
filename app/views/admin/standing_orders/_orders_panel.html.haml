@@ -4,8 +4,8 @@
       .fourteen.columns.offset-by-one
         %table
           %col{ style: 'width: 25%' }
-          %col{ style: 'width: 25%' }
-          %col{ style: 'width: 25%' }
+          %col{ style: 'width: 30%' }
+          %col{ style: 'width: 20%' }
           %col{ style: 'width: 15%' }
           %col{ style: 'width: 10%' }
           %thead
@@ -18,7 +18,9 @@
             %tr.standing_order_order{ :id => "o_{{order.id}}", ng: { repeat: 'order in standingOrder.not_closed_standing_order_orders' } }
               %td
                 %a{ ng: { href: "{{::order.edit_path}}", bind: '::order.number' }, target: '_blank' }
-              %td{ ng: { bind: '::orderCyclesByID[order.order_cycle_id].name' } }
+              %td
+                %div{ ng: { bind: "::orderCycleName(order.order_cycle_id)" } }
+                %div{ ng: { bind: "::orderCycleCloses(order.order_cycle_id)" } }
               %td.text-center{ ng: { bind: 'order.status' } }
               %td.text-center{ ng: { bind: 'order.total' } }
               %td.actions
