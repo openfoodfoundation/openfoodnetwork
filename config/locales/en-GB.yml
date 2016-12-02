@@ -11,7 +11,7 @@ en-GB:
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
     enterprise_confirmations:
       enterprise:
-        confirmed: Thankyou, your email address has been confirmed.
+        confirmed: Thank you, your email address has been confirmed.
         not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
         confirmation_sent: "Confirmation email sent!"
         confirmation_not_sent: "Could not send a confirmation email."
@@ -855,7 +855,7 @@ en-GB:
   spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
   spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
   spree_admin_overview_action_required: "Action Required"
-  spree_admin_overview_check_your_inbox: "Please check you inbox for further instructions. Thanks!"
+  spree_admin_overview_check_your_inbox: "Please check your inbox for further instructions. Thanks!"
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   your_profil_live: "Your profile live"
