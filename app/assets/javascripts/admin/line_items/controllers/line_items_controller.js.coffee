@@ -22,8 +22,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.refreshData = ->
     unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == 0
-      $scope.startDate = moment(OrderCycles.byID[$scope.orderCycleFilter].first_order).format('YYYY-MM-DD')
-      $scope.endDate = moment(OrderCycles.byID[$scope.orderCycleFilter].last_order).startOf('day').format('YYYY-MM-DD')
+      $scope.startDate = moment(OrderCycles.byID[$scope.orderCycleFilter].orders_open_at).format('YYYY-MM-DD')
+      $scope.endDate = moment(OrderCycles.byID[$scope.orderCycleFilter].orders_close_at).startOf('day').format('YYYY-MM-DD')
 
     RequestMonitor.load $scope.orders = Orders.index("q[state_not_eq]": "canceled", "q[completed_at_not_null]": "true", "q[completed_at_gteq]": "#{moment($scope.startDate).format()}", "q[completed_at_lt]": "#{moment($scope.endDate).add(1,'day').format()}")
     RequestMonitor.load $scope.lineItems = LineItems.index("q[order][state_not_eq]": "canceled", "q[order][completed_at_not_null]": "true", "q[order][completed_at_gteq]": "#{moment($scope.startDate).format()}", "q[order][completed_at_lt]": "#{moment($scope.endDate).add(1,'day').format()}")
