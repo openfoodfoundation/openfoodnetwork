@@ -31,14 +31,13 @@
     %p {{'registration_outcome2' | t}}
     %p {{'registration_outcome3' | t}}
 
-.row
+.row{'ng-init' => "tos_required=#{Spree::Config.enterprises_require_tos}" }
   %hr
-  .small-12.columns{'ng-init' => "tos_required=false", 'ng-hide' => '!tos_required' }
-    %p{'ng-hide' => '!tos_required'}
-      #{t(:enterprise_tos_message)}
-      %a{'href' => "#{Spree::Config[:enterprise_tos_link]}"} #{t(:enterprise_tos_link_text)}
-    %p
-      %input{ type: 'checkbox', name: 'accept_terms', ng: { model: "tos_accepted" } }
+  .small-12.columns{'ng-hide' => '!tos_required' }
+    %p.tos-message
+      %a{'href' => "#{Spree::Config.enterprise_tos_link}"} #{t(:enterprise_tos_link_text)}
+    %p.tos-checkbox
+      %input{ type: 'checkbox', name: 'accept_terms', id: 'accept_terms', ng: { model: "tos_accepted" } }
         %label{for: "accept_terms"} #{t(:enterprise_tos_agree)}
 
   .small-12.columns

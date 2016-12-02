@@ -1,13 +1,18 @@
 require 'spec_helper'
 
 feature "Registration", js: true do
+  include AuthenticationWorkflow
   include WebHelper
 
   describe "Registering a Profile" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
+    before { Spree::Config.enterprises_require_tos = false }
 
     it "Allows a logged in user to register a profile" do
       visit registration_path
+
+      expect(Spree::Config.enterprises_require_tos).to eq false
+      Spree::Config[:enterprises_require_tos].should be false
 
       expect(URI.parse(current_url).path).to eq registration_auth_path
 
@@ -94,6 +99,43 @@ feature "Registration", js: true do
       expect(e.twitter).to eq "@TwItTeR"
       expect(e.instagram).to eq "@InStAgRaM"
     end
+
+  end
+
+  describe "Terms of Service agreement" do
+    let!(:user2) { create(:user) }
+
+    before do
+      quick_login_as user2
+    end
+
+    context "if accepting Terms of Service is not required" do
+      before { Spree::Config.enterprises_require_tos = false }
+
+      it "allows registration as normal" do
+        visit registration_path
+
+        click_button "Let's get started!"
+        find("div#progress-bar").visible?.should be_true
+      end
+    end
+
+    context "if accepting Terms of Service is required" do
+      before { Spree::Config.enterprises_require_tos = true }
+
+      it "does not allow registration unless checkbox is checked" do
+        visit registration_path
+
+        page.should have_content('Terms of Service')
+        page.should have_selector("input.button.primary[disabled]")
+
+        check 'accept_terms'
+        page.should_not have_selector("input.button.primary[disabled]")
+
+        click_button "Let's get started!"
+        find("div#progress-bar").visible?.should be_true
+      end
+    end
   end
 
   def switch_to_login_tab
@@ -115,6 +157,14 @@ feature "Registration", js: true do
       end
     end
     expect(page).to have_content content
+  end
+
+  def wait_for(element)
+    using_wait_time 0.5 do
+      10.times do
+        break if page.has_selector? element
+      end
+    end
   end
 
   def click_and_ensure(type, text, check)
