@@ -129,6 +129,8 @@ en:
   say_yes: "Yes"
   then: then
   ongoing: Ongoing
+  closes: Closes
+  closed: Closed
   bill_address: Billing Address
   ship_address: Shipping Address
   sort_order_cycles_on_shopfront_by: "Sort Order Cycles On Shopfront By"
