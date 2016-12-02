@@ -19,20 +19,11 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
         @registerVariants()
         @loading = false
 
-    indexVariants: (product) ->
-      if product.variants.length > 1
-        variant_names = ""
-        angular.forEach product.variants, (item, key) ->
-          if product.name != item.name_to_display
-            variant_names += item.name_to_display
-      variant_names
-
     extend: ->
       for product in @products
         if product.variants?.length > 0
           prices = (v.price for v in product.variants)
           product.price = Math.min.apply(null, prices)
-          product.variant_names = @indexVariants product
         product.hasVariants = product.variants?.length > 0
         product.primaryImage = product.images[0]?.small_url if product.images
         product.primaryImageOrMissing = product.primaryImage || "/assets/noimage/small.png"
@@ -53,5 +44,7 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
         if product.variants
           product.variants = for variant in product.variants
             variant = Variants.register variant
+            if product.name != variant.name_to_display
+              product.variant_names += variant.name_to_display
             variant.product = product
             variant
