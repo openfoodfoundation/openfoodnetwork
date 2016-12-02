@@ -24,4 +24,5 @@
               %td.text-center{ ng: { bind: 'order.status' } }
               %td.text-center{ ng: { bind: 'order.total' } }
               %td.actions
-                %a.cancel-order.icon-remove.no-text{ href: 'javascript:void(0)', ng: { click: "cancelOrder(order)" }, 'ofn-with-tip' => t(:cancel_order) }
+                %a.cancel-order.icon-remove.no-text{ href: 'javascript:void(0)', ng: { hide: "order.status == 'cancelled'", click: "cancelOrder(order)" }, 'ofn-with-tip' => t(:cancel_order) }
+                %a.resume-order.icon-resume.no-text{ href: 'javascript:void(0)', ng: { show: "order.status == 'cancelled'", click: "resumeOrder(order)" }, 'ofn-with-tip' => t(:resume_order) }

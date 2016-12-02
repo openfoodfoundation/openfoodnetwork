@@ -40,3 +40,10 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
         angular.extend(order,response.data)
       , (response) ->
         InfoDialog.open 'error', response.data.errors[0]
+
+  resumeOrder: (order) ->
+    if order.id?
+      $http.put("/admin/standing_order_orders/#{order.id}/resume").then (response) =>
+        angular.extend(order,response.data)
+      , (response) ->
+        InfoDialog.open 'error', response.data.errors[0]
