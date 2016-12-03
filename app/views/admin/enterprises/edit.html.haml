@@ -5,7 +5,7 @@
   = @enterprise.name
 
 - content_for :page_actions do
-  %li= select :enterprise, :id, options_for_select(managed_enterprises.collect {|e| [e.name, e.id, {'data-url' => "#{main_app.edit_admin_enterprise_path(e.permalink)}"}]}, @enterprise.id ), {}, {:id => 'enterprise_switcher', :class => 'select2'}
+  %li= select :enterprise, :id, options_for_select(managed_enterprises.collect {|e| [e.name, e.id, {:'data-url' => "#{main_app.edit_admin_enterprise_path(e.permalink)}"}]}, @enterprise.id ), {}, {:id => 'enterprise_switcher', :class => 'select2'}
   %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
 
 
@@ -18,7 +18,7 @@
 
     var initial = #{@enterprise.id};
     var switcher = $('#enterprise_switcher');
-    var confirm_message = "There are unsaved changed on this page. Continue without saving?";
+    var confirm_message = "#{t('admin.unsaved_confirm_leave')}";
 
     //Enterprise switcher dropdown
     switcher.on('change', function(){
@@ -29,13 +29,13 @@
         }
       }
 
-      $(window).unbind("beforeunload"); //Don't ask twice if leaving
+      $(window).unbind("beforeunload.dirtyConfirm"); //Don't ask twice if leaving
       window.location.href = $('#enterprise_switcher option:selected').attr('data-url');
 
     });
 
     //Confirmation message if navigating away from the page with unsaved changes
-    $(window).bind('beforeunload', function(){
+    $(window).bind('beforeunload.dirtyConfirm', function(){
       if($('form.edit_enterprise').hasClass('ng-dirty')) {
         //The message behaviour on 'beforeunload' events may be overridden by some browsers,
         //but a similar message should be displayed.
