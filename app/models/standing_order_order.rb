@@ -7,8 +7,8 @@ class StandingOrderOrder < ActiveRecord::Base
   scope :closed, -> { joins(order: :order_cycle).merge(OrderCycle.closed) }
   scope :not_closed, -> { joins(order: :order_cycle).merge(OrderCycle.not_closed) }
 
-  def status
-    return 'cancelled' if cancelled?
+  def state
+    return 'canceled' if cancelled?
     order.state
   end
 

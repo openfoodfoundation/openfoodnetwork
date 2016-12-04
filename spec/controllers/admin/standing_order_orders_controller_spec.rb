@@ -43,7 +43,7 @@ describe Admin::StandingOrderOrdersController, type: :controller do
             it 'renders the cancelled standing_order_order as json' do
               spree_get :cancel, params
               json_response = JSON.parse(response.body)
-              expect(json_response['status']).to eq "cancelled"
+              expect(json_response['state']).to eq "canceled"
               expect(json_response['id']).to eq standing_order_order.id
               expect(standing_order_order.reload.cancelled_at).to be_within(5.seconds).of Time.now
             end
@@ -108,7 +108,7 @@ describe Admin::StandingOrderOrdersController, type: :controller do
             it 'renders the resumed standing_order_order as json' do
               spree_get :resume, params
               json_response = JSON.parse(response.body)
-              expect(json_response['status']).to eq "resumed"
+              expect(json_response['state']).to eq "resumed"
               expect(json_response['id']).to eq standing_order_order.id
               expect(standing_order_order.reload.cancelled_at).to be nil
             end
