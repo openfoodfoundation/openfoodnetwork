@@ -16,3 +16,5 @@ angular.module("admin.standingOrders").controller "OrdersPanelController", ($sco
     closes_at = moment(OrderCycles.byID[id].orders_close_at)
     text = if closes_at > moment() then t('closes') else t('closed')
     "#{text} #{closes_at.fromNow()}"
+
+  $scope.stateText = (state) -> t("spree.order_state.#{state}")

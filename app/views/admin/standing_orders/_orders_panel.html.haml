@@ -11,7 +11,7 @@
           %thead
             %th= t('admin.standing_orders.orders.number')
             %th= t('admin.order_cycle')
-            %th= t('admin.standing_orders.orders.status')
+            %th= t('admin.standing_orders.orders.state')
             %th= t('total')
             %th.actions
           %tbody
@@ -21,8 +21,9 @@
               %td
                 %div{ ng: { bind: "::orderCycleName(order.order_cycle_id)" } }
                 %div{ ng: { bind: "::orderCycleCloses(order.order_cycle_id)" } }
-              %td.text-center{ ng: { bind: 'order.status' } }
+              %td.text-center
+                %span.state{ ng: { class: "order.state", bind: 'stateText(order.state)' } }
               %td.text-center{ ng: { bind: 'order.total' } }
               %td.actions
-                %a.cancel-order.icon-remove.no-text{ href: 'javascript:void(0)', ng: { hide: "order.status == 'cancelled'", click: "cancelOrder(order)" }, 'ofn-with-tip' => t(:cancel_order) }
-                %a.resume-order.icon-resume.no-text{ href: 'javascript:void(0)', ng: { show: "order.status == 'cancelled'", click: "resumeOrder(order)" }, 'ofn-with-tip' => t(:resume_order) }
+                %a.cancel-order.icon-remove.no-text{ href: 'javascript:void(0)', ng: { hide: "order.state == 'canceled'", click: "cancelOrder(order)" }, 'ofn-with-tip' => t(:cancel_order) }
+                %a.resume-order.icon-resume.no-text{ href: 'javascript:void(0)', ng: { show: "order.state == 'canceled'", click: "resumeOrder(order)" }, 'ofn-with-tip' => t(:resume_order) }
