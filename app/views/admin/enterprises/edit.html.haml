@@ -43,4 +43,9 @@
       }
     });
 
+    //Allow Update/Cancel buttons
+    $('#save-bar input').on('mousedown', function() {
+      $(window).unbind("beforeunload.dirtyConfirm");
+    });
+
   });
