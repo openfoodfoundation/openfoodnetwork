@@ -3,7 +3,7 @@ angular.module('admin.enterprises').directive 'enterpriseSwitcher',
   restrict: 'A'
   require: 'ngModel'
   link: (scope, element, attr, ngModel) ->
-    initial = element[0].querySelector('option[selected]').getAttribute('value')
+    initial = element[0].getAttribute('data-initial')
     confirm_message = t('admin.unsaved_confirm_leave')
 
     element.on 'change', ->
