@@ -3,6 +3,9 @@
 - content_for :page_title do
   New Enterprise
 
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.enterprises'"
+
 - content_for :page_actions do
   %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
 
