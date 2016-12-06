@@ -1099,6 +1099,7 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.datetime "updated_at",         :null => false
     t.integer  "bill_address_id",    :null => false
     t.integer  "ship_address_id",    :null => false
+    t.datetime "canceled_at"
   end
 
   add_index "standing_orders", ["bill_address_id"], :name => "index_standing_orders_on_bill_address_id"
