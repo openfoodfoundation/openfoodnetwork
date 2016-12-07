@@ -18,6 +18,7 @@ module Spree
         klass ||= name.singularize.to_sym
         klass = :overview if klass == :dashboard
         klass = Spree::Order if klass == :bulk_order_management
+        klass = EnterpriseGroup if klass == :group
         klass
       end
       alias_method_chain :klass_for, :sym_fallback
