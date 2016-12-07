@@ -42,6 +42,14 @@ module Admin
       end
     end
 
+    def cancel
+      @standing_order.cancel
+
+      respond_with(@standing_order) do |format|
+        format.json { render_as_json @standing_order, fee_calculator: fee_calculator }
+      end
+    end
+
     private
 
     def permissions

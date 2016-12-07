@@ -253,7 +253,7 @@ class AbilityDecorator
     can [:create], Customer
     can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
     can [:admin, :new, :index], StandingOrder
-    can [:create, :edit, :update], StandingOrder do |standing_order|
+    can [:create, :edit, :update, :cancel], StandingOrder do |standing_order|
       user.enterprises.include?(standing_order.shop)
     end
     can [:admin, :build], StandingLineItem
