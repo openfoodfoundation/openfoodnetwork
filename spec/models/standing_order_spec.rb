@@ -85,4 +85,39 @@ describe StandingOrder, type: :model do
       expect(subject).to validate_presence_of :begins_at
     end
   end
+
+  describe "cancel" do
+    let!(:standing_order) { create(:standing_order, orders: [create(:order), create(:order)]) }
+    let!(:standing_order_order1) { standing_order.standing_order_orders.first }
+    let!(:standing_order_order2) { standing_order.standing_order_orders.last }
+
+    before do
+      allow(standing_order).to receive(:standing_order_orders) { [standing_order_order1, standing_order_order2] }
+    end
+
+    context "when all standing order orders can be cancelled" do
+      before { allow(standing_order_order1).to receive(:cancel) { true } }
+      before { allow(standing_order_order2).to receive(:cancel) { true } }
+
+      it "marks the standing order as cancelled and calls #cancel on all standing_order_orders" do
+        standing_order.cancel
+        expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+        expect(standing_order_order1).to have_received(:cancel)
+        expect(standing_order_order2).to have_received(:cancel)
+      end
+    end
+
+    context "when a standing order order cannot be cancelled" do
+      before { allow(standing_order_order1).to receive(:cancel).and_raise("Some error") }
+      before { allow(standing_order_order2).to receive(:cancel) { true } }
+
+      it "aborts the transaction" do
+        # ie. canceled_at remains as nil, #cancel not called on second standing order order
+        expect{standing_order.cancel}.to raise_error "Some error"
+        expect(standing_order.reload.canceled_at).to be nil
+        expect(standing_order_order1).to have_received(:cancel)
+        expect(standing_order_order2).to_not have_received(:cancel)
+      end
+    end
+  end
 end
