@@ -17,10 +17,10 @@ class StandingOrderOrder < ActiveRecord::Base
   end
 
   def cancel
-    return false unless order.order_cycle.orders_close_at > Time.zone.now
+    return false unless order.order_cycle.andand.orders_close_at.andand > Time.zone.now
     transaction do
       self.update_column(:cancelled_at, Time.zone.now)
-      order.send('cancel') if order.complete?
+      order.send('cancel')
       true
     end
   end
