@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http, $injector, InfoDialog, StatusMessage) ->
+angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http, $injector, InfoDialog, ConfirmDialog, StatusMessage) ->
   errors: {}
 
   buildItem: (item) ->
@@ -33,6 +33,13 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
       StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
       angular.extend(@errors, response.data.errors)
 
+  cancel: ->
+    ConfirmDialog.open('error', t('admin.standing_orders.confirm_cancel_msg'), {cancel: t('back'), confirm: t('yes_i_am_sure')})
+    .then =>
+      @$cancel().then (response) =>
+        $injector.get('StandingOrders').afterCancel(@) if $injector.has('StandingOrders')
+      , ->
+        InfoDialog.open 'error', t('admin.standing_orders.cancel_failure_msg')
 
   cancelOrder: (order) ->
     if order.id?

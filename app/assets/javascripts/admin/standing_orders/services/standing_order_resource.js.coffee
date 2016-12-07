@@ -7,6 +7,11 @@ angular.module("admin.standingOrders").factory 'StandingOrderResource', ($resour
       method: 'PUT'
       params:
         id: '@id'
+    'cancel':
+      method: 'PUT'
+      params:
+        id: '@id'
+        action: 'cancel'
   })
 
   angular.extend(resource.prototype, StandingOrderPrototype)
