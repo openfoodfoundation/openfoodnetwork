@@ -8,7 +8,7 @@ describe ProducerProperty do
     producer.set_producer_property 'Organic Certified', 'NASAA 54321'
   end
 
-  describe ".sold_by" do
+  describe ".currently_sold_by and .ever_sold_by" do
     let!(:shop) { create(:distributor_enterprise) }
     let!(:oc) { create(:simple_order_cycle, distributors: [shop], variants: [product.variants.first]) }
     let(:product) { create(:simple_product, supplier: producer) }
@@ -22,7 +22,8 @@ describe ProducerProperty do
 
     describe "with an associated producer property" do
       it "returns the producer property" do
-        expect(ProducerProperty.sold_by(shop)).to eq [pp]
+        expect(ProducerProperty.currently_sold_by(shop)).to eq [pp]
+        expect(ProducerProperty.ever_sold_by(shop)).to eq [pp]
       end
     end
 
@@ -30,7 +31,8 @@ describe ProducerProperty do
       let!(:exchange) { create(:exchange, order_cycle: oc, incoming: true, sender: producer_other, receiver: oc.coordinator) }
 
       it "doesn't return the producer property" do
-        expect(ProducerProperty.sold_by(shop)).not_to include pp_other
+        expect(ProducerProperty.currently_sold_by(shop)).not_to include pp_other
+        expect(ProducerProperty.ever_sold_by(shop)).not_to include pp_other
       end
     end
 
@@ -40,7 +42,8 @@ describe ProducerProperty do
       let!(:exchange) { create(:exchange, order_cycle: oc, incoming: false, sender: oc.coordinator, receiver: shop_other, variants: [product_other.variants.first]) }
 
       it "doesn't return the producer property" do
-        expect(ProducerProperty.sold_by(shop)).not_to include pp_other
+        expect(ProducerProperty.currently_sold_by(shop)).not_to include pp_other
+        expect(ProducerProperty.ever_sold_by(shop)).not_to include pp_other
       end
     end
 
@@ -49,8 +52,12 @@ describe ProducerProperty do
         oc.update_attributes! orders_close_at: 1.week.ago
       end
 
-      it "doesn't return the producer property" do
-        expect(ProducerProperty.sold_by(shop)).not_to include pp
+      it "doesn't return the producer property for .currently_sold_by" do
+        expect(ProducerProperty.currently_sold_by(shop)).not_to include pp
+      end
+
+      it "returns the producer property for .ever_sold_by" do
+        expect(ProducerProperty.ever_sold_by(shop)).to include pp
       end
     end
 
@@ -59,7 +66,8 @@ describe ProducerProperty do
       let!(:oc) { create(:simple_order_cycle, distributors: [shop], variants: [product.variants.first, product2.variants.first]) }
 
       it "doesn't return duplicates" do
-        expect(ProducerProperty.sold_by(shop).to_a.count).to eq 1
+        expect(ProducerProperty.currently_sold_by(shop).to_a.count).to eq 1
+        expect(ProducerProperty.ever_sold_by(shop).to_a.count).to eq 1
       end
     end
   end

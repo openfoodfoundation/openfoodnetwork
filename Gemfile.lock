@@ -594,7 +594,7 @@ GEM
       ref
     thor (0.19.1)
     tilt (1.4.1)
-    timecop (0.6.2.2)
+    timecop (0.8.1)
     timers (1.1.0)
     treetop (1.4.15)
       polyglot

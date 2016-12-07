@@ -3,8 +3,8 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
   $scope.availableCountries = availableCountries
   $scope.RequestMonitor = RequestMonitor
   $scope.submitAll = pendingChanges.submitAll
-  $scope.add = Customers.add
   $scope.customerLimit = 20
+  $scope.customers = Customers.all
   $scope.columns = Columns.columns
 
   $scope.confirmRefresh = (event) ->
@@ -16,7 +16,6 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
       Customers.index({enterprise_id: $scope.shop_id}).then (data) ->
         pendingChanges.removeAll()
         $scope.customers_form.$setPristine()
-        $scope.customers = data
 
   $scope.shop_id = shops[0].id if shops.length == 1
 

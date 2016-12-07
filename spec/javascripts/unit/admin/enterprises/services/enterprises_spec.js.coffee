@@ -26,9 +26,9 @@ describe "Enterprises service", ->
         result = Enterprises.index()
         $httpBackend.flush()
 
-      it "stores returned data in @enterprisesByID, with ids as keys", ->
+      it "stores returned data in @byID, with ids as keys", ->
         # EnterpriseResource returns instances of Resource rather than raw objects
-        expect(Enterprises.enterprisesByID).toDeepEqual { 5: response[0] }
+        expect(Enterprises.byID).toDeepEqual { 5: response[0] }
 
       it "stores returned data in @pristineByID, with ids as keys", ->
         expect(Enterprises.pristineByID).toDeepEqual { 5: response[0] }

@@ -1,16 +1,18 @@
-angular.module("admin.enterprises").factory 'Enterprises', ($q, EnterpriseResource, blankOption) ->
+angular.module("admin.resources").factory 'Enterprises', ($q, EnterpriseResource) ->
   new class Enterprises
-    enterprisesByID: {}
+    byID: {}
     pristineByID: {}
 
     index: (params={}, callback=null) ->
-      EnterpriseResource.index(params, (data) =>
-        for enterprise in data
-          @enterprisesByID[enterprise.id] = enterprise
-          @pristineByID[enterprise.id] = angular.copy(enterprise)
+      EnterpriseResource.index params, (data) =>
+        @load(data)
         (callback || angular.noop)(data)
         data
-      )
+
+    load: (enterprises) ->
+      for enterprise in enterprises
+        @byID[enterprise.id] = enterprise
+        @pristineByID[enterprise.id] = angular.copy(enterprise)
 
     save: (enterprise) ->
       deferred = $q.defer()

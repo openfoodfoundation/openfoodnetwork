@@ -22,7 +22,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
 
     $scope.producers = producers
-    $scope.taxons = Taxons.taxons
+    $scope.taxons = Taxons.all
     $scope.tax_categories = tax_categories
     $scope.filterProducers = [{id: "0", name: ""}].concat $scope.producers
     $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons

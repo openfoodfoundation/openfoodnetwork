@@ -20,9 +20,9 @@ class Api::EnterpriseSerializer < ActiveModel::Serializer
 end
 
 class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
+  include SerializerHelper
+
   attributes :orders_close_at, :active
-  has_many :supplied_properties, serializer: Api::PropertySerializer
-  has_many :distributed_properties, serializer: Api::PropertySerializer
 
   def orders_close_at
     options[:data].earliest_closing_times[object.id]
@@ -31,26 +31,11 @@ class Api::UncachedEnterpriseSerializer < ActiveModel::Serializer
   def active
     options[:data].active_distributors.andand.include? object
   end
-
-  def supplied_properties
-    # This results in 3 queries per enterprise
-    product_properties  = Spree::Property.applied_by(object)
-    producer_properties = object.properties
-
-    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
-  end
-
-  def distributed_properties
-    # This results in 3 queries per enterprise
-    product_properties  = Spree::Property.sold_by(object)
-    ids = ProducerProperty.sold_by(object).pluck(:property_id)
-    producer_properties = Spree::Property.where(id: ids)
-
-    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
-  end
 end
 
 class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
+  include SerializerHelper
+
   cached
   #delegate :cache_key, to: :object
 
@@ -68,13 +53,9 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   attributes :taxons, :supplied_taxons
 
   has_one :address, serializer: Api::AddressSerializer
-  def taxons
-    ids_to_objs options[:data].distributed_taxons[object.id]
-  end
 
-  def supplied_taxons
-    ids_to_objs options[:data].supplied_taxons[object.id]
-  end
+  has_many :supplied_properties, serializer: Api::PropertySerializer
+  has_many :distributed_properties, serializer: Api::PropertySerializer
 
   def pickup
     services = options[:data].shipping_method_services[object.id]
@@ -116,6 +97,47 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
     ids_to_objs(relatives.andand[:distributors])
   end
 
+  def taxons
+    if active
+      ids_to_objs options[:data].current_distributed_taxons[object.id]
+    else
+      ids_to_objs options[:data].all_distributed_taxons[object.id]
+    end
+  end
+
+  def supplied_taxons
+    ids_to_objs options[:data].supplied_taxons[object.id]
+  end
+
+  def supplied_properties
+    # This results in 3 queries per enterprise
+    product_properties  = Spree::Property.applied_by(object)
+    producer_properties = object.properties
+
+    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
+  end
+
+  def distributed_properties
+    # This results in 3 queries per enterprise
+
+    if active
+      product_properties  = Spree::Property.currently_sold_by(object)
+      producer_property_ids = ProducerProperty.currently_sold_by(object).pluck(:property_id)
+
+    else
+      product_properties  = Spree::Property.ever_sold_by(object)
+      producer_property_ids = ProducerProperty.ever_sold_by(object).pluck(:property_id)
+    end
+
+    producer_properties = Spree::Property.where(id: producer_property_ids)
+
+    OpenFoodNetwork::PropertyMerge.merge product_properties, producer_properties
+  end
+
+  def active
+    options[:data].active_distributors.andand.include? object
+  end
+
   # Map svg icons.
   def icon
     icons = {
@@ -152,13 +174,5 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
       :producer => "ofn-i_059-producer",
     }
     icon_fonts[object.category]
-  end
-
-
-  private
-
-  def ids_to_objs(ids)
-    return [] if ids.blank?
-    ids.map { |id| {id: id} }
   end
 end
