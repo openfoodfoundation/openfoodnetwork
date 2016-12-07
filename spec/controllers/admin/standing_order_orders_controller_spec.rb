@@ -45,7 +45,7 @@ describe Admin::StandingOrderOrdersController, type: :controller do
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "canceled"
               expect(json_response['id']).to eq standing_order_order.id
-              expect(standing_order_order.reload.cancelled_at).to be_within(5.seconds).of Time.now
+              expect(standing_order_order.reload.canceled_at).to be_within(5.seconds).of Time.now
             end
           end
 
@@ -75,7 +75,7 @@ describe Admin::StandingOrderOrdersController, type: :controller do
     before do
       # Processing order to completion
       while !order.completed? do break unless order.next! end
-      standing_order_order.update_attribute(:cancelled_at, Time.zone.now)
+      standing_order_order.update_attribute(:canceled_at, Time.zone.now)
       order.cancel
       allow(controller).to receive(:spree_current_user) { user }
     end
@@ -110,7 +110,7 @@ describe Admin::StandingOrderOrdersController, type: :controller do
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "resumed"
               expect(json_response['id']).to eq standing_order_order.id
-              expect(standing_order_order.reload.cancelled_at).to be nil
+              expect(standing_order_order.reload.canceled_at).to be nil
             end
           end
 
