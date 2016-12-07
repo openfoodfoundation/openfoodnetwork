@@ -41,6 +41,18 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
       , ->
         InfoDialog.open 'error', t('admin.standing_orders.cancel_failure_msg')
 
+  pause: ->
+    ConfirmDialog.open('error', t('admin.standing_orders.confirm_pause_msg'), {confirm: t('yes_i_am_sure')})
+    .then =>
+      @$pause().then angular.noop, ->
+        InfoDialog.open 'error', t('admin.standing_orders.pause_failure_msg')
+
+  unpause: ->
+    ConfirmDialog.open('error', t('admin.standing_orders.confirm_unpause_msg'), {confirm: t('yes_i_am_sure')})
+    .then =>
+      @$unpause().then angular.noop, ->
+        InfoDialog.open 'error', t('admin.standing_orders.unpause_failure_msg')
+
   cancelOrder: (order) ->
     if order.id?
       $http.put("/admin/standing_order_orders/#{order.id}/cancel").then (response) =>

@@ -814,6 +814,10 @@ en:
         status: Status
       confirm_cancel_msg: Are you sure you want to cancel this standing order? This action cannot be undone.
       cancel_failure_msg: 'Sorry, cancellation failed!' 
+      confirm_pause_msg: Are you sure you want to pause this standing order?
+      pause_failure_msg: 'Sorry, pausing failed!'
+      confirm_unpause_msg: Are you sure you want to unpause this standing order?
+      unpause_failure_msg: 'Sorry, unpausing failed!'
 
     stripe_connect_settings:
       edit:

@@ -47,6 +47,8 @@
       %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[standingOrder.shipping_method_id].name' } }
       %td.actions
         %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{standingOrder.edit_path}}'} }
+        %a.pause-standing-order.icon-pause.no-text{ ng: { click: 'standingOrder.pause()', hide: '!!standingOrder.paused_at' } }
+        %a.unpause-standing-order.icon-play.no-text{ ng: { click: 'standingOrder.unpause()', show: '!!standingOrder.paused_at' } }
         %a.cancel-standing-order.icon-remove.no-text{ ng: { click: 'standingOrder.cancel()'} }
 
     %tr.panel-row{ object: "standingOrder", panels: "{products: 'standing_order_products', orders: 'standing_order_orders'}" }
