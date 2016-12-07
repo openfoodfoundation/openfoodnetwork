@@ -4,5 +4,5 @@
       %i.icon-question-sign
     .text{ ng: { bind: "::message" } }
   .action-buttons.text-center
-    %button{ ng: { click: "close()", bind: "::cancelText" } }
-    %button.red{ ng: { click: "confirm()", bind: "::confirmText" } }
+    %button.cancel{ ng: { click: "close()", bind: "::cancelText" } }
+    %button.confirm.red{ ng: { click: "confirm()", bind: "::confirmText" } }

@@ -4,13 +4,13 @@
 %table.index#standing_orders
   %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }
   %col.schedule{ width: "15%", 'ng-show' => 'columns.schedule.visible' }
-  %col.items{ width: "15%", 'ng-show' => 'columns.items.visible' }
-  %col.orders{ width: "15%", 'ng-show' => 'columns.orders.visible' }
+  %col.items{ width: "10%", 'ng-show' => 'columns.items.visible' }
+  %col.orders{ width: "10%", 'ng-show' => 'columns.orders.visible' }
   %col.begins_on{ width: "10%", 'ng-show' => 'columns.begins_on.visible' }
   %col.ends_on{ width: "10%", 'ng-show' => 'columns.ends_on.visible' }
   %col.payment_method{ width: "20%", 'ng-show' => 'columns.payment_method.visible' }
   %col.shipping_method{ width: "20%", 'ng-show' => 'columns.shipping_method.visible' }
-  %col.actions{ width: "5%" }
+  %col.actions{ width: "10%" }
   %thead
     %tr
       -# %th.bulk
@@ -47,6 +47,6 @@
       %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[standingOrder.shipping_method_id].name' } }
       %td.actions
         %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{standingOrder.edit_path}}'} }
-      -#   %a.delete-standing-order.icon-trash.no-text{ ng: { href: '{{standingOrder.delete_path}}'}, data: { method: 'delete', confirm: "Are you sure?" } }
+        %a.cancel-standing-order.icon-remove.no-text{ ng: { click: 'standingOrder.cancel()'} }
 
     %tr.panel-row{ object: "standingOrder", panels: "{products: 'standing_order_products', orders: 'standing_order_orders'}" }
