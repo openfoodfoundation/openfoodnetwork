@@ -50,6 +50,16 @@ module Admin
       end
     end
 
+    def pause
+      @standing_order.update_attributes(paused_at: Time.zone.now)
+      render_as_json @standing_order, fee_calculator: fee_calculator
+    end
+
+    def unpause
+      @standing_order.update_attributes(paused_at: nil)
+      render_as_json @standing_order, fee_calculator: fee_calculator
+    end
+
     private
 
     def permissions
