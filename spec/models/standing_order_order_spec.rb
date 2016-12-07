@@ -36,7 +36,17 @@ describe StandingOrderOrder, type: :model do
       before { order_cycle.update_attributes(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
 
       it "returns false and does nothing" do
-        expect(standing_order_order.cancel).to eq false
+        expect(standing_order_order.cancel).to be false
+        expect(standing_order_order.reload.cancelled_at).to be nil
+        expect(order.reload.state).to eq 'cart'
+      end
+    end
+
+    context "when the order cycle for the order does not exist" do
+      let(:order) { create(:order) }
+
+      it "returns false and does nothing" do
+        expect(standing_order_order.cancel).to be false
         expect(standing_order_order.reload.cancelled_at).to be nil
         expect(order.reload.state).to eq 'cart'
       end
