@@ -86,7 +86,7 @@ feature 'Standing Orders' do
               find("a.cancel-order").trigger('click')
             end
             expect(page).to have_content 'CANCELLED'
-            expect(standing_order_order.reload.cancelled_at).to be_within(5.seconds).of Time.now
+            expect(standing_order_order.reload.canceled_at).to be_within(5.seconds).of Time.now
 
             # Resuming an order
             accept_alert 'Are you sure?' do
@@ -94,7 +94,7 @@ feature 'Standing Orders' do
             end
             # Note: the order itself was not complete when 'cancelled', so state remained as cart
             expect(page).to have_content 'CART'
-            expect(standing_order_order.reload.cancelled_at).to be nil
+            expect(standing_order_order.reload.canceled_at).to be nil
           end
         end
 
