@@ -31,6 +31,16 @@ class StandingOrder < ActiveRecord::Base
     standing_order_orders.not_closed
   end
 
+  def cancel
+    transaction do
+      self.update_column(:canceled_at, Time.zone.now)
+      standing_order_orders.each(&:cancel)
+      true
+    end
+  end
+
+  private
+
   def ends_at_after_begins_at
     if begins_at.present? && ends_at.present? && ends_at <= begins_at
       errors.add(:ends_at, "must be after begins at")
