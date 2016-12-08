@@ -1,9 +1,10 @@
 %form.margin-bottom-50{ name: 'standing_order_form', novalidate: true, ng: { submit: 'save()' } }
   %save-bar{ persist: 'true' }
+    %a.button{ href: main_app.admin_standing_orders_path, ng: { show: "['details','review'].indexOf(view) >= 0", bind: "standingOrder.id? '#{t(:close)}' : '#{t(:cancel)}'" } }
     %input{ type: "button", value: t(:back), ng: { click: 'back()', show: '!!backCallbacks[view]'} }
     %input.red{ type: "button", value: t(:next), ng: { click: 'next()', show: '!!nextCallbacks[view]' } }
-    %input.red{ type: "submit", value: "#{t('admin.standing_orders.create')}", ng: { show: "view=='review' && !standingOrder.id" } }
-    %input.red{ type: "submit", value: "#{t(:save_changes)}", ng: { show: "view=='review' && standingOrder.id", disabled: 'standing_order_form.$pristine' } }
+    %input.red{ type: "submit", value: t('admin.standing_orders.create'), ng: { show: "view=='review' && !standingOrder.id" } }
+    %input.red{ type: "submit", value: t(:save_changes), ng: { show: "view=='review' && standingOrder.id", disabled: 'standing_order_form.$pristine' } }
 
   .details{ ng: { show: "['details','review'].indexOf(view) >= 0" } }
     %ng-form{ name: 'standing_order_details_form', ng: { controller: 'DetailsController' } }
