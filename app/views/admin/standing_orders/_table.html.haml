@@ -3,14 +3,15 @@
 
 %table.index#standing_orders
   %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }
-  %col.schedule{ width: "15%", 'ng-show' => 'columns.schedule.visible' }
+  %col.schedule{ width: "20%", 'ng-show' => 'columns.schedule.visible' }
   %col.items{ width: "10%", 'ng-show' => 'columns.items.visible' }
   %col.orders{ width: "10%", 'ng-show' => 'columns.orders.visible' }
+  %col.status{ width: "15%", 'ng-show' => 'columns.state.visible' }
   %col.begins_on{ width: "10%", 'ng-show' => 'columns.begins_on.visible' }
   %col.ends_on{ width: "10%", 'ng-show' => 'columns.ends_on.visible' }
   %col.payment_method{ width: "20%", 'ng-show' => 'columns.payment_method.visible' }
   %col.shipping_method{ width: "20%", 'ng-show' => 'columns.shipping_method.visible' }
-  %col.actions{ width: "10%" }
+  %col.actions{ width: "15%" }
   %thead
     %tr
       -# %th.bulk
@@ -23,6 +24,8 @@
         = t('admin.items')
       %th.orders{ ng: { show: 'columns.orders.visible',  } }
         = t('orders')
+      %th.status{ ng: { show: 'columns.state.visible',  } }
+        = t('admin.status_state')
       %th.begins_on{ ng: { show: 'columns.begins_on.visible',  } }
         = t('admin.begins_on')
       %th.ends_on{ ng: { show: 'columns.ends_on.visible',  } }
@@ -41,6 +44,8 @@
         %h5{ ng: { bind: 'itemCount(standingOrder)' } }
       %td.orders.panel-toggle.text-center{ name: 'orders', ng: { show: 'columns.orders.visible' } }
         %h5{ ng: { bind: 'standingOrder.not_closed_standing_order_orders.length + standingOrder.closed_standing_order_orders.length' } }
+      %td.status.text-center{ ng: { show: 'columns.state.visible' } }
+        %span.state{ ng: { class: "standingOrder.state", bind: "'spree.standing_order_state.' + standingOrder.state | t" } }
       %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_at' } }
       %td.ends_on.text-center{ ng: { show: 'columns.ends_on.visible', bind: '::standingOrder.ends_at' } }
       %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[standingOrder.payment_method_id].name' } }

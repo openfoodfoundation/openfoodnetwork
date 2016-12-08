@@ -213,6 +213,7 @@ en:
     shipping_method: Shipping Method
     shop: Shop
     sku: SKU
+    status_state: State
     tags: Tags
     variant: Variant
     weight: Weight
@@ -811,7 +812,6 @@ en:
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
-        status: Status
       confirm_cancel_msg: Are you sure you want to cancel this standing order? This action cannot be undone.
       cancel_failure_msg: 'Sorry, cancellation failed!' 
       confirm_pause_msg: Are you sure you want to pause this standing order?
@@ -2381,6 +2381,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       resumed: resumed
       returned: returned
       skrill: skrill
+    standing_order_state:
+      active: active
+      pending: pending
+      ended: ended
+      paused: paused
+      canceled: cancelled
     payment_states:
       balance_due: balance due
       completed: completed
