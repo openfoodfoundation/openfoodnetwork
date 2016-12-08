@@ -123,8 +123,10 @@ feature 'Standing Orders' do
           find("a.cancel-standing-order").click
         end
         click_button "Yes, I'm sure"
-        expect(page).to have_no_selector "tr#so_#{standing_order.id}"
-        expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+        within "tr#so_#{standing_order.id}" do
+          expect(page).to have_selector ".state.canceled", text: "CANCELLED"
+          expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+        end
       end
     end
 
