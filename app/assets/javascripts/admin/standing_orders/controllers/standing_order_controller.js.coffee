@@ -7,6 +7,8 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
   $scope.errors = $scope.standingOrder.errors
   $scope.distributor_id = $scope.standingOrder.shop_id # variant selector requires distributor_id
   $scope.view = if $scope.standingOrder.id? then 'review' else 'details'
+  $scope.nextCallbacks = {}
+  $scope.backCallbacks = {}
 
   $scope.save = ->
     $scope.standing_order_form.$setPristine()
@@ -18,3 +20,8 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
   $scope.setView = (view) -> $scope.view = view
 
   $scope.stepTitleFor = (step) -> t("admin.standing_orders.steps.#{step}")
+
+  $scope.registerNextCallback = (view, callback) => $scope.nextCallbacks[view] = callback
+  $scope.registerBackCallback = (view, callback) => $scope.backCallbacks[view] = callback
+  $scope.next = -> $scope.nextCallbacks[$scope.view]()
+  $scope.back = -> $scope.backCallbacks[$scope.view]()
