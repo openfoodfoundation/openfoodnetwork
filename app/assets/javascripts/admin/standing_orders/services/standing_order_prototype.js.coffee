@@ -36,9 +36,7 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
   cancel: ->
     ConfirmDialog.open('error', t('admin.standing_orders.confirm_cancel_msg'), {cancel: t('back'), confirm: t('yes_i_am_sure')})
     .then =>
-      @$cancel().then (response) =>
-        $injector.get('StandingOrders').afterCancel(@) if $injector.has('StandingOrders')
-      , ->
+      @$cancel().then angular.noop, ->
         InfoDialog.open 'error', t('admin.standing_orders.cancel_failure_msg')
 
   pause: ->

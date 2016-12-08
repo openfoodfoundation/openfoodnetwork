@@ -31,7 +31,7 @@ describe "StandingOrdersCtrl", ->
     standingOrders = [standingOrder]
 
     beforeEach ->
-      http.expectGET('/admin/standing_orders.json?q%5Bshop_id_eq%5D=3').respond 200, standingOrders
+      http.expectGET('/admin/standing_orders.json?q%5Bcanceled_at_null%5D=true&q%5Bshop_id_eq%5D=3').respond 200, standingOrders
       scope.$apply -> scope.shop_id = 3
       http.flush()
 
