@@ -120,4 +120,76 @@ describe StandingOrder, type: :model do
       end
     end
   end
+
+  describe "state" do
+    let(:standing_order) { StandingOrder.new }
+
+    context "when the standing order has been cancelled" do
+      before { allow(standing_order).to receive(:canceled_at) { Time.zone.now } }
+
+      it "returns 'canceled'" do
+        expect(standing_order.state).to eq 'canceled'
+      end
+    end
+
+    context "when the standing order has not been cancelled" do
+      before { allow(standing_order).to receive(:canceled_at) { nil } }
+
+      context "and the standing order has been paused" do
+        before { allow(standing_order).to receive(:paused_at) { Time.zone.now } }
+
+        it "returns 'paused'" do
+          expect(standing_order.state).to eq 'paused'
+        end
+      end
+
+      context "and the standing order has not been paused" do
+        before { allow(standing_order).to receive(:paused_at) { nil } }
+
+        context "and the standing order has no begins_at date" do
+          before { allow(standing_order).to receive(:begins_at) { nil } }
+
+          it "returns nil" do
+            expect(standing_order.state).to be nil
+          end
+        end
+
+        context "and the standing order has a begins_at date in the future" do
+          before { allow(standing_order).to receive(:begins_at) { 1.minute.from_now } }
+
+          it "returns 'pending'" do
+            expect(standing_order.state).to eq 'pending'
+          end
+        end
+
+        context "and the standing order has a begins_at date in the past" do
+          before { allow(standing_order).to receive(:begins_at) { 1.minute.ago } }
+
+          context "and the standing order has no ends_at date set" do
+            before { allow(standing_order).to receive(:ends_at) { nil } }
+
+            it "returns 'active'" do
+              expect(standing_order.state).to eq 'active'
+            end
+          end
+
+          context "and the standing order has an ends_at date in the future" do
+            before { allow(standing_order).to receive(:ends_at) { 1.minute.from_now } }
+
+            it "returns 'active'" do
+              expect(standing_order.state).to eq 'active'
+            end
+          end
+
+          context "and the standing order has an ends_at date in the past" do
+            before { allow(standing_order).to receive(:ends_at) { 1.minute.ago } }
+
+            it "returns 'ended'" do
+              expect(standing_order.state).to eq 'ended'
+            end
+          end
+        end
+      end
+    end
+  end
 end

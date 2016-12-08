@@ -39,6 +39,18 @@ class StandingOrder < ActiveRecord::Base
     end
   end
 
+  def state
+    return 'canceled' if canceled_at
+    return 'paused' if paused_at
+    return nil unless begins_at
+    if begins_at > Time.zone.now
+      'pending'
+    else
+      return 'ended' if ends_at.andand < Time.zone.now
+      'active'
+    end
+  end
+
   private
 
   def ends_at_after_begins_at
