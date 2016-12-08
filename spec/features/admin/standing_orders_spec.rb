@@ -98,6 +98,26 @@ feature 'Standing Orders' do
           end
         end
 
+        # Pausing a standing order
+        within "tr#so_#{standing_order.id}" do
+          find("a.pause-standing-order").click
+        end
+        click_button "Yes, I'm sure"
+        within "tr#so_#{standing_order.id}" do
+          expect(page).to have_selector ".state.paused", text: "PAUSED"
+          expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.zone.now
+        end
+
+        # Unpausing a standing order
+        within "tr#so_#{standing_order.id}" do
+          find("a.unpause-standing-order").click
+        end
+        click_button "Yes, I'm sure"
+        within "tr#so_#{standing_order.id}" do
+          expect(page).to have_selector ".state.active", text: "ACTIVE"
+          expect(standing_order.reload.paused_at).to be nil
+        end
+
         # Cancelling a standing order
         within "tr#so_#{standing_order.id}" do
           find("a.cancel-standing-order").click
