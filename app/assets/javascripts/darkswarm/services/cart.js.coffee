@@ -120,6 +120,10 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
       @line_items = []
       localStorageService.clearAll() # One day this will have to be moar GRANULAR
 
+    removeFinalisedLineItem: (id) =>
+      @line_items_finalised = @line_items_finalised.filter (item) ->
+        item.id != id
+
     reloadFinalisedLineItems: =>
       @line_items_finalised = []
       $resource("/line_items").query (items) =>

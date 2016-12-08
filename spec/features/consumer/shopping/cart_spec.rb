@@ -110,6 +110,11 @@ feature "full-page cart", js: true do
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_content item2.variant.name
 
+        # open the dropdown cart and check there as well
+        find('#cart').click
+        expect(page).to have_no_content item1.variant.name
+        expect(page).to have_content item2.variant.name
+
         visit spree.cart_path
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_content item2.variant.name
