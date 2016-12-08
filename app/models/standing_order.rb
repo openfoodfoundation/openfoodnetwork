@@ -23,7 +23,10 @@ class StandingOrder < ActiveRecord::Base
   validate :standing_line_items_available
   validate :check_associations
 
-  scope :active, where('standing_orders.paused_at IS NULL AND standing_orders.canceled_at IS NULL AND standing_orders.begins_at <= (?) AND (standing_orders.ends_at > (?) OR standing_orders.ends_at IS NULL)', Time.zone.now, Time.zone.now)
+  scope :not_ended, -> { where('standing_orders.ends_at > (?) OR standing_orders.ends_at IS NULL', Time.zone.now) }
+  scope :not_canceled, where('standing_orders.canceled_at IS NULL')
+  scope :not_paused, where('standing_orders.paused_at IS NULL')
+  scope :active, -> { not_canceled.not_ended.not_paused.where('standing_orders.begins_at <= (?)', Time.zone.now) }
 
   def closed_standing_order_orders
     standing_order_orders.closed
