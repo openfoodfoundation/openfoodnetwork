@@ -5,4 +5,7 @@
 = inject_available_countries
 = inject_enterprise_attributes
 
+%script{type: "text/ng-template", id: "registration/introduction.html"}
+  = render partial: "registration/introduction"
+
 %div{ "ng-controller" => "RegistrationCtrl" }
