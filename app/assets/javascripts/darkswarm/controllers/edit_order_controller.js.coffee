@@ -4,6 +4,7 @@ Darkswarm.controller "EditOrderCtrl", ($scope, $resource, Cart) ->
     params = {id: id}
     success = (response) ->
       $(".line-item-" + id).remove()
+      Cart.removeFinalisedLineItem(id)
     fail = (error) ->
       console.log error
 
