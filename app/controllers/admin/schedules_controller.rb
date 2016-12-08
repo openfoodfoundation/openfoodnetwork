@@ -3,6 +3,8 @@ require 'open_food_network/permissions'
 module Admin
   class SchedulesController < ResourceController
     before_filter :check_editable_order_cycle_ids, only: [:create, :update]
+    create.after :sync_standing_orders
+    update.after :sync_standing_orders
 
     respond_to :json
 
@@ -37,9 +39,9 @@ module Admin
     def check_editable_order_cycle_ids
       return unless params[:schedule][:order_cycle_ids]
       requested = params[:schedule][:order_cycle_ids]
-      existing = @schedule.persisted? ? @schedule.order_cycle_ids : []
-      permitted = OrderCycle.where(id: params[:schedule][:order_cycle_ids] | existing).merge(OrderCycle.managed_by(spree_current_user)).pluck(:id)
-      result = existing
+      @existing_order_cycle_ids = @schedule.persisted? ? @schedule.order_cycle_ids : []
+      permitted = OrderCycle.where(id: params[:schedule][:order_cycle_ids] | @existing_order_cycle_ids).merge(OrderCycle.managed_by(spree_current_user)).pluck(:id)
+      result = @existing_order_cycle_ids
       result |= (requested & permitted) # add any requested & permitted ids
       result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
       params[:schedule][:order_cycle_ids] = result
@@ -49,6 +51,15 @@ module Admin
     def permissions
       return @permissions unless @permission.nil?
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+    end
+
+    def sync_standing_orders
+      return unless params[:schedule][:order_cycle_ids]
+      removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
+      new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
+      if removed_ids.any? || new_ids.any?
+        Delayed::Job.enqueue StandingOrderSyncJob.new(@schedule)
+      end
     end
   end
 end

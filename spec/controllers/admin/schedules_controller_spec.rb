@@ -88,6 +88,18 @@ describe Admin::SchedulesController, type: :controller do
           # coordinated_order_cycle is removed, uncoordinated_order_cycle2 is NOT added
           expect(coordinated_schedule.reload.order_cycles).to_not include coordinated_order_cycle, uncoordinated_order_cycle2
         end
+
+        it "enqueues a StandingOrderSyncJob when order_cycle_ids change" do
+          expect do
+            spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id] }
+          end.to enqueue_job StandingOrderSyncJob
+          expect do
+            spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id,] }
+          end.to enqueue_job StandingOrderSyncJob
+          expect do
+            spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id] }
+          end.to_not enqueue_job StandingOrderSyncJob
+        end
       end
 
       context "where I don't manage any of the schedule's coordinators" do
@@ -137,6 +149,10 @@ describe Admin::SchedulesController, type: :controller do
             schedule = Schedule.last
             expect(schedule.order_cycles).to include coordinated_order_cycle
             expect(schedule.order_cycles).to_not include uncoordinated_order_cycle
+          end
+
+          it "enqueues StandingOrderSyncJob" do
+            expect { create_schedule params }.to enqueue_job StandingOrderSyncJob
           end
         end
 
