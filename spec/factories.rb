@@ -150,8 +150,8 @@ FactoryGirl.define do
   end
 
   factory :standing_order_with_items, parent: :standing_order do |standing_order|
-    standing_line_items { create_list(:standing_line_item, 3) }
-    before(:create) do |standing_order, proxy|
+    after(:create) do |standing_order, proxy|
+      standing_order.standing_line_items = build_list(:standing_line_item, 3, standing_order: standing_order)
       standing_order.schedule.order_cycles.each do |oc|
         ex = oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(standing_order.shop_id, standing_order.shop_id) ||
           create(:exchange, :order_cycle => oc, :sender => standing_order.shop, :receiver => standing_order.shop, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
