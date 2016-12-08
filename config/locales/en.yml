@@ -784,6 +784,10 @@ en:
       create: Create Standing Order
       index:
         please_select_a_shop: Please select a shop
+        edit_standing_order: Edit Standing Order
+        pause_standing_order: Pause Standing Order
+        unpause_standing_order: Unpause Standing Order
+        cancel_standing_order: Cancel Standing Order
       steps:
         details: 1. Basic Details
         address: 2. Address

@@ -51,9 +51,9 @@
       %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[standingOrder.payment_method_id].name' } }
       %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[standingOrder.shipping_method_id].name' } }
       %td.actions
-        %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{standingOrder.edit_path}}'} }
-        %a.pause-standing-order.icon-pause.no-text{ ng: { click: 'standingOrder.pause()', hide: '!!standingOrder.paused_at' } }
-        %a.unpause-standing-order.icon-play.no-text{ ng: { click: 'standingOrder.unpause()', show: '!!standingOrder.paused_at' } }
-        %a.cancel-standing-order.icon-remove.no-text{ ng: { click: 'standingOrder.cancel()'} }
+        %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{standingOrder.edit_path}}'}, 'ofn-with-tip' => t('.edit_standing_order') }
+        %a.pause-standing-order.icon-pause.no-text{ ng: { click: 'standingOrder.pause()', hide: '!!standingOrder.paused_at' }, 'ofn-with-tip' => t('.pause_standing_order') , href: 'javascript:void(0)' }
+        %a.unpause-standing-order.icon-play.no-text{ ng: { click: 'standingOrder.unpause()', show: '!!standingOrder.paused_at' }, 'ofn-with-tip' => t('.unpause_standing_order') , href: 'javascript:void(0)' }
+        %a.cancel-standing-order.icon-remove.no-text{ ng: { click: 'standingOrder.cancel()'}, 'ofn-with-tip' => t('.cancel_standing_order') , href: 'javascript:void(0)' }
 
     %tr.panel-row{ object: "standingOrder", panels: "{products: 'standing_order_products', orders: 'standing_order_orders'}" }
