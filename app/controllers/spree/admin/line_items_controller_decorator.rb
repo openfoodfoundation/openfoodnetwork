@@ -60,7 +60,7 @@ Spree::Admin::LineItemsController.class_eval do
 
   def render_order_form
     respond_to do |format|
-      format.html { render 'spree/admin/orders/form', order: @order.reload }
+      format.html { render partial: 'spree/admin/orders/form', locals: {order: @order.reload} }
     end
   end
 

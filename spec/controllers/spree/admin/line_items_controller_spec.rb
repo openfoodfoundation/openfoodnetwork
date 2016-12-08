@@ -165,16 +165,28 @@ describe Spree::Admin::LineItemsController do
       end
 
       context "coordinator enterprise" do
+        render_views
+
         before do
           controller.stub spree_current_user: coordinator.owner
-          spree_put :update, params
         end
 
-        it "updates the line_item" do
+        it "updates the line item" do
+          spree_put :update, params
           line_item1.reload
           expect(line_item1.quantity).to eq 3
           expect(line_item1.final_weight_volume).to eq 3000
           expect(line_item1.price).to eq 3.00
+        end
+
+        it "returns an empty JSON response" do
+          spree_put :update, params.merge(format: :json)
+          expect(response.body).to eq ' '
+        end
+
+        it "returns an HTML response with the order form" do
+          spree_put :update, params.merge(format: :html)
+          expect(response.body).to match /admin_order_form_fields/
         end
       end
 
@@ -184,13 +196,45 @@ describe Spree::Admin::LineItemsController do
           spree_put :update, params
         end
 
-        it "retrieves a list of line_items" do
+        it "updates the line item" do
           line_item1.reload
           expect(line_item1.quantity).to eq 3
           expect(line_item1.final_weight_volume).to eq 3000
           expect(line_item1.price).to eq 3.00
         end
       end
+    end
+  end
+
+  describe "#destroy" do
+    render_views
+
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:distributor1) { create(:distributor_enterprise) }
+    let(:coordinator) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
+    let!(:order1) { FactoryGirl.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryGirl.create(:address) ) }
+    let!(:line_item1) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: supplier)) }
+    let(:params) { { format: :json, id: line_item1.id, order_id: order1.number } }
+
+    before do
+      controller.stub spree_current_user: coordinator.owner
+    end
+
+    it "destroys the line item" do
+      expect {
+        spree_delete :destroy, params
+      }.to change { Spree::LineItem.where(id: line_item1).count }.from(1).to(0)
+    end
+
+    it "returns an empty JSON response" do
+      spree_delete :destroy, params.merge(format: :json)
+      expect(response.body).to eq ' '
+    end
+
+    it "returns an HTML response with the order form" do
+      spree_delete :destroy, params.merge(format: :html)
+      expect(response.body).to match /admin_order_form_fields/
     end
   end
 end
