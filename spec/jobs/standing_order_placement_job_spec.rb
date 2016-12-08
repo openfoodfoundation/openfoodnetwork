@@ -4,29 +4,40 @@ describe StandingOrderPlacementJob do
   let(:shop) { create(:distributor_enterprise) }
   let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop) }
   let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop) }
-  let(:schedule1) { create(:schedule, order_cycles: [order_cycle1]) }
-  let(:schedule2) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
+  let(:schedule1) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
   let(:standing_order1) { create(:standing_order_with_items, shop: shop, schedule: schedule1) }
-  let(:standing_order2) { create(:standing_order_with_items, shop: shop, schedule: schedule2) }
+  let(:standing_order2) { create(:standing_order_with_items, shop: shop, schedule: schedule1, paused_at: 1.minute.ago) }
+  let(:standing_order3) { create(:standing_order_with_items, shop: shop, schedule: schedule1, canceled_at: 1.minute.ago) }
+  let(:standing_order4) { create(:standing_order_with_items, shop: shop, schedule: schedule1, begins_at: 1.minute.from_now) }
+  let(:standing_order5) { create(:standing_order_with_items, shop: shop, schedule: schedule1, ends_at: 1.minute.ago) }
 
   let!(:job) { StandingOrderPlacementJob.new(order_cycle1) }
 
   describe "finding standing_order orders for the specified order cycle" do
     let(:order1) { create(:order, order_cycle: order_cycle1, completed_at: 5.minutes.ago) } # Complete + Linked + OC Matches
-    let(:order2) { create(:order, order_cycle: order_cycle1) } # Incomplete + Linked + OC Matches
-    let(:order3) { create(:order, order_cycle: order_cycle1) } # Incomplete + Not-Linked + OC Matches
-    let(:order4) { create(:order, order_cycle: order_cycle2) } # Incomplete + Linked + OC Mismatch
+    let(:order2) { create(:order, order_cycle: order_cycle1) } # Incomplete + Not-Linked + OC Matches
+    let(:order3) { create(:order, order_cycle: order_cycle2) } # Incomplete + Linked + OC Mismatch
+    let(:order4) { create(:order, order_cycle: order_cycle1) } # Incomplete + Linked + OC Matches + Paused
+    let(:order5) { create(:order, order_cycle: order_cycle1) } # Incomplete + Linked + OC Matches + Cancelled
+    let(:order6) { create(:order, order_cycle: order_cycle1) } # Incomplete + Linked + OC Matches + Yet To Begin
+    let(:order7) { create(:order, order_cycle: order_cycle1) } # Incomplete + Linked + OC Matches + Ended
+    let(:order8) { create(:order, order_cycle: order_cycle1) } # Incomplete + Linked + OC Matches
 
     before do
-      standing_order1.orders = [order1,order2]
+      standing_order1.orders = [order1, order3, order8]
       standing_order2.orders = [order4]
+      standing_order3.orders = [order5]
+      standing_order4.orders = [order6]
+      standing_order5.orders = [order7]
     end
 
     it "only returns incomplete orders in the relevant order cycle that are linked to a standing order" do
       orders = job.send(:orders)
-      expect(orders).to include order2
-      expect(orders).to_not include order1, order3, order4
+      expect(orders).to include order8
+      expect(orders).to_not include order1, order2, order3, order4, order5, order6, order7
     end
+
+
   end
 
   describe "processing an order containing items with insufficient stock" do

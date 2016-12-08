@@ -14,7 +14,8 @@ class StandingOrderPlacementJob
   private
 
   def orders
-    Spree::Order.incomplete.where(order_cycle_id: order_cycle).joins(:standing_order).readonly(false)
+    Spree::Order.incomplete.where(order_cycle_id: order_cycle)
+    .merge(StandingOrder.active).joins(:standing_order).readonly(false)
   end
 
   def process(order)
