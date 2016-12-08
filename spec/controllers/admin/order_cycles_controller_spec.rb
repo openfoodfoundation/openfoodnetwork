@@ -197,6 +197,18 @@ module Admin
           # coordinated_order_cycle is removed, uncoordinated_order_cycle is NOT added
           expect(coordinated_order_cycle.reload.schedules).to_not include coordinated_schedule, uncoordinated_schedule
         end
+
+        it "enqueues a StandingOrderSyncJob when schedule_ids change" do
+          expect do
+            spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id, coordinated_schedule2.id] }
+          end.to enqueue_job StandingOrderSyncJob
+          expect do
+            spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
+          end.to enqueue_job StandingOrderSyncJob
+          expect do
+            spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
+          end.to_not enqueue_job StandingOrderSyncJob
+        end
       end
     end
 

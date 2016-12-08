@@ -11,6 +11,8 @@ module Admin
     before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
     before_filter :check_editable_schedule_ids, only: [:create, :update]
     around_filter :protect_invalid_destroy, only: :destroy
+    create.after :sync_standing_orders
+    update.after :sync_standing_orders
 
     def index
       respond_to do |format|
@@ -45,7 +47,7 @@ module Admin
       respond_to do |format|
         if @order_cycle.save
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-
+          invoke_callbacks(:create, :after)
           flash[:notice] = I18n.t(:order_cycles_create_notice)
           format.html { redirect_to admin_order_cycles_path }
           format.json { render :json => {:success => true} }
@@ -65,6 +67,7 @@ module Admin
             # Only update apply exchange information if it is actually submmitted
             OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
           end
+          invoke_callbacks(:update, :after)
           flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
           format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
           format.json { render :json => {:success => true}  }
@@ -186,12 +189,23 @@ module Admin
     def check_editable_schedule_ids
       return unless params[:order_cycle][:schedule_ids]
       requested = params[:order_cycle][:schedule_ids].map(&:to_i)
-      existing = @order_cycle.schedule_ids
-      permitted = Schedule.where(id: requested | existing).merge(OpenFoodNetwork::Permissions.new(spree_current_user).editable_schedules).pluck(:id)
-      result = existing
+      @existing_schedule_ids = @order_cycle.persisted? ? @order_cycle.schedule_ids : []
+      permitted = Schedule.where(id: requested | @existing_schedule_ids).merge(OpenFoodNetwork::Permissions.new(spree_current_user).editable_schedules).pluck(:id)
+      result = @existing_schedule_ids
       result |= (requested & permitted) # add any requested & permitted ids
       result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
       params[:order_cycle][:schedule_ids] = result
+    end
+
+    def sync_standing_orders
+      return unless params[:order_cycle][:schedule_ids]
+      removed_ids = @existing_schedule_ids - @order_cycle.schedule_ids
+      new_ids = @order_cycle.schedule_ids - @existing_schedule_ids
+      if removed_ids.any? || new_ids.any?
+        Schedule.where(id: removed_ids + new_ids).each do |schedule|
+          Delayed::Job.enqueue StandingOrderSyncJob.new(schedule)
+        end
+      end
     end
 
     def ams_prefix_whitelist
