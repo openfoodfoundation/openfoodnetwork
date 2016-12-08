@@ -12,9 +12,9 @@ class OrderCycleOpenCloseJob
   def recently_opened_order_cycles
     return @recently_opened_order_cycles unless @recently_opened_order_cycles.nil?
     @recently_opened_order_cycles =
-      OrderCycle.where(
-        'orders_open_at BETWEEN (?) AND (?) AND standing_orders_placed_at IS NULL',
-        10.minutes.ago, Time.now
+      OrderCycle.active.where(
+        'standing_orders_placed_at IS NULL AND (orders_open_at BETWEEN (?) AND (?) OR updated_at BETWEEN (?) AND (?))',
+        10.minutes.ago, Time.now, 10.minutes.ago, Time.now
       )
   end
 end
