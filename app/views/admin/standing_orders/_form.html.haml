@@ -1,25 +1,19 @@
 %form.margin-bottom-50{ name: 'standing_order_form', novalidate: true, ng: { submit: 'save()' } }
-  %save-bar{ dirty: "standing_order_form.$dirty", persist: 'true', ng: { show: "view == 'review'" } }
-    %input.red{ type: "submit", value: "#{t('admin.standing_orders.create')}", ng: { hide: "standingOrder.id" } }
-    %input.red{ type: "submit", value: "#{t(:save_changes)}", ng: { show: "standingOrder.id", disabled: 'standing_order_form.$pristine' } }
+  %save-bar{ persist: 'true' }
+    %input{ type: "button", value: t(:back), ng: { click: 'back()', show: '!!backCallbacks[view]'} }
+    %input.red{ type: "button", value: t(:next), ng: { click: 'next()', show: '!!nextCallbacks[view]' } }
+    %input.red{ type: "submit", value: "#{t('admin.standing_orders.create')}", ng: { show: "view=='review' && !standingOrder.id" } }
+    %input.red{ type: "submit", value: "#{t(:save_changes)}", ng: { show: "view=='review' && standingOrder.id", disabled: 'standing_order_form.$pristine' } }
 
   .details{ ng: { show: "['details','review'].indexOf(view) >= 0" } }
     %ng-form{ name: 'standing_order_details_form', ng: { controller: 'DetailsController' } }
-      %save-bar{ dirty: "standing_order_details_form.$dirty", persist: 'true', ng: { hide: "view == 'review'" } }
-        %input.red{ type: "button", value: t(:next), ng: { click: 'next()' } }
       = render 'details'
 
   .address{ ng: { show: "['address','review'].indexOf(view) >= 0" } }
     %ng-form{ name: 'standing_order_address_form', ng: { controller: 'AddressController' } }
-      %save-bar{ dirty: "standing_order_address_form.$dirty", persist: 'true', ng: { hide: "view == 'review'" } }
-        %input{ type: "button", value: t(:back), ng: { click: "back()" } }
-        %input.red{ type: "button", value: t(:next), ng: { click: 'next()' } }
       = render 'address'
 
   .products{ ng: { show: "['products','review'].indexOf(view) >= 0" } }
     %ng-form{ name: 'standing_order_products_form', ng: { controller: 'ProductsController' } }
-      %save-bar{ dirty: "standing_order_products_form.$dirty", persist: 'true', ng: { hide: "view == 'review'" } }
-        %input{ type: "button", value: t(:back), ng: { click: "back()" } }
-        %input.red{ type: "button", value: t(:next), ng: { click: 'next()' } }
     = render :partial => "spree/admin/variants/autocomplete", :formats => :js
     = render 'products'

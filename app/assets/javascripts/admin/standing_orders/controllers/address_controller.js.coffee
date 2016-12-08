@@ -7,7 +7,7 @@ angular.module("admin.standingOrders").controller "AddressController", ($scope, 
   $scope.billStates = $scope.statesFor($scope.standingOrder.bill_address.country_id)
   $scope.shipStates = $scope.statesFor($scope.standingOrder.ship_address.country_id)
 
-  $scope.next = ->
+  $scope.registerNextCallback 'address', ->
     $scope.submitted = true
     if $scope.standing_order_address_form.$valid
       StatusMessage.clear()
@@ -16,7 +16,9 @@ angular.module("admin.standingOrders").controller "AddressController", ($scope, 
       StatusMessage.display 'failure', t('admin.standing_orders.details.invalid_error')
 
 
-  $scope.back = -> $scope.setView('details')
+  $scope.registerBackCallback 'address', ->
+    StatusMessage.clear()
+    $scope.setView('details')
 
   $scope.$watch 'standingOrder.bill_address.country_id', (newValue, oldValue) ->
     $scope.billStates = $scope.statesFor(newValue) if newValue?

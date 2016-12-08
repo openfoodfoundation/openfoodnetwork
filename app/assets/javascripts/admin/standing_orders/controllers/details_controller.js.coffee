@@ -1,7 +1,7 @@
 angular.module("admin.standingOrders").controller "DetailsController", ($scope, StatusMessage) ->
   $scope.submitted = false
 
-  $scope.next = ->
+  $scope.registerNextCallback 'details', ->
     $scope.submitted = true
     if $scope.standing_order_details_form.$valid
       StatusMessage.clear()
