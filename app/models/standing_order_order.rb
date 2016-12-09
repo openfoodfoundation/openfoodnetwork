@@ -6,6 +6,7 @@ class StandingOrderOrder < ActiveRecord::Base
 
   scope :closed, -> { joins(order: :order_cycle).merge(OrderCycle.closed) }
   scope :not_closed, -> { joins(order: :order_cycle).merge(OrderCycle.not_closed) }
+  scope :not_canceled, where('standing_order_orders.canceled_at IS NULL')
 
   def state
     return 'canceled' if canceled?
