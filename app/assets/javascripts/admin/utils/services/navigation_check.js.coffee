@@ -1,5 +1,5 @@
 angular.module("admin.utils")
-  .factory "NavigationCheck", ($window, $rootScope) ->
+  .factory "NavigationCheck", ($window, $rootScope, FormState) ->
     new class NavigationCheck
       callbacks = []
       constructor: ->
@@ -9,7 +9,6 @@ angular.module("admin.utils")
           $window.onbeforeunload = @onBeforeUnloadHandler
 
         $rootScope.$on "$locationChangeStart", @locationChangeStartHandler
-
 
       # Action for regular browser navigation.
       onBeforeUnloadHandler: ($event) =>

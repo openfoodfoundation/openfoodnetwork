@@ -81,6 +81,7 @@ en-GB:
     tag_has_rules: "Existing rules for this tag: %{num}"
     has_one_rule: "has one rule"
     has_n_rules: "has %{num} rules"
+    unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     customers:
       index:
         add_customer: "Add Customer"
