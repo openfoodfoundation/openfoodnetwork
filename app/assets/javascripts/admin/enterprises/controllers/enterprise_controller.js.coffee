@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, $window, NavigationCheck, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
+  .controller "enterpriseCtrl", ($scope, $window, NavigationCheck, FormState, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
     $scope.Enterprise = enterprise
     $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
@@ -11,6 +11,7 @@ angular.module("admin.enterprises")
     $scope.StatusMessage = StatusMessage
 
     $scope.$watch 'enterprise_form.$dirty', (newValue) ->
+      FormState.isDirty = newValue;
       StatusMessage.display 'notice', 'You have unsaved changes' if newValue
 
     $scope.setFormDirty = ->
@@ -29,8 +30,8 @@ angular.module("admin.enterprises")
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
     # and on all new uses of this contoller, and we might not want that.
     enterpriseNavCallback = ->
-      if $scope.Enterprise.$dirty
-        "Your changes to the enterprise are not saved yet."
+      if FormState.isDirty
+        t('admin.unsaved_confirm_leave')
 
     # Register the NavigationCheck callback
     NavigationCheck.register(enterpriseNavCallback)

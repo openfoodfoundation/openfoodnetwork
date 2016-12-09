@@ -4,7 +4,11 @@
   Editing:
   = @enterprise.name
 
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.enterprises'"
+
 - content_for :page_actions do
+  %li= select :enterprise, :id, options_for_select(managed_enterprises.collect {|e| [e.name, e.id, {:'data-url' => "#{main_app.edit_admin_enterprise_path(e.permalink)}", :'ng-selected' => "selected==#{e.id}"}]}, @enterprise.id ), {}, {:'enterprise-switcher' => '', 'data-initial' => "#{@enterprise.id}", :'ng-init' => "selected='#{@enterprise.id}'", :'ng-model' => 'selected', :id => 'enterprise_switcher', :class => 'select2'}
   %li= button_link_to "Back to enterprises list", main_app.admin_enterprises_path, icon: 'icon-arrow-left'
 
 
