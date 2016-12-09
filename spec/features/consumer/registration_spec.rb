@@ -124,11 +124,11 @@ feature "Registration", js: true do
       it "does not allow registration unless checkbox is checked" do
         visit registration_path
 
-        page.should have_content('Terms of Service')
-        page.should have_selector("input.button.primary[disabled]")
+        expect(page).to have_content "Terms of Service"
+        expect(page).to have_selector "input.button.primary[disabled]"
 
         check 'accept_terms'
-        page.should_not have_selector("input.button.primary[disabled]")
+        expect(page).to_not have_selector "input.button.primary[disabled]"
 
         click_button "Let's get started!"
         find("div#progress-bar").visible?.should be_true
