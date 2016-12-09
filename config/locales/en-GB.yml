@@ -43,7 +43,7 @@ en-GB:
   monthly_cap_excl_tax: "monthly cap (excl. VAT)"
   capped_at_cap: "capped at %{cap}"
   per_month: "per month"
-  free: "free"
+  free: "pay what you can"
   free_trial: "free trial"
   plus_tax: "plus VAT"
   total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. VAT)"
