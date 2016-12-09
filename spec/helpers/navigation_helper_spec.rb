@@ -19,6 +19,14 @@ module Spree
         it "returns Spree::Order for bulk_order_management" do
           helper.klass_for('bulk_order_management').should == Spree::Order
         end
+
+        it "returns EnterpriseGroup for group" do
+          helper.klass_for('group').should == EnterpriseGroup
+        end
+
+        it "returns VariantOverride for Inventory" do
+          helper.klass_for('Inventory').should == VariantOverride
+        end
       end
     end
   end
