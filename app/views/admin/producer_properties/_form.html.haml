@@ -4,8 +4,8 @@
   %table.index.sortable{"data-hook" => "", "data-sortable-link" => main_app.update_positions_admin_enterprise_producer_properties_url(@enterprise)}
     %thead
       %tr{"data-hook" => "producer_properties_header"}
-        %th{colspan: "2"} Property
-        %th Value
+        %th{colspan: "2"}= t('admin.products.properties.property_name')
+        %th= t('admin.description')
         %th.actions
     %tbody#producer_properties{"data-hook" => ""}
       = f.fields_for :producer_properties do |pp_form|
