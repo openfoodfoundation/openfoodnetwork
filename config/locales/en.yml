@@ -109,6 +109,7 @@ en:
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
+    description: Description
 
     whats_this: What's this?
 
@@ -225,6 +226,9 @@ en:
         av_on: "Av. On"
       variants:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
+      properties:
+        property_name: Property Name
+        inherited_property: Inherited Property
 
     variant_overrides:
       loading_flash:

@@ -9,8 +9,8 @@
   %table.index
     %thead
       %tr{"data-hook" => "producer_properties_header"}
-        %th= t(:inherited_property)
-        %th= t(:value)
+        %th= t('admin.products.properties.inherited_property')
+        %th= t('admin.description')
         %th.actions
     %tbody#producer_properties{"data-hook" => ""}
       - @product.supplier.producer_properties.each do |producer_property|
