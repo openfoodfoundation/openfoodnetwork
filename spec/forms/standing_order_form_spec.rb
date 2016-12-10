@@ -206,17 +206,36 @@ describe StandingOrderForm do
   describe "changing the quantity of a line item" do
     let(:standing_order) { create(:standing_order_with_items) }
     let(:sli) { standing_order.standing_line_items.first }
-    let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 4} ] } }
-    let(:form) { StandingOrderForm.new(standing_order, params) }
+    let(:variant) { sli.variant }
 
-    before { form.send(:initialise_orders!) }
+    before { variant.update_attribute(:count_on_hand, 2) }
 
-    it "updates the line_item quantities and totals on all orders" do
-      expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
-      form.save
-      line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
-      expect(line_items.map(&:quantity)).to eq [4]
-      expect(standing_order.orders.first.reload.total.to_f).to eq 119.94
+    context "when quantity is less than available stock" do
+      let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 2} ] } }
+      let(:form) { StandingOrderForm.new(standing_order, params) }
+      before { form.send(:initialise_orders!) }
+
+      it "updates the line_item quantities and totals on all orders" do
+        expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+        form.save
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
+        expect(line_items.map(&:quantity)).to eq [2]
+        expect(standing_order.orders.first.reload.total.to_f).to eq 79.96
+      end
+    end
+
+    context "when quantity is greater than available stock" do
+      let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 3} ] } }
+      let(:form) { StandingOrderForm.new(standing_order, params) }
+      before { form.send(:initialise_orders!) }
+
+      it "updates the line_item quantities and totals on all orders" do
+        expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+        form.save
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
+        expect(line_items.map(&:quantity)).to eq [3]
+        expect(standing_order.orders.first.reload.total.to_f).to eq 99.95
+      end
     end
   end
 
