@@ -7,8 +7,12 @@ Spree::LineItem.class_eval do
   # Redefining here to add the inverse_of option
   belongs_to :order, :class_name => "Spree::Order", inverse_of: :line_items
 
+  # Allows manual skipping of stock_availability check
+  attr_accessor :skip_stock_check
+
   attr_accessible :max_quantity, :final_weight_volume, :price
   attr_accessible :final_weight_volume, :price, :as => :api
+  attr_accessible :skip_stock_check
 
   before_save :calculate_final_weight_volume, if: :quantity_changed?, unless: :final_weight_volume_changed?
   after_save :update_units
@@ -138,6 +142,13 @@ Spree::LineItem.class_eval do
   end
 
   private
+
+  # Override of Spree validation method
+  # Added check for in-memory :skip_stock_check attribute
+  def stock_availability
+    return if skip_stock_check || sufficient_stock?
+    errors.add(:quantity, I18n.t('validation.exceeds_available_stock'))
+  end
 
   def scoper
 	  return @scoper unless @scoper.nil?
