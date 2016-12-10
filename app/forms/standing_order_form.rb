@@ -6,7 +6,7 @@ class StandingOrderForm
   attr_accessor :standing_order, :params, :fee_calculator
 
   delegate :orders, :order_cycles, :bill_address, :ship_address, :standing_line_items, to: :standing_order
-  delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :standing_order_orders, to: :standing_order
+  delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :proxy_orders, to: :standing_order
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
   delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
 
@@ -114,7 +114,7 @@ class StandingOrderForm
   end
 
   def remove_obsolete_orders!
-    standing_order_orders.where(order_id: obsolete_orders).destroy_all
+    proxy_orders.where(order_id: obsolete_orders).destroy_all
   end
 
   def obsolete_orders

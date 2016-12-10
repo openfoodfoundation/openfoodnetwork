@@ -15,7 +15,7 @@ class StandingOrderConfirmJob
 
   def orders
     Spree::Order.complete.where(order_cycle_id: order_cycle)
-    .merge(StandingOrderOrder.not_canceled).joins(:standing_order_order).readonly(false)
+    .merge(ProxyOrder.not_canceled).joins(:proxy_order).readonly(false)
   end
 
   def process(order)

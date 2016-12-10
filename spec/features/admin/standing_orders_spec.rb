@@ -77,16 +77,16 @@ feature 'Standing Orders' do
         # expect(page).to have_selector ".standing-order-orders"
 
         within ".standing-order-orders" do
-          expect(page).to have_selector "tr.standing_order_order", count: 1
+          expect(page).to have_selector "tr.proxy_order", count: 1
 
-          standing_order_order = standing_order.standing_order_orders.first
-          within "tr#o_#{standing_order_order.id}" do
+          proxy_order = standing_order.proxy_orders.first
+          within "tr#o_#{proxy_order.id}" do
             expect(page).to_not have_content 'CANCELLED'
             accept_alert 'Are you sure?' do
               find("a.cancel-order").trigger('click')
             end
             expect(page).to have_content 'CANCELLED'
-            expect(standing_order_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+            expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
 
             # Resuming an order
             accept_alert 'Are you sure?' do
@@ -94,7 +94,7 @@ feature 'Standing Orders' do
             end
             # Note: the order itself was not complete when 'cancelled', so state remained as cart
             expect(page).to have_content 'CART'
-            expect(standing_order_order.reload.canceled_at).to be nil
+            expect(proxy_order.reload.canceled_at).to be nil
           end
         end
 

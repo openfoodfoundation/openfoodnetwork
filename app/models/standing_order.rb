@@ -8,8 +8,8 @@ class StandingOrder < ActiveRecord::Base
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: Spree::Address
   has_many :standing_line_items, inverse_of: :standing_order
   has_many :order_cycles, through: :schedule
-  has_many :standing_order_orders
-  has_many :orders, through: :standing_order_orders
+  has_many :proxy_orders
+  has_many :orders, through: :proxy_orders
 
   alias_attribute :billing_address, :bill_address
   alias_attribute :shipping_address, :ship_address
@@ -28,18 +28,18 @@ class StandingOrder < ActiveRecord::Base
   scope :not_paused, where('standing_orders.paused_at IS NULL')
   scope :active, -> { not_canceled.not_ended.not_paused.where('standing_orders.begins_at <= (?)', Time.zone.now) }
 
-  def closed_standing_order_orders
-    standing_order_orders.closed
+  def closed_proxy_orders
+    proxy_orders.closed
   end
 
-  def not_closed_standing_order_orders
-    standing_order_orders.not_closed
+  def not_closed_proxy_orders
+    proxy_orders.not_closed
   end
 
   def cancel
     transaction do
       self.update_column(:canceled_at, Time.zone.now)
-      standing_order_orders.each(&:cancel)
+      proxy_orders.each(&:cancel)
       true
     end
   end

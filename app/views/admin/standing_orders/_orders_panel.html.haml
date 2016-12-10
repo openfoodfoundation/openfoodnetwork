@@ -1,4 +1,4 @@
-%script{ type: "text/ng-template", id: "admin/panels/standing_order_orders.html" }
+%script{ type: "text/ng-template", id: "admin/panels/proxy_orders.html" }
   %form.margin-top-30{ name: 'standing_order_form', ng: { controller: 'OrdersPanelController' } }
     .row.standing-order-orders
       .fourteen.columns.offset-by-one
@@ -15,7 +15,7 @@
             %th= t('total')
             %th.actions
           %tbody
-            %tr.standing_order_order{ :id => "o_{{order.id}}", ng: { repeat: 'order in standingOrder.not_closed_standing_order_orders' } }
+            %tr.proxy_order{ :id => "o_{{order.id}}", ng: { repeat: 'order in standingOrder.not_closed_proxy_orders' } }
               %td
                 %a{ ng: { href: "{{::order.edit_path}}", bind: '::order.number' }, target: '_blank' }
               %td
