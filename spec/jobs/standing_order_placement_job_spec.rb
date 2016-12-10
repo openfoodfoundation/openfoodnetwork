@@ -78,6 +78,8 @@ describe StandingOrderPlacementJob do
     end
 
     it "moves orders to completion, but does not process the payment" do
+      # If this spec starts complaining about no shipping methods being available
+      # on CI, there is probably another spec resetting the currency though Rails.cache.clear
       order = standing_order1.orders.first
       ActionMailer::Base.deliveries.clear
       expect{job.send(:process, order)}.to change{order.reload.completed_at}.from(nil)
