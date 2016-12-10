@@ -14,11 +14,11 @@ describe StandingOrderConfirmJob do
     let(:order3) { create(:order, order_cycle: order_cycle2, completed_at: 5.minutes.ago) } # Complete + Linked + OC Mismatch
     let(:order4) { create(:order, order_cycle: order_cycle1, completed_at: 5.minutes.ago) } # Complete + Linked + OC Matches + Cancelled
     let(:order5) { create(:order, order_cycle: order_cycle1, completed_at: 5.minutes.ago) } # Complete + Linked + OC Matches
-    let(:cancelled_standing_order_order) { standing_order1.standing_order_orders.find_by_order_id(order4.id) }
+    let(:cancelled_proxy_order) { standing_order1.proxy_orders.find_by_order_id(order4.id) }
 
     before do
       standing_order1.orders = [order1, order3, order4, order5]
-      cancelled_standing_order_order.update_attribute(:canceled_at, 1.minute.ago)
+      cancelled_proxy_order.update_attribute(:canceled_at, 1.minute.ago)
     end
 
     it "only returns incomplete orders in the relevant order cycle that are linked to a standing order" do

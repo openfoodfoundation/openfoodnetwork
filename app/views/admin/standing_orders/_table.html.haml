@@ -43,7 +43,7 @@
       %td.items.panel-toggle.text-center{ name: 'products', ng: { show: 'columns.items.visible' } }
         %h5{ ng: { bind: 'itemCount(standingOrder)' } }
       %td.orders.panel-toggle.text-center{ name: 'orders', ng: { show: 'columns.orders.visible' } }
-        %h5{ ng: { bind: 'standingOrder.not_closed_standing_order_orders.length + standingOrder.closed_standing_order_orders.length' } }
+        %h5{ ng: { bind: 'standingOrder.not_closed_proxy_orders.length + standingOrder.closed_proxy_orders.length' } }
       %td.status.text-center{ ng: { show: 'columns.state.visible' } }
         %span.state{ ng: { class: "standingOrder.state", bind: "'spree.standing_order_state.' + standingOrder.state | t" } }
       %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_at' } }
@@ -56,4 +56,4 @@
         %a.unpause-standing-order.icon-play.no-text{ ng: { click: 'standingOrder.unpause()', show: '!!standingOrder.paused_at' }, 'ofn-with-tip' => t('.unpause_standing_order') , href: 'javascript:void(0)' }
         %a.cancel-standing-order.icon-remove.no-text{ ng: { click: 'standingOrder.cancel()', hide: '!!standingOrder.canceled_at'}, 'ofn-with-tip' => t('.cancel_standing_order') , href: 'javascript:void(0)' }
 
-    %tr.panel-row{ object: "standingOrder", panels: "{products: 'standing_order_products', orders: 'standing_order_orders'}" }
+    %tr.panel-row{ object: "standingOrder", panels: "{products: 'standing_order_products', orders: 'proxy_orders'}" }

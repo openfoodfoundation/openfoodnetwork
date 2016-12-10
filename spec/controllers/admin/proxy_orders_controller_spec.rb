@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::StandingOrderOrdersController, type: :controller do
+describe Admin::ProxyOrdersController, type: :controller do
   include AuthenticationWorkflow
 
   describe 'cancel' do
@@ -9,14 +9,14 @@ describe Admin::StandingOrderOrdersController, type: :controller do
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
     let!(:order) { create(:order, order_cycle: order_cycle) }
     let!(:standing_order) { create(:standing_order_with_items, shop: shop, orders: [order]) }
-    let!(:standing_order_order) { standing_order.standing_order_orders.first }
+    let!(:proxy_order) { standing_order.proxy_orders.first }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
     end
 
     context 'json' do
-      let(:params) { { format: :json, id: standing_order_order.id } }
+      let(:params) { { format: :json, id: proxy_order.id } }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
@@ -40,12 +40,12 @@ describe Admin::StandingOrderOrdersController, type: :controller do
           before { shop.update_attributes(owner: user) }
 
           context "when cancellation succeeds" do
-            it 'renders the cancelled standing_order_order as json' do
+            it 'renders the cancelled proxy_order as json' do
               spree_get :cancel, params
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "canceled"
-              expect(json_response['id']).to eq standing_order_order.id
-              expect(standing_order_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+              expect(json_response['id']).to eq proxy_order.id
+              expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
             end
           end
 
@@ -70,18 +70,18 @@ describe Admin::StandingOrderOrdersController, type: :controller do
     let!(:payment_method) { create(:payment_method) }
     let!(:order) { create(:order, shipping_method: create(:shipping_method), order_cycle: order_cycle) }
     let!(:standing_order) { create(:standing_order_with_items, shop: shop, orders: [order]) }
-    let!(:standing_order_order) { standing_order.standing_order_orders.first }
+    let!(:proxy_order) { standing_order.proxy_orders.first }
 
     before do
       # Processing order to completion
       while !order.completed? do break unless order.next! end
-      standing_order_order.update_attribute(:canceled_at, Time.zone.now)
+      proxy_order.update_attribute(:canceled_at, Time.zone.now)
       order.cancel
       allow(controller).to receive(:spree_current_user) { user }
     end
 
     context 'json' do
-      let(:params) { { format: :json, id: standing_order_order.id } }
+      let(:params) { { format: :json, id: proxy_order.id } }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
@@ -105,12 +105,12 @@ describe Admin::StandingOrderOrdersController, type: :controller do
           before { shop.update_attributes(owner: user) }
 
           context "when resuming succeeds" do
-            it 'renders the resumed standing_order_order as json' do
+            it 'renders the resumed proxy_order as json' do
               spree_get :resume, params
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "resumed"
-              expect(json_response['id']).to eq standing_order_order.id
-              expect(standing_order_order.reload.canceled_at).to be nil
+              expect(json_response['id']).to eq proxy_order.id
+              expect(proxy_order.reload.canceled_at).to be nil
             end
           end
 

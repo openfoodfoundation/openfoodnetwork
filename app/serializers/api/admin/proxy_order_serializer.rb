@@ -1,4 +1,4 @@
-class Api::Admin::StandingOrderOrderSerializer < ActiveModel::Serializer
+class Api::Admin::ProxyOrderSerializer < ActiveModel::Serializer
   attributes :id, :state, :edit_path, :number, :completed_at, :order_cycle_id, :total
 
   def total
