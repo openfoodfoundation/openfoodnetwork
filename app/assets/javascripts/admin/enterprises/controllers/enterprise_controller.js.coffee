@@ -39,7 +39,7 @@ angular.module("admin.enterprises")
       if manager.id?
         for i, user of $scope.Enterprise.users when user.id == manager.id
           $scope.Enterprise.users.splice i, 1
-        $scope.enterprise_form.$setDirty()
+        $scope.enterprise_form.$dirty = true
 
     $scope.addManager = (manager) ->
       if manager.id? and manager.email?
