@@ -535,5 +535,24 @@ module Spree
         }.to change(Spree::OptionValue, :count).by(0)
       end
     end
+
+    describe "checking stock availability" do
+      let(:line_item) { LineItem.new }
+
+      context "when skip_stock_check is not set" do
+        it "checks stock" do
+          expect(line_item).to receive(:sufficient_stock?) { true }
+          line_item.send(:stock_availability)
+        end
+      end
+
+      context "when skip_stock_check is set to true" do
+        before { line_item.skip_stock_check = true }
+        it "does not check stock" do
+          expect(line_item).to_not receive(:sufficient_stock?)
+          line_item.send(:stock_availability)
+        end
+      end
+    end
   end
 end
