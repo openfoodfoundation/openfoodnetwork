@@ -100,6 +100,8 @@ fr:
         select_country: 'Choisir le pays'
         select_state: 'Choisir le département'
         edit: 'Modifier'
+        update_address: 'Mettre à jour l''adresse'
+        confirm_delete: 'Confirmer suppression?'
     products:
       bulk_edit:
         unit: Unité
@@ -162,11 +164,15 @@ fr:
         status: Statut
         manage: Gérer
       form:
-        primary_details:
-          shopfront_requires_login: "Cette boutique exige un login?"
-          shopfront_requires_login_tip: "Les acheteurs doivent-ils se connecter pour accéder à la boutique?"
-          shopfront_requires_login_false: "Public"
-          shopfront_requires_login_true: "Demander aux acheteurs de se connecter"
+        shop_preferences:
+          shopfront_requires_login: "Boutique visible par tous?"
+          shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir la boutique ou si la boutique est visible par tout le monde."
+          shopfront_requires_login_false: "Visible par tous"
+          shopfront_requires_login_true: "Visible uniquement pour les acheteurs logués"
+          allow_guest_orders: "Commandes des invités"
+          allow_guest_orders_tip: "Autoriser la commande en tant qu'invité ou demander que l'acheteur soit logué (l'acheteur doit avoir ou se créer un compte sur Open Food France)"
+          allow_guest_orders_false: "Demander que l'acheteur se logue pour pouvoir commander"
+          allow_guest_orders_true: "Autoriser les commandes en mode invité"
   home:
     hubs:
       show_closed_shops: "Aficher les boutiques fermées"
@@ -318,7 +324,9 @@ fr:
   checkout_as_guest: "Régler en mode invité"
   checkout_details: "Vos informations"
   checkout_billing: "Informations de facturation"
+  checkout_default_bill_address: "Sauvegarder comme adresse de facturation par défaut"
   checkout_shipping: Informations de livraison
+  checkout_default_ship_address: "Sauvegarder comme adresse de livraison par défaut"
   checkout_method_free: Gratuit
   checkout_address_same: Adresse de livraison identique à l'adresse de facturation?
   checkout_ready_for: "Prêt pour:"
@@ -959,6 +967,7 @@ fr:
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
   validation_msg_is_associated_with_an_exising_customer: "est associé à un acheteur existant"
   spree:
+    zipcode: Code postal
     shipment_states:
       backorder: réapprovisionnement
       partial: partiel
