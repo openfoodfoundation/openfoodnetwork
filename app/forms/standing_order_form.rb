@@ -65,34 +65,11 @@ class StandingOrderForm
     @future_and_undated_orders = orders.joins(:order_cycle).merge(OrderCycle.not_closed).readonly(false)
   end
 
-  def create_order_for(order_cycle_id)
-    order = Spree::Order.create!({
-      customer_id: customer_id,
-      email: customer.email,
-      order_cycle_id: order_cycle_id,
-      distributor_id: shop_id,
-      shipping_method_id: shipping_method_id,
-    })
-    standing_line_items.each do |sli|
-      order.line_items.build(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: true)
-    end
-    order.update_attributes(bill_address: bill_address.dup, ship_address: ship_address.dup)
-    order.update_distribution_charge!
-    create_payment_for(order)
-
-    order.save
-    order
-  end
-
-  def create_payment_for(order)
-    order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)
-  end
-
   def update_payment_for(order)
     payment = order.payments.with_state('checkout').where(payment_method_id: payment_method_id_was).last
     if payment
       payment.andand.void_transaction!
-      create_payment_for(order)
+      order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)
     end
   end
 
@@ -106,7 +83,9 @@ class StandingOrderForm
 
   def initialise_proxy_orders!
     uninitialised_order_cycle_ids.each do |order_cycle_id|
-      proxy_orders << ProxyOrder.new(standing_order: standing_order, order_cycle_id: order_cycle_id, order: create_order_for(order_cycle_id))
+      proxy_order = proxy_orders.build(standing_order: standing_order, order_cycle_id: order_cycle_id)
+      proxy_order.initialise_order!
+      proxy_order.save! unless standing_order.new_record?
     end
   end
 
