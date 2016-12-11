@@ -574,7 +574,7 @@ describe Spree::Order do
     end
 
     it "does not send confirmation emails when the order belongs to a standing order" do
-      create(:standing_order_with_items, orders: [order])
+      create(:proxy_order, order: order)
 
       expect do
         order.deliver_order_confirmation_email

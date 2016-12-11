@@ -7,7 +7,7 @@ describe Admin::ProxyOrdersController, type: :controller do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
-    let!(:standing_order) { create(:standing_order_with_items, shop: shop) }
+    let!(:standing_order) { create(:standing_order, shop: shop, with_items: true) }
     let!(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
 
     before do
@@ -68,7 +68,7 @@ describe Admin::ProxyOrdersController, type: :controller do
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
     let!(:payment_method) { create(:payment_method) }
     let!(:shipping_method) { create(:shipping_method) }
-    let!(:standing_order) { create(:standing_order_with_items, shop: shop) }
+    let!(:standing_order) { create(:standing_order, shop: shop, with_items: true) }
     let!(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
     let(:order) { proxy_order.order }
 

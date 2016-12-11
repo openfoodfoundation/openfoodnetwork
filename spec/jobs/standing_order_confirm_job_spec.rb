@@ -5,7 +5,7 @@ describe StandingOrderConfirmJob do
   let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop) }
   let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop) }
   let(:schedule1) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
-  let(:standing_order1) { create(:standing_order_with_items, shop: shop, schedule: schedule1) }
+  let(:standing_order1) { create(:standing_order, shop: shop, schedule: schedule1, with_items: true) }
   let!(:job) { StandingOrderConfirmJob.new(order_cycle1) }
 
   describe "finding standing_order orders for the specified order cycle" do
@@ -27,11 +27,10 @@ describe StandingOrderConfirmJob do
   end
 
   describe "processing an order" do
-    let(:order) { standing_order1.orders.first }
+    let(:proxy_order) { create(:proxy_order, standing_order: standing_order1) }
+    let(:order) { proxy_order.order }
 
     before do
-      form = StandingOrderForm.new(standing_order1)
-      form.send(:initialise_proxy_orders!)
       while !order.completed? do break unless order.next! end
       allow(job).to receive(:send_confirm_email).and_call_original
       Spree::MailMethod.create!(

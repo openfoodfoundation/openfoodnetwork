@@ -46,11 +46,10 @@ describe ProxyOrder, type: :model do
   end
 
   describe "resume" do
-    let(:order_cycle) { create(:simple_order_cycle) }
     let!(:payment_method) { create(:payment_method) }
-    let(:standing_order) { create(:standing_order) }
     let(:order) { create(:order_with_totals, shipping_method: create(:shipping_method)) }
-    let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order: order, order_cycle: order_cycle) }
+    let(:proxy_order) { create(:proxy_order, order: order) }
+    let(:order_cycle) { proxy_order.order_cycle}
 
 
     before do
@@ -105,7 +104,7 @@ describe ProxyOrder, type: :model do
   end
 
   describe "initialising an the order" do
-    let(:standing_order) { create(:standing_order_with_items) }
+    let(:standing_order) { create(:standing_order, with_items: true) }
     let!(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
 
     it "builds a new order based the standing order" do
