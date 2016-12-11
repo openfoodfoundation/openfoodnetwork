@@ -356,7 +356,7 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
 
   create_table "proxy_orders", :force => true do |t|
     t.integer  "standing_order_id", :null => false
-    t.integer  "order_id",          :null => false
+    t.integer  "order_id"
     t.datetime "canceled_at"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
