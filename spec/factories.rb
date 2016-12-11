@@ -139,8 +139,8 @@ FactoryGirl.define do
   end
 
   factory :standing_order, :class => StandingOrder do
-    shop { FactoryGirl.create :enterprise }
-    schedule { FactoryGirl.create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
+    shop { create :enterprise }
+    schedule { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
     customer { create(:customer, enterprise: shop) }
     bill_address { create(:address) }
     ship_address { create(:address) }
@@ -150,7 +150,7 @@ FactoryGirl.define do
 
     ignore do
       with_items false
-      with_orders false
+      with_proxy_orders false
     end
 
     after(:create) do |standing_order, proxy|
@@ -163,7 +163,7 @@ FactoryGirl.define do
         end
       end
 
-      if proxy.with_orders
+      if proxy.with_proxy_orders
         standing_order.order_cycles.each do |oc|
           standing_order.proxy_orders << create(:proxy_order, standing_order: standing_order, order_cycle: oc)
         end
@@ -181,8 +181,9 @@ FactoryGirl.define do
     standing_order
     order_cycle { standing_order.order_cycles.first }
     before(:create) do |proxy_order, proxy|
-      proxy_order.initialise_order! unless proxy_order.order
-      proxy_order.order.update_attribute(:order_cycle_id, proxy_order.order_cycle_id)
+      if proxy_order.order
+        proxy_order.order.update_attribute(:order_cycle_id, proxy_order.order_cycle_id)
+      end
     end
   end
 

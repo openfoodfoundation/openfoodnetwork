@@ -3,7 +3,7 @@ class ProxyOrder < ActiveRecord::Base
   belongs_to :standing_order
   belongs_to :order_cycle
 
-  delegate :number, :completed_at, :total, to: :order
+  delegate :number, :completed_at, :total, to: :order, allow_nil: true
 
   scope :closed, -> { joins(order: :order_cycle).merge(OrderCycle.closed) }
   scope :not_closed, -> { joins(order: :order_cycle).merge(OrderCycle.not_closed) }
@@ -51,6 +51,7 @@ class ProxyOrder < ActiveRecord::Base
     order.update_distribution_charge!
     order.payments.create(payment_method_id: standing_order.payment_method_id, amount: order.reload.total)
 
-    order.save!
+    save!
+    order
   end
 end

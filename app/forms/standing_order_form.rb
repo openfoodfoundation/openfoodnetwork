@@ -47,7 +47,7 @@ class StandingOrderForm
 
       future_and_undated_orders.each(&:save)
 
-      standing_order.save
+      raise ActiveRecord::Rollback unless standing_order.save
     end
   end
 
@@ -83,9 +83,7 @@ class StandingOrderForm
 
   def initialise_proxy_orders!
     uninitialised_order_cycle_ids.each do |order_cycle_id|
-      proxy_order = proxy_orders.build(standing_order: standing_order, order_cycle_id: order_cycle_id)
-      proxy_order.initialise_order!
-      proxy_order.save! unless standing_order.new_record?
+      proxy_orders << ProxyOrder.new(standing_order: standing_order, order_cycle_id: order_cycle_id)
     end
   end
 
