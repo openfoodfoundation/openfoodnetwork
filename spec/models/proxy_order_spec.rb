@@ -3,14 +3,14 @@ require 'spec_helper'
 describe ProxyOrder, type: :model do
   describe "cancel" do
     let(:order_cycle) { create(:simple_order_cycle) }
-    let(:standing_order) { create(:standing_order, orders: [order]) }
-    let(:proxy_order) { standing_order.proxy_orders.first }
+    let(:standing_order) { create(:standing_order) }
 
-    context "when the order cycle for the order is not yet closed" do
+    context "when the order cycle is not yet closed" do
       before { order_cycle.update_attributes(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
 
       context "and the order has already been completed" do
-        let(:order) { create(:completed_order_with_totals, order_cycle: order_cycle) }
+        let(:order) { create(:completed_order_with_totals) }
+        let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order: order, order_cycle: order_cycle) }
 
         it "returns true and sets canceled_at to the current time, and cancels the order" do
           expect(proxy_order.cancel).to be true
@@ -20,7 +20,8 @@ describe ProxyOrder, type: :model do
       end
 
       context "and the order has not already been completed" do
-        let(:order) { create(:order, order_cycle: order_cycle) }
+        let(:order) { create(:order) }
+        let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order: order, order_cycle: order_cycle) }
 
         it "returns true and sets canceled_at to the current time" do
           expect(proxy_order.cancel).to be true
@@ -30,20 +31,11 @@ describe ProxyOrder, type: :model do
       end
     end
 
-    context "when the order cycle for the order is already closed" do
-      let(:order) { create(:order, order_cycle: order_cycle) }
+    context "when the order cycle is already closed" do
+      let(:order) { create(:order) }
+      let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order: order, order_cycle: order_cycle) }
 
       before { order_cycle.update_attributes(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
-
-      it "returns false and does nothing" do
-        expect(proxy_order.cancel).to be false
-        expect(proxy_order.reload.canceled_at).to be nil
-        expect(order.reload.state).to eq 'cart'
-      end
-    end
-
-    context "when the order cycle for the order does not exist" do
-      let(:order) { create(:order) }
 
       it "returns false and does nothing" do
         expect(proxy_order.cancel).to be false
@@ -56,9 +48,10 @@ describe ProxyOrder, type: :model do
   describe "resume" do
     let(:order_cycle) { create(:simple_order_cycle) }
     let!(:payment_method) { create(:payment_method) }
-    let(:order) { create(:order_with_totals, shipping_method: create(:shipping_method), order_cycle: order_cycle) }
-    let(:standing_order) { create(:standing_order, orders: [order]) }
-    let(:proxy_order) { standing_order.proxy_orders.first }
+    let(:standing_order) { create(:standing_order) }
+    let(:order) { create(:order_with_totals, shipping_method: create(:shipping_method)) }
+    let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order: order, order_cycle: order_cycle) }
+
 
     before do
       # Processing order to completion
@@ -66,7 +59,7 @@ describe ProxyOrder, type: :model do
       proxy_order.update_attribute(:canceled_at, Time.zone.now)
     end
 
-    context "when the order cycle for the order is not yet closed" do
+    context "when the order cycle is not yet closed" do
       before { order_cycle.update_attributes(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
 
       context "and the order has already been cancelled" do
@@ -88,7 +81,7 @@ describe ProxyOrder, type: :model do
       end
     end
 
-    context "when the order cycle for the order is already closed" do
+    context "when the order cycle is already closed" do
       before { order_cycle.update_attributes(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
 
       context "and the order has been cancelled" do

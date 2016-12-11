@@ -21,8 +21,8 @@ class StandingOrderForm
       validate_price_estimates
       standing_order.assign_attributes(params)
 
-      initialise_orders!
-      remove_obsolete_orders!
+      initialise_proxy_orders!
+      remove_obsolete_proxy_orders!
 
       orders.update_all(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
 
@@ -80,6 +80,7 @@ class StandingOrderForm
     order.update_distribution_charge!
     create_payment_for(order)
 
+    order.save
     order
   end
 
@@ -103,24 +104,24 @@ class StandingOrderForm
     end
   end
 
-  def initialise_orders!
+  def initialise_proxy_orders!
     uninitialised_order_cycle_ids.each do |order_cycle_id|
-      orders << create_order_for(order_cycle_id)
+      proxy_orders << ProxyOrder.new(standing_order: standing_order, order_cycle_id: order_cycle_id, order: create_order_for(order_cycle_id))
     end
   end
 
   def uninitialised_order_cycle_ids
-    not_closed_in_range_order_cycles.pluck(:id) - orders.map(&:order_cycle_id)
+    not_closed_in_range_order_cycles.pluck(:id) - proxy_orders.map(&:order_cycle_id)
   end
 
-  def remove_obsolete_orders!
-    proxy_orders.where(order_id: obsolete_orders).destroy_all
+  def remove_obsolete_proxy_orders!
+    obsolete_proxy_orders.destroy_all
   end
 
-  def obsolete_orders
+  def obsolete_proxy_orders
     in_range_order_cycle_ids = in_range_order_cycles.pluck(:id)
-    return orders unless in_range_order_cycle_ids.any?
-    orders.where('order_cycle_id NOT IN (?)', in_range_order_cycle_ids)
+    return proxy_orders unless in_range_order_cycle_ids.any?
+    proxy_orders.where('order_cycle_id NOT IN (?)', in_range_order_cycle_ids)
   end
 
   def not_closed_in_range_order_cycles

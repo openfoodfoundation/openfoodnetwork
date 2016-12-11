@@ -166,6 +166,16 @@ FactoryGirl.define do
     quantity 1
   end
 
+  factory :proxy_order, :class => ProxyOrder do
+    standing_order
+    order
+    order_cycle
+    after(:create) do |proxy_order, proxy|
+      proxy_order.order.order_cycle = proxy_order.order_cycle
+      proxy_order.order.save!
+    end
+  end
+
   factory :variant_override, :class => VariantOverride do
     price         77.77
     count_on_hand 11111

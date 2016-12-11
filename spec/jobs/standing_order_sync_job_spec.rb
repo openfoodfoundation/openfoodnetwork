@@ -31,14 +31,14 @@ describe StandingOrderSyncJob do
     before do
       allow(job).to receive(:standing_orders) { [standing_order] }
       allow(StandingOrderForm).to receive(:new) { form }
-      allow(form).to receive(:initialise_orders!)
-      allow(form).to receive(:remove_obsolete_orders!)
+      allow(form).to receive(:initialise_proxy_orders!)
+      allow(form).to receive(:remove_obsolete_proxy_orders!)
     end
 
-    it "calls initialize_orders! and remove_obsolete_orders! on each form" do
+    it "calls initialize_orders! and remove_obsolete_proxy_orders! on each form" do
       job.perform
-      expect(form).to have_received(:initialise_orders!).once
-      expect(form).to have_received(:remove_obsolete_orders!).once
+      expect(form).to have_received(:initialise_proxy_orders!).once
+      expect(form).to have_received(:remove_obsolete_proxy_orders!).once
     end
   end
 end

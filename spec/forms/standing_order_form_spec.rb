@@ -96,7 +96,7 @@ describe StandingOrderForm do
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     before do
-      form.send(:initialise_orders!)
+      form.send(:initialise_proxy_orders!)
       form.save
     end
 
@@ -116,12 +116,12 @@ describe StandingOrderForm do
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     context "when the shipping method on an order is the same as the standing order" do
-      before { form.send(:initialise_orders!) }
+      before { form.send(:initialise_proxy_orders!) }
 
       it "updates the shipping_method on the order and on shipments" do
         expect(order.shipments.first.shipping_method).to eq shipping_method
         form.save
-        expect(order.shipping_method).to eq new_shipping_method
+        expect(order.reload.shipping_method).to eq new_shipping_method
         expect(order.shipments.first.shipping_method).to eq new_shipping_method
       end
     end
@@ -130,7 +130,7 @@ describe StandingOrderForm do
       let(:changed_shipping_method) { create(:shipping_method) }
 
       before do
-        form.send(:initialise_orders!)
+        form.send(:initialise_proxy_orders!)
         # Updating the shipping method on a shipment updates the shipping method on the order,
         # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
         # behaviour.
@@ -155,7 +155,7 @@ describe StandingOrderForm do
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     context "when the payment method on an order is the same as the standing order" do
-      before { form.send(:initialise_orders!) }
+      before { form.send(:initialise_proxy_orders!) }
 
       it "voids existing payments and creates a new payment with the relevant payment method" do
         expect(order.payments.reload.first.payment_method).to eq payment_method
@@ -173,7 +173,7 @@ describe StandingOrderForm do
       let(:changed_payment_method) { create(:payment_method) }
 
       before do
-        form.send(:initialise_orders!)
+        form.send(:initialise_proxy_orders!)
         order.payments.first.update_attribute(:payment_method_id, changed_payment_method.id)
         form.save
       end
@@ -191,7 +191,7 @@ describe StandingOrderForm do
     let(:params) { { begins_at: 1.year.from_now, ends_at: 2.years.from_now } }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
-    before { form.send(:initialise_orders!) }
+    before { form.send(:initialise_proxy_orders!) }
 
     it "removes orders outside the newly specified date range" do
       expect(standing_order.reload.orders.count).to be 1
@@ -213,7 +213,7 @@ describe StandingOrderForm do
     context "when quantity is less than available stock" do
       let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 2} ] } }
       let(:form) { StandingOrderForm.new(standing_order, params) }
-      before { form.send(:initialise_orders!) }
+      before { form.send(:initialise_proxy_orders!) }
 
       it "updates the line_item quantities and totals on all orders" do
         expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
@@ -227,7 +227,7 @@ describe StandingOrderForm do
     context "when quantity is greater than available stock" do
       let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 3} ] } }
       let(:form) { StandingOrderForm.new(standing_order, params) }
-      before { form.send(:initialise_orders!) }
+      before { form.send(:initialise_proxy_orders!) }
 
       it "updates the line_item quantities and totals on all orders" do
         expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
@@ -248,7 +248,7 @@ describe StandingOrderForm do
 
     before do
       order_cycle.variants << variant
-      form.send(:initialise_orders!)
+      form.send(:initialise_proxy_orders!)
     end
 
     it "add the line item and updates the total on all orders" do
@@ -267,7 +267,7 @@ describe StandingOrderForm do
     let(:params) { { standing_line_items_attributes: [ { id: sli.id, _destroy: true } ] } }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
-    before { form.send(:initialise_orders!) }
+    before { form.send(:initialise_proxy_orders!) }
 
     it "removes the line item and updates totals on all orders" do
       expect(standing_order.orders.first.reload.total.to_f).to eq 59.97

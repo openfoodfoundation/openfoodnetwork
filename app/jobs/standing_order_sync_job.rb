@@ -8,8 +8,8 @@ class StandingOrderSyncJob
   def perform
     standing_orders.each do |standing_order|
       form = StandingOrderForm.new(standing_order)
-      form.send(:initialise_orders!)
-      form.send(:remove_obsolete_orders!)
+      form.send(:initialise_proxy_orders!)
+      form.send(:remove_obsolete_proxy_orders!)
     end
   end
 
