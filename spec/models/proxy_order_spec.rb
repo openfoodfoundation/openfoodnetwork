@@ -109,6 +109,7 @@ describe ProxyOrder, type: :model do
 
     it "builds a new order based the standing order" do
       expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
+      expect(proxy_order.reload.order).to be_a Spree::Order
       order = proxy_order.order
       expect(order.line_items.count).to eq standing_order.standing_line_items.count
       expect(order.distributor).to eq standing_order.shop
@@ -119,6 +120,23 @@ describe ProxyOrder, type: :model do
       expect(order.bill_address).to eq standing_order.bill_address
       expect(order.ship_address).to eq standing_order.ship_address
       expect(order.complete?).to be false
+    end
+
+    context "when a requested quantity is greater than available stock" do
+      let(:sli) { standing_order.standing_line_items.first }
+      let(:variant) { sli.variant }
+
+      before do
+        variant.update_attribute(:count_on_hand, 2)
+        sli.update_attribute(:quantity, 5)
+      end
+
+      it "initialises the order with the requested quantity regardless" do
+        expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
+        expect(proxy_order.reload.order).to be_a Spree::Order
+        order = proxy_order.order
+        expect(order.line_items.find_by_variant_id(variant.id).quantity).to eq 5
+      end
     end
   end
 end

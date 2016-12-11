@@ -46,16 +46,16 @@ describe StandingOrderForm do
       Spree::Config.set allow_backorders: false
       form.save
 
-      expect(standing_order.orders.count).to be 2
+      expect(standing_order.proxy_orders.count).to be 2
 
       # This order cycle has already closed, so no order is initialized
-      order1 = standing_order.orders.find_by_order_cycle_id(order_cycle1.id)
-      expect(order1).to be nil
+      proxy_order1 = standing_order.proxy_orders.find_by_order_cycle_id(order_cycle1.id)
+      expect(proxy_order1).to be nil
 
       # Currently open order cycle, closing after begins_at and before ends_at
-      # Note: Quantity for variant3 is 3, despite available stock being 1
-      order2 = standing_order.orders.find_by_order_cycle_id(order_cycle2.id)
-      expect(order2).to be_a Spree::Order
+      proxy_order2 = standing_order.proxy_orders.find_by_order_cycle_id(order_cycle2.id)
+      expect(proxy_order2).to be_a ProxyOrder
+      order2 = proxy_order2.initialise_order!
       expect(order2.line_items.count).to be 3
       expect(order2.line_items.find_by_variant_id(variant3.id).quantity).to be 3
       expect(order2.shipments.count).to be 1
@@ -68,8 +68,9 @@ describe StandingOrderForm do
 
       # Future order cycle, closing after begins_at and before ends_at
       # Adds line items for variants that aren't yet available from the order cycle
-      # Note: Quantity for variant3 is 3, despite available stock being 1
-      order3 = standing_order.orders.find_by_order_cycle_id(order_cycle3.id)
+      proxy_order3 = standing_order.proxy_orders.find_by_order_cycle_id(order_cycle3.id)
+      expect(proxy_order3).to be_a ProxyOrder
+      order3 = proxy_order3.initialise_order!
       expect(order3).to be_a Spree::Order
       expect(order3.line_items.count).to be 3
       expect(order2.line_items.find_by_variant_id(variant3.id).quantity).to be 3
@@ -82,35 +83,35 @@ describe StandingOrderForm do
       expect(order3.completed?).to be false
 
       # Future order cycle closing after ends_at
-      order4 = standing_order.orders.find_by_order_cycle_id(order_cycle4.id)
-      expect(order4).to be nil
+      proxy_order4 = standing_order.proxy_orders.find_by_order_cycle_id(order_cycle4.id)
+      expect(proxy_order4).to be nil
     end
   end
 
   describe "making a change that causes an error" do
-    let(:standing_order) { create(:standing_order, with_items: true, with_orders: true) }
-    let(:shipping_method) { standing_order.shipping_method }
-    let(:invalid_shipping_method) { create(:shipping_method, distributors: [create(:enterprise)]) }
-    let(:order) { standing_order.orders.first }
-    let(:params) { { shipping_method_id: invalid_shipping_method.id } }
-    let(:form) { StandingOrderForm.new(standing_order, params) }
+    let!(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
+    let!(:order) { standing_order.proxy_orders.first.initialise_order! }
+    let!(:shipping_method) { standing_order.shipping_method }
+    let!(:invalid_shipping_method) { create(:shipping_method, distributors: [create(:enterprise)]) }
+    let!(:params) { { shipping_method_id: invalid_shipping_method.id } }
+    let!(:form) { StandingOrderForm.new(standing_order, params) }
 
     before do
       form.save
     end
 
     it "does not update standing_order or associated orders" do
-      expect(order.shipping_method).to eq shipping_method
+      expect(order.reload.shipping_method).to eq shipping_method
       expect(order.shipments.first.shipping_method).to eq shipping_method
       expect(form.json_errors.keys).to eq [:shipping_method]
     end
   end
 
   describe "changing the shipping method" do
-    let(:standing_order) { create(:standing_order, with_items: true, with_orders: true) }
+    let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
+    let(:order) { standing_order.proxy_orders.first.initialise_order! }
     let(:shipping_method) { standing_order.shipping_method }
     let(:new_shipping_method) { create(:shipping_method, distributors: [standing_order.shop]) }
-    let(:order) { standing_order.orders.first }
     let(:params) { { shipping_method_id: new_shipping_method.id } }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
@@ -143,8 +144,8 @@ describe StandingOrderForm do
   end
 
   describe "changing the payment method" do
-    let(:standing_order) { create(:standing_order, with_items: true, with_orders: true) }
-    let(:order) { standing_order.orders.first }
+    let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
+    let(:order) { standing_order.proxy_orders.first.initialise_order! }
     let(:payment_method) { standing_order.payment_method }
     let(:new_payment_method) { create(:payment_method, distributors: [standing_order.shop]) }
     let(:params) { { payment_method_id: new_payment_method.id } }
@@ -180,22 +181,28 @@ describe StandingOrderForm do
   end
 
   describe "changing begins_at" do
-    let(:standing_order) { create(:standing_order, begins_at: Time.zone.now, with_items: true, with_orders: true) }
+    let(:standing_order) { create(:standing_order, begins_at: Time.zone.now, with_items: true, with_proxy_orders: true) }
     let(:params) { { begins_at: 1.year.from_now, ends_at: 2.years.from_now } }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
-    it "removes orders outside the newly specified date range" do
+    before { standing_order.proxy_orders.each(&:initialise_order!) }
+
+    it "removes orders outside the newly specified date range, recreates proxy orders" do
+      expect(standing_order.reload.proxy_orders.count).to be 1
       expect(standing_order.reload.orders.count).to be 1
       form.save
+      expect(standing_order.reload.proxy_orders.count).to be 0
       expect(standing_order.reload.orders.count).to be 0
       form.params = { begins_at: 1.month.ago }
       form.save
-      expect(standing_order.reload.orders.count).to be 1
+      expect(standing_order.reload.proxy_orders.count).to be 1
+      expect(standing_order.reload.orders.count).to be 0
     end
   end
 
   describe "changing the quantity of a line item" do
-    let(:standing_order) { create(:standing_order, with_items: true, with_orders: true) }
+    let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
+    let(:order) { standing_order.proxy_orders.first.initialise_order! }
     let(:sli) { standing_order.standing_line_items.first }
     let(:variant) { sli.variant }
 
@@ -206,11 +213,11 @@ describe StandingOrderForm do
       let(:form) { StandingOrderForm.new(standing_order, params) }
 
       it "updates the line_item quantities and totals on all orders" do
-        expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+        expect(order.reload.total.to_f).to eq 59.97
         form.save
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
         expect(line_items.map(&:quantity)).to eq [2]
-        expect(standing_order.orders.first.reload.total.to_f).to eq 79.96
+        expect(order.reload.total.to_f).to eq 79.96
       end
     end
 
@@ -219,48 +226,48 @@ describe StandingOrderForm do
       let(:form) { StandingOrderForm.new(standing_order, params) }
 
       it "updates the line_item quantities and totals on all orders" do
-        expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+        expect(order.reload.total.to_f).to eq 59.97
         form.save
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
         expect(line_items.map(&:quantity)).to eq [3]
-        expect(standing_order.orders.first.reload.total.to_f).to eq 99.95
+        expect(order.reload.total.to_f).to eq 99.95
       end
     end
   end
 
   describe "adding a new line item" do
-    let!(:standing_order) { create(:standing_order, with_items: true, with_orders: true) }
-    let!(:variant) { create(:variant) }
-    let!(:order_cycle) { standing_order.schedule.order_cycles.first }
-    let!(:params) { { standing_line_items_attributes: [ { id: nil, variant_id: variant.id, quantity: 1} ] } }
-    let!(:form) { StandingOrderForm.new(standing_order, params) }
-
-    before do
-      order_cycle.variants << variant
-    end
+    let(:variant) { create(:variant) }
+    let(:shop) { create(:enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle, variants: [variant], coordinator: shop, distributors: [shop]) }
+    let(:schedule) { create(:schedule, order_cycles: [order_cycle] )}
+    let(:standing_order) { create(:standing_order, schedule: schedule, shop: shop, with_items: true, with_proxy_orders: true) }
+    let(:order) { standing_order.proxy_orders.first.initialise_order! }
+    let(:params) { { standing_line_items_attributes: [ { id: nil, variant_id: variant.id, quantity: 1} ] } }
+    let(:form) { StandingOrderForm.new(standing_order, params) }
 
     it "add the line item and updates the total on all orders" do
-      expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+      expect(order.reload.total.to_f).to eq 59.97
       form.save
       line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
       expect(line_items.map(&:quantity)).to eq [1]
-      expect(standing_order.orders.first.reload.total.to_f).to eq 79.96
+      expect(order.reload.total.to_f).to eq 79.96
     end
   end
 
   describe "removing an existing line item" do
-    let(:standing_order) { create(:standing_order, with_items: true, with_orders: true) }
+    let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
+    let(:order) { standing_order.proxy_orders.first.initialise_order! }
     let(:sli) { standing_order.standing_line_items.first }
     let(:variant) { sli.variant}
     let(:params) { { standing_line_items_attributes: [ { id: sli.id, _destroy: true } ] } }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     it "removes the line item and updates totals on all orders" do
-      expect(standing_order.orders.first.reload.total.to_f).to eq 59.97
+      expect(order.reload.total.to_f).to eq 59.97
       form.save
       line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
       expect(line_items.count).to be 0
-      expect(standing_order.orders.first.reload.total.to_f).to eq 39.98
+      expect(order.reload.total.to_f).to eq 39.98
     end
   end
 
