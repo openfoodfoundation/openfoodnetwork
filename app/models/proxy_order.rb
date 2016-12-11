@@ -1,6 +1,7 @@
 class ProxyOrder < ActiveRecord::Base
   belongs_to :order, class_name: 'Spree::Order', dependent: :destroy
   belongs_to :standing_order
+  belongs_to :order_cycle
 
   delegate :number, :order_cycle_id, :completed_at, :total, to: :order
 
@@ -18,7 +19,7 @@ class ProxyOrder < ActiveRecord::Base
   end
 
   def cancel
-    return false unless order.order_cycle.andand.orders_close_at.andand > Time.zone.now
+    return false unless order_cycle.orders_close_at.andand > Time.zone.now
     transaction do
       self.update_column(:canceled_at, Time.zone.now)
       order.send('cancel')
@@ -27,7 +28,7 @@ class ProxyOrder < ActiveRecord::Base
   end
 
   def resume
-    return false unless order.order_cycle.orders_close_at > Time.zone.now
+    return false unless order_cycle.orders_close_at.andand > Time.zone.now
     transaction do
       self.update_column(:canceled_at, nil)
       order.send('resume')

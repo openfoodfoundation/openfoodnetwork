@@ -377,9 +377,8 @@ describe Admin::StandingOrdersController, type: :controller do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
-    let!(:order) { create(:order, order_cycle: order_cycle) }
-    let!(:standing_order) { create(:standing_order_with_items, shop: shop, orders: [order]) }
-    let!(:proxy_order) { standing_order.proxy_orders.first }
+    let!(:standing_order) { create(:standing_order_with_items, shop: shop) }
+    let!(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }

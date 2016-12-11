@@ -19,9 +19,9 @@ feature 'Standing Orders' do
 
       before do
         # initialise standing orders
-        StandingOrderForm.new(standing_order).send(:initialise_orders!)
-        StandingOrderForm.new(standing_order2).send(:initialise_orders!)
-        StandingOrderForm.new(standing_order_unmanaged).send(:initialise_orders!)
+        StandingOrderForm.new(standing_order).send(:initialise_proxy_orders!)
+        StandingOrderForm.new(standing_order2).send(:initialise_proxy_orders!)
+        StandingOrderForm.new(standing_order_unmanaged).send(:initialise_proxy_orders!)
       end
 
       it "passes the smoke test" do

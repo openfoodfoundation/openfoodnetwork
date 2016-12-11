@@ -87,9 +87,9 @@ describe StandingOrder, type: :model do
   end
 
   describe "cancel" do
-    let!(:standing_order) { create(:standing_order, orders: [create(:order), create(:order)]) }
-    let!(:proxy_order1) { standing_order.proxy_orders.first }
-    let!(:proxy_order2) { standing_order.proxy_orders.last }
+    let!(:standing_order) { create(:standing_order) }
+    let!(:proxy_order1) { create(:proxy_order, order_cycle: create(:simple_order_cycle)) }
+    let!(:proxy_order2) { create(:proxy_order, order_cycle: create(:simple_order_cycle)) }
 
     before do
       allow(standing_order).to receive(:proxy_orders) { [proxy_order1, proxy_order2] }
