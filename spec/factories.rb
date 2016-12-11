@@ -147,15 +147,26 @@ FactoryGirl.define do
     payment_method { create(:payment_method, distributors: [shop]) }
     shipping_method { create(:shipping_method, distributors: [shop]) }
     begins_at { 1.month.ago }
-  end
 
-  factory :standing_order_with_items, parent: :standing_order do |standing_order|
+    ignore do
+      with_items false
+      with_orders false
+    end
+
     after(:create) do |standing_order, proxy|
-      standing_order.standing_line_items = build_list(:standing_line_item, 3, standing_order: standing_order)
-      standing_order.schedule.order_cycles.each do |oc|
-        ex = oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(standing_order.shop_id, standing_order.shop_id) ||
-          create(:exchange, :order_cycle => oc, :sender => standing_order.shop, :receiver => standing_order.shop, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
-        standing_order.standing_line_items.each { |sli| ex.variants << sli.variant }
+      if proxy.with_items
+        standing_order.standing_line_items = build_list(:standing_line_item, 3, standing_order: standing_order)
+        standing_order.order_cycles.each do |oc|
+          ex = oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(standing_order.shop_id, standing_order.shop_id) ||
+            create(:exchange, :order_cycle => oc, :sender => standing_order.shop, :receiver => standing_order.shop, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
+          standing_order.standing_line_items.each { |sli| ex.variants << sli.variant }
+        end
+      end
+
+      if proxy.with_orders
+        standing_order.order_cycles.each do |oc|
+          standing_order.proxy_orders << create(:proxy_order, standing_order: standing_order, order_cycle: oc)
+        end
       end
     end
   end
@@ -168,11 +179,10 @@ FactoryGirl.define do
 
   factory :proxy_order, :class => ProxyOrder do
     standing_order
-    order
-    order_cycle
-    after(:create) do |proxy_order, proxy|
-      proxy_order.order.order_cycle = proxy_order.order_cycle
-      proxy_order.order.save!
+    order_cycle { standing_order.order_cycles.first }
+    before(:create) do |proxy_order, proxy|
+      proxy_order.initialise_order! unless proxy_order.order
+      proxy_order.order.update_attribute(:order_cycle_id, proxy_order.order_cycle_id)
     end
   end
 

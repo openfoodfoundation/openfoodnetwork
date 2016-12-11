@@ -9,11 +9,11 @@ describe StandingOrderSyncJob do
   let(:job) { StandingOrderSyncJob.new(schedule1) }
 
   describe "finding standing_orders for the specified schedule" do
-    let!(:standing_order1) { create(:standing_order_with_items, shop: shop, schedule: schedule1) }
-    let!(:standing_order2) { create(:standing_order_with_items, shop: shop, schedule: schedule1, paused_at: 1.minute.ago) }
-    let!(:standing_order3) { create(:standing_order_with_items, shop: shop, schedule: schedule1, canceled_at: 1.minute.ago) }
-    let!(:standing_order4) { create(:standing_order_with_items, shop: shop, schedule: schedule1, begins_at: 1.minute.from_now) }
-    let!(:standing_order5) { create(:standing_order_with_items, shop: shop, schedule: schedule1, ends_at: 1.minute.ago) }
+    let!(:standing_order1) { create(:standing_order, with_items: true, shop: shop, schedule: schedule1) }
+    let!(:standing_order2) { create(:standing_order, with_items: true, shop: shop, schedule: schedule1, paused_at: 1.minute.ago) }
+    let!(:standing_order3) { create(:standing_order, with_items: true, shop: shop, schedule: schedule1, canceled_at: 1.minute.ago) }
+    let!(:standing_order4) { create(:standing_order, with_items: true, shop: shop, schedule: schedule1, begins_at: 1.minute.from_now) }
+    let!(:standing_order5) { create(:standing_order, with_items: true, shop: shop, schedule: schedule1, ends_at: 1.minute.ago) }
 
     it "only returns incomplete orders in the relevant order cycle that are linked to a standing order" do
       standing_orders = job.send(:standing_orders)
