@@ -2,6 +2,11 @@ module Admin
   class ProxyOrdersController < ResourceController
     respond_to :json
 
+    def edit
+      @proxy_order.initialise_order! unless @proxy_order.order
+      redirect_to spree.edit_admin_order_path(@proxy_order.order)
+    end
+
     def cancel
       if @proxy_order.cancel
         respond_with(@proxy_order) do |format|
