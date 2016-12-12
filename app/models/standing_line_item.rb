@@ -12,5 +12,9 @@ class StandingLineItem < ActiveRecord::Base
     .any?
   end
 
+  def total_estimate
+    (price_estimate || 0) * (quantity || 0)
+  end
+
   default_scope order('id ASC')
 end
