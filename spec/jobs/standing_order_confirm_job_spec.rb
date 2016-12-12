@@ -28,7 +28,7 @@ describe StandingOrderConfirmJob do
 
   describe "processing an order" do
     let(:proxy_order) { create(:proxy_order, standing_order: standing_order1) }
-    let(:order) { proxy_order.order }
+    let(:order) { proxy_order.initialise_order! }
 
     before do
       while !order.completed? do break unless order.next! end
