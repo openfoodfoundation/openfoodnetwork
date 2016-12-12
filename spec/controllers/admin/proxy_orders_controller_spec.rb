@@ -70,7 +70,7 @@ describe Admin::ProxyOrdersController, type: :controller do
     let!(:shipping_method) { create(:shipping_method) }
     let!(:standing_order) { create(:standing_order, shop: shop, with_items: true) }
     let!(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
-    let(:order) { proxy_order.order }
+    let(:order) { proxy_order.initialise_order! }
 
     before do
       # Processing order to completion

@@ -67,9 +67,9 @@ describe StandingOrderPlacementJob do
   end
 
   describe "processing a standing order order" do
-    let(:standing_order) { create(:standing_order, with_orders: true, with_items: true) }
-    let(:proxy_order) { standing_order.proxy_orders.first }
-    let!(:order) { proxy_order.order }
+    let(:standing_order) { create(:standing_order, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
+    let!(:order) { proxy_order.initialise_order! }
     let(:changes) { {} }
 
     let!(:job) { StandingOrderPlacementJob.new(proxy_order.order_cycle) }

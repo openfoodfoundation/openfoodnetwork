@@ -13,9 +13,9 @@ feature 'Standing Orders' do
     before { quick_login_as user }
 
     context 'listing standing orders' do
-      let!(:standing_order) { create(:standing_order, shop: shop, with_items: true, with_orders: true) }
-      let!(:standing_order2) { create(:standing_order, shop: shop2, with_items: true, with_orders: true) }
-      let!(:standing_order_unmanaged) { create(:standing_order, shop: shop_unmanaged, with_items: true, with_orders: true) }
+      let!(:standing_order) { create(:standing_order, shop: shop, with_items: true, with_proxy_orders: true) }
+      let!(:standing_order2) { create(:standing_order, shop: shop2, with_items: true, with_proxy_orders: true) }
+      let!(:standing_order_unmanaged) { create(:standing_order, shop: shop_unmanaged, with_items: true, with_proxy_orders: true) }
 
       it "passes the smoke test" do
         visit spree.admin_path

@@ -5,13 +5,13 @@ class ProxyOrder < ActiveRecord::Base
 
   delegate :number, :completed_at, :total, to: :order, allow_nil: true
 
-  scope :closed, -> { joins(order: :order_cycle).merge(OrderCycle.closed) }
-  scope :not_closed, -> { joins(order: :order_cycle).merge(OrderCycle.not_closed) }
+  scope :closed, -> { joins(:order_cycle).merge(OrderCycle.closed) }
+  scope :not_closed, -> { joins(:order_cycle).merge(OrderCycle.not_closed) }
   scope :not_canceled, where('proxy_orders.canceled_at IS NULL')
 
   def state
     return 'canceled' if canceled?
-    order.state
+    order ? order.state : 'cart'
   end
 
   def canceled?
@@ -22,7 +22,7 @@ class ProxyOrder < ActiveRecord::Base
     return false unless order_cycle.orders_close_at.andand > Time.zone.now
     transaction do
       self.update_column(:canceled_at, Time.zone.now)
-      order.send('cancel')
+      order.send('cancel') if order
       true
     end
   end
@@ -31,7 +31,7 @@ class ProxyOrder < ActiveRecord::Base
     return false unless order_cycle.orders_close_at.andand > Time.zone.now
     transaction do
       self.update_column(:canceled_at, nil)
-      order.send('resume')
+      order.send('resume') if order
       true
     end
   end

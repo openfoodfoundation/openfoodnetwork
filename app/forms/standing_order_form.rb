@@ -48,6 +48,7 @@ class StandingOrderForm
       future_and_undated_orders.each(&:save)
 
       raise ActiveRecord::Rollback unless standing_order.save
+      true
     end
   end
 
