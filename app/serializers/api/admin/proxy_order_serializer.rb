@@ -10,6 +10,6 @@ class Api::Admin::ProxyOrderSerializer < ActiveModel::Serializer
   end
 
   def edit_path
-    spree.edit_admin_order_path(object.order)
+    edit_admin_proxy_order_path(object)
   end
 end

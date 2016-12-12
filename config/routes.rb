@@ -189,9 +189,9 @@ Openfoodnetwork::Application.routes.draw do
       post :build, on: :collection
     end
 
-    resources :proxy_orders, only: [], format: :json do
-      put :cancel, on: :member
-      put :resume, on: :member
+    resources :proxy_orders, only: [:edit] do
+      put :cancel, on: :member, format: :json
+      put :resume, on: :member, format: :json
     end
   end
 
