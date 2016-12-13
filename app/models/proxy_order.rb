@@ -37,6 +37,7 @@ class ProxyOrder < ActiveRecord::Base
   end
 
   def initialise_order!
+    return order if order.present?
     create_order!({
       customer_id: standing_order.customer_id,
       email: standing_order.customer.email,
