@@ -2,23 +2,23 @@
 
 .row
   .alpha.two.columns
-    = label_tag 'Ready for'
+    = label_tag t('.ready_for')
   .six.columns
-    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => 'Date / time', 'ng-model' => 'outgoing_exchange.pickup_time', 'size' => 30
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => t('.ready_for_placeholder'), 'ng-model' => 'outgoing_exchange.pickup_time', 'size' => 30
   .two.columns
-    = label_tag 'Customer instructions'
+    = label_tag t('.customer_instructions')
   .six.columns.omega
-    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_instructions', 'placeholder' => 'Pick-up or delivery notes', 'ng-model' => 'outgoing_exchange.pickup_instructions', 'size' => 30
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_instructions', 'placeholder' => t('.customer_instructions_placeholder'), 'ng-model' => 'outgoing_exchange.pickup_instructions', 'size' => 30
 
-= label_tag 'Products'
+= label_tag t('.products')
 %table.exchanges
   %tbody{ng: {repeat: "exchange in order_cycle.incoming_exchanges"}}
     %tr.products
       %td{ ng: { include: "'admin/panels/exchange_supplied_products.html'" } }
 
 %br/
-= label_tag 'Fees'
+= label_tag t('.fees')
 = render 'coordinator_fees', f: f
 
 .actions
-  %span{'ng-hide' => 'loaded()'} Loading...
+  %span{'ng-hide' => 'loaded()'}= t(:loading)

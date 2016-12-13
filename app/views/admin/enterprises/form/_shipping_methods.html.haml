@@ -2,8 +2,8 @@
   %table
     %thead
       %tr
-        %th Name
-        %th Applies?
+        %th= t('.name')
+        %th= t('.applies')
         %th
     %tbody
       - @shipping_methods.each do |shipping_method|
@@ -15,19 +15,19 @@
   .row
     .six.columns.alpha
       %a.button{ href: "#{admin_shipping_methods_path}"}
-        Manage Shipping Methods
+        = t('.manage')
         %i.icon-arrow-right
     .five.columns.omega.text-right
       %a.button{ href: "#{new_admin_shipping_method_path}"}
-        Create New Shipping Method
+        = t('.create_button')
         %i.icon-plus
 
 - else
   %p.text-center
-    You don't have any shipping methods yet.
+    = t('.no_method_yet')
 
   %br
   .text-center
     %a.button{ href: "#{new_admin_shipping_method_path}"}
-      Create One Now
+      = t('.create_one_button')
       %i.icon-arrow-right
