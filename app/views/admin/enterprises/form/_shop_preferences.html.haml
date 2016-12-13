@@ -5,7 +5,7 @@
     .eight.columns.omega
       %text-angular{'ng-model' => 'Enterprise.preferred_shopfront_message', 'id' => 'enterprise_preferred_shopfront_message', 'name' => 'enterprise[preferred_shopfront_message]', 'class' => 'text-angular',
         'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
-        'placeholder' => 'An optional explanation for customers detailing how your shopfront works, to be displayed above the product list on your shop page.'}
+        'placeholder' => t('.shopfront_message_placeholder')}
 .row
   .alpha.eleven.columns
     .three.columns.alpha
@@ -13,7 +13,7 @@
     .eight.columns.omega
       %text-angular{'ng-model' => 'Enterprise.preferred_shopfront_closed_message', 'id' => 'enterprise_preferred_shopfront_closed_message', 'name' => 'enterprise[preferred_shopfront_closed_message]', 'class' => 'text-angular',
         'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
-        'placeholder' => 'A message which provides a more detailed explanation about why your shop is closed and/or when customers can expect it to open again. This is displayed on your shop only when you have no active order cycles (ie. shop is closed).'}
+        'placeholder' => t('.shopfront_closed_message_placeholder')}
 .row
   .alpha.eleven.columns
     .three.columns.alpha
@@ -29,10 +29,10 @@
       = f.label "enterprise_preferred_shopfront_order_cycle_order", t(:sort_order_cycles_on_shopfront_by)
     .three.columns
       = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_open_at, { 'ng-model' => 'Enterprise.preferred_shopfront_order_cycle_order' }
-      = label :enterprise, :preferred_shopfront_order_cycle_order_orders_open_at, "Open Date"
+      = label :enterprise, :preferred_shopfront_order_cycle_order_orders_open_at, t('.open_date')
     .five.columns.omega
       = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_close_at, { 'ng-model' => 'Enterprise.preferred_shopfront_order_cycle_order' }
-      = label :enterprise, :preferred_shopfront_order_cycle_order_orders_close_at, "Close Date"
+      = label :enterprise, :preferred_shopfront_order_cycle_order_orders_close_at, t('.close_date')
 .row
   .alpha.eleven.columns
     .three.columns.alpha

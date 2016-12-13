@@ -6,10 +6,10 @@
       %tr
         %td
           %h5
-            By Default
+            = t('.by_default')
           %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/tag_rule_help.html' }
   .no_rules{ ng: { show: "defaultTagGroup.rules.length == 0" } }
-    No default rules apply yet
+    = t('.no_rules_yet')
   .tag_rule{ ng: { repeat: "rule in defaultTagGroup.rules" } }
   .add_rule.text-center
-    %input.button.icon-plus{ type: 'button', value: "+ Add A New Default Rule", "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true }
+    %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true }

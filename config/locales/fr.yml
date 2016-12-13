@@ -53,6 +53,17 @@ fr:
   say_yes: "Oui"
   then: puis
   sort_order_cycles_on_shopfront_by: "Trier les cycles de vente par"
+  required_fields: "Les champs obligatoires sont annotés d'une astérisque"
+  select_continue: Sélectionner et Continuer
+  remove: Supprimer
+  or: ou
+  collapse_all:  Réduire
+  expand_all: Etendre
+  loading: Chargement...
+  show_more: Voir plus
+  show_all: Voir tout
+  cancel: Annuler
+
   admin:
     date: Date
     email: Email
@@ -100,6 +111,27 @@ fr:
         select_country: 'Choisir le pays'
         select_state: 'Choisir le département'
         edit: 'Modifier'
+    cache_settings:
+      show:
+        distributor: Distributeur
+        order_cycle: Cycle de vente
+        status: Statut
+        diff: Diff
+    contents:
+      edit:
+        title: Contenu
+    enterprise_fees:
+      index:
+        title: Marges de l'entreprise
+        enterprise: Entreprise
+        fee_type: Type de marge
+        name: Nom
+        tax_category: TVA appliquée
+        calculator: Calculateur
+        calculator_values: Valeurs applicables
+    enterprise_groups:
+      index:
+        new_button: Nouveau groupe d'entreprise
     products:
       bulk_edit:
         unit: Unité
@@ -110,6 +142,8 @@ fr:
         available_on: Disponible sur
         av_on: "Disp. sur"
     variant_overrides:
+      loading_flash:
+        loading_inventory: LOADING INVENTORY
       index:
         title: Stock
         description: Utilisez cette page pour gérer le catalogue de votre entreprise. Les détails produits saisis ici remplaceront ceux de la page "Produit" pour votre entreprise uniquement.
@@ -162,11 +196,231 @@ fr:
         status: Statut
         manage: Gérer
       form:
+        about_us:
+          desc_short: Description courte
+          desc_short_placeholder: Dites nous à propos de votre entreprise en 2 lignes
+          desc_long: Description publique
+          desc_long_placeholder: Décrivez-vous à vos clients. Cette information apparaîtra sur votre profil public.
+        business_details:
+          abn: ABN
+          abn_placeholder: "ex: 99 123 456 789"
+          acn: ACN
+          acn_placeholder: "ex: 123 456 789"
+        contact:
+          name: Prénom/Nom
+          name_placeholder: "ex: Maurice Batot"
+          email_address: Email Address
+          email_address_placeholder: "ex: maurice@tomates.fr"
+          phone: Téléphone
+          phone_placeholder: "ex: 98 7654 3210"
+          website: Site Web
+          website_placeholder: "ex: www.tomates.fr"
+        enterprise_fees:
+          name: Nom
+          fee_type: Type de marge
+          manage_fees: Gérer vos marges
+          no_fees_yet: Vous n'avez pas encore de marges définies.
+          create_button: Créer une nouvelle marge
+        images:
+          logo: Logo
+          promo_image_placeholder: 'Cette image est affichée dans la partie "A Propos"'
+          promo_image_note1: 'NOTES :'
+          promo_image_note2: Toutes les images uploadées ici seront coupées pour 1200x260 pixels.
+          promo_image_note3: L'image promotionelle est affichée en haut de la page profil de l'entreprise et sur les pop-ups.
+        inventory_settings:
+          text1: Vous pouvez gérer votre stock et vos prix via votre
+          inventory: inventaire
+          text2: "If you are using the inventory tool, you can select whether new products \
+                 added by your suppliers need to be added to your inventory before they can be \
+                 stocked. If you are not using your inventory to manage your products you should \
+                 select the 'recommended' option below:"
+          preferred_product_selection_from_inventory_only_yes: Les nouveaux produits peuvent être mis dans mon magasin (Recommendé)
+          preferred_product_selection_from_inventory_only_no: Les nouveaux produits doivent être ajouté dans mon magasin avant de pouvoir être ajouté dans mon magasin
+        payment_methods:
+          name: Nom
+          applies: Applies?
+          manage: Gérer les moyens de paiement
+          not_method_yet: Vous n'avez encore aucun moyen de paiement.
+          create_button: Ajouter un nouveau moyen de paiement
+          create_one_button: Ajouter un nouveau moyen de paiement
         primary_details:
+          name: Nom
+          name_placeholder: 'ex: Les Oranges Bleues'
+          groups: Groupes
+          groups_tip: Select any groups or regions that you are a member of. This will help customers find your enterprise.
+          groups_placeholder: Commencer à taper dans rechercher les groupes disponibles...
+          primary_producer: Primary Producer
+          primary_producer_tip: Select 'Producer' if you are a primary producer of food.
+          producer: Producteur
+          any: Any
+          none: None
+          own: Own
+          sells: Sells
+          sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
+          visible_in_seach:  Visible dans la recherche?
+          visible_in_seach_tip: Determines whether this enterprise will be visible to customers when searching the site.
+          visible: Visible
+          not_visible: Pas visible
+          permalink: Lien (pas d'espace)
+          permalink_tip: "This permalink is used to create the url to your shop: {{link}} your-shop-name/shop"
+          link_to_front: Link to shop front
+          link_to_front_tip: A direct link to your shopfront on the Open Food Network.
+        shipping_methods:
+          name: Nom
+          applies: Applies?
+          manage: Gérer les moyens de livraison
+          create_button: Ajouter un nouveau moyen de livraison
+          create_one_button: Ajouter un nouveau moyen de livraison
+          no_method_yet: Vous n'avez encore aucun moyen de livraison défini.
+        shop_preferences:
           shopfront_requires_login: "Cette boutique exige un login?"
           shopfront_requires_login_tip: "Les acheteurs doivent-ils se connecter pour accéder à la boutique?"
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Demander aux acheteurs de se connecter"
+          allow_guest_orders: "Guest orders"
+          allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
+          allow_guest_orders_false: "Require login to order"
+          allow_guest_orders_true: "Allow guest checkout"
+          shopfront_message_placeholder: \
+            An optional explanation for customers detailing how your shopfront works, \
+            to be displayed above the product list on your shop page.
+          shopfront_closed_message_placeholder: \
+            A message which provides a more detailed explanation about why your shop is \
+            closed and/or when customers can expect it to open again. This is displayed \
+            on your shop only when you have no active order cycles (ie. shop is closed).
+          open_date: Open Date
+          close_date: Close Date
+        social:
+          twitter_placeholder: 'ex: @lesorangesbleues'
+        tag_rules:
+          default_rules:
+            by_default: Par défaut
+            no_rules_yet: Aucune règle encore ajoutée
+            add_new_button: + Ajouter une nouvelle règle
+          no_tags_yet: Aucun tag encore défini pour cette entreprise
+          no_rules_yet: Aucun régle encore définie pour ce tag
+          for_customers_tagged: 'For customers tagged:'
+          add_new_rule: '+ Ajouter une nouvelle régle'
+          add_new_tag: '+ Ajouter un nouveau tag'
+        users:
+          email_confirmation_text: Email confirmation is pending.<br />We've sent a confirmation email to
+          resend: Renvoyer
+          owner: Propriétaire
+          owner_tip: Le premier utilisateur responsable pour l'entreprise.
+          notifications: Notifications
+          notifications_tip: Notifications about orders will be send to this email address.
+          notifications_placeholder: 'ex: gustav@truffles.com'
+          notifications_note: 'Note: A new email address may need to be confirmed prior to use'
+          managers: Managers
+          managers_tip: The other users with permission to manage this enterprise.
+      actions:
+        edit_profile: Mettre à jour le profil
+        properties: Propriétés
+        payment_methods: Méthodes de paiement
+        payment_methods_tip: Cette entreprise n'a pas de méthode de paiement
+        shipping_methods: Méthodes de livraison
+        shipping_methods_tip: Cette entreprise n'a pas de méthode de livraisons
+        enterprise_fees: Enterprise Fees
+        enterprise_fees_tip: This enterprise has no fees
+      admin_index:
+        name: Nom
+        role: Role
+        sells: Sells
+        visible: Visible?
+        owner: Owner
+        producer: Producer
+      change_type_form:
+        producer_profile: Producer Profile
+        connect_ofn: Connect through OFN
+        always_free: ALWAYS FREE
+        producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
+        producer_shop: Producer Shop
+        sell_your_produce: Sell your own produce
+        sell_description_text: Sell your products directly to customers through your very own Open Food Network shopfront.
+        sell_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
+        producer_hub: Producer Hub
+        producer_hub_text: Sell produce from self and others
+        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+        profile: Profile Only
+        get_listing: Get a listing
+        profile_description_text: People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
+        hub_shop: Hub Shop
+        hub_shop_text: Sell produce from others
+        hub_shop_description_text: Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+        choose_option: Please choose one of the options above.
+        change_now: Change now
+      enterprise_user_index:
+        search_placeholder: Search By Name
+        manage: Manage
+      new_form:
+        owner: Owner
+        owner_tip: The primary user responsible for this enterprise.
+        i_am_producer: I am a Producer
+        contact_name: Nom du contact
+      edit:
+        editing: 'Editing:'
+        back_link: Retour à la liste d'entreprise
+      index:
+        title: Enterprises
+        new_enterprise: Ajouter une nouvelle entreprise
+      new:
+        title: Nouvelle entreprise
+        back_link: Retour à la liste d'entreprise
+      welcome:
+        welcome_title: Bienvenue chez Open Food France !
+        welcome_text: Vous avez bien créé une
+        next_step: Etape suivante
+        choose_starting_point: 'Choose your starting point:'
+    order_cycles:
+      advanced_settings:
+        title: Advanced Settings
+        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in {{inventory}}'s inventory.
+        preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
+        preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
+        save_reload: Save and Reload Page
+      coordinator_fees:
+        add: Add coordinator fee
+      form:
+        incoming: Incoming
+        supplier: Supplier
+        products: Products
+        receival_details: Receival details
+        fees: Fees
+        outgoing: Outgoing
+        distributor: Distributor
+        products: Products
+        tags: Tags
+        delivery_detaisl: Pickup / Delivery details
+        debug_info: Debug information
+      name_and_timing_form:
+        name: Name
+        orders_open: Orders open
+        coordinator: Coordinator
+        order_closes: Orders close
+      row:
+        suppliers: suppliers
+        distributors: distributors
+        variants: variants
+      simple_form:
+        ready_for: Ready for
+        ready_for_placeholder: Date / time
+        customer_instructions: Customer instructions
+        customer_instructions_placeholder: Pick-up or delivery notes
+        products: Products
+        fees: Fees
+      edit:
+        advanced_settings: Advanced Settings
+        update_and_close: Update and Close
+    producer_properties:
+      form:
+        property: Propriété
+        value: Valeur
+      index:
+        title: Producer Properties
+    shared:
+      user_guide_link:
+        user_guide: Guide l'utilisateur
+
   home:
     hubs:
       show_closed_shops: "Aficher les boutiques fermées"
@@ -211,10 +465,14 @@ fr:
   phone: Téléphone
   next: Suivant
   address: Adresse
+  address_placeholder: "ex: 16, rue du Marché"
   address2: Adresse (suite)
   city: Ville
+  city_placeholder: "ex: Lille"
   state: Département
   postcode: Code postal
+  postcode_placeholder: "ex: 59000"
+  state: Région
   country: Pays
   unauthorized: Non authorisé
   terms_of_service: "Conditions d'utilisation"
