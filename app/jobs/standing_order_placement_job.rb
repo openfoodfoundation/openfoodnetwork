@@ -6,32 +6,33 @@ class StandingOrderPlacementJob
   end
 
   def perform
-    orders.each do |order|
-      process(order)
+    proxy_orders.each do |proxy_order|
+      proxy_orders.initialise_order!
+      process(proxy_order.order)
     end
   end
 
   private
 
-  def orders
-    Spree::Order.incomplete.where(order_cycle_id: order_cycle)
-    .merge(StandingOrder.active).joins(:standing_order).readonly(false)
+  def proxy_orders
+    ProxyOrder.not_canceled.where(order_cycle_id: order_cycle)
+    .merge(StandingOrder.active).joins(:standing_order)
   end
 
   def process(order)
+    return if order.completed?
     changes = cap_quantity_and_store_changes(order) unless order.completed?
     until order.completed?
-      if order.errors.any?
+      unless order.next!
         Bugsnag.notify(RuntimeError.new("StandingOrderPlacementError"), {
           job: "StandingOrderPlacement",
           error: "Cannot process order due to errors",
           data: {
+            order_number: order.number,
             errors: order.errors.full_messages
           }
         })
         break
-      else
-        order.next!
       end
     end
     send_placement_email(order, changes)
@@ -47,6 +48,7 @@ class StandingOrderPlacementJob
   end
 
   def send_placement_email(order, changes)
+    return unless order.completed?
     Spree::OrderMailer.standing_order_email(order, 'placement', changes).deliver
   end
 end

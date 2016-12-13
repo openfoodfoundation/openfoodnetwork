@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe StandingOrderPlacementJob do
 
-  describe "finding standing_order orders for the specified order cycle" do
+  describe "finding proxy_orders for the specified order cycle" do
     let(:shop) { create(:distributor_enterprise) }
     let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop) }
     let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop) }
@@ -12,28 +12,19 @@ describe StandingOrderPlacementJob do
     let(:standing_order3) { create(:standing_order, shop: shop, schedule: schedule, canceled_at: 1.minute.ago) }
     let(:standing_order4) { create(:standing_order, shop: shop, schedule: schedule, begins_at: 1.minute.from_now) }
     let(:standing_order5) { create(:standing_order, shop: shop, schedule: schedule, ends_at: 1.minute.ago) }
-    let!(:order1) { create(:order, completed_at: 5.minutes.ago) } # Complete + Linked + OC Matches
-    let!(:order2) { create(:order) } # Incomplete + Not-Linked + OC Matches
-    let!(:order3) { create(:order) } # Incomplete + Linked + OC Mismatch
-    let!(:order4) { create(:order) } # Incomplete + Linked + OC Matches + Paused
-    let!(:order5) { create(:order) } # Incomplete + Linked + OC Matches + Cancelled
-    let!(:order6) { create(:order) } # Incomplete + Linked + OC Matches + Yet To Begin
-    let!(:order7) { create(:order) } # Incomplete + Linked + OC Matches + Ended
-    let!(:order8) { create(:order) } # Incomplete + Linked + OC Matches
-    let!(:proxy_order1) { create(:proxy_order, standing_order: standing_order1, order: order1, order_cycle: order_cycle1) }
-    let!(:proxy_order3) { create(:proxy_order, standing_order: standing_order1, order: order3, order_cycle: order_cycle2) }
-    let!(:proxy_order4) { create(:proxy_order, standing_order: standing_order2, order: order4, order_cycle: order_cycle1) }
-    let!(:proxy_order5) { create(:proxy_order, standing_order: standing_order3, order: order5, order_cycle: order_cycle1) }
-    let!(:proxy_order6) { create(:proxy_order, standing_order: standing_order4, order: order6, order_cycle: order_cycle1) }
-    let!(:proxy_order7) { create(:proxy_order, standing_order: standing_order5, order: order7, order_cycle: order_cycle1) }
-    let!(:proxy_order8) { create(:proxy_order, standing_order: standing_order1, order: order8, order_cycle: order_cycle1) }
+    let!(:proxy_order1) { create(:proxy_order, standing_order: standing_order1, order_cycle: order_cycle2) } # OC Mismatch
+    let!(:proxy_order2) { create(:proxy_order, standing_order: standing_order2, order_cycle: order_cycle1) } # Paused
+    let!(:proxy_order3) { create(:proxy_order, standing_order: standing_order3, order_cycle: order_cycle1) } # Cancelled
+    let!(:proxy_order4) { create(:proxy_order, standing_order: standing_order4, order_cycle: order_cycle1) } # Yet To Begin
+    let!(:proxy_order5) { create(:proxy_order, standing_order: standing_order5, order_cycle: order_cycle1) } # Ended
+    let!(:proxy_order6) { create(:proxy_order, standing_order: standing_order1, order_cycle: order_cycle1) } # OK
 
     let!(:job) { StandingOrderPlacementJob.new(order_cycle1) }
 
-    it "only returns incomplete orders in the relevant order cycle that are linked to a standing order" do
-      orders = job.send(:orders)
-      expect(orders).to include order8
-      expect(orders).to_not include order1, order2, order3, order4, order5, order6, order7
+    it "only returns not_canceled proxy_orders for the relevant order cycle" do
+      proxy_orders = job.send(:proxy_orders)
+      expect(proxy_orders).to include proxy_order6
+      expect(proxy_orders).to_not include proxy_order1, proxy_order2, proxy_order3, proxy_order4, proxy_order5
     end
   end
 
@@ -77,23 +68,66 @@ describe StandingOrderPlacementJob do
     before do
       expect_any_instance_of(Spree::Payment).to_not receive(:process!)
       allow(job).to receive(:cap_quantity_and_store_changes) { changes }
-      allow(job).to receive(:send_placement_email).and_call_original
+      allow(job).to receive(:send_placement_email)
     end
 
-    it "moves orders to completion, but does not process the payment" do
-      # If this spec starts complaining about no shipping methods being available
-      # on CI, there is probably another spec resetting the currency though Rails.cache.clear
-      ActionMailer::Base.deliveries.clear
-      expect{job.send(:process, order)}.to change{order.reload.completed_at}.from(nil)
-      expect(order.completed_at).to be_within(5.seconds).of Time.now
-      expect(order.payments.first.state).to eq "checkout"
+    context "when the order is already complete" do
+      before { while !order.completed? do break unless order.next! end }
+
+      it "ignores it" do
+        ActionMailer::Base.deliveries.clear
+        expect{job.send(:process, order)}.to_not change{order.reload.state}
+        expect(order.payments.first.state).to eq "checkout"
+        expect(ActionMailer::Base.deliveries.count).to be 0
+      end
     end
 
-    it "sends only a placement email, no confirmation emails" do
-      ActionMailer::Base.deliveries.clear
-      expect{job.send(:process, order)}.to_not enqueue_job ConfirmOrderJob
-      expect(job).to have_received(:send_placement_email).with(order, changes).once
-      expect(ActionMailer::Base.deliveries.count).to be 1
+    context "when the order is not already complete" do
+      it "processes the order to completion, but does not process the payment" do
+        # If this spec starts complaining about no shipping methods being available
+        # on CI, there is probably another spec resetting the currency though Rails.cache.clear
+        ActionMailer::Base.deliveries.clear
+        expect{job.send(:process, order)}.to change{order.reload.completed_at}.from(nil)
+        expect(order.completed_at).to be_within(5.seconds).of Time.now
+        expect(order.payments.first.state).to eq "checkout"
+      end
+
+      it "does not enqueue confirmation emails" do
+        expect{job.send(:process, order)}.to_not enqueue_job ConfirmOrderJob
+        expect(job).to have_received(:send_placement_email).with(order, changes).once
+      end
+    end
+  end
+
+  describe "sending placement email" do
+    let(:standing_order) { create(:standing_order, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
+    let!(:order) { proxy_order.initialise_order! }
+    let(:mail_mock) { double(:mailer_mock) }
+
+    let!(:job) { StandingOrderPlacementJob.new(proxy_order.order_cycle) }
+
+    before do
+      allow(Spree::OrderMailer).to receive(:standing_order_email) { mail_mock }
+      allow(mail_mock).to receive(:deliver)
+    end
+
+    context "when the order is complete" do
+      before { while !order.completed? do break unless order.next! end }
+
+      it "sends the email" do
+        job.send(:send_placement_email, order, {})
+        expect(Spree::OrderMailer).to have_received(:standing_order_email)
+        expect(mail_mock).to have_received(:deliver)
+      end
+    end
+
+    context "when the order is incomplete" do
+      it "does not send the email" do
+        job.send(:send_placement_email, order, {})
+        expect(Spree::OrderMailer).to_not have_received(:standing_order_email)
+        expect(mail_mock).to_not have_received(:deliver)
+      end
     end
   end
 end
