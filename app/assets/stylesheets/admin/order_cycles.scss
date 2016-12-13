@@ -1,26 +1,55 @@
 #schedule-dialog {
-  #available-order-cycles, #selected-order-cycles {
-    text-align: left;
-    display: inline-block;
-    width: 45%;
-    height: 200px;
-    max-height: 300px;
-    width: 45%;
+  table {
+    border: none;
 
-    .order-cycles {
-      display: block;
-      border: 1px solid #dddddd;
-      height: 100%;
-      width: 100%;
-      overflow-x: hidden;
-      overflow-y: scroll;
+    tr {
+      &:hover {
+        td { background: none; }
+      }
 
-      .order-cycle {
-        padding: 8px 5px;
-        cursor: pointer;
+      td {
+        border: none;
+      }
 
-        &:hover {
-          background-color: #cee1f4;
+      #add-remove-buttons{
+        width: 10%;
+        height: 200px;
+        max-height: 300px;
+
+        a.button {
+          display: block;
+          width: 100%;
+          margin-bottom: 10px;
+          color: #ffffff;
+          font-size: 1em;
+        }
+      }
+      #available-order-cycles, #selected-order-cycles {
+        text-align: left;
+        width: 40%;
+        height: 200px;
+        max-height: 300px;
+
+        .order-cycles {
+          display: block;
+          border: 1px solid #dddddd;
+          height: 100%;
+          width: 100%;
+          overflow-x: hidden;
+          overflow-y: scroll;
+
+          .order-cycle {
+            padding: 8px 5px;
+            cursor: pointer;
+
+            &.selected {
+              background-color: #b9d1e9;
+            }
+
+            &:hover {
+              background-color: #cee1f4;
+            }
+          }
         }
       }
     }

@@ -13,7 +13,6 @@ angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compi
         order_cycle_ids: existing?.order_cycle_ids || []
       scope.selectedOrderCycles = []
       scope.selectedOrderCycles.push orderCycle for orderCycle in (existing?.order_cycles || [])
-      scope.availableOrderCycles = (orderCycle for id, orderCycle of OrderCycles.byID when orderCycle.id not in scope.schedule.order_cycle_ids)
       scope.submitted = false
       scope.errors = []
       # Compile modal template
