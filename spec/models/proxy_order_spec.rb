@@ -139,39 +139,52 @@ describe ProxyOrder, type: :model do
     end
   end
 
-  describe "initialising an the order" do
-    let(:standing_order) { create(:standing_order, with_items: true) }
-    let!(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
+  describe "initialise_order!" do
+    context "when the order has not already been initialised" do
+      let(:standing_order) { create(:standing_order, with_items: true) }
+      let!(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
 
-    it "builds a new order based the standing order" do
-      expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
-      expect(proxy_order.reload.order).to be_a Spree::Order
-      order = proxy_order.order
-      expect(order.line_items.count).to eq standing_order.standing_line_items.count
-      expect(order.distributor).to eq standing_order.shop
-      expect(order.order_cycle).to eq proxy_order.order_cycle
-      expect(order.shipping_method).to eq standing_order.shipping_method
-      expect(order.shipments.first.shipping_method).to eq standing_order.shipping_method
-      expect(order.payments.first.payment_method).to eq standing_order.payment_method
-      expect(order.bill_address).to eq standing_order.bill_address
-      expect(order.ship_address).to eq standing_order.ship_address
-      expect(order.complete?).to be false
-    end
-
-    context "when a requested quantity is greater than available stock" do
-      let(:sli) { standing_order.standing_line_items.first }
-      let(:variant) { sli.variant }
-
-      before do
-        variant.update_attribute(:count_on_hand, 2)
-        sli.update_attribute(:quantity, 5)
-      end
-
-      it "initialises the order with the requested quantity regardless" do
+      it "builds a new order based the standing order" do
         expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
         expect(proxy_order.reload.order).to be_a Spree::Order
         order = proxy_order.order
-        expect(order.line_items.find_by_variant_id(variant.id).quantity).to eq 5
+        expect(order.line_items.count).to eq standing_order.standing_line_items.count
+        expect(order.distributor).to eq standing_order.shop
+        expect(order.order_cycle).to eq proxy_order.order_cycle
+        expect(order.shipping_method).to eq standing_order.shipping_method
+        expect(order.shipments.first.shipping_method).to eq standing_order.shipping_method
+        expect(order.payments.first.payment_method).to eq standing_order.payment_method
+        expect(order.bill_address).to eq standing_order.bill_address
+        expect(order.ship_address).to eq standing_order.ship_address
+        expect(order.complete?).to be false
+      end
+
+      context "when a requested quantity is greater than available stock" do
+        let(:sli) { standing_order.standing_line_items.first }
+        let(:variant) { sli.variant }
+
+        before do
+          variant.update_attribute(:count_on_hand, 2)
+          sli.update_attribute(:quantity, 5)
+        end
+
+        it "initialises the order with the requested quantity regardless" do
+          expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
+          expect(proxy_order.reload.order).to be_a Spree::Order
+          order = proxy_order.order
+          expect(order.line_items.find_by_variant_id(variant.id).quantity).to eq 5
+        end
+      end
+    end
+
+    context "when the order has already been initialised" do
+      let(:existing_order) { create(:order) }
+      let!(:proxy_order) { create(:proxy_order, order: existing_order) }
+
+      it "returns the existing order" do
+        expect do
+          expect(proxy_order.initialise_order!).to eq existing_order
+        end.to_not change{Spree::Order.count}
       end
     end
   end
