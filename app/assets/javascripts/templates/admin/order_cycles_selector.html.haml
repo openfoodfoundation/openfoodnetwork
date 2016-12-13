@@ -1,11 +1,18 @@
-#available-order-cycles
-  Available
-  .order-cycles{ ui: { sortable: 'availableOptions' }, ng: { model: "availableOrderCycles" } }
-    .order-cycle{ ng: { repeat: 'orderCycle in availableOrderCycles' } }
-      {{ orderCycle.name }}
-#selected-order-cycles
-  Selected
-  .order-cycles{ ui: { sortable: 'selectedOptions' }, ng: { model: "selectedOrderCycles" } }
-    .order-cycle{ ng: { repeat: 'orderCycle in selectedOrderCycles' } }
-      {{ orderCycle.name }}
+%table
+  %tr
+    %td#available-order-cycles
+      Available
+      .order-cycles
+        .order-cycle{ ng: { repeat: 'orderCycle in orderCycles | available:selectedOrderCycles as availableOrderCycles', click: 'selections.available = orderCycle', dblclick: 'add(orderCycle)', class: '{selected: selections.available == orderCycle}' } }
+          {{ orderCycle.name }}
+    %td#add-remove-buttons
+      %a.add.button{ href: 'javascript:void(0)', ng: { click: 'add()' } }
+        %i.icon-chevron-right
+      %a.remove.button{ href: 'javascript:void(0)', ng: { click: 'remove()' } }
+        %i.icon-chevron-left
+    %td#selected-order-cycles
+      Selected
+      .order-cycles
+        .order-cycle{ ng: { repeat: 'orderCycle in selectedOrderCycles', click: 'selections.selected = orderCycle', dblclick: 'remove(orderCycle)', class: '{selected: selections.selected == orderCycle}' } }
+          {{ orderCycle.name }}
 .error{ ng: { repeat: "error in errors", bind: "error" } }

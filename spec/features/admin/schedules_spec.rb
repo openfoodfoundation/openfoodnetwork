@@ -5,13 +5,15 @@ feature 'Schedules', js: true do
   include WebHelper
 
   context "as an enterprise user" do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, enterprise_limit: 10) }
     let(:managed_enterprise) { create(:distributor_enterprise, owner: user) }
     let(:unmanaged_enterprise) { create(:distributor_enterprise) }
+    let(:managed_enterprise2) { create(:distributor_enterprise, owner: user) }
     let!(:oc1) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc1') }
     let!(:oc2) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc2') }
     let!(:oc3) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc3') }
-    let!(:oc4) { create(:simple_order_cycle, coordinator: unmanaged_enterprise, name: 'oc4') }
+    let!(:oc4) { create(:simple_order_cycle, coordinator: unmanaged_enterprise, distributors: [managed_enterprise], name: 'oc4') }
+    let!(:oc5) { create(:simple_order_cycle, coordinator: managed_enterprise2, name: 'oc5') }
     let!(:weekly_schedule) { create(:schedule, name: 'Weekly', order_cycles: [oc1, oc2, oc3, oc4]) }
 
     before { login_to_admin_as user }
@@ -23,13 +25,19 @@ feature 'Schedules', js: true do
         find('a', text: 'NEW SCHEDULE').click
 
         within "#schedule-dialog" do
+          # Only order cycles coordinated by managed enterprises are available to select
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc1.name
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc2.name
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc3.name
           expect(page).to have_no_selector '#available-order-cycles .order-cycle', text: oc4.name
+          expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc5.name
           fill_in 'name', with: "Fortnightly"
-          find("#available-order-cycles .order-cycle", text: oc1.name).drag_to find("#selected-order-cycles")
-          find("#available-order-cycles .order-cycle", text: oc3.name).drag_to find("#selected-order-cycles")
+          find("#available-order-cycles .order-cycle", text: oc1.name).click
+          find("#add-remove-buttons a.add").click
+          # Selection of an order cycles limits available options to those with the same coordinator
+          expect(page).to have_no_selector '#available-order-cycles .order-cycle', text: oc5.name
+          find("#available-order-cycles .order-cycle", text: oc3.name).click
+          find("#add-remove-buttons a.add").click
           click_button "Create Schedule"
         end
 
@@ -69,7 +77,8 @@ feature 'Schedules', js: true do
         end
 
         within "#schedule-dialog" do
-          find("#selected-order-cycles .order-cycle", text: oc3.name).drag_to find("#available-order-cycles")
+          find("#selected-order-cycles .order-cycle", text: oc3.name).click
+          find("#add-remove-buttons a.remove").click
           click_button "Update Schedule"
         end
 
