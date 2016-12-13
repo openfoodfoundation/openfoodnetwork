@@ -66,14 +66,11 @@ feature 'Standing Orders' do
           page.find("td.orders.panel-toggle").trigger('click')
         end
 
-        # save_screenshot '/Users/rob/Desktop/ss1.png'
-        # expect(page).to have_selector ".standing-order-orders"
-
         within ".standing-order-orders" do
           expect(page).to have_selector "tr.proxy_order", count: 1
 
           proxy_order = standing_order.proxy_orders.first
-          within "tr#o_#{proxy_order.id}" do
+          within "tr#po_#{proxy_order.id}" do
             expect(page).to_not have_content 'CANCELLED'
             accept_alert 'Are you sure?' do
               find("a.cancel-order").trigger('click')
