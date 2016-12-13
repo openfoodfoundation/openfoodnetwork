@@ -15,8 +15,11 @@ class StandingOrderPlacementJob
   private
 
   def proxy_orders
+    # Load proxy orders for standing orders whose begins at date may between now and the order cycle close date
+    # Does not load proxy orders for standing orders who ends_at date is before order_cycle close
     ProxyOrder.not_canceled.where(order_cycle_id: order_cycle)
-    .merge(StandingOrder.active).joins(:standing_order)
+    .where('begins_at < ? AND (ends_at IS NULL OR ends_at > ?)', order_cycle.orders_close_at, order_cycle.orders_close_at)
+    .merge(StandingOrder.not_canceled.not_paused).joins(:standing_order)
   end
 
   def process(order)
