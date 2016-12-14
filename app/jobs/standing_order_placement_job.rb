@@ -7,7 +7,7 @@ class StandingOrderPlacementJob
 
   def perform
     proxy_orders.each do |proxy_order|
-      proxy_orders.initialise_order!
+      proxy_order.initialise_order!
       process(proxy_order.order)
     end
   end
@@ -19,7 +19,7 @@ class StandingOrderPlacementJob
     # Does not load proxy orders for standing orders who ends_at date is before order_cycle close
     ProxyOrder.not_canceled.where(order_cycle_id: order_cycle)
     .where('begins_at < ? AND (ends_at IS NULL OR ends_at > ?)', order_cycle.orders_close_at, order_cycle.orders_close_at)
-    .merge(StandingOrder.not_canceled.not_paused).joins(:standing_order)
+    .merge(StandingOrder.not_canceled.not_paused).joins(:standing_order).readonly(false)
   end
 
   def process(order)
