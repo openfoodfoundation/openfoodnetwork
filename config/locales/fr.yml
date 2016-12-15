@@ -481,10 +481,28 @@ fr:
       require_customer_login: "La boutique est réservée aux membres."
       require_login_html: "Déjà inscrit? %{Connectez-vous}. Sinon, %{inscrivez-vous} pour pouvoir faire vos achats."
       require_customer_html: "Veuillez %{contacter} %{l'entreprise} pour devenir membre."
+
   invoice_column_item: "Produit"
   invoice_column_qty: "Qté"
-  invoice_column_tax: "TVA"
-  invoice_column_price: "Prix"
+  invoice_column_unit_price_with_taxes: "Prix unitaire (TTC)"
+  invoice_column_unit_price_without_taxes: "Prix unitaire (HT)"
+  invoice_column_price_with_taxes: "Prix total (TTC)"
+  invoice_column_price_without_taxes: "Prix total (HT)"
+  invoice_column_tax_rate: "Taux TVA"
+  tax_invoice: "FACTURE"
+  tax_total: "Total TVA (%{rate}) :"
+  total_excl_tax: "Total HT :"
+  total_incl_tax: "Total TTC :"
+  abn: "SIRET :"
+  acn: "n° TVA :"
+  invoice_issued_on: "Facture éditée le :"
+  order_number: "Numéro de facture :"
+  date_of_transaction: "Date de la transaction :"
+  number:
+    percentage:
+      format:
+        format: "%n %"
+
   logo: "Logo (640x130)"
   logo_mobile: "Logo smartphone (75x26)"
   logo_mobile_svg: "Logo  smartphone (SVG)"
@@ -688,7 +706,7 @@ fr:
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_summary: Résumé du paiement
-  email_payment_method: "Payer via :"
+  email_payment_method: "Moyen de paiement :"
   email_shipping_delivery_details: Détails de livraison
   email_shipping_delivery_time: "Livré le:"
   email_shipping_delivery_address: "Adresse de livraison:"

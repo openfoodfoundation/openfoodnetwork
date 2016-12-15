@@ -43,6 +43,16 @@ module CheckoutHelper
     Spree::Money.new order.total_tax, currency: order.currency
   end
 
+  def display_checkout_taxes_hash(order)
+    order.tax_adjustment_totals.each_with_object(Hash.new) do |(tax_rate, tax_value), acc|
+      acc[number_to_percentage(tax_rate.amount * 100, :precision => 1)] = Spree::Money.new tax_value, currency: order.currency
+    end
+  end
+
+  def display_line_item_tax_rates(line_item)
+    line_item.tax_rates.map { |tr| number_to_percentage(tr.amount * 100, :precision => 1) }.join(", ")
+  end
+
   def display_checkout_total_less_tax(order)
     Spree::Money.new order.total - order.total_tax, currency: order.currency
   end

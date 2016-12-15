@@ -227,6 +227,22 @@ Spree::Order.class_eval do
     (adjustments + price_adjustments).sum &:included_tax
   end
 
+  def tax_adjustments
+    adjustments.with_tax +
+      line_items.includes(:tax_adjustments).map {|li| li.tax_adjustments}.flatten
+  end
+
+  def tax_adjustment_totals
+    Hash[tax_adjustments.group_by(&:label).map do |label, adjustments|
+      [adjustments.first.originator, adjustments.sum(&:amount)]
+    end]
+  end
+
+  # Uses the first associated tax to determine if taxes are included in price
+  def has_taxes_included
+    not line_items.with_tax.empty?
+  end
+
   def account_invoice?
     distributor_id == Spree::Config.accounts_distributor_id
   end

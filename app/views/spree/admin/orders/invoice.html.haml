@@ -5,38 +5,46 @@
   %tbody
     %tr{ valign: "top" }
       %td{ :align => "left", colspan: 3 }
-        %h6= "Issued on: #{Time.zone.now.strftime("%F")}"
-    %tr{ valign: "top" }
-      %td{ :align => "left" }
         %h4
-          = "TAX INVOICE: "
-          = "#{@order.number}"
-      %td{width: "10%" }
-        &nbsp;
-      %td{ :align => "right" }
-        %h4= @order.order_cycle.andand.name
+          = t :tax_invoice
     %tr{ valign: "top" }
-      %td{ :align => "left" }
-        %strong= "From: #{@order.distributor.name}"
-        - if @order.distributor.abn.present?
-          %br
-          = "ABN: #{@order.distributor.abn}"
+      %td{ :align => "left", colspan: 3 }
+        %strong= @order.distributor.name
         %br
-        = @order.distributor.address.full_address
+        = @order.distributor.address.address_part1
+        %br
+        = @order.distributor.address.address_part2
         %br
         = @order.distributor.email
-      %td{width: "10%" }
-        &nbsp;
-      %td{ :align => "right" }
-        %strong= "To: #{@order.ship_address.full_name}"
+        - if @order.distributor.phone.present?
+          %br
+          = @order.distributor.phone
+        - if @order.distributor.abn.present?
+          %br
+          = "#{t :abn} #{@order.distributor.abn}"
+        - if @order.distributor.acn.present?
+          %br
+          = "#{t :acn} #{@order.distributor.acn}"
+    %tr{ valign: "top" }
+      %td{ :align => "right", colspan: 3 }
+        %strong= @order.ship_address.full_name
         - if @order.customer.code.present?
           %br
           = "Code: #{@order.customer.code}"
         %br
-        = @order.ship_address.full_address
+        = @order.ship_address.address_part1
         %br
-        = "#{@order.customer.email},"
-        = "#{@order.bill_address.phone}"
+        = @order.ship_address.address_part2
+    %tr{ valign: "top" }
+      %td{ :align => "left", colspan: 3 }
+        = t :invoice_issued_on
+        = l Time.zone.now.to_date
+        %br
+        = t :date_of_transaction
+        = l @order.completed_at.to_date
+        %br
+        = t :order_number
+        = @order.number
 
 = render 'spree/admin/orders/invoice_table'
 
