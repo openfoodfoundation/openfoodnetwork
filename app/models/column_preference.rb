@@ -21,6 +21,7 @@ class ColumnPreference < ActiveRecord::Base
   def self.for(user, action_name)
     stored_preferences = where(user_id: user.id, action_name: action_name)
     default_preferences = send("#{action_name}_columns")
+    filter(default_preferences, user, action_name)
     default_preferences.each_with_object([]) do |(column_name, default_attributes), preferences|
       stored_preference = stored_preferences.find_by_column_name(column_name)
       if stored_preference
@@ -42,5 +43,12 @@ class ColumnPreference < ActiveRecord::Base
   def self.known_actions
     OpenFoodNetwork::ColumnPreferenceDefaults.private_instance_methods
       .select{|m| m.to_s.end_with?("_columns")}.map{ |m| m.to_s.sub /_columns$/, ''}
+  end
+
+  # Arbitrary filtering of default_preferences
+  def self.filter(default_preferences, user, action_name)
+    if action_name == 'order_cycles_index'
+      default_preferences.delete(:schedules) unless user.admin? || user.enterprises.where(enable_standing_orders: true).any?
+    end
   end
 end

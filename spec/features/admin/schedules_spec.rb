@@ -6,9 +6,9 @@ feature 'Schedules', js: true do
 
   context "as an enterprise user" do
     let(:user) { create(:user, enterprise_limit: 10) }
-    let(:managed_enterprise) { create(:distributor_enterprise, owner: user) }
-    let(:unmanaged_enterprise) { create(:distributor_enterprise) }
-    let(:managed_enterprise2) { create(:distributor_enterprise, owner: user) }
+    let(:managed_enterprise) { create(:distributor_enterprise, owner: user, enable_standing_orders: true) }
+    let(:unmanaged_enterprise) { create(:distributor_enterprise, enable_standing_orders: true) }
+    let(:managed_enterprise2) { create(:distributor_enterprise, owner: user, enable_standing_orders: true) }
     let!(:oc1) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc1') }
     let!(:oc2) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc2') }
     let!(:oc3) { create(:simple_order_cycle, coordinator: managed_enterprise, name: 'oc3') }
