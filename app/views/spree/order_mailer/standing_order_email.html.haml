@@ -18,7 +18,7 @@
       %span.clear
 
 %p.callout
-  = t("email_so_explainer_html", orders_close_at: l(@order.order_cycle.orders_close_at, format: "%a %b %d @ %I%p"))
+  = t("email_so_#{@type}_explainer_html", orders_close_at: l(@order.order_cycle.orders_close_at, format: "%a %b %d @ %I%p"))
   = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.email)
 
 %p &nbsp;
