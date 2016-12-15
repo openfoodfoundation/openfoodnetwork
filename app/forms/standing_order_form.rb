@@ -24,28 +24,7 @@ class StandingOrderForm
       initialise_proxy_orders!
       remove_obsolete_proxy_orders!
 
-      orders.update_all(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
-
-      orders.each do |order|
-        update_shipment_for(order) if shipping_method_id_changed?
-        update_payment_for(order) if payment_method_id_changed?
-      end
-
-      changed_standing_line_items.each do |sli|
-        updateable_line_items(sli).each{ |li| li.update_attributes(quantity: sli.quantity, skip_stock_check: true)}
-      end
-
-      new_standing_line_items.each do |sli|
-        future_and_undated_orders.each do |order|
-          order.line_items.create(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: true)
-        end
-      end
-
-      standing_line_items.select(&:marked_for_destruction?).each do |sli|
-        updateable_line_items(sli).destroy_all
-      end
-
-      future_and_undated_orders.each(&:save)
+      update_initialised_orders
 
       raise ActiveRecord::Rollback unless standing_order.save
       true
@@ -60,6 +39,28 @@ class StandingOrderForm
   end
 
   private
+
+  def update_initialised_orders
+    future_and_undated_orders.each do |order|
+      order.assign_attributes(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
+
+      update_shipment_for(order) if shipping_method_id_changed?
+      update_payment_for(order) if payment_method_id_changed?
+
+      changed_standing_line_items.each do |sli|
+        order.line_items.find_by_variant_id(sli.variant_id)
+        .update_attributes(quantity: sli.quantity, skip_stock_check: true)
+      end
+
+      new_standing_line_items.each do |sli|
+        order.line_items.create(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: true)
+      end
+
+      order.line_items.where(variant_id: standing_line_items.select(&:marked_for_destruction?).map(&:variant_id)).destroy_all
+
+      order.save
+    end
+  end
 
   def future_and_undated_orders
     return @future_and_undated_orders unless @future_and_undated_orders.nil?
@@ -116,14 +117,6 @@ class StandingOrderForm
 
   def new_standing_line_items
     standing_line_items.select(&:new_record?)
-  end
-
-  def updateable_line_items(sli)
-    line_items_from_future_and_undated_orders(sli.variant_id).where(quantity: sli.quantity_was)
-  end
-
-  def line_items_from_future_and_undated_orders(variant_id)
-    Spree::LineItem.where(order_id: future_and_undated_orders, variant_id: variant_id)
   end
 
   def validate_price_estimates
