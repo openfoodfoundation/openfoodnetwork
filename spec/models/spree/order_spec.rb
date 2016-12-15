@@ -607,6 +607,31 @@ describe Spree::Order do
     end
   end
 
+  describe "a completed order with shipping and transaction fees" do
+    let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+    let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+    let(:shipping_fee) { 3 }
+    let(:payment_fee) { 5 }
+
+    it "updates shipping fees" do
+      # Sanity check the fees
+      expect(order.adjustments.length).to eq 2
+      item_num = order.line_items.length
+      expect(item_num).to eq 2
+      expected_fees = item_num * (shipping_fee + payment_fee)
+      expect(order.adjustment_total).to eq expected_fees
+
+      # Delete the item
+      order.line_items.first.destroy
+      order.update_shipping_fees!
+
+      # Check if fees got updated
+      expect(order.adjustments.length).to eq 2
+      expect(order.line_items.length).to eq item_num - 1
+      expect(order.adjustment_total).to eq expected_fees - shipping_fee
+    end
+  end
+
   describe "retrieving previously ordered items" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle) }

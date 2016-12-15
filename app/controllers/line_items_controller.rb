@@ -30,6 +30,7 @@ class LineItemsController < BaseController
     order = item.order
     order.with_lock do
       item.destroy
+      order.update_shipping_fees!
       order.update_distribution_charge!
     end
   end
