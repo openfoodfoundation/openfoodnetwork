@@ -149,6 +149,8 @@ describe ProxyOrder, type: :model do
         expect(proxy_order.reload.order).to be_a Spree::Order
         order = proxy_order.order
         expect(order.line_items.count).to eq standing_order.standing_line_items.count
+        expect(order.customer).to eq standing_order.customer
+        expect(order.user).to eq standing_order.customer.user
         expect(order.distributor).to eq standing_order.shop
         expect(order.order_cycle).to eq proxy_order.order_cycle
         expect(order.shipping_method).to eq standing_order.shipping_method
@@ -173,6 +175,19 @@ describe ProxyOrder, type: :model do
           expect(proxy_order.reload.order).to be_a Spree::Order
           order = proxy_order.order
           expect(order.line_items.find_by_variant_id(variant.id).quantity).to eq 5
+        end
+      end
+
+      context "when the customer does not have a user associated with it" do
+        before do
+          standing_order.customer.update_attribute(:user_id, nil)
+        end
+
+        it "initialises the order without a user_id" do
+          expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
+          expect(proxy_order.reload.order).to be_a Spree::Order
+          order = proxy_order.order
+          expect(order.user).to be nil
         end
       end
     end

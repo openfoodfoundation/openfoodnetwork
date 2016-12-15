@@ -45,6 +45,7 @@ class ProxyOrder < ActiveRecord::Base
       distributor_id: standing_order.shop_id,
       shipping_method_id: standing_order.shipping_method_id,
     })
+    order.update_attribute(:user, standing_order.customer.user)
     standing_order.standing_line_items.each do |sli|
       order.line_items.build(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: true)
     end
