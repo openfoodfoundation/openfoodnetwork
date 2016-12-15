@@ -59,4 +59,27 @@ describe LineItemsController do
     expect(response.status).to eq 204
     expect { item.reload }.to raise_error
   end
+
+  it "updates fees" do
+    distributor = create(:distributor_enterprise, allow_order_changes: true)
+    shipping_fee = 3
+    payment_fee = 5
+    order = create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee)
+
+    # Sanity check fees
+    item_num = order.line_items.length
+    expected_fees = item_num * (shipping_fee + payment_fee)
+    expect(order.adjustment_total).to eq expected_fees
+
+    # Delete the item
+    item = order.line_items.first
+    controller.stub spree_current_user: order.user
+    request = { format: :json, id: item }
+    delete :destroy, request
+    expect(response.status).to eq 204
+
+    # Check the fees again
+    order.reload
+    expect(order.adjustment_total).to eq expected_fees - shipping_fee
+  end
 end

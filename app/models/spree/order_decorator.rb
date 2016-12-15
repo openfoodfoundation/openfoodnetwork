@@ -139,6 +139,21 @@ Spree::Order.class_eval do
     current_item
   end
 
+  # After changing line items of a completed order
+  def update_shipping_fees!
+    line_items(:reload)
+    shipments.each do |shipment|
+      next if shipment.shipped?
+      adjustment = shipment.adjustment
+      locked = adjustment.locked
+      adjustment.locked = false
+      adjustment.update!
+      adjustment.locked = locked
+      update_totals
+      save
+    end
+  end
+
   def cap_quantity_at_stock!
     line_items.each &:cap_quantity_at_stock!
   end
