@@ -72,7 +72,7 @@ describe Spree::OrderMailer do
 
       it "sends the email, which notifies the customer of changes made" do
         body = Spree::OrderMailer.deliveries.last.body.encoded
-        expect(body).to include "This order was automatically created on your behalf."
+        expect(body).to include "This order was automatically created for you."
         expect(body).to include "Unfortunately, not all products that you requested were available."
       end
     end
@@ -86,9 +86,26 @@ describe Spree::OrderMailer do
 
       it "sends the email" do
         body = Spree::OrderMailer.deliveries.last.body.encoded
-        expect(body).to include "This order was automatically created on your behalf."
+        expect(body).to include "This order was automatically created for you."
         expect(body).to_not include "Unfortunately, not all products that you requested were available."
       end
+    end
+  end
+
+  describe "order confirmation for standing orders" do
+    let(:standing_order) { create(:standing_order, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
+    let!(:order) { proxy_order.initialise_order! }
+
+    before do
+      expect do
+        Spree::OrderMailer.standing_order_email(order.id, 'confirmation', {}).deliver
+      end.to change{Spree::OrderMailer.deliveries.count}.by(1)
+    end
+
+    it "sends the email" do
+      body = Spree::OrderMailer.deliveries.last.body.encoded
+      expect(body).to include "This order was automatically placed for you"
     end
   end
 end
