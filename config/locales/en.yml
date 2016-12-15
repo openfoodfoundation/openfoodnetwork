@@ -529,6 +529,10 @@ en:
           allow_order_changes_tip: "Allow customers to change their order as long the order cycle is open."
           allow_order_changes_false: "Placed orders cannot be changed / cancelled"
           allow_order_changes_true: "Customers can change / cancel orders while order cycle is open"
+          enable_standing_orders: "Standing Orders"
+          enable_standing_orders_tip: "Enable standing/repeating order functionality?"
+          enable_standing_orders_false: "Disabled"
+          enable_standing_orders_true: "Enabled"
           shopfront_message: Shopfront Message
           shopfront_message_placeholder: >
             An optional explanation for customers detailing how your shopfront works,
