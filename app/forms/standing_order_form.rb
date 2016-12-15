@@ -3,7 +3,7 @@ class StandingOrderForm
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :standing_order, :params, :fee_calculator
+  attr_accessor :standing_order, :params, :fee_calculator, :problematic_orders
 
   delegate :orders, :order_cycles, :bill_address, :ship_address, :standing_line_items, to: :standing_order
   delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :proxy_orders, to: :standing_order
@@ -14,6 +14,7 @@ class StandingOrderForm
     @standing_order = standing_order
     @params = params
     @fee_calculator = fee_calculator
+    @problematic_orders = []
   end
 
   def save
@@ -51,8 +52,12 @@ class StandingOrderForm
       update_payment_for(order) if payment_method_id_changed?
 
       changed_standing_line_items.each do |sli|
-        order.line_items.find_by_variant_id(sli.variant_id)
-        .update_attributes(quantity: sli.quantity, skip_stock_check: true)
+        line_item = order.line_items.find_by_variant_id(sli.variant_id)
+        if line_item.quantity == sli.quantity_was
+          line_item.update_attributes(quantity: sli.quantity, skip_stock_check: true)
+        else
+          @problematic_orders |= [order]
+        end
       end
 
       new_standing_line_items.each do |sli|
@@ -75,6 +80,8 @@ class StandingOrderForm
     if payment
       payment.andand.void_transaction!
       order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)
+    else
+      @problematic_orders |= [order]
     end
   end
 
@@ -83,6 +90,8 @@ class StandingOrderForm
     if shipment
       shipment.update_attributes(shipping_method_id: shipping_method_id)
       order.update_attribute(:shipping_method_id, shipping_method_id)
+    else
+      @problematic_orders |= [order]
     end
   end
 
