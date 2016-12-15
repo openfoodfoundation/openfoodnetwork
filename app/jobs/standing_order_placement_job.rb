@@ -25,6 +25,20 @@ class StandingOrderPlacementJob
   def process(order)
     return if order.completed?
     changes = cap_quantity_and_store_changes(order) unless order.completed?
+    move_to_completion(order)
+    send_placement_email(order, changes)
+  end
+
+  def cap_quantity_and_store_changes(order)
+    insufficient_stock_lines = order.insufficient_stock_lines
+    return {} unless insufficient_stock_lines.present?
+    insufficient_stock_lines.each_with_object({}) do |line_item, changes|
+      changes[line_item.id] = line_item.quantity
+      line_item.cap_quantity_at_stock!
+    end
+  end
+
+  def move_to_completion(order)
     until order.completed?
       unless order.next!
         Bugsnag.notify(RuntimeError.new("StandingOrderPlacementError"), {
@@ -37,16 +51,6 @@ class StandingOrderPlacementJob
         })
         break
       end
-    end
-    send_placement_email(order, changes)
-  end
-
-  def cap_quantity_and_store_changes(order)
-    insufficient_stock_lines = order.insufficient_stock_lines
-    return {} unless insufficient_stock_lines.present?
-    insufficient_stock_lines.each_with_object({}) do |line_item, changes|
-      changes[line_item.id] = line_item.quantity
-      line_item.cap_quantity_at_stock!
     end
   end
 
