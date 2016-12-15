@@ -77,7 +77,7 @@ module Admin
     end
 
     def load_shops
-      @shops = Enterprise.managed_by(spree_current_user).is_distributor
+      @shops = Enterprise.managed_by(spree_current_user).is_distributor.where(enable_standing_orders: true)
     end
 
     def load_form_data
