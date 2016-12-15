@@ -5,7 +5,7 @@ describe Admin::StandingOrdersController, type: :controller do
 
   describe 'index' do
     let!(:user) { create(:user, enterprise_limit: 10) }
-    let!(:shop) { create(:distributor_enterprise) }
+    let!(:shop) { create(:distributor_enterprise, enable_standing_orders: true) }
     let!(:standing_order) { create(:standing_order, shop: shop) }
 
     before do
@@ -24,6 +24,7 @@ describe Admin::StandingOrdersController, type: :controller do
 
       context 'as an enterprise user' do
         before { shop.update_attributes(owner: user) }
+        let!(:not_enabled_shop) { create(:distributor_enterprise, owner: user) }
 
         it 'renders the index page with appropriate data' do
           spree_get :index, params
