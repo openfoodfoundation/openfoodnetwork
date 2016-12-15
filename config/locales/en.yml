@@ -531,8 +531,20 @@ en:
   # Printable Invoice Columns
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
-  invoice_column_tax: "GST"
-  invoice_column_price: "Price"
+  invoice_column_unit_price_with_taxes: "Unit price (Incl. GST)"
+  invoice_column_unit_price_without_taxes: "Unit price (Excl. GST)"
+  invoice_column_price_with_taxes: "Total price (Incl. GST)"
+  invoice_column_price_without_taxes: "Total price (Excl. GST)"
+  invoice_column_tax_rate: "Tax rate"
+  tax_invoice: "TAX INVOICE"
+  tax_total: "GST Total (%{rate}):"
+  total_excl_tax: "Total (Excl. GST):"
+  total_incl_tax: "Total (Incl. GST):"
+  abn: "ABN:"
+  acn: "ACN:"
+  invoice_issued_on: "Invoice issued on:"
+  order_number: "Invoice number:"
+  date_of_transaction: "Date of transaction:"
 
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME

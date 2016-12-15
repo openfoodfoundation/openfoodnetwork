@@ -20,6 +20,18 @@ Spree::Address.class_eval do
     filtered_address.compact.join(', ')
   end
 
+  def address_part1
+    address_part1 = [address1, address2]
+    filtered_address = address_part1.select{ |field| !field.nil? && field != '' }
+    filtered_address.compact.join(', ')
+  end
+
+  def address_part2
+    address_part2= [city, zipcode, state.andand.name]
+    filtered_address = address_part2.select{ |field| !field.nil? && field != '' }
+    filtered_address.compact.join(', ')
+  end
+
   private
 
   def touch_enterprise
