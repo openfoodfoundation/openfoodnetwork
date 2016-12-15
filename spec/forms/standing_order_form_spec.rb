@@ -136,6 +136,7 @@ describe StandingOrderForm do
       it "does not update the shipping_method on the standing order or on the pre-altered shipment" do
         expect(order.reload.shipping_method).to eq changed_shipping_method
         expect(order.reload.shipments.first.shipping_method).to eq changed_shipping_method
+        expect(form.problematic_orders).to include order
       end
     end
   end
@@ -173,6 +174,7 @@ describe StandingOrderForm do
         payments = order.reload.payments
         expect(payments.count).to be 1
         expect(payments.first.payment_method).to eq changed_payment_method
+        expect(form.problematic_orders).to include order
       end
     end
   end
@@ -228,6 +230,23 @@ describe StandingOrderForm do
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
         expect(line_items.map(&:quantity)).to eq [3]
         expect(order.reload.total.to_f).to eq 99.95
+      end
+    end
+
+    context "where the quantity of the item on an initialised order has already been changed" do
+      let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 3} ] } }
+      let(:form) { StandingOrderForm.new(standing_order, params) }
+      let(:changed_line_item) { order.line_items.find_by_variant_id(sli.variant_id) }
+
+      before { changed_line_item.update_attributes(quantity: 2) }
+
+      it "does not change the quantity, and adds the order to the problematic_orders list" do
+        expect(order.reload.total.to_f).to eq 79.96
+        expect(form.save).to be true
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
+        expect(line_items.map(&:quantity)).to eq [2]
+        expect(order.reload.total.to_f).to eq 79.96
+        expect(form.problematic_orders).to include order
       end
     end
   end
