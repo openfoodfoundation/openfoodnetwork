@@ -45,6 +45,7 @@
     .five.columns.omega
       = f.radio_button :require_login, true, "ng-model" => "Enterprise.require_login", "ng-value" => "true"
       = f.label :require_login, t('.shopfront_requires_login_true'), value: :true
+
 .row{ng: {if: "!Enterprise.require_login"}}
   .alpha.eleven.columns
     .three.columns.alpha
@@ -75,3 +76,17 @@
     .five.columns.omega
       = f.radio_button :allow_order_changes, true, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "true"
       = f.label :allow_order_changes, t('.allow_order_changes_true'), value: :true
+
+
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      %label= t '.enable_standing_orders'
+      %div{'ofn-with-tip' => t('.enable_standing_orders_tip')}
+        %a= t 'admin.whats_this'
+    .three.columns
+      = f.radio_button :enable_standing_orders, true
+      = f.label :enable_standing_orders, t('.enable_standing_orders_true'), value: :true
+    .five.columns.omega
+      = f.radio_button :enable_standing_orders, false
+      = f.label :enable_standing_orders, t('.enable_standing_orders_false'), value: :false

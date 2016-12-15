@@ -91,6 +91,7 @@ feature %q{
     expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
     choose "Visible to registered customers only"
     expect(page).to have_no_checked_field "enterprise_require_login_false"
+    expect(page).to have_checked_field "enterprise_enable_standing_orders_false"
 
     within(".side_menu") { click_link "Users" }
     select2_search user.email, from: 'Owner'
