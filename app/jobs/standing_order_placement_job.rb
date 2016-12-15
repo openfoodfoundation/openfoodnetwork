@@ -30,11 +30,16 @@ class StandingOrderPlacementJob
   end
 
   def cap_quantity_and_store_changes(order)
+    changes = {}
     insufficient_stock_lines = order.insufficient_stock_lines
-    return {} unless insufficient_stock_lines.present?
-    insufficient_stock_lines.each_with_object({}) do |line_item, changes|
+    insufficient_stock_lines.each_with_object(changes) do |line_item, changes|
       changes[line_item.id] = line_item.quantity
       line_item.cap_quantity_at_stock!
+    end
+    unavailable_stock_lines = unavailable_stock_lines_for(order)
+    unavailable_stock_lines.each_with_object(changes) do |line_item, changes|
+      changes[line_item.id] = changes[line_item.id] || line_item.quantity
+      line_item.update_attributes(quantity: 0)
     end
   end
 
@@ -52,6 +57,14 @@ class StandingOrderPlacementJob
         break
       end
     end
+  end
+
+  def unavailable_stock_lines_for(order)
+    order.line_items.where('variant_id NOT IN (?)', available_variants_for(order))
+  end
+
+  def available_variants_for(order)
+    DistributionChangeValidator.new(order).variants_available_for_distribution(order.distributor, order_cycle)
   end
 
   def send_placement_email(order, changes)
