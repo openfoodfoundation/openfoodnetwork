@@ -104,6 +104,7 @@ describe StandingOrderPlacementJob do
     let(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
     let!(:order) { proxy_order.initialise_order! }
     let(:mail_mock) { double(:mailer_mock) }
+    let(:changes) { double(:changes) }
 
     let!(:job) { StandingOrderPlacementJob.new(proxy_order.order_cycle) }
 
@@ -116,15 +117,15 @@ describe StandingOrderPlacementJob do
       before { while !order.completed? do break unless order.next! end }
 
       it "sends the email" do
-        job.send(:send_placement_email, order, {})
-        expect(Spree::OrderMailer).to have_received(:standing_order_email)
+        job.send(:send_placement_email, order, changes)
+        expect(Spree::OrderMailer).to have_received(:standing_order_email).with(order.id, 'placement', changes)
         expect(mail_mock).to have_received(:deliver)
       end
     end
 
     context "when the order is incomplete" do
       it "does not send the email" do
-        job.send(:send_placement_email, order, {})
+        job.send(:send_placement_email, order, changes)
         expect(Spree::OrderMailer).to_not have_received(:standing_order_email)
         expect(mail_mock).to_not have_received(:deliver)
       end
