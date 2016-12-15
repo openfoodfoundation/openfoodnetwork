@@ -6,9 +6,9 @@ feature 'Standing Orders' do
 
   context "as an enterprise user", js: true do
     let!(:user) { create_enterprise_user(enterprise_limit: 10) }
-    let!(:shop) { create(:distributor_enterprise, owner: user) }
-    let!(:shop2) { create(:distributor_enterprise, owner: user) }
-    let!(:shop_unmanaged) { create(:distributor_enterprise) }
+    let!(:shop) { create(:distributor_enterprise, owner: user, enable_standing_orders: true) }
+    let!(:shop2) { create(:distributor_enterprise, owner: user, enable_standing_orders: true) }
+    let!(:shop_unmanaged) { create(:distributor_enterprise, enable_standing_orders: true) }
 
     before { quick_login_as user }
 

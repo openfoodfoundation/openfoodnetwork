@@ -669,6 +669,7 @@ feature %q{
       end
 
       scenario "creating a new order cycle" do
+        distributor_managed.update_attribute(:enable_standing_orders, true)
         # Make the page long enough to avoid the save bar overlaying the form
         page.driver.resize(1280, 2000)
 
@@ -762,6 +763,7 @@ feature %q{
 
       scenario "editing an order cycle" do
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
+        distributor_managed.update_attribute(:enable_standing_orders, true)
 
         visit edit_admin_order_cycle_path(oc)
 
