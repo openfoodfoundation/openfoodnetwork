@@ -44,7 +44,7 @@ describe StandingOrderForm do
 
     it "creates orders for each order cycle in the schedule" do
       Spree::Config.set allow_backorders: false
-      form.save
+      expect(form.save).to be true
 
       expect(standing_order.proxy_orders.count).to be 2
 
@@ -96,11 +96,8 @@ describe StandingOrderForm do
     let!(:params) { { shipping_method_id: invalid_shipping_method.id } }
     let!(:form) { StandingOrderForm.new(standing_order, params) }
 
-    before do
-      form.save
-    end
-
     it "does not update standing_order or associated orders" do
+      expect(form.save).to be nil
       expect(order.reload.shipping_method).to eq shipping_method
       expect(order.shipments.first.shipping_method).to eq shipping_method
       expect(form.json_errors.keys).to eq [:shipping_method]
@@ -118,7 +115,7 @@ describe StandingOrderForm do
     context "when the shipping method on an order is the same as the standing order" do
       it "updates the shipping_method on the order and on shipments" do
         expect(order.shipments.first.shipping_method).to eq shipping_method
-        form.save
+        expect(form.save).to be true
         expect(order.reload.shipping_method).to eq new_shipping_method
         expect(order.shipments.first.shipping_method).to eq new_shipping_method
       end
@@ -133,7 +130,7 @@ describe StandingOrderForm do
         # behaviour.
         order.shipments.first.update_attributes(shipping_method_id: changed_shipping_method.id)
         order.update_attributes(shipping_method_id: changed_shipping_method.id)
-        form.save
+        expect(form.save).to be true
       end
 
       it "does not update the shipping_method on the standing order or on the pre-altered shipment" do
@@ -154,7 +151,7 @@ describe StandingOrderForm do
     context "when the payment method on an order is the same as the standing order" do
       it "voids existing payments and creates a new payment with the relevant payment method" do
         expect(order.payments.reload.first.payment_method).to eq payment_method
-        form.save
+        expect(form.save).to be true
         payments = order.reload.payments
         expect(payments.count).to be 2
         expect(payments.with_state('void').count).to be 1
@@ -169,7 +166,7 @@ describe StandingOrderForm do
 
       before do
         order.payments.first.update_attribute(:payment_method_id, changed_payment_method.id)
-        form.save
+        expect(form.save).to be true
       end
 
       it "keeps pre-altered payments" do
@@ -190,11 +187,11 @@ describe StandingOrderForm do
     it "removes orders outside the newly specified date range, recreates proxy orders" do
       expect(standing_order.reload.proxy_orders.count).to be 1
       expect(standing_order.reload.orders.count).to be 1
-      form.save
+      expect(form.save).to be true
       expect(standing_order.reload.proxy_orders.count).to be 0
       expect(standing_order.reload.orders.count).to be 0
       form.params = { begins_at: 1.month.ago }
-      form.save
+      expect(form.save).to be true
       expect(standing_order.reload.proxy_orders.count).to be 1
       expect(standing_order.reload.orders.count).to be 0
     end
@@ -214,7 +211,7 @@ describe StandingOrderForm do
 
       it "updates the line_item quantities and totals on all orders" do
         expect(order.reload.total.to_f).to eq 59.97
-        form.save
+        expect(form.save).to be true
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
         expect(line_items.map(&:quantity)).to eq [2]
         expect(order.reload.total.to_f).to eq 79.96
@@ -227,7 +224,7 @@ describe StandingOrderForm do
 
       it "updates the line_item quantities and totals on all orders" do
         expect(order.reload.total.to_f).to eq 59.97
-        form.save
+        expect(form.save).to be true
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
         expect(line_items.map(&:quantity)).to eq [3]
         expect(order.reload.total.to_f).to eq 99.95
@@ -247,7 +244,7 @@ describe StandingOrderForm do
 
     it "add the line item and updates the total on all orders" do
       expect(order.reload.total.to_f).to eq 59.97
-      form.save
+      expect(form.save).to be true
       line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
       expect(line_items.map(&:quantity)).to eq [1]
       expect(order.reload.total.to_f).to eq 79.96
@@ -264,7 +261,7 @@ describe StandingOrderForm do
 
     it "removes the line item and updates totals on all orders" do
       expect(order.reload.total.to_f).to eq 59.97
-      form.save
+      expect(form.save).to be true
       line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
       expect(line_items.count).to be 0
       expect(order.reload.total.to_f).to eq 39.98

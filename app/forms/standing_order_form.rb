@@ -26,8 +26,11 @@ class StandingOrderForm
 
       update_initialised_orders
 
-      raise ActiveRecord::Rollback unless standing_order.save
-      true
+      begin
+        standing_order.save!
+      rescue ActiveRecord::RecordInvalid
+        raise ActiveRecord::Rollback
+      end
     end
   end
 
