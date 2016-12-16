@@ -121,22 +121,41 @@ describe StandingOrderForm do
       end
     end
 
-    context "when the shipping method on a shipment is not the same as the standing order" do
-      let(:changed_shipping_method) { create(:shipping_method) }
+    context "when the shipping method on a shipment is not the same as the original shipping method on the standing order" do
+      context "when the shipping method on a shipment is the same as the new shipping method on the standing order" do
+        before do
+          # Updating the shipping method on a shipment updates the shipping method on the order,
+          # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
+          # behaviour.
+          order.shipments.first.update_attributes(shipping_method_id: new_shipping_method.id)
+          order.update_attributes(shipping_method_id: new_shipping_method.id)
+          expect(form.save).to be true
+        end
 
-      before do
-        # Updating the shipping method on a shipment updates the shipping method on the order,
-        # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
-        # behaviour.
-        order.shipments.first.update_attributes(shipping_method_id: changed_shipping_method.id)
-        order.update_attributes(shipping_method_id: changed_shipping_method.id)
-        expect(form.save).to be true
+        it "does not update the shipping_method on the standing order or on the pre-altered shipment" do
+          expect(order.reload.shipping_method).to eq new_shipping_method
+          expect(order.reload.shipments.first.shipping_method).to eq new_shipping_method
+          expect(form.order_update_issues[order.id]).to be nil
+        end
       end
 
-      it "does not update the shipping_method on the standing order or on the pre-altered shipment" do
-        expect(order.reload.shipping_method).to eq changed_shipping_method
-        expect(order.reload.shipments.first.shipping_method).to eq changed_shipping_method
-        expect(form.problematic_orders).to include order
+      context "when the shipping method on a shipment is not the same as the new shipping method on the standing order" do
+        let(:changed_shipping_method) { create(:shipping_method) }
+
+        before do
+          # Updating the shipping method on a shipment updates the shipping method on the order,
+          # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
+          # behaviour.
+          order.shipments.first.update_attributes(shipping_method_id: changed_shipping_method.id)
+          order.update_attributes(shipping_method_id: changed_shipping_method.id)
+          expect(form.save).to be true
+        end
+
+        it "does not update the shipping_method on the standing order or on the pre-altered shipment" do
+          expect(order.reload.shipping_method).to eq changed_shipping_method
+          expect(order.reload.shipments.first.shipping_method).to eq changed_shipping_method
+          expect(form.order_update_issues[order.id]).to include "Shipping Method"
+        end
       end
     end
   end
@@ -163,18 +182,34 @@ describe StandingOrderForm do
     end
 
     context "when the payment method on a payment is not the same as the standing order" do
-      let(:changed_payment_method) { create(:payment_method) }
+      context "when the payment method on a payment is the same as the original payment method on the standing order" do
+        before do
+          order.payments.first.update_attribute(:payment_method_id, new_payment_method.id)
+          expect(form.save).to be true
+        end
 
-      before do
-        order.payments.first.update_attribute(:payment_method_id, changed_payment_method.id)
-        expect(form.save).to be true
+        it "keeps pre-altered payments and doesn't add an issue to order_update_issues" do
+          payments = order.reload.payments
+          expect(payments.count).to be 1
+          expect(payments.first.payment_method).to eq new_payment_method
+          expect(form.order_update_issues[order.id]).to be nil
+        end
       end
 
-      it "keeps pre-altered payments" do
-        payments = order.reload.payments
-        expect(payments.count).to be 1
-        expect(payments.first.payment_method).to eq changed_payment_method
-        expect(form.problematic_orders).to include order
+      context "when the payment method on a shipment is not the same as the original payment method on the standing order" do
+        let(:changed_payment_method) { create(:payment_method) }
+
+        before do
+          order.payments.first.update_attribute(:payment_method_id, changed_payment_method.id)
+          expect(form.save).to be true
+        end
+
+        it "keeps pre-altered payments and adds an issue to order_update_issues" do
+          payments = order.reload.payments
+          expect(payments.count).to be 1
+          expect(payments.first.payment_method).to eq changed_payment_method
+          expect(form.order_update_issues[order.id]).to include "Payment Method"
+        end
       end
     end
   end
@@ -207,7 +242,7 @@ describe StandingOrderForm do
 
     before { variant.update_attribute(:count_on_hand, 2) }
 
-    context "when quantity is less than available stock" do
+    context "when quantity is within available stock" do
       let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 2} ] } }
       let(:form) { StandingOrderForm.new(standing_order, params) }
 
@@ -238,15 +273,30 @@ describe StandingOrderForm do
       let(:form) { StandingOrderForm.new(standing_order, params) }
       let(:changed_line_item) { order.line_items.find_by_variant_id(sli.variant_id) }
 
-      before { changed_line_item.update_attributes(quantity: 2) }
+      before { variant.update_attribute(:count_on_hand, 3) }
 
-      it "does not change the quantity, and adds the order to the problematic_orders list" do
-        expect(order.reload.total.to_f).to eq 79.96
-        expect(form.save).to be true
-        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: sli.variant_id)
-        expect(line_items.map(&:quantity)).to eq [2]
-        expect(order.reload.total.to_f).to eq 79.96
-        expect(form.problematic_orders).to include order
+      context "when the changed line_item quantity matches the new quantity on the standing line item" do
+        before { changed_line_item.update_attributes(quantity: 3) }
+
+        it "does not change the quantity, and doesn't add the order to order_update_issues" do
+          expect(order.reload.total.to_f).to eq 99.95
+          expect(form.save).to be true
+          expect(changed_line_item.reload.quantity).to eq 3
+          expect(order.reload.total.to_f).to eq 99.95
+          expect(form.order_update_issues[order.id]).to be nil
+        end
+      end
+
+      context "when the changed line_item quantity doesn't match the new quantity on the standing line item" do
+        before { changed_line_item.update_attributes(quantity: 2) }
+
+        it "does not change the quantity, and adds the order to order_update_issues" do
+          expect(order.reload.total.to_f).to eq 79.96
+          expect(form.save).to be true
+          expect(changed_line_item.reload.quantity).to eq 2
+          expect(order.reload.total.to_f).to eq 79.96
+          expect(form.order_update_issues[order.id]).to include "#{changed_line_item.product.name} - #{changed_line_item.full_name}"
+        end
       end
     end
   end
