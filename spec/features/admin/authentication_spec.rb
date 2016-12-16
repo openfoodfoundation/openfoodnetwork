@@ -18,6 +18,7 @@ feature "Authentication", js: true do
       click_login_button
       expect(page).to have_content "DASHBOARD"
       expect(page).to have_current_path spree.admin_path
+      expect(page).to have_no_content "CONFIGURATION"
     end
   end
 

@@ -29,7 +29,9 @@ feature %q{
                           permissions_list: [:add_to_order_cycle]) } # This er should not confer ability to create VOs for hub2
 
       it "displays a list of hub choices (ie. only those managed by the user)" do
-        visit '/admin/inventory'
+        visit spree.admin_path
+        click_link 'Products'
+        click_link 'Inventory'
 
         page.should have_select2 'hub_id', options: [hub.name] # Selects the hub automatically when only one is available
       end
