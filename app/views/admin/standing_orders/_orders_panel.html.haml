@@ -21,6 +21,6 @@
                 %span.state{ ng: { class: "proxyOrder.state", bind: 'stateText(proxyOrder.state)' } }
               %td.text-center{ ng: { bind: 'proxyOrder.total | currency' } }
               %td.actions
-                %a.edit-order.icon-edit.no-text{ href: '{{::proxyOrder.edit_path}}', 'ofn-with-tip' => t(:edit_order) }
+                %a.edit-order.icon-edit.no-text{ href: '{{::proxyOrder.edit_path}}', target: '_blank', 'ofn-with-tip' => t(:edit_order) }
                 %a.cancel-order.icon-remove.no-text{ href: 'javascript:void(0)', ng: { hide: "proxyOrder.state == 'canceled'", click: "cancelOrder(proxyOrder)" }, 'ofn-with-tip' => t(:cancel_order) }
                 %a.resume-order.icon-resume.no-text{ href: 'javascript:void(0)', ng: { show: "proxyOrder.state == 'canceled'", click: "resumeOrder(proxyOrder)" }, 'ofn-with-tip' => t(:resume_order) }

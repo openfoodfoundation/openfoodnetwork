@@ -1,10 +1,11 @@
 angular.module("admin.utils").factory 'InfoDialog', ($rootScope, $compile, $injector, $templateCache, DialogDefaults) ->
   new class InfoDialog
-    open: (type, message) ->
+    open: (type, message, templateUrl='admin/info_dialog.html', options={}) ->
       scope = $rootScope.$new()
       scope.message = message
       scope.dialog_class = type
-      template = $compile($templateCache.get('admin/info_dialog.html'))(scope)
+      scope.options = options
+      template = $compile($templateCache.get(templateUrl))(scope)
       template.dialog(DialogDefaults)
       template.dialog('open')
       scope.close = ->

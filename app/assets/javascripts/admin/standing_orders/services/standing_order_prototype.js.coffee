@@ -29,6 +29,9 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
     @$update().then (response) =>
       StatusMessage.display 'success', 'Saved'
       $injector.get('StandingOrders').afterUpdate(@id) if $injector.has('StandingOrders')
+      orders_with_issues = @not_closed_proxy_orders.filter((po) -> po.update_issues.length > 0)
+      if orders_with_issues.length > 0
+        InfoDialog.open('error', null, 'admin/order_update_issues_dialog.html', { proxyOrders: orders_with_issues})
     , (response) =>
       StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
       angular.extend(@errors, response.data.errors)
