@@ -3,7 +3,7 @@ class StandingOrderForm
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :standing_order, :params, :fee_calculator, :problematic_orders
+  attr_accessor :standing_order, :params, :fee_calculator, :order_update_issues
 
   delegate :orders, :order_cycles, :bill_address, :ship_address, :standing_line_items, to: :standing_order
   delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :proxy_orders, to: :standing_order
@@ -14,7 +14,7 @@ class StandingOrderForm
     @standing_order = standing_order
     @params = params
     @fee_calculator = fee_calculator
-    @problematic_orders = []
+    @order_update_issues = {}
   end
 
   def save
@@ -56,7 +56,10 @@ class StandingOrderForm
         if line_item.quantity == sli.quantity_was
           line_item.update_attributes(quantity: sli.quantity, skip_stock_check: true)
         else
-          @problematic_orders |= [order]
+          unless line_item.quantity == sli.quantity
+            product_name = "#{line_item.product.name} - #{line_item.full_name}"
+            add_order_update_issue(order, product_name)
+          end
         end
       end
 
@@ -81,7 +84,9 @@ class StandingOrderForm
       payment.andand.void_transaction!
       order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)
     else
-      @problematic_orders |= [order]
+      unless order.payments.with_state('checkout').where(payment_method_id: payment_method_id).any?
+        add_order_update_issue(order, I18n.t('admin.payment_method'))
+      end
     end
   end
 
@@ -91,7 +96,9 @@ class StandingOrderForm
       shipment.update_attributes(shipping_method_id: shipping_method_id)
       order.update_attribute(:shipping_method_id, shipping_method_id)
     else
-      @problematic_orders |= [order]
+      unless order.shipments.with_state('pending').where(shipping_method_id: shipping_method_id).any?
+        add_order_update_issue(order, I18n.t('admin.shipping_method'))
+      end
     end
   end
 
@@ -150,5 +157,10 @@ class StandingOrderForm
   def price_estimate_for(variant)
     fees = fee_calculator.indexed_fees_for(variant)
     (variant.price + fees).to_d
+  end
+
+  def add_order_update_issue(order, issue)
+    order_update_issues[order.id] ||= []
+    order_update_issues[order.id] << issue
   end
 end
