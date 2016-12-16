@@ -826,6 +826,7 @@ en:
       pause_failure_msg: 'Sorry, pausing failed!'
       confirm_unpause_msg: Are you sure you want to unpause this standing order?
       unpause_failure_msg: 'Sorry, unpausing failed!'
+      order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
 
     stripe_connect_settings:
       edit:

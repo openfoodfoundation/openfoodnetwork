@@ -246,7 +246,8 @@ feature 'Standing Orders' do
           schedule: schedule,
           payment_method: payment_method,
           shipping_method: shipping_method,
-          standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)]
+          standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)],
+          with_proxy_orders: true
         ) }
 
         it "passes the smoke test" do
@@ -293,6 +294,27 @@ feature 'Standing Orders' do
           expect(page).to have_selector 'tr.item', count: 1
           expect(standing_order.reload.standing_line_items.length).to eq 1
           expect(standing_order.standing_line_items.first.variant).to eq variant2
+        end
+
+        context "with initialised order that has been changed" do
+          let(:proxy_order) { standing_order.proxy_orders.first }
+          let(:order) { proxy_order.initialise_order! }
+          let(:line_item) { order.line_items.first }
+
+          before { line_item.update_attributes(quantity: 3) }
+
+          it "reports issues encountered during the update" do
+            visit edit_admin_standing_order_path(standing_order)
+
+            within "#sli_0" do
+              fill_in 'quantity', with: "1"
+            end
+
+            click_button 'Save Changes'
+            expect(page).to have_content 'Saved'
+
+            expect(page).to have_selector "#order_update_issues_dialog .message", text: I18n.t("admin.standing_orders.order_update_issues_msg")
+          end
         end
       end
     end
