@@ -16,7 +16,6 @@ module Spree
         adjustment.save
       else
         payment_method.create_adjustment(adjustment_label, order, self, true)
-        reload
       end
     end
 
