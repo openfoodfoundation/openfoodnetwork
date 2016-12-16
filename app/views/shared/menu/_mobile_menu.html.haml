@@ -51,6 +51,17 @@
           %span.nav-primary
             %i.ofn-i_013-help
             = t 'label_learn'
+    - else
+      %li.li-menu
+        %a{href: main_app.groups_path}
+          %span.nav-primary
+            %i.ofn-i_035-groups
+            = t 'label_groups'
+      %li.li-menu
+        %a{href: ContentConfig.footer_about_url}
+          %span.nav-primary
+            %i.ofn-i_013-help
+            = t 'label_about'
 
     %li
     - if spree_current_user.nil?
