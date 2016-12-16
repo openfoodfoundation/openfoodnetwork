@@ -68,8 +68,8 @@ describe LineItemsController do
 
     # Sanity check fees
     item_num = order.line_items.length
-    expected_fees = item_num * (shipping_fee + payment_fee)
-    expect(order.adjustment_total).to eq expected_fees
+    initial_fees = item_num * (shipping_fee + payment_fee)
+    expect(order.adjustment_total).to eq initial_fees
 
     # Delete the item
     item = order.line_items.first
@@ -80,6 +80,6 @@ describe LineItemsController do
 
     # Check the fees again
     order.reload
-    expect(order.adjustment_total).to eq expected_fees - shipping_fee
+    expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
   end
 end
