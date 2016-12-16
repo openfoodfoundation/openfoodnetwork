@@ -36,7 +36,7 @@ module Admin
     def update
       form = StandingOrderForm.new(@standing_order, params[:standing_order], fee_calculator)
       if form.save
-        render_as_json @standing_order, ams_prefix: params[:ams_prefix], fee_calculator: fee_calculator
+        render_as_json @standing_order, fee_calculator: fee_calculator, order_update_issues: form.order_update_issues
       else
         render json: { errors: form.json_errors }, status: :unprocessable_entity
       end
@@ -85,6 +85,7 @@ module Admin
       @schedules = Schedule.with_coordinator(@standing_order.shop)
       @payment_methods = Spree::PaymentMethod.for_distributor(@standing_order.shop)
       @shipping_methods = Spree::ShippingMethod.for_distributor(@standing_order.shop)
+      @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
       @fee_calculator = fee_calculator
     end
 
