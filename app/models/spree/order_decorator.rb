@@ -144,14 +144,22 @@ Spree::Order.class_eval do
     line_items(:reload)
     shipments.each do |shipment|
       next if shipment.shipped?
-      adjustment = shipment.adjustment
-      locked = adjustment.locked
-      adjustment.locked = false
-      adjustment.update!
-      adjustment.locked = locked
-      update_totals
-      save
+      update_adjustment! shipment.adjustment
     end
+    update_totals
+    save
+  end
+
+  # After changing line items of a completed order
+  def update_payment_fees!
+    payments(:reload)
+    line_items(:reload)
+    payments.each do |payment|
+      next if payment.completed?
+      update_adjustment! payment.adjustment
+    end
+    update_totals
+    save
   end
 
   def cap_quantity_at_stock!
@@ -332,5 +340,12 @@ Spree::Order.class_eval do
       customer_name = bill_address.andand.full_name
       self.customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user, name: customer_name, bill_address: bill_address.andand.clone, ship_address: ship_address.andand.clone)
     end
+  end
+
+  def update_adjustment!(adjustment)
+    locked = adjustment.locked
+    adjustment.locked = false
+    adjustment.update!
+    adjustment.locked = locked
   end
 end

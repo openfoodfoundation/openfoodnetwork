@@ -630,6 +630,20 @@ describe Spree::Order do
       expect(order.line_items.length).to eq item_num - 1
       expect(order.adjustment_total).to eq expected_fees - shipping_fee
     end
+
+    it "updates transaction fees" do
+      item_num = order.line_items.length
+      initial_fees = item_num * (shipping_fee + payment_fee)
+
+      # Delete the item
+      order.line_items.first.destroy
+      order.update_payment_fees!
+
+      # Check if fees got updated
+      expect(order.adjustments.length).to eq 2
+      expect(order.line_items.length).to eq item_num - 1
+      expect(order.adjustment_total).to eq initial_fees - payment_fee
+    end
   end
 
   describe "retrieving previously ordered items" do
