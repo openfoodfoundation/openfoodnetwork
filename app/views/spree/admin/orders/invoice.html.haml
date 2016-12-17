@@ -8,7 +8,7 @@
         %h4
           = t :tax_invoice
     %tr{ valign: "top" }
-      %td{ :align => "left", colspan: 3 }
+      %td{ :align => "left", colspan: 2 }
         %strong= @order.distributor.name
         %br
         = @order.distributor.address.address_part1
@@ -25,6 +25,9 @@
         - if @order.distributor.acn.present?
           %br
           = "#{t :acn} #{@order.distributor.acn}"
+      - if @order.distributor.invoice_logo && @order.distributor.logo.present?
+        %td{ :align => "right" }
+          = wicked_pdf_image_tag @order.distributor.logo(:small)
     %tr{ valign: "top" }
       %td{ :align => "right", colspan: 3 }
         %strong= @order.ship_address.full_name
@@ -56,5 +59,9 @@
     %em= @order.special_instructions
   %p
     &nbsp;
+
+- if @order.distributor.invoice_text.present?
+  %p
+    = @order.distributor.invoice_text
 
 = render 'spree/order_mailer/payment'

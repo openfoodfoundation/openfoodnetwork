@@ -654,7 +654,7 @@ fr:
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
-  order_payment: "Payer via:"
+  order_payment: "Paiement par :"
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
