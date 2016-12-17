@@ -75,7 +75,8 @@ feature %q{
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
       select 'Test Shipping Category', from: 'product_shipping_category_id'
-      fill_in 'product_description', with: "In demand, and on_demand! The hottest cakes in town."
+      #fill_in 'product_description', with: "In demand, and on_demand! The hottest cakes in town."
+      page.first("input[name='product\[description\]']", visible: false).set('In demand, and on_demand! The hottest cakes in town.')
 
       click_button 'Create'
 
