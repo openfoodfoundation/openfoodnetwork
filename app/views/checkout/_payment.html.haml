@@ -16,7 +16,7 @@
       -# TODO render this in Angular instead of server-side
       -# The problem being how to render the partials
       .row
-        .small-6.columns
+        .small-12.medium-12.large-6.columns
           - available_payment_methods.each do |method|
             .row
               .small-12.columns
@@ -34,6 +34,6 @@
             .row{"ng-if" => "order.payment_method_id == #{method.id}"}
               .small-12.columns
                 = render partial: "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
-        .small-12.columns.medium-6.columns.large-6.columns
+        .small-12.medium-12.large-6.columns
           #distributor_address.panel{"ng-show" => "Checkout.paymentMethod().description"}
             %span.pre-wrap {{ Checkout.paymentMethod().description }}
