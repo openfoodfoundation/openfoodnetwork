@@ -111,6 +111,10 @@ feature 'Shops', js: true do
     describe "closed shops" do
       it "shows taxons for any order cycle" do
         visit shops_path
+
+        # Check that the page is loaded
+        expect(page).to have_content distributor.name
+
         click_link 'Show Closed Shops'
         expand_active_table_node shop.name
         expect(page).to have_selector '.fat-taxons', text: 'Closed'

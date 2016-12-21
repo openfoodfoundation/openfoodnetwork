@@ -755,7 +755,7 @@ feature %q{
         login_to_admin_as new_user
       end
 
-      scenario "editing an order cycle" do
+      scenario "editing an order cycle", retry: 3 do
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
@@ -1020,6 +1020,9 @@ feature %q{
       # When I update, or update and close, both work
       click_button 'Update'
       page.should have_content 'Your order cycle has been updated.'
+
+      # Wait for message to disappear to test it again later
+      page.should have_no_content 'Your order cycle has been updated.'
 
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'yyz'
       click_button 'Update and Close'
