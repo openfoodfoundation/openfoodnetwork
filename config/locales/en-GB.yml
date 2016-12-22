@@ -522,14 +522,14 @@ en-GB:
   producers_title: Producers
   producers_headline: Find local producers
   producers_signup_title: Sign up as a producer
-  producers_signup_headline: Food producers, empowered.
-  producers_signup_motivation: Sell your food and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
-  producers_signup_send: Join now
-  producers_signup_enterprise: Enterprise Accounts
+  producers_signup_headline: Food producers. Meet OFN.
+  producers_signup_motivation: Sell your food and tell your stories. Save time and money on every overhead. We support innovation without the risk. We're levelling the playing field.
+  producers_signup_send: Register
+  producers_signup_enterprise: Why the Open Food Network?
   producers_signup_studies: Stories from our producers.
   producers_signup_cta_headline: Join now!
-  producers_signup_cta_action: Join now
-  producers_signup_detail: Here's the detail.
+  producers_signup_cta_action: Register
+  producers_signup_detail: Got a question?
   products_item: Item
   products_description: Description
   products_variant: Variant
