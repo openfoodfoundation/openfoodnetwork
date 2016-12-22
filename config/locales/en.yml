@@ -803,6 +803,7 @@ en:
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
+        confirm_edit: Are you sure you want to edit this order? Doing so may make it more difficult to automatically sync changes to the standing order in the future.
       confirm_cancel_msg: Are you sure you want to cancel this standing order? This action cannot be undone.
       cancel_failure_msg: 'Sorry, cancellation failed!' 
       confirm_pause_msg: Are you sure you want to pause this standing order?
