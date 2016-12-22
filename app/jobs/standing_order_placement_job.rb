@@ -1,18 +1,21 @@
 class StandingOrderPlacementJob
-  attr_accessor :proxy_orders
-
-  def initialize(proxy_orders)
-    @proxy_orders = proxy_orders
-  end
-
   def perform
-    proxy_orders.each do |proxy_order|
+    ids = proxy_orders.pluck(:id)
+    proxy_orders.update_all(placed_at: Time.now)
+    ProxyOrder.where(id: ids).each do |proxy_order|
       proxy_order.initialise_order!
       process(proxy_order.order)
     end
   end
 
   private
+
+  def proxy_orders
+    # Loads proxy orders for open order cycles that have not been placed yet
+    ProxyOrder.not_canceled.where(placed_at: nil)
+    .joins(:order_cycle).merge(OrderCycle.active)
+    .joins(:standing_order).merge(StandingOrder.not_canceled.not_paused)
+  end
 
   def process(order)
     return if order.completed?
