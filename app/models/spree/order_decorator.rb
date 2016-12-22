@@ -145,6 +145,7 @@ Spree::Order.class_eval do
     shipments.each do |shipment|
       next if shipment.shipped?
       update_adjustment! shipment.adjustment
+      shipment.save # updates included tax
     end
     update_totals
     save

@@ -61,7 +61,9 @@ describe LineItemsController do
   end
 
   it "updates fees" do
-    distributor = create(:distributor_enterprise, allow_order_changes: true)
+    Spree::Config.shipment_inc_vat = true
+    Spree::Config.shipping_tax_rate = 0.25
+    distributor = create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true)
     shipping_fee = 3
     payment_fee = 5
     order = create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee)
@@ -70,6 +72,7 @@ describe LineItemsController do
     item_num = order.line_items.length
     initial_fees = item_num * (shipping_fee + payment_fee)
     expect(order.adjustment_total).to eq initial_fees
+    expect(order.shipment.adjustment.included_tax).to eq 1.2
 
     # Delete the item
     item = order.line_items.first
@@ -80,6 +83,8 @@ describe LineItemsController do
 
     # Check the fees again
     order.reload
+    order.shipment.reload
     expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
+    expect(order.shipment.adjustment.included_tax).to eq 0.6
   end
 end
