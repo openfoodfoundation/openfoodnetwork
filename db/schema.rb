@@ -362,6 +362,8 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "order_cycle_id",    :null => false
+    t.datetime "placed_at"
+    t.datetime "confirmed_at"
   end
 
   add_index "proxy_orders", ["order_cycle_id", "standing_order_id"], :name => "index_proxy_orders_on_order_cycle_id_and_standing_order_id", :unique => true
