@@ -1,8 +1,8 @@
 class StandingOrderPlacementJob
-  attr_accessor :order_cycle
+  attr_accessor :proxy_orders
 
-  def initialize(order_cycle)
-    @order_cycle = order_cycle
+  def initialize(proxy_orders)
+    @proxy_orders = proxy_orders
   end
 
   def perform
@@ -13,14 +13,6 @@ class StandingOrderPlacementJob
   end
 
   private
-
-  def proxy_orders
-    # Load proxy orders for standing orders whose begins at date may between now and the order cycle close date
-    # Does not load proxy orders for standing orders who ends_at date is before order_cycle close
-    ProxyOrder.not_canceled.where(order_cycle_id: order_cycle)
-    .where('begins_at < ? AND (ends_at IS NULL OR ends_at > ?)', order_cycle.orders_close_at, order_cycle.orders_close_at)
-    .merge(StandingOrder.not_canceled.not_paused).joins(:standing_order).readonly(false)
-  end
 
   def process(order)
     return if order.completed?
@@ -64,7 +56,7 @@ class StandingOrderPlacementJob
   end
 
   def available_variants_for(order)
-    DistributionChangeValidator.new(order).variants_available_for_distribution(order.distributor, order_cycle)
+    DistributionChangeValidator.new(order).variants_available_for_distribution(order.distributor, order.order_cycle)
   end
 
   def send_placement_email(order, changes)
