@@ -1,33 +1,6 @@
 require 'spec_helper'
 
 describe StandingOrderPlacementJob do
-
-  describe "finding proxy_orders for the specified order cycle" do
-    let(:shop) { create(:distributor_enterprise) }
-    let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_close_at: 10.minutes.from_now) }
-    let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop) }
-    let(:schedule) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
-    let(:standing_order1) { create(:standing_order, shop: shop, schedule: schedule, begins_at: 9.minutes.from_now, ends_at: 11.minutes.from_now) }
-    let(:standing_order2) { create(:standing_order, shop: shop, schedule: schedule, begins_at: 9.minutes.from_now, ends_at: 11.minutes.from_now, paused_at: 1.minute.ago) }
-    let(:standing_order3) { create(:standing_order, shop: shop, schedule: schedule, begins_at: 9.minutes.from_now, ends_at: 11.minutes.from_now, canceled_at: 1.minute.ago) }
-    let(:standing_order4) { create(:standing_order, shop: shop, schedule: schedule, begins_at: 11.minutes.from_now, ends_at: 20.minutes.from_now) }
-    let(:standing_order5) { create(:standing_order, shop: shop, schedule: schedule, begins_at: 1.minute.ago, ends_at: 9.minutes.from_now) }
-    let!(:proxy_order1) { create(:proxy_order, standing_order: standing_order1, order_cycle: order_cycle2) } # OC Mismatch
-    let!(:proxy_order2) { create(:proxy_order, standing_order: standing_order2, order_cycle: order_cycle1) } # Paused
-    let!(:proxy_order3) { create(:proxy_order, standing_order: standing_order3, order_cycle: order_cycle1) } # Cancelled
-    let!(:proxy_order4) { create(:proxy_order, standing_order: standing_order4, order_cycle: order_cycle1) } # Begins after OC close
-    let!(:proxy_order5) { create(:proxy_order, standing_order: standing_order5, order_cycle: order_cycle1) } # Ends before OC close
-    let!(:proxy_order6) { create(:proxy_order, standing_order: standing_order1, order_cycle: order_cycle1) } # OK
-
-    let!(:job) { StandingOrderPlacementJob.new(order_cycle1) }
-
-    it "only returns not_canceled proxy_orders for the relevant order cycle" do
-      proxy_orders = job.send(:proxy_orders)
-      expect(proxy_orders).to include proxy_order6
-      expect(proxy_orders).to_not include proxy_order1, proxy_order2, proxy_order3, proxy_order4, proxy_order5
-    end
-  end
-
   describe "checking that line items are available to purchase" do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:shop) { order_cycle.coordinator }

@@ -1,22 +1,17 @@
 class StandingOrderConfirmJob
-  attr_accessor :order_cycle
+  attr_accessor :proxy_orders
 
-  def initialize(order_cycle)
-    @order_cycle = order_cycle
+  def initialize(proxy_orders)
+    @proxy_orders = proxy_orders
   end
 
   def perform
-    orders.each do |order|
-      process(order)
+    proxy_orders.each do |proxy_order|
+      process(proxy_order.order)
     end
   end
 
   private
-
-  def orders
-    Spree::Order.complete.where(order_cycle_id: order_cycle)
-    .merge(ProxyOrder.not_canceled).joins(:proxy_order).readonly(false)
-  end
 
   def process(order)
     send_confirm_email(order)
