@@ -755,7 +755,7 @@ feature %q{
         login_to_admin_as new_user
       end
 
-      scenario "editing an order cycle", retry: 3 do
+      scenario "editing an order cycle" do
         oc = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' } )
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
@@ -793,6 +793,7 @@ feature %q{
         end
 
         # I should be able to see and toggle v1
+        puts page.body
         expect(page).to have_checked_field "order_cycle_outgoing_exchange_0_variants_#{v1.id}", disabled: false
         uncheck "order_cycle_outgoing_exchange_0_variants_#{v1.id}"
 
