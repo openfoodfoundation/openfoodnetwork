@@ -8,6 +8,7 @@ rvm:
 branches:
   only:
   - master
+  - merged-pull/*
 
 # Set the timezone for phantomjs with TZ
 # Set the timezone for karma with TIMEZONE
