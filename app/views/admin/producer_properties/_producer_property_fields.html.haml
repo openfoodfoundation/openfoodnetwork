@@ -12,4 +12,4 @@
     = f.text_field :value, :class => 'autocomplete'
   %td.actions
     - unless @enterprise.producer_properties.empty?
-      = link_to_remove_fields t(:remove), f, no_text: true, url: (f.object.persisted? && main_app.admin_enterprise_producer_property_path(@enterprise, f.object)), html: {"onclick" => "if(typeof(enterprise_form) != 'undefined') { angular.element(enterprise_form).scope().setFormDirty() }".html_safe}
+      = link_to_remove_fields_without_url t(:remove), f, no_text: true, html: {"onclick" => "if(typeof(enterprise_form) != 'undefined') { angular.element(enterprise_form).scope().setFormDirty() }".html_safe}
