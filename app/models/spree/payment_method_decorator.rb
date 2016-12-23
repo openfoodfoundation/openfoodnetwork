@@ -40,7 +40,7 @@ Spree::PaymentMethod.class_eval do
 
   def init
     unless reflections.keys.include? :calculator
-      include Spree::Core::CalculatedAdjustments
+      self.class.include Spree::Core::CalculatedAdjustments
     end
 
     self.calculator ||= Spree::Calculator::FlatRate.new(preferred_amount: 0)
