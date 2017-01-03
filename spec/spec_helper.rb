@@ -93,6 +93,9 @@ RSpec.configure do |config|
   # Ensure we start with consistent config settings
   config.before(:each) { Spree::Config.products_require_tax_category = false }
 
+  # Tests assume AUD is the default currency.
+  config.before(:each) {Spree::Config.currency = "AUD" }
+
   # Helpers
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
