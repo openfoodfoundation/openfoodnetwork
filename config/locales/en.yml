@@ -1343,6 +1343,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_order_cycle: "Order Cycle: "
   report_entreprises: "Enterprises: "
   report_users: "Users: "
+  report_tax_rates: "Tax rates"
+  report_tax_types: "Tax types"
   initial_invoice_number: "Initial invoice number:"
   invoice_date: "Invoice date:"
   due_date: "Due date:"
