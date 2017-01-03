@@ -1225,6 +1225,8 @@ fr:
   report_order_cycle: "Cycle de vente:"
   report_entreprises: "Entreprises:"
   report_users: "Managers:"
+  report_tax_rates: "Taxes par taux"
+  report_tax_types: "Taxes par type"
   initial_invoice_number: "N° de facture initial:"
   invoice_date: "Date de facture:"
   due_date: "Date d'échéance:"

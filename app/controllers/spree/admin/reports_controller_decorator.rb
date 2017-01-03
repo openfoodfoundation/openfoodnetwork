@@ -159,6 +159,7 @@ Spree::Admin::ReportsController.class_eval do
   def sales_tax
     prepare_date_params params
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+    @report_type = params[:report_type]
 
     @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, params
 
