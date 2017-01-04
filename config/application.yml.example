@@ -21,3 +21,5 @@ CURRENCY: AUD
 #
 # DISCOURSE_URL must be the URL of your Discourse instance.
 #DISCOURSE_URL: "https://noticeboard.openfoodnetwork.org.au"
+
+GOOGLE_MAPS_API_KEY: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
