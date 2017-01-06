@@ -391,6 +391,7 @@ en:
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Visible to registered customers only"
+          recommend_require_login: "We recommend to require users to login when orders can be changed."
           allow_guest_orders: "Guest orders"
           allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
           allow_guest_orders_false: "Require login to order"
