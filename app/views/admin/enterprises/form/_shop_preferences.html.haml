@@ -51,12 +51,18 @@
       %label= t '.allow_guest_orders'
       %div{'ofn-with-tip' => t('.allow_guest_orders_tip')}
         %a= t 'admin.whats_this'
-    .three.columns
-      = f.radio_button :allow_guest_orders, true
-      = f.label :allow_guest_orders, t('.allow_guest_orders_true'), value: :true
-    .five.columns.omega
-      = f.radio_button :allow_guest_orders, false
-      = f.label :allow_guest_orders, t('.allow_guest_orders_false'), value: :false
+    .eight.columns.omega
+      .row
+        .three.columns.alpha
+          = f.radio_button :allow_guest_orders, true, "ng-model" => "Enterprise.allow_guest_orders", "ng-value" => "true"
+          = f.label :allow_guest_orders, t('.allow_guest_orders_true'), value: :true
+        .five.columns.omega
+          = f.radio_button :allow_guest_orders, false, "ng-model" => "Enterprise.allow_guest_orders", "ng-value" => "false"
+          = f.label :allow_guest_orders, t('.allow_guest_orders_false'), value: :false
+      .row.warning{ng: {show: 'Enterprise.allow_guest_orders && Enterprise.allow_order_changes'}}
+        .eight.columns.alpha.omega
+          %i.icon-warning-sign
+          = t '.recommend_require_login'
 .row
   .alpha.eleven.columns
     .three.columns.alpha
@@ -64,8 +70,8 @@
       %div{'ofn-with-tip' => t('.allow_order_changes_tip')}
         %a= t 'admin.whats_this'
     .three.columns
-      = f.radio_button :allow_order_changes, false
+      = f.radio_button :allow_order_changes, false, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "false"
       = f.label :allow_order_changes, t('.allow_order_changes_false'), value: :false
     .five.columns.omega
-      = f.radio_button :allow_order_changes, true
+      = f.radio_button :allow_order_changes, true, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "true"
       = f.label :allow_order_changes, t('.allow_order_changes_true'), value: :true
