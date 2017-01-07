@@ -1,14 +1,14 @@
 .row
   .alpha.three.columns
-    = f.label :abn, 'ABN'
+    = f.label :abn, t('.abn')
   .omega.eight.columns
-    = f.text_field :abn, { placeholder: "eg. 99 123 456 789"}
+    = f.text_field :abn, { placeholder: t('.abn_placeholder') }
 
 .row
   .alpha.three.columns
-    = f.label :acn, 'ACN'
+    = f.label :acn, t('.acn')
   .omega.eight.columns
-    = f.text_field :acn, { placeholder: "eg. 123 456 789"}
+    = f.text_field :acn, { placeholder: t('.acn_placeholder') }
 
 .row
   .three.columns.alpha
@@ -16,8 +16,8 @@
   .two.columns
     = f.radio_button :charges_sales_tax, true
     &nbsp;
-    = f.label :charges_sales_tax, "Yes", :value => "true"
+    = f.label :charges_sales_tax, t(:say_yes), value: 'true'
   .five.columns.omega
     = f.radio_button :charges_sales_tax, false
     &nbsp;
-    = f.label :charges_sales_tax, "No", :value => "false"
+    = f.label :charges_sales_tax, t(:say_no), value: 'false'
