@@ -100,6 +100,8 @@ nb:
         select_country: 'velg landet'
         select_state: 'Velg Fylket'
         edit: 'Redigere'
+        update_address: 'Oppdater Adresse'
+        confirm_delete: 'Sikker på å slette?'
     products:
       bulk_edit:
         unit: Enhet
@@ -162,11 +164,15 @@ nb:
         status: Status
         manage: Administrer
       form:
-        primary_details:
-          shopfront_requires_login: "Krever butikk innlogging?"
-          shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller ikke."
+        shop_preferences:
+          shopfront_requires_login: "Offentlig synlig butikk?"
+          shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
           shopfront_requires_login_false: "Offentlig"
-          shopfront_requires_login_true: "Krev at kunder logger inn"
+          shopfront_requires_login_true: "Synlig kun for registrerte kunder."
+          allow_guest_orders: "Gjestebestillinger"
+          allow_guest_orders_tip: "Tillat gjestebestillinger eller krev brukerregistrering."
+          allow_guest_orders_false: "Krev innlogging for å bestille"
+          allow_guest_orders_true: "Tillat gjestebestilling"
   home:
     hubs:
       show_closed_shops: "Vis stengte butikker"
@@ -318,7 +324,9 @@ nb:
   checkout_as_guest: "Betal som gjest"
   checkout_details: "Dine detaljer"
   checkout_billing: "Betalingsinformasjon"
+  checkout_default_bill_address: "Lagre som standard fakturaadresse"
   checkout_shipping: Leveringsinformasjon
+  checkout_default_ship_address: "Lagre som standard leveringsadresse"
   checkout_method_free: Gratis
   checkout_address_same: Leveringsadresse samme som fakturaadresse?
   checkout_ready_for: "Klar for:"
@@ -959,6 +967,7 @@ nb:
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"
   validation_msg_is_associated_with_an_exising_customer: "er assosiert med en eksisterende kunde"
   spree:
+    zipcode: Postnummer
     shipment_states:
       backorder: restordre
       partial: delvis
