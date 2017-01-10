@@ -444,12 +444,37 @@ describe OrderCycle do
 
     # to_h gives us a unique hash for each exchange
     # check that the clone has no additional exchanges
-    occ.exchanges.map(&:to_h).all? do |ex|
-      oc.exchanges.map(&:to_h).include? ex
-    end
+    occ.exchanges.size.should == oc.exchanges.size
     # check that the clone has original exchanges
-    occ.exchanges.map(&:to_h).include? ex1.to_h
-    occ.exchanges.map(&:to_h).include? ex2.to_h
+    occ.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex1["receiver_id"], ex1["sender_id"]]
+    occ.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex2["receiver_id"], ex2["sender_id"]]
+  end
+
+  it "copies information from another order cycle" do
+    #Issue 1052
+    coordinator = create(:enterprise);
+    oc = create(:simple_order_cycle, coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)], preferred_product_selection_from_coordinator_inventory_only: true)
+    ex1 = create(:exchange, order_cycle: oc)
+    ex2 = create(:exchange, order_cycle: oc)
+    new_oc = create(:order_cycle)
+    original_exchange = new_oc.exchanges.map(&:to_h).first
+
+    new_oc.copy_settings_from(oc)
+
+    new_oc.preferred_product_selection_from_coordinator_inventory_only.should be_true
+    new_oc.coordinator_fee_ids.should_not be_empty
+    new_oc.coordinator_fee_ids.should == oc.coordinator_fee_ids
+    new_oc.preferred_product_selection_from_coordinator_inventory_only.should == oc.preferred_product_selection_from_coordinator_inventory_only
+
+    # check that the copy has original exchanges
+    new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex1["receiver_id"], ex1["sender_id"]]
+    new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should include [ex2["receiver_id"], ex2["sender_id"]]
+
+    new_oc.exchanges.size.should eq oc.exchanges.size
+
+    # Any existing exchanges are deleted
+    new_oc.exchanges.map(&:to_h).map{ |e| [e["receiver_id"], e["sender_id"]] }.should_not include [original_exchange["receiver_id"], original_exchange["sender_id"]]
+
   end
 
   describe "finding recently closed order cycles" do

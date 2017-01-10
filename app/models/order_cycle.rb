@@ -118,13 +118,22 @@ class OrderCycle < ActiveRecord::Base
 
   def clone!
     oc = self.dup
-    oc.name = "COPY OF #{oc.name}"
+    oc.name = I18n.t('admin.order_cycles.edit.copy_prefix') + " #{oc.name}"
     oc.orders_open_at = oc.orders_close_at = nil
-    oc.coordinator_fee_ids = self.coordinator_fee_ids
-    oc.preferred_product_selection_from_coordinator_inventory_only = self.preferred_product_selection_from_coordinator_inventory_only
-    oc.save!
-    self.exchanges.each { |e| e.clone!(oc) }
-    oc.reload
+    oc.copy_fees_products_and_exchanges_from(self)
+  end
+
+  def copy_fees_products_and_exchanges_from(from)
+    self.coordinator_fee_ids = from.coordinator_fee_ids
+    self.preferred_product_selection_from_coordinator_inventory_only = from.preferred_product_selection_from_coordinator_inventory_only
+    save!
+    from.exchanges.each { |e| e.clone!(self) }
+    self.reload
+  end
+
+  def copy_settings_from(oc)
+    exchanges.clear
+    copy_fees_products_and_exchanges_from(oc)
   end
 
   def suppliers

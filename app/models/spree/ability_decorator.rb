@@ -163,7 +163,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
       OrderCycle.accessible_by(user).include? order_cycle
     end
-    can [:bulk_update, :clone, :destroy, :notify_producers], OrderCycle do |order_cycle|
+    can [:bulk_update, :clone, :copy_settings, :destroy, :notify_producers], OrderCycle do |order_cycle|
       user.enterprises.include? order_cycle.coordinator
     end
     can [:for_order_cycle], Enterprise

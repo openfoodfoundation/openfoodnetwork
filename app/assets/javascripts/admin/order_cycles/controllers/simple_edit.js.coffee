@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", ($scope, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
+angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", ($rootScope, $scope, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
   $scope.orderCycleId = ->
     $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
 
@@ -45,3 +45,10 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
 
   $scope.cancel = (destination) ->
     $window.location = destination
+
+  $rootScope.$on 'refreshOC', (event, id) ->
+    $scope.enterprises = Enterprise.index(order_cycle_id: id)
+    $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: id)
+    $scope.order_cycle = OrderCycle.load(id)
+    $q.all([$scope.enterprises.$promise, $scope.enterprise_fees.$promise, $scope.order_cycle.$promise]).then ->
+      StatusMessage.display 'success', t "admin.order_cycles.edit.order_cycle_updated"

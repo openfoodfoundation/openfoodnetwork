@@ -706,6 +706,36 @@ feature %q{
         occ = OrderCycle.last
         occ.name.should == "COPY OF #{oc.name}"
       end
+
+      scenario "copying from another order cycle" do
+        oc = create(:simple_order_cycle, { suppliers: [supplier_managed], coordinator: distributor_managed, distributors: [distributor_managed], name: 'Order Cycle 1' } )
+        oc_new = create(:simple_order_cycle, coordinator: distributor_managed, name: 'Order Cycle 2')
+        v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
+        v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
+
+        # Incoming exchange
+        ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed, incoming: true).first
+        ex_in.update_attributes(variant_ids: [v1.id, v2.id])
+
+        # Outgoing exchange
+        ex_out = oc.exchanges.where(sender_id: distributor_managed, receiver_id: distributor_managed, incoming: false).first
+        ex_out.update_attributes(variant_ids: [v1.id, v2.id])
+
+        visit edit_admin_order_cycle_path(oc_new)
+        click_button 'Advanced Settings'
+        expect(page).to have_selector('div.loaded')
+        select2_select oc.name, from: "oc_id"
+        page.find('#copy_products').click
+        expect(page).to have_content "Copying products and fees"
+        # Should now show the exchanges from the original oc
+
+        expect(page).to have_content "Products and fees copied"
+        expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
+        expect(page).to have_selector 'tr.supplier', count: 1
+
+        expect(page).to have_selector "tr.distributor-#{distributor_managed.id}"
+        expect(page).to have_selector 'tr.distributor', count: 1
+      end
     end
 
     context "that is a manager of a participating producer" do
@@ -998,7 +1028,6 @@ feature %q{
 
       # And it should have the fee
       oc.coordinator_fees.should == [fee2]
-
       # And my pickup time and instructions should have been saved
       ex = oc.exchanges.outgoing.first
       ex.pickup_time.should == 'xy'

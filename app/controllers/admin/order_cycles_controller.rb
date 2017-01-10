@@ -9,6 +9,7 @@ module Admin
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
     before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
+    before_filter :set_order_cycle, only: [:update, :clone, :copy_settings]
     around_filter :protect_invalid_destroy, only: :destroy
 
     def index
@@ -56,7 +57,6 @@ module Admin
     end
 
     def update
-      @order_cycle = OrderCycle.find params[:id]
 
       respond_to do |format|
         if @order_cycle.update_attributes(params[:order_cycle])
@@ -83,9 +83,17 @@ module Admin
     end
 
     def clone
-      @order_cycle = OrderCycle.find params[:id]
       @order_cycle.clone!
       redirect_to main_app.admin_order_cycles_path, :notice => "Your order cycle #{@order_cycle.name} has been cloned."
+    end
+
+    def copy_settings
+      oc_to_copy = OrderCycle.find(params[:oc_to_copy])
+      if @order_cycle.copy_settings_from(oc_to_copy)
+        render_as_json @order_cycle, current_user: spree_current_user 
+      else
+        render :json => {:success => false}
+      end
     end
 
     # Send notifications to all producers who are part of the order cycle
@@ -119,6 +127,11 @@ module Admin
     end
 
     private
+
+    def set_order_cycle
+      @order_cycle = OrderCycle.find params[:id]
+    end
+
     def load_data_for_index
       @show_more = !!params[:show_more]
       unless @show_more || params[:q].andand[:orders_close_at_gt].present?

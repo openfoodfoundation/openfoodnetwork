@@ -142,7 +142,6 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
 
         delete(service.order_cycle.exchanges)
         service.loaded = true
-
         (callback || angular.noop)(service.order_cycle)
 
       this.order_cycle
