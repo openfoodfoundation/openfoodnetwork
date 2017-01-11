@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 feature "As a consumer I want to check out my cart", js: true, retry: 3 do
   include AuthenticationWorkflow
   include ShopWorkflow
@@ -31,7 +30,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
     let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
     let(:sm3) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
     let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
-    let!(:pm2) { create(:payment_method, distributors: [distributor]) }
+    let!(:pm2) { create(:payment_method, distributors: [distributor], calculator: Spree::Calculator::FlatRate.new(preferred_amount: 5.67)) }
     let!(:pm3) do
       Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test', distributor_ids: [distributor.id]).tap do |pm|
         pm.preferred_login = 'devnull-facilitator_api1.rohanmitchell.com'
@@ -39,6 +38,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         pm.preferred_signature = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AaTntNJ-AjvUJkWf4dgJIvcLsf1V'
       end
     end
+
 
     before do
       distributor.shipping_methods << sm1
@@ -325,6 +325,28 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
               o = Spree::Order.complete.first
               o.adjustments.shipping.first.amount.should == 4.56
               o.payments.first.amount.should == 10 + 1.23 + 4.56 # items + fees + shipping
+            end
+          end
+
+          context "when we are charged a payment method fee (transaction fee)" do
+            it "creates a payment including the transaction fee" do
+              # Selecting the transaction fee, it is displayed
+              expect(page).to have_selector ".transaction-fee td", text: "$0.00"
+              expect(page).to have_selector ".total", text: "$11.23"
+
+              toggle_payment
+              choose "#{pm2.name} ($5.67)"
+
+              expect(page).to have_selector ".transaction-fee td", text: "$5.67"
+              expect(page).to have_selector ".total", text: "$16.90"
+
+              place_order
+              expect(page).to have_content "Your order has been processed successfully"
+
+              # There are two orders - our order and our new cart
+              o = Spree::Order.complete.first
+              expect(o.adjustments.payment_fee.first.amount).to eq 5.67
+              expect(o.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
             end
           end
 
