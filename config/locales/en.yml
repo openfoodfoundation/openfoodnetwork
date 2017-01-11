@@ -173,6 +173,8 @@ en:
         inherits_properties?: Inherits Properties?
         available_on: Available On
         av_on: "Av. On"
+      variants:
+        to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
 
     variant_overrides:
       loading_flash:

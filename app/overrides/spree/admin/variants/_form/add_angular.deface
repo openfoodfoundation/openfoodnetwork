@@ -1,0 +1,2 @@
+add_to_attributes '[data-hook="admin_variant_form_fields"]'
+attributes 'ng-app' => 'admin.products'
