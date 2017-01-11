@@ -6,7 +6,7 @@ class Api::StateSerializer < ActiveModel::Serializer
   end
 
   def label 
-	eval I18n.t("registration_detail_state_label")
+	eval Spree::Config[:state_display]
   end
 
 end
