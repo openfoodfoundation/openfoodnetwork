@@ -12,7 +12,7 @@ angular.module('admin.orderCycles')
     $scope.StatusMessage = StatusMessage
 
     $scope.$watch 'order_cycle_form.$dirty', (newValue) ->
-      StatusMessage.display 'notice', 'You have unsaved changes' if newValue
+      StatusMessage.display 'notice', t("admin.unsaved_changes") if newValue
 
     $scope.loaded = ->
       Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
