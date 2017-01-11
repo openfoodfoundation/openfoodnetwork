@@ -1,13 +1,13 @@
 #welcome_page.sixteen.columns.alpha
   %header
-    %h1 Welcome to the Open Food Network!
+    %h1= t('.welcome_title')
     %p
-      You have successfully created a
+      = t('.welcome_text')
       %strong
         = "#{"producer " if @enterprise.is_primary_producer}profile"
 
     %section
-      %h2 Next step
-      %p Choose your starting point:
+      %h2= t('.next_step')
+      %p= t('.choose_starting_point')
 
   = render partial: "change_type_form"

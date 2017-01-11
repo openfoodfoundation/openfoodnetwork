@@ -151,7 +151,7 @@
             %th.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
               = t("admin.orders.bulk_management.weight_volume")
             %th.price{ 'ng-show' => 'columns.price.visible' }
-              = t("admin.price")
+              = t("admin.price (#{currency_symbol})")
             %th.actions
             %th.actions
               = t("admin.orders.bulk_management.ask")
@@ -178,7 +178,7 @@
             %input.show-dirty{ :type => 'number', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true", class: '{"update-error": line_item.errors.final_weight_volume}' }, min: 0, 'ng-pattern' => '/[1-9]+/' }
             %span.error{ ng: { bind: 'line_item.errors.final_weight_volume' } }
           %td.price{ 'ng-show' => 'columns.price.visible' }
-            %input.show-dirty{ :type => 'text', :name => 'price', :id => 'price', :ng => { value: 'line_item.price * line_item.quantity | currency', readonly: "true", class: '{"update-error": line_item.errors.price}' } }
+            %input.show-dirty{ :type => 'text', :name => 'price', :id => 'price', :ng => { value: 'line_item.price * line_item.quantity | currency:""', readonly: "true", class: '{"update-error": line_item.errors.price}' } }
             %span.error{ ng: { bind: 'line_item.errors.price' } }
           %td.actions
             %a{ href: "/admin/orders/{{line_item.order.number}}/edit", :class => "edit-order icon-edit no-text", 'confirm-link-click' => 'confirmRefresh()' }

@@ -25,7 +25,6 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
           prices = (v.price for v in product.variants)
           product.price = Math.min.apply(null, prices)
         product.hasVariants = product.variants?.length > 0
-
         product.primaryImage = product.images[0]?.small_url if product.images
         product.primaryImageOrMissing = product.primaryImage || "/assets/noimage/small.png"
         product.largeImage = product.images[0]?.large_url if product.images
@@ -45,5 +44,7 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
         if product.variants
           product.variants = for variant in product.variants
             variant = Variants.register variant
+            if product.name != variant.name_to_display
+              product.variant_names += variant.name_to_display
             variant.product = product
             variant
