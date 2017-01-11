@@ -3,9 +3,9 @@
     %p.modal-header {{'contact' | t}}
     %p{"ng-if" => "::enterprise.phone", "ng-bind" => "::enterprise.phone"}
 
-    %p.word-wrap{"ng-if" => "::enterprise.email_address"}
+    %p{"ng-if" => "::enterprise.email_address"}
       %a{"ng-href" => "{{::enterprise.email_address | stripUrl}}", target: "_blank", mailto: true}
         %span.email{"ng-bind" => "::enterprise.email_address | stripUrl"}
 
-    %p.word-wrap{"ng-if" => "enterprise.website"}
+    %p{"ng-if" => "enterprise.website"}
       %a{"ng-href" => "http://{{::enterprise.website | stripUrl}}", target: "_blank", "ng-bind" => "::enterprise.website | stripUrl"}
