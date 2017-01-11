@@ -559,7 +559,6 @@ es:
   registration_detail_state_error: "Estado requerido"
   registration_detail_country: "País:"
   registration_detail_country_error: "Seleccione un país"
-  registration_detail_state_label: "name"
   fees: "Tarifas"
   item_cost: "Costo del artículo"
   bulk: "Agrupar"
