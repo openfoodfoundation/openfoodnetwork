@@ -350,6 +350,8 @@ feature %q{
     fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'New instructions 0'
     fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'New time 1'
     fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'New instructions 1'
+    fill_in 'order_cycle_outgoing_exchange_2_pickup_time', with: 'New time 2'
+    fill_in 'order_cycle_outgoing_exchange_2_pickup_instructions', with: 'New instructions 2'
 
     page.find("table.exchanges tr.distributor-#{distributor.id} td.tags").click
     within ".exchange-tags" do
@@ -615,6 +617,11 @@ feature %q{
         click_button 'Add distributor'
         select 'Permitted distributor', from: 'new_distributor_id'
         click_button 'Add distributor'
+
+        fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
+        fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
+        fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'pickup time 2'
+        fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'pickup instructions'
 
         # Should only have suppliers / distributors listed which the user is managing or
         # has E2E permission to add products to order cycles
