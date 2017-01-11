@@ -105,6 +105,8 @@ en:
     clear_all: Clear All
     start_date: "Start Date"
     end_date: "End Date"
+    unsaved_changes: "You have unsaved changes"
+    form_invalid: "Form contains missing or invalid fields"
 
     columns: Columns
     actions: Actions
