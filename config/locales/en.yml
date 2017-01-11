@@ -228,7 +228,9 @@ en:
 
     enterprises:
       index:
-        producer?: Producer?
+        title: Enterprises
+        new_enterprise: New Enterprise
+        producer?: "Producer?"
         package: Package
         status: Status
         manage: Manage
@@ -397,9 +399,6 @@ en:
       edit:
         editing: 'Editing:'
         back_link: Back to enterprises list
-      index:
-        title: Enterprises
-        new_enterprise: New Enterprise
       new:
         title: New Enterprise
         back_link: Back to enterprises list
