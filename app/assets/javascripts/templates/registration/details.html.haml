@@ -44,13 +44,13 @@
               %span.error{ ng: { show: "details.zipcode.$error.required && submitted" } }
                 {{'registration_detail_postcode_error' | t}}
         .row
-          .small-12.medium-4.large-4.columns
+          .small-12.medium-6.large-6.columns
             .field
               %label{ for: 'enterprise_state' } {{'registration_detail_state' | t}}
-              %select.chunky{ id: 'enterprise_state', name: 'state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.abbr for s in enterprise.country.states', show: 'countryHasStates()', required: 'countryHasStates()' } }
+              %select.chunky{ id: 'enterprise_state', name: 'state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.label for s in enterprise.country.states', show: 'countryHasStates()', required: 'countryHasStates()' } }
               %span.error{ ng: { show: "details.state.$error.required && submitted" } }
                 {{'registration_detail_state_error' | t}}
-          .small-12.medium-8.large-8.columns
+          .small-12.medium-6.large-6.columns
             .field
               %label{ for: 'enterprise_country' } {{'registration_detail_country' | t}}
               %select.chunky{ id: 'enterprise_country', name: 'country', required: true, ng: { model: 'enterprise.country', options: 'c as c.name for c in countries' } }
