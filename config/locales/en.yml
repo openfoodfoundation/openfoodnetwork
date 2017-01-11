@@ -244,7 +244,7 @@ en:
           acn: ACN
           acn_placeholder: eg. 123 456 789
         contact:
-          name: Fullname
+          name: Name
           name_placeholder: eg. Gustav Plum
           email_address: Email Address
           email_address_placeholder: eg. gustav@truffles.com
@@ -294,8 +294,8 @@ en:
           own: Own
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
-          visible_in_seach:  Visible in search?
-          visible_in_seach_tip: Determines whether this enterprise will be visible to customers when searching the site.
+          visible_in_search: Visible in search?
+          visible_in_search_tip: Determines whether this enterprise will be visible to customers when searching the site.
           visible: Visible
           not_visible: Not visible
           permalink: Permalink (no spaces)
@@ -666,6 +666,8 @@ en:
   order_includes_tax: (includes tax)
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
   order_hub_info: Hub Info
+
+  bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
 
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
