@@ -5,7 +5,32 @@
 = inject_available_countries
 = inject_enterprise_attributes
 
+%script{type: "text/ng-template", id: "registration/about.html"}
+  = render partial: "registration/steps/about"
+%script{type: "text/ng-template", id: "registration/contact.html"}
+  = render partial: "registration/steps/contact"
+%script{type: "text/ng-template", id: "registration/details.html"}
+  = render partial: "registration/steps/details"
+%script{type: "text/ng-template", id: "registration/finished.html"}
+  = render partial: "registration/steps/finished"
+%script{type: "text/ng-template", id: "registration/images.html"}
+  = render partial: "registration/steps/images"
+%script{type: "text/ng-template", id: "registration/limit_reached.html"}
+  = render partial: "registration/steps/limit_reached"
+%script{type: "text/ng-template", id: "registration/images/logo.html"}
+  = render partial: "registration/steps/logo"
+%script{type: "text/ng-template", id: "registration/images/promo.html"}
+  = render partial: "registration/steps/promo"
+%script{type: "text/ng-template", id: "registration/social.html"}
+  = render partial: "registration/steps/social"
+%script{type: "text/ng-template", id: "registration/steps.html"}
+  = render partial: "registration/steps/steps"
+%script{type: "text/ng-template", id: "registration/type.html"}
+  = render partial: "registration/steps/type"
+
 %script{type: "text/ng-template", id: "registration/introduction.html"}
-  = render partial: "registration/introduction"
+  = render partial: "registration/steps/introduction"
+%script{type: "text/ng-template", id: "registration.html"}
+  = render "modal"
 
 %div{ "ng-controller" => "RegistrationCtrl" }
