@@ -16,14 +16,7 @@
   = render partial: "shopping_shared/details"
 
   %accordion{"close-others" => "true"}
-    %checkout.row{"ng-controller" => "CheckoutCtrl"}
-      .small-12.medium-8.large-9.columns
-        - unless spree_current_user
-          = render partial: "checkout/authentication"
-        %div{"ng-show" => "enabled", "ng-controller" => "AccordionCtrl"}
-          = render partial: "checkout/form"
-      .small-12.medium-4.large-3.columns
-        = render partial: "checkout/summary"
-
+    %checkout{"ng-controller" => "CheckoutCtrl"}
+      = render partial: "checkout/form"
 
 = render partial: "shared/footer"

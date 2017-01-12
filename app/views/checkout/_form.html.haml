@@ -4,14 +4,30 @@
     novalidate: true,
     "ng-submit" => "purchase($event, checkout)"} do |f|
 
-  = inject_available_shipping_methods
-  = inject_available_payment_methods
+  .row
+    .small-12.medium-8.large-9.columns
+      - unless spree_current_user
+        = render partial: "checkout/authentication"
+      %div{"ng-show" => "enabled", "ng-controller" => "AccordionCtrl"}
 
-  = render "checkout/details", f: f
-  = render "checkout/billing", f: f
-  = render "checkout/shipping", f: f
-  = render "checkout/payment", f: f
-  %p
-    %button.button.primary{type: :submit}
-      = t :checkout_send
-    / {{ checkout.$valid }}
+        = inject_available_shipping_methods
+        = inject_available_payment_methods
+
+        = render "checkout/details", f: f
+        = render "checkout/billing", f: f
+        = render "checkout/shipping", f: f
+        = render "checkout/payment", f: f
+
+    .small-12.medium-4.large-3.columns
+      = render partial: "checkout/summary"
+
+  .row
+    .small-12.medium-8.large-9.columns
+      .row
+        .small-6.columns
+          %a.button.secondary{href: cart_url}
+            %i.ofn-i_008-caret-left
+            = t :checkout_back_to_cart
+        .small-6.columns
+          %button.button.primary.right{type: :submit}
+            = t :checkout_send

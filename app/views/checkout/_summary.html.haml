@@ -30,6 +30,3 @@
           %td.total.text-right {{ Checkout.cartTotal() | localizeCurrency }}
 
       //= f.submit "Purchase", class: "button", "ofn-focus" => "accordion['payment']"
-      %a.button.secondary{href: cart_url}
-        %i.ofn-i_008-caret-left
-        = t :checkout_back_to_cart
