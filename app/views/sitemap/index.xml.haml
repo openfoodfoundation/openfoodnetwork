@@ -1,8 +1,8 @@
 !!! XML
 %urlset{xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9"}
-  - for page in @pages
+  - for page_url in @page_urls
     %url
-      %loc= root_url + page
+      %loc= page_url
       %changefreq monthly
 
   - for enterprise in @enterprises
@@ -14,4 +14,4 @@
   - for group in @groups
     %url
       %loc= group_url(group)
-      %changefreq yearly
+      %changefreq monthly
