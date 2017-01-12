@@ -1,32 +1,29 @@
 %orderdetails
-  = form_for current_order, url: "#", html: {"ng-submit" => "purchase($event, checkout)"} do |f|
-    %fieldset
-      %legend
-        = t :checkout_your_order
-      %table
+  %fieldset
+    %legend
+      = t :checkout_your_order
+    %table
+      %tr
+        %th
+          = t :checkout_cart_total
+        %td.cart-total.text-right= display_checkout_subtotal(@order)
+
+      - checkout_adjustments_for(current_order, exclude: [:shipping, :payment, :line_item]).reject{ |a| a.amount == 0 }.each do |adjustment|
         %tr
-          %th
-            = t :checkout_cart_total
-          %td.cart-total.text-right= display_checkout_subtotal(@order)
+          %th= adjustment.label
+          %td.text-right= adjustment.display_amount.to_html
 
-        - checkout_adjustments_for(current_order, exclude: [:shipping, :payment, :line_item]).reject{ |a| a.amount == 0 }.each do |adjustment|
-          %tr
-            %th= adjustment.label
-            %td.text-right= adjustment.display_amount.to_html
+      %tr
+        %th
+          = t :checkout_shipping_price
+        %td.shipping.text-right {{ Checkout.shippingPrice() | localizeCurrency }}
 
-        %tr
-          %th
-            = t :checkout_shipping_price
-          %td.shipping.text-right {{ Checkout.shippingPrice() | localizeCurrency }}
+      %tr
+        %th
+          = t :payment_method_fee
+        %td.text-right {{ Checkout.paymentPrice() | localizeCurrency }}
 
-        %tr
-          %th
-            = t :payment_method_fee
-          %td.text-right {{ Checkout.paymentPrice() | localizeCurrency }}
-
-        %tr
-          %th
-            = t :checkout_total_price
-          %td.total.text-right {{ Checkout.cartTotal() | localizeCurrency }}
-
-      //= f.submit "Purchase", class: "button", "ofn-focus" => "accordion['payment']"
+      %tr
+        %th
+          = t :checkout_total_price
+        %td.total.text-right {{ Checkout.cartTotal() | localizeCurrency }}
