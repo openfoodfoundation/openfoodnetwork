@@ -342,7 +342,7 @@ en:
           add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
         users:
-          email_confirmation_text: Email confirmation is pending.<br />We've sent a confirmation email to
+          email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
           owner_tip: The primary user responsible for this enterprise.

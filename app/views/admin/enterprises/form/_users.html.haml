@@ -4,8 +4,7 @@
 -if @enterprise.pending_any_confirmation?
   .alert-box
     - email = @enterprise.confirmed? ? @enterprise.unconfirmed_email : @enterprise.email
-    = t('.email_confirmation_text')
-    %strong= "#{email}."
+    = t('.email_confirmation_notice_html', {email: "<strong>#{email}</strong>".html_safe})
     = link_to(t('.resend'), main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: email } ), method: :post)
     %a.close{ href: "#" } ×
 
