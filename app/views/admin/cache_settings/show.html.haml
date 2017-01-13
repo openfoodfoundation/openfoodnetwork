@@ -4,10 +4,10 @@
 %table.index
   %thead
     %tr
-      %th Distributor
-      %th Order Cycle
-      %th Status
-      %th Diff
+      %th= t('.distributor')
+      %th= t('.order_cycle')
+      %th= t('.status')
+      %th= t('.diff')
   %tbody
     - @results.each do |result|
       %tr

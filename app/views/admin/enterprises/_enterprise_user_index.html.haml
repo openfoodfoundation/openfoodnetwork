@@ -2,7 +2,7 @@
   .row{ 'ng-hide' => '!loaded' }
     .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
       .four.columns.alpha
-        %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => 'Search By Name' }
+        %input{ :class => "fullwidth", :type => "text", :id => 'quick_search', 'ng-model' => 'quickSearch', :placeholder => t('.search_placeholder') }
       .six.columns &nbsp;
       -# = render 'admin/shared/bulk_actions_dropdown'
       .three.columns &nbsp;
@@ -41,7 +41,7 @@
             %i.icon-status{ ng: { class: "enterprise.status" } }
           %td.manage{ ng: { show: 'columns.manage.visible' } }
             %a.button.fullwidth{ ng: { href: '{{::enterprise.edit_path}}' } }
-              Manage
+              = t('.manage')
               %i.icon-arrow-right
 
         %tr.panel-row{ object: "enterprise", panels: "{producer: 'enterprise_producer', package: 'enterprise_package', status: 'enterprise_status'}" }
