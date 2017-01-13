@@ -9,7 +9,7 @@
 
 %fieldset.no-border-bottom
   %legend
-    =t :admin_settings
+    = t(:admin_settings)
   = form_for @settings, as: :settings, url: main_app.admin_accounts_and_billing_settings_path, :method => :put do |f|
     .row{ ng: { app: 'admin.accounts_and_billing_settings' } }
       .twelve.columns.alpha.omega

@@ -3,55 +3,54 @@
 -if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
   = render 'coordinator_fees', f: f
 
-%h2 Incoming
+%h2= t('.incoming')
 %table.exchanges
   %thead
     %tr
-      %th Supplier
+      %th= t('.supplier')
       %th
-        Products
+        =t('.products')
         = surround '(', ')' do
           %a{href: '#', 'ng-click' => "OrderCycle.toggleAllProducts('incoming')"}
-            %span{'ng-show' => "OrderCycle.showProducts['incoming']"} Collapse all
-            %span{'ng-hide' => "OrderCycle.showProducts['incoming']"} Expand all
-      %th Receival details
-      %th Fees
+            %span{'ng-show' => "OrderCycle.showProducts['incoming']"}= t(:collapse_all)
+            %span{'ng-hide' => "OrderCycle.showProducts['incoming']"}= t(:expand_all)
+      %th= t('.receival_details')
+      %th= t('.fees')
       %th.actions
   %tbody.panel-ctrl{ object: 'exchange', 'ng-repeat' => 'exchange in order_cycle.incoming_exchanges'}
-    = render 'exchange_form', :f => f, :type => 'supplier'
+    = render 'exchange_form', f: f, type: 'supplier'
 
 - if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
   = render 'add_exchange_form', f: f, type: 'supplier'
 
-%h2 Outgoing
+%h2= t('.outgoing')
 %table.exchanges
   %thead
     %tr
-      %th Distributor
+      %th= t('.distributor')
       %th
-        Products
+        = t('.products')
         = surround '(', ')' do
           %a{href: '#', 'ng-click' => "OrderCycle.toggleAllProducts('outgoing')"}
-            %span{'ng-show' => "OrderCycle.showProducts['outgoing']"} Collapse all
-            %span{'ng-hide' => "OrderCycle.showProducts['outgoing']"} Expand all
-      %th{ ng: { if: 'enterprises[exchange.enterprise_id].managed || order_cycle.viewing_as_coordinator' } } Tags
-      %th Pickup / Delivery details
+            %span{'ng-show' => "OrderCycle.showProducts['outgoing']"}= t(:collapse_all)
+            %span{'ng-hide' => "OrderCycle.showProducts['outgoing']"}= t(:expand_all)
+      %th{ ng: { if: 'enterprises[exchange.enterprise_id].managed || order_cycle.viewing_as_coordinator' } }
+        = t('.tags')
+      %th= t('.delivery_details')
       %th Fees
       %th.actions
   %tbody.panel-ctrl{ object: 'exchange', 'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
-    = render 'exchange_form', :f => f, :type => 'distributor'
-
+    = render 'exchange_form', f: f, type: 'distributor'
 
 - if Enterprise.managed_by(spree_current_user).include? @order_cycle.coordinator
   = render 'add_exchange_form', f: f, type: 'distributor'
 
 .actions
-  %span{'ng-hide' => 'loaded()'} Loading...
-
+  %span{'ng-hide' => 'loaded()'}= t(:loading)
 
 - unless Rails.env.production?
   #order-cycles-debug
-    %h2 Debug information
+    %h2= t('.debug_info')
 
     %pre loaded =  {{ loaded() | json }}
     %hr/

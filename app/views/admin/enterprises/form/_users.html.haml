@@ -4,19 +4,17 @@
 -if @enterprise.pending_any_confirmation?
   .alert-box
     - email = @enterprise.confirmed? ? @enterprise.unconfirmed_email : @enterprise.email
-    Email confirmation is pending.
-    We've sent a confirmation email to
-    %strong= "#{email}."
-    = link_to('Resend', main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: email } ), method: :post)
+    = t('.email_confirmation_notice_html', {email: "<strong>#{email}</strong>".html_safe})
+    = link_to(t('.resend'), main_app.enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: email } ), method: :post)
     %a.close{ href: "#" } ×
 
 .row
   .three.columns.alpha
-    =f.label :owner_id, 'Owner'
+    =f.label :owner_id, t('.owner')
     - if full_permissions
       %span.required *
-    %div{'ofn-with-tip' => "The primary user responsible for this enterprise."}
-      %a What's this?
+    %div{'ofn-with-tip' => t('.owner_tip')}
+      %a= t('admin.whats_this')
   .eight.columns.omega
     - if full_permissions
       = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner'
@@ -25,29 +23,29 @@
 
 .row
   .three.columns.alpha
-    = f.label :email, 'Notifications'
+    = f.label :email, t('.notifications')
     - if full_permissions
       %span.required *
-    .with-tip{'data-powertip' => "Notifications about orders will be send to this email address."}
-      %a What's this?
+    .with-tip{'data-powertip' => t('.notifications_tip')}
+      %a= t('admin.whats_this')
   .eight.columns.omega
     - if full_permissions
-      = f.text_field :email, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email" }
+      = f.text_field :email, { placeholder: t('.notifications_placeholder'), "ng-model" => "Enterprise.email" }
     - else
       = @enterprise.email
 .row{ ng: { hide: "pristineEmail == null || pristineEmail == Enterprise.email"} }
   .alpha.three.columns
     &nbsp;
   .omega.eight.columns
-    Note: A new email address may need to be confirmed prior to use
+    = t('.notifications_note')
 
 .row
   .three.columns.alpha
-    =f.label :user_ids, 'Managers'
+    =f.label :user_ids, t('.managers')
     - if full_permissions
       %span.required *
-    %div{'ofn-with-tip' => "The other users with permission to manage this enterprise."}
-      %a What's this?
+    %div{'ofn-with-tip' => t('.managers_tip')}
+      %a= t('admin.whats_this')
   .eight.columns.omega
     - if full_permissions
       %table

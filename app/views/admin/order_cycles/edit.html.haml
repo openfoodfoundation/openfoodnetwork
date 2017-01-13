@@ -12,12 +12,11 @@
 
   - if can? :notify_producers, @order_cycle
     %li
-      = button_to "Notify producers", main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers', :confirm => 'Are you sure?'
+      = button_to "Notify producers", main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers', :confirm => t(:are_you_sure)
   %li
     %button#toggle_settings{ onClick: 'toggleSettings()' }
-      Advanced Settings
+      = t('.advanced_settings')
       %i.icon-chevron-down
-
 
 #advanced_settings{ hidden: true }
   = render partial: "/admin/order_cycles/advanced_settings"
@@ -25,13 +24,12 @@
 %h1
   = t :edit_order_cycle
 
-
 - ng_controller = order_cycles_simple_form ? 'AdminSimpleEditOrderCycleCtrl' : 'AdminEditOrderCycleCtrl'
 = form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
 
   %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
-    %input.red{ type: "button", value: "Update", ng: { click: "submit($event, null)", disabled: "!order_cycle_form.$dirty" } }
-    %input.red{ type: "button", value: "Update and Close", ng: { click: "submit($event, '#{main_app.admin_order_cycles_path}')", disabled: "!order_cycle_form.$dirty" } }
+    %input.red{ type: "button", value: t(:update), ng: { click: "submit($event, null)", disabled: "!order_cycle_form.$dirty" } }
+    %input.red{ type: "button", value: t('.update_and_close'), ng: { click: "submit($event, '#{main_app.admin_order_cycles_path}')", disabled: "!order_cycle_form.$dirty" } }
     %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? 'Cancel' : 'Close'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
 
   - if order_cycles_simple_form
