@@ -1,0 +1,121 @@
+div.sidebar_item {
+  margin-bottom: 30px;
+
+  .centered {
+    text-align: center;
+  }
+
+  div.header {
+    font-size: 105%;
+    color: #fff;
+    padding: 10px 0px;
+    position: relative;
+
+    &.blue {
+      background-color: #5498da;
+    }
+
+    &.red {
+      background-color: #DA5354;
+    }
+  }
+
+  .list {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &.red {
+      color: #DA5354;
+
+      .list-item {
+        border: solid #DA5354;
+        border-width: 0px 3px 0px 3px;
+
+        a.alpha, span.alpha {
+          margin-left: -3px;
+        }
+
+        &.odd {
+          background-color: #fcf6ef;
+
+          &:hover {
+            background-color: #9fc820;
+          }
+        }
+      }
+
+      a {
+        color: #DA5354;
+      }
+    }
+  }
+
+  .list-item {
+    .icon-arrow-right {
+      padding-top: 6px;
+      font-size: 20px;
+    }
+
+    border: solid #5498da;
+    border-width: 0px 1px 0px 1px;
+
+    a.alpha, span.alpha {
+      font-weight: bold;
+      margin-left: -1px;
+      padding: 10px 2px 10px 5%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    span.omega {
+      padding: 8px 18px 8px 0px;
+      margin-right: -3px;
+      text-align: right;
+    }
+
+    .icon-remove-sign {
+      color: #DA5354;
+      font-size: 18px;
+    }
+
+    &.even {
+      background-color: #fff;
+    }
+
+    &.odd {
+      background-color: #eff5fc;
+    }
+
+    &.even, &.odd {
+      &:hover {
+        color: #ffffff;
+        background-color: #9fc820;
+
+        a {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  a.button {
+    color: #fff;
+    padding: 15px 15px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 0px;
+
+    &.blue {
+      background-color: #5498da;
+    }
+
+    &.red {
+      background-color: #DA5354;
+    }
+
+    &:hover {
+      background-color: #9fc820;
+    }
+  }
+}
