@@ -1,13 +1,13 @@
 .row
   .alpha.two.columns
-    = f.label :name
+    = f.label :name, t('.name')
   .six.columns.omega
     - if viewing_as_coordinator_of?(@order_cycle)
       = f.text_field :name, 'ng-model' => 'order_cycle.name', 'required' => true, 'ng-disabled' => '!loaded()'
     - else
       {{ order_cycle.name }}
   .two.columns
-    = f.label :orders_open_at, 'Orders open'
+    = f.label :orders_open_at, t('.orders_open')
   .omega.six.columns
     - if viewing_as_coordinator_of?(@order_cycle)
       = f.text_field :orders_open_at, 'datetimepicker' => 'order_cycle.orders_open_at', 'ng-model' => 'order_cycle.orders_open_at', 'ng-disabled' => '!loaded()'
@@ -16,11 +16,11 @@
 
 .row
   .alpha.two.columns
-    = f.label :coordinator
+    = f.label :coordinator, t('.coordinator')
   .six.columns.omega
     = @order_cycle.coordinator.name
   .two.columns
-    = f.label :orders_close_at, 'Orders close'
+    = f.label :orders_close, t('.orders_close')
   .six.columns.omega
     - if viewing_as_coordinator_of?(@order_cycle)
       = f.text_field :orders_close_at, 'datetimepicker' => 'order_cycle.orders_close_at', 'ng-model' => 'order_cycle.orders_close_at', 'ng-disabled' => '!loaded()'

@@ -3,7 +3,7 @@
 
 - if admin_user?
   = content_for :page_actions do
-    %li= button_link_to "New Enterprise Group", main_app.new_admin_enterprise_group_path
+    %li= button_link_to t('.new_button'), main_app.new_admin_enterprise_group_path
 
 %table.index#listing_enterprise_groups
   %thead
