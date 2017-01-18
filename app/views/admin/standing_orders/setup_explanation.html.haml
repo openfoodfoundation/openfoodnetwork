@@ -1,0 +1,51 @@
+%h1.text-center.margin-bottom-30= t('admin.standing_order.standing_orders')
+
+.row
+  .four.columns.alpha &nbsp;
+  .twelve.columns.omega.todolist
+    %h4.margin-bottom-30= t('.just_a_few_more_steps')
+
+    .row.margin-bottom-20.todo{ class: @shop.present? ? 'done' : '' }
+      .one.columns.alpha
+        %i.text-big.icon-check-empty
+      .nine.columns.omega
+        .title.text-normal
+          %strong= t('.enable_standing_orders')
+        .steps
+          %div
+            = t('.enable_standing_orders_step_1_html',
+              enterprises_link: link_to(t('admin.enterprises.title'), main_app.admin_enterprises_path, target: '_blank'))
+          %div= t('.enable_standing_orders_step_2')
+
+    .row.margin-bottom-20.todo{ class: shipping_and_payment_methods_ok?(@shop) ? 'done' : '' }
+      .one.columns.alpha
+        %i.text-big.icon-check-empty
+      .nine.columns.omega
+        .title.text-normal
+          %strong
+            = t('.set_up_shipping_and_payment_methods_html',
+              shipping_link: link_to(t('admin.shipping'), admin_shipping_methods_path, target: '_blank'),
+              payment_link: link_to(t('admin.payment'), admin_payment_methods_path, target: '_blank'))
+    .row.margin-bottom-20.todo{ class: customers_ok?(@shop) ? 'done' : '' }
+      .one.columns.alpha
+        %i.text-big.icon-check-empty
+      .nine.columns.omega
+        .title.text-normal
+          %strong
+            = t('.ensure_at_least_one_customer_html',
+              customer_link: link_to(t('admin.customer'), main_app.admin_customers_path, target: '_blank'))
+    .row.margin-bottom-20.todo{ class: schedules_ok?(@shop) ? 'done' : '' }
+      .one.columns.alpha
+        %i.text-big.icon-check-empty
+      .nine.columns.omega
+        .title.text-normal
+          %strong= t('.create_at_least_one_schedule')
+        .steps
+          %div
+            = t('.create_at_least_one_schedule_step_1_html',
+              order_cycles_link: link_to("Order Cycles", main_app.admin_order_cycles_path, target: '_blank'))
+          %div= t('.create_at_least_one_schedule_step_2')
+          %div= t('.create_at_least_one_schedule_step_3')
+    .text-normal
+      = t('.once_you_are_done_you_can_html',
+        reload_this_page_link: link_to(t('.reload_this_page'), main_app.admin_standing_orders_path))

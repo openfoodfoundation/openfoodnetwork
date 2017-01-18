@@ -6,7 +6,6 @@ describe Admin::StandingOrdersController, type: :controller do
   describe 'index' do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise, enable_standing_orders: true) }
-    let!(:standing_order) { create(:standing_order, shop: shop) }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
@@ -26,17 +25,31 @@ describe Admin::StandingOrdersController, type: :controller do
         before { shop.update_attributes(owner: user) }
         let!(:not_enabled_shop) { create(:distributor_enterprise, owner: user) }
 
-        it 'renders the index page with appropriate data' do
-          spree_get :index, params
-          expect(response).to render_template 'index'
-          expect(assigns(:collection)).to eq [] # No collection loaded
-          expect(assigns(:shops)).to eq [shop] # Shops are loaded
+        context "where I manage a shop that is set up for standing orders" do
+          let!(:standing_order) { create(:standing_order, shop: shop) }
+
+          it 'renders the index page with appropriate data' do
+            spree_get :index, params
+            expect(response).to render_template 'index'
+            expect(assigns(:collection)).to eq [] # No collection loaded
+            expect(assigns(:shops)).to eq [shop] # Shops are loaded
+          end
+        end
+
+        context "where I don't manage a shop that is set up for standing orders" do
+          it 'renders the setup_explanation page' do
+            spree_get :index, params
+            expect(response).to render_template 'setup_explanation'
+            expect(assigns(:collection)).to eq [] # No collection loaded
+            expect(assigns(:shop)).to eq shop # First SO enabled shop is loaded
+          end
         end
       end
     end
 
     context 'json' do
       let(:params) { { format: :json } }
+      let!(:standing_order) { create(:standing_order, shop: shop) }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do

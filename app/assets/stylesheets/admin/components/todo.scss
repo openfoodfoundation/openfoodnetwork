@@ -1,0 +1,15 @@
+@import '../plugins/font-awesome';
+
+.todolist{
+  .todo {
+    &.done {
+      .title, .steps {
+        text-decoration: line-through;
+      }
+
+      i {
+        @extend .icon-check
+      }
+    }
+  }
+}

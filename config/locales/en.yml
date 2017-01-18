@@ -203,6 +203,7 @@ en:
     on_demand: On Demand
     on_demand?: On Demand?
     order_cycle: Order Cycle
+    payment: Payment
     payment_method: Payment Method
     phone: Phone
     price: Price
@@ -210,6 +211,7 @@ en:
     product: Product
     quantity: Quantity
     schedule: Schedule
+    shipping: Shipping
     shipping_method: Shipping Method
     shop: Shop
     sku: SKU
@@ -809,6 +811,19 @@ en:
         pause_standing_order: Pause Standing Order
         unpause_standing_order: Unpause Standing Order
         cancel_standing_order: Cancel Standing Order
+      setup_explanation:
+        just_a_few_more_steps: 'Just a few more steps before you can begin:'
+        enable_standing_orders: "Enable standing orders for at least one of your shops"
+        enable_standing_orders_step_1_html: 1. Go to the %{enterprises_link} page, find your shop, and click "Manage"
+        enable_standing_orders_step_2: 2. Under "Shop Preferences", enable the Standing Orders option
+        set_up_shipping_and_payment_methods_html: Set up %{shipping_link} and %{payment_link} methods
+        ensure_at_least_one_customer_html: Ensure that at least one %{customer_link} exists
+        create_at_least_one_schedule: Create at least one Schedule
+        create_at_least_one_schedule_step_1_html: 1. Go to the on the %{order_cycles_link} page
+        create_at_least_one_schedule_step_2: 2. Create an order cycle if you have not already done so
+        create_at_least_one_schedule_step_3: 3. Click '+ New Schedule', and fill out the form
+        once_you_are_done_you_can_html: Once you are done, you can %{reload_this_page_link}
+        reload_this_page: reload this page
       steps:
         details: 1. Basic Details
         address: 2. Address
