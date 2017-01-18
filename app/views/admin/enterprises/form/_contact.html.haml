@@ -1,20 +1,20 @@
 .row
   .alpha.three.columns
-    = f.label :contact, 'Name'
+    = f.label :contact, t('.name')
   .omega.eight.columns
-    = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
+    = f.text_field :contact, { placeholder: t('.name_placeholder') }
 .row
   .alpha.three.columns
-    = f.label :email_address
+    = f.label :email_address, t('.email_address')
   .omega.eight.columns
-    = f.text_field :email_address, { placeholder: "eg. gustav@truffles.com" }
+    = f.text_field :email_address, { placeholder: t('.email_address_placeholder') }
 .row
   .alpha.three.columns
-    = f.label :phone
+    = f.label :phone, t('.phone')
   .omega.eight.columns
-    = f.text_field :phone, { placeholder: "eg. 98 7654 3210"}
+    = f.text_field :phone, { placeholder: t('.phone_placeholder') }
 .row
   .alpha.three.columns
-    = f.label :website
+    = f.label :website, t('.website')
   .omega.eight.columns
-    = f.text_field :website, { placeholder: "eg. www.truffles.com"}
+    = f.text_field :website, { placeholder: t('.website_placeholder') }

@@ -11,7 +11,7 @@ en-GB:
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
     enterprise_confirmations:
       enterprise:
-        confirmed: Thank you, your email address has been confirmed.
+        confirmed: Thankyou, your email address has been confirmed.
         not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
         confirmation_sent: "Confirmation email sent!"
         confirmation_not_sent: "Could not send a confirmation email."
@@ -522,14 +522,14 @@ en-GB:
   producers_title: Producers
   producers_headline: Find local producers
   producers_signup_title: Sign up as a producer
-  producers_signup_headline: Food producers, empowered.
-  producers_signup_motivation: Sell your food and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
-  producers_signup_send: Join now
-  producers_signup_enterprise: Enterprise Accounts
+  producers_signup_headline: Food producers. Meet OFN.
+  producers_signup_motivation: Sell your food and tell your stories. Save time and money on every overhead. We support innovation without the risk. We're levelling the playing field.
+  producers_signup_send: Register
+  producers_signup_enterprise: Why the Open Food Network?
   producers_signup_studies: Stories from our producers.
   producers_signup_cta_headline: Join now!
-  producers_signup_cta_action: Join now
-  producers_signup_detail: Here's the detail.
+  producers_signup_cta_action: Register
+  producers_signup_detail: Got a question?
   products_item: Item
   products_description: Description
   products_variant: Variant
@@ -537,7 +537,7 @@ en-GB:
   products_available: Available?
   products_producer: "Producer"
   products_price: "Price"
-  register_title: Register
+  register_title: Find out more
   sell_title: "Register"
   sell_headline: "Get on the Open Food Network!"
   sell_motivation: "Showcase your beautiful food."
@@ -875,7 +875,7 @@ en-GB:
   spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
   spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
   spree_admin_overview_action_required: "Action Required"
-  spree_admin_overview_check_your_inbox: "Please check your inbox for further instructions. Thanks!"
+  spree_admin_overview_check_your_inbox: "Please check you inbox for further instructions. Thanks!"
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   your_profil_live: "Your profile live"

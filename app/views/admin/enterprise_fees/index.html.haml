@@ -1,5 +1,5 @@
 = content_for :page_title do
-  =t :Enterprise_Fees
+  = t('.title')
 
 = ng_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path, :html => {'ng-app' => 'admin.enterpriseFees', 'ng-controller' => 'enterpriseFeesCtrl'} do |enterprise_fee_set_form|
   = hidden_field_tag 'enterprise_id', @enterprise.id if @enterprise
@@ -12,17 +12,17 @@
     %thead
       %tr
         %th
-          =t'Enterprise'
+          = t('.enterprise')
         %th
-          =t'fee_type'
+          = t('.fee_type')
         %th
-          =t'name'
+          = t('.name')
         %th
-          =t'tax_category'
+          = t('.tax_category')
         %th
-          =t'calculator'
+          = t('.calculator')
         %th
-          =t'calculator_values'
+          = t('.calculator_values')
         %th.actions
     %tbody
       = enterprise_fee_set_form.ng_fields_for :collection do |f|
