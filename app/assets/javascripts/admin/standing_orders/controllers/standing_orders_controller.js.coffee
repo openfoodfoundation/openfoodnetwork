@@ -1,9 +1,11 @@
-angular.module("admin.standingOrders").controller "StandingOrdersController", ($scope, StandingOrders, Columns, shops, ShippingMethods, PaymentMethods) ->
+angular.module("admin.standingOrders").controller "StandingOrdersController", ($scope, StandingOrders, Columns, RequestMonitor, shops, ShippingMethods, PaymentMethods) ->
   $scope.columns = Columns.columns
   $scope.shops = shops
   $scope.shop_id = if shops.length == 1 then shops[0].id else null
   $scope.shippingMethodsByID = ShippingMethods.byID
   $scope.paymentMethodsByID = PaymentMethods.byID
+  $scope.RequestMonitor = RequestMonitor
+  $scope.query = ''
 
   $scope.$watch "shop_id", ->
     if $scope.shop_id?
@@ -13,3 +15,6 @@ angular.module("admin.standingOrders").controller "StandingOrdersController", ($
     standingOrder.standing_line_items.reduce (sum, sli) ->
       return sum + sli.quantity
     , 0
+
+  $scope.filtersApplied = ->
+    $scope.query != ''

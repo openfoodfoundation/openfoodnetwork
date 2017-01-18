@@ -1,11 +1,12 @@
-angular.module("admin.standingOrders").factory 'StandingOrders', ($q, StandingOrderResource, StandingOrder) ->
+angular.module("admin.standingOrders").factory 'StandingOrders', ($q, StandingOrderResource, StandingOrder, RequestMonitor) ->
   new class StandingOrders
     byID: {}
     pristineByID: {}
 
     index: (params={}, callback=null) ->
-    	StandingOrderResource.index params, (data) =>
-        @load(data)
+      request = StandingOrderResource.index params, (data) => @load(data)
+      RequestMonitor.load(request.$promise)
+      request
 
     load: (standingOrders) ->
       for standingOrder in standingOrders
