@@ -163,10 +163,18 @@ class Enterprise < ActiveRecord::Base
   }
 
   scope :distributing_products, lambda { |products|
-    with_distributed_products_outer.with_order_cycles_and_exchange_variants_outer.
-    where('product_distributions.product_id IN (?) OR spree_variants.product_id IN (?)', products, products).
-    select('DISTINCT enterprises.*')
+    # TODO: remove this when we pull out product distributions
+    pds = joins("INNER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id").
+    where("product_distributions.product_id IN (?)", products).select('DISTINCT enterprises.id')
+
+    exs = joins("INNER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
+    joins('INNER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
+    joins('INNER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)').
+    where('spree_variants.product_id IN (?)', products).select('DISTINCT enterprises.id')
+
+    where(id: pds | exs)
   }
+
   scope :managed_by, lambda { |user|
     if user.has_spree_role?('admin')
       scoped
