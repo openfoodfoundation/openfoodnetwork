@@ -1,7 +1,7 @@
 = render 'products_panel'
 = render 'orders_panel'
 
-%table.index#standing_orders
+%table.index#standing_orders{ ng: { cloak: true, show: 'shop_id && !RequestMonitor.loading && filteredStandingOrders.length > 0' } }
   %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }
   %col.schedule{ width: "20%", 'ng-show' => 'columns.schedule.visible' }
   %col.items{ width: "10%", 'ng-show' => 'columns.items.visible' }
@@ -36,7 +36,7 @@
         = t('admin.shipping_method')
       %th.actions
         &nbsp;
-  %tbody.panel-ctrl{ object: 'standingOrder', ng: { repeat: "standingOrder in standingOrders | filter:query track by standingOrder.id" } }
+  %tbody.panel-ctrl{ object: 'standingOrder', ng: { repeat: "standingOrder in standingOrders | filter:query as filteredStandingOrders track by standingOrder.id" } }
     %tr.standing_order{ :id => "so_{{standingOrder.id}}", ng: { class: { even: "'even'", odd: "'odd'" } } }
       %td.customer.text-center{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer_email' } }
       %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule_name' } }
