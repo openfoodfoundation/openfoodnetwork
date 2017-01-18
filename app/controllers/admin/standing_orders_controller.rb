@@ -11,9 +11,14 @@ module Admin
     def index
       respond_to do |format|
         format.html do
-          @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
-          @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user)
-          @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user)
+          if view_context.standing_orders_setup_complete?(@shops)
+            @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
+            @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user)
+            @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user)
+          else
+            @shop = @shops.first
+            render :setup_explanation
+          end
         end
         format.json { render_as_json @collection, ams_prefix: params[:ams_prefix] }
       end
