@@ -40,16 +40,28 @@
         %span.nav-primary
           %i.ofn-i_036-producers
           = t 'label_producers'
-    %li.li-menu
-      %a{href: "https://openfoodnetwork.org/au/connect/"}
-        %span.nav-primary
-          %i.ofn-i_035-groups
-          = t 'label_connect'
-    %li.li-menu
-      %a{href: "https://openfoodnetwork.org/au/learn/"}
-        %span.nav-primary
-          %i.ofn-i_013-help
-          = t 'label_learn'
+    - if feature? :connect_learn_homepage
+      %li.li-menu
+        %a{href: "https://openfoodnetwork.org/au/connect/"}
+          %span.nav-primary
+            %i.ofn-i_035-groups
+            = t 'label_connect'
+      %li.li-menu
+        %a{href: "https://openfoodnetwork.org/au/learn/"}
+          %span.nav-primary
+            %i.ofn-i_013-help
+            = t 'label_learn'
+    - else
+      %li.li-menu
+        %a{href: main_app.groups_path}
+          %span.nav-primary
+            %i.ofn-i_035-groups
+            = t 'label_groups'
+      %li.li-menu
+        %a{href: ContentConfig.footer_about_url}
+          %span.nav-primary
+            %i.ofn-i_013-help
+            = t 'label_about'
 
     %li
     - if spree_current_user.nil?

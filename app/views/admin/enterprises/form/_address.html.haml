@@ -1,34 +1,35 @@
 -# redo denoting required fields in the whole project
 .row
-  Required fields are denoted with an asterisk (
+  = t(:required_fields)
+  (
   %span.required *
   )
 .row
   .three.columns.alpha
-    = af.label :address1
+    = af.label :address1, t(:address)
     %span.required *
   .eight.columns.omega
-    = af.text_field :address1, { placeholder: "eg. 123 High Street"}
+    = af.text_field :address1, { placeholder: t(:address_placeholder) }
 .row
   .alpha.three.columns
-    = af.label :address2
+    = af.label :address2, t(:address2)
   .eight.columns.omega
     = af.text_field :address2
 .row
   .three.columns.alpha
-    = af.label :city, 'Suburb'
+    = af.label :city, t(:city)
     \/
-    = af.label :zipcode, 'Postcode'
+    = af.label :zipcode, t(:postcode)
     %span.required *
   .four.columns
-    = af.text_field :city, { placeholder: "eg. Northcote"}
+    = af.text_field :city, { placeholder: t(:city_placeholder) }
   .four.columns.omega
-    = af.text_field :zipcode, { placeholder: "eg. 3070"}
+    = af.text_field :zipcode, { placeholder: t(:postcode_placeholder) }
 .row
   .three.columns.alpha
-    = af.label :state_id, 'State'
+    = af.label :state_id, t(:state)
     \/
-    = af.label :country_id, 'Country'
+    = af.label :country_id, t(:country)
     %span.required *
   .four.columns
     = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"

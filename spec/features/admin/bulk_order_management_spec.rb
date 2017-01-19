@@ -162,9 +162,9 @@ feature %q{
         # hide dropdown
         find("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
-          expect(page).to have_field "price", with: "$50.00"
+          expect(page).to have_field "price", with: "50.00"
           fill_in "final_weight_volume", :with => 2000
-          expect(page).to have_field "price", with: "$100.00"
+          expect(page).to have_field "price", with: "100.00"
         end
         click_button "Save Changes"
         expect(page).to have_no_selector "#save-bar"
@@ -181,9 +181,9 @@ feature %q{
         find("div#columns-dropdown div.menu div.menu_item", text: "Price").click
         find("div#columns-dropdown", :text => "COLUMNS").click
         within "tr#li_#{li1.id}" do
-          expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * 5)}"
+          expect(page).to have_field "price", with: "#{format("%.2f",li1.price * 5)}"
           fill_in "quantity", :with => 6
-          expect(page).to have_field "price", with: "$#{format("%.2f",li1.price * 6)}"
+          expect(page).to have_field "price", with: "#{format("%.2f",li1.price * 6)}"
         end
       end
     end
