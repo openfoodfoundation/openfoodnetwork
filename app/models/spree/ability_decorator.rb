@@ -111,7 +111,7 @@ class AbilityDecorator
       user.enterprises.include? enterprise_fee.enterprise
     end
 
-    can [:admin, :known_users, :customers], :search
+    can [:admin, :known_users, :customers, :customer_addresses], :search
 
     can [:admin, :show], :account
 
