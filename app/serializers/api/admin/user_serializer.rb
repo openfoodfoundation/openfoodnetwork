@@ -7,12 +7,10 @@ class Api::Admin::UserSerializer < ActiveModel::Serializer
   has_one :bill_address, serializer: Api::AddressSerializer
 
   def ship_address
-    object.ship_address ||
-      OpenFoodNetwork::LastUsedAddress.new(object.email).last_used_ship_address
+    OpenFoodNetwork::LastUsedAddress.new(object.email, object).ship_address
   end
 
   def bill_address
-    object.bill_address ||
-      OpenFoodNetwork::LastUsedAddress.new(object.email).last_used_bill_address
+    OpenFoodNetwork::LastUsedAddress.new(object.email, object).bill_address
   end
 end

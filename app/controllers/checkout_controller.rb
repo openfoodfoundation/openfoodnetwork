@@ -185,16 +185,10 @@ class CheckoutController < Spree::CheckoutController
   def before_address
     associate_user
 
-    lua = OpenFoodNetwork::LastUsedAddress.new(@order.email)
-    last_used_bill_address = lua.last_used_bill_address.andand.clone
-    last_used_ship_address = lua.last_used_ship_address.andand.clone
+    lua = OpenFoodNetwork::LastUsedAddress.new(@order.email, @order.customer, spree_current_user)
 
-    preferred_bill_address, preferred_ship_address = spree_current_user.bill_address, spree_current_user.ship_address if spree_current_user
-
-    customer_preferred_bill_address, customer_preferred_ship_address = @order.customer.bill_address, @order.customer.ship_address if @order.customer
-
-    @order.bill_address ||= customer_preferred_bill_address || preferred_bill_address || last_used_bill_address || Spree::Address.default
-    @order.ship_address ||= customer_preferred_ship_address || preferred_ship_address || last_used_ship_address || Spree::Address.default
+    @order.bill_address = lua.bill_address
+    @order.ship_address = lua.ship_address
   end
 
   # Overriding Spree's methods
