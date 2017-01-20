@@ -100,7 +100,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           fill_out_form
         end
 
-        it "sets user's default billing address and shipping address" do
+        it "allows user to save default billing address and shipping address" do
           user.bill_address.should be_nil
           user.ship_address.should be_nil
 
@@ -136,6 +136,26 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         it "informs about previous orders" do
           expect(page).to have_content("You have an order for this order cycle already.")
+        end
+      end
+
+      context "when the user has a preset shipping and billing address" do
+        before do
+          user.bill_address = build(:address)
+          user.ship_address = build(:address)
+          user.save!
+        end
+
+        it "checks out successfully" do
+          visit checkout_path
+          choose sm2.name
+          toggle_payment
+          choose pm1.name
+
+          expect do
+            place_order
+            page.should have_content "Your order has been processed successfully"
+          end.to enqueue_job ConfirmOrderJob
         end
       end
 
@@ -475,31 +495,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
             end
           end
         end
-      end
-    end
-
-    context "when the customer has a pre-set shipping and billing address" do
-      before do
-        # Load up the customer's order and give them a shipping and billing address
-        # This is equivalent to when the customer has ordered before and their addresses
-        # are pre-populated.
-        o = Spree::Order.last
-        o.ship_address = build(:address)
-        o.bill_address = build(:address)
-        o.save!
-      end
-
-      it "checks out successfully", retry: 3 do
-        visit checkout_path
-        checkout_as_guest
-        choose sm2.name
-        toggle_payment
-        choose pm1.name
-
-        expect do
-          place_order
-          page.should have_content "Your order has been processed successfully"
-        end.to enqueue_job ConfirmOrderJob
       end
     end
   end
