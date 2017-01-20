@@ -1,4 +1,4 @@
-require 'open_food_network/last_used_address'
+require 'open_food_network/address_finder'
 
 Spree::CheckoutController.class_eval do
 
@@ -23,9 +23,9 @@ Spree::CheckoutController.class_eval do
   def before_address
     associate_user
 
-    lua = OpenFoodNetwork::LastUsedAddress.new(@order.email)
+    finder = OpenFoodNetwork::AddressFinder.new(@order.email)
 
-    @order.bill_address = lua.bill_address
-    @order.ship_address = lua.ship_address
+    @order.bill_address = finder.bill_address
+    @order.ship_address = finder.ship_address
   end
 end

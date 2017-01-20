@@ -1,4 +1,4 @@
-require 'open_food_network/last_used_address'
+require 'open_food_network/address_finder'
 
 class CheckoutController < Spree::CheckoutController
   layout 'darkswarm'
@@ -185,10 +185,10 @@ class CheckoutController < Spree::CheckoutController
   def before_address
     associate_user
 
-    lua = OpenFoodNetwork::LastUsedAddress.new(@order.email, @order.customer, spree_current_user)
+    finder = OpenFoodNetwork::AddressFinder.new(@order.email, @order.customer, spree_current_user)
 
-    @order.bill_address = lua.bill_address
-    @order.ship_address = lua.ship_address
+    @order.bill_address = finder.bill_address
+    @order.ship_address = finder.ship_address
   end
 
   # Overriding Spree's methods
