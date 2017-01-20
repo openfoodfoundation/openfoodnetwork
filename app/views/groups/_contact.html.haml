@@ -20,7 +20,7 @@
   - if @group.facebook.present? || @group.twitter.present? || @group.linkedin.present? || @group.instagram.present?
     %div.modal-centered.pad-top
       %p.modal-header
-        = t :groups_contact_web
+        = t :groups_contact_social
       .follow-icons
         =link_to_service "http://twitter.com/", @group.twitter do
           %i.ofn-i_041-twitter
@@ -35,7 +35,7 @@
   - if @group.address1.present? || @group.city.present?
     %div.modal-centered.pad-top
       %p.modal-header
-        = t :groups_contact_web
+        = t :groups_contact_address
       %p
         = @group.address1
         - if @group.address2.present?

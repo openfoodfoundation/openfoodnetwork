@@ -43,7 +43,6 @@ en:
   site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
   search_by_name: Search by name or suburb...
   producers: 'Australian Producers'
-  producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
   charges_sales_tax: Charges GST?
   print_invoice: "Print Invoice"
   send_invoice: "Send Invoice"
@@ -220,7 +219,6 @@ en:
         max_qtt_ordered: "Max Quantity Ordered"
         current_fulfilled_units: "Current Fulfilled Units"
         max_fulfilled_units: "Max Fulfilled Units"
-        order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
 
     order_cycles:
@@ -233,9 +231,6 @@ en:
         products_and_fees_copied_refreshing: "Products and fees copied. Refreshing..."
         select_an_order_cycle_first: "Select an order cycle first."
         order_cycle_updated: "Order cycle updated."
-
-    enterprise:
-      select_outgoing_oc_products_from: Select outgoing OC products from
 
     enterprises:
       index:
@@ -290,7 +285,7 @@ en:
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
-          not_method_yet: You don't have any payment methods yet.
+          no_method_yet: You don't have any payment methods yet.
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:
@@ -386,8 +381,6 @@ en:
         producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
         producer_shop: Producer Shop
         sell_your_produce: Sell your own produce
-        sell_description_text: Sell your products directly to customers through your very own Open Food Network shopfront.
-        sell_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
         producer_hub: Producer Hub
         producer_hub_text: Sell produce from self and others
         producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
@@ -437,13 +430,13 @@ en:
         distributor: Distributor
         products: Products
         tags: Tags
-        delivery_detaisl: Pickup / Delivery details
+        delivery_details: Pickup / Delivery details
         debug_info: Debug information
       name_and_timing_form:
         name: Name
         orders_open: Orders open at
         coordinator: Coordinator
-        order_closes: Orders close
+        orders_close: Orders close
       row:
         suppliers: suppliers
         distributors: distributors
@@ -560,15 +553,6 @@ en:
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
 
-  ofn_cart_headline: "Current cart for:"
-  ofn_cart_distributor: "Distributor:"
-  ofn_cart_oc: "Order cycle:"
-  ofn_cart_from: "From:"
-  ofn_cart_to: "To:"
-  ofn_cart_product: "Product:"
-  ofn_cart_quantitiy: "Quantity:"
-  ofn_cart_send: "Buy me"
-
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
   ie_warning_chrome: Download Chrome
@@ -683,9 +667,6 @@ en:
   unsaved_changes_error: "Fields with red borders contain errors."
 
   products: "Products"
-  products_in: "in %{oc}"
-  products_at: "at %{distributor}"
-  products_elsewhere: "Products found elsewhere"
 
   email_welcome: "Welcome"
   email_confirmed: "Thank you for confirming your email address."
@@ -695,7 +676,6 @@ en:
   email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
   email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next.
 %{link}"
-  join_community: "Join the community"
   email_help: "If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!"
   email_confirmation_greeting: "Hi, %{contact}!"
   email_confirmation_profile_created: "A profile for %{name} has been successfully created!
@@ -782,7 +762,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hubs_filter_property: "Property"
   hubs_matches: "Did you mean?"
   hubs_intro: Shop in your local area
-  hubs_distance: Closest to
   hubs_distance_filter: "Show me shops near %{location}"
 
   products_clear_all: Clear all
@@ -890,7 +869,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_variant: Variant
   products_quantity: Quantity
   products_available: Available?
-  products_producer: "Producer"
   products_price: "Price"
 
   register_title: Register
@@ -939,7 +917,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Phone:"
   orders_show_title: Order Confirmation
-  orders_show_time: Order ready on
   orders_show_number: Order confirmation
 
   products_cart_distributor_choice: "Distributor for your order:"
@@ -1144,7 +1121,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   value: "Value"
   balance_due: "Balance due"
   credit: "Credit"
-  Paid: "Paid"
   Ready: "Ready"
   you_have_no_orders_yet: "You have no orders yet"
   running_balance: "Running balance"
@@ -1187,7 +1163,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   calculator: "Calculator"
   calculator_values: "Calculator values"
   flat_percent_per_item: "Flat Percent (per item)"
-  new_order_cycles: "New Order Cycles"
+  new_order_cycle: "New Order Cycle"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
@@ -1208,7 +1184,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   queued: "Queued"
   scheduled_for: "Scheduled for"
   customers: "Customers"
-  please_select_hub: "Please select a Hub"
   loading_customers: "Loading Customers"
   no_customers_found: "No customers found"
   go: "Go"
@@ -1219,7 +1194,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   product: "Product"
   price: "Price"
   on_hand: "On hand"
-  save_changes: "Save Changes"
   spree_admin_overview_enterprises_header: "My Enterprises"
   spree_admin_overview_enterprises_footer: "MANAGE MY ENTERPRISES"
   spree_admin_enterprises_hubs_name: "Name"
@@ -1232,7 +1206,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree_admin_enterprises_producers_total_products: "Total Products"
   spree_admin_enterprises_producers_active_products: "Active Products"
   spree_admin_enterprises_producers_order_cycles: "Products in OCs"
-  spree_admin_enterprises_producers_order_cycles_title: ""
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_tabs_producers: "PRODUCERS"
   spree_admin_enterprises_producers_manage_order_cycles: "MANAGE ORDER CYCLES"
@@ -1275,8 +1248,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   hub_sidebar_none_available: "None Available"
   hub_sidebar_manage: "Manage"
   hub_sidebar_at_least: "At least one hub must be selected"
-  hub_sidebar_blue: "blue"
-  hub_sidebar_red: "red"
   shop_trial_in_progress: "Your shopfront trial expires in %{days}."
   shop_trial_expired: "Good news! We have decided to extend shopfront trials until further notice (probably around March 2015)." #FIXME
   report_customers_distributor: "Distributor"
@@ -1314,7 +1285,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   products_unsaved: "Changes to %{n} products remain unsaved."
   add_manager: "Add a manager"
   is_already_manager: "is already a manager!"
-  no_change_to_save: " No change to save"
   add_manager: "Add a manager"
   users:  "Users"
   about: "About"
@@ -1322,7 +1292,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   contact: "Contact"
   web: "Web"
   primary_details: "Primary Details"
-  adrdress: "Address"
   contact: "Contact"
   social: "Social"
   business_details: "Business Details"
@@ -1335,7 +1304,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
   validation_msg_relationship_already_established: "^That relationship is already established."
-  validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
