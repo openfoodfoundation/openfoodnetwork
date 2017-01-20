@@ -4,7 +4,7 @@
 # according to this order: customer addresses, user addresses, addresses from
 # completed orders with an email that matches the email string provided.
 module OpenFoodNetwork
-  class LastUsedAddress
+  class AddressFinder
     attr_accessor :email, :user, :customer
 
     def initialize(*args)

@@ -1,4 +1,4 @@
-require 'open_food_network/last_used_address'
+require 'open_food_network/address_finder'
 
 class Api::Admin::UserSerializer < ActiveModel::Serializer
   attributes :id, :email
@@ -7,10 +7,10 @@ class Api::Admin::UserSerializer < ActiveModel::Serializer
   has_one :bill_address, serializer: Api::AddressSerializer
 
   def ship_address
-    OpenFoodNetwork::LastUsedAddress.new(object.email, object).ship_address
+    OpenFoodNetwork::AddressFinder.new(object.email, object).ship_address
   end
 
   def bill_address
-    OpenFoodNetwork::LastUsedAddress.new(object.email, object).bill_address
+    OpenFoodNetwork::AddressFinder.new(object.email, object).bill_address
   end
 end
