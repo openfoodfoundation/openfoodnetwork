@@ -51,7 +51,8 @@ module Admin
 
     def fetch_event_from_stripe(request)
       event_json = JSON.parse(request.body.read)
-      JSON.parse(Stripe::Event.retrieve(event_json["id"]))
+      acct_param = event_json["user_id"] ? {"Stripe-Account" => event_json["user_id"]} : nil
+      Stripe::Event.retrieve(event_json["id"],acct_param)
     end
 
     def deauthorize_request_for_stripe_id(id)
