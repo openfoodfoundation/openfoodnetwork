@@ -17,10 +17,11 @@ module Admin
     end
 
     def destroy_from_webhook
+      # Fetch the event again direct from stripe for extra security
       event = fetch_event_from_stripe(request)
-      if event["type"] == "account.application.deauthorized"
-        StripeAccount.where(stripe_user_id: event["data"]["id"]).map{ |account| account.destroy }
-        render json: nil, status: 200
+      if event.type == "account.application.deauthorized"
+        StripeAccount.where(stripe_user_id: event.user_id).map{ |account| account.destroy }
+        render text: "Account #{event.user_id} deauthorized", status: 200
       else
         render json: nil, status: 501
       end
