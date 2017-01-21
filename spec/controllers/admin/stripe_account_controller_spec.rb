@@ -20,6 +20,7 @@ describe Admin::StripeAccountsController, type: :controller do
                    "type"=>"account.application.deauthorized",
                    "user_id"=>"webhook_id"}))
     account = create(:stripe_account, stripe_user_id: "webhook_id")
+    expect(Stripe::Event).not_to receive(:retrieve) # should not retrieve direct for a deauth event
     post 'destroy_from_webhook', {"id"=>"evt_wrfwg4323fw",
                                    "object"=>"event",
                                    "api_version"=>nil,
