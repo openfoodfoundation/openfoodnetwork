@@ -51,8 +51,14 @@ module Admin
 
     def fetch_event_from_stripe(request)
       event_json = JSON.parse(request.body.read)
-      acct_param = event_json["user_id"] ? {"Stripe-Account" => event_json["user_id"]} : nil
-      Stripe::Event.retrieve(event_json["id"],acct_param)
+      # If the application has been deauthorised, we are no longer authorised to retrieve events for that account
+      # Left here in case it's useful for other webhooks
+      unless event_json["type"] == "account.application.deauthorized"
+        acct_param = event_json["user_id"] ? {"Stripe-Account" => event_json["user_id"]} : nil
+        Stripe::Event.retrieve(event_json["id"],acct_param)
+      else
+        Stripe::Event.construct_from(event_json)
+      end
     end
 
     def deauthorize_request_for_stripe_id(id)
