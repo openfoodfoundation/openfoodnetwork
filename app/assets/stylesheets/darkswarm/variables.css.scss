@@ -1,0 +1,31 @@
+@import "foundation/functions";
+@import "foundation/components/global";
+
+// Brand guide colours:
+// International: #81c26e
+// Australia: #f35746
+// Africa: #f35e32
+// South Africa: #f9a72b
+// Norway: #4b83cc
+// Scandanavia: #0c8bbc
+// UK: #e6373f
+
+$brand-colour: #f27052;
+
+// Topbar
+$topbar-height: rem-calc(75);
+$topbar-link-padding: $topbar-height / 3;
+
+$topbar-bg: $white;
+$topbar-bg-color: $topbar-bg;
+
+$topbar-link-color: $black;
+$topbar-link-color-hover: $brand-colour;
+$topbar-link-color-active: $black;
+$topbar-link-color-active-hover: $white;
+$topbar-link-bg-hover: $white;
+
+$topbar-dropdown-link-color: $black;
+$topbar-dropdown-bg: $white;
+$topbar-dropdown-link-bg: $white;
+$topbar-dropdown-link-bg-hover: $white;

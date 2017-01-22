@@ -1,0 +1,13 @@
+// Styling for login modal to style tabs
+.reveal-modal.login-modal {
+  border-bottom-color: #efefef;
+}
+
+.login-modal {
+  background: #efefef;
+
+  .tabs-content {
+    background: #fff;
+    padding-top: 10px;
+  }
+}

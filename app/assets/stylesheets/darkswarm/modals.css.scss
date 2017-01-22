@@ -1,0 +1,64 @@
+@import "branding";
+@import "mixins";
+
+dialog, .reveal-modal {
+  border: none;
+  outline: none;
+  padding: 30px 20px 0 20px;
+  border-bottom: 30px solid white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  min-height: 260px;
+
+  // Not working yet - want a nice gradient shadow when there is overflow - needs JS too
+  // &:after
+  //   @include elipse-shadow(0 0 40px rgba(0, 0, 0, 0.8))
+
+  // Reveal.js break point:
+  // @media only screen and (max-width: 40.063em)
+
+  // Small - when modal IS full screen
+  @media only screen and (max-width: 640px) {
+    max-height: initial;
+
+    // This is needed to make the height not the height of whole content page
+    min-height: 100%;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+  }
+
+  // Medium and up - when modal IS NOT full screen
+  @media only screen and (min-width: 641px) {
+    top: 10%;
+    max-height: 80%;
+  }
+}
+
+.reveal-modal-bg {
+  background-color: rgba(0, 0, 0, 0.85);
+  position: fixed;
+}
+
+dialog .close-reveal-modal, .reveal-modal .close-reveal-modal {
+  right: 0.25rem;
+  top: 0.25rem;
+  background-color: rgba(205, 205, 205, 0.65);
+  text-shadow: none;
+  font-size: 2rem;
+  padding: 0.45rem;
+  color: #666;
+  z-index: 9999999;
+
+  @include border-radius(999999rem);
+
+  &:hover, &:active, &:focus {
+    background-color: rgba(205, 205, 205, 1);
+    color: #333;
+  }
+}
+
+// Prevent body from scrolling when a modal is open
+body.modal-open {
+  overflow: hidden;
+}

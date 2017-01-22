@@ -1,0 +1,77 @@
+@import "branding";
+@import "animations";
+@import "compass/css3/transition";
+
+// Basic style \\
+.page-alert {
+  .alert-box {
+    height: 55px;
+    overflow: hidden;
+    border: 1px solid rgba($dark-grey, 0.35);
+    border-left: none;
+    border-right: none;
+    background-color: #bbb;
+    background-image: url("/assets/tile-wide.png");
+    background-position: center center;
+    padding: 12px 0 8px 0;
+    margin: 0;
+
+    h6 {
+      @media all and (max-width: 480px) {
+        font-size: 10px;
+        line-height: 24px;
+      }
+    }
+
+    .alert-cta {
+      &, & * {
+        @include csstrans;
+
+        color: #333;
+      }
+
+      strong {
+        letter-spacing: 0.5px;
+      }
+
+      a:hover, a:active, a:focus {
+        &, & * {
+          text-decoration: none;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// Show-hide animation \\
+.off-canvas-wrap .inner-wrap, .off-canvas-wrap .inner-wrap .fixed, nav.tab-bar {
+  @include transition(all, 1000ms, ease-in-out);
+
+  &.move-down {
+    margin-top: 55px;
+
+    @include transition(all, 1000ms, ease-in-out);
+  }
+}
+
+.off-canvas-wrap .inner-wrap .page-alert.fixed {
+  top: -55px;
+  z-index: 1;
+
+  // TODO: Compass to disable transition
+  -moz-transition: none;
+  -webkit-transition: none;
+  -o-transition: color 0 ease-in;
+  transition: none;
+}
+
+.off-canvas-wrap.move-right .inner-wrap.move-down {
+  .page-alert {
+    top: -55px * 2;
+  }
+
+  .left-off-canvas-menu {
+    top: -55px;
+  }
+}

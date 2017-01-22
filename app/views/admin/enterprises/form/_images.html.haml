@@ -8,11 +8,13 @@
     = f.file_field :logo
 .row
   .alpha.three.columns
-    = f.label :promo_image, 'ofn-with-tip' => 'This image is displayed in "About Us"'
+    = f.label :promo_image, 'ofn-with-tip' => t('.promo_image_placeholder')
     %br/
-    %span{ style: 'font-weight:bold' } PLEASE NOTE:
-    Any promo image uploaded here will be cropped to 1200 x 260.
-    The promo image is displayed at the top of an enterprise's profile page and pop-ups.
+    %span{ style: 'font-weight:bold' }= t('.promo_image_note1')
+    %br
+    = t('.promo_image_note2')
+    %br
+    = t('.promo_image_note3')
 
   .omega.eight.columns
     = image_tag @object.promo_image(:large) if @object.promo_image.present?

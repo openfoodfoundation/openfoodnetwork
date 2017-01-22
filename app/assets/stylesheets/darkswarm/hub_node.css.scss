@@ -1,0 +1,255 @@
+@import "branding";
+@import "mixins";
+
+.hubs {
+  .active_table .active_table_node {
+    //Prevents ugly overflows on hub title
+    .columns.skinny-head {
+      white-space: nowrap;
+      overflow-x: hidden;
+      overflow-y: visible;
+    }
+
+    //Generic text link style
+    a, a * {
+      color: $clr-brick;
+
+      &:hover, &:active, &:focus {
+        color: $clr-brick-bright;
+      }
+    }
+
+    //Hub and Producer icons
+    i.ofn-i_063-hub, i.ofn-i_064-hub-reversed, i.ofn-i_059-producer, i.ofn-i_060-producer-reversed {
+      font-size: 2rem;
+      display: inline-block;
+      margin-right: 0.25rem;
+      float: left;
+    }
+
+    //Closed & Open column
+    .open_closed {
+      i {
+        font-size: 2rem;
+        float: right;
+        margin-left: 0.5rem;
+      }
+    }
+
+    //Hub Link
+    @media all and (max-width: 640px) {
+      a.hub {
+        display: block;
+      }
+    }
+
+    //Hub Name
+    span.hub-name-listing {
+      font-weight: 700;
+
+      &:after {
+        content: ">>";
+        display: inline-block;
+        margin-left: 5px;
+      }
+    }
+
+    //CLOSED row
+    &.closed {
+      .active_table_row {
+        border: 1px solid transparent;
+
+        @media all and (max-width: 640px) {
+          border-color: $clr-brick-light;
+        }
+
+        &:hover, &:active, &:focus {
+          border-color: $clr-brick-light-bright;
+        }
+      }
+    }
+
+    //OPEN row
+    &.open {
+      .active_table_row, .active_table_row:first-child, .active_table_row:last-child {
+        border-color: $clr-brick-light-bright;
+      }
+    }
+
+    &.open, &.closed {
+      @media all and (max-width: 640px) {
+        .active_table_row:first-child .skinny-head {
+          background-color: $clr-brick-light;
+
+          @include border-radius-mixed(0.5em, 0.5em, 0, 0);
+
+          margin-top: -1rem;
+          margin-bottom: 1rem;
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+        }
+
+        label {
+          margin-top: 1rem;
+        }
+      }
+    }
+
+    //Padding second row
+    &.open {
+      .active_table_row:nth-child(2) {
+        padding-bottom: 0.75rem;
+      }
+    }
+
+    .producers-list {
+      li.more-producers-link {
+        .less {
+          display: none;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+
+      li.additional-producer {
+        display: none;
+      }
+
+      &.show-more-producers {
+        li.additional-producer {
+          display: block;
+        }
+
+        li.more-producers-link {
+          .more {
+            display: none;
+          }
+
+          .less {
+            display: block;
+          }
+        }
+      }
+    }
+
+    //CURRENT hub (shows selected hub)
+    &.current {
+      //overwrites active_table
+      &.closed, &.open {
+        a, a * {
+          color: $clr-brick;
+        }
+
+        .active_table_row {
+          border-color: $clr-brick;
+        }
+
+        .active_table_row:first-child, .active_table_row:last-child {
+          background-color: $clr-brick-light-trans;
+          opacity: 1;
+
+          &:hover, &:focus, &:active {
+            opacity: 0.9;
+            border-color: $clr-brick-bright;
+          }
+        }
+
+        @media all and (max-width: 640px) {
+          .active_table_row:first-child .skinny-head {
+            background-color: rgba(255, 255, 255, 0.85);
+          }
+        }
+      }
+    }
+
+    //INACTIVE - closed hub
+    &.inactive {
+      &.closed, &.open {
+        &, & * {
+          color: $disabled-med;
+        }
+
+        a, a * {
+          color: $disabled-dark;
+        }
+      }
+
+      &.closed {
+        .active_table_row, .active_table_row:first-child, .active_table_row:last-child {
+          &:hover, &:active, &:focus {
+            border-color: $disabled-bright;
+          }
+        }
+      }
+
+      &.open {
+        .active_table_row, .active_table_row:first-child, .active_table_row:last-child {
+          // border-color: $disabled-bright
+          &, &:hover, &:active, &:focus {
+            border-color: $disabled-bright;
+          }
+        }
+      }
+
+      &.closed, &.open {
+        // & Current hub
+        &.current {
+          .active_table_row, .active_table_row:first-child, .active_table_row:last-child {
+            a, a * {
+              color: $med-grey;
+            }
+
+            border-color: $disabled-dark;
+            background-color: rgba(220, 220, 220, 0.5);
+
+            &:hover, &:focus, &:active {
+              border-color: $disabled-dark;
+            }
+          }
+
+          // Small devices
+          @media all and (max-width: 640px) {
+            .active_table_row:first-child .skinny-head {
+              background-color: $disabled-bright;
+            }
+          }
+        }
+
+        // Small devices
+        @media all and (max-width: 640px) {
+          .active_table_row, .active_table_row:first-child, .active_table_row:last-child {
+            border-color: $disabled-bright;
+            background-color: transparent;
+
+            &:hover, &:focus, &:active {
+              border-color: $disabled-bright;
+              opacity: 0.85;
+            }
+          }
+
+          .active_table_row:first-child .skinny-head {
+            background-color: $disabled-light;
+          }
+        }
+      }
+    }
+
+    //Is Profile - profile node
+    &.inactive.is_profile {
+      &.closed, &.open {
+        .active_table_row {
+          &:hover, &:active, &:focus {
+            border-color: transparent;
+            cursor: auto;
+          }
+
+          @media all and (max-width: 640px) {
+            border-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}

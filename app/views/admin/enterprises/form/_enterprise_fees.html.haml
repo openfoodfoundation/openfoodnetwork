@@ -2,8 +2,8 @@
   %table
     %thead
       %tr
-        %th Name
-        %th Fee Type
+        %th= t('.name')
+        %th= t('.fee_type')
         -# %th Calculator
         -# %th Calculator Values
     %tbody
@@ -16,15 +16,15 @@
   %br
   %div
     %a.button{ href: "#{main_app.admin_enterprise_fees_path}"}
-      Manage Enterprise Fees
+      = t('.manage_fees')
       %i.icon-arrow-right
 
 - else
   %p.text-center
-    You don't have any enterprise fees yet.
+    = t('.no_fees_yet')
 
   %br
   .text-center
     %a.button{ href: "#{main_app.admin_enterprise_fees_path}"}
-      Create One Now
+      = t('.create_button')
       %i.icon-arrow-right
