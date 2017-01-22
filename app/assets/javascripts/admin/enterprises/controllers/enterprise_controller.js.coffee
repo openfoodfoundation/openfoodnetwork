@@ -11,7 +11,7 @@ angular.module("admin.enterprises")
     $scope.StatusMessage = StatusMessage
 
     $scope.$watch 'enterprise_form.$dirty', (newValue) ->
-      FormState.isDirty = newValue;
+      FormState.isDirty = newValue
       StatusMessage.display 'notice', 'You have unsaved changes' if newValue
 
     $scope.setFormDirty = ->

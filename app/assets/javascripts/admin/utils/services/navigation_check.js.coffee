@@ -1,5 +1,5 @@
 angular.module("admin.utils")
-  .factory "NavigationCheck", ($window, $rootScope, FormState) ->
+  .factory "NavigationCheck", ($window, $rootScope) ->
     new class NavigationCheck
       callbacks = []
       constructor: ->
