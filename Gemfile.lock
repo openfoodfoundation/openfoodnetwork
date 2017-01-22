@@ -13,6 +13,13 @@ GIT
     custom_error_message (1.1.1)
 
 GIT
+  remote: git://github.com/ltrls/ofn-qz.git
+  revision: 024680ccea429b2e5428d7b964fa67c52add34ec
+  specs:
+    ofn-qz (0.1.0)
+      railties (~> 3.1)
+
+GIT
   remote: git://github.com/openfoodfoundation/better_spree_paypal_express.git
   revision: 840d973cd5bd3250b17674a624dad494aeb09eb3
   branch: hide-password
@@ -694,6 +701,7 @@ DEPENDENCIES
   momentjs-rails
   newrelic_rpm
   nokogiri (>= 1.6.7.1)
+  ofn-qz!
   oj
   paper_trail (~> 3.0.8)
   paperclip

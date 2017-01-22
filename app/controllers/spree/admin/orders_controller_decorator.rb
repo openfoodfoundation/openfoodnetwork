@@ -90,6 +90,10 @@ Spree::Admin::OrdersController.class_eval do
     render pdf: "invoice-#{@order.number}", template: template, encoding: "UTF-8"
   end
 
+  def print_ticket
+    render template: "spree/admin/orders/ticket", layout: false
+  end
+
   def update_distribution_charge
     @order.update_distribution_charge!
   end

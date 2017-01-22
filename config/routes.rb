@@ -249,6 +249,7 @@ Spree::Core::Engine.routes.prepend do
     resources :orders do
       get :invoice, on: :member
       get :print, on: :member
+      get :print_ticket, on: :member
       get :managed, on: :collection
     end
 

@@ -46,6 +46,8 @@ en:
   producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
   charges_sales_tax: Charges GST?
   print_invoice: "Print Invoice"
+  print_ticket: "Print Ticket"
+  select_ticket_printer: "Select printer for tickets"
   send_invoice: "Send Invoice"
   resend_confirmation: "Resend Confirmation"
   view_order: "View Order"
@@ -552,6 +554,11 @@ en:
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
+
+  ticket_column_qty: "Qty"
+  ticket_column_item: "Item"
+  ticket_column_unit_price: "Unit Price"
+  ticket_column_total_price: "Total Price"
 
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME

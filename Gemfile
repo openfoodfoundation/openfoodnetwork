@@ -90,6 +90,7 @@ gem 'jquery-rails'
 gem 'jquery-migrate-rails'
 gem 'css_splitter'
 
+gem 'ofn-qz', github: 'ltrls/ofn-qz'
 
 group :test, :development do
   # Pretty printed test output

@@ -28,6 +28,8 @@ fr:
   producers_join: Les producteurs et autres hubs basés en France sont invités à rejoindre Open Food France.
   charges_sales_tax: Soumis à la TVA?
   print_invoice: "Imprimer la facture"
+  print_ticket: "Imprimer le ticket"
+  select_ticket_printer: "Choisir l'imprimante à tickets"
   send_invoice: "Envoyer la facture"
   resend_confirmation: "Renvoyer la confirmation"
   view_order: "Voir la commande"
@@ -492,6 +494,8 @@ fr:
   invoice_column_price: "Prix"
   invoice_column_item: "Produit"
   invoice_column_qty: "Qté"
+  invoice_column_tax: "TVA"
+  invoice_column_price: "Prix"
   invoice_column_unit_price_with_taxes: "Prix unitaire (TTC)"
   invoice_column_unit_price_without_taxes: "Prix unitaire (HT)"
   invoice_column_price_with_taxes: "Prix total (TTC)"
@@ -510,6 +514,10 @@ fr:
     percentage:
       format:
         format: "%n %"
+  ticket_column_qty: "Qté"
+  ticket_column_item: "Item"
+  ticket_column_unit_price: "Px Unit"
+  ticket_column_total_price: "Px Total"
 
   logo: "Logo (640x130)"
   logo_mobile: "Logo smartphone (75x26)"

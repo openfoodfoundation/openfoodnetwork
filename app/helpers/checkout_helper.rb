@@ -62,6 +62,10 @@ module CheckoutHelper
     end
   end
 
+  def display_adjustment_amount(adjustment)
+    Spree::Money.new(adjustment.amount, { :currency => adjustment.currency })
+  end
+
   def display_checkout_total_less_tax(order)
     Spree::Money.new order.total - order.total_tax, currency: order.currency
   end
