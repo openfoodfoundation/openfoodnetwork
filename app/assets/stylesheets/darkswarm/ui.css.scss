@@ -1,0 +1,128 @@
+@import "foundation/components/buttons";
+@import "branding";
+@import "mixins";
+@import "typography";
+
+// Button class extensions
+
+.neutral-btn {
+  @include button;
+
+  @include border-radius(0.5em);
+
+  font-family: $bodyFont;
+  background-color: transparent;
+  border: 2px solid rgba(200, 200, 200, 1);
+  color: #999;
+}
+
+.neutral-btn:hover, .neutral-btn:active, .neutral-btn:focus {
+  background-color: rgba(200, 200, 200, 0.2);
+  border: 2px solid rgba(200, 200, 200, 0.8);
+}
+
+.neutral-btn.dark {
+  border-color: #000;
+  color: #000;
+}
+
+.neutral-btn.dark:hover, .neutral-btn.dark:active, .neutral-btn.dark:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 0 #fff;
+}
+
+.neutral-btn.light {
+  border-color: #fff;
+  color: #fff;
+}
+
+.neutral-btn.light:hover, .neutral-btn.light:active, .neutral-btn.light:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.neutral-btn.turquoise {
+  border-color: $clr-turquoise;
+  color: $clr-turquoise;
+}
+
+.neutral-btn.turquoise:hover, .neutral-btn.turquoise:active, .neutral-btn.turquoise:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+
+  // text-shadow: 0 1px 0 #fff
+}
+
+// Rewrite foundation's .primary button style
+
+.button, button {
+  @include border-radius(0.5em);
+
+  outline: none;
+}
+
+.button.primary, button.primary {
+  font-family: $bodyFont;
+  background: $clr-brick;
+  color: white;
+}
+
+.button.primary:hover, .button.primary:active, .button.primary:focus, button.primary:hover, button.primary:active, button.primary:focus {
+  background: $clr-brick-bright;
+  text-shadow: 0 1px 0 $clr-brick;
+}
+
+button.success, .button.success {
+  background: #0096ad;
+}
+
+.button.success:hover, .button.success:active, .button.success:focus, button.success:hover, button.success:active, button.success:focus {
+  background: #14b6cc;
+}
+
+.button.help-btn {
+  @include border-radius(999999px);
+
+  &.tiny {
+    padding: 0rem;
+    margin: 0;
+    float: right;
+  }
+
+  i {
+    font-size: 1.25rem;
+  }
+}
+
+.profile-checkbox {
+  display: inline-block;
+
+  label {
+    margin: 0 0.2rem;
+    float: right;
+  }
+}
+
+// Transparent button
+.button.transparent {
+  @include headingFont;
+
+  font-size: 20px;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.3);
+  border: 3px solid #fff;
+  text-shadow: none;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+  }
+}
+
+// Responsive
+@media screen and (min-width: 768px) {
+  [role="main"] {
+    padding: 0;
+  }
+}
