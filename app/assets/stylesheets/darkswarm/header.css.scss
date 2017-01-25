@@ -1,0 +1,31 @@
+@import "variables";
+
+nav.top-bar {
+  margin-bottom: 0px;
+
+  a.icon {
+    &:hover {
+      text-decoration: none;
+    }
+
+    height: $topbar-height;
+    color: white;
+
+    i {
+      font-size: 29px;
+      line-height: $topbar-height;
+    }
+
+    span {
+      font-size: 13px;
+      display: inline-block;
+      line-height: $topbar-height;
+      height: $topbar-height;
+      vertical-align: top;
+    }
+  }
+}
+
+body > section[role='main'] {
+  padding: 0px;
+}

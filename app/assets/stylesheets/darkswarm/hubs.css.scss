@@ -1,0 +1,18 @@
+@import "branding";
+@import "mixins";
+
+#hubs {
+  background-color: lighten($ofn-grey, 43%);
+
+  @include panepadding;
+
+  @include sidepaddingSm;
+
+  .name-matches, .distance-matches {
+    margin-top: 4em;
+  }
+
+  .more-controls {
+    text-align: center;
+  }
+}

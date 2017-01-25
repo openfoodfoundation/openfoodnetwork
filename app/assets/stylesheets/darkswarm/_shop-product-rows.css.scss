@@ -1,0 +1,182 @@
+@import "branding";
+@import "animations";
+
+.darkswarm {
+  products {
+    product {
+      // GENERAL LAYOUT
+      .row {
+        .columns {
+          padding-top: 0em;
+          padding-bottom: 0em;
+          display: table;
+          line-height: 1.1;
+
+          // outline: 1px solid red
+
+          @media all and (max-width: 768px) {
+            font-size: 0.875rem;
+          }
+
+          @media all and (max-width: 640px) {
+            font-size: 0.75rem;
+          }
+        }
+
+        .table-cell {
+          display: table-cell;
+          vertical-align: middle;
+          height: 37px;
+        }
+      }
+
+      // ROW VARIANTS
+      .row.variants {
+        margin-left: 0;
+        margin-right: 0;
+        background-color: #ECECEC;
+
+        &:hover, &:focus, &:active {
+          background-color: $clr-brick-light;
+        }
+
+        &:nth-of-type(even) {
+          background-color: #f9f9f9;
+
+          &:hover, &:focus, &:active {
+            background-color: $clr-brick-ultra-light;
+          }
+        }
+
+        &.out-of-stock {
+          opacity: 0.2;
+        }
+
+        // Variant name
+        .variant-name {
+          padding-left: 7.9375rem;
+
+          @media all and (max-width: 768px) {
+            padding-left: 4.9375rem;
+          }
+        }
+
+        .variant-name {
+          @media all and (max-width: 640px) {
+            background: #333;
+            color: white;
+            padding-left: 0.9375rem;
+            font-weight: bold;
+
+            .table-cell {
+              height: 27px;
+            }
+          }
+        }
+
+        // Variant unit
+        .variant-unit {
+          padding-left: 0rem;
+          padding-right: 0rem;
+          color: #888;
+          font-size: 0.875rem;
+          overflow: hidden;
+
+          @media all and (max-width: 768px) {
+            font-size: 0.75rem;
+          }
+        }
+
+        // Variant price
+        .variant-price {
+          padding-left: 0.25rem;
+          padding-right: 0.25rem;
+
+          @media all and (max-width: 640px) {
+            text-align: right;
+          }
+        }
+
+        // Total price
+        .total-price {
+          padding-left: 0rem;
+          color: $disabled-med;
+
+          .filled {
+            color: $med-drk-grey;
+          }
+
+          @media all and (max-width: 640px) {
+            background: #777;
+            color: $disabled-med;
+
+            .filled {
+              color: white;
+            }
+
+            .table-cell {
+              height: 27px;
+            }
+          }
+        }
+      }
+
+      // ROW SUMMARY
+      .row.summary {
+        margin-left: 0;
+        margin-right: 0;
+        background: #fff;
+
+        .columns {
+          padding-top: 1em;
+          padding-bottom: 1em;
+          line-height: 1;
+
+          @media all and (max-width: 768px) {
+            padding-top: 0.65rem;
+            padding-bottom: 0.65rem;
+          }
+        }
+
+        .summary-header {
+          padding-left: 7.9375rem;
+
+          @media all and (max-width: 768px) {
+            padding-left: 4.9375rem;
+          }
+
+          @media all and (max-width: 640px) {
+            padding-left: 0.9375rem;
+          }
+
+          small {
+            font-size: 80%;
+          }
+
+          h3 {
+            font-size: 1.5rem;
+            margin: 0;
+          }
+
+          h3 a {
+            color: #222;
+
+            i {
+              @include csstrans;
+
+              font-size: 0.6em;
+            }
+
+            &:hover, &:focus, &:active {
+              color: $clr-brick;
+
+              i {
+                font-size: 0.8em;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
