@@ -1,0 +1,146 @@
+@import "mixins";
+@import "animations";
+@import "variables";
+@import "branding";
+@import "big-input";
+
+// Shop partials
+@import "shop-inputs";
+@import "shop-navigation";
+@import "shop-product-rows";
+@import "shop-taxon-flag";
+@import "shop-popovers";
+
+.darkswarm {
+  products {
+    display: block;
+    padding-top: 20px;
+
+    @media all and (max-width: 768px) {
+      input.button.right {
+        float: left;
+      }
+    }
+
+    @media all and (max-width: 480px) {
+      .add_to_cart {
+        margin-top: 2rem;
+      }
+    }
+
+    form {
+      input.small.button.primary.right.add_to_cart {
+        &.dirty {
+          padding-left: 3.2rem;
+        }
+      }
+
+      i.cart-spinner {
+        position: absolute;
+        top: 14px;
+        right: 146px;
+        color: white;
+        font-size: 1.2em;
+
+        // Necessary to be below Z index of cart popover:
+        z-index: 98;
+        -webkit-animation: spin 2s infinite linear;
+        animation: spin 2s infinite linear;
+      }
+    }
+
+    product {
+      @include csstrans;
+
+      border-bottom: 1px solid #e5e5e5;
+      border-top: 1px solid #e5e5e5;
+      padding-bottom: 1px;
+      margin-bottom: 20px !important;
+      position: relative;
+      display: block;
+      color: $med-drk-grey;
+
+      &:hover, &:focus, &:active {
+        border-bottom: 1px solid $clr-brick-med-bright;
+        border-top: 1px solid $clr-brick-med-bright;
+      }
+
+      // BULK
+      .bulk-buy {
+        font-size: 0.875rem;
+
+        @media all and (max-width: 768px) {
+          font-size: 0.75rem;
+        }
+      }
+
+      .bulk-buy, .bulk-buy i {
+        color: #888;
+      }
+
+      .inline {
+        display: inline;
+      }
+
+      .spinner {
+        width: 100px;
+        margin-bottom: 20px;
+      }
+
+      // ICONS
+      i {
+        font-size: 0.75em;
+        padding-right: 0.9375rem;
+
+        @media all and (max-width: 640px) {
+          padding-right: 0.25rem;
+        }
+      }
+
+      i.ofn-i_056-bulk {
+        font-size: 1rem;
+        padding-right: 0rem;
+      }
+
+      i.ofn-i_036-producers {
+        padding-left: 0.2rem;
+        padding-right: 0rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .alert-box.shopfront-message {
+    border: 2px solid $clr-turquoise;
+    border-radius: 5px;
+    background-color: $clr-turquoise-light;
+    color: $clr-turquoise;
+
+    a {
+      color: #0096ad;
+
+      &:hover, &:focus, &:active {
+        text-decoration: none;
+        color: #4aadbd;
+      }
+    }
+  }
+
+  .shopfront_closed_message, .shopfront_hidden_message {
+    padding: 15px;
+    border-radius: 5px;
+  }
+
+  .shopfront_closed_message {
+    border: 2px solid #eb4c46;
+  }
+
+  .shopfront_closed_message {
+    margin: 2em 0em;
+  }
+
+  .shopfront_hidden_message {
+    border: 2px solid #db4;
+    margin: 2em 0em;
+  }
+}

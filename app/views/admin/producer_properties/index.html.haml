@@ -1,16 +1,13 @@
 - content_for :page_title do
   = "#{@enterprise.name}:"
-  Producer Properties
-
+  = t('.title')
 
 - content_for :page_actions do
   %ul.tollbar.inline-menu
     %li
       = link_to_add_fields t(:add_producer_property), 'tbody#producer_properties', class: 'icon-plus button'
 
-
 = render 'spree/shared/error_messages', target: @enterprise
-
 
 = form_for @enterprise, url: main_app.admin_enterprise_path(@enterprise), method: :put do |f|
   = render 'form', f: f

@@ -1,0 +1,81 @@
+@import "branding";
+@import "animations";
+
+.darkswarm {
+  products {
+    product {
+      .product-thumb {
+        @include csstrans;
+
+        position: absolute;
+        top: 2px;
+        left: 0px;
+        width: 7rem;
+        height: 7rem;
+        float: left;
+        display: block;
+        z-index: 1;
+        background-color: white;
+        overflow: hidden;
+
+        i {
+          @include csstrans;
+
+          transition-delay: 150ms;
+          position: absolute;
+          left: 45%;
+          top: 45%;
+          z-index: 99999;
+          color: white;
+          font-size: 1rem;
+          opacity: 0;
+        }
+
+        img {
+          @include csstrans;
+
+          opacity: 1;
+
+          @include transform-scale(scale(1));
+        }
+
+        &:hover, &:focus, &:active {
+          background-color: $clr-brick;
+
+          i {
+            left: 32%;
+            top: 30%;
+            font-size: 3rem;
+            opacity: 1;
+          }
+
+          img {
+            opacity: 0.5;
+
+            @include transform-scale(scale(1.1));
+          }
+        }
+
+        @media all and (max-width: 768px) {
+          top: 2px;
+          width: 4rem;
+          height: 4rem;
+
+          &:hover, &:focus, &:active {
+            i {
+              left: 30%;
+              top: 30%;
+              font-size: 2rem;
+            }
+          }
+        }
+
+        @media all and (max-width: 640px) {
+          display: none;
+          width: 0rem;
+          height: 0rem;
+        }
+      }
+    }
+  }
+}

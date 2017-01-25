@@ -1,98 +1,97 @@
 .row
   .three.columns.alpha
-    = f.label :name
+    = f.label :name, t('admin.enterprises.form.primary_details.name')
     %span.required *
   .nine.columns.omega
-    = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles", class: "fullwidth" }
+    = f.text_field :name, { placeholder: t('admin.enterprises.form.primary_details.name_placeholder'), class: "fullwidth" }
 
 - if spree_current_user.admin?
   .row
     .three.columns.alpha
-      =f.label :owner_id, 'Owner'
+      =f.label :owner_id, t('.owner')
       %span.required *
-      %div{'ofn-with-tip' => "The primary user responsible for this enterprise."}
-        %a What's this?
+      %div{'ofn-with-tip' => t('.owner_tip')}
+        %a= t('admin.whats_this')
     .nine.columns.omega
       - owner_email = @enterprise.andand.owner.andand.email || ""
       = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner'
 .row
   .three.columns.alpha
-    %label Primary Producer?
-    %div{'ofn-with-tip' => "Select 'Producer' if you are a primary producer of food."}
-      %a What's this?
+    %label= t('admin.enterprises.form.primary_details.primary_producer')
+    %div{'ofn-with-tip' => t('admin.enterprises.form.primary_details.primary_producer_tip')}
+      %a= t('admin.whats_this')
   .five.columns.omega
     = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
     &nbsp;
-    = f.label :is_primary_producer, 'I am a Producer'
+    = f.label :is_primary_producer, t('.i_am_producer')
 - if spree_current_user.admin?
   .row
     .alpha.eleven.columns
       .three.columns.alpha
-        = f.label :sells, 'Sells'
-        %div{'ofn-with-tip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
+        = f.label :sells, t('admin.enterprises.form.primary_details.sells')
+        %div{'ofn-with-tip' => t('admin.enterprises.form.primary_details.sells_tip')}
           %a What's this?
       .two.columns
         = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, "None", value: "none"
+        = f.label :sells, t('admin.enterprises.form.primary_details.none'), value: "none"
       .two.columns
         = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, "Own", value: "own"
+        = f.label :sells, t('admin.enterprises.form.primary_details.own'), value: "own"
       .four.columns.omega
         = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, "Any", value: "any"
+        = f.label :sells, t('admin.enterprises.form.primary_details.any'), value: "any"
 
-
 .row
   .alpha.three.columns
-    = f.label :contact, 'Contact Name'
+    = f.label :contact, t('.contact_name')
   .omega.nine.columns
-    = f.text_field :contact, { placeholder: "eg. Gustav Plum"}
+    = f.text_field :contact, { placeholder: t('admin.enterprises.form.contact.name_placeholder')}
 .row
   .alpha.three.columns
-    = f.label :email_address
+    = f.label :email_address, t('admin.enterprises.form.contact.email_address')
   .omega.nine.columns
-    = f.text_field :email_address, { placeholder: "eg. gustav@truffles.com", "ng-model" => "Enterprise.email_address" }
+    = f.text_field :email_address, { placeholder: t('admin.enterprises.form.contact.email_address_placeholder'), "ng-model" => "Enterprise.email_address" }
 .row
   .alpha.three.columns
-    = f.label :phone
+    = f.label :phone, t('admin.enterprises.form.contact.phone')
   .omega.nine.columns
-    = f.text_field :phone, { placeholder: "eg. 98 7654 3210"}
+    = f.text_field :phone, { placeholder: t('admin.enterprises.form.contact.phone_placeholder')}
 .row
   .alpha.three.columns
-    = f.label :website
+    = f.label :website, t('admin.enterprises.form.contact.website')
   .omega.nine.columns
-    = f.text_field :website, { placeholder: "eg. www.truffles.com"}
+    = f.text_field :website, { placeholder: t('admin.enterprises.form.contact.website_placeholder')}
 
 = f.fields_for :address do |af|
   .row
     .three.columns.alpha
-      = af.label :address1
+      = af.label :address1, t(:address)
       %span.required *
     .nine.columns.omega
-      = af.text_field :address1, { placeholder: "eg. 123 High Street"}
+      = af.text_field :address1, { placeholder: t(:address_placeholder)}
   .row
     .alpha.three.columns
-      = af.label :address2
+      = af.label :address2, t(:address2)
     .nine.columns.omega
       = af.text_field :address2
   .row
     .three.columns.alpha
-      = af.label :city, 'Suburb'
+      = af.label :city, t(:city)
       \/
-      = af.label :zipcode, 'Postcode'
+      = af.label :zipcode, t(:postcode)
       %span.required *
     .four.columns
-      = af.text_field :city, { placeholder: "eg. Northcote"}
+      = af.text_field :city, { placeholder: t(:city_placeholder)}
     .five.columns.omega
-      = af.text_field :zipcode, { placeholder: "eg. 3070"}
+      = af.text_field :zipcode, { placeholder: t(:postcode_placeholder)}
   .row
     .three.columns.alpha
-      = af.label :state_id, 'State'
+      = af.label :state_id, t(:state)
       \/
-      = af.label :country_id, 'Country'
+      = af.label :country_id, t(:country)
     .four.columns
       = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
     .five.columns.omega
