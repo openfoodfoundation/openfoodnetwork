@@ -100,6 +100,15 @@ describe Spree::Admin::SearchController, type: :controller do
           expect(response).to redirect_to spree.unauthorized_path
         end
       end
+
+      context "when no customer with a matching id exists" do
+        before { params.merge!({customer_id: 1}) }
+
+        it "redirects to unauthorised" do
+          spree_get :customer_addresses, params
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
     end
   end
 end
