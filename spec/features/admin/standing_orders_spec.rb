@@ -121,7 +121,8 @@ feature 'Standing Orders' do
     end
 
     context 'creating a new standing order' do
-      let!(:customer) { create(:customer, enterprise: shop) }
+      let(:address) { create(:address) }
+      let!(:customer) { create(:customer, enterprise: shop, bill_address: address) }
       let!(:product1) { create(:product, supplier: shop) }
       let!(:product2) { create(:product, supplier: shop) }
       let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
@@ -152,20 +153,28 @@ feature 'Standing Orders' do
 
         click_button('Next')
         expect(page).to have_content 'BILLING ADDRESS'
+        # Customer bill address has been pre-loaded
+        expect(page).to have_input "bill_address_firstname", with: address.firstname
+        expect(page).to have_input "bill_address_lastname", with: address.lastname
+        expect(page).to have_input "bill_address_address1", with: address.address1
         click_button('Next')
-        expect(page).to have_content 'can\'t be blank', count: 16
+        expect(page).to have_content 'can\'t be blank', count: 7 # 7 because country is set on Spree::Address.default
 
-        # Setting the shipping and billing addresses
-        [:bill_address, :ship_address].each do |type|
-          fill_in "#{type}_firstname", with: 'Freda'
-          fill_in "#{type}_lastname", with: 'Figapple'
-          fill_in "#{type}_address1", with: '7 Tempany Lane'
-          fill_in "#{type}_city", with: 'Natte Yallock'
-          fill_in "#{type}_zipcode", with: '3465'
-          fill_in "#{type}_phone", with: '0400 123 456'
-          select2_select "Australia", from: "#{type}_country_id"
-          select2_select "Victoria", from: "#{type}_state_id"
-        end
+        # Setting the billing address
+        fill_in "bill_address_firstname", with: 'Freda'
+        fill_in "bill_address_lastname", with: 'Figapple'
+        fill_in "bill_address_address1", with: '7 Tempany Lane'
+        fill_in "bill_address_city", with: 'Natte Yallock'
+        fill_in "bill_address_zipcode", with: '3465'
+        fill_in "bill_address_phone", with: '0400 123 456'
+        select2_select "Australia", from: "bill_address_country_id"
+        select2_select "Victoria", from: "bill_address_state_id"
+
+        # Use copy button to fill in ship address
+        click_link "Copy"
+        expect(page).to have_input "ship_address_firstname", with: 'Freda'
+        expect(page).to have_input "ship_address_lastname", with: 'Figapple'
+        expect(page).to have_input "ship_address_address1", with: '7 Tempany Lane'
 
         click_button('Next')
         expect(page).to have_content 'NAME OR SKU'

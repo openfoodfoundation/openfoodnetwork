@@ -45,7 +45,9 @@
 
 
   .two.columns
-    &nbsp;
+    %a.button.red.fullwidth{ href: 'javascript:void(0)', ng: { click: 'shipAddressFromBilling()' } }
+      = t('copy')
+      %i.icon-chevron-right
   .seven.columns.omega
     %fieldset.no-border-bottom
       %legend{ align: 'center'}= t(:ship_address)
