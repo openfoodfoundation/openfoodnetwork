@@ -37,8 +37,8 @@ Spree::Admin::SearchController.class_eval do
   alias_method_chain :users, :ams
 
   def customer_addresses
-    customer = Customer.of(spree_current_user.enterprises).find(params[:customer_id])
-    redirect_to :unauthorised unless customer.present?
+    customer = Customer.of(spree_current_user.enterprises).find_by_id(params[:customer_id])
+    return redirect_to :unauthorized unless customer.present?
 
     finder = OpenFoodNetwork::AddressFinder.new(customer, customer.email)
     bill_address = Api::AddressSerializer.new(finder.bill_address).serializable_hash
