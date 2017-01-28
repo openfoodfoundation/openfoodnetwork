@@ -24,7 +24,7 @@
         - if @order.distributor.acn.present?
           %br
           = "#{t :acn} #{@order.distributor.acn}"
-      - if @order.distributor.invoice_logo && @order.distributor.logo.present?
+      - if @order.distributor.display_invoice_logo? && @order.distributor.logo.present?
         %td{ :align => "right" }
           = wicked_pdf_image_tag @order.distributor.logo(:small)
     %tr{ valign: "top" }
