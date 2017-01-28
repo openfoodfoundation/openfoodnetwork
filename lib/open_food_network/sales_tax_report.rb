@@ -11,13 +11,24 @@ module OpenFoodNetwork
     def header
       case params[:report_type]
       when "tax_types"
-        ["Order number", "Date", "Items", "Items total (#{currency_symbol})", "Taxable Items Total (#{currency_symbol})",
-          "Sales Tax (#{currency_symbol})", "Delivery Charge (#{currency_symbol})", "Tax on Delivery (#{currency_symbol})", "Tax on Fees (#{currency_symbol})",
-          "Total Tax (#{currency_symbol})", "Customer", "Distributor"]
+        [I18n.t(:report_header_order_number),
+         I18n.t(:report_header_date),
+         I18n.t(:report_header_items),
+         I18n.t(:report_header_items_total, currency_symbol: currency_symbol),
+         I18n.t(:report_header_taxable_items_total, currency_symbol: currency_symbol),
+         I18n.t(:report_header_sales_tax, currency_symbol: currency_symbol),
+         I18n.t(:report_header_delivery_charge, currency_symbol: currency_symbol),
+         I18n.t(:report_header_tax_on_delivery, currency_symbol: currency_symbol),
+         I18n.t(:report_header_tax_on_fees, currency_symbol: currency_symbol),
+         I18n.t(:report_header_total_tax, currency_symbol: currency_symbol),
+         I18n.t(:report_header_customer),
+         I18n.t(:report_header_distributor)]
       else
-        ["Order number", "Total excl. VAT"] +
-          relevant_rates.map { |rate| "%s (%.1f%%)" % [rate.name, rate.amount.to_f * 100] } +
-          ["Total VAT", "Total incl. VAT"]
+        [I18n.t(:report_header_order_number),
+         I18n.t(:report_header_total_excl_vat, currency_symbol: currency_symbol)] +
+        relevant_rates.map { |rate| "%s (%.1f%%) (%s)" % [rate.name, rate.amount.to_f * 100, currency_symbol] } +
+        [I18n.t(:report_header_total_tax, currency_symbol: currency_symbol),
+         I18n.t(:report_header_total_incl_vat, currency_symbol: currency_symbol)]
       end
     end
 
@@ -48,7 +59,6 @@ module OpenFoodNetwork
             [order.total_tax, order.display_total]
         end
       end
-
     end
 
 
@@ -59,8 +69,8 @@ module OpenFoodNetwork
                   search.result.joins(:adjustments => :tax_rate).select('spree_tax_rates.*').uniq ]
       queries.map do |query|
         ActiveRecord::Base.connection.select_all(query)
-      end.sum.map do
-        |tax_rate| Spree::TaxRate.new(tax_rate, without_protection: true)
+      end.sum.map do |tax_rate|
+        Spree::TaxRate.new(tax_rate, without_protection: true)
       end
     end
 
