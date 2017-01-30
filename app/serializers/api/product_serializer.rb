@@ -37,7 +37,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   include ActionView::Helpers::SanitizeHelper
 
   attributes :id, :name, :permalink
-  attributes :on_demand, :group_buy, :notes, :description
+  attributes :on_demand, :group_buy, :notes, :description, :description_html
   attributes :properties_with_values
 
   has_many :variants, serializer: Api::VariantSerializer
@@ -49,8 +49,15 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
   has_many :images, serializer: Api::ImageSerializer
   has_one :supplier, serializer: Api::IdSerializer
 
+  #return an unformatted descripton
   def description
     strip_tags object.description
+  end
+
+  #return a sanitized html description
+  def description_html
+    d = sanitize(object.description, options = {tags: "p, b, strong, em, i"})
+    d.to_s.html_safe
   end
 
   def properties_with_values

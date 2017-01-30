@@ -35,7 +35,7 @@ feature %q{
       fill_in 'product_on_hand', with: 5
       select 'Test Tax Category', from: 'product_tax_category_id'
       select 'Test Shipping Category', from: 'product_shipping_category_id'
-      fill_in 'product_description', with: "A description..."
+      page.find("input[name='product\[description\]']", visible: false).set('A description...')
 
       click_button 'Create'
 

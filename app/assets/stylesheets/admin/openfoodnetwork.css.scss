@@ -200,6 +200,13 @@ table#listing_enterprise_groups {
 
 // textAngular wysiwyg
 text-angular {
+  .ta-toolbar {
+    border: 1px solid #cdd9e4;
+    padding: 0.4em;
+    margin-bottom: -1px;
+    background-color: #f1f1f1;
+    border-radius: 0.25em 0.25em 0 0;
+  }
   .ta-scroll-window > .ta-bind {
     max-height: 400px;
     min-height: 100px;
@@ -210,12 +217,18 @@ text-angular {
   }
   .ta-scroll-window.form-control {
     min-height: 100px;
+    box-shadow: none !important;
   }
   .btn-group {
     display: inline;
     margin-right: 8px;
     button {
       padding: 5px 10px;
+      margin-right: 0.25em;
+    }
+    button.active:not(:hover) {
+      box-shadow: 0 0 0.7em rgba(0,0,0,0.3) inset;
+      background-color: #4583bf;
     }
   }
 }
