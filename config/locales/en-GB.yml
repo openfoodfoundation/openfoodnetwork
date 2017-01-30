@@ -58,8 +58,8 @@ en-GB:
     email: Email
     name: Name
     on_hand: In Stock
-    on_demand: On Demand
-    on_demand?: On Demand?
+    on_demand: Unlimited
+    on_demand?: Unlimited?
     order_cycle: Order Cycle
     phone: Phone
     price: Price
@@ -224,7 +224,7 @@ en-GB:
   country: Country
   unauthorized: Unauthorized
   terms_of_service: "Terms of service"
-  on_demand: To Order
+  on_demand: Unlimited
   none: None
   label_shops: "Shops"
   label_map: "Map"
