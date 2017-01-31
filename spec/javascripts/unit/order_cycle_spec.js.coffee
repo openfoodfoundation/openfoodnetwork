@@ -300,6 +300,7 @@ describe 'OrderCycle controllers', ->
       scope.removeCoordinatorFee(event, 0)
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.removeCoordinatorFee).toHaveBeenCalledWith(0)
+      expect(scope.order_cycle_form.$dirty).toEqual true
 
     it 'Adds exchange fees', ->
       scope.addExchangeFee(event)
@@ -310,6 +311,7 @@ describe 'OrderCycle controllers', ->
       scope.removeExchangeFee(event, 'exchange', 0)
       expect(event.preventDefault).toHaveBeenCalled()
       expect(OrderCycle.removeExchangeFee).toHaveBeenCalledWith('exchange', 0)
+      expect(scope.order_cycle_form.$dirty).toEqual true
 
     it 'Removes distribution of a variant', ->
       scope.removeDistributionOfVariant('variant')

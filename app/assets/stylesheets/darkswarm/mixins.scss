@@ -1,0 +1,253 @@
+// Note this mixin file is used in ADMIN and FRONTEND
+
+@import "branding";
+
+// Generic \\
+
+@mixin tiledPane {
+  background-image: url("/assets/tile-wide.png");
+  background-color: $brand-colour;
+  background-position: center center;
+
+  @include paneWhiteText;
+}
+
+@mixin panepadding {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+@mixin paneWhiteText {
+  &, & * {
+    color: white;
+  }
+}
+
+@mixin sidepaddingSm {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  @media all and (min-width: 768px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @media all and (min-width: 1024px) {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  @media all and (min-width: 1200px) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
+
+@mixin sidepaddingBg {
+  padding-left: 20px;
+  padding-right: 20px;
+
+  @media all and (min-width: 768px) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media all and (min-width: 1024px) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  @media all and (min-width: 1200px) {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
+}
+
+@mixin disabled {
+  color: $disabled-bright;
+}
+
+@mixin box-shadow($box-shadow) {
+  -moz-box-shadow: $box-shadow;
+  -webkit-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
+}
+
+@mixin elipse-shadow($elipse-shadow) {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  -webkit-box-shadow: $elipse-shadow;
+  box-shadow: $elipse-shadow;
+  bottom: -12%;
+  left: 10%;
+  right: 10%;
+  width: 80%;
+  height: 10%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+}
+
+@mixin border-radius($border-radius) {
+  -webkit-border-radius: $border-radius;
+  border-radius: $border-radius;
+}
+
+@mixin border-radius-mixed($border-radius-TL, $border-radius-TR, $border-radius-BR, $border-radius-BL) {
+  -webkit-border-radius: $border-radius-TL $border-radius-TR $border-radius-BR $border-radius-BL;
+  border-radius: $border-radius-TL $border-radius-TR $border-radius-BR $border-radius-BL;
+}
+
+@mixin transform-translate($translate) {
+  -ms-transform: $translate;
+  -webkit-transform: $translate;
+  transform: $translate;
+}
+
+@mixin transform-scale($scale) {
+  -moz-transform: $scale;
+  -webkit-transform: $scale;
+  -o-transform: $scale;
+  -ms-transform: $scale;
+  transform: $scale;
+}
+
+// Typography \\
+
+@mixin textpress {
+  text-shadow: 0 -1px 1px #111111, 0 1px 2px #222222;
+}
+
+@mixin textsoftpress {
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
+}
+
+// TO USE icon-font
+// Assign to :before or :after element
+// Assign content: "string"
+
+@mixin icon-font {
+  font-family: "OFN";
+  display: inline-block;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+}
+
+// Background options \\
+
+@mixin darkbg {
+  background-color: $clr-brick;
+
+  &, & * {
+    color: white;
+  }
+
+  a {
+    color: $clr-brick-ultra-light;
+
+    &:hover {
+      text-decoration: none;
+      color: $clr-brick-light;
+    }
+  }
+}
+
+@mixin lightbg {
+  background-color: $clr-brick-light;
+
+  &, & * {
+    color: black;
+  }
+
+  a {
+    color: $clr-brick;
+
+    &:hover {
+      text-decoration: none;
+      color: $clr-brick-bright;
+    }
+  }
+}
+
+@mixin turqbg {
+  background-color: $clr-turquoise-light;
+
+  &, & * {
+    color: $clr-turquoise;
+  }
+
+  a {
+    color: $clr-turquoise;
+
+    &:hover {
+      text-decoration: none;
+      color: $clr-turquoise-bright;
+    }
+  }
+}
+
+@mixin fullbg {
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@mixin fullwidthbg {
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
+@mixin gradient($gradient-clr1, $gradient-clr2) {
+  background: $gradient-clr1;
+
+  // Old browsers
+  background: -moz-linear-gradient(top, $gradient-clr1 0%, $gradient-clr2 100%);
+
+  // FF3.6+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $gradient-clr1), color-stop(100%, $gradient-clr2));
+
+  // Chrome,Safari4+
+  background: -webkit-linear-gradient(top, $gradient-clr1 0%, $gradient-clr2 100%);
+
+  // Chrome10+,Safari5.1+
+  background: -o-linear-gradient(top, $gradient-clr1 0%, $gradient-clr2 100%);
+
+  // Opera 11.10+
+  background: -ms-linear-gradient(top, $gradient-clr1 0%, $gradient-clr2 100%);
+
+  // IE10+
+  background: linear-gradient(to bottom, $gradient-clr1 0%, $gradient-clr2 100%);
+
+  // W3C
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gradient-clr1', endColorstr='$gradient-clr2',GradientType=0 );
+
+  // IE6-8
+}
+
+@mixin producersbg {
+  background-color: lighten($clr-turquoise, 68%);
+  background-image: url("/assets/producers.svg");
+  background-position: center 50px;
+  background-repeat: no-repeat;
+  background-size: 922px 763px;
+}
+
+@mixin hubsbg {
+  background-color: $brand-colour;
+  background-image: url("/assets/hubs-bg.jpg");
+  background-position: center center;
+}
+
+@mixin groupsbg {
+  background-color: lighten($clr-brick, 56%);
+  background-image: url("/assets/groups.svg");
+  background-position: center 50px;
+  background-repeat: no-repeat;
+  background-size: 922px 922px;
+}

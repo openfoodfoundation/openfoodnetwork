@@ -10,7 +10,7 @@
              register: ('<a auth="signup">' + t('.register') + '</a>').html_safe}
         - else
           = t '.require_customer_html',
-            {contact: ('<a href="##contact">' + t('.contact') + '</a>').html_safe,
+            {contact: link_to(t('.contact'), '#contact'),
              enterprise: current_distributor.name}
 - elsif @order_cycles and @order_cycles.empty?
   - if current_distributor.preferred_shopfront_closed_message.present?

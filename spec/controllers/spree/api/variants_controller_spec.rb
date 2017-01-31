@@ -47,7 +47,7 @@ module Spree
         spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
         response.status.should == 204
         lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should_not be_nil
+        variant.deleted_at.should be_present
       end
 
       it "is denied access to soft deleting another enterprises' variant" do

@@ -1,61 +1,61 @@
 .row
   .alpha.eleven.columns
     .three.columns.alpha
-      = f.label :name
+      = f.label :name, t('.name')
       %span.required *
     .eight.columns.omega
-      = f.text_field :name, { placeholder: "eg. Professor Plum's Biodynamic Truffles" }
+      = f.text_field :name, { placeholder: t('.name_placeholder') }
 - if @groups.present?
   .row
     .alpha.eleven.columns
       .three.columns.alpha
-        = f.label :group_ids, 'Groups'
-        %div{'ofn-with-tip' => "Select any groups or regions that you are a member of. This will help customers find your enterprise."}
-          %a What's this?
+        = f.label :group_ids, t('.groups')
+        %div{'ofn-with-tip' => t('.groups_tip')}
+          %a= t('admin.whats_this')
       .eight.columns.omega
-        = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: "Start typing to search available groups..."
+        = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: t('.groups_placeholder')
 
 .row
   .three.columns.alpha
-    %label Primary Producer
-    %div{'ofn-with-tip' => "Select 'Producer' if you are a primary producer of food."}
-      %a What's this?
+    %label= t('.primary_producer')
+    %div{'ofn-with-tip' => t('.primary_producer_tip')}
+      %a= t('admin.whats_this')
   .five.columns.omega
     = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
-    = f.label :is_primary_producer, 'Producer'
+    = f.label :is_primary_producer, t('.producer')
 - if spree_current_user.admin?
   .row
     .alpha.eleven.columns
       .three.columns.alpha
-        = f.label :sells, 'Sells'
-        %div{'ofn-with-tip' => "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"}
-          %a What's this?
+        = f.label :sells, t('.sells')
+        %div{'ofn-with-tip' => t('.sells_tip')}
+          %a= t('admin.whats_this')
       .two.columns
         = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
-        = f.label :sells, "None", value: "none"
+        = f.label :sells, t('.none'), value: "none"
       .two.columns
         = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
-        = f.label :sells, "Own", value: "own"
+        = f.label :sells, t('.own'), value: "own"
       .four.columns.omega
         = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
-        = f.label :sells, "Any", value: "any"
+        = f.label :sells, t('.any'), value: "any"
 .row
   .three.columns.alpha
-    %label Visible in search?
-    %div{'ofn-with-tip' => "Determines whether this enterprise will be visible to customers when searching the site."}
-      %a What's this?
+    %label= t('.visible_in_search')
+    %div{'ofn-with-tip' => t('.visible_in_search_tip')}
+      %a= t('admin.whats_this')
   .two.columns
     = f.radio_button :visible, true
-    = f.label :visible, "Visible", :value => "true"
+    = f.label :visible, t('.visible'), value: 'true'
   .five.columns.omega
     = f.radio_button :visible, false
-    = f.label :visible, "Not Visible", :value => "false"
+    = f.label :visible, t('.not_visible'), value: 'false'
 .permalink{ ng: { controller: "permalinkCtrl" } }
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha
-      = f.label :permalink, 'Permalink (no spaces)'
-      %div{'ofn-with-tip' => "This permalink is used to create the url to your shop: #{spree.root_url}your-shop-name/shop"}
-        %a What's this?
+      = f.label :permalink, t('.permalink')
+      %div{'ofn-with-tip' => t('.permalink_tip', link: spree.root_url)}
+        %a= t('admin.whats_this')
     .six.columns
       = f.text_field :permalink, { 'ng-model' => "Enterprise.permalink", placeholder: "eg. your-shop-name", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }" }
     .two.columns.omega
@@ -65,9 +65,9 @@
         %i{ ng: { class: "{'icon-ok-sign': availability == 'Available', 'icon-remove-sign': availability == 'Unavailable'}" } }
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha
-      %label Link to shop front
-      %div{'ofn-with-tip' => "A direct link to your shopfront on the Open Food Network."}
-        %a What's this?
+      %label= t('.link_to_front')
+      %div{'ofn-with-tip' => t('.link_to_front_tip')}
+        %a= t('admin.whats_this')
     .eight.columns.omega
       = surround spree.root_url, "/shop" do
         {{Enterprise.permalink}}

@@ -13,7 +13,7 @@
       "ng-class" => "{valid: shipping.$valid, open: accordion.shipping}"}
       = render 'checkout/accordion_heading'
 
-      .small-12.columns.medium-6.columns.large-6.columns
+      .small-12.columns.medium-12.columns.large-6.columns
         %label{"ng-repeat" => "method in ShippingMethods.shipping_methods"}
           %input{type: :radio,
             required: true,
@@ -38,7 +38,7 @@
             %input{type: :checkbox, "ng-model" => "Checkout.default_ship_address"}
             = t :checkout_default_ship_address
 
-      .small-12.columns.medium-6.columns.large-6.columns
+      .small-12.columns.medium-12.columns.large-6.columns
         #distributor_address.panel{"ng-show" => "Checkout.shippingMethod().description"}
           %span{ style: "white-space: pre-wrap;" }{{ Checkout.shippingMethod().description }}
           %br/

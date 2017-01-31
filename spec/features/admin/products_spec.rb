@@ -39,6 +39,7 @@ feature %q{
 
       click_button 'Create'
 
+      expect(current_path).to eq spree.bulk_edit_admin_products_path
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
@@ -56,22 +57,6 @@ feature %q{
       product.group_buy.should be_false
       product.master.option_values.map(&:name).should == ['5kg']
       product.master.options_text.should == "5kg"
-
-      # Distributors
-      visit spree.product_distributions_admin_product_path(product)
-
-      check @distributors[0].name
-      select2_select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
-      check @distributors[2].name
-      select2_select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
-
-      click_button 'Update'
-
-      product.reload
-      product.distributors.should match_array [@distributors[0], @distributors[2]]
-
-
-      product.product_distributions.map { |pd| pd.enterprise_fee }.should match_array [@enterprise_fees[0], @enterprise_fees[2]]
     end
 
     scenario "making a product into a group buy product" do
@@ -185,7 +170,7 @@ feature %q{
 
     scenario "deleting product properties", js: true do
       # Given a product with a property
-      p = create(:simple_product, supplier: @supplier)
+      p = create(:simple_product, supplier: @supplier2)
       p.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
@@ -195,11 +180,12 @@ feature %q{
 
       # And I delete the property
       page.all('a.remove_fields').first.click
-      wait_until { p.reload.property('fooprop').nil? }
+      click_button 'Update'
 
       # Then the property should have been deleted
       page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
       page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval'
+      expect(p.reload.property('fooprop')).to be_nil
     end
 
 

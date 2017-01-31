@@ -62,28 +62,17 @@ describe "CustomersCtrl", ->
       as = scope.findByCode('b')
       expect(as).toDeepEqual []
 
-    describe "scope.add", ->
-      it "creates a new customer", ->
-        email = "customer@example.org"
-        newCustomer = {id: 6, email: email}
-        customers.unshift(newCustomer)
-        http.expectPOST('/admin/customers.json?email=' + email + '&enterprise_id=3').respond 200, newCustomer
-        scope.add(email)
-        http.flush()
-        expect(scope.customers).toDeepEqual customers
-
     describe "scope.deleteCustomer", ->
       beforeEach ->
         spyOn(window, 'confirm').and.returnValue(true)
 
       it "deletes a customer", ->
-        expect(scope.customers.length).toBe 2
+        expect(scope.customers.length).toBe 1
         customer = scope.customers[0]
         http.expectDELETE('/admin/customers/' + customer.id + '.json').respond 200
         scope.deleteCustomer(customer)
         http.flush()
-        expect(scope.customers.length).toBe 1
-        expect(scope.customers[0]).not.toDeepEqual customer
+        expect(scope.customers.length).toBe 0
 
     describe "scope.findTags", ->
       tags = [

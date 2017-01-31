@@ -1,5 +1,5 @@
 .filter-shopfront.taxon-selectors.text-right
-  %single-line-selectors{ selectors: "taxonSelectors", objects: "Products.products | products:query | properties: activeProperties | taxonsOf", "active-selectors" => "activeTaxons"}
+  %single-line-selectors{ selectors: "taxonSelectors", objects: "Products.products | products:query | properties:activeProperties | taxonsOf", "active-selectors" => "activeTaxons"}
 
 .filter-shopfront.property-selectors.text-right
   %single-line-selectors{ selectors: "propertySelectors", objects: "Products.products | products:query | taxons:activeTaxons | propertiesOf", "active-selectors" => "activeProperties"}

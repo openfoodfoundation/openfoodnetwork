@@ -35,7 +35,7 @@ Spree::Order.class_eval do
       order.payment_required?
     }
     go_to_state :confirm, :if => lambda { |order| order.confirmation_required? }
-    go_to_state :complete, :if => lambda { |order| (order.payment_required? && order.has_unprocessed_payments?) || !order.payment_required? }
+    go_to_state :complete
     remove_transition :from => :delivery, :to => :confirm
   end
 

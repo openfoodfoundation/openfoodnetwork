@@ -1,8 +1,13 @@
+require 'spree/core/controller_helpers/respond_with_decorator'
 require 'open_food_network/tag_rule_applicator'
 
 class BaseController < ApplicationController
   include Spree::Core::ControllerHelpers
+  include Spree::Core::ControllerHelpers::Auth
+  include Spree::Core::ControllerHelpers::Common
+  include Spree::Core::ControllerHelpers::Order
   include Spree::Core::ControllerHelpers::RespondWith
+
   include EnterprisesHelper
   include OrderCyclesHelper
 

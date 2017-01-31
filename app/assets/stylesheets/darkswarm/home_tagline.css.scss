@@ -1,0 +1,47 @@
+@import "branding";
+@import "mixins";
+@import "variables";
+
+// Styling for brand intro / tagline on homepage
+
+#tagline {
+  width: 100%;
+
+  &:before {
+    content: "";
+
+    @include fullbg;
+
+    background-color: $ofn-grey;
+    background-image: url("/assets/home/home.jpg");
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+  }
+
+  h1 {
+    margin-top: 2rem;
+
+    @media all and (min-width: 768px) {
+      margin-top: 10rem;
+    }
+
+    img {
+      max-width: 45%;
+
+      @media all and (min-height: 500px) {
+        max-width: 80%;
+      }
+
+      margin-bottom: 2rem;
+
+      @media all and (min-width: 768px) {
+        margin-bottom: 5rem;
+      }
+    }
+  }
+}

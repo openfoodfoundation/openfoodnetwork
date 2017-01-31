@@ -1,0 +1,40 @@
+#ie-warning {
+  margin-bottom: 0;
+  padding-bottom: 2rem;
+
+  .ie-msg {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+
+  .browserbtn {
+    text-align: center;
+    margin-bottom: 1rem;
+
+    a {
+      color: white;
+      font-size: 1rem;
+      filter: alpha(opacity = 70);
+      opacity: 0.7;
+
+      &:hover, &:active, &:focus {
+        filter: alpha(opacity = 100);
+        opacity: 1;
+      }
+    }
+
+    a.browserlogo {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  i {
+    font-size: 5rem;
+    color: white;
+    text-align: center;
+    display: block;
+  }
+}
