@@ -14,6 +14,7 @@ angular.module("admin.utils").directive "variantAutocomplete", ($timeout) ->
         element.select2
           placeholder: "Select a variant"
           minimumInputLength: 3
+          quietMillis: 300
           ajax:
             url: Spree.routes.variants_search
             datatype: "json"
