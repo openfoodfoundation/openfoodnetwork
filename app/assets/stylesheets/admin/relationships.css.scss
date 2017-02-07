@@ -1,0 +1,31 @@
+// TODO: Provide -moz- and -o- directives
+@-webkit-keyframes alert-flash {
+  0% {
+    background-color: #f9f1ae;
+  }
+
+  100% {
+    background-color: #fff;
+  }
+}
+
+table#enterprise-relationships, table#enterprise-roles {
+  ul {
+    list-style-type: none;
+  }
+
+  th.actions, td.actions {
+    width: 16%;
+
+    .errors {
+      color: #f00;
+    }
+  }
+
+  tr.ng-enter {
+    -webkit-animation-name: alert-flash;
+    -webkit-animation-duration: 1200ms;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+}

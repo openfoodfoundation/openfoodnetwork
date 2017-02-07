@@ -169,6 +169,8 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
+
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
 

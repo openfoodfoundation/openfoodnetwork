@@ -1,0 +1,106 @@
+@import "branding";
+@import "mixins";
+
+.orders {
+  @include sidepaddingSm;
+
+  @include panepadding;
+
+  padding-top: 10px;
+
+  h3 {
+    padding-top: 2em;
+  }
+
+  a {
+    color: $clr-brick;
+
+    &:hover, &:active, &:focus {
+      color: $clr-brick-med-bright;
+    }
+  }
+
+  img {
+    display: block;
+    width: 80px;
+    height: auto;
+  }
+
+  i.ofn-i_059-producer, i.ofn-i_060-producer-reversed {
+    font-size: 3rem;
+    display: inline-block;
+    margin-right: 0.25rem;
+    float: left;
+    color: $clr-turquoise;
+  }
+
+  .credit {
+    color: green;
+  }
+
+  .debit {
+    color: $clr-brick;
+  }
+
+  .invalid {
+    color: $ofn-grey;
+
+    .credit {
+      color: $ofn-grey;
+    }
+
+    .debit {
+      color: $ofn-grey;
+    }
+  }
+
+  .distributor-balance.paid {
+    visibility: hidden;
+  }
+
+  .transaction-group {}
+
+  table {
+    border-radius: 0.5em 0.5em 0 0;
+
+    tr:nth-of-type(even) {
+      background: transparent;
+    }
+
+    tbody.odd {
+      tr {
+        background-color: #f9f9f9;
+        border: none;
+      }
+    }
+  }
+
+  // Column widths for order table
+  .order1 {
+    width: 20%;
+  }
+
+  .order2 {
+    width: 20%;
+  }
+
+  .order3 {
+    width: 20%;
+  }
+
+  .order4 {
+    width: 10%;
+  }
+
+  .order5 {
+    width: 10%;
+  }
+
+  .order6 {
+    width: 10%;
+  }
+
+  .order7 {
+    width: 10%;
+  }
+}

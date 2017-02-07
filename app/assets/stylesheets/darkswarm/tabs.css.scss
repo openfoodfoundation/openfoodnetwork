@@ -1,0 +1,161 @@
+@import "typography";
+@import "mixins";
+@import "branding";
+
+// Foundation overrides
+#tabs .tabs-content > .content p {
+  max-width: 100% !important;
+}
+
+.tabs-content > .content {
+  padding-top: 0 !important;
+}
+
+// Tabs styling
+
+#tabs {
+  background: url("/assets/gray_jean.png") top left repeat;
+
+  @include box-shadow(inset 0 2px 3px 0 rgba(0, 0, 0, 0.15));
+
+  display: block;
+  color: $dark-grey;
+
+  .header {
+    text-align: center;
+    text-transform: uppercase;
+    color: $dark-grey;
+    border-bottom: 1px solid $disabled-dark;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  .panel {
+    border-color: $clr-brick-bright;
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  dl dd {
+    text-align: center;
+
+    @media all and (max-width: 640px) {
+      text-align: left;
+    }
+
+    a {
+      @include headingFont;
+
+      background: transparent;
+      text-transform: uppercase;
+      line-height: 1;
+      font-size: 0.875em;
+      text-shadow: 0 -1px 1px #ffffff;
+      padding: 1em;
+      border: none;
+
+      &:hover, &:focus, &:active {
+        color: $clr-brick-bright;
+      }
+
+      &, &:hover {
+        background: none;
+      }
+
+      @media all and (max-width: 640px) {
+        padding: 0.35em 0 0.65em 0;
+        text-shadow: none;
+      }
+    }
+  }
+
+  // inactive nav link
+  dl {
+    dd {
+      border-top: 4px solid transparent;
+
+      a:after {
+        padding-left: 8px;
+        content: "";
+        visibility: hidden;
+
+        @include icon-font;
+
+        @media all and (max-width: 640px) {
+          content: "";
+        }
+      }
+    }
+
+    dd:hover {
+      a:after {
+        visibility: visible;
+      }
+    }
+  }
+
+  // active nav link
+
+  dl {
+    dd.active {
+      border-top: 4px solid $clr-brick;
+
+      @media all and (max-width: 640px) {
+        border-top: 4px solid transparent;
+        background-color: $clr-brick;
+      }
+
+      a {
+        color: $clr-brick;
+
+        @media all and (max-width: 640px) {
+          color: white;
+        }
+      }
+
+      a:after {
+        content: "";
+        visibility: visible;
+
+        @include icon-font;
+
+        @media all and (max-width: 640px) {
+          content: "";
+        }
+      }
+    }
+  }
+
+  // content revealed in accordion
+
+  .tabs-content {
+    margin-bottom: 0;
+
+    & > .content {
+      background: none;
+      border: none;
+
+      img {
+        margin: 0px 0px 0px 40px;
+      }
+
+      p {
+        max-width: 555px;
+
+        @media all and (max-width: 768px) {
+          height: auto !important;
+        }
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: none;
+      }
+
+      .panel {
+        padding-bottom: 1.25em;
+      }
+    }
+  }
+}
