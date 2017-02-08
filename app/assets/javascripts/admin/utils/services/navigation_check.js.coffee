@@ -10,7 +10,6 @@ angular.module("admin.utils")
 
         $rootScope.$on "$locationChangeStart", @locationChangeStartHandler
 
-
       # Action for regular browser navigation.
       onBeforeUnloadHandler: ($event) =>
         message = @getMessage()
@@ -21,12 +20,16 @@ angular.module("admin.utils")
 
       # Action for angular navigation.
       locationChangeStartHandler: ($event) =>
-        message = @getMessage()
-        if message and not $window.confirm(message)
+        if not @confirmLeave()
           $event.stopPropagation() if $event.stopPropagation
           $event.preventDefault() if $event.preventDefault
           $event.cancelBubble = true
           $event.returnValue = false
+
+      # Check if leaving is okay
+      confirmLeave: =>
+        message = @getMessage()
+        !message or $window.confirm(message)
 
       # Runs callback functions to retreive most recently added non-empty message.
       getMessage: ->

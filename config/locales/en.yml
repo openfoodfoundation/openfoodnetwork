@@ -117,6 +117,9 @@ en:
     has_one_rule: "has one rule"
     has_n_rules: "has %{num} rules"
 
+    unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
+    unsaved_changes: "You have unsaved changes"
+
     customers:
       index:
         add_customer: "Add Customer"
