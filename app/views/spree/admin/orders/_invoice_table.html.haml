@@ -9,8 +9,9 @@
         %h5= @order.has_taxes_included ? t(:invoice_column_unit_price_with_taxes) : t(:invoice_column_unit_price_without_taxes)
       %th{:align => "right", :width => "15%"}
         %h5= @order.has_taxes_included ? t(:invoice_column_price_with_taxes) : t(:invoice_column_price_without_taxes)
-      %th{:align => "right", :width => "15%"}
-        %h5= @order.total_tax > 0 ? t(:invoice_column_tax_rate) : ""
+      - if @order.total_tax > 0
+        %th{:align => "right", :width => "15%"}
+          %h5= t(:invoice_column_tax_rate)
   %tbody
     - @order.line_items.sort_by{ |li| li.product.name }.each do |item|
       %tr
@@ -22,8 +23,9 @@
           = item.single_display_amount_with_adjustments
         %td{:align => "right"}
           = item.display_amount_with_adjustments
-        %td{:align => "right"}
-          = display_line_item_tax_rates(item)
+        - if @order.total_tax > 0
+          %td{:align => "right"}
+            = display_line_item_tax_rates(item)
     - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
       %tr
         %td
