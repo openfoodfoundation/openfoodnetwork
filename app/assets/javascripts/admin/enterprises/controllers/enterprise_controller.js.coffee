@@ -11,7 +11,7 @@ angular.module("admin.enterprises")
     $scope.StatusMessage = StatusMessage
 
     $scope.$watch 'enterprise_form.$dirty', (newValue) ->
-      StatusMessage.display 'notice', 'You have unsaved changes' if newValue
+      StatusMessage.display 'notice', t('admin.unsaved_changes') if newValue
 
     $scope.setFormDirty = ->
       $scope.$apply ->
@@ -24,13 +24,12 @@ angular.module("admin.enterprises")
       $scope.navClear()
       enterprise_form.submit()
 
-
     # Provide a callback for generating warning messages displayed before leaving the page. This is passed in
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
     # and on all new uses of this contoller, and we might not want that.
     enterpriseNavCallback = ->
-      if $scope.Enterprise.$dirty
-        "Your changes to the enterprise are not saved yet."
+      if $scope.enterprise_form.$dirty
+        t('admin.unsaved_confirm_leave')
 
     # Register the NavigationCheck callback
     NavigationCheck.register(enterpriseNavCallback)

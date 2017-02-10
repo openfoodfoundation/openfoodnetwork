@@ -32,6 +32,12 @@ module EnterprisesHelper
     Enterprise.managed_by(spree_current_user)
   end
 
+  def editable_enterprises
+    OpenFoodNetwork::Permissions.new(spree_current_user).
+      editable_enterprises.
+      order('is_primary_producer ASC, name')
+  end
+
   def enterprises_options enterprises
     enterprises.map { |enterprise| [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city, enterprise.id.to_i] }
   end

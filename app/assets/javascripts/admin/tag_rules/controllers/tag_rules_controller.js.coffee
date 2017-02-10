@@ -38,7 +38,6 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, $fil
         newRule.peferred_exchange_tags = []
         newRule.preferred_matched_order_cycles_visibility = "visible"
     tagGroup.rules.push(newRule)
-    $scope.enterprise_form.$setDirty()
     $scope.updateRuleCounts()
 
   $scope.addNewTag = ->
@@ -58,3 +57,4 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, $fil
         .success ->
           tagGroup.rules.splice(index, 1)
           $scope.updateRuleCounts()
+          $scope.enterprise_form.$setDirty()
