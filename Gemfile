@@ -63,6 +63,7 @@ gem 'wkhtmltopdf-binary'
 
 gem 'foreigner'
 gem 'immigrant'
+gem 'roo', '~> 2.7.0'
 
 gem 'whenever', require: false
 
