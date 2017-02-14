@@ -114,6 +114,10 @@ Openfoodnetwork::Application.routes.draw do
 
     get '/inventory', to: 'variant_overrides#index'
 
+    get '/product_import', to: 'product_import#index'
+    post '/product_import', to: 'product_import#import'
+    post '/product_import/save', to: 'product_import#save', as: 'product_import_save'
+
     resources :variant_overrides do
       post :bulk_update, on: :collection
       post :bulk_reset, on: :collection
@@ -235,7 +239,6 @@ Spree::Core::Engine.routes.prepend do
 
   namespace :admin do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
-
     get '/search/customers' => 'search#customers', :as => :search_customers
 
     resources :products do

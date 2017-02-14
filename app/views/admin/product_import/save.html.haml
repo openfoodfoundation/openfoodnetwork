@@ -1,0 +1,24 @@
+- content_for :page_title do
+  Product Import
+
+= render :partial => 'spree/admin/shared/product_sub_menu'
+
+%h5 Import results
+%br
+
+%p{style: 'font-size: 1.15em'}
+  Products created:
+  = @importer.products_created
+%p{style: 'font-size: 1.15em'}
+  Products updated:
+  = @importer.products_updated
+
+- if @importer.errors.full_messages && !@importer.errors.full_messages.blank?
+  %br
+  %h6 Errors
+  - @importer.errors.full_messages.each do |error|
+    %p{class: "red"}
+      &nbsp;-&nbsp; #{error}
+
+%br
+  %a.button{href: main_app.admin_product_import_path} Back
