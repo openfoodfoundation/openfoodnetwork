@@ -1,0 +1,4 @@
+/ insert_bottom "[data-hook='admin_product_sub_tabs']"
+
+-# Commenting out for now, until product import is finished
+-# = tab :product_import, label: "Import", url: main_app.admin_product_import_path, match_path: '/product_import'
