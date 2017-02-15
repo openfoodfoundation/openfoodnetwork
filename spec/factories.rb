@@ -319,10 +319,6 @@ end
 
 
 FactoryGirl.modify do
-  factory :base_product do
-    unit_value 1
-    unit_description ''
-  end
   factory :product do
     primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
   end
@@ -336,12 +332,15 @@ FactoryGirl.modify do
     primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
     on_hand 3
 
+    unit_value 1
+    unit_description ''
+
     variant_unit 'weight'
     variant_unit_scale 1
     variant_unit_name ''
   end
 
-  factory :base_variant do
+  factory :variant do
     unit_value 1
     unit_description ''
   end

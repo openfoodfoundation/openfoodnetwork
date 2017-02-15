@@ -39,6 +39,7 @@ feature %q{
 
       click_button 'Create'
 
+      expect(current_path).to eq spree.bulk_edit_admin_products_path
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
@@ -56,22 +57,33 @@ feature %q{
       product.group_buy.should be_false
       product.master.option_values.map(&:name).should == ['5kg']
       product.master.options_text.should == "5kg"
+    end
 
-      # Distributors
-      visit spree.product_distributions_admin_product_path(product)
+    scenario "creating an on-demand product", js: true do
+      login_to_admin_section
 
-      check @distributors[0].name
-      select2_select @enterprise_fees[0].name, :from => 'product_product_distributions_attributes_0_enterprise_fee_id'
-      check @distributors[2].name
-      select2_select @enterprise_fees[2].name, :from => 'product_product_distributions_attributes_2_enterprise_fee_id'
+      click_link 'Products'
+      click_link 'New Product'
 
-      click_button 'Update'
+      fill_in 'product_name', with: 'Hot Cakes'
+      select 'New supplier', from: 'product_supplier_id'
+      select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value_with_description', with: 1
+      select taxon.name, from: "product_primary_taxon_id"
+      fill_in 'product_price', with: '1.99'
+      fill_in 'product_on_hand', with: 0
+      check 'product_on_demand'
+      select 'Test Tax Category', from: 'product_tax_category_id'
+      select 'Test Shipping Category', from: 'product_shipping_category_id'
+      fill_in 'product_description', with: "In demand, and on_demand! The hottest cakes in town."
 
-      product.reload
-      product.distributors.should match_array [@distributors[0], @distributors[2]]
+      click_button 'Create'
 
-
-      product.product_distributions.map { |pd| pd.enterprise_fee }.should match_array [@enterprise_fees[0], @enterprise_fees[2]]
+      expect(current_path).to eq spree.bulk_edit_admin_products_path
+      product = Spree::Product.find_by_name('Hot Cakes')
+      product.variants.count.should == 1
+      variant = product.variants.first
+      variant.on_demand.should be_true
     end
 
     scenario "making a product into a group buy product" do
@@ -185,7 +197,7 @@ feature %q{
 
     scenario "deleting product properties", js: true do
       # Given a product with a property
-      p = create(:simple_product, supplier: @supplier)
+      p = create(:simple_product, supplier: @supplier2)
       p.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
@@ -195,11 +207,12 @@ feature %q{
 
       # And I delete the property
       page.all('a.remove_fields').first.click
-      wait_until { p.reload.property('fooprop').nil? }
+      click_button 'Update'
 
       # Then the property should have been deleted
       page.should_not have_field 'product_product_properties_attributes_0_property_name', with: 'fooprop'
       page.should_not have_field 'product_product_properties_attributes_0_value', with: 'fooval'
+      expect(p.reload.property('fooprop')).to be_nil
     end
 
 

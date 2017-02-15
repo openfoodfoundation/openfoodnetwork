@@ -6,6 +6,7 @@
 //
 
 //= require jquery
+//= require jquery-migrate-min
 //= require jquery_ujs
 //= require jquery-ui
 //= require shared/jquery-ui-timepicker-addon
@@ -36,6 +37,7 @@
 //= require ./order_cycles/order_cycles
 //= require ./payment_methods/payment_methods
 //= require ./products/products
+//= require ./resources/resources
 //= require ./shipping_methods/shipping_methods
 //= require ./side_menu/side_menu
 //= require ./tag_rules/tag_rules

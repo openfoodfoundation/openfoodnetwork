@@ -68,6 +68,7 @@ angular.module('admin.orderCycles')
     $scope.removeCoordinatorFee = ($event, index) ->
       $event.preventDefault()
       OrderCycle.removeCoordinatorFee(index)
+      $scope.order_cycle_form.$dirty = true
 
     $scope.addExchangeFee = ($event, exchange) ->
       $event.preventDefault()
@@ -76,6 +77,7 @@ angular.module('admin.orderCycles')
     $scope.removeExchangeFee = ($event, exchange, index) ->
       $event.preventDefault()
       OrderCycle.removeExchangeFee(exchange, index)
+      $scope.order_cycle_form.$dirty = true
 
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)

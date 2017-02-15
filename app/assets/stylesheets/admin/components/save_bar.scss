@@ -1,0 +1,19 @@
+#save-bar {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  bottom: 0px;
+  left: 0;
+  padding: 8px 8px;
+  font-weight: bold;
+  background-color: #eff5fc;
+  color: #5498da;
+
+  h5 {
+    color: #5498da;
+  }
+
+  input {
+    margin-right: 5px;
+  }
+}

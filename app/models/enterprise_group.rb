@@ -58,14 +58,14 @@ class EnterpriseGroup < ActiveRecord::Base
   }
 
   def set_unused_address_fields
-    address.firstname = address.lastname = 'unused' if address.present?
+    address.firstname = address.lastname = 'unused'
   end
 
   def set_undefined_address_fields
-    return unless address.present?
     address.phone.present? || address.phone = 'undefined'
     address.address1.present? || address.address1 = 'undefined'
     address.city.present? || address.city = 'undefined'
+    address.state.present? || address.state = address.country.states.first
     address.zipcode.present? || address.zipcode = 'undefined'
   end
 

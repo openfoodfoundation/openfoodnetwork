@@ -16,6 +16,7 @@ class EnterpriseFee < ActiveRecord::Base
 
   calculated_adjustments
 
+
   attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :inherits_tax_category
 
   FEE_TYPES = %w(packing transport admin sales fundraising)

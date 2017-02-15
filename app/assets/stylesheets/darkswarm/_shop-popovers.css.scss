@@ -1,0 +1,152 @@
+@import "mixins";
+@import "branding";
+
+// .darkswarm
+//   product
+
+ordercycle {
+  .joyride-tip-guide {
+    background-color: $clr-brick;
+
+    .joyride-nub.right {
+      border-color: $clr-brick !important;
+      border-top-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+    }
+
+    p {
+      margin: 0;
+      font-weight: 700;
+    }
+  }
+}
+
+// Pop over
+// Foundation overrides
+.joyride-tip-guide.price_breakdown {
+  // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
+  background-color: #999;
+  color: #1f1f1f;
+  margin-left: -8px;
+
+  @include box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.7));
+
+  .joyride-content-wrapper {
+    padding: 1.125rem 1.25rem 1.5rem;
+    padding: 1rem;
+    margin: 1%;
+    width: 98%;
+    background-color: white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #1f1f1f;
+  }
+
+  .joyride-nub.right {
+    top: 38px;
+    border-color: #999 !important;
+    border-top-color: transparent !important;
+    border-right-color: transparent !important;
+    border-bottom-color: transparent !important;
+  }
+
+  .progress {
+    background-color: #13bf85;
+    padding: 0;
+    border: none;
+    color: white;
+    font-size: 0.75rem;
+    font-style: oblique;
+    line-height: 1;
+    height: auto;
+
+    .right {
+      padding: 0.5rem 0.25rem 0 0;
+    }
+
+    .meter {
+      background-color: #0b8c61;
+      padding: 0.5rem 0.25rem;
+      border-right: 1px solid #539f92;
+    }
+  }
+
+  .expanded {
+    ul, li {
+      list-style: none;
+      margin: 0;
+      font-size: 0.875rem;
+    }
+
+    li {
+      background-color: #13bf85;
+      padding: 0 0.25rem;
+      margin-bottom: 2px;
+      color: white;
+    }
+
+    li.cost {
+      background-color: #0b8c61;
+    }
+
+    li:last-child {
+      margin-bottom: 0.75rem;
+    }
+  }
+}
+
+button.graph-button {
+  // z-index: 9999999
+  border: 1px solid transparent;
+  padding: 0;
+  margin: 0;
+  display: inline;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 4px;
+
+  @include box-shadow(none);
+
+  @include border-radius(999rem);
+
+  &:before {
+    @include icon-font;
+
+    content: "";
+    color: #999;
+  }
+
+  &:focus {
+    border: 1px solid #e0e0e0;
+    background-color: rgba(255, 255, 255, 1);
+
+    &:before {
+      color: #666;
+    }
+  }
+
+  &:hover, &:active {
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid transparent;
+
+    &:before {
+      color: $clr-brick-bright;
+    }
+  }
+
+  @media all and (max-width: 768px) {
+    // Hide for small
+    display: none;
+  }
+}
+
+button.graph-button.open {
+  border: 1px solid transparent;
+  background-color: $clr-brick-bright;
+
+  &:before {
+    content: "";
+    color: white;
+  }
+}

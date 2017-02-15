@@ -1,5 +1,5 @@
 class DistributionChangeValidator
-  
+
   def initialize order
     @order = order
   end
@@ -29,7 +29,7 @@ class DistributionChangeValidator
   end
 
   def available_distributors_for(product)
-    distributors = Enterprise.distributing_product(product)
+    distributors = Enterprise.distributing_products(product)
 
     if @order.andand.line_items.present?
       distributors = available_distributors(distributors)

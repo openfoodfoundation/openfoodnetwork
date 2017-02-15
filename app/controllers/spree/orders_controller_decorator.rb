@@ -40,7 +40,6 @@ Spree::OrdersController.class_eval do
 
     if @order.update_attributes(params[:order])
       @order.line_items = @order.line_items.select {|li| li.quantity > 0 }
-      @order.restart_checkout_flow
 
       render :edit and return unless apply_coupon_code
 

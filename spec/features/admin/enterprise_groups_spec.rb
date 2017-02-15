@@ -105,6 +105,17 @@ feature %q{
   end
 
   context "as an enterprise user" do
+    let(:user) { create_enterprise_user }
+    let!(:enterprise) { create(:distributor_enterprise, owner: user) }
+    let!(:group) { create(:enterprise_group, name: 'My Group', owner: user) }
+
+    it "lets me access enterprise groups" do
+      quick_login_as user
+      visit spree.admin_path
+      click_link 'Groups'
+      expect(page).to have_content 'My Group'
+    end
+
     xit "should show me only enterprises I manage when creating a new enterprise group"
   end
 end

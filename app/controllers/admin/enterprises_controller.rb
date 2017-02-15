@@ -2,6 +2,10 @@ require 'open_food_network/referer_parser'
 
 module Admin
   class EnterprisesController < ResourceController
+    # These need to run before #load_resource so that @object is initialised with sanitised values
+    prepend_before_filter :override_owner, only: :create
+    prepend_before_filter :override_sells, only: :create
+
     before_filter :load_enterprise_set, :only => :index
     before_filter :load_countries, :except => [:index, :register, :check_permalink]
     before_filter :load_methods_and_fees, :only => [:edit, :update]
@@ -9,8 +13,6 @@ module Admin
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
-    before_filter :override_owner, only: :create
-    before_filter :override_sells, only: :create
     before_filter :check_can_change_owner, only: :update
     before_filter :check_can_change_bulk_owner, only: :bulk_update
     before_filter :check_can_change_managers, only: :update
@@ -115,8 +117,8 @@ module Admin
 
     def build_resource_with_address
       enterprise = build_resource_without_address
-      enterprise.address = Spree::Address.new
-      enterprise.address.country = Spree::Country.find_by_id(Spree::Config[:default_country_id])
+      enterprise.address ||= Spree::Address.new
+      enterprise.address.country ||= Spree::Country.find_by_id(Spree::Config[:default_country_id])
       enterprise
     end
     alias_method_chain :build_resource, :address
@@ -269,9 +271,10 @@ module Admin
     # Overriding method on Spree's resource controller
     def location_after_save
       referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
-      refered_from_edit = referer_path =~ /\/edit$/
-      if params[:enterprise].key?(:producer_properties_attributes) && !refered_from_edit
-        main_app.admin_enterprises_path
+      refered_from_producer_properties = referer_path =~ /\/producer_properties$/
+
+      if refered_from_producer_properties
+        main_app.admin_enterprise_producer_properties_path(@enterprise)
       else
         main_app.edit_admin_enterprise_path(@enterprise)
       end

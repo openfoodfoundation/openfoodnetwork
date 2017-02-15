@@ -18,6 +18,6 @@
             = t :producers_filter
           = t :producers_filter_property
         .filter-shopfront.property-selectors
-          %single-line-selectors{ selectors: "filterSelectors", objects: "producers_to_filter | searchEnterprises:query | propertiesOf", "active-selectors" => "activeProperties"}
+          %filter-selector{ "selector-set" => "filterSelectors", objects: "producers_to_filter | searchEnterprises:query | taxons:activeTaxons | propertiesOf:'supplied_properties'", "active-selectors" => "activeProperties"}
 
     = render partial: 'shared/components/filter_box'

@@ -1,8 +1,7 @@
 = render 'spree/admin/shared/configuration_menu'
 
 - content_for :page_title do
-  Content
-
+  = t('.title')
 
 = form_tag main_app.admin_content_path, method: :put, multipart: true do
   #preferences

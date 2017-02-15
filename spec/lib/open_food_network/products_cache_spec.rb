@@ -89,6 +89,26 @@ module OpenFoodNetwork
       end
     end
 
+    describe "when a product is deleted" do
+      let(:product) { create(:simple_product) }
+      let(:variant) { create(:variant, product: product) }
+      let(:distributor) { create(:distributor_enterprise) }
+      let!(:oc) { create(:open_order_cycle, distributors: [distributor], variants: [variant]) }
+
+      it "refreshes the cache based on exchanges the variant was in before destruction" do
+        expect(ProductsCache).to receive(:refresh_cache).with(distributor, oc)
+        product.delete
+      end
+
+      it "performs the cache refresh after the product has been removed from the order cycle" do
+        expect(ProductsCache).to receive(:refresh_cache).with(distributor, oc) do
+          expect(product.reload.deleted_at).not_to be_nil
+        end
+
+        product.delete
+      end
+    end
+
     describe "when a variant override changes" do
       let(:variant) { create(:variant) }
       let(:d1) { create(:distributor_enterprise) }
