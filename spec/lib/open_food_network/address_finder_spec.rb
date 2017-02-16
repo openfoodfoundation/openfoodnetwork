@@ -87,9 +87,12 @@ module OpenFoodNetwork
       let(:distributor) { create(:distributor_enterprise) }
       let(:address) { create(:address) }
       let(:order) { create(:completed_order_with_totals, user: nil, email: email, distributor: distributor) }
+      let(:finder) { AddressFinder.new(email) }
 
-      context "when an email has not been provided" do
-        let(:finder) { AddressFinder.new(nil) }
+      context "when searching by email is not allowed" do
+        before do
+          allow(finder).to receive(:allow_search_by_email?) { false }
+        end
 
         context "and an order with a bill address exists" do
           before do
@@ -102,8 +105,10 @@ module OpenFoodNetwork
         end
       end
 
-      context "when an email has been provided" do
-        let(:finder) { AddressFinder.new(email) }
+      context "when searching by email is allowed" do
+        before do
+          allow(finder).to receive(:allow_search_by_email?) { true }
+        end
 
         context "and an order with a bill address exists" do
           before { order.update_attribute(:bill_address_id, address.id) }
@@ -135,9 +140,12 @@ module OpenFoodNetwork
       let!(:pickup) { create(:shipping_method, require_ship_address: false, distributors: [distributor]) }
       let!(:delivery) { create(:shipping_method, require_ship_address: true, distributors: [distributor]) }
       let(:order) { create(:completed_order_with_totals, user: nil, email: email, distributor: distributor) }
+      let(:finder) { AddressFinder.new(email) }
 
-      context "when an email has not been provided" do
-        let(:finder) { AddressFinder.new(nil) }
+      context "when searching by email is not allowed" do
+        before do
+          allow(finder).to receive(:allow_search_by_email?) { false }
+        end
 
         context "and an order with a required ship address exists" do
           before do
@@ -151,8 +159,10 @@ module OpenFoodNetwork
         end
       end
 
-      context "when an email has been provided" do
-        let(:finder) { AddressFinder.new(email) }
+      context "when searching by email is allowed" do
+        before do
+          allow(finder).to receive(:allow_search_by_email?) { true }
+        end
 
         context "and an order with a ship address exists" do
           before { order.update_attribute(:ship_address_id, address.id) }
@@ -186,6 +196,63 @@ module OpenFoodNetwork
           it "returns nil" do
             expect(finder.send(:last_used_ship_address)).to eq nil
           end
+        end
+      end
+    end
+
+    describe "allow_search_by_email?" do
+      let(:finder) { AddressFinder.new }
+      context "when an email address has been provided" do
+        before{ allow(finder).to receive(:email) { "email@email.com" } }
+
+        context "when a customer has been provided" do
+          let(:customer) { double(:customer) }
+          before{ allow(finder).to receive(:customer) { customer } }
+
+          context "when the customer email matches the raw email" do
+            before{ allow(customer).to receive(:email) {"email@email.com"} }
+            it "returns true" do
+              expect(finder.send(:allow_search_by_email?)).to be true
+            end
+          end
+
+          context "when the customer email does not match the raw email" do
+            before{ allow(customer).to receive(:email) {"nah@email.com"} }
+            it "returns false" do
+              expect(finder.send(:allow_search_by_email?)).to be false
+            end
+          end
+        end
+
+        context "when a user has been provided" do
+          let(:user) { double(:user) }
+          before{ allow(finder).to receive(:user) { user } }
+
+          context "when the user email matches the raw email" do
+            before{ allow(user).to receive(:email) {"email@email.com"} }
+            it "returns true" do
+              expect(finder.send(:allow_search_by_email?)).to be true
+            end
+          end
+
+          context "when the user email does not match the raw email" do
+            before{ allow(user).to receive(:email) {"nah@email.com"} }
+            it "returns false" do
+              expect(finder.send(:allow_search_by_email?)).to be false
+            end
+          end
+        end
+
+        context "when neither a customer nor a user has been provided" do
+          it "returns false" do
+            expect(finder.send(:allow_search_by_email?)).to be false
+          end
+        end
+      end
+
+      context "when an email address is not provided" do
+        it "returns false" do
+          expect(finder.send(:allow_search_by_email?)).to be false
         end
       end
     end
