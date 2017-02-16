@@ -55,17 +55,28 @@ module OpenFoodNetwork
     end
 
     def last_used_bill_address
-      return nil unless email
+      return nil unless allow_search_by_email?
       Spree::Order.joins(:bill_address).order('id DESC')
       .complete.where(email: email)
       .first.andand.bill_address
     end
 
     def last_used_ship_address
-      return nil unless email
+      return nil unless allow_search_by_email?
       Spree::Order.complete.joins(:ship_address, :shipping_method).order('id DESC')
       .where(email: email, spree_shipping_methods: { require_ship_address: true })
       .first.andand.ship_address
+    end
+
+    # Only allow search for address by email if a customer or user with the
+    # same address has been provided, otherwise we are providing access to
+    # addresses with only an email address, which could be problematic.
+    # Assumption: front-end users can't ask this library for an address using
+    # a customer or user other than themselves...
+    def allow_search_by_email?
+      return false unless email.present? && (user.present? || customer.present?)
+      return false unless email == customer.andand.email || email == user.andand.email
+      return true
     end
   end
 end
