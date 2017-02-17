@@ -21,7 +21,7 @@ module Admin
       options
     )
 
-    def get_stripe_token(code, options={scope: 'read_write'})
+    def get_stripe_token(code, options={})
       StripeHelper.client.auth_code.get_token(code, options)
     end
 
@@ -29,7 +29,7 @@ module Admin
       options = options.merge({enterprise_id: enterprise_id})
       jwt = jwt_encode options
       # State param will be passed back after auth
-      StripeHelper.client.auth_code.authorize_url(state: jwt)
+      StripeHelper.client.auth_code.authorize_url(state: jwt, scope: 'read_write')
     end
 
     def deauthorize_stripe(account_id)

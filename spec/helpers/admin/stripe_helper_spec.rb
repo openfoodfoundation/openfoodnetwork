@@ -6,13 +6,14 @@ describe Admin::StripeHelper do
   let!(:stripe_account) { create(:stripe_account, enterprise: enterprise) }
 
   it "calls the Stripe API to get a token" do
-    expect(Admin::StripeHelper.client.auth_code).to receive(:get_token).with("abc",{scope: "read_write"})
+    expect(Admin::StripeHelper.client.auth_code).to receive(:get_token).with("abc", {})
     helper.get_stripe_token("abc")
   end
 
-  it "calls the Stripe API for authorization, passing appropriate JWT in the state param" do
+  it "calls the Stripe API for authorization with read_write permission, passing appropriate JWT in the state param" do
     expect(Admin::StripeHelper.client.auth_code).to receive(:authorize_url).with({
-      state: JWT.encode({enterprise_id: "enterprise-permalink"}, Openfoodnetwork::Application.config.secret_token, 'HS256')
+      state: JWT.encode({enterprise_id: "enterprise-permalink"}, Openfoodnetwork::Application.config.secret_token, 'HS256'),
+      scope: "read_write"
     })
     helper.authorize_stripe("enterprise-permalink")
   end
@@ -47,6 +48,5 @@ describe Admin::StripeHelper do
     it "encodes and decodes JWT" do
       jwt_decode(jwt_encode({test: "string"})).should eq({"test" => "string"})
     end
-
   end
 end
