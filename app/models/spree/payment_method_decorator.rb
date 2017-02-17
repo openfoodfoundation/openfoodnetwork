@@ -55,6 +55,8 @@ Spree::PaymentMethod.class_eval do
       "MasterCard Internet Gateway Service (MIGS)"
     when "Spree::Gateway::Pin"
       "Pin Payments"
+    when "Spree::Gateway::StripeConnect"
+      "Stripe"
     when "Spree::Gateway::PayPalExpress"
       "PayPal Express"
     else
