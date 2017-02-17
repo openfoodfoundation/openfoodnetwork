@@ -71,6 +71,7 @@ module Openfoodnetwork
     initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
       app.config.spree.payment_methods << Spree::Gateway::Migs
       app.config.spree.payment_methods << Spree::Gateway::Pin
+      app.config.spree.payment_methods << Spree::Gateway::StripeConnect
     end
 
     # Settings in config/environments/* take precedence over those specified here.
