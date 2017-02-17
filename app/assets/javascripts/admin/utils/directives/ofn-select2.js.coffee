@@ -1,4 +1,4 @@
-angular.module("admin.indexUtils").directive "ofnSelect2", ($sanitize, $timeout, $filter) ->
+angular.module("admin.utils").directive "ofnSelect2", ($sanitize, $timeout, $filter) ->
   require: 'ngModel'
   restrict: 'C'
   scope:
