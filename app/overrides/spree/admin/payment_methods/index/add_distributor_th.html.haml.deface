@@ -1,4 +1,4 @@
 / insert_after "[data-hook='admin_payment_methods_index_headers'] th:first-child"
 
 %th
-  Distributors
+  = t(:products_distributor)
