@@ -1,0 +1,7 @@
+/ replace '[data-hook="add_button"]'
+.two.columns.actions.omega{"data-hook" => "add-button"}
+  = link_to_with_icon 'icon-plus', t(:add), admin_order_line_items_url(@order) + '?distributor_id={{distributor_id}}'.html_safe,
+            :method => :post,
+            :id => 'add_line_item_to_order',
+            :class => 'button fullwidth',
+            'data-update' => 'order-form-wrapper'

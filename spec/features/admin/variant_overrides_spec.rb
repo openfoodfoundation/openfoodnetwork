@@ -324,7 +324,7 @@ feature %q{
       before do
         dist = order_cycle.distributors.first
         login_to_admin_section
-        visit 'admin/orders/new'
+        visit spree.new_admin_order_path 
         select2_select dist.name, from: 'order_distributor_id'
         page.should have_select2 'order_order_cycle_id', with_options: ['Overidden (open)']
         select2_select order_cycle.name, from: 'order_order_cycle_id'
