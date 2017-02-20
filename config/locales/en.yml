@@ -647,6 +647,7 @@ en:
     producer_properties:
       index:
         title: Producer Properties
+
     shared:
       user_guide_link:
         user_guide: User Guide
@@ -2041,6 +2042,19 @@ Please follow the instructions there to make your enterprise visible on the Open
             one: "You have one active order cycle."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+      payment_methods:
+        stripe_connect:
+          enterprise_select_placeholder: Choose...
+          loading_account_information_msg: Loading account information from stripe, please wait...
+          request_failed_msg: Sorry. Something went wrong when trying to verify account details with Stripe...
+          account_missing_msg: No Stripe account exists for this enterprise.
+          connect_one: Connect One
+          access_revoked_msg: Access to this Stripe account has been revoked, please reconnect your account.
+          status: Status
+          connected: Connected
+          account_id: Account ID
+          business_name: Business Name
+          charges_enabled: Charges Enabled
       products:
         bulk_edit:
           header:

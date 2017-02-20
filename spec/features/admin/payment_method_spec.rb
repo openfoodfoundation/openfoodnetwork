@@ -29,6 +29,41 @@ feature %q{
       payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
       payment_method.distributors.should == [@distributors[0]]
     end
+
+    context "using stripe connect" do
+      let(:user) { create(:user, enterprise_limit: 5) }
+      let!(:connected_enterprise) { create(:distributor_enterprise, name: "Connected", owner: user) }
+      let!(:revoked_account_enterprise) { create(:distributor_enterprise, name: "Revoked", owner: user) }
+      let!(:missing_account_enterprise) { create(:distributor_enterprise, name: "Missing", owner: user) }
+      let!(:valid_stripe_account) { create(:stripe_account, enterprise: connected_enterprise, stripe_user_id: "acc_connected123") }
+      let!(:disconnected_stripe_account) { create(:stripe_account, enterprise: revoked_account_enterprise, stripe_user_id: "acc_revoked123") }
+      let!(:stripe_account_mock) { { id: "acc_connected123", business_name: "My Org", charges_enabled: true } }
+
+      before do
+        Stripe.api_key = "sk_test_12345"
+        stub_request(:get, "https://api.stripe.com/v1/accounts/acc_connected123").to_return(body: JSON.generate(stripe_account_mock))
+        stub_request(:get, "https://api.stripe.com/v1/accounts/acc_revoked123").to_return(status: 404)
+      end
+
+      it "communicates the status of the stripe connection to the user" do
+        login_as user
+        visit spree.new_admin_payment_method_path
+
+        select2_select "Stripe", from: "payment_method_type"
+
+        select2_select "Missing", from: "payment_method_preferred_enterprise_id"
+        expect(page).to have_selector "#stripe-account-status .alert-box.error", text: I18n.t("spree.admin.payment_methods.stripe_connect.account_missing_msg")
+
+        select2_select "Revoked", from: "payment_method_preferred_enterprise_id"
+        expect(page).to have_selector "#stripe-account-status .alert-box.error", text: I18n.t("spree.admin.payment_methods.stripe_connect.access_revoked_msg")
+
+        select2_select "Connected", from: "payment_method_preferred_enterprise_id"
+        expect(page).to have_selector "#stripe-account-status .status", text: "Status: Connected"
+        expect(page).to have_selector "#stripe-account-status .account_id", text: "Account ID: acc_connected123"
+        expect(page).to have_selector "#stripe-account-status .business_name", text: "Business Name: My Org"
+        expect(page).to have_selector "#stripe-account-status .charges_enabled", text: "Charges Enabled: Yes"
+      end
+    end
   end
 
   scenario "updating a payment method", js: true do
