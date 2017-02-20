@@ -1,0 +1,80 @@
+@import "../../darkswarm/mixins";
+
+.alert-box {
+  position: relative;
+  display: block;
+  background-color: #eff5dc;
+  border: 1px solid #9fc820;
+  color: #666;
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+  @include border-radius(3px);
+
+  transition: opacity 300ms ease-out;
+  padding: 0.77778em 1.33333em 0.77778em 0.77778em;
+
+  a.close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 1.5em;
+  }
+
+  &.ok {
+    border: 1px solid #9fc820;
+    background-color: #fbffee;
+    color: #9fc820;
+    font-weight: bold;
+
+    a.button {
+      padding: 3px 10px;
+      background-color: #a7c44d;
+      &:hover {
+        background-color: #9fc820;
+      }
+    }
+
+    a.close {
+      color: #9fc820;
+    }
+  }
+
+  &.error {
+    border: 1px solid #c82020;
+    background-color: #f5dcdc;
+    color: #c82020;
+    font-weight: bold;
+
+    a.button {
+      padding: 3px 10px;
+      background-color: #c85252;
+      &:hover {
+        background-color: #c82020;
+      }
+    }
+
+    a.close {
+      color: #c82020;
+    }
+  }
+
+  &.warning {
+    border: 1px solid #e6912e;
+    background-color: #fff4e6;
+    color: #e6912e;
+    font-weight: bold;
+
+    a.button {
+      padding: 3px 10px;
+      background-color: #db9350;
+      &:hover {
+        background-color: #e6912e;
+      }
+    }
+
+    a.close {
+      color: #e6912e;
+    }
+  }
+}

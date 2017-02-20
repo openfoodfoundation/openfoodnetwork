@@ -1,7 +1,7 @@
 / replace "div[data-hook='admin_payment_method_form_fields']"
 
 = admin_inject_payment_method
-= admin_inject_json_ams_array "admin.paymentMethods", "shops", @hubs, Api::Admin::IdNameSerializer
+= admin_inject_json_ams_array "admin.paymentMethods", "shops", @hubs, Api::Admin::BasicEnterpriseSerializer
 %div.alpha.eleven.columns{ "ng-app" => "admin.paymentMethods", "ng-controller" => "paymentMethodCtrl" }
   .row
     .alpha.three.columns
