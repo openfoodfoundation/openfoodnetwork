@@ -58,7 +58,7 @@ Spree::LineItem.class_eval do
   end
 
   def tax_rates
-    product.tax_category.tax_rates
+    product.tax_category.andand.tax_rates || []
   end
 
   def price_with_adjustments

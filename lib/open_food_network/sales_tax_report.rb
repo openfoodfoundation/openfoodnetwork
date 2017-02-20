@@ -65,13 +65,10 @@ module OpenFoodNetwork
     private
 
     def relevant_rates
-      queries = [ search.result.joins(:line_items => {:adjustments => :tax_rate}).select('spree_tax_rates.*').uniq,
-                  search.result.joins(:adjustments => :tax_rate).select('spree_tax_rates.*').uniq ]
-      queries.map do |query|
-        ActiveRecord::Base.connection.select_all(query)
-      end.sum.map do |tax_rate|
-        Spree::TaxRate.new(tax_rate, without_protection: true)
-      end
+      return @relevant_rates unless @relevant_rates.nil?
+      item_rate_ids = search.result.joins(:line_items => {:adjustments => :tax_rate}).select('spree_tax_rates.id').uniq
+      order_rate_ids = search.result.joins(:adjustments => :tax_rate).select('spree_tax_rates.id').uniq
+      @relevant_rates = Spree::TaxRate.where(id: item_rate_ids | order_rate_ids)
     end
 
     def totals_of(line_items)
