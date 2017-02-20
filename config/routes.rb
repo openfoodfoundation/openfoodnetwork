@@ -98,7 +98,8 @@ Openfoodnetwork::Application.routes.draw do
       end
 
       get "/stripe_connect", to: "enterprises#stripe_connect"
-      resources :stripe_accounts
+      get "/stripe_account", to: "stripe_accounts#status"
+      resources :stripe_accounts, only: [:destroy]
 
       member do
         get :welcome

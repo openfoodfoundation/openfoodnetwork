@@ -96,7 +96,7 @@ class AbilityDecorator
     can [:welcome, :register], Enterprise do |enterprise|
       enterprise.owner == user
     end
-    can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
+    can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees, :stripe_account], Enterprise do |enterprise|
       user.enterprises.include? enterprise
     end
 
