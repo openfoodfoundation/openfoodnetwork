@@ -32,6 +32,9 @@ table#listing_products.bulk {
   clear: both;
 
   colgroup col {
+    &.image {
+      width: 1%;
+    }
     &.producer {
       width: 18%;
     }
@@ -58,6 +61,19 @@ table#listing_products.bulk {
     }
     &.actions {
       width: 3%;
+    }
+  }
+
+  td.image {
+    padding: 10px;
+    img {
+      border: 1px solid transparent;
+    }
+    img:hover {
+      opacity: 0.8;
+      cursor: pointer;
+      background-color: #fbfbfb;
+      border: 1px solid #e4e4e4;
     }
   }
 

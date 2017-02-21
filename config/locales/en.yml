@@ -269,6 +269,7 @@ en:
     phone: Phone
     price: Price
     producer: Producer
+    image: Image
     product: Product
     quantity: Quantity
     schedule: Schedule
