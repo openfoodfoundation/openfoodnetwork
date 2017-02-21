@@ -1,0 +1,4 @@
+= render "spree/checkout/payment/gateway", payment_method: payment_method
+
+:javascript
+  Stripe.setPublishableKey("#{ENV['STRIPE_INSTANCE_PUBLISHABLE_KEY']}")
