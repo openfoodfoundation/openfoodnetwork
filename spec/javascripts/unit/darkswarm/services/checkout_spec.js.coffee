@@ -15,6 +15,11 @@ describe 'Checkout service', ->
       id: 123
       test: "bar"
       method_type: "check"
+    },
+    {
+      id: 666
+      test: "qux"
+      method_type: "stripe"
     }]
   shippingMethods = [
     {
@@ -46,6 +51,7 @@ describe 'Checkout service', ->
       $provide.value "currentOrder", orderData
       $provide.value "shippingMethods", shippingMethods
       $provide.value "paymentMethods", paymentMethods
+      $provide.value "StripeInstancePublishableKey", "instance_publishable_key"
       null
 
     inject ($injector, _$httpBackend_, $rootScope)->
@@ -83,31 +89,41 @@ describe 'Checkout service', ->
     Checkout.order.payment_method_id = 99
     expect(Checkout.paymentMethod()).toEqual paymentMethods[0]
 
-  it "Posts the Checkout to the server", ->
-    $httpBackend.expectPUT("/checkout", {order: Checkout.preprocess()}).respond 200, {path: "test"}
-    Checkout.submit()
-    $httpBackend.flush()
-
-  describe "when there is an error", ->
-    it "redirects when a redirect is given", ->
-      $httpBackend.expectPUT("/checkout").respond 400, {path: 'path'}
+  describe "submitting", ->
+    it "Posts the Checkout to the server", ->
+      $httpBackend.expectPUT("/checkout", {order: Checkout.preprocess()}).respond 200, {path: "test"}
       Checkout.submit()
       $httpBackend.flush()
-      expect(Navigation.go).toHaveBeenCalledWith 'path'
 
-    it "sends flash messages to the flash service", ->
-      spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
-      $httpBackend.expectPUT("/checkout").respond 400, {flash: {error: "frogs"}}
-      Checkout.submit()
+    describe "when there is an error", ->
+      it "redirects when a redirect is given", ->
+        $httpBackend.expectPUT("/checkout").respond 400, {path: 'path'}
+        Checkout.submit()
+        $httpBackend.flush()
+        expect(Navigation.go).toHaveBeenCalledWith 'path'
 
-      $httpBackend.flush()
-      expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith {error: "frogs"}
+      it "sends flash messages to the flash service", ->
+        spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
+        $httpBackend.expectPUT("/checkout").respond 400, {flash: {error: "frogs"}}
+        Checkout.submit()
 
-    it "puts errors into the scope", ->
-      $httpBackend.expectPUT("/checkout").respond 400, {errors: {error: "frogs"}}
-      Checkout.submit()
-      $httpBackend.flush()
-      expect(Checkout.errors).toEqual {error: "frogs"}
+        $httpBackend.flush()
+        expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith {error: "frogs"}
+
+      it "puts errors into the scope", ->
+        $httpBackend.expectPUT("/checkout").respond 400, {errors: {error: "frogs"}}
+        Checkout.submit()
+        $httpBackend.flush()
+        expect(Checkout.errors).toEqual {error: "frogs"}
+
+    describe "when using the Stripe Connect gateway", ->
+      beforeEach inject ($injector, StripeJS) ->
+        Checkout.order.payment_method_id = 666
+
+      it "requests a Stripe token before submitting", inject (StripeJS) ->
+        spyOn(StripeJS, "requestToken")
+        Checkout.purchase()
+        expect(StripeJS.requestToken).toHaveBeenCalled()
 
   describe "data preprocessing", ->
     beforeEach ->
@@ -155,3 +171,23 @@ describe 'Checkout service', ->
       Checkout.order.payment_method_id = 123
       source_attributes = Checkout.preprocess().payments_attributes[0].source_attributes
       expect(source_attributes).not.toBeDefined()
+
+    describe "when the payment method is the Stripe Connect gateway", ->
+      beforeEach ->
+        Checkout.order.payment_method_id = 666
+        Checkout.secrets =
+          token: "stripe_token"
+          cc_type: "mastercard"
+          card:
+            last4: "1234"
+            exp_year: "2099"
+            exp_month: "10"
+
+      it "creates source attributes for the submitted card", ->
+        source_attributes = Checkout.preprocess().payments_attributes[0].source_attributes
+        expect(source_attributes).toBeDefined()
+        expect(source_attributes.gateway_payment_profile_id).toBe "stripe_token"
+        expect(source_attributes.cc_type).toBe "mastercard"
+        expect(source_attributes.last_digits).toBe "1234"
+        expect(source_attributes.year).toBe "2099"
+        expect(source_attributes.month).toBe "10"
