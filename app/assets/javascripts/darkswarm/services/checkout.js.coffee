@@ -1,10 +1,16 @@
-Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
+Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeJS, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
   new class Checkout
     errors: {}
     secrets: {}
     order: CurrentOrder.order
 
-    submit: ->
+    purchase: ->
+      if @paymentMethod()?.method_type == 'stripe'
+        StripeJS.requestToken(@secrets, @submit)
+      else
+        @submit()
+
+    submit: =>
       Loading.message = t 'submitting_order'
       $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
         Navigation.go data.path
@@ -51,6 +57,16 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
             verification_value: @secrets.card_verification_value
             first_name: @order.bill_address.firstname
             last_name: @order.bill_address.lastname
+        }
+
+      if @paymentMethod()?.method_type == 'stripe'
+        angular.extend munged_order.payments_attributes[0], {
+          source_attributes:
+            gateway_payment_profile_id: @secrets.token
+            cc_type: @secrets.cc_type
+            last_digits: @secrets.card.last4
+            month: @secrets.card.exp_month
+            year: @secrets.card.exp_year
         }
 
       munged_order
