@@ -49,7 +49,7 @@ feature %q{
     eg = EnterpriseGroup.last
     eg.name.should == 'EGEGEG'
     eg.description.should == 'This is a description'
-    eg.on_front_page.should be_true
+    eg.on_front_page.should be true
     eg.enterprises.should match_array [e1, e2]
   end
 
@@ -76,7 +76,7 @@ feature %q{
 
     eg = EnterpriseGroup.last
     eg.name.should == 'xyzzy'
-    eg.on_front_page.should be_false
+    eg.on_front_page.should be false
     eg.enterprises.should == [e2]
   end
 

@@ -27,7 +27,7 @@ module Spree
         t = create(:taxon)
         product = Product.new supplier_id: s.id, name: "Apples", price: 1, primary_taxon_id: t.id, variant_unit: "weight", variant_unit_scale: 1000, unit_value: 1
         product.on_hand = "10,000"
-        expect(product.save).to be_false
+        expect(product.save).to be false
 
         expect(product.errors[:count_on_hand]).to include "is not a number"
       end

@@ -177,7 +177,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         end
         it "shows ship address forms when 'same as billing address' is unchecked" do
           uncheck "Shipping address same as billing address?"
-          find("#ship_address > div.visible").visible?.should be_true
+          find("#ship_address > div.visible").visible?.should be true
         end
       end
 
