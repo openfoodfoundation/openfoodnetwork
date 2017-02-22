@@ -201,3 +201,4 @@ feature 'Shops', js: true do
     end
   end
 end
+
