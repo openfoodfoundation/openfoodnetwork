@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::BulkLineItemsController do
+describe Admin::BulkLineItemsController, type: :controller do
   include AuthenticationWorkflow
 
   describe '#index' do

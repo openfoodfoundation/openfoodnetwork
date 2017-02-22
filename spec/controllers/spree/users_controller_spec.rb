@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::UsersController do
+describe Spree::UsersController, type: :controller do
   include AuthenticationWorkflow
 
   describe "show" do

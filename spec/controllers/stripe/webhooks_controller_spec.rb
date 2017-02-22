@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Stripe::WebhooksController do
+describe Stripe::WebhooksController, type: :controller do
   describe "#create" do
     let(:params) do
       {

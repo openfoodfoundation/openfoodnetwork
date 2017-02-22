@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::LineItemsController do
+describe Spree::Admin::LineItemsController, type: :controller do
   include AuthenticationWorkflow
 
   describe "#create" do

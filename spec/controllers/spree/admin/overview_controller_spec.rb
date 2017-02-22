@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::OverviewController do
+describe Spree::Admin::OverviewController, type: :controller do
   include AuthenticationWorkflow
   context "loading overview" do
     let(:user) { create_enterprise_user(enterprise_limit: 2) }

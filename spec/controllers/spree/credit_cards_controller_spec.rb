@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'support/request/authentication_workflow'
 
-describe Spree::CreditCardsController do
+describe Spree::CreditCardsController, type: :controller do
   include AuthenticationWorkflow
   let(:user) { create_enterprise_user }
   let(:token) { "tok_234bd2c22" }

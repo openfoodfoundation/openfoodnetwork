@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GroupsController do
+describe GroupsController, type: :controller do
   render_views
   let(:enterprise) { create(:distributor_enterprise) }
   let!(:group) { create(:enterprise_group, enterprises: [enterprise], on_front_page: true) }

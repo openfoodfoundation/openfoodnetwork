@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
-describe UserRegistrationsController do
+describe UserRegistrationsController, type: :controller do
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]

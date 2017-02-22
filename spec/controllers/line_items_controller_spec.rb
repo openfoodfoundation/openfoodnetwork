@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe LineItemsController do
+describe LineItemsController, type: :controller do
   let(:user) { create(:user) }
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }
