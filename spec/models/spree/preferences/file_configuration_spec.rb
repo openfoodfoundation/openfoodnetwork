@@ -45,11 +45,11 @@ module Spree
 
       describe "respond_to?" do
         it "responds to preference getters" do
-          c.respond_to?(:name).should be_true
+          c.respond_to?(:name).should be true
         end
 
         it "responds to preference setters" do
-          c.respond_to?(:name=).should be_true
+          c.respond_to?(:name=).should be true
         end
       end
     end

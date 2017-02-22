@@ -52,18 +52,18 @@ module OpenFoodNetwork
         it "clears on_demand when the stock is overridden" do
           vo
           scoper.scope v
-          v.on_demand.should be_false
+          v.on_demand.should be false
         end
 
         it "does not clear on_demand when only the price is overridden" do
           vo_price_only
           scoper.scope v
-          v.on_demand.should be_true
+          v.on_demand.should be true
         end
 
         it "does not clear on_demand when there is no override" do
           scoper.scope v
-          v.on_demand.should be_true
+          v.on_demand.should be true
         end
       end
 
@@ -74,7 +74,7 @@ module OpenFoodNetwork
           context "with an on_demand set" do
             it "returns the overridden on_demand" do
               scoper.scope v
-              expect(v.on_demand).to be_false
+              expect(v.on_demand).to be false
             end
           end
 
@@ -84,7 +84,7 @@ module OpenFoodNetwork
             context "when count_on_hand is set" do
               it "returns false" do
                 scoper.scope v
-                expect(v.on_demand).to be_false
+                expect(v.on_demand).to be false
               end
             end
 
@@ -93,7 +93,7 @@ module OpenFoodNetwork
 
               it "returns the variant's on_demand" do
                 scoper.scope v
-                expect(v.on_demand).to be_true
+                expect(v.on_demand).to be true
               end
             end
           end
@@ -102,7 +102,7 @@ module OpenFoodNetwork
         context "when no override exists" do
           it "returns the variant's on_demand" do
             scoper.scope v
-            expect(v.on_demand).to be_true
+            expect(v.on_demand).to be true
           end
         end
       end

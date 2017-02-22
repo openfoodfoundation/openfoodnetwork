@@ -42,7 +42,7 @@ module OpenFoodNetwork
         v.stub(:product) { p }
         subject = OptionValueNamer.new v
 
-        expect(subject.send(:value_scaled?)).to be_true
+        expect(subject.send(:value_scaled?)).to be true
       end
 
       it "returns false otherwise" do
@@ -51,7 +51,7 @@ module OpenFoodNetwork
         v.stub(:product) { p }
         subject = OptionValueNamer.new v
 
-        expect(subject.send(:value_scaled?)).to be_false
+        expect(subject.send(:value_scaled?)).to be false
       end
     end
 
@@ -63,7 +63,7 @@ module OpenFoodNetwork
         p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
         v.stub(:product) { p }
         v.stub(:unit_value) { 100 }
-        
+
 
         expect(subject.send(:option_value_value_unit)).to eq [100, 'g']
       end

@@ -84,7 +84,7 @@ feature "Registration", js: true do
       expect(e.long_description).to eq "Long description"
       expect(e.abn).to eq '12345'
       expect(e.acn).to eq '54321'
-      expect(e.charges_sales_tax).to be_true
+      expect(e.charges_sales_tax).to be true
 
       # Images
       # Move from logo page
@@ -144,7 +144,7 @@ feature "Registration", js: true do
         visit registration_path
 
         click_button "Let's get started!"
-        find("div#progress-bar").visible?.should be_true
+        find("div#progress-bar").visible?.should be true
       end
     end
 
@@ -160,7 +160,7 @@ feature "Registration", js: true do
         perform_and_ensure(:check, "accept_terms", lambda { page.has_no_selector? "input.button.primary[disabled]" })
 
         click_button "Let's get started!"
-        find("div#progress-bar").visible?.should be_true
+        find("div#progress-bar").visible?.should be true
       end
     end
   end

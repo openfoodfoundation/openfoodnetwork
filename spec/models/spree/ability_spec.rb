@@ -21,10 +21,10 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_any
         end
 
-        it { subject.can_manage_products?(user).should be_true }
-        it { subject.can_manage_enterprises?(user).should be_true }
-        it { subject.can_manage_orders?(user).should be_true }
-        it { subject.can_manage_order_cycles?(user).should be_true }
+        it { subject.can_manage_products?(user).should be true }
+        it { subject.can_manage_enterprises?(user).should be true }
+        it { subject.can_manage_orders?(user).should be true }
+        it { subject.can_manage_order_cycles?(user).should be true }
       end
 
       context "as manager of an enterprise who sell 'own'" do
@@ -32,10 +32,10 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_own
         end
 
-        it { subject.can_manage_products?(user).should be_true }
-        it { subject.can_manage_enterprises?(user).should be_true }
-        it { subject.can_manage_orders?(user).should be_true }
-        it { subject.can_manage_order_cycles?(user).should be_true }
+        it { subject.can_manage_products?(user).should be true }
+        it { subject.can_manage_enterprises?(user).should be true }
+        it { subject.can_manage_orders?(user).should be true }
+        it { subject.can_manage_order_cycles?(user).should be true }
       end
 
       context "as manager of an enterprise who sells 'none'" do
@@ -43,10 +43,10 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_none
         end
 
-        it { subject.can_manage_products?(user).should be_false }
-        it { subject.can_manage_enterprises?(user).should be_true }
-        it { subject.can_manage_orders?(user).should be_false }
-        it { subject.can_manage_order_cycles?(user).should be_false }
+        it { subject.can_manage_products?(user).should be false }
+        it { subject.can_manage_enterprises?(user).should be true }
+        it { subject.can_manage_orders?(user).should be false }
+        it { subject.can_manage_order_cycles?(user).should be false }
       end
 
       context "as manager of a producer enterprise who sells 'any'" do
@@ -54,10 +54,10 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_any_producer
         end
 
-        it { subject.can_manage_products?(user).should be_true }
-        it { subject.can_manage_enterprises?(user).should be_true }
-        it { subject.can_manage_orders?(user).should be_true }
-        it { subject.can_manage_order_cycles?(user).should be_true }
+        it { subject.can_manage_products?(user).should be true }
+        it { subject.can_manage_enterprises?(user).should be true }
+        it { subject.can_manage_orders?(user).should be true }
+        it { subject.can_manage_order_cycles?(user).should be true }
       end
 
       context "as manager of a producer enterprise who sell 'own'" do
@@ -65,10 +65,10 @@ module Spree
           user.enterprise_roles.create! enterprise: enterprise_own_producer
         end
 
-        it { subject.can_manage_products?(user).should be_true }
-        it { subject.can_manage_enterprises?(user).should be_true }
-        it { subject.can_manage_orders?(user).should be_true }
-        it { subject.can_manage_order_cycles?(user).should be_true }
+        it { subject.can_manage_products?(user).should be true }
+        it { subject.can_manage_enterprises?(user).should be true }
+        it { subject.can_manage_orders?(user).should be true }
+        it { subject.can_manage_order_cycles?(user).should be true }
       end
 
       context "as manager of a producer enterprise who sells 'none'" do
@@ -83,10 +83,10 @@ module Spree
             enterprise_none_producer.save!
           end
 
-          it { subject.can_manage_products?(user).should be_true }
-          it { subject.can_manage_enterprises?(user).should be_true }
-          it { subject.can_manage_orders?(user).should be_false }
-          it { subject.can_manage_order_cycles?(user).should be_false }
+          it { subject.can_manage_products?(user).should be true }
+          it { subject.can_manage_enterprises?(user).should be true }
+          it { subject.can_manage_orders?(user).should be false }
+          it { subject.can_manage_order_cycles?(user).should be false }
         end
 
         context "as a profile" do
@@ -96,21 +96,21 @@ module Spree
             enterprise_none_producer.save!
           end
 
-          it { subject.can_manage_products?(user).should be_false }
-          it { subject.can_manage_enterprises?(user).should be_true }
-          it { subject.can_manage_orders?(user).should be_false }
-          it { subject.can_manage_order_cycles?(user).should be_false }
+          it { subject.can_manage_products?(user).should be false }
+          it { subject.can_manage_enterprises?(user).should be true }
+          it { subject.can_manage_orders?(user).should be false }
+          it { subject.can_manage_order_cycles?(user).should be false }
         end
       end
 
       context "as a new user with no enterprises" do
-        it { subject.can_manage_products?(user).should be_false }
-        it { subject.can_manage_enterprises?(user).should be_false }
-        it { subject.can_manage_orders?(user).should be_false }
-        it { subject.can_manage_order_cycles?(user).should be_false }
+        it { subject.can_manage_products?(user).should be false }
+        it { subject.can_manage_enterprises?(user).should be false }
+        it { subject.can_manage_orders?(user).should be false }
+        it { subject.can_manage_order_cycles?(user).should be false }
 
         it "can create enterprises straight off the bat" do
-          subject.is_new_user?(user).should be_true
+          subject.is_new_user?(user).should be true
           expect(user).to have_ability :create, for: Enterprise
         end
       end

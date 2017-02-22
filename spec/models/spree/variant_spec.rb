@@ -426,7 +426,7 @@ module Spree
 
           # Although invalid, this calls the before_validation callback, which would
           # error if not handling unit_value == nil case
-          v.update_attributes(unit_value: nil, unit_description: 'foo').should be_false
+          v.update_attributes(unit_value: nil, unit_description: 'foo').should be false
 
           v.reload.weight.should == 123
         end
@@ -533,7 +533,7 @@ module Spree
         expect(product.variants.length).to eq 2
         expect(extra_variant.delete).to eq extra_variant
         expect(product.variants(:reload).length).to eq 1
-        expect(first_variant.delete).to be_false
+        expect(first_variant.delete).to be false
         expect(product.variants(:reload).length).to eq 1
         expect(first_variant.errors[:product]).to include "must have at least one variant"
       end

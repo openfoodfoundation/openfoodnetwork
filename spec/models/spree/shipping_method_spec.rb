@@ -93,12 +93,12 @@ module Spree
     describe '#delivery?' do
       context 'when the shipping method requires an address' do
         let(:shipping_method) { build(:shipping_method, require_ship_address: true) }
-        it { expect(shipping_method.delivery?).to be_true }
+        it { expect(shipping_method.delivery?).to be true }
       end
 
       context 'when the shipping method does not require address' do
         let(:shipping_method) { build(:shipping_method, require_ship_address: false) }
-        it { expect(shipping_method.delivery?).to be_false }
+        it { expect(shipping_method.delivery?).to be false }
       end
     end
   end

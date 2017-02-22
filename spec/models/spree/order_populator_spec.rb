@@ -58,7 +58,7 @@ module Spree
         op.should_receive(:distribution_can_supply_products_in_cart).
           with(distributor, order_cycle).and_return(false)
 
-        op.populate(params).should be_false
+        op.populate(params).should be false
         op.errors.to_a.should == ["That distributor or order cycle can't supply all the products in your cart. Please choose another."]
       end
 
@@ -84,45 +84,45 @@ module Spree
 
       it "returns true when item is not in cart and a quantity is specified" do
         op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
-        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'}).should be_true
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'}).should be true
       end
 
       it "returns true when item is not in cart and a max_quantity is specified" do
         op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
-        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '0', max_quantity: '2'}).should be_true
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '0', max_quantity: '2'}).should be true
       end
 
       it "returns false when item is not in cart and no quantity or max_quantity are specified" do
         op.should_receive(:line_item_for_variant_id).with(variant.id).and_return(nil)
-        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '0'}).should be_false
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '0'}).should be false
       end
 
       it "returns true when quantity varies" do
         li = double(:line_item, quantity: 1, max_quantity: nil)
         op.stub(:line_item_for_variant_id) { li }
 
-        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'}).should be_true
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '2'}).should be true
       end
 
       it "returns true when max_quantity varies" do
         li = double(:line_item, quantity: 1, max_quantity: nil)
         op.stub(:line_item_for_variant_id) { li }
 
-        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '3'}).should be_true
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '3'}).should be true
       end
 
       it "returns false when max_quantity varies only in nil vs 0" do
         li = double(:line_item, quantity: 1, max_quantity: nil)
         op.stub(:line_item_for_variant_id) { li }
 
-        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1'}).should be_false
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1'}).should be false
       end
 
       it "returns false when both are specified and neither varies" do
         li = double(:line_item, quantity: 1, max_quantity: 2)
         op.stub(:line_item_for_variant_id) { li }
 
-        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '2'}).should be_false
+        op.send(:varies_from_cart, {variant_id: variant.id, quantity: '1', max_quantity: '2'}).should be false
       end
     end
 
@@ -242,7 +242,7 @@ module Spree
           dcv = double(:dcv)
           dcv.should_receive(:can_change_to_distribution?).with(distributor, order_cycle).and_return(true)
           DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
-          op.send(:distribution_can_supply_products_in_cart, distributor, order_cycle).should be_true
+          op.send(:distribution_can_supply_products_in_cart, distributor, order_cycle).should be true
         end
       end
 
@@ -251,17 +251,17 @@ module Spree
 
         it "returns false and errors when order cycle is not provided and is required" do
           op.stub(:order_cycle_required_for).and_return true
-          op.send(:check_order_cycle_provided_for, variant).should be_false
+          op.send(:check_order_cycle_provided_for, variant).should be false
           op.errors.to_a.should == ["Please choose an order cycle for this order."]
         end
         it "returns true when order cycle is provided" do
           op.stub(:order_cycle_required_for).and_return true
           op.instance_variable_set :@order_cycle,  double(:order_cycle)
-          op.send(:check_order_cycle_provided_for, variant).should be_true
+          op.send(:check_order_cycle_provided_for, variant).should be true
         end
         it "returns true when order cycle is not required" do
           op.stub(:order_cycle_required_for).and_return false
-          op.send(:check_order_cycle_provided_for, variant).should be_true
+          op.send(:check_order_cycle_provided_for, variant).should be true
         end
       end
 
@@ -274,7 +274,7 @@ module Spree
           dcv.should_receive(:variants_available_for_distribution).with(123, 234).and_return([variant])
           DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
           op.instance_eval { @distributor = 123; @order_cycle = 234 }
-          op.send(:check_variant_available_under_distribution, variant).should be_true
+          op.send(:check_variant_available_under_distribution, variant).should be true
           op.errors.should be_empty
         end
 
@@ -283,7 +283,7 @@ module Spree
           dcv.should_receive(:variants_available_for_distribution).with(123, 234).and_return([])
           DistributionChangeValidator.should_receive(:new).with(order).and_return(dcv)
           op.instance_eval { @distributor = 123; @order_cycle = 234 }
-          op.send(:check_variant_available_under_distribution, variant).should be_false
+          op.send(:check_variant_available_under_distribution, variant).should be false
           op.errors.to_a.should == ["That product is not available from the chosen distributor or order cycle."]
         end
       end
@@ -295,13 +295,13 @@ module Spree
         it "requires an order cycle when the product has no product distributions" do
           product = double(:product, product_distributions: [])
           variant = double(:variant, product: product)
-          op.send(:order_cycle_required_for, variant).should be_true
+          op.send(:order_cycle_required_for, variant).should be true
         end
 
         it "does not require an order cycle when the product has product distributions" do
           product = double(:product, product_distributions: [1])
           variant = double(:variant, product: product)
-          op.send(:order_cycle_required_for, variant).should be_false
+          op.send(:order_cycle_required_for, variant).should be false
         end
       end
 
