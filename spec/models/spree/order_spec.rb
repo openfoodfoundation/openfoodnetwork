@@ -101,7 +101,7 @@ describe Spree::Order do
       order_cycle = double(:order_cycle, variants: [v])
       subject.stub(:order_cycle) { order_cycle }
 
-      subject.send(:provided_by_order_cycle?, line_item).should be_true
+      subject.send(:provided_by_order_cycle?, line_item).should be true
     end
 
     it "returns false otherwise" do
@@ -110,7 +110,7 @@ describe Spree::Order do
       order_cycle = double(:order_cycle, variants: [])
       subject.stub(:order_cycle) { order_cycle }
 
-      subject.send(:provided_by_order_cycle?, line_item).should be_false
+      subject.send(:provided_by_order_cycle?, line_item).should be false
     end
 
     it "returns false when there is no order cycle" do
@@ -118,7 +118,7 @@ describe Spree::Order do
       line_item = double(:line_item, variant: v)
       subject.stub(:order_cycle) { nil }
 
-      subject.send(:provided_by_order_cycle?, line_item).should be_false
+      subject.send(:provided_by_order_cycle?, line_item).should be false
     end
   end
 

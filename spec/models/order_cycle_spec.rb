@@ -294,7 +294,7 @@ describe OrderCycle do
         distributed_variants = [master, unassociated_variant]
 
         oc = OrderCycle.new
-        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_true
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be true
       end
 
       it "returns false when the product doesn't have variants" do
@@ -303,7 +303,7 @@ describe OrderCycle do
         distributed_variants = [master]
 
         oc = OrderCycle.new
-        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be false
       end
 
       it "returns false when the master isn't distributed" do
@@ -312,7 +312,7 @@ describe OrderCycle do
         distributed_variants = []
 
         oc = OrderCycle.new
-        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be false
       end
 
       it "returns false when the product has other variants distributed" do
@@ -322,7 +322,7 @@ describe OrderCycle do
         distributed_variants = [master, variant]
 
         oc = OrderCycle.new
-        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be_false
+        oc.send(:product_has_only_obsolete_master_in_distribution?, product, distributed_variants).should be false
       end
     end
   end
@@ -435,7 +435,7 @@ describe OrderCycle do
     occ.orders_open_at.should be_nil
     occ.orders_close_at.should be_nil
     occ.coordinator.should_not be_nil
-    occ.preferred_product_selection_from_coordinator_inventory_only.should be_true
+    occ.preferred_product_selection_from_coordinator_inventory_only.should be true
     occ.coordinator.should == oc.coordinator
 
     occ.coordinator_fee_ids.should_not be_empty
