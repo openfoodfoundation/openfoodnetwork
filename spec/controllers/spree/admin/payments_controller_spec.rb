@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::PaymentsController do
+describe Spree::Admin::PaymentsController, type: :controller do
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
   let!(:order) { create(:order, distributor: shop) }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::ProductsController do
+describe Spree::Admin::ProductsController, type: :controller do
   describe "updating a product we do not have access to" do
     let(:s_managed) { create(:enterprise) }
     let(:s_unmanaged) { create(:enterprise) }

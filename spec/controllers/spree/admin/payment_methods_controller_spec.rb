@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::PaymentMethodsController do
+describe Spree::Admin::PaymentMethodsController, type: :controller do
   describe "#update" do
     context "on a StripeConnect payment method" do
       let!(:user) { create(:user, enterprise_limit: 2) }

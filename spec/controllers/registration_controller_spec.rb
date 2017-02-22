@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RegistrationController do
+describe RegistrationController, type: :controller do
   include AuthenticationWorkflow
   describe "redirecting when user not logged in" do
     it "index" do

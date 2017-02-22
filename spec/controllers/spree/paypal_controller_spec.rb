@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe PaypalController do
+  describe PaypalController, type: :controller do
     context 'when cancelling' do
       it 'redirects back to checkout' do
         expect(spree_get(:cancel)).to redirect_to checkout_path

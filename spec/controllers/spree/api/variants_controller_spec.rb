@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::Api::VariantsController do
+  describe Spree::Api::VariantsController, type: :controller do
     render_views
 
     let(:supplier) { FactoryGirl.create(:supplier_enterprise) }

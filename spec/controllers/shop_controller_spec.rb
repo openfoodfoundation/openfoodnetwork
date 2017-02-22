@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ShopController do
+describe ShopController, type: :controller do
   let!(:pm) { create(:payment_method) }
   let!(:sm) { create(:shipping_method) }
   let(:distributor) { create(:distributor_enterprise, payment_methods: [pm], shipping_methods: [sm]) }

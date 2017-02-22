@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Admin
-  describe OrderCyclesController do
+  describe OrderCyclesController, type: :controller do
     include AuthenticationWorkflow
 
     let!(:distributor_owner) { create_enterprise_user enterprise_limit: 2 }

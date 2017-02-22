@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    describe VariantsController do
+    describe VariantsController, type: :controller do
       before { login_as_admin }
 
       describe "search action" do

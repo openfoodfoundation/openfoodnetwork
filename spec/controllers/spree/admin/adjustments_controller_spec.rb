@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Admin::AdjustmentsController do
+  describe Admin::AdjustmentsController, type: :controller do
     include AuthenticationWorkflow
 
     before { login_as_admin }
