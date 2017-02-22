@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ShopsController do
+describe ShopsController, type: :controller do
   render_views
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }

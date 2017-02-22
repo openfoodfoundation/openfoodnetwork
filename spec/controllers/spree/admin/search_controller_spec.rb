@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::SearchController do
+describe Spree::Admin::SearchController, type: :controller do
   include AuthenticationWorkflow
   context "Distributor Enterprise User" do
     let!(:owner) { create_enterprise_user( email: "test1@email.com" ) }

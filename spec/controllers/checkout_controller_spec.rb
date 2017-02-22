@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CheckoutController do
+describe CheckoutController, type: :controller do
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:order) { create(:order) }

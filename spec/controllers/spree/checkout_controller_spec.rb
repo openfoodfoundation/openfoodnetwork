@@ -3,7 +3,7 @@ require 'spree/api/testing_support/helpers'
 require 'support/request/authentication_workflow'
 
 
-describe Spree::CheckoutController do
+describe Spree::CheckoutController, type: :controller do
   include AuthenticationWorkflow
 
   context "After completing an order" do

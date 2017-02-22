@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::UserSessionsController do
+describe Spree::UserSessionsController, type: :controller do
   include AuthenticationWorkflow
 
   let(:user) { create_enterprise_user }

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Api
-  describe StatusesController do
+  describe StatusesController, type: :controller do
     render_views
 
     describe "job queue status" do

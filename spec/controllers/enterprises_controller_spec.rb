@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EnterprisesController do
+describe EnterprisesController, type: :controller do
   describe "shopping for a distributor" do
     let(:order) { controller.current_order(true) }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::BaseController do
+describe Spree::Admin::BaseController, type: :controller do
   controller(Spree::Admin::BaseController) do
     def index
       before_filter :unauthorized

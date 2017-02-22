@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::OrdersController do
+describe Spree::Admin::OrdersController, type: :controller do
   include AuthenticationWorkflow
 
   context "updating an order with line items" do

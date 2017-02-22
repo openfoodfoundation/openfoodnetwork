@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::ReportsController do
+describe Spree::Admin::ReportsController, type: :controller do
 
   # Given two distributors and two suppliers
   let(:ba) { create(:address) }

@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
 module Spree
-  describe Spree::Api::ProductsController do
+  describe Spree::Api::ProductsController, type: :controller do
     include Spree::Api::TestingSupport::Helpers
     render_views
 
