@@ -36,7 +36,6 @@ feature "Registration", js: true do
       select 'VIC', from: 'enterprise_state'
       click_and_ensure(:button, "Continue", lambda { page.has_content? 'Who is responsible for managing My Awesome Enterprise?' })
 
-
       # Filling in Contact Details
       fill_in 'enterprise_contact', with: 'Saskia Munroe'
       page.should have_field 'enterprise_email_address', with: user.email
@@ -53,7 +52,7 @@ feature "Registration", js: true do
       expect(e.sells).to eq "unspecified"
       expect(e.is_primary_producer).to eq true
       expect(e.contact).to eq "Saskia Munroe"
-
+      
       # Filling in about
       fill_in 'enterprise_description', with: 'Short description'
       fill_in 'enterprise_long_desc', with: 'Long description'
