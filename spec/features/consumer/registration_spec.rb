@@ -144,7 +144,7 @@ feature "Registration", js: true do
         visit registration_path
 
         click_button "Let's get started!"
-        find("div#progress-bar").visible?.should be true
+        expect(find("div#progress-bar")).to be_visible
       end
     end
 
@@ -160,7 +160,7 @@ feature "Registration", js: true do
         perform_and_ensure(:check, "accept_terms", lambda { page.has_no_selector? "input.button.primary[disabled]" })
 
         click_button "Let's get started!"
-        find("div#progress-bar").visible?.should be true
+        expect(find("div#progress-bar")).to be_visible
       end
     end
   end

@@ -16,7 +16,7 @@ module Spree
     private
 
     def product_selection_from_inventory_only_changed?
-      key =~ product_selection_from_inventory_only_regex
+      !!(key =~ product_selection_from_inventory_only_regex)
     end
 
     def enterprise
