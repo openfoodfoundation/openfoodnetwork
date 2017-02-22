@@ -20,8 +20,6 @@ module Admin
       ENV['STRIPE_INSTANCE_SECRET_KEY'],
       options
     )
-    # Stripe ruby bindings used for non-Connect functionality
-    Stripe.api_key = ENV['STRIPE_INSTANCE_SECRET_KEY']
 
     def get_stripe_token(code, options={scope: 'read_write'})
       StripeHelper.client.auth_code.get_token(code, options)
