@@ -66,6 +66,10 @@ module OpenFoodNetwork
       failure_message_for_should_not do |event_proc|
         @exception || "expected #{klass} to not be enqueued matching #{options.inspect}"
       end
+
+      def supports_block_expectations?
+        true
+      end
     end
   end
 end
