@@ -51,7 +51,6 @@
 //= require textAngular.min.js
 //= require i18n/translations
 //= require darkswarm/i18n.translate.js
-//
 //= require moment
 //= require moment/en-gb.js
 //= require moment/es.js
@@ -60,5 +59,7 @@
 //= require moment/nb.js
 //= require moment/pt-br.js
 //= require moment/sv.js
+//= require ../shared/mm-foundation-tpls-0.8.0.min.js
+//= require angularjs-file-upload
 
 //= require_tree .

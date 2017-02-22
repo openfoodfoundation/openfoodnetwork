@@ -286,6 +286,7 @@ Spree::Core::Engine.routes.prepend do
       get :managed, on: :collection
     end
 
+    post '/images/product/:product_id', to: 'images#update_product_image'
   end
 
   namespace :admin do
