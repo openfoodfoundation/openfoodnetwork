@@ -10,7 +10,7 @@ gem 'i18n-js', '~> 3.0.0'
 gem 'nokogiri', '>= 1.6.7.1'
 
 gem 'pg'
-gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6-adjustment-state-migration', ref: '48febb2'
+gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: '5a76d45'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch: 'spree-upgrade-intermediate'
 
@@ -20,6 +20,7 @@ gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch:
 gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "spree-upgrade-intermediate"
 #gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
 gem 'stripe', '~>1.51.0'
+gem 'activemerchant', '~> 1.71.0'
 
 gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
 gem 'jwt', '~> 1.5'
