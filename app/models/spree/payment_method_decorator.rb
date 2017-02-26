@@ -4,6 +4,7 @@ Spree::PaymentMethod.class_eval do
   acts_as_taggable
 
   has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
+  has_many :credit_cards, class_name: "Spree::CreditCard" # from future Spree version
 
   attr_accessible :distributor_ids, :tag_list
 
