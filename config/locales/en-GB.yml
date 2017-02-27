@@ -335,6 +335,8 @@ en-GB:
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
   ofn_cart_headline: "Current cart for:"
   ofn_cart_distributor: "Distributor:"
   ofn_cart_oc: "Order cycle:"

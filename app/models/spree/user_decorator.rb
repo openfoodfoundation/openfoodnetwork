@@ -11,6 +11,7 @@ Spree.user_class.class_eval do
   has_many :billable_periods, foreign_key: :owner_id, inverse_of: :owner
   has_one :cart
   has_many :customers
+  has_many :credit_cards
 
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 

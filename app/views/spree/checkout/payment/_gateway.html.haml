@@ -1,4 +1,11 @@
 .row
+  .small-12.columns
+    %label
+      = t :previously_used_credit_cards
+    %select{"ng-model" => "selected_card", "ng-options" => "card.id as card.formatted for card in savedCreditCards", name: "secrets.card_year", required: true}
+
+
+.row
   .small-6.columns
     %label
       = t :first_name
