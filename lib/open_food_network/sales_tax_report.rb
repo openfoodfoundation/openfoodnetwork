@@ -26,7 +26,7 @@ module OpenFoodNetwork
       else
         [I18n.t(:report_header_order_number),
          I18n.t(:report_header_total_excl_vat, currency_symbol: currency_symbol)] +
-        relevant_rates.map { |rate| "%s (%.1f%%) (%s)" % [rate.name, rate.amount.to_f * 100, currency_symbol] } +
+        relevant_rates.map { |rate| "%.1f%% (%s)" % [rate.to_f * 100, currency_symbol] } +
         [I18n.t(:report_header_total_tax, currency_symbol: currency_symbol),
          I18n.t(:report_header_total_incl_vat, currency_symbol: currency_symbol)]
       end
@@ -66,9 +66,7 @@ module OpenFoodNetwork
 
     def relevant_rates
       return @relevant_rates unless @relevant_rates.nil?
-      item_rate_ids = search.result.joins(:line_items => {:adjustments => :tax_rate}).select('spree_tax_rates.id').uniq
-      order_rate_ids = search.result.joins(:adjustments => :tax_rate).select('spree_tax_rates.id').uniq
-      @relevant_rates = Spree::TaxRate.where(id: item_rate_ids | order_rate_ids)
+      @relevant_rates = Spree::TaxRate.pluck(:amount).uniq
     end
 
     def totals_of(line_items)
