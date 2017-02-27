@@ -860,6 +860,8 @@ en:
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
