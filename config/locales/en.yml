@@ -1406,3 +1406,11 @@ Please follow the instructions there to make your enterprise visible on the Open
       resumed: resumed
       returned: returned
       skrill: skrill
+    users:
+      show:
+        my_addresses: 'My Addresses'
+        billing_address: 'Billing Address'
+        shipping_address: 'Shipping Address'
+      edit_address:
+        edit_billing_address: 'Edit Billing Address'
+        edit_shipping_address: 'Edit Shipping Address'

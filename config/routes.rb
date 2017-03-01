@@ -48,6 +48,9 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  get '/account/edit_address', to: 'spree/users#edit_address'
+  put '/account/update_address', to: 'spree/users#update_address'
+
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
@@ -257,5 +260,4 @@ Spree::Core::Engine.routes.prepend do
     get :clear, :on => :collection
     get :order_cycle_expired, :on => :collection
   end
-
 end

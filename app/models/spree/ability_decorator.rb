@@ -11,6 +11,7 @@ class AbilityDecorator
     add_order_cycle_management_abilities user if can_manage_order_cycles? user
     add_order_management_abilities user if can_manage_orders? user
     add_relationship_management_abilities user if can_manage_relationships? user
+    add_user_addresses_abilities
   end
 
   # New users have no enterprises.
@@ -232,6 +233,10 @@ class AbilityDecorator
     can [:destroy], EnterpriseRelationship do |enterprise_relationship|
       user.enterprises.include? enterprise_relationship.parent
     end
+  end
+
+  def add_user_addresses_abilities
+    can [:edit_address, :update_address], Spree.user_class
   end
 end
 

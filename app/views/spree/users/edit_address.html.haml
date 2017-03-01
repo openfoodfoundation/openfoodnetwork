@@ -1,0 +1,15 @@
+.darkswarm
+  .row
+    = render partial: 'spree/shared/error_messages', locals: { target: @user }
+  .row
+    = form_for Spree::User.new, as: @user, url: main_app.account_update_address_path, method: :put do |f|
+      .small-12.medium-6.columns
+        %h3.text-center= t('.edit_billing_address')
+        = render partial: 'spree/users/address_form', locals: { f: f, address_type: :bill_address }
+
+      .small-12.medium-6.columns
+        %h3.text-center= t('.edit_shipping_address')
+        = render partial: 'spree/users/address_form', locals: { f: f, address_type: :ship_address }
+
+      .medium-12.columns.text-center
+        = f.submit t(:update), class: 'button primary'
