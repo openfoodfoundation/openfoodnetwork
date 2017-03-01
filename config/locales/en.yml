@@ -1406,3 +1406,5 @@ Please follow the instructions there to make your enterprise visible on the Open
       resumed: resumed
       returned: returned
       skrill: skrill
+  current_version: "Current Version"
+  version_not_found: " Version not found"
