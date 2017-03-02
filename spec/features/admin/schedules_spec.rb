@@ -41,6 +41,9 @@ feature 'Schedules', js: true do
           click_button "Create Schedule"
         end
 
+        save_bar = find("#save-bar")
+        expect(save_bar).to have_content "Created schedule: 'Fortnightly'"
+
         within ".order-cycle-#{oc1.id} td.schedules" do
           expect(page).to have_selector "a", text: "Weekly"
           expect(page).to have_selector "a", text: "Fortnightly"
@@ -74,6 +77,9 @@ feature 'Schedules', js: true do
           click_button "Update Schedule"
         end
 
+        save_bar = find("#save-bar")
+        expect(save_bar).to have_content "Updated schedule: 'Weekly'"
+
         within ".order-cycle-#{oc1.id} td.schedules" do
           expect(page).to have_selector "a", text: "Weekly"
           expect(page).to have_selector "a", text: "Fortnightly"
@@ -102,6 +108,9 @@ feature 'Schedules', js: true do
         within "#schedule-dialog" do
           click_button "Delete Schedule"
         end
+
+        save_bar = find("#save-bar")
+        expect(save_bar).to have_content "Deleted schedule: 'Weekly'"
 
         within ".order-cycle-#{oc1.id} td.schedules" do
           expect(page).to have_no_selector "a", text: "Weekly"
