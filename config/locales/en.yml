@@ -2414,6 +2414,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       confirm: confirm
       delivery: delivery
       payment: payment
+      pending: pending
       resumed: resumed
       returned: returned
       skrill: skrill

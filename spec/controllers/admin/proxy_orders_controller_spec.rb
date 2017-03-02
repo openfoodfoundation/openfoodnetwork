@@ -109,7 +109,7 @@ describe Admin::ProxyOrdersController, type: :controller do
             it 'renders the resumed proxy_order as json' do
               spree_get :resume, params
               json_response = JSON.parse(response.body)
-              expect(json_response['state']).to eq "resumed"
+              expect(json_response['state']).to eq "cart"
               expect(json_response['id']).to eq proxy_order.id
               expect(proxy_order.reload.canceled_at).to be nil
             end
