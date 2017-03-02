@@ -72,7 +72,7 @@
         .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_city.$error.required' } }= t(:error_required)
         .error{ ng: { repeat: 'error in errors.ship_address.city', show: 'standing_order_address_form.ship_address_city.$pristine' } } {{ error }}
       .field
-        %label{ for: "ship_address_zipcode"}= t(:potcode)
+        %label{ for: "ship_address_zipcode"}= t(:postcode)
         %input.fullwidth#ship_address_zipcode{ name: 'ship_address_zipcode', type: 'text', required: true, ng: { model: "standingOrder.ship_address.zipcode" } }
         .error{ ng: { show: 'submitted && standing_order_address_form.ship_address_zipcode.$error.required' } }= t(:error_required)
         .error{ ng: { repeat: 'error in errors.ship_address.zipcode', show: 'standing_order_address_form.ship_address_zipcode.$pristine' } } {{ error }}
