@@ -5,7 +5,7 @@
   %td.schedules{ ng: { show: 'columns.schedules.visible' } }
     %span{ ng: { repeat: 'schedule in orderCycle.schedules'} }
       %a{ 'schedule-dialog' => true, 'schedule-id' => '{{schedule.id}}' }
-        {{ schedule.name }}
+        {{ schedule.name + ($last ? '' : ',') }}
     %span{ ng: { show: 'orderCycle.schedules.length == 0'}} None
   %td.orders_open_at{ ng: { show: 'columns.open.visible' } }
     %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at' }, datetimepicker: 'orderCycle.orders_open_at' }
