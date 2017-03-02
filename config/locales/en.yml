@@ -726,6 +726,9 @@ en:
         customer_instructions_placeholder: Pick-up or delivery notes
         products: Products
         fees: Fees
+      destroy_errors:
+        orders_present: That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.
+        schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
     producer_properties:
       index:
         title: Producer Properties
@@ -2099,7 +2102,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
-  order_cycles_no_permission_to_delete_error: "That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead."
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
