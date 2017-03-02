@@ -687,6 +687,9 @@ en:
         create_schedule: Create Schedule
         update_schedule: Update Schedule
         delete_schedule: Delete Schedule
+        created_schedule: Created schedule
+        updated_schedule: Updated schedule
+        deleted_schedule: Deleted schedule
         schedule_name_placeholder: Schedule Name
         name_required_error: Please enter a name for this schedule
         no_order_cycles_error: Please select at least one order cycle (drag and drop)
