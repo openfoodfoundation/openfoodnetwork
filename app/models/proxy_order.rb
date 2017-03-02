@@ -11,7 +11,13 @@ class ProxyOrder < ActiveRecord::Base
 
   def state
     return 'canceled' if canceled?
-    order ? order.state : 'cart'
+    if !order || order_cycle.orders_open_at > Time.now
+      'pending'
+    elsif order_cycle.orders_close_at > Time.now
+      'cart'
+    else
+      order.state
+    end
   end
 
   def canceled?

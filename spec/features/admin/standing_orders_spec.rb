@@ -83,7 +83,7 @@ feature 'Standing Orders' do
               find("a.resume-order").trigger('click')
             end
             # Note: the order itself was not complete when 'cancelled', so state remained as cart
-            expect(page).to have_content 'CART'
+            expect(page).to have_content 'PENDING'
             expect(proxy_order.reload.canceled_at).to be nil
           end
         end
