@@ -229,6 +229,7 @@ en:
     show_more: Show more
     show_n_more: Show %{num} more
     choose: "Choose..."
+    please_select: Please select...
 
     columns: Columns
     actions: Actions

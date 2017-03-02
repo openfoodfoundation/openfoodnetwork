@@ -14,6 +14,7 @@ angular.module("admin.utils").directive "ofnSelect2", ($sanitize, $timeout, $fil
       scope.text ?= 'name'
       scope.multiple ?= false
       scope.filter ?= -> true
+      scope.placeholder ?= t('admin.choose')
 
       if scope.data.$promise
         scope.data.$promise.then -> init()
@@ -39,6 +40,7 @@ angular.module("admin.utils").directive "ofnSelect2", ($sanitize, $timeout, $fil
       item.name = $sanitize(item.name) for item in scope.data
       element.select2
         multiple: scope.multiple
+        placeholder: scope.placeholder
         minimumResultsForSearch: scope.minSearch || 0
         data: ->
           filtered = $filter('filter')(scope.data,scope.filter)
