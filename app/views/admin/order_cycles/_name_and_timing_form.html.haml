@@ -37,6 +37,7 @@
         %input.fullwidth.ofn-select2#schedule_ids{ name: 'order_cycle[schedule_ids]',
           data: 'schedules',
           multiple: 'true',
+          placeholder: t('admin.please_select'),
           filter: '{viewing_as_coordinator: true}',
           ng: { model: 'order_cycle.schedule_ids' } }
       - else
