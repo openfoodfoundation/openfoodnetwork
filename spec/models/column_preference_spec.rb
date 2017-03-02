@@ -56,4 +56,31 @@ describe ColumnPreference, type: :model do
       end
     end
   end
+
+  describe "filtering default_preferences" do
+    let(:name_preference) { double(:name_preference) }
+    let(:schedules_preference) { double(:scheudles_preference) }
+    let(:default_preferences) { { name: name_preference, schedules: schedules_preference } }
+    context "when the action is order_cycles_index" do
+      let(:action_name) { "order_cycles_index" }
+
+      context "and the user owns a standing-orders-enabled enterprise" do
+        let!(:enterprise) { create(:distributor_enterprise, enable_standing_orders: true) }
+
+        it "removes the schedules column from the defaults" do
+          ColumnPreference.filter(default_preferences, enterprise.owner, action_name)
+          expect(default_preferences[:schedules]).to eq schedules_preference
+        end
+      end
+
+      context "and the user does not own a standing-orders-enabled enterprise" do
+        let!(:enterprise) { create(:distributor_enterprise, enable_standing_orders: false) }
+
+        it "removes the schedules column from the defaults" do
+          ColumnPreference.filter(default_preferences, enterprise.owner, action_name)
+          expect(default_preferences[:schedules]).to be nil
+        end
+      end
+    end
+  end
 end
