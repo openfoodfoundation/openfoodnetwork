@@ -7,7 +7,8 @@ feature "Product Import", js: true do
 
   let!(:admin) { create(:admin_user) }
   let!(:user) { create_enterprise_user }
-  let!(:enterprise) { create(:supplier_enterprise, owner: user, name: "Test Enterprise") }
+  let!(:enterprise) { create(:supplier_enterprise, owner: user, name: "User Enterprise") }
+  let!(:enterprise2) { create(:supplier_enterprise, owner: admin, name: "Another Enterprise") }
   let!(:category) { create(:taxon, name: 'Vegetables') }
   let!(:category2) { create(:taxon, name: 'Cake') }
   let!(:product) { create(:simple_product, supplier: enterprise, name: 'Hypothetical Cake') }
@@ -21,8 +22,8 @@ feature "Product Import", js: true do
     it "validates entries and saves them if they are all valid" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
-        csv << ["Carrots", "Test Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
-        csv << ["Potatoes", "Test Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000"]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -49,7 +50,7 @@ feature "Product Import", js: true do
     it "displays info about invalid entries but still allows saving of valid entries" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
-        csv << ["Good Carrots", "Test Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
+        csv << ["Good Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
         csv << ["Bad Potatoes", "", "Vegetables", "6", "6.50", "1000", "", "1000"]
       end
       File.write('/tmp/test.csv', csv_data)
@@ -101,8 +102,8 @@ feature "Product Import", js: true do
     it "can add new variants to existing products and update price and stock level of existing products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale", "display_name"]
-        csv << ["Hypothetical Cake", "Test Enterprise", "Cake", "5", "5.50", "500", "weight", "1", "Preexisting Banana"]
-        csv << ["Hypothetical Cake", "Test Enterprise", "Cake", "6", "3.50", "500", "weight", "1", "Emergent Coffee"]
+        csv << ["Hypothetical Cake", "User Enterprise", "Cake", "5", "5.50", "500", "weight", "1", "Preexisting Banana"]
+        csv << ["Hypothetical Cake", "User Enterprise", "Cake", "6", "3.50", "500", "weight", "1", "Emergent Coffee"]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -168,5 +169,35 @@ feature "Product Import", js: true do
     end
   end
 
-  # Test enterprise permissions with non-admin user
+  describe "handling enterprise permissions" do
+    before { quick_login_as user }
+
+    it "only allows import into enterprises the user is permitted to manage" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
+        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
+        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000"]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Import'
+
+      expect(page).to have_selector '.item-count', text: "2"
+      expect(page).to have_selector '.invalid-count', text: "1"
+      expect(page).to have_selector '.create-count', text: "1"
+      expect(page).to have_selector '.update-count', text: "0"
+
+      expect(page.body).to have_content 'You do not have permission to manage products for "Another Enterprise"'
+
+      click_button 'Save'
+      expect(page).to have_content "Products created: 1"
+
+      Spree::Product.find_by_name('My Carrots').should be_a Spree::Product
+      Spree::Product.find_by_name('Your Potatoes').should == nil
+    end
+  end
+
 end
