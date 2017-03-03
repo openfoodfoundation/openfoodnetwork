@@ -1,0 +1,11 @@
+- @importer.invalid_entries.each do |line, item|
+  %div.import-errors
+    %p.line
+      %strong
+        Item line #{line}:
+      %span= item[:entry]['name']
+      - if item[:entry]['display_name']
+        ( #{item[:entry]['display_name']} )
+    - item[:errors].each do |error|
+      %p.error
+        &nbsp;-&nbsp; #{error}

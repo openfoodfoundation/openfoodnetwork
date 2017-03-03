@@ -8,17 +8,20 @@
 
 %p{style: 'font-size: 1.15em'}
   Products created:
-  = @importer.products_created
+  = @importer.products_created_count
 %p{style: 'font-size: 1.15em'}
   Products updated:
-  = @importer.products_updated
+  = @importer.products_updated_count
 
-- if @importer.errors.full_messages && !@importer.errors.full_messages.blank?
-  %br
-  %h6 Errors
+%br
+
+- if !@importer.errors.full_messages
+  %h5 All #{importer.total_saved_count} items saved successfully
+- else
+  %h5 Errors
   - @importer.errors.full_messages.each do |error|
     %p{class: "red"}
       &nbsp;-&nbsp; #{error}
 
 %br
-  %a.button{href: main_app.admin_product_import_path} Back
+%a.button{href: main_app.admin_product_import_path} Back

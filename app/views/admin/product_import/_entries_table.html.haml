@@ -1,0 +1,12 @@
+- if entries && entries.count > 0 #&& entries.values.first && entries.values.first[:entry]
+  %div.table-wrap
+    %table
+      %thead
+        %th Line
+        - entries.values.first[:entry].each do |key, value|
+          %th= key
+      - entries.each do |line, item|
+        %tr
+          %td= line
+          - item[:entry].each do |key, value|
+            %td= value
