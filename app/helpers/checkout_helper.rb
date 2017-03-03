@@ -53,6 +53,15 @@ module CheckoutHelper
     line_item.tax_rates.map { |tr| number_to_percentage(tr.amount * 100, :precision => 1) }.join(", ")
   end
 
+  def display_adjustment_tax_rates(adjustment)
+    tax_rate = (adjustment.included_tax / (adjustment.amount - adjustment.included_tax)).round(2)
+    if tax_rate == 0 || tax_rate.infinite?
+      ""
+    else
+      number_to_percentage(tax_rate * 100, :precision => 1)
+    end
+  end
+
   def display_checkout_total_less_tax(order)
     Spree::Money.new order.total - order.total_tax, currency: order.currency
   end

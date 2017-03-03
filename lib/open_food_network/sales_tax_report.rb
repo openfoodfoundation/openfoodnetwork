@@ -56,7 +56,7 @@ module OpenFoodNetwork
         orders.map do |order|
           [order.number, order.total - order.total_tax] +
             relevant_rates.map { |rate| order.tax_adjustment_totals.fetch(rate, 0) } +
-            [order.total_tax, order.display_total]
+            [order.total_tax, order.total]
         end
       end
     end
