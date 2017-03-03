@@ -31,11 +31,12 @@
         %td
           %strong= "#{raw(adjustment.label)}"
         %td{:align => "right"}
-          1
         %td{:align => "right"}
-          = adjustment.included_tax > 0 ? adjustment.display_included_tax : ""
         %td{:align => "right"}
           = adjustment.display_amount
+        - if @order.total_tax > 0
+          %td{:align => "right"}
+            = display_adjustment_tax_rates(adjustment)
   %tfoot
     %tr
       %td{:align => "right", :colspan => "3"}

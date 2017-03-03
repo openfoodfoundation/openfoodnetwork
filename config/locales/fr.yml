@@ -482,6 +482,8 @@ fr:
       require_customer_login: "La boutique est réservée aux membres."
       require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
       require_customer_html: "Veuillez %{contact} %{enterprise} pour devenir membre."
+
+  invoice_billing_address: "Adresse de facturation :"
   invoice_column_item: "Produit"
   invoice_column_qty: "Qté"
   invoice_column_unit_price_with_taxes: "Prix unitaire (TTC)"

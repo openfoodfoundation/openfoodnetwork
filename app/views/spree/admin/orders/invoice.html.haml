@@ -17,7 +17,7 @@
         %br
         = @order.distributor.address.address_part2
         %br
-        = @order.distributor.email
+        = @order.distributor.email_address
         - if @order.distributor.phone.present?
           %br
           = @order.distributor.phone
@@ -31,6 +31,7 @@
       %td{ :align => "left", colspan: 2 } &nbsp;
     %tr{ valign: "top" }
       %td{ :align => "left" }
+        %br
         = t :invoice_issued_on
         = l Time.zone.now.to_date
         %br
@@ -40,6 +41,8 @@
         = t :order_number
         = @order.number
       %td{ :align => "right" }
+        = t :invoice_billing_address
+        %br
         %strong= @order.ship_address.full_name
         - if @order.customer.code.present?
           %br
