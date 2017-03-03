@@ -1,0 +1,62 @@
+%h5 Import validation overview
+%br
+
+%div.feedback-section
+  %div.feedback-header
+    %div.header-caret
+      -#%i.icon-chevron-right{ng: {hide: 'active'}}
+      -#%i.icon-chevron-down{ng: {hide: '!active'}}
+    %div.header-icon
+      %i.fa.fa-check-circle
+    %div.header-count
+      %strong.item-count= @importer.item_count
+    %div.header-description
+      Entries found in imported file
+  -#%div.feedback-panel{ng: {hide: '!active'}}
+  -#  Content goes here
+
+%div.feedback-section{ng: {controller: 'FeedbackPanelsCtrl', init: "count = #{@importer.invalid_count}"}}
+  %div.feedback-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
+    %div.header-caret
+      %i.icon-chevron-right{ng: {hide: 'active || count == 0'}}
+      %i.icon-chevron-down{ng: {hide: '!active || count == 0'}}
+    %div.header-icon
+      %i.fa.fa-warning
+    %div.header-count
+      %strong.invalid-count= @importer.invalid_count
+    %div.header-description
+      Items contain errors and will not be imported
+  %div.feedback-panel{ng: {hide: '!active || count == 0'}}
+    = render 'errors_list'
+    %br
+    = render 'entries_table', entries: @importer.invalid_entries
+
+%div.feedback-section{ng: {controller: 'FeedbackPanelsCtrl', init: "count = #{@importer.products_create_count}"}}
+  %div.feedback-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
+    %div.header-caret
+      %i.icon-chevron-right{ng: {hide: 'active || count == 0'}}
+      %i.icon-chevron-down{ng: {hide: '!active || count == 0'}}
+    %div.header-icon
+      %i.fa.fa-check-circle
+    %div.header-count
+      %strong.create-count= @importer.products_create_count
+    %div.header-description
+      Products will be created
+  %div.feedback-panel{ng: {hide: '!active || count == 0'}}
+    = render 'entries_table', entries: @importer.products_to_create
+
+%div.feedback-section{ng: {controller: 'FeedbackPanelsCtrl', init: "count = #{@importer.products_update_count}"}}
+  %div.feedback-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
+    %div.header-caret
+      %i.icon-chevron-right{ng: {hide: 'active || count == 0'}}
+      %i.icon-chevron-down{ng: {hide: '!active || count == 0'}}
+    %div.header-icon
+      %i.fa.fa-check-circle
+    %div.header-count
+      %strong.update-count= @importer.products_update_count
+    %div.header-description
+      Products will be updated
+  %div.feedback-panel{ng: {hide: '!active || count == 0'}}
+    = render 'entries_table', entries: @importer.products_to_update
+
+%br.panels.clearfix

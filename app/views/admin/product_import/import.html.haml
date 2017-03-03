@@ -1,67 +1,32 @@
 - content_for :page_title do
   Product Import
 
-= render :partial => 'spree/admin/shared/product_sub_menu'
+= render partial: 'spree/admin/shared/product_sub_menu'
 
-- if @importer.valid_count && @importer.invalid_count
-  %h5 Products imported from spreadsheet:
-  %br
-  %p{style: "font-size: 1.15em"}
-    Valid entries found:
-    = @importer.valid_count
-  %p{style: "font-size: 1.15em"}
-    Invalid entries found:
-    = @importer.invalid_count
-  %br
-  %p{style: "font-size: 1.15em"}
-    Products to be created:
-    = @importer.products_create_count
-  %p{style: "font-size: 1.15em"}
-    Products to be updated:
-    = @importer.products_update_count
+= form_tag main_app.admin_product_import_save_path, {'ng-app' => 'ofn.admin'} do
 
-- if @importer.invalid_entries && @importer.invalid_entries.count > 0
-  %br
-  %h5 Import errors:
-  %br
-  - @importer.invalid_entries.each do |line, item|
-    %p{style: "font-size: 1.15em"}
-      %strong
-        Item line #{line}:
-      %span= item[:entry]['name']
-      - if item[:entry]['display_name']
-        ( #{item[:entry]['display_name']} )
-    - item[:errors].each do |error|
-      %p{class: "red"}
-        &nbsp;-&nbsp; #{error}
-  %br
-  %h5 Review invalid entries:
-  %div{style: 'width: 100%; overflow: auto;'}
-    %table
-      %thead
-        %th Line
-        - @importer.invalid_entries.values.first[:entry].each do |key, value|
-          %th{style: 'white-space: nowrap;'}= key
-      - @importer.invalid_entries.each do |line, item|
-        %tr
-          %td= line
-          - item[:entry].each do |key, value|
-            %td{style: 'white-space: nowrap;'}= value
+  - if @importer.invalid_count && !@importer.has_valid_entries?
+    %h5 No valid entries found
+    %p There are no entries that can be saved
+    %br
 
-- if @importer.has_valid_entries?
-  %br
-  - if @importer.invalid_count > 0
-    %h5 Invalid entries detected.
-    %p Save valid products for now and discard the others?
-  - else
-    %h5 No errors detected!
-    %p Save all imported products?
-  %br
-  = form_tag main_app.admin_product_import_save_path, multipart: true do
+  = render 'import_review'
+
+  - if @importer.has_valid_entries?
+    - if @importer.invalid_count > 0
+      %br
+      %h5 Imported file contains some invalid entries
+      %p Save valid entries for now and discard the others?
+    - else
+      %h5 No errors detected!
+      %p Save all imported products?
+    %br
     = hidden_field_tag :filepath, @filepath
     = submit_tag "Save"
     %a.button{href: main_app.admin_product_import_path} Cancel
 
-- if @importer.invalid_count && !@importer.has_valid_entries?
-  %br
-  %a.button{href: main_app.admin_product_import_path} Cancel
+  - else
+    %br
+    %a.button{href: main_app.admin_product_import_path} Cancel
+
+

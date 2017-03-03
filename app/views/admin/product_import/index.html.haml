@@ -3,12 +3,4 @@
 
 = render :partial => 'spree/admin/shared/product_sub_menu'
 
-%h5 Select a spreadsheet to upload
-%br
-= form_tag main_app.admin_product_import_path, multipart: true do
-  = file_field_tag :file
-  %br
-  %br
-  = submit_tag "Import"
-  %br
-  %br
+= render 'upload_form'
