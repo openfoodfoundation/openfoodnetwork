@@ -76,6 +76,7 @@ en:
         standing_order_form:
           attributes:
             standing_line_items:
+              at_least_one_product: "^Please add at least one product"
               not_available: "^%{name} is not available from the selected schedule"
   devise:
     confirmations:
