@@ -1,3 +1,9 @@
+.row{ "ng-show" => "savedCreditCards != null && savedCreditCards.length > 0" }
+  .small-12.columns
+    %label
+      = t :previously_used_credit_cards
+    %select{"ng-model" => "selected_card", "ng-options" => "card.id as card.formatted for card in savedCreditCards", name: "secrets.card_year", required: true}
+
 = render "spree/checkout/payment/gateway", payment_method: payment_method
 
 :javascript
