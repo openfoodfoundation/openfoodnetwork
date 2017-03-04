@@ -15,8 +15,8 @@
 
 %br
 
-- if !@importer.errors.full_messages
-  %h5 All #{importer.total_saved_count} items saved successfully
+- if @importer.errors.count == 0
+  %h5 All #{@importer.total_saved_count} items saved successfully
 - else
   %h5 Errors
   - @importer.errors.full_messages.each do |error|

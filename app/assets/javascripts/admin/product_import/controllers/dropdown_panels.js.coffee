@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "FeedbackPanelsCtrl", ($scope) ->
+angular.module("ofn.admin").controller "DropdownPanelsCtrl", ($scope) ->
   $scope.active = false
 
   $scope.togglePanel = ->

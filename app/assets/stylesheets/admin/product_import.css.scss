@@ -1,6 +1,6 @@
-div.feedback-section {
+div.panel-section {
 
-  div.feedback-header {
+  div.panel-header {
     width: 100%;
     //font-size: 1.5em;
     clear: both;
@@ -22,7 +22,7 @@ div.feedback-section {
     div.header-icon {
       width: 2.5em;
       text-align: center;
-      padding-top: 0.1em;
+      padding-top: 0.18em;
 
       .fa {
         font-size: 1.5em;
@@ -48,17 +48,17 @@ div.feedback-section {
 
   }
 
-  div.feedback-header:hover {
+  div.panel-header:hover {
     cursor: pointer;
     background-color: #f7f7f7;
   }
 
-  div.feedback-header.active {
+  div.panel-header.active {
     background-color: #efefef;
     text-shadow: 1px 1px 0px rgba(255,255,255,0.75);
   }
 
-  div.feedback-panel {
+  div.panel-content {
     width: 100%;
     clear: both;
     //border: 1px solid #ccc;
@@ -101,4 +101,62 @@ div.feedback-section {
 
 br.panels.clearfix {
   clear: both;
+}
+
+table.import-settings {
+  background-color: transparent !important;
+  width: auto;
+
+  //select {
+  //  width: 100%;
+  //}
+  tr {
+
+  }
+  tbody tr:hover td {
+    background-color: #f3f3f3;
+  }
+  td {
+    border: 0;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+
+    input {
+      width: 15em;
+    }
+    input[type="checkbox"] {
+      width: auto;
+    }
+
+  }
+  td.description {
+    font-weight: bold;
+    padding-right: 2.5em;
+  }
+  tr:first-child td {
+    //border-top: 1px solid #eee;
+    border-top: 0;
+  }
+  tr:last-child td {
+    //border-top: 1px solid #eee;
+    border-bottom: 0;
+  }
+
+}
+
+.panel-section.import-settings {
+  .header-icon {
+    color: #BFBFBF;
+  }
+  .header-description {
+    padding-left: 1em;
+  }
+}
+
+.select2-search {
+  display: none;
+}
+
+.select2-results {
+  margin: 0;
 }
