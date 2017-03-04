@@ -194,10 +194,18 @@ feature 'Standing Orders' do
 
         click_button('Next')
 
-        # Deleting the existing product and adding a new product
+        # Deleting the existing product
         within 'table#standing-line-items tr.item', match: :first do
           find("a.delete-item").click
         end
+
+        # Attempting to submit without a product
+        expect{
+          click_button('Create Standing Order')
+          expect(page).to have_content 'Please add at least one product'
+        }.to_not change(StandingOrder, :count)
+
+        # Adding a new product
         targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 3
         click_link 'Add'
@@ -241,12 +249,16 @@ feature 'Standing Orders' do
         let!(:customer) { create(:customer, enterprise: shop) }
         let!(:product1) { create(:product, supplier: shop) }
         let!(:product2) { create(:product, supplier: shop) }
+        let!(:product3) { create(:product, supplier: shop) }
         let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
         let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
+        let!(:variant3) { create(:variant, product: product3, unit_value: '10000', price: 22.00, option_values: []) }
         let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
         let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
         let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2], enterprise_fees: [enterprise_fee]) }
         let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
+        let!(:variant3_oc) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
+        let!(:variant3_ex) { variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3]) }
         let!(:payment_method) { create(:payment_method, distributors: [shop]) }
         let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
         let!(:standing_order) { create(:standing_order,
@@ -272,33 +284,55 @@ feature 'Standing Orders' do
             expect(page).to have_selector 'td.price', text: "$13.75"
             expect(page).to have_input 'quantity', with: "2"
             expect(page).to have_selector 'td.total', text: "$27.50"
+
+            # Remove variant1 from the standing order
+            find("a.delete-item").click
           end
+
+          # Attempting to submit without a product
+          click_button 'Save Changes'
+          expect(page).to have_content 'Please add at least one product'
 
           # Add variant2 to the standing order
           targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
-          within "#sli_1" do
+          within "#sli_0" do
             expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
             expect(page).to have_selector 'td.price', text: "$7.75"
             expect(page).to have_input 'quantity', with: "1"
             expect(page).to have_selector 'td.total', text: "$7.75"
           end
 
-          expect(page).to have_selector '#order_form_total', text: "$35.25"
+          # Total should be $7.75
+          expect(page).to have_selector '#order_form_total', text: "$7.75"
 
-          # Remove variant1 from the standing order
-          within '#sli_0', match: :first do
-            find("a.delete-item").click
+          # Add variant3 to the standing order (even though it is not available)
+          targetted_select2_search product3.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+          fill_in 'add_quantity', with: 1
+          click_link 'Add'
+          within "#sli_1" do
+            expect(page).to have_selector 'td.description', text: "#{product3.name} - #{variant3.full_name}"
+            expect(page).to have_selector 'td.price', text: "$22.00"
+            expect(page).to have_input 'quantity', with: "1"
+            expect(page).to have_selector 'td.total', text: "$22.00"
           end
 
-          # Total should be $35.25
-          expect(page).to have_selector '#order_form_total', text: "$7.75"
+          # Total should be $29.75
+          expect(page).to have_selector '#order_form_total', text: "$29.75"
+
+          click_button 'Save Changes'
+          expect(page).to have_content "#{product3.name} - #{variant3.full_name} is not available from the selected schedule"
+
+          # Remove variant3 from the standing order
+          within '#sli_1' do
+            find("a.delete-item").click
+          end
 
           click_button 'Save Changes'
           expect(page).to have_content 'Saved'
 
-          # Total should be $35.25
+          # Total should be $7.75
           expect(page).to have_selector '#order_form_total', text: "$7.75"
           expect(page).to have_selector 'tr.item', count: 1
           expect(standing_order.reload.standing_line_items.length).to eq 1

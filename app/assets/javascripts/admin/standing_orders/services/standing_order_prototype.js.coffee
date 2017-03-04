@@ -20,8 +20,9 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
       StatusMessage.display 'success', 'Saved'
       $injector.get('StandingOrders').afterCreate(@id) if $injector.has('StandingOrders')
     , (response) =>
-      StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
       angular.extend(@errors, response.data.errors)
+      keys = Object.keys(response.data.errors)
+      StatusMessage.display 'failure', response.data.errors[keys[0]][0]
 
   update: ->
     StatusMessage.display 'progress', 'Saving...'
@@ -33,8 +34,9 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
       if orders_with_issues.length > 0
         InfoDialog.open('error', null, 'admin/order_update_issues_dialog.html', { proxyOrders: orders_with_issues})
     , (response) =>
-      StatusMessage.display 'failure', 'Oh no! I was unable to save your changes.'
       angular.extend(@errors, response.data.errors)
+      keys = Object.keys(response.data.errors)
+      StatusMessage.display 'failure', response.data.errors[keys[0]][0]
 
   cancel: ->
     ConfirmDialog.open('error', t('admin.standing_orders.confirm_cancel_msg'), {cancel: t('back'), confirm: t('yes_i_am_sure')})
