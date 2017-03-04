@@ -70,7 +70,9 @@ module InjectionHelper
   end
 
   def inject_saved_credit_cards
-    inject_json_ams "savedCreditCards", spree_current_user.credit_cards, Api::CreditCardSerializer
+    if spree_current_user
+      inject_json_ams "savedCreditCards", spree_current_user.credit_cards, Api::CreditCardSerializer
+    end
   end
 
   def inject_json(name, partial, opts = {})
