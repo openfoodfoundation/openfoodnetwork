@@ -70,6 +70,13 @@ en:
           attributes:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
+  activemodel:
+    errors:
+      models:
+        standing_order_form:
+          attributes:
+            standing_line_items:
+              not_available: "^%{name} is not available from the selected schedule"
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
