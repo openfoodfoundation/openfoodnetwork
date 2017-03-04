@@ -17,7 +17,7 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   end
 
   def save
-    @importer = ProductImporter.new(File.new(params[:filepath]), editable_enterprises)
+    @importer = ProductImporter.new(File.new(params[:filepath]), editable_enterprises, params[:settings])
     @importer.save_all if @importer.has_valid_entries?
   end
 

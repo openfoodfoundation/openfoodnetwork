@@ -11,9 +11,11 @@ feature "Product Import", js: true do
   let!(:enterprise2) { create(:supplier_enterprise, owner: admin, name: "Another Enterprise") }
   let!(:category) { create(:taxon, name: 'Vegetables') }
   let!(:category2) { create(:taxon, name: 'Cake') }
+  let!(:tax_category) { create(:tax_category) }
+  let!(:tax_category2) { create(:tax_category) }
+  let!(:shipping_category) { create(:shipping_category) }
   let!(:product) { create(:simple_product, supplier: enterprise, name: 'Hypothetical Cake') }
   let!(:variant) { create(:variant, product_id: product.id, price: '8.50', count_on_hand: '100', unit_value: '500', display_name: 'Preexisting Banana') }
-  let(:permissions) { OpenFoodNetwork::Permissions.new(user) }
 
   describe "when importing products from uploaded file" do
     before { quick_login_as_admin }
@@ -77,7 +79,7 @@ feature "Product Import", js: true do
       carrots.price.should == 3.20
     end
 
-    it "displays info about invalid entries but no save button if all invalid" do
+    it "displays info about invalid entries but no save button if all items are invalid" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
         csv << ["Bad Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "", "weight", ""]
@@ -129,6 +131,37 @@ feature "Product Import", js: true do
       updated_banana.product.name.should == 'Hypothetical Cake'
       updated_banana.price.should == 5.50
       updated_banana.on_hand.should == 5
+    end
+
+    it "can add a new product and sub-variants of that product at the same time" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale", "display_name"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "weight", "1000", "Small Bag"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2000", "weight", "1000", "Big Bag"]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Import'
+
+      expect(page).to have_selector '.item-count', text: "2"
+      expect(page).to have_selector '.invalid-count', text: "0"
+      expect(page).to have_selector '.create-count', text: "2"
+      expect(page).to have_selector '.update-count', text: "0"
+
+      click_button 'Save'
+      expect(page).to have_content "Products created: 2"
+
+      small_bag = Spree::Variant.find_by_display_name('Small Bag')
+      small_bag.product.name.should == 'Potatoes'
+      small_bag.price.should == 3.50
+      small_bag.on_hand.should == 5
+
+      big_bag = Spree::Variant.find_by_display_name('Big Bag')
+      big_bag.product.name.should == 'Potatoes'
+      big_bag.price.should == 5.50
+      big_bag.on_hand.should == 6
     end
   end
 
@@ -200,4 +233,57 @@ feature "Product Import", js: true do
     end
   end
 
+  describe "applying settings and defaults on import" do
+    before { quick_login_as_admin }
+
+    it "overwrites fields with selected defaults" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale", "tax_category_id", "available_on"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1", tax_category.id, ""]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000", "", ""]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Import'
+
+      within 'div.import-settings' do
+        find('div.header-description').click  # Import settings tab
+        expect(page).to have_selector "#settings_#{enterprise.id}_defaults_on_hand_mode", visible: false
+
+        # Overwrite stock level of all items to 9000
+        select 'Overwrite all', from: "settings_#{enterprise.id}_defaults_on_hand_mode", visible: false
+        fill_in "settings_#{enterprise.id}_defaults_on_hand_value", with: '9000'
+
+        # Overwrite default tax category, but only where field is empty
+        select 'Overwrite if empty', from: "settings_#{enterprise.id}_defaults_tax_category_id_mode", visible: false
+        select tax_category2.name, from: "settings_#{enterprise.id}_defaults_tax_category_id_value", visible: false
+
+        # Set default shipping category (field not present in file)
+        select 'Overwrite all', from: "settings_#{enterprise.id}_defaults_shipping_category_id_mode", visible: false
+        select shipping_category.name, from: "settings_#{enterprise.id}_defaults_shipping_category_id_value", visible: false
+
+        # Set available_on date
+        select 'Overwrite all', from: "settings_#{enterprise.id}_defaults_available_on_mode", visible: false
+        find("input#settings_#{enterprise.id}_defaults_available_on_value").set '2020-01-01'
+      end
+
+      click_button 'Save'
+      expect(page).to have_content "Products created: 2"
+
+      carrots = Spree::Product.find_by_name('Carrots')
+      carrots.on_hand.should == 9000
+      carrots.tax_category_id.should == tax_category.id
+      carrots.shipping_category_id.should == shipping_category.id
+      carrots.available_on.should be_within(1.day).of(Time.zone.local(2020, 1, 1))
+
+      potatoes = Spree::Product.find_by_name('Potatoes')
+      potatoes.on_hand.should == 9000
+      potatoes.tax_category_id.should == tax_category2.id
+      potatoes.shipping_category_id.should == shipping_category.id
+      potatoes.available_on.should be_within(1.day).of(Time.zone.local(2020, 1, 1))
+    end
+  end
 end

@@ -5,10 +5,9 @@ class ProductImporter
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  def initialize(file, editable_enterprises, options={})
+  def initialize(file, editable_enterprises, import_settings={})
     if file.is_a?(File)
       @file = file
-      @options = options
       @sheet = open_spreadsheet
       @valid_entries = {}
       @invalid_entries = {}
@@ -21,10 +20,11 @@ class ProductImporter
       @variants_created = 0
       @variants_updated = 0
 
+      @import_settings = import_settings
       @editable_enterprises = {}
       editable_enterprises.map { |e| @editable_enterprises[e.name] = e.id }
 
-      @non_display_attributes = 'id', 'product_id', 'variant_id', 'supplier_id', 'primary_taxon_id', 'category_id', 'shipping_category_id', 'tax_category_id'
+      @non_display_attributes = 'id', 'product_id', 'variant_id', 'supplier_id', 'primary_taxon_id', 'category_id', 'shipping_category_id', 'tax_category_id', 'on_hand_nil'
 
       validate_all if @sheet
     else
@@ -144,12 +144,8 @@ class ProductImporter
 
       supplier_validation(line_number, entry)
       category_validation(line_number, entry)
-
-      # Ensure on_hand isn't nil because Spree::Product and
-      # Spree::Variant each validate it differently
-      entry['on_hand'] = 0 if entry['on_hand'].nil?
-
       set_update_status(line_number, entry)
+
       mark_as_valid(line_number, entry) unless entry_invalid?(line_number)
     end
 
@@ -264,14 +260,9 @@ class ProductImporter
 
       product = Spree::Product.new()
       product.assign_attributes(entry.except('id'))
+      assign_defaults(product, entry)
       if product.save
-        # Ensure display_name and on_demand are copied to new variant
-        if entry['display_name'] || entry['on_demand']
-          variant = product.variants.first
-          variant.display_name = entry['display_name'] if entry['display_name']
-          variant.on_demand = entry['on_demand'] if entry['on_demand']
-          variant.save
-        end
+        ensure_variant_updated(entry, product)
         @products_created += 1
       else
         self.errors.add("Line #{line_number}:", product.errors.full_messages)
@@ -282,6 +273,7 @@ class ProductImporter
 
     @variants_to_update.each do |line_number, data|
       variant = data[:variant]
+      assign_defaults(variant, data[:entry])
       if variant.valid? and variant.save
         @variants_updated += 1
       else
@@ -291,6 +283,7 @@ class ProductImporter
 
     @variants_to_create.each do |line_number, data|
       new_variant = data[:variant]
+      assign_defaults(new_variant, data[:entry])
       if new_variant.valid? and new_variant.save
         @variants_created += 1
       else
@@ -301,6 +294,29 @@ class ProductImporter
     self.errors.add(:importer, "did not save any products successfully") if total_saved_count == 0
 
     total_saved_count
+  end
+
+  def assign_defaults(object, entry)
+    @import_settings[entry['supplier_id'].to_s]['defaults'].each do |attribute, setting|
+      case setting['mode']
+        when 'overwrite_all'
+          object.assign_attributes(attribute => setting['value'])
+        when 'overwrite_empty'
+          if object.send(attribute).blank? or (attribute == 'on_hand' and entry['on_hand_nil'])
+            object.assign_attributes(attribute => setting['value'])
+          end
+      end
+    end
+  end
+
+  def ensure_variant_updated(entry, product)
+    # Ensure display_name and on_demand are copied to new product's variant
+    if entry['display_name'] || entry['on_demand']
+      variant = product.variants.first
+      variant.display_name = entry['display_name'] if entry['display_name']
+      variant.on_demand = entry['on_demand'] if entry['on_demand']
+      variant.save
+    end
   end
 
   def set_update_status(line_number, entry)
@@ -337,6 +353,7 @@ class ProductImporter
 
   def mark_as_existing_variant(line_number, entry, existing_variant)
     existing_variant.assign_attributes(entry.except('id', 'product_id'))
+    check_on_hand_nil(entry, existing_variant)
     if existing_variant.valid?
       @variants_to_update[line_number] = {entry: entry, variant: existing_variant} unless entry_invalid?(line_number)
     else
@@ -347,10 +364,18 @@ class ProductImporter
   def mark_as_new_variant(line_number, entry, product_id)
     new_variant = Spree::Variant.new(entry.except('id', 'product_id'))
     new_variant.product_id = product_id
+    check_on_hand_nil(entry, new_variant)
     if new_variant.valid?
       @variants_to_create[line_number] = {entry: entry, variant: new_variant} unless entry_invalid?(line_number)
     else
       mark_as_invalid(line_number, entry, new_variant.errors.full_messages)
+    end
+  end
+
+  def check_on_hand_nil(entry, variant)
+    if entry['on_hand'].blank?
+      variant.on_hand = 0
+      entry['on_hand_nil'] = true
     end
   end
 

@@ -10,6 +10,8 @@
     %p There are no entries that can be saved
     %br
 
+  = render 'import_options' if @importer.has_valid_entries?
+
   = render 'import_review'
 
   - if @importer.has_valid_entries?
