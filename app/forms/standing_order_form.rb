@@ -18,6 +18,7 @@ class StandingOrderForm
   validate :schedule_allowed?
   validate :payment_method_allowed?
   validate :shipping_method_allowed?
+  validate :standing_line_items_present?
   validate :standing_line_items_available?
 
   def initialize(standing_order, params={}, fee_calculator=nil)
@@ -206,6 +207,12 @@ class StandingOrderForm
   def shipping_method_allowed?
     if shipping_method && shipping_method.distributors.exclude?(shop)
       errors[:shipping_method] << "is not available to #{shop.name}"
+    end
+  end
+
+  def standing_line_items_present?
+    unless standing_line_items.reject(&:marked_for_destruction?).any?
+      errors.add(:standing_line_items, :at_least_one_product)
     end
   end
 

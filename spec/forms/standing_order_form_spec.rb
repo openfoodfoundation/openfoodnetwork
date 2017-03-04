@@ -384,12 +384,32 @@ describe StandingOrderForm do
     let(:params) { { standing_line_items_attributes: [ { id: sli.id, _destroy: true } ] } }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
-    it "removes the line item and updates totals on all orders" do
-      expect(order.reload.total.to_f).to eq 59.97
-      expect(form.save).to be true
-      line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
-      expect(line_items.count).to be 0
-      expect(order.reload.total.to_f).to eq 39.98
+    context "that is not the last remaining item" do
+      it "removes the line item and updates totals on all orders" do
+        expect(order.reload.total.to_f).to eq 59.97
+        expect(form.save).to be true
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
+        expect(line_items.count).to be 0
+        expect(order.reload.total.to_f).to eq 39.98
+      end
+    end
+
+    context "that is the last remaining item" do
+      before do
+        standing_order.standing_line_items.where('variant_id != ?',variant.id).destroy_all
+        order.line_items.where('variant_id != ?',variant.id).destroy_all
+        standing_order.reload
+        order.reload
+      end
+
+      it "returns false and does not remove the line item or update totals on orders" do
+        expect(order.reload.total.to_f).to eq 19.99
+        expect(form.save).to be false
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
+        expect(line_items.count).to be 1
+        expect(order.reload.total.to_f).to eq 19.99
+        expect(form.json_errors.keys).to eq [:standing_line_items]
+      end
     end
   end
 
