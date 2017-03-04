@@ -7,8 +7,18 @@ class StandingOrderForm
 
   delegate :orders, :order_cycles, :bill_address, :ship_address, :standing_line_items, to: :standing_order
   delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :proxy_orders, to: :standing_order
+  delegate :schedule, :schedule_id, to: :standing_order
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
   delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
+
+  validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method
+  validates_presence_of :bill_address, :ship_address, :begins_at
+  validate :ends_at_after_begins_at?
+  validate :customer_allowed?
+  validate :schedule_allowed?
+  validate :payment_method_allowed?
+  validate :shipping_method_allowed?
+  validate :standing_line_items_available?
 
   def initialize(standing_order, params={}, fee_calculator=nil)
     @standing_order = standing_order
@@ -18,26 +28,20 @@ class StandingOrderForm
   end
 
   def save
+    validate_price_estimates
+    standing_order.assign_attributes(params)
+    return false unless valid?
     standing_order.transaction do
-      validate_price_estimates
-      standing_order.assign_attributes(params)
-
       initialise_proxy_orders!
       remove_obsolete_proxy_orders!
-
       update_initialised_orders
-
-      begin
-        standing_order.save!
-      rescue ActiveRecord::RecordInvalid
-        raise ActiveRecord::Rollback
-      end
+      standing_order.save!
     end
   end
 
   def json_errors
-    standing_order.errors.messages.inject({}) do |errors, (k,v)|
-      errors[k] = v.map{ |msg| standing_order.errors.full_message(k,msg) }
+    errors.messages.inject({}) do |errors, (k,v)|
+      errors[k] = v.map { |msg| build_msg_from(k, msg) }
       errors
     end
   end
@@ -162,5 +166,60 @@ class StandingOrderForm
   def add_order_update_issue(order, issue)
     order_update_issues[order.id] ||= []
     order_update_issues[order.id] << issue
+  end
+
+
+  def standing_order_valid?
+    unless standing_order.valid?
+      standing_order.errors.each do |k, msg|
+        errors.add(k, msg)
+      end
+    end
+  end
+
+  def ends_at_after_begins_at?
+    # Returns true even if ends_at is false
+    # Note: presence of begins_at validated on the model
+    if begins_at.present? && ends_at.present? && ends_at <= begins_at
+      errors.add(:ends_at, "must be after begins at")
+    end
+  end
+
+  def customer_allowed?
+    if customer && customer.enterprise != shop
+      errors[:customer] << "does not belong to #{shop.name}"
+    end
+  end
+
+  def schedule_allowed?
+    if schedule && schedule.coordinators.exclude?(shop)
+      errors[:schedule] << "is not coordinated by #{shop.name}"
+    end
+  end
+
+  def payment_method_allowed?
+    if payment_method && payment_method.distributors.exclude?(shop)
+      errors[:payment_method] << "is not available to #{shop.name}"
+    end
+  end
+
+  def shipping_method_allowed?
+    if shipping_method && shipping_method.distributors.exclude?(shop)
+      errors[:shipping_method] << "is not available to #{shop.name}"
+    end
+  end
+
+  def standing_line_items_available?
+    standing_line_items.each do |sli|
+      unless sli.available_from?(shop_id, schedule_id)
+        name = "#{sli.variant.product.name} - #{sli.variant.full_name}"
+        errors.add(:standing_line_items, :not_available, name: name)
+      end
+    end
+  end
+
+  def build_msg_from(k, msg)
+    return msg[1..-1] if msg.starts_with?("^")
+    errors.full_message(k,msg)
   end
 end

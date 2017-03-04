@@ -17,12 +17,6 @@ class StandingOrder < ActiveRecord::Base
   accepts_nested_attributes_for :standing_line_items, allow_destroy: true
   accepts_nested_attributes_for :bill_address, :ship_address
 
-  validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method
-  validates_presence_of :billing_address, :shipping_address, :begins_at
-  validate :ends_at_after_begins_at
-  validate :standing_line_items_available
-  validate :check_associations
-
   scope :not_ended, -> { where('standing_orders.ends_at > (?) OR standing_orders.ends_at IS NULL', Time.zone.now) }
   scope :not_canceled, where('standing_orders.canceled_at IS NULL')
   scope :not_paused, where('standing_orders.paused_at IS NULL')
@@ -53,30 +47,6 @@ class StandingOrder < ActiveRecord::Base
     else
       return 'ended' if ends_at.andand < Time.zone.now
       'active'
-    end
-  end
-
-  private
-
-  def ends_at_after_begins_at
-    if begins_at.present? && ends_at.present? && ends_at <= begins_at
-      errors.add(:ends_at, "must be after begins at")
-    end
-  end
-
-  def check_associations
-    errors[:customer] << "does not belong to #{shop.name}" if customer && customer.enterprise != shop
-    errors[:schedule] << "is not coordinated by #{shop.name}" if schedule && schedule.coordinators.exclude?(shop)
-    errors[:payment_method] << "is not available to #{shop.name}" if payment_method && payment_method.distributors.exclude?(shop)
-    errors[:shipping_method] << "is not available to #{shop.name}" if shipping_method && shipping_method.distributors.exclude?(shop)
-  end
-
-  def standing_line_items_available
-    standing_line_items.each do |sli|
-      unless sli.available_from?(shop_id, schedule_id)
-        name = "#{sli.variant.product.name} - #{sli.variant.full_name}"
-        errors[:base] << "#{name} is not available from the selected schedule"
-      end
     end
   end
 end

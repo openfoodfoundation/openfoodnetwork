@@ -171,8 +171,10 @@ describe Admin::StandingOrdersController, type: :controller do
         end
       end
 
-      context 'when I submit valid and complete params' do
+      context 'when I submit complete params with references to accessible objects' do
         let!(:address) { create(:address) }
+        let(:variant) { create(:variant) }
+
         before do
           params[:standing_order].merge!({
             schedule_id: schedule.id,
@@ -184,44 +186,35 @@ describe Admin::StandingOrdersController, type: :controller do
           })
           params.merge!({
             bill_address: address.attributes.except('id'),
-            ship_address: address.attributes.except('id')
+            ship_address: address.attributes.except('id'),
+            standing_line_items: [{ quantity: 2, variant_id: variant.id}]
           })
         end
 
-        it 'creates a standing order' do
-          expect{ spree_post :create, params }.to change{StandingOrder.count}.by(1)
-          standing_order = StandingOrder.last
-          expect(standing_order.schedule).to eq schedule
-          expect(standing_order.customer).to eq customer
-          expect(standing_order.payment_method).to eq payment_method
-          expect(standing_order.shipping_method).to eq shipping_method
-          expect(standing_order.bill_address.firstname).to eq address.firstname
-          expect(standing_order.ship_address.firstname).to eq address.firstname
+        context 'where the specified variants are not available from the shop' do
+          it 'returns an error' do
+            expect{ spree_post :create, params }.to_not change{StandingOrder.count}
+            json_response = JSON.parse(response.body)
+            expect(json_response['errors']['standing_line_items']).to eq ["#{variant.product.name} - #{variant.full_name} is not available from the selected schedule"]
+          end
         end
 
-        context 'with standing_line_items params' do
-          let(:variant) { create(:variant) }
-          before { params[:standing_line_items] = [{ quantity: 2, variant_id: variant.id}] }
+        context 'where the specified variants are available from the shop' do
+          let!(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant])}
 
-          context 'where the specified variants are not available from the shop' do
-            it 'returns an error' do
-              expect{ spree_post :create, params }.to_not change{StandingOrder.count}
-              json_response = JSON.parse(response.body)
-              expect(json_response['errors']['base']).to eq ["#{variant.product.name} - #{variant.full_name} is not available from the selected schedule"]
-            end
-          end
-
-          context 'where the specified variants are available from the shop' do
-            let!(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant])}
-
-            it 'creates standing line items for the standing order' do
-              expect{ spree_post :create, params }.to change{StandingOrder.count}.by(1)
-              standing_order = StandingOrder.last
-              expect(standing_order.standing_line_items.count).to be 1
-              standing_line_item = standing_order.standing_line_items.first
-              expect(standing_line_item.quantity).to be 2
-              expect(standing_line_item.variant).to eq variant
-            end
+          it 'creates standing line items for the standing order' do
+            expect{ spree_post :create, params }.to change{StandingOrder.count}.by(1)
+            standing_order = StandingOrder.last
+            expect(standing_order.schedule).to eq schedule
+            expect(standing_order.customer).to eq customer
+            expect(standing_order.payment_method).to eq payment_method
+            expect(standing_order.shipping_method).to eq shipping_method
+            expect(standing_order.bill_address.firstname).to eq address.firstname
+            expect(standing_order.ship_address.firstname).to eq address.firstname
+            expect(standing_order.standing_line_items.count).to be 1
+            standing_line_item = standing_order.standing_line_items.first
+            expect(standing_line_item.quantity).to be 2
+            expect(standing_line_item.variant).to eq variant
           end
         end
       end
@@ -366,7 +359,7 @@ describe Admin::StandingOrdersController, type: :controller do
             it 'returns an error' do
               expect{ spree_post :update, params }.to_not change{standing_order.standing_line_items.count}
               json_response = JSON.parse(response.body)
-              expect(json_response['errors']['base']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
+              expect(json_response['errors']['standing_line_items']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
             end
           end
 

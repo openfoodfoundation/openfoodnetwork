@@ -88,40 +88,43 @@ describe StandingOrderForm do
     end
   end
 
-  describe "making a change that causes an error" do
-    let!(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
-    let!(:order) { standing_order.proxy_orders.first.initialise_order! }
-    let!(:shipping_method) { standing_order.shipping_method }
-    let!(:invalid_shipping_method) { create(:shipping_method, distributors: [create(:enterprise)]) }
-    let!(:params) { { shipping_method_id: invalid_shipping_method.id } }
-    let!(:form) { StandingOrderForm.new(standing_order, params) }
-
-    it "does not update standing_order or associated orders" do
-      expect(form.save).to be nil
-      expect(order.reload.shipping_method).to eq shipping_method
-      expect(order.shipments.first.shipping_method).to eq shipping_method
-      expect(form.json_errors.keys).to eq [:shipping_method]
-    end
-  end
-
   describe "changing the shipping method" do
     let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
     let(:order) { standing_order.proxy_orders.first.initialise_order! }
     let(:shipping_method) { standing_order.shipping_method }
     let(:new_shipping_method) { create(:shipping_method, distributors: [standing_order.shop]) }
-    let(:params) { { shipping_method_id: new_shipping_method.id } }
+    let(:invalid_shipping_method) { create(:shipping_method, distributors: [create(:enterprise)]) }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     context "when the shipping method on an order is the same as the standing order" do
-      it "updates the shipping_method on the order and on shipments" do
-        expect(order.shipments.first.shipping_method).to eq shipping_method
-        expect(form.save).to be true
-        expect(order.reload.shipping_method).to eq new_shipping_method
-        expect(order.shipments.first.shipping_method).to eq new_shipping_method
+      let(:params) { { shipping_method_id: new_shipping_method.id } }
+
+      context "and the shipping method is associated with the shop" do
+        it "updates the shipping_method on the order and on shipments" do
+          expect(order.shipments.first.shipping_method).to eq shipping_method
+          expect(form.save).to be true
+          expect(standing_order.reload.shipping_method).to eq new_shipping_method
+          expect(order.reload.shipping_method).to eq new_shipping_method
+          expect(order.shipments.first.shipping_method).to eq new_shipping_method
+        end
+      end
+
+      context "and the shipping method is not associated with the shop" do
+        let(:params) { { shipping_method_id: invalid_shipping_method.id } }
+
+        it "returns false and does not update the shipping method on the order or shipments" do
+          expect(order.shipments.first.shipping_method).to eq shipping_method
+          expect(form.save).to be false
+          expect(standing_order.reload.shipping_method).to eq shipping_method
+          expect(order.reload.shipping_method).to eq shipping_method
+          expect(order.shipments.first.shipping_method).to eq shipping_method
+        end
       end
     end
 
     context "when the shipping method on a shipment is not the same as the original shipping method on the standing order" do
+      let(:params) { { shipping_method_id: new_shipping_method.id } }
+
       context "when the shipping method on a shipment is the same as the new shipping method on the standing order" do
         before do
           # Updating the shipping method on a shipment updates the shipping method on the order,
@@ -165,23 +168,43 @@ describe StandingOrderForm do
     let(:order) { standing_order.proxy_orders.first.initialise_order! }
     let(:payment_method) { standing_order.payment_method }
     let(:new_payment_method) { create(:payment_method, distributors: [standing_order.shop]) }
-    let(:params) { { payment_method_id: new_payment_method.id } }
+    let(:invalid_payment_method) { create(:payment_method, distributors: [create(:enterprise)]) }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     context "when the payment method on an order is the same as the standing order" do
-      it "voids existing payments and creates a new payment with the relevant payment method" do
-        expect(order.payments.reload.first.payment_method).to eq payment_method
-        expect(form.save).to be true
-        payments = order.reload.payments
-        expect(payments.count).to be 2
-        expect(payments.with_state('void').count).to be 1
-        expect(payments.with_state('checkout').count).to be 1
-        expect(payments.with_state('void').first.payment_method).to eq payment_method
-        expect(payments.with_state('checkout').first.payment_method).to eq new_payment_method
+      let(:params) { { payment_method_id: new_payment_method.id } }
+
+      context "and the submitted payment method is associated with the shop" do
+        it "voids existing payments and creates a new payment with the relevant payment method" do
+          expect(order.payments.reload.first.payment_method).to eq payment_method
+          expect(form.save).to be true
+          payments = order.reload.payments
+          expect(payments.count).to be 2
+          expect(payments.with_state('void').count).to be 1
+          expect(payments.with_state('checkout').count).to be 1
+          expect(payments.with_state('void').first.payment_method).to eq payment_method
+          expect(payments.with_state('checkout').first.payment_method).to eq new_payment_method
+        end
+      end
+
+      context "and the submitted shipping method is not associated with the shop" do
+        let(:params) { { payment_method_id: invalid_payment_method.id } }
+
+        it "returns false and does not void existing payments or create a new payment" do
+          expect(order.payments.reload.first.payment_method).to eq payment_method
+          expect(form.save).to be false
+          payments = order.reload.payments
+          expect(payments.count).to be 1
+          expect(payments.with_state('void').count).to be 0
+          expect(payments.with_state('checkout').count).to be 1
+          expect(payments.with_state('checkout').first.payment_method).to eq payment_method
+        end
       end
     end
 
     context "when the payment method on a payment is not the same as the standing order" do
+      let(:params) { { payment_method_id: new_payment_method.id } }
+
       context "when the payment method on a payment is the same as the original payment method on the standing order" do
         before do
           order.payments.first.update_attribute(:payment_method_id, new_payment_method.id)
@@ -215,22 +238,38 @@ describe StandingOrderForm do
   end
 
   describe "changing begins_at" do
-    let(:standing_order) { create(:standing_order, begins_at: Time.zone.now, with_items: true, with_proxy_orders: true) }
-    let(:params) { { begins_at: 1.year.from_now, ends_at: 2.years.from_now } }
+    let(:standing_order) { create(:standing_order, begins_at: Time.zone.now, ends_at: 2.months.from_now, with_items: true, with_proxy_orders: true) }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     before { standing_order.proxy_orders.each(&:initialise_order!) }
 
-    it "removes orders outside the newly specified date range, recreates proxy orders" do
-      expect(standing_order.reload.proxy_orders.count).to be 1
-      expect(standing_order.reload.orders.count).to be 1
-      expect(form.save).to be true
-      expect(standing_order.reload.proxy_orders.count).to be 0
-      expect(standing_order.reload.orders.count).to be 0
-      form.params = { begins_at: 1.month.ago }
-      expect(form.save).to be true
-      expect(standing_order.reload.proxy_orders.count).to be 1
-      expect(standing_order.reload.orders.count).to be 0
+    context "to a date that is before ends_at" do
+      let(:params) { { begins_at: 1.month.from_now } }
+
+      it "removes orders outside the newly specified date range, recreates proxy orders" do
+        expect(standing_order.reload.proxy_orders.count).to be 1
+        expect(standing_order.reload.orders.count).to be 1
+        expect(form.save).to be true
+        expect(standing_order.reload.proxy_orders.count).to be 0
+        expect(standing_order.reload.orders.count).to be 0
+        form.params = { begins_at: 1.month.ago }
+        expect(form.save).to be true
+        expect(standing_order.reload.proxy_orders.count).to be 1
+        expect(standing_order.reload.orders.count).to be 0
+      end
+    end
+
+    context "to a date that is after ends_at" do
+      let(:params) { { begins_at: 3.months.from_now } }
+
+      it "returns false, does not update begins_at and alter orders or proxy orders" do
+        expect(standing_order.reload.proxy_orders.count).to be 1
+        expect(standing_order.reload.orders.count).to be 1
+        expect(form.save).to be false
+        expect(standing_order.reload.begins_at).to be_within(5.seconds).of Time.now
+        expect(standing_order.proxy_orders.count).to be 1
+        expect(standing_order.orders.count).to be 1
+      end
     end
   end
 
@@ -303,20 +342,37 @@ describe StandingOrderForm do
 
   describe "adding a new line item" do
     let(:variant) { create(:variant) }
+    let(:unavailable_variant) { create(:variant) }
     let(:shop) { create(:enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, variants: [variant], coordinator: shop, distributors: [shop]) }
     let(:schedule) { create(:schedule, order_cycles: [order_cycle] )}
     let(:standing_order) { create(:standing_order, schedule: schedule, shop: shop, with_items: true, with_proxy_orders: true) }
     let(:order) { standing_order.proxy_orders.first.initialise_order! }
-    let(:params) { { standing_line_items_attributes: [ { id: nil, variant_id: variant.id, quantity: 1} ] } }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
-    it "add the line item and updates the total on all orders" do
-      expect(order.reload.total.to_f).to eq 59.97
-      expect(form.save).to be true
-      line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
-      expect(line_items.map(&:quantity)).to eq [1]
-      expect(order.reload.total.to_f).to eq 79.96
+    context "that is available from the selected schedule" do
+      let(:params) { { standing_line_items_attributes: [ { id: nil, variant_id: variant.id, quantity: 1} ] } }
+
+      it "adds the line item and updates the total on all orders" do
+        expect(order.reload.total.to_f).to eq 59.97
+        expect(form.save).to be true
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
+        expect(line_items.map(&:quantity)).to eq [1]
+        expect(order.reload.total.to_f).to eq 79.96
+      end
+    end
+
+    context "that is not available from the selected schedule" do
+      let(:params) { { standing_line_items_attributes: [ { id: nil, variant_id: unavailable_variant.id, quantity: 1} ] } }
+
+      it "returns false and does not add the line item or update the total on orders" do
+        expect(order.reload.total.to_f).to eq 59.97
+        expect(form.save).to be false
+        line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
+        expect(line_items.count).to be 0
+        expect(order.reload.total.to_f).to eq 59.97
+        expect(form.json_errors.keys).to eq [:standing_line_items]
+      end
     end
   end
 
