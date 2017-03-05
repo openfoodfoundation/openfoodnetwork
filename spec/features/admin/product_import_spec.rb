@@ -14,8 +14,12 @@ feature "Product Import", js: true do
   let!(:tax_category) { create(:tax_category) }
   let!(:tax_category2) { create(:tax_category) }
   let!(:shipping_category) { create(:shipping_category) }
-  let!(:product) { create(:simple_product, supplier: enterprise, name: 'Hypothetical Cake') }
-  let!(:variant) { create(:variant, product_id: product.id, price: '8.50', count_on_hand: '100', unit_value: '500', display_name: 'Preexisting Banana') }
+  let!(:product) { create(:simple_product, supplier: enterprise2, name: 'Hypothetical Cake') }
+  let!(:variant) { create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500', display_name: 'Preexisting Banana') }
+  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans') }
+  let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts') }
+  let!(:product4) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce') }
+
 
   describe "when importing products from uploaded file" do
     before { quick_login_as_admin }
@@ -104,8 +108,8 @@ feature "Product Import", js: true do
     it "can add new variants to existing products and update price and stock level of existing products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale", "display_name"]
-        csv << ["Hypothetical Cake", "User Enterprise", "Cake", "5", "5.50", "500", "weight", "1", "Preexisting Banana"]
-        csv << ["Hypothetical Cake", "User Enterprise", "Cake", "6", "3.50", "500", "weight", "1", "Emergent Coffee"]
+        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "5", "5.50", "500", "weight", "1", "Preexisting Banana"]
+        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "6", "3.50", "500", "weight", "1", "Emergent Coffee"]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -235,6 +239,36 @@ feature "Product Import", js: true do
 
   describe "applying settings and defaults on import" do
     before { quick_login_as_admin }
+
+    it "can set all products for an enterprise that are not present in the uploaded file to zero stock" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000"]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Import'
+
+      within 'div.import-settings' do
+        find('div.header-description').click  # Import settings tab
+        check "settings_#{enterprise.id}_reset_all_absent"
+      end
+
+      expect(page).to have_selector '.reset-count', text: "2"
+
+      click_button 'Save'
+      expect(page).to have_content "Products created: 2"
+
+      Spree::Product.find_by_name('Carrots').on_hand.should == 5    # Present in file
+      Spree::Product.find_by_name('Potatoes').on_hand.should == 6   # Present in file
+      Spree::Product.find_by_name('Beans').on_hand.should == 0      # In enterprise, not in file
+      Spree::Product.find_by_name('Sprouts').on_hand.should == 0    # In enterprise, not in file
+      Spree::Product.find_by_name('Lettuce').on_hand.should == 100  # In different enterprise; unchanged
+    end
 
     it "overwrites fields with selected defaults" do
       csv_data = CSV.generate do |csv|
