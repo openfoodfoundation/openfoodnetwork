@@ -45,7 +45,8 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.update-count', text: "0"
 
       click_button 'Save'
-      expect(page).to have_content "Products created: 2"
+      expect(page).to have_selector '.created-count', text: '2'
+      expect(page).to have_selector '.updated-count', text: '0'
 
       potatoes = Spree::Product.find_by_name('Potatoes')
       potatoes.supplier.should == enterprise
@@ -74,7 +75,9 @@ feature "Product Import", js: true do
 
       expect(page).to have_selector 'input[type=submit][value="Save"]'
       click_button 'Save'
-      expect(page).to have_content "Products created: 1"
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_selector '.updated-count', text: '0'
 
       Spree::Product.find_by_name('Bad Potatoes').should == nil
       carrots = Spree::Product.find_by_name('Good Carrots')
@@ -123,8 +126,9 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.update-count', text: "1"
 
       click_button 'Save'
-      expect(page).to have_content "Products created: 1"
-      expect(page).to have_content "Products updated: 1"
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_selector '.updated-count', text: '1'
 
       added_coffee = Spree::Variant.find_by_display_name('Emergent Coffee')
       added_coffee.product.name.should == 'Hypothetical Cake'
@@ -155,7 +159,8 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.update-count', text: "0"
 
       click_button 'Save'
-      expect(page).to have_content "Products created: 2"
+      expect(page).to have_selector '.created-count', text: '2'
+      expect(page).to have_selector '.updated-count', text: '0'
 
       small_bag = Spree::Variant.find_by_display_name('Small Bag')
       small_bag.product.name.should == 'Potatoes'
@@ -230,7 +235,9 @@ feature "Product Import", js: true do
       expect(page.body).to have_content 'You do not have permission to manage products for "Another Enterprise"'
 
       click_button 'Save'
-      expect(page).to have_content "Products created: 1"
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_selector '.updated-count', text: '0'
 
       Spree::Product.find_by_name('My Carrots').should be_a Spree::Product
       Spree::Product.find_by_name('Your Potatoes').should == nil
@@ -261,7 +268,9 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.reset-count', text: "2"
 
       click_button 'Save'
-      expect(page).to have_content "Products created: 2"
+
+      expect(page).to have_selector '.created-count', text: '2'
+      expect(page).to have_selector '.updated-count', text: '0'
 
       Spree::Product.find_by_name('Carrots').on_hand.should == 5    # Present in file
       Spree::Product.find_by_name('Potatoes').on_hand.should == 6   # Present in file
@@ -305,7 +314,9 @@ feature "Product Import", js: true do
       end
 
       click_button 'Save'
-      expect(page).to have_content "Products created: 2"
+
+      expect(page).to have_selector '.created-count', text: '2'
+      expect(page).to have_selector '.updated-count', text: '0'
 
       carrots = Spree::Product.find_by_name('Carrots')
       carrots.on_hand.should == 9000
