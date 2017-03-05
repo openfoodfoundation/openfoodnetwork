@@ -24,16 +24,23 @@ div.panel-section {
       text-align: center;
       padding-top: 0.18em;
 
-      .fa {
+      i {
         font-size: 1.5em;
         line-height: 0.9em;
       }
-      .fa-warning {
-        color: #ee4728;
-      }
-      .fa-check-circle {
-        color: #86d83a;
-      }
+    }
+
+    .neutral {
+      color: #BFBFBF;
+    }
+    .warning {
+      color: #ee4728;
+    }
+    .success {
+      color: #86d83a;
+    }
+    .info {
+      color: #68b7c0;
     }
 
     div.header-count {
@@ -145,9 +152,7 @@ table.import-settings {
 }
 
 .panel-section.import-settings {
-  .header-icon {
-    color: #BFBFBF;
-  }
+
   .header-description {
     padding-left: 1em;
   }

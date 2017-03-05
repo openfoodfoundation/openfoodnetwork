@@ -4,9 +4,32 @@
 %div.panel-section
   %div.panel-header
     %div.header-caret
-      -#%i.icon-chevron-right{ng: {hide: 'active'}}
-      -#%i.icon-chevron-down{ng: {hide: '!active'}}
-    %div.header-icon
+    %div.header-icon.info
+      %i.fa.fa-info-circle
+    %div.header-count
+      %strong.item-count= @importer.supplier_products[:total]
+    %div.header-description
+      Existing products in referenced enterprise(s)
+  -#%div.panel-content{ng: {hide: '!active'}}
+  -#  Content goes here
+
+%div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetCount == 0'}}
+  %div.panel-header
+    %div.header-caret
+    %div.header-icon.info
+      %i.fa.fa-info-circle
+    %div.header-count
+      %strong.reset-count
+        {{resetCount}}
+    %div.header-description
+      Existing products will have their stock reset to zero
+  -#%div.panel-content{ng: {hide: '!active'}}
+  -#  Content goes here
+
+%div.panel-section
+  %div.panel-header
+    %div.header-caret
+    %div.header-icon.success
       %i.fa.fa-check-circle
     %div.header-count
       %strong.item-count= @importer.item_count
@@ -19,7 +42,7 @@
   %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
     %div.header-caret
       %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
-    %div.header-icon
+    %div.header-icon.warning
       %i.fa.fa-warning
     %div.header-count
       %strong.invalid-count= @importer.invalid_count
@@ -34,7 +57,7 @@
   %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
     %div.header-caret
       %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
-    %div.header-icon
+    %div.header-icon.success
       %i.fa.fa-check-circle
     %div.header-count
       %strong.create-count= @importer.products_create_count
@@ -47,7 +70,7 @@
   %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
     %div.header-caret
       %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
-    %div.header-icon
+    %div.header-icon.success
       %i.fa.fa-check-circle
     %div.header-count
       %strong.update-count= @importer.products_update_count

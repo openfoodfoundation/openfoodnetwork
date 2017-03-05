@@ -1,9 +1,9 @@
-%table.import-settings
+%table.import-settings{ng: {controller: 'ImportOptionsFormCtrl', init: "supplierId = #{id}; nonUpdated = #{@importer.supplier_products[:by_supplier][id][:non_updated]}"}}
   %tr
     %td.description
       Remove absent products?
     %td
-      = check_box_tag "settings[#{id}][products_absent]", 1, false
+      = check_box_tag "settings[#{id}][reset_all_absent]", 1, false, :'ng-model' => 'resetAbsent', :'ng-change' => 'toggleResetAbsent()'
     %td
   %tr
     %td.description

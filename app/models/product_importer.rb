@@ -25,6 +25,8 @@ class ProductImporter
       editable_enterprises.map { |e| @editable_enterprises[e.name] = e.id }
 
       @non_display_attributes = 'id', 'product_id', 'variant_id', 'supplier_id', 'primary_taxon_id', 'category_id', 'shipping_category_id', 'tax_category_id', 'on_hand_nil'
+      @supplier_products = {total: 0, by_supplier: {}}
+      @updated_ids = []
 
       validate_all if @sheet
     else
@@ -42,6 +44,18 @@ class ProductImporter
 
   def item_count
     @sheet ? @sheet.last_row - 1 : 0
+  end
+
+  def supplier_products
+    # Return indexed data about existing product count and update count per supplier
+    @supplier_products[:by_supplier].each do |supplier_id, supplier_data|
+      supplier_data[:updates_count] = 0 if supplier_data[:updates_count].blank?
+
+      if supplier_data[:updates_count] and supplier_data[:existing_products]
+        @supplier_products[:by_supplier][supplier_id][:non_updated] = supplier_data[:existing_products] - supplier_data[:updates_count]
+      end
+    end
+    @supplier_products
   end
 
   def valid_count
@@ -140,7 +154,7 @@ class ProductImporter
 
   def validate_all
     entries.each_with_index do |entry, i|
-      line_number = i+2
+      line_number = i+2 # Roo counts "line 2" as the first line of data
 
       supplier_validation(line_number, entry)
       category_validation(line_number, entry)
@@ -149,7 +163,24 @@ class ProductImporter
       mark_as_valid(line_number, entry) unless entry_invalid?(line_number)
     end
 
+    count_existing_products
+
     delete_uploaded_file if item_count.zero? or valid_count.zero?
+  end
+
+  def count_existing_products
+    @suppliers_index.each do |supplier_name, supplier_id|
+      if supplier_id
+        products_count = Spree::Variant.joins(:product).
+          where('spree_products.supplier_id IN (?)
+          AND spree_variants.is_master = false
+          AND spree_variants.deleted_at IS NULL', supplier_id).
+          count
+
+        @supplier_products[:by_supplier][supplier_id] = {existing_products: products_count}
+        @supplier_products[:total] += products_count
+      end
+    end
   end
 
   def entry_invalid?(line_number)
@@ -246,14 +277,14 @@ class ProductImporter
   end
 
   def save_all_valid
-    updated = {}
+    already_created = {}
     @products_to_create.each do |line_number, data|
       entry = data[:entry]
       # If we've already added a new product with these attributes
       # from this spreadsheet, mark this entry as a new variant with
       # the new product id, as this is a now variant of that product...
-      if updated[entry['supplier_id']] && updated[entry['supplier_id']][entry['name']]
-        product_id = updated[entry['supplier_id']][entry['name']]
+      if already_created[entry['supplier_id']] and already_created[entry['supplier_id']][entry['name']]
+        product_id = already_created[entry['supplier_id']][entry['name']]
         mark_as_new_variant(line_number, entry, product_id)
         next
       end
@@ -264,11 +295,12 @@ class ProductImporter
       if product.save
         ensure_variant_updated(entry, product)
         @products_created += 1
+        @updated_ids.push product.variants.first.id
       else
         self.errors.add("Line #{line_number}:", product.errors.full_messages)
       end
 
-      updated[entry['supplier_id']] = {entry['name'] => product.id}
+      already_created[entry['supplier_id']] = {entry['name'] => product.id}
     end
 
     @variants_to_update.each do |line_number, data|
@@ -276,6 +308,7 @@ class ProductImporter
       assign_defaults(variant, data[:entry])
       if variant.valid? and variant.save
         @variants_updated += 1
+        @updated_ids.push variant.id
       else
         self.errors.add("Line #{line_number}:", variant.errors.full_messages)
       end
@@ -286,14 +319,34 @@ class ProductImporter
       assign_defaults(new_variant, data[:entry])
       if new_variant.valid? and new_variant.save
         @variants_created += 1
+        @updated_ids.push new_variant.id
       else
         self.errors.add("Line #{line_number}:", new_variant.errors.full_messages)
       end
     end
 
-    self.errors.add(:importer, "did not save any products successfully") if total_saved_count == 0
+    self.errors.add(:importer, "did not save any products successfully") if total_saved_count.zero?
 
+    reset_absent_products
     total_saved_count
+  end
+
+  def reset_absent_products
+    return if total_saved_count.zero?
+
+    enterprises_to_reset = []
+    @import_settings.each do |enterprise_id, settings|
+      enterprises_to_reset.push enterprise_id if settings['reset_all_absent']
+    end
+
+    unless enterprises_to_reset.empty? or @updated_ids.empty?
+      # Set stock to zero for all products in selected enterprises that were not
+      # present in the uploaded spreadsheet.
+      Spree::Variant.joins(:product).
+        where('spree_products.supplier_id IN (?)
+          AND spree_variants.id NOT IN (?)', enterprises_to_reset, @updated_ids).
+        update_all(count_on_hand: 0)
+    end
   end
 
   def assign_defaults(object, entry)
@@ -356,6 +409,7 @@ class ProductImporter
     check_on_hand_nil(entry, existing_variant)
     if existing_variant.valid?
       @variants_to_update[line_number] = {entry: entry, variant: existing_variant} unless entry_invalid?(line_number)
+      updates_count_per_supplier(entry['supplier_id']) unless entry_invalid?(line_number)
     else
       mark_as_invalid(line_number, entry, existing_variant.errors.full_messages)
     end
@@ -369,6 +423,14 @@ class ProductImporter
       @variants_to_create[line_number] = {entry: entry, variant: new_variant} unless entry_invalid?(line_number)
     else
       mark_as_invalid(line_number, entry, new_variant.errors.full_messages)
+    end
+  end
+
+  def updates_count_per_supplier(supplier_id)
+    if @supplier_products[:by_supplier][supplier_id] and @supplier_products[:by_supplier][supplier_id][:updates_count]
+      @supplier_products[:by_supplier][supplier_id][:updates_count] += 1
+    else
+      @supplier_products[:by_supplier][supplier_id] = {updates_count: 1}
     end
   end
 
