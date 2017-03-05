@@ -3,25 +3,30 @@
 
 = render :partial => 'spree/admin/shared/product_sub_menu'
 
-%h5 Import results
+%h5 Import final results
 %br
 
-%p{style: 'font-size: 1.15em'}
-  Products created:
-  = @importer.products_created_count
-%p{style: 'font-size: 1.15em'}
-  Products updated:
-  = @importer.products_updated_count
+%div.post-save-results{ng: {app: 'ofn.admin'}}
 
-%br
+  %p
+    %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_created_count} == 0, 'fa-check-circle': #{@importer.products_created_count} != 0}"}}
+    %strong.created-count= @importer.products_created_count
+    Products created
 
-- if @importer.errors.count == 0
-  %h5 All #{@importer.total_saved_count} items saved successfully
-- else
-  %h5 Errors
-  - @importer.errors.full_messages.each do |error|
-    %p{class: "red"}
-      &nbsp;-&nbsp; #{error}
+  %p
+    %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_updated_count} == 0, 'fa-check-circle': #{@importer.products_updated_count} != 0}"}}
+    %strong.updated-count= @importer.products_updated_count
+    Products updated
 
-%br
-%a.button{href: main_app.admin_product_import_path} Back
+  %br
+
+  - if @importer.errors.count == 0
+    %p All #{@importer.total_saved_count} items saved successfully
+  - else
+    %h5 Save errors
+    - @importer.errors.full_messages.each do |error|
+      %p.save-error
+        &nbsp;-&nbsp; #{error}
+
+  %br
+  %a.button{href: main_app.admin_product_import_path} Back

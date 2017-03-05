@@ -165,3 +165,35 @@ table.import-settings {
 .select2-results {
   margin: 0;
 }
+
+.post-save-results {
+  p {
+    font-size: 1.25em;
+    margin-bottom: 0.5em;
+
+    strong {
+      margin-left: 0.5em;
+      margin-right: 0.2em;
+    }
+
+    i {
+      font-size: 1.4em;
+      vertical-align: middle;
+      position: relative;
+      //margin-bottom: -0.8em;
+    }
+
+    i.fa-check-circle {
+      color: #86d83a;
+    }
+    i.fa-info-circle {
+      color: #68b7c0;
+    }
+  }
+
+  p.save-error {
+    color: #ee4728;
+    font-size: 1.05em;
+    margin-top: 0.4em;
+  }
+}
