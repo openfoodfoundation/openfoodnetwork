@@ -18,6 +18,12 @@
     %strong.updated-count= @importer.products_updated_count
     Products updated
 
+  - if @importer.products_reset_count > 0
+    %p
+      %i.fa.fa-check-circle
+      %strong.reset-count= @importer.products_reset_count
+      Products had stock level reset to zero
+
   %br
 
   - if @importer.errors.count == 0

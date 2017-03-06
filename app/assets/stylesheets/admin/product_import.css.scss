@@ -172,15 +172,16 @@ table.import-settings {
     margin-bottom: 0.5em;
 
     strong {
-      margin-left: 0.5em;
       margin-right: 0.2em;
+      min-width: 1.8em;
+      display: inline-block;
+      text-align: right;
     }
 
     i {
       font-size: 1.4em;
       vertical-align: middle;
       position: relative;
-      //margin-bottom: -0.8em;
     }
 
     i.fa-check-circle {
