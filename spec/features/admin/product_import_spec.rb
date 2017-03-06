@@ -16,9 +16,10 @@ feature "Product Import", js: true do
   let!(:shipping_category) { create(:shipping_category) }
   let!(:product) { create(:simple_product, supplier: enterprise2, name: 'Hypothetical Cake') }
   let!(:variant) { create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500', display_name: 'Preexisting Banana') }
-  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans') }
+  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans', unit_value: '500') }
   let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts') }
-  let!(:product4) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce') }
+  let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage') }
+  let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce') }
 
 
   describe "when importing products from uploaded file" do
@@ -251,7 +252,7 @@ feature "Product Import", js: true do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000"]
+        csv << ["Beans", "User Enterprise", "Vegetables", "6", "6.50", "500", "weight", "1"]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -259,6 +260,13 @@ feature "Product Import", js: true do
 
       attach_file 'file', '/tmp/test.csv'
       click_button 'Import'
+
+      expect(page).to have_selector '.item-count', text: "2"
+      expect(page).to have_selector '.invalid-count', text: "0"
+      expect(page).to have_selector '.create-count', text: "1"
+      expect(page).to have_selector '.update-count', text: "1"
+
+      expect(page).to_not have_selector '.reset-count'
 
       within 'div.import-settings' do
         find('div.header-description').click  # Import settings tab
@@ -269,13 +277,14 @@ feature "Product Import", js: true do
 
       click_button 'Save'
 
-      expect(page).to have_selector '.created-count', text: '2'
-      expect(page).to have_selector '.updated-count', text: '0'
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_selector '.updated-count', text: '1'
+      expect(page).to have_selector '.reset-count', text: '2'
 
-      Spree::Product.find_by_name('Carrots').on_hand.should == 5    # Present in file
-      Spree::Product.find_by_name('Potatoes').on_hand.should == 6   # Present in file
-      Spree::Product.find_by_name('Beans').on_hand.should == 0      # In enterprise, not in file
+      Spree::Product.find_by_name('Carrots').on_hand.should == 5    # Present in file, added
+      Spree::Product.find_by_name('Beans').on_hand.should == 6      # Present in file, updated
       Spree::Product.find_by_name('Sprouts').on_hand.should == 0    # In enterprise, not in file
+      Spree::Product.find_by_name('Cabbage').on_hand.should == 0    # In enterprise, not in file
       Spree::Product.find_by_name('Lettuce').on_hand.should == 100  # In different enterprise; unchanged
     end
 

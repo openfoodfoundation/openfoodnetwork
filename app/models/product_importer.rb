@@ -110,6 +110,10 @@ class ProductImporter
     @variants_updated
   end
 
+  def products_reset_count
+    @products_reset_count || 0
+  end
+
   def total_saved_count
     @products_created + @variants_created + @variants_updated
   end
@@ -177,7 +181,12 @@ class ProductImporter
           AND spree_variants.deleted_at IS NULL', supplier_id).
           count
 
-        @supplier_products[:by_supplier][supplier_id] = {existing_products: products_count}
+        if @supplier_products[:by_supplier][supplier_id]
+          @supplier_products[:by_supplier][supplier_id][:existing_products] = products_count
+        else
+          @supplier_products[:by_supplier][supplier_id] = {existing_products: products_count}
+        end
+
         @supplier_products[:total] += products_count
       end
     end
@@ -340,11 +349,13 @@ class ProductImporter
     end
 
     unless enterprises_to_reset.empty? or @updated_ids.empty?
-      # Set stock to zero for all products in selected enterprises that were not
-      # present in the uploaded spreadsheet.
-      Spree::Variant.joins(:product).
+      # For selected enterprises; set stock to zero for all products
+      # that were not present in the uploaded spreadsheet
+      @products_reset_count = Spree::Variant.joins(:product).
         where('spree_products.supplier_id IN (?)
-          AND spree_variants.id NOT IN (?)', enterprises_to_reset, @updated_ids).
+        AND spree_variants.id NOT IN (?)
+        AND spree_variants.is_master = false
+        AND spree_variants.deleted_at IS NULL', enterprises_to_reset, @updated_ids).
         update_all(count_on_hand: 0)
     end
   end
