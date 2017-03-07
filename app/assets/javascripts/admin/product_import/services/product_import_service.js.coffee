@@ -1,15 +1,15 @@
-angular.module("ofn.admin").factory "ProductImportService", ($rootScope, $timeout) ->
+angular.module("ofn.admin").factory "ProductImportService", ($rootScope) ->
   new class ProductImportService
     suppliers: {}
-    resetCount: 0
+    resetTotal: 0
 
-    updateResetAbsent: (supplierId, nonUpdated, resetAbsent) ->
+    updateResetAbsent: (supplierId, resetCount, resetAbsent) ->
       if resetAbsent
-        @suppliers[supplierId] = nonUpdated
-        @resetCount += nonUpdated
+        @suppliers[supplierId] = resetCount
+        @resetTotal += resetCount
       else
         @suppliers[supplierId] = null
-        @resetCount -= nonUpdated
+        @resetTotal -= resetCount
 
-      $rootScope.resetCount = @resetCount
+      $rootScope.resetTotal = @resetTotal
 

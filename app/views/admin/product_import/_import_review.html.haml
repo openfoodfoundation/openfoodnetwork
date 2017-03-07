@@ -1,26 +1,26 @@
 %h5 Import validation overview
 %br
 
-%div.panel-section
-  %div.panel-header
-    %div.header-caret
-    %div.header-icon.info
-      %i.fa.fa-info-circle
-    %div.header-count
-      %strong.item-count= @importer.supplier_products[:total]
-    %div.header-description
-      Existing products in referenced enterprise(s)
-  -#%div.panel-content{ng: {hide: '!active'}}
-  -#  Content goes here
+-#%div.panel-section
+-#  %div.panel-header
+-#    %div.header-caret
+-#    %div.header-icon.info
+-#      %i.fa.fa-info-circle
+-#    %div.header-count
+-#      %strong.existing-count= @importer.total_supplier_products
+-#    %div.header-description
+-#      Existing products in referenced enterprise(s)
+-#  -#%div.panel-content{ng: {hide: '!active'}}
+-#  -#  Content goes here
 
-%div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetCount == 0'}}
+%div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetTotal == 0'}}
   %div.panel-header
     %div.header-caret
     %div.header-icon.info
       %i.fa.fa-info-circle
     %div.header-count
       %strong.reset-count
-        {{resetCount}}
+        {{resetTotal}}
     %div.header-description
       Existing products will have their stock reset to zero
   -#%div.panel-content{ng: {hide: '!active'}}

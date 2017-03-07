@@ -1,8 +1,8 @@
 %h5 Import options and defaults
 %br
 
-- @importer.suppliers_index.each do |name, id|
-  - if name and id
+- @importer.suppliers_index.each do |name, supplier_id|
+  - if name and supplier_id and @importer.permission_by_id?(supplier_id)
     %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
       %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active}'}}
         %div.header-caret
@@ -14,7 +14,7 @@
         %div.header-description
           = name
       %div.panel-content{ng: {hide: '!active'}}
-        = render 'options_form', id: id, name: name
+        = render 'options_form', supplier_id: supplier_id, name: name
 
 
 %br.panels.clearfix
