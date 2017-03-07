@@ -5,6 +5,8 @@ class ProductImporter
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
+  attr_reader :total_supplier_products
+
   def initialize(file, editable_enterprises, import_settings={})
     if file.is_a?(File)
       @file = file
@@ -25,7 +27,8 @@ class ProductImporter
       editable_enterprises.map { |e| @editable_enterprises[e.name] = e.id }
 
       @non_display_attributes = 'id', 'product_id', 'variant_id', 'supplier_id', 'primary_taxon_id', 'category_id', 'shipping_category_id', 'tax_category_id', 'on_hand_nil'
-      @supplier_products = {total: 0, by_supplier: {}}
+      @total_supplier_products = 0
+      @products_to_reset = {}
       @updated_ids = []
 
       validate_all if @sheet
@@ -46,16 +49,16 @@ class ProductImporter
     @sheet ? @sheet.last_row - 1 : 0
   end
 
-  def supplier_products
-    # Return indexed data about existing product count and update count per supplier
-    @supplier_products[:by_supplier].each do |supplier_id, supplier_data|
-      supplier_data[:updates_count] = 0 if supplier_data[:updates_count].blank?
+  def products_to_reset
+    # Return indexed data about existing product count, reset count, and updates count per supplier
+    @products_to_reset.each do |supplier_id, values|
+      values[:updates_count] = 0 if values[:updates_count].blank?
 
-      if supplier_data[:updates_count] and supplier_data[:existing_products]
-        @supplier_products[:by_supplier][supplier_id][:non_updated] = supplier_data[:existing_products] - supplier_data[:updates_count]
+      if values[:updates_count] and values[:existing_products]
+        @products_to_reset[supplier_id][:reset_count] = values[:existing_products] - values[:updates_count]
       end
     end
-    @supplier_products
+    @products_to_reset
   end
 
   def valid_count
@@ -123,6 +126,14 @@ class ProductImporter
     delete_uploaded_file
   end
 
+  def permission_by_name?(supplier_name)
+    @editable_enterprises.has_key?(supplier_name)
+  end
+
+  def permission_by_id?(supplier_id)
+    @editable_enterprises.has_value?(Integer(supplier_id))
+  end
+
   private
 
   def open_spreadsheet
@@ -174,20 +185,20 @@ class ProductImporter
 
   def count_existing_products
     @suppliers_index.each do |supplier_name, supplier_id|
-      if supplier_id
+      if supplier_id and permission_by_id?(supplier_id)
         products_count = Spree::Variant.joins(:product).
           where('spree_products.supplier_id IN (?)
           AND spree_variants.is_master = false
           AND spree_variants.deleted_at IS NULL', supplier_id).
           count
 
-        if @supplier_products[:by_supplier][supplier_id]
-          @supplier_products[:by_supplier][supplier_id][:existing_products] = products_count
+        if @products_to_reset[supplier_id]
+          @products_to_reset[supplier_id][:existing_products] = products_count
         else
-          @supplier_products[:by_supplier][supplier_id] = {existing_products: products_count}
+          @products_to_reset[supplier_id] = {existing_products: products_count}
         end
 
-        @supplier_products[:total] += products_count
+        @total_supplier_products += products_count
       end
     end
   end
@@ -210,7 +221,7 @@ class ProductImporter
       return
     end
 
-    unless permission_to_manage?(supplier_name)
+    unless permission_by_name?(supplier_name)
       mark_as_invalid(line_number, entry, "You do not have permission to manage products for \"#{supplier_name}\"")
       return
     end
@@ -220,10 +231,6 @@ class ProductImporter
 
   def supplier_exists?(supplier_name)
     @suppliers_index[supplier_name]
-  end
-
-  def permission_to_manage?(supplier_name)
-    @editable_enterprises.has_key?(supplier_name)
   end
 
   def category_validation(line_number, entry)
@@ -345,7 +352,7 @@ class ProductImporter
 
     enterprises_to_reset = []
     @import_settings.each do |enterprise_id, settings|
-      enterprises_to_reset.push enterprise_id if settings['reset_all_absent']
+      enterprises_to_reset.push enterprise_id if settings['reset_all_absent'] and permission_by_id?(enterprise_id)
     end
 
     unless enterprises_to_reset.empty? or @updated_ids.empty?
@@ -438,10 +445,10 @@ class ProductImporter
   end
 
   def updates_count_per_supplier(supplier_id)
-    if @supplier_products[:by_supplier][supplier_id] and @supplier_products[:by_supplier][supplier_id][:updates_count]
-      @supplier_products[:by_supplier][supplier_id][:updates_count] += 1
+    if @products_to_reset[supplier_id] and @products_to_reset[supplier_id][:updates_count]
+      @products_to_reset[supplier_id][:updates_count] += 1
     else
-      @supplier_products[:by_supplier][supplier_id] = {updates_count: 1}
+      @products_to_reset[supplier_id] = {updates_count: 1}
     end
   end
 
