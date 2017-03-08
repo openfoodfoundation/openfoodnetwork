@@ -13,7 +13,8 @@
 = render 'data'
 = render 'order_update_issues_dialog'
 
-%div{ ng: { controller: 'StandingOrdersController' } }
+%div.margin-bottom-50{ ng: { controller: 'StandingOrdersController' } }
+  %save-bar{ dirty: "false", persist: "false" }
   = render 'filters'
   = render 'controls'
   = render 'table'
