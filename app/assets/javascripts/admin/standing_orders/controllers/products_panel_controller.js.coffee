@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").controller "ProductsPanelController", ($scope, StandingOrders) ->
+angular.module("admin.standingOrders").controller "ProductsPanelController", ($scope, StandingOrders, StatusMessage) ->
   $scope.standingOrder = $scope.object
   $scope.distributor_id = $scope.standingOrder.shop_id
   $scope.saving = false
@@ -10,7 +10,14 @@ angular.module("admin.standingOrders").controller "ProductsPanelController", ($s
 
   $scope.save = ->
     $scope.saving = true
-    $scope.standingOrder.update().then ->
+    StatusMessage.display 'progress', 'Saving...'
+    $scope.standingOrder.update().then (response) ->
       $scope.saving = false
-    , ->
+      StatusMessage.display 'success', 'Saved'
+    , (response) ->
       $scope.saving = false
+      if response.data?.errors?
+        keys = Object.keys(response.data.errors)
+        StatusMessage.display 'failure', response.data.errors[keys[0]][0]
+      else
+        StatusMessage.display 'success', 'Saved'
