@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").controller "StandingOrderController", ($scope, $http, StandingOrder, customers, schedules, paymentMethods, shippingMethods) ->
+angular.module("admin.standingOrders").controller "StandingOrderController", ($scope, $http, $window, StandingOrder, customers, schedules, paymentMethods, shippingMethods) ->
   $scope.standingOrder = new StandingOrder()
   $scope.customers = customers
   $scope.schedules = schedules
@@ -13,9 +13,11 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
   $scope.save = ->
     $scope.standing_order_form.$setPristine()
     if $scope.standingOrder.id?
-      $scope.standingOrder.update()
+      $scope.standingOrder.update().then (response) ->
+        $window.location.href = "/admin/standing_orders"
     else
-      $scope.standingOrder.create()
+      $scope.standingOrder.create().then (response) ->
+        $window.location.href = "/admin/standing_orders"
 
   $scope.setView = (view) -> $scope.view = view
 
