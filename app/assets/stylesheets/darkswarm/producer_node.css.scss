@@ -32,6 +32,11 @@
       color: $clr-turquoise;
     }
 
+    .vertical-align-middle {
+      display: flex;
+      align-items: center;
+    }
+
     a {
       &:hover, &:active, &:focus {
         color: $clr-turquoise-bright;

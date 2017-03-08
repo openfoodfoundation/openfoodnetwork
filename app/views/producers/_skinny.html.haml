@@ -1,20 +1,24 @@
 .row.active_table_row{"ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
-  .columns.small-12.medium-4.large-4.skinny-head
+  .columns.small-12.medium-8.large-8.skinny-head
     %span{"ng-if" => "::producer.is_distributor" }
-      %a.is_distributor{"ng-href" => "{{::producer.path}}" }
-        %i{ng: {class: "::producer.producer_icon_font"}}
-        %span.margin-top
-          %strong{"ng-bind" => "::producer.name"}
+      %a.is_distributor{"ng-href" => "{{::producer.path}}"}
+        .row.vertical-align-middle
+          .columns.small-2.medium-2.large-2
+            %i{ng: {class: "::producer.producer_icon_font"}}
+          .columns.small-10.medium-10.large-10
+            %span.margin-top
+              %strong{"ng-bind" => "::producer.name"}
     %span.producer-name{"ng-if" => "::!producer.is_distributor" }
-      %i{ng: {class: "::producer.producer_icon_font"}}
-      %span.margin-top
-        %strong{"ng-bind" => "::producer.name"}
-
-
-  .columns.small-6.medium-3.large-3
+      .row.vertical-align-middle
+        .columns.small-2.medium-2.large-2
+          %i{ng: {class: "::producer.producer_icon_font"}}
+        .columns.small-10.medium-10.large-10
+          %span.margin-top
+            %strong{"ng-bind" => "::producer.name"}
+  .columns.small-6.medium-2.large-2
     %span.margin-top{"ng-bind" => "::producer.address.city"}
-  .columns.small-4.medium-3.large-4
+  .columns.small-4.medium-1.large-1
     %span.margin-top{"ng-bind" => "::producer.address.state_name | uppercase"}
-  .columns.small-2.medium-2.large-1.text-right
+  .columns.small-2.medium-1.large-1.text-right
     %span.margin-top
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
