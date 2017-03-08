@@ -1,9 +1,8 @@
 angular.module("admin.standingOrders").controller "DetailsController", ($scope, StatusMessage) ->
-  $scope.submitted = false
-
   $scope.registerNextCallback 'details', ->
-    $scope.submitted = true
+    $scope.standing_order_form.$submitted = true
     if $scope.standing_order_details_form.$valid
+      $scope.standing_order_form.$setPristine()
       StatusMessage.clear()
       $scope.setView('address')
     else

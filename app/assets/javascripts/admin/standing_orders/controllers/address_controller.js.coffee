@@ -1,5 +1,4 @@
 angular.module("admin.standingOrders").controller "AddressController", ($scope, $filter, StatusMessage, availableCountries) ->
-  $scope.submitted = false
   $scope.countries = availableCountries
   $scope.statesFor = (country_id) ->
     return [] unless country_id
@@ -8,13 +7,13 @@ angular.module("admin.standingOrders").controller "AddressController", ($scope, 
   $scope.shipStates = $scope.statesFor($scope.standingOrder.ship_address.country_id)
 
   $scope.registerNextCallback 'address', ->
-    $scope.submitted = true
+    $scope.standing_order_form.$submitted = true
     if $scope.standing_order_address_form.$valid
+      $scope.standing_order_form.$setPristine()
       StatusMessage.clear()
       $scope.setView('products')
     else
       StatusMessage.display 'failure', t('admin.standing_orders.details.invalid_error')
-
 
   $scope.registerBackCallback 'address', ->
     StatusMessage.clear()
