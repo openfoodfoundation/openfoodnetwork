@@ -115,7 +115,7 @@ describe Spree.user_class do
 
     it "ignores prior orders linked to an account_invoice" do
       create :account_invoice, user: user
-      expect(user.last_incomplete_spree_order).to be_nil
+      expect(user.last_incomplete_spree_order).to eq order
     end
   end
 
