@@ -6,12 +6,6 @@ class StandingLineItem < ActiveRecord::Base
   validates :variant, presence: true
   validates :quantity, { presence: true, numericality: { only_integer: true } }
 
-  def available_from?(shop, schedule)
-    Spree::Variant.joins(exchanges: { order_cycle: :schedules})
-    .where(id: variant_id, schedules: { id: schedule}, exchanges: { incoming: false, receiver_id: shop })
-    .any?
-  end
-
   def total_estimate
     (price_estimate || 0) * (quantity || 0)
   end

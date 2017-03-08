@@ -217,12 +217,22 @@ class StandingOrderForm
   end
 
   def standing_line_items_available?
+    available_variant_ids = variant_ids_for_shop_and_schedule
     standing_line_items.each do |sli|
-      unless sli.available_from?(shop_id, schedule_id)
+      unless available_variant_ids.include? sli.variant_id
         name = "#{sli.variant.product.name} - #{sli.variant.full_name}"
         errors.add(:standing_line_items, :not_available, name: name)
       end
     end
+  end
+
+  def variant_ids_for_shop_and_schedule
+    Spree::Variant.joins(exchanges: { order_cycle: :schedules})
+    .where(id: standing_line_items.map(&:variant_id))
+    .where(schedules: { id: schedule}, exchanges: { incoming: false, receiver_id: shop })
+    .merge(OrderCycle.not_closed)
+    .select('DISTINCT spree_variants.id')
+    .pluck(:id)
   end
 
   def build_msg_from(k, msg)
