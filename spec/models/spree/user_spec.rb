@@ -106,7 +106,7 @@ describe Spree.user_class do
   end
 
   describe "last incomplete spree order" do
-    let!(:user) { create(:user) }
+    let(:user) { create(:user) }
     let!(:order) { create(:order, state: 'cart', user_id: user.id) }
 
     it "returns any prior incomplete orders" do
