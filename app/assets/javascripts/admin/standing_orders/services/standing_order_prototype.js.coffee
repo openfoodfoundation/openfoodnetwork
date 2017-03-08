@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http, $injector, InfoDialog, ConfirmDialog, StatusMessage) ->
+angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http, $injector, $q, InfoDialog, ConfirmDialog, StatusMessage) ->
   errors: {}
 
   buildItem: (item) ->
@@ -19,10 +19,12 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
     @$save().then (response) =>
       StatusMessage.display 'success', 'Saved'
       $injector.get('StandingOrders').afterCreate(@id) if $injector.has('StandingOrders')
+      $q.resolve(response)
     , (response) =>
       angular.extend(@errors, response.data.errors)
       keys = Object.keys(response.data.errors)
       StatusMessage.display 'failure', response.data.errors[keys[0]][0]
+      $q.reject(response)
 
   update: ->
     StatusMessage.display 'progress', 'Saving...'
@@ -33,10 +35,13 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
       orders_with_issues = @not_closed_proxy_orders.filter((po) -> po.update_issues.length > 0)
       if orders_with_issues.length > 0
         InfoDialog.open('error', null, 'admin/order_update_issues_dialog.html', { proxyOrders: orders_with_issues})
+        return $q.reject(response)
+      $q.resolve(response)
     , (response) =>
       angular.extend(@errors, response.data.errors)
       keys = Object.keys(response.data.errors)
       StatusMessage.display 'failure', response.data.errors[keys[0]][0]
+      $q.reject(response)
 
   cancel: ->
     ConfirmDialog.open('error', t('admin.standing_orders.confirm_cancel_msg'), {cancel: t('back'), confirm: t('yes_i_am_sure')})
