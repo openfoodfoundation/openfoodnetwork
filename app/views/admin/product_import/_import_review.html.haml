@@ -13,30 +13,18 @@
 -#  -#%div.panel-content{ng: {hide: '!active'}}
 -#  -#  Content goes here
 
-%div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetTotal == 0'}}
-  %div.panel-header
+%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.item_count}"}}
+  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
     %div.header-caret
-    %div.header-icon.info
-      %i.fa.fa-info-circle
-    %div.header-count
-      %strong.reset-count
-        {{resetTotal}}
-    %div.header-description
-      Existing products will have their stock reset to zero
-  -#%div.panel-content{ng: {hide: '!active'}}
-  -#  Content goes here
-
-%div.panel-section
-  %div.panel-header
-    %div.header-caret
+      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
     %div.header-icon.success
-      %i.fa.fa-check-circle
+      %i.fa.fa-info-circle.info
     %div.header-count
       %strong.item-count= @importer.item_count
     %div.header-description
       Entries found in imported file
-  -#%div.panel-content{ng: {hide: '!active'}}
-  -#  Content goes here
+  %div.panel-content{ng: {hide: '!active || count == 0'}}
+    = render 'entries_table', entries: @importer.all_entries
 
 %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.invalid_count}"}}
   %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
@@ -78,5 +66,18 @@
       Products will be updated
   %div.panel-content{ng: {hide: '!active || count == 0'}}
     = render 'entries_table', entries: @importer.products_to_update
+
+%div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetTotal == 0'}}
+  %div.panel-header
+    %div.header-caret
+    %div.header-icon.info
+      %i.fa.fa-info-circle
+    %div.header-count
+      %strong.reset-count
+        {{resetTotal}}
+    %div.header-description
+      Existing products will have their stock reset to zero
+  -#%div.panel-content{ng: {hide: '!active'}}
+  -#  Content goes here
 
 %br.panels.clearfix

@@ -78,7 +78,12 @@ class ProductImporter
   end
 
   def suppliers_index
-    @suppliers_index || get_suppliers_index
+    index = @suppliers_index || get_suppliers_index
+    index.sort_by{ |k,v| v.to_i }.reverse.to_h
+  end
+
+  def all_entries
+    invalid_entries.merge(products_to_create).merge(products_to_update).sort.to_h
   end
 
   def invalid_entries
@@ -213,16 +218,19 @@ class ProductImporter
 
     if supplier_name.blank?
       mark_as_invalid(line_number, entry, "Supplier name field is empty")
+      entry['supplier_id'] = Enterprise.first.id # Removes a duplicate validation message TODO: proper solution
       return
     end
 
     unless supplier_exists?(supplier_name)
       mark_as_invalid(line_number, entry, "Supplier \"#{supplier_name}\" not found in database")
+      entry['supplier_id'] = Enterprise.first.id # Removes a duplicate validation message TODO: proper solution
       return
     end
 
     unless permission_by_name?(supplier_name)
       mark_as_invalid(line_number, entry, "You do not have permission to manage products for \"#{supplier_name}\"")
+      entry['supplier_id'] = Enterprise.first.id # Removes a duplicate validation message TODO: proper solution
       return
     end
 
@@ -239,7 +247,7 @@ class ProductImporter
 
     if category_name.blank?
       mark_as_invalid(line_number, entry, "Category field is empty")
-      entry['primary_taxon_id'] = Spree::Taxon.first.id # Removes a duplicate validation message
+      entry['primary_taxon_id'] = Spree::Taxon.first.id # Removes a duplicate validation message TODO: proper solution
       return
     end
 
