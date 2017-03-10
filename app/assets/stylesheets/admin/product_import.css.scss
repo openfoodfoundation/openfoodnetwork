@@ -88,15 +88,21 @@ div.panel-section {
       }
       tr.error {
         //background-color: #ffe6e4;
-        color: #ee4728;
+        //color: #ee4728;
+        color: #c84C4c;
       }
-      tr.error:hover td {
-        //background-color: #fecac6;
+      tr:hover td.invalid {
+        background-color: #ed5135;
       }
       tr i {
         display: block;
         margin-bottom: -0.2em;
         font-size: 1.4em !important;
+      }
+      td.invalid {
+        background-color: #f05c51;
+        box-shadow: inset 0px 0px 1px red;
+        color: white;
       }
     }
 
