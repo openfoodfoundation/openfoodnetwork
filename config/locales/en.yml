@@ -318,10 +318,11 @@ en:
         inventory_settings:
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
-          text2: "If you are using the inventory tool, you can select whether new products \
-                 added by your suppliers need to be added to your inventory before they can be \
-                 stocked. If you are not using your inventory to manage your products you should \
-                 select the 'recommended' option below:"
+          text2: >
+            If you are using the inventory tool, you can select whether new products
+            added by your suppliers need to be added to your inventory before they can be
+            stocked. If you are not using your inventory to manage your products you should
+            select the 'recommended' option below:"
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
@@ -369,12 +370,12 @@ en:
           allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
           allow_guest_orders_false: "Require login to order"
           allow_guest_orders_true: "Allow guest checkout"
-          shopfront_message_placeholder: \
-            An optional explanation for customers detailing how your shopfront works, \
+          shopfront_message_placeholder: >
+            An optional explanation for customers detailing how your shopfront works,
             to be displayed above the product list on your shop page.
-          shopfront_closed_message_placeholder: \
-            A message which provides a more detailed explanation about why your shop is \
-            closed and/or when customers can expect it to open again. This is displayed \
+          shopfront_closed_message_placeholder: >
+            A message which provides a more detailed explanation about why your shop is
+            closed and/or when customers can expect it to open again. This is displayed
             on your shop only when you have no active order cycles (ie. shop is closed).
           open_date: Open Date
           close_date: Close Date
