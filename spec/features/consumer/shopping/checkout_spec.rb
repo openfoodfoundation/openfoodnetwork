@@ -39,7 +39,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       end
     end
 
-
     before do
       distributor.shipping_methods << sm1
       distributor.shipping_methods << sm2
@@ -61,61 +60,66 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         page.should have_content "An item in your cart has become unavailable"
       end
     end
+
     context 'login in as user' do
       let(:user) { create(:user) }
 
       before do
         quick_login_as(user)
-        visit checkout_path
-
-        toggle_shipping
-        choose sm1.name
-        toggle_payment
-        choose pm1.name
-        toggle_details
-        within "#details" do
-          fill_in "First Name", with: "Will"
-          fill_in "Last Name", with: "Marshall"
-          fill_in "Email", with: "test@test.com"
-          fill_in "Phone", with: "0468363090"
-        end
-        toggle_billing
-        check "Save as default billing address"
-        within "#billing" do
-          fill_in "City", with: "Melbourne"
-          fill_in "Postcode", with: "3066"
-          fill_in "Address", with: "123 Your Head"
-          select "Australia", from: "Country"
-          select "Victoria", from: "State"
-        end
-
-        toggle_shipping
-        check "Shipping address same as billing address?"
-        check "Save as default shipping address"
       end
 
-      it "sets user's default billing address and shipping address" do
-        user.bill_address.should be_nil
-        user.ship_address.should be_nil
+      context "with details filled out" do
+        before do
+          visit checkout_path
+          toggle_shipping
+          choose sm1.name
+          toggle_payment
+          choose pm1.name
+          toggle_details
+          within "#details" do
+            fill_in "First Name", with: "Will"
+            fill_in "Last Name", with: "Marshall"
+            fill_in "Email", with: "test@test.com"
+            fill_in "Phone", with: "0468363090"
+          end
+          toggle_billing
+          check "Save as default billing address"
+          within "#billing" do
+            fill_in "City", with: "Melbourne"
+            fill_in "Postcode", with: "3066"
+            fill_in "Address", with: "123 Your Head"
+            select "Australia", from: "Country"
+            select "Victoria", from: "State"
+          end
 
-        order.bill_address.should be_nil
-        order.ship_address.should be_nil
+          toggle_shipping
+          check "Shipping address same as billing address?"
+          check "Save as default shipping address"
+        end
 
-        place_order
-        page.should have_content "Your order has been processed successfully"
+        it "sets user's default billing address and shipping address" do
+          user.bill_address.should be_nil
+          user.ship_address.should be_nil
 
-        order.reload.bill_address.address1.should eq '123 Your Head'
-        order.reload.ship_address.address1.should eq '123 Your Head'
+          order.bill_address.should be_nil
+          order.ship_address.should be_nil
 
-        order.customer.bill_address.address1.should eq '123 Your Head'
-        order.customer.ship_address.address1.should eq '123 Your Head'
+          place_order
+          page.should have_content "Your order has been processed successfully"
 
-        user.reload.bill_address.address1.should eq '123 Your Head'
-        user.reload.ship_address.address1.should eq '123 Your Head'
-      end
+          order.reload.bill_address.address1.should eq '123 Your Head'
+          order.reload.ship_address.address1.should eq '123 Your Head'
 
-      it "it doesn't tell about previous orders" do
-        expect(page).to_not have_content("You have an order for this order cycle already.")
+          order.customer.bill_address.address1.should eq '123 Your Head'
+          order.customer.ship_address.address1.should eq '123 Your Head'
+
+          user.reload.bill_address.address1.should eq '123 Your Head'
+          user.reload.ship_address.address1.should eq '123 Your Head'
+        end
+
+        it "it doesn't tell about previous orders" do
+          expect(page).to_not have_content("You have an order for this order cycle already.")
+        end
       end
 
       context "with previous orders" do
@@ -124,11 +128,39 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         before do
           order.distributor.allow_order_changes = true
           order.distributor.save
+          visit checkout_path
         end
 
         it "informs about previous orders" do
-          visit checkout_path
           expect(page).to have_content("You have an order for this order cycle already.")
+        end
+      end
+
+      context "with Stripe" do
+        let!(:stripe_pm) { create(:payment_method, distributors: [distributor], name: "Stripe", type: "Spree::Gateway::StripeConnect") }
+
+        let!(:saved_card) {
+          create(:credit_card,
+          user_id: user.id,
+          month: "01",
+          year: "2025",
+          cc_type: "Visa",
+          number: "1111111111111111")
+        }
+
+        before do
+          visit checkout_path
+          toggle_payment
+          choose stripe_pm.name
+        end
+
+        it "shows the saved credit card dropdown" do
+          page.should have_content "Previously Used Credit Cards"
+        end
+
+        it "disables the input fields when a saved card is selected" do
+          select "Visa XXXX XXXX XXXX 1111 Exp 01/2025", from: "selected_card"
+          page.should have_css "#secrets\\.card_number[disabled]"
         end
       end
     end

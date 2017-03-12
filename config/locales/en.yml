@@ -852,6 +852,7 @@ en:
   card_expiry_date: Expiry Date
   card_masked_digit: "X"
   card_expiry_abbreviation: "Exp"
+  new_credit_card: "New credit card"
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
