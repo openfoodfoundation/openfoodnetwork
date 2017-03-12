@@ -233,7 +233,7 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.create-count', text: "1"
       expect(page).to have_selector '.update-count', text: "0"
 
-      expect(page.body).to have_content 'You do not have permission to manage products for "Another Enterprise"'
+      expect(page.body).to have_content 'you do not have permission'
 
       click_button 'Save'
 
