@@ -11,6 +11,7 @@ class ProductImporter
     if file.is_a?(File)
       @file = file
       @sheet = open_spreadsheet
+      @entries = []
       @valid_entries = {}
       @invalid_entries = {}
 
@@ -26,12 +27,11 @@ class ProductImporter
       @editable_enterprises = {}
       editable_enterprises.map { |e| @editable_enterprises[e.name] = e.id }
 
-      @non_display_attributes = 'id', 'product_id', 'variant_id', 'supplier_id', 'primary_taxon_id', 'category_id', 'shipping_category_id', 'tax_category_id', 'on_hand_nil'
       @total_supplier_products = 0
       @products_to_reset = {}
       @updated_ids = []
 
-      validate_all if @sheet
+      init_product_importer if @sheet
     else
       self.errors.add(:importer, 'error: no file uploaded')
     end
@@ -78,7 +78,7 @@ class ProductImporter
   end
 
   def suppliers_index
-    index = @suppliers_index || get_suppliers_index
+    index = @suppliers_index || build_suppliers_index
     index.sort_by{ |k,v| v.to_i }.reverse.to_h
   end
 
@@ -87,27 +87,15 @@ class ProductImporter
   end
 
   def invalid_entries
-    entries = {}
-    @invalid_entries.each do |line_number, data|
-      entries[line_number] = {entry: data[:entry].except(*@non_display_attributes), errors: data[:errors]}
-    end
-    entries
+    @invalid_entries
   end
 
   def products_to_create
-    entries = {}
-    @products_to_create.merge(@variants_to_create).each do |line_number, data|
-      entries[line_number] = {entry: data[:entry].except(*@non_display_attributes)}
-    end
-    entries
+    @products_to_create.merge(@variants_to_create)
   end
 
   def products_to_update
-    entries = {}
-    @variants_to_update.each do |line_number, data|
-      entries[line_number] = {entry: data[:entry].except(*@non_display_attributes)}
-    end
-    entries
+    @variants_to_update
   end
 
   def products_created_count
@@ -141,6 +129,13 @@ class ProductImporter
 
   private
 
+  def init_product_importer
+    build_entries
+    build_categories_index
+    build_suppliers_index
+    validate_all
+  end
+
   def open_spreadsheet
     if accepted_mimetype
       Roo::Spreadsheet.open(@file, extension: accepted_mimetype)
@@ -166,25 +161,26 @@ class ProductImporter
     end
   end
 
-  def entries
-    rows.map do |row|
-      Hash[[headers, row].transpose]
+  def build_entries
+    rows.each_with_index do |row, i|
+      row_data = Hash[[headers, row].transpose]
+      entry = SpreadsheetEntry.new(row_data)
+      entry.line_number = i+2
+      @entries.push entry
     end
+    @entries
   end
 
   def validate_all
-    entries.each_with_index do |entry, i|
-      line_number = i+2 # Roo counts "line 2" as the first line of data
+    @entries.each do |entry|
+      supplier_validation(entry)
+      category_validation(entry)
+      set_update_status(entry)
 
-      supplier_validation(line_number, entry)
-      category_validation(line_number, entry)
-      set_update_status(line_number, entry)
-
-      mark_as_valid(line_number, entry) unless entry_invalid?(line_number)
+      mark_as_valid(entry) unless entry_invalid?(entry.line_number)
     end
 
     count_existing_products
-
     delete_uploaded_file if item_count.zero? or valid_count.zero?
   end
 
@@ -212,49 +208,43 @@ class ProductImporter
     !!@invalid_entries[line_number]
   end
 
-  def supplier_validation(line_number, entry)
-    suppliers_index = @suppliers_index || get_suppliers_index
-    supplier_name = entry['supplier']
+  def supplier_validation(entry)
+    supplier_name = entry.supplier
 
     if supplier_name.blank?
-      mark_as_invalid(line_number, entry, "Supplier name field is empty")
-      entry['supplier_id'] = Enterprise.first.id # Removes a duplicate validation message TODO: proper solution
+      mark_as_invalid(entry, attribute: "supplier", error: "can't be blank")
       return
     end
 
     unless supplier_exists?(supplier_name)
-      mark_as_invalid(line_number, entry, "Supplier \"#{supplier_name}\" not found in database")
-      entry['supplier_id'] = Enterprise.first.id # Removes a duplicate validation message TODO: proper solution
+      mark_as_invalid(entry, attribute: "supplier", error: "\"#{supplier_name}\" not found in database")
       return
     end
 
     unless permission_by_name?(supplier_name)
-      mark_as_invalid(line_number, entry, "You do not have permission to manage products for \"#{supplier_name}\"")
-      entry['supplier_id'] = Enterprise.first.id # Removes a duplicate validation message TODO: proper solution
+      mark_as_invalid(entry, attribute: "supplier", error: "\"#{supplier_name}\": you do not have permission to manage products for this enterprise")
       return
     end
 
-    entry['supplier_id'] = suppliers_index[supplier_name]
+    entry.supplier_id = @suppliers_index[supplier_name]
   end
 
   def supplier_exists?(supplier_name)
     @suppliers_index[supplier_name]
   end
 
-  def category_validation(line_number, entry)
-    categories_index = @categories_index || get_categories_index
-    category_name = entry['category']
+  def category_validation(entry)
+    category_name = entry.category
 
     if category_name.blank?
-      mark_as_invalid(line_number, entry, "Category field is empty")
-      entry['primary_taxon_id'] = Spree::Taxon.first.id # Removes a duplicate validation message TODO: proper solution
+      mark_as_invalid(entry, attribute: "category", error: "can't be blank")
       return
     end
 
     if category_exists?(category_name)
-      entry['primary_taxon_id'] = categories_index[category_name]
+      entry.primary_taxon_id = @categories_index[category_name]
     else
-      mark_as_invalid(line_number, entry, "Category \"#{category_name}\" not found in database")
+      mark_as_invalid(entry, attribute: "category", error: "\"#{category_name}\" not found in database")
     end
   end
 
@@ -262,26 +252,23 @@ class ProductImporter
     @categories_index[category_name]
   end
 
-  def mark_as_valid(line_number, entry)
-    @valid_entries[line_number] = {entry: entry}
+  def mark_as_valid(entry)
+    @valid_entries[entry.line_number] = entry
   end
 
-  def mark_as_invalid(line_number, entry, errors)
-    errors = [errors] if errors.is_a? String
+  def mark_as_invalid(entry, options={})
+    entry.errors.add(options[:attribute], options[:error]) if options[:attribute] and options[:error]
+    entry.product_validations = options[:product_validations] if options[:product_validations]
 
-    if entry_invalid?(line_number)
-      @invalid_entries[line_number][:errors] += errors
-    else
-      @invalid_entries[line_number] = {entry: entry, errors: errors}
-    end
+    @invalid_entries[entry.line_number] = entry
   end
 
   # Minimise db queries by getting a list of suppliers to look
   # up, instead of doing a query for each entry in the spreadsheet
-  def get_suppliers_index
-    @suppliers_index ||= {}
-    entries.each do |entry|
-      supplier_name = entry['supplier']
+  def build_suppliers_index
+    @suppliers_index = {}
+    @entries.each do |entry|
+      supplier_name = entry.supplier
       supplier_id = @suppliers_index[supplier_name] ||
           Enterprise.find_by_name(supplier_name, :select => 'id, name').try(:id)
       @suppliers_index[supplier_name] = supplier_id
@@ -289,10 +276,10 @@ class ProductImporter
     @suppliers_index
   end
 
-  def get_categories_index
-    @categories_index ||= {}
-    entries.each do |entry|
-      category_name = entry['category']
+  def build_categories_index
+    @categories_index = {}
+    @entries.each do |entry|
+      category_name = entry.category
       category_id = @categories_index[category_name] ||
           Spree::Taxon.find_by_name(category_name, :select => 'id, name').try(:id)
       @categories_index[category_name] = category_id
@@ -302,45 +289,44 @@ class ProductImporter
 
   def save_all_valid
     already_created = {}
-    @products_to_create.each do |line_number, data|
-      entry = data[:entry]
+    @products_to_create.each do |line_number, entry|
       # If we've already added a new product with these attributes
       # from this spreadsheet, mark this entry as a new variant with
       # the new product id, as this is a now variant of that product...
-      if already_created[entry['supplier_id']] and already_created[entry['supplier_id']][entry['name']]
-        product_id = already_created[entry['supplier_id']][entry['name']]
-        mark_as_new_variant(line_number, entry, product_id)
+      if already_created[entry.supplier_id] and already_created[entry.supplier_id][entry.name]
+        product_id = already_created[entry.supplier_id][entry.name]
+        mark_as_new_variant(entry, product_id)
         next
       end
 
       product = Spree::Product.new()
-      product.assign_attributes(entry.except('id'))
-      assign_defaults(product, entry)
+      product.assign_attributes(entry.attributes.except('id'))
+      assign_defaults(product, entry.attributes)
       if product.save
-        ensure_variant_updated(entry, product)
+        ensure_variant_updated(product, entry)
         @products_created += 1
         @updated_ids.push product.variants.first.id
       else
-        self.errors.add("Line #{line_number}:", product.errors.full_messages)
+        self.errors.add("Line #{line_number}:", product.errors.full_messages) #TODO: change
       end
 
-      already_created[entry['supplier_id']] = {entry['name'] => product.id}
+      already_created[entry.supplier_id] = {entry.name => product.id}
     end
 
-    @variants_to_update.each do |line_number, data|
-      variant = data[:variant]
-      assign_defaults(variant, data[:entry])
+    @variants_to_update.each do |line_number, entry|
+      variant = entry.product_object
+      assign_defaults(variant, entry.attributes)
       if variant.valid? and variant.save
         @variants_updated += 1
         @updated_ids.push variant.id
       else
-        self.errors.add("Line #{line_number}:", variant.errors.full_messages)
+        self.errors.add("Line #{line_number}:", variant.errors.full_messages) #TODO: change
       end
     end
 
-    @variants_to_create.each do |line_number, data|
-      new_variant = data[:variant]
-      assign_defaults(new_variant, data[:entry])
+    @variants_to_create.each do |line_number, entry|
+      new_variant = entry.product_object
+      assign_defaults(new_variant, entry.attributes)
       if new_variant.valid? and new_variant.save
         @variants_created += 1
         @updated_ids.push new_variant.id
@@ -388,67 +374,69 @@ class ProductImporter
     end
   end
 
-  def ensure_variant_updated(entry, product)
+  def ensure_variant_updated(product, entry)
     # Ensure display_name and on_demand are copied to new product's variant
-    if entry['display_name'] || entry['on_demand']
+    if entry.display_name || entry.on_demand
       variant = product.variants.first
-      variant.display_name = entry['display_name'] if entry['display_name']
-      variant.on_demand = entry['on_demand'] if entry['on_demand']
+      variant.display_name = entry.display_name if entry.display_name
+      variant.on_demand = entry.on_demand if entry.on_demand
       variant.save
     end
   end
 
-  def set_update_status(line_number, entry)
+  def set_update_status(entry)
     # Find product with matching supplier and name
-    match = Spree::Product.where(supplier_id: entry['supplier_id'], name: entry['name'], deleted_at: nil).first
+    match = Spree::Product.where(supplier_id: entry.supplier_id, name: entry.name, deleted_at: nil).first
 
     # If no matching product was found, create a new product
     if match.nil?
-      mark_as_new_product(line_number, entry)
+      mark_as_new_product(entry)
       return
     end
 
     # Otherwise, if a variant exists with matching display_name and unit_value, update it
     match.variants.each do |existing_variant|
-      if existing_variant.display_name == entry['display_name'] && existing_variant.unit_value == Float(entry['unit_value'])
-        mark_as_existing_variant(line_number, entry, existing_variant)
+      if existing_variant.display_name == entry.display_name && existing_variant.unit_value == Float(entry.unit_value)
+        mark_as_existing_variant(entry, existing_variant)
         return
       end
     end
 
     # Otherwise, a variant with sufficiently matching attributes doesn't exist; create a new one
-    mark_as_new_variant(line_number, entry, match.id)
+    mark_as_new_variant(entry, match.id)
   end
 
-  def mark_as_new_product(line_number, entry)
+  def mark_as_new_product(entry)
     new_product = Spree::Product.new()
-    new_product.assign_attributes(entry.except('id'))
+    new_product.assign_attributes(entry.attributes.except('id'))
     if new_product.valid?
-      @products_to_create[line_number] = {entry: entry} unless entry_invalid?(line_number)
+      @products_to_create[entry.line_number] = entry unless entry_invalid?(entry.line_number)
     else
-      mark_as_invalid(line_number, entry, new_product.errors.full_messages)
+      mark_as_invalid(entry, product_validations: new_product.errors)
     end
   end
 
-  def mark_as_existing_variant(line_number, entry, existing_variant)
-    existing_variant.assign_attributes(entry.except('id', 'product_id'))
+  def mark_as_existing_variant(entry, existing_variant)
+    existing_variant.assign_attributes(entry.attributes.except('id', 'product_id'))
     check_on_hand_nil(entry, existing_variant)
     if existing_variant.valid?
-      @variants_to_update[line_number] = {entry: entry, variant: existing_variant} unless entry_invalid?(line_number)
-      updates_count_per_supplier(entry['supplier_id']) unless entry_invalid?(line_number)
+      entry.product_object = existing_variant
+      @variants_to_update[entry.line_number] = entry unless entry_invalid?(entry.line_number)
+      updates_count_per_supplier(entry.supplier_id) unless entry_invalid?(entry.line_number)
     else
-      mark_as_invalid(line_number, entry, existing_variant.errors.full_messages)
+      mark_as_invalid(entry, product_validations: existing_variant.errors)
     end
   end
 
-  def mark_as_new_variant(line_number, entry, product_id)
-    new_variant = Spree::Variant.new(entry.except('id', 'product_id'))
+  def mark_as_new_variant(entry, product_id)
+    new_variant = Spree::Variant.new(entry.attributes.except('id', 'product_id'))
     new_variant.product_id = product_id
     check_on_hand_nil(entry, new_variant)
     if new_variant.valid?
-      @variants_to_create[line_number] = {entry: entry, variant: new_variant} unless entry_invalid?(line_number)
+      entry.product_object = new_variant
+      @variants_to_create[entry.line_number] = entry unless entry_invalid?(entry.line_number)
     else
-      mark_as_invalid(line_number, entry, new_variant.errors.full_messages)
+      mark_as_invalid(entry, product_validations: new_variant.errors)
     end
   end
 
@@ -461,9 +449,9 @@ class ProductImporter
   end
 
   def check_on_hand_nil(entry, variant)
-    if entry['on_hand'].blank?
+    if entry.on_hand.blank?
       variant.on_hand = 0
-      entry['on_hand_nil'] = true
+      entry.on_hand_nil = true
     end
   end
 

@@ -1,15 +1,15 @@
-- if entries && entries.count > 0 #&& entries.values.first && entries.values.first[:entry]
+- if entries && entries.count > 0
   %div.table-wrap
     %table
       %thead
         %th
         %th Line
-        - entries.values.first[:entry].each do |key, value|
+        - entries.values.first.displayable_attributes.each do |key, value|
           %th= key
-      - entries.each do |line, item|
-        %tr{class: ('error' if item[:errors])}
+      - entries.each do |line_number, entry|
+        %tr{class: ('error' if entry.has_errors?)}
           %td
-            %i{class: (item[:errors] ? 'fa fa-warning warning' : 'fa fa-check-circle success')}
-          %td= line
-          - item[:entry].each do |key, value|
+            %i{class: (entry.has_errors? ? 'fa fa-warning warning' : 'fa fa-check-circle success')}
+          %td= line_number
+          - entry.displayable_attributes.each do |key, value|
             %td= value
