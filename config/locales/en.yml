@@ -76,6 +76,7 @@ en:
   loading: Loading...
   show_more: Show more
   show_all: Show all
+  show_all_with_more: "Show All (%{num}  More)"
   cancel: Cancel
 
   admin:
@@ -438,6 +439,8 @@ en:
         choose_option: Please choose one of the options above.
         change_now: Change now
       enterprise_user_index:
+        loading_enterprises: LOADING ENTERPRISES
+        no_enterprises_found: No enterprises found.
         search_placeholder: Search By Name
         manage: Manage
       new_form:
@@ -1371,7 +1374,137 @@ Please follow the instructions there to make your enterprise visible on the Open
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
 
+  js:
+    admin:
+      modals:
+        got_it: Got it
+        tag_rule_help:
+          title: Tag Rules
+          overview: Overview
+          overview_text: >
+            Tag rules provide a way to describe which items are visible or otherwise
+            to which customers. Items can be Shipping Methods, Payment Methods,
+            Products and Order Cycles.
+          by_default_rules: "'By Default...' Rules"
+          by_default_rules_text: >
+            Default rules allow you to hide items so that they are not visible by default.
+            This behaviour can then be overriden by non-default rules for customers with
+            particular tags.
+          customer_tagged_rules: "'Customers Tagged...' Rules"
+          customer_tagged_rules_text: >
+            By creating rules related to a specific customer tag, you can override the default
+            behaviour (whether it be to show or to hide items) for customers with the specified tag.
+      panels:
+        save: SAVE
+        saved: SAVED
+        saving: SAVING
+        enterprise_package:
+          hub_profile: Hub Profile
+          hub_profile_cost: "COST: ALWAYS FREE"
+          hub_profile_text1: >
+            People can find and contact you on the Open Food Network. Your enterprise will be
+            visible on the map, and will be searchable in listings.
+          hub_profile_text2: >
+            Having a profile, and making connections within your local food system through
+            the Open Food Network will always be free.
+          hub_shop: Hub Shop
+          hub_shop_text1: >
+            Your enterprise is the backbone of your local food system. You aggregate produce
+            from other enterprises and can sell it through your shop on the Open Food Network.
+          hub_shop_text2: >
+            Hubs can take many forms, whether they be a food co-op, a buying group, a veggie-box
+            program, or a local grocery store.
+          hub_shop_text3: >
+            If you also want to sell your own products, you will need to switch this enterprise
+            to be a producer.
+          choose_package: Please Choose a Package
+          choose_package_text1: >
+            Your enterprise will not be fully activated until a package is selected from the
+            options on the left.
+          choose_package_text2: >
+            Click on an option to see more detailed information about each package, and hit
+            the red SAVE button when you are done!
+          profile_only: Profile Only
+          profile_only_cost: "COST: ALWAYS FREE"
+          profile_only_text1: >
+            A profile makes you visible and contactable to others and is a way to share your story.
+          profile_only_text2: >
+            If you prefer to focus on producing food, and want to leave the work of selling it
+            to someone else, you won't require a shop on the Open Food Network.
+          profile_only_text3: >
+            Add your products to Open Food Network, allowing hubs to stock your products in
+            their stores.
+          producer_shop: Producer Shop
+          producer_shop_text1: >
+            Sell your products directly to customers through your very own Open Food Network
+            shopfront.
+          producer_shop_text2: >
+            A Producer Shop is for your produce only, if you want to sell produce grown/produced
+            off site, please select 'Producer Hub'.
+          producer_hub: Producer Hub
+          producer_hub_text1: >
+            Your enterprise is the backbone of your local food system. You can sell your own
+            produce as well as produce aggregated from other enterprises through your shopfront
+            on the Open Food Network.
+          producer_hub_text2: >
+            Producer Hubs can take many forms, whether they be a CSA, a veggie-box program,
+            or a food co-op with a rooftop garden.
+          producer_hub_text3: >
+            The Open Food Network aims to support as many hub models as possible, so no matter
+            your situation, we want to provide the tools you need to run your organisation or
+            local food business.
+          get_listing: Get a listing
+          always_free: ALWAYS FREE
+          sell_produce_others: Sell produce from others
+          sell_own_produce: Sell your own produce
+          sell_both: Sell produce from self and others
+        enterprise_producer:
+          producer: Producer
+          producer_text1: >
+            Producers make yummy things to eat or drink. You're a producer if you grow it,
+            raise it, brew it, bake it, ferment it, milk it or mould it.
+          producer_text2: >
+            Producers can also perform other functions, such as aggregating food from other
+            enterprises and selling it through a shop on the Open Food Network.
+          non_producer: Non-producer
+          non_producer_text1: >
+            Non-producers do not produce any food themselves, meaning that they cannot create
+            their own products for sale through the Open Food Network.
+          non_producer_text2: >
+            Instead, non-producers specialise in linking producers to the end eater, whether it
+            be by aggregating, grading, packing, selling or delivering food.
+          producer_desc: Producers of food
+          producer_example: eg. GROWERS, BAKERS, BREWERS, MAKERS
+          non_producer_desc: All other food enterprises
+          non_producer_example: eg. Grocery stores, Food co-ops, Buying groups
+        enterprise_status:
+          status_title: "%{name} is set up and ready to go!"
+          severity: Severity
+          description: Description
+          resolve: Resolve
+      new_tag_rule_dialog:
+        select_rule_type: "Select a rule type:"
+    out_of_stock:
+      reduced_stock_available: Reduced stock available
+      out_of_stock_text: >
+        While you've been shopping, the stock levels for one or more of the products
+        in your cart have reduced. Here's what's changed:
+      now_out_of_stock: is now out of stock.
+      only_n_remainging: "now only has %{num} remaining."
+
   spree:
+    admin:
+      products:
+        bulk_edit:
+          header:
+            title: Bulk Edit Products
+          indicators:
+            title: LOADING PRODUCTS
+            no_products: "No products yet. Why don't you add some?"
+            no_results: "Sorry, no results match"
+      variants:
+        autocomplete:
+          producer_name: Producer
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
@@ -1393,6 +1526,10 @@ Please follow the instructions there to make your enterprise visible on the Open
       processing: processing
       void: void
       invalid: invalid
+    order_mailer:
+      invoice_email:
+        hi: "Hi %{name}"
+        invoice_attached_text: Please find attached an invoice for your recent order from
     order_state:
       address: address
       adjustments: adjustments
@@ -1406,3 +1543,6 @@ Please follow the instructions there to make your enterprise visible on the Open
       resumed: resumed
       returned: returned
       skrill: skrill
+    orders:
+      invoice:
+        tax_invoice: "TAX INVOICE: "
