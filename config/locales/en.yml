@@ -351,7 +351,7 @@ en:
           visible: Visible
           not_visible: Not visible
           permalink: Permalink (no spaces)
-          permalink_tip: "This permalink is used to create the url to your shop: {{link}} your-shop-name/shop"
+          permalink_tip: "This permalink is used to create the url to your shop: %{link} your-shop-name/shop"
           link_to_front: Link to shop front
           link_to_front_tip: A direct link to your shopfront on the Open Food Network.
         shipping_methods:
@@ -460,7 +460,7 @@ en:
     order_cycles:
       advanced_settings:
         title: Advanced Settings
-        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in {{inventory}}'s inventory.
+        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
