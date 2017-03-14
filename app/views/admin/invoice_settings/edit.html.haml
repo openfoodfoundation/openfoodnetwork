@@ -1,0 +1,14 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t('.invoice_settings')
+
+= form_tag main_app.admin_invoice_settings_path, :method => :put do
+
+  .field.align-center
+    = hidden_field_tag 'preferences[invoice_style2?]', '0'
+    = check_box_tag 'preferences[invoice_style2?]', '1',  Spree::Config[:invoice_style2?]
+    = label_tag nil, t('.invoice_style2?')
+
+  .form-buttons{"data-hook" => "buttons"}
+    = button t(:update), 'icon-refresh'

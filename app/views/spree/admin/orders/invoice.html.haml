@@ -4,54 +4,39 @@
 %table{:width => "100%"}
   %tbody
     %tr{ valign: "top" }
+      %td{ :align => "left", colspan: 3 }
+        %h6= "Issued on: #{Time.zone.now.strftime("%F")}"
+    %tr{ valign: "top" }
       %td{ :align => "left" }
         %h4
-          = t :tax_invoice
-      - if @order.distributor.display_invoice_logo? && @order.distributor.logo.present?
-        %td{ :align => "right", rowspan: 2 }
-          = wicked_pdf_image_tag @order.distributor.logo(:small), width: 150, height: 150
+          = "TAX INVOICE: "
+          = "#{@order.number}"
+      %td{width: "10%" }
+        &nbsp;
+      %td{ :align => "right" }
+        %h4= @order.order_cycle.andand.name
     %tr{ valign: "top" }
       %td{ :align => "left" }
-        %strong= @order.distributor.name
-        %br
-        = @order.distributor.address.address_part1
-        %br
-        = @order.distributor.address.address_part2
-        %br
-        = @order.distributor.email_address
-        - if @order.distributor.phone.present?
-          %br
-          = @order.distributor.phone
+        %strong= "From: #{@order.distributor.name}"
         - if @order.distributor.abn.present?
           %br
-          = "#{t :abn} #{@order.distributor.abn}"
-        - if @order.distributor.acn.present?
-          %br
-          = "#{t :acn} #{@order.distributor.acn}"
-    %tr{ valign: "top" }
-      %td{ :align => "left", colspan: 2 } &nbsp;
-    %tr{ valign: "top" }
-      %td{ :align => "left" }
+          = "ABN: #{@order.distributor.abn}"
         %br
-        = t :invoice_issued_on
-        = l Time.zone.now.to_date
+        = @order.distributor.address.full_address
         %br
-        = t :date_of_transaction
-        = l @order.completed_at.to_date
-        %br
-        = t :order_number
-        = @order.number
+        = @order.distributor.email
+      %td{width: "10%" }
+        &nbsp;
       %td{ :align => "right" }
-        = t :invoice_billing_address
-        %br
-        %strong= @order.ship_address.full_name
+        %strong= "To: #{@order.ship_address.full_name}"
         - if @order.customer.code.present?
           %br
           = "Code: #{@order.customer.code}"
         %br
-        = @order.ship_address.address_part1
+        = @order.ship_address.full_address
         %br
-        = @order.ship_address.address_part2
+        = "#{@order.customer.email},"
+        = "#{@order.bill_address.phone}"
 
 = render 'spree/admin/orders/invoice_table'
 
@@ -63,9 +48,5 @@
     %em= @order.special_instructions
   %p
     &nbsp;
-
-- if @order.distributor.invoice_text.present?
-  %p
-    = @order.distributor.invoice_text
 
 = render 'spree/order_mailer/payment'
