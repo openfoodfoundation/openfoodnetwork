@@ -527,9 +527,15 @@ en:
       require_customer_login: "This shop is for customers only."
       require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
       require_customer_html: "Please %{contact} %{enterprise} to become a customer."
+    invoice_settings:
+      edit:
+        invoice_settings: Invoice
+        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
 
   # Printable Invoice Columns
   invoice_billing_address: "Billing address:"
+  invoice_column_tax: "GST"
+  invoice_column_price: "Price"
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
   invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"

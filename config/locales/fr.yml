@@ -464,6 +464,10 @@ fr:
     shared:
       user_guide_link:
         user_guide: Guide l'utilisateur
+    invoice_settings:
+      edit:
+        invoice_settings: Apparence de la facture
+        invoice_style2?: Utiliser le modèle de facture alternaltif qui comprend une séparation des taxes par taux et une indication du taux appliqué par item (pas encore adapté pour les pays affichant des prix hors taxe)
 
   home:
     hubs:
@@ -484,6 +488,8 @@ fr:
       require_customer_html: "Veuillez %{contact} %{enterprise} pour devenir membre."
 
   invoice_billing_address: "Adresse de facturation :"
+  invoice_column_tax: "TVA"
+  invoice_column_price: "Prix"
   invoice_column_item: "Produit"
   invoice_column_qty: "Qté"
   invoice_column_unit_price_with_taxes: "Prix unitaire (TTC)"

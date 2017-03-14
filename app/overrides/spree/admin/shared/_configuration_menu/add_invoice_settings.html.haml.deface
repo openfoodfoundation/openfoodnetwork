@@ -1,0 +1,4 @@
+// insert_bottom "[data-hook='admin_configurations_sidebar_menu']"
+
+%li
+  = link_to t('admin.invoice_settings.edit.invoice_settings'), main_app.edit_admin_invoice_settings_path

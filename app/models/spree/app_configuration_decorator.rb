@@ -32,4 +32,7 @@ Spree::AppConfiguration.class_eval do
 
   # External services
   preference :bugherd_api_key, :string, default: nil
+
+  # Invoice layout
+  preference :invoice_style2?, :boolean, default: false
 end
