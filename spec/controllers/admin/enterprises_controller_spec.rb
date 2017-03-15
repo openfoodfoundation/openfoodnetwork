@@ -144,6 +144,69 @@ module Admin
           expect(distributor.users).to_not include user
         end
 
+        describe "stripe connect" do
+          it "redirects to Stripe" do
+            controller.stub spree_current_user: distributor_manager
+            Admin::StripeHelper.client.stub id: "abc"
+            spree_get :stripe_connect
+            ['https://connect.stripe.com/oauth/authorize',
+              'response_type=code',
+              'state=',
+              'client_id=abc'].each{|element| response.location.should match element}
+          end
+
+          it "returns 500 on callback if the response code is not provided" do
+            controller.stub spree_current_user: distributor_manager
+            spree_get :stripe_connect_callback
+            response.status.should be 500
+          end
+
+          it "redirects to login with the query params in case of session problems" do
+            pending("Difficult to reproduce: sometimes get logged out of OFN during Stripe connect
+            redirect/callback process. After logging in again, it doesn't redirect to the callback URL.")
+            controller.stub spree_current_user: nil
+            params = {this: "that"}
+            spree_get :stripe_connect_callback, params
+            # This is the idea - but even if generated correctly not sure it actually works since the redirect
+            # is ultimately handled in Angular, which presumably doesn't know which controller to
+            # use for the action?
+            response.should redirect_to root_path(anchor: "login?after_login=/?action=stripe_connect&this=that")
+          end
+
+          it "redirects to unauthorized if the callback state param is invalid" do
+             controller.stub spree_current_user: distributor_manager
+             payload = {junk: "Ssfs"}
+             params = {state: JWT.encode(payload, Openfoodnetwork::Application.config.secret_token),
+                        code: "code"}
+             spree_get :stripe_connect_callback, params
+             response.should redirect_to '/unauthorized'
+          end
+
+          # TODO: This should probably also include managers/coordinators as well as owners?
+          it "makes a request to cancel the Stripe connection if the user does not own the enterprise" do
+            controller.stub spree_current_user: distributor_manager
+            controller.stub(:deauthorize_request_for_stripe_id)
+            controller.stub_chain(:get_stripe_token, :params).and_return({stripe_user_id: "xyz123", stripe_publishable_key: "abc456"}.to_json)
+            payload = {enterprise_id: supplier.permalink} # Request is not for the current user's Enterprise
+            params = {state: JWT.encode(payload, Openfoodnetwork::Application.config.secret_token),
+                        code: "code"}
+            spree_get :stripe_connect_callback, params
+
+            controller.should have_received(:deauthorize_request_for_stripe_id)
+          end
+
+          it "makes a new Stripe Account from the callback params" do
+            controller.stub spree_current_user: distributor_manager
+            controller.stub_chain(:get_stripe_token, :params).and_return({stripe_user_id: "xyz123", stripe_publishable_key: "abc456"}.to_json)
+            payload = {enterprise_id: distributor.permalink}
+            params = {state: JWT.encode(payload, Openfoodnetwork::Application.config.secret_token),
+                        code: "code"}
+            expect{spree_get :stripe_connect_callback, params}.to change{StripeAccount.all.length}.by 1
+            StripeAccount.last.enterprise_id.should eq distributor.id
+          end
+
+        end
+
 
         describe "enterprise properties" do
           let(:producer) { create(:enterprise) }

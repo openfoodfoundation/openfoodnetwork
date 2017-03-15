@@ -42,6 +42,7 @@ class Enterprise < ActiveRecord::Base
   has_many :billable_periods
   has_many :inventory_items
   has_many :tag_rules
+  has_one :stripe_account, dependent: :destroy
 
   delegate :latitude, :longitude, :city, :state_name, :to => :address
 
@@ -364,6 +365,7 @@ class Enterprise < ActiveRecord::Base
   def can_invoice?
     abn.present?
   end
+
 
   protected
 
