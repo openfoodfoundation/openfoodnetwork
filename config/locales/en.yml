@@ -526,12 +526,31 @@ en:
       require_customer_login: "This shop is for customers only."
       require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
       require_customer_html: "Please %{contact} %{enterprise} to become a customer."
+    invoice_settings:
+      edit:
+        invoice_settings: Invoice
+        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
 
   # Printable Invoice Columns
-  invoice_column_item: "Item"
-  invoice_column_qty: "Qty"
+  invoice_billing_address: "Billing address:"
   invoice_column_tax: "GST"
   invoice_column_price: "Price"
+  invoice_column_item: "Item"
+  invoice_column_qty: "Qty"
+  invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"
+  invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
+  invoice_column_price_with_taxes: "Total price (Incl. tax)"
+  invoice_column_price_without_taxes: "Total price (Excl. tax)"
+  invoice_column_tax_rate: "Tax rate"
+  tax_invoice: "TAX INVOICE"
+  tax_total: "Total tax (%{rate}):"
+  total_excl_tax: "Total (Excl. tax):"
+  total_incl_tax: "Total (Incl. tax):"
+  abn: "ABN:"
+  acn: "ACN:"
+  invoice_issued_on: "Invoice issued on:"
+  order_number: "Invoice number:"
+  date_of_transaction: "Date of transaction:"
 
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME
@@ -1330,6 +1349,22 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_order_cycle: "Order Cycle: "
   report_entreprises: "Enterprises: "
   report_users: "Users: "
+  report_tax_rates: "Tax rates"
+  report_tax_types: "Tax types"
+  report_header_order_number: "Order number"
+  report_header_date: "Date"
+  report_header_items: "Items"
+  report_header_items_total: "Items total %{currency_symbol}"
+  report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
+  report_header_sales_tax: "Sales Tax (%{currency_symbol})"
+  report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
+  report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
+  report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
+  report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_customer: "Customer"
+  report_header_distributor: "Distributor"
+  report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
   initial_invoice_number: "Initial invoice number:"
   invoice_date: "Invoice date:"
   due_date: "Due date:"

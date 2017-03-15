@@ -4,6 +4,7 @@ module Spree
     # So we don't need the option `dependent: :destroy` as long as
     # AdjustmentMetadata has no destroy logic itself.
     has_one :metadata, class_name: 'AdjustmentMetadata'
+    belongs_to :tax_rate, foreign_key: 'originator_id', conditions: "spree_adjustments.originator_type = 'Spree::TaxRate'"
 
     scope :enterprise_fee,  where(originator_type: 'EnterpriseFee')
     scope :billable_period, where(source_type: 'BillablePeriod')

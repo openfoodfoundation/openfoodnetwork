@@ -21,3 +21,13 @@
     = f.radio_button :charges_sales_tax, false
     &nbsp;
     = f.label :charges_sales_tax, t(:say_no), value: 'false'
+.row
+  .alpha.three.columns
+    = f.label :display_invoice_logo, 'Display logo in invoices'
+  .omega.eight.columns
+    = f.check_box :display_invoice_logo
+.row
+  .alpha.three.columns
+    = f.label :invoice_text, 'Add customized text at the end of invoices'
+  .omega.eight.columns
+    = f.text_area :invoice_text, style: "width: 100%; height: 100px;"

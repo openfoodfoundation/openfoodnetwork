@@ -463,6 +463,10 @@ fr:
     shared:
       user_guide_link:
         user_guide: Guide l'utilisateur
+    invoice_settings:
+      edit:
+        invoice_settings: Apparence de la facture
+        invoice_style2?: Utiliser le modèle de facture alternaltif qui comprend une séparation des taxes par taux et une indication du taux appliqué par item (pas encore adapté pour les pays affichant des prix hors taxe)
 
   home:
     hubs:
@@ -481,10 +485,31 @@ fr:
       require_customer_login: "La boutique est réservée aux membres."
       require_login_html: "Déjà inscrit? %{Connectez-vous}. Sinon, %{inscrivez-vous} pour pouvoir faire vos achats."
       require_customer_html: "Veuillez %{contacter} %{l'entreprise} pour devenir membre."
-  invoice_column_item: "Produit"
-  invoice_column_qty: "Qté"
+
+  invoice_billing_address: "Adresse de facturation :"
   invoice_column_tax: "TVA"
   invoice_column_price: "Prix"
+  invoice_column_item: "Produit"
+  invoice_column_qty: "Qté"
+  invoice_column_unit_price_with_taxes: "Prix unitaire (TTC)"
+  invoice_column_unit_price_without_taxes: "Prix unitaire (HT)"
+  invoice_column_price_with_taxes: "Prix total (TTC)"
+  invoice_column_price_without_taxes: "Prix total (HT)"
+  invoice_column_tax_rate: "Taux TVA"
+  tax_invoice: "FACTURE"
+  tax_total: "Total TVA (%{rate}) :"
+  total_excl_tax: "Total HT :"
+  total_incl_tax: "Total TTC :"
+  abn: "SIRET :"
+  acn: "n° TVA :"
+  invoice_issued_on: "Facture éditée le :"
+  order_number: "Numéro de facture :"
+  date_of_transaction: "Date de la transaction :"
+  number:
+    percentage:
+      format:
+        format: "%n %"
+
   logo: "Logo (640x130)"
   logo_mobile: "Logo smartphone (75x26)"
   logo_mobile_svg: "Logo  smartphone (SVG)"
@@ -636,7 +661,7 @@ fr:
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
-  order_payment: "Payer via:"
+  order_payment: "Paiement par :"
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
@@ -688,7 +713,7 @@ fr:
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_summary: Résumé du paiement
-  email_payment_method: "Payer via :"
+  email_payment_method: "Moyen de paiement :"
   email_shipping_delivery_details: Détails de livraison
   email_shipping_delivery_time: "Livré le:"
   email_shipping_delivery_address: "Adresse de livraison:"
@@ -1207,6 +1232,22 @@ fr:
   report_order_cycle: "Cycle de vente:"
   report_entreprises: "Entreprises:"
   report_users: "Managers:"
+  report_tax_rates: "Taxes par taux"
+  report_tax_types: "Taxes par type"
+  report_header_order_number: "Numéro de commande"
+  report_header_date: "Date"
+  report_header_items: "Produits"
+  report_header_items_total: "Total des produits %{currency_symbol}"
+  report_header_taxable_items_total: "Total des produits taxés (%{currency_symbol})"
+  report_header_sales_tax: "Tax sur la vente (%{currency_symbol})"
+  report_header_delivery_charge: "Frais de livraison (%{currency_symbol})"
+  report_header_tax_on_delivery: "Taxe sur la livraison (%{currency_symbol})"
+  report_header_tax_on_fees: "Taxes sur les charges (%{currency_symbol})"
+  report_header_total_tax: "Taxe totale (%{currency_symbol})"
+  report_header_customer: "Acheteur"
+  report_header_distributor: "Distributeur"
+  report_header_total_excl_vat: "Total sans TVA (%{currency_symbol})"
+  report_header_total_incl_vat: "Total avec TVA (%{currency_symbol})"
   initial_invoice_number: "N° de facture initial:"
   invoice_date: "Date de facture:"
   due_date: "Date d'échéance:"
