@@ -1,0 +1,173 @@
+@import "mixins";
+@import "branding";
+@import "big-input";
+@import "animations";
+
+@mixin filter-selector($base-clr, $border-clr, $hover-clr) {
+  &.inline-block, ul.inline-block {
+    display: inline-block;
+  }
+
+  li {
+    display: inline-block;
+
+    @include border-radius(0);
+
+    padding: 0;
+    margin: 0 0 0.25rem 0.25rem;
+
+    &:hover, &:focus {
+      background: transparent;
+    }
+
+    &.active {
+      box-shadow: none;
+    }
+
+    a, a.button {
+      display: block;
+      padding-top: 0.5rem;
+
+      @include border-radius(0.5em);
+
+      border: 1px solid $border-clr;
+      padding: 0.5em 0.625em;
+      font-size: 0.875em;
+      color: $base-clr;
+      font-size: 0.75em;
+      background: white;
+      margin: 0;
+
+      i {
+        padding-left: 0.25rem;
+      }
+
+      render-svg {
+        &, & svg {
+          width: 1rem;
+          height: 1rem;
+          float: left;
+          padding-right: 0.25rem;
+
+          path {
+            @include csstrans;
+
+            fill: $base-clr;
+          }
+        }
+      }
+
+      &:hover, &:focus {
+        border-color: $hover-clr;
+        color: $hover-clr;
+
+        render-svg {
+          svg {
+            path {
+              fill: $hover-clr;
+            }
+          }
+        }
+      }
+
+      &.disabled {
+        opacity: 0.6;
+
+        &:hover, &:focus {
+          border-color: $border-clr;
+          color: $base-clr;
+
+          render-svg {
+            svg {
+              path {
+                fill: $base-clr;
+              }
+            }
+          }
+        }
+      }
+
+      &.active, &.active:hover, &.active:focus {
+        border: 1px solid $base-clr;
+        background: $base-clr;
+        color: white;
+
+        render-svg {
+          svg {
+            path {
+              fill: white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Alert when search, taxon, filter is triggered
+
+.alert-box.search-alert {
+  background-color: $clr-yellow-light;
+  border-color: $clr-yellow-light;
+  color: #777;
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+
+  span.applied-properties {
+    color: #333;
+  }
+
+  span.applied-taxons {
+    color: $clr-blue;
+  }
+
+  span.applied-search {
+    color: $clr-brick;
+  }
+
+  span.filter-label {
+    opacity: 0.75;
+  }
+}
+
+// singleLineSelectors directive provides a drop-down that can overlap
+// content. Ensure that the dropdown appears above the content.
+.filter-row {
+  position: relative;
+  z-index: 90;
+}
+
+.filter-shopfront {
+  &.taxon-selectors, &.property-selectors {
+    background: transparent;
+
+    single-line-selectors {
+      overflow-x: hidden;
+      white-space: nowrap;
+
+      .f-dropdown {
+        overflow-x: auto;
+        white-space: normal;
+      }
+    }
+
+    ul {
+      margin: 0;
+      display: inline-block;
+    }
+
+    ul, ul li {
+      list-style: none;
+    }
+  }
+
+  // Shopfront taxons
+  &.taxon-selectors {
+    @include filter-selector($clr-blue, $clr-blue-light, $clr-blue-bright);
+  }
+
+  // Shopfront properties
+  &.property-selectors {
+    @include filter-selector(#666, #ccc, #777);
+  }
+}

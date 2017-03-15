@@ -1,6 +1,5 @@
 = wicked_pdf_stylesheet_link_tag "mail/all"
 
-
 %table{:width => "100%"}
   %tbody
     %tr{ valign: "top" }
@@ -9,7 +8,7 @@
     %tr{ valign: "top" }
       %td{ :align => "left" }
         %h4
-          = "TAX INVOICE: "
+          = t('.tax_invoice')
           = "#{@order.number}"
       %td{width: "10%" }
         &nbsp;

@@ -1,0 +1,41 @@
+@-webkit-keyframes slideInUp {
+  0% {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+// @-webkit-keyframes slideOutDown
+//   0%
+//     -webkit-transform: translateY(0)
+//     transform: translateY(0)
+//   100%
+//     -webkit-transform: translateY(20px)
+//     transform: translateY(20px)
+
+.animate-show {
+  -webkit-animation-name: slideInUp;
+  animation-name: slideInUp;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+  // line-height: 20px
+  // opacity: 1
+
+  // &.ng-hide
+  //   -webkit-animation-name: slideOutDown
+  //   animation-name: slideOutDown
+  //   -webkit-animation-duration: 0.5s
+  //   animation-duration: 0.5s
+  //   -webkit-animation-fill-mode: both
+  //   animation-fill-mode: both
+  //   // line-height: 20px
+  //   // opacity: 1
+}

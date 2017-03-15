@@ -28,8 +28,6 @@ describe "TagRulesCtrl", ->
       scope.addNewRuleTo(scope.tagGroups[0], "DiscountOrder")
 
     it "adds a new rule of the specified type to the rules array for the tagGroup", ->
-      expect(scope.enterprise_form.$setDirty).toHaveBeenCalled()
-
       expect(scope.tagGroups[0].rules.length).toEqual 3
       expect(scope.tagGroups[0].rules[2].type).toEqual "TagRule::DiscountOrder"
 

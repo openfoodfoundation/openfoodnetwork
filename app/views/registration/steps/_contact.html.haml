@@ -1,0 +1,32 @@
+%script{ type: "text/ng-template", id: "registration/contact.html" }
+  .container#registration-contact
+    %ng-include{ src: "'registration/steps.html'" }
+    .row
+      .small-12.columns
+        %header
+          %h2 {{'registration_greeting' | t}}
+          %h5{ "ng-bind" => "'who_is_managing_enterprise' | t:{enterprise: enterprise.name}" }
+
+    %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('type',contact)" } }
+      .row.content
+        .small-12.medium-12.large-7.columns
+          .row
+            .small-12.columns.field
+              %label{ for: 'enterprise_contact' } {{'enterprise_contact' | t}}:
+              %input.chunky.small-12.columns{ id: 'enterprise_contact', name: 'contact', required: true, placeholder: "Contact Name", ng: { model: 'enterprise.contact' } }
+              %span.error.small-12.columns{ ng: { show: "contact.contact.$error.required && submitted" } }
+                {{'enterprise_contact_required' | t}}
+          .row
+            .small-12.columns.field
+              %label{ for: 'enterprise_email_address' } {{'enterprise_email_address' | t}}:
+              %input.chunky.small-12.columns{ id: 'enterprise_email_address', name: 'email_address', type: 'email', placeholder: "eg. charlie@thefarm.com", ng: { model: 'enterprise.email_address' } }
+          .row
+            .small-12.columns.field
+              %label{ for: 'enterprise_phone' } {{'enterprise_phone' | t}}:
+              %input.chunky.small-12.columns{ id: 'enterprise_phone', name: 'phone', placeholder: "eg. (03) 1234 5678", ng: { model: 'enterprise.phone' } }
+        .small-12.medium-12.large-5.hide-for-small-only
+
+      .row.buttons
+        .small-12.columns
+          %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('details')" } }
+          %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }

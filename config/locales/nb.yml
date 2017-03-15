@@ -39,16 +39,12 @@ nb:
   must_have_valid_business_number: "%{enterprise_name} må ha et gyldig ORG nr. før fakturaer kan sendes."
   invoice: "Faktura"
   percentage_of_sales: "%{percentage} av handel"
-  percentage_of_turnover: "Prosent av omsetning"
-  monthly_cap_excl_tax: "månedlig tak (eks. MVA)"
   capped_at_cap: "tak på %{cap}"
   per_month: "pr. måned"
   free: "gratis"
   free_trial: "gratis prøveperiode"
   plus_tax: "pluss MVA"
-  total_monthly_bill_incl_tax: "Total månedlig regning (Inkl. Avgift)"
   min_bill_turnover_desc: "når omsettning overstiger %{mbt_amount}"
-  business_model_configuration: "Utforming av forretningsmodell"
   say_no: "Nei"
   say_yes: "Ja"
   then: vil
@@ -81,6 +77,51 @@ nb:
     tag_has_rules: "Gjeldende regler for denne merkelappen: %{num}"
     has_one_rule: "har én regel"
     has_n_rules: "har %{num} regler"
+    accounts_and_billing_settings:
+      method_settings:
+        default_accounts_payment_method: "Default Accounts Payment Method"
+        default_accounts_shipping_method: "Default Accounts Shipping Method"
+      edit:
+        accounts_and_billing: "Bokføring & Fakturering"
+        accounts_administration_distributor: "bokføringsadministrasjon distributør"
+        admin_settings: "Innstillinger"
+        update_invoice: "Oppdater Fakturaer"
+        finalise_invoice: "Sluttfør Fakturaer"
+        finalise_user_invoices: "Sluttfør Brukerfakturaer"
+        finalise_user_invoice_explained: "Bruk denne knappen til å sluttføre alle fakturaer i systemet for forrige kalendermåned. Denne oppgaven kan settes opp til å kjøres automatisk hver måned."
+        manually_run_task: "Gjør Oppgave Manuelt"
+        update_user_invoices: "Oppdater Brukerfakturaer"
+        update_user_invoice_explained: "Bruk denne knappen til umiddelbart å oppdatere fakturaer for måneden frem til i dag for hver bedriftsbruker i systemet. Denne oppgaven kan settes opp til å kjøres automatisk hver natt."
+        auto_finalise_invoices: "Auto-sluttfør fakturaer månedlig på den 2. kl. 01:30"
+        auto_update_invoices: "Auto-oppdater fakturaer hver natt kl. 01:00"
+    business_model_configuration:
+      edit:
+        business_model_configuration: "Utforming av forretningsmodell"
+        business_model_configuration_tip: "Configure the rate at which shops will be charged each month for use of the Open Food Network."
+        bill_calculation_settings: "Bill Calculation Settings"
+        bill_calculation_settings_tip: "Adjust the amount that enterprises will be billed each month for use of the OFN."
+        shop_trial_length: "Lengden av prøveperioden (dager)"
+        shop_trial_length_tip: "The length of time (in days) that enterprises who are set up as shops can run as a trial period."
+        fixed_monthly_charge: "Fixed Monthly Charge"
+        fixed_monthly_charge_tip: "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."
+        percentage_of_turnover: "Prosent av omsetning"
+        percentage_of_turnover_tip: "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."
+        monthly_cap_excl_tax: "månedlig tak (eks. MVA)"
+        monthly_cap_excl_tax_tip: "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."
+        tax_rate: "Tax Rate"
+        tax_rate_tip: "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."
+        minimum_monthly_billable_turnover: "Minimum Monthly Billable Turnover"
+        minimum_monthly_billable_turnover_tip: "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."
+        example_bill_calculator: "Example Bill Calculator"
+        example_bill_calculator_legend: "Alter the example turnover to visualise the effect of the settings to the left."
+        example_monthly_turnover: "Example Monthly Turnover"
+        example_monthly_turnover_tip: "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."
+        cap_reached?: "Cap Reached ?"
+        cap_reached?_tip: "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."
+        included_tax: "Included tax"
+        included_tax_tip: "The total tax included in the example monthly bill, given the settings and the turnover provided."
+        total_monthly_bill_incl_tax: "Total månedlig regning (Inkl. Avgift)"
+        total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
     customers:
       index:
         add_customer: "Legge til kunde"
@@ -100,6 +141,8 @@ nb:
         select_country: 'velg landet'
         select_state: 'Velg Fylket'
         edit: 'Redigere'
+        update_address: 'Oppdater Adresse'
+        confirm_delete: 'Sikker på å slette?'
     products:
       bulk_edit:
         unit: Enhet
@@ -162,11 +205,15 @@ nb:
         status: Status
         manage: Administrer
       form:
-        primary_details:
-          shopfront_requires_login: "Krever butikk innlogging?"
-          shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller ikke."
+        shop_preferences:
+          shopfront_requires_login: "Offentlig synlig butikk?"
+          shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
           shopfront_requires_login_false: "Offentlig"
-          shopfront_requires_login_true: "Krev at kunder logger inn"
+          shopfront_requires_login_true: "Synlig kun for registrerte kunder."
+          allow_guest_orders: "Gjestebestillinger"
+          allow_guest_orders_tip: "Tillat gjestebestillinger eller krev brukerregistrering."
+          allow_guest_orders_false: "Krev innlogging for å bestille"
+          allow_guest_orders_true: "Tillat gjestebestilling"
   home:
     hubs:
       show_closed_shops: "Vis stengte butikker"
@@ -318,7 +365,9 @@ nb:
   checkout_as_guest: "Betal som gjest"
   checkout_details: "Dine detaljer"
   checkout_billing: "Betalingsinformasjon"
+  checkout_default_bill_address: "Lagre som standard fakturaadresse"
   checkout_shipping: Leveringsinformasjon
+  checkout_default_ship_address: "Lagre som standard leveringsadresse"
   checkout_method_free: Gratis
   checkout_address_same: Leveringsadresse samme som fakturaadresse?
   checkout_ready_for: "Klar for:"
@@ -586,7 +635,6 @@ nb:
   products_max_quantity: Max mengde
   products_distributor: Distributør
   products_distributor_info: Når du velger en distributør for din bestilling, vil deres adresse og hentetider vises her.
-  shop_trial_length: "Lengden av prøveperioden (dager)"
   shop_trial_expires_in: "Din prøveperiode på butikkfront går ut om "
   shop_trial_expired_notice: "Gode nyheter! Vi har bestemt å forlenge butikkprøveperioder inntil ytterligere beskjed."
   password: Passord
@@ -815,16 +863,6 @@ nb:
   roles: "Roller"
   update: "Oppdater"
   add_producer_property: "Legg til produsentegenskap"
-  admin_settings: "Innstillinger"
-  update_invoice: "Oppdater Fakturaer"
-  finalise_invoice: "Sluttfør Fakturaer"
-  finalise_user_invoices: "Sluttfør Brukerfakturaer"
-  finalise_user_invoice_explained: "Bruk denne knappen til å sluttføre alle fakturaer i systemet for forrige kalendermåned. Denne oppgaven kan settes opp til å kjøres automatisk hver måned."
-  manually_run_task: "Gjør Oppgave Manuelt"
-  update_user_invoices: "Oppdater Brukerfakturaer"
-  update_user_invoice_explained: "Bruk denne knappen til umiddelbart å oppdatere fakturaer for måneden frem til i dag for hver bedriftsbruker i systemet. Denne oppgaven kan settes opp til å kjøres automatisk hver natt."
-  auto_finalise_invoices: "Auto-sluttfør fakturaer månedlig på den 2. kl. 01:30"
-  auto_update_invoices: "Auto-oppdater fakturaer hver natt kl. 01:00"
   in_progress: "Pågår"
   started_at: "Startet"
   queued: "Satt i kø"
@@ -835,8 +873,6 @@ nb:
   no_customers_found: "Fant ingen kunder"
   go: "Gå"
   hub: "Hub"
-  accounts_administration_distributor: "bokføringsadministrasjon distributør"
-  accounts_and_billing: "Bokføring & Fakturering"
   producer: "Produsent"
   product: "Produkt"
   price: "Pris"
@@ -959,6 +995,7 @@ nb:
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"
   validation_msg_is_associated_with_an_exising_customer: "er assosiert med en eksisterende kunde"
   spree:
+    zipcode: Postnummer
     shipment_states:
       backorder: restordre
       partial: delvis

@@ -15,13 +15,13 @@
       %col{style: "width: 25%;"}/
     %thead
       %tr{"data-hook" => "enterprises_header"}
-        %th Name
-        %th Role
+        %th= t('.name')
+        %th= t('.role')
         - if spree_current_user.admin?
-          %th Sells
-        %th Visible?
+          %th= t('.sells')
+        %th= t('.visible')
         - if spree_current_user.admin?
-          %th Owner
+          %th= t('.owner')
         %th
     %tbody
       = f.fields_for :collection do |enterprise_form|
@@ -30,7 +30,7 @@
           %td= link_to enterprise.name, main_app.edit_admin_enterprise_path(enterprise)
           %td
             = enterprise_form.check_box :is_primary_producer
-            Producer
+            = t('.producer')
           - if spree_current_user.admin?
             %td= enterprise_form.select :sells, Enterprise::SELLS, {}, class: 'select2 fullwidth'
           %td= enterprise_form.check_box :visible
@@ -41,4 +41,4 @@
       - if @enterprises.empty?
         %tr
           %td{colspan: "4"}= t(:none)
-  = f.submit 'Update'
+  = f.submit t(:update)

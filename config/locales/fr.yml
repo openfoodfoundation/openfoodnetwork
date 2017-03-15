@@ -39,20 +39,27 @@ fr:
   must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
   invoice: "Facture"
   percentage_of_sales: "%{percentage} des ventes"
-  percentage_of_turnover: "Pourcentage du chiffre d'affaire"
-  monthly_cap_excl_tax: "plafond mensuel (sans TVA)"
   capped_at_cap: "plafonné à %{cap}"
   per_month: "par mois"
   free: "gratuit"
   free_trial: "Utilisation contre contribution libre"
   plus_tax: "plus TVA"
-  total_monthly_bill_incl_tax: "Facture mensuelle totale (taxes incluses)"
   min_bill_turnover_desc: "Quand le chiffre d'affaire dépasse %{mbt_amount}"
-  business_model_configuration: "Configuration du modèle économique"
   say_no: "Non"
   say_yes: "Oui"
   then: puis
   sort_order_cycles_on_shopfront_by: "Trier les cycles de vente par"
+  required_fields: "Les champs obligatoires sont annotés d'une astérisque"
+  select_continue: Sélectionner et Continuer
+  remove: Supprimer
+  or: ou
+  collapse_all:  Réduire
+  expand_all: Etendre
+  loading: Chargement...
+  show_more: Voir plus
+  show_all: Voir tout
+  cancel: Annuler
+
   admin:
     date: Date
     email: Email
@@ -81,6 +88,51 @@ fr:
     tag_has_rules: "Règles existantes pour ce tag: %{num}"
     has_one_rule: "a une règle"
     has_n_rules: "a %{num} règles"
+    accounts_and_billing_settings:
+      method_settings:
+        default_accounts_payment_method: "Default Accounts Payment Method"
+        default_accounts_shipping_method: "Default Accounts Shipping Method"
+      edit:
+        accounts_and_billing: "Compte & Facturation"
+        accounts_administration_distributor: "entreprise d'administration des comptes (facturation des hubs)"
+        admin_settings: "Paramètres"
+        update_invoice: "Mettre à jour les factures"
+        finalise_invoice: "Finaliser les factures"
+        finalise_user_invoices: "Finaliser les factures utilisateurs"
+        finalise_user_invoice_explained: "Cliquez ici pour finaliser toutes les factures pour le mois calendaire précédent. Cette tâche peut-être définie pour être opérée automatiquement une fois par mois."
+        manually_run_task: "Tache manuelle"
+        update_user_invoices: "Mettre à jour les factures utilisateurs"
+        update_user_invoice_explained: "Cliquez ici pour mettre à jour immédiatement les factures pour le mois en cours pour toutes les entreprises utilisant le système. Cette tache peut être définie pour s'effectuer automatiquement chaque nuit."
+        auto_finalise_invoices: "Finaliser automatiquement les factures le 2 de chaque mois à 01:30"
+        auto_update_invoices: "Mettre à jour automatiquement les factures chaque nuit à 01:00"
+    business_model_configuration:
+      edit:
+        business_model_configuration: "Configuration du modèle économique"
+        business_model_configuration_tip: "Configure the rate at which shops will be charged each month for use of the Open Food Network."
+        bill_calculation_settings: "Bill Calculation Settings"
+        bill_calculation_settings_tip: "Adjust the amount that enterprises will be billed each month for use of the OFN."
+        shop_trial_length: "Durée de la période de test (jours)"
+        shop_trial_length_tip: "The length of time (in days) that enterprises who are set up as shops can run as a trial period."
+        fixed_monthly_charge: "Fixed Monthly Charge"
+        fixed_monthly_charge_tip: "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."
+        percentage_of_turnover: "Pourcentage du chiffre d'affaire"
+        percentage_of_turnover_tip: "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."
+        monthly_cap_excl_tax: "plafond mensuel (sans TVA)"
+        monthly_cap_excl_tax_tip: "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."
+        tax_rate: "Tax Rate"
+        tax_rate_tip: "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."
+        minimum_monthly_billable_turnover: "Minimum Monthly Billable Turnover"
+        minimum_monthly_billable_turnover_tip: "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."
+        example_bill_calculator: "Example Bill Calculator"
+        example_bill_calculator_legend: "Alter the example turnover to visualise the effect of the settings to the left."
+        example_monthly_turnover: "Example Monthly Turnover"
+        example_monthly_turnover_tip: "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."
+        cap_reached?: "Cap Reached ?"
+        cap_reached?_tip: "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."
+        included_tax: "Included tax"
+        included_tax_tip: "The total tax included in the example monthly bill, given the settings and the turnover provided."
+        total_monthly_bill_incl_tax: "Facture mensuelle totale (taxes incluses)"
+        total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
     customers:
       index:
         add_customer: "Ajouter un acheteur"
@@ -100,6 +152,29 @@ fr:
         select_country: 'Choisir le pays'
         select_state: 'Choisir le département'
         edit: 'Modifier'
+        update_address: 'Mettre à jour l''adresse'
+        confirm_delete: 'Confirmer suppression?'
+    cache_settings:
+      show:
+        distributor: Distributeur
+        order_cycle: Cycle de vente
+        status: Statut
+        diff: Diff
+    contents:
+      edit:
+        title: Contenu
+    enterprise_fees:
+      index:
+        title: Marges de l'entreprise
+        enterprise: Entreprise
+        fee_type: Type de marge
+        name: Nom
+        tax_category: TVA appliquée
+        calculator: Calculateur
+        calculator_values: Valeurs applicables
+    enterprise_groups:
+      index:
+        new_button: Nouveau groupe d'entreprise
     products:
       bulk_edit:
         unit: Unité
@@ -110,6 +185,8 @@ fr:
         available_on: Disponible sur
         av_on: "Disp. sur"
     variant_overrides:
+      loading_flash:
+        loading_inventory: LOADING INVENTORY
       index:
         title: Stock
         description: Utilisez cette page pour gérer le catalogue de votre entreprise. Les détails produits saisis ici remplaceront ceux de la page "Produit" pour votre entreprise uniquement.
@@ -162,11 +239,232 @@ fr:
         status: Statut
         manage: Gérer
       form:
+        about_us:
+          desc_short: Description courte
+          desc_short_placeholder: Dites nous à propos de votre entreprise en 2 lignes
+          desc_long: Description publique
+          desc_long_placeholder: Décrivez-vous à vos clients. Cette information apparaîtra sur votre profil public.
+        business_details:
+          abn: ABN
+          abn_placeholder: "ex: 99 123 456 789"
+          acn: ACN
+          acn_placeholder: "ex: 123 456 789"
+        contact:
+          name: Prénom/Nom
+          name_placeholder: "ex: Maurice Batot"
+          email_address: Email Address
+          email_address_placeholder: "ex: maurice@tomates.fr"
+          phone: Téléphone
+          phone_placeholder: "ex: 98 7654 3210"
+          website: Site Web
+          website_placeholder: "ex: www.tomates.fr"
+        enterprise_fees:
+          name: Nom
+          fee_type: Type de marge
+          manage_fees: Gérer vos marges
+          no_fees_yet: Vous n'avez pas encore de marges définies.
+          create_button: Créer une nouvelle marge
+        images:
+          logo: Logo
+          promo_image_placeholder: 'Cette image est affichée dans la partie "A Propos"'
+          promo_image_note1: 'NOTES :'
+          promo_image_note2: Toutes les images uploadées ici seront coupées pour 1200x260 pixels.
+          promo_image_note3: L'image promotionelle est affichée en haut de la page profil de l'entreprise et sur les pop-ups.
+        inventory_settings:
+          text1: Vous pouvez gérer votre stock et vos prix via votre
+          inventory: inventaire
+          text2: >
+            If you are using the inventory tool, you can select whether new products
+            added by your suppliers need to be added to your inventory before they can be
+            stocked. If you are not using your inventory to manage your products you should
+            select the 'recommended' option below:
+          preferred_product_selection_from_inventory_only_yes: Les nouveaux produits peuvent être mis dans mon magasin (Recommendé)
+          preferred_product_selection_from_inventory_only_no: Les nouveaux produits doivent être ajouté dans mon magasin avant de pouvoir être ajouté dans mon magasin
+        payment_methods:
+          name: Nom
+          applies: Applies?
+          manage: Gérer les moyens de paiement
+          not_method_yet: Vous n'avez encore aucun moyen de paiement.
+          create_button: Ajouter un nouveau moyen de paiement
+          create_one_button: Ajouter un nouveau moyen de paiement
         primary_details:
+          name: Nom
+          name_placeholder: 'ex: Les Oranges Bleues'
+          groups: Groupes
+          groups_tip: Select any groups or regions that you are a member of. This will help customers find your enterprise.
+          groups_placeholder: Commencer à taper dans rechercher les groupes disponibles...
+          primary_producer: Primary Producer
+          primary_producer_tip: Select 'Producer' if you are a primary producer of food.
+          producer: Producteur
+          any: Any
+          none: None
+          own: Own
+          sells: Sells
+          sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
+          visible_in_seach:  Visible dans la recherche?
+          visible_in_seach_tip: Determines whether this enterprise will be visible to customers when searching the site.
+          visible: Visible
+          not_visible: Pas visible
+          permalink: Lien (pas d'espace)
+          permalink_tip: "This permalink is used to create the url to your shop: %{link} your-shop-name/shop"
+          link_to_front: Link to shop front
+          link_to_front_tip: A direct link to your shopfront on the Open Food Network.
+        shipping_methods:
+          name: Nom
+          applies: Applies?
+          manage: Gérer les moyens de livraison
+          create_button: Ajouter un nouveau moyen de livraison
+          create_one_button: Ajouter un nouveau moyen de livraison
+          no_method_yet: Vous n'avez encore aucun moyen de livraison défini.
+        shop_preferences:
           shopfront_requires_login: "Cette boutique exige un login?"
           shopfront_requires_login_tip: "Les acheteurs doivent-ils se connecter pour accéder à la boutique?"
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Demander aux acheteurs de se connecter"
+          allow_guest_orders: "Guest orders"
+          allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
+          allow_guest_orders_false: "Require login to order"
+          allow_guest_orders_true: "Allow guest checkout"
+          shopfront_message_placeholder: >
+            An optional explanation for customers detailing how your shopfront works,
+            to be displayed above the product list on your shop page.
+          shopfront_closed_message_placeholder: >
+            A message which provides a more detailed explanation about why your shop is
+            closed and/or when customers can expect it to open again. This is displayed
+            on your shop only when you have no active order cycles (ie. shop is closed).
+          open_date: Open Date
+          close_date: Close Date
+        social:
+          twitter_placeholder: 'ex: @lesorangesbleues'
+        tag_rules:
+          default_rules:
+            by_default: Par défaut
+            no_rules_yet: Aucune règle encore ajoutée
+            add_new_button: + Ajouter une nouvelle règle
+          no_tags_yet: Aucun tag encore défini pour cette entreprise
+          no_rules_yet: Aucun régle encore définie pour ce tag
+          for_customers_tagged: 'For customers tagged:'
+          add_new_rule: '+ Ajouter une nouvelle régle'
+          add_new_tag: '+ Ajouter un nouveau tag'
+        users:
+          email_confirmation_text: Email confirmation is pending.<br />We've sent a confirmation email to
+          resend: Renvoyer
+          owner: Propriétaire
+          owner_tip: Le premier utilisateur responsable pour l'entreprise.
+          notifications: Notifications
+          notifications_tip: Notifications about orders will be send to this email address.
+          notifications_placeholder: 'ex: gustav@truffles.com'
+          notifications_note: 'Note: A new email address may need to be confirmed prior to use'
+          managers: Managers
+          managers_tip: The other users with permission to manage this enterprise.
+      actions:
+        edit_profile: Mettre à jour le profil
+        properties: Propriétés
+        payment_methods: Méthodes de paiement
+        payment_methods_tip: Cette entreprise n'a pas de méthode de paiement
+        shipping_methods: Méthodes de livraison
+        shipping_methods_tip: Cette entreprise n'a pas de méthode de livraisons
+        enterprise_fees: Enterprise Fees
+        enterprise_fees_tip: This enterprise has no fees
+      admin_index:
+        name: Nom
+        role: Role
+        sells: Sells
+        visible: Visible?
+        owner: Owner
+        producer: Producer
+      change_type_form:
+        producer_profile: Producer Profile
+        connect_ofn: Connect through OFN
+        always_free: ALWAYS FREE
+        producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
+        producer_shop: Producer Shop
+        sell_your_produce: Sell your own produce
+        sell_description_text: Sell your products directly to customers through your very own Open Food Network shopfront.
+        sell_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
+        producer_hub: Producer Hub
+        producer_hub_text: Sell produce from self and others
+        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+        profile: Profile Only
+        get_listing: Get a listing
+        profile_description_text: People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
+        hub_shop: Hub Shop
+        hub_shop_text: Sell produce from others
+        hub_shop_description_text: Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+        choose_option: Please choose one of the options above.
+        change_now: Change now
+      enterprise_user_index:
+        search_placeholder: Search By Name
+        manage: Manage
+      new_form:
+        owner: Owner
+        owner_tip: The primary user responsible for this enterprise.
+        i_am_producer: I am a Producer
+        contact_name: Nom du contact
+      edit:
+        editing: 'Editing:'
+        back_link: Retour à la liste d'entreprise
+      index:
+        title: Enterprises
+        new_enterprise: Ajouter une nouvelle entreprise
+      new:
+        title: Nouvelle entreprise
+        back_link: Retour à la liste d'entreprise
+      welcome:
+        welcome_title: Bienvenue chez Open Food France !
+        welcome_text: Vous avez bien créé une
+        next_step: Etape suivante
+        choose_starting_point: 'Choose your starting point:'
+    order_cycles:
+      advanced_settings:
+        title: Advanced Settings
+        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
+        preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
+        preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
+        save_reload: Save and Reload Page
+      coordinator_fees:
+        add: Add coordinator fee
+      form:
+        incoming: Incoming
+        supplier: Supplier
+        products: Products
+        receival_details: Receival details
+        fees: Fees
+        outgoing: Outgoing
+        distributor: Distributor
+        products: Products
+        tags: Tags
+        delivery_detaisl: Pickup / Delivery details
+        debug_info: Debug information
+      name_and_timing_form:
+        name: Name
+        orders_open: Orders open
+        coordinator: Coordinator
+        order_closes: Orders close
+      row:
+        suppliers: suppliers
+        distributors: distributors
+        variants: variants
+      simple_form:
+        ready_for: Ready for
+        ready_for_placeholder: Date / time
+        customer_instructions: Customer instructions
+        customer_instructions_placeholder: Pick-up or delivery notes
+        products: Products
+        fees: Fees
+      edit:
+        advanced_settings: Advanced Settings
+        update_and_close: Update and Close
+    producer_properties:
+      form:
+        property: Propriété
+        value: Valeur
+      index:
+        title: Producer Properties
+    shared:
+      user_guide_link:
+        user_guide: Guide l'utilisateur
+
   home:
     hubs:
       show_closed_shops: "Aficher les boutiques fermées"
@@ -182,8 +480,8 @@ fr:
       register: "s'inscrire"
       contact: "contact"
       require_customer_login: "La boutique est réservée aux membres."
-      require_login_html: "Déjà inscrit? %{Connectez-vous}. Sinon, %{inscrivez-vous} pour pouvoir faire vos achats."
-      require_customer_html: "Veuillez %{contacter} %{l'entreprise} pour devenir membre."
+      require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
+      require_customer_html: "Veuillez %{contact} %{enterprise} pour devenir membre."
   invoice_column_item: "Produit"
   invoice_column_qty: "Qté"
   invoice_column_tax: "TVA"
@@ -211,10 +509,14 @@ fr:
   phone: Téléphone
   next: Suivant
   address: Adresse
+  address_placeholder: "ex: 16, rue du Marché"
   address2: Adresse (suite)
   city: Ville
+  city_placeholder: "ex: Lille"
   state: Département
   postcode: Code postal
+  postcode_placeholder: "ex: 59000"
+  state: Région
   country: Pays
   unauthorized: Non authorisé
   terms_of_service: "Conditions d'utilisation"
@@ -318,7 +620,9 @@ fr:
   checkout_as_guest: "Régler en mode invité"
   checkout_details: "Vos informations"
   checkout_billing: "Informations de facturation"
+  checkout_default_bill_address: "Sauvegarder comme adresse de facturation par défaut"
   checkout_shipping: Informations de livraison
+  checkout_default_ship_address: "Sauvegarder comme adresse de livraison par défaut"
   checkout_method_free: Gratuit
   checkout_address_same: Adresse de livraison identique à l'adresse de facturation?
   checkout_ready_for: "Prêt pour:"
@@ -586,7 +890,6 @@ fr:
   products_max_quantity: Quantité max
   products_distributor: Distributeur
   products_distributor_info: Quand vous choisissez un distributeur pour votre commande, les adresse et date de retrait seront affichées ici.
-  shop_trial_length: "Durée de la période de test (jours)"
   shop_trial_expires_in: "Votre période de test se termine dans"
   shop_trial_expired_notice: "Vous pouvez continuer à utiliser la plateforme en contrepartie d'une contribution libre et volontaire. Merci de nous informer de la façon dont vous souhaitez contribuer :-)"
   password: Mot de passe
@@ -815,16 +1118,6 @@ fr:
   roles: "Roles"
   update: "Mettre à jour"
   add_producer_property: "Ajouter une propriété"
-  admin_settings: "Paramètres"
-  update_invoice: "Mettre à jour les factures"
-  finalise_invoice: "Finaliser les factures"
-  finalise_user_invoices: "Finaliser les factures utilisateurs"
-  finalise_user_invoice_explained: "Cliquez ici pour finaliser toutes les factures pour le mois calendaire précédent. Cette tâche peut-être définie pour être opérée automatiquement une fois par mois."
-  manually_run_task: "Tache manuelle"
-  update_user_invoices: "Mettre à jour les factures utilisateurs"
-  update_user_invoice_explained: "Cliquez ici pour mettre à jour immédiatement les factures pour le mois en cours pour toutes les entreprises utilisant le système. Cette tache peut être définie pour s'effectuer automatiquement chaque nuit."
-  auto_finalise_invoices: "Finaliser automatiquement les factures le 2 de chaque mois à 01:30"
-  auto_update_invoices: "Mettre à jour automatiquement les factures chaque nuit à 01:00"
   in_progress: "En cours"
   started_at: "Commencé à"
   queued: "En attente"
@@ -835,8 +1128,6 @@ fr:
   no_customers_found: "Aucun acheteur trouvé"
   go: "Lancer"
   hub: "Hub"
-  accounts_administration_distributor: "entreprise d'administration des comptes (facturation des hubs)"
-  accounts_and_billing: "Compte & Facturation"
   producer: "Producteur"
   product: "Produit"
   price: "Prix"
@@ -959,6 +1250,7 @@ fr:
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
   validation_msg_is_associated_with_an_exising_customer: "est associé à un acheteur existant"
   spree:
+    zipcode: Code postal
     shipment_states:
       backorder: réapprovisionnement
       partial: partiel

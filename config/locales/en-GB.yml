@@ -6,7 +6,7 @@ en-GB:
         shipment_state: Shipment State
   devise:
     failure:
-      invalid:
+      invalid: |
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
     enterprise_confirmations:
@@ -23,7 +23,7 @@ en-GB:
   title: Open Food Network
   welcome_to: 'Welcome to '
   site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
-  search_by_name: Search by name...
+  search_by_name: Search by name, town, county or postcode...
   producers: 'UK Producers'
   producers_join: UK producers are now welcome to join Open Food Network UK.
   charges_sales_tax: Charges VAT?
@@ -39,16 +39,12 @@ en-GB:
   must_have_valid_business_number: "Please enter your company number."
   invoice: "Invoice"
   percentage_of_sales: "%{percentage} of sales"
-  percentage_of_turnover: "Percentage of turnover"
-  monthly_cap_excl_tax: "monthly cap (excl. VAT)"
   capped_at_cap: "capped at %{cap}"
   per_month: "per month"
-  free: "free"
+  free: "pay what you can"
   free_trial: "free trial"
   plus_tax: "plus VAT"
-  total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. VAT)"
   min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
-  business_model_configuration: "Business model configuration"
   say_no: "No"
   say_yes: "Yes"
   then: then
@@ -81,6 +77,52 @@ en-GB:
     tag_has_rules: "Existing rules for this tag: %{num}"
     has_one_rule: "has one rule"
     has_n_rules: "has %{num} rules"
+    unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
+    accounts_and_billing_settings:
+      method_settings:
+        default_accounts_payment_method: "Default Accounts Payment Method"
+        default_accounts_shipping_method: "Default Accounts Shipping Method"
+      edit:
+        accounts_and_billing: "Accounts & Billing"
+        accounts_administration_distributor: "Accounts Administration Distributor"
+        admin_settings: "Settings"
+        update_invoice: "Update Invoices"
+        finalise_invoice: "Finalise Invoices"
+        finalise_user_invoices: "Finalise User Invoices"
+        finalise_user_invoice_explained: "Use this button to finalise all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month."
+        manually_run_task: "Manually Run Task"
+        update_user_invoices: "Update User Invoices"
+        update_user_invoice_explained: "Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night."
+        auto_finalise_invoices: "Auto-finalise invoices monthly on the 2nd at 1:30am"
+        auto_update_invoices: "Auto-update invoices nightly at 1:00am"
+    business_model_configuration:
+      edit:
+        business_model_configuration: "Business Model"
+        business_model_configuration_tip: "Configure the rate at which shops will be charged each month for use of the Open Food Network."
+        bill_calculation_settings: "Bill Calculation Settings"
+        bill_calculation_settings_tip: "Adjust the amount that enterprises will be billed each month for use of the OFN."
+        shop_trial_length: "Shop Trial Length (Days)"
+        shop_trial_length_tip: "The length of time (in days) that enterprises who are set up as shops can run as a trial period."
+        fixed_monthly_charge: "Fixed Monthly Charge"
+        fixed_monthly_charge_tip: "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."
+        percentage_of_turnover: "Percentage of turnover"
+        percentage_of_turnover_tip: "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."
+        monthly_cap_excl_tax: "monthly cap (excl. VAT)"
+        monthly_cap_excl_tax_tip: "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."
+        tax_rate: "Tax Rate"
+        tax_rate_tip: "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."
+        minimum_monthly_billable_turnover: "Minimum Monthly Billable Turnover"
+        minimum_monthly_billable_turnover_tip: "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."
+        example_bill_calculator: "Example Bill Calculator"
+        example_bill_calculator_legend: "Alter the example turnover to visualise the effect of the settings to the left."
+        example_monthly_turnover: "Example Monthly Turnover"
+        example_monthly_turnover_tip: "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."
+        cap_reached?: "Cap reached ?"
+        cap_reached?_tip: "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."
+        included_tax: "Include Tax"
+        included_tax_tip: "The total tax included in the example monthly bill, given the settings and the turnover provided."
+        total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. VAT)"
+        total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
     customers:
       index:
         add_customer: "Add Customer"
@@ -90,6 +132,18 @@ en-GB:
         add_a_new_customer_for: Add a new customer for %{shop_name}
         code: Code
         duplicate_code: "This code is used already."
+        bill_address: "Billing Address"
+        ship_address: "Shipping Address"
+        update_address_success: 'Address updated successfully.'
+        update_address_error: 'Sorry! Please input all of the required fields!'
+        edit_bill_address: 'Edit Billing Address'
+        edit_ship_address: 'Edit Shipping Address'
+        required_fileds: 'Required fields are denoted with an asterisk'
+        select_country: 'Select Country'
+        select_state: 'Select County'
+        edit: 'Edit'
+        update_address: 'Update Address'
+        confirm_delete: 'Sure to delete?'
     products:
       bulk_edit:
         unit: Unit
@@ -99,6 +153,8 @@ en-GB:
         inherits_properties?: Inherits Properties?
         available_on: Available On
         av_on: "Av. On"
+      variants:
+        to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
     variant_overrides:
       index:
         title: Inventory
@@ -152,11 +208,15 @@ en-GB:
         status: Status
         manage: Manage
       form:
-        primary_details:
-          shopfront_requires_login: "Shopfront requires login?"
-          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront."
+        shop_preferences:
+          shopfront_requires_login: "Publicly visible shopfront?"
+          shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
-          shopfront_requires_login_true: "Require customers to login"
+          shopfront_requires_login_true: "Visible to registered customers only"
+          allow_guest_orders: "Guest orders"
+          allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
+          allow_guest_orders_false: "Require login to order"
+          allow_guest_orders_true: "Allow guest checkout"
   home:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -308,7 +368,9 @@ en-GB:
   checkout_as_guest: "Checkout as guest"
   checkout_details: "Your details"
   checkout_billing: "Billing info"
+  checkout_default_bill_address: "Save as default billing address"
   checkout_shipping: Shipping info
+  checkout_default_ship_address: "Save as default shipping address"
   checkout_method_free: Free
   checkout_address_same: Shipping address same as billing address?
   checkout_ready_for: "Ready for:"
@@ -347,6 +409,7 @@ en-GB:
   email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
   email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
   email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
+  join_community: "Join the community"
   email_help: "If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!"
   email_confirmation_greeting: "Hi, %{contact}!"
   email_confirmation_profile_created: "A profile for %{name} has been successfully created! To activate your Profile we need to confirm this email address."
@@ -388,7 +451,7 @@ en-GB:
   email_signup_email: Your login email is
   email_signup_shop_html: "You can start shopping online now at %{link}."
   email_signup_text: "Thanks for joining the network. If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food! If you are a producer or food enterprise, we are excited to have you as a part of the network."
-  email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at"
+  email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
   producer_mail_greeting: "Dear"
   producer_mail_text_before: "We now have all the consumer orders for the next food delivery."
   producer_mail_order_text: "Here is a summary of the orders for your products:"
@@ -503,14 +566,14 @@ en-GB:
   producers_title: Producers
   producers_headline: Find local producers
   producers_signup_title: Sign up as a producer
-  producers_signup_headline: Food producers, empowered.
-  producers_signup_motivation: Sell your food and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
-  producers_signup_send: Join now
-  producers_signup_enterprise: Enterprise Accounts
+  producers_signup_headline: Food producers. Meet OFN.
+  producers_signup_motivation: Sell your food and tell your stories. Save time and money on every overhead. We support innovation without the risk. We're levelling the playing field.
+  producers_signup_send: Register
+  producers_signup_enterprise: Why the Open Food Network?
   producers_signup_studies: Stories from our producers.
   producers_signup_cta_headline: Join now!
-  producers_signup_cta_action: Join now
-  producers_signup_detail: Here's the detail.
+  producers_signup_cta_action: Register
+  producers_signup_detail: Got a question?
   products_item: Item
   products_description: Description
   products_variant: Variant
@@ -518,7 +581,7 @@ en-GB:
   products_available: Available?
   products_producer: "Producer"
   products_price: "Price"
-  register_title: Register
+  register_title: Find out more
   sell_title: "Register"
   sell_headline: "Get on the Open Food Network!"
   sell_motivation: "Showcase your beautiful food."
@@ -529,8 +592,8 @@ en-GB:
   sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
-  sell_listing_price: "Listing on OFN is free. Opening and running a shop on OFN is free for six months and always free for small enterprises. We charge just 2% of sales for enterprises turning over more than £5000/year."
-  sell_embed: "We can also embed an OFN shop in your own customised website or build a customised local food network website for your region."
+  sell_listing_price: "Selling through OFN UK is free!\n\nOFN UK is a Platform Cooperative - part of the Solidarity or Sharing Economy. Our goal is to support the distribution of as much local food as possible. As such OFN UK asks users to 'Pay What You Feel' toward the running costs and maintenance. We think 2% of sales is fair for all the services that OFN UK provide. But more importantly, we think that getting good local food to people at a fair price is more important than paying for software. So pay what you feel our services are worth to your enterprise."
+  sell_embed: "We collectively budget for new feature development from the international OFN community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in France, South Africa, Australia, India or Brazil might want it too! Use the Community Forum to suggest features you'd like to see."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
   shops_headline: Shopping, transformed.
@@ -575,7 +638,6 @@ en-GB:
   products_max_quantity: Max quantity
   products_distributor: Distributor
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
-  shop_trial_length: "Shop Trial Length (Days)"
   shop_trial_expires_in: "Your shopfront trial expires in"
   shop_trial_expired_notice: "OFN UK is a non-profit social enterprise making software affordable through open source collaboration. Thanks for being part of it!"
   password: Password
@@ -706,30 +768,30 @@ en-GB:
   registration_type_producer: "Yes, I'm a producer"
   registration_type_no_producer: "No, I'm not a producer"
   registration_type_error: "Please choose one. Are you are producer?"
-  registration_type_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
+  registration_type_producer_help: "Producers make things to eat and/or drink. You're a producer if you might grow it, raise it, brew it, bake it or ferment it."
   registration_type_no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
   create_profile: "Create profile"
   registration_images_headline: "Thanks!"
-  registration_images_description: "Let's upload some pretty pictures so your profile looks great! :)"
+  registration_images_description: "Let's upload some pictures so your profile looks great! :)"
   registration_detail_headline: "Let's get started"
-  registration_detail_enterprise: "Woot! First we need to know a little bit about your enterprise:"
-  registration_detail_producer: "Woot! First we need to know a little bit about your farm:"
+  registration_detail_enterprise: "First we need to know a little bit about your enterprise:"
+  registration_detail_producer: "First we need to know a little bit about your farm:"
   registration_detail_name_enterprise: "Enterprise name:"
   registration_detail_name_producer: "Farm name:"
-  registration_detail_name_placeholder: "e.g. Charlie's Awesome Farm"
+  registration_detail_name_placeholder: "e.g. Charlie's Farm"
   registration_detail_name_error: "Please choose a unique name for your enterprise"
   registration_detail_address1: "Address line 1:"
-  registration_detail_address1_placeholder: "e.g. 123 Cranberry Drive"
+  registration_detail_address1_placeholder: "e.g. 123 Apple Drive"
   registration_detail_address1_error: "Please enter an address"
   registration_detail_address2: "Address line 2:"
-  registration_detail_suburb: "Suburb:"
-  registration_detail_suburb_placeholder: "e.g. Northcote"
-  registration_detail_suburb_error: "Please enter a suburb"
+  registration_detail_suburb: "Town:"
+  registration_detail_suburb_placeholder: "e.g. Taunton"
+  registration_detail_suburb_error: "Please enter a town"
   registration_detail_postcode: "Postcode:"
-  registration_detail_postcode_placeholder: "e.g. 3070"
+  registration_detail_postcode_placeholder: "e.g. TA1 1AA"
   registration_detail_postcode_error: "Postcode required"
-  registration_detail_state: "State:"
-  registration_detail_state_error: "State required"
+  registration_detail_state: "County:"
+  registration_detail_state_error: "County required"
   registration_detail_country: "Country:"
   registration_detail_country_error: "Please select a country"
   fees: "Fees"
@@ -797,22 +859,13 @@ en-GB:
   tax_category: "Tax Category"
   calculator: "Calculator"
   calculator_values: "Calculator values"
+  flat_percent_per_item: "Flat Percent (per item)"
   new_order_cycles: "New Order Cycles"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"
   add_producer_property: "Add producer property"
-  admin_settings: "Settings"
-  update_invoice: "Update Invoices"
-  finalise_invoice: "Finalise Invoices"
-  finalise_user_invoices: "Finalise User Invoices"
-  finalise_user_invoice_explained: "Use this button to finalise all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month."
-  manually_run_task: "Manually Run Task"
-  update_user_invoices: "Update User Invoices"
-  update_user_invoice_explained: "Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night."
-  auto_finalise_invoices: "Auto-finalise invoices monthly on the 2nd at 1:30am"
-  auto_update_invoices: "Auto-update invoices nightly at 1:00am"
   in_progress: "In Progress"
   started_at: "Started at"
   queued: "Queued"
@@ -823,8 +876,6 @@ en-GB:
   no_customers_found: "No customers found"
   go: "Go"
   hub: "Hub"
-  accounts_administration_distributor: "accounts administration distributor"
-  accounts_and_billing: "Accounts & Billing"
   producer: "Producer"
   product: "Product"
   price: "Price"
@@ -872,6 +923,12 @@ en-GB:
   edit_profile_details_etc: "Change your profile description, images, etc."
   order_cycle: "Order Cycle"
   remove_tax: "Remove tax"
+  enterprise_terms_of_service: "Enterprise Terms of Service"
+  enterprises_require_tos: "Enterprises must accept Terms of Service"
+  enterprise_tos_link: "Enterprise Terms of Service link"
+  enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
+  enterprise_tos_link_text: "Terms of Service."
+  enterprise_tos_agree: "I agree to the above Terms of Service"
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
   admin_shared_address_1: "Address"
@@ -947,6 +1004,7 @@ en-GB:
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
   spree:
+    zipcode: Postcode
     shipment_states:
       backorder: backorder
       partial: partial

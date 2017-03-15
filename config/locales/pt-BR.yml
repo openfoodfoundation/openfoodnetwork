@@ -1,0 +1,1015 @@
+pt-BR:
+  activerecord:
+    attributes:
+      spree/order:
+        payment_state: Situação do pagamento
+        shipment_state: Situação do Envio
+  devise:
+    failure:
+      invalid: |
+        Email ou senha incorretos.
+        Você entrou como visitante da última vez?  Talvez você precise criar uma conta ou criar uma nova senha.
+    enterprise_confirmations:
+      enterprise:
+        confirmed: Obrigado, seu endereço de email foi confirmado.
+        not_confirmed: Não foi possível confirmar seu endereço de email. Talvez você já tenha completado esse passo?
+        confirmation_sent: "Email de confirmação enviado!"
+        confirmation_not_sent: "Não foi possível enviar a confirmação de email."
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "Favor confirmar o endereço de email para %{enterprise}"
+    welcome:
+      subject: "%{enterprise} está agora em %{sitename}"
+  title: Open Food Network
+  welcome_to: 'Bem vindo a'
+  site_meta_description: "A gente começa por quem produz os alimentos, contando suas histórias e de seus cultivos, passando por quem distribui de modo justo e sem desperdício, até chegar em quem acredita que suas decisões de consumo podem..."
+  search_by_name: Procurar por nome ou localidade
+  producers: 'Produtores Nacionais'
+  producers_join: Produtores nacionais estão convidados a se unirem à Open Food Network.
+  print_invoice: "Imprimir fatura"
+  send_invoice: "Enviar fatura"
+  resend_confirmation: "Enviar confirmação novamente"
+  view_order: "Ver pedido"
+  edit_order: "Editar pedido"
+  ship_order: "Enviar pedido"
+  cancel_order: "Cancelar pedido"
+  confirm_send_invoice: "Uma fatura desse pedido será enviada ao cliente. Tem certeza que deseja continuar?"
+  confirm_resend_order_confirmation: "Tem certeza que deseja enviar novamente o pedido de confirmação do email?"
+  invoice: "Fatura"
+  percentage_of_sales: "%{percentage} de vendas"
+  capped_at_cap: "limitado em %{cap}"
+  per_month: "ao mês"
+  free: "grátis"
+  free_trial: "faça um teste grátis"
+  plus_tax: "mais taxas"
+  min_bill_turnover_desc: "uma vez que o volume de negócio exceder %{mbt_amount}"
+  say_no: "Não"
+  say_yes: "Sim"
+  then: então
+  sort_order_cycles_on_shopfront_by: "Ordenar Ciclo de Pedidos no Mercado Por"
+  admin:
+    date: Data
+    email: Email
+    name: Nome
+    on_hand: Disponível
+    on_demand: Sob Encomenda
+    on_demand?: Sob Encomenda
+    order_cycle: Ciclo de Pedidos
+    phone: Telefone
+    price: Preço
+    producer: Produtor
+    product: Produto
+    quantity: Quantidade
+    shop: Loja
+    tags: Tags
+    variant: Variante
+    quick_search: Busca Rápida
+    clear_all: apagar tudo
+    start_date: "Data de Início"
+    end_date: "Data de Término"
+    columns: Colunas
+    actions: Ações
+    viewing: "Visualizando: %{current_view_name}"
+    whats_this: O que é isso
+    tag_has_rules: "Regras existentes para essa tag: %{num}"
+    has_one_rule: "possui uma regra"
+    has_n_rules: "tem %{num} regras"
+    accounts_and_billing_settings:
+      method_settings:
+        default_accounts_payment_method: "Default Accounts Payment Method"
+        default_accounts_shipping_method: "Default Accounts Shipping Method"
+      edit:
+        accounts_and_billing: "Contas e Faturamento"
+        accounts_administration_distributor: "distribuidor de administração de contas"
+        admin_settings: "Preferências do Sistema"
+        update_invoice: "Atualizar faturas"
+        finalise_invoice: "Finalizar Faturas"
+        finalise_user_invoices: "Finalizar Faturas de Usuário"
+        finalise_user_invoice_explained: "Usar este botão para finalizar todos as faturas no sistema para o calendário do mês anterior. "
+        manually_run_task: "Rodar Tarefa Manualmente"
+        update_user_invoices: "Atualizar Fatura de Usuário"
+        update_user_invoice_explained: "Usar este botão para atualizar imediamente todas as faturas no sistema para o  mês atual, para cada usuário da empresa no sistema. Essa tarefa pode ser automatizada para rodar automaticamente toda noite. "
+        auto_finalise_invoices: "Finalizar automaticamente as faturas no dia 2 de cada mês, à 1:30am"
+        auto_update_invoices: "Atualizar automaticamente faturas toda as noites, a 1:00 am"
+    business_model_configuration:
+      edit:
+        business_model_configuration: "Configuração do modelo de negócios"
+        business_model_configuration_tip: "Configure the rate at which shops will be charged each month for use of the Open Food Network."
+        bill_calculation_settings: "Bill Calculation Settings"
+        bill_calculation_settings_tip: "Adjust the amount that enterprises will be billed each month for use of the OFN."
+        shop_trial_length: "Duração de Avaliação da Loja (dias)"
+        shop_trial_length_tip: "The length of time (in days) that enterprises who are set up as shops can run as a trial period."
+        fixed_monthly_charge: "Fixed Monthly Charge"
+        fixed_monthly_charge_tip: "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."
+        percentage_of_turnover: " \"Percentual de faturamento\""
+        percentage_of_turnover_tip: "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."
+        monthly_cap_excl_tax: "limite mensal (taxas exclusas)"
+        monthly_cap_excl_tax_tip: "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."
+        tax_rate: "Tax Rate"
+        tax_rate_tip: "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."
+        minimum_monthly_billable_turnover: "Minimum Monthly Billable Turnover"
+        minimum_monthly_billable_turnover_tip: "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."
+        example_bill_calculator: "Example Bill Calculator"
+        example_bill_calculator_legend: "Alter the example turnover to visualise the effect of the settings to the left."
+        example_monthly_turnover: "Example Monthly Turnover"
+        example_monthly_turnover_tip: "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."
+        cap_reached?: "Cap Reached ?"
+        cap_reached?_tip: "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."
+        included_tax: "Included tax"
+        included_tax_tip: "The total tax included in the example monthly bill, given the settings and the turnover provided."
+        total_monthly_bill_incl_tax: "Total mensal (taxas inclusas)"
+        total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
+    customers:
+      index:
+        add_customer: "Adicionar Cliente"
+        new_customer: "Novo Cliente"
+        customer_placeholder: "cliente@exemplo.org"
+        valid_email_error: Favor usar um endereço de email válido
+        add_a_new_customer_for: Adicionar novo cliente para %{shop_name}
+        code: Código
+        duplicate_code: "Esse código já está sendo usado."
+        bill_address: "Endereço de Fatura"
+        ship_address: "Endereço de Entrega"
+        update_address_success: 'Endereço atualizado com sucesso'
+        update_address_error: 'Favor preencher todos os campos obrigatórios'
+        edit_bill_address: 'Editar Endereço de Fatura'
+        edit_ship_address: 'Editar Endereço de Entrega'
+        required_fileds: 'Os campos obrigatórios estão marcados com um asterisco'
+        select_country: 'Selecionar País'
+        select_state: 'Selecionar Estado'
+        edit: 'Editar'
+        update_address: 'Atualizar Endereço'
+        confirm_delete: 'Certeza que quer excluir?'
+    products:
+      bulk_edit:
+        unit: Unidade
+        display_as: Mostrar Como
+        category: Categoria
+        tax_category: Categoria de taxa
+        inherits_properties?: Herdar Propriedades?
+        available_on: Disponível Em
+        av_on: "Disp. Em"
+    variant_overrides:
+      index:
+        title: Inventário
+        description: Utilize essa página para gerenciar inventários para seus empreendimentos. Qualquer detalhe de produtos especificado aqui irá substituir o que foi especificado na página de 'Produtos'
+        enable_reset?: Ativar Restauração do Estoque
+        inherit?: Herdar?
+        add: Adicionar
+        hide: Esconder
+        select_a_shop: Selecionar Uma Loja
+        review_now: Avaliar Agora
+        new_products_alert_message: Há %{new_product_count} novos produtos disponíveis para serem adicionados ao seu inventário.
+        currently_empty: Seu inventário está vazio no momento
+        no_matching_products: enhum produto correspondente encontrado no seu inventário
+        no_hidden_products: Nenhum produto foi ocultado nesse inventário
+        no_matching_hidden_products: Nenhum produto oculto corresponde à sua busca
+        no_new_products: Nenhum novo produto está disponível para ser adicionado a este inventário
+        no_matching_new_products: Nenhum novo produto corresponde à sua busca
+        inventory_powertip: Este é seu inventário de produtos. Para adicionar produtos ao seu inventário, selecione 'Novos Produtos' no menu Exibição
+        hidden_powertip: Estes produtos foram escondidos no seu inventário e não estarão disponíveis para serem adicionados à sua loja. Você pode clicar em 'Adicionar' para adicionar um produto a seu inventário.
+        new_powertip: 'Estes produtos estão disponíveis para serem adicionados ao seu inventário. Clique em ''Adicionar'' para adicionar um produto em seu inventário, ou ''Ocultar'' para escondê-lo. Você pode voltar atrás quando quiser! '
+    orders:
+      bulk_management:
+        tip: "Use essa página para alterar a quantidade de produtos dentre múltiplos pedidos. Produtos podem ser removidos completamente dos pedidos, se necessário"
+        shared: "Recurso Compartilhado?"
+        order_no: "Pedido nº"
+        order_date: "Data do Pedido"
+        max: "Máximo"
+        product_unit: "Produto: Unidade"
+        weight_volume: "Peso/Volume"
+        ask: "Perguntar?"
+        page_title: "Gestão de Pedidos a Granel"
+        actions_delete: "Deletar Selecionado"
+        loading: "Carregando pedidos"
+        no_results: "Nenhum pedido encontrado. "
+        group_buy_unit_size: "Tamanho de Unidade para Compras de Grupo"
+        total_qtt_ordered: "Quantidade Total do Pedido"
+        max_qtt_ordered: "Quantidade Máxima do Pedido"
+        current_fulfilled_units: "Unidades Completadas no Momento"
+        max_fulfilled_units: "Máximo de Unidades Completadas "
+        order_error: "Alguns erros devem ser corrigidos antes de atualizar os pedidos.\nOs campos com bordas vermelhas contém erros."
+        variants_without_unit_value: "AVISO: Algumas variantes não possuem unidade de valor"
+    order_cycles:
+      edit:
+        choose_products_from: "Escolha Produtos De:"
+    enterprises:
+      index:
+        producer?: Produtor?
+        package: Embalagem
+        status: Status
+        manage: Administrar
+      form:
+        shop_preferences:
+          shopfront_requires_login: "Mercado visível publicamente?"
+          shopfront_requires_login_tip: "Escolha se os clientes precisarão fazer o login para ver os produtos do mercado, ou se eles estarão visíveis para todos."
+          shopfront_requires_login_false: "Publico"
+          shopfront_requires_login_true: "Disponível somente para clientes registrados"
+          allow_guest_orders: "Pedidos dos convidados"
+          allow_guest_orders_tip: "Permitir o checkout como convidado, ou requisitar um usuário registrado. "
+          allow_guest_orders_false: "Requisitar o registro para fazer pedidos"
+          allow_guest_orders_true: "Permitir checkout de convidados"
+  home:
+    hubs:
+      show_closed_shops: "Mostrar lojas fechadas"
+      hide_closed_shops: "Esconder lojas fechadas"
+      show_on_map: "Mostrar todas no mapa"
+  shared:
+    register_call:
+      selling_on_ofn: "Interessado em participar da Open Food Network?"
+      register: "Registre-se aqui"
+  shop:
+    messages:
+      login: "Entrar"
+      register: "registro"
+      contact: "contato"
+      require_customer_login: "Essa loja é somente para clientes."
+      require_login_html: "Fazer o %{login} se você já possui uma conta. Caso contrário, %{register} para se tornar cliente. "
+      require_customer_html: "Favor %{contact} %{enterprise} para se tornar um cliente. "
+  invoice_column_item: "Ítem"
+  invoice_column_qty: "Quantidade"
+  invoice_column_price: "Preço"
+  logo: "Logo (640x130)"
+  logo_mobile: "logo mobile (75x26)"
+  logo_mobile_svg: "Logo mobile (svg)"
+  home_hero: "Imagem de capa"
+  home_show_stats: "Mostrar estatísticas"
+  footer_logo: "Logo (220x76)"
+  footer_facebook_url: "URL Facebook"
+  footer_twitter_url: "URL Twitter"
+  footer_instagram_url: "URL Instagram"
+  footer_linkedin_url: "URL Linkedln "
+  footer_googleplus_url: "URL Google Plus"
+  footer_pinterest_url: "URL Pinterest"
+  footer_email: "Email"
+  footer_links_md: "Links"
+  footer_about_url: "URL Sobre"
+  footer_tos_url: "URL Termos de Serviço"
+  name: Nome
+  first_name: Primeiro Nome
+  last_name: Último Nome
+  email: Email
+  phone: Telefon
+  next: Próximo
+  address: Endereço
+  address2: Complemento
+  city: Cidade
+  state: Estado
+  postcode: CEP
+  country: País
+  unauthorized: Não autorizado
+  terms_of_service: "Termos de Serviço"
+  on_demand: Sob encomenda
+  none: Nenhum
+  label_shops: "Lojas"
+  label_map: "Mapa"
+  label_producers: "Produtores"
+  label_groups: "Grupos"
+  label_about: "Sobre"
+  label_connect: "Conectar"
+  label_learn: "Aprender"
+  label_shopping: "Compras"
+  label_login: "Entrar"
+  label_logout: "Sair"
+  label_signup: "Registre-se"
+  label_administration: "Administração"
+  label_admin: "Admin"
+  label_account: "Conta"
+  label_more: "Mostrar mais"
+  label_less: "Mostrar menos"
+  label_notices: "Avisos"
+  items: "itens"
+  cart_headline: "seu carrinho de compras"
+  total: "Total"
+  checkout: "Checkout"
+  cart_updating: "Atualizando carrinho"
+  cart_empty: "Carrinho vazio"
+  cart_edit: "Edite seu carrinho"
+  card_number: Número do Cartão
+  card_securitycode: "Código de Segurança"
+  card_expiry_date: Data de Vencimento
+  ofn_cart_headline: "Carrinho atual para:"
+  ofn_cart_distributor: "Distribuidor:"
+  ofn_cart_oc: "Ciclo de pedidos"
+  ofn_cart_from: "De:"
+  ofn_cart_to: "Para:"
+  ofn_cart_product: "Produto:"
+  ofn_cart_quantitiy: "Quantidade:"
+  ofn_cart_send: "Me compre"
+  ie_warning_headline: "Seu navegador está desatualizado :-("
+  ie_warning_text: "Para a melhor experiência na Open Food Network, recomendamos que você atualize seu navegador:"
+  ie_warning_chrome: Baixar Chrome
+  ie_warning_firefox: Baixar Firefox
+  ie_warning_ie: Atualizar Internet Explorer
+  ie_warning_other: "Não consegue atualizar o navegador? Tente acessar a OFN pelo smartphone :-)"
+  footer_global_headline: "OFN Global"
+  footer_global_home: "Início"
+  footer_global_news: "Novidades"
+  footer_global_about: "Sobre"
+  footer_global_contact: "Contato"
+  footer_sites_headline: "Páginas OFN"
+  footer_sites_developer: "Desenvolvedores"
+  footer_sites_community: "Comunidade"
+  footer_sites_userguide: "Guia do Usuário"
+  footer_secure: "Seguro e confiável."
+  footer_secure_text: "A Open Food Network utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
+  footer_contact_headline: "Mantenha contato"
+  footer_contact_email: "Envie-nos um email"
+  footer_nav_headline: "Navegar"
+  footer_join_headline: "Junte-se a nós"
+  footer_join_body: "Criar uma lista de ofertas, mercado ou cooperativa na Open Food Network"
+  footer_join_cta: "Quero saber mais!"
+  footer_legal_call: "Leia nosso"
+  footer_legal_tos: "Termos e condições"
+  footer_legal_visit: "Nos encontre em "
+  footer_legal_text_html: "A Open Food Network é uma plataforma grátis e open-source. Nosso conteúdo está sob licensa %{content_license} e nosso código %{code_license}."
+  home_shop: Compre Agora
+  brandstory_headline: "Alimentos, com liberdade"
+  brandstory_intro: "Às vezes, a melhor maneira de consertar o sistema é construir um novo..."
+  brandstory_part1: "A gente começa por quem produz os alimentos, contando suas histórias e de seus cultivos, passando por quem distribui de modo justo e sem desperdício, até chegar em quem acredita que suas decisões de consumo podem..."
+  brandstory_part2: "Precisamos de uma ferramenta para empoderar a todos que produzem, vendem e compram comida. Uma maneira de contar histórias, e controlar toda a logística. "
+  brandstory_part3: "Por isso construímos um mercado online, transparente, capaz de criar conexões verdadeiras. O código é aberto, e pode ser modificado para melhor se adaptar as particularidades de cada canto do planeta. "
+  brandstory_part4: "Queremos de volta o controle sobre os alimentos que consumimos."
+  brandstory_part5_strong: "Bem vindos à Open Food Network"
+  brandstory_part6: "Todos amamos comida. Agora a gente também pode amar nosso sistema alimentar. "
+  learn_body: "Conheça novos modelos, histórias e fornecedores para dar suporte à sua iniciativa, mercado ou organização. Encontre oportunidades para aprender com quem faz parte do seu setor. "
+  learn_cta: "Inspire-se"
+  connect_body: "Procure em nossa lista por produtores, distribuidores e cooperativas para encontrar um comércio justo, perto de você. Registre seu negócio na OFN para que os consumidores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas, juntos. "
+  connect_cta: "Explore"
+  system_headline: "Comprar, funciona assim:"
+  system_step1: "1. Busca"
+  system_step1_text: "Escolha entre diversos mercados independentes por alimentos locais, da estação. Procure por região, tipo de alimentos, ou se você prefere retirar ou receber em casa. "
+  system_step2: "2. Compra"
+  system_step2_text: "Transforme seu comércio com fornecedores de alimentos locais. Conheça as histórias por trás do seu produto, e daqueles que o fazem!"
+  system_step3: "3. Coleta / Entrega"
+  system_step3_text: "Espere que sua compre chegue até você, ou retire nos pontos de entrega determinados pelo seu fornecedor. Simples assim!"
+  cta_headline: "A feira que incentiva a economia local."
+  cta_label: "Estou pronto"
+  stats_headline: "Estamos criando um novo sistema alimentar"
+  stats_producers: "produtores"
+  stats_shops: "lojas"
+  stats_shoppers: "compradores"
+  stats_orders: "pedidos"
+  checkout_title: Fechar pedido
+  checkout_now: Fechar pedido agora
+  checkout_order_ready: Pedido pronto para
+  checkout_hide: Ocultar
+  checkout_expand: Expandir
+  checkout_headline: "Ok, pronto para fechar o pedido?"
+  checkout_as_guest: "Fechar pedido como convidado"
+  checkout_details: "Seus detalhes"
+  checkout_billing: "Informações para fatura"
+  checkout_default_bill_address: "Salvar como endereço de faturamento padrão"
+  checkout_shipping: Informações para envio
+  checkout_default_ship_address: "Salvar como endereço para entrega padrão"
+  checkout_method_free: Grátis
+  checkout_address_same: O endereço de entrega é o mesmo endereço da fatura?
+  checkout_ready_for: "Pronto para"
+  checkout_instructions: "Algum comentário ou instruções especiais?"
+  checkout_payment: Pagamento
+  checkout_send: Fechar pedido agora
+  checkout_your_order: Seu pedido
+  checkout_cart_total: Total do carrinho
+  checkout_shipping_price: Envio
+  checkout_total_price: Total
+  checkout_back_to_cart: "De volta para o Carrinho"
+  order_paid: PAGO
+  order_not_paid: NÃO PAGO
+  order_total: Total do pedido
+  order_payment: "Pagando com:"
+  order_billing_address: Endereço de fatura
+  order_delivery_on: Entrega em
+  order_delivery_address: Endereço para entrega
+  order_special_instructions: "Suas anotações"
+  order_pickup_time: Pronto para retirada
+  order_pickup_instructions: Instruções para retirada
+  order_produce: Produtos
+  order_total_price: Total
+  order_includes_tax: (inclui taxas)
+  order_payment_paypal_successful: Seu pagamento via Paypal foi processado com sucesso.
+  order_hub_info: Informações do distribuidor
+  unsaved_changes_warning: "Existem modificações não salvas que serão perdidas se você continuar"
+  unsaved_changes_error: "Campos com bordas vermelhas contem erros. "
+  products: "Produtos"
+  products_in: "em  %{oc}"
+  products_at: "em %{distributor}"
+  products_elsewhere: "Produtos encontrados em outros lugares"
+  email_welcome: "Bem vindo"
+  email_confirmed: "Obrigado por confirmar seu endereço"
+  email_registered: "é agora parte de"
+  email_userguide_html: "O Guia de Usuário com suporte detalhado para gerenciar sua loja está aqui:"
+  email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
+  email_community_html: "Também temos um fórum online para discussão sobre a plataforma e as dificuldades únicas de se negociar alimentos. Você está convidade a participar. Estamos evoluindo constantemente e suas idéias vão nos ajudar a melhorar.\n%{link}"
+  join_community: "Faça parte da comunidade"
+  email_help: "Se tiver quaisquer dificuldades, leia nosso FAQs, navegue no fórum ou crie um post no tópico 'Support' e alguém irá te ajudar!"
+  email_confirmation_greeting: "Olá, %{contact}!"
+  email_confirmation_profile_created: "Um perfil para %{name} foi criado com sucesso!\nPara ativar seu Perfil precisamos que você confirme seu endereço de email."
+  email_confirmation_click_link: "Clique no link abaixo para confirma seu email e continuar criando seu perfil."
+  email_confirmation_link_label: "Confirme esse endereço de email »"
+  email_confirmation_help_html: "Depois de confirmar seu email você pode acessar a conta de administração desse empreendimento. Veja o %{link} para descobrir mais sobre %{sitename} e para começar a utilizar seu perfil ou loja online."
+  email_confirmation_userguide: "Guia do Usuário"
+  email_social: "Conecte-se com a gente:"
+  email_contact: "Envie-nos um email:"
+  email_signoff: "Olá,"
+  email_signature: "%{sitename} Equipe"
+  email_confirm_customer_greeting: "Olá %{name}, "
+  email_confirm_customer_intro_html: "Obrigado por comprar com <strong>%{distributor}</strong>!"
+  email_confirm_customer_number_html: "Confirmação de pedido <strong>#%{number}</strong>"
+  email_confirm_customer_details_html: "Aqui estão os detalhes de pedido de <strong>%{distributor}</strong>:"
+  email_confirm_customer_signoff: "Atenciosamente,"
+  email_confirm_shop_greeting: "Olá %{name}, "
+  email_confirm_shop_order_html: "Parabéns! Você tem um novo pedido para <strong>%{distributor}</strong>:"
+  email_confirm_shop_number_html: "Confirmação de pedido <strong>#%{number}</strong>"
+  email_order_summary_item: "Item"
+  email_order_summary_quantity: "Qtd"
+  email_order_summary_price: "Preço"
+  email_order_summary_subtotal: "Subtotal:"
+  email_order_summary_total: "Total:"
+  email_payment_paid: PAGO
+  email_payment_not_paid: NÃO PAGO
+  email_payment_summary: Resumo do pagamento
+  email_payment_method: "Pagando com:"
+  email_shipping_delivery_details: Detalhes da entrega
+  email_shipping_delivery_time: "Entrega "
+  email_shipping_delivery_address: "Endereço de entrega:"
+  email_shipping_collection_details: Detalhes para retirada
+  email_shipping_collection_time: "Pronto para retirada"
+  email_shipping_collection_instructions: "Instruções para retirada:"
+  email_special_instructions: "Suas anotações"
+  email_signup_greeting: Olá!
+  email_signup_welcome: "Bem vindo a %{sitename}!"
+  email_signup_login: Seu login
+  email_signup_email: 'O seu email de login é '
+  email_signup_shop_html: "Você pode começar a comprar agora em %{link}."
+  email_signup_text: "Obrigado por se juntar à rede. Se você é um cliente, esperamos te apresentar a vários produtores fantásticos, incríveis distribuidores e comidas deliciosas! Se você é um produtor ou empreendedor, estamos felizes em ter você como parte de nossa rede"
+  email_signup_help_html: "Dúvidas e comentários são sempre benvindos; você pode usar o botão  <em>Enviar Comentário</em> no site, ou enviar um e-mail para %{email}"
+  producer_mail_greeting: "Querido"
+  producer_mail_text_before: "Agora temos todos os pedidos do cliente para a próxima entrega."
+  producer_mail_order_text: "Aqui está um resumo de pedidos para seus produtos:"
+  producer_mail_delivery_instructions: "Instruções para retirada/entrega do estoque:"
+  producer_mail_signoff: "Obrigado e até breve"
+  shopping_oc_closed: Fechado para pedidos
+  shopping_oc_closed_description: "Favor aguardar até que o próximo ciclo seja aberto (ou entre em contato diretamente para saber se podemos aceitar pedidos atrasados)"
+  shopping_oc_last_closed: "A último ciclo fechou a %{distance_of_time} atrás"
+  shopping_oc_next_open: "A próximo ciclo abre em %{distance_of_time}"
+  shopping_tabs_about: "Sobre %{distributor}"
+  shopping_tabs_contact: "Contato"
+  shopping_contact_address: "Endereço"
+  shopping_contact_web: "Contato"
+  shopping_contact_social: "Seguir"
+  shopping_groups_part_of: "é parte de:"
+  shopping_producers_of_hub: "produtores de %{hub}:"
+  enterprises_next_closing: "Próximo fechamento de pedido"
+  enterprises_ready_for: "Pronto para"
+  enterprises_choose: "Escolha para quando você quer seu pedido:"
+  hubs_buy: "Compre por:"
+  hubs_shopping_here: "Comprando aqui"
+  hubs_orders_closed: "Fechado para pedidos"
+  hubs_profile_only: "Somente perfil"
+  hubs_delivery_options: "Opções de entrega"
+  hubs_pickup: "Coleta"
+  hubs_delivery: "Entrega"
+  hubs_producers: "Nosso produtores"
+  hubs_filter_by: "Filtrar por"
+  hubs_filter_type: "Tipo"
+  hubs_filter_delivery: "Entrega"
+  hubs_matches: "Você quis dizer?"
+  hubs_intro: Compre na sua região
+  hubs_distance: Mais próximo a
+  hubs_distance_filter: "Mostrar lojas próximas a %{location}"
+  products_clear_all: Apagar tudo
+  products_showing: "Mostrando:"
+  products_with: com
+  products_search: "Procurar por produto ou produtor"
+  products_loading: "Carregando produtos..."
+  products_updating_cart: "Atualizando carrinho..."
+  products_cart_empty: "Carrinho vazio"
+  products_edit_cart: "Edite seu carrinho"
+  products_from: de
+  products_change: "Nenhuma modificação a ser salva."
+  products_update_error: "Falha ao salvar, com os seguintes erros:"
+  products_update_error_msg: "Falha ao salvar."
+  products_update_error_data: "Falha no salvamento devido a dados inválidos:"
+  products_changes_saved: "Modificações salvas."
+  search_no_results_html: "Desculpe, nenhum resultado encontrado para %{query}. Que tal tentar outra busca?"
+  components_profiles_popover: "Perfis não possuem mercaods na Open Food Network, mas pode ter suas próprias lojas físicas ou online em outro endereço"
+  components_profiles_show: "Mostrar perfis"
+  components_filters_nofilters: "Nenhum filtro"
+  components_filters_clearfilters: "Eliminar filtros"
+  groups_title: Grupos
+  groups_headline: Grupos / Regiões
+  groups_text: "Todo produtor é único. Todo negócio tem algo de diferente para oferecer. Nossos grupos são coletivos de produtores, armazéns e distribuidores que compartilham algo em comum, como localização, mercado ou filosofia. Isso faz com que sua experiência de compra fique mais fácil. Explore a curadoria feita por cada um de nosso grupos. "
+  groups_search: "Procurar por nome ou localidade"
+  groups_no_groups: "Nenhum grupo encontrado. "
+  groups_about: "Sobre nós"
+  groups_producers: "Nosso produtores"
+  groups_hubs: "Nossas"
+  groups_contact_web: Contato
+  groups_contact_social: Seguir
+  groups_contact_address: Endereço
+  groups_contact_email: Envie-nos um email
+  groups_contact_website: Visite nosso website
+  groups_contact_facebook: Siga
+  groups_signup_title: Inscreva-se como grupo
+  groups_signup_headline: Inscrição de grupos
+  groups_signup_intro: "Somos uma plataforma incrível para marketing colaborativo: a maneira mais fácil para que seus membros alcancem novos mercados. Não temos fins lucrativos, somos simples e acessíveis."
+  groups_signup_email: Envie-nos um email
+  groups_signup_motivation1: Transformamos o sistema alimentar de maneira justa.
+  groups_signup_motivation2: 'Trabalhos para isso. Somos uma organização global, sem fins lucrativos, baseada em código open source. Jogamos limpo, sem mistério. '
+  groups_signup_motivation3: 'Sabemos que você tem grandes planos, e queremos ajudar. Podemos compartilhar conhecimento, redes e recurso. Sabemos que ninguém muda nada sozinho, por isso queremos você como parceiro. '
+  groups_signup_motivation4: Vamos até onde você está.
+  groups_signup_motivation5: 'Seja uma cooperativa de produtores, distribuidores, indústria ou governo local. '
+  groups_signup_motivation6: 'Seja qual for o seu papel, estamos aqui para ajudar. Entre em contato com a gente e conte-nos sobre suas ideias e projetos. '
+  groups_signup_motivation7: 'Queremos dar sentido para os movimentos por boa comida. '
+  groups_signup_motivation8: 'Se você precisa engajar sua rede de contatos, nós oferecemos a plataforma para isso. Conectamos todos os agentes e setores envolvidos no sistema alimentar. '
+  groups_signup_motivation9: 'Se você precisa de recursos, nós te conectamos a uma rede global de parceiros. '
+  groups_signup_pricing: Conta de Grupos
+  groups_signup_studies: Estudos de Caso
+  groups_signup_contact: Pronto para discutir?
+  groups_signup_contact_text: "Entre em contato para descobrir o que a OFN pode fazer por você"
+  groups_signup_detail: "Aqui está o detalhe. "
+  login_invalid: "Email ou senha inválidos"
+  modal_hubs: "Centrais de Alimentos"
+  modal_hubs_abstract: Nossas centrais de alimentos são o ponto de contato entre você e as pessoas que produzem sua comida!
+  modal_hubs_content1: 'Você pode procurar pelo mercado mais próximo, por localização ou por nome. Alguns distribuidores possuem múltiplos pontos de entrega, onde você pode retirar suas compras, e outros ainda entregam na sua casa. Cada mercado é um ponto de venda independente, e por isso as ofertas e maneira de operar podem variar de um para outro. '
+  modal_hubs_content2: Você só pode comprar em uma central de alimentos por vez.
+  modal_groups: "Grupos / Regiões"
+  modal_groups_content1: Essas são as organizações e relações entre as centrais que constroem a Open Food Network
+  modal_groups_content2: Alguns grupos estão organizados por localização, outros por similaridades não geográficas.
+  modal_how: "Como funciona"
+  modal_how_shop: Compra na Open Food Network
+  modal_how_shop_explained: Procure por um mercado próximo e comece suas compras! Em cada mercado você pode ver, em detalhe, quais produtos são oferecidos (você só pode comprar em um mercado de cada vez).
+  modal_how_pickup: 'Custos de coleta e entrega. '
+  modal_how_pickup_explained: 'Alguns mercados entregam na sua casa, outros oferecem um local para que você mesmo retire os produtos. É possível ver quais opções estão disponíveis no perfil individual de cada um, e fazer sua escolha no momento do checkout. Provavelmente será cobrada uma taxa de entrega, que pode variar de mercado para mercado. '
+  modal_how_more: Saiba mais
+  modal_how_more_explained: "Para saber mais sobre a Open Food Network, como funciona, e se envolver:"
+  modal_producers: "Produtores"
+  modal_producers_explained: "Nosso produtores são quem disponibilizam toda a oferta da Open Food Network"
+  producers_about: Sobre nós
+  producers_buy: Compre por
+  producers_contact: Contato
+  producers_contact_phone: Ligue
+  producers_contact_social: Seguir
+  producers_buy_at_html: "Compre por produtos oferecidos por %{enterprise} em:"
+  producers_filter: Filtrar por
+  producers_filter_type: Tipo
+  producers_filter_property: Propriedades
+  producers_title: Produtores
+  producers_headline: Encontre produtores locais
+  producers_signup_title: Inscreva-se como produtor
+  producers_signup_headline: Mais liberdade para quem produz comida.
+  producers_signup_motivation: Comercialize seus produtos e conte sua história para um mercado novo e diferenciado. Economize tempo e dinheiro em comunicação e logística.
+  producers_signup_send: Cadastre-se agora
+  producers_signup_enterprise: Contas de Empreendimentos
+  producers_signup_studies: Histórias de nossos produtores
+  producers_signup_cta_headline: Cadastre-se agora!
+  producers_signup_cta_action: Cadastre-se agora
+  producers_signup_detail: Aqui está o detalhe/
+  products_item: Ítem
+  products_description: Descrição
+  products_variant: Variante
+  products_quantity: Quantidade
+  products_available: Disponível?
+  products_producer: "Produtor"
+  products_price: "Preço"
+  register_title: Registro
+  sell_title: "\bRegistrar"
+  sell_headline: "Fazer parte da Open Food Network!"
+  sell_motivation: "Mostre seus produtos deliciosos."
+  sell_producers: "Produtores"
+  sell_hubs: "Centrais"
+  sell_groups: "Grupos"
+  sell_producers_detail: "Crie um perfil para seu negócio em apenas alguns minutos. A qualquer momento você poderá fazer se tornar um mercado online e vender seus produtos diretamente ao consumidor."
+  sell_hubs_detail: "Crie um perfil para seu negócio ou organização na OFN. A qualquer momento você poderá fazer um upgrade para um mercado de multi-produtores. "
+  sell_groups_detail: "Organize um lista personalizada de negócios (cultivos, cooperativas, comércios, etc.) para sua região ou organização. "
+  sell_user_guide: "Saiba mais acessando nosso guia. "
+  sell_listing_price: "Criar um perfil na OFN é grátis. Abrir e gerenciar um mercado na OFN é grátis. Organizar um grupo de empresas na OFN é grátis."
+  sell_embed: "Você também pode embutir um mercado da OFN no seu próprio site, ou construir um site específico para a sua região. "
+  sell_ask_services: "Pergunte-nos sobre nossos serviços."
+  shops_title: Lojas
+  shops_headline: 'Compras, transformadas. '
+  shops_text: 'A colheita é feita em ciclos, a comida é produzida em ciclos, e nós fazemos nossos pedidos em ciclos. Se você encontrar um ciclo de pedidos fechado, volte em breve para tentar novamente. '
+  shops_signup_title: Registre-se como uma central
+  shops_signup_headline: 'Um mercado de alimentos sem tamanho. '
+  shops_signup_motivation: 'Seja qual for seu perfil, nos oferecemos suporte. Somos sem fins lucrativos, independentes, e open source. '
+  shops_signup_action: Cadastre-se agora
+  shops_signup_pricing: Contas de Empreendimentos
+  shops_signup_stories: Histórias de nossas centrais.
+  shops_signup_help: Estamos prontos para ajudar
+  shops_signup_help_text: Você precisa de mais retorno, novos compradores e parceiros de logística. Você precisa contar a sua história.
+  shops_signup_detail: Aqui está o detalhe.
+  orders_fees: Taxas...
+  orders_edit_title: Carrinho de compras
+  orders_edit_headline: seu carrinho de compras
+  orders_edit_time: Pedido pronto para
+  orders_edit_continue: Continuar comprando
+  orders_edit_checkout: Fechar pedido
+  orders_form_empty_cart: "Carrinho vazio"
+  orders_form_subtotal: Subtotal dos produtos
+  orders_form_admin: Administração e manejo
+  orders_form_total: Total
+  orders_oc_expired_headline: Este ciclo de pedidos está fechado para pedidos
+  orders_oc_expired_text: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Favor entrar em contato diretamente com sua central para saber se podem aceitar pedidos atrasados."
+  orders_oc_expired_text_others_html: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Favor entrar em contato diretamente com sua central para saber se podem aceitar pedidos atrasados <strong>%{link}</strong>."
+  orders_oc_expired_text_link: "ou veja os outros ciclos de pedidos disponíveis nessa central"
+  orders_oc_expired_email: "Email:"
+  orders_oc_expired_phone: "Telefone:"
+  orders_show_title: Confimação de Pedido
+  orders_show_time: Pedido pronto em
+  orders_show_number: Confirmação de pedido
+  products_cart_distributor_choice: "Distribuidor para seu pedido:"
+  products_cart_distributor_change: "O distribuidor para este pedido será trocado para %{name} se você adicionar este produto no carrinho."
+  products_cart_distributor_is: "O distribuidor para este pedido é %{name}."
+  products_distributor_error: "Favor completar seu pedido no %{link} antes de comprar com outro distribuidor."
+  products_oc: "Ciclo de pedido para seu pedido:"
+  products_oc_change: "O ciclo de pedido para esse pedido será trocada para %{name} se você adicionar este produto ao carrinho."
+  products_oc_is: "O ciclo de pedido para este pedido é %{name}."
+  products_oc_error: "Favor completar seu pedido no %{link} antes de comprar em outro ciclo de pedido."
+  products_oc_current: "seu ciclo de pedido atual"
+  products_max_quantity: Quantidade máxima
+  products_distributor: Distribuidor
+  products_distributor_info: Quando você selecionar um distribuidor para seu pedido, o endereço e data para retirada serão exibidos aqui.
+  shop_trial_expires_in: "O período de avaliação do mercado termina em "
+  shop_trial_expired_notice: "Boa notícia! Decidimos extender o período avaliação do mercado até segunda ordem. "
+  password: Senha
+  remember_me: Lembre-me
+  are_you_sure: "Tem certeza?"
+  orders_open: Pedidos abertos
+  closing: "Fechando"
+  going_back_to_home_page: "Voltando à pagina inicial"
+  creating: Criando
+  updating: Atualizando
+  failed_to_create_enterprise: "Falha ao criar seu empreendimento"
+  failed_to_create_enterprise_unknown: "Falha ao criar seu empreendimento. \nFavor verificar se todos os campos foram preenchidos corretamente."
+  failed_to_update_enterprise_unknown: "Falha ao atualizar seu empreendimento. \nFavor verificar se todos os campos foram preenchidos corretamente."
+  order_not_saved_yet: "Seu pedido ainda não foi salvo. Aguarde um momento. "
+  filter_by: "Filtrar por"
+  hide_filters: "Esconder filtros"
+  one_filter_applied: "1 filtro aplicado"
+  x_filters_applied: "filtros aplicados"
+  submitting_order: "Processando seu pedido: favor aguardar"
+  confirm_hub_change: "Tem certeza? Isso irá mudar a central selecionada e remover todos os ítens do carrinho de compras."
+  confirm_oc_change: "Tem certeza? Isso irá mudar o ciclo de pedidos selecionado e remover todos os ítens do carrinho de compras."
+  location_placeholder: "Digite uma localidade..."
+  error_required: "Não pode ser vazio"
+  error_number: "Precisa ser um número"
+  error_email: "Precisa ser um endereço de email"
+  item_handling_fees: "Taxas de Manejo do Produto (incluídas no total do produto)"
+  january: "Janeiro"
+  february: "Fevereiro"
+  march: "Março"
+  april: "Abril"
+  may: "Maio"
+  june: "Junho"
+  july: "Julho"
+  august: "Agosto "
+  september: "Setembro"
+  october: "Outubro"
+  november: "Novembro"
+  december: "Dezembro"
+  email_not_found: "Endereço de email não encontrado"
+  email_required: "Você precisa providenciar um endereço de email"
+  logging_in: "Fazendo o login, aguarde um momento"
+  signup_email: "Seu email"
+  choose_password: "Escolha uma senha"
+  confirm_password: "Confirme a senha"
+  action_signup: "Cadastre-se agora"
+  welcome_to_ofn: "Bem-vindo à Open Food Network!"
+  signup_or_login: "Faça seu cadastro ou login para começar"
+  have_an_account: "Já possui um conta?"
+  action_login: "Entrar agora"
+  forgot_password: "Esqueceu sua senha?"
+  password_reset_sent: "Um email foi enviado com instruções para resetar sua senha!"
+  reset_password: "Resetar password"
+  who_is_managing_enterprise: "Quem é responsável por gerenciar %{enterprise}? "
+  enterprise_contact: "Contato Principal"
+  enterprise_contact_required: "Você precisa adicionar um contato principal"
+  enterprise_email_address: "Endereço de e-mail"
+  enterprise_phone: "n"
+  back: "Voltar"
+  continue: "Continuar"
+  limit_reached_headline: "Oh não!"
+  limit_reached_message: "Você chegou ao limite!"
+  limit_reached_text: "Você chegou ao limite para o número de empreendimentos permitidos"
+  limit_reached_action: "Voltar à página principal"
+  select_promo_image: "Passo 3. Selecionar Imagem Promocional"
+  promo_image_tip: "Tamanho preferencial: 1200x260px"
+  promo_image_label: "Escolher uma imagem promocional"
+  action_or: "OU"
+  promo_image_drag: "Arraste e solte sua imagem aqui"
+  review_promo_image: "Passo 4. Avalie Sua Imagem Promocional"
+  review_promo_image_tip: "Dica: para melhores resultados, sua imagem deve preencher o espaço disponível"
+  promo_image_placeholder: "Seu logo aparecerá aqui para avaliação assim que for carregado"
+  uploading: "Carregando..."
+  select_logo: "Passo 1. Selecionar imagem de perfil"
+  logo_tip: "Dica: Imagens quadradas funcionam melhor, com mínimo de 300x300px"
+  logo_label: "Escolha uma imagem de perfil"
+  logo_drag: "Arraste e solte sua imagem aqui"
+  review_logo: "Passo 2. Avalie sua imagem de perfil"
+  review_logo_tip: "Dica: para melhores resultados, sua imagem deve preencher o espaço disponível"
+  logo_placeholder: "Seu logo aparecerá aqui para avaliação assim que for carregado`"
+  enterprise_about_headline: "Boa!"
+  enterprise_about_message: "Vamos inserir mais detalhes sobre"
+  enterprise_success: "Sucesso! %{enterprise} foi adicionada a Open Food Network"
+  enterprise_registration_exit_message: "Se você fechar esse guia a qualquer momento, você precisa clicar no link de confirmação que você recebeu no email. Isso te levará até sua interface de administração onde você pode continuar construindo seu perfil."
+  enterprise_description: "Descrição Curta"
+  enterprise_description_placeholder: "Uma pequena frase descrevendo sua empresa"
+  enterprise_long_desc: "Descrição completa"
+  enterprise_long_desc_placeholder: "Essa é a oportunidade de contar a história da sua empresa. Sugerimos um parágrafo, no máximo, 600 caracteres ou 150 palavras. "
+  enterprise_long_desc_length: "%{num} caracteres / recomendamos até 600"
+  enterprise_tax_required: "Você precisa fazer uma seleção."
+  enterprise_final_step: "Último passo!"
+  enterprise_social_text: "Como as pessoas podem encontrar o/a %{enterprise} online?"
+  website: "Website"
+  website_placeholder: "eg. openfoodnetwork.com.br"
+  facebook: "Facebook"
+  facebook_placeholder: "ex. www.facebook.com/suapagina"
+  linkedin: "LinkedIn"
+  linkedin_placeholder: "ex. www.linkedin.com/seunome"
+  twitter: "Twitter"
+  twitter_placeholder: "ex. @conta_twitter"
+  instagram: "Instagram"
+  instagram_placeholder: "ex. @conta_instagram"
+  registration_greeting: "Olá!"
+  registration_intro: "Você pode criar um perfil para seu Produtor ou Distribuidor"
+  registration_action: "Vamos começar!"
+  registration_checklist: "Você vai precisar"
+  registration_time: "5-10 minutos"
+  registration_enterprise_address: "Endereço do empreendimento"
+  registration_contact_details: "Informações para contato"
+  registration_logo: "Sua imagem de perfil"
+  registration_promo_image: "Imagem horizontal para seu perfil"
+  registration_about_us: "'Sobre Nós'"
+  registration_outcome_headline: "O que eu ganho?"
+  registration_outcome1_html: "Seu perfil ajuda as pessoas a te <strong>encontrarem</strong> e entrarem em <strong>contato</strong> com você na Open Food Network"
+  registration_outcome2: "Use este espaço para contar a história da sua empresa, e ajudar a criar conexões entre sua presença física e virtual."
+  registration_outcome3: "Esse é também o primeiro passo para começar a comercializar na Open Food Network, ou abrir uma loja online"
+  registration_finished_headline: "Pronto!"
+  registration_finished_thanks: "Obrigado por preencher os detalhes para %{enterprise}."
+  registration_finished_login: "Você pode alterar ou atualizar suas informações a qualquer momento fazendo o login na Open Food Network e entrando na seção 'Admin'."
+  registration_finished_activate: "Ativar %{enterprise}."
+  registration_finished_activate_instruction_html: "Enviamos um email de confirmação para  <strong>%{email}</strong>. Favor seguir as instruções do email para que seu negócio seja visível na Open Food Network. "
+  registration_finished_action: "Página principal"
+  registration_type_headline: "Último passo para adicionar %{enterprise}!"
+  registration_type_question: "Você é um produtor?"
+  registration_type_producer: "Sim, sou um produtor"
+  registration_type_no_producer: "Não, não sou um produtor"
+  registration_type_error: "Favor escolher um. Você é um produtor?"
+  registration_type_producer_help: "Produtores fazem coisas deliciosas de comer e beber. "
+  registration_type_no_producer_help: "Se você não é um produtor, você provavelmente é alguém que vende e distribui comida. Você pode ser uma central, cooperativa, grupo de compras, lojista, etc."
+  create_profile: "Crir perfil"
+  registration_images_headline: "Obrigado!"
+  registration_images_description: "Vamos adicionar umas belas imagens para seu perfil ficar lindão!"
+  registration_detail_headline: "Vamos Começar"
+  registration_detail_enterprise: "Primeiro precisamos saber mais sobre sua empresa:"
+  registration_detail_producer: "Primeiro precisamos saber mais sobre sua produção:"
+  registration_detail_name_enterprise: "Nome da Atividade:"
+  registration_detail_name_producer: "Nome da Produção"
+  registration_detail_name_placeholder: "ex. Fazenda da Nina"
+  registration_detail_name_error: "Escolha um nome para sua empresa"
+  registration_detail_address1: "Linha de endereço 1:"
+  registration_detail_address1_placeholder: "ex. Rua Mármore, 123"
+  registration_detail_address1_error: "Favor inserir um endereço"
+  registration_detail_address2: "Linha de endereço 2:"
+  registration_detail_suburb: "Município"
+  registration_detail_suburb_placeholder: "ex. Contagem"
+  registration_detail_suburb_error: "Favor inserir um município"
+  registration_detail_postcode: "Código postal"
+  registration_detail_postcode_placeholder: "ex. 3070"
+  registration_detail_postcode_error: "Código postal requisitado"
+  registration_detail_state: "Estado"
+  registration_detail_state_error: "É obrigatório inserir o Estado"
+  registration_detail_country: "País"
+  registration_detail_country_error: "Favor inserir um país"
+  fees: "Taxas"
+  item_cost: "Custo da unidade"
+  bulk: "Atacado"
+  shop_variant_quantity_min: "mín."
+  shop_variant_quantity_max: "max."
+  follow: "Seguir"
+  shop_for_products_html: "Compre produtos da <span class=\"turquoise\">%{enterprise}</span> em:"
+  change_shop: "Mudar loja para:"
+  shop_at: "Compre agora em:"
+  price_breakdown: "Preço detalhado"
+  admin_fee: "Taxa de manejo"
+  sales_fee: "Taxa de venda"
+  packing_fee: "Taxa de embalagem"
+  transport_fee: "Taxa de transporte"
+  fundraising_fee: "Taxa de poupança"
+  price_graph: "Gráfico de preços"
+  included_tax: "Taxas incluídas"
+  balance: "Balanço"
+  transaction: "Transação"
+  transaction_date: "DataData"
+  payment_state: "Status do Pagamento"
+  shipping_state: "Status da entrega"
+  value: "Valor"
+  balance_due: "saldo devedor"
+  credit: "Crédito"
+  Paid: "Pago"
+  Ready: "Pronto"
+  you_have_no_orders_yet: "Você ainda não tem pedidos"
+  running_balance: "Balanço corrente"
+  outstanding_balance: "Saldo devedor"
+  admin_entreprise_relationships: "Relações da empresa"
+  admin_entreprise_relationships_everything: "Tudo"
+  admin_entreprise_relationships_permits: "permite"
+  admin_entreprise_relationships_seach_placeholder: "Busca"
+  admin_entreprise_relationships_button_create: "Criar"
+  admin_entreprise_groups: "Grupos de empresas"
+  admin_entreprise_groups_name: "Nome"
+  admin_entreprise_groups_owner: "Dono"
+  admin_entreprise_groups_on_front_page: "Na página inicial?"
+  admin_entreprise_groups_entreprise: "Empreendimentos"
+  admin_entreprise_groups_data_powertip: "Usuário responsável pelo grupo"
+  admin_entreprise_groups_data_powertip_logo: "Esse é o logo do grupo"
+  admin_entreprise_groups_data_powertip_promo_image: "Essa é a imagem que aparecerá no topo do perfil do Grupo"
+  admin_entreprise_groups_contact: "Contato"
+  admin_entreprise_groups_contact_city: "Município"
+  admin_entreprise_groups_contact_city_placeholder: "ex. Contagem"
+  admin_entreprise_groups_contact_zipcode: "Código Postal "
+  admin_entreprise_groups_contact_zipcode_placeholder: "ex. 3078"
+  admin_entreprise_groups_contact_state_id: "Estadi"
+  admin_entreprise_groups_contact_country_id: "País"
+  admin_entreprise_groups_web: "Recursos Web"
+  admin_entreprise_groups_web_twitter: "ex. @nome_perfil"
+  admin_entreprise_groups_web_website_placeholder: "ex. www.cogumelos.com.br"
+  admin_order_cycles: "Ciclo de Pedidos do Administrador"
+  open: "Aberto"
+  close: "Fechado"
+  supplier: "Fornecedor"
+  coordinator: "Coordenador"
+  distributor: "Distribuidor"
+  fee_type: "Tipo de Taxa"
+  tax_category: "Categoria de taxa"
+  calculator: "Calculadora"
+  calculator_values: "Valores da calculadora"
+  flat_percent_per_item: "Percentual (por unidade)"
+  new_order_cycles: "Novo Ciclo de Pedidos"
+  select_a_coordinator_for_your_order_cycle: "Escolher um coordenador para novo ciclo de pedidos"
+  edit_order_cycle: "Editar Ciclo de Pedidos"
+  roles: "Papeis"
+  update: "Atualizar"
+  add_producer_property: "Adicionar produtor"
+  in_progress: "Em andamento"
+  started_at: "Começou em "
+  queued: "Aguardando"
+  scheduled_for: "Agendado para"
+  customers: "Clientes"
+  please_select_hub: "Favor selecionar uma Central"
+  loading_customers: "Carregando Clientes"
+  no_customers_found: "Nenhum cliente encontrado"
+  go: "Ir"
+  hub: "Central"
+  producer: "Produtor"
+  product: "Produto"
+  price: "Preço"
+  on_hand: "Disponível"
+  save_changes: "Salvar Modificações"
+  spree_admin_overview_enterprises_header: "Minhas Empresas"
+  spree_admin_overview_enterprises_footer: "GERENCIAR MINHAS EMPRESAS"
+  spree_admin_enterprises_hubs_name: "Nome"
+  spree_admin_enterprises_create_new: "CRIAR NOVA"
+  spree_admin_enterprises_shipping_methods: "Métodos de Entrega"
+  spree_admin_enterprises_fees: "Taxas da Empresa"
+  spree_admin_enterprises_none_create_a_new_enterprise: "CRIAR NOVA EMPRESA"
+  spree_admin_enterprises_none_text: "Você ainda não possui nenhuma empresa"
+  spree_admin_enterprises_producers_name: "Nome"
+  spree_admin_enterprises_producers_total_products: "Total de Produtos"
+  spree_admin_enterprises_producers_active_products: "Produtos Ativos"
+  spree_admin_enterprises_tabs_hubs: "CENTRAIS"
+  spree_admin_enterprises_tabs_producers: "PRODUTORES"
+  spree_admin_enterprises_producers_manage_order_cycles: "GERENCIAR CICLO DE PEDIDOS"
+  spree_admin_enterprises_producers_manage_products: "GERENCIAR PRODUTOS"
+  spree_admin_enterprises_producers_orders_cycle_text: "Você ainda não possui nenhum ciclo de pedidos ativo."
+  spree_admin_enterprises_any_active_products_text: "Você ainda não tem nenhum produto ativo."
+  spree_admin_enterprises_create_new_product: "CRIAR UM NOVO PRODUTO"
+  spree_admin_order_cycles: "Ciclo de Pedidos"
+  spree_admin_order_cycles_tip: "O ciclo de pedido determina quando e onde seus produtos estarão disponíveis para clientes."
+  dashbord: "Painel"
+  spree_admin_single_enterprise_alert_mail_confirmation: "Favor confirmar o endereço de email para"
+  spree_admin_single_enterprise_alert_mail_sent: "Enviamos um e-mail para"
+  spree_admin_overview_action_required: "Medida Solicitada"
+  spree_admin_overview_check_your_inbox: "Favor verificar sua caixa de entrada para maiores informações. Obrigado!"
+  change_package: "Modificar Embalagem"
+  spree_admin_single_enterprise_hint: "Dica: Para permitir que as pessoas te encontrem, ative sua visibilidade em"
+  your_profil_live: "Seu perfil online"
+  on_ofn_map: "O mapa da Open Food Network"
+  see: "Ver"
+  live: "online"
+  manage: "Gerenciar"
+  resend: "Re-enviar"
+  add_and_manage_products: "Adicionar e gerenciar produtos"
+  add_and_manage_order_cycles: "Adicionar e enviar ciclos de pedidos"
+  manage_order_cycles: "Gerenciar ciclos de pedidos"
+  manage_products: "Gerenciar produtos"
+  edit_profile_details: "Editar detalhes de perfil "
+  edit_profile_details_etc: "Modificar a descrição dos seu perfil, imagem, etc."
+  order_cycle: "Ciclo de Pedidos"
+  remove_tax: "Remover taxa"
+  tax_settings: "Configurações de Taxas"
+  products_require_tax_category: "produtos necessitam uma categoria de taxa"
+  admin_shared_address_1: "Endereço"
+  admin_shared_address_2: "Endereço (cont.)"
+  admin_share_city: "Cidade"
+  admin_share_zipcode: "Código Postal "
+  admin_share_country: "País"
+  admin_share_state: "Estadi"
+  hub_sidebar_hubs: "Centrais"
+  hub_sidebar_none_available: "Nada Disponível"
+  hub_sidebar_manage: "Gerenciar"
+  hub_sidebar_at_least: "Ao menos uma central deve ser selecionada"
+  hub_sidebar_blue: "azul"
+  hub_sidebar_red: "vermelho"
+  shop_trial_in_progress: "O período de avaliação do mercado termina em %{days}."
+  shop_trial_expired: "Boa notícia! Decidimos extender a avaliação da loja até segunda ordem. "
+  report_customers_distributor: "Distribuidor"
+  report_customers_supplier: "Fornecedor"
+  report_customers_cycle: "Ciclo de Pedidos"
+  report_customers_type: "Relatar Tipo"
+  report_customers_csv: "Fazer download como csv"
+  report_producers: "Produtores:"
+  report_type: "Relatar Tipo:"
+  report_hubs: "Centrais:"
+  report_payment: "Métodos de Pagamento"
+  report_distributor: "Distribuidor:"
+  report_payment_by: 'Pagamentos Por Tipo'
+  report_itemised_payment: 'Totais dos Pagamentos Discriminados'
+  report_payment_totals: 'Totais dos Pagamanetos'
+  report_all: 'todos'
+  report_order_cycle: "Ciclo de Pedidos:"
+  report_entreprises: "Empresas:"
+  report_users: "Usuários:"
+  initial_invoice_number: "Número de recibo inicial:"
+  invoice_date: "Data de recibo:"
+  due_date: "Data limite:"
+  account_code: "Código de conta:"
+  equals: "Igual a:"
+  contains: "contém:"
+  discount: "Desconto"
+  filter_products: "Filtrar Produtos"
+  delete_product_variant: "A última variante não pode ser deletada!"
+  progress: "progresso"
+  saving: "Salvando.."
+  success: "Sucesso"
+  failure: "falha"
+  unsaved_changes_confirmation: "Modificações não salvas serão perdidas. Continuar mesmo assim?"
+  one_product_unsaved: "Modificações para um produto permanecem não salvas."
+  products_unsaved: "Modificações para %{n} produtos permanecem não salvas."
+  is_already_manager: "já é um gestor!"
+  no_change_to_save: "Nenhuma modificação a ser salva"
+  add_manager: "Adicionar um gestor"
+  users: "Usuários"
+  about: "Sobre"
+  images: "Imagens"
+  web: "Web"
+  primary_details: "Detalhes principais"
+  adrdress: "Endereço"
+  contact: "Contato"
+  social: "Social"
+  business_details: "Detalhes do negócio"
+  properties: "Propriedades"
+  shipping_methods: "Métodos de Entrega"
+  payment_methods: "Métodos de Pagamento"
+  payment_method_fee: "Taxa de transação"
+  enterprise_fees: "Taxas da Empresa"
+  inventory_settings: "Configurações de Inventário"
+  tag_rules: "Regras para tag"
+  shop_preferences: "Preferências da Loja"
+  validation_msg_relationship_already_established: "^Esse relacionamento já foi estabelecido."
+  validation_msg_at_least_one_hub: "^Pelo menos uma central deve ser selecionada"
+  validation_msg_product_category_cant_be_blank: "^A Categoria do Produto deve ser preenchida"
+  validation_msg_tax_category_cant_be_blank: "^A Categoria da taxa deve ser preenchida"
+  validation_msg_is_associated_with_an_exising_customer: "está associado com um cliente existente"
+  spree:
+    zipcode: CEP
+    shipment_states:
+      backorder: atrasos
+      partial: parcial
+      pending: pendente
+      ready: pronto
+      shipped: enviado
+    payment_states:
+      balance_due: saldo devedor
+      completed: completado
+      checkout: fechar pedido
+      credit_owed: crédito devido
+      failed: falha
+      paid: pago
+      pending: pendente
+      processing: processando
+      void: vazio
+      invalid: inváliod
+    order_state:
+      address: endereço
+      adjustments: ajustes
+      awaiting_return: aguardando retorno
+      canceled: cancelado
+      cart: carrinho
+      complete: completo
+      confirm: confirmado
+      delivery: entrega
+      payment: pagamento
+      resumed: retomado
+      returned: retornado
+      skrill: skrill

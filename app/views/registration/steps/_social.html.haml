@@ -1,0 +1,44 @@
+%script{ type: "text/ng-template", id: "registration/social.html" }
+  .container#registration-social
+    %ng-include{ src: "'registration/steps.html'" }
+
+    .row
+      .small-12.columns
+        %header
+          %h2 {{'enterprise_final_step' | t}}
+          %h5{ "ng-bind" => "'enterprise_social_text' | t:{enterprise: enterprise.name}" }
+
+    %form{ name: 'social', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('finished',social)" } }
+      .row.content
+        .small-12.large-7.columns
+          .row
+            .small-12.columns
+              .field
+                %label{ for: 'enterprise_website' } {{'website' | t}}:
+                %input.chunky{ id: 'enterprise_website', placeholder: "{{'website_placeholder' | t}}", ng: { model: 'enterprise.website' } }
+          .row
+            .small-12.columns
+              .field
+                %label{ for: 'enterprise_facebook' } {{'facebook' | t}}:
+                %input.chunky{ id: 'enterprise_facebook', placeholder: "{{'facebook_placeholder' | t}}", ng: { model: 'enterprise.facebook' } }
+          .row
+            .small-12.columns
+              .field
+                %label{ for: 'enterprise_linkedin' } {{'linkedin' | t}}:
+                %input.chunky{ id: 'enterprise_linkedin', placeholder: "{{'linkedin_placeholder' | t}}", ng: { model: 'enterprise.linkedin' } }
+        .small-12.large-5.columns
+          .row
+            .small-12.columns
+              .field
+                %label{ for: 'enterprise_twitter' } {{'twitter' | t}}:
+                %input.chunky{ id: 'enterprise_twitter', placeholder: "{{'twitter_placeholder' | t}}", ng: { model: 'enterprise.twitter' } }
+          .row
+            .small-12.columns
+              .field
+                %label{ for: 'enterprise_instagram' } {{'instagram' | t}}:
+                %input.chunky{ id: 'enterprise_instagram', placeholder: "{{'instagram_placeholder' | t}}", ng: { model: 'enterprise.instagram' } }
+
+      .row.buttons
+        .small-12.columns
+          %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('images')" } }
+            %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }

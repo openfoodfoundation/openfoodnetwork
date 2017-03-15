@@ -1,0 +1,44 @@
+%script{ type: "text/ng-template", id: "registration/promo.html" }
+  .small-12.medium-12.large-12.columns
+    .row
+      .small-12.columns.center
+        %h4
+          {{'select_promo_image' | t}}
+    .row
+      .small-12.medium-12.large-5.columns.center
+        .row
+          .small-12.columns.center
+            %span.small
+              {{'promo_image_tip' | t}}
+        .row.pad-top
+          .small-12.columns
+            .image-select.small-12.columns
+              %label.small-12.columns.button{ for: 'image-select' } {{'promo_image_label' | t}}
+              %input#image-select{ type: 'file', hidden: true, 'nv-file-select' => true, uploader: "imageUploader", options: '{ alias: imageStep }' }
+      .large-2.columns
+        %span#or.horizontal.large-12.columns
+          {{'action_or' | t}}
+      .large-5.columns
+        #image-over{ 'nv-file-over' => true, uploader: "imageUploader" }
+          {{'promo_image_drag' | t}}
+  .small-12.medium-12.large-12.columns.pad-top
+    .row
+      .small-12.columns.center
+        %h4
+          {{'review_promo_image' | t}}
+    .row
+      .small-12.columns.center
+        .row
+          .small-12.columns.center
+            %span.small
+              {{'review_promo_image_tip' | t}}
+        .row.pad-top
+          .small-12.columns.center
+            #image-placeholder.promo
+              %img{ ng: { show: "imageSrc() && !imageUploader.isUploading", src: '{{ imageSrc() }}' } }
+              .message{ ng: { hide: "imageSrc() || imageUploader.isUploading" } }
+                {{'promo_image_placeholder' | t}}
+              .loading{ ng: { hide: "!imageUploader.isUploading" } }
+                %img.spinner{ src: "/assets/spinning-circles.svg" }
+                %br/
+                {{'uploading' | t}}

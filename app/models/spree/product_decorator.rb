@@ -237,6 +237,7 @@ Spree::Product.class_eval do
       variant = self.master.dup
       variant.product = self
       variant.is_master = false
+      variant.on_demand = self.on_demand
       self.variants << variant
     end
   end

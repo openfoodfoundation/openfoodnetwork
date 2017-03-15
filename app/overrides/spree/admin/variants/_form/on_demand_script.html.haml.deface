@@ -1,0 +1,28 @@
+/ insert_bottom "[data-hook='admin_variant_form_fields']"
+:javascript
+
+    $(document).ready(function() {
+
+        var on_demand = $('input#variant_on_demand');
+        var on_hand = $('input#variant_on_hand');
+
+        on_hand.attr('disabled', on_demand.attr('checked'));
+
+        on_demand.change(function(){
+
+            on_hand.attr('disabled', this.checked);
+
+            if(this.checked) {
+                on_hand.attr('data-stock', on_hand.val());
+                on_hand.val("Infinity");
+            } else {
+                if(on_hand.attr('data-stock') !== undefined) {
+                    on_hand.val(on_hand.attr('data-stock'));
+                } else {
+                    on_hand.val("0");
+                }
+            }
+
+        });
+
+    });
