@@ -38,6 +38,10 @@ Spree::Admin::ReportsController.class_eval do
       ["Payment Methods Report", :payment_methods],
       ["Delivery Report", :delivery]
     ],
+    sales_tax: [
+      ["Tax Types", :tax_types],
+      ["Tax Rates", :tax_rates]
+    ],
     packing: [
       ["Pack By Customer", :pack_by_customer],
       ["Pack By Supplier", :pack_by_supplier]
@@ -59,6 +63,8 @@ Spree::Admin::ReportsController.class_eval do
       render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: REPORT_TYPES[:order_cycle_management]}).html_safe
     @reports[:packing][:description] =
         render_to_string(partial: 'packing_description', layout: false, locals: {report_types: REPORT_TYPES[:packing]}).html_safe
+    @reports[:sales_tax][:description] =
+        render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: REPORT_TYPES[:sales_tax]}).html_safe
 } } }
 
 
@@ -321,8 +327,7 @@ Spree::Admin::ReportsController.class_eval do
       :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
       :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
       :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' },
-      :packing => { :name => "Packing Reports", :description => '' },
-      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" }
+      :packing => { :name => "Packing Reports", :description => '' }
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
