@@ -13,8 +13,10 @@ module Spree
             links << { name: t(:send_invoice), url: "#", icon: 'icon-email', confirm: t(:must_have_valid_business_number, enterprise_name: order.distributor.name) }
           end
           links << { name: t(:print_invoice), url: print_admin_order_path(order), icon: 'icon-print', target: "_blank" }
-          links << { name: t(:print_ticket), url: print_ticket_admin_order_path(order), icon: 'icon-print', target: "_blank" }
-          links << { name: t(:select_ticket_printer), url: "#{print_ticket_admin_order_path(order)}#select-printer", icon: 'icon-print', target: "_blank" }
+          if Spree::Config.enable_receipt_printing?
+            links << { name: t(:print_ticket), url: print_ticket_admin_order_path(order), icon: 'icon-print', target: "_blank" }
+            links << { name: t(:select_ticket_printer), url: "#{print_ticket_admin_order_path(order)}#select-printer", icon: 'icon-print', target: "_blank" }
+          end
         end
         if @order.ready_to_ship?
           links << { name: t(:ship_order), url: fire_admin_order_path(@order, :e => 'ship'), method: 'put', icon: 'icon-truck', confirm: t(:are_you_sure) }
