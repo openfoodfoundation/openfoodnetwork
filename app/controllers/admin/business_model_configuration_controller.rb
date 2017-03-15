@@ -6,7 +6,8 @@ class Admin::BusinessModelConfigurationController < Spree::Admin::BaseController
 
   def update
     Spree::Config.set(params[:settings])
-    flash[:success] = t(:successfully_updated, :resource => t(:business_model_configuration))
+    flash[:success] = t(:successfully_updated,
+                        resource: t('admin.business_model_configuration.edit.business_model_configuration'))
     redirect_to_edit
   end
 

@@ -1,0 +1,19 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t('.title')
+
+= form_tag main_app.admin_invoice_settings_path, :method => :put do
+
+  .field.align-center
+    = hidden_field_tag 'preferences[invoice_style2?]', '0'
+    = check_box_tag 'preferences[invoice_style2?]', '1',  Spree::Config[:invoice_style2?]
+    = label_tag nil, t('.invoice_style2?')
+
+  .field.align-center
+    = hidden_field_tag 'preferences[enable_receipt_printing?]', '0'
+    = check_box_tag 'preferences[enable_receipt_printing?]', '1',  Spree::Config[:enable_receipt_printing?]
+    = label_tag nil, t('.enable_receipt_printing?')
+
+  .form-buttons{"data-hook" => "buttons"}
+    = button t(:update), 'icon-refresh'

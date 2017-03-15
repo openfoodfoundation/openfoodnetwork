@@ -1,0 +1,4 @@
+%script{ type: "text/ng-template", id: "registration/steps.html" }
+  .row#progress-bar
+    .small-12.medium-2.columns.item{ ng: { repeat: 'step in steps', class: "{active: (currentStep() == step),'show-for-medium-up': (currentStep() != step)}" } }
+      {{ $index+1 + ". " + step }}

@@ -1,18 +1,19 @@
 #tag-rule-help
   .margin-bottom-30.text-center
-    .text-big Tag Rules
+    .text-big
+      = t('js.admin.modals.tag_rule_help.title')
 
   .margin-bottom-30
-    .text-normal Overview
-    %p Tag rules provide a way to describe which items are visible or otherwise to which customers. Items can be Shipping Methods, Payment Methods, Products and Order Cycles.
+    .text-normal= t('js.admin.modals.tag_rule_help.overview')
+    %p= t('js.admin.modals.tag_rule_help.overview_text')
 
   .margin-bottom-30
-    .text-normal 'By Default...' Rules
-    %p Default rules allow you to hide items so that they are not visible by default. This behaviour can then be overriden by non-default rules for customers with particular tags.
+    .text-normal= t('js.admin.modals.tag_rule_help.by_default_rules')
+    %p= t('js.admin.modals.tag_rule_help.by_default_rules_text')
 
   .margin-bottom-30
-    .text-normal 'Customers Tagged...' Rules
-    %p By creating rules related to a specific customer tag, you can override the default behaviour (whether it be to show or to hide items) for customers with the specified tag.
+    .text-normal= t('js.admin.modals.tag_rule_help.customer_tagged_rules')
+    %p= t('js.admin.modals.tag_rule_help.customer_tagged_rules_text')
 
   .text-center
-    %input.button.red.icon-plus{ type: 'button', value: 'Got it', ng: { click: 'close()' } }
+    %input.button.red.icon-plus{ type: 'button', value: t('js.admin.modals.got_it'), ng: { click: 'close()' } }

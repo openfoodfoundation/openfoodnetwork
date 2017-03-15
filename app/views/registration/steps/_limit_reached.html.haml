@@ -1,0 +1,17 @@
+%script{ type: "text/ng-template", id: "registration/limit_reached.html" }
+  .row
+    .small-12.columns
+      %header
+        %h2 {{'limit_reached_headline' | t}}
+        %h4 {{'limit_reached_message' | t}}
+  .row
+    .small-12.medium-3.large-2.columns.text-right.hide-for-small-only
+      %img{:src => "/assets/potatoes.png"}
+    .small-12.medium-9.large-10.columns
+      %p
+        {{'limit_reached_text' | t}}
+        %strong Open Food Network.
+  .row
+    .small-12.columns
+      %hr
+      %input.button.primary{ type: "button", value: "{{'limit_reached_action' | t}}", ng: { click: "close()" } }

@@ -145,6 +145,8 @@ Openfoodnetwork::Application.routes.draw do
     resources :column_preferences, only: [], format: :json do
       put :bulk_update, on: :collection
     end
+
+    resource :invoice_settings, only: [:edit, :update]
   end
 
   namespace :api do
@@ -247,6 +249,7 @@ Spree::Core::Engine.routes.prepend do
     resources :orders do
       get :invoice, on: :member
       get :print, on: :member
+      get :print_ticket, on: :member
       get :managed, on: :collection
     end
 
