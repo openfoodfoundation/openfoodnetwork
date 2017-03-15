@@ -468,7 +468,7 @@ fr:
         user_guide: Guide l'utilisateur
     invoice_settings:
       edit:
-        invoice_settings: Apparence de la facture
+        title: Apparence de la facture
         invoice_style2?: Utiliser le modèle de facture alternaltif qui comprend une séparation des taxes par taux et une indication du taux appliqué par item (pas encore adapté pour les pays affichant des prix hors taxe)
 
   home:

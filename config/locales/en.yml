@@ -514,7 +514,6 @@ en:
     invoice_settings:
       edit:
         title: Invoice Settings
-        invoice_settings: Invoice
         invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
 
 
