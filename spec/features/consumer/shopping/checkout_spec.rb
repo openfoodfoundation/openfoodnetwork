@@ -328,37 +328,41 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
             end
           end
 
-          context "with a credit card payment method" do
-            let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::Gateway::Bogus") }
+          describe "credit card payments" do
+            ["Spree::Gateway::Bogus", "Spree::Gateway::BogusSimple"].each do |gateway_type|
+              context "with a credit card payment method using #{gateway_type}" do
+                let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: gateway_type) }
 
-            it "takes us to the order confirmation page when submitted with a valid credit card" do
-              toggle_payment
-              fill_in 'Card Number', with: "4111111111111111"
-              select 'February', from: 'secrets.card_month'
-              select (Date.current.year+1).to_s, from: 'secrets.card_year'
-              fill_in 'Security Code', with: '123'
+                it "takes us to the order confirmation page when submitted with a valid credit card" do
+                  toggle_payment
+                  fill_in 'Card Number', with: "4111111111111111"
+                  select 'February', from: 'secrets.card_month'
+                  select (Date.current.year+1).to_s, from: 'secrets.card_year'
+                  fill_in 'Security Code', with: '123'
 
-              place_order
-              page.should have_content "Your order has been processed successfully"
+                  place_order
+                  page.should have_content "Your order has been processed successfully"
 
-              # Order should have a payment with the correct amount
-              o = Spree::Order.complete.first
-              o.payments.first.amount.should == 11.23
-            end
+                  # Order should have a payment with the correct amount
+                  o = Spree::Order.complete.first
+                  o.payments.first.amount.should == 11.23
+                end
 
-            it "shows the payment processing failed message when submitted with an invalid credit card" do
-              toggle_payment
-              fill_in 'Card Number', with: "9999999988887777"
-              select 'February', from: 'secrets.card_month'
-              select (Date.current.year+1).to_s, from: 'secrets.card_year'
-              fill_in 'Security Code', with: '123'
+                it "shows the payment processing failed message when submitted with an invalid credit card" do
+                  toggle_payment
+                  fill_in 'Card Number', with: "9999999988887777"
+                  select 'February', from: 'secrets.card_month'
+                  select (Date.current.year+1).to_s, from: 'secrets.card_year'
+                  fill_in 'Security Code', with: '123'
 
-              place_order
-              page.should have_content "Payment could not be processed, please check the details you entered"
+                  place_order
+                  page.should have_content "Payment could not be processed, please check the details you entered"
 
-              # Does not show duplicate shipping fee
-              visit checkout_path
-              page.should have_selector "th", text: "Shipping", count: 1
+                  # Does not show duplicate shipping fee
+                  visit checkout_path
+                  page.should have_selector "th", text: "Shipping", count: 1
+                end
+              end
             end
           end
         end

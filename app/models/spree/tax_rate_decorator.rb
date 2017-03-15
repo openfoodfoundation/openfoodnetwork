@@ -12,7 +12,8 @@ module Spree
     def adjust_with_included_tax(order)
       adjust_without_included_tax(order)
 
-      order.reload
+      order.adjustments(:reload)
+      order.line_items(:reload)
       (order.adjustments.tax + order.price_adjustments).each do |a|
         a.set_absolute_included_tax! a.amount
       end
