@@ -7,7 +7,7 @@
       = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
   = label_tag nil, t(:report_customers_type)
   %br
-  = select_tag(:report_type, options_for_select([[t(:report_tax_rates),:tax_rates],[t(:report_tax_types),:tax_types]], @report_type))
+  = select_tag(:report_type, options_for_select([[t(:report_tax_types),:tax_types],[t(:report_tax_rates),:tax_rates]], @report_type))
   %br
   %br
   = check_box_tag :csv

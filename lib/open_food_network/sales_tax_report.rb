@@ -10,7 +10,13 @@ module OpenFoodNetwork
 
     def header
       case params[:report_type]
-      when "tax_types"
+      when "tax_rates"
+        [I18n.t(:report_header_order_number),
+         I18n.t(:report_header_total_excl_vat, currency_symbol: currency_symbol)] +
+        relevant_rates.map { |rate| "%.1f%% (%s)" % [rate.to_f * 100, currency_symbol] } +
+        [I18n.t(:report_header_total_tax, currency_symbol: currency_symbol),
+         I18n.t(:report_header_total_incl_vat, currency_symbol: currency_symbol)]
+       else
         [I18n.t(:report_header_order_number),
          I18n.t(:report_header_date),
          I18n.t(:report_header_items),
@@ -23,12 +29,6 @@ module OpenFoodNetwork
          I18n.t(:report_header_total_tax, currency_symbol: currency_symbol),
          I18n.t(:report_header_customer),
          I18n.t(:report_header_distributor)]
-      else
-        [I18n.t(:report_header_order_number),
-         I18n.t(:report_header_total_excl_vat, currency_symbol: currency_symbol)] +
-        relevant_rates.map { |rate| "%.1f%% (%s)" % [rate.to_f * 100, currency_symbol] } +
-        [I18n.t(:report_header_total_tax, currency_symbol: currency_symbol),
-         I18n.t(:report_header_total_incl_vat, currency_symbol: currency_symbol)]
       end
     end
 
@@ -43,7 +43,13 @@ module OpenFoodNetwork
 
     def table
       case params[:report_type]
-      when "tax_types"
+      when "tax_rates"
+        orders.map do |order|
+          [order.number, order.total - order.total_tax] +
+            relevant_rates.map { |rate| order.tax_adjustment_totals.fetch(rate, 0) } +
+            [order.total_tax, order.total]
+        end
+      else
         orders.map do |order|
           totals = totals_of order.line_items
           shipping_cost = shipping_cost_for order
@@ -51,12 +57,6 @@ module OpenFoodNetwork
           [order.number, order.created_at, totals[:items], totals[:items_total],
            totals[:taxable_total], totals[:sales_tax], shipping_cost, order.shipping_tax, order.enterprise_fee_tax, order.total_tax,
            order.bill_address.full_name, order.distributor.andand.name]
-        end
-      else
-        orders.map do |order|
-          [order.number, order.total - order.total_tax] +
-            relevant_rates.map { |rate| order.tax_adjustment_totals.fetch(rate, 0) } +
-            [order.total_tax, order.total]
         end
       end
     end
