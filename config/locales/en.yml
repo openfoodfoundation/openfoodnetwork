@@ -351,7 +351,7 @@ en:
           visible: Visible
           not_visible: Not visible
           permalink: Permalink (no spaces)
-          permalink_tip: "This permalink is used to create the url to your shop: %{link} your-shop-name/shop"
+          permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
           link_to_front_tip: A direct link to your shopfront on the Open Food Network.
         shipping_methods:
