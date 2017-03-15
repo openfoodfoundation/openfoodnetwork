@@ -322,7 +322,7 @@ en:
             If you are using the inventory tool, you can select whether new products
             added by your suppliers need to be added to your inventory before they can be
             stocked. If you are not using your inventory to manage your products you should
-            select the 'recommended' option below:"
+            select the 'recommended' option below:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
