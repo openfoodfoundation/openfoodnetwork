@@ -48,4 +48,8 @@
   %p
     &nbsp;
 
+- if @order.distributor.invoice_text.present?
+  %p
+    = @order.distributor.invoice_text
+
 = render 'spree/order_mailer/payment'
