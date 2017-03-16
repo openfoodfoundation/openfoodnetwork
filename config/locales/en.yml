@@ -858,6 +858,7 @@ en:
       pause_failure_msg: 'Sorry, pausing failed!'
       confirm_unpause_msg: Are you sure you want to unpause this standing order?
       unpause_failure_msg: 'Sorry, unpausing failed!'
+      confirm_cancel_open_orders_msg: "Some orders for this standing order are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
       order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
       no_results:
         no_standing_orders: No standing orders yet...
