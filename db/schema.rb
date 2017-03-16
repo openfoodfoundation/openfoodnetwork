@@ -1058,6 +1058,7 @@ ActiveRecord::Schema.define(:version => 20180316034336) do
     t.string   "unit_description",                               :default => ""
     t.string   "display_name"
     t.string   "display_as"
+    t.datetime "import_date"
   end
 
   add_index "spree_variants", ["product_id"], :name => "index_variants_on_product_id"
@@ -1176,6 +1177,7 @@ ActiveRecord::Schema.define(:version => 20180316034336) do
     t.string   "sku"
     t.boolean  "on_demand"
     t.datetime "permission_revoked_at"
+    t.datetime "import_date"
   end
 
   add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"

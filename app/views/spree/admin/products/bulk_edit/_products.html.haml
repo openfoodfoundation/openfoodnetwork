@@ -8,7 +8,7 @@
 
       = render 'spree/admin/products/bulk_edit/products_head'
 
-      %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | producer: producerFilter | category: categoryFilter | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
+      %tbody{ 'ng-repeat' => 'product in filteredProducts = ( products | filter:query | producer: producerFilter | category: categoryFilter | filter: (importDateFilter != 0) && {import_date: importDateFilter} | limitTo:limit )', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
 
         = render 'spree/admin/products/bulk_edit/products_product'
         = render 'spree/admin/products/bulk_edit/products_variant'

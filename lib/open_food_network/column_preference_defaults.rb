@@ -68,7 +68,8 @@ module OpenFoodNetwork
         category:             { name: I18n.t("#{node}.category"),              visible: false },
         tax_category:         { name: I18n.t("#{node}.tax_category"),          visible: false },
         inherits_properties:  { name: I18n.t("#{node}.inherits_properties?"),  visible: false },
-        available_on:         { name: I18n.t("#{node}.available_on"),          visible: false }
+        available_on:         { name: I18n.t("#{node}.available_on"),          visible: false },
+        import_date:          { name: I18n.t("#{node}.import_date"),           visible: false }
       }
     end
 

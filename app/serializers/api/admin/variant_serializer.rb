@@ -1,6 +1,6 @@
 class Api::Admin::VariantSerializer < ActiveModel::Serializer
   attributes :id, :options_text, :unit_value, :unit_description, :unit_to_display, :on_demand, :display_as, :display_name, :name_to_display, :sku
-  attributes :on_hand, :price
+  attributes :on_hand, :price, :import_date
   has_many :variant_overrides
 
   def on_hand
