@@ -12,11 +12,13 @@ angular.module("admin.standingOrders").factory 'StandingOrderResource', ($resour
       params:
         id: '@id'
         action: 'cancel'
+        open_orders: '@open_orders'
     'pause':
       method: 'PUT'
       params:
         id: '@id'
         action: 'pause'
+        open_orders: '@open_orders'
     'unpause':
       method: 'PUT'
       params:

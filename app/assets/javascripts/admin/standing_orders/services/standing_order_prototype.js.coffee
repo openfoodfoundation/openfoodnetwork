@@ -30,14 +30,24 @@ angular.module("admin.standingOrders").factory 'StandingOrderPrototype', ($http,
   cancel: ->
     ConfirmDialog.open('error', t('admin.standing_orders.confirm_cancel_msg'), {cancel: t('back'), confirm: t('yes_i_am_sure')})
     .then =>
-      @$cancel().then angular.noop, ->
-        InfoDialog.open 'error', t('admin.standing_orders.cancel_failure_msg')
+      @$cancel().then angular.noop, (response) =>
+        if response.data?.errors?.open_orders?
+          options = {cancel: t('admin.standing_orders.no_keep_them'), confirm: t('admin.standing_orders.yes_cancel_them')}
+          ConfirmDialog.open('error', response.data.errors.open_orders, options)
+          .then (=> @$cancel(open_orders: 'cancel')), (=> @$cancel(open_orders: 'keep'))
+        else
+          InfoDialog.open 'error', t('admin.standing_orders.cancel_failure_msg')
 
   pause: ->
     ConfirmDialog.open('error', t('admin.standing_orders.confirm_pause_msg'), {confirm: t('yes_i_am_sure')})
     .then =>
-      @$pause().then angular.noop, ->
-        InfoDialog.open 'error', t('admin.standing_orders.pause_failure_msg')
+      @$pause().then angular.noop, (response) =>
+        if response.data?.errors?.open_orders?
+          options = {cancel: t('admin.standing_orders.no_keep_them'), confirm: t('admin.standing_orders.yes_cancel_them')}
+          ConfirmDialog.open('error', response.data.errors.open_orders, options)
+          .then (=> @$pause(open_orders: 'cancel')), (=> @$pause(open_orders: 'keep'))
+        else
+          InfoDialog.open 'error', t('admin.standing_orders.pause_failure_msg')
 
   unpause: ->
     ConfirmDialog.open('error', t('admin.standing_orders.confirm_unpause_msg'), {confirm: t('yes_i_am_sure')})
