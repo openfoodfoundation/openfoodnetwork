@@ -5,7 +5,7 @@ Spree::Admin::StatesController.class_eval do
       format.html
       format.js { render :partial => 'state_list' }
 
-    Spree::Config.set(params[:state_display])
+      Spree::Config.set(params[:state_display])
     end
   end
 
