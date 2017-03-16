@@ -1201,6 +1201,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_so_confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed"
   email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
   email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
+  email_so_empty_intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
+  email_so_empty_explainer_html: "Unfortunately, none of products that you ordered were available. The original quantities that you requested appear crossed-out below."
+  email_so_empty_details_html: "Here are the details of the order for <strong>%{distributor}</strong>:"
   email_shipping_delivery_details: Delivery details
   email_shipping_delivery_time: "Delivery on:"
   email_shipping_delivery_address: "Delivery address:"

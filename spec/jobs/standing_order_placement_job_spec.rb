@@ -122,12 +122,11 @@ describe StandingOrderPlacementJob do
     let(:standing_order) { create(:standing_order, with_items: true) }
     let(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
     let!(:order) { proxy_order.initialise_order! }
-    let(:changes) { {} }
 
     before do
       expect_any_instance_of(Spree::Payment).to_not receive(:process!)
-      allow(job).to receive(:cap_quantity_and_store_changes) { changes }
       allow(job).to receive(:send_placement_email)
+      allow(job).to receive(:send_empty_email)
     end
 
     context "when the order is already complete" do
@@ -142,18 +141,31 @@ describe StandingOrderPlacementJob do
     end
 
     context "when the order is not already complete" do
-      it "processes the order to completion, but does not process the payment" do
-        # If this spec starts complaining about no shipping methods being available
-        # on CI, there is probably another spec resetting the currency though Rails.cache.clear
-        ActionMailer::Base.deliveries.clear
-        expect{job.send(:process, order)}.to change{order.reload.completed_at}.from(nil)
-        expect(order.completed_at).to be_within(5.seconds).of Time.now
-        expect(order.payments.first.state).to eq "checkout"
+      context "when no stock items are available after capping stock" do
+        before do
+          allow(job).to receive(:unavailable_stock_lines_for) { order.line_items }
+        end
+
+        it "does not place the order, sends an empty_order email" do
+          expect{job.send(:process, order)}.to_not change{order.reload.completed_at}.from(nil)
+          expect(job).to_not have_received(:send_placement_email)
+          expect(job).to have_received(:send_empty_email)
+        end
       end
 
-      it "does not enqueue confirmation emails" do
-        expect{job.send(:process, order)}.to_not enqueue_job ConfirmOrderJob
-        expect(job).to have_received(:send_placement_email).with(order, changes).once
+      context "when at least one stock item is available after capping stock" do
+        it "processes the order to completion, but does not process the payment" do
+          # If this spec starts complaining about no shipping methods being available
+          # on CI, there is probably another spec resetting the currency though Rails.cache.clear
+          expect{job.send(:process, order)}.to change{order.reload.completed_at}.from(nil)
+          expect(order.completed_at).to be_within(5.seconds).of Time.now
+          expect(order.payments.first.state).to eq "checkout"
+        end
+
+        it "does not enqueue confirmation emails" do
+          expect{job.send(:process, order)}.to_not enqueue_job ConfirmOrderJob
+          expect(job).to have_received(:send_placement_email).with(order, anything).once
+        end
       end
     end
   end

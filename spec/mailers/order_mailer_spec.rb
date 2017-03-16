@@ -108,4 +108,21 @@ describe Spree::OrderMailer do
       expect(body).to include "This order was automatically placed for you"
     end
   end
+
+  describe "empty order notification for standing orders" do
+    let(:standing_order) { create(:standing_order, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
+    let!(:order) { proxy_order.initialise_order! }
+
+    before do
+      expect do
+        Spree::OrderMailer.standing_order_email(order.id, 'empty', {}).deliver
+      end.to change{Spree::OrderMailer.deliveries.count}.by(1)
+    end
+
+    it "sends the email" do
+      body = Spree::OrderMailer.deliveries.last.body.encoded
+      expect(body).to include "Unfortunately, none of products that you ordered were available"
+    end
+  end
 end
