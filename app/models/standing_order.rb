@@ -30,10 +30,10 @@ class StandingOrder < ActiveRecord::Base
     proxy_orders.not_closed
   end
 
-  def cancel
+  def cancel(keep_ids = [])
     transaction do
       self.update_column(:canceled_at, Time.zone.now)
-      proxy_orders.each(&:cancel)
+      proxy_orders.reject{ |o| keep_ids.include? o.id }.each(&:cancel)
       true
     end
   end

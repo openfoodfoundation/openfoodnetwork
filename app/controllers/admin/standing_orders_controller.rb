@@ -6,6 +6,7 @@ module Admin
     before_filter :load_form_data, only: [:new, :edit]
     before_filter :strip_banned_attrs, only: [:update]
     before_filter :wrap_nested_attrs, only: [:create, :update]
+    before_filter :check_for_open_orders, only: [:cancel, :pause]
     respond_to :json
 
     def index
@@ -48,7 +49,7 @@ module Admin
     end
 
     def cancel
-      @standing_order.cancel
+      @standing_order.cancel(@open_orders_to_keep || [])
 
       respond_with(@standing_order) do |format|
         format.json { render_as_json @standing_order, fee_calculator: fee_calculator }
@@ -56,6 +57,10 @@ module Admin
     end
 
     def pause
+      unless params[:open_orders] == 'keep'
+        @standing_order.proxy_orders.placed_and_open.each(&:cancel)
+      end
+
       @standing_order.update_attributes(paused_at: Time.zone.now)
       render_as_json @standing_order, fee_calculator: fee_calculator
     end
@@ -114,6 +119,13 @@ module Admin
       if ship_address_attrs = params[:ship_address]
         params[:standing_order][:ship_address_attributes] = ship_address_attrs.slice(*Spree::Address.attribute_names)
       end
+    end
+
+    def check_for_open_orders
+      return if params[:open_orders] == 'cancel'
+      @open_orders_to_keep = @standing_order.proxy_orders.placed_and_open.pluck(:id)
+      return if @open_orders_to_keep.empty? || params[:open_orders] == 'keep'
+      return render json: { errors: { open_orders: t('admin.standing_orders.confirm_cancel_open_orders_msg') } }, status: :conflict
     end
 
     def strip_banned_attrs

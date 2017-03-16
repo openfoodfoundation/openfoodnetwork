@@ -415,12 +415,66 @@ describe Admin::StandingOrdersController, type: :controller do
         context "with authorisation" do
           before { shop.update_attributes(owner: user) }
 
-          it 'renders the cancelled standing_order as json' do
-            spree_put :cancel, params
-            json_response = JSON.parse(response.body)
-            expect(json_response['canceled_at']).to_not be nil
-            expect(json_response['id']).to eq standing_order.id
-            expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          context "when at least one associated order is still 'open'" do
+            let(:order_cycle) { standing_order.order_cycles.first }
+            let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
+            let!(:order) { proxy_order.initialise_order! }
+
+            before { while !order.completed? do break unless order.next! end }
+
+            context "when no 'open_orders' directive has been provided" do
+              it "renders an error, asking what to do" do
+                spree_put :cancel, params
+                expect(response.status).to be 409
+                json_response = JSON.parse(response.body)
+                expect(json_response['errors']['open_orders']).to eq I18n.t('admin.standing_orders.confirm_cancel_open_orders_msg')
+              end
+            end
+
+            context "when 'keep' has been provided as the 'open_orders' directive" do
+              before { params.merge!({ open_orders: 'keep'}) }
+
+              it 'renders the cancelled standing_order as json, and does not cancel the open order' do
+                spree_put :cancel, params
+                json_response = JSON.parse(response.body)
+                expect(json_response['canceled_at']).to_not be nil
+                expect(json_response['id']).to eq standing_order.id
+                expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+                expect(order.reload.state).to eq 'complete'
+                expect(proxy_order.reload.canceled_at).to be nil
+              end
+            end
+
+            context "when 'cancel' has been provided as the 'open_orders' directive" do
+              let(:mail_mock) { double(:mail) }
+
+              before do
+                params.merge!({ open_orders: 'cancel'})
+                allow(Spree::OrderMailer).to receive(:cancel_email) { mail_mock }
+                allow(mail_mock).to receive(:deliver)
+              end
+
+              it 'renders the cancelled standing_order as json, and cancels the open order' do
+                spree_put :cancel, params
+                json_response = JSON.parse(response.body)
+                expect(json_response['canceled_at']).to_not be nil
+                expect(json_response['id']).to eq standing_order.id
+                expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+                expect(order.reload.state).to eq 'canceled'
+                expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+                expect(mail_mock).to have_received(:deliver)
+              end
+            end
+          end
+
+          context "when no associated orders are still 'open'" do
+            it 'renders the cancelled standing_order as json' do
+              spree_put :cancel, params
+              json_response = JSON.parse(response.body)
+              expect(json_response['canceled_at']).to_not be nil
+              expect(json_response['id']).to eq standing_order.id
+              expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+            end
           end
         end
       end
@@ -460,12 +514,66 @@ describe Admin::StandingOrdersController, type: :controller do
         context "with authorisation" do
           before { shop.update_attributes(owner: user) }
 
-          it 'renders the paused standing_order as json' do
-            spree_put :pause, params
-            json_response = JSON.parse(response.body)
-            expect(json_response['paused_at']).to_not be nil
-            expect(json_response['id']).to eq standing_order.id
-            expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.now
+          context "when at least one associated order is still 'open'" do
+            let(:order_cycle) { standing_order.order_cycles.first }
+            let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
+            let!(:order) { proxy_order.initialise_order! }
+
+            before { while !order.completed? do break unless order.next! end }
+
+            context "when no 'open_orders' directive has been provided" do
+              it "renders an error, asking what to do" do
+                spree_put :pause, params
+                expect(response.status).to be 409
+                json_response = JSON.parse(response.body)
+                expect(json_response['errors']['open_orders']).to eq I18n.t('admin.standing_orders.confirm_cancel_open_orders_msg')
+              end
+            end
+
+            context "when 'keep' has been provided as the 'open_orders' directive" do
+              before { params.merge!({ open_orders: 'keep'}) }
+
+              it 'renders the paused standing_order as json, and does not cancel the open order' do
+                spree_put :pause, params
+                json_response = JSON.parse(response.body)
+                expect(json_response['paused_at']).to_not be nil
+                expect(json_response['id']).to eq standing_order.id
+                expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.now
+                expect(order.reload.state).to eq 'complete'
+                expect(proxy_order.reload.canceled_at).to be nil
+              end
+            end
+
+            context "when 'cancel' has been provided as the 'open_orders' directive" do
+              let(:mail_mock) { double(:mail) }
+
+              before do
+                params.merge!({ open_orders: 'cancel'})
+                allow(Spree::OrderMailer).to receive(:cancel_email) { mail_mock }
+                allow(mail_mock).to receive(:deliver)
+              end
+
+              it 'renders the paused standing_order as json, and cancels the open order' do
+                spree_put :pause, params
+                json_response = JSON.parse(response.body)
+                expect(json_response['paused_at']).to_not be nil
+                expect(json_response['id']).to eq standing_order.id
+                expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.now
+                expect(order.reload.state).to eq 'canceled'
+                expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+                expect(mail_mock).to have_received(:deliver)
+              end
+            end
+          end
+
+          context "when no associated orders are still 'open'" do
+            it 'renders the paused standing_order as json' do
+              spree_put :pause, params
+              json_response = JSON.parse(response.body)
+              expect(json_response['paused_at']).to_not be nil
+              expect(json_response['id']).to eq standing_order.id
+              expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.now
+            end
           end
         end
       end
