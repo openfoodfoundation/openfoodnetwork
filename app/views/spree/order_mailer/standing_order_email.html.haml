@@ -27,11 +27,15 @@
 %p
   = t("email_so_#{@type}_details_html", distributor: @order.distributor.name)
 
-- if @changes.any?
+- if @changes.any? && @type == 'placement'
   %p.callout
     = t("email_so_placement_changes")
+
 = render 'order_summary'
-= render 'payment'
-= render 'shipping'
-= render 'special_instructions'
+
+- unless @type == 'empty'
+  = render 'payment'
+  = render 'shipping'
+  = render 'special_instructions'
+
 = render 'signoff'

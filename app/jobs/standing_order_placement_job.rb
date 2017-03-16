@@ -19,7 +19,10 @@ class StandingOrderPlacementJob
 
   def process(order)
     return if order.completed?
-    changes = cap_quantity_and_store_changes(order) unless order.completed?
+    changes = cap_quantity_and_store_changes(order)
+    if order.line_items.where('quantity > 0').empty?
+      return send_empty_email(order, changes)
+    end
     move_to_completion(order)
     send_placement_email(order, changes)
   end
@@ -65,5 +68,9 @@ class StandingOrderPlacementJob
   def send_placement_email(order, changes)
     return unless order.completed?
     Spree::OrderMailer.standing_order_email(order.id, 'placement', changes).deliver
+  end
+
+  def send_empty_email(order, changes)
+    Spree::OrderMailer.standing_order_email(order.id, 'empty', changes).deliver
   end
 end
