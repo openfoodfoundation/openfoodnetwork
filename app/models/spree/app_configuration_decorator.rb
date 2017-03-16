@@ -4,6 +4,9 @@ Spree::AppConfiguration.class_eval do
   # we can allow to be modified in the UI by adding appropriate form
   # elements to existing or new configuration pages.
 
+  # State display
+  preference :state_display, :string, default: "abbr"
+
   # Terms of Service Preferences
   preference :enterprises_require_tos, :boolean, default: false
   preference :enterprise_tos_link, :string, default: "/Terms-of-service.pdf"
@@ -33,6 +36,7 @@ Spree::AppConfiguration.class_eval do
   # External services
   preference :bugherd_api_key, :string, default: nil
 
-  # State display
-  preference :state_display, :string, default: "abbr"
+  # Invoices & Receipts
+  preference :invoice_style2?, :boolean, default: false
+  preference :enable_receipt_printing?, :boolean, default: false
 end
