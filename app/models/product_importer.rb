@@ -448,11 +448,33 @@ class ProductImporter
     @already_created[entry.supplier_id] = {entry.name => product.id}
   end
 
+  def display_in_inventory(variant_override, is_new=false)
+    unless is_new
+      existing_item = InventoryItem.where(
+        variant_id: variant_override.variant_id,
+        enterprise_id: variant_override.hub_id).
+        first
+
+      if existing_item
+        existing_item.assign_attributes(visible: true)
+        existing_item.save
+        return
+      end
+    end
+
+    InventoryItem.new(
+      variant_id: variant_override.variant_id,
+      enterprise_id: variant_override.hub_id,
+      visible: true).
+      save
+  end
+
   def save_new_inventory_item(entry)
     new_item = entry.product_object
     assign_defaults(new_item, entry)
     new_item.import_date = @import_time
     if new_item.valid? and new_item.save
+      display_in_inventory(new_item, true)
       @inventory_created += 1
       @updated_ids.push new_item.id
     else
@@ -465,6 +487,7 @@ class ProductImporter
     assign_defaults(existing_item, entry)
     existing_item.import_date = @import_time
     if existing_item.valid? and existing_item.save
+      display_in_inventory(existing_item)
       @inventory_updated += 1
       @updated_ids.push existing_item.id
     else

@@ -19,7 +19,8 @@ module OpenFoodNetwork
         reset:        { name: I18n.t("#{node}.enable_reset?"),  visible: false },
         inheritance:  { name: I18n.t("#{node}.inherit?"),       visible: false },
         tags:         { name: I18n.t("admin.tags"),             visible: false },
-        visibility:   { name: I18n.t("#{node}.hide"),           visible: false }
+        visibility:   { name: I18n.t("#{node}.hide"),           visible: false },
+        import_date:   { name: I18n.t("#{node}.import_date"),   visible: false }
       }
     end
 
