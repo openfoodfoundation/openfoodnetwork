@@ -4,8 +4,7 @@
       %legend{:align => "center"}
         = t(:state_settings)
       .field
-        = label_tag :state, t(:state_display_preference)             
+        = label_tag :state, t(:state_display_preference)
         = form_tag do
           .select2-container.fullwidth
-            = select_tag(:state_display, options_for_select(Spree::State.accessible_attributes.to_a, "abbr"))
-
+            = select_tag(:state_display, options_for_select(Spree::State.accessible_attributes.to_a, Spree::Config[:state_display]))
