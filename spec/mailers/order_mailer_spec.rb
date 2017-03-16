@@ -122,6 +122,7 @@ describe Spree::OrderMailer do
 
     it "sends the email" do
       body = Spree::OrderMailer.deliveries.last.body.encoded
+      expect(body).to include "We tried to place a new order with"
       expect(body).to include "Unfortunately, none of products that you ordered were available"
     end
   end
