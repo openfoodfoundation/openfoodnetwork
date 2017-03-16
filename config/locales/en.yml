@@ -2415,6 +2415,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       complete: complete
       confirm: confirm
       delivery: delivery
+      paused: paused
       payment: payment
       pending: pending
       resumed: resumed
