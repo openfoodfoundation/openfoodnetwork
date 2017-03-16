@@ -7,7 +7,7 @@
             %h3
               = t :email_confirm_customer_greeting, name: @order.bill_address.firstname
             %h4
-              - if @order.paid?
+              - if @order.paid? && @type == 'confirmation'
                 = t :email_so_payment_success_intro_html, distributor: @order.distributor.name
               - else
                 = t("email_so_#{@type}_intro_html", distributor: @order.distributor.name)
