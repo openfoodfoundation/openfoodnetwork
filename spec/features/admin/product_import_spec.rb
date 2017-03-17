@@ -31,7 +31,7 @@ feature "Product Import", js: true do
     before { quick_login_as_admin }
     after { File.delete('/tmp/test.csv') }
 
-    it "validates entries and saves them if they are all valid" do
+    it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
@@ -54,11 +54,19 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.created-count', text: '2'
       expect(page).to_not have_selector '.updated-count'
 
+      carrots = Spree::Product.find_by_name('Carrots')
       potatoes = Spree::Product.find_by_name('Potatoes')
       potatoes.supplier.should == enterprise
       potatoes.on_hand.should == 6
       potatoes.price.should == 6.50
       potatoes.variants.first.import_date.should be_within(1.minute).of DateTime.now
+
+      click_link 'View Products'
+
+      expect(page).to have_content 'Bulk Edit Products'
+      wait_until { page.find("#p_#{potatoes.id}").present? }
+      expect(page).to have_field "product_name", with: carrots.name
+      expect(page).to have_field "product_name", with: potatoes.name
     end
 
     it "displays info about invalid entries but still allows saving of valid entries" do
@@ -195,7 +203,7 @@ feature "Product Import", js: true do
       carrots = Spree::Product.find_by_name('Carrots')
       carrots.variants.first.import_date.should be_within(1.minute).of DateTime.now
 
-      visit 'admin/products/bulk_edit'
+      click_link 'View Products'
 
       wait_until { page.find("#p_#{carrots.id}").present? }
 
@@ -246,7 +254,6 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.inv-created-count', text: '2'
       expect(page).to have_selector '.inv-updated-count', text: '1'
 
-
       beans_override = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
       sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
       cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
@@ -259,6 +266,17 @@ feature "Product Import", js: true do
 
       Float(cabbage_override.price).should == 1.50
       cabbage_override.count_on_hand.should == 2001
+
+      click_link 'View Inventory'
+      expect(page).to have_content 'Inventory'
+
+      select enterprise2.name, from: "hub_id", visible: false
+
+      within '#variant-overrides' do
+        expect(page).to have_content 'Beans'
+        expect(page).to have_content 'Sprouts'
+        expect(page).to have_content 'Cabbage'
+      end
     end
   end
 
@@ -349,8 +367,6 @@ feature "Product Import", js: true do
       expect(page).to_not have_selector '.invalid-count'
       expect(page).to have_selector '.inv-create-count', text: "1"
 
-      #expect(page.body).to have_content 'you do not have permission'
-
       click_button 'Save'
 
       expect(page).to have_selector '.inv-created-count', text: '1'
@@ -379,8 +395,7 @@ feature "Product Import", js: true do
       expect(page).to_not have_selector '.inv-create-count'
 
       expect(page.body).to have_content 'you do not have permission'
-
-
+      expect(page).to_not have_selector 'input[type=submit][value="Save"]'
     end
   end
 

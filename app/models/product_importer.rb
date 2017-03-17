@@ -53,7 +53,7 @@ class ProductImporter
   end
 
   def persisted?
-    false #ActiveModel, not ActiveRecord
+    false # ActiveModel
   end
 
   def has_entries?
@@ -188,7 +188,7 @@ class ProductImporter
     rows.each_with_index do |row, i|
       row_data = Hash[[headers, row].transpose]
       entry = SpreadsheetEntry.new(row_data)
-      entry.line_number = i+2
+      entry.line_number = i + 2
       @entries.push entry
     end
     @entries
@@ -238,12 +238,7 @@ class ProductImporter
   def create_inventory_item(entry, existing_variant)
     existing_variant_override = VariantOverride.where(variant_id: existing_variant.id, hub_id: entry.supplier_id).first
 
-    if existing_variant_override
-      variant_override = existing_variant_override
-    else
-      variant_override = VariantOverride.new(variant_id: existing_variant.id, hub_id: entry.supplier_id)
-    end
-
+    variant_override = existing_variant_override || VariantOverride.new(variant_id: existing_variant.id, hub_id: entry.supplier_id)
     variant_override.assign_attributes(count_on_hand: entry.on_hand, import_date: @import_time)
     check_on_hand_nil(entry, variant_override)
     variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
@@ -260,7 +255,7 @@ class ProductImporter
   end
 
   def mark_as_inventory_item(entry, variant_override)
-    if variant_override.id?
+    if variant_override.id
       entry.is_a_valid('existing_inventory_item')
       entry.product_object = variant_override
       updates_count_per_supplier(entry.supplier_id) unless entry.has_errors?
@@ -279,7 +274,8 @@ class ProductImporter
           where('variant_overrides.hub_id IN (?)', supplier_id).
           count
       else
-        products_count = Spree::Variant.joins(:product).
+        products_count = Spree::Variant.
+          joins(:product).
           where('spree_products.supplier_id IN (?)
           AND spree_variants.is_master = false
           AND spree_variants.deleted_at IS NULL', supplier_id).
@@ -377,7 +373,7 @@ class ProductImporter
     @entries.each do |entry|
       supplier_name = entry.supplier
       supplier_id = @suppliers_index[supplier_name] ||
-          Enterprise.find_by_name(supplier_name, :select => 'id, name').try(:id)
+          Enterprise.find_by_name(supplier_name, select: 'id, name').try(:id)
       @suppliers_index[supplier_name] = supplier_id
     end
     @suppliers_index
@@ -388,7 +384,7 @@ class ProductImporter
     @entries.each do |entry|
       producer_name = entry.producer
       producer_id = @producers_index[producer_name] ||
-          Enterprise.find_by_name(producer_name, :select => 'id, name').try(:id)
+          Enterprise.find_by_name(producer_name, select: 'id, name').try(:id)
       @producers_index[producer_name] = producer_id
     end
     @producers_index
@@ -437,6 +433,7 @@ class ProductImporter
     product = Spree::Product.new()
     product.assign_attributes(entry.attributes.except('id'))
     assign_defaults(product, entry)
+
     if product.save
       ensure_variant_updated(product, entry)
       @products_created += 1
@@ -473,6 +470,7 @@ class ProductImporter
     new_item = entry.product_object
     assign_defaults(new_item, entry)
     new_item.import_date = @import_time
+
     if new_item.valid? and new_item.save
       display_in_inventory(new_item, true)
       @inventory_created += 1
@@ -486,6 +484,7 @@ class ProductImporter
     existing_item = entry.product_object
     assign_defaults(existing_item, entry)
     existing_item.import_date = @import_time
+
     if existing_item.valid? and existing_item.save
       display_in_inventory(existing_item)
       @inventory_updated += 1
@@ -499,6 +498,7 @@ class ProductImporter
     new_variant = entry.product_object
     assign_defaults(new_variant, entry)
     new_variant.import_date = @import_time
+
     if new_variant.valid? and new_variant.save
       @variants_created += 1
       @updated_ids.push new_variant.id
@@ -511,6 +511,7 @@ class ProductImporter
     variant = entry.product_object
     assign_defaults(variant, entry)
     variant.import_date = @import_time
+
     if variant.valid? and variant.save
       @variants_updated += 1
       @updated_ids.push variant.id
@@ -584,7 +585,10 @@ class ProductImporter
 
     # Otherwise, if a variant exists with matching display_name and unit_value, update it
     match.variants.each do |existing_variant|
-      if existing_variant.display_name == entry.display_name and existing_variant.unit_value == Float(entry.unit_value)
+      if existing_variant.display_name == entry.display_name \
+      and existing_variant.unit_value == Float(entry.unit_value) \
+      and existing_variant.deleted_at == nil
+
         mark_as_existing_variant(entry, existing_variant)
         return
       end
@@ -597,6 +601,7 @@ class ProductImporter
   def mark_as_new_product(entry)
     new_product = Spree::Product.new()
     new_product.assign_attributes(entry.attributes.except('id'))
+
     if new_product.valid?
       entry.is_a_valid 'new_product' unless entry.has_errors?
     else
@@ -607,6 +612,7 @@ class ProductImporter
   def mark_as_existing_variant(entry, existing_variant)
     existing_variant.assign_attributes(entry.attributes.except('id', 'product_id'))
     check_on_hand_nil(entry, existing_variant)
+
     if existing_variant.valid?
       entry.product_object = existing_variant
       entry.is_a_valid 'existing_variant' unless entry.has_errors?
@@ -620,6 +626,7 @@ class ProductImporter
     new_variant = Spree::Variant.new(entry.attributes.except('id', 'product_id'))
     new_variant.product_id = product_id
     check_on_hand_nil(entry, new_variant)
+
     if new_variant.valid?
       entry.product_object = new_variant
       entry.is_a_valid 'new_variant' unless entry.has_errors?
@@ -629,7 +636,8 @@ class ProductImporter
   end
 
   def updates_count_per_supplier(supplier_id)
-    if @reset_counts[supplier_id] and @reset_counts[supplier_id][:updates_count]
+    if @reset_counts[supplier_id] \
+    and @reset_counts[supplier_id][:updates_count]
       @reset_counts[supplier_id][:updates_count] += 1
     else
       @reset_counts[supplier_id] = {updates_count: 1}
@@ -637,17 +645,17 @@ class ProductImporter
   end
 
   def check_on_hand_nil(entry, object)
-    if entry.on_hand.blank?
-      object.on_hand = 0 if object.respond_to?(:on_hand)
-      object.count_on_hand = 0 if object.respond_to?(:count_on_hand)
-      entry.on_hand_nil = true
-    end
+    return unless entry.on_hand.blank?
+
+    object.on_hand = 0 if object.respond_to?(:on_hand)
+    object.count_on_hand = 0 if object.respond_to?(:count_on_hand)
+    entry.on_hand_nil = true
   end
 
   def delete_uploaded_file
     # Only delete if file is in '/tmp/product_import' directory
-    if @file.path == Rails.root.join('tmp', 'product_import').to_s
-      File.delete(@file)
-    end
+    return unless @file.path == Rails.root.join('tmp', 'product_import').to_s
+
+    File.delete(@file)
   end
 end

@@ -53,6 +53,9 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         $scope.resetProducts()
         $scope.loading = false
 
+    $timeout ->
+      if $scope.showLatestImport
+        $scope.importDateFilter = $scope.importDates[1].id
 
     $scope.resetProducts = ->
       DirtyProducts.clear()

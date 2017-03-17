@@ -46,10 +46,18 @@
   - if @importer.errors.count == 0
     %p All #{@importer.total_saved_count} items saved successfully
   - else
+    %p #{@importer.total_saved_count} items saved successfully
+    %br
     %h5 Save errors
     - @importer.errors.full_messages.each do |error|
       %p.save-error
         &nbsp;-&nbsp; #{error}
 
   %br
+  - if @importer.total_saved_count > 0
+    - if @import_into == 'inventories'
+      %a.button{href: main_app.admin_inventory_path} View Inventory
+    - else
+      %a.button{href: bulk_edit_admin_products_path + '?latest_import=true'} View Products
+
   %a.button{href: main_app.admin_product_import_path} Back

@@ -5,6 +5,7 @@ Spree::Admin::ProductsController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   include OrderCyclesHelper
   include EnterprisesHelper
+  before_filter :latest_import, only: [:bulk_edit]
   before_filter :load_form_data, :only => [:bulk_edit, :new, :create, :edit, :update]
   before_filter :load_spree_api_key, :only => [:bulk_edit, :variant_overrides]
   before_filter :strip_new_properties, only: [:create, :update]
@@ -92,6 +93,10 @@ Spree::Admin::ProductsController.class_eval do
 
 
   private
+
+  def latest_import
+    @show_latest_import = params[:latest_import] || false
+  end
 
   def load_form_data
     @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
