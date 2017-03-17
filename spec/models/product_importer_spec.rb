@@ -22,12 +22,9 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
 
-      importer = ProductImporter.new(file, permissions.editable_enterprises)
+      importer = ProductImporter.new(file, admin)
 
-      expect(importer.valid_count).to eq(2)
-      expect(importer.invalid_count).to eq(0)
+      expect(importer.item_count).to eq(2)
     end
   end
-
-  # Test handling of filetypes
 end
