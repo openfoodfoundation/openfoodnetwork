@@ -7,7 +7,8 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   def import
     # Save uploaded file to tmp directory
     @filepath = save_uploaded_file(params[:file])
-    @importer = ProductImporter.new(File.new(@filepath), editable_enterprises)
+    @importer = ProductImporter.new(File.new(@filepath), spree_current_user, params[:settings])
+    @import_into = params[:settings][:import_into]
 
     check_file_errors @importer
     check_spreadsheet_has_data @importer
@@ -17,8 +18,9 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   end
 
   def save
-    @importer = ProductImporter.new(File.new(params[:filepath]), editable_enterprises, params[:settings])
+    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, params[:settings])
     @importer.save_all if @importer.has_valid_entries?
+    @import_into = params[:settings][:import_into]
   end
 
   private

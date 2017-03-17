@@ -9,41 +9,38 @@
           %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}"}}
         %div.header-icon.neutral
           %i.fa.fa-edit
-        -#%div.header-count
-        -#  %strong.invalid-count= @importer.invalid_count
         %div.header-description
           = name
       %div.panel-content{ng: {hide: '!active'}}
-        = render 'options_form', supplier_id: supplier_id, name: name
+        = render 'product_options_form', supplier_id: supplier_id, name: name if @import_into == 'product_list'
+        = render 'inventory_options_form', supplier_id: supplier_id, name: name if @import_into == 'inventories'
   - elsif name and supplier_id
     %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
       %div.panel-header
         %div.header-caret
-          -#%i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}"}}
         %div.header-icon.error
           %i.fa.fa-warning
-          -#%div.header-count
-          -#  %strong.invalid-count= @importer.invalid_count
         %div.header-description
           = name
           %span.header-error= " - you do not have permission to manage this enterprise"
-      -#%div.panel-content{ng: {hide: '!active'}}
-      -#  = render 'options_form', supplier_id: supplier_id, name: name
   - elsif name
     %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
       %div.panel-header
         %div.header-caret
-          -#%i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}"}}
         %div.header-icon.error
           %i.fa.fa-warning
-          -#%div.header-count
-          -#  %strong.invalid-count= @importer.invalid_count
         %div.header-description
           = name
           %span.header-error= " - enterprise could not be found in database"
-      -#%div.panel-content{ng: {hide: '!active'}}
-      -#  = render 'options_form', supplier_id: supplier_id, name: name
-
+  - else
+    %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
+      %div.panel-header
+        %div.header-caret
+        %div.header-icon.error
+          %i.fa.fa-warning
+        %div.header-description
+          No name
+          %span.header-error= " - some products have blank supplier name"
 
 %br.panels.clearfix
 %br

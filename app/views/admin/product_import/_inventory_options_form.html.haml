@@ -1,0 +1,16 @@
+%table.import-settings{ng: {controller: 'ImportOptionsFormCtrl', init: "supplierId = #{supplier_id}; resetCount = #{@importer.reset_counts[supplier_id][:reset_count]}"}}
+  %tr
+    %td.description
+      Remove absent products?
+    %td
+      = check_box_tag "settings[#{supplier_id}][reset_all_absent]", 1, false, :'ng-model' => 'resetAbsent', :'ng-change' => 'toggleResetAbsent()'
+    %td
+  %tr
+    %td.description
+      Set default stock level
+    %td
+      = check_box_tag "settings[#{supplier_id}][defaults][count_on_hand][active]", 1, false, :'ng-model' => "count_on_hand_#{supplier_id}"
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][count_on_hand][mode]", options_for_select({"Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth select2-no-search', 'ng-disabled' => "!count_on_hand_#{supplier_id}"}
+    %td
+      = number_field_tag "settings[#{supplier_id}][defaults][count_on_hand][value]", 0, 'ng-disabled' => "!count_on_hand_#{supplier_id}"

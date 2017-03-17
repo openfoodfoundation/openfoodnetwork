@@ -7,7 +7,7 @@ class ProductImporter
 
   attr_reader :total_supplier_products
 
-  def initialize(file, editable_enterprises, import_settings={})
+  def initialize(file, current_user, import_settings={})
     if file.is_a?(File)
       @file = file
       @sheet = open_spreadsheet
@@ -22,13 +22,18 @@ class ProductImporter
       @products_created = 0
       @variants_created = 0
       @variants_updated = 0
+      @inventory_created = 0
+      @inventory_updated = 0
 
+      @import_time = DateTime.now
       @import_settings = import_settings
+
+      @current_user = current_user
       @editable_enterprises = {}
-      editable_enterprises.map { |e| @editable_enterprises[e.name] = e.id }
+      @inventory_permissions = {}
 
       @total_supplier_products = 0
-      @products_to_reset = {}
+      @reset_counts = {}
       @updated_ids = []
 
       init_product_importer if @sheet
@@ -37,44 +42,45 @@ class ProductImporter
     end
   end
 
+  def init_permissions
+    permissions = OpenFoodNetwork::Permissions.new(@current_user)
+
+    permissions.editable_enterprises.
+      order('is_primary_producer ASC, name').
+      map { |e| @editable_enterprises[e.name] = e.id }
+
+    @inventory_permissions = permissions.variant_override_enterprises_per_hub
+  end
+
   def persisted?
     false #ActiveModel, not ActiveRecord
   end
 
+  def has_entries?
+    @entries.count > 0
+  end
+
   def has_valid_entries?
-    valid_count and valid_count > 0
+    @entries.each do |entry|
+      return true unless entry.validates_as.blank?
+    end
+    false
   end
 
   def item_count
     @sheet ? @sheet.last_row - 1 : 0
   end
 
-  def products_to_reset
+  def reset_counts
     # Return indexed data about existing product count, reset count, and updates count per supplier
-    @products_to_reset.each do |supplier_id, values|
+    @reset_counts.each do |supplier_id, values|
       values[:updates_count] = 0 if values[:updates_count].blank?
 
       if values[:updates_count] and values[:existing_products]
-        @products_to_reset[supplier_id][:reset_count] = values[:existing_products] - values[:updates_count]
+        @reset_counts[supplier_id][:reset_count] = values[:existing_products] - values[:updates_count]
       end
     end
-    @products_to_reset
-  end
-
-  def valid_count
-    @valid_entries.count
-  end
-
-  def invalid_count
-    @invalid_entries.count
-  end
-
-  def products_create_count
-    @products_to_create.count + @variants_to_create.count
-  end
-
-  def products_update_count
-    @variants_to_update.count
+    @reset_counts
   end
 
   def suppliers_index
@@ -83,19 +89,22 @@ class ProductImporter
   end
 
   def all_entries
-    invalid_entries.merge(products_to_create).merge(products_to_update).sort.to_h
+    @entries
   end
 
-  def invalid_entries
-    @invalid_entries
+  def entries_json
+    entries = {}
+    @entries.each do |entry|
+      entries[entry.line_number] = {
+        attributes: entry.displayable_attributes,
+        validates_as: entry.validates_as,
+        errors: entry.invalid_attributes }
+    end
+    entries.to_json
   end
 
-  def products_to_create
-    @products_to_create.merge(@variants_to_create)
-  end
-
-  def products_to_update
-    @variants_to_update
+  def table_headings
+    @entries.first.displayable_attributes.keys.map(&:humanize) if @entries.first
   end
 
   def products_created_count
@@ -106,12 +115,20 @@ class ProductImporter
     @variants_updated
   end
 
+  def inventory_created_count
+    @inventory_created
+  end
+
+  def inventory_updated_count
+    @inventory_updated
+  end
+
   def products_reset_count
     @products_reset_count || 0
   end
 
   def total_saved_count
-    @products_created + @variants_created + @variants_updated
+    @products_created + @variants_created + @variants_updated + @inventory_created + @inventory_updated
   end
 
   def save_all
@@ -127,12 +144,18 @@ class ProductImporter
     @editable_enterprises.has_value?(Integer(supplier_id))
   end
 
+  def inventory_permission?(supplier_id, producer_id)
+    @current_user.admin? or ( @inventory_permissions[supplier_id] and @inventory_permissions[supplier_id].include? producer_id )
+  end
+
   private
 
   def init_product_importer
+    init_permissions
     build_entries
     build_categories_index
     build_suppliers_index
+    build_producers_index if importing_into_inventory?
     validate_all
   end
 
@@ -174,38 +197,103 @@ class ProductImporter
   def validate_all
     @entries.each do |entry|
       supplier_validation(entry)
-      category_validation(entry)
-      set_update_status(entry)
 
-      mark_as_valid(entry) unless entry_invalid?(entry.line_number)
+      if importing_into_inventory?
+        producer_validation(entry)
+        inventory_validation(entry)
+      else
+        category_validation(entry)
+        product_validation(entry)
+      end
     end
 
-    count_existing_products
-    delete_uploaded_file if item_count.zero? or valid_count.zero?
+    count_existing_items
+    delete_uploaded_file if item_count.zero? or !has_valid_entries?
   end
 
-  def count_existing_products
+  def importing_into_inventory?
+    @import_settings['import_into'] == 'inventories'
+  end
+
+  def inventory_validation(entry)
+    # Find product with matching supplier and name
+    match = Spree::Product.where(supplier_id: entry.producer_id, name: entry.name, deleted_at: nil).first
+
+    if match.nil?
+      mark_as_invalid(entry, attribute: 'name', error: 'did not match any products in the database')
+      return
+    end
+
+    match.variants.each do |existing_variant|
+      if existing_variant.display_name == entry.display_name and existing_variant.unit_value == Float(entry.unit_value)
+        variant_override = create_inventory_item(entry, existing_variant)
+        validate_inventory_item(entry, variant_override)
+        return
+      end
+    end
+
+    mark_as_invalid(entry, attribute: 'product', error: 'not found in database')
+  end
+
+  def create_inventory_item(entry, existing_variant)
+    existing_variant_override = VariantOverride.where(variant_id: existing_variant.id, hub_id: entry.supplier_id).first
+
+    if existing_variant_override
+      variant_override = existing_variant_override
+    else
+      variant_override = VariantOverride.new(variant_id: existing_variant.id, hub_id: entry.supplier_id)
+    end
+
+    variant_override.assign_attributes(count_on_hand: entry.on_hand, import_date: @import_time)
+    check_on_hand_nil(entry, variant_override)
+    variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
+
+    variant_override
+  end
+
+  def validate_inventory_item(entry, variant_override)
+    if variant_override.valid? and !entry.has_errors?
+      mark_as_inventory_item(entry, variant_override)
+    else
+      mark_as_invalid(entry, product_validations: variant_override.errors)
+    end
+  end
+
+  def mark_as_inventory_item(entry, variant_override)
+    if variant_override.id?
+      entry.is_a_valid('existing_inventory_item')
+      entry.product_object = variant_override
+      updates_count_per_supplier(entry.supplier_id) unless entry.has_errors?
+    else
+      entry.is_a_valid('new_inventory_item')
+      entry.product_object = variant_override
+    end
+  end
+
+  def count_existing_items
     @suppliers_index.each do |supplier_name, supplier_id|
-      if supplier_id and permission_by_id?(supplier_id)
+      next unless supplier_id and permission_by_id?(supplier_id)
+
+      if importing_into_inventory?
+        products_count = VariantOverride.
+          where('variant_overrides.hub_id IN (?)', supplier_id).
+          count
+      else
         products_count = Spree::Variant.joins(:product).
           where('spree_products.supplier_id IN (?)
           AND spree_variants.is_master = false
           AND spree_variants.deleted_at IS NULL', supplier_id).
           count
-
-        if @products_to_reset[supplier_id]
-          @products_to_reset[supplier_id][:existing_products] = products_count
-        else
-          @products_to_reset[supplier_id] = {existing_products: products_count}
-        end
-
-        @total_supplier_products += products_count
       end
-    end
-  end
 
-  def entry_invalid?(line_number)
-    !!@invalid_entries[line_number]
+      if @reset_counts[supplier_id]
+        @reset_counts[supplier_id][:existing_products] = products_count
+      else
+        @reset_counts[supplier_id] = {existing_products: products_count}
+      end
+
+      @total_supplier_products += products_count
+    end
   end
 
   def supplier_validation(entry)
@@ -229,8 +317,33 @@ class ProductImporter
     entry.supplier_id = @suppliers_index[supplier_name]
   end
 
+  def producer_validation(entry)
+    producer_name = entry.producer
+
+    if producer_name.blank?
+      mark_as_invalid(entry, attribute: "producer", error: "can't be blank")
+      return
+    end
+
+    unless producer_exists?(producer_name)
+      mark_as_invalid(entry, attribute: "producer", error: "\"#{producer_name}\" not found in database")
+      return
+    end
+
+    unless inventory_permission?(entry.supplier_id, @producers_index[producer_name])
+      mark_as_invalid(entry, attribute: "producer", error: "\"#{producer_name}\": you do not have permission to create inventory for this producer")
+      return
+    end
+
+    entry.producer_id = @producers_index[producer_name]
+  end
+
   def supplier_exists?(supplier_name)
     @suppliers_index[supplier_name]
+  end
+
+  def producer_exists?(producer_name)
+    @producers_index[producer_name]
   end
 
   def category_validation(entry)
@@ -252,15 +365,9 @@ class ProductImporter
     @categories_index[category_name]
   end
 
-  def mark_as_valid(entry)
-    @valid_entries[entry.line_number] = entry
-  end
-
   def mark_as_invalid(entry, options={})
     entry.errors.add(options[:attribute], options[:error]) if options[:attribute] and options[:error]
     entry.product_validations = options[:product_validations] if options[:product_validations]
-
-    @invalid_entries[entry.line_number] = entry
   end
 
   # Minimise db queries by getting a list of suppliers to look
@@ -276,6 +383,17 @@ class ProductImporter
     @suppliers_index
   end
 
+  def build_producers_index
+    @producers_index = {}
+    @entries.each do |entry|
+      producer_name = entry.producer
+      producer_id = @producers_index[producer_name] ||
+          Enterprise.find_by_name(producer_name, :select => 'id, name').try(:id)
+      @producers_index[producer_name] = producer_id
+    end
+    @producers_index
+  end
+
   def build_categories_index
     @categories_index = {}
     @entries.each do |entry|
@@ -288,70 +406,114 @@ class ProductImporter
   end
 
   def save_all_valid
-    already_created = {}
-    @products_to_create.each do |line_number, entry|
-      # If we've already added a new product with these attributes
-      # from this spreadsheet, mark this entry as a new variant with
-      # the new product id, as this is a now variant of that product...
-      if already_created[entry.supplier_id] and already_created[entry.supplier_id][entry.name]
-        product_id = already_created[entry.supplier_id][entry.name]
-        mark_as_new_variant(entry, product_id)
-        next
-      end
-
-      product = Spree::Product.new()
-      product.assign_attributes(entry.attributes.except('id'))
-      assign_defaults(product, entry.attributes)
-      if product.save
-        ensure_variant_updated(product, entry)
-        @products_created += 1
-        @updated_ids.push product.variants.first.id
+    @entries.each do |entry|
+      if importing_into_inventory?
+        save_new_inventory_item entry if entry.is_a_valid? 'new_inventory_item'
+        save_existing_inventory_item entry if entry.is_a_valid? 'existing_inventory_item'
       else
-        self.errors.add("Line #{line_number}:", product.errors.full_messages) #TODO: change
-      end
-
-      already_created[entry.supplier_id] = {entry.name => product.id}
-    end
-
-    @variants_to_update.each do |line_number, entry|
-      variant = entry.product_object
-      assign_defaults(variant, entry.attributes)
-      if variant.valid? and variant.save
-        @variants_updated += 1
-        @updated_ids.push variant.id
-      else
-        self.errors.add("Line #{line_number}:", variant.errors.full_messages) #TODO: change
-      end
-    end
-
-    @variants_to_create.each do |line_number, entry|
-      new_variant = entry.product_object
-      assign_defaults(new_variant, entry.attributes)
-      if new_variant.valid? and new_variant.save
-        @variants_created += 1
-        @updated_ids.push new_variant.id
-      else
-        self.errors.add("Line #{line_number}:", new_variant.errors.full_messages)
+        save_new_product entry if entry.is_a_valid? 'new_product'
+        save_new_variant entry if entry.is_a_valid? 'new_variant'
+        save_existing_variant entry if entry.is_a_valid? 'existing_variant'
       end
     end
 
     self.errors.add(:importer, I18n.t(:product_importer_products_save_error)) if total_saved_count.zero?
 
-    reset_absent_products
+    reset_absent_items
     total_saved_count
   end
 
-  def reset_absent_products
-    return if total_saved_count.zero?
+  def save_new_product(entry)
+    @already_created ||= {}
+    # If we've already added a new product with these attributes
+    # from this spreadsheet, mark this entry as a new variant with
+    # the new product id, as this is a now variant of that product...
+    if @already_created[entry.supplier_id] and @already_created[entry.supplier_id][entry.name]
+      product_id = @already_created[entry.supplier_id][entry.name]
+      mark_as_new_variant(entry, product_id)
+      return
+    end
+
+    product = Spree::Product.new()
+    product.assign_attributes(entry.attributes.except('id'))
+    assign_defaults(product, entry)
+    if product.save
+      ensure_variant_updated(product, entry)
+      @products_created += 1
+      @updated_ids.push product.variants.first.id
+    else
+      self.errors.add("Line #{line_number}:", product.errors.full_messages)
+    end
+
+    @already_created[entry.supplier_id] = {entry.name => product.id}
+  end
+
+  def save_new_inventory_item(entry)
+    new_item = entry.product_object
+    assign_defaults(new_item, entry)
+    new_item.import_date = @import_time
+    if new_item.valid? and new_item.save
+      @inventory_created += 1
+      @updated_ids.push new_item.id
+    else
+      self.errors.add("Line #{line_number}:", new_item.errors.full_messages)
+    end
+  end
+
+  def save_existing_inventory_item(entry)
+    existing_item = entry.product_object
+    assign_defaults(existing_item, entry)
+    existing_item.import_date = @import_time
+    if existing_item.valid? and existing_item.save
+      @inventory_updated += 1
+      @updated_ids.push existing_item.id
+    else
+      self.errors.add("Line #{line_number}:", existing_item.errors.full_messages)
+    end
+  end
+
+  def save_new_variant(entry)
+    new_variant = entry.product_object
+    assign_defaults(new_variant, entry)
+    new_variant.import_date = @import_time
+    if new_variant.valid? and new_variant.save
+      @variants_created += 1
+      @updated_ids.push new_variant.id
+    else
+      self.errors.add("Line #{line_number}:", new_variant.errors.full_messages)
+    end
+  end
+
+  def save_existing_variant(entry)
+    variant = entry.product_object
+    assign_defaults(variant, entry)
+    variant.import_date = @import_time
+    if variant.valid? and variant.save
+      @variants_updated += 1
+      @updated_ids.push variant.id
+    else
+      self.errors.add("Line #{line_number}:", variant.errors.full_messages)
+    end
+  end
+
+  def reset_absent_items
+    return if total_saved_count.zero? or @updated_ids.empty?
 
     enterprises_to_reset = []
     @import_settings.each do |enterprise_id, settings|
       enterprises_to_reset.push enterprise_id if settings['reset_all_absent'] and permission_by_id?(enterprise_id)
     end
 
-    unless enterprises_to_reset.empty? or @updated_ids.empty?
-      # For selected enterprises; set stock to zero for all products
-      # that were not present in the uploaded spreadsheet
+    return if enterprises_to_reset.empty?
+
+    # For selected enterprises; set stock to zero for all products/inventory
+    # items that were not present in the uploaded spreadsheet
+    if importing_into_inventory?
+      @products_reset_count = VariantOverride.
+        where('variant_overrides.hub_id IN (?)
+        AND variant_overrides.id NOT IN (?)', enterprises_to_reset, @updated_ids).
+        update_all(count_on_hand: 0)
+    else
       @products_reset_count = Spree::Variant.joins(:product).
         where('spree_products.supplier_id IN (?)
         AND spree_variants.id NOT IN (?)
@@ -362,12 +524,16 @@ class ProductImporter
   end
 
   def assign_defaults(object, entry)
-    @import_settings[entry['supplier_id'].to_s]['defaults'].each do |attribute, setting|
+    return unless @import_settings[entry.supplier_id.to_s] and @import_settings[entry.supplier_id.to_s]['defaults']
+
+    @import_settings[entry.supplier_id.to_s]['defaults'].each do |attribute, setting|
+      next unless setting['active']
+
       case setting['mode']
       when 'overwrite_all'
         object.assign_attributes(attribute => setting['value'])
       when 'overwrite_empty'
-        if object.send(attribute).blank? or (attribute == 'on_hand' and entry['on_hand_nil'])
+        if object.send(attribute).blank? or ((attribute == 'on_hand' or attribute == 'count_on_hand') and entry.on_hand_nil)
           object.assign_attributes(attribute => setting['value'])
         end
       end
@@ -375,16 +541,15 @@ class ProductImporter
   end
 
   def ensure_variant_updated(product, entry)
-    # Ensure display_name and on_demand are copied to new product's variant
-    if entry.display_name || entry.on_demand
-      variant = product.variants.first
-      variant.display_name = entry.display_name if entry.display_name
-      variant.on_demand = entry.on_demand if entry.on_demand
-      variant.save
-    end
+    # Ensure attributes are copied to new product's variant
+    variant = product.variants.first
+    variant.display_name = entry.display_name if entry.display_name
+    variant.on_demand = entry.on_demand if entry.on_demand
+    variant.import_date = @import_time
+    variant.save
   end
 
-  def set_update_status(entry)
+  def product_validation(entry)
     # Find product with matching supplier and name
     match = Spree::Product.where(supplier_id: entry.supplier_id, name: entry.name, deleted_at: nil).first
 
@@ -396,7 +561,7 @@ class ProductImporter
 
     # Otherwise, if a variant exists with matching display_name and unit_value, update it
     match.variants.each do |existing_variant|
-      if existing_variant.display_name == entry.display_name && existing_variant.unit_value == Float(entry.unit_value)
+      if existing_variant.display_name == entry.display_name and existing_variant.unit_value == Float(entry.unit_value)
         mark_as_existing_variant(entry, existing_variant)
         return
       end
@@ -410,7 +575,7 @@ class ProductImporter
     new_product = Spree::Product.new()
     new_product.assign_attributes(entry.attributes.except('id'))
     if new_product.valid?
-      @products_to_create[entry.line_number] = entry unless entry_invalid?(entry.line_number)
+      entry.is_a_valid 'new_product' unless entry.has_errors?
     else
       mark_as_invalid(entry, product_validations: new_product.errors)
     end
@@ -421,8 +586,8 @@ class ProductImporter
     check_on_hand_nil(entry, existing_variant)
     if existing_variant.valid?
       entry.product_object = existing_variant
-      @variants_to_update[entry.line_number] = entry unless entry_invalid?(entry.line_number)
-      updates_count_per_supplier(entry.supplier_id) unless entry_invalid?(entry.line_number)
+      entry.is_a_valid 'existing_variant' unless entry.has_errors?
+      updates_count_per_supplier(entry.supplier_id) unless entry.has_errors?
     else
       mark_as_invalid(entry, product_validations: existing_variant.errors)
     end
@@ -434,23 +599,24 @@ class ProductImporter
     check_on_hand_nil(entry, new_variant)
     if new_variant.valid?
       entry.product_object = new_variant
-      @variants_to_create[entry.line_number] = entry unless entry_invalid?(entry.line_number)
+      entry.is_a_valid 'new_variant' unless entry.has_errors?
     else
       mark_as_invalid(entry, product_validations: new_variant.errors)
     end
   end
 
   def updates_count_per_supplier(supplier_id)
-    if @products_to_reset[supplier_id] and @products_to_reset[supplier_id][:updates_count]
-      @products_to_reset[supplier_id][:updates_count] += 1
+    if @reset_counts[supplier_id] and @reset_counts[supplier_id][:updates_count]
+      @reset_counts[supplier_id][:updates_count] += 1
     else
-      @products_to_reset[supplier_id] = {updates_count: 1}
+      @reset_counts[supplier_id] = {updates_count: 1}
     end
   end
 
-  def check_on_hand_nil(entry, variant)
+  def check_on_hand_nil(entry, object)
     if entry.on_hand.blank?
-      variant.on_hand = 0
+      object.on_hand = 0 if object.respond_to?(:on_hand)
+      object.count_on_hand = 0 if object.respond_to?(:count_on_hand)
       entry.on_hand_nil = true
     end
   end

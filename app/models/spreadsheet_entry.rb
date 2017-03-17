@@ -4,21 +4,26 @@ class SpreadsheetEntry
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :line_number, :valid, :product_object, :product_validations, :save_type, :on_hand_nil
+  attr_reader :validates_as
 
-  attr_accessor :id, :product_id, :supplier, :supplier_id, :name, :display_name, :sku,
+  attr_accessor :line_number, :valid, :product_object, :product_validations, :on_hand_nil,
+                :has_overrides
+
+  attr_accessor :id, :product_id, :producer, :producer_id, :supplier, :supplier_id, :name, :display_name, :sku,
                 :unit_value, :unit_description, :variant_unit, :variant_unit_scale, :variant_unit_name,
-                :display_as, :category, :primary_taxon_id, :price, :on_hand, :on_demand,
-                :tax_category_id, :shipping_category_id, :description
+                :display_as, :category, :primary_taxon_id, :price, :on_hand, :count_on_hand, :on_demand,
+                :tax_category_id, :shipping_category_id, :description, :import_date
 
   def initialize(attrs)
-    @product_validations = {}
+    #@product_validations = {}
+    @validates_as = ''
 
     attrs.each do |k, v|
       if self.respond_to?("#{k}=")
         send("#{k}=", v) unless non_product_attributes.include?(k)
       else
-        # Trying to assign unknown attribute. Record this and give feedback or just ignore silently?
+        # Trying to assign unknown attribute... record this and give feedback or
+        # just continue to ignore silently?
       end
     end
   end
@@ -27,8 +32,18 @@ class SpreadsheetEntry
     false #ActiveModel
   end
 
+  def is_a_valid?(type)
+    #@validates_as[type]
+    @validates_as == type
+  end
+
+  def is_a_valid(type)
+    #@validates_as.push type
+    @validates_as = type
+  end
+
   def has_errors?
-    self.errors.count > 0 or @product_validations.count > 0
+    self.errors.count > 0 or @product_validations
   end
 
   def attributes
@@ -50,7 +65,8 @@ class SpreadsheetEntry
 
   def invalid_attributes
     invalid_attrs = {}
-    @product_validations.messages.merge(self.errors.messages).each do |attr, message|
+    errors = @product_validations ? self.errors.messages.merge(@product_validations.messages) : self.errors.messages
+    errors.each do |attr, message|
       invalid_attrs[attr.to_s] = "#{attr.to_s.capitalize} #{message.first}"
     end
     invalid_attrs.except(*non_product_attributes, *non_display_attributes)
@@ -63,6 +79,6 @@ class SpreadsheetEntry
   end
 
   def non_product_attributes
-    ['line_number', 'valid', 'errors', 'product_object', 'product_validations', 'save_type', 'on_hand_nil']
+    ['line_number', 'valid', 'errors', 'product_object', 'product_validations', 'inventory_validations', 'validates_as', 'save_type', 'on_hand_nil', 'has_overrides']
   end
 end

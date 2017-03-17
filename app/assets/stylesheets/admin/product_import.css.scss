@@ -166,6 +166,20 @@ table.import-settings {
     //border-top: 1px solid #eee;
     border-bottom: 0;
   }
+  div.select2-container {
+    width: 13.5em;
+  }
+  div.select2-container.select2-container-disabled {
+    a.select2-choice, span.select2-arrow {
+      background-color: #d5d5d5;
+    }
+  }
+  input[disabled], input:disabled {
+    background-color: #d5d5d5;
+    opacity: 1;
+    border-color: transparent;
+    color: white !important;
+  }
 
 }
 
@@ -221,5 +235,15 @@ table.import-settings {
     color: #ee4728;
     font-size: 1.05em;
     margin-top: 0.4em;
+  }
+}
+
+form.product-import, div.post-save-results {
+  input[type="submit"] {
+    margin-right: 0.5em;
+  }
+  input[type="submit"], button, a.button {
+    min-width: 8em;
+    text-align: center;
   }
 }

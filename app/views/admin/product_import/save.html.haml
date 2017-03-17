@@ -8,21 +8,38 @@
 
 %div.post-save-results{ng: {app: 'ofn.admin'}}
 
-  %p
-    %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_created_count} == 0, 'fa-check-circle': #{@importer.products_created_count} != 0}"}}
-    %strong.created-count= @importer.products_created_count
-    Products created
+  - if @importer.products_created_count > 0
+    %p
+      %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_created_count} == 0, 'fa-check-circle': #{@importer.products_created_count} != 0}"}}
+      %strong.created-count= @importer.products_created_count
+      Products created
 
-  %p
-    %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_updated_count} == 0, 'fa-check-circle': #{@importer.products_updated_count} != 0}"}}
-    %strong.updated-count= @importer.products_updated_count
-    Products updated
+  - if @importer.products_updated_count > 0
+    %p
+      %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_updated_count} == 0, 'fa-check-circle': #{@importer.products_updated_count} != 0}"}}
+      %strong.updated-count= @importer.products_updated_count
+      Products updated
+
+  - if @importer.inventory_created_count > 0
+    %p
+      %i.fa{ng: {class: "{'fa-info-circle': #{@importer.inventory_created_count} == 0, 'fa-check-circle': #{@importer.inventory_created_count} != 0}"}}
+      %strong.inv-created-count= @importer.inventory_created_count
+      Inventory items updated
+
+  - if @importer.inventory_updated_count > 0
+    %p
+      %i.fa{ng: {class: "{'fa-info-circle': #{@importer.inventory_updated_count} == 0, 'fa-check-circle': #{@importer.inventory_updated_count} != 0}"}}
+      %strong.inv-updated-count= @importer.inventory_updated_count
+      Inventory items updated
 
   - if @importer.products_reset_count > 0
     %p
-      %i.fa.fa-check-circle
+      %i.fa.fa-info-circle
       %strong.reset-count= @importer.products_reset_count
-      Products had stock level reset to zero
+      - if @import_into == 'inventories'
+        Inventory items had stock level reset to zero
+      - else
+        Products had stock level reset to zero
 
   %br
 

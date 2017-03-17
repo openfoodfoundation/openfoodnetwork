@@ -1,83 +1,107 @@
 %h5 Import validation overview
 %br
 
--#%div.panel-section
--#  %div.panel-header
--#    %div.header-caret
--#    %div.header-icon.info
--#      %i.fa.fa-info-circle
--#    %div.header-count
--#      %strong.existing-count= @importer.total_supplier_products
--#    %div.header-description
--#      Existing products in referenced enterprise(s)
--#  -#%div.panel-content{ng: {hide: '!active'}}
--#  -#  Content goes here
+%div{ng: {controller: 'ImportFeedbackCtrl'}}
 
-%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.item_count}"}}
-  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
-    %div.header-caret
-      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
-    %div.header-icon.success
-      %i.fa.fa-info-circle.info
-    %div.header-count
-      %strong.item-count= @importer.item_count
-    %div.header-description
-      Entries found in imported file
-  %div.panel-content{ng: {hide: '!active || count == 0'}}
-    = render 'entries_table', entries: @importer.all_entries
+  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "all.count = count((entries | entriesFilterValid:'all')) "}}
+    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && all.count}'}}
+      %div.header-caret
+        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'all.count == 0'}}
+      %div.header-icon.success
+        %i.fa.fa-info-circle.info
+      %div.header-count
+        %strong.item-count
+          {{all.count}}
+      %div.header-description
+        Entries found in imported file
+    %div.panel-content{ng: {hide: '!active || all.count == 0'}}
+      = render 'entries_table', entries: @importer.all_entries, filter: 'all'
 
-%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.invalid_count}"}}
-  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
-    %div.header-caret
-      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
-    %div.header-icon.warning
-      %i.fa.fa-warning
-    %div.header-count
-      %strong.invalid-count= @importer.invalid_count
-    %div.header-description
-      Items contain errors and will not be imported
-  %div.panel-content{ng: {hide: '!active || count == 0'}}
-    = render 'errors_list'
-    %br
-    = render 'entries_table', entries: @importer.invalid_entries
+  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "invalid.count = count((entries | entriesFilterValid:'invalid')) ", hide: 'invalid.count == 0'}}
+    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && invalid.count}'}}
+      %div.header-caret
+        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'invalid.count == 0'}}
+      %div.header-icon.warning
+        %i.fa.fa-warning
+      %div.header-count
+        %strong.invalid-count
+          {{invalid.count}}
+      %div.header-description
+        Items contain errors and will not be imported
+    %div.panel-content{ng: {hide: '!active || invalid.count == 0'}}
+      = render 'errors_list'
+      %br
+      = render 'entries_table', entries: @importer.all_entries, filter: 'invalid'
 
-%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.products_create_count}"}}
-  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
-    %div.header-caret
-      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
-    %div.header-icon.success
-      %i.fa.fa-check-circle
-    %div.header-count
-      %strong.create-count= @importer.products_create_count
-    %div.header-description
-      Products will be created
-  %div.panel-content{ng: {hide: '!active || count == 0'}}
-    = render 'entries_table', entries: @importer.products_to_create
+  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl',  init: "create_product.count = count((entries | entriesFilterValid:'create_product')) ", hide: 'create_product.count == 0'}}
+    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && create_product.count}'}}
+      %div.header-caret
+        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'create_product.count == 0'}}
+      %div.header-icon.success
+        %i.fa.fa-check-circle
+      %div.header-count
+        %strong.create-count
+          {{create_product.count}}
+      %div.header-description
+        Products will be created
+    %div.panel-content{ng: {hide: '!active || create_product.count == 0'}}
+      = render 'entries_table', entries: @importer.all_entries, filter: 'create_product'
 
-%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.products_update_count}"}}
-  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
-    %div.header-caret
-      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
-    %div.header-icon.success
-      %i.fa.fa-check-circle
-    %div.header-count
-      %strong.update-count= @importer.products_update_count
-    %div.header-description
-      Products will be updated
-  %div.panel-content{ng: {hide: '!active || count == 0'}}
-    = render 'entries_table', entries: @importer.products_to_update
+  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "update_product.count = count((entries | entriesFilterValid:'update_product')) ", hide: 'update_product.count == 0'}}
+    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && update_product.count}'}}
+      %div.header-caret
+        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'update_product.count == 0'}}
+      %div.header-icon.success
+        %i.fa.fa-check-circle
+      %div.header-count
+        %strong.update-count
+          {{update_product.count}}
+      %div.header-description
+        Products will be updated
+    %div.panel-content{ng: {hide: '!active || update_product.count == 0'}}
+      = render 'entries_table', entries: @importer.all_entries, filter: 'update_product'
 
-%div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetTotal == 0'}}
-  %div.panel-header
-    %div.header-caret
-    %div.header-icon.info
-      %i.fa.fa-info-circle
-    %div.header-count
-      %strong.reset-count
-        {{resetTotal}}
-    %div.header-description
-      Existing products will have their stock reset to zero
-  -#%div.panel-content{ng: {hide: '!active'}}
-  -#  Content goes here
+  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "create_inventory.count = count((entries | entriesFilterValid:'create_inventory')) ", hide: 'create_inventory.count == 0'}}
+    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && create_inventory.count}'}}
+      %div.header-caret
+        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'create_inventory.count == 0'}}
+      %div.header-icon.success
+        %i.fa.fa-check-circle
+      %div.header-count
+        %strong.inv-create-count
+          {{create_inventory.count}}
+      %div.header-description
+        Inventory items will be created
+    %div.panel-content{ng: {hide: '!active || create_inventory.count == 0'}}
+      = render 'entries_table', entries: @importer.all_entries, filter: 'create_inventory'
 
-%br.panels.clearfix
+  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "update_inventory.count = count((entries | entriesFilterValid:'update_inventory')) ", hide: 'update_inventory.count == 0'}}
+    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && update_inventory.count}'}}
+      %div.header-caret
+        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'update_inventory.count == 0'}}
+      %div.header-icon.success
+        %i.fa.fa-check-circle
+      %div.header-count
+        %strong.inv-update-count
+          {{update_inventory.count}}
+      %div.header-description
+        Inventory items will be updated
+    %div.panel-content{ng: {hide: '!active || update_inventory.count == 0'}}
+      = render 'entries_table', entries: @importer.all_entries, filter: 'update_inventory'
+
+  %div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetTotal == 0'}}
+    %div.panel-header
+      %div.header-caret
+      %div.header-icon.info
+        %i.fa.fa-info-circle
+      %div.header-count
+        %strong.reset-count
+          {{resetTotal}}
+      %div.header-description
+        -if @import_into == 'inventories'
+          Existing inventory items will have their stock reset to zero
+        - else
+          Existing products will have their stock reset to zero
+    -#%div.panel-content{ng: {hide: '!active'}}
+
+  %br.panels.clearfix

@@ -3,31 +3,35 @@
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-= form_tag main_app.admin_product_import_save_path, {'ng-app' => 'ofn.admin'} do
+= form_tag main_app.admin_product_import_save_path, {class: 'product-import', 'ng-app' => 'ofn.admin'} do
 
-  - if @importer.invalid_count && !@importer.has_valid_entries?
+  - if !@importer.has_valid_entries? #and @importer.invalid_count
     %h5 No valid entries found
     %p There are no entries that can be saved
     %br
 
+  = render partial: "admin/json/injection_ams", locals: {ngModule: 'ofn.admin', name: 'productImportData', json: @importer.entries_json}
+
   = render 'import_options' if @importer.has_valid_entries?
 
-  = render 'import_review'
+  = render 'import_review' if @importer.has_entries?
 
-  - if @importer.has_valid_entries?
-    - if @importer.invalid_count > 0
+  %div{ng: {controller: 'ImportFeedbackCtrl', show: "count((entries | entriesFilterValid:'valid')) > 0"}}
+    %div{ng: {if: "count((entries | entriesFilterValid:'invalid')) > 0"}}
       %br
       %h5 Imported file contains some invalid entries
       %p Save valid entries for now and discard the others?
-    - else
+    %div{ng: {show: "count((entries | entriesFilterValid:'invalid')) == 0"}}
+      %br
       %h5 No errors detected!
       %p Save all imported products?
     %br
     = hidden_field_tag :filepath, @filepath
+    = hidden_field_tag "settings[import_into]", @import_into
     = submit_tag "Save"
     %a.button{href: main_app.admin_product_import_path} Cancel
 
-  - else
+  %div{ng: {controller: 'ImportFeedbackCtrl', show: "count((entries | entriesFilterValid:'valid')) == 0"}}
     %br
     %a.button{href: main_app.admin_product_import_path} Cancel
 

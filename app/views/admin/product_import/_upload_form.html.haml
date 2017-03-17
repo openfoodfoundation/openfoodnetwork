@@ -1,9 +1,17 @@
-%h5 Select a spreadsheet to upload
-%br
-= form_tag main_app.admin_product_import_path, multipart: true do
-  = file_field_tag :file
+%div{ng: {app: 'ofn.admin'}}
+
+  %h5 Select a spreadsheet to upload
   %br
-  %br
-  = submit_tag "Import"
-  %br
-  %br
+  = form_tag main_app.admin_product_import_path, multipart: true, class: 'product-import' do
+    %label Spreadsheet
+    %br
+    = file_field_tag :file
+    %br
+    %br
+    %label Import into:
+    %br
+    = select_tag "settings[import_into]", options_for_select({"Product List" => :product_list, "Inventories" => :inventories}), {class: 'select2 select2-no-search'}
+    %br
+    %br
+    %br
+    = submit_tag "Import"
