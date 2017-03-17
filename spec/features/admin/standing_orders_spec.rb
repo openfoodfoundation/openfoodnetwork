@@ -157,10 +157,18 @@ feature 'Standing Orders' do
         expect(page).to have_input "bill_address_firstname", with: address.firstname
         expect(page).to have_input "bill_address_lastname", with: address.lastname
         expect(page).to have_input "bill_address_address1", with: address.address1
-        click_button('Next')
-        expect(page).to have_content 'can\'t be blank', count: 7 # 7 because country is set on Spree::Address.default
 
-        # Setting the billing address
+        # Clear some elements of bill address
+        fill_in "bill_address_firstname", with: ''
+        fill_in "bill_address_lastname", with: ''
+        fill_in "bill_address_address1", with: ''
+        fill_in "bill_address_city", with: ''
+        fill_in "bill_address_zipcode", with: ''
+        fill_in "bill_address_phone", with: ''
+        click_button('Next')
+        expect(page).to have_content 'can\'t be blank', count: 6
+
+        # Re-setting the billing address
         fill_in "bill_address_firstname", with: 'Freda'
         fill_in "bill_address_lastname", with: 'Figapple'
         fill_in "bill_address_address1", with: '7 Tempany Lane'

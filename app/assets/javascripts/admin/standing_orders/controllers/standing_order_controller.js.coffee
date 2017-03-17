@@ -53,6 +53,7 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
       delete response.ship_address.id
       angular.extend($scope.standingOrder.bill_address, response.bill_address)
       angular.extend($scope.standingOrder.ship_address, response.ship_address)
+      $scope.shipAddressFromBilling() unless response.ship_address.address1?
 
   $scope.shipAddressFromBilling = =>
     angular.extend($scope.standingOrder.ship_address, $scope.standingOrder.bill_address)
