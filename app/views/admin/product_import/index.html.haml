@@ -1,6 +1,6 @@
 - content_for :page_title do
-  Product Import
+  #{t('admin.product_import.title')}
 
-= render :partial => 'spree/admin/shared/product_sub_menu'
+= render partial: 'spree/admin/shared/product_sub_menu'
 
 = render 'upload_form'

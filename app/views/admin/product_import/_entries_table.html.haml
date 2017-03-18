@@ -2,7 +2,7 @@
   %table
     %thead
       %th
-      %th Line
+      %th #{t('admin.product_import.import.line')}
       - @importer.table_headings.each do |heading|
         %th= heading
     %tr{ng: {repeat: "(line_number, entry ) in entries | entriesFilterValid:'#{filter}' "}}

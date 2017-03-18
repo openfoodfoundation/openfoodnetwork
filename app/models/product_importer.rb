@@ -220,7 +220,7 @@ class ProductImporter
     match = Spree::Product.where(supplier_id: entry.producer_id, name: entry.name, deleted_at: nil).first
 
     if match.nil?
-      mark_as_invalid(entry, attribute: 'name', error: 'did not match any products in the database')
+      mark_as_invalid(entry, attribute: 'name', error: I18n.t('admin.product_import.model.no_product'))
       return
     end
 
@@ -232,7 +232,7 @@ class ProductImporter
       end
     end
 
-    mark_as_invalid(entry, attribute: 'product', error: 'not found in database')
+    mark_as_invalid(entry, attribute: 'product', error: I18n.t('admin.product_import.model.not_found'))
   end
 
   def create_inventory_item(entry, existing_variant)
@@ -317,17 +317,17 @@ class ProductImporter
     producer_name = entry.producer
 
     if producer_name.blank?
-      mark_as_invalid(entry, attribute: "producer", error: "can't be blank")
+      mark_as_invalid(entry, attribute: "producer", error: I18n.t('admin.product_import.model.blank'))
       return
     end
 
     unless producer_exists?(producer_name)
-      mark_as_invalid(entry, attribute: "producer", error: "\"#{producer_name}\" not found in database")
+      mark_as_invalid(entry, attribute: "producer", error: "\"#{producer_name}\" #{I18n.t('admin.product_import.model.not_found')}")
       return
     end
 
     unless inventory_permission?(entry.supplier_id, @producers_index[producer_name])
-      mark_as_invalid(entry, attribute: "producer", error: "\"#{producer_name}\": you do not have permission to create inventory for this producer")
+      mark_as_invalid(entry, attribute: "producer", error: "\"#{producer_name}\": #{I18n.t('admin.product_import.model.inventory_no_permission')}")
       return
     end
 
@@ -439,7 +439,7 @@ class ProductImporter
       @products_created += 1
       @updated_ids.push product.variants.first.id
     else
-      self.errors.add("Line #{line_number}:", product.errors.full_messages)
+      self.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", product.errors.full_messages)
     end
 
     @already_created[entry.supplier_id] = {entry.name => product.id}
@@ -476,7 +476,7 @@ class ProductImporter
       @inventory_created += 1
       @updated_ids.push new_item.id
     else
-      self.errors.add("Line #{line_number}:", new_item.errors.full_messages)
+      self.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", new_item.errors.full_messages)
     end
   end
 
@@ -490,7 +490,7 @@ class ProductImporter
       @inventory_updated += 1
       @updated_ids.push existing_item.id
     else
-      self.errors.add("Line #{line_number}:", existing_item.errors.full_messages)
+      self.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", existing_item.errors.full_messages)
     end
   end
 
@@ -503,7 +503,7 @@ class ProductImporter
       @variants_created += 1
       @updated_ids.push new_variant.id
     else
-      self.errors.add("Line #{line_number}:", new_variant.errors.full_messages)
+      self.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", new_variant.errors.full_messages)
     end
   end
 
@@ -516,7 +516,7 @@ class ProductImporter
       @variants_updated += 1
       @updated_ids.push variant.id
     else
-      self.errors.add("Line #{line_number}:", variant.errors.full_messages)
+      self.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", variant.errors.full_messages)
     end
   end
 

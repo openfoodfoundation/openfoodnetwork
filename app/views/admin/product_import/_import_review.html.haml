@@ -1,4 +1,4 @@
-%h5 Import validation overview
+%h5 #{t('admin.product_import.import.validation_overview')}
 %br
 
 %div{ng: {controller: 'ImportFeedbackCtrl'}}
@@ -13,7 +13,7 @@
         %strong.item-count
           {{all.count}}
       %div.header-description
-        Entries found in imported file
+        #{t('admin.product_import.import.entries_found')}
     %div.panel-content{ng: {hide: '!active || all.count == 0'}}
       = render 'entries_table', entries: @importer.all_entries, filter: 'all'
 
@@ -27,7 +27,7 @@
         %strong.invalid-count
           {{invalid.count}}
       %div.header-description
-        Items contain errors and will not be imported
+        #{t('admin.product_import.import.entries_with_errors')}
     %div.panel-content{ng: {hide: '!active || invalid.count == 0'}}
       = render 'errors_list'
       %br
@@ -43,7 +43,7 @@
         %strong.create-count
           {{create_product.count}}
       %div.header-description
-        Products will be created
+        #{t('admin.product_import.import.products_to_create')}
     %div.panel-content{ng: {hide: '!active || create_product.count == 0'}}
       = render 'entries_table', entries: @importer.all_entries, filter: 'create_product'
 
@@ -57,7 +57,7 @@
         %strong.update-count
           {{update_product.count}}
       %div.header-description
-        Products will be updated
+        #{t('admin.product_import.import.products_to_update')}
     %div.panel-content{ng: {hide: '!active || update_product.count == 0'}}
       = render 'entries_table', entries: @importer.all_entries, filter: 'update_product'
 
@@ -71,7 +71,7 @@
         %strong.inv-create-count
           {{create_inventory.count}}
       %div.header-description
-        Inventory items will be created
+        #{t('admin.product_import.import.inventory_to_create')}
     %div.panel-content{ng: {hide: '!active || create_inventory.count == 0'}}
       = render 'entries_table', entries: @importer.all_entries, filter: 'create_inventory'
 
@@ -85,7 +85,7 @@
         %strong.inv-update-count
           {{update_inventory.count}}
       %div.header-description
-        Inventory items will be updated
+        #{t('admin.product_import.import.inventory_to_update')}
     %div.panel-content{ng: {hide: '!active || update_inventory.count == 0'}}
       = render 'entries_table', entries: @importer.all_entries, filter: 'update_inventory'
 
@@ -99,9 +99,9 @@
           {{resetTotal}}
       %div.header-description
         -if @import_into == 'inventories'
-          Existing inventory items will have their stock reset to zero
+          #{t('admin.product_import.import.inventory_to_reset')}
         - else
-          Existing products will have their stock reset to zero
+          #{t('admin.product_import.import.products_to_reset')}
     -#%div.panel-content{ng: {hide: '!active'}}
 
   %br.panels.clearfix

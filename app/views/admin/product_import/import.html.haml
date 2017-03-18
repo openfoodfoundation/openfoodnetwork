@@ -1,13 +1,13 @@
 - content_for :page_title do
-  Product Import
+  #{t('admin.product_import.title')}
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
 = form_tag main_app.admin_product_import_save_path, {class: 'product-import', 'ng-app' => 'ofn.admin'} do
 
   - if !@importer.has_valid_entries? #and @importer.invalid_count
-    %h5 No valid entries found
-    %p There are no entries that can be saved
+    %h5 #{t('admin.product_import.import.no_valid_entries')}
+    %p #{t('admin.product_import.import.none_to_save')}
     %br
 
   = render partial: "admin/json/injection_ams", locals: {ngModule: 'ofn.admin', name: 'productImportData', json: @importer.entries_json}
@@ -19,20 +19,20 @@
   %div{ng: {controller: 'ImportFeedbackCtrl', show: "count((entries | entriesFilterValid:'valid')) > 0"}}
     %div{ng: {if: "count((entries | entriesFilterValid:'invalid')) > 0"}}
       %br
-      %h5 Imported file contains some invalid entries
-      %p Save valid entries for now and discard the others?
+      %h5 #{t('admin.product_import.import.some_invalid_entries')}
+      %p #{t('admin.product_import.import.save_valid?')}
     %div{ng: {show: "count((entries | entriesFilterValid:'invalid')) == 0"}}
       %br
-      %h5 No errors detected!
-      %p Save all imported products?
+      %h5 #{t('admin.product_import.import.no_errors')}
+      %p #{t('admin.product_import.import.save_all_imported?')}
     %br
     = hidden_field_tag :filepath, @filepath
     = hidden_field_tag "settings[import_into]", @import_into
-    = submit_tag "Save"
-    %a.button{href: main_app.admin_product_import_path} Cancel
+    = submit_tag t('admin.save')
+    %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
 
   %div{ng: {controller: 'ImportFeedbackCtrl', show: "count((entries | entriesFilterValid:'valid')) == 0"}}
     %br
-    %a.button{href: main_app.admin_product_import_path} Cancel
+    %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
 
 

@@ -1,4 +1,4 @@
-%h5 Import options and defaults
+%h5 #{t('admin.product_import.import.options_and_defaults')}
 %br
 
 - @importer.suppliers_index.each do |name, supplier_id|
@@ -22,7 +22,7 @@
           %i.fa.fa-warning
         %div.header-description
           = name
-          %span.header-error= " - you do not have permission to manage this enterprise"
+          %span.header-error= " - #{t('admin.product_import.import.no_permission')}"
   - elsif name
     %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
       %div.panel-header
@@ -31,7 +31,7 @@
           %i.fa.fa-warning
         %div.header-description
           = name
-          %span.header-error= " - enterprise could not be found in database"
+          %span.header-error= " - #{t('admin.product_import.import.not_found')}"
   - else
     %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
       %div.panel-header
@@ -39,8 +39,8 @@
         %div.header-icon.error
           %i.fa.fa-warning
         %div.header-description
-          No name
-          %span.header-error= " - some products have blank supplier name"
+          #{t('admin.product_import.import.no_name')}
+          %span.header-error= " - #{t('admin.product_import.import.blank_supplier')}"
 
 %br.panels.clearfix
 %br
