@@ -5,6 +5,9 @@ Spree::Admin::OrdersController.class_eval do
   helper CheckoutHelper
   before_filter :load_spree_api_key, :only => :bulk_management
 
+  # Ensure that the distributor is set for an order when
+  before_filter :ensure_distribution, only: :new
+
   # We need to add expections for collection actions other than :index here
   # because spree_auth_devise causes load_order to be called, which results
   # in an auth failure as the @order object is nil for collection actions
@@ -130,5 +133,11 @@ Spree::Admin::OrdersController.class_eval do
                     ocs.soonest_opening +
                     ocs.closed +
                     ocs.undated
+  end
+
+  def ensure_distribution
+    unless @order.distribution_set?
+      render 'set_distribution'
+    end
   end
 end

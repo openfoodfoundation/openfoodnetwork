@@ -186,6 +186,12 @@ Spree::OrdersController.class_eval do
 
   private
 
+  def ensure_distributor
+    unless @order.distributor_id
+      render 'set_distribution'
+    end
+  end
+
   def populate_variant_attributes
     order = current_order.reload
 
