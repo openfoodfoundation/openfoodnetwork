@@ -11,7 +11,7 @@ nb:
         Var du gjest forrige gang? Kanskje du må opprette en konto eller nullstille passordet.
     enterprise_confirmations:
       enterprise:
-        confirmed: Takk, din epostadresse er bekreftet.
+        confirmed: Takk, e-postadressen din er bekreftet.
         not_confirmed: Din epostadresse kan ikke bekreftes. Kanskje du allerede har fullført dette steget?
         confirmation_sent: "Bekreftelse på epost er sendt!"
         confirmation_not_sent: "Kunne ikke sende bekreftelse på epost."
@@ -28,6 +28,8 @@ nb:
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
   charges_sales_tax: MVA-pliktig?
   print_invoice: "Skriv ut Faktura"
+  print_ticket: "Skriv ut kvittering"
+  select_ticket_printer: "Velg skriver for kvitteringer"
   send_invoice: "Send Faktura"
   resend_confirmation: "Send Bekreftelse på nytt"
   view_order: "Se Bestilling"
@@ -49,6 +51,17 @@ nb:
   say_yes: "Ja"
   then: vil
   sort_order_cycles_on_shopfront_by: "Sorter Bestillingsrunder i Butikkvindu etter"
+  required_fields: Obligatoriske felt er merket med en stjerne
+  select_continue: Velg og fortsett
+  remove: Fjern
+  or: eller
+  collapse_all: Skjul alle
+  expand_all: Vis alle
+  loading: Laster...
+  show_more: Vis mer
+  show_all: Vis alle
+  show_all_with_more: "Vis Alle (%{num} Mer)"
+  cancel: Avbryt
   admin:
     date: Dato
     email: Epost
@@ -77,51 +90,53 @@ nb:
     tag_has_rules: "Gjeldende regler for denne merkelappen: %{num}"
     has_one_rule: "har én regel"
     has_n_rules: "har %{num} regler"
+    unsaved_confirm_leave: "Det finnes ulagrede endringer på denne siden. Fortsett uten å lagre?"
+    unsaved_changes: "Du har ulagrede endringer"
     accounts_and_billing_settings:
       method_settings:
-        default_accounts_payment_method: "Default Accounts Payment Method"
-        default_accounts_shipping_method: "Default Accounts Shipping Method"
+        default_accounts_payment_method: "Standard Betalingsmetode for Bokføring"
+        default_accounts_shipping_method: "Standard Leveringsmetode for Bokføring"
       edit:
         accounts_and_billing: "Bokføring & Fakturering"
-        accounts_administration_distributor: "bokføringsadministrasjon distributør"
+        accounts_administration_distributor: "Distributør bokføringsadministrasjon"
         admin_settings: "Innstillinger"
         update_invoice: "Oppdater Fakturaer"
-        finalise_invoice: "Sluttfør Fakturaer"
-        finalise_user_invoices: "Sluttfør Brukerfakturaer"
-        finalise_user_invoice_explained: "Bruk denne knappen til å sluttføre alle fakturaer i systemet for forrige kalendermåned. Denne oppgaven kan settes opp til å kjøres automatisk hver måned."
-        manually_run_task: "Gjør Oppgave Manuelt"
+        auto_update_invoices: "Auto-oppdater fakturaer hver natt kl. 1:00am"
+        finalise_invoice: "Ferdigstill Fakturaer"
+        auto_finalise_invoices: "Auto-ferdigstill fakturaer månedlig den 2. kl. 1:30am"
+        manually_run_task: "Kjør oppgaver manuelt"
+        update_user_invoice_explained: "Bruk denne knappen til umiddelbart å oppdatere fakturaer for denne måneden frem til i dag for hver bedriftsbruker i systemet. Denne oppgaven kan settes opp til å kjøre automatisk hver natt."
+        finalise_user_invoices: "Ferdigstill Brukerfakturaer"
+        finalise_user_invoice_explained: "Bruk denne knappen til å ferdigstille alle fakturaer i systemet for forrige kalendermåned. Denne oppgaven kan settes opp til å kjøre automatisk en gang i måneden."
         update_user_invoices: "Oppdater Brukerfakturaer"
-        update_user_invoice_explained: "Bruk denne knappen til umiddelbart å oppdatere fakturaer for måneden frem til i dag for hver bedriftsbruker i systemet. Denne oppgaven kan settes opp til å kjøres automatisk hver natt."
-        auto_finalise_invoices: "Auto-sluttfør fakturaer månedlig på den 2. kl. 01:30"
-        auto_update_invoices: "Auto-oppdater fakturaer hver natt kl. 01:00"
     business_model_configuration:
       edit:
-        business_model_configuration: "Utforming av forretningsmodell"
-        business_model_configuration_tip: "Configure the rate at which shops will be charged each month for use of the Open Food Network."
-        bill_calculation_settings: "Bill Calculation Settings"
-        bill_calculation_settings_tip: "Adjust the amount that enterprises will be billed each month for use of the OFN."
-        shop_trial_length: "Lengden av prøveperioden (dager)"
-        shop_trial_length_tip: "The length of time (in days) that enterprises who are set up as shops can run as a trial period."
-        fixed_monthly_charge: "Fixed Monthly Charge"
-        fixed_monthly_charge_tip: "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."
+        business_model_configuration: "Forretningsmodell"
+        business_model_configuration_tip: "Konfigurer hvor ofte butikker skal belastes hver måned for å bruke Open Food Network."
+        bill_calculation_settings: "Kalkulatorinnstillinger for Regninger"
+        bill_calculation_settings_tip: "Tilpass hvor mye bedrifter skal faktureres for hver måned for bruken av OFN."
+        shop_trial_length: "Lengde på prøveperiode for butikker (dager)"
+        shop_trial_length_tip: "Antall dager prøveperiode for en bedrift som er satt opp som butikk."
+        fixed_monthly_charge: "Fast månedlig belastning"
+        fixed_monthly_charge_tip: "En fast månedlig belastning for alle bedrifter som er satt opp som butikk og har overskredet minimum fakturert omsetning (hvis konfigurert)."
         percentage_of_turnover: "Prosent av omsetning"
-        percentage_of_turnover_tip: "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."
-        monthly_cap_excl_tax: "månedlig tak (eks. MVA)"
-        monthly_cap_excl_tax_tip: "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."
-        tax_rate: "Tax Rate"
-        tax_rate_tip: "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."
-        minimum_monthly_billable_turnover: "Minimum Monthly Billable Turnover"
-        minimum_monthly_billable_turnover_tip: "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."
-        example_bill_calculator: "Example Bill Calculator"
-        example_bill_calculator_legend: "Alter the example turnover to visualise the effect of the settings to the left."
-        example_monthly_turnover: "Example Monthly Turnover"
-        example_monthly_turnover_tip: "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."
-        cap_reached?: "Cap Reached ?"
-        cap_reached?_tip: "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."
-        included_tax: "Included tax"
-        included_tax_tip: "The total tax included in the example monthly bill, given the settings and the turnover provided."
-        total_monthly_bill_incl_tax: "Total månedlig regning (Inkl. Avgift)"
-        total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
+        percentage_of_turnover_tip: "Når større enn null, gjelder denne raten (0.0 - 1.0) på total omsetning for hver butikk og lagt til enhver fast rate (til venstre) for å beregne den månedlige fakturaen."
+        monthly_cap_excl_tax: "månedlig lokk (eks. MVA)"
+        monthly_cap_excl_tax_tip: "Når større enn null vil denne verdien bli brukt som et lokk på hvor mye butikker vil bli belastet hver måned."
+        tax_rate: "Avgiftsrate"
+        tax_rate_tip: "Avgiftsrate som gjelder månedlig regning som bedrifter blir belastet for å bruke systemet."
+        minimum_monthly_billable_turnover: "Minimum Månedlig Fakturerbar Omsetning"
+        minimum_monthly_billable_turnover_tip: "Minimum månedlig omsetning før en butikk vil bli belastet for å bruke OFN. Bedrifter som omsetter for mindre enn dette på en måned vil ikke bli belastet, enten som en prosent eller en fast rate."
+        example_bill_calculator: "Eksempel på Regningskalkulator"
+        example_bill_calculator_legend: "Endre eksempelomsetningen for å se effekten av innstillingene til venstre."
+        example_monthly_turnover: "Eksempel på Månedlig Omsetning"
+        example_monthly_turnover_tip: "Eksempel på månedlig omsetning for en bedrift som vil bli brukt for å generere beregning av eksempel på månedlig regning under."
+        cap_reached?: "Lokk Nådd?"
+        cap_reached?_tip: "Om lokket (spesifisert til venstre) er nådd, gitt innstillingene og omsetningen som er satt."
+        included_tax: "Inkludert avgift"
+        included_tax_tip: "Total avgift inkludert i eksemplet på månedlig regning, gitt innstillingene og omsetningen som er satt."
+        total_monthly_bill_incl_tax: "Total Månedlig Regning (Inkl. Avgift)"
+        total_monthly_bill_incl_tax_tip: "Eksempel på total månedlig regning inkludert avgift, gitt innstillingene og omsetningen som er satt."
     customers:
       index:
         add_customer: "Legge til kunde"
@@ -143,6 +158,28 @@ nb:
         edit: 'Redigere'
         update_address: 'Oppdater Adresse'
         confirm_delete: 'Sikker på å slette?'
+    cache_settings:
+      show:
+        title: Mellomlagring
+        distributor: Distributør
+        order_cycle: Bestillingsrunde
+        status: Status
+        diff: Forskjell
+    contents:
+      edit:
+        title: Innhold
+    enterprise_fees:
+      index:
+        title: Bedriftsavgifter
+        enterprise: Bedrift
+        fee_type: Avfgiftstype
+        name: Navn
+        tax_category: Avgiftskategori
+        calculator: Kalkulator
+        calculator_values: Kalkulatorverdier
+    enterprise_groups:
+      index:
+        new_button: Ny Bedriftsgruppe
     products:
       bulk_edit:
         unit: Enhet
@@ -152,7 +189,11 @@ nb:
         inherits_properties?: Arver Egenskaper?
         available_on: Tilgjengelig på
         av_on: "Til. på"
+      variants:
+        to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
     variant_overrides:
+      loading_flash:
+        loading_inventory: LASTER VARELAGER
       index:
         title: Varelager
         description: Bruk denne siden til å administrere varelager for dine bedrifter. Eventuelle produktdetaljer satt her vil overstyre de som er satt på 'Produkter'-siden
@@ -193,18 +234,94 @@ nb:
         max_fulfilled_units: "Max Oppfylte Enheter"
         order_error: "Noen feil må løses før du kan oppdatere bestillinger.\nAlle felt med røde kanter inneholder feil."
         variants_without_unit_value: "ADVARSEL: Noen varianter mangler enhetsverdi"
-    order_cycles:
-      edit:
-        choose_products_from: "Velg Produkter Fra:"
     enterprise:
       select_outgoing_oc_products_from: Velg utgående bestillingsrundeprodukter fra
     enterprises:
       index:
-        producer?: Produsent?
+        title: Bedrifter
+        new_enterprise: Ny Bedrift
+        producer?: "Produsent?"
         package: Pakke
         status: Status
         manage: Administrer
       form:
+        about_us:
+          desc_short: Kort Beskrivelse
+          desc_short_placeholder: Fortell oss om din bedrift med en eller to setninger
+          desc_long: Om Oss
+          desc_long_placeholder: Fortell kunder om deg selv. Denne informasjonen vises på din offentlige profil.
+        business_details:
+          abn: Org nr.
+          abn_placeholder: f.eks. 999 000 123
+          acn: Mva. nr.
+          acn_placeholder: f.eks. 999 000 123
+        contact:
+          name: Navn
+          name_placeholder: f.eks. Gustav Plum
+          email_address: Epostadresse
+          email_address_placeholder: f.eks. www.truffles.com
+          phone: Telefon
+          phone_placeholder: f.eks. 987 123 654
+          website: Hjemmeside
+          website_placeholder: f.eks. www.truffles.com
+        enterprise_fees:
+          name: Navn
+          fee_type: Avfgiftstype
+          manage_fees: Administrer Bedriftsavgifter
+          no_fees_yet: Du har ingen bedriftsavgifter ennå.
+          create_button: Opprett en nå
+        images:
+          logo: Logo
+          promo_image_placeholder: 'Dette bildet vises i "Om Oss"'
+          promo_image_note1: 'VENNLIGST MERK:'
+          promo_image_note2: Ethvert promobilde lastet opp her vil bli kuttet til 1200x260.
+          promo_image_note3: Promobildet vises på toppen av en bedrifts profilside og i pop-ups.
+        inventory_settings:
+          text1: Du kan velge å administrere lagernivå og priser inn via din
+          inventory: varelager
+          text2: >
+              Hvis du bruker varelagerverktøyet kan du velge om nye produkter lagt
+              til av dine leverandører må legges til ditt varelager før de kan bli
+              telt med. Hvis du ikke bruker varelageret ditt til å administrere dine
+              produkter burde du velge det 'anbefalte' alternativet nedenfor:
+          preferred_product_selection_from_inventory_only_yes: Nye produkter kan legges til mitt butikkvindu (anbefalt)
+          preferred_product_selection_from_inventory_only_no: Nye produkter må legges til mitt varelager før de kan legges til mitt butikkvindu
+        payment_methods:
+          name: Navn
+          applies: Gjelder?
+          manage: Administrer Betalingsmetoder
+          not_method_yet: Du har ingen betalingsmetoder ennå.
+          create_button: Opprett Ny Betalingsmetode
+          create_one_button: Opprett en nå
+        primary_details:
+          name: Navn
+          name_placeholder: f.eks. Professor Plums Biodynamiske Trøfler
+          groups: Grupper
+          groups_tip: Velg grupper eller regioner du er medlem av. Dette vil hjelpe kunder til å finne din bedrift.
+          groups_placeholder: Begynn å skriv for å søke etter tilgjengelige grupper...
+          primary_producer: Prmærprodusent?
+          primary_producer_tip: Velg 'Produsent' hvis du er en primærprodusent av mat.
+          producer: Produsent
+          any: Hvilken som helst
+          none: Ingen
+          own: Egen
+          sells: Selger
+          sells_tip: "Ingen - bedriften selger ikke til kunder direkte.<br />Egne - Bedrift selger egne produkter til kunder.<br />Både og - Bedrift kan selge egne eller andre bedrfiters produkter.<br />"
+          visible_in_search: Synlig i søk?
+          visible_in_search_tip: Bestemmer om denne bedriften vil være synlig til kunder når man søker på siden.
+          visible: Synlig
+          not_visible: Ikke synlig
+          permalink: Permalink (ingen mellomrom)
+          permalink_tip: "Denne permalinken brukes til å opprette url-en til din butikk: %{link}din-butikks-navn/shop"
+          link_to_front: Lenke til butikkvindu
+          link_to_front_tip: En direktelenke til ditt butikkvindu på Open Food Network.
+        shipping_methods:
+          name: Navn
+          applies: Gjelder?
+          manage: Administrer Leveringsmetoder
+          create_button: Opprett Ny Leveringsmetode
+          create_one_button: Opprett en nå
+          no_method_yet: Du har ingen leveringsmetoder ennå.
         shop_preferences:
           shopfront_requires_login: "Offentlig synlig butikk?"
           shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
@@ -214,6 +331,149 @@ nb:
           allow_guest_orders_tip: "Tillat gjestebestillinger eller krev brukerregistrering."
           allow_guest_orders_false: "Krev innlogging for å bestille"
           allow_guest_orders_true: "Tillat gjestebestilling"
+          shopfront_message_placeholder: >
+              En valgfri forklaring for kunder med detaljer om hvordan din nettbutikk
+              fungerer, for å vises over produktlisten på din side.
+          shopfront_closed_message_placeholder: >
+              En melding som gir en mer detaljert forklaring om hvorfor din butikk
+              er stengt og/eller når kunder kan forvente at den åpner igjen. Dette
+              vises på din butikk kun når du ikke har noen aktive bestillingsrunder
+              (dvs. butikk er stengt).
+          open_date: Åpningsdato
+          close_date: Stengedato
+        social:
+          twitter_placeholder: f.eks. @the_prof
+        tag_rules:
+          default_rules:
+            by_default: Som Standard
+            no_rules_yet: Ingen standard regler gjelder ennå
+            add_new_button: '+ Legg til en Ny Standard Regel'
+          no_tags_yet: Ingen emner gjelder for denne bedriften ennå
+          no_rules_yet: Ingen regler gjelder for dette emnet ennå
+          for_customers_tagged: 'For kunder merket:'
+          add_new_rule: '+ Legg til En Ny Regel'
+          add_new_tag: '+ Legg til Et Nytt Merke'
+        users:
+          email_confirmation_notice_html: "Epostbekreftelse venter. Vi har sendt en bekreftelsesepost til %{email}."
+          resend: Send på nytt
+          owner: 'Eier'
+          owner_tip: Primærbrukeren ansvarlig for denne bedriften.
+          notifications: Varslinger
+          notifications_tip: Varslinger om bestillinger vil bli sendt til denne epostadressen.
+          notifications_placeholder: f.eks. www.truffles.com
+          notifications_note: 'Merk: En ny epostadresse må kanskje bekreftes før bruk'
+          managers: Administratorer
+          managers_tip: Andre brukere med tilgang til å administrere denne bedriften.
+      actions:
+        edit_profile: Endre Profil
+        properties: Egenskaper
+        payment_methods: Betalingsmetoder
+        payment_methods_tip: Denne bedriften har ingen betalingsmetoder
+        shipping_methods: Leveringsmetoder
+        shipping_methods_tip: Denne bedriften har leveringsmetoder
+        enterprise_fees: Bedriftsavgifter
+        enterprise_fees_tip: Denne bedriften har ingen avgifter
+      admin_index:
+        name: Navn
+        role: Rolle
+        sells: Selger
+        visible: Synlig?
+        owner: Eier
+        producer: Produsent
+      change_type_form:
+        producer_profile: Produsentprofil
+        connect_ofn: Koble gjennom OFN
+        always_free: GRATIS FOR ALLTID
+        producer_description_text: Legg til dine produkter til Open Food Network, tillat hubs å lagre dine produkter i sine butikker.
+        producer_shop: Produsentbutikk
+        sell_your_produce: Selg dine egne produkter
+        sell_description_text: Selg dine produkter direkte til kunder gjennom din egen Open Food Network nettbutikk.
+        sell_description_text2: En Produsentbutikk er kun for dine produkter, hvis du ønsker å selge produkter dyrket/produsert en annen plass, velg 'Produsenthub'.
+        producer_hub: Produsenthub
+        producer_hub_text: Selg egne produkter og produkter fra andre
+        producer_hub_description_text: Din bedrift er ryggraden i ditt lokale matsystem. Du kan selge dine egne produkter og produkter samlet fra andre bedrifter gjennom din nettbutikk på Open Food Network.
+        profile: Kun Profil
+        get_listing: Få en oppføring
+        profile_description_text: Personer kan finne og kontakte deg på Open Food Network. Din bedrift vil være synlig på kartet, og vil være søkbar i oppføringer.
+        hub_shop: Hub butikk
+        hub_shop_text: Selg produkter fra andre
+        hub_shop_description_text: Din bedrift er ryggraden i ditt lokale matsystem. Du samler produkter fra andre bedrifter og kan selge de gjennom din butikk på Open Food Network.
+        choose_option: Vennligst velg en av alternativene over.
+        change_now: Endre nå
+      enterprise_user_index:
+        loading_enterprises: LASTER BEDRIFTER
+        no_enterprises_found: Ingen bedrifter funnet.
+        search_placeholder: Søk på navn
+        manage: Administrer
+      new_form:
+        owner: Eier
+        owner_tip: Primærbrukeren ansvarlig for denne bedriften.
+        i_am_producer: Jeg er en Produsent
+        contact_name: Kontaktnavn
+      edit:
+        editing: 'Endrer:'
+        back_link: Tilbake til bedriftsliste
+      new:
+        title: Ny Bedrift
+        back_link: Tilbake til bedriftsliste
+      welcome:
+        welcome_title: Velkommen til Open Food Network!
+        welcome_text: Du har opprettet en
+        next_step: Neste steg
+        choose_starting_point: 'Velg ditt startpunkt:'
+    order_cycles:
+      advanced_settings:
+        title: Avanserte Innstillinger
+        choose_product_tip: Du kan velge å begrense alle tilgjengelige produkter (både innkommende og utgående), til kun de i %{inventory}s varelager.
+        preferred_product_selection_from_coordinator_inventory_only_here: Kun Koordinators varelager
+        preferred_product_selection_from_coordinator_inventory_only_all: Alle tilgjengelige produkter
+        save_reload: Lagre og last siden på nytt
+      coordinator_fees:
+        add: Legg til koordinatoravgift
+      form:
+        incoming: Innkommende
+        supplier: Leverandør
+        receival_details: Mottaksdetaljer
+        fees: Avgifter
+        outgoing: Utgående
+        distributor: Distributør
+        products: Produkter
+        tags: Merker
+        delivery_detaisl: Hentings- / Leveringsdetaljer
+        debug_info: Debuginformasjon
+      name_and_timing_form:
+        name: Navn
+        orders_open: Bestillinger åpner
+        coordinator: Koordinator
+        order_closes: Bestillinger stenger
+      row:
+        suppliers: 'leverandører '
+        distributors: distributører
+        variants: varianter
+      simple_form:
+        ready_for: Klar til
+        ready_for_placeholder: Dato / tid
+        customer_instructions: Kundeinstruksjoner
+        customer_instructions_placeholder: Hente- eller leveringsmerknader
+        products: Produkter
+        fees: Avgifter
+      edit:
+        advanced_settings: Avanserte Innstillinger
+        update_and_close: Oppdater og Lukk
+    producer_properties:
+      form:
+        property: Egenskap
+        value: Verdi
+      index:
+        title: Produsentegenskaper
+    shared:
+      user_guide_link:
+        user_guide: Brukermanual
+    invoice_settings:
+      edit:
+        title: Fakturainnstillinger
+        invoice_style2?: Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)
+        enable_receipt_printing?: 'Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? '
   home:
     hubs:
       show_closed_shops: "Vis stengte butikker"
@@ -231,10 +491,29 @@ nb:
       require_customer_login: "Denne butikken er kun for kunder."
       require_login_html: "Vennligst %{login} hvis du allerede har en konto. Hvis ikke, %{register} for å bli kunde."
       require_customer_html: "Vennligst %{contact} %{enterprise} for å bli kunde."
-  invoice_column_item: "Vare"
-  invoice_column_qty: "Mengde"
+  invoice_billing_address: "Fakturaadresse:"
   invoice_column_tax: "MVA"
   invoice_column_price: "Pris"
+  invoice_column_item: "Vare"
+  invoice_column_qty: "Mengde"
+  invoice_column_unit_price_with_taxes: "Enhetspris (Inkl. avgift)"
+  invoice_column_unit_price_without_taxes: "Enhetspris (Eks. avgift)"
+  invoice_column_price_with_taxes: "Totalpris (Inkl. avgift)"
+  invoice_column_price_without_taxes: "Totalpris (Eks. avgift)"
+  invoice_column_tax_rate: "Avgiftsrate"
+  tax_invoice: "AVGIFTSFAKTURA"
+  tax_total: "Totalavgift (%{rate}):"
+  total_excl_tax: "Sum (Eks. avgift):"
+  total_incl_tax: "Sum (Inkl. avgift):"
+  abn: "ORG nr.:"
+  acn: "Org nr:"
+  invoice_issued_on: "Fakturadato:"
+  order_number: "Fakturanummer"
+  date_of_transaction: "Transaksjonsdato:"
+  ticket_column_qty: "Antall"
+  ticket_column_item: "Vare"
+  ticket_column_unit_price: "Enhetspris"
+  ticket_column_total_price: "Totalpris"
   logo: "Logo (640x130)"
   logo_mobile: "Mobil logo (75x26)"
   logo_mobile_svg: "Mobil logo (SVG)"
@@ -258,10 +537,13 @@ nb:
   phone: Telefon
   next: Neste
   address: Adresse
+  address_placeholder: f.eks. 123 High Street
   address2: Adresse (forts.)
   city: Kommune
-  state: Fylke
+  city_placeholder: f.eks. Northcote
   postcode: Postnummer
+  postcode_placeholder: f.eks. 3070
+  state: Fylke
   country: Land
   unauthorized: Uautorisert
   terms_of_service: "Vilkår"
@@ -394,6 +676,7 @@ nb:
   order_includes_tax: (inkludert MVA)
   order_payment_paypal_successful: Din betaling via PayPal har blitt godkjent.
   order_hub_info: Hub info
+  bom_tip: "Bruk denne siden for å endre produktmengder på tvers av flere bestillinger. Produkter kan også fjernes fra bestillinger helt hvis påkrevd."
   unsaved_changes_warning: "Ulagrede endringer finnes og vil gå tapt hvis du fortsetter."
   unsaved_changes_error: "Felt med røde kanter inneholder feil."
   products: "Produkter"
@@ -479,6 +762,7 @@ nb:
   hubs_filter_by: "Filtrer"
   hubs_filter_type: "Type"
   hubs_filter_delivery: "Levering"
+  hubs_filter_property: "Egenskap"
   hubs_matches: "Mente du?"
   hubs_intro: Handle lokalt
   hubs_distance: Nærmest
@@ -903,7 +1187,7 @@ nb:
   spree_admin_single_enterprise_alert_mail_confirmation: "Vennligst bekreft epostadressen for"
   spree_admin_single_enterprise_alert_mail_sent: "Vi har sendt epost til"
   spree_admin_overview_action_required: "Handling Nødvendig"
-  spree_admin_overview_check_your_inbox: "Vennligst sjekk innboksen din for nærmere instruksjoner. Takk!"
+  spree_admin_overview_check_your_inbox: "Vennligst sjekk din innboks for nærmere instruksjoner. Takk!"
   change_package: "Endre Pakke"
   spree_admin_single_enterprise_hint: "Hint: For å hjelpe folk til å finne deg, skru på din synlighet under"
   your_profil_live: "Din profil live"
@@ -920,6 +1204,12 @@ nb:
   edit_profile_details_etc: "Endre din profilbeskrivelse, bilder, osv."
   order_cycle: "Bestillingsrunde"
   remove_tax: "Fjern avgift"
+  enterprise_terms_of_service: "Tjenestevilkår for Bedrifter"
+  enterprises_require_tos: "Bedrifter må godta Tjenestevilkår"
+  enterprise_tos_link: "Lenke til Tjenestevilkår for Bedrifter"
+  enterprise_tos_message: "Vi ønsker å jobbe med bedrifter som deler våre mål og verdier. Derfor ber vi nye bedrifter om å godta vår"
+  enterprise_tos_link_text: "Tjenestevilkår."
+  enterprise_tos_agree: "Jeg godtar Tjenestevilkårene over"
   tax_settings: "Avgiftsinnstillinger"
   products_require_tax_category: "produkter krever avgiftskategori"
   admin_shared_address_1: "Adresse"
@@ -953,6 +1243,22 @@ nb:
   report_order_cycle: "Bestillingsrunde:"
   report_entreprises: "Bedrifter:"
   report_users: "Brukere:"
+  report_tax_rates: "Avgiftsrater"
+  report_tax_types: "Avgiftstyper"
+  report_header_order_number: "Bestillingsnummer"
+  report_header_date: "Dato"
+  report_header_items: "Varer"
+  report_header_items_total: "Sum varer %{currency_symbol}"
+  report_header_taxable_items_total: "Sum varer som krever avgift (%{currency_symbol})"
+  report_header_sales_tax: "Salgsavgift (%{currency_symbol})"
+  report_header_delivery_charge: "Leveringsavgift (%{currency_symbol})"
+  report_header_tax_on_delivery: "Leveringsavgift (%{currency_symbol})"
+  report_header_tax_on_fees: "Avgiftsavgift (%{currency_symbol})"
+  report_header_total_tax: "Sum avgifter (%{currency_symbol})"
+  report_header_customer: "Kunde"
+  report_header_distributor: "Distributør"
+  report_header_total_excl_vat: "Sum eks. avgift (%{currency_symbol})"
+  report_header_total_incl_vat: "Sum inkl. avgift (%{currency_symbol})"
   initial_invoice_number: "Første fakturanummer:"
   invoice_date: "Fakturadato:"
   due_date: "Tidsfrist:"
@@ -994,7 +1300,145 @@ nb:
   validation_msg_product_category_cant_be_blank: "^Produktkategori kan ikke være blank"
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"
   validation_msg_is_associated_with_an_exising_customer: "er assosiert med en eksisterende kunde"
+  js:
+    admin:
+      modals:
+        got_it: Har det
+        tag_rule_help:
+          title: Regler for Merkelapper
+          overview: Oversikt
+          overview_text: >
+              Merkelappregler gir en måte å forklare hvilke elementer som er synlige
+              eller ikke til hvilke kunder. Elementer kan være Leveringsmetoder, Betalingsmetoder,
+              Produkter og Bestillingsrunder.
+          by_default_rules: "'Standard...' Regler"
+          by_default_rules_text: >
+              Standardregler lar deg skjule elementer slik at de ikke er synlige som
+              standard. Denne oppførselen kan overskrives av ikke-standard regler
+              for kunder med spesielle merkelapper.
+          customer_tagged_rules: "Regler for 'Kunder merket...'"
+          customer_tagged_rules_text: >
+              Ved å opprette regler relatert til en spesifikk kundemerkelapp, kan
+              du overstyre standard oppførsel (enten det er for å vise eller skjule
+              elementer) for kunder med den spesifikke merkelappen.
+      panels:
+        save: LAGRE
+        saved: LAGRET
+        saving: LAGRER
+        enterprise_package:
+          hub_profile: Hubprofil
+          hub_profile_cost: "KOSTNAD: GRATIS FOR ALLTID"
+          hub_profile_text1: >
+              Personer kan finner og kontakte deg på Open Food Network. Din bedrift
+              vil være synlig på kartet og vil være søkbar i oppføringer.
+          hub_profile_text2: >
+              Å ha en profil og å knytte seg til ditt lokale matsystem gjennom Open
+              Food Network vil alltid være gratis.
+          hub_shop: Hub butikk
+          hub_shop_text1: >
+              Din bedrift er ryggraden i ditt lokale matsystem. Du samler produkter
+              fra andre bedrifter og kan selge det gjennom din butikk på Open Food
+              Network.
+          hub_shop_text2: >
+              Hubs kan ha mange former, enten de er et matsamvirke, en kjøpegruppe,
+              et grønnsakskasse program, eller en lokal dagligvare.
+          hub_shop_text3: >
+              Hvis du også ønsker å selge egne produkter må du endre denne bedriften
+              til å bli en produsent.
+          choose_package: Vennligst velg en pakke
+          choose_package_text1: >
+              Din bedrift vil ikke bli fullt aktivert før en pakke er valgt fra alternativene
+              til venstre.
+          choose_package_text2: >
+              Klikk på et valg for å se mer detaljert informasjon om hver pakke, og
+              klikk på den røde LAGRE-knappen når du er ferdig!
+          profile_only: Kun Profil
+          profile_only_cost: "KOSTNAD: GRATIS FOR ALLTID"
+          profile_only_text1: >
+              En profil gjør deg synlig og mulig å kontakte for andre og er en måte
+              å dele din historie på.
+          profile_only_text2: >
+              Hvis du foretrekker å fokusere på å produsere mat, og ønsker å overlate
+              jobben med å selge den til noen andre, trenger du ikke en butikk på
+              Open Food Network.
+          profile_only_text3: >
+              Legg dine produkter til Open Food Network, noe som muliggjør hubs å
+              lagre dine produkter i sine butikker.
+          producer_shop: Produsentbutikk
+          producer_shop_text1: >
+              Selg dine produkter direkte til kunder gjennom din helt egne Open Food
+              Network nettbutikk.
+          producer_shop_text2: >
+              En Produsentbutikk er kun for dine produkter, hvis du ønsker å selge
+              produkter dyrket/produsert av andre, vennligst velg 'Produsenthub'.
+          producer_hub: Produsenthub
+          producer_hub_text1: >
+              Din bedrift er ryggraden i ditt lokale matsystem. Du kan selge dine
+              egne produkter og produkter samlet fra andre bedrifter gjennom din nettbutikk
+              på Open Food Network.
+          producer_hub_text2: >
+              Produsenthubs kan ha mange former, enten de er et andelslandbruk, grønnsaksboks
+              program, eller et matsamvirke med en takhage.
+          producer_hub_text3: >
+              Open Food Network har som mål å støtte så mange hub-modeller som mulig,
+              så uansett hvilken situasjon du er i ønsker vi å gi deg de verktøy du
+              trenger for å kjøre din organisasjon eller lokale matforretning.
+          get_listing: Bli registrert
+          always_free: GRATIS FOR ALLTID
+          sell_produce_others: Selg produkter fra andre
+          sell_own_produce: Selg dine egne produkter
+          sell_both: Selg egne produkter og produkter fra andre
+        enterprise_producer:
+          producer: Produsent
+          producer_text1: >
+              Produsenter lager masse god mat og drikke. Du er en produsent hvis du
+              dyrker, driver med husdyrhold, brygger, baker, fermenterer, melker eller
+              former.
+          producer_text2: >
+              Produsenter kan også utføre andre funksjoner, slik som å samle mat fra
+              andre bedrifter og selge det gjennom en butikk på Open Food Network.
+          non_producer: Ikke-produsent
+          non_producer_text1: >
+              Ikke-produsenter produserer ikke noe mat selv, noe som gjør at de ikke
+              kan opprette egne produkter for salg gjennom Open Food Network.
+          non_producer_text2: >
+              I stedet, ikke-produsenter spesialiserer seg i å koble produsenter til
+              sluttbrukeren, enten det er ved å samle, vurdere, pakke, selge eller
+              levere mat.
+          producer_desc: Matprodusenter
+          producer_example: f.eks. DYRKERE, BAKERE, BRYGGERE, SKAPERE
+          non_producer_desc: Alle andre matbedrifter
+          non_producer_example: f.eks. Dagligvare, Matsamvirker, Kjøpegrupper
+        enterprise_status:
+          status_title: "%{name} er satt opp og klar!"
+          severity: Alvorlighetsgrad
+          description: Beskrivelse
+          resolve: Løse
+      new_tag_rule_dialog:
+        select_rule_type: "Velg en regeltype:"
+    out_of_stock:
+      reduced_stock_available: Redusert lager tilgjengelig
+      out_of_stock_text: >
+          Samtidig som du har handlet har lagernivået for en eller flere av produktene
+          i din handlekurv gått ned. Her er hva som er endret.
+      now_out_of_stock: er nå ikke på lager.
+      only_n_remainging: "har nå kun %{num} igjen."
   spree:
+    admin:
+      products:
+        bulk_edit:
+          header:
+            title: Endre produkter i bulk
+          indicators:
+            title: LASTER PRODUKTER
+            no_products: "Ingen produkter ennå. Ønsker du å legge til noen?"
+            no_results: "Beklager, ingen resultater passer"
+      variants:
+        autocomplete:
+          producer_name: Produsent
+    date_picker:
+      format: '%Y-%m-%d'
+      js_format: 'åå-mm-dd'
     zipcode: Postnummer
     shipment_states:
       backorder: restordre
@@ -1013,6 +1457,10 @@ nb:
       processing: behandler
       void: ugyldig
       invalid: ugyldig
+    order_mailer:
+      invoice_email:
+        hi: "Hei %{name}"
+        invoice_attached_text: Vennligst finn vedlagt en faktura for din nylige bestilling fra
     order_state:
       address: adresse
       adjustments: justeringer
@@ -1026,3 +1474,6 @@ nb:
       resumed: gjenopptatt
       returned: returnert
       skrill: skrill
+    orders:
+      invoice:
+        tax_invoice: "AVGIFTSFAKTURA:"
