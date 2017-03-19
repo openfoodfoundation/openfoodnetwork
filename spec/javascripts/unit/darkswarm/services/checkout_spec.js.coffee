@@ -125,6 +125,13 @@ describe 'Checkout service', ->
         Checkout.purchase()
         expect(StripeJS.requestToken).toHaveBeenCalled()
 
+      it "doesn't hit Stripe when reusing a credit card", inject (StripeJS) ->
+        spyOn(StripeJS, "requestToken")
+        Checkout.secrets.selected_card = 1
+        Checkout.purchase()
+        expect(StripeJS.requestToken).not.toHaveBeenCalled()
+
+
   describe "data preprocessing", ->
     beforeEach ->
       Checkout.order.payment_method_id = 99
