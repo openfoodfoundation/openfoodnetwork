@@ -63,7 +63,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeJ
         if @secrets.selected_card
           angular.extend munged_order.payments_attributes[0], {
             source_attributes:
-              id: @secrets.selected_card
+              credit_card_id: @secrets.selected_card
               type: 'Spree::CreditCard'
           }
         else
