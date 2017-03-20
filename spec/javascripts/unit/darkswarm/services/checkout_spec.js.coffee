@@ -131,7 +131,6 @@ describe 'Checkout service', ->
         Checkout.purchase()
         expect(StripeJS.requestToken).not.toHaveBeenCalled()
 
-
   describe "data preprocessing", ->
     beforeEach ->
       Checkout.order.payment_method_id = 99
@@ -198,3 +197,15 @@ describe 'Checkout service', ->
         expect(source_attributes.last_digits).toBe "1234"
         expect(source_attributes.year).toBe "2099"
         expect(source_attributes.month).toBe "10"
+
+    describe "when a saved card from Stripe is used", ->
+      beforeEach ->
+        Checkout.order.payment_method_id = 666
+
+      it "passes the card ID in source attributes if a saved card is selected", ->
+        Checkout.secrets.selected_card = 1
+        source_attributes = Checkout.preprocess().payments_attributes[0].source_attributes
+        expect(source_attributes).toBeDefined()
+        expect(source_attributes.credit_card_id).toBe 1
+        expect(source_attributes.type).toBe "Spree::CreditCard"
+        expect(source_attributes.year).toBeUndefined()
