@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Spree.user_class do
   include AuthenticationWorkflow
 
@@ -70,11 +72,22 @@ describe Spree.user_class do
     end
   end
 
-  context "#create" do
+  describe "#create" do
     it "should send a signup email" do
       expect do
         create(:user)
       end.to enqueue_job ConfirmSignupJob
+    end
+
+    context "called with the the same email as existing customers" do
+      let(:email) { Faker::Internet.email }
+      let!(:c1) { create(:customer, user: nil, email: email) }
+      let!(:c2) { create(:customer, user: nil, email: email) }
+      let!(:u) { create(:user, email: email) }
+
+      it "should associate these customers with the created user" do
+        u.customers(:reload).should include c1, c2
+      end
     end
   end
 

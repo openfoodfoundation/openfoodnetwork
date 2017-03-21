@@ -19,6 +19,7 @@ Spree.user_class.class_eval do
 
   attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit, :bill_address_attributes, :ship_address_attributes
   after_create :send_signup_confirmation
+  after_create :associate_customers
 
   validate :limit_owned_enterprises
 
@@ -47,6 +48,10 @@ Spree.user_class.class_eval do
 
   def send_signup_confirmation
     Delayed::Job.enqueue ConfirmSignupJob.new(id)
+  end
+
+  def associate_customers
+    self.customers = Customer.where(email: email)
   end
 
   def can_own_more_enterprises?
