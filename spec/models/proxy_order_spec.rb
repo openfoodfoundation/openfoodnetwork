@@ -15,6 +15,7 @@ describe ProxyOrder, type: :model do
         it "returns true and sets canceled_at to the current time" do
           expect(proxy_order.cancel).to be true
           expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          expect(proxy_order.state).to eq 'canceled'
         end
       end
 
@@ -25,6 +26,7 @@ describe ProxyOrder, type: :model do
           expect(proxy_order.cancel).to be true
           expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
           expect(order.reload.state).to eq 'canceled'
+          expect(proxy_order.state).to eq 'canceled'
         end
       end
 
@@ -35,6 +37,7 @@ describe ProxyOrder, type: :model do
           expect(proxy_order.cancel).to be true
           expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
           expect(order.reload.state).to eq 'cart'
+          expect(proxy_order.state).to eq 'canceled'
         end
       end
     end
@@ -49,6 +52,7 @@ describe ProxyOrder, type: :model do
         it "returns false and does nothing" do
           expect(proxy_order.cancel).to be false
           expect(proxy_order.reload.canceled_at).to be nil
+          expect(proxy_order.state).to eq 'pending'
         end
       end
 
@@ -59,6 +63,7 @@ describe ProxyOrder, type: :model do
           expect(proxy_order.cancel).to be false
           expect(proxy_order.reload.canceled_at).to be nil
           expect(order.reload.state).to eq 'cart'
+          expect(proxy_order.state).to eq 'cart'
         end
       end
     end
@@ -79,6 +84,7 @@ describe ProxyOrder, type: :model do
         it "returns true and clears canceled_at" do
           expect(proxy_order.resume).to be true
           expect(proxy_order.reload.canceled_at).to be nil
+          expect(proxy_order.state).to eq 'pending'
         end
       end
 
@@ -90,6 +96,7 @@ describe ProxyOrder, type: :model do
           expect(proxy_order.resume).to be true
           expect(proxy_order.reload.canceled_at).to be nil
           expect(order.reload.state).to eq 'resumed'
+          expect(proxy_order.state).to eq 'resumed'
         end
       end
 
@@ -100,6 +107,7 @@ describe ProxyOrder, type: :model do
           expect(proxy_order.resume).to be true
           expect(proxy_order.reload.canceled_at).to be nil
           expect(order.reload.state).to eq 'complete'
+          expect(proxy_order.state).to eq 'cart'
         end
       end
     end
@@ -113,6 +121,7 @@ describe ProxyOrder, type: :model do
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false
           expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          expect(proxy_order.state).to eq 'canceled'
         end
       end
 
@@ -124,6 +133,7 @@ describe ProxyOrder, type: :model do
           expect(proxy_order.resume).to eq false
           expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
           expect(order.reload.state).to eq 'canceled'
+          expect(proxy_order.state).to eq 'canceled'
         end
       end
 
@@ -134,6 +144,7 @@ describe ProxyOrder, type: :model do
           expect(proxy_order.resume).to eq false
           expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
           expect(order.reload.state).to eq 'complete'
+          expect(proxy_order.state).to eq 'canceled'
         end
       end
     end
