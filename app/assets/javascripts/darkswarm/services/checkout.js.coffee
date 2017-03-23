@@ -61,10 +61,8 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeJ
 
       if @paymentMethod()?.method_type == 'stripe'
         if @secrets.selected_card
-          angular.extend munged_order.payments_attributes[0], {
-            source_attributes:
-              credit_card_id: @secrets.selected_card
-              type: 'Spree::CreditCard'
+          angular.extend munged_order, {
+            existing_card: @secrets.selected_card
           }
         else
           angular.extend munged_order.payments_attributes[0], {
@@ -75,7 +73,6 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeJ
               month: @secrets.card.exp_month
               year: @secrets.card.exp_year
           }
-
       munged_order
 
     shippingMethod: ->

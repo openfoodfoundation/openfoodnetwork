@@ -204,8 +204,6 @@ describe 'Checkout service', ->
 
       it "passes the card ID in source attributes if a saved card is selected", ->
         Checkout.secrets.selected_card = 1
-        source_attributes = Checkout.preprocess().payments_attributes[0].source_attributes
+        source_attributes = Checkout.preprocess()
         expect(source_attributes).toBeDefined()
-        expect(source_attributes.credit_card_id).toBe 1
-        expect(source_attributes.type).toBe "Spree::CreditCard"
-        expect(source_attributes.year).toBeUndefined()
+        expect(source_attributes.existing_card).toBe 1
