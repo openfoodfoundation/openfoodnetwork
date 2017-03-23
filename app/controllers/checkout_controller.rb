@@ -119,6 +119,9 @@ class CheckoutController < Spree::CheckoutController
     if (params[:order][:payments_attributes])
       params[:order][:payments_attributes].first[:amount] = @order.total
     end
+    if params[:order][:existing_card]
+      construct_saved_card_attributes
+    end
     params[:order]
   end
 
@@ -201,5 +204,22 @@ class CheckoutController < Spree::CheckoutController
 
     render json: {path: spree.paypal_express_url(payment_method_id: payment_method.id)}, status: 200
     true
+  end
+
+  def construct_saved_card_attributes
+    existing_card_id = params[:order].delete(:existing_card)
+    if existing_card_id.present?
+      credit_card = Spree::CreditCard.find(existing_card_id)
+      if credit_card.user_id != spree_current_user.id || credit_card.user_id.blank?
+        raise Core::GatewayError.new Spree.t(:invalid_credit_card)
+      end
+
+      # Not currently supported but maybe we should add it...?
+      credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
+
+      params[:order][:payments_attributes].first[:source] = credit_card
+      params[:order][:payments_attributes].first[:payment_method_id] = credit_card.payment_method_id
+      params[:order][:payments_attributes].first.delete :source_attributes
+    end
   end
 end
