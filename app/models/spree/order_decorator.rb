@@ -227,6 +227,26 @@ Spree::Order.class_eval do
     (adjustments + price_adjustments).sum &:included_tax
   end
 
+  def tax_adjustments
+    adjustments.with_tax +
+      line_items.includes(:adjustments).map {|li| li.adjustments.with_tax }.flatten
+  end
+
+  def tax_adjustment_totals
+    tax_adjustments.each_with_object(Hash.new) do |adjustment, hash|
+      if adjustment.originator_type == "Spree::TaxRate"
+        tax_rate = adjustment.originator.amount
+      else
+        tax_rate = (adjustment.included_tax / (adjustment.amount - adjustment.included_tax)).round(2)
+      end
+      hash.update({tax_rate => adjustment.included_tax}) { |_tax_rate, amount1, amount2| amount1 + amount2 }
+    end
+  end
+
+  def has_taxes_included
+    not line_items.with_tax.empty?
+  end
+
   def account_invoice?
     distributor_id == Spree::Config.accounts_distributor_id
   end

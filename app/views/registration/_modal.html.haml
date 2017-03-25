@@ -1,0 +1,11 @@
+%script{ type: "text/ng-template", id: "registration.html" }
+  %div#registration-modal{"ng-controller" => "RegistrationCtrl"}
+    %div{ ng: { show: "currentStep() == 'introduction'" } }
+      %ng-include{ src: "'registration/introduction.html'" }
+    %div{ ng: { repeat: 'step in steps', show: "currentStep() == step" } }
+      %ng-include{ src: "'registration/'+ step + '.html'" }
+    %div{ ng: { show: "currentStep() == 'finished'" } }
+      %ng-include{ src: "'registration/finished.html'" }
+
+  %a.close-reveal-modal{"ng-click" => "$close()"}
+    %i.ofn-i_009-close

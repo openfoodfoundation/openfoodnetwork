@@ -1,18 +1,17 @@
 .row.enterprise_status_panel{ ng: { controller: 'indexStatusPanelCtrl' } }
   .alpha.omega.sixteen.columns
-
     %h4.status-ok.text-center{ ng: { show: "issues.length == 0 && warnings.length == 0" } }
       %i.icon-ok-sign
-      {{ object.name }} is set up and ready to go!
+      = t('js.admin.panels.enterprise_status.status_title', name: '{{ object.name }}')
 
     %table{ ng: { show: "issues.length > 0 || warnings.length > 0" } }
       %thead
         %th.severity
-          Severity
+          = t('js.admin.panels.enterprise_status.severity')
         %th.description
-          Description
+          = t('js.admin.panels.enterprise_status.description')
         %th.resolve
-          Resolve
+          = t('js.admin.panels.enterprise_status.resolve')
       %tr{ ng: { repeat: "issue in issues"} }
         %td.severity
           %i.icon-warning-sign.issue

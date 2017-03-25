@@ -199,6 +199,7 @@ feature %q{
       login_to_admin_as user1
       click_link "Reports"
       click_link "Sales Tax"
+      select("Tax types", from: "report_type")
     end
 
     it "reports" do

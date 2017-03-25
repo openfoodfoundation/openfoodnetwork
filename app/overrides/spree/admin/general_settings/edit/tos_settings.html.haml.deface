@@ -1,0 +1,11 @@
+/ insert_after "fieldset.security"
+
+%fieldset.enterprise_toc.no-border-bottom
+  %legend{:align => "center"}= t(:enterprise_terms_of_service)
+  - [:enterprise_tos_link, :enterprises_require_tos].each do |pref|
+  - type = Spree::Config.preference_type(pref)
+    .field
+      = label_tag(pref, t(pref) + ': ') + tag(:br) if type != :boolean
+      = preference_field_tag(pref, Spree::Config[pref], :type => type)
+      = label_tag(pref, t(pref)) + tag(:br) if type == :boolean
+

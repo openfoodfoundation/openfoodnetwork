@@ -1,0 +1,38 @@
+- content_for :page_title do
+  Product Import
+
+= render :partial => 'spree/admin/shared/product_sub_menu'
+
+%h5 Import final results
+%br
+
+%div.post-save-results{ng: {app: 'ofn.admin'}}
+
+  %p
+    %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_created_count} == 0, 'fa-check-circle': #{@importer.products_created_count} != 0}"}}
+    %strong.created-count= @importer.products_created_count
+    Products created
+
+  %p
+    %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_updated_count} == 0, 'fa-check-circle': #{@importer.products_updated_count} != 0}"}}
+    %strong.updated-count= @importer.products_updated_count
+    Products updated
+
+  - if @importer.products_reset_count > 0
+    %p
+      %i.fa.fa-check-circle
+      %strong.reset-count= @importer.products_reset_count
+      Products had stock level reset to zero
+
+  %br
+
+  - if @importer.errors.count == 0
+    %p All #{@importer.total_saved_count} items saved successfully
+  - else
+    %h5 Save errors
+    - @importer.errors.full_messages.each do |error|
+      %p.save-error
+        &nbsp;-&nbsp; #{error}
+
+  %br
+  %a.button{href: main_app.admin_product_import_path} Back

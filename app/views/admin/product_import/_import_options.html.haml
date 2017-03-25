@@ -1,0 +1,49 @@
+%h5 Import options and defaults
+%br
+
+- @importer.suppliers_index.each do |name, supplier_id|
+  - if name and supplier_id and @importer.permission_by_id?(supplier_id)
+    %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
+      %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active}'}}
+        %div.header-caret
+          %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}"}}
+        %div.header-icon.neutral
+          %i.fa.fa-edit
+        -#%div.header-count
+        -#  %strong.invalid-count= @importer.invalid_count
+        %div.header-description
+          = name
+      %div.panel-content{ng: {hide: '!active'}}
+        = render 'options_form', supplier_id: supplier_id, name: name
+  - elsif name and supplier_id
+    %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
+      %div.panel-header
+        %div.header-caret
+          -#%i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}"}}
+        %div.header-icon.error
+          %i.fa.fa-warning
+          -#%div.header-count
+          -#  %strong.invalid-count= @importer.invalid_count
+        %div.header-description
+          = name
+          %span.header-error= " - you do not have permission to manage this enterprise"
+      -#%div.panel-content{ng: {hide: '!active'}}
+      -#  = render 'options_form', supplier_id: supplier_id, name: name
+  - elsif name
+    %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
+      %div.panel-header
+        %div.header-caret
+          -#%i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}"}}
+        %div.header-icon.error
+          %i.fa.fa-warning
+          -#%div.header-count
+          -#  %strong.invalid-count= @importer.invalid_count
+        %div.header-description
+          = name
+          %span.header-error= " - enterprise could not be found in database"
+      -#%div.panel-content{ng: {hide: '!active'}}
+      -#  = render 'options_form', supplier_id: supplier_id, name: name
+
+
+%br.panels.clearfix
+%br

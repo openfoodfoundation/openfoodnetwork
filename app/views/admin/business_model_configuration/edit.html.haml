@@ -4,57 +4,58 @@
   = "ng-app='admin.businessModelConfiguration'"
 
 - content_for :page_title do
-  %h1.page-title= t(:business_model_configuration)
-  %a{ 'ofn-with-tip' => "Configure the rate at which shops will be charged each month for use of the Open Food Network." } What's this?
+  %h1.page-title= t('.business_model_configuration')
+  %a{ 'ofn-with-tip' => t('.business_model_configuration_tip') }
+    = t('admin.whats_this')
 
 = render 'spree/shared/error_messages', target: @settings
 
 .row{ ng: { controller: "BusinessModelConfigCtrl" } }
   .five.columns.omega
     %fieldset.no-border-bottom
-      %legend=t(:bill_calculation_settings)
+      %legend=t('.bill_calculation_settings')
       %p
-        Adjust the amount that enterprises will be billed each month for use of the OFN.
+        = t('.bill_calculation_settings_tip')
       %br
       = form_for @settings, as: :settings, url: main_app.admin_business_model_configuration_path, :method => :put do |f|
         .row
           .three.columns.alpha
-            = f.label :shop_trial_length_days, t(:shop_trial_length)
-            %span.icon-question-sign{'ofn-with-tip' => "The length of time (in days) that enterprises who are set up as shops can run as a trial period."}
+            = f.label :shop_trial_length_days, t('.shop_trial_length')
+            %span.icon-question-sign{'ofn-with-tip' => t('.shop_trial_length_tip')}
           .two.columns.omega
             = f.number_field :shop_trial_length_days, min: 0.0, step: 1.0, class: "fullwidth"
         .row
           .three.columns.alpha
-            = f.label :account_invoices_monthly_fixed, t(:fixed_monthly_charge)
-            %span.icon-question-sign{'ofn-with-tip' => "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."}
+            = f.label :account_invoices_monthly_fixed, t('.fixed_monthly_charge')
+            %span.icon-question-sign{'ofn-with-tip' => t('.fixed_monthly_charge_tip')}
           .two.columns.omega
             .input-symbol.before
               %span= Spree::Money.currency_symbol
               = f.number_field :account_invoices_monthly_fixed, min: 0.0, class: "fullwidth", 'watch-value-as' => 'fixed'
         .row
           .three.columns.alpha
-            = f.label :account_invoices_monthly_rate, t(:percentage_of_turnover)
-            %span.icon-question-sign{'ofn-with-tip' => "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."}
+            = f.label :account_invoices_monthly_rate, t('.percentage_of_turnover')
+            %span.icon-question-sign{'ofn-with-tip' => t('.percentage_of_turnover_tip')}
           .two.columns.omega
             = f.number_field :account_invoices_monthly_rate, min: 0.0, max: 1.0, step: 0.01, class: "fullwidth", 'watch-value-as' => 'rate'
         .row
           .three.columns.alpha
-            = f.label :account_invoices_monthly_cap, t(:monthly_cap_excl_tax)
-            %span.icon-question-sign{'ofn-with-tip' => "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."}
+            = f.label :account_invoices_monthly_cap, t('.monthly_cap_excl_tax')
+            %span.icon-question-sign{'ofn-with-tip' => t('.monthly_cap_excl_tax_tip')}
           .two.columns.omega
             .input-symbol.before
               %span= Spree::Money.currency_symbol
               = f.number_field :account_invoices_monthly_cap, min: 0.0, class: "fullwidth", 'watch-value-as' => 'cap'
         .row
           .three.columns.alpha
-            = f.label :account_invoices_tax_rate, t(:tax_rate)
-            %span.icon-question-sign{'ofn-with-tip' => "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."}
+            = f.label :account_invoices_tax_rate, t('.tax_rate')
+            %span.icon-question-sign{'ofn-with-tip' => t('.tax_rate_tip')}
           .two.columns.omega
             = f.number_field :account_invoices_tax_rate, min: 0.0, max: 1.0, step: 0.01, class: "fullwidth", 'watch-value-as' => 'taxRate'
         .row
           .three.columns.alpha
-            = f.label :minimum_billable_turnover, t(:minimum_monthly_billable_turnover)
-            %span.icon-question-sign{'ofn-with-tip' => "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."}
+            = f.label :minimum_billable_turnover, t('.minimum_monthly_billable_turnover')
+            %span.icon-question-sign{'ofn-with-tip' => t('.minimum_monthly_billable_turnover_tip')}
           .two.columns.omega
             .input-symbol.before
               %span= Spree::Money.currency_symbol
@@ -69,35 +70,35 @@
 
   .five.columns.alpha
     %fieldset.no-border-bottom
-      %legend=t(:example_bill_calculator)
+      %legend= t('.example_bill_calculator')
       %p
-        Alter the example turnover to visualise the effect of the settings to the left.
+        = t('.example_bill_calculator_legend')
       %br
       .row
         .three.columns.alpha
-          = label_tag :turnover, t(:example_monthly_turnover)
-          %span.icon-question-sign{'ofn-with-tip' => "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."}
+          = label_tag :turnover, t('.example_monthly_turnover')
+          %span.icon-question-sign{'ofn-with-tip' => t('.example_monthly_turnover_tip')}
         .two.columns.omega
           .input-symbol.before
             %span= Spree::Money.currency_symbol
             %input.fullwidth{ id: 'turnover', type: "number", ng: { model: 'turnover' } }
       .row
         .three.columns.alpha
-          = label_tag :cap_reached, t(:cap_reached?)
-          %span.icon-question-sign{'ofn-with-tip' => "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."}
+          = label_tag :cap_reached, t('.cap_reached?')
+          %span.icon-question-sign{'ofn-with-tip' => t('.cap_reached?_tip')}
         .two.columns.omega
           %input.fullwidth{ id: 'cap_reached', type: "text", readonly: true, ng: { value: 'capReached()' } }
       .row
         .three.columns.alpha
-          = label_tag :included_tax, t(:included_tax)
-          %span.icon-question-sign{'ofn-with-tip' => "The total tax included in the example monthly bill, given the settings and the turnover provided."}
+          = label_tag :included_tax, t('.included_tax')
+          %span.icon-question-sign{'ofn-with-tip' => t('.included_tax_tip')}
         .two.columns.omega
           %span= Spree::Money.currency_symbol
           %input.fullwidth{ id: 'included_tax', type: "text", readonly: true, ng: { value: 'includedTax()' } }
       .row
         .three.columns.alpha
-          = label_tag :total_incl_tax, t(:total_monthly_bill_incl_tax)
-          %span.icon-question-sign{'ofn-with-tip' => "The example total monthly bill with tax included, given the settings and the turnover provided."}
+          = label_tag :total_incl_tax, t('.total_monthly_bill_incl_tax')
+          %span.icon-question-sign{'ofn-with-tip' => t('.total_monthly_bill_incl_tax_tip')}
         .two.columns.omega
           %span= Spree::Money.currency_symbol
           %input.fullwidth{ id: 'total_incl_tax', type: "text", readonly: true, ng: { value: 'total()' } }

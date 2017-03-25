@@ -1,0 +1,15 @@
+- if entries && entries.count > 0
+  %div.table-wrap
+    %table
+      %thead
+        %th
+        %th Line
+        - entries.values.first.displayable_attributes.each do |key, value|
+          %th= key
+      - entries.each do |line_number, entry|
+        %tr{class: ('error' if entry.has_errors?)}
+          %td
+            %i{class: (entry.has_errors? ? 'fa fa-warning warning' : 'fa fa-check-circle success')}
+          %td= line_number
+          - entry.displayable_attributes.each do |key, value|
+            %td{class: ('invalid' if entry.has_errors? and entry.invalid_attributes[key])}= value

@@ -3,27 +3,27 @@
     %legend
       = t :checkout_your_order
     %table
-      %tr
+      %tr.subtotal
         %th
           = t :checkout_cart_total
         %td.cart-total.text-right= display_checkout_subtotal(@order)
 
       - checkout_adjustments_for(current_order, exclude: [:shipping, :payment, :line_item]).reject{ |a| a.amount == 0 }.each do |adjustment|
-        %tr
+        %tr.adjustment
           %th= adjustment.label
           %td.text-right= adjustment.display_amount.to_html
 
       %tr
-        %th
+        %th.shipping
           = t :checkout_shipping_price
         %td.shipping.text-right {{ Checkout.shippingPrice() | localizeCurrency }}
 
-      %tr
+      %tr.transaction-fee
         %th
           = t :payment_method_fee
         %td.text-right {{ Checkout.paymentPrice() | localizeCurrency }}
 
-      %tr
+      %tr.total
         %th
           = t :checkout_total_price
         %td.total.text-right {{ Checkout.cartTotal() | localizeCurrency }}

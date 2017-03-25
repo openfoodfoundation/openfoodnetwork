@@ -2,9 +2,9 @@
   %tr
     %td
       %h3
-        Hi #{@order.bill_address.firstname},
+        = t('.hi', name: @order.bill_address.firstname)
       %h4
-        Please find attached an invoice for your recent order from
+        = t('.invoice_attached_text')
         %strong= "#{@order.distributor.name}"
 
 = render 'signoff'
