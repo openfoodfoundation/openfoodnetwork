@@ -99,9 +99,9 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       fill_in "variants[#{v1.id}]", with: "2"
       click_checkout
 
-      page.should have_selector 'form.edit_order .cart-total', text: '$122.22'
-      page.should have_selector 'form.edit_order .shipping', text: '$0.00'
-      page.should have_selector 'form.edit_order .total', text: '$122.22'
+      page.should have_selector 'orderdetails .cart-total', text: '$122.22'
+      page.should have_selector 'orderdetails .shipping', text: '$0.00'
+      page.should have_selector 'orderdetails .total', text: '$122.22'
     end
   end
 
