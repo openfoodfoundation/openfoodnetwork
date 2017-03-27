@@ -1,42 +1,42 @@
-= form_for @report.search, :url => spree.orders_and_fulfillment_admin_reports_path do |f|
-  = render 'date_range_form', f: f
+= admin_inject_json_ams_array "admin.reports", "producers", @producers, Api::Admin::Reports::EnterpriseSerializer
+= admin_inject_json_ams_array "admin.reports", "shops", @shops, Api::Admin::Reports::EnterpriseSerializer
+= admin_inject_json_ams_array "admin.reports", "orderCycles", @order_cycles, Api::Admin::IdNameSerializer
 
-  .row
-    .alpha.two.columns= label_tag nil, t(:report_hubs)
-    .omega.fourteen.columns= f.collection_select(:distributor_id_in, @distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})
 
-  .row
-    .alpha.two.columns= label_tag nil, t(:report_producers)
-    .omega.fourteen.columns= select_tag(:supplier_id_in, options_from_collection_for_select(@suppliers, :id, :name, params[:supplier_id_in]), {class: "select2 fullwidth", multiple: true})
+%div{ ng: { app: 'admin.reports', controller: 'ordersAndFulfillmentsController' } }
+  %form{ name: 'orders_and_fulfillments_report_form', ng: { submit: 'load()' } }
+    = render 'ng_date_range_form'
 
-  .row
-    .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
-    .omega.fourteen.columns
-      = f.select(:order_cycle_id_in, report_order_cycle_options(@order_cycles), {selected: params[:q][:order_cycle_id_in]}, {class: "select2 fullwidth", multiple: true})
+    .row
+      .alpha.two.columns= label_tag :distributor_id_in, t(:report_hubs)
+      .omega.fourteen.columns
+        %input.ofn-select2.fullwidth#distributor_id_in{ type: 'text', name: 'distributor_id_in', data: 'shops', multiple: 'true', ng: { model: 'q.distributor_id_in' } }
+    .row
+      .alpha.two.columns= label_tag :supplier_id_in, t(:report_producers)
+      .omega.fourteen.columns
+        %input.ofn-select2.fullwidth#supplier_id_in{ type: 'text', name: 'supplier_id_in', data: 'producers', multiple: 'true', ng: { model: 'q.supplier_id_in' } }
+    .row
+      .alpha.two.columns= label_tag :order_cycle_id_in, t(:report_customers_cycle)
+      .omega.fourteen.columns
+        %input.ofn-select2.fullwidth#order_cycle_id_in{ type: 'text', name: 'order_cycle_id_in', data: 'orderCycles', multiple: 'true', ng: { model: 'q.order_cycle_id_in' } }
+    .row
+      .alpha.two.columns= label_tag :report_type, t(:report_type)
+      .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, @report_type))
 
-  .row
-    .alpha.two.columns= label_tag nil, t(:report_type)
-    .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, @report_type))
+    .row
+      = submit_tag t(:search)
 
-  .row
-    = check_box_tag :csv
-    = label_tag :csv, t(:report_customers_csv)
+    %hr.fullwidth
+    .row.text-right
+      %button{ ng: { click: 'downloadAsCSV()' } } Download As CSV
 
-  .row
-  = button t(:search)
-
-%br
-%br
-%table#listing_orders.index
-  %thead
-    %tr{'data-hook' => "orders_header"}
-      - @report.header.each do |heading|
-        %th=heading
-  %tbody
-    - @table.each do |row|
-      %tr
-        - row.each do |column|
-          %td= column
-    - if @table.empty?
-      %tr
-        %td{:colspan => "2"}= t(:none)
+  %br
+  %br
+  -#
+  .report-grid{ 'ui-grid' => 'gridOptions',
+    'ui-grid-tree-view' => true,
+    'ui-grid-resize-columns' => true,
+    'ui-grid-exporter' => true,
+    'ui-grid-grouping' => true,
+    'ui-grid-move-columns' => true,
+    style: 'height: 80vh; width: 100%' }

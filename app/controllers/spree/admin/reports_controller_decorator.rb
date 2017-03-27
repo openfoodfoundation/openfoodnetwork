@@ -18,6 +18,8 @@ Spree::Admin::ReportsController.class_eval do
 
   include Spree::ReportsHelper
 
+  respond_to :json
+
   REPORT_TYPES = {
     orders_and_fulfillment: [
       ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
@@ -215,31 +217,42 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_fulfillment
-    # -- Prepare Date Params
-    prepare_date_params params
+    if request.format.json?
+      # -- Prepare Date Params
+      prepare_date_params params
+      @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
+      line_items = @report.table_items
+      orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')
+      variants = Spree::Variant.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_variants.*')
+      products = Spree::Product.joins(:variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
+      line_items = ActiveModel::ArraySerializer.new(line_items, each_serializer: Api::Admin::Reports::LineItemSerializer)
+      orders = ActiveModel::ArraySerializer.new(orders, each_serializer: Api::Admin::Reports::OrderSerializer)
+      variants = ActiveModel::ArraySerializer.new(variants, each_serializer: Api::Admin::Reports::VariantSerializer)
+      products = ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::Reports::ProductSerializer)
 
-    # -- Prepare Form Options
-    permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-    # My distributors and any distributors distributing products I supply
-    @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
-    # My suppliers and any suppliers supplying products I distribute
-    @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
+      report_data = { line_items: line_items, orders: orders, variants: variants, products: products }
+      render json: report_data
+    else
+      prepare_date_params params
 
-    @order_cycles = OrderCycle.active_or_complete.
-    involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
+      # -- Prepare Form Options
+      permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+      # My distributors and any distributors distributing products I supply
+      @shops = permissions.visible_enterprises_for_order_reports.is_distributor
+      # My suppliers and any suppliers supplying products I distribute
+      @producers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
-    @report_types = REPORT_TYPES[:orders_and_fulfillment]
-    @report_type = params[:report_type]
+      @order_cycles = OrderCycle.active_or_complete.
+      involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
-    @include_blank = 'All'
+      @report_types = REPORT_TYPES[:orders_and_fulfillment]
+      @report_type = params[:report_type]
 
-    # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
-    order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
-    @table = order_grouper.table(@report.table_items)
-    csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+      @include_blank = 'All'
 
-    render_report(@report.header, @table, params[:csv], csv_file_name)
+      # -- Build Report with Order Grouper
+      @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
+    end
 
   end
 
