@@ -23,11 +23,11 @@
     = f.label :charges_sales_tax, t(:say_no), value: 'false'
 .row
   .alpha.three.columns
-    = f.label :display_invoice_logo, 'Display logo in invoices'
+    = f.label :display_invoice_logo, t('.display_invoice_logo')
   .omega.eight.columns
     = f.check_box :display_invoice_logo
 .row
   .alpha.three.columns
-    = f.label :invoice_text, 'Add customized text at the end of invoices'
+    = f.label :invoice_text, t('.invoice_text')
   .omega.eight.columns
     = f.text_area :invoice_text, style: "width: 100%; height: 100px;"
