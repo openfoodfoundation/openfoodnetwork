@@ -191,6 +191,58 @@ describe Spree::OrdersController do
     end
   end
 
+  describe "#order_to_update" do
+    let!(:current_order) { double(:current_order) }
+    let!(:order) { create(:order) }
+    let(:li) { order.line_items.first }
+    let(:params) { { order: {} } }
+
+    before do
+      allow(controller).to receive(:current_order) { current_order }
+      allow(controller).to receive(:params) { params }
+    end
+
+    context "when no order id is given in params" do
+      it "returns the current_order" do
+        expect(controller.send(:order_to_update)).to eq current_order
+      end
+    end
+
+    context "when an order_id is given in params" do
+      before do
+        params[:order].merge!({id: order.id})
+      end
+
+      context "and the order is not complete" do
+        it "returns the current_order" do
+          expect(controller.send(:order_to_update)).to eq current_order
+        end
+      end
+
+      context "and the order is complete" do
+        before do
+          allow(Spree::Order).to receive(:complete) { Spree::Order.where(id: order.id) }
+        end
+
+        context "and the user doesn't have permisson to 'update' the order" do
+          before { allow(controller).to receive(:can?).with(:update, order) { false } }
+
+          it "returns the current_order" do
+            expect(controller.send(:order_to_update)).to eq current_order
+          end
+        end
+
+        context "and the user has permission to 'update' the order" do
+          before { allow(controller).to receive(:can?).with(:update, order) { true } }
+
+          it "returns the order" do
+            expect(controller.send(:order_to_update)).to eq order
+          end
+        end
+      end
+    end
+  end
+
 
   private
 

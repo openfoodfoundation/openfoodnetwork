@@ -202,4 +202,10 @@ Spree::OrdersController.class_eval do
   def wrap_json_infinity(n)
     n == Float::INFINITY ? 2147483647 : n
   end
+
+  def order_to_update
+    order = Spree::Order.complete.find_by_id(params[:order].andand[:id])
+    return order if order.present? && can?(:update, order)
+    current_order
+  end
 end
