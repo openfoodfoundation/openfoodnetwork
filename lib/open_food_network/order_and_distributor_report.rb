@@ -1,7 +1,11 @@
+include Spree::ReportsHelper
+
 module OpenFoodNetwork
   class OrderAndDistributorReport
-
-    def initialize orders
+    attr_reader :params
+    def initialize user, params, orders = nil
+      @user = user
+      @params = params
       @orders = orders
     end
 
@@ -27,6 +31,21 @@ module OpenFoodNetwork
         I18n.t(:report_header_shipping_instructions)]
     end
 
+    def search
+      permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
+    end
+
+    def table_items
+      orders = search.result
+
+      line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
+      line_items = line_items.preload([:order, :product])
+      line_items = line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
+
+      line_items
+    end
+
+
     def table
       order_and_distributor_details = []
 
@@ -41,6 +60,15 @@ module OpenFoodNetwork
       end
 
       order_and_distributor_details
+    end
+
+
+
+    private
+
+    def permissions
+      return @permissions unless @permissions.nil?
+      @permissions = OpenFoodNetwork::Permissions.new(@user)
     end
   end
 end
