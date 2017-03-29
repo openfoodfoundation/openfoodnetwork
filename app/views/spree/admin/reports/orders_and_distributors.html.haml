@@ -8,6 +8,8 @@
 
 %br
 %br
+
+%br
 %table#listing_orders.index
   %thead
     %tr{'data-hook' => 'orders_header'}
@@ -21,3 +23,21 @@
     - if @report.table.empty?
       %tr
         %td{:colspan => "2"}= t(:none)
+
+%br
+%br
+%div{ ng: { app: 'admin.reports', controller: 'ordersAndDistributorsController' } }
+  %form{ name: 'orders_and_distributors_report_form', ng: { submit: 'load()' } }
+    = render 'ng_date_range_form'
+
+    .row
+      = submit_tag t(:search)
+  %br
+    -#
+    .report-grid{ 'ui-grid' => 'gridOptions',
+      'ui-grid-tree-view' => true,
+      'ui-grid-resize-columns' => true,
+      'ui-grid-exporter' => true,
+      'ui-grid-grouping' => true,
+      'ui-grid-move-columns' => true,
+      style: 'height: 80vh; width: 95%' }

@@ -1,8 +1,6 @@
-angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http ,OrdersAndFulfillmentsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants, shops, producers) ->
-  $scope.shops = shops
-  $scope.producers = producers
+angular.module("admin.reports").controller "ordersAndDistributorsController", ($scope, $http, OrdersAndDistributorsReport, Enterprises, OrderCycles, LineItems, Orders, Products) ->
   $scope.orderCycles = OrderCycles.all
-  $scope.gridOptions = OrdersAndFulfillmentsReport.gridOptions()
+  $scope.gridOptions = OrdersAndDistributorsReport.gridOptions()
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
 
   $scope.downloadAsCSV = ->
@@ -11,10 +9,11 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
   $scope.load = ->
     params = {}
     params["q[#{param}]"] = value for param, value of $scope.q
-    $http.get('/admin/reports/orders_and_fulfillment.json', params: params).success (data) ->
+    $http.get('/admin/reports/orders_and_distributors.json', params: params).success (data) ->
       LineItems.load data.line_items
       Orders.load data.orders
       Products.load data.products
-      Variants.load data.variants
+      Enterprises.load data.distributors
+      Orders.linkToDistributors()
       LineItems.linkToOrders()
       $scope.gridOptions.data = LineItems.all

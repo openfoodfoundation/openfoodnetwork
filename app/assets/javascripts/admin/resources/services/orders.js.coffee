@@ -1,4 +1,4 @@
-angular.module("admin.resources").factory 'Orders', ($q, OrderResource) ->
+angular.module("admin.resources").factory 'Orders', ($q, $injector, OrderResource) ->
   new class Orders
     all: []
     byID: {}
@@ -36,3 +36,9 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource) ->
 
     resetAttribute: (order, attribute) ->
       order[attribute] = @pristineByID[order.id][attribute]
+
+    linkToDistributors: ->
+      if $injector.has('Enterprises')
+        enterprisesByID = $injector.get('Enterprises').byID
+        for id, order of @byID
+          order.distributor = enterprisesByID[order.distributor.id] if order.distributor?
