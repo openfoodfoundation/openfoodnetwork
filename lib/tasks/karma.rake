@@ -1,13 +1,21 @@
 namespace :karma  do
-  task :start => :environment do
+  task :start => :environment do |task|
+    continue_only_in_test_env task
     with_tmp_config :start
   end
 
-  task :run => :environment do
+  task :run => :environment do |task|
+    continue_only_in_test_env task
     with_tmp_config :start, "--single-run"
   end
 
   private
+
+  def continue_only_in_test_env task
+    if Rails.env != 'test'
+      raise "Task must be called in test environment:\n  bundle exec rake #{task.name} RAILS_ENV=test"
+    end
+  end
 
   def with_tmp_config(command, args = nil)
     Tempfile.open('karma_unit.js', Rails.root.join('tmp') ) do |f|

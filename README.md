@@ -98,6 +98,14 @@ The site is configured to use
 startup time while Rails loads. See the Zeus github page for
 usage instructions.
 
+Once [npm dependencies are
+installed](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Karma), AngularJS tests can be run with:
+
+    ./script/karma run
+
+If you want karma to automatically rerun the tests on file modification, use:
+
+    ./script/karma start
 
 ## Credits
 
