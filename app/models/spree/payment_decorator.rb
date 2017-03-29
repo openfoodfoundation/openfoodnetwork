@@ -4,6 +4,8 @@ module Spree
 
     after_save :ensure_correct_adjustment, :update_order
 
+    attr_accessible :source
+
     def ensure_correct_adjustment
       # Don't charge for invalid payments.
       # PayPalExpress always creates a payment that is invalidated later.
