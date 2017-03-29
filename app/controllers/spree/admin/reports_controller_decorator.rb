@@ -147,8 +147,9 @@ Spree::Admin::ReportsController.class_eval do
       orders = ActiveModel::ArraySerializer.new(orders, each_serializer: Api::Admin::Reports::OrderSerializer)
       products = ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::Reports::ProductSerializer)
       distributors = ActiveModel::ArraySerializer.new(distributors, each_serializer: Api::Admin::Reports::EnterpriseSerializer)
+      variants = ActiveModel::ArraySerializer.new(variants, each_serializer: Api::Admin::Reports::VariantSerializer)
 
-      report_data = { line_items: line_items, orders: orders, products: products, distributors: distributors }
+      report_data = { line_items: line_items, orders: orders, products: products, distributors: distributors, variants: variants }
       render json: report_data
     else
       prepare_date_params params

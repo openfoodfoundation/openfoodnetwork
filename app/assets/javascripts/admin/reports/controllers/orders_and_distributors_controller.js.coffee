@@ -1,4 +1,4 @@
-angular.module("admin.reports").controller "ordersAndDistributorsController", ($scope, $http, OrdersAndDistributorsReport, Enterprises, OrderCycles, LineItems, Orders, Products) ->
+angular.module("admin.reports").controller "ordersAndDistributorsController", ($scope, $http, OrdersAndDistributorsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants) ->
   $scope.orderCycles = OrderCycles.all
   $scope.gridOptions = OrdersAndDistributorsReport.gridOptions()
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
@@ -12,8 +12,10 @@ angular.module("admin.reports").controller "ordersAndDistributorsController", ($
     $http.get('/admin/reports/orders_and_distributors.json', params: params).success (data) ->
       LineItems.load data.line_items
       Orders.load data.orders
+      Variants.load data.variants
       Products.load data.products
       Enterprises.load data.distributors
       Orders.linkToDistributors()
       LineItems.linkToOrders()
+      LineItems.linkToVariants()
       $scope.gridOptions.data = LineItems.all

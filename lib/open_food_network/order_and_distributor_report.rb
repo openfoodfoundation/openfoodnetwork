@@ -25,7 +25,7 @@ module OpenFoodNetwork
       orders = search.result
 
       line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
-      line_items = line_items.preload([:order, :product])
+      line_items = line_items.preload([:order, :variant, :product])
       line_items = line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
 
       line_items
