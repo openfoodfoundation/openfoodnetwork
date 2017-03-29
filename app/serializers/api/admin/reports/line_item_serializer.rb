@@ -3,6 +3,7 @@ class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
 
   has_one :order, serializer: Api::Admin::IdSerializer
   has_one :product, serializer: Api::Admin::IdNameSerializer
+  has_one :variant, serializer: Api::Admin::IdSerializer
 
   def price
     object.amount.to_f

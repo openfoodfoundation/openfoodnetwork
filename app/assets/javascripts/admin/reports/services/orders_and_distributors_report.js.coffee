@@ -5,15 +5,15 @@ angular.module("admin.reports").factory 'OrdersAndDistributorsReport', (uiGridGr
       enableSorting: true
       enableFiltering: true
       columnDefs: [
-        { field: 'order.created_at',            displayName: 'Order date',            width: '15%', visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-        { field: 'order.id',                    displayName: 'Order ID',              width: '8%', visible: true, groupingShowAggregationMenu: true, groupingShowGroupingMenu: true, grouping: { groupPriority: 1 } }
+        { field: 'order.created_at',            displayName: 'Order date',            width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @orderDateFinalizer }
+        { field: 'order.id',                    displayName: 'Order ID',              width: '8%',  visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, grouping: { groupPriority: 2 } }
         { field: 'order.customer',              displayName: 'Customer name',         width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerFinalizer }
-        { field: 'order.email',                 displayName: 'Email',                 width: '15%', visible: true, groupingShowAggregationMenu: true, groupingShowGroupingMenu: truetreeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerEmailFinalizer }
-        { field: 'order.phone',                 displayName: 'Phone',                 width: '10%', visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-        { field: 'order.city',                  displayName: 'City',                  width: '10%', visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-        { field: 'product.sku',                 displayName: 'SKU',                   width: '5%', visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-        { field: 'product.name',                displayName: 'Item name',             width: '10%', visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-        { field: 'full_name',                   displayName: 'Variant',               width: '10%', visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+        { field: 'order.email',                 displayName: 'Email',                 width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerEmailFinalizer }
+        { field: 'order.phone',                 displayName: 'Phone',                 width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerPhoneFinalizer }
+        { field: 'order.city',                  displayName: 'City',                  width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerCityFinalizer }
+        { field: 'variant.sku',                 displayName: 'SKU',                   width: '5%',  groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+        { field: 'product.name',                displayName: 'Item name',             width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+        { field: 'full_name',                   displayName: 'Variant',               width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
         { field: 'quantity',                    displayName: 'Qty',                   width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
         { field: 'max_quantity',                displayName: 'Max Qty',               width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
         { field: 'cost',                        displayName: 'Cost',                  width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
@@ -34,6 +34,15 @@ angular.module("admin.reports").factory 'OrdersAndDistributorsReport', (uiGridGr
 
     customerEmailFinalizer: (aggregation) ->
       aggregation.rendered = aggregation.order.email
+
+    orderDateFinalizer: (aggregation) ->
+      aggregation.rendered = aggregation.order.created_at
+
+    customerPhoneFinalizer: (aggregation) ->
+      aggregation.rendered = aggregation.order.phone
+
+    customerCityFinalizer: (aggregation) ->
+      aggregation.rendered = aggregation.order.city
 
     productFinalizer: (aggregation) ->
       aggregation.rendered = "TOTAL"
