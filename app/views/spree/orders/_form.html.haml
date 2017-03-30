@@ -21,18 +21,7 @@
           = render :partial => 'line_item', :locals => { :variant => item_form.object.variant, :line_item => item_form.object, :item_form => item_form }
 
       %tfoot#edit-cart
-        %tr
-          %td{colspan:"2"}
-          %td
-            = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
-              %i.ofn-i_023-refresh
-              = t(:update)
-          %td
-          %td#empty-cart.text-center
-            %span#clear_cart_link{"data-hook" => ""}
-              = link_to t(:orders_form_empty_cart), empty_cart_path, method: :put, :class => 'not-bold small'
-              -#= form_tag empty_cart_path, :method => :put do
-                -#= submit_tag t(:empty_cart), :class => 'button alert expand small'
+        = render 'spree/orders/form/cart_actions_row'
 
         / This is the fees row which we want to replace with the pop-over
         -# - unless @order.adjustments.eligible.blank?
