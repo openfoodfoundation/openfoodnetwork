@@ -12,7 +12,7 @@
         %span= t(:total)
   %tbody{"data-hook" => ""}
     - order.line_items.each do |item|
-      %tr{"data-hook" => "order_details_line_item_row"}
+      %tr.line_item{"data-hook" => "order_details_line_item_row", class: "variant-#{item.variant.id}" }
         %td(data-hook = "order_item_description")
 
           %div.item-thumb-image{"data-hook" => "order_item_image"}

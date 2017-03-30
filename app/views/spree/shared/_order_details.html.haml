@@ -86,5 +86,9 @@
 %br
 .row
   .columns.large-12
-    = render partial: 'spree/orders/summary'
-    = render 'spree/orders/form/update_buttons'
+    = form_for order, html: {id: 'update-order'} do |order_form|
+      - if order.editable?
+        = render 'spree/orders/form', order_form: order_form
+      -else
+        = render 'spree/orders/summary', order: order
+      = render 'spree/orders/form/update_buttons', order: order

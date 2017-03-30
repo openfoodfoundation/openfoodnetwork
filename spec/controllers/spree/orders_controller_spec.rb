@@ -195,7 +195,7 @@ describe Spree::OrdersController do
     let!(:current_order) { double(:current_order) }
     let!(:order) { create(:order) }
     let(:li) { order.line_items.first }
-    let(:params) { { order: {} } }
+    let(:params) { { } }
 
     before do
       allow(controller).to receive(:current_order) { current_order }
@@ -210,7 +210,7 @@ describe Spree::OrdersController do
 
     context "when an order_id is given in params" do
       before do
-        params[:order].merge!({id: order.id})
+        params.merge!({id: order.number})
       end
 
       context "and the order is not complete" do
@@ -235,8 +235,24 @@ describe Spree::OrdersController do
         context "and the user has permission to 'update' the order" do
           before { allow(controller).to receive(:can?).with(:update, order) { true } }
 
-          it "returns the order" do
-            expect(controller.send(:order_to_update)).to eq order
+          context "and the order is not editable" do
+
+            it "returns the current_order" do
+              expect(controller.send(:order_to_update)).to eq current_order
+            end
+          end
+
+          context "and the order is editable" do
+            let(:order_cycle) { create(:simple_order_cycle) }
+            let(:distributor) { create(:enterprise, allow_order_changes: true) }
+
+            before do
+              order.update_attributes(order_cycle_id: order_cycle.id, distributor_id: distributor.id)
+            end
+
+            it "returns the order" do
+              expect(controller.send(:order_to_update)).to eq order
+            end
           end
         end
       end

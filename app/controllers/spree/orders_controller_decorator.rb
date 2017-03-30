@@ -32,7 +32,7 @@ Spree::OrdersController.class_eval do
 
   def update
     @insufficient_stock_lines = []
-    @order = current_order
+    @order = order_to_update
     unless @order
       flash[:error] = t(:order_not_found)
       redirect_to root_path and return
@@ -49,6 +49,8 @@ Spree::OrdersController.class_eval do
           if params.has_key?(:checkout)
             @order.next_transition.run_callbacks if @order.cart?
             redirect_to checkout_state_path(@order.checkout_steps.first)
+          elsif @order.complete?
+            redirect_to order_path(@order)
           else
             redirect_to cart_path
           end
@@ -204,8 +206,8 @@ Spree::OrdersController.class_eval do
   end
 
   def order_to_update
-    order = Spree::Order.complete.find_by_id(params[:order].andand[:id])
-    return order if order.present? && can?(:update, order)
+    order = Spree::Order.complete.find_by_number(params[:id])
+    return order if order.andand.editable? && can?(:update, order)
     current_order
   end
 end
