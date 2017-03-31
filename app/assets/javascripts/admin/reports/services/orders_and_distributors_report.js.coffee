@@ -5,15 +5,17 @@ angular.module("admin.reports").factory 'OrdersAndDistributorsReport', (uiGridGr
       enableSorting: true
       enableFiltering: true
       enableGridMenu: true
-      exporterPdfTableHeaderStyle: { fontSize: 5, bold: true }
       exporterPdfDefaultStyle: {fontSize: 6 }
+      exporterPdfTableHeaderStyle: { fontSize: 5, bold: true }
+      exporterPdfTableStyle: { width: 'auto'}
+      exporterPdfMaxGridWidth: 600
       columnDefs: [
         { field: 'order.created_at',            displayName: 'Order date',            width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @orderDateFinalizer }
         { field: 'order.id',                    displayName: 'Order ID',              width: '6%',  visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, grouping: { groupPriority: 2 } }
         { field: 'order.customer',              displayName: 'Customer name',         width: '12%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerFinalizer }
         { field: 'order.email',                 displayName: 'Email',                 width: '12%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerEmailFinalizer }
         { field: 'order.phone',                 displayName: 'Phone',                 width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerPhoneFinalizer }
-        { field: 'order.city',                  displayName: 'City',                  width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerCityFinalizer }
+        { field: 'order.city',                  displayName: 'City',                  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerCityFinalizer }
         { field: 'variant.sku',                 displayName: 'SKU',                   width: '5%',  groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
         { field: 'product.name',                displayName: 'Item name',             width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
         { field: 'full_name',                   displayName: 'Variant',               width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
