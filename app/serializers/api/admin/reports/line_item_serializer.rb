@@ -1,5 +1,5 @@
 class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
-  attributes :id, :quantity, :max_quantity, :price, :price_with_fees, :full_name, :cost
+  attributes :id, :quantity, :max_quantity, :price, :price_with_fees, :full_name, :cost, :distribution_fee
 
   has_one :order, serializer: Api::Admin::IdSerializer
   has_one :product, serializer: Api::Admin::IdNameSerializer

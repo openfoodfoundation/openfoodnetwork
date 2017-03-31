@@ -3,6 +3,10 @@ class Api::Admin::Reports::OrderSerializer < ActiveModel::Serializer
 
   has_one :distributor, serializer: Api::Admin::IdSerializer
 
+  def created_at
+    object.created_at.to_s
+  end
+
   def customer
     object.bill_address.full_name
   end
