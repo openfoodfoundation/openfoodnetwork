@@ -4,6 +4,9 @@ angular.module("admin.reports").factory 'OrdersAndDistributorsReport', (uiGridGr
     gridOptions: ->
       enableSorting: true
       enableFiltering: true
+      enableGridMenu: true
+      exporterPdfTableHeaderStyle: { fontSize: 5, bold: true }
+      exporterPdfDefaultStyle: {fontSize: 6 }
       columnDefs: [
         { field: 'order.created_at',            displayName: 'Order date',            width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @orderDateFinalizer }
         { field: 'order.id',                    displayName: 'Order ID',              width: '6%',  visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, grouping: { groupPriority: 2 } }
