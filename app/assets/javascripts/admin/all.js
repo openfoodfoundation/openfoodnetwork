@@ -21,6 +21,8 @@
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ui-grid.min.js
 //= require ../shared/ng-tags-input.min.js
+//= require ../shared/pdfmake.min.js
+//= require ../shared/vfs_fonts.js
 //= require angular-rails-templates
 //= require_tree ../templates/admin
 //= require ./admin_ofn
