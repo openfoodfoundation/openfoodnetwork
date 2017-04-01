@@ -275,13 +275,6 @@ en:
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
 
-    order_cycles:
-      edit:
-        choose_products_from: "Choose Products From:"
-        pickup_time_tip: 'Display name for order cycle delivery, e.g "Monday"'
-        pickup_instructions_tip: 'Additional notes for this selection'
-
-
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
@@ -470,6 +463,14 @@ en:
         next_step: Next step
         choose_starting_point: 'Choose your starting point:'
     order_cycles:
+      test:
+        test: testing
+      edit:
+        advanced_settings: Advanced Settings
+        update_and_close: Update and Close
+        choose_products_from: 'Choose Products From:'
+        pickup_time_tip: When orders from this OC will be ready for the customer
+        pickup_instructions_tip: These instructions are shown to customers after they complete an order
       advanced_settings:
         title: Advanced Settings
         choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
@@ -488,7 +489,7 @@ en:
         distributor: Distributor
         products: Products
         tags: Tags
-        delivery_detaisl: Pickup / Delivery details
+        delivery_details: Pickup / Delivery details
         debug_info: Debug information
       name_and_timing_form:
         name: Name
@@ -506,9 +507,6 @@ en:
         customer_instructions_placeholder: Pick-up or delivery notes
         products: Products
         fees: Fees
-      edit:
-        advanced_settings: Advanced Settings
-        update_and_close: Update and Close
     producer_properties:
       index:
         title: Producer Properties

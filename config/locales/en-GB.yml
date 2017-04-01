@@ -198,9 +198,9 @@ en-GB:
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
     order_cycles:
       edit:
-        choose_products_from: "Choose Products From:"
-        pickup_time_tip: 'Display name for order cycle delivery, e.g "Monday"'
-        pickup_instructions_tip: 'Additional notes for this selection'
+        choose_products_from: 'Choose Products From:'
+        pickup_time_tip: When orders from this OC will be ready for the customer
+        pickup_instructions_tip: These instructions are shown to customers after they complete an order
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
     enterprises:
