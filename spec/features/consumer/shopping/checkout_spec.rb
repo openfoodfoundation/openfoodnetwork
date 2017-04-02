@@ -64,6 +64,33 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
     context 'login in as user' do
       let(:user) { create(:user) }
 
+      def fill_out_form
+        toggle_shipping
+        choose sm1.name
+        toggle_payment
+        choose pm1.name
+        toggle_details
+        within "#details" do
+          fill_in "First Name", with: "Will"
+          fill_in "Last Name", with: "Marshall"
+          fill_in "Email", with: "test@test.com"
+          fill_in "Phone", with: "0468363090"
+        end
+        toggle_billing
+        check "Save as default billing address"
+        within "#billing" do
+          fill_in "City", with: "Melbourne"
+          fill_in "Postcode", with: "3066"
+          fill_in "Address", with: "123 Your Head"
+          select "Australia", from: "Country"
+          select "Victoria", from: "State"
+        end
+
+        toggle_shipping
+        check "Shipping address same as billing address?"
+        check "Save as default shipping address"
+      end
+
       before do
         quick_login_as(user)
       end
@@ -71,30 +98,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       context "with details filled out" do
         before do
           visit checkout_path
-          toggle_shipping
-          choose sm1.name
-          toggle_payment
-          choose pm1.name
-          toggle_details
-          within "#details" do
-            fill_in "First Name", with: "Will"
-            fill_in "Last Name", with: "Marshall"
-            fill_in "Email", with: "test@test.com"
-            fill_in "Phone", with: "0468363090"
-          end
-          toggle_billing
-          check "Save as default billing address"
-          within "#billing" do
-            fill_in "City", with: "Melbourne"
-            fill_in "Postcode", with: "3066"
-            fill_in "Address", with: "123 Your Head"
-            select "Australia", from: "Country"
-            select "Victoria", from: "State"
-          end
-
-          toggle_shipping
-          check "Shipping address same as billing address?"
-          check "Save as default shipping address"
+          fill_out_form
         end
 
         it "sets user's default billing address and shipping address" do
@@ -145,11 +149,13 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           month: "01",
           year: "2025",
           cc_type: "Visa",
-          number: "1111111111111111")
+          number: "1111111111111111",
+          payment_method_id: stripe_pm.id)
         }
 
         before do
           visit checkout_path
+          fill_out_form
           toggle_payment
           choose stripe_pm.name
         end
@@ -161,6 +167,12 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         it "disables the input fields when a saved card is selected" do
           select "Visa XXXX XXXX XXXX 1111 Exp 01/2025", from: "selected_card"
           page.should have_css "#secrets\\.card_number[disabled]"
+        end
+
+        it "allows use of a saved card" do
+          select "Visa XXXX XXXX XXXX 1111 Exp 01/2025", from: "selected_card"
+          place_order
+          page.should have_content "Your order has been processed successfully"
         end
       end
     end

@@ -25,6 +25,16 @@ describe "Submitting Stripe Connect charge requests", type: :request do
     order.update_attributes(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
     order.reload.update_totals
     set_order order
+
+    stub_request(:post, "https://sk_test_123456:@api.stripe.com/v1/customers")
+      .to_return(status: 200, body: JSON.generate({ id: "cus_A123", default_card: "card_XyZ456", sources: { data: [{id: "1"}] } }), headers: {})
+
+    stub_request(:post, "https://api.stripe.com/v1/tokens")
+      .to_return(status: 200, body: JSON.generate({id: "tok_123"}), headers: {})
+
+#    stub_request(:post, "https://sk_test_123456:@api.stripe.com/v1/charges")
+#      .to_return(status: 200, body: JSON.generate({id: "ch_123"}), headers: {})
+
   end
 
   context "when the charge request is accepted" do
@@ -32,7 +42,6 @@ describe "Submitting Stripe Connect charge requests", type: :request do
 
     before do
       stub_request(:post, "https://sk_test_123456:@api.stripe.com/v1/charges")
-      .with { |request| request.body.starts_with?("card=#{token}") }
       .to_return(body: JSON.generate(response_mock))
     end
 
@@ -48,8 +57,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
 
     before do
       stub_request(:post, "https://sk_test_123456:@api.stripe.com/v1/charges")
-      .with { |request| request.body.starts_with?("card=#{token}") }
-      .to_return(body: JSON.generate(response_mock))
+        .to_return(body: JSON.generate(response_mock))
     end
 
     it "should not process the payment" do
