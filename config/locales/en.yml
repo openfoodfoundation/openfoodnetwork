@@ -1550,6 +1550,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       variants:
         autocomplete:
           producer_name: Producer
+      no_results: "No data available"
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
