@@ -121,6 +121,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'capybara-screenshot'
   # See spec/spec_helper.rb for instructions
   #gem 'perftools.rb'
 end
