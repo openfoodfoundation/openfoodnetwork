@@ -643,9 +643,8 @@ GEM
     whenever (0.9.2)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
-    wicked_pdf (0.11.0)
-      rails
-    wkhtmltopdf-binary (0.9.9.3)
+    wicked_pdf (1.1.0)
+    wkhtmltopdf-binary (0.12.3.1)
     xml-simple (1.1.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
