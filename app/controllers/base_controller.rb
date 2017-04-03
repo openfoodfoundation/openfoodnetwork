@@ -26,6 +26,8 @@ class BaseController < ApplicationController
     @order_cycles = OrderCycle.with_distributor(@distributor).active
     .order(@distributor.preferred_shopfront_order_cycle_order)
 
+    ensure_shop_ready
+
     applicator = OpenFoodNetwork::TagRuleApplicator.new(@distributor, "FilterOrderCycles", current_customer.andand.tag_list)
     applicator.filter!(@order_cycles)
 
@@ -33,5 +35,10 @@ class BaseController < ApplicationController
     if @order_cycles.count == 1
       current_order(true).set_order_cycle! @order_cycles.first
     end
+  end
+
+  def ensure_shop_ready
+    # Don't display order cycles if shop is not ready for checkout
+    @order_cycles = {} unless @distributor.ready_for_checkout?
   end
 end
