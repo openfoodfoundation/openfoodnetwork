@@ -40,4 +40,6 @@
       'ui-grid-exporter' => true,
       'ui-grid-grouping' => true,
       'ui-grid-move-columns' => true,
-      style: 'height: 80vh; width: 95%' }
+      style: 'height: 80vh; width: 100%' }
+      .no-data-label.sixteen.columns.align-center{ 'ng-show' => '!gridOptions.data.length && loadAttempted' } No data available
+      .loading-data-label.sixteen.columns.align-center{ 'ng-hide' => '!gridOptions.data.length && !loading || gridOptions.data.length' } Loading....
