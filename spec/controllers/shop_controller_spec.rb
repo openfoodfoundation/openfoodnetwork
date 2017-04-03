@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe ShopController do
-  let(:distributor) { create(:distributor_enterprise) }
+  let!(:pm) { create(:payment_method) }
+  let!(:sm) { create(:shipping_method) }
+  let(:distributor) { create(:distributor_enterprise, payment_methods: [pm], shipping_methods: [sm]) }
 
   it "redirects to the home page if no distributor is selected" do
     spree_get :show
