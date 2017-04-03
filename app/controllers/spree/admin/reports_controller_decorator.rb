@@ -118,7 +118,7 @@ Spree::Admin::ReportsController.class_eval do
 
   def orders_and_distributors
     if request.format.json?
-      # prepare_date_params params
+      prepare_date_params params
       @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params
       line_items = @report.table_items
       orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')

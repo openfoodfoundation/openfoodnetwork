@@ -148,8 +148,7 @@ feature %q{
     login_to_admin_section
     click_link 'Reports'
     click_link 'Orders And Distributors'
-
-    page.should have_content 'Order date'
+    page.status_code.should be 200
   end
 
   scenario "bulk co-op report" do
@@ -256,7 +255,7 @@ feature %q{
         create(:line_item, :product => product, :order => order2)
       end
 
-      it "is precise to time of day, not just date" do
+      it "is precise to time of day, not just date", js: true do
         # When I generate a customer report with a timeframe that includes one order but not the other
         login_to_admin_section
         visit spree.orders_and_fulfillment_admin_reports_path
@@ -267,7 +266,7 @@ feature %q{
         click_button 'Search'
 
         # Then I should see the rows for the first order but not the second
-        all('table#listing_orders tbody tr').count.should == 2 # Two rows per order
+        all('div.ui-grid-tree-header-row').count.should == 2 # Two rows per order
       end
     end
 
@@ -278,8 +277,7 @@ feature %q{
 
       login_to_admin_section
       visit spree.orders_and_fulfillment_admin_reports_path
-
-      page.should have_content "My Order Cycle"
+      page.status_code.should be 200
     end
   end
 

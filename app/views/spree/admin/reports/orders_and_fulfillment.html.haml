@@ -5,7 +5,7 @@
 
 %div{ ng: { app: 'admin.reports', controller: 'ordersAndFulfillmentsController' } }
   %form{ name: 'orders_and_fulfillments_report_form', ng: { submit: 'load()' } }
-    = render 'ng_date_range_form'
+    = render 'ng_date_range_form', search: @search
 
     .row
       .alpha.two.columns= label_tag :distributor_id_in, t(:report_hubs)
