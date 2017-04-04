@@ -1,8 +1,8 @@
-Darkswarm.directive "countrySelector", () ->
+Darkswarm.directive "countrySelector", (RegistrationService) ->
   restrict: "A"
   require: 'ngModel'
   link: (scope, elem, attrs)->
-    defaultCountry = elem[0].getAttribute('data-default')
+    defaultCountry = "<%= Spree::Country.find_by_id(Spree::Config[:default_country_id]) %>"
     options = elem[0].querySelectorAll('option')
 
     #Set default country on country dropdown
