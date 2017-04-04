@@ -190,6 +190,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (1.0.14)
+      capybara (>= 1.0, < 3)
+      launchy
     celluloid (0.15.2)
       timers (~> 1.1.0)
     chronic (0.10.2)
@@ -667,6 +670,7 @@ DEPENDENCIES
   blockenspiel
   bugsnag
   capybara
+  capybara-screenshot
   coffee-rails (~> 3.2.1)
   compass-rails
   css_splitter
@@ -749,4 +753,4 @@ RUBY VERSION
    ruby 2.1.5p273
 
 BUNDLED WITH
-   1.14.3
+   1.14.6
