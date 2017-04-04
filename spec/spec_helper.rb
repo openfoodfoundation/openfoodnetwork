@@ -93,6 +93,9 @@ RSpec.configure do |config|
   # Ensure we start with consistent config settings
   config.before(:each) { Spree::Config.products_require_tax_category = false }
 
+  # Set currency symbol from config for tests
+  config.before(:all) { @currency_symbol = ::Money::Currency.new(Spree::Config[:currency]).symbol }
+
   # Helpers
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers

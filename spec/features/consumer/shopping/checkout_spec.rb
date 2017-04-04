@@ -135,9 +135,9 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         toggle_shipping
         choose sm2.name
 
-        page.should have_selector 'orderdetails .cart-total', text: "$11.23"
-        page.should have_selector 'orderdetails .shipping', text: "$4.56"
-        page.should have_selector 'orderdetails .total', text: "$15.79"
+        page.should have_selector 'orderdetails .cart-total', text: "#{@currency_symbol}11.23"
+        page.should have_selector 'orderdetails .shipping', text: "#{@currency_symbol}4.56"
+        page.should have_selector 'orderdetails .total', text: "#{@currency_symbol}15.79"
 
         # Tax should not be displayed in checkout, as the customer's choice of shipping method
         # affects the tax and we haven't written code to live-update the tax amount when they
@@ -269,7 +269,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           # + shipping tax ($ 4.56 @ 25% = $0.91)
           #                              = $1.93
           page.should have_content "(includes tax)"
-          page.should have_content "$1.93"
+          page.should have_content "#{@currency_symbol}1.93"
         end
 
         context "with basic details filled" do
@@ -331,14 +331,14 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           context "when we are charged a payment method fee (transaction fee)" do
             it "creates a payment including the transaction fee" do
               # Selecting the transaction fee, it is displayed
-              expect(page).to have_selector ".transaction-fee td", text: "$0.00"
-              expect(page).to have_selector ".total", text: "$11.23"
+              expect(page).to have_selector ".transaction-fee td", text: "#{@currency_symbol}0.00"
+              expect(page).to have_selector ".total", text: "#{@currency_symbol}11.23"
 
               toggle_payment
-              choose "#{pm2.name} ($5.67)"
+              choose "#{pm2.name} (#{@currency_symbol}5.67)"
 
-              expect(page).to have_selector ".transaction-fee td", text: "$5.67"
-              expect(page).to have_selector ".total", text: "$16.90"
+              expect(page).to have_selector ".transaction-fee td", text: "#{@currency_symbol}5.67"
+              expect(page).to have_selector ".total", text: "#{@currency_symbol}16.90"
 
               place_order
               expect(page).to have_content "Your order has been processed successfully"

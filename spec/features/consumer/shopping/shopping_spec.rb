@@ -95,23 +95,23 @@ feature "As a consumer I want to shop with a distributor", js: true do
             # -- Selecting an order cycle
             visit shop_path
             select "turtles", from: "order_cycle_id"
-            page.should have_content "$1020.99"
+            page.should have_content "#{@currency_symbol}1020.99"
 
             # -- Cart shows correct price
             fill_in "variants[#{variant.id}]", with: 1
             show_cart
-            within("li.cart") { page.should have_content "$1020.99" }
+            within("li.cart") { page.should have_content "#{@currency_symbol}1020.99" }
 
             # -- Changing order cycle
             select "frogs", from: "order_cycle_id"
-            page.should have_content "$19.99"
+            page.should have_content "#{@currency_symbol}19.99"
 
             # -- Cart should be cleared
             # ng-animate means that the old product row is likely to be present, so we explicitly
             # fill in the quantity in the incoming row
             page.should_not have_selector "tr.product-cart"
             within('product.ng-enter') { fill_in "variants[#{variant.id}]", with: 1 }
-            within("li.cart") { page.should have_content "$19.99" }
+            within("li.cart") { page.should have_content "#{@currency_symbol}19.99" }
           end
 
           describe "declining to clear the cart" do
@@ -164,15 +164,15 @@ feature "As a consumer I want to shop with a distributor", js: true do
         visit shop_path
 
         # Page should not have product.price (with or without fee)
-        page.should_not have_price "$10.00"
-        page.should_not have_price "$33.00"
+        page.should_not have_price "#{@currency_symbol}10.00"
+        page.should_not have_price "#{@currency_symbol}33.00"
 
         # Page should have variant prices (with fee)
-        page.should have_price "$43.00"
-        page.should have_price "$53.00"
+        page.should have_price "#{@currency_symbol}43.00"
+        page.should have_price "#{@currency_symbol}53.00"
 
         # Product price should be listed as the lesser of these
-        page.should have_price "$43.00"
+        page.should have_price "#{@currency_symbol}43.00"
       end
 
       it "filters search results properly" do
