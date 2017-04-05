@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OrderCyclesHelper do
+describe OrderCyclesHelper, type: :helper do
   let(:oc) { double(:order_cycle) }
 
   describe "finding producer enterprise options" do

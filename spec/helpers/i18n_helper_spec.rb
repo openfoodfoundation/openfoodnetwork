@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe I18nHelper do
+describe I18nHelper, type: :helper do
   let(:user) { create(:user) }
 
   # In the real world, the helper is called in every request and sets
