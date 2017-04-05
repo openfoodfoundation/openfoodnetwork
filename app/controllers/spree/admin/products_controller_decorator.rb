@@ -8,9 +8,6 @@ Spree::Admin::ProductsController.class_eval do
   before_filter :load_spree_api_key, :only => [:bulk_edit, :variant_overrides]
   before_filter :strip_new_properties, only: [:create, :update]
 
-
-  respond_to :json, :only => :clone
-
   respond_override create: { html: {
     success: lambda {
       if params[:button] == "add_another"
@@ -22,7 +19,6 @@ Spree::Admin::ProductsController.class_eval do
     failure: lambda {
       render :new
     } } }
-  #respond_override :clone => { :json => {:success => lambda { redirect_to bulk_index_admin_products_url+"?q[id_eq]=#{@new.id}" } } }
 
   def product_distributions
   end

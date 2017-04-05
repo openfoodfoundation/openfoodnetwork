@@ -37,6 +37,17 @@ Spree::Api::ProductsController.class_eval do
     respond_with(@product, :status => 204)
   end
 
+  # POST /api/products/:product_id/clone
+  #
+  def clone
+    authorize! :create, Spree::Product
+    original_product = find_product(params[:product_id])
+    authorize! :update, original_product
+
+    @product = original_product.duplicate
+
+    respond_with(@product, status: 201, default_template: :show)
+  end
 
   private
 
