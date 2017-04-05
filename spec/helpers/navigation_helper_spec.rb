@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    describe NavigationHelper do
+    describe NavigationHelper, type: :helper do
       describe "klass_for" do
         it "returns the class when present" do
           helper.klass_for('products').should == Spree::Product
