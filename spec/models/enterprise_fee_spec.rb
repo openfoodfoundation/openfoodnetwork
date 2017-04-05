@@ -166,7 +166,7 @@ describe EnterpriseFee do
 
     it "does not clear adjustments from another originator" do
       order = create(:order)
-      tax_rate = create(:tax_rate, calculator: stub_model(Spree::Calculator))
+      tax_rate = create(:tax_rate, calculator: build(:calculator))
       order.adjustments.create({:amount => 12.34,
                                 :source => order,
                                 :originator => tax_rate,
