@@ -259,6 +259,41 @@ describe Spree::OrdersController do
     end
   end
 
+  describe "cancelling an order" do
+    let(:user) { create(:user) }
+    let(:order) { create(:order, user: user) }
+    let(:params) { { id: order.number } }
+
+    context "when the user does not have permission to cancel the order" do
+      it "responds with unauthorized" do
+        spree_put :cancel, params
+        expect(response).to render_template 'shared/unauthorized'
+      end
+    end
+
+    context "when the user has permission to cancel the order" do
+      before { allow(controller).to receive(:spree_current_user) { user } }
+
+      context "when the order is not yet complete" do
+        it "responds with forbidden" do
+          spree_put :cancel, params
+          expect(response.status).to redirect_to spree.order_path(order)
+          expect(flash[:error]).to eq I18n.t(:orders_could_not_cancel)
+        end
+      end
+
+      context "when the order is complete" do
+        let(:order) { create(:completed_order_with_totals, user: user) }
+
+        it "responds with success" do
+          spree_put :cancel, params
+          expect(response.status).to redirect_to spree.order_path(order)
+          expect(flash[:success]).to eq I18n.t(:orders_your_order_has_been_cancelled)
+        end
+      end
+    end
+  end
+
 
   private
 

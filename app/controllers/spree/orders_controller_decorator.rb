@@ -12,6 +12,7 @@ Spree::OrdersController.class_eval do
   include OrderCyclesHelper
   layout 'darkswarm'
 
+  respond_to :json
 
   # Patching to redirect to shop if order is empty
   def edit
@@ -162,6 +163,18 @@ Spree::OrdersController.class_eval do
 
   def order_cycle_expired
     @order_cycle = OrderCycle.find session[:expired_order_cycle_id]
+  end
+
+  def cancel
+    @order = Spree::Order.find_by_number!(params[:id])
+    authorize! :cancel, @order
+
+    if @order.cancel
+      flash[:success] = I18n.t(:orders_your_order_has_been_cancelled)
+    else
+      flash[:error] = I18n.t(:orders_could_not_cancel)
+    end
+    redirect_to request.referer || order_path(@order)
   end
 
 

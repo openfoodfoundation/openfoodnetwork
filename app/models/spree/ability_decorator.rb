@@ -55,6 +55,9 @@ class AbilityDecorator
     can [:destroy], Spree::LineItem do |item|
       item.andand.order.andand.can_remove_items? user
     end
+    can [:cancel], Spree::Order do |order|
+      order.user == user
+    end
   end
 
   # New users can create an enterprise, and gain other permissions from doing this.

@@ -264,6 +264,7 @@ Spree::Core::Engine.routes.prepend do
   resources :orders do
     get :clear, :on => :collection
     get :order_cycle_expired, :on => :collection
+    put :cancel, on: :member
   end
 
 end
