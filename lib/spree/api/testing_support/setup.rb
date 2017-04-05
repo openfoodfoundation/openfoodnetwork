@@ -4,7 +4,7 @@ module Spree
       module Setup
         def sign_in_as_user!
           let!(:current_api_user) do
-            user = stub_model(Spree::LegacyUser)
+            user = Spree::LegacyUser.new(:email => "spree@example.com")
             user.stub(:has_spree_role?).with("admin").and_return(false)
             user.stub(:enterprises) { [] }
             user.stub(:owned_groups) { [] }
@@ -28,7 +28,7 @@ module Spree
 
         def sign_in_as_admin!
           let!(:current_api_user) do
-            user = stub_model(Spree::LegacyUser)
+            user = Spree::LegacyUser.new(:email => "spree@example.com")
             user.stub(:has_spree_role?).with("admin").and_return(true)
 
             # Stub enterprises, needed for cancan ability checks

@@ -9,7 +9,7 @@ describe Spree::Calculator::PriceSack do
     calculator
   end
 
-  let(:line_item) { stub_model(Spree::LineItem, price: 1, quantity: 2) }
+  let(:line_item) { build(:line_item, price: 1, quantity: 2) }
 
   it "computes with a line item object" do
     calculator.compute(line_item)
