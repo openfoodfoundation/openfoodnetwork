@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::BusinessModelConfigurationHelper do
+describe Admin::BusinessModelConfigurationHelper, type: :helper do
   describe "describing monthly bills for enterprises" do
 
     context "when there is no free trial" do

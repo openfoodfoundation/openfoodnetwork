@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EnterprisesHelper do
+describe EnterprisesHelper, type: :helper do
   let(:user) { create(:user) }
   let(:distributor) { create(:distributor_enterprise) }
   let(:some_other_distributor) { create(:distributor_enterprise) }

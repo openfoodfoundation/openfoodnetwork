@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SharedHelper do
+describe SharedHelper, type: :helper do
 
   it "does not require emptying the cart when it is empty" do
     d = double(:distributor)

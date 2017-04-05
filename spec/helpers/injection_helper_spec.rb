@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe InjectionHelper do
+describe InjectionHelper, type: :helper do
   let!(:enterprise) { create(:distributor_enterprise, facebook: "roger") }
 
   let!(:distributor1) { create(:distributor_enterprise) }

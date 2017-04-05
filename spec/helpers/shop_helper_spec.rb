@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe ShopHelper do
+describe ShopHelper, type: :helper do
 
   it "should build order cycle select options" do
     d = create(:distributor_enterprise)
