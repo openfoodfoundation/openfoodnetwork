@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spree::Calculator::FlexiRate do
   let(:calculator) { Spree::Calculator::FlexiRate.new }
-  let(:line_item) { mock_model(Spree::LineItem, amount: 10, quantity: 4) }
+  let(:line_item) { instance_double(Spree::LineItem, amount: 10, quantity: 4) }
 
   describe "computing for a single line item" do
     it "returns the first item rate" do
