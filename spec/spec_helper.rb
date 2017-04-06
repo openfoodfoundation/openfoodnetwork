@@ -28,7 +28,7 @@ require 'spree/testing_support/capybara_ext'
 require 'spree/api/testing_support/setup'
 require 'spree/api/testing_support/helpers'
 require 'spree/api/testing_support/helpers_decorator'
-require 'spree/core/testing_support/authorization_helpers'
+require 'spree/testing_support/authorization_helpers'
 
 # Capybara config
 require 'capybara/poltergeist'
