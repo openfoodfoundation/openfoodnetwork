@@ -1,0 +1,5 @@
+/ replace "tr[data-hook='product_properties_header']"
+%tr{"data-hook" => "product_properties_header"}
+  %th= t('admin.products.properties.property_name')
+  %th= t('admin.description')
+  %th.actions

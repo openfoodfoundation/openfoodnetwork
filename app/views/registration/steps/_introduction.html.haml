@@ -37,7 +37,7 @@
     .small-12.columns{'ng-hide' => '!tos_required' }
       %p.tos-message
         #{t(:enterprise_tos_message)}
-        %a{href:  "#{Spree::Config.enterprise_tos_link}", target: "_blank" } #{t(:enterprise_tos_link_text)}
+        %a{href: ContentConfig.footer_tos_url, target: "_blank" } #{t(:enterprise_tos_link_text)}
       %p.tos-checkbox
         %input{ type: 'checkbox', name: 'accept_terms', id: 'accept_terms', ng: { model: "tos_accepted" } }
           %label{for: "accept_terms"} #{t(:enterprise_tos_agree)}

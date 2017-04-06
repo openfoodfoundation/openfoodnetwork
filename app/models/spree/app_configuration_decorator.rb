@@ -6,7 +6,6 @@ Spree::AppConfiguration.class_eval do
 
   # Terms of Service Preferences
   preference :enterprises_require_tos, :boolean, default: false
-  preference :enterprise_tos_link, :string, default: "/Terms-of-service.pdf"
 
   # Tax Preferences
   preference :products_require_tax_category, :boolean, default: false

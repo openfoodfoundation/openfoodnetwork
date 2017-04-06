@@ -1,0 +1,3 @@
+/ replace "[data-hook=admin_product_form_left] code[erb-loud]:contains('f.text_area :description')"
+%text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', 'textangular-strip' => true, 'ta-paste' => "stripFormatting($html)", 'ta-toolbar' => "[['bold','italics','clear']]"}
+  = sanitize(@product.description)

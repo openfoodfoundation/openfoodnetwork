@@ -14,9 +14,9 @@
     .filter-shopfront.property-selectors.inline-block
       %filter-selector{ 'selector-set' => "productPropertySelectors", objects: "[product] | propertiesWithValuesOf" }
 
-    %div{"ng-if" => "product.description"}
+    %div{"ng-if" => "product.description_html"}
       %hr
-      %p.text-small{"ng-bind" => "::product.description"}
+      %p.text-small{"ng-bind-html" => "::product.description_html"}
       %hr
 
   .columns.small-12.large-6

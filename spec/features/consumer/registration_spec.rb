@@ -98,6 +98,23 @@ feature "Registration", js: true do
       expect(e.instagram).to eq "@InStAgRaM"
     end
 
+    context "when the user has no more remaining enterprises" do
+      before do
+        user.update_attributes(enterprise_limit: 0)
+      end
+
+      it "displays the limit reached page" do
+        visit registration_path
+
+        expect(page).to have_selector "dd", text: "Login"
+        switch_to_login_tab
+
+        # Enter Login details
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password
+        click_login_and_ensure_content I18n.t('limit_reached_headline')
+      end
+    end
   end
 
   describe "Terms of Service agreement" do
