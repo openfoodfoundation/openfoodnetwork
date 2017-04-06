@@ -4,6 +4,10 @@ angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGr
     gridOptions: ->
       enableSorting: true
       enableFiltering: true
+      enableGridMenu: true
+      exporterPdfDefaultStyle: {fontSize: 6 }
+      exporterPdfTableHeaderStyle: { fontSize: 5, bold: true }
+      exporterPdfTableStyle: { width: 'auto'}
       columnDefs: [
         { field: 'id',                displayName: 'ID',                width: '10%', visible: false, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
         { field: 'order.number',      displayName: 'Order',             width: '20%', visible: false, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, grouping: { groupPriority: 1 } }
