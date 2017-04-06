@@ -558,6 +558,9 @@ GEM
     roadie-rails (1.0.3)
       rails (>= 3.0, < 4.2)
       roadie (~> 3.0)
+    roo (2.7.1)
+      nokogiri (~> 1)
+      rubyzip (~> 1.1, < 2.0.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -576,6 +579,7 @@ GEM
     rspec-retry (0.4.2)
       rspec-core
     ruby-progressbar (1.7.1)
+    rubyzip (1.2.0)
     safe_yaml (0.9.5)
     sass (3.3.14)
     sass-rails (3.2.6)
@@ -717,6 +721,7 @@ DEPENDENCIES
   redcarpet
   representative_view
   roadie-rails (~> 1.0.3)
+  roo (~> 2.7.0)
   rspec-rails
   rspec-retry
   sass (~> 3.3)

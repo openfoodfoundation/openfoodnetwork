@@ -94,6 +94,7 @@ feature %q{
 
     within (".side_menu") { click_link "Users" }
     select2_search user.email, from: 'Owner'
+    expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
 
     click_link "About"
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
