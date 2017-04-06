@@ -104,9 +104,15 @@ feature "full-page cart", js: true do
       it "shows already ordered line items" do
         item1 = prev_order1.line_items.first
         item2 = prev_order2.line_items.first
+
+        expect(page).to_not have_content item1.variant.name
+        expect(page).to_not have_content item2.variant.name
+
+        find("td.toggle-bought").click
+
         expect(page).to have_content item1.variant.name
         expect(page).to have_content item2.variant.name
-        page.find(".line-item-#{item1.id} a.delete").click
+        page.find(".line-item-#{item1.id} td.bought-item-delete a").click
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_content item2.variant.name
 
@@ -116,6 +122,8 @@ feature "full-page cart", js: true do
         expect(page).to have_content item2.variant.name
 
         visit spree.cart_path
+
+        find("td.toggle-bought").click
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_content item2.variant.name
       end

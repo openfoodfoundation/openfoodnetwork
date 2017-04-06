@@ -1,4 +1,5 @@
-Darkswarm.controller "EditOrderCtrl", ($scope, $resource, Cart) ->
+Darkswarm.controller "EditBoughtOrderController", ($scope, $resource, Cart) ->
+  $scope.showBought = false
 
   $scope.deleteLineItem = (id) ->
     params = {id: id}

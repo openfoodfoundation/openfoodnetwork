@@ -1052,6 +1052,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_show_confirmed: Confirmed
   orders_your_order_has_been_cancelled: "Your order has been cancelled"
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
+  orders_bought_items_notice:
+    one: An additional item is already confirmed for this order cycle
+    other: "%{count} additional items already confirmed for this order cycle"
+  orders_bought_edit_button: Edit confirmed items
+  orders_bought_already_confirmed: "* already confirmed"
 
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."

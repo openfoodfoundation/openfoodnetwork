@@ -20,8 +20,10 @@
         = order_form.fields_for :line_items do |item_form|
           = render :partial => 'line_item', :locals => { :variant => item_form.object.variant, :line_item => item_form.object, :item_form => item_form }
 
+      = render 'bought' if show_bought_items? && @order.cart?
+
       %tfoot#edit-cart
-        = render 'spree/orders/form/cart_actions_row' unless @order.complete?
+        = render 'spree/orders/form/cart_actions_row' if @order.cart?
 
         / This is the fees row which we want to replace with the pop-over
         -# - unless @order.adjustments.eligible.blank?
