@@ -4,7 +4,7 @@
   .alpha.two.columns
     = label_tag t('.ready_for')
   .six.columns
-    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => t('.ready_for_placeholder'), 'ng-model' => 'outgoing_exchange.pickup_time', 'size' => 30
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'required' => 'required', 'placeholder' => t('.ready_for_placeholder'), 'ng-model' => 'outgoing_exchange.pickup_time', 'size' => 30
   .two.columns
     = label_tag t('.customer_instructions')
   .six.columns.omega
