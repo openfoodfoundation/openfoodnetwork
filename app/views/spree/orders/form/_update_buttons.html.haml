@@ -4,11 +4,11 @@
       %i.ofn-i_008-caret-left
       = t(:back_to_store)
   - if order.editable?
-    .columns.show-for-medium-up.medium-6 &nbsp;
-    -# .columns.small-12.medium-3 &nbsp;
-    -#   = link_to "#", method: :delete, :class => "button secondary expand" do
-    -#     %i.ofn-i_009-close
-    -#     =t(:cancel_order)
+    .columns.show-for-medium-up.medium-3 &nbsp;
+    .columns.small-12.medium-3
+      = link_to spree.cancel_order_path(@order), method: :put, :class => "button secondary expand" do
+        %i.ofn-i_009-close
+        = t(:cancel_order)
     .columns.small-12.medium-3
       = button_tag :class => 'button primary radius expand', :id => 'update-button' do
         %i.ofn-i_051-check-big

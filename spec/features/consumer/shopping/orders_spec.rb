@@ -38,8 +38,10 @@ feature "Order Management", js: true do
         order.distributor.update_attributes(allow_order_changes: true)
       end
 
-      it "shows already ordered line items" do
+      it "allows quantity to be changed, items to be removed and the order to be cancelled" do
         visit spree.order_path(order)
+
+        # Changing the quantity of an item
         within "tr.variant-#{item1.variant.id}" do
           expect(page).to have_content item1.product.name
           expect(page).to have_field 'order_line_items_attributes_0_quantity'
@@ -53,13 +55,18 @@ feature "Order Management", js: true do
         expect(find(".order-total.grand-total")).to have_content "$40.00"
         expect(item1.reload.quantity).to eq 2
 
+        # Deleting an item
         within "tr.variant-#{item2.variant.id}" do
           click_link "delete_line_item_#{item2.id}"
         end
 
         expect(find(".order-total.grand-total")).to have_content "$30.00"
-
         expect(Spree::LineItem.find_by_id(item2.id)).to be nil
+
+        # Cancelling the order
+        click_link(I18n.t(:cancel_order))
+        expect(page).to have_content I18n.t(:orders_show_cancelled)
+        expect(order.reload).to be_canceled
       end
     end
   end

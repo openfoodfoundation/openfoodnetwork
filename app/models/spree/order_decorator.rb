@@ -290,7 +290,7 @@ Spree::Order.class_eval do
   end
 
   def editable?
-    distributor.andand.allow_order_changes? && order_cycle.andand.open?
+    complete? && distributor.andand.allow_order_changes? && order_cycle.andand.open?
   end
 
   private

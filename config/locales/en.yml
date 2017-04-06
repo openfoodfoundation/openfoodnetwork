@@ -1047,7 +1047,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_oc_expired_phone: "Phone:"
   orders_show_title: Order Confirmation
   orders_show_time: Order ready on
-  orders_show_number: Order confirmation
+  orders_show_order_number: "Order #%{number}"
+  orders_show_cancelled: Cancelled
+  orders_show_confirmed: Confirmed
   orders_your_order_has_been_cancelled: "Your order has been cancelled"
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
 

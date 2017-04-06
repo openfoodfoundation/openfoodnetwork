@@ -10,8 +10,15 @@
     .row
       .columns.large-12.text-center
         %h2
-          = t :orders_show_number
-          = " #" + @order.number
+          = t(:orders_show_order_number, number: @order.number)
+          - if @order.canceled?
+            %span.brick
+              = t(:orders_show_cancelled)
+              %i.ofn-i_009-close
+          - elsif @order.complete?
+            %span.turquoise
+              = t(:orders_show_confirmed)
+              %i.ofn-i_051-check-big
 
     #order{"data-hook" => ""}
       - if params.has_key? :checkout_complete
