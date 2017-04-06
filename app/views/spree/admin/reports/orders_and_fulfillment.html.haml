@@ -26,12 +26,6 @@
 
     .row
       = submit_tag t(:search)
-
-    %hr.fullwidth
-    .row.text-right
-      %button{ ng: { click: 'downloadAsCSV()' } } Download As CSV
-
-  %br
   %br
   -#
   .report-grid{ 'ui-grid' => 'gridOptions',
@@ -41,3 +35,8 @@
     'ui-grid-grouping' => true,
     'ui-grid-move-columns' => true,
     style: 'height: 80vh; width: 100%' }
+    .no-data-label.sixteen.columns.align-center{ 'ng-show' => '!gridOptions.data.length && loadAttempted' }
+      =t('spree.admin.no_results')
+    .loading-data-label.sixteen.columns.align-center{ 'ng-hide' => '!gridOptions.data.length && !loading || gridOptions.data.length' }
+      =t(:loading)
+
