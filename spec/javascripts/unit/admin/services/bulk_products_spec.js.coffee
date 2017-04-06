@@ -38,18 +38,14 @@ describe "BulkProducts service", ->
 
 
   describe "cloning products", ->
-    it "clones products using a http get request to /admin/products/(permalink)/clone.json", ->
+    it "clones products using a http post request to /api/products/(id)/clone", ->
       BulkProducts.products = [
         id: 13
-        permalink_live: "oranges"
       ]
-      $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
-        product:
-          id: 17
-          name: "new_product"
+      $httpBackend.expectPOST("/api/products/13/clone").respond 201,
+        id: 17
       $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, [
         id: 17
-        name: "new_product"
       ]
       BulkProducts.cloneProduct BulkProducts.products[0]
       $httpBackend.flush()
@@ -57,15 +53,13 @@ describe "BulkProducts service", ->
     it "adds the product", ->
       originalProduct =
         id: 16
-        permalink_live: "oranges"
       clonedProduct =
         id: 17
 
       spyOn(BulkProducts, "insertProductAfter")
       spyOn(BulkProducts, "unpackProduct")
       BulkProducts.products = [originalProduct]
-      $httpBackend.expectGET("/admin/products/oranges/clone.json").respond 200,
-        product: clonedProduct
+      $httpBackend.expectPOST("/api/products/16/clone").respond 201, clonedProduct
       $httpBackend.expectGET("/api/products/17?template=bulk_show").respond 200, clonedProduct
       BulkProducts.cloneProduct BulkProducts.products[0]
       $httpBackend.flush()
