@@ -13,8 +13,8 @@ angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGr
         { field: 'product.name',      displayName: 'Product',           width: '20%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @productFinalizer }
         { field: 'full_name',         displayName: 'Variant',           width: '25%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
         { field: 'quantity',          displayName: 'Qty',               width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
-        { field: 'price',             displayName: 'Items ($)',         width: '15%', cellFilter: "currency", groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
-        { field: 'price_with_fees',   displayName: 'Items + Fees ($)',  width: '15%', cellFilter: "currency", groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
+        { field: 'price',             displayName: 'Items',             width: '15%', cellFilter: "customCurrency", groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
+        { field: 'price_with_fees',   displayName: 'Items + Fees',      width: '15%', cellFilter: "customCurrency", groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
       ]
 
     basicFinalizer: (aggregation) ->
@@ -36,6 +36,3 @@ angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGr
         aggregation.order = { }
       else
         aggregation.order = row.entity.order
-
-    priceFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.display_total

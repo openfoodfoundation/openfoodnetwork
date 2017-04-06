@@ -1,4 +1,4 @@
-angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http ,OrdersAndFulfillmentsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants, shops, producers) ->
+angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http, OrdersAndFulfillmentsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants, shops, producers) ->
   $scope.shops = shops
   $scope.producers = producers
   $scope.orderCycles = OrderCycles.all
