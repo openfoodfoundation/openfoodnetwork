@@ -26,9 +26,7 @@ class CheckoutController < Spree::CheckoutController
           return if redirect_to_paypal_express_form_if_needed
         end
 
-        if advance_order_state(@order)
-          state_callback(:after)
-        else
+        unless advance_order_state(@order)
           if @order.errors.present?
             flash[:error] = @order.errors.full_messages.to_sentence
           else
@@ -154,7 +152,7 @@ class CheckoutController < Spree::CheckoutController
     raise_insufficient_quantity and return if @order.insufficient_stock_lines.present?
     redirect_to main_app.shop_path and return if @order.completed?
     before_address
-    state_callback(:before)
+    setup_for_current_state
   end
 
   def before_address
