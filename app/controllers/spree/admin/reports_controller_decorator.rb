@@ -204,6 +204,7 @@ Spree::Admin::ReportsController.class_eval do
       report_data = { line_items: line_items, orders: orders, products: products, distributors: distributors, variants: variants }
       render json: report_data
     else
+      @show_old_version = params[:show_old_version] == '1' || false
       # -- Prepare date parameters
       prepare_date_params params
       @report_types = REPORT_TYPES[:bulk_coop]
