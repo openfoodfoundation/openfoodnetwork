@@ -54,7 +54,7 @@
       .row
         .alpha.two.columns= submit_tag t(:search)
         .omega.fourteen.columns.align-right
-          =link_to 'Older version', spree.bulk_coop_admin_reports_path(show_old_version: 1), {class: 'button'}
+          =link_to 'Old version', spree.bulk_coop_admin_reports_path(show_old_version: 1), {class: 'button'}
     %br
       -#
       .report-grid{ 'ui-grid' => 'gridOptions',

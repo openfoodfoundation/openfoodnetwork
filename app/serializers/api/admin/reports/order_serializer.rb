@@ -1,10 +1,14 @@
 class Api::Admin::Reports::OrderSerializer < ActiveModel::Serializer
-  attributes :id, :number, :display_total, :customer, :email, :created_at, :phone, :city, :payment_method, :special_instructions
+  attributes :id, :number, :display_total, :total, :customer, :email, :created_at, :completed_at, :phone, :city, :payment_method, :special_instructions, :outstanding_balance, :payment_total
 
   has_one :distributor, serializer: Api::Admin::IdSerializer
 
   def created_at
     object.created_at.to_s
+  end
+
+  def completed_at
+    object.completed_at.to_s
   end
 
   def customer

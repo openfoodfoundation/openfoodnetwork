@@ -1,7 +1,7 @@
 angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstants) ->
   new class BulkCoopReport
     columnOptions: ->
-      {bulk_coop_supplier_report: [
+      {supplier_report: [
           { field: 'id',                             displayName: 'id',                   width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'product.producer.name',          displayName: 'Supplier',             width: '15%', sort: { priority: 0, direction: 'asc' }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'product.name',                   displayName: 'Product',              width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
@@ -15,23 +15,34 @@ angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstan
           { field: 'remainder',                      displayName: 'Unallocated',          width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'max_quantity_excess',            displayName: 'Max quantity excess',  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
       ],
-      bulk_coop_allocation: [
+      allocation: [
           { field: 'id',                             displayName: 'id',                   width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.producer.name',          displayName: 'Supplier',             width: '15%', sort: { priority: 0, direction: 'asc' }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.name',                   displayName: 'Product',              width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'order.customer',                 displayName: 'Customer',             width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'product.name',                   displayName: 'Product',              width: '15%', sort: { priority: 0, direction: 'asc' }, grouping: { groupPriority: 0 }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'product.group_buy_unit_size',    displayName: 'Bulk Unit size',       width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'full_name',                      displayName: 'Variant',              width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'variant.value',                  displayName: 'Variant value',        width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'variant.unit',                   displayName: 'Variant unit',         width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'variant.weight_from_unit_value', displayName: 'Weight',               width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'scaled_final_weight_volume',     displayName: 'Sum Total',            width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'total_available',                displayName: 'Total available',      width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'remainder',                      displayName: 'Unallocated',          width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'max_quantity_excess',            displayName: 'Max quantity excess',  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
       ],
-      bulk_coop_packing_sheets: [
-          { field: 'id',                             displayName: 'id',                   width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.producer.name',          displayName: 'Supplier',             width: '15%', sort: { priority: 0, direction: 'asc' }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.name',                   displayName: 'Product',              width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.group_buy_unit_size',    displayName: 'Bulk Unit size',       width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+      packing_sheets: [
+          { field: 'id',                             displayName: 'Line Item ID',         width: '*', visible: false, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'order.customer',                 displayName: 'Customer',             width: '*', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'product.name',                   displayName: 'Product',              width: '*', sort: { priority: 0, direction: 'asc' }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'full_name',                      displayName: 'Variant',              width: '*', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'quantity',                       displayName: 'Sum total',            width: '*', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
       ],
-      bulk_coop_customer_payments: [
-          { field: 'id',                             displayName: 'id',                   width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.producer.name',          displayName: 'Supplier',             width: '15%', sort: { priority: 0, direction: 'asc' }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.name',                   displayName: 'Product',              width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.group_buy_unit_size',    displayName: 'Bulk Unit size',       width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+      customer_payments: [
+          { field: 'order.id',                       displayName: 'Order ID',             width: '*', visible: false, grouping: { groupPriority: 0 }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'order.customer',                 displayName: 'Customer',             width: '*', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @customerFinalizer }
+          { field: 'order.completed_at',             displayName: 'Date of order',        width: '*', sort: { priority: 0, direction: 'asc' }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @orderDateFinalizer  }
+          { field: 'order.total',                    displayName: 'Total cost',           width: '*', cellFilter: "customCurrency", groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @orderTotalFinalizer  }
+          { field: 'order.outstanding_balance',      displayName: 'Amount owing',         width: '*', cellFilter: "customCurrency", groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @orderOutstandingBalanceFinalizer  }
+          { field: 'order.payment_total',            displayName: 'Amount paid',          width: '*', cellFilter: "customCurrency", groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @orderPaymentTotalFinalizer  }
         ]
       }
 
@@ -43,7 +54,7 @@ angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstan
       exporterPdfTableHeaderStyle: { fontSize: 5, bold: true }
       exporterPdfTableStyle: { width: 'auto'}
       exporterPdfMaxGridWidth: 600
-      columnDefs: this.columnOptions().bulk_coop_supplier_report
+      columnDefs: this.columnOptions().supplier_report
 
     basicFinalizer: (aggregation) ->
       aggregation.rendered = aggregation.value
@@ -55,35 +66,16 @@ angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstan
       aggregation.rendered = aggregation.order.email
 
     orderDateFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.created_at
+      aggregation.rendered = aggregation.order.completed_at
 
-    customerPhoneFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.phone
+    orderTotalFinalizer: (aggregation) ->
+      aggregation.rendered = aggregation.order.total
 
-    customerCityFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.city
+    orderOutstandingBalanceFinalizer: (aggregation) ->
+      aggregation.rendered = aggregation.order.outstanding_balance
 
-    paymentMethodFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.payment_method
-
-    distributorFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.distributor.name
-
-    distributorAddressFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.distributor.address
-
-    distributorCityFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.distributor.city
-
-    distributorPostcodeFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.distributor.postcode
-
-    shippingInstructionsFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.special_instructions
-
-    sumAggregator: (aggregation, fieldValue, numValue, row) ->
-      aggregation.value = 0 unless aggregation.sum?
-      aggregation.value += numValue
+    orderPaymentTotalFinalizer: (aggregation) ->
+      aggregation.rendered = aggregation.order.payment_total
 
     orderAggregator: (aggregation, fieldValue, numValue, row) ->
       return if aggregation.order == row.entity.order

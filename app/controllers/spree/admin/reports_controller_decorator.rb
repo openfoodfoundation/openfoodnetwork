@@ -49,10 +49,10 @@ Spree::Admin::ReportsController.class_eval do
       ["Pack By Supplier", :pack_by_supplier]
     ],
     bulk_coop: [
-      ['Bulk Co-op - Totals by Supplier', :bulk_coop_supplier_report],
-      ['Bulk Co-op - Allocation', :bulk_coop_allocation],
-      ['Bulk Co-op - Packing Sheets', :bulk_coop_packing_sheets],
-      ['Bulk Co-op - Customer Payments', :bulk_coop_customer_payments]
+      ['Bulk Co-op - Totals by Supplier', :supplier_report],
+      ['Bulk Co-op - Allocation', :allocation],
+      ['Bulk Co-op - Packing Sheets', :packing_sheets],
+      ['Bulk Co-op - Customer Payments', :customer_payments]
     ]
   }
 
