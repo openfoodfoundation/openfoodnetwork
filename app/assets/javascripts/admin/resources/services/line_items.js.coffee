@@ -79,3 +79,9 @@ angular.module("admin.resources").factory 'LineItems', ($q, $injector, LineItemR
         for id, lineItem of @byID
           lineItem.variant = variantsByID[lineItem.variant.id] if lineItem.variant?
 
+    linkToProducts: ->
+      if $injector.has('Products')
+        productsByID = $injector.get('Products').byID
+        for id, lineItem of @byID
+          lineItem.product = productsByID[lineItem.product.id] if lineItem.product?
+

@@ -51,6 +51,12 @@ Spree::Admin::ReportsController.class_eval do
       packing: [
         [I18n.t('admin.reports.pack_by_customer'), :pack_by_customer],
         [I18n.t('admin.reports.pack_by_supplier'), :pack_by_supplier]
+      ],
+      bulk_coop: [
+        ['Bulk Co-op - Totals by Supplier', :bulk_coop_supplier_report],
+        ['Bulk Co-op - Allocation', :bulk_coop_allocation],
+        ['Bulk Co-op - Packing Sheets', :bulk_coop_packing_sheets],
+        ['Bulk Co-op - Customer Payments', :bulk_coop_customer_payments]
       ]
     }
   end
@@ -123,7 +129,7 @@ Spree::Admin::ReportsController.class_eval do
       line_items = @report.table_items
       orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')
       variants = Spree::Variant.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_variants.*')
-      products = Spree::Product.joins(:variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
+      products = Spree::Product.joins(:all_variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
       distributors = Enterprise.joins(:distributed_orders).where(spree_orders: { id: orders.pluck(:id) }).select('DISTINCT enterprises.*')
 
       line_items = ActiveModel::ArraySerializer.new(line_items, each_serializer: Api::Admin::Reports::LineItemSerializer)
@@ -185,20 +191,42 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def bulk_coop
-    # -- Prepare date parameters
-    prepare_date_params params
+    if request.format.json?
+      # -- Prepare date parameters
+      prepare_date_params params
+      @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
+      line_items = @report.table_items
 
-    # -- Prepare form options
-    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-    @report_type = params[:report_type]
+      orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')
+      variants = Spree::Variant.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_variants.*')
+      products = Spree::Product.joins(:all_variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
+      distributors = Enterprise.joins(:distributed_orders).where(spree_orders: { id: orders.pluck(:id) }).select('DISTINCT enterprises.*')
 
-    # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
-    order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
-    @table = order_grouper.table(@report.table_items)
-    csv_file_name = "bulk_coop_#{params[:report_type]}_#{timestamp}.csv"
+      line_items = ActiveModel::ArraySerializer.new(line_items, each_serializer: Api::Admin::Reports::LineItemSerializer)
+      orders = ActiveModel::ArraySerializer.new(orders, each_serializer: Api::Admin::Reports::OrderSerializer)
+      products = ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::Reports::ProductSerializer)
+      distributors = ActiveModel::ArraySerializer.new(distributors, each_serializer: Api::Admin::Reports::EnterpriseSerializer)
+      variants = ActiveModel::ArraySerializer.new(variants, each_serializer: Api::Admin::Reports::VariantSerializer)
 
-    render_report(@report.header, @table, params[:csv], csv_file_name)
+      report_data = { line_items: line_items, orders: orders, products: products, distributors: distributors, variants: variants }
+      render json: report_data
+    else
+      # -- Prepare date parameters
+      prepare_date_params params
+      @report_types = REPORT_TYPES[:bulk_coop]
+      @report_type = params[:q].andand[:report_type]
+      # -- Prepare form options
+      @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+      @report_type = params[:report_type] || @report_types.first.last
+
+      # -- Build Report with Order Grouper
+      @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
+      order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
+      @table = order_grouper.table(@report.table_items)
+      csv_file_name = "bulk_coop_#{params[:report_type]}_#{timestamp}.csv"
+
+      render_report(@report.header, @table, params[:csv], csv_file_name)
+    end
   end
 
   def payments
