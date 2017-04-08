@@ -12,6 +12,7 @@ feature %q{
     @product = create(:simple_product)
     @distributor = create(:distributor_enterprise, owner: @user, charges_sales_tax: true)
     @order_cycle = create(:simple_order_cycle, name: 'One', distributors: [@distributor], variants: [@product.variants.first])
+    @oc_overrides = create(:order_cycle_with_overrides)
 
     @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
     @customer = create(:customer, enterprise: @distributor, email: @user.email, user: @user, ship_address: create(:address))
@@ -20,6 +21,14 @@ feature %q{
     @order.finalize!
 
     create :check_payment, order: @order, amount: @order.total
+  end
+
+  def new_order_with_distribution(distributor, order_cycle)
+    visit 'admin/orders/new'
+    page.should have_selector('#s2id_order_distributor_id')
+    select2_select distributor.name, from: 'order_distributor_id'
+    select2_select order_cycle.name, from: 'order_order_cycle_id'
+    click_button 'Next'
   end
 
   scenario "creating an order with distributor and order cycle" do
@@ -43,6 +52,7 @@ feature %q{
     select2_select @distributor.name, from: 'order_distributor_id'
     page.should have_select2 'order_order_cycle_id', options: ['One (open)']
     select2_select @order_cycle.name, from: 'order_order_cycle_id'
+    click_button 'Next'
 
     page.should have_content 'ADD PRODUCT'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
@@ -127,12 +137,11 @@ feature %q{
 
     # When I create a new order
     quick_login_as @user
-    visit spree.admin_path
-
-    visit '/admin/orders'
-    click_link 'New Order'
-    select2_select @distributor.name, from: 'order_distributor_id'
-    select2_select @order_cycle.name, from: 'order_order_cycle_id'
+    new_order_with_distribution(@distributor, @order_cycle)
+    # visit '/admin/orders'
+    # click_link 'New Order'
+    # select2_select @distributor.name, from: 'order_distributor_id'
+    # select2_select @order_cycle.name, from: 'order_order_cycle_id'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
@@ -212,11 +221,7 @@ feature %q{
     end
 
     scenario "creating an order with distributor and order cycle" do
-      visit '/admin/orders'
-      click_link 'New Order'
-
-      select2_select distributor1.name, from: 'order_distributor_id'
-      select2_select order_cycle1.name, from: 'order_order_cycle_id'
+      new_order_with_distribution(distributor1, order_cycle1)
 
       expect(page).to have_content 'ADD PRODUCT'
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
@@ -240,6 +245,18 @@ feature %q{
     end
 
   end
+
+  scenario "with overrides it uses the overriden price" do
+    login_to_admin_section
+    new_order_with_distribution(@oc_overrides.distributors.first, @oc_overrides)
+    product = @oc_overrides.products.first
+    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+    click_link 'Add'
+    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
+    page.should have_selector 'td', text: "119.99"
+
+  end
+
 
   # Working around intermittent click failing
   # Possible causes of failure:
