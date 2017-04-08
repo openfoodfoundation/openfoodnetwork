@@ -156,6 +156,8 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     resource :invoice_settings, only: [:edit, :update]
+
+    post '/order/:id/update', to: :update, controller: 'orders'
   end
 
   namespace :api do
