@@ -5,14 +5,13 @@
     .alpha.six.columns
       %p
         %b Distributor:
-        = f.object.distributor.andand.name || "None"
-        = f.hidden_field :distributor_id
+        = @order.distributor.andand.name || "None"
+        %input{type: "hidden", id: "order_distributor_id", value: @order.distributor.andand.id}
     .omega.six.columns
       %p
         %b Order cycle:
-        = f.object.order_cycle.andand.name || "None"
-        = f.hidden_field :order_cycle_id
-
+        = @order.order_cycle.andand.name || "None"
+        %input{type: "hidden", id: "order_order_cycle_id", value: @order.order_cycle.andand.id}
   - else
     .alpha.six.columns
       .field
