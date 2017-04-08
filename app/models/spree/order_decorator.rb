@@ -158,6 +158,10 @@ Spree::Order.class_eval do
     save!
   end
 
+  def distribution_set?
+    distributor && order_cycle
+  end
+
   def update_distribution_charge!
     with_lock do
       EnterpriseFee.clear_all_adjustments_on_order self

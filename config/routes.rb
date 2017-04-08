@@ -145,6 +145,7 @@ Openfoodnetwork::Application.routes.draw do
     resources :column_preferences, only: [], format: :json do
       put :bulk_update, on: :collection
     end
+    post '/order/:id/update', to: :update, controller: 'orders'
   end
 
   namespace :api do
