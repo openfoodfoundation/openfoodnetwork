@@ -1,0 +1,83 @@
+%h5 Import validation overview
+%br
+
+-#%div.panel-section
+-#  %div.panel-header
+-#    %div.header-caret
+-#    %div.header-icon.info
+-#      %i.fa.fa-info-circle
+-#    %div.header-count
+-#      %strong.existing-count= @importer.total_supplier_products
+-#    %div.header-description
+-#      Existing products in referenced enterprise(s)
+-#  -#%div.panel-content{ng: {hide: '!active'}}
+-#  -#  Content goes here
+
+%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.item_count}"}}
+  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
+    %div.header-caret
+      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
+    %div.header-icon.success
+      %i.fa.fa-info-circle.info
+    %div.header-count
+      %strong.item-count= @importer.item_count
+    %div.header-description
+      Entries found in imported file
+  %div.panel-content{ng: {hide: '!active || count == 0'}}
+    = render 'entries_table', entries: @importer.all_entries
+
+%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.invalid_count}"}}
+  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
+    %div.header-caret
+      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
+    %div.header-icon.warning
+      %i.fa.fa-warning
+    %div.header-count
+      %strong.invalid-count= @importer.invalid_count
+    %div.header-description
+      Items contain errors and will not be imported
+  %div.panel-content{ng: {hide: '!active || count == 0'}}
+    = render 'errors_list'
+    %br
+    = render 'entries_table', entries: @importer.invalid_entries
+
+%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.products_create_count}"}}
+  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
+    %div.header-caret
+      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
+    %div.header-icon.success
+      %i.fa.fa-check-circle
+    %div.header-count
+      %strong.create-count= @importer.products_create_count
+    %div.header-description
+      Products will be created
+  %div.panel-content{ng: {hide: '!active || count == 0'}}
+    = render 'entries_table', entries: @importer.products_to_create
+
+%div.panel-section{ng: {controller: 'DropdownPanelsCtrl', init: "count = #{@importer.products_update_count}"}}
+  %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count}'}}
+    %div.header-caret
+      %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count == 0'}}
+    %div.header-icon.success
+      %i.fa.fa-check-circle
+    %div.header-count
+      %strong.update-count= @importer.products_update_count
+    %div.header-description
+      Products will be updated
+  %div.panel-content{ng: {hide: '!active || count == 0'}}
+    = render 'entries_table', entries: @importer.products_to_update
+
+%div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetTotal == 0'}}
+  %div.panel-header
+    %div.header-caret
+    %div.header-icon.info
+      %i.fa.fa-info-circle
+    %div.header-count
+      %strong.reset-count
+        {{resetTotal}}
+    %div.header-description
+      Existing products will have their stock reset to zero
+  -#%div.panel-content{ng: {hide: '!active'}}
+  -#  Content goes here
+
+%br.panels.clearfix

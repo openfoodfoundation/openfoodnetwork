@@ -5,4 +5,10 @@
 = inject_available_countries
 = inject_enterprise_attributes
 
+- steps = %w{about contact details finished images introduction}
+- steps += %w{logo promo social steps type}
+- steps.each do |step|
+  = render partial: "registration/steps/#{step}"
+= render "modal"
+
 %div{ "ng-controller" => "RegistrationCtrl" }

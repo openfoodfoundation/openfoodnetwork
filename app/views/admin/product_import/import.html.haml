@@ -1,0 +1,34 @@
+- content_for :page_title do
+  Product Import
+
+= render partial: 'spree/admin/shared/product_sub_menu'
+
+= form_tag main_app.admin_product_import_save_path, {'ng-app' => 'ofn.admin'} do
+
+  - if @importer.invalid_count && !@importer.has_valid_entries?
+    %h5 No valid entries found
+    %p There are no entries that can be saved
+    %br
+
+  = render 'import_options' if @importer.has_valid_entries?
+
+  = render 'import_review'
+
+  - if @importer.has_valid_entries?
+    - if @importer.invalid_count > 0
+      %br
+      %h5 Imported file contains some invalid entries
+      %p Save valid entries for now and discard the others?
+    - else
+      %h5 No errors detected!
+      %p Save all imported products?
+    %br
+    = hidden_field_tag :filepath, @filepath
+    = submit_tag "Save"
+    %a.button{href: main_app.admin_product_import_path} Cancel
+
+  - else
+    %br
+    %a.button{href: main_app.admin_product_import_path} Cancel
+
+

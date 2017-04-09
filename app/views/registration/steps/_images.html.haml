@@ -1,0 +1,23 @@
+%script{ type: "text/ng-template", id: "registration/images.html" }
+  .container#registration-images{ 'nv-file-drop' => true, uploader: "imageUploader", options:"{ alias: imageStep }", ng: { controller: "EnterpriseImageCtrl" } }
+    %ng-include{ src: "'registration/steps.html'" }
+    .row
+      .small-12.columns
+        %header
+          %h2 {{'registration_images_headline' | t}}
+          %h5 {{'registration_images_description' | t}}
+
+    %form{ name: 'images', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "select('social')" } }
+      .row{ ng: { repeat: 'image_step in imageSteps', show: "imageStep == image_step" } }
+        %ng-include{ src: "'registration/'+ image_step + '.html'" }
+
+      .row.buttons.pad-top{ ng: { if: "imageStep == 'logo'" } }
+        .small-12.columns
+          %input.button.secondary{ type: "button", value: "Back", ng: { click: "select('about')" } }
+          &nbsp;
+          %input.button.primary.right{ type: "button", value: "Continue", ng: { click: "imageSelect('promo')" } }
+
+      .row.buttons.pad-top{ ng: { if: "imageStep == 'promo'" } }
+        .small-12.columns
+          %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "imageSelect('logo')" } }
+            %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }

@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 feature "As a consumer I want to check out my cart", js: true, retry: 3 do
   include AuthenticationWorkflow
   include ShopWorkflow
@@ -31,7 +30,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
     let(:sm2) { create(:shipping_method, require_ship_address: false, name: "Donkeys", description: "blue", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 4.56)) }
     let(:sm3) { create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local") }
     let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::PaymentMethod::Check") }
-    let!(:pm2) { create(:payment_method, distributors: [distributor]) }
+    let!(:pm2) { create(:payment_method, distributors: [distributor], calculator: Spree::Calculator::FlatRate.new(preferred_amount: 5.67)) }
     let!(:pm3) do
       Spree::Gateway::PayPalExpress.create!(name: "Paypal", environment: 'test', distributor_ids: [distributor.id]).tap do |pm|
         pm.preferred_login = 'devnull-facilitator_api1.rohanmitchell.com'
@@ -39,6 +38,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         pm.preferred_signature = 'AFcWxV21C7fd0v3bYYYRCpSSRl31AaTntNJ-AjvUJkWf4dgJIvcLsf1V'
       end
     end
+
 
     before do
       distributor.shipping_methods << sm1
@@ -328,37 +328,63 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
             end
           end
 
-          context "with a credit card payment method" do
-            let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: "Spree::Gateway::Bogus") }
+          context "when we are charged a payment method fee (transaction fee)" do
+            it "creates a payment including the transaction fee" do
+              # Selecting the transaction fee, it is displayed
+              expect(page).to have_selector ".transaction-fee td", text: "$0.00"
+              expect(page).to have_selector ".total", text: "$11.23"
 
-            it "takes us to the order confirmation page when submitted with a valid credit card" do
               toggle_payment
-              fill_in 'Card Number', with: "4111111111111111"
-              select 'February', from: 'secrets.card_month'
-              select (Date.current.year+1).to_s, from: 'secrets.card_year'
-              fill_in 'Security Code', with: '123'
+              choose "#{pm2.name} ($5.67)"
+
+              expect(page).to have_selector ".transaction-fee td", text: "$5.67"
+              expect(page).to have_selector ".total", text: "$16.90"
 
               place_order
-              page.should have_content "Your order has been processed successfully"
+              expect(page).to have_content "Your order has been processed successfully"
 
-              # Order should have a payment with the correct amount
+              # There are two orders - our order and our new cart
               o = Spree::Order.complete.first
-              o.payments.first.amount.should == 11.23
+              expect(o.adjustments.payment_fee.first.amount).to eq 5.67
+              expect(o.payments.first.amount).to eq(10 + 1.23 + 5.67) # items + fees + transaction
             end
+          end
 
-            it "shows the payment processing failed message when submitted with an invalid credit card" do
-              toggle_payment
-              fill_in 'Card Number', with: "9999999988887777"
-              select 'February', from: 'secrets.card_month'
-              select (Date.current.year+1).to_s, from: 'secrets.card_year'
-              fill_in 'Security Code', with: '123'
+          describe "credit card payments" do
+            ["Spree::Gateway::Bogus", "Spree::Gateway::BogusSimple"].each do |gateway_type|
+              context "with a credit card payment method using #{gateway_type}" do
+                let!(:pm1) { create(:payment_method, distributors: [distributor], name: "Roger rabbit", type: gateway_type) }
 
-              place_order
-              page.should have_content "Payment could not be processed, please check the details you entered"
+                it "takes us to the order confirmation page when submitted with a valid credit card" do
+                  toggle_payment
+                  fill_in 'Card Number', with: "4111111111111111"
+                  select 'February', from: 'secrets.card_month'
+                  select (Date.current.year+1).to_s, from: 'secrets.card_year'
+                  fill_in 'Security Code', with: '123'
 
-              # Does not show duplicate shipping fee
-              visit checkout_path
-              page.should have_selector "th", text: "Shipping", count: 1
+                  place_order
+                  page.should have_content "Your order has been processed successfully"
+
+                  # Order should have a payment with the correct amount
+                  o = Spree::Order.complete.first
+                  o.payments.first.amount.should == 11.23
+                end
+
+                it "shows the payment processing failed message when submitted with an invalid credit card" do
+                  toggle_payment
+                  fill_in 'Card Number', with: "9999999988887777"
+                  select 'February', from: 'secrets.card_month'
+                  select (Date.current.year+1).to_s, from: 'secrets.card_year'
+                  fill_in 'Security Code', with: '123'
+
+                  place_order
+                  page.should have_content "Payment could not be processed, please check the details you entered"
+
+                  # Does not show duplicate shipping fee
+                  visit checkout_path
+                  page.should have_selector "th", text: "Shipping", count: 1
+                end
+              end
             end
           end
         end

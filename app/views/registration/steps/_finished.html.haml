@@ -1,0 +1,16 @@
+%script{ type: "text/ng-template", id: "registration/finished.html" }
+  .container#registration-finished
+    .row
+      .small-12.columns.pad-top
+        %header
+          %h2 {{'registration_finished_headline' | t}}
+          .panel.callout
+            %p{ "ng-bind" => "'registration_finished_thanks' | t:{enterprise: enterprise.name}" }
+            %p {{'registration_finished_login' | t}}
+    .row
+      .small-12.columns.text-center
+        %h4{ "ng-bind" => "'registration_finished_activate' | t:{enterprise: enterprise.name}" }
+
+        %p{ "ng-bind-html" => "'registration_finished_activate_instruction_html' | t:{email: enterprise.email}"}
+
+        %a.button.primary{ type: "button", href: "/" } {{'registration_finished_action' | t}} &gt;

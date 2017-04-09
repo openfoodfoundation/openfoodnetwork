@@ -155,6 +155,8 @@ class AbilityDecorator
     can [:admin, :index, :read, :search], Spree::Taxon
     can [:admin, :index, :read, :create, :edit], Spree::Classification
 
+    can [:admin, :index, :import, :save], ProductImporter
+
     # Reports page
     can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing], :report
   end
@@ -173,7 +175,7 @@ class AbilityDecorator
   def add_order_management_abilities(user)
     # Enterprise User can only access orders that they are a distributor for
     can [:index, :create], Spree::Order
-    can [:read, :update, :fire, :resend, :invoice, :print], Spree::Order do |order|
+    can [:read, :update, :fire, :resend, :invoice, :print, :print_ticket], Spree::Order do |order|
       # We allow editing orders with a nil distributor as this state occurs
       # during the order creation process from the admin backend
       order.distributor.nil? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)

@@ -1,0 +1,65 @@
+%script{ type: "text/ng-template", id: "registration/details.html" }
+  .container#registration-details
+    %ng-include{ src: "'registration/steps.html'" }
+    .row
+      .small-12.columns
+        %header
+          %h2 {{'registration_detail_headline' | t}}
+          %h5{ ng: { if: "::enterprise.type != 'own'" } } {{'registration_detail_enterprise' | t}}
+          %h5{ ng: { if: "::enterprise.type == 'own'" } } {{'registration_detail_producer' | t}}
+
+    %form{ name: 'details', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('contact',details)" } }
+
+      .row
+        .small-12.medium-9.large-12.columns.end
+          .field
+            %label{ for: 'enterprise_name', ng: { if: "::enterprise.type != 'own'" } } {{'registration_detail_name_enterprise' | t}}
+            %label{ for: 'enterprise_name', ng: { if: "::enterprise.type == 'own'" } } {{'registration_detail_name_producer' | t}}
+            %input.chunky{ id: 'enterprise_name', name: 'name', placeholder: "{{'registration_detail_name_placeholder' | t}}", required: true, ng: { model: 'enterprise.name' } }
+            %span.error{ ng: { show: "details.name.$error.required && submitted" } }
+              {{'registration_detail_name_error' | t}}
+
+      .row
+        .small-12.medium-9.large-6.columns
+          .field
+            %label{ for: 'enterprise_address' } {{'registration_detail_address1' | t}}
+            %input.chunky{ id: 'enterprise_address', name: 'address1', required: true, placeholder: "{{'registration_detail_address1_placeholder' | t}}", required: true, ng: { model: 'enterprise.address.address1' } }
+            %span.error{ ng: { show: "details.address1.$error.required && submitted" } }
+              {{'registration_detail_address1_error' | t}}
+          .field
+            %label{ for: 'enterprise_address2' } {{'registration_detail_address2' | t}}
+            %input.chunky{ id: 'enterprise_address2', name: 'address2', required: false, placeholder: "", required: false, ng: { model: 'enterprise.address.address2' } }
+
+        .small-12.medium-9.large-6.columns.end
+          .row
+            .small-12.medium-8.large-8.columns
+              .field
+                %label{ for: 'enterprise_city' } {{'registration_detail_suburb' | t}}
+                %input.chunky{ id: 'enterprise_city', name: 'city', required: true, placeholder: "{{'registration_detail_suburb_placeholder' | t}}", ng: { model: 'enterprise.address.city' } }
+                %span.error{ ng: { show: "details.city.$error.required && submitted" } }
+                  {{'registration_detail_suburb_error' | t}}
+            .small-12.medium-4.large-4.columns
+              .field
+                %label{ for: 'enterprise_zipcode' } {{'registration_detail_postcode' | t}}
+                %input.chunky{ id: 'enterprise_zipcode', name: 'zipcode', required: true, placeholder: "{{'registration_detail_postcode_placeholder' | t}}", ng: { model: 'enterprise.address.zipcode' } }
+                %span.error{ ng: { show: "details.zipcode.$error.required && submitted" } }
+                  {{'registration_detail_postcode_error' | t}}
+          .row
+            .small-12.medium-4.large-4.columns
+              .field
+                %label{ for: 'enterprise_state' } {{'registration_detail_state' | t}}
+                %select.chunky{ id: 'enterprise_state', name: 'state', ng: { model: 'enterprise.address.state_id', options: 's.id as s.abbr for s in enterprise.country.states', show: 'countryHasStates()', required: 'countryHasStates()' } }
+                %span.error{ ng: { show: "details.state.$error.required && submitted" } }
+                  {{'registration_detail_state_error' | t}}
+            .small-12.medium-8.large-8.columns
+              .field
+                %label{ for: 'enterprise_country' } {{'registration_detail_country' | t}}
+                %select.chunky{ id: 'enterprise_country', name: 'country', required: true, ng: { model: 'enterprise.country', options: 'c as c.name for c in countries' } }
+                %span.error{ ng: { show: "details.country.$error.required && submitted" } }
+                  {{'registration_detail_country_error' | t}}
+
+
+      .row.buttons
+        .small-12.columns
+          %hr
+          %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }

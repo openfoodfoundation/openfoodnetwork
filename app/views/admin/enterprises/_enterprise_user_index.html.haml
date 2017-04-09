@@ -10,10 +10,9 @@
   .row{ 'ng-if' => '!loaded' }
     .sixteen.columns.alpha#loading
       %img.spinner{ src: "/assets/spinning-circles.svg" }
-      %h1 LOADING ENTERPRISES
+      %h1= t('.loading_enterprises')
   .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded && filteredEnterprises.length == 0'}
-    %h1#no_results No enterprises found.
-
+    %h1#no_results= t('.no_enterprises_found')
 
   .row{ ng: { show: "loaded && filteredEnterprises.length > 0" } }
     %table.index#enterprises

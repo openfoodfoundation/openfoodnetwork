@@ -1,0 +1,7 @@
+/ insert_after "fieldset.security"
+
+%fieldset.enterprise_toc.no-border-bottom
+  %legend{:align => "center"}= t(:enterprise_terms_of_service)
+  .field
+    = preference_field_tag(:enterprises_require_tos, Spree::Config[:enterprises_require_tos], :type => Spree::Config.preference_type(:enterprises_require_tos))
+    = label_tag(:enterprises_require_tos, t(:enterprises_require_tos)) + tag(:br)

@@ -42,7 +42,7 @@ feature 'Business Model Configuration' do
 
         click_button "Update"
 
-        expect(page).to have_content "Business model configuration has been successfully updated!"
+        expect(page).to have_content "Business Model has been successfully updated!"
         expect(Spree::Config.account_invoices_monthly_fixed).to eq 10
         expect(Spree::Config.account_invoices_monthly_rate).to eq 0.05
         expect(Spree::Config.account_invoices_monthly_cap).to eq 30

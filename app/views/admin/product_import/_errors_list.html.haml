@@ -1,0 +1,11 @@
+- @importer.invalid_entries.each do |line_number, entry|
+  %div.import-errors
+    %p.line
+      %strong
+        Item line #{line_number}:
+      %span= entry.name
+      - if entry.display_name
+        ( #{entry.display_name} )
+    - entry.invalid_attributes.each do |attr, error|
+      %p.error
+        &nbsp;-&nbsp; #{error}

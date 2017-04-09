@@ -46,6 +46,8 @@ en:
   producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
   charges_sales_tax: Charges GST?
   print_invoice: "Print Invoice"
+  print_ticket: "Print Ticket"
+  select_ticket_printer: "Select printer for tickets"
   send_invoice: "Send Invoice"
   resend_confirmation: "Resend Confirmation"
   view_order: "View Order"
@@ -57,16 +59,12 @@ en:
   must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
   invoice: "Invoice"
   percentage_of_sales: "%{percentage} of sales"
-  percentage_of_turnover: "Percentage of turnover"
-  monthly_cap_excl_tax: "monthly cap (excl. GST)"
   capped_at_cap: "capped at %{cap}"
   per_month: "per month"
   free: "free"
   free_trial: "free trial"
   plus_tax: "plus GST"
-  total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
   min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
-  business_model_configuration: "Business model configuration"
   say_no: "No"
   say_yes: "Yes"
   then: then
@@ -80,6 +78,7 @@ en:
   loading: Loading...
   show_more: Show more
   show_all: Show all
+  show_all_with_more: "Show All (%{num}  More)"
   cancel: Cancel
 
   admin:
@@ -110,6 +109,7 @@ en:
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
+    description: Description
 
     whats_this: What's this?
 
@@ -119,6 +119,53 @@ en:
 
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     unsaved_changes: "You have unsaved changes"
+
+    accounts_and_billing_settings:
+      method_settings:
+        default_accounts_payment_method: "Default Accounts Payment Method"
+        default_accounts_shipping_method: "Default Accounts Shipping Method"
+      edit:
+        accounts_and_billing: "Accounts & Billing"
+        accounts_administration_distributor: "Accounts Administration Distributor"
+        admin_settings: "Settings"
+        update_invoice: "Update Invoices"
+        auto_update_invoices: "Auto-update invoices nightly at 1:00am"
+        finalise_invoice: "Finalise Invoices"
+        auto_finalise_invoices: "Auto-finalise invoices monthly on the 2nd at 1:30am"
+        manually_run_task: "Manually Run Task "
+        update_user_invoice_explained: "Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night."
+        finalise_user_invoices: "Finalise User Invoices"
+        finalise_user_invoice_explained: "Use this button to finalize all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month."
+        update_user_invoices: "Update User Invoices"
+
+    business_model_configuration:
+      edit:
+        business_model_configuration: "Business Model"
+        business_model_configuration_tip: "Configure the rate at which shops will be charged each month for use of the Open Food Network."
+        bill_calculation_settings: "Bill Calculation Settings"
+        bill_calculation_settings_tip: "Adjust the amount that enterprises will be billed each month for use of the OFN."
+        shop_trial_length: "Shop Trial Length (Days)"
+        shop_trial_length_tip: "The length of time (in days) that enterprises who are set up as shops can run as a trial period."
+        fixed_monthly_charge: "Fixed Monthly Charge"
+        fixed_monthly_charge_tip: "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."
+        percentage_of_turnover: "Percentage of turnover"
+        percentage_of_turnover_tip: "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."
+        monthly_cap_excl_tax: "monthly cap (excl. GST)"
+        monthly_cap_excl_tax_tip: "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."
+        tax_rate: "Tax Rate"
+        tax_rate_tip: "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."
+        minimum_monthly_billable_turnover: "Minimum Monthly Billable Turnover"
+        minimum_monthly_billable_turnover_tip: "Minimum monthly turnover before a shopfront will be charged for using OFN. Enterprises turning over less than this amount in a month will not be charged, either as a percentage or fixed rate."
+        example_bill_calculator: "Example Bill Calculator"
+        example_bill_calculator_legend: "Alter the example turnover to visualise the effect of the settings to the left."
+        example_monthly_turnover: "Example Monthly Turnover"
+        example_monthly_turnover_tip: "An example monthly turnover for an enterprise which will be used to generate calculate an example monthly bill below."
+        cap_reached?: "Cap Reached ?"
+        cap_reached?_tip: "Whether the cap (specified to the left) has been reached, given the settings and the turnover provided."
+        included_tax: "Included tax"
+        included_tax_tip: "The total tax included in the example monthly bill, given the settings and the turnover provided."
+        total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
+        total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
 
     customers:
       index:
@@ -144,6 +191,7 @@ en:
 
     cache_settings:
       show:
+        title: Caching
         distributor: Distributor
         order_cycle: Order Cycle
         status: Status
@@ -176,6 +224,9 @@ en:
         inherits_properties?: Inherits Properties?
         available_on: Available On
         av_on: "Av. On"
+      properties:
+        property_name: Property Name
+        inherited_property: Inherited Property
       variants:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
 
@@ -274,10 +325,11 @@ en:
         inventory_settings:
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
-          text2: "If you are using the inventory tool, you can select whether new products \
-                 added by your suppliers need to be added to your inventory before they can be \
-                 stocked. If you are not using your inventory to manage your products you should \
-                 select the 'recommended' option below:"
+          text2: >
+            If you are using the inventory tool, you can select whether new products
+            added by your suppliers need to be added to your inventory before they can be
+            stocked. If you are not using your inventory to manage your products you should
+            select the 'recommended' option below:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
@@ -306,7 +358,7 @@ en:
           visible: Visible
           not_visible: Not visible
           permalink: Permalink (no spaces)
-          permalink_tip: "This permalink is used to create the url to your shop: {{link}} your-shop-name/shop"
+          permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
           link_to_front_tip: A direct link to your shopfront on the Open Food Network.
         shipping_methods:
@@ -325,12 +377,12 @@ en:
           allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
           allow_guest_orders_false: "Require login to order"
           allow_guest_orders_true: "Allow guest checkout"
-          shopfront_message_placeholder: \
-            An optional explanation for customers detailing how your shopfront works, \
+          shopfront_message_placeholder: >
+            An optional explanation for customers detailing how your shopfront works,
             to be displayed above the product list on your shop page.
-          shopfront_closed_message_placeholder: \
-            A message which provides a more detailed explanation about why your shop is \
-            closed and/or when customers can expect it to open again. This is displayed \
+          shopfront_closed_message_placeholder: >
+            A message which provides a more detailed explanation about why your shop is
+            closed and/or when customers can expect it to open again. This is displayed
             on your shop only when you have no active order cycles (ie. shop is closed).
           open_date: Open Date
           close_date: Close Date
@@ -394,6 +446,8 @@ en:
         choose_option: Please choose one of the options above.
         change_now: Change now
       enterprise_user_index:
+        loading_enterprises: LOADING ENTERPRISES
+        no_enterprises_found: No enterprises found.
         search_placeholder: Search By Name
         manage: Manage
       new_form:
@@ -415,7 +469,7 @@ en:
     order_cycles:
       advanced_settings:
         title: Advanced Settings
-        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in {{inventory}}'s inventory.
+        choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
@@ -453,14 +507,16 @@ en:
         advanced_settings: Advanced Settings
         update_and_close: Update and Close
     producer_properties:
-      form:
-        property: Property
-        value: Value
       index:
         title: Producer Properties
     shared:
       user_guide_link:
         user_guide: User Guide
+    invoice_settings:
+      edit:
+        title: Invoice Settings
+        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
+        enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
 
   home:
     hubs:
@@ -481,10 +537,30 @@ en:
       require_customer_html: "Please %{contact} %{enterprise} to become a customer."
 
   # Printable Invoice Columns
-  invoice_column_item: "Item"
-  invoice_column_qty: "Qty"
+  invoice_billing_address: "Billing address:"
   invoice_column_tax: "GST"
   invoice_column_price: "Price"
+  invoice_column_item: "Item"
+  invoice_column_qty: "Qty"
+  invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"
+  invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
+  invoice_column_price_with_taxes: "Total price (Incl. tax)"
+  invoice_column_price_without_taxes: "Total price (Excl. tax)"
+  invoice_column_tax_rate: "Tax rate"
+  tax_invoice: "TAX INVOICE"
+  tax_total: "Total tax (%{rate}):"
+  total_excl_tax: "Total (Excl. tax):"
+  total_incl_tax: "Total (Incl. tax):"
+  abn: "ABN:"
+  acn: "ACN:"
+  invoice_issued_on: "Invoice issued on:"
+  order_number: "Invoice number:"
+  date_of_transaction: "Date of transaction:"
+
+  ticket_column_qty: "Qty"
+  ticket_column_item: "Item"
+  ticket_column_unit_price: "Unit Price"
+  ticket_column_total_price: "Total Price"
 
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME
@@ -949,7 +1025,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_distributor: Distributor
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
 
-  shop_trial_length: "Shop Trial Length (Days)"
   shop_trial_expires_in: "Your shopfront trial expires in"
   shop_trial_expired_notice: "Good news! We have decided to extend shopfront trials until further notice."
 
@@ -1187,16 +1262,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   roles: "Roles"
   update: "Update"
   add_producer_property: "Add producer property"
-  admin_settings: "Settings"
-  update_invoice: "Update Invoices"
-  finalise_invoice: "Finalise Invoices"
-  finalise_user_invoices: "Finalise User Invoices"
-  finalise_user_invoice_explained: "Use this button to finalize all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month."
-  manually_run_task: "Manually Run Task "
-  update_user_invoices: "Update User Invoices"
-  update_user_invoice_explained: "Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night."
-  auto_finalise_invoices: "Auto-finalise invoices monthly on the 2nd at 1:30am"
-  auto_update_invoices: "Auto-update invoices nightly at 1:00am"
   in_progress: "In Progress"
   started_at: "Started at"
   queued: "Queued"
@@ -1207,8 +1272,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   no_customers_found: "No customers found"
   go: "Go"
   hub: "Hub"
-  accounts_administration_distributor: "accounts administration distributor"
-  accounts_and_billing: "Accounts & Billing"
   producer: "Producer"
   product: "Product"
   price: "Price"
@@ -1257,6 +1320,12 @@ Please follow the instructions there to make your enterprise visible on the Open
   edit_profile_details_etc: "Change your profile description, images, etc."
   order_cycle: "Order Cycle"
   remove_tax: "Remove tax"
+  enterprise_terms_of_service: "Enterprise Terms of Service"
+  enterprises_require_tos: "Enterprises must accept Terms of Service"
+  enterprise_tos_link: "Enterprise Terms of Service link"
+  enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
+  enterprise_tos_link_text: "Terms of Service."
+  enterprise_tos_agree: "I agree to the above Terms of Service"
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
   admin_shared_address_1: "Address"
@@ -1290,6 +1359,22 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_order_cycle: "Order Cycle: "
   report_entreprises: "Enterprises: "
   report_users: "Users: "
+  report_tax_rates: "Tax rates"
+  report_tax_types: "Tax types"
+  report_header_order_number: "Order number"
+  report_header_date: "Date"
+  report_header_items: "Items"
+  report_header_items_total: "Items total %{currency_symbol}"
+  report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
+  report_header_sales_tax: "Sales Tax (%{currency_symbol})"
+  report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
+  report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
+  report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
+  report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_customer: "Customer"
+  report_header_distributor: "Distributor"
+  report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
   initial_invoice_number: "Initial invoice number:"
   invoice_date: "Invoice date:"
   due_date: "Due date:"
@@ -1334,7 +1419,137 @@ Please follow the instructions there to make your enterprise visible on the Open
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
 
+  js:
+    admin:
+      modals:
+        got_it: Got it
+        tag_rule_help:
+          title: Tag Rules
+          overview: Overview
+          overview_text: >
+            Tag rules provide a way to describe which items are visible or otherwise
+            to which customers. Items can be Shipping Methods, Payment Methods,
+            Products and Order Cycles.
+          by_default_rules: "'By Default...' Rules"
+          by_default_rules_text: >
+            Default rules allow you to hide items so that they are not visible by default.
+            This behaviour can then be overriden by non-default rules for customers with
+            particular tags.
+          customer_tagged_rules: "'Customers Tagged...' Rules"
+          customer_tagged_rules_text: >
+            By creating rules related to a specific customer tag, you can override the default
+            behaviour (whether it be to show or to hide items) for customers with the specified tag.
+      panels:
+        save: SAVE
+        saved: SAVED
+        saving: SAVING
+        enterprise_package:
+          hub_profile: Hub Profile
+          hub_profile_cost: "COST: ALWAYS FREE"
+          hub_profile_text1: >
+            People can find and contact you on the Open Food Network. Your enterprise will be
+            visible on the map, and will be searchable in listings.
+          hub_profile_text2: >
+            Having a profile, and making connections within your local food system through
+            the Open Food Network will always be free.
+          hub_shop: Hub Shop
+          hub_shop_text1: >
+            Your enterprise is the backbone of your local food system. You aggregate produce
+            from other enterprises and can sell it through your shop on the Open Food Network.
+          hub_shop_text2: >
+            Hubs can take many forms, whether they be a food co-op, a buying group, a veggie-box
+            program, or a local grocery store.
+          hub_shop_text3: >
+            If you also want to sell your own products, you will need to switch this enterprise
+            to be a producer.
+          choose_package: Please Choose a Package
+          choose_package_text1: >
+            Your enterprise will not be fully activated until a package is selected from the
+            options on the left.
+          choose_package_text2: >
+            Click on an option to see more detailed information about each package, and hit
+            the red SAVE button when you are done!
+          profile_only: Profile Only
+          profile_only_cost: "COST: ALWAYS FREE"
+          profile_only_text1: >
+            A profile makes you visible and contactable to others and is a way to share your story.
+          profile_only_text2: >
+            If you prefer to focus on producing food, and want to leave the work of selling it
+            to someone else, you won't require a shop on the Open Food Network.
+          profile_only_text3: >
+            Add your products to Open Food Network, allowing hubs to stock your products in
+            their stores.
+          producer_shop: Producer Shop
+          producer_shop_text1: >
+            Sell your products directly to customers through your very own Open Food Network
+            shopfront.
+          producer_shop_text2: >
+            A Producer Shop is for your produce only, if you want to sell produce grown/produced
+            off site, please select 'Producer Hub'.
+          producer_hub: Producer Hub
+          producer_hub_text1: >
+            Your enterprise is the backbone of your local food system. You can sell your own
+            produce as well as produce aggregated from other enterprises through your shopfront
+            on the Open Food Network.
+          producer_hub_text2: >
+            Producer Hubs can take many forms, whether they be a CSA, a veggie-box program,
+            or a food co-op with a rooftop garden.
+          producer_hub_text3: >
+            The Open Food Network aims to support as many hub models as possible, so no matter
+            your situation, we want to provide the tools you need to run your organisation or
+            local food business.
+          get_listing: Get a listing
+          always_free: ALWAYS FREE
+          sell_produce_others: Sell produce from others
+          sell_own_produce: Sell your own produce
+          sell_both: Sell produce from self and others
+        enterprise_producer:
+          producer: Producer
+          producer_text1: >
+            Producers make yummy things to eat or drink. You're a producer if you grow it,
+            raise it, brew it, bake it, ferment it, milk it or mould it.
+          producer_text2: >
+            Producers can also perform other functions, such as aggregating food from other
+            enterprises and selling it through a shop on the Open Food Network.
+          non_producer: Non-producer
+          non_producer_text1: >
+            Non-producers do not produce any food themselves, meaning that they cannot create
+            their own products for sale through the Open Food Network.
+          non_producer_text2: >
+            Instead, non-producers specialise in linking producers to the end eater, whether it
+            be by aggregating, grading, packing, selling or delivering food.
+          producer_desc: Producers of food
+          producer_example: eg. GROWERS, BAKERS, BREWERS, MAKERS
+          non_producer_desc: All other food enterprises
+          non_producer_example: eg. Grocery stores, Food co-ops, Buying groups
+        enterprise_status:
+          status_title: "%{name} is set up and ready to go!"
+          severity: Severity
+          description: Description
+          resolve: Resolve
+      new_tag_rule_dialog:
+        select_rule_type: "Select a rule type:"
+    out_of_stock:
+      reduced_stock_available: Reduced stock available
+      out_of_stock_text: >
+        While you've been shopping, the stock levels for one or more of the products
+        in your cart have reduced. Here's what's changed:
+      now_out_of_stock: is now out of stock.
+      only_n_remainging: "now only has %{num} remaining."
+
   spree:
+    admin:
+      products:
+        bulk_edit:
+          header:
+            title: Bulk Edit Products
+          indicators:
+            title: LOADING PRODUCTS
+            no_products: "No products yet. Why don't you add some?"
+            no_results: "Sorry, no results match"
+      variants:
+        autocomplete:
+          producer_name: Producer
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
@@ -1356,6 +1571,10 @@ Please follow the instructions there to make your enterprise visible on the Open
       processing: processing
       void: void
       invalid: invalid
+    order_mailer:
+      invoice_email:
+        hi: "Hi %{name}"
+        invoice_attached_text: Please find attached an invoice for your recent order from
     order_state:
       address: address
       adjustments: adjustments
@@ -1369,3 +1588,6 @@ Please follow the instructions there to make your enterprise visible on the Open
       resumed: resumed
       returned: returned
       skrill: skrill
+    orders:
+      invoice:
+        tax_invoice: "TAX INVOICE: "

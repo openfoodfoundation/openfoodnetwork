@@ -1,0 +1,35 @@
+%table.import-settings{ng: {controller: 'ImportOptionsFormCtrl', init: "supplierId = #{supplier_id}; resetCount = #{@importer.products_to_reset[supplier_id][:reset_count]}"}}
+  %tr
+    %td.description
+      Remove absent products?
+    %td
+      = check_box_tag "settings[#{supplier_id}][reset_all_absent]", 1, false, :'ng-model' => 'resetAbsent', :'ng-change' => 'toggleResetAbsent()'
+    %td
+  %tr
+    %td.description
+      Set default stock level
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][on_hand][mode]", options_for_select({"Don't overwrite" => :overwrite_none, "Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth'}
+    %td
+      = number_field_tag "settings[#{supplier_id}][defaults][on_hand][value]", 0
+  %tr
+    %td.description
+      Set default tax category
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][tax_category_id][mode]", options_for_select({"Don't overwrite" => :overwrite_none, "Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth'}
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][tax_category_id][value]", options_for_select(@tax_categories.map {|tc| [tc.name, tc.id]}), {prompt: 'None', class: 'select2 fullwidth'}
+  %tr
+    %td.description
+      Set default shipping category
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][shipping_category_id][mode]", options_for_select({"Don't overwrite" => :overwrite_none, "Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth'}
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][shipping_category_id][value]", options_for_select(@shipping_categories.map {|sc| [sc.name, sc.id]}), {prompt: 'None', class: 'select2 fullwidth'}
+  %tr
+    %td.description
+      Set default available date
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][available_on][mode]", options_for_select({"Don't overwrite" => :overwrite_none, "Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth'}
+    %td
+      = text_field_tag "settings[#{supplier_id}][defaults][available_on][value]", nil, {class: 'datepicker', placeholder: 'Today'}

@@ -1,7 +1,7 @@
 .ofn-drop-down
   %span
     %i.icon-check
-    Actions
+    = t('admin.actions')
     %i{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
   %div.menu{ 'ng-show' => "expanded" }
     %a.menu_item{ 'ng-repeat' => "link in links", href: '{{link.url}}', target: "{{link.target || '_self'}}", data: { method: "{{ link.method || 'get' }}", confirm: "{{link.confirm}}" } }

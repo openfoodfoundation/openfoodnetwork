@@ -63,6 +63,7 @@ gem 'wkhtmltopdf-binary'
 
 gem 'foreigner'
 gem 'immigrant'
+gem 'roo', '~> 2.7.0'
 
 gem 'whenever', require: false
 
@@ -90,6 +91,7 @@ gem 'jquery-rails'
 gem 'jquery-migrate-rails'
 gem 'css_splitter'
 
+gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz'
 
 group :test, :development do
   # Pretty printed test output
