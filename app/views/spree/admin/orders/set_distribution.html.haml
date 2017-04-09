@@ -17,6 +17,8 @@
 %div{"ng-app" => "admin.orders", "ng-controller" => "ordersCtrl"}
   = form_for @order, url: admin_order_url(@order), method: :put do |f|
     = render 'spree/admin/orders/_form/distribution_fields'
+    -# This param passed to stop validation error in next page due to no line items in order yet:
+    = hidden_field_tag 'suppress_error_msg', "true"
     = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
       %i.icon-arrow-right
       = t(:next)
