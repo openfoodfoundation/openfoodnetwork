@@ -328,6 +328,7 @@ feature %q{
         select2_select dist.name, from: 'order_distributor_id'
         page.should have_select2 'order_order_cycle_id', with_options: ['Overidden (open)']
         select2_select order_cycle.name, from: 'order_order_cycle_id'
+        click_button 'Next'
       end
 
       # Reproducing a bug, issue #1446

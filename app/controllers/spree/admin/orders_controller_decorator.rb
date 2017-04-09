@@ -15,8 +15,6 @@ Spree::Admin::OrdersController.class_eval do
   # Ensure that the distributor is set for an order when
   before_filter :ensure_distribution, only: :new
 
-#  before_filter :clear_errors, only: :update
-
   # After updating an order, the fees should be updated as well
   # Currently, adding or deleting line items does not trigger updating the
   # fees! This is a quick fix for that.

@@ -12,7 +12,6 @@ feature %q{
     @product = create(:simple_product)
     @distributor = create(:distributor_enterprise, owner: @user, charges_sales_tax: true)
     @order_cycle = create(:simple_order_cycle, name: 'One', distributors: [@distributor], variants: [@product.variants.first])
-    @oc_overrides = create(:order_cycle_with_overrides)
 
     @order = create(:order_with_totals_and_distribution, user: @user, distributor: @distributor, order_cycle: @order_cycle, state: 'complete', payment_state: 'balance_due')
     @customer = create(:customer, enterprise: @distributor, email: @user.email, user: @user, ship_address: create(:address))
@@ -54,6 +53,8 @@ feature %q{
     select2_select @order_cycle.name, from: 'order_order_cycle_id'
     click_button 'Next'
 
+    # it suppresses validation errors when setting distribution
+    page.should_not have_selector '#errorExplanation'
     page.should have_content 'ADD PRODUCT'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
@@ -85,6 +86,8 @@ feature %q{
   scenario "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
+    puts d.name
+    puts @distributor.name
 
     @order.state = 'cart'; @order.completed_at = nil; @order.save
 
@@ -99,7 +102,6 @@ feature %q{
     select2_select oc.name, from: 'order_order_cycle_id'
 
     click_button 'Update And Recalculate Fees'
-
     page.should have_content "Distributor or order cycle cannot supply the products in your cart"
   end
 
@@ -151,7 +153,7 @@ feature %q{
     # And I select that customer's email address and save the order
     targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
     click_button 'Continue'
-    within('h1.page-title') { page.should have_content "Shipments" }
+    page.should have_selector "h1.page-title", text: "Shipments"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
@@ -243,17 +245,6 @@ feature %q{
       expect(o.distributor).to eq distributor1
       expect(o.order_cycle).to eq order_cycle1
     end
-
-  end
-
-  scenario "with overrides it uses the overriden price" do
-    login_to_admin_section
-    new_order_with_distribution(@oc_overrides.distributors.first, @oc_overrides)
-    product = @oc_overrides.products.first
-    targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
-    click_link 'Add'
-    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
-    page.should have_selector 'td', text: "119.99"
 
   end
 
