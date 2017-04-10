@@ -9,8 +9,14 @@ angular.module("admin.reports").controller "bulkCoopController", ($scope, $http,
 
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
 
-  $scope.downloadAsCSV = ->
-    $scope.gridApi.exporter.csvExport('all','visible')
+  $scope.download = ($event, type, visibility) ->
+    $event.stopPropagation()
+    $event.preventDefault()
+    # exporterAllDataPromise???
+    if type == 'csv'
+      $scope.gridApi.exporter.csvExport(visibility, visibility)
+    else
+      $scope.gridApi.exporter.pdfExport(visibility, visibility)
 
   $scope.reload = ->
     $scope.loading = false
