@@ -5,7 +5,7 @@ angular.module("admin.reports").controller "bulkCoopController", ($scope, $http,
   $scope.gridOptions = BulkCoopReport.gridOptions()
   $scope.loading = false
   $scope.loadAttempted = false
-  $scope.q = {report_type: 'supplier_report'}
+  $scope.q = {report_type: 'supplier_totals'}
 
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
 

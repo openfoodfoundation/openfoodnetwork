@@ -22,10 +22,10 @@ Spree::Admin::ReportsController.class_eval do
 
   REPORT_TYPES = {
     orders_and_fulfillment: [
-      ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
-      ['Order Cycle Supplier Totals by Distributor',:order_cycle_supplier_totals_by_distributor],
-      ['Order Cycle Distributor Totals by Supplier',:order_cycle_distributor_totals_by_supplier],
-      ['Order Cycle Customer Totals',:order_cycle_customer_totals]
+      ['Order Cycle Supplier Totals', :supplier_totals],
+      ['Order Cycle Supplier Totals by Distributor', :supplier_totals_by_distributor],
+      ['Order Cycle Distributor Totals by Supplier', :distributor_totals_by_supplier],
+      ['Order Cycle Customer Totals', :customer_totals]
     ],
     products_and_inventory: [
       ['All products', :all_products],
@@ -273,15 +273,17 @@ Spree::Admin::ReportsController.class_eval do
       line_items = @report.table_items
       orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')
       variants = Spree::Variant.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_variants.*')
-      products = Spree::Product.joins(:variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
+      products = Spree::Product.joins(:all_variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
+
       line_items = ActiveModel::ArraySerializer.new(line_items, each_serializer: Api::Admin::Reports::LineItemSerializer)
       orders = ActiveModel::ArraySerializer.new(orders, each_serializer: Api::Admin::Reports::OrderSerializer)
       variants = ActiveModel::ArraySerializer.new(variants, each_serializer: Api::Admin::Reports::VariantSerializer)
       products = ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::Reports::ProductSerializer)
 
-      report_data = { line_items: line_items, orders: orders, variants: variants, products: products }
+      report_data = { line_items: line_items, orders: orders, variants: variants, products: products}
       render json: report_data
     else
+      @show_old_version = params[:show_old_version] == '1' || false
       prepare_date_params params
 
       # -- Prepare Form Options
@@ -301,6 +303,12 @@ Spree::Admin::ReportsController.class_eval do
 
       # -- Build Report with Order Grouper
       @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
+      order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
+      @table = order_grouper.table(@report.table_items)
+      csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+
+      render_report(@report.header, @table, params[:csv], csv_file_name)
+
     end
 
   end
