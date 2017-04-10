@@ -10,7 +10,6 @@ module OpenFoodNetwork
 
     def header
       case params[:report_type]
-
       when "order_cycle_supplier_totals"
         [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
           I18n.t(:report_header_total_units), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
@@ -55,19 +54,19 @@ module OpenFoodNetwork
 
       line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
       line_items = line_items.preload([:order, :variant, :product])
-      line_items = line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
+      line_items = line_items.supplied_by_any(params[:q][:supplier_id_in]) if params[:q].andand[:supplier_id_in].present?
 
-      # # If empty array is passed in, the where clause will return all line_items, which is bad
-      # line_items_with_hidden_details =
-      #   permissions.editable_line_items.empty? ? line_items : line_items.where('"spree_line_items"."id" NOT IN (?)', permissions.editable_line_items)
-      #
-      # line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
-      #   # TODO We should really be hiding customer code here too, but until we
-      #   # have an actual association between order and customer, it's a bit tricky
-      #   line_item.order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-      #   line_item.order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-      #   line_item.order.assign_attributes(email: "HIDDEN")
-      # end
+      # If empty array is passed in, the where clause will return all line_items, which is bad
+      line_items_with_hidden_details =
+        permissions.editable_line_items.empty? ? line_items : line_items.where('"spree_line_items"."id" NOT IN (?)', permissions.editable_line_items)
+
+      line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
+        # TODO We should really be hiding customer code here too, but until we
+        # have an actual association between order and customer, it's a bit tricky
+        line_item.order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.assign_attributes(email: "HIDDEN")
+      end
 
       line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
         # TODO We should really be hiding customer code here too, but until we
@@ -81,14 +80,14 @@ module OpenFoodNetwork
 
     def rules
       case params[:report_type]
-      when "order_cycle_supplier_totals"
+      when "supplier_totals"
         [ { group_by: proc { |line_item| line_item.product.supplier },
           sort_by: proc { |supplier| supplier.name } },
           { group_by: proc { |line_item| line_item.product },
           sort_by: proc { |product| product.name } },
           { group_by: proc { |line_item| line_item.full_name },
           sort_by: proc { |full_name| full_name } } ]
-      when "order_cycle_supplier_totals_by_distributor"
+      when "supplier_totals_by_distributor"
         [ { group_by: proc { |line_item| line_item.product.supplier },
           sort_by: proc { |supplier| supplier.name } },
           { group_by: proc { |line_item| line_item.product },
@@ -105,7 +104,7 @@ module OpenFoodNetwork
             proc { |line_items| "" } ] },
           { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name } } ]
-      when "order_cycle_distributor_totals_by_supplier"
+      when "distributor_totals_by_supplier"
         [ { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name },
           summary_columns: [ proc { |line_items| "" },
@@ -123,7 +122,7 @@ module OpenFoodNetwork
           sort_by: proc { |product| product.name } },
           { group_by: proc { |line_item| line_item.full_name },
           sort_by: proc { |full_name| full_name } } ]
-      when "order_cycle_customer_totals"
+      when "customer_totals"
         [ { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name } },
           { group_by: proc { |line_item| line_item.order },
@@ -186,7 +185,7 @@ module OpenFoodNetwork
 
     def columns
       case params[:report_type]
-      when "order_cycle_supplier_totals"
+      when "supplier_totals"
         [ proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },
           proc { |line_items| line_items.first.full_name },
@@ -196,7 +195,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.sum { |li| li.amount } },
           proc { |line_items| "" },
           proc { |line_items| I18n.t(:report_header_incoming_transport) } ]
-      when "order_cycle_supplier_totals_by_distributor"
+      when "supplier_totals_by_distributor"
         [ proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },
           proc { |line_items| line_items.first.full_name },
@@ -205,7 +204,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.price },
           proc { |line_items| line_items.sum { |li| li.amount } },
           proc { |line_items| I18n.t(:report_header_shipping_method) } ]
-      when "order_cycle_distributor_totals_by_supplier"
+      when "distributor_totals_by_supplier"
         [ proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },
@@ -215,8 +214,8 @@ module OpenFoodNetwork
           proc { |line_items| line_items.sum { |li| li.amount } },
           proc { |line_items| "" },
           proc { |line_items| I18n.t(:report_header_shipping_method) } ]
-      when "order_cycle_customer_totals"
-        rsa = proc { |line_items| line_items.first.order.shipping_method.andand.delivery? }
+      when "customer_totals"
+        rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
         [
           proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },

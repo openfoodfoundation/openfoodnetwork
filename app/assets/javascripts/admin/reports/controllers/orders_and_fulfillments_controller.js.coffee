@@ -2,13 +2,29 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
   $scope.shops = shops
   $scope.producers = producers
   $scope.orderCycles = OrderCycles.all
+  $scope.columnOptions = OrdersAndFulfillmentsReport.columnOptions()
   $scope.gridOptions = OrdersAndFulfillmentsReport.gridOptions()
   $scope.loading = false
   $scope.loadAttempted = false
+  $scope.q = {report_type: 'supplier_totals'}
+
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
 
-  $scope.downloadAsCSV = ->
-    $scope.gridApi.exporter.csvExport('all','visible')
+  $scope.download = ($event, type, visibility) ->
+    $event.stopPropagation()
+    $event.preventDefault()
+    # exporterAllDataPromise???
+    if type == 'csv'
+      $scope.gridApi.exporter.csvExport(visibility, visibility)
+    else
+      $scope.gridApi.exporter.pdfExport(visibility, visibility)
+
+  $scope.reload = ->
+    $scope.loading = false
+    $scope.loadAttempted = false
+    $scope.gridOptions.columnDefs = $scope.$eval('columnOptions.'+this.q.report_type)
+    $scope.gridOptions.data = new Array()
+    $scope.gridApi.grid.refresh()
 
   $scope.load = ->
     $scope.loading = true
@@ -23,6 +39,7 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
         Products.load data.products
         Variants.load data.variants
         LineItems.linkToOrders()
+        LineItems.linkToProducts()
         $scope.gridOptions.data = LineItems.all
       .finally ->
         $scope.loading = false

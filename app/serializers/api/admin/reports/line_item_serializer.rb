@@ -1,5 +1,5 @@
 class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
-  attributes :id, :quantity, :max_quantity, :price, :price_with_fees, :full_name, :cost, :distribution_fee, :currency, :scaled_final_weight_volume, :units_required, :remainder, :max_quantity_excess, :total_available
+  attributes :id, :quantity, :max_quantity, :price, :price_with_fees, :full_name, :cost, :distribution_fee, :currency, :scaled_final_weight_volume, :units_required, :remainder, :max_quantity_excess, :total_available, :total_units
 
   has_one :order, serializer: Api::Admin::IdSerializer
   has_one :product, serializer: Api::Admin::IdNameSerializer
@@ -35,5 +35,11 @@ class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
 
   def max_quantity_excess
     OpenFoodNetwork::Reports::BulkCoopReport.max_quantity_excess([object])
+  end
+
+  def total_units
+    return " " if object.unit_value.nil?
+    scale_factor = ( object.product.variant_unit == 'weight' ? 1000 : 1 )
+    (object.quantity * object.unit_value / scale_factor).round 3
   end
 end
