@@ -5,6 +5,8 @@ angular.module("admin.reports").factory 'OrdersAndDistributorsReport', (uiGridGr
       enableSorting: true
       enableFiltering: true
       enableGridMenu: true
+      exporterMenuAllData: false
+      exporterMenuVisibleData: false
       exporterPdfDefaultStyle: {fontSize: 6 }
       exporterPdfTableHeaderStyle: { fontSize: 5, bold: true }
       exporterPdfTableStyle: { width: 'auto'}

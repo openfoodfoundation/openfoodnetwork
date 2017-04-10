@@ -1,21 +1,58 @@
-= admin_inject_json_ams "admin.reports", "currencyConfig", {}, Api::CurrencyConfigSerializer
+- if @show_old_version
+  = form_for @search, :url => spree.orders_and_distributors_admin_reports_path do |f|
+    = hidden_field_tag :show_old_version, 1
+    = render 'date_range_form', f: f
 
-%div{ ng: { app: 'admin.reports', controller: 'ordersAndDistributorsController' } }
-  %form{ name: 'orders_and_distributors_report_form', ng: { submit: 'load()' } }
-    = render 'ng_date_range_form', search: @search
-
+    = check_box_tag :csv
+    = label_tag :csv, t(:report_customers_csv)
+    %br
     .row
-      = submit_tag t(:search)
+      .alpha.two.columns= button t(:search)
+      .omega.fourteen.columns.align-right
+        =link_to 'New version', spree.orders_and_distributors_admin_reports_path(show_old_version: 0), {class: 'button'}
+
   %br
-    -#
-    .report-grid{ 'ui-grid' => 'gridOptions',
-      'ui-grid-tree-view' => true,
-      'ui-grid-resize-columns' => true,
-      'ui-grid-exporter' => true,
-      'ui-grid-grouping' => true,
-      'ui-grid-move-columns' => true,
-      style: 'height: 80vh; width: 100%' }
-      .no-data-label.sixteen.columns.align-center{ 'ng-show' => '!gridOptions.data.length && loadAttempted' }
-        =t('spree.admin.no_results')
-      .loading-data-label.sixteen.columns.align-center{ 'ng-hide' => '!gridOptions.data.length && !loading || gridOptions.data.length' }
-        =t(:loading)
+  %br
+  %table#listing_orders.index
+    %thead
+      %tr{'data-hook' => 'orders_header'}
+        - @report.header.each do |heading|
+          %th=heading
+    %tbody
+      - @report.table.each do |row|
+        %tr
+          - row.each do |column|
+            %td= column
+      - if @report.table.empty?
+        %tr
+          %td{:colspan => "2"}= t(:none)
+
+- else
+  = admin_inject_json_ams "admin.reports", "currencyConfig", {}, Api::CurrencyConfigSerializer
+
+  %div{ ng: { app: 'admin.reports', controller: 'ordersAndDistributorsController' } }
+    %form{ name: 'orders_and_distributors_report_form', ng: { submit: 'load()' } }
+      = render 'ng_date_range_form', search: @search
+
+      .row
+        .alpha.two.columns= submit_tag t(:search)
+        .omega.fourteen.columns.align-right
+          =button_tag 'Download Visible As PDF', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "pdf", "visible")'}
+          =button_tag 'Download All As PDF', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "pdf", "all")'}
+          =button_tag 'Download Visible As CSV', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "csv", "visible")'}
+          =button_tag 'Download All As CSV', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "csv", "all")'}
+
+          =link_to 'Old version', spree.orders_and_distributors_admin_reports_path(show_old_version: 1), {class: 'button'}
+    %br
+      -#
+      .report-grid{ 'ui-grid' => 'gridOptions',
+        'ui-grid-tree-view' => true,
+        'ui-grid-resize-columns' => true,
+        'ui-grid-exporter' => true,
+        'ui-grid-grouping' => true,
+        'ui-grid-move-columns' => true,
+        style: 'height: 80vh; width: 100%' }
+        .no-data-label.sixteen.columns.align-center{ 'ng-show' => '!gridOptions.data.length && loadAttempted' }
+          =t('spree.admin.no_results')
+        .loading-data-label.sixteen.columns.align-center{ 'ng-hide' => '!gridOptions.data.length && !loading || gridOptions.data.length' }
+          =t(:loading)
