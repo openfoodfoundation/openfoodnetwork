@@ -22,7 +22,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
           token: spreeApiKey
       ).success((data) =>
         Loading.clear()
-        @enterprise.id = data
+        @enterprise.id = data.id
         EnterpriseImageService.configure(@enterprise)
         RegistrationService.select('about')
       ).error((data) =>
