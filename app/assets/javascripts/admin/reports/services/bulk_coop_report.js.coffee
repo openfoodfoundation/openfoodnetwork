@@ -2,21 +2,21 @@ angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstan
   new class BulkCoopReport
     columnOptions: ->
       {supplier_report: [
-          { field: 'id',                             displayName: 'id',                   width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.producer.name',          displayName: 'Supplier',             width: '15%', sort: { priority: 0, direction: 'asc' }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.name',                   displayName: 'Product',              width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'product.group_buy_unit_size',    displayName: 'Bulk Unit size',       width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'id',                             displayName: 'Line Item ID',         width: '5%', visible: false, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'product.producer.name',          displayName: 'Supplier',             width: '15%', sort: { priority: 0, direction: 'asc' }, grouping: { groupPriority: 1 }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'product.name',                   displayName: 'Product',              width: '15%', sort: { priority: 1, direction: 'asc' }, grouping: { groupPriority: 10 }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'product.group_buy_unit_size',    displayName: 'Bulk Unit size',       width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
           { field: 'full_name',                      displayName: 'Variant',              width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'variant.value',                  displayName: 'Variant value',        width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'variant.unit',                   displayName: 'Variant unit',         width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'variant.weight_from_unit_value', displayName: 'Weight',               width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'scaled_final_weight_volume',     displayName: 'Sum Total',            width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'units_required',                 displayName: 'Units required',       width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'remainder',                      displayName: 'Unallocated',          width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'max_quantity_excess',            displayName: 'Max quantity excess',  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'scaled_final_weight_volume',     displayName: 'Sum Total',            width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
+          { field: 'units_required',                 displayName: 'Units required',       width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
+          { field: 'remainder',                      displayName: 'Unallocated',          width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
+          { field: 'max_quantity_excess',            displayName: 'Max quantity excess',  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
       ],
       allocation: [
-          { field: 'id',                             displayName: 'id',                   width: '5%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'id',                             displayName: 'Line Item ID',         width: '5%', visible: false, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'order.customer',                 displayName: 'Customer',             width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'product.name',                   displayName: 'Product',              width: '15%', sort: { priority: 0, direction: 'asc' }, grouping: { groupPriority: 0 }, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'product.group_buy_unit_size',    displayName: 'Bulk Unit size',       width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
@@ -24,10 +24,10 @@ angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstan
           { field: 'variant.value',                  displayName: 'Variant value',        width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'variant.unit',                   displayName: 'Variant unit',         width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
           { field: 'variant.weight_from_unit_value', displayName: 'Weight',               width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'scaled_final_weight_volume',     displayName: 'Sum Total',            width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'total_available',                displayName: 'Total available',      width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'scaled_final_weight_volume',     displayName: 'Sum Total',            width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
+          { field: 'total_available',                displayName: 'Total available',      width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
           { field: 'remainder',                      displayName: 'Unallocated',          width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
-          { field: 'max_quantity_excess',            displayName: 'Max quantity excess',  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
+          { field: 'max_quantity_excess',            displayName: 'Max quantity excess',  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.SUM, customTreeAggregationFinalizerFn: @basicFinalizer }
       ],
       packing_sheets: [
           { field: 'id',                             displayName: 'Line Item ID',         width: '*', visible: false, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
