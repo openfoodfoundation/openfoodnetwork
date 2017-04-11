@@ -114,6 +114,9 @@ en:
     sku: SKU
     tags: Tags
     variant: Variant
+    weight: Weight
+    volume: Volume
+    items: Items
 
     # General form elements
     quick_search: Quick Search
@@ -236,6 +239,7 @@ en:
         new_button: New Enterprise Group
 
     products:
+      unit_name_placeholder: 'eg. bunches'
       bulk_edit:
         unit: Unit
         display_as: Display As
