@@ -463,8 +463,6 @@ en:
         next_step: Next step
         choose_starting_point: 'Choose your starting point:'
     order_cycles:
-      test:
-        test: testing
       edit:
         advanced_settings: Advanced Settings
         update_and_close: Update and Close
