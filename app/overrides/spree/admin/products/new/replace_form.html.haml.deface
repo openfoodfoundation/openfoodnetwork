@@ -72,7 +72,7 @@
       = f.field_container :description do
         = f.label :product_description, t(:product_description)
         %br/
-        = f.text_area :description, class: 'fullwidth', rows: 3
+        %text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', 'textangular-strip' => true, 'ta-paste' => "stripFormatting($html)", 'ta-toolbar' => "[['bold','italics','clear']]"}
         = f.error_message_on :description
 .four.columns.omega{ style: "text-align: center" }
   %fieldset.no-border-bottom{ id: "image" }
