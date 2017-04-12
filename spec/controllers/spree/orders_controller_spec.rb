@@ -193,8 +193,6 @@ describe Spree::OrdersController do
 
   describe "#order_to_update" do
     let!(:current_order) { double(:current_order) }
-    let!(:order) { create(:order) }
-    let(:li) { order.line_items.first }
     let(:params) { { } }
 
     before do
@@ -214,15 +212,15 @@ describe Spree::OrdersController do
       end
 
       context "and the order is not complete" do
+        let!(:order) { create(:order) }
+
         it "returns the current_order" do
           expect(controller.send(:order_to_update)).to eq current_order
         end
       end
 
       context "and the order is complete" do
-        before do
-          allow(Spree::Order).to receive(:complete) { Spree::Order.where(id: order.id) }
-        end
+        let!(:order) { create(:completed_order_with_totals) }
 
         context "and the user doesn't have permisson to 'update' the order" do
           before { allow(controller).to receive(:can?).with(:update, order) { false } }
