@@ -24,5 +24,18 @@ module Spree
         distributor_id: current_distributor.id,
         order_cycle_id: current_order_cycle.id)
     end
+
+    def changeable_orders_link_path
+      changeable_orders.one? ? spree.order_path(changeable_orders.first) : spree.account_path
+    end
+
+    def shop_changeable_orders_alert_html
+      t(:shop_changeable_orders_alert_html,
+        count: changeable_orders.count,
+        path: changeable_orders_link_path,
+        order: changeable_orders.first.number,
+        shop: current_distributor.name,
+        oc_close: l(current_order_cycle.orders_close_at, format: :long))
+    end
   end
 end
