@@ -1,20 +1,16 @@
 class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
-  attributes :id, :quantity, :max_quantity, :price, :price_with_fees, :full_name, :cost, :distribution_fee, :currency, :scaled_final_weight_volume, :units_required, :remainder, :max_quantity_excess, :total_available, :total_units
+  attributes :id, :quantity, :max_quantity, :price, :full_name, :cost, :cost_with_fees, :amount, :distribution_fee, :currency, :scaled_final_weight_volume, :units_required, :remainder, :max_quantity_excess, :total_available, :total_units, :paid?
 
   has_one :order, serializer: Api::Admin::IdSerializer
   has_one :product, serializer: Api::Admin::IdNameSerializer
   has_one :variant, serializer: Api::Admin::IdSerializer
 
-  def price
-    object.amount.to_f
-  end
-
-  def price_with_fees
-    object.amount_with_adjustments.to_f
-  end
-
   def cost
     object.price * object.quantity
+  end
+
+  def cost_with_fees
+    object.amount_with_adjustments.to_f
   end
 
   def scaled_final_weight_volume
@@ -42,4 +38,9 @@ class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
     scale_factor = ( object.product.variant_unit == 'weight' ? 1000 : 1 )
     (object.quantity * object.unit_value / scale_factor).round 3
   end
+
+  def paid?
+    object.order.paid? ? 'Yes' : 'No'
+  end
+
 end
