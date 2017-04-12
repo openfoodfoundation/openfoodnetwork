@@ -251,7 +251,7 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def items_bought_by_user(user, distributor)
-    orders = Spree::Order.complete.where(user_id: user, order_cycle_id: self)
+    orders = Spree::Order.complete.where(user_id: user, distributor_id: distributor, order_cycle_id: self)
     items = []
     orders.each do |o|
       items += o.line_items
