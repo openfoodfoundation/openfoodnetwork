@@ -220,7 +220,7 @@ Spree::OrdersController.class_eval do
 
   def order_to_update
     order = Spree::Order.complete.find_by_number(params[:id])
-    return order if order.andand.editable? && can?(:update, order)
+    return order if order.andand.changes_allowed? && can?(:update, order)
     current_order
   end
 end

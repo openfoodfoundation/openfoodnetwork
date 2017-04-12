@@ -1,7 +1,7 @@
 module Api
   class OrderSerializer < ActiveModel::Serializer
     attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state
-    attributes :outstanding_balance, :payments, :path, :cancel_path, :editable, :editable_until
+    attributes :outstanding_balance, :payments, :path, :cancel_path, :changes_allowed, :changes_allowed_until
     attributes :shop_name, :item_count
 
     has_many :payments, serializer: Api::PaymentSerializer
@@ -18,7 +18,7 @@ module Api
       object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: :long)
     end
 
-    def editable_until
+    def changes_allowed_until
       object.order_cycle.andand.orders_close_at
     end
 
@@ -43,12 +43,12 @@ module Api
     end
 
     def cancel_path
-      return nil unless object.editable?
+      return nil unless object.changes_allowed?
       Spree::Core::Engine.routes_url_helpers.cancel_order_path(object)
     end
 
-    def editable
-      object.editable?
+    def changes_allowed
+      object.changes_allowed?
     end
   end
 end

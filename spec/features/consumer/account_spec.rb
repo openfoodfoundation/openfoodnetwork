@@ -58,7 +58,7 @@ feature %q{
         expect(page).not_to have_content "Order " + d1o1.number.to_s
       end
 
-      context "when there is at least one editable order" do
+      context "when there is at least one changeable order" do
         before do
           distributor1.update_attributes(allow_order_changes: true)
         end

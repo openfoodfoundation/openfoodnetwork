@@ -10,7 +10,7 @@
           (#{link_to t(:edit), spree.edit_account_path})
 
       .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
-        .my-open-orders{ ng: { show: 'Orders.editable_orders.length > 0' } }
+        .my-open-orders{ ng: { show: 'Orders.changeable_orders.length > 0' } }
           %h3= t(:open_orders)
           = render 'open_orders'
 

@@ -289,7 +289,7 @@ Spree::Order.class_eval do
     user_id == user.id && distributor.andand.allow_order_changes? && order_cycle.andand.open?
   end
 
-  def editable?
+  def changes_allowed?
     complete? && distributor.andand.allow_order_changes? && order_cycle.andand.open?
   end
 

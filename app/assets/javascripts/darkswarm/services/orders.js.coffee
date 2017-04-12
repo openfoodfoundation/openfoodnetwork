@@ -3,11 +3,11 @@ Darkswarm.factory 'Orders', (orders_by_distributor, currencyConfig, CurrentHub, 
     constructor: ->
       # Populate Orders.orders from json in page.
       @orders_by_distributor = orders_by_distributor
-      @editable_orders = []
+      @changeable_orders = []
       @currency_symbol = currencyConfig.symbol
 
       for distributor in @orders_by_distributor
-        @findEditableOrders(distributor.distributed_orders)
+        @findChangeableOrders(distributor.distributed_orders)
         @updateRunningBalance(distributor.distributed_orders)
 
 
@@ -17,6 +17,6 @@ Darkswarm.factory 'Orders', (orders_by_distributor, currencyConfig, CurrentHub, 
         running_balance = balances.reduce (a,b) -> a+b
         order.running_balance = running_balance.toFixed(2)
 
-    findEditableOrders: (orders) ->
-      for order in orders when order.editable
-        @editable_orders.push(order)
+    findChangeableOrders: (orders) ->
+      for order in orders when order.changes_allowed
+        @changeable_orders.push(order)

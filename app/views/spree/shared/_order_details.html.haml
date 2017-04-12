@@ -87,7 +87,7 @@
 .row
   .columns.large-12
     = form_for order, html: {id: 'update-order'} do |order_form|
-      - if order.editable?
+      - if order.changes_allowed?
         = render 'spree/orders/form', order_form: order_form
       -else
         = render 'spree/orders/summary', order: order
