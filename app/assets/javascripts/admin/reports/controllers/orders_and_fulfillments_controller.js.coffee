@@ -1,12 +1,15 @@
-angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http, OrdersAndFulfillmentsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants, shops, producers) ->
+angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http, $location, OrdersAndFulfillmentsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants, shops, producers, reportType) ->
+  $scope.loading = false
+  $scope.loadAttempted = false
   $scope.shops = shops
   $scope.producers = producers
   $scope.orderCycles = OrderCycles.all
   $scope.columnOptions = OrdersAndFulfillmentsReport.columnOptions()
-  $scope.gridOptions = OrdersAndFulfillmentsReport.gridOptions()
-  $scope.loading = false
-  $scope.loadAttempted = false
-  $scope.q = {report_type: 'supplier_totals'}
+
+  if $location.search().report_type
+    reportType = $location.search().report_type
+  $scope.gridOptions = OrdersAndFulfillmentsReport.gridOptions(reportType)
+  $scope.q = {report_type: reportType}
 
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
 
@@ -22,7 +25,8 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
   $scope.reload = ->
     $scope.loading = false
     $scope.loadAttempted = false
-    $scope.gridOptions.columnDefs = $scope.$eval('columnOptions.'+this.q.report_type)
+    $scope.gridOptions.columnDefs = $scope.$eval('columnOptions.' + this.q.report_type)
+    $location.search('report_type', this.q.report_type)
     $scope.gridOptions.data = new Array()
     $scope.gridApi.grid.refresh()
 

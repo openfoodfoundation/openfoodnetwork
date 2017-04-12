@@ -81,7 +81,7 @@ angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGr
         return angular.equals(listItem, obj)
       ).length > 0
 
-    gridOptions: ->
+    gridOptions: (reportType = 'supplier_totals') ->
       enableSorting: true
       enableFiltering: true
       enableGridMenu: true
@@ -91,7 +91,7 @@ angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGr
       exporterPdfTableHeaderStyle: { fontSize: 5, bold: true }
       exporterPdfTableStyle: { width: 'auto'}
       exporterPdfMaxGridWidth: 600
-      columnDefs: this.columnOptions().supplier_totals
+      columnDefs: eval('this.columnOptions().' + reportType)
 
     basicFinalizer: (aggregation) ->
       aggregation.rendered = aggregation.value
