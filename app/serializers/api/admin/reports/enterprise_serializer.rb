@@ -1,15 +1,5 @@
 class Api::Admin::Reports::EnterpriseSerializer < ActiveModel::Serializer
-  attributes :id, :name, :address, :city, :postcode
+  attributes :id, :name
 
-  def address
-    object.address.address1
-  end
-
-  def city
-    object.address.city
-  end
-
-  def postcode
-    object.address.zipcode
-  end
+  has_one :address, serializer: Api::Admin::Reports::AddressSerializer
 end
