@@ -23,10 +23,11 @@ feature %q{
     end
 
     context "with completed orders" do
-      let!(:d1o1) { create(:completed_order_with_totals, distributor_id: distributor1.id, user_id: user.id, total: 10000)}
-      let!(:d1o2) { create(:order_without_full_payment, distributor_id: distributor1.id, user_id: user.id, total: 5000)}
-      let!(:d2o1) { create(:completed_order_with_totals, distributor_id: distributor2.id, user_id: user.id)}
-      let!(:credit_order) { create(:order_with_credit_payment, distributor_id: distributor_credit.id, user_id: user.id)}
+      let(:order_cycle) { create(:simple_order_cycle) }
+      let!(:d1o1) { create(:completed_order_with_totals, distributor: distributor1, user: user, total: 10000, order_cycle: order_cycle)}
+      let!(:d1o2) { create(:order_without_full_payment, distributor: distributor1, user: user, total: 5000, order_cycle: order_cycle)}
+      let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user: user)}
+      let!(:credit_order) { create(:order_with_credit_payment, distributor: distributor_credit, user: user)}
 
       before do
         credit_order.update!
@@ -35,6 +36,9 @@ feature %q{
       it "shows all hubs that have been ordered from with balance or credit" do
         # Single test to avoid re-rendering page
         visit "/account"
+
+        # No distributors allow changes to orders
+        expect(page).to_not have_content I18n.t('spree.users.show.open_orders')
 
         # It shows all hubs that have been ordered from with balance or credit
         expect(page).to have_content distributor1.name
@@ -52,6 +56,22 @@ feature %q{
 
         expand_active_table_node distributor2.name
         expect(page).not_to have_content "Order " + d1o1.number.to_s
+      end
+
+      context "when there is at least one editable order" do
+        before do
+          distributor1.update_attributes(allow_order_changes: true)
+        end
+
+        it "shows such orders in a section labelled 'Open Orders'" do
+          visit '/account'
+          expect(page).to have_content I18n.t('spree.users.show.open_orders')
+
+          expect(page).to have_link d1o1.number, href: spree.order_path(d1o1)
+          expect(page).to have_link d1o2.number, href: spree.order_path(d1o2)
+          expect(page).to have_link I18n.t('spree.users.open_orders.cancel'), href: spree.cancel_order_path(d1o1)
+          expect(page).to have_link I18n.t('spree.users.open_orders.cancel'), href: spree.cancel_order_path(d1o2)
+        end
       end
     end
 

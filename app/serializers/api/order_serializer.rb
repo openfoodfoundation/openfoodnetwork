@@ -1,11 +1,25 @@
 module Api
   class OrderSerializer < ActiveModel::Serializer
-    attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state, :outstanding_balance, :payments, :path
+    attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state
+    attributes :outstanding_balance, :payments, :path, :cancel_path, :editable, :editable_until
+    attributes :shop_name, :item_count
 
     has_many :payments, serializer: Api::PaymentSerializer
 
+    def shop_name
+      object.distributor.andand.name
+    end
+
+    def item_count
+      object.line_items.sum(&:quantity)
+    end
+
     def completed_at
       object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: :long)
+    end
+
+    def editable_until
+      object.order_cycle.andand.orders_close_at
     end
 
     def total
@@ -25,7 +39,16 @@ module Api
     end
 
     def path
-      Spree::Core::Engine.routes_url_helpers.order_url(object.number, only_path: true)
+      Spree::Core::Engine.routes_url_helpers.order_path(object)
+    end
+
+    def cancel_path
+      return nil unless object.editable?
+      Spree::Core::Engine.routes_url_helpers.cancel_order_path(object)
+    end
+
+    def editable
+      object.editable?
     end
   end
 end

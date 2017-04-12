@@ -1676,3 +1676,17 @@ Please follow the instructions there to make your enterprise visible on the Open
           If you continue to have problems please feel free to contact us.
     weight: Weight (per kg)
     zipcode: Postcode
+    users:
+      show:
+        open_orders: Open Orders
+        transaction_history: Transaction History
+      open_orders:
+        order: Order
+        shop: Shop
+        changes_allowed: Changes Allowed?
+        items: Items
+        total: Total
+        edit: Edit
+        cancel: Cancel
+        closed: Closed
+        until: Until
