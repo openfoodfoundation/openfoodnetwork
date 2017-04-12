@@ -783,6 +783,8 @@ en:
   order_includes_tax: (includes tax)
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
   order_hub_info: Hub Info
+  order_back_to_store: Back To Store
+  order_back_to_cart: Back To Cart
 
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
 
