@@ -1683,7 +1683,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       open_orders:
         order: Order
         shop: Shop
-        changes_allowed: Changes Allowed?
+        changes_allowed_until: Changes Allowed Until
         items: Items
         total: Total
         edit: Edit

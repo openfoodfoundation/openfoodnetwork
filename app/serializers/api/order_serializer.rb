@@ -19,7 +19,7 @@ module Api
     end
 
     def changes_allowed_until
-      object.order_cycle.andand.orders_close_at
+      I18n.l(object.order_cycle.andand.orders_close_at, format: :long)
     end
 
     def total
