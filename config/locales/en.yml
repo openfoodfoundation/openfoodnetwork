@@ -645,6 +645,7 @@ en:
   terms_of_service: "Terms of service"
   on_demand: On demand
   none: None
+  not_allowed: Not allowed
 
   label_shops: "Shops"
   label_map: "Map"

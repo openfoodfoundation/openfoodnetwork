@@ -19,6 +19,7 @@ module Api
     end
 
     def changes_allowed_until
+      return I18n.t(:not_allowed) unless object.changes_allowed?
       I18n.l(object.order_cycle.andand.orders_close_at, format: :long)
     end
 
