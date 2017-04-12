@@ -49,6 +49,7 @@
   = admin_inject_json_ams_array "admin.reports", "shops", @shops, Api::Admin::Reports::EnterpriseSerializer
   = admin_inject_json_ams_array "admin.reports", "orderCycles", @order_cycles, Api::Admin::IdNameSerializer
   = admin_inject_json_ams "admin.reports", "currencyConfig", {}, Api::CurrencyConfigSerializer
+  = admin_inject_json "admin.reports", "reportType", @report_type
 
   %div{ ng: { app: 'admin.reports', controller: 'ordersAndFulfillmentsController' } }
     %form{ name: 'orders_and_fulfillments_report_form', ng: { submit: 'load()' } }

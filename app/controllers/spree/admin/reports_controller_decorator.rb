@@ -280,7 +280,7 @@ Spree::Admin::ReportsController.class_eval do
         involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
       @report_types = report_types[:orders_and_fulfillment]
-      @report_type = params[:report_type]
+      @report_type = params[:report_type] || @report_types.first.last
 
       @include_blank = I18n.t(:all)
 

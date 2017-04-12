@@ -244,8 +244,9 @@ feature %q{
       let(:product) { create(:product) }
       let(:product_distribution) { create(:product_distribution, :product => product, :distributor => distributor) }
       let(:shipping_instructions) { "pick up on thursday please!" }
-      let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
-      let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
+      let(:order_cycle) { create(:undated_order_cycle) }
+      let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions, order_cycle: order_cycle) }
+      let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions, order_cycle: order_cycle) }
 
       before do
         Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
@@ -262,11 +263,11 @@ feature %q{
 
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
-        select 'Order Cycle Customer Totals', from: 'report_type'
+        select 'Order Cycle Customer Totals', from: 'q_report_type'
         click_button 'Search'
-
+        sleep 1 #FIXME !!!!!
         # Then I should see the rows for the first order but not the second
-        all('div.ui-grid-tree-header-row').count.should == 2 # Two rows per order
+        wait_until { all('div.ui-grid-tree-header-row').count.should == 2 } # Two rows per order
       end
     end
 
