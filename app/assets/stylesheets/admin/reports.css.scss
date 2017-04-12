@@ -9,3 +9,12 @@
 .date-label {
   padding-top: 7px;
 }
+
+// override ugly gradient color
+.ui-grid-top-panel, .ui-grid-top-panel-background, .ui-grid-footer-panel-background, .ui-grid-footer-panel {
+  background: #f3f3f3;
+}
+
+button.ui-grid-menu-item {
+  color: inherit;
+}
