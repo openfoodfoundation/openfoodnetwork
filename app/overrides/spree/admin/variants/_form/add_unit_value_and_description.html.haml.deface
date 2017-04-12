@@ -8,6 +8,6 @@
       = text_field_tag :unit_value_human, nil, {class: "fullwidth", 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
       = f.text_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
 
-  .field{"data-hook" => "unit_description"}
-    = f.label :unit_description, "Unit Description"
-    = f.text_field :unit_description, class: "fullwidth"
+    .field{"data-hook" => "unit_description"}
+      = f.label :unit_description, "Unit Description"
+      = f.text_field :unit_description, class: "fullwidth"
