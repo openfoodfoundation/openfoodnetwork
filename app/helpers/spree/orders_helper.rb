@@ -16,5 +16,13 @@ module Spree
     def cart_count
       current_order.andand.line_items.andand.count || 0
     end
+
+    def changeable_orders
+      return [] unless spree_current_user && current_distributor && current_order_cycle
+      Spree::Order.complete.where(
+        user_id: spree_current_user.id,
+        distributor_id: current_distributor.id,
+        order_cycle_id: current_order_cycle.id)
+    end
   end
 end
