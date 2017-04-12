@@ -28,9 +28,9 @@ angular.module("admin.reports").factory 'OrdersAndDistributorsReport', (uiGridGr
         { field: 'order.payment_method',        displayName: 'Payment method',        width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @paymentMethodFinalizer }
 
         { field: 'order.distributor.name',      displayName: 'Distributor',           width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @distributorFinalizer }
-        { field: 'order.distributor.address',   displayName: 'Distributor address',   width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @distributorAddressFinalizer }
-        { field: 'order.distributor.city',      displayName: 'Distributor city',      width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @distributorCityFinalizer }
-        { field: 'order.distributor.postcode',  displayName: 'Distributor postcode',  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @distributorPostcodeFinalizer }
+        { field: 'order.distributor.address.address1',   displayName: 'Distributor address',   width: '15%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @distributorAddressFinalizer }
+        { field: 'order.distributor.address.city',      displayName: 'Distributor city',      width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @distributorCityFinalizer }
+        { field: 'order.distributor.address.zipcode',  displayName: 'Distributor postcode',  width: '8%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @distributorPostcodeFinalizer }
         { field: 'order.special_instructions',  displayName: 'Shipping instructions', width: '10%', groupingShowAggregationMenu: false, groupingShowGroupingMenu: false, treeAggregationType: uiGridGroupingConstants.aggregation.CUSTOM, customTreeAggregationFn: @orderAggregator, customTreeAggregationFinalizerFn: @shippingInstructionsFinalizer }
       ]
 
@@ -47,7 +47,7 @@ angular.module("admin.reports").factory 'OrdersAndDistributorsReport', (uiGridGr
       aggregation.rendered = aggregation.order.created_at
 
     customerPhoneFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.bill_adress.phone
+      aggregation.rendered = aggregation.order.bill_address.phone
 
     customerCityFinalizer: (aggregation) ->
       aggregation.rendered = aggregation.order.bill_address.city
@@ -59,7 +59,7 @@ angular.module("admin.reports").factory 'OrdersAndDistributorsReport', (uiGridGr
       aggregation.rendered = aggregation.order.distributor.name
 
     distributorAddressFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.distributor.address
+      aggregation.rendered = aggregation.order.distributor.address1
 
     distributorCityFinalizer: (aggregation) ->
       aggregation.rendered = aggregation.order.distributor.city
