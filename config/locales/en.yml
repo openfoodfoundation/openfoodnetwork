@@ -469,6 +469,10 @@ en:
         choose_products_from: 'Choose Products From:'
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_tip: These instructions are shown to customers after they complete an order
+      exchange_form:
+        pickup_instructions_placeholder: "Pick-up instructions"
+        pickup_time_placeholder: "Ready for (ie. Date / Time)"
+        receival_instructions_placeholder: "Receival instructions"
       advanced_settings:
         title: Advanced Settings
         choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
