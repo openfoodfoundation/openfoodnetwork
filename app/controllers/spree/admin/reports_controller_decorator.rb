@@ -280,18 +280,17 @@ Spree::Admin::ReportsController.class_eval do
         involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
       @report_types = report_types[:orders_and_fulfillment]
-      @report_type = params[:report_type] || @report_types.first.last
+      @report_type = params[:report_type] || @report_types.first.last.to_s
 
       @include_blank = I18n.t(:all)
 
       # -- Build Report with Order Grouper
-      @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
+      @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params.merge(report_type: @report_type)
       order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
       @table = order_grouper.table(@report.table_items)
       csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
 
       render_report(@report.header, @table, params[:csv], csv_file_name)
-
     end
   end
 
