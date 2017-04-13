@@ -240,13 +240,14 @@ feature %q{
     context "with two orders on the same day at different times" do
       let(:bill_address) { create(:address) }
       let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
-      let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
+      let(:distributor1) { create(:distributor_enterprise, :address => distributor_address) }
+      let(:distributor2) { create(:distributor_enterprise, :address => distributor_address) }
       let(:product) { create(:product) }
       let(:product_distribution) { create(:product_distribution, :product => product, :distributor => distributor) }
       let(:shipping_instructions) { "pick up on thursday please!" }
       let(:order_cycle) { create(:undated_order_cycle) }
-      let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions, order_cycle: order_cycle) }
-      let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions, order_cycle: order_cycle) }
+      let(:order1) { create(:order, :distributor => distributor1, :bill_address => bill_address, :special_instructions => shipping_instructions, order_cycle: order_cycle) }
+      let(:order2) { create(:order, :distributor => distributor2, :bill_address => bill_address, :special_instructions => shipping_instructions, order_cycle: order_cycle) }
 
       before do
         Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
@@ -265,9 +266,9 @@ feature %q{
         fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
         select 'Order Cycle Customer Totals', from: 'q_report_type'
         click_button 'Search'
-        sleep 1 #FIXME !!!!!
-        # Then I should see the rows for the first order but not the second
-        wait_until { all('div.ui-grid-tree-header-row').count.should == 2 } # Two rows per order
+
+        page.should have_content("#{order1.distributor.name}")
+        page.should_not have_content("#{order2.distributor.name}")
       end
     end
 
