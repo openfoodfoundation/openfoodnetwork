@@ -104,7 +104,7 @@ module OpenFoodNetwork
       before { o1.line_items << li1 }
 
       it 'has aligned columsn' do
-        report_types = ["", "order_cycle_supplier_totals", "order_cycle_supplier_totals_by_distributor", "order_cycle_distributor_totals_by_supplier", "order_cycle_customer_totals"]
+        report_types = ["supplier_totals", "supplier_totals_by_distributor", "distributor_totals_by_supplier", "customer_totals"]
 
         report_types.each do |report_type|
           report = OrdersAndFulfillmentsReport.new user, report_type: report_type

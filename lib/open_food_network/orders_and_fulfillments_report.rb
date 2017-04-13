@@ -32,8 +32,6 @@ module OpenFoodNetwork
                   "Order Cycle", "Payment Method", "Customer Code", "Tags",
                   "Billing Street 1", "Billing Street 2", "Billing City", "Billing Postcode", "Billing State"
          ]
-      else
-        ["Producer", "Product", "Variant", "Amount", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
       end
 
     end
@@ -159,13 +157,6 @@ module OpenFoodNetwork
           sort_by: proc { |product| product.name } },
           { group_by: proc { |line_item| line_item.full_name },
            sort_by: proc { |full_name| full_name } } ]
-      else
-        [ { group_by: proc { |line_item| line_item.product.supplier },
-          sort_by: proc { |supplier| supplier.name } },
-          { group_by: proc { |line_item| line_item.product },
-          sort_by: proc { |product| product.name } },
-          { group_by: proc { |line_item| line_item.full_name },
-          sort_by: proc { |full_name| full_name } } ]
       end
     end
 
@@ -242,15 +233,6 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.bill_address.andand.city },
           proc { |line_items| line_items.first.order.bill_address.andand.zipcode },
           proc { |line_items| line_items.first.order.bill_address.andand.state } ]
-      else
-        [ proc { |line_items| line_items.first.product.supplier.name },
-          proc { |line_items| line_items.first.product.name },
-          proc { |line_items| line_items.first.full_name },
-          proc { |line_items| line_items.sum { |li| li.quantity } },
-          proc { |line_items| line_items.first.price },
-          proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
-          proc { |line_items| "" },
-          proc { |line_items| "incoming transport" } ]
       end
     end
 
