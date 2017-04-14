@@ -33,6 +33,7 @@ feature %q{
         click_link 'Products'
         click_link 'Inventory'
 
+        page.status_code.should be 200
         page.should have_select2 'hub_id', options: [hub.name] # Selects the hub automatically when only one is available
       end
     end
