@@ -10,4 +10,4 @@
 
     .field{"data-hook" => "unit_description"}
       = f.label :unit_description, "Unit Description"
-      = f.text_field :unit_description, class: "fullwidth"
+      = f.text_field :unit_description, class: "fullwidth", placeholder: t('admin.products.unit_name_placeholder')
