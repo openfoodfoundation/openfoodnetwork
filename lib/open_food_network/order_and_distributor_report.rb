@@ -1,8 +1,10 @@
+require 'open_food_network/reports/report'
 include Spree::ReportsHelper
 
 module OpenFoodNetwork
-  class OrderAndDistributorReport
+  class OrderAndDistributorReport < Reports::Report
     attr_reader :params
+
     def initialize user, params = {}, orders = nil
       @user = user
       @params = params
@@ -58,6 +60,9 @@ module OpenFoodNetwork
       line_items
     end
 
+    header "Order date", "Order Id", "Customer Name","Customer Email", "Customer Phone", "Customer City", "SKU", "Item name",
+      "Variant", "Quantity", "Max Quantity", "Cost", "Shipping cost", "Payment method", "Distributor", "Distributor address",
+      "Distributor city", "Distributor postcode", "Shipping instructions"
 
     def table
       order_and_distributor_details = []
@@ -71,17 +76,7 @@ module OpenFoodNetwork
             order.distributor.andand.name, order.distributor.address.address1, order.distributor.address.city, order.distributor.address.zipcode, order.special_instructions ]
         end
       end
-
       order_and_distributor_details
-    end
-
-
-
-    private
-
-    def permissions
-      return @permissions unless @permissions.nil?
-      @permissions = OpenFoodNetwork::Permissions.new(@user)
     end
   end
 end

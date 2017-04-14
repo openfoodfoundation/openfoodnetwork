@@ -88,6 +88,18 @@ describe Spree::Admin::ReportsController do
         assigns(:search).result.should_not include(orderA2)
         assigns(:search).result.should_not include(orderB2)
       end
+
+      it 'returns accessible line items in json' do
+        spree_get :orders_and_distributors, format: :json
+
+        json = JSON.parse(response.body)
+
+        json['line_items'].size.should == 4
+        json['orders'].size.should == 2
+        json['products'].size.should == 2
+        json['distributors'].size.should == 1
+        json['variants'].size.should == 2
+      end
     end
 
     describe 'Bulk Coop' do
@@ -97,6 +109,18 @@ describe Spree::Admin::ReportsController do
         resulting_orders.should     include(orderA1, orderB1)
         resulting_orders.should_not include(orderA2)
         resulting_orders.should_not include(orderB2)
+      end
+
+      it 'returns accessible line items in json' do
+        spree_get :bulk_coop, format: :json
+
+        json = JSON.parse(response.body)
+
+        json['line_items'].size.should == 4
+        json['orders'].size.should == 2
+        json['products'].size.should == 2
+        json['distributors'].size.should == 1
+        json['variants'].size.should == 2
       end
     end
 
@@ -123,6 +147,17 @@ describe Spree::Admin::ReportsController do
 
         resulting_orders.should     include(orderA1)
         resulting_orders.should_not include(orderB1)
+      end
+
+      it 'returns accessible line items in json' do
+        spree_get :orders_and_fulfillment, format: :json
+
+        json = JSON.parse(response.body)
+
+        json['line_items'].size.should == 4
+        json['orders'].size.should == 2
+        json['products'].size.should == 2
+        json['variants'].size.should == 2
       end
     end
   end

@@ -1,13 +1,8 @@
+require 'open_food_network/reports/report'
 include Spree::ReportsHelper
 
 module OpenFoodNetwork
-  class OrdersAndFulfillmentsReport
-    attr_reader :params
-    def initialize(user, params = {})
-      @params = params
-      @user = user
-    end
-
+  class OrdersAndFulfillmentsReport < Reports::Report
     def header
       case params[:report_type]
       when "order_cycle_supplier_totals"
@@ -262,11 +257,6 @@ module OpenFoodNetwork
     end
 
     private
-
-    def permissions
-      return @permissions unless @permissions.nil?
-      @permissions = OpenFoodNetwork::Permissions.new(@user)
-    end
 
     def total_units(line_items)
       return " " if line_items.map{ |li| li.unit_value.nil? }.any?
