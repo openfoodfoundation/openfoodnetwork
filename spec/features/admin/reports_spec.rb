@@ -149,14 +149,22 @@ feature %q{
     click_link 'Reports'
     click_link 'Orders And Distributors'
     page.status_code.should be 200
+    click_link 'Old version'
+    page.status_code.should be 200
+    click_link 'New version'
+    page.status_code.should be 200
   end
 
   scenario "bulk co-op report" do
     login_to_admin_section
     click_link 'Reports'
     click_link 'Bulk Co-Op'
-
     page.should have_content 'Supplier'
+    page.status_code.should be 200
+    click_link 'Old version'
+    page.status_code.should be 200
+    click_link 'New version'
+    page.status_code.should be 200
   end
 
   scenario "payments reports" do
@@ -233,8 +241,12 @@ feature %q{
       login_to_admin_section
       click_link 'Reports'
       click_link 'Orders & Fulfillment Reports'
-
       page.should have_content 'Supplier'
+      page.status_code.should be 200
+      click_link 'Old version'
+      page.status_code.should be 200
+      click_link 'New version'
+      page.status_code.should be 200
     end
 
     context "with two orders on the same day at different times" do
@@ -316,19 +328,17 @@ feature %q{
       click_link 'Products & Inventory'
       page.should have_content "Supplier"
 
-      page.should have_table_row ["Supplier",             "Producer Suburb",              "Product",      "Product Properties",                               "Taxons",                     "Variant Value",  "Price",  "Group Buy Unit Quantity",         "Amount", "SKU"].map(&:upcase)
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Something",      "80.0",   product1.group_buy_unit_size.to_s, "",       "sku2"]
-      page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,  "100g",           "99.0",   product1.group_buy_unit_size.to_s, "",       "product_sku"]
+      page.should have_content "sku1"
+      page.should have_content "sku2"
+      page.should have_content "product_sku"
     end
 
     it "shows the LettuceShare report" do
       login_to_admin_section
       click_link 'Reports'
       click_link 'LettuceShare'
-
-      page.should have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit', 'Unit Price', 'Total', 'GST incl.', 'Grower and growing method', 'Taxon'].map(&:upcase)
-      page.should have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0', 'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
+      page.should have_content "Product 2"
+      page.should have_content "Supplier Name (Organic - NASAA 12345)"
     end
   end
 
