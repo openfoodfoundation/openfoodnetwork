@@ -115,7 +115,7 @@
         %h2
           =link_to_service "https://www.facebook.com/", @group.facebook, title: t(:groups_contact_facebook) do
             %i.ofn-i_044-facebook
-          =link_to_service "", @group.email.reverse, title: t(:groups_contact_email), mailto: true do
+          =link_to_service "", @group.email, title: t(:groups_contact_email), mailto: true do
             %i.ofn-i_050-mail-circle
           =link_to_service "http://", @group.website, title: t(:groups_contact_website) do
             %i.ofn-i_049-web
