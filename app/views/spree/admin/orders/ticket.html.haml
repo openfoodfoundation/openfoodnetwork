@@ -26,7 +26,7 @@
       '\x1B' + '\x61' + '\x30', // left align
       '\x0A',
       '\x1B' + '\x4D' + '\x31', // small text
-      "#{'%6s   %-23s%12s%12s' %
+      "#{'%6s   %-26s%10s%10s' %
       [t(:ticket_column_qty),
       t(:ticket_column_item),
       t(:ticket_column_unit_price),
@@ -39,8 +39,8 @@
       .map { |line_item| '%5d %-19.19s%8.8s%8.8s' %
       [line_item.quantity,
       line_item.product.name,
-      line_item.single_display_amount_with_adjustments.money.format(symbol: false),
-      line_item.display_amount_with_adjustments.money.format(symbol: false)] }
+      line_item.single_display_amount_with_adjustments.format(symbol: false, with_currency: false),
+      line_item.display_amount_with_adjustments.format(symbol: false, with_currency: false)] }
       .join('" + \'\x0A\' + "')}",
       '\x0A',
       "#{checkout_adjustments_for(@order, exclude: [:line_item])
@@ -48,26 +48,24 @@
       .reverse.map { |adjustment| '%5s %-27.27s%8.8s' %
       ["",
       raw(adjustment.label),
-      display_adjustment_amount(adjustment).money.format(symbol: false)] }
-      .join('" + \'\x0A\' + "')}",
-      '\x0A',
+      display_adjustment_amount(adjustment).format(symbol: false, with_currency: false)] +
+      '" + \'\x0A\' + "'}.join }",
       '__________________________________________' + '\x0A',
       '\x0A',
       '\x1B' + '\x45' + '\x0D', // bold on
       "#{'%31s%10s' %
       [t(:total_incl_tax),
-      @order.display_total]}",
+      @order.display_total.format(with_currency: false)]}",
       '\x1B' + '\x45' + '\x0A', // bold off
       '\x0A',
       "#{display_checkout_taxes_hash(@order).map { |tax_rate, tax_value|
       '%31s%10s' %
       [t(:tax_total, rate: tax_rate),
-      tax_value] }
-      .join('" + \'\x0A\' + "')}",
-      '\x0A',
+      tax_value.format(with_currency: false)] +
+      '" + \'\x0A\' + "'}.join }",
       "#{'%31s%10s' %
       [t(:total_excl_tax),
-      display_checkout_total_less_tax(@order)]}",
+      display_checkout_total_less_tax(@order).format(with_currency: false)]}",
       '\x0A',
       '\x0A' + '\x0A' + '\x0A' + '\x0A' + '\x0A' + '\x0A' + '\x0A',
       '\x1B' + '\x69',          // cut paper
