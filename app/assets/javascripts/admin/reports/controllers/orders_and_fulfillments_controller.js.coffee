@@ -1,6 +1,6 @@
-angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($scope, $http, $location, OrdersAndFulfillmentsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants, shops, producers, reportType) ->
-  $scope.loading = false
-  $scope.loadAttempted = false
+angular.module("admin.reports").controller "ordersAndFulfillmentsCtrl", ($scope, $controller, $http, $location, OrdersAndFulfillmentsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants, shops, producers, reportType) ->
+  angular.extend this, $controller('ReportsCtrl', {$scope: $scope, $location: $location})
+
   $scope.shops = shops
   $scope.producers = producers
   $scope.orderCycles = OrderCycles.all
@@ -8,27 +8,10 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsController", ($
 
   if $location.search().report_type
     reportType = $location.search().report_type
-  $scope.gridOptions = OrdersAndFulfillmentsReport.gridOptions(reportType)
   $scope.q = {report_type: reportType}
 
+  $scope.gridOptions = OrdersAndFulfillmentsReport.gridOptions(reportType)
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
-
-  $scope.download = ($event, type, visibility) ->
-    $event.stopPropagation()
-    $event.preventDefault()
-    # exporterAllDataPromise???
-    if type == 'csv'
-      $scope.gridApi.exporter.csvExport(visibility, visibility)
-    else
-      $scope.gridApi.exporter.pdfExport(visibility, visibility)
-
-  $scope.reload = ->
-    $scope.loading = false
-    $scope.loadAttempted = false
-    $scope.gridOptions.columnDefs = $scope.$eval('columnOptions.' + this.q.report_type)
-    $location.search('report_type', this.q.report_type)
-    $scope.gridOptions.data = new Array()
-    $scope.gridApi.grid.refresh()
 
   $scope.load = ->
     $scope.loading = true

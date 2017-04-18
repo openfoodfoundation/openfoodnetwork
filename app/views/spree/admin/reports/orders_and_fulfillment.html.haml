@@ -51,7 +51,7 @@
   = admin_inject_json_ams "admin.reports", "currencyConfig", {}, Api::CurrencyConfigSerializer
   = admin_inject_json "admin.reports", "reportType", @report_type
 
-  %div{ ng: { app: 'admin.reports', controller: 'ordersAndFulfillmentsController' } }
+  %div{ ng: { app: 'admin.reports', controller: 'ordersAndFulfillmentsCtrl' } }
     %form{ name: 'orders_and_fulfillments_report_form', ng: { submit: 'load()' } }
       = render 'ng_date_range_form', search: @search
 

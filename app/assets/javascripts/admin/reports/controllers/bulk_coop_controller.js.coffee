@@ -1,29 +1,15 @@
-angular.module("admin.reports").controller "bulkCoopController", ($scope, $http, BulkCoopReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants, distributors) ->
-  $scope.distributors = distributors
-  $scope.orderCycles = OrderCycles.all
-  $scope.columnOptions = BulkCoopReport.columnOptions()
-  $scope.gridOptions = BulkCoopReport.gridOptions()
-  $scope.loading = false
-  $scope.loadAttempted = false
-  $scope.q = {report_type: 'supplier_report'}
+angular.module("admin.reports").controller "bulkCoopCtrl", ($scope, $controller, $location, $http, BulkCoopReport, Enterprises, LineItems, Orders, Products, Variants, distributors, reportType) ->
+  angular.extend this, $controller('ReportsCtrl', {$scope: $scope, $location: $location})
 
+  if $location.search().report_type
+    reportType = $location.search().report_type
+  $scope.q = {report_type: reportType}
+
+  $scope.distributors = distributors
+  $scope.columnOptions = BulkCoopReport.columnOptions()
+  $scope.gridOptions = BulkCoopReport.gridOptions(reportType)
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
 
-  $scope.download = ($event, type, visibility) ->
-    $event.stopPropagation()
-    $event.preventDefault()
-    # exporterAllDataPromise???
-    if type == 'csv'
-      $scope.gridApi.exporter.csvExport(visibility, visibility)
-    else
-      $scope.gridApi.exporter.pdfExport(visibility, visibility)
-
-  $scope.reload = ->
-    $scope.loading = false
-    $scope.loadAttempted = false
-    $scope.gridOptions.columnDefs = $scope.$eval('columnOptions.'+this.q.report_type)
-    $scope.gridOptions.data = new Array()
-    $scope.gridApi.grid.refresh()
   $scope.load = ->
     $scope.loading = true
     $scope.loadAttempted = false

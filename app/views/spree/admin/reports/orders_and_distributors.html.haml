@@ -30,7 +30,7 @@
 - else
   = admin_inject_json_ams "admin.reports", "currencyConfig", {}, Api::CurrencyConfigSerializer
 
-  %div{ ng: { app: 'admin.reports', controller: 'ordersAndDistributorsController' } }
+  %div{ ng: { app: 'admin.reports', controller: 'ordersAndDistributorsCtrl' } }
     %form{ name: 'orders_and_distributors_report_form', ng: { submit: 'load()' } }
       = render 'ng_date_range_form', search: @search
 

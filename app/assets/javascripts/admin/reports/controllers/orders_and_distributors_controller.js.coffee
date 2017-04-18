@@ -1,18 +1,8 @@
-angular.module("admin.reports").controller "ordersAndDistributorsController", ($scope, $http, OrdersAndDistributorsReport, Enterprises, OrderCycles, LineItems, Orders, Products, Variants) ->
-  $scope.orderCycles = OrderCycles.all
-  $scope.gridOptions = OrdersAndDistributorsReport.gridOptions()
-  $scope.loading = false
-  $scope.loadAttempted = false
-  $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
+angular.module("admin.reports").controller "ordersAndDistributorsCtrl", ($scope, $controller, $http, OrdersAndDistributorsReport, Enterprises, LineItems, Orders, Products, Variants) ->
+  angular.extend this, $controller('ReportsCtrl', {$scope: $scope})
 
-  $scope.download = ($event, type, visibility) ->
-    $event.stopPropagation()
-    $event.preventDefault()
-    # exporterAllDataPromise???
-    if type == 'csv'
-      $scope.gridApi.exporter.csvExport(visibility, visibility)
-    else
-      $scope.gridApi.exporter.pdfExport(visibility, visibility)
+  $scope.gridOptions = OrdersAndDistributorsReport.gridOptions()
+  $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi
 
   $scope.load = ->
     $scope.loading = true
@@ -27,6 +17,7 @@ angular.module("admin.reports").controller "ordersAndDistributorsController", ($
         Variants.load data.variants
         Products.load data.products
         Enterprises.load data.distributors
+
         Orders.linkToDistributors()
         LineItems.linkToOrders()
         LineItems.linkToVariants()
