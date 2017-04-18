@@ -46,7 +46,7 @@ angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstan
         ]
       }
 
-    gridOptions: ->
+    gridOptions: (reportType = 'supplier_report') ->
       enableSorting: true
       enableFiltering: true
       enableGridMenu: true
@@ -56,7 +56,7 @@ angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstan
       exporterPdfTableHeaderStyle: { fontSize: 5, bold: true }
       exporterPdfTableStyle: { width: 'auto'}
       exporterPdfMaxGridWidth: 600
-      columnDefs: this.columnOptions().supplier_report
+      columnDefs: eval('this.columnOptions().' + reportType)
 
     basicFinalizer: (aggregation) ->
       aggregation.rendered = aggregation.value

@@ -38,8 +38,9 @@
 
   = admin_inject_json_ams_array "admin.reports", "distributors", @distributors, Api::Admin::Reports::EnterpriseSerializer
   = admin_inject_json_ams "admin.reports", "currencyConfig", {}, Api::CurrencyConfigSerializer
+  = admin_inject_json "admin.reports", "reportType", @report_type
 
-  %div{ ng: { app: 'admin.reports', controller: 'bulkCoopController' } }
+  %div{ ng: { app: 'admin.reports', controller: 'bulkCoopCtrl' } }
     %form{ name: 'bulk_coop_report_form', ng: { submit: 'load()' } }
       = render 'ng_date_range_form', search: @search
       .row

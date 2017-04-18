@@ -1,8 +1,15 @@
 namespace :karma  do
+  desc 'Debug on browser'
+  task :debug => :environment do
+    with_tmp_config :start, '--browsers=Chrome --debug'
+  end
+
+  desc 'Continous run'
   task :start => :environment do
     with_tmp_config :start
   end
 
+  desc 'Single run of tests'
   task :run => :environment do
     with_tmp_config :start, "--single-run"
   end
