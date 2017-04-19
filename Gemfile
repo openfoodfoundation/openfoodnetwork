@@ -10,7 +10,7 @@ gem 'i18n-js', '~> 3.0.0'
 gem 'nokogiri', '>= 1.6.7.1'
 
 gem 'pg'
-gem 'spree', github: 'coopdevs/spree', branch: 'spree-upgrade-step-5'
+gem 'spree', github: 'coopdevs/spree', branch: 'spree-upgrade-step-6'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch: 'spree-upgrade-intermediate'
 

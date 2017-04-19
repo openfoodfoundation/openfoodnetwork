@@ -8,8 +8,8 @@ GIT
 
 GIT
   remote: git://github.com/coopdevs/spree.git
-  revision: ff96a88494c0f0d13e06cc620a2b90372f52c8d7
-  branch: spree-upgrade-step-5
+  revision: 93337acbee00dd3f5702c6dd1f668112f3809400
+  branch: spree-upgrade-step-6
   specs:
     spree (1.3.99)
       spree_api (= 1.3.99)
@@ -34,9 +34,7 @@ GIT
     spree_cmd (1.3.99)
       thor (>= 0.14.6)
     spree_core (1.3.99)
-      actionmailer (~> 3.2.9)
       activemerchant (~> 1.50.0)
-      activerecord (~> 3.2.9)
       acts_as_list (= 0.1.9)
       awesome_nested_set (= 2.1.5)
       aws-sdk (~> 1.11.1)
@@ -50,7 +48,6 @@ GIT
       money (= 5.1.0)
       paperclip (~> 3.0)
       rails (~> 3.2.13)
-      railties (~> 3.2.9)
       ransack (= 0.7.2)
       state_machine (= 1.2.0)
       stringex (~> 1.3.2)
