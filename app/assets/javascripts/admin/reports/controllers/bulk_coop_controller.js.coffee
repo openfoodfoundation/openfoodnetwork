@@ -4,6 +4,7 @@ angular.module("admin.reports").controller "bulkCoopCtrl", ($scope, $controller,
   if $location.search().report_type
     reportType = $location.search().report_type
   $scope.q = {report_type: reportType}
+  $scope.reportType = reportType
 
   $scope.distributors = distributors
   $scope.columnOptions = BulkCoopReport.columnOptions()

@@ -8,7 +8,7 @@
         = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
     = label_tag nil, "Report Type: "
     %br
-    = select_tag(:report_type, options_for_select([['Bulk Co-op - Totals by Supplier',:bulk_coop_supplier_report],['Bulk Co-op - Allocation',:bulk_coop_allocation],['Bulk Co-op - Packing Sheets',:bulk_coop_packing_sheets],['Bulk Co-op - Customer Payments',:bulk_coop_customer_payments]], @report_type))
+    = select_tag(:report_type, options_for_select(@report_types, @report_type))
     %br
     %br
     = check_box_tag :csv
@@ -17,7 +17,7 @@
     .row
       .alpha.two.columns= button t(:search)
       .omega.fourteen.columns.align-right
-        =link_to 'New version', spree.bulk_coop_admin_reports_path(show_old_version: 0), {class: 'button'}
+        =link_to 'New version', spree.bulk_coop_admin_reports_path(report_type: @report_type, show_old_version: 0), {class: 'button'}
   %br
   %br
   %table#listing_orders.index
@@ -55,24 +55,6 @@
       .row
         .alpha.two.columns= submit_tag t(:search)
         .omega.fourteen.columns.align-right
-          =button_tag 'Download Visible As PDF', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "pdf", "visible")'}
-          =button_tag 'Download All As PDF', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "pdf", "all")'}
-          =button_tag 'Download Visible As CSV', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "csv", "visible")'}
-          =button_tag 'Download All As CSV', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "csv", "all")'}
-          -# FIXME Angular reload or #?report_type= doesn't change this link's report_type
-          =link_to 'Old version', spree.bulk_coop_admin_reports_path(report_type: @report_type, show_old_version: 1), {class: 'button'}
-    %br
-      -#
-      .report-grid{ 'ui-grid' => 'gridOptions',
-        'ui-grid-tree-view' => true,
-        'ui-grid-resize-columns' => true,
-        'ui-grid-exporter' => true,
-        'ui-grid-grouping' => true,
-        'ui-grid-move-columns' => true,
-        style: 'height: 80vh; width: 100%' }
-        .no-data-label.sixteen.columns.align-center{ 'ng-show' => '!gridOptions.data.length && loadAttempted' }
-          =t('spree.admin.no_results')
-        .loading-data-label.sixteen.columns.align-center{ 'ng-hide' => '!gridOptions.data.length && !loading || gridOptions.data.length' }
-          =t(:loading)
-
-
+          = render 'ng_download_buttons'
+          =link_to 'Old version', spree.bulk_coop_admin_reports_path(show_old_version: 1, report_type: @report_type), {'ng-href' => spree.bulk_coop_admin_reports_path(show_old_version: 1) + '&report_type={{reportType}}', class: 'button'}
+    = render 'ng_report_grid'
