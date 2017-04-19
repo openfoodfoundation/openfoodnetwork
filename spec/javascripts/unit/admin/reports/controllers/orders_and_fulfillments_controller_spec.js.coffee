@@ -21,6 +21,9 @@ describe "ordersAndFulfillmentsCtrl", ->
     expect(scope.loading).toBe false
     expect(scope.loadAttempted).toBe false
 
+  it "should set default reportType", ->
+    expect(scope.reportType).toEqual 'supplier_totals'
+
   it "can load reports", ->
     $httpBackend.expectGET("/admin/reports/bulk_coop.json").respond 200
 

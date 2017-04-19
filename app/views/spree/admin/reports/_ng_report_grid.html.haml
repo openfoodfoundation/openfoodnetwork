@@ -1,0 +1,11 @@
+.report-grid{ 'ui-grid' => 'gridOptions',
+  'ui-grid-tree-view' => true,
+  'ui-grid-resize-columns' => true,
+  'ui-grid-exporter' => true,
+  'ui-grid-grouping' => true,
+  'ui-grid-move-columns' => true,
+  style: 'height: 80vh; width: 100%' }
+  .no-data-label.sixteen.columns.align-center{ 'ng-show' => '!gridOptions.data.length && loadAttempted' }
+    =t('spree.admin.no_results')
+  .loading-data-label.sixteen.columns.align-center{ 'ng-hide' => '!gridOptions.data.length && !loading || gridOptions.data.length' }
+    =t(:loading)

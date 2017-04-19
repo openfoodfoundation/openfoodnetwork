@@ -210,8 +210,8 @@ Spree::Admin::ReportsController.class_eval do
 
   def bulk_coop
     if request.format.json?
-      # -- Prepare date parameters
       prepare_date_params params
+
       @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
       line_items = @report.table_items
 
@@ -229,14 +229,15 @@ Spree::Admin::ReportsController.class_eval do
       report_data = { line_items: line_items, orders: orders, products: products, distributors: distributors, variants: variants }
       render json: report_data
     else
-      @show_old_version = params[:show_old_version] == '1' || false
-      # -- Prepare date parameters
       prepare_date_params params
+
+      @show_old_version = params[:show_old_version] == '1' || false
+
       @report_types = REPORT_TYPES[:bulk_coop]
       @report_type = params[:q].andand[:report_type]
+      @report_type ||= params[:report_type] || @report_types.first.last.to_s
       # -- Prepare form options
       @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-      @report_type = params[:report_type] || @report_types.first.last
 
       # -- Build Report with Order Grouper
       @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
@@ -297,7 +298,8 @@ Spree::Admin::ReportsController.class_eval do
       involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
       @report_types = REPORT_TYPES[:orders_and_fulfillment]
-      @report_type = params[:report_type] || @report_types.first.last.to_s
+      @report_type = params[:q].andand[:report_type]
+      @report_type ||= params[:report_type] || @report_types.first.last.to_s
 
       # -- Build Report with Order Grouper
       @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params.merge(report_type: @report_type)

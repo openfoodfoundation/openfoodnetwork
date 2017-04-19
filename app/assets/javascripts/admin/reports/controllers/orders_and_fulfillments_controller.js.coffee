@@ -9,6 +9,7 @@ angular.module("admin.reports").controller "ordersAndFulfillmentsCtrl", ($scope,
   if $location.search().report_type
     reportType = $location.search().report_type
   $scope.q = {report_type: reportType}
+  $scope.reportType = reportType
 
   $scope.gridOptions = OrdersAndFulfillmentsReport.gridOptions(reportType)
   $scope.gridOptions.onRegisterApi = (gridApi) -> $scope.gridApi = gridApi

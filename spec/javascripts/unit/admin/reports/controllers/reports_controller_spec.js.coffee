@@ -19,15 +19,17 @@ describe 'ReportsCtrl', ->
   it 'init ui-grid loading flags should be false', ->
     expect(scope.loading).toBe false
     expect(scope.loadAttempted).toBe false
+    expect(scope.reportType).toEqual undefined
 
   describe '#reload', ->
-    it 'changes ui-grid table definintions', ->
+    it 'changes ui-grid table definintions and scope variables', ->
       spyOn(scope.gridApi.grid, "refresh").and.callThrough()
 
       scope.reload()
 
       expect(scope.loading).toBe false
       expect(scope.loadAttempted).toBe false
+      expect(scope.reportType).toEqual 'report'
       expect(scope.gridOptions.columnDefs).toEqual {a: 'b'}
       expect(scope.gridOptions.data).toEqual []
       expect(scope.gridApi.grid.refresh).toHaveBeenCalled()

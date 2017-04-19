@@ -37,22 +37,6 @@
       .row
         .alpha.two.columns= submit_tag t(:search)
         .omega.fourteen.columns.align-right
-          =button_tag 'Download Visible As PDF', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "pdf", "visible")'}
-          =button_tag 'Download All As PDF', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "pdf", "all")'}
-          =button_tag 'Download Visible As CSV', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "csv", "visible")'}
-          =button_tag 'Download All As CSV', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "csv", "all")'}
-
+          = render 'ng_download_buttons'
           =link_to 'Old version', spree.orders_and_distributors_admin_reports_path(show_old_version: 1), {class: 'button'}
-    %br
-      -#
-      .report-grid{ 'ui-grid' => 'gridOptions',
-        'ui-grid-tree-view' => true,
-        'ui-grid-resize-columns' => true,
-        'ui-grid-exporter' => true,
-        'ui-grid-grouping' => true,
-        'ui-grid-move-columns' => true,
-        style: 'height: 80vh; width: 100%' }
-        .no-data-label.sixteen.columns.align-center{ 'ng-show' => '!gridOptions.data.length && loadAttempted' }
-          =t('spree.admin.no_results')
-        .loading-data-label.sixteen.columns.align-center{ 'ng-hide' => '!gridOptions.data.length && !loading || gridOptions.data.length' }
-          =t(:loading)
+    = render 'ng_report_grid'

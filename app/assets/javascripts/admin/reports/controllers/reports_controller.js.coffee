@@ -13,7 +13,8 @@ angular.module("admin.reports").controller 'ReportsCtrl', ($scope, $location) ->
   $scope.reload = ->
     $scope.loading = false
     $scope.loadAttempted = false
-    $scope.gridOptions.columnDefs = $scope.$eval('columnOptions.' + $scope.q.report_type)
-    $location.search('report_type', $scope.q.report_type)
+    $scope.reportType = $scope.q.report_type
+    $scope.gridOptions.columnDefs = $scope.$eval('columnOptions.' + $scope.reportType)
+    $location.search('report_type', $scope.reportType)
     $scope.gridOptions.data = new Array()
     $scope.gridApi.grid.refresh()
