@@ -59,8 +59,8 @@
           =button_tag 'Download All As PDF', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "pdf", "all")'}
           =button_tag 'Download Visible As CSV', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "csv", "visible")'}
           =button_tag 'Download All As CSV', {class: 'button', 'ng-show' => 'gridOptions.data.length', 'ng-click' => 'download($event, "csv", "all")'}
-
-          =link_to 'Old version', spree.bulk_coop_admin_reports_path(show_old_version: 1), {class: 'button'}
+          -# FIXME Angular reload or #?report_type= doesn't change this link's report_type
+          =link_to 'Old version', spree.bulk_coop_admin_reports_path(report_type: @report_type, show_old_version: 1), {class: 'button'}
     %br
       -#
       .report-grid{ 'ui-grid' => 'gridOptions',

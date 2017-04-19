@@ -36,10 +36,6 @@ angular.module("admin.reports").factory 'UIGridReport', ->
     shippingInstructionsFinalizer: (aggregation) ->
       aggregation.rendered = aggregation.order.special_instructions
 
-    sumAggregator: (aggregation, fieldValue, numValue, row) ->
-      aggregation.value = 0 unless aggregation.sum?
-      aggregation.value += numValue
-
     orderTotalFinalizer: (aggregation) ->
       aggregation.rendered = aggregation.order.total
 
@@ -61,3 +57,7 @@ angular.module("admin.reports").factory 'UIGridReport', ->
         aggregation.order = { }
       else
         aggregation.order = row.entity.order
+
+    sumAggregator: (aggregation, fieldValue, numValue, row) ->
+      aggregation.value = 0 unless aggregation.sum?
+      aggregation.value += numValue
