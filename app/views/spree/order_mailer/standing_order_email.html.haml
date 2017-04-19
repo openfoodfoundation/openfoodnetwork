@@ -18,7 +18,11 @@
       %span.clear
 
 %p.callout
-  = t("email_so_#{@type}_explainer_html", orders_close_at: l(@order.order_cycle.orders_close_at, format: "%a %b %d @ %l:%M%p"))
+  = t("email_so_#{@type}_explainer_html")
+  - if @type != 'empty'
+    = t("email_so_edit_false_html",
+      orders_close_at: l(@order.order_cycle.orders_close_at, format: "%a %b %d @ %l:%M%p"),
+      order_url: spree.order_url(@order))
   = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.email)
 
 %p &nbsp;
