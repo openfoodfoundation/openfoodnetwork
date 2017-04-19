@@ -170,14 +170,6 @@ class CheckoutController < Spree::CheckoutController
     @order.ship_address ||= customer_preferred_ship_address || preferred_ship_address || last_used_ship_address || Spree::Address.default
   end
 
-  def after_payment
-    # object_params sets the payment amount to the order total, but it does this before
-    # the shipping method is set. This results in the customer not being charged for their
-    # order's shipping. To fix this, we refresh the payment amount here.
-    @order.update_totals
-    @order.payments.first.update_attribute :amount, @order.total
-  end
-
   # Overriding Spree's methods
   def raise_insufficient_quantity
     respond_to do |format|
