@@ -1,5 +1,6 @@
-angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstants) ->
-  new class BulkCoopReport
+angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstants, UIGridReport) ->
+  new class BulkCoopReport extends UIGridReport
+
     columnOptions: ->
       {supplier_report: [
           { field: 'id',                             displayName: 'Line Item ID',         width: '5%', visible: false, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
@@ -57,34 +58,3 @@ angular.module("admin.reports").factory 'BulkCoopReport', (uiGridGroupingConstan
       exporterPdfTableStyle: { width: 'auto'}
       exporterPdfMaxGridWidth: 600
       columnDefs: eval('this.columnOptions().' + reportType)
-
-    basicFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.value
-
-    customerFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.customer
-
-    customerEmailFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.email
-
-    orderDateFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.completed_at
-
-    orderTotalFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.total
-
-    orderOutstandingBalanceFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.outstanding_balance
-
-    orderPaymentTotalFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.payment_total
-
-    orderAggregator: (aggregation, fieldValue, numValue, row) ->
-      return if aggregation.order == row.entity.order
-      if aggregation.order?
-        aggregation.order = { }
-      else
-        aggregation.order = row.entity.order
-
-    priceFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.display_total

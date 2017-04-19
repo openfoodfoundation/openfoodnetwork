@@ -1,5 +1,6 @@
-angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGroupingConstants) ->
-  new class OrdersAndFulfillmentsReport
+angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGroupingConstants, UIGridReport) ->
+  new class OrdersAndFulfillmentsReport extends UIGridReport
+
     columnOptions: -> {
       supplier_totals: [
         { field: 'id',                      displayName: 'ID',                      width: '5%', visible: true, groupingShowAggregationMenu: false, groupingShowGroupingMenu: false }
@@ -76,11 +77,6 @@ angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGr
       ]
     }
 
-    @arrayInclude: (list, obj) ->
-      return _.filter(list, (listItem) ->
-        return angular.equals(listItem, obj)
-      ).length > 0
-
     gridOptions: (reportType = 'supplier_totals') ->
       enableSorting: true
       enableFiltering: true
@@ -93,24 +89,17 @@ angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGr
       exporterPdfMaxGridWidth: 600
       columnDefs: eval('this.columnOptions().' + reportType)
 
-    basicFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.value
-
-    customerFinalizer: (aggregation) ->
-      aggregation.rendered = aggregation.order.customer
-
-    productFinalizer: (aggregation) ->
-      aggregation.rendered = "TOTAL"
-
-    sumAggregator: (aggregation, fieldValue, numValue, row) ->
-      aggregation.value = 0 unless aggregation.sum?
-      aggregation.value += numValue
-
     orderTotalFinalizer: (aggregation) ->
       if !aggregation.order.total?
         aggregation.rendered = aggregation.stats.sum
       else
         aggregation.rendered = aggregation.order.total
+
+    # Easier way to check if array includes object?
+    @arrayInclude: (list, obj) ->
+      return _.filter(list, (listItem) ->
+        return angular.equals(listItem, obj)
+      ).length > 0
 
     # Aggregator for orderTotalFinalizer
     # it sums up only by order (not by LineItem)
@@ -130,10 +119,3 @@ angular.module("admin.reports").factory 'OrdersAndFulfillmentsReport', (uiGridGr
       if not OrdersAndFulfillmentsReport.arrayInclude(aggregation.stats.orders, {id: row.entity.order.id, value: numValue})
         aggregation.stats.orders.push({id: row.entity.order.id, value: numValue})
         aggregation.stats.sum += numValue
-
-    orderAggregator: (aggregation, fieldValue, numValue, row) ->
-      return if aggregation.order == row.entity.order
-      if aggregation.order?
-        aggregation.order = { }
-      else
-        aggregation.order = row.entity.order
