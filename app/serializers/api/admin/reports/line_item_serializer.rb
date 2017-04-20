@@ -14,23 +14,24 @@ class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
   end
 
   def scaled_final_weight_volume
-    OpenFoodNetwork::Reports::BulkCoopReport.scaled_final_weight_volume(object)
+    (object.final_weight_volume || 0) / (object.product.variant_unit_scale || 1)
   end
 
   def total_available
-    OpenFoodNetwork::Reports::BulkCoopReport.total_available([object])
+    units_required * group_buy_unit_size
   end
 
   def units_required
-    OpenFoodNetwork::Reports::BulkCoopReport.units_required([object])
+    group_buy_unit_size.zero? ? 0 : ( scaled_final_weight_volume / group_buy_unit_size ).ceil
   end
 
   def remainder
-    OpenFoodNetwork::Reports::BulkCoopReport.remainder([object])
+    remainder = total_available - scaled_final_weight_volume
+    remainder >= 0 ? remainder : ''
   end
 
   def max_quantity_excess
-    OpenFoodNetwork::Reports::BulkCoopReport.max_quantity_excess([object])
+    max_quantity_amount - scaled_final_weight_volume
   end
 
   def total_units
@@ -41,6 +42,19 @@ class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
 
   def paid?
     object.order.paid? ? 'Yes' : 'No'
+  end
+
+  private
+  def group_buy_unit_size
+    (object.variant.product.group_buy_unit_size || 0.0) / (object.product.variant_unit_scale || 1)
+  end
+
+  def scaled_unit_value
+    (object.variant.unit_value || 0) / (object.variant.product.variant_unit_scale || 1)
+  end
+
+  def max_quantity_amount
+    [object.max_quantity || 0, object.quantity || 0].max * scaled_unit_value
   end
 
 end

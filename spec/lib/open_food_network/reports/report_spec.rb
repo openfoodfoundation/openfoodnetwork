@@ -50,7 +50,7 @@ module OpenFoodNetwork::Reports
       let(:user) { create(:admin_user) }
 
       context 'blank object' do
-        let(:report) { Report.new(user, {query: 'keyword'}, ['order']) }
+        let(:report) { Report.new(user, {query: 'keyword'}) }
         it 'new instance accepts 3 arguments' do
           expect(report.params).to eq({query: 'keyword'})
         end
@@ -73,12 +73,56 @@ module OpenFoodNetwork::Reports
 
         before { order.line_items << line_item }
 
-        it 'returns one line_item' do
+        it '#table_items returns one line_item' do
           expect(report.table_items).to eq([line_item])
         end
+
+        it '#line_items returns one line_item' do
+          expect(report.line_items).to eq([line_item])
+        end
+
+        it '#orders returns one order' do
+          expect(report.orders).to eq([order])
+        end
+
+        it '#variants returns one variant' do
+          expect(report.variants).to eq([line_item.variant])
+        end
+
+        it '#products returns one variant' do
+          expect(report.products).to eq([line_item.product])
+        end
+
+        it '#distributors returns one variant' do
+          expect(report.distributors).to eq([line_item.order.distributor])
+        end
+
+        context 'serializers' do
+          it '#line_items returns one line_item' do
+            expect(report.line_items_serialized.options[:each_serializer]).to eq(Api::Admin::Reports::LineItemSerializer)
+          end
+
+          it '#orders returns one order' do
+            expect(report.orders_serialized.options[:each_serializer]).to eq(Api::Admin::Reports::OrderSerializer)
+          end
+
+          it '#variants returns one variant' do
+            expect(report.variants_serialized.options[:each_serializer]).to eq(Api::Admin::Reports::VariantSerializer)
+          end
+
+          it '#products returns one variant' do
+            expect(report.products_serialized.options[:each_serializer]).to eq(Api::Admin::Reports::ProductSerializer)
+          end
+
+          it '#distributors returns one variant' do
+            expect(report.distributors_serialized.options[:each_serializer]).to eq(Api::Admin::Reports::EnterpriseSerializer)
+          end
+        end
+
       end
     end
 
+    # TODO - ditch this after backend generated reports are not needed anymore
     context 'methods for creating report tables' do
       let(:report) { TestReport.new }
       let(:helper_report) { HelperReport.new }
