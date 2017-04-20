@@ -86,6 +86,7 @@ fr:
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
+    description: Description
     whats_this: Qu'est-ce que c'est?
     tag_has_rules: "Règles existantes pour ce tag: %{num}"
     has_one_rule: "a une règle"
@@ -189,13 +190,16 @@ fr:
         inherits_properties?: Hériter des propriétés producteur?
         available_on: Disponible sur
         av_on: "Disp. sur"
+      properties:
+        property_name: Nom du label
+        inherited_property: Label producteur appliqué par défaut
       variants:
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
     variant_overrides:
       loading_flash:
         loading_inventory: Catalogue boutique en cours de chargement...
       index:
-        title: Stock
+        title: Catalogue boutique
         description: Utilisez cette page pour gérer le catalogue de votre entreprise. Les détails produits saisis ici remplaceront ceux de la page "Produit" pour votre entreprise uniquement.
         enable_reset?: Autoriser réinitialisation du stock (retour configurations par défaut)?
         inherit?: Hériter?
@@ -249,7 +253,7 @@ fr:
           desc_short: Description (en bref)
           desc_short_placeholder: Parlez de votre entreprise en une ou deux phrases
           desc_long: A propos
-          desc_long_placeholder: Parlez de vous à vos acheteurs! Ces informations seront visibles sur votre profil public.
+          desc_long_placeholder: Parlez de vous à vos acheteurs ! Ces informations seront visibles sur votre profil public.
         business_details:
           abn: SIRET
           abn_placeholder: 'ex: 404 833 048 00022'
@@ -268,7 +272,7 @@ fr:
           name: Nom
           fee_type: Type de marge
           manage_fees: Gérer les marges et commissions
-          no_fees_yet: Vous n'avez pas encore définies de commissions
+          no_fees_yet: Vous n'avez pas encore défini de commissions
           create_button: Créer une commission
         images:
           logo: Logo
@@ -290,9 +294,9 @@ fr:
         payment_methods:
           name: Nom
           applies: Active?
-          manage: Gérer les options de paiement
-          not_method_yet: Vous n'avez pas encore d'option de paiement.
-          create_button: Créer une nouvelle option de paiement
+          manage: Gérer les méthodes de paiement
+          not_method_yet: Vous n'avez pas encore de méthode de paiement.
+          create_button: Créer une nouvelle méthode de paiement
           create_one_button: En créer une maintenant
         primary_details:
           name: Nom
@@ -312,7 +316,7 @@ fr:
           visible_in_search_tip: Indiquez si vous souhaitez ou ne souhaitez pas que votre entreprise apparaisse sur la carte et dans la liste des boutiques.
           visible: Visible
           not_visible: Invisible
-          permalink: Nom affiché dans l'URL (sans espace)
+          permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique
           link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre boutique sur Open Food France.
@@ -462,9 +466,6 @@ fr:
         advanced_settings: Paramétrages avancés
         update_and_close: Mettre à jour et fermer
     producer_properties:
-      form:
-        property: Propriétés / labels
-        value: Détail
       index:
         title: Propriétés / labels du producteur
     shared:
@@ -570,7 +571,7 @@ fr:
   items: "produits"
   cart_headline: "Votre panier"
   total: "Total"
-  checkout: "Régler la commande"
+  checkout: "Passer la commande"
   cart_updating: "Mettre à jour le panier"
   cart_empty: "Panier vide"
   cart_edit: "Modifier votre panier"
@@ -639,13 +640,13 @@ fr:
   stats_shops: "boutiques"
   stats_shoppers: "acheteurs"
   stats_orders: "commandes"
-  checkout_title: Paiement
-  checkout_now: Régler la commande
+  checkout_title: Finalisation commande
+  checkout_now: Passer la commande
   checkout_order_ready: Commande prête pour
   checkout_hide: Masquer
   checkout_expand: Afficher
-  checkout_headline: "Ok, prêt pour le paiement?"
-  checkout_as_guest: "Régler en mode invité"
+  checkout_headline: "Ok, prêt à finaliser la commande?"
+  checkout_as_guest: "Passer commande en mode invité"
   checkout_details: "Vos informations"
   checkout_billing: "Informations de facturation"
   checkout_default_bill_address: "Sauvegarder comme adresse de facturation par défaut"
@@ -674,7 +675,7 @@ fr:
   order_pickup_instructions: Instructions de retrait
   order_produce: Produit
   order_total_price: Total
-  order_includes_tax: (TVA inclue)
+  order_includes_tax: (dont TVA)
   order_payment_paypal_successful: Votre paiement via PayPal a été réalisé avec succès.
   order_hub_info: Hub Info
   bom_tip: "Utilisez cette page pour modifier les quantités sur plusieurs commandes à la fois. Les produits peuvent aussi être supprimés des commandes si nécessaire."
@@ -739,7 +740,7 @@ fr:
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
   shopping_oc_closed: La boutique est actuellement fermée
-  shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvez accépter une commande tardive)"
+  shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvons accepter une commande tardive)"
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
   shopping_oc_next_open: "Le prochain cycle de vente ouvrira dans %{distance_of_time}"
   shopping_tabs_about: "A propos de %{distributor}"
@@ -775,7 +776,7 @@ fr:
   products_loading: "Produits en cours de chargement..."
   products_updating_cart: "Actualisation du panier..."
   products_cart_empty: "Panier vide"
-  products_edit_cart: "Modifier votre panier"
+  products_edit_cart: "Valider votre panier"
   products_from: de
   products_change: "Aucun changement à sauvegarder."
   products_update_error: "Échec de l'enregistrement dû à:"
@@ -874,9 +875,9 @@ fr:
   sell_hubs_detail: "Créer un profil pour votre entreprise de distribution ou organisation sur OFFrance. A tout moment vous pourrez créer une boutique multi-fournisseurs."
   sell_groups_detail: "Créer un répertoire sur mesure (regroupant différents producteurs et hubs de distribution) pour votre région ou votre organisation."
   sell_user_guide: "En savoir plus en explorant le guide utilisateur."
-  sell_listing_price: "L'inscription sur OFFrance est gratuite. Ouvrir est gérer une boutique sur OFFrance ou créer un groupe sur OFFrance pour votre organisation ou réseau régional, n'est pas gratuit, mais le prix est libre: soit 2% du chiffre d'affaire (ou autre forme de contribution libre designée par votre hub), soit une contribution \"en compétences\" à Open Food France (développement de fonctionnalités, recherche de financement, support utilisateur, etc.), soit un mix des deux."
+  sell_listing_price: "La création d'un profil sur OFFrance est entièrement libre. Si vous ouvrez et gérez une boutique sur OFFrance, ou créez un groupe pour votre organisation ou réseau régional, nous vous invitons à contribuer au commun Open Food France que vous utilisez. En effet, faire tourner la plateforme Open Food France a un coût, et nous comptons sur VOUS pour contribuer à couvrir ces frais de fonctionnement (location et maintenance des serveurs, support utilisateur, nouveaux développements...). Par exemple, en reversant sous forme de don à l'association 2% de votre chiffre d'affaire, et/ou un montant fixe tous les mois. Vous pouvez aussi contribuer au commun \"en compétences\" (développement de fonctionnalités, recherche de financement, support utilisateur, etc.)"
   sell_embed: "Nous pouvons aussi intégrer votre boutique OFFrance dans votre propre site web ou construire un site web d'alimentation locale sur mesure pour votre région."
-  sell_ask_services: "Nous consulter sur les services OFFrance."
+  sell_ask_services: "Nous consulter sur les services des partenaires OFFrance."
   shops_title: Boutiques
   shops_headline: Des achats qui transforment.
   shops_text: Les aliments poussent selon des cycles naturels, les fermiers récoltent en cycles. Alors ici, nous achetons aussi en cycles. Si un cycle de vente est terminé, attendez le suivant ou demandez des infos au hub !
@@ -894,7 +895,7 @@ fr:
   orders_edit_headline: Votre panier
   orders_edit_time: Commande prête pour
   orders_edit_continue: Poursuivre mes achats
-  orders_edit_checkout: Régler ma commande
+  orders_edit_checkout: Passer ma commande
   orders_form_empty_cart: "Vider le panier"
   orders_form_subtotal: Sous-total
   orders_form_admin: Admin et opérations
@@ -926,7 +927,7 @@ fr:
   remember_me: Se souvenir de moi
   are_you_sure: "Confirmer?"
   orders_open: Boutique ouverte
-  closing: "Fermeture"
+  closing: "Fermeture "
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
   updating: Mettre à jour
@@ -938,7 +939,7 @@ fr:
   hide_filters: "Masquer les filtres"
   one_filter_applied: "1 filtre appliqué"
   x_filters_applied: "filtres appliqués"
-  submitting_order: "Votre commande est en cours d'envoi: veuillez patienter"
+  submitting_order: "Votre commande est en cours d'envoi : veuillez patienter"
   confirm_hub_change: "Confirmer? Cette action modifiera la boutique sélectionnée et tous les articles de votre panier seront effacés."
   confirm_oc_change: "Confirmer? Cette action modifiera le cycle de vente sélectionné et tous les articles de votre panier seront effacés."
   location_placeholder: "Saisissez une localisation..."
@@ -1014,7 +1015,7 @@ fr:
   enterprise_acn_placeholder: "ex: 404 833 048"
   enterprise_tax_required: "Merci de choisir."
   enterprise_final_step: "Dernière étape!"
-  enterprise_social_text: "Comment trouver la boutique en ligne %{enterprise}"
+  enterprise_social_text: "Comment trouver la boutique en ligne %{enterprise} ?"
   website: "Site internet"
   website_placeholder: "ex: openfoodfrance.fr"
   facebook: "Facebook"
@@ -1106,7 +1107,7 @@ fr:
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
-  admin_entreprise_relationships: "Liens inter-entreprises"
+  admin_entreprise_relationships: "Permissions inter-entreprises"
   admin_entreprise_relationships_everything: "Tout"
   admin_entreprise_relationships_permits: "autorise"
   admin_entreprise_relationships_seach_placeholder: "Chercher"
@@ -1116,7 +1117,7 @@ fr:
   admin_entreprise_groups_owner: "Manager principal"
   admin_entreprise_groups_on_front_page: "Sur la page d'accueil?"
   admin_entreprise_groups_entreprise: "Entreprises"
-  admin_entreprise_groups_data_powertip: "L'utilisateur principal en charge de ce groupe."
+  admin_entreprise_groups_data_powertip: "Le manager principal en charge de ce groupe."
   admin_entreprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
   admin_entreprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
   admin_entreprise_groups_contact: "Contact"
@@ -1129,7 +1130,7 @@ fr:
   admin_entreprise_groups_contact_state_id: "Département"
   admin_entreprise_groups_contact_country_id: "Pays"
   admin_entreprise_groups_web: "Liens web"
-  admin_entreprise_groups_web_twitter: "ex: @OpenFoodNet"
+  admin_entreprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
   admin_entreprise_groups_web_website_placeholder: "ex: www.monepicerieenligne.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
@@ -1167,8 +1168,8 @@ fr:
   spree_admin_overview_enterprises_footer: "GÉRER MES ENTREPRISES"
   spree_admin_enterprises_hubs_name: "Nom"
   spree_admin_enterprises_create_new: "CRÉER NOUVELLE"
-  spree_admin_enterprises_shipping_methods: "Options de livraison"
-  spree_admin_enterprises_fees: "Marges de l'entreprise"
+  spree_admin_enterprises_shipping_methods: "Méthodes de livraison"
+  spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
   spree_admin_enterprises_producers_name: "Nom"
@@ -1177,7 +1178,7 @@ fr:
   spree_admin_enterprises_producers_order_cycles: "Produits dans le cycle de vente"
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_tabs_producers: "PRODUCTEURS"
-  spree_admin_enterprises_producers_manage_order_cycles: "GÉRER MES CYCLES DE VENTES"
+  spree_admin_enterprises_producers_manage_order_cycles: "GÉRER LES CYCLES DE VENTES"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
   spree_admin_enterprises_producers_orders_cycle_text: "Vous n'avez pas de cycle de vente actif."
   spree_admin_enterprises_any_active_products_text: "Vous n'avez aucun produit actif."
@@ -1189,12 +1190,12 @@ fr:
   spree_admin_single_enterprise_alert_mail_sent: "Email envoyé à "
   spree_admin_overview_action_required: "Action requise"
   spree_admin_overview_check_your_inbox: "Veuillez vérifier votre boîte mail pour les prochaines étapes. Merci!"
-  change_package: "Changer de pack"
+  change_package: "Changer de type de compte"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   your_profil_live: "Votre profil en ligne"
   on_ofn_map: "sur la carte Open Food France"
   see: "Voir"
-  live: "En ligne"
+  live: "en ligne"
   manage: "Gérer"
   resend: "Renvoyer"
   add_and_manage_products: "Ajouter & gérer des produits"
@@ -1214,7 +1215,7 @@ fr:
   tax_settings: "Paramètres TVA"
   products_require_tax_category: "vous devez choisir la TVA applicable"
   admin_shared_address_1: "Adresse"
-  admin_shared_address_2: "Adresse (cont.)"
+  admin_shared_address_2: "Adresse (suite)"
   admin_share_city: "Ville"
   admin_share_zipcode: "Code postal"
   admin_share_country: "Pays"
@@ -1265,7 +1266,7 @@ fr:
   due_date: "Date d'échéance:"
   account_code: "Code compte:"
   equals: "Egal"
-  contains: "contients"
+  contains: "contient"
   discount: "Réduction"
   filter_products: "Filtrer les produits"
   delete_product_variant: "La variante ne peut pas être supprimée!"
@@ -1287,14 +1288,14 @@ fr:
   adrdress: "Adresse"
   contact: "Contact"
   social: "Réseaux sociaux"
-  business_details: "N° fiscaux"
-  properties: "Propriétés"
+  business_details: "Juridique"
+  properties: "Propriétés / labels"
   shipping_methods: "Méthodes de livraison"
   payment_methods: "Méthodes de paiement"
   payment_method_fee: "Frais de transaction"
-  enterprise_fees: "Marges de l'entreprise"
-  inventory_settings: "Paramètres de stock"
-  tag_rules: "Règles des tags"
+  enterprise_fees: "Marges et commissions"
+  inventory_settings: "Catalogue boutique"
+  tag_rules: "Règles de tag"
   shop_preferences: "Préférences boutique"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un hub"
@@ -1309,7 +1310,7 @@ fr:
           title: Règles de tag
           overview: Aperçu
           overview_text: >
-              Les règles de tags vous permettent de paramétrer ce qui est vu ou pas
+              Les règles de tag vous permettent de paramétrer ce qui est vu ou pas
               par tel ou tel type d'acheteur.  Par exemple des options de livraison,
               des méthodes de paiement, des produits, ou des cycles de vente.
           by_default_rules: "Règles à appliquer \"par défaut\""
@@ -1358,10 +1359,9 @@ fr:
               fois votre choix fait, cliquez sur le bouton rouge ENREGISTRER !
           profile_only: Profil uniquement
           profile_only_cost: "COÛT: CONTRIBUTION LIBRE"
-          profile_only_text1: >+
+          profile_only_text1: >
               Gagnez en visibilité, racontez votre histoire, et affichez vos coordonnées
               pour pouvoir être contactés.
-
           profile_only_text2: >
               Si vous souhaitez vous concentrer sur votre activité de production,
               et laisser à d'autre le soin de distribuer vos produits, vous n'avez
@@ -1407,7 +1407,7 @@ fr:
               Un producteur peut aussi avoir d'autres rôles, comme par exemple stocker
               et distribuer des produits d'autres producteurs à travers une boutique
               sur Open Food France.
-          non_producer: Pas producteur
+          non_producer: Non-producteur
           non_producer_text1: >
               Les entreprises qui ne produisent pas ne peuvent pas créer leur propre
               catalogue produits pour les vendre sur Open Food France.
@@ -1442,7 +1442,7 @@ fr:
             title: Edition des produits par lots
           indicators:
             title: CHARGEMENT DES PRODUITS
-            no_products: "Aucun produit trouvé. Pourquoi n'en ajouté vous pas quelques-uns ?"
+            no_products: "Aucun produit trouvé. Ajouter un produit ?"
             no_results: "Désolé, aucun résultat trouvé"
       variants:
         autocomplete:
@@ -1460,14 +1460,14 @@ fr:
     payment_states:
       balance_due: solde dû
       completed: effectué
-      checkout: Paiement
-      credit_owed: Crédit acheteur
+      checkout: passer commande
+      credit_owed: crédit acheteur
       failed: échec
       paid: payé
       pending: en attente
       processing: en traitement
-      void: annuler
-      invalid: Invalide
+      void: faire un avoir
+      invalid: invalide
     order_mailer:
       invoice_email:
         hi: "Bonjour %{name}"
