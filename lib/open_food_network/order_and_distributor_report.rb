@@ -12,7 +12,7 @@ module OpenFoodNetwork
     def table
       order_and_distributor_details = []
 
-      @orders.each do |order|
+      orders.each do |order|
         order.line_items.each do |line_item|
           order_and_distributor_details << [order.created_at, order.id,
             order.bill_address.full_name, order.email, order.bill_address.phone, order.bill_address.city,

@@ -143,41 +143,21 @@ Spree::Admin::ReportsController.class_eval do
     if request.format.json?
       prepare_date_params params
       @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params
-      line_items = @report.table_items
-      orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')
-      variants = Spree::Variant.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_variants.*')
-      products = Spree::Product.joins(:all_variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
-      distributors = Enterprise.joins(:distributed_orders).where(spree_orders: { id: orders.pluck(:id) }).select('DISTINCT enterprises.*')
 
-      line_items = ActiveModel::ArraySerializer.new(line_items, each_serializer: Api::Admin::Reports::LineItemSerializer)
-      orders = ActiveModel::ArraySerializer.new(orders, each_serializer: Api::Admin::Reports::OrderSerializer)
-      products = ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::Reports::ProductSerializer)
-      distributors = ActiveModel::ArraySerializer.new(distributors, each_serializer: Api::Admin::Reports::EnterpriseSerializer)
-      variants = ActiveModel::ArraySerializer.new(variants, each_serializer: Api::Admin::Reports::VariantSerializer)
-
-      report_data = { line_items: line_items, orders: orders, products: products, distributors: distributors, variants: variants }
+      report_data = {
+        line_items: @report.line_items_serialized,
+        orders: @report.orders_serialized,
+        products: @report.products_serialized,
+        distributors: @report.distributors_serialized,
+        variants: @report.variants_serialized }
       render json: report_data
     else
       @show_old_version = params[:show_old_version] == '1' || false
       prepare_date_params params
 
-      permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-      @search = permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
-      orders = @search.result
+      @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params
+      @search = @report.search
 
-      # If empty array is passed in, the where clause will return all line_items, which is bad
-      orders_with_hidden_details =
-        permissions.editable_orders.empty? ? orders : orders.where('id NOT IN (?)', permissions.editable_orders)
-
-      orders.select{ |order| orders_with_hidden_details.include? order }.each do |order|
-        # TODO We should really be hiding customer code here too, but until we
-        # have an actual association between order and customer, it's a bit tricky
-        order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        order.assign_attributes(email: "HIDDEN")
-      end
-
-      @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params, orders
       unless params[:csv]
         render :html => @report
       else
@@ -213,20 +193,13 @@ Spree::Admin::ReportsController.class_eval do
       prepare_date_params params
 
       @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
-      line_items = @report.table_items
 
-      orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')
-      variants = Spree::Variant.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_variants.*')
-      products = Spree::Product.joins(:all_variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
-      distributors = Enterprise.joins(:distributed_orders).where(spree_orders: { id: orders.pluck(:id) }).select('DISTINCT enterprises.*')
-
-      line_items = ActiveModel::ArraySerializer.new(line_items, each_serializer: Api::Admin::Reports::LineItemSerializer)
-      orders = ActiveModel::ArraySerializer.new(orders, each_serializer: Api::Admin::Reports::OrderSerializer)
-      products = ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::Reports::ProductSerializer)
-      distributors = ActiveModel::ArraySerializer.new(distributors, each_serializer: Api::Admin::Reports::EnterpriseSerializer)
-      variants = ActiveModel::ArraySerializer.new(variants, each_serializer: Api::Admin::Reports::VariantSerializer)
-
-      report_data = { line_items: line_items, orders: orders, products: products, distributors: distributors, variants: variants }
+      report_data = {
+        line_items: @report.line_items_serialized,
+        orders: @report.orders_serialized,
+        products: @report.products_serialized,
+        distributors: @report.distributors_serialized,
+        variants: @report.variants_serialized }
       render json: report_data
     else
       prepare_date_params params
@@ -271,17 +244,12 @@ Spree::Admin::ReportsController.class_eval do
       # -- Prepare Date Params
       prepare_date_params params
       @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
-      line_items = @report.table_items
-      orders = Spree::Order.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_orders.*')
-      variants = Spree::Variant.joins(:line_items).where(spree_line_items: { id: line_items.pluck(:id) }).select('DISTINCT spree_variants.*')
-      products = Spree::Product.joins(:all_variants).where(spree_variants: { id: variants.pluck(:id) }).select('DISTINCT spree_products.*')
 
-      line_items = ActiveModel::ArraySerializer.new(line_items, each_serializer: Api::Admin::Reports::LineItemSerializer)
-      orders = ActiveModel::ArraySerializer.new(orders, each_serializer: Api::Admin::Reports::OrderSerializer)
-      variants = ActiveModel::ArraySerializer.new(variants, each_serializer: Api::Admin::Reports::VariantSerializer)
-      products = ActiveModel::ArraySerializer.new(products, each_serializer: Api::Admin::Reports::ProductSerializer)
-
-      report_data = { line_items: line_items, orders: orders, variants: variants, products: products}
+      report_data = {
+        line_items: @report.line_items_serialized,
+        orders: @report.orders_serialized,
+        products: @report.products_serialized,
+        variants: @report.variants_serialized }
       render json: report_data
     else
       @show_old_version = params[:show_old_version] == '1' || false
