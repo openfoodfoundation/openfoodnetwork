@@ -10,7 +10,5 @@ Darkswarm.factory "Matcher", ->
     # Return true if text occurs at the beginning of any word present in an array of strings
     matchBeginning: (properties, text) ->
       text = text.trim()
-      properties.some (prop) ->
-        prop ||= ""
-        prop.split(' ').some (word) ->
-          word.toLowerCase().indexOf(text.toLowerCase()) == 0
+      regexp = new RegExp("(?:^|[\\s-])#{text}", "i")
+      properties.some (prop) -> (prop || "").search(regexp) >= 0
