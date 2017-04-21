@@ -15,12 +15,12 @@ module Api
     end
 
     def completed_at
-      object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: :long)
+      object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: "%b %d, %Y %H:%M")
     end
 
     def changes_allowed_until
       return I18n.t(:not_allowed) unless object.changes_allowed?
-      I18n.l(object.order_cycle.andand.orders_close_at, format: :long)
+      I18n.l(object.order_cycle.andand.orders_close_at, format: "%b %d, %Y %H:%M")
     end
 
     def total
