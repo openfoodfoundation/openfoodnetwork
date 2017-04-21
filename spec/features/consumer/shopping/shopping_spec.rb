@@ -137,6 +137,32 @@ feature "As a consumer I want to shop with a distributor", js: true do
             end
           end
         end
+
+        context "when logged in" do
+          let!(:prev_order) { create(:completed_order_with_totals, order_cycle: oc1, distributor: distributor, user: order.user) }
+
+          before do
+            distributor.allow_order_changes = true
+            distributor.save
+            quick_login_as order.user
+            visit shop_path
+          end
+
+          it "shows previous orders if order cycle was selected already" do
+            select "frogs", from: "order_cycle_id"
+            expect(page).to have_content "Next order closing in 2 days"
+            visit shop_path
+            find("#cart").click
+            expect(page).to have_text(I18n.t("shared.menu.cart.already_ordered_products"))
+          end
+
+          it "shows previous orders after selecting an order cycle" do
+            select "frogs", from: "order_cycle_id"
+            expect(page).to have_content "Next order closing in 2 days"
+            find("#cart").click
+            expect(page).to have_text(I18n.t("shared.menu.cart.already_ordered_products"))
+          end
+        end
       end
     end
 

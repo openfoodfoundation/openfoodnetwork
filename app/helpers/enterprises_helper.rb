@@ -88,4 +88,12 @@ module EnterprisesHelper
   def remaining_trial_days(enterprise)
     distance_of_time_in_words(Time.zone.now, enterprise.shop_trial_start_date + Spree::Config[:shop_trial_length_days].days)
   end
+
+  def order_changes_allowed?
+    current_order.andand.distributor.andand.allow_order_changes?
+  end
+
+  def show_bought_items?
+    order_changes_allowed? && current_order.finalised_line_items.present?
+  end
 end
