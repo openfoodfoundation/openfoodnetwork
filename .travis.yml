@@ -5,6 +5,11 @@ bundler_args: --without development
 rvm:
   - "2.1.5"
 
+branches:
+  only:
+  - master
+  - merged-pull/*
+
 # Set the timezone for phantomjs with TZ
 # Set the timezone for karma with TIMEZONE
 #
