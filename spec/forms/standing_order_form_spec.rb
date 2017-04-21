@@ -273,6 +273,178 @@ describe StandingOrderForm do
     end
   end
 
+  describe "changing the billing address" do
+    let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
+    let(:shipping_method) { standing_order.shipping_method }
+    let!(:order) { standing_order.proxy_orders.first.initialise_order! }
+    let!(:bill_address_attrs) { standing_order.bill_address.attributes }
+    let!(:ship_address_attrs) { standing_order.ship_address.attributes }
+    let(:params) { { bill_address_attributes: { id: bill_address_attrs["id"], firstname: "Bill", address1: "123 abc st", phone: "1123581321" } } }
+    let(:form) { StandingOrderForm.new(standing_order, params) }
+
+    context "when a ship address is not required" do
+      before { shipping_method.update_attributes(require_ship_address: false) }
+
+      context "when the bill_address on the order matches that on the standing order" do
+        it "updates all bill_address attrs and ship_address names + phone" do
+          expect(form.save).to be true
+          expect(form.order_update_issues.keys).to_not include order.id
+          order.reload; standing_order.reload;
+          expect(standing_order.bill_address.firstname).to eq "Bill"
+          expect(standing_order.bill_address.lastname).to eq bill_address_attrs["lastname"]
+          expect(standing_order.bill_address.address1).to eq "123 abc st"
+          expect(standing_order.bill_address.phone).to eq "1123581321"
+          expect(order.bill_address.firstname).to eq "Bill"
+          expect(order.bill_address.lastname).to eq bill_address_attrs["lastname"]
+          expect(order.bill_address.address1).to eq "123 abc st"
+          expect(order.bill_address.phone).to eq "1123581321"
+          expect(order.ship_address.firstname).to eq "Bill"
+          expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+          expect(order.ship_address.phone).to eq "1123581321"
+        end
+      end
+
+      context "when the bill_address on the order doesn't match that on the standing order" do
+        before { order.bill_address.update_attributes(firstname: "Jane") }
+        it "does not update bill_address or ship_address on the order" do
+          expect(form.save).to be true
+          expect(form.order_update_issues.keys).to include order.id
+          order.reload; standing_order.reload;
+          expect(standing_order.bill_address.firstname).to eq "Bill"
+          expect(standing_order.bill_address.lastname).to eq bill_address_attrs["lastname"]
+          expect(standing_order.bill_address.address1).to eq "123 abc st"
+          expect(standing_order.bill_address.phone).to eq "1123581321"
+          expect(order.bill_address.firstname).to eq "Jane"
+          expect(order.bill_address.lastname).to eq bill_address_attrs["lastname"]
+          expect(order.bill_address.address1).to eq bill_address_attrs["address1"]
+          expect(order.bill_address.phone).to eq bill_address_attrs["phone"]
+          expect(order.ship_address.firstname).to eq "Jane"
+          expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+          expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+        end
+      end
+    end
+
+    context "when a ship address is required" do
+      before { shipping_method.update_attributes(require_ship_address: true) }
+
+      context "when the bill_address on the order matches that on the standing order" do
+        it "only updates bill_address attrs" do
+          expect(form.save).to be true
+          expect(form.order_update_issues.keys).to_not include order.id
+          order.reload; standing_order.reload;
+          expect(order.bill_address.firstname).to eq "Bill"
+          expect(order.bill_address.lastname).to eq bill_address_attrs["lastname"]
+          expect(order.bill_address.address1).to eq "123 abc st"
+          expect(order.bill_address.phone).to eq "1123581321"
+          expect(order.ship_address.firstname).to eq ship_address_attrs["firstname"]
+          expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+          expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+        end
+      end
+
+      context "when the bill_address on the order doesn't match that on the standing order" do
+        before { order.bill_address.update_attributes(firstname: "Jane") }
+        it "does not update bill_address or ship_address on the order" do
+          expect(form.save).to be true
+          expect(form.order_update_issues.keys).to include order.id
+          order.reload; standing_order.reload;
+          expect(standing_order.bill_address.firstname).to eq "Bill"
+          expect(standing_order.bill_address.lastname).to eq bill_address_attrs["lastname"]
+          expect(standing_order.bill_address.address1).to eq "123 abc st"
+          expect(standing_order.bill_address.phone).to eq "1123581321"
+          expect(order.bill_address.firstname).to eq "Jane"
+          expect(order.bill_address.lastname).to eq bill_address_attrs["lastname"]
+          expect(order.bill_address.address1).to eq bill_address_attrs["address1"]
+          expect(order.bill_address.phone).to eq bill_address_attrs["phone"]
+          expect(order.ship_address.firstname).to eq ship_address_attrs["firstname"]
+          expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+          expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+        end
+      end
+    end
+  end
+
+  describe "changing the ship address" do
+    let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
+    let(:shipping_method) { standing_order.shipping_method }
+    let!(:order) { standing_order.proxy_orders.first.initialise_order! }
+    let!(:bill_address_attrs) { standing_order.bill_address.attributes }
+    let!(:ship_address_attrs) { standing_order.ship_address.attributes }
+    let(:params) { { ship_address_attributes: { id: ship_address_attrs["id"], firstname: "Ship", address1: "123 abc st", phone: "1123581321" } } }
+    let(:form) { StandingOrderForm.new(standing_order, params) }
+
+    context "when a ship address is not required" do
+      before { shipping_method.update_attributes(require_ship_address: false) }
+
+      it "does not change the ship address" do
+        expect(form.save).to be true
+        expect(form.order_update_issues.keys).to_not include order.id
+        order.reload; standing_order.reload;
+        expect(order.ship_address.firstname).to eq ship_address_attrs["firstname"]
+        expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+        expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+        expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+      end
+
+      context "but the shipping method is being changed to one that requires a ship_address" do
+        let(:new_shipping_method) { create(:shipping_method, require_ship_address: true) }
+        before { params.merge!({ shipping_method_id: new_shipping_method.id }) }
+
+        it "updates ship_address attrs" do
+          expect(form.save).to be true
+          expect(form.order_update_issues.keys).to_not include order.id
+          order.reload; standing_order.reload;
+          expect(order.ship_address.firstname).to eq "Ship"
+          expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(order.ship_address.address1).to eq "123 abc st"
+          expect(order.ship_address.phone).to eq "1123581321"
+        end
+      end
+    end
+
+    context "when a ship address is required" do
+      before { shipping_method.update_attributes(require_ship_address: true) }
+
+      context "when the ship address on the order matches that on the standing order" do
+        it "updates ship_address attrs" do
+          expect(form.save).to be true
+          expect(form.order_update_issues.keys).to_not include order.id
+          order.reload; standing_order.reload;
+          expect(standing_order.ship_address.firstname).to eq "Ship"
+          expect(standing_order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(standing_order.ship_address.address1).to eq "123 abc st"
+          expect(standing_order.ship_address.phone).to eq "1123581321"
+          expect(order.ship_address.firstname).to eq "Ship"
+          expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(order.ship_address.address1).to eq "123 abc st"
+          expect(order.ship_address.phone).to eq "1123581321"
+        end
+      end
+
+      context "when the ship address on the order doesn't match that on the standing order" do
+        before { order.ship_address.update_attributes(firstname: "Jane") }
+        it "does not update ship_address on the order" do
+          expect(form.save).to be true
+          expect(form.order_update_issues.keys).to include order.id
+          order.reload; standing_order.reload;
+          expect(standing_order.ship_address.firstname).to eq "Ship"
+          expect(standing_order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(standing_order.ship_address.address1).to eq "123 abc st"
+          expect(standing_order.ship_address.phone).to eq "1123581321"
+          expect(order.ship_address.firstname).to eq "Jane"
+          expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]
+          expect(order.ship_address.address1).to eq ship_address_attrs["address1"]
+          expect(order.ship_address.phone).to eq ship_address_attrs["phone"]
+        end
+      end
+    end
+  end
+
   describe "changing the quantity of a line item" do
     let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
     let(:order) { standing_order.proxy_orders.first.initialise_order! }
