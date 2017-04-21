@@ -53,6 +53,8 @@ class StandingOrderForm
     future_and_undated_orders.each do |order|
       order.assign_attributes(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
 
+      update_bill_address_for(order) if (bill_address.changes.keys & relevant_address_attrs).any?
+      update_ship_address_for(order) if (ship_address.changes.keys & relevant_address_attrs).any?
       update_shipment_for(order) if shipping_method_id_changed?
       update_payment_for(order) if payment_method_id_changed?
 
@@ -81,6 +83,22 @@ class StandingOrderForm
   def future_and_undated_orders
     return @future_and_undated_orders unless @future_and_undated_orders.nil?
     @future_and_undated_orders = orders.joins(:order_cycle).merge(OrderCycle.not_closed).readonly(false)
+  end
+
+  def update_bill_address_for(order)
+    unless addresses_match?(order.bill_address, bill_address)
+      return add_order_update_issue(order, I18n.t('bill_address'))
+    end
+    order.bill_address.update_attributes(bill_address.attributes.slice(*relevant_address_attrs))
+  end
+
+  def update_ship_address_for(order)
+    force_update = force_ship_address_update_for?(order)
+    return unless force_update || order.shipping_method.require_ship_address?
+    unless force_update || addresses_match?(order.ship_address, ship_address)
+      return add_order_update_issue(order, I18n.t('ship_address'))
+    end
+    order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
   end
 
   def update_payment_for(order)
@@ -169,6 +187,24 @@ class StandingOrderForm
     order_update_issues[order.id] << issue
   end
 
+  def relevant_address_attrs
+    ["firstname","lastname","address1","zipcode","city","state_id","country_id","phone"]
+  end
+
+  def addresses_match?(order_address, standing_order_address)
+    relevant_address_attrs.all? do |attr|
+      order_address[attr] == standing_order_address.send("#{attr}_was") ||
+      order_address[attr] == standing_order_address[attr]
+    end
+  end
+
+  def force_ship_address_update_for?(order)
+    return false unless shipping_method.require_ship_address?
+    distributor_address = order.send(:address_from_distributor)
+    relevant_address_attrs.all? do |attr|
+      order.ship_address[attr] == distributor_address[attr]
+    end
+  end
 
   def standing_order_valid?
     unless standing_order.valid?
