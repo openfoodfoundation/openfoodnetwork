@@ -29,12 +29,7 @@ class Admin::ProductImportController < Spree::Admin::BaseController
 
     @importer.validate_entries
 
-    import_results = {
-      entries: @importer.entries_json,
-      reset_counts: @importer.reset_counts
-    }
-
-    render json: import_results
+    render json: @importer.import_results
   end
 
   def save_data
@@ -42,19 +37,7 @@ class Admin::ProductImportController < Spree::Admin::BaseController
 
     @importer.save_entries
 
-    save_results = {
-      results: {
-        products_created: @importer.products_created_count,
-        products_updated: @importer.products_updated_count,
-        inventory_created: @importer.inventory_created_count,
-        inventory_updated: @importer.inventory_updated_count,
-        products_reset: @importer.products_reset_count,
-      },
-      updated_ids: @importer.updated_ids,
-      errors: @importer.errors.full_messages
-    }
-
-    render json: save_results
+    render json: @importer.save_results
   end
 
   def reset_absent_products

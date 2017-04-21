@@ -127,6 +127,24 @@ class ProductImporter
     delete_uploaded_file
   end
 
+  def import_results
+    {entries: entries_json, reset_counts: reset_counts}
+  end
+
+  def save_results
+    {
+      results: {
+        products_created: products_created_count,
+        products_updated: products_updated_count,
+        inventory_created: inventory_created_count,
+        inventory_updated: inventory_updated_count,
+        products_reset: products_reset_count,
+      },
+      updated_ids: updated_ids,
+      errors: errors.full_messages
+    }
+  end
+
   def permission_by_name?(supplier_name)
     @editable_enterprises.has_key?(supplier_name)
   end
