@@ -500,7 +500,13 @@ en:
         product_list: Product list
         inventories: Inventories
         import: Import
+        upload: Upload
       import:
+        review: Review
+        proceed: Proceed
+        save: Save
+        results: Results
+        save_imported: Save imported products
         no_valid_entries: No valid entries found
         none_to_save: There are no entries that can be saved
         some_invalid_entries: Imported file contains some invalid entries
@@ -538,8 +544,8 @@ en:
         inventory_updated: Inventory items updated
         products_reset: Products had stock level reset to zero
         inventory_reset: Inventory items had stock level reset to zero
-        all_saved: "All %{num} items saved successfully"
-        total_saved: "%{num} items saved successfully"
+        all_saved: "All items saved successfully"
+        some_saved: "items saved successfully"
         save_errors: Save errors
         view_products: View Products
         view_inventory: View Inventory

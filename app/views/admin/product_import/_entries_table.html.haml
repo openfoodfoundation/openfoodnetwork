@@ -5,7 +5,7 @@
       %th #{t('admin.product_import.import.line')}
       - @importer.table_headings.each do |heading|
         %th= heading
-    %tr{ng: {repeat: "(line_number, entry ) in entries | entriesFilterValid:'#{filter}' "}}
+    %tr{ng: {repeat: "(line_number, entry) in (entries | entriesFilterValid:'#{entries}')"}}
       %td
         %i{ng: {class: "{'fa fa-warning warning': (count(entry.errors) > 0), 'fa fa-check-circle success': (count(entry.errors) == 0)}"}}
       %td

@@ -1,16 +1,19 @@
-%table.import-settings{ng: {controller: 'ImportOptionsFormCtrl', init: "supplierId = #{supplier_id}; resetCount = #{@importer.reset_counts[supplier_id][:reset_count]}"}}
+%table.import-settings{ng: {controller: 'ImportOptionsFormCtrl', init: "supplierId = #{supplier_id}; initForm()"}}
   %tr
     %td.description
       #{t('admin.product_import.import.reset_absent?')}
     %td
-      = check_box_tag "settings[#{supplier_id}][reset_all_absent]", 1, false, :'ng-model' => 'resetAbsent', :'ng-change' => 'toggleResetAbsent()'
+      = check_box_tag "settings[#{supplier_id}][reset_all_absent]", 1, false, 'ng-model' => "settings[#{supplier_id}]['reset_all_absent']", 'ng-change' => "toggleResetAbsent('#{supplier_id}')"
+    %td
+    %td
     %td
   %tr
     %td.description
       #{t('admin.product_import.import.default_stock')}
     %td
-      = check_box_tag "settings[#{supplier_id}][defaults][count_on_hand][active]", 1, false, :'ng-model' => "count_on_hand_#{supplier_id}"
+      = check_box_tag "settings[#{supplier_id}][defaults][count_on_hand][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['count_on_hand']['active']"
     %td
-      = select_tag "settings[#{supplier_id}][defaults][count_on_hand][mode]", options_for_select({"#{t('admin.product_import.import.overwrite_all')}" => :overwrite_all, "#{t('admin.product_import.import.overwrite_empty')}" => :overwrite_empty}), {class: 'select2 fullwidth select2-no-search', 'ng-disabled' => "!count_on_hand_#{supplier_id}"}
     %td
-      = number_field_tag "settings[#{supplier_id}][defaults][count_on_hand][value]", 0, 'ng-disabled' => "!count_on_hand_#{supplier_id}"
+      = select_tag "settings[#{supplier_id}][defaults][count_on_hand][mode]", options_for_select({"#{t('admin.product_import.import.overwrite_all')}" => :overwrite_all, "#{t('admin.product_import.import.overwrite_empty')}" => :overwrite_empty}), {class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['count_on_hand']['mode']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['count_on_hand']['active']"}
+    %td
+      = number_field_tag "settings[#{supplier_id}][defaults][count_on_hand][value]", 0, 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['count_on_hand']['active']", 'ng-model' => "settings[#{supplier_id}]['defaults']['count_on_hand']['value']"

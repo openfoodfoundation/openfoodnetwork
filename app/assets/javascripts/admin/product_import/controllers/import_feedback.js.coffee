@@ -1,5 +1,4 @@
-angular.module("ofn.admin").controller "ImportFeedbackCtrl", ($scope, productImportData) ->
-  $scope.entries = productImportData
+angular.module("ofn.admin").controller "ImportFeedbackCtrl", ($scope) ->
 
   $scope.count = (items) ->
     total = 0

@@ -3,36 +3,62 @@
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-= form_tag main_app.admin_product_import_save_path, {class: 'product-import', 'ng-app' => 'ofn.admin'} do
+.import-wrapper{ng: {app: 'ofn.admin', controller: 'ImportFormCtrl', init: "supplier_product_counts = #{@importer.supplier_products.to_json}"}}
 
-  - if !@importer.has_valid_entries? #and @importer.invalid_count
+  - if @importer.item_count == 0 #and @importer.invalid_count
     %h5 #{t('admin.product_import.import.no_valid_entries')}
     %p #{t('admin.product_import.import.none_to_save')}
     %br
+  - else
+    .progress-interface{ng: {show: 'step == "import"'}}
+      %span.filename
+        #{@original_filename}
+        %span.percentage
+          ({{percentage}})
+      .progress-bar
+        %span.progress-track{class: 'ng-binding', style: "width:{{percentage}}"}
+      %button.start_import{ng: {click: 'start()', disabled: 'started', init: "item_count = #{@importer.item_count}; import_url = '#{main_app.admin_product_import_process_async_path}'; filepath = '#{@filepath}'; import_into = '#{@import_into}'"}}
+        #{t('admin.product_import.index.import')}
+      %button.review{ng: {click: 'viewResults()', disabled: '!finished'}}
+        #{t('admin.product_import.import.review')}
 
-  = render partial: "admin/json/injection_ams", locals: {ngModule: 'ofn.admin', name: 'productImportData', json: @importer.entries_json}
+  = form_tag false, {class: 'product-import', name: 'importForm', 'ng-show' => 'step == "results"'} do
 
-  = render 'import_options' if @importer.has_valid_entries?
+    = render 'import_options' if @importer.table_headings
 
-  = render 'import_review' if @importer.has_entries?
+    = render 'import_review' if @importer.table_headings
 
-  %div{ng: {controller: 'ImportFeedbackCtrl', show: "count((entries | entriesFilterValid:'valid')) > 0"}}
-    %div{ng: {if: "count((entries | entriesFilterValid:'invalid')) > 0"}}
+    %div{ng: {controller: 'ImportFeedbackCtrl', show: 'count((entries | entriesFilterValid:"valid")) > 0'}}
+      %div{ng: {if: 'count((entries | entriesFilterValid:"invalid")) > 0'}}
+        %br
+        %h5 #{t('admin.product_import.import.some_invalid_entries')}
+        %p #{t('admin.product_import.import.save_valid?')}
+      %div{ng: {show: 'count((entries | entriesFilterValid:"invalid")) == 0'}}
+        %br
+        %h5 #{t('admin.product_import.import.no_errors')}
+        %p #{t('admin.product_import.import.save_all_imported?')}
       %br
-      %h5 #{t('admin.product_import.import.some_invalid_entries')}
-      %p #{t('admin.product_import.import.save_valid?')}
-    %div{ng: {show: "count((entries | entriesFilterValid:'invalid')) == 0"}}
+      = hidden_field_tag :filepath, @filepath
+      = hidden_field_tag "settings[import_into]", @import_into
+
+      %a.button{href: '', ng: {click: 'acceptResults()'}}
+        #{t('admin.product_import.import.proceed')}
+
+      %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
+
+    %div{ng: {controller: 'ImportFeedbackCtrl', show: 'count((entries | entriesFilterValid:"valid")) == 0'}}
       %br
-      %h5 #{t('admin.product_import.import.no_errors')}
-      %p #{t('admin.product_import.import.save_all_imported?')}
-    %br
-    = hidden_field_tag :filepath, @filepath
-    = hidden_field_tag "settings[import_into]", @import_into
-    = submit_tag t('admin.save')
-    %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
+      %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
 
-  %div{ng: {controller: 'ImportFeedbackCtrl', show: "count((entries | entriesFilterValid:'valid')) == 0"}}
-    %br
-    %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
+  .progress-interface{ng: {show: 'step == "save"'}}
+    %span.filename
+      #{t('admin.product_import.import.save_imported')} ({{percentage}})
+    .progress-bar{}
+      %span.progress-track{ng: {style: "{'width':percentage}"}}
+    %button.start_save{ng: {click: 'start()', disabled: 'started', init: "item_count = #{@importer.item_count}; save_url = '#{main_app.admin_product_import_save_async_path}'; reset_url = '#{main_app.admin_product_import_reset_async_path}'; filepath = '#{@filepath}'; import_into = '#{@import_into}'"}}
+      #{t('admin.product_import.import.save')}
+    %button.view_results{ng: {click: 'finalResults()', disabled: '!finished'}}
+      #{t('admin.product_import.import.results')}
 
-
+  .save-results{ng: {show: 'step == "complete"'}}
+    = render 'save_results'

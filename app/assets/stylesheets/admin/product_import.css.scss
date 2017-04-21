@@ -238,12 +238,67 @@ table.import-settings {
   }
 }
 
-form.product-import, div.post-save-results {
+form.product-import, div.post-save-results, div.import-wrapper {
   input[type="submit"] {
     margin-right: 0.5em;
   }
   input[type="submit"], button, a.button {
     min-width: 8em;
     text-align: center;
+  }
+}
+
+form.product-import, div.save-results {
+  transition: all linear 0.25s;
+}
+
+form.product-import.ng-hide, div.save-results.ng-hide {
+  opacity: 0;
+}
+
+div.import-wrapper {
+  div.progress-interface {
+    text-align: center;
+    transition: all linear 0.25s;
+
+    button {
+
+    }
+
+    button:disabled {
+      background: #ccc !important;
+    }
+
+  }
+  div.progress-interface.ng-hide {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+  }
+  .post-save-results {
+    a.button{
+      float: left;
+      margin-right: 0.5em;
+    }
+  }
+}
+
+div.progress-bar {
+  height: 25px;
+  width: 30em;
+  max-width: 90%;
+  margin: 1em auto;
+  background: #f7f7f7;
+  padding: 3px;
+  border-radius: 0.3em;
+  border: 1px solid #eee;
+
+  span.progress-track{
+    display: block;
+    background: #b7ea53;
+    height: 100%;
+    border-radius: 0.3em;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+    transition: width 0.5s ease-in-out;
   }
 }

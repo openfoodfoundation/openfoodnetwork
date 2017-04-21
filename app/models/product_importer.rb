@@ -5,7 +5,7 @@ class ProductImporter
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_reader :total_supplier_products
+  attr_reader :total_supplier_products, :supplier_products, :updated_ids
 
   def initialize(file, current_user, import_settings={})
     if file.is_a?(File)
@@ -33,6 +33,7 @@ class ProductImporter
       @inventory_permissions = {}
 
       @total_supplier_products = 0
+      @supplier_products = {}
       @reset_counts = {}
       @updated_ids = []
 
@@ -40,16 +41,6 @@ class ProductImporter
     else
       self.errors.add(:importer, I18n.t(:product_importer_file_error))
     end
-  end
-
-  def init_permissions
-    permissions = OpenFoodNetwork::Permissions.new(@current_user)
-
-    permissions.editable_enterprises.
-      order('is_primary_producer ASC, name').
-      map { |e| @editable_enterprises[e.name] = e.id }
-
-    @inventory_permissions = permissions.variant_override_enterprises_per_hub
   end
 
   def persisted?
@@ -148,15 +139,55 @@ class ProductImporter
     @current_user.admin? or ( @inventory_permissions[supplier_id] and @inventory_permissions[supplier_id].include? producer_id )
   end
 
+  def validate_entries
+    @entries.each do |entry|
+      supplier_validation(entry)
+
+      if importing_into_inventory?
+        producer_validation(entry)
+        inventory_validation(entry)
+      else
+        category_validation(entry)
+        product_validation(entry)
+      end
+    end
+  end
+
+  def save_entries
+    validate_entries
+    save_all_valid
+  end
+
+  def reset_absent(updated_ids)
+    @products_created = updated_ids.count
+    @updated_ids = updated_ids
+    reset_absent_items
+  end
+
   private
 
   def init_product_importer
     init_permissions
-    build_entries
+    if @import_settings.has_key?(:start) and @import_settings.has_key?(:end)
+      build_entries_in_range
+    else
+      build_entries
+    end
     build_categories_index
     build_suppliers_index
     build_producers_index if importing_into_inventory?
-    validate_all
+    #validate_all
+    count_existing_items unless @import_settings.has_key?(:start)
+  end
+
+  def init_permissions
+    permissions = OpenFoodNetwork::Permissions.new(@current_user)
+
+    permissions.editable_enterprises.
+        order('is_primary_producer ASC, name').
+        map { |e| @editable_enterprises[e.name] = e.id }
+
+    @inventory_permissions = permissions.variant_override_enterprises_per_hub
   end
 
   def open_spreadsheet
@@ -181,6 +212,21 @@ class ProductImporter
     return [] unless @sheet and @sheet.last_row
     (2..@sheet.last_row).map do |i|
       @sheet.row(i)
+    end
+  end
+
+  def build_entries_in_range
+    start_line = @import_settings[:start]
+    end_line = @import_settings[:end]
+
+    (start_line..end_line).each do |i|
+      line_number = i + 1
+      row = @sheet.row(line_number)
+      row_data = Hash[[headers, row].transpose]
+      entry = SpreadsheetEntry.new(row_data)
+      entry.line_number = line_number
+      @entries.push entry
+      return if @sheet.last_row == line_number # TODO: test
     end
   end
 
@@ -212,7 +258,7 @@ class ProductImporter
   end
 
   def importing_into_inventory?
-    @import_settings['import_into'] == 'inventories'
+    @import_settings[:import_into] == 'inventories'
   end
 
   def inventory_validation(entry)
@@ -282,12 +328,7 @@ class ProductImporter
           count
       end
 
-      if @reset_counts[supplier_id]
-        @reset_counts[supplier_id][:existing_products] = products_count
-      else
-        @reset_counts[supplier_id] = {existing_products: products_count}
-      end
-
+      @supplier_products[supplier_id] = products_count
       @total_supplier_products += products_count
     end
   end
@@ -415,7 +456,7 @@ class ProductImporter
 
     self.errors.add(:importer, I18n.t(:product_importer_products_save_error)) if total_saved_count.zero?
 
-    reset_absent_items
+    reset_absent_items unless @import_settings.has_key?(:start)
     total_saved_count
   end
 
@@ -521,10 +562,10 @@ class ProductImporter
   end
 
   def reset_absent_items
-    return if total_saved_count.zero? or @updated_ids.empty?
+    return if total_saved_count.zero? or @updated_ids.empty? or !@import_settings.has_key?('settings')
 
     enterprises_to_reset = []
-    @import_settings.each do |enterprise_id, settings|
+    @import_settings['settings'].each do |enterprise_id, settings|
       enterprises_to_reset.push enterprise_id if settings['reset_all_absent'] and permission_by_id?(enterprise_id)
     end
 
@@ -548,9 +589,9 @@ class ProductImporter
   end
 
   def assign_defaults(object, entry)
-    return unless @import_settings[entry.supplier_id.to_s] and @import_settings[entry.supplier_id.to_s]['defaults']
+    return unless @import_settings.has_key?(:settings) and @import_settings[:settings][entry.supplier_id.to_s] and @import_settings[:settings][entry.supplier_id.to_s]['defaults']
 
-    @import_settings[entry.supplier_id.to_s]['defaults'].each do |attribute, setting|
+    @import_settings[:settings][entry.supplier_id.to_s]['defaults'].each do |attribute, setting|
       next unless setting['active']
 
       case setting['mode']

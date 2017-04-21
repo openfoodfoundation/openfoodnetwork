@@ -1,0 +1,60 @@
+
+%h5 #{t('admin.product_import.save.final_results')}
+%br
+
+%div.post-save-results
+
+  %p{ng: {show: 'updates.products_created'}}
+    %i.fa{ng: {class: "{'fa-info-circle': updates.products_created == 0, 'fa-check-circle': updates.products_created > 0}"}}
+    %strong.created-count
+      {{updates.products_created}}
+    #{t('admin.product_import.save.products_created')}
+
+  %p{ng: {show: 'updates.products_updated'}}
+    %i.fa{ng: {class: "{'fa-info-circle': updates.products_updated == 0, 'fa-check-circle': updates.products_updated > 0}"}}
+    %strong.updated-count
+      {{updates.products_updated}}
+    #{t('admin.product_import.save.products_updated')}
+
+  %p{ng: {show: 'updates.inventory_created'}}
+    %i.fa{ng: {class: "{'fa-info-circle': updates.inventory_created == 0, 'fa-check-circle': updates.inventory_created > 0}"}}
+    %strong.inv-created-count
+      {{updates.inventory_created}}
+    #{t('admin.product_import.save.inventory_created')}
+
+  %p{ng: {show: 'updates.inventory_updated'}}
+    %i.fa{ng: {class: "{'fa-info-circle': updates.inventory_updated == 0, 'fa-check-circle': updates.inventory_updated > 0}"}}
+    %strong.inv-updated-count
+      {{updates.inventory_updated}}
+    #{t('admin.product_import.save.inventory_updated')}
+
+  %p{ng: {show: 'updates.products_reset'}}
+    %i.fa.fa-info-circle
+    %strong.reset-count
+      {{updates.products_reset}}
+    - if @import_into == 'inventories'
+      #{t('admin.product_import.save.inventory_reset')}
+    - else
+      #{t('admin.product_import.save.products_reset')}
+
+  %br
+
+    %p{ng: {show: 'update_errors.length == 0'}}
+      #{t('admin.product_import.save.all_saved')}
+
+    %div{ng: {show: 'update_errors.length > 0'}}
+      %p {{updated_total}} #{t('admin.product_import.save.some_saved')}
+      %br
+      %h5 #{t('admin.product_import.save.save_errors')}
+
+      %p.save-error{ng: {repeat: 'error in update_errors'}}
+        &nbsp;-&nbsp; {{error}}
+
+  %br
+  %div{ng: {show: 'updated_total > 0'}}
+    - if @import_into == 'inventories'
+      %a.button.view{href: main_app.admin_inventory_path} #{t('admin.product_import.save.view_inventory')}
+    - else
+      %a.button.view{href: bulk_edit_admin_products_path + '?latest_import=true'} #{t('admin.product_import.save.view_products')}
+
+  %a.button{href: main_app.admin_product_import_path} #{t('admin.back')}

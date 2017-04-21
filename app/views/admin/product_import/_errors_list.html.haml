@@ -1,4 +1,4 @@
-%div.import-errors{ng: {controller: 'ImportFeedbackCtrl', repeat: "(line_number, entry ) in entries | entriesFilterValid:'invalid' "}}
+%div.import-errors{ng: {controller: 'ImportFeedbackCtrl', repeat: "(line_number, entry ) in (entries | entriesFilterValid:'invalid')"}}
   %p.line
     %strong
       #{t('admin.product_import.import.item_line')} {{line_number}}:
