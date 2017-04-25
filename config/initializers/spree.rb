@@ -6,7 +6,6 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 
-
 require 'spree/product_filters'
 require 'spree/core/calculated_adjustments_decorator'
 
@@ -39,17 +38,6 @@ end
 # Seems like classes within OFN module become 'uninitialized' when server reloads
 # unless the empty module is explicity 'registered' here. Something to do with autoloading?
 module OpenFoodNetwork
-end
-
-# Add calculators category for enterprise fees
-module Spree
-  module Core
-    class Environment
-      class Calculators
-        attr_accessor :enterprise_fees, :payment_methods
-      end
-    end
-  end
 end
 
 # Forcing spree to always allow SSL connections

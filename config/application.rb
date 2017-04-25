@@ -25,20 +25,25 @@ module Openfoodnetwork
     end
 
     # Register Spree calculators
-    initializer "spree.register.calculators" do |app|
+    initializer 'spree.register.calculators' do |app|
       app.config.spree.calculators.shipping_methods << OpenFoodNetwork::Calculator::Weight
-
-      app.config.spree.calculators.enterprise_fees = [Calculator::FlatPercentPerItem,
-                                                      Spree::Calculator::FlatRate,
-                                                      Spree::Calculator::FlexiRate,
-                                                      Spree::Calculator::PerItem,
-                                                      Spree::Calculator::PriceSack,
-                                                      OpenFoodNetwork::Calculator::Weight]
-      app.config.spree.calculators.payment_methods = [Spree::Calculator::FlatPercentItemTotal,
-                                                      Spree::Calculator::FlatRate,
-                                                      Spree::Calculator::FlexiRate,
-                                                      Spree::Calculator::PerItem,
-                                                      Spree::Calculator::PriceSack]
+      app.config.spree.calculators.add_class('enterprise_fees')
+      config.spree.calculators.enterprise_fees = [
+        Calculator::FlatPercentPerItem,
+        Spree::Calculator::FlatRate,
+        Spree::Calculator::FlexiRate,
+        Spree::Calculator::PerItem,
+        Spree::Calculator::PriceSack,
+        OpenFoodNetwork::Calculator::Weight
+      ]
+      app.config.spree.calculators.add_class('payment_methods')
+      config.spree.calculators.payment_methods = [
+        Spree::Calculator::FlatPercentItemTotal,
+        Spree::Calculator::FlatRate,
+        Spree::Calculator::FlexiRate,
+        Spree::Calculator::PerItem,
+        Spree::Calculator::PriceSack
+      ]
     end
 
     # Register Spree payment methods
