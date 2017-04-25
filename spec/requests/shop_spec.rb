@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Shop API" do
+describe "Shop API", type: :request do
   include ShopWorkflow
 
   describe "filtering products" do
@@ -49,16 +49,16 @@ describe "Shop API" do
 
     it "filters products based on availability" do
       # It shows on demand variants
-      response.body.should include v43.options_text
+      expect(response.body).to include v43.options_text
       # It does not show variants that are neither on hand or on demand
-      response.body.should_not include v42.options_text
+      expect(response.body).not_to include v42.options_text
       # It does not show products that have no available variants in this distribution
-      response.body.should_not include p5.name
+      expect(response.body).not_to include p5.name
       # It does not show deleted products
-      response.body.should_not include p6.name
+      expect(response.body).not_to include p6.name
       # It does not show deleted variants
-      response.body.should_not include v71.name
-      response.body.should_not include p7.name
+      expect(response.body).not_to include v71.name
+      expect(response.body).not_to include p7.name
     end
   end
 end
