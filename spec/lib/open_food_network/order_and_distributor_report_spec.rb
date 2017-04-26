@@ -128,8 +128,8 @@ module OpenFoodNetwork
 
             table = subject.table
 
-            # Trying to figure out why it is failing in Travis and not local machine
-            expect(table[0]).to include(@order.created_at)
+            # In Travis time comparison fails
+            expect(table[0][0].to_s).to include(@order.created_at.to_s)
             expect(table[0]).to include(@order.id)
             expect(table[0]).to include(@bill_address.full_name)
             expect(table[0]).to include(@order.email)
@@ -148,11 +148,6 @@ module OpenFoodNetwork
             expect(table[0]).to include(@distributor.address.city)
             expect(table[0]).to include(@distributor.address.zipcode)
             expect(table[0]).to include(@shipping_instructions)
-            # table[0].should == [@order.created_at, @order.id,
-            #   @bill_address.full_name, @order.email, @bill_address.phone, @bill_address.city,
-            #   @line_item.product.sku, @line_item.product.name, @line_item.options_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.distribution_fee,
-            #   @payment_method.name,
-            #   @distributor.name, @distributor.address.address1, @distributor.address.city, @distributor.address.zipcode, @shipping_instructions ]
           end
         end
       end
