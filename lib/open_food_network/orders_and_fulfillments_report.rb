@@ -1,8 +1,8 @@
-require 'open_food_network/reports/report'
+require 'open_food_network/reports/base_report'
 include Spree::ReportsHelper
 
 module OpenFoodNetwork
-  class OrdersAndFulfillmentsReport < Reports::Report
+  class OrdersAndFulfillmentsReport < Reports::BaseReport
     def header
       case params[:report_type]
       when "supplier_totals"
