@@ -6,7 +6,7 @@ describe ShopsController do
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
 
   before do
-    Enterprise.stub(:distributors_with_active_order_cycles) { [distributor] }
+    Enterprise.stub_chain("distributors_with_active_order_cycles.ready_for_checkout") { [distributor] }
   end
 
   # Exclusion from actual rendered view handled in features/consumer/home
