@@ -289,7 +289,7 @@ class ProductImporter
     end
 
     match.variants.each do |existing_variant|
-      if existing_variant.display_name == entry.display_name and existing_variant.unit_value == Float(entry.unit_value)
+      if existing_variant.display_name == entry.display_name and existing_variant.unit_value == entry.unit_value.to_f
         variant_override = create_inventory_item(entry, existing_variant)
         validate_inventory_item(entry, variant_override)
         return
@@ -645,7 +645,7 @@ class ProductImporter
     # Otherwise, if a variant exists with matching display_name and unit_value, update it
     match.variants.each do |existing_variant|
       if existing_variant.display_name == entry.display_name \
-      and existing_variant.unit_value == Float(entry.unit_value) \
+      and existing_variant.unit_value == entry.unit_value.to_f \
       and existing_variant.deleted_at == nil
 
         mark_as_existing_variant(entry, existing_variant)
