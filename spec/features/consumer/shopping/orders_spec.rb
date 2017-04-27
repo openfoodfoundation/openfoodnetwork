@@ -8,13 +8,15 @@ feature "Order Management", js: true do
     let(:user) { create(:user, bill_address: address, ship_address: address) }
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:order_cycle) { create(:order_cycle) }
+    let(:shipping_method) { distributor.shipping_methods.first }
     let(:order) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: user, bill_address: address, ship_address: address) }
     let!(:item1) { order.reload.line_items.first }
     let!(:item2) { create(:line_item, order: order) }
     let!(:item3) { create(:line_item, order: order) }
 
     before do
-      order.update_attributes(shipping_method_id: distributor.shipping_methods.first.id)
+      shipping_method.calculator.update_attributes(preferred_amount: 5.0)
+      order.update_attributes(shipping_method_id: shipping_method.id)
       order.reload.save
       quick_login_as user
     end
@@ -49,10 +51,12 @@ feature "Order Management", js: true do
         end
         expect(find("tr.variant-#{item2.variant.id}")).to have_content item2.product.name
         expect(find("tr.variant-#{item3.variant.id}")).to have_content item3.product.name
+        expect(find("tr.order-adjustment")).to have_content "Shipping"
+        expect(find("tr.order-adjustment")).to have_content "$5.00"
 
         click_button I18n.t(:save_changes)
 
-        expect(find(".order-total.grand-total")).to have_content "$40.00"
+        expect(find(".order-total.grand-total")).to have_content "$45.00"
         expect(item1.reload.quantity).to eq 2
 
         # Deleting an item
@@ -60,7 +64,7 @@ feature "Order Management", js: true do
           click_link "delete_line_item_#{item2.id}"
         end
 
-        expect(find(".order-total.grand-total")).to have_content "$30.00"
+        expect(find(".order-total.grand-total")).to have_content "$35.00"
         expect(Spree::LineItem.find_by_id(item2.id)).to be nil
 
         # Cancelling the order
