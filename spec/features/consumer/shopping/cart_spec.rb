@@ -95,8 +95,8 @@ feature "full-page cart", js: true do
 
         click_button 'Update'
 
-        page.should have_field "order[line_items_attributes][0][quantity]", with: '1'
-        page.should have_content "Insufficient stock available, only 2 remaining"
+        expect(page).to have_content "Insufficient stock available, only 2 remaining"
+        expect(page).to have_field "order[line_items_attributes][0][quantity]", with: '1'
       end
     end
 
