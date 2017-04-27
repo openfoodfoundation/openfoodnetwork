@@ -3,40 +3,37 @@ require 'spec_helper'
 describe ProductDistribution do
   it "is unique for scope [product, distributor]" do
     pd1 = create(:product_distribution)
-    pd1.should be_valid
+    expect(pd1).to be_valid
 
     new_product = create(:product)
     new_distributor = create(:distributor_enterprise)
 
     pd2 = build(:product_distribution, :product => pd1.product, :distributor => pd1.distributor)
-    pd2.should_not be_valid
+    expect(pd2).to_not be_valid
 
     pd2 = build(:product_distribution, :product => pd1.product, :distributor => new_distributor)
-    pd2.should be_valid
+    expect(pd2).to be_valid
 
     pd2 = build(:product_distribution, :product => new_product, :distributor => pd1.distributor)
-    pd2.should be_valid
+    expect(pd2).to be_valid
 
     pd2 = build(:product_distribution, :product => new_product, :distributor => new_distributor)
-    pd2.should be_valid
+    expect(pd2).to be_valid
   end
 
 
   describe "adjusting orders" do
     context "integration" do
+      let!(:distributor) { create(:distributor_enterprise) }
+      let!(:order) { create(:order, distributor: distributor) }
+      let!(:product) { create(:product, name: 'Pear') }
+      let!(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator)) }
+      let!(:product_distribution) { create(:product_distribution, product: product, distributor: distributor, enterprise_fee: enterprise_fee) }
+
       it "creates an adjustment for product distributions" do
-        pending "Intermittently failing spec - we intend to remove product distributions soon"
-
-        # Given an order
-        distributor = create(:distributor_enterprise)
-        order = create(:order, distributor: distributor)
-
-        # And a product with a product distribution with an enterprise fee
-        product = create(:product, name: 'Pear')
-        enterprise_fee = create(:enterprise_fee, calculator: build(:calculator))
+        # pending "Intermittently failing spec - we intend to remove product distributions soon"
         enterprise_fee.calculator.preferred_amount = 1.23
         enterprise_fee.calculator.save!
-        create(:product_distribution, product: product, distributor: distributor, enterprise_fee: enterprise_fee)
 
         # When I add the product to the order, an adjustment should be made
         expect do
@@ -50,21 +47,21 @@ describe ProductDistribution do
         # And it should have the correct data
         order.reload
         adjustments = order.adjustments.where(:originator_type => 'EnterpriseFee')
-        adjustments.count.should == 1
+        expect(adjustments.count).to eq 1
         adjustment = adjustments.first
 
-        adjustment.source.should == order.line_items.last
-        adjustment.originator.should == enterprise_fee
-        adjustment.label.should == "Product distribution by #{distributor.name} for Pear"
-        adjustment.amount.should == 1.23
+        expect(adjustment.source).to eq order.line_items.last
+        expect(adjustment.originator).to eq enterprise_fee
+        expect(adjustment.label).to eq "Product distribution by #{distributor.name} for Pear"
+        expect(adjustment.amount).to eq 1.23
 
         # TODO ROB this has an intermittent failure
         # And it should have some associated metadata
         md = adjustment.metadata
-        md.enterprise.should == distributor
-        md.fee_name.should == enterprise_fee.name
-        md.fee_type.should == enterprise_fee.fee_type
-        md.enterprise_role.should == 'distributor'
+        expect(md.enterprise).to eq distributor
+        expect(md.fee_name).to eq enterprise_fee.name
+        expect(md.fee_type).to eq enterprise_fee.fee_type
+        expect(md.enterprise_role).to eq 'distributor'
       end
     end
 
@@ -72,7 +69,7 @@ describe ProductDistribution do
       it "returns nil when not present" do
         line_item = build(:line_item)
         pd = ProductDistribution.new
-        pd.send(:adjustment_for, line_item).should be_nil
+        expect(pd.send(:adjustment_for, line_item)).to be_nil
       end
 
       it "returns the adjustment when present" do
@@ -80,7 +77,7 @@ describe ProductDistribution do
         line_item = create(:line_item)
         adjustment = pd.enterprise_fee.create_adjustment('foo', line_item.order, line_item, true)
 
-        pd.send(:adjustment_for, line_item).should == adjustment
+        expect(pd.send(:adjustment_for, line_item)).to eq adjustment
       end
 
       it "raises an error when there are multiple adjustments for this enterprise fee" do
@@ -104,17 +101,17 @@ describe ProductDistribution do
         expect { pd.send(:create_adjustment_for, line_item) }.to change(Spree::Adjustment, :count).by(1)
 
         adjustment = Spree::Adjustment.last
-        adjustment.label.should == 'label'
-        adjustment.adjustable.should == line_item.order
-        adjustment.source.should == line_item
-        adjustment.originator.should == pd.enterprise_fee
-        adjustment.should be_mandatory
+        expect(adjustment.label).to eq 'label'
+        expect(adjustment.adjustable).to eq line_item.order
+        expect(adjustment.source).to eq line_item
+        expect(adjustment.originator).to eq pd.enterprise_fee
+        expect(adjustment).to be_mandatory
 
         md = adjustment.metadata
-        md.enterprise.should == pd.distributor
-        md.fee_name.should == pd.enterprise_fee.name
-        md.fee_type.should == pd.enterprise_fee.fee_type
-        md.enterprise_role.should == 'distributor'
+        expect(md.enterprise).to eq pd.distributor
+        expect(md.fee_name).to eq pd.enterprise_fee.name
+        expect(md.fee_type).to eq pd.enterprise_fee.fee_type
+        expect(md.enterprise_role).to eq 'distributor'
       end
     end
   end
