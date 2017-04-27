@@ -24,14 +24,13 @@ describe ProductDistribution do
 
   describe "adjusting orders" do
     context "integration" do
-      let!(:distributor) { create(:distributor_enterprise) }
-      let!(:order) { create(:order, distributor: distributor) }
-      let!(:product) { create(:product, name: 'Pear') }
-      let!(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator)) }
+      let(:distributor) { create(:distributor_enterprise) }
+      let(:product) { create(:product, name: 'Pear') }
+      let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator), enterprise: distributor) }
       let!(:product_distribution) { create(:product_distribution, product: product, distributor: distributor, enterprise_fee: enterprise_fee) }
+      let(:order) { create(:order, distributor: distributor) }
 
       it "creates an adjustment for product distributions" do
-        # pending "Intermittently failing spec - we intend to remove product distributions soon"
         enterprise_fee.calculator.preferred_amount = 1.23
         enterprise_fee.calculator.save!
 
