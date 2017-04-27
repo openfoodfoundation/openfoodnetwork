@@ -896,8 +896,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hubs_distance_filter: "Show me shops near %{location}"
 
   shop_changeable_orders_alert_html:
-    one: Your order with <a href='%{path}'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
-    other: You have <a href='%{path}'>%{count} orders with %{shop}</a> currently open for review.
+    one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
+    other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review.
 
   products_clear_all: Clear all
   products_showing: "Showing:"
