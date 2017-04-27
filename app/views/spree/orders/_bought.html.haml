@@ -3,7 +3,7 @@
     %td.toggle-bought{ colspan: 2, ng: { click: 'showBought=!showBought' } }
       %h5.brick
         %i{ ng: { class: "{ 'ofn-i_007-caret-right': !showBought, 'ofn-i_005-caret-down': showBought}"} }
-        = t(:orders_bought_items_notice, count: @order.finalised_line_items.count)
+        = t(:orders_bought_items_notice, count: @order.finalised_line_items.sum(&:quantity))
     %td.text-right{ colspan: 3 }
       %a.edit-finalised.button.radius.expand.small{ href: changeable_orders_link_path, ng: { class: "{secondary: !showBought, primary: showBought}" } }
         = t(:orders_bought_edit_button)
