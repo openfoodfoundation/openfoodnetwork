@@ -505,4 +505,22 @@ describe OrderCycle do
       OrderCycle.earliest_closing_times[e2.id].should == time2
     end
   end
+
+  describe "finding all line items sold by to a user by a given shop" do
+    let(:shop) { create(:enterprise) }
+    let(:user) { create(:user) }
+    let(:oc) { create(:order_cycle) }
+    let!(:order1) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
+    let!(:order2) { create(:completed_order_with_totals, distributor: create(:enterprise), user: user, order_cycle: oc)  }
+    let!(:order3) { create(:completed_order_with_totals, distributor: shop, user: create(:user), order_cycle: oc)  }
+    let!(:order4) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: create(:order_cycle))  }
+    let!(:order5) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
+
+    before { order5.cancel }
+
+    it "only returns items from non-cancelled orders in the OC, placed by the user at the shop" do
+      items = oc.items_bought_by_user(user, shop)
+      expect(items).to eq order1.reload.line_items
+    end
+  end
 end

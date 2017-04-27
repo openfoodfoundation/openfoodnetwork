@@ -251,16 +251,11 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def items_bought_by_user(user, distributor)
-    orders = Spree::Order.complete.where(user_id: user, distributor_id: distributor, order_cycle_id: self)
-    items = []
-    orders.each do |o|
-      items += o.line_items
-    end
+    # The Spree::Order.complete scope only checks for completed_at date, does not ensure state is "complete"
+    orders = Spree::Order.complete.where(state: "complete", user_id: user, distributor_id: distributor, order_cycle_id: self)
+    items = orders.map(&:line_items).flatten
     scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
-    items.each do |li|
-      scoper.scope(li.variant)
-    end
-    items
+    items.each { |li| scoper.scope(li.variant) }
   end
 
   private
