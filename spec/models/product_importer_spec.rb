@@ -31,9 +31,11 @@ describe ProductImporter do
   describe "importing products from a spreadsheet" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", ""]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "2", "kg", ""]
+        csv << ["Pea Soup", "User Enterprise", "Vegetables", "8", "5.50", "750", "ml", ""]
+        csv << ["Salad", "User Enterprise", "Vegetables", "7", "4.50", "1", "", "bags"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -42,46 +44,70 @@ describe ProductImporter do
     after { File.delete('/tmp/test-m.csv') }
 
     it "returns the number of entries" do
-      expect(@importer.item_count).to eq(2)
+      expect(@importer.item_count).to eq(4)
     end
 
     it "validates entries and returns the results as json" do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
-      expect(filter('valid', entries)).to eq 2
+      expect(filter('valid', entries)).to eq 4
       expect(filter('invalid', entries)).to eq 0
-      expect(filter('create_product', entries)).to eq 2
+      expect(filter('create_product', entries)).to eq 4
       expect(filter('update_product', entries)).to eq 0
     end
 
     it "saves the results and returns info on updated products" do
       @importer.save_entries
 
-      expect(@importer.products_created_count).to eq 2
+      expect(@importer.products_created_count).to eq 4
       expect(@importer.updated_ids).to be_a(Array)
-      expect(@importer.updated_ids.count).to eq 2
+      expect(@importer.updated_ids.count).to eq 4
 
       carrots = Spree::Product.find_by_name('Carrots')
       carrots.supplier.should == enterprise
       carrots.on_hand.should == 5
       carrots.price.should == 3.20
+      carrots.unit_value.should == 500
+      carrots.variant_unit.should == 'weight'
+      carrots.variant_unit_scale.should == 1
       carrots.variants.first.import_date.should be_within(1.minute).of DateTime.now
 
       potatoes = Spree::Product.find_by_name('Potatoes')
       potatoes.supplier.should == enterprise
       potatoes.on_hand.should == 6
       potatoes.price.should == 6.50
+      potatoes.unit_value.should == 2000
+      potatoes.variant_unit.should == 'weight'
+      potatoes.variant_unit_scale.should == 1000
       potatoes.variants.first.import_date.should be_within(1.minute).of DateTime.now
+
+      pea_soup = Spree::Product.find_by_name('Pea Soup')
+      pea_soup.supplier.should == enterprise
+      pea_soup.on_hand.should == 8
+      pea_soup.price.should == 5.50
+      pea_soup.unit_value.should == 0.75
+      pea_soup.variant_unit.should == 'volume'
+      pea_soup.variant_unit_scale.should == 0.001
+      pea_soup.variants.first.import_date.should be_within(1.minute).of DateTime.now
+
+      salad = Spree::Product.find_by_name('Salad')
+      salad.supplier.should == enterprise
+      salad.on_hand.should == 7
+      salad.price.should == 4.50
+      salad.unit_value.should == 1
+      salad.variant_unit.should == 'items'
+      salad.variant_unit_scale.should == nil
+      salad.variants.first.import_date.should be_within(1.minute).of DateTime.now
     end
   end
 
   describe "when uploading a spreadsheet with some invalid entries" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
-        csv << ["Good Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
-        csv << ["Bad Potatoes", "", "Vegetables", "6", "6.50", "1000", "", "1000"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["Good Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
+        csv << ["Bad Potatoes", "", "Vegetables", "6", "6.50", "1", ""]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -119,9 +145,9 @@ describe ProductImporter do
   describe "adding new variants to existing products and updating exiting products" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale", "display_name"]
-        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "5", "5.50", "500", "weight", "1", "Preexisting Banana"]
-        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "6", "3.50", "500", "weight", "1", "Emergent Coffee"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "5", "5.50", "500", "g", "Preexisting Banana"]
+        csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "6", "3.50", "500", "g", "Emergent Coffee"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -165,9 +191,9 @@ describe ProductImporter do
   describe "adding new product and sub-variant at the same time" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale", "display_name"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "weight", "1000", "Small Bag"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2000", "weight", "1000", "Big Bag"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -206,7 +232,7 @@ describe ProductImporter do
   describe "importing items into inventory" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "producer", "category", "on_hand", "price", "unit_value"]
+        csv << ["name", "supplier", "producer", "category", "on_hand", "price", "units"]
         csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "5", "3.20", "500"]
         csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50", "500"]
         csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "2001", "1.50", "500"]
@@ -255,9 +281,9 @@ describe ProductImporter do
 
     it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
-        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
-        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
+        csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -282,7 +308,7 @@ describe ProductImporter do
 
     it "allows creating inventories for producers that a user's hub has permission for" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "supplier", "category", "on_hand", "price", "unit_value"]
+        csv << ["name", "producer", "supplier", "category", "on_hand", "price", "units"]
         csv << ["Beans", "User Enterprise", "Another Enterprise", "Vegetables", "777", "3.20", "500"]
       end
       File.write('/tmp/test-m.csv', csv_data)
@@ -308,7 +334,7 @@ describe ProductImporter do
 
     it "does not allow creating inventories for producers that a user's hubs don't have permission for" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units"]
         csv << ["Beans", "User Enterprise", "Vegetables", "5", "3.20", "500"]
         csv << ["Sprouts", "User Enterprise", "Vegetables", "6", "6.50", "500"]
       end
@@ -336,9 +362,9 @@ describe ProductImporter do
 
     it "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1"]
-        csv << ["Beans", "User Enterprise", "Vegetables", "6", "6.50", "500", "weight", "1"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
+        csv << ["Beans", "User Enterprise", "Vegetables", "6", "6.50", "500", "g"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -373,7 +399,7 @@ describe ProductImporter do
 
     it "can reset all inventory items for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "producer", "category", "on_hand", "price", "unit_value"]
+        csv << ["name", "supplier", "producer", "category", "on_hand", "price", "units"]
         csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "6", "3.20", "500"]
         csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "7", "6.50", "500"]
       end
@@ -411,9 +437,9 @@ describe ProductImporter do
 
     it "can overwrite fields with selected defaults when importing to product list" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "unit_value", "variant_unit", "variant_unit_scale", "tax_category_id", "available_on"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "weight", "1", tax_category.id, ""]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1000", "weight", "1000", "", ""]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category_id", "available_on"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.id, ""]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "", ""]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -473,7 +499,7 @@ describe ProductImporter do
 
     it "can overwrite fields with selected defaults when importing to inventory" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "supplier", "category", "on_hand", "price", "unit_value"]
+        csv << ["name", "producer", "supplier", "category", "on_hand", "price", "units"]
         csv << ["Beans", "User Enterprise", "Another Enterprise", "Vegetables", "", "3.20", "500"]
         csv << ["Sprouts", "User Enterprise", "Another Enterprise", "Vegetables", "7", "6.50", "500"]
         csv << ["Cabbage", "User Enterprise", "Another Enterprise", "Vegetables", "", "1.50", "500"]
@@ -516,9 +542,7 @@ describe ProductImporter do
       sprouts_override.count_on_hand.should == 7
       cabbage_override.count_on_hand.should == 9000
     end
-
   end
-
 end
 
 private

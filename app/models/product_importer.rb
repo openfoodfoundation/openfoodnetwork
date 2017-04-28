@@ -241,7 +241,7 @@ class ProductImporter
       line_number = i + 1
       row = @sheet.row(line_number)
       row_data = Hash[[headers, row].transpose]
-      entry = SpreadsheetEntry.new(row_data)
+      entry = SpreadsheetEntry.new(row_data, importing_into_inventory?)
       entry.line_number = line_number
       @entries.push entry
       return if @sheet.last_row == line_number # TODO: test
@@ -251,7 +251,7 @@ class ProductImporter
   def build_entries
     rows.each_with_index do |row, i|
       row_data = Hash[[headers, row].transpose]
-      entry = SpreadsheetEntry.new(row_data)
+      entry = SpreadsheetEntry.new(row_data, importing_into_inventory?)
       entry.line_number = i + 2
       @entries.push entry
     end
@@ -289,6 +289,10 @@ class ProductImporter
     end
 
     match.variants.each do |existing_variant|
+      unit_scale = match.variant_unit_scale
+      unscaled_units = entry.unscaled_units || 0
+      entry.unit_value = unscaled_units * unit_scale
+
       if existing_variant.display_name == entry.display_name and existing_variant.unit_value == entry.unit_value.to_f
         variant_override = create_inventory_item(entry, existing_variant)
         validate_inventory_item(entry, variant_override)

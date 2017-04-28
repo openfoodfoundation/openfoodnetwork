@@ -5,5 +5,5 @@
     %span {{entry.attributes.name}}
     %span{ng: {if: "entry.attributes.display_name"}}
       ( {{entry.attributes.display_name}} )
-  %p.error{ng: {repeat: "(attribute, error) in entry.errors"}}
+  %p.error{ng: {repeat: "(attribute, error) in entry.errors", show: "ignore_fields.indexOf(attribute) < 0" }}
     &nbsp;-&nbsp; {{error}}
