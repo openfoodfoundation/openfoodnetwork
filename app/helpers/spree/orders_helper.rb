@@ -20,6 +20,7 @@ module Spree
     def changeable_orders
       return [] unless spree_current_user && current_distributor && current_order_cycle
       Spree::Order.complete.where(
+        state: 'complete',
         user_id: spree_current_user.id,
         distributor_id: current_distributor.id,
         order_cycle_id: current_order_cycle.id)
