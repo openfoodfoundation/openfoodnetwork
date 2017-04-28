@@ -21,7 +21,7 @@ describe "Shop API" do
     let(:order) { create(:order, distributor: distributor, order_cycle: oc1) }
 
     before do
-      set_order order
+      set_order_into_session order
 
       v61.update_attribute(:count_on_hand, 1)
       p6.delete

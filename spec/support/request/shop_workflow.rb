@@ -12,7 +12,7 @@ module ShopWorkflow
     order_cycle.exchanges.outgoing.first.enterprise_fees << enterprise_fee
   end
 
-  def set_order(order)
+  def set_order_into_session(order)
     ApplicationController.any_instance.stub(:session).and_return({order_id: order.id, access_token: order.token})
   end
 
