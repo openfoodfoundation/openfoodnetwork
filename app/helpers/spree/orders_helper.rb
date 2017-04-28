@@ -35,7 +35,7 @@ module Spree
         path: changeable_orders_link_path,
         order: changeable_orders.first.number,
         shop: current_distributor.name,
-        oc_close: l(current_order_cycle.orders_close_at, format: :long))
+        oc_close: l(current_order_cycle.orders_close_at, format: "%b %d, %Y %H:%M"))
     end
   end
 end
