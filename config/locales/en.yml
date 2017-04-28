@@ -1332,6 +1332,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   price: "Price"
   on_hand: "On hand"
   save_changes: "Save Changes"
+  order_saved: "Order Saved"
   spree_admin_overview_enterprises_header: "My Enterprises"
   spree_admin_overview_enterprises_footer: "MANAGE MY ENTERPRISES"
   spree_admin_enterprises_hubs_name: "Name"

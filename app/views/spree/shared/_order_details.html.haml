@@ -86,7 +86,7 @@
 %br
 .row
   .columns.large-12
-    = form_for order, html: {id: 'update-order'} do |order_form|
+    = form_for order, html: {id: 'update-order', name: 'update_order_form' } do |order_form|
       - if order.changes_allowed?
         = render 'spree/orders/form', order_form: order_form
       -else

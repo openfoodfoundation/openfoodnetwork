@@ -43,12 +43,18 @@ feature "Order Management", js: true do
       it "allows quantity to be changed, items to be removed and the order to be cancelled" do
         visit spree.order_path(order)
 
+        expect(page).to have_button I18n.t(:order_saved), disabled: true
+        expect(page).to_not have_button I18n.t(:save_changes)
+
         # Changing the quantity of an item
         within "tr.variant-#{item1.variant.id}" do
           expect(page).to have_content item1.product.name
           expect(page).to have_field 'order_line_items_attributes_0_quantity'
           fill_in 'order_line_items_attributes_0_quantity', with: 2
         end
+
+        expect(page).to have_button I18n.t(:save_changes)
+
         expect(find("tr.variant-#{item2.variant.id}")).to have_content item2.product.name
         expect(find("tr.variant-#{item3.variant.id}")).to have_content item3.product.name
         expect(find("tr.order-adjustment")).to have_content "Shipping"
