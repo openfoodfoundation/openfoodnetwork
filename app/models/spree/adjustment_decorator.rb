@@ -47,14 +47,14 @@ module Spree
           return originator.tax_category ? originator.tax_category.tax_rates.match(source) : []
         end
       else
-        [find_closest_tax_rate_from_included_tax]
+        find_closest_tax_rates_from_included_tax
       end
     end
 
-    def find_closest_tax_rate_from_included_tax
+    def find_closest_tax_rates_from_included_tax
       approximation = (included_tax / (amount - included_tax))
-      return nil if approximation.infinite? or approximation.zero?
-      Spree::TaxRate.order("ABS(amount - #{approximation})").first
+      return [] if approximation.infinite? or approximation.zero?
+      [Spree::TaxRate.order("ABS(amount - #{approximation})").first]
     end
 
 
