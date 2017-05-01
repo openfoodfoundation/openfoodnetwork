@@ -1044,6 +1044,14 @@ en-GB:
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
+  error: Error
+  processing_payment: Processing payment...
+  my_credit_cards: My credit cards
+  add_new_credit_card: Add new credit card
+  saved_cards: Saved cards
+  add_card: Add card
+  saving_credit_card: Saving credit card...
+    
   spree:
     admin:
       orders:

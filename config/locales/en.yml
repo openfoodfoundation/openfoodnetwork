@@ -161,6 +161,13 @@ en:
   powered_by: Powered by
   blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
   allow_cookies: "Allow Cookies"
+  error: Error
+  processing_payment: Processing payment...
+  my_credit_cards: My credit cards
+  add_new_credit_card: Add new credit card
+  saved_cards: Saved cards
+  add_card: Add card
+  saving_credit_card: Saving credit card...
 
   admin:
     # Common properties / models
