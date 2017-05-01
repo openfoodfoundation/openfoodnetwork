@@ -1,6 +1,9 @@
 module Spree
   class CreditCardsController < BaseController
 
+    before_filter :set_credit_card, only: [:destroy]
+    before_filter :destroy_at_stripe, only: [:destroy]
+
     def new_from_token
       set_user
       # At the moment a new Customer is created for every credit card (even via ActiveMerchant),
@@ -28,6 +31,19 @@ module Spree
       end
     end
 
+    def destroy
+      if @credit_card.destroy
+        redirect_to "/account"
+      end
+    end
+
+    # Currently can only destroy the whole customer object
+    def destroy_at_stripe
+      if stripe_customer = Stripe::Customer.retrieve( @credit_card.gateway_customer_profile_id )
+        stripe_customer.delete
+      end
+    end
+
   private
     def create_customer(token)
       Stripe::Customer.create(email: @user.email, source: token)
@@ -42,6 +58,10 @@ module Spree
 
     def set_user
       @user = spree_current_user
+    end
+
+    def set_credit_card
+      @credit_card = Spree::CreditCard.find(params[:id])
     end
   end
 end

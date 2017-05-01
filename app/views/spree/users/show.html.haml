@@ -19,15 +19,21 @@
           %h4
             = t(:saved_cards)
           .row
-            .card_list.small-12.columns
-              %span{"ng-repeat" => "card in savedCreditCards"}
+            .card_list.small-12.columns{"ng-repeat" => "card in savedCreditCards"}
+              %p.card
                 %span{"ng-bind" => "card.formatted"}
-          %h4
-            = t(:add_new_credit_card)
+                %a{"rel" => "nofollow", "data-method" => "delete", "ng-href" => "{{card.delete_link}}" }
+                  Delete
           .row
-            .new_card.small-12.columns
+            %h4{"ng-click" => "toggle()"}
+              .columns.small-10.medium-10
+                = t(:add_new_credit_card)
+              .columns.small-2.medium-2.text-right
+                %span.margin-top
+                  %i{"ng-class" => "{'ofn-i_005-caret-down' : !add_card_visible, 'ofn-i_006-caret-up' : add_card_visible}"}
+          .row
+            .new_card.small-12.columns{"ng-if" => 'add_card_visible', "ng-class" => "{'closed' : !add_card_visible, 'open' : add_card_visible}"}
               %form{novalidate: true, "ng-submit" => "storeCard()"}
-                -# render "spree/checkout/payment/gateway"
                 .row
                   .small-6.columns
                     %label
@@ -59,7 +65,6 @@
                     %select{"ng-model" => "secrets.card_month", "ng-options" => "currMonth.value as currMonth.key for currMonth in months", name: "secrets.card_month", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"}
                   .small-6.columns
                     %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"}
-
 
                 %p
                   %button.button.primary{type: :submit}
