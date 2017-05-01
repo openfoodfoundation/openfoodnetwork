@@ -9,6 +9,10 @@ Darkswarm.controller "CreditCardsCtrl", ($scope, $timeout, CreditCard, savedCred
   $scope.years = Dates.years
 
   $scope.secrets = CreditCard.secrets
+  $scope.add_card_visible = false
 
   $scope.storeCard = =>
     CreditCard.requestToken($scope.secrets)
+
+  $scope.toggle = ->
+    $scope.add_card_visible = !($scope.add_card_visible)
