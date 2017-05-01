@@ -1,5 +1,9 @@
 .darkswarm
   = inject_orders_by_distributor
+  = inject_saved_credit_cards
+
+  :javascript
+    Stripe.setPublishableKey("#{ENV['STRIPE_INSTANCE_PUBLISHABLE_KEY']}")
 
   .row.pad-top
     .small-12.columns.pad-top
@@ -9,6 +13,59 @@
           = @user.email
           (#{link_to t(:edit), spree.edit_account_path})
 
+      %h3
+        = t(:my_credit_cards)
+        .credit_cards{"ng-controller" => "CreditCardsCtrl"}
+          %h4
+            = t(:saved_cards)
+          .row
+            .card_list.small-12.columns
+              %span{"ng-repeat" => "card in savedCreditCards"}
+                %span{"ng-bind" => "card.formatted"}
+          %h4
+            = t(:add_new_credit_card)
+          .row
+            .new_card.small-12.columns
+              %form{novalidate: true, "ng-submit" => "storeCard()"}
+                -# render "spree/checkout/payment/gateway"
+                .row
+                  .small-6.columns
+                    %label
+                      = t :first_name
+                      -# Changing name not permitted by default (in checkout) - can be enabled by setting an allow_name_change variable in $scope
+                    %input{type: :text,  "ng-model" => "secrets.first_name","ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.firstname"}
+
+                  .small-6.columns
+                    %label
+                      = t :last_name
+                    %input{type: :text, "ng-model" => "secrets.last_name", "ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.lastname"}
+
+                  .small-6.columns
+                    %label
+                      = t(:card_number)
+                    %input{type: :text, "ng-model" => "secrets.card_number", "ng-required" => "!secrets.selected_card", maxlength: 19, autocomplete: "off", "ng-disabled" => "!!secrets.selected_card"}
+                  .small-6.columns
+                    %label
+                      = t(:card_securitycode)
+                    %input{type: :text, "ng-model" => "secrets.card_verification_value", "ng-required" => "!secrets.selected_card", autocomplete: "off", "ng-disabled" => "!!secrets.selected_card"}
+
+                .row
+                  .small-12.columns
+                    %label{for: "secrets.card_month"}
+                      = t :card_expiry_date, "ng-disabled" => "!!secrets.selected_card"
+
+                .row
+                  .small-6.columns
+                    %select{"ng-model" => "secrets.card_month", "ng-options" => "currMonth.value as currMonth.key for currMonth in months", name: "secrets.card_month", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"}
+                  .small-6.columns
+                    %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"}
+
+
+                %p
+                  %button.button.primary{type: :submit}
+                    = t :add_card
+
+      %h3= t(:my_orders)
       .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
         .my-open-orders{ ng: { show: 'Orders.changeable_orders.length > 0' } }
           %h3= t(:open_orders)
