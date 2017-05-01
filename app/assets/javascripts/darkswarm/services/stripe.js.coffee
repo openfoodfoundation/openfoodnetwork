@@ -1,7 +1,7 @@
 Darkswarm.factory 'StripeJS', ($rootScope, Loading, RailsFlashLoader) ->
   new class StripeJS
-    requestToken: (secrets, submit) ->
-      Loading.message = "Processing Payment..."
+    requestToken: (secrets, submit, loading_message = t("processing_payment")) ->
+      Loading.message = loading_message
       params =
         number: secrets.card_number
         cvc: secrets.card_verification_value
@@ -13,7 +13,7 @@ Darkswarm.factory 'StripeJS', ($rootScope, Loading, RailsFlashLoader) ->
         if response.error
           $rootScope.$apply ->
             Loading.clear()
-            RailsFlashLoader.loadFlash({error: "Error: #{response.error.message}"})
+            RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
         else
           secrets.token = response['id']
           secrets.cc_type = @mapCC(response.card.brand)
