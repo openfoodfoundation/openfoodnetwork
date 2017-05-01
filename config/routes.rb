@@ -230,6 +230,7 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/xero_invoices' => 'admin/reports#xero_invoices', :as => "xero_invoices_admin_reports",  :via  => [:get, :post]
   match '/admin', :to => 'admin/overview#index', :as => :admin
   match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
+  put 'credit_cards/new_from_token', to: 'credit_cards#new_from_token'
 
 
   namespace :api, :defaults => { :format => 'json' } do

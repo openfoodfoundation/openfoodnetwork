@@ -10,16 +10,5 @@ Darkswarm.controller "CreditCardsCtrl", ($scope, $timeout, CreditCard, savedCred
 
   $scope.secrets = CreditCard.secrets
 
-
-
   $scope.storeCard = =>
-    Loading.message = "Saving"
     CreditCard.requestToken($scope.secrets)
-
-
-
-
-
-    # Need to call Spree::Gateway::StripeConnect#provider.store(creditcard)
-    # creditcard should be formatted as for a payment
-    # The token then needs to be associated with the Customer (in Stripe) - can be done in Ruby.
