@@ -22,17 +22,17 @@ module UIComponentHelper
 
   def select_login_tab(text)
     within ".login-modal" do
-      find("a", text: text).click
+      page.find("a", text: text).click
     end
     sleep 0.2
   end
 
   def open_login_modal
-    find("a", text: "Login").click
+    page.find("a", text: "Login").click
   end
 
   def open_off_canvas
-    find("a.left-off-canvas-toggle").click
+    page.find("a.left-off-canvas-toggle").click
   end
 
   def have_login_modal
@@ -40,11 +40,11 @@ module UIComponentHelper
   end
 
   def open_product_modal(product)
-    find("a", text: product.name).click
+    page.find("a", text: product.name).click
   end
 
   def open_enterprise_modal(enterprise)
-    find("a", text: enterprise.name).trigger "click"
+    page.find("a", text: enterprise.name).trigger "click"
   end
 
   def modal_should_be_open_for(object)
@@ -65,7 +65,7 @@ module UIComponentHelper
   end
 
   def show_cart
-    find("#cart").click
+    page.find("#cart").click
   end
 
   def cart_dirty
@@ -94,15 +94,15 @@ module UIComponentHelper
   end
 
   def open_active_table_row
-    find("hub:first-child .active_table_row:first-child").click()
+    page.find("hub:first-child .active_table_row:first-child").click()
   end
 
   def expand_active_table_node(name)
-    find(".active_table_node", text: name).click
+    page.find(".active_table_node", text: name).click
   end
 
   def follow_active_table_node(name)
     expand_active_table_node(name)
-    find(".active_table_node a", text: "#{name}").click
+    page.find(".active_table_node a", text: "#{name}").click
   end
 end
