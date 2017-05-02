@@ -6,6 +6,50 @@ feature "full-page cart", js: true do
   include ShopWorkflow
   include UIComponentHelper
 
+  describe "viewing the cart without stubbed session" do
+    let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
+    let(:supplier) { create(:supplier_enterprise) }
+    let!(:order_cycle) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [product_fee.variants.first]) }
+    let(:product_fee) { create(:simple_product, supplier: supplier, price: 0.86, on_hand: 12) }
+    let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
+    let(:user) { create(:user, bill_address: address, ship_address: address) }
+    let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, user: user) }
+    let(:variant) { product_fee.variants.first }
+
+    before do
+      quick_login_as user
+      add_product_to_cart order, product_fee, quantity: 10
+      # FIXME - this is required because of prepend_before_filters in orders controller redirects anyway because current_order or current_distributor is not set yet
+      visit spree.root_path
+    end
+
+    it "doesn't let to checkout with insufficient stock" do
+      visit spree.cart_path
+      expect(page).to have_content product_fee.name
+      variant.update_attributes! on_hand: 8
+      click_link "Checkout"
+      expect(page).to have_content 'Insufficient stock available, only 8 remaining'
+    end
+
+    it "doesn't let to checkout with insufficient stock after loggin back" do
+      visit spree.cart_path
+      expect(page).to have_content product_fee.name
+
+      logout
+      visit root_path
+      expect(page).not_to have_content "Shopping @ #{distributor.name.upcase}"
+      variant.update_attributes! on_hand: 5
+
+      quick_login_as user
+      # FIXME - this is required because of prepend_before_filters in orders controller redirects anyway because current_order or current_distributor is not set yet
+      visit root_path
+      expect(page).to have_content "Shopping @ #{distributor.name.upcase}"
+      visit spree.cart_path
+      expect(page).to have_content 'Insufficient stock available, only 5 remaining'
+    end
+
+  end
+
   describe "viewing the cart" do
     let!(:zone) { create(:zone_with_member) }
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }

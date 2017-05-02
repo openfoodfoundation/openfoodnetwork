@@ -483,7 +483,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
         quick_login_as user
       end
 
-      it 'shows notification if stock is less than demand' do
+      it 'shows notification if there is insufficient stock' do
         visit enterprise_shop_path(distributor)
 
         fill_in "variants[#{variant.id}]", with: 5
