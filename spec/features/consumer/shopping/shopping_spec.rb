@@ -18,7 +18,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
     context "with stubbed session" do
       before do
-        set_order_into_session order
+        set_order_into_stubbed_session order
       end
 
       it "shows a distributor with images" do

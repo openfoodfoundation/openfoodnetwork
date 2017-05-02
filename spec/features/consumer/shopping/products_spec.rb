@@ -16,7 +16,7 @@ feature "As a consumer I want to view products", js: true do
     let(:exchange1) { oc1.exchanges.to_enterprises(distributor).outgoing.first }
 
     before do
-      set_order_into_session order
+      set_order_into_stubbed_session order
     end
 
     describe "viewing HTML product descriptions" do

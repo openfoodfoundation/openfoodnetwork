@@ -62,7 +62,7 @@ feature "full-page cart", js: true do
 
     context "with stubbed session" do
       before do
-        set_order_into_session order
+        set_order_into_stubbed_session order
       end
 
       describe "fees" do
