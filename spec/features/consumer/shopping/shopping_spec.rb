@@ -497,7 +497,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
         quick_login_as user
         visit shop_path
-
+        expect(Spree::Config.allow_backorders).to be_false
         expect(page).to have_content 'Insufficient stock available, only 3 remaining'
       end
     end
