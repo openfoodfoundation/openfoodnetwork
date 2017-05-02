@@ -71,7 +71,12 @@ feature "full-page cart", js: true do
       let(:variant) { product_tax.variants.first }
 
       before do
+        Spree::Config.set allow_backorders: false
         add_product_to_cart order, product_tax
+      end
+
+      after do
+        Spree::Config.set allow_backorders: true
       end
 
       it "prevents me from entering an invalid value" do
@@ -82,8 +87,7 @@ feature "full-page cart", js: true do
         accept_alert 'Insufficient stock available, only 2 remaining' do
           fill_in "order_line_items_attributes_0_quantity", with: '4'
         end
-
-        page.should have_field "order_line_items_attributes_0_quantity", with: '2'
+        expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
       end
 
       it "shows the quantities saved, not those submitted" do
@@ -95,7 +99,6 @@ feature "full-page cart", js: true do
 
         click_button 'Update'
 
-        expect(page).to have_content "Line items quantity exceeds available stock. Please ensure line items have a valid quantity."
         expect(page).to have_content "Insufficient stock available, only 2 remaining"
         expect(page).to have_field "order[line_items_attributes][0][quantity]", with: '1'
       end
