@@ -478,6 +478,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
 
       before do
+        Spree::Config.set allow_backorders: false
         add_variant_to_order_cycle(exchange, variant)
         set_order_cycle(order, oc1)
         quick_login_as user

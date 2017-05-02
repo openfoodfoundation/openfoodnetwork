@@ -17,6 +17,7 @@ feature "full-page cart", js: true do
     let(:variant) { product_fee.variants.first }
 
     before do
+      Spree::Config.set allow_backorders: false
       quick_login_as user
       add_product_to_cart order, product_fee, quantity: 10
       # FIXME - this is required because of prepend_before_filters in orders controller redirects anyway because current_order or current_distributor is not set yet
@@ -26,6 +27,8 @@ feature "full-page cart", js: true do
     it "doesn't let to checkout with insufficient stock" do
       visit spree.cart_path
       expect(page).to have_content product_fee.name
+      expect(Spree::Config.allow_backorders).to be_false
+
       variant.update_attributes! on_hand: 8
       click_link "Checkout"
       expect(page).to have_content 'Insufficient stock available, only 8 remaining'
@@ -34,6 +37,7 @@ feature "full-page cart", js: true do
     it "doesn't let to checkout with insufficient stock after loggin back" do
       visit spree.cart_path
       expect(page).to have_content product_fee.name
+      expect(Spree::Config.allow_backorders).to be_false
 
       logout
       visit root_path
