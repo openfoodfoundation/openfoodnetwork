@@ -44,10 +44,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
     describe "selecting an order cycle" do
       let(:exchange1) { oc1.exchanges.to_enterprises(distributor).outgoing.first }
 
-      it "selects an order cycle if only one is open" do
+      it "shows label instead of dropdown if only one is open" do
         exchange1.update_attribute :pickup_time, "turtles"
         visit shop_path
-        page.should have_selector "option[selected]", text: 'turtles'
+        page.should have_selector ".single-order-cycle", text: 'turtles'
       end
 
       describe "with multiple order cycles" do
@@ -177,7 +177,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "filters search results properly" do
         visit shop_path
-        select "frogs", :from => "order_cycle_id"
 
         fill_in "search", with: "74576345634XXXXXX"
         page.should have_content "Sorry, no results found"
@@ -190,7 +189,6 @@ feature "As a consumer I want to shop with a distributor", js: true do
 
       it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
-        select "frogs", :from => "order_cycle_id"
 
         fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
 
