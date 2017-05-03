@@ -2,6 +2,7 @@ Spree::PaypalController.class_eval do
   include CheckoutHelper
 
   after_filter :reset_order_when_complete, only: :confirm
+  before_filter :enable_embedded_shopfront
 
   def cancel
     flash[:notice] = t('flash.cancel', :scope => 'paypal')

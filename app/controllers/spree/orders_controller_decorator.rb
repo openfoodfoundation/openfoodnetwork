@@ -4,6 +4,7 @@ Spree::OrdersController.class_eval do
   after_filter  :populate_variant_attributes, only: :populate
   before_filter :update_distribution, only: :update
   before_filter :filter_order_params, only: :update
+  before_filter :enable_embedded_shopfront
 
   prepend_before_filter :require_order_cycle, only: :edit
   prepend_before_filter :require_distributor_chosen, only: :edit

@@ -1,6 +1,8 @@
 class HomeController < BaseController
   layout 'darkswarm'
 
+  before_filter :enable_embedded_shopfront
+
   def index
     if ContentConfig.home_show_stats
       @num_distributors = Enterprise.is_distributor.activated.visible.count

@@ -4,6 +4,8 @@ Spree::CheckoutController.class_eval do
 
   include CheckoutHelper
 
+  before_filter :enable_embedded_shopfront
+
   def edit
     flash.keep
     redirect_to main_app.checkout_path

@@ -1,0 +1,11 @@
+/ insert_after "fieldset.security"
+
+%fieldset.embedded_shopfronts.no-border-bottom
+  %legend{:align => "center"}= t('admin.shopfront_settings.embedded_shopfront_settings')
+  .field
+    = preference_field_tag(:enable_embedded_shopfronts, Spree::Config[:enable_embedded_shopfronts], type: Spree::Config.preference_type(:enable_embedded_shopfronts))
+    = label_tag(:enable_embedded_shopfronts, t('admin.shopfront_settings.enable_embedded_shopfronts')) + tag(:br)
+  .field
+    = label_tag(:embedded_shopfronts_whitelist, t('admin.shopfront_settings.embedded_shopfronts_whitelist')) + tag(:br)
+    = preference_field_tag(:embedded_shopfronts_whitelist, Spree::Config[:embedded_shopfronts_whitelist], type: Spree::Config.preference_type(:embedded_shopfronts_whitelist))
+

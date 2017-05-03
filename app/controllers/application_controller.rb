@@ -3,6 +3,8 @@ require 'open_food_network/referer_parser'
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  prepend_before_filter :restrict_iframes
+
   include EnterprisesHelper
   helper CssSplitter::ApplicationHelper
 
@@ -19,6 +21,21 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def restrict_iframes
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['Content-Security-Policy'] = "frame-ancestors 'none'"
+  end
+
+  def enable_embedded_shopfront
+    return unless Spree::Config[:enable_embedded_shopfronts]
+
+    @session_data = session
+
+    whitelist = Spree::Config[:embedded_shopfronts_whitelist] || "'none'"
+    response.headers.delete 'X-Frame-Options'
+    response.headers['Content-Security-Policy'] = "frame-ancestors #{whitelist}"
+  end
 
   def action
     params[:action].to_sym

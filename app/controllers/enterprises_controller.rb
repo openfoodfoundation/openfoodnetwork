@@ -10,6 +10,7 @@ class EnterprisesController < BaseController
   before_filter :check_stock_levels, only: :shop
 
   before_filter :clean_permalink, only: :check_permalink
+  before_filter :enable_embedded_shopfront
 
   respond_to :js, only: :permalink_checker
 
