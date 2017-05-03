@@ -523,6 +523,11 @@ en:
         invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
         enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
 
+    mail_methods:
+      send_from_enterprise_address: "Send emails to producers from the co-ordinating enterprise address."
+      caveat: "May be overriden by other SMTP settings."
+
+
   home:
     hubs:
       show_closed_shops: "Show closed shops"
