@@ -32,10 +32,10 @@ feature "full-page cart", js: true do
       it "rounds fee calculations correctly" do
         # $0.86 + 20% = $1.032
         # Fractional cents should be immediately rounded down and not carried through
-        expect(page).to have_selector '.cart-item-price',         text: "#{@currency_symbol}1.03"
-        expect(page).to have_selector '.cart-item-total',         text: "#{@currency_symbol}8.24"
-        expect(page).to have_selector '.order-total.item-total',  text: "#{@currency_symbol}8.24"
-        expect(page).to have_selector '.order-total.grand-total', text: "#{@currency_symbol}8.24"
+        expect(page).to have_selector '.cart-item-price',         text: "#{currency}1.03"
+        expect(page).to have_selector '.cart-item-total',         text: "#{currency}8.24"
+        expect(page).to have_selector '.order-total.item-total',  text: "#{currency}8.24"
+        expect(page).to have_selector '.order-total.grand-total', text: "#{currency}8.24"
       end
     end
 

@@ -4,13 +4,13 @@ module Spree
   describe ProductsHelper do
     it "displays variant price differences as absolute, not relative values" do
       variant = make_variant_stub(10.00, 10.00)
-      helper.variant_price_diff(variant).should == "(#{@currency_symbol}10.00)"
+      helper.variant_price_diff(variant).should == "(#{currency}10.00)"
 
       variant = make_variant_stub(10.00, 15.55)
-      helper.variant_price_diff(variant).should == "(#{@currency_symbol}15.55)"
+      helper.variant_price_diff(variant).should == "(#{currency}15.55)"
 
       variant = make_variant_stub(10.00, 5.55)
-      helper.variant_price_diff(variant).should == "(#{@currency_symbol}5.55)"
+      helper.variant_price_diff(variant).should == "(#{currency}5.55)"
     end
 
     private

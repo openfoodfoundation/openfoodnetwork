@@ -58,122 +58,262 @@ feature %q{
     end
   end
 
-  scenario "creating an order cycle", js: true do
-    page.driver.resize(1280, 2000)
+  context "with specific time" do
+    let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 06, 06, 00, 00) }
+    let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 00, 00) }
 
-    # Given coordinating, supplying and distributing enterprises with some products with variants
-    coordinator = create(:distributor_enterprise, name: 'My coordinator')
-    supplier = create(:supplier_enterprise, name: 'My supplier')
-    product = create(:product, supplier: supplier)
-    v1 = create(:variant, product: product)
-    v2 = create(:variant, product: product)
-    distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
+    scenario "creating an order cycle", js: true do
+      page.driver.resize(1280, 2000)
 
-    # Relationships required for interface to work
-    create(:enterprise_relationship, parent: supplier, child: coordinator, permissions_list: [:add_to_order_cycle])
-    create(:enterprise_relationship, parent: distributor, child: coordinator, permissions_list: [:add_to_order_cycle])
-    create(:enterprise_relationship, parent: supplier, child: distributor, permissions_list: [:add_to_order_cycle])
+      # Given coordinating, supplying and distributing enterprises with some products with variants
+      coordinator = create(:distributor_enterprise, name: 'My coordinator')
+      supplier = create(:supplier_enterprise, name: 'My supplier')
+      product = create(:product, supplier: supplier)
+      v1 = create(:variant, product: product)
+      v2 = create(:variant, product: product)
+      distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
 
-    # And some enterprise fees
-    supplier_fee    = create(:enterprise_fee, enterprise: supplier,    name: 'Supplier fee')
-    coordinator_fee = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee')
-    distributor_fee = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee')
+      # Relationships required for interface to work
+      create(:enterprise_relationship, parent: supplier, child: coordinator, permissions_list: [:add_to_order_cycle])
+      create(:enterprise_relationship, parent: distributor, child: coordinator, permissions_list: [:add_to_order_cycle])
+      create(:enterprise_relationship, parent: supplier, child: distributor, permissions_list: [:add_to_order_cycle])
 
-    # When I go to the new order cycle page
-    login_to_admin_section
-    click_link 'Order Cycles'
-    click_link 'New Order Cycle'
+      # And some enterprise fees
+      supplier_fee    = create(:enterprise_fee, enterprise: supplier,    name: 'Supplier fee')
+      coordinator_fee = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee')
+      distributor_fee = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee')
 
-    # Select a coordinator since there are two available
-    select2_select 'My coordinator', from: 'coordinator_id'
-    click_button "Continue >"
+      # When I go to the new order cycle page
+      login_to_admin_section
+      click_link 'Order Cycles'
+      click_link 'New Order Cycle'
 
-    # And I fill in the basic fields
-    fill_in 'order_cycle_name', with: 'Plums & Avos'
-    fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
-    fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
+      # Select a coordinator since there are two available
+      select2_select 'My coordinator', from: 'coordinator_id'
+      click_button "Continue >"
 
-    # And I add a coordinator fee
-    click_button 'Add coordinator fee'
-    select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
+      # And I fill in the basic fields
+      fill_in 'order_cycle_name', with: 'Plums & Avos'
+      fill_in 'order_cycle_orders_open_at', with: order_cycle_opening_time
+      fill_in 'order_cycle_orders_close_at', with: order_cycle_closing_time
 
-    # I should not be able to add a blank supplier
-    page.should have_select 'new_supplier_id', selected: ''
-    page.should have_button 'Add supplier', disabled: true
+      # And I add a coordinator fee
+      click_button 'Add coordinator fee'
+      select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
 
-    # And I add a supplier and some products
-    select 'My supplier', from: 'new_supplier_id'
-    click_button 'Add supplier'
-    fill_in 'order_cycle_incoming_exchange_0_receival_instructions', with: 'receival instructions'
-    page.find('table.exchanges tr.supplier td.products').click
-    check "order_cycle_incoming_exchange_0_variants_#{v1.id}"
-    check "order_cycle_incoming_exchange_0_variants_#{v2.id}"
+      # I should not be able to add a blank supplier
+      page.should have_select 'new_supplier_id', selected: ''
+      page.should have_button 'Add supplier', disabled: true
 
-    # I should not be able to re-add the supplier
-    page.should_not have_select 'new_supplier_id', with_options: ['My supplier']
-    page.should have_button 'Add supplier', disabled: true
-    page.all("td.supplier_name").map(&:text).should == ['My supplier']
+      # And I add a supplier and some products
+      select 'My supplier', from: 'new_supplier_id'
+      click_button 'Add supplier'
+      fill_in 'order_cycle_incoming_exchange_0_receival_instructions', with: 'receival instructions'
+      page.find('table.exchanges tr.supplier td.products').click
+      check "order_cycle_incoming_exchange_0_variants_#{v1.id}"
+      check "order_cycle_incoming_exchange_0_variants_#{v2.id}"
 
-    # And I add a supplier fee
-    within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
-    select 'My supplier',  from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id'
-    select 'Supplier fee', from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id'
+      # I should not be able to re-add the supplier
+      page.should_not have_select 'new_supplier_id', with_options: ['My supplier']
+      page.should have_button 'Add supplier', disabled: true
+      page.all("td.supplier_name").map(&:text).should == ['My supplier']
 
-    # And I add a distributor with the same products
-    select 'My distributor', from: 'new_distributor_id'
-    click_button 'Add distributor'
+      # And I add a supplier fee
+      within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
+      select 'My supplier',  from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_id'
+      select 'Supplier fee', from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
-    fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
-    fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
+      # And I add a distributor with the same products
+      select 'My distributor', from: 'new_distributor_id'
+      click_button 'Add distributor'
 
-    page.find('table.exchanges tr.distributor td.products').click
-    check "order_cycle_outgoing_exchange_0_variants_#{v1.id}"
-    check "order_cycle_outgoing_exchange_0_variants_#{v2.id}"
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
-    page.find('table.exchanges tr.distributor td.tags').click
-    within ".exchange-tags" do
-      find(:css, "tags-input .tags input").set "wholesale\n"
+      page.find('table.exchanges tr.distributor td.products').click
+      check "order_cycle_outgoing_exchange_0_variants_#{v1.id}"
+      check "order_cycle_outgoing_exchange_0_variants_#{v2.id}"
+
+      page.find('table.exchanges tr.distributor td.tags').click
+      within ".exchange-tags" do
+        find(:css, "tags-input .tags input").set "wholesale\n"
+      end
+
+      # And I add a distributor fee
+      within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
+      select 'My distributor',  from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id'
+      select 'Distributor fee', from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
+
+      # And I click Create
+      click_button 'Create'
+
+      # Then my order cycle should have been created
+      page.should have_content 'Your order cycle has been created.'
+
+      page.should have_selector 'a', text: 'Plums & Avos'
+      page.should have_selector "input[value='#{order_cycle_opening_time}']"
+      page.should have_selector "input[value='#{order_cycle_closing_time}']"
+      page.should have_content 'My coordinator'
+
+      page.should have_selector 'td.suppliers', text: 'My supplier'
+      page.should have_selector 'td.distributors', text: 'My distributor'
+
+      # And it should have some fees
+      oc = OrderCycle.last
+      oc.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
+      oc.coordinator_fees.should                         == [coordinator_fee]
+      oc.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
+
+      # And it should have some variants selected
+      oc.exchanges.first.variants.count.should == 2
+      oc.exchanges.last.variants.count.should == 2
+
+      # And my receival and pickup time and instructions should have been saved
+      exchange = oc.exchanges.incoming.first
+      exchange.receival_instructions.should == 'receival instructions'
+
+      exchange = oc.exchanges.outgoing.first
+      exchange.pickup_time.should == 'pickup time'
+      exchange.pickup_instructions.should == 'pickup instructions'
+      exchange.tag_list.should == ['wholesale']
     end
 
-    # And I add a distributor fee
-    within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
-    select 'My distributor',  from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id'
-    select 'Distributor fee', from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
+    scenario "updating an order cycle", js: true do
+      # Given an order cycle with all the settings
+      oc = create(:order_cycle)
+      initial_variants = oc.variants.sort_by &:id
 
-    # And I click Create
-    click_button 'Create'
+      # And a coordinating, supplying and distributing enterprise with some products with variants
+      coordinator = oc.coordinator
+      supplier = create(:supplier_enterprise, name: 'My supplier')
+      distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
+      product = create(:product, supplier: supplier)
+      v1 = create(:variant, product: product)
+      v2 = create(:variant, product: product)
 
-    # Then my order cycle should have been created
-    page.should have_content 'Your order cycle has been created.'
+      # Relationships required for interface to work
+      create(:enterprise_relationship, parent: supplier, child: coordinator, permissions_list: [:add_to_order_cycle])
+      create(:enterprise_relationship, parent: distributor, child: coordinator, permissions_list: [:add_to_order_cycle])
+      create(:enterprise_relationship, parent: supplier, child: distributor, permissions_list: [:add_to_order_cycle])
 
-    page.should have_selector 'a', text: 'Plums & Avos'
-    page.should have_selector "input[value='#{Time.zone.local(2040, 11, 06, 06, 00, 00)}']"
-    page.should have_selector "input[value='#{Time.zone.local(2040, 11, 13, 17, 00, 00)}']"
-    page.should have_content 'My coordinator'
+      # And some enterprise fees
+      supplier_fee1 = create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee 1')
+      supplier_fee2 = create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee 2')
+      coordinator_fee1 = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee 1')
+      coordinator_fee2 = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee 2')
+      distributor_fee1 = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee 1')
+      distributor_fee2 = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee 2')
 
-    page.should have_selector 'td.suppliers', text: 'My supplier'
-    page.should have_selector 'td.distributors', text: 'My distributor'
+      # When I go to its edit page
+      login_to_admin_section
+      click_link 'Order Cycles'
+      click_link oc.name
+      wait_until { page.find('#order_cycle_name').value.present? }
 
-    # And it should have some fees
-    oc = OrderCycle.last
-    oc.exchanges.incoming.first.enterprise_fees.should == [supplier_fee]
-    oc.coordinator_fees.should                         == [coordinator_fee]
-    oc.exchanges.outgoing.first.enterprise_fees.should == [distributor_fee]
+      # And I update it
+      fill_in 'order_cycle_name', with: 'Plums & Avos'
+      fill_in 'order_cycle_orders_open_at', with: order_cycle_opening_time
+      fill_in 'order_cycle_orders_close_at', with: order_cycle_closing_time
 
-    # And it should have some variants selected
-    oc.exchanges.first.variants.count.should == 2
-    oc.exchanges.last.variants.count.should == 2
+      # CAN'T CHANGE COORDINATOR ANYMORE
+      # select 'My coordinator', from: 'order_cycle_coordinator_id'
 
-    # And my receival and pickup time and instructions should have been saved
-    exchange = oc.exchanges.incoming.first
-    exchange.receival_instructions.should == 'receival instructions'
+      # And I configure some coordinator fees
+      click_button 'Add coordinator fee'
+      select 'Coord fee 1', from: 'order_cycle_coordinator_fee_0_id'
+      click_button 'Add coordinator fee'
+      click_button 'Add coordinator fee'
+      click_link 'order_cycle_coordinator_fee_2_remove'
+      select 'Coord fee 2', from: 'order_cycle_coordinator_fee_1_id'
 
-    exchange = oc.exchanges.outgoing.first
-    exchange.pickup_time.should == 'pickup time'
-    exchange.pickup_instructions.should == 'pickup instructions'
-    exchange.tag_list.should == ['wholesale']
+      # And I add a supplier and some products
+      select 'My supplier', from: 'new_supplier_id'
+      click_button 'Add supplier'
+      page.all("table.exchanges tr.supplier td.products").each { |e| e.click }
+
+      page.should have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
+      page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
+      check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
+      check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
+
+      # And I configure some supplier fees
+      within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
+      select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
+      select 'Supplier fee 1', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
+      within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
+      within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
+      click_link 'order_cycle_incoming_exchange_2_enterprise_fees_0_remove'
+      select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
+      select 'Supplier fee 2', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
+
+      # And I add a distributor and some products
+      select 'My distributor', from: 'new_distributor_id'
+      click_button 'Add distributor'
+
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'New time 0'
+      fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'New instructions 0'
+      fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'New time 1'
+      fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'New instructions 1'
+      fill_in 'order_cycle_outgoing_exchange_2_pickup_time', with: 'New time 2'
+      fill_in 'order_cycle_outgoing_exchange_2_pickup_instructions', with: 'New instructions 2'
+
+      page.find("table.exchanges tr.distributor-#{distributor.id} td.tags").click
+      within ".exchange-tags" do
+        find(:css, "tags-input .tags input").set "wholesale\n"
+      end
+
+      page.all("table.exchanges tr.distributor td.products").each { |e| e.click }
+
+      uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
+      check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
+
+      # And I configure some distributor fees
+      within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
+      select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
+      select 'Distributor fee 1', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
+      within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
+      within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
+      click_link 'order_cycle_outgoing_exchange_2_enterprise_fees_0_remove'
+      select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
+      select 'Distributor fee 2', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
+
+      # And I click Update
+      expect(page).to have_selector "#save-bar"
+      click_button 'Update and Close'
+
+      # Then my order cycle should have been updated
+      page.should have_content 'Your order cycle has been updated.'
+
+      page.should have_selector 'a', text: 'Plums & Avos'
+
+      page.should have_selector "input[value='#{order_cycle_opening_time}']"
+      page.should have_selector "input[value='#{order_cycle_closing_time}']"
+      page.should have_content coordinator.name
+
+      page.should have_selector 'td.suppliers', text: 'My supplier'
+      page.should have_selector 'td.distributors', text: 'My distributor'
+
+      # And my coordinator fees should have been configured
+      OrderCycle.last.coordinator_fee_ids.should match_array [coordinator_fee1.id, coordinator_fee2.id]
+
+      # And my supplier fees should have been configured
+      OrderCycle.last.exchanges.incoming.last.enterprise_fee_ids.should == [supplier_fee2.id]
+
+      # And my distributor fees should have been configured
+      OrderCycle.last.exchanges.outgoing.last.enterprise_fee_ids.should == [distributor_fee2.id]
+
+      # And my tags should have been save
+      OrderCycle.last.exchanges.outgoing.last.tag_list.should == ['wholesale']
+
+      # And it should have some variants selected
+      selected_initial_variants = initial_variants.take initial_variants.size - 1
+      OrderCycle.last.variants.map(&:id).should match_array (selected_initial_variants.map(&:id) + [v1.id, v2.id])
+
+      # And the collection details should have been updated
+      OrderCycle.last.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present
+      OrderCycle.last.exchanges.where(pickup_time: 'New time 1', pickup_instructions: 'New instructions 1').should be_present
+    end
   end
-
 
   scenario "editing an order cycle" do
     # Given an order cycle with all the settings
@@ -271,144 +411,6 @@ feature %q{
     page.should     have_selector 'table.exchanges tr.distributor'
     page.should_not have_selector 'table.exchanges tr.supplier'
   end
-
-
-  scenario "updating an order cycle", js: true do
-    # Given an order cycle with all the settings
-    oc = create(:order_cycle)
-    initial_variants = oc.variants.sort_by &:id
-
-    # And a coordinating, supplying and distributing enterprise with some products with variants
-    coordinator = oc.coordinator
-    supplier = create(:supplier_enterprise, name: 'My supplier')
-    distributor = create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
-    product = create(:product, supplier: supplier)
-    v1 = create(:variant, product: product)
-    v2 = create(:variant, product: product)
-
-    # Relationships required for interface to work
-    create(:enterprise_relationship, parent: supplier, child: coordinator, permissions_list: [:add_to_order_cycle])
-    create(:enterprise_relationship, parent: distributor, child: coordinator, permissions_list: [:add_to_order_cycle])
-    create(:enterprise_relationship, parent: supplier, child: distributor, permissions_list: [:add_to_order_cycle])
-
-    # And some enterprise fees
-    supplier_fee1 = create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee 1')
-    supplier_fee2 = create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee 2')
-    coordinator_fee1 = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee 1')
-    coordinator_fee2 = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee 2')
-    distributor_fee1 = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee 1')
-    distributor_fee2 = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee 2')
-
-    # When I go to its edit page
-    login_to_admin_section
-    click_link 'Order Cycles'
-    click_link oc.name
-    wait_until { page.find('#order_cycle_name').value.present? }
-
-    # And I update it
-    fill_in 'order_cycle_name', with: 'Plums & Avos'
-    fill_in 'order_cycle_orders_open_at', with: '2040-11-06 06:00:00'
-    fill_in 'order_cycle_orders_close_at', with: '2040-11-13 17:00:00'
-
-    # CAN'T CHANGE COORDINATOR ANYMORE
-    # select 'My coordinator', from: 'order_cycle_coordinator_id'
-
-    # And I configure some coordinator fees
-    click_button 'Add coordinator fee'
-    select 'Coord fee 1', from: 'order_cycle_coordinator_fee_0_id'
-    click_button 'Add coordinator fee'
-    click_button 'Add coordinator fee'
-    click_link 'order_cycle_coordinator_fee_2_remove'
-    select 'Coord fee 2', from: 'order_cycle_coordinator_fee_1_id'
-
-    # And I add a supplier and some products
-    select 'My supplier', from: 'new_supplier_id'
-    click_button 'Add supplier'
-    page.all("table.exchanges tr.supplier td.products").each { |e| e.click }
-
-    page.should have_selector "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true
-    page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}", visible: true).click # uncheck (with visible:true filter)
-    check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
-    check "order_cycle_incoming_exchange_2_variants_#{v2.id}"
-
-    # And I configure some supplier fees
-    within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
-    select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
-    select 'Supplier fee 1', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
-    within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
-    within("tr.supplier-#{supplier.id}") { click_button 'Add fee' }
-    click_link 'order_cycle_incoming_exchange_2_enterprise_fees_0_remove'
-    select 'My supplier', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_id'
-    select 'Supplier fee 2', from: 'order_cycle_incoming_exchange_2_enterprise_fees_0_enterprise_fee_id'
-
-    # And I add a distributor and some products
-    select 'My distributor', from: 'new_distributor_id'
-    click_button 'Add distributor'
-
-    fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'New time 0'
-    fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'New instructions 0'
-    fill_in 'order_cycle_outgoing_exchange_1_pickup_time', with: 'New time 1'
-    fill_in 'order_cycle_outgoing_exchange_1_pickup_instructions', with: 'New instructions 1'
-    fill_in 'order_cycle_outgoing_exchange_2_pickup_time', with: 'New time 2'
-    fill_in 'order_cycle_outgoing_exchange_2_pickup_instructions', with: 'New instructions 2'
-
-    page.find("table.exchanges tr.distributor-#{distributor.id} td.tags").click
-    within ".exchange-tags" do
-      find(:css, "tags-input .tags input").set "wholesale\n"
-    end
-
-    page.all("table.exchanges tr.distributor td.products").each { |e| e.click }
-
-    uncheck "order_cycle_outgoing_exchange_2_variants_#{v1.id}"
-    check "order_cycle_outgoing_exchange_2_variants_#{v2.id}"
-
-    # And I configure some distributor fees
-    within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
-    select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
-    select 'Distributor fee 1', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
-    within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
-    within("tr.distributor-#{distributor.id}") { click_button 'Add fee' }
-    click_link 'order_cycle_outgoing_exchange_2_enterprise_fees_0_remove'
-    select 'My distributor', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_id'
-    select 'Distributor fee 2', from: 'order_cycle_outgoing_exchange_2_enterprise_fees_0_enterprise_fee_id'
-
-    # And I click Update
-    expect(page).to have_selector "#save-bar"
-    click_button 'Update and Close'
-
-    # Then my order cycle should have been updated
-    page.should have_content 'Your order cycle has been updated.'
-
-    page.should have_selector 'a', text: 'Plums & Avos'
-
-    page.should have_selector "input[value='#{Time.zone.local(2040, 11, 06, 06, 00, 00)}']"
-    page.should have_selector "input[value='#{Time.zone.local(2040, 11, 13, 17, 00, 00)}']"
-    page.should have_content coordinator.name
-
-    page.should have_selector 'td.suppliers', text: 'My supplier'
-    page.should have_selector 'td.distributors', text: 'My distributor'
-
-    # And my coordinator fees should have been configured
-    OrderCycle.last.coordinator_fee_ids.should match_array [coordinator_fee1.id, coordinator_fee2.id]
-
-    # And my supplier fees should have been configured
-    OrderCycle.last.exchanges.incoming.last.enterprise_fee_ids.should == [supplier_fee2.id]
-
-    # And my distributor fees should have been configured
-    OrderCycle.last.exchanges.outgoing.last.enterprise_fee_ids.should == [distributor_fee2.id]
-
-    # And my tags should have been save
-    OrderCycle.last.exchanges.outgoing.last.tag_list.should == ['wholesale']
-
-    # And it should have some variants selected
-    selected_initial_variants = initial_variants.take initial_variants.size - 1
-    OrderCycle.last.variants.map(&:id).should match_array (selected_initial_variants.map(&:id) + [v1.id, v2.id])
-
-    # And the collection details should have been updated
-    OrderCycle.last.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present
-    OrderCycle.last.exchanges.where(pickup_time: 'New time 1', pickup_instructions: 'New instructions 1').should be_present
-  end
-
 
   scenario "updating many order cycle opening/closing times at once", js: true do
     # Given three order cycles

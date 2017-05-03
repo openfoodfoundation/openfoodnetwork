@@ -93,13 +93,11 @@ RSpec.configure do |config|
   # Ensure we start with consistent config settings
   config.before(:each) { Spree::Config.products_require_tax_category = false }
 
-  # Set currency symbol from config for tests
-  config.before(:all) { @currency_symbol = Spree::Money.currency_symbol }
-
   # Helpers
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
   config.include Spree::CheckoutHelpers
+  config.include Spree::MoneyHelper
   config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
   config.include Devise::TestHelpers, :type => :controller
   config.extend  Spree::Api::TestingSupport::Setup, :type => :controller
