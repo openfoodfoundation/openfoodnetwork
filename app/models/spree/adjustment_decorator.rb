@@ -34,9 +34,29 @@ module Spree
       included_tax > 0
     end
 
-    def display_included_tax
-      Spree::Money.new(included_tax, { :currency => currency })
+    def tax_rates
+      case originator
+      when Spree::TaxRate
+        [originator]
+      when EnterpriseFee
+        case source
+        when Spree::LineItem
+          tax_category = originator.inherits_tax_category? ? source.product.tax_category : originator.tax_category
+          return tax_category ? tax_category.tax_rates.match(source.order) : []
+        when Spree::Order
+          return originator.tax_category ? originator.tax_category.tax_rates.match(source) : []
+        end
+      else
+        [find_closest_tax_rate_from_included_tax]
+      end
     end
+
+    def find_closest_tax_rate_from_included_tax
+      approximation = (included_tax / (amount - included_tax))
+      return nil if approximation.infinite? or approximation.zero?
+      Spree::TaxRate.order("ABS(amount - #{approximation})").first
+    end
+
 
     def self.without_callbacks
       skip_callback :save, :after, :update_adjustable

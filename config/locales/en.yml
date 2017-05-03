@@ -105,6 +105,8 @@ en:
     clear_all: Clear All
     start_date: "Start Date"
     end_date: "End Date"
+    unsaved_changes: "You have unsaved changes"
+    form_invalid: "Form contains missing or invalid fields"
 
     columns: Columns
     actions: Actions
@@ -1595,3 +1597,13 @@ Please follow the instructions there to make your enterprise visible on the Open
     orders:
       invoice:
         tax_invoice: "TAX INVOICE: "
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+          A request to reset your password has been made.
+          If you did not make this request, simply ignore this email.
+        link_text: >
+          If you did make this request just click the link below:
+        issue_text: |
+          If the above URL does not work try copying and pasting it into your browser.
+          If you continue to have problems please feel free to contact us.

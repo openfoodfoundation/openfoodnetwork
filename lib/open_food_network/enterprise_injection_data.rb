@@ -1,7 +1,7 @@
 module OpenFoodNetwork
   class EnterpriseInjectionData
     def active_distributors
-      @active_distributors ||= Enterprise.distributors_with_active_order_cycles
+      @active_distributors ||= Enterprise.distributors_with_active_order_cycles.ready_for_checkout
     end
 
     def earliest_closing_times

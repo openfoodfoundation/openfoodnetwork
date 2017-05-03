@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 module Spree
   describe Adjustment do
     it "has metadata" do
@@ -277,6 +279,21 @@ module Spree
         it "sets it, rounding to two decimal places" do
           adjustment.set_included_tax! 0.25
           adjustment.included_tax.should == 10.00
+        end
+      end
+
+      describe "getting the corresponding tax rate" do
+        let!(:adjustment_with_tax)    { create(:adjustment, amount: 50, included_tax: 10) }
+        let!(:adjustment_without_tax) { create(:adjustment, amount: 50, included_tax: 0) }
+        let!(:tax_rate)               { create(:tax_rate, calculator: Spree::Calculator::DefaultTax.new, amount: 0.25) }
+        let!(:other_tax_rate)         { create(:tax_rate, calculator: Spree::Calculator::DefaultTax.new, amount: 0.3) }
+
+        it "returns nil if there is no included tax" do
+          adjustment_without_tax.find_closest_tax_rate_from_included_tax.should == nil
+        end
+
+        it "returns the most accurate tax rate" do
+          adjustment_with_tax.find_closest_tax_rate_from_included_tax.should == tax_rate
         end
       end
     end

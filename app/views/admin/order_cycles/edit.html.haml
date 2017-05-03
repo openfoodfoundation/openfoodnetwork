@@ -28,8 +28,8 @@
 = form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
 
   %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
-    %input.red{ type: "button", value: t(:update), ng: { click: "submit($event, null)", disabled: "!order_cycle_form.$dirty" } }
-    %input.red{ type: "button", value: t('.update_and_close'), ng: { click: "submit($event, '#{main_app.admin_order_cycles_path}')", disabled: "!order_cycle_form.$dirty" } }
+    %input.red{ type: "button", value: t(:update), ng: { click: "submit($event, null)", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
+    %input.red{ type: "button", value: t('.update_and_close'), ng: { click: "submit($event, '#{main_app.admin_order_cycles_path}')", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
     %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? 'Cancel' : 'Close'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
 
   - if order_cycles_simple_form

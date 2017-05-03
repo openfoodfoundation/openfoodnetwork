@@ -14,4 +14,4 @@ echo "--- Bundling"
 bundle install
 
 echo "--- Running tests"
-bundle exec rake karma:run
+./script/karma run
