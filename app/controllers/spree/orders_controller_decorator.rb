@@ -8,6 +8,7 @@ Spree::OrdersController.class_eval do
   prepend_before_filter :require_order_cycle, only: :edit
   prepend_before_filter :require_distributor_chosen, only: :edit
   before_filter :check_hub_ready_for_checkout, only: :edit
+  before_filter :check_at_least_one_line_item, only: :update
 
   include OrderCyclesHelper
   layout 'darkswarm'
@@ -222,5 +223,18 @@ Spree::OrdersController.class_eval do
     order = Spree::Order.complete.find_by_number(params[:id])
     return order if order.andand.changes_allowed? && can?(:update, order)
     current_order
+  end
+
+  def check_at_least_one_line_item
+    order = order_to_update
+    return unless order.complete?
+
+    items = params[:order][:line_items_attributes]
+    .andand.select{ |k,attrs| attrs["quantity"].to_i > 0 }
+
+    if items.empty?
+      flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)
+      redirect_to order_path(order)
+    end
   end
 end
