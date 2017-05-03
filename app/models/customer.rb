@@ -4,7 +4,7 @@ class Customer < ActiveRecord::Base
   belongs_to :enterprise
   belongs_to :user, class_name: Spree.user_class
   has_many :orders, class_name: Spree::Order
-  before_destroy :check_for_orders
+  before_destroy :check_for_associated_orders
 
   belongs_to :bill_address, foreign_key: :bill_address_id, class_name: Spree::Address
   alias_attribute :billing_address, :bill_address
@@ -39,9 +39,9 @@ class Customer < ActiveRecord::Base
     self.user = user || Spree::User.find_by_email(email)
   end
 
-  def check_for_orders
-    return true unless orders.any?
-    errors[:base] << "Delete failed: customer has associated orders"
+  def check_for_associated_orders
+    return true unless orders.any? && orders.find {|o| o.distributor == enterprise}
+    errors[:base] << I18n.t('admin.customers.destroy.has_associated_orders')
     false
   end
 end

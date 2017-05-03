@@ -190,6 +190,8 @@ en:
         edit: 'Edit'
         update_address: 'Update Address'
         confirm_delete: 'Sure to delete?'
+      destroy:
+        has_associated_orders: 'Delete failed: customer has associated orders with his shop'
 
     cache_settings:
       show:

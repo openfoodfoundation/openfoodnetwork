@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161215230219) do
+ActiveRecord::Schema.define(:version => 20170503080759) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -123,8 +123,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   create_table "distributors_shipping_methods", :force => true do |t|
     t.integer  "distributor_id"
     t.integer  "shipping_method_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "distributors_shipping_methods", ["distributor_id"], :name => "index_distributors_shipping_methods_on_distributor_id"
@@ -134,8 +134,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "enterprise_id"
     t.string   "fee_type"
     t.string   "name"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "tax_category_id"
     t.boolean  "inherits_tax_category", :default => false, :null => false
   end
@@ -221,8 +221,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "address_id"
     t.string   "pickup_times"
     t.string   "next_collection_at"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "distributor_info"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
@@ -264,8 +264,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   create_table "exchange_fees", :force => true do |t|
     t.integer  "exchange_id"
     t.integer  "enterprise_fee_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "exchange_fees", ["enterprise_fee_id"], :name => "index_exchange_fees_on_enterprise_fee_id"
@@ -274,8 +274,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   create_table "exchange_variants", :force => true do |t|
     t.integer  "exchange_id"
     t.integer  "variant_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "exchange_variants", ["exchange_id"], :name => "index_exchange_variants_on_exchange_id"
@@ -288,8 +288,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "payment_enterprise_id"
     t.string   "pickup_time"
     t.string   "pickup_instructions"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "incoming",              :default => false, :null => false
     t.string   "receival_instructions"
   end
@@ -314,8 +314,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.datetime "orders_open_at"
     t.datetime "orders_close_at"
     t.integer  "coordinator_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "producer_properties", :force => true do |t|
@@ -381,8 +381,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "alternative_phone"
     t.integer  "state_id"
     t.integer  "country_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "company"
     t.float    "latitude"
     t.float    "longitude"
@@ -397,8 +397,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "label"
     t.string   "source_type"
     t.integer  "adjustable_id"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "mandatory"
     t.boolean  "locked"
     t.integer  "originator_id"
@@ -431,8 +431,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "type"
     t.integer  "calculable_id",   :null => false
     t.string   "calculable_type", :null => false
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "spree_configurations", :force => true do |t|
@@ -487,8 +487,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "state"
     t.integer  "variant_id"
     t.integer  "order_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "shipment_id"
     t.integer  "return_authorization_id"
   end
@@ -502,8 +502,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "variant_id"
     t.integer  "quantity",                                            :null => false
     t.decimal  "price",                :precision => 8,  :scale => 2, :null => false
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "max_quantity"
     t.string   "currency"
     t.decimal  "distribution_fee",     :precision => 10, :scale => 2
@@ -518,8 +518,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "source_id"
     t.string   "source_type"
     t.text     "details"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "spree_mail_methods", :force => true do |t|
@@ -532,8 +532,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   create_table "spree_option_types", :force => true do |t|
     t.string   "name",         :limit => 100
     t.string   "presentation", :limit => 100
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "position",                    :default => 0, :null => false
   end
 
@@ -547,8 +547,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "name"
     t.string   "presentation"
     t.integer  "option_type_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "spree_option_values_line_items", :id => false, :force => true do |t|
@@ -573,8 +573,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "state"
     t.decimal  "adjustment_total",                   :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.integer  "user_id"
-    t.datetime "created_at",                                                                         :null => false
-    t.datetime "updated_at",                                                                         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "completed_at"
     t.integer  "bill_address_id"
     t.integer  "ship_address_id"
@@ -585,9 +585,9 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "email"
     t.text     "special_instructions"
     t.integer  "distributor_id"
-    t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
+    t.integer  "order_cycle_id"
     t.integer  "cart_id"
     t.integer  "customer_id"
   end
@@ -601,8 +601,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.text     "description"
     t.boolean  "active",      :default => true
     t.string   "environment", :default => "development"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "display_on"
   end
@@ -610,8 +610,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   create_table "spree_payments", :force => true do |t|
     t.decimal  "amount",               :precision => 10, :scale => 2, :default => 0.0, :null => false
     t.integer  "order_id"
-    t.datetime "created_at",                                                           :null => false
-    t.datetime "updated_at",                                                           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "source_id"
     t.string   "source_type"
     t.integer  "payment_method_id"
@@ -655,8 +655,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
 
   create_table "spree_preferences", :force => true do |t|
     t.text     "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "key"
     t.string   "value_type"
   end
@@ -689,8 +689,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "position"
     t.integer  "product_id"
     t.integer  "option_type_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "spree_product_properties", :force => true do |t|
@@ -723,8 +723,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "meta_keywords"
     t.integer  "tax_category_id"
     t.integer  "shipping_category_id"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "count_on_hand",        :default => 0
     t.integer  "supplier_id"
     t.boolean  "group_buy"
@@ -841,8 +841,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "order_id"
     t.integer  "shipping_method_id"
     t.integer  "address_id"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state"
   end
 
@@ -859,8 +859,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   create_table "spree_shipping_methods", :force => true do |t|
     t.string   "name"
     t.integer  "zone_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "display_on"
     t.integer  "shipping_category_id"
     t.boolean  "match_none"
@@ -887,8 +887,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "previous_state"
     t.integer  "stateful_id"
     t.integer  "user_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "stateful_type"
     t.string   "next_state"
   end
@@ -921,8 +921,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
 
   create_table "spree_taxonomies", :force => true do |t|
     t.string   "name",                      :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "position",   :default => 0
   end
 
@@ -932,8 +932,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "name",                             :null => false
     t.string   "permalink"
     t.integer  "taxonomy_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "lft"
     t.integer  "rgt"
     t.string   "icon_file_name"
@@ -954,8 +954,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "permissable_id"
     t.string   "permissable_type"
     t.string   "token"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "spree_tokenized_permissions", ["permissable_id", "permissable_type"], :name => "index_tokenized_name_and_type"
@@ -986,8 +986,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "login"
     t.integer  "ship_address_id"
     t.integer  "bill_address_id"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "authentication_token"
     t.string   "unlock_token"
     t.datetime "locked_at"
@@ -1028,8 +1028,8 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.integer  "zoneable_id"
     t.string   "zoneable_type"
     t.integer  "zone_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "spree_zones", :force => true do |t|
@@ -1189,7 +1189,6 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   add_foreign_key "spree_option_values_variants", "spree_variants", name: "spree_option_values_variants_variant_id_fk", column: "variant_id"
 
   add_foreign_key "spree_orders", "carts", name: "spree_orders_cart_id_fk"
-  add_foreign_key "spree_orders", "customers", name: "spree_orders_customer_id_fk"
   add_foreign_key "spree_orders", "enterprises", name: "spree_orders_distributor_id_fk", column: "distributor_id"
   add_foreign_key "spree_orders", "order_cycles", name: "spree_orders_order_cycle_id_fk"
   add_foreign_key "spree_orders", "spree_addresses", name: "spree_orders_bill_address_id_fk", column: "bill_address_id"
