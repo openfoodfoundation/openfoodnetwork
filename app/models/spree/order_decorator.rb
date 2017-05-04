@@ -21,6 +21,9 @@ Spree::Order.class_eval do
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
 
+  before_save :update_shipping_fees!, if: :complete?
+  before_save :update_payment_fees!, if: :complete?
+
   checkout_flow do
     go_to_state :address
     go_to_state :delivery
@@ -141,26 +144,20 @@ Spree::Order.class_eval do
 
   # After changing line items of a completed order
   def update_shipping_fees!
-    line_items(:reload)
     shipments.each do |shipment|
       next if shipment.shipped?
       update_adjustment! shipment.adjustment
       shipment.save # updates included tax
     end
-    update_totals
-    save
   end
 
   # After changing line items of a completed order
   def update_payment_fees!
-    payments(:reload)
-    line_items(:reload)
     payments.each do |payment|
       next if payment.completed?
       update_adjustment! payment.adjustment
+      payment.save
     end
-    update_totals
-    save
   end
 
   def cap_quantity_at_stock!
@@ -350,7 +347,7 @@ Spree::Order.class_eval do
   def update_adjustment!(adjustment)
     locked = adjustment.locked
     adjustment.locked = false
-    adjustment.update!
+    adjustment.update!(self)
     adjustment.locked = locked
   end
 end

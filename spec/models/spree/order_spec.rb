@@ -656,44 +656,59 @@ describe Spree::Order do
     let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
     let(:shipping_fee) { 3 }
     let(:payment_fee) { 5 }
+    let(:item_num) { order.line_items.length }
+    let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
 
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.25
-    end
 
-    it "updates shipping fees" do
       # Sanity check the fees
       expect(order.adjustments.length).to eq 2
-      item_num = order.line_items.length
       expect(item_num).to eq 2
-      expected_fees = item_num * (shipping_fee + payment_fee)
       expect(order.adjustment_total).to eq expected_fees
       expect(order.shipment.adjustment.included_tax).to eq 1.2
-
-      # Delete the item
-      order.line_items.first.destroy
-      order.update_shipping_fees!
-
-      # Check if fees got updated
-      expect(order.adjustments.length).to eq 2
-      expect(order.line_items.length).to eq item_num - 1
-      expect(order.adjustment_total).to eq expected_fees - shipping_fee
-      expect(order.shipment.adjustment.included_tax).to eq 0.6
     end
 
-    it "updates transaction fees" do
-      item_num = order.line_items.length
-      initial_fees = item_num * (shipping_fee + payment_fee)
+    context "removing line_items" do
+      it "updates shipping and transaction fees" do
+        # Setting quantity of an item to zero
+        order.update_attributes(line_items_attributes: [{id: order.line_items.first.id, quantity: 0}])
 
-      # Delete the item
-      order.line_items.first.destroy
-      order.update_payment_fees!
+        # Check if fees got updated
+        order.reload
+        expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
+        expect(order.shipment.adjustment.included_tax).to eq 0.6
+      end
+    end
 
-      # Check if fees got updated
-      expect(order.adjustments.length).to eq 2
-      expect(order.line_items.length).to eq item_num - 1
-      expect(order.adjustment_total).to eq initial_fees - payment_fee
+    context "changing the shipping method to one without fees" do
+      let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0)) }
+
+      it "updates shipping fees" do
+        # Change the shipping method
+        order.shipment.update_attributes(shipping_method_id: shipping_method.id)
+        order.save
+
+        # Check if fees got updated
+        order.reload
+        expect(order.adjustment_total).to eq expected_fees - (item_num * shipping_fee)
+        expect(order.shipment.adjustment.included_tax).to eq 0
+      end
+    end
+
+    context "changing the payment method to one without fees" do
+      let(:payment_method) { create(:payment_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0)) }
+
+      it "removes transaction fees" do
+        # Change the payment method
+        order.payment.update_attributes(payment_method_id: payment_method.id)
+        order.save
+
+        # Check if fees got updated
+        order.reload
+        expect(order.adjustment_total).to eq expected_fees - (item_num * payment_fee)
+      end
     end
   end
 

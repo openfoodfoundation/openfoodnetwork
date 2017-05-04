@@ -60,31 +60,67 @@ describe LineItemsController do
     expect { item.reload }.to raise_error
   end
 
-  it "updates fees" do
-    Spree::Config.shipment_inc_vat = true
-    Spree::Config.shipping_tax_rate = 0.25
-    distributor = create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true)
-    shipping_fee = 3
-    payment_fee = 5
-    order = create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee)
+  describe "destroying a line item" do
+    context "where shipping and payment fees apply" do
+      let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
+      let(:shipping_fee) { 3 }
+      let(:payment_fee) { 5 }
+      let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
 
-    # Sanity check fees
-    item_num = order.line_items.length
-    initial_fees = item_num * (shipping_fee + payment_fee)
-    expect(order.adjustment_total).to eq initial_fees
-    expect(order.shipment.adjustment.included_tax).to eq 1.2
+      before do
+        Spree::Config.shipment_inc_vat = true
+        Spree::Config.shipping_tax_rate = 0.25
+      end
 
-    # Delete the item
-    item = order.line_items.first
-    controller.stub spree_current_user: order.user
-    request = { format: :json, id: item }
-    delete :destroy, request
-    expect(response.status).to eq 204
+      it "updates the fees" do
+        # Sanity check fees
+        item_num = order.line_items.length
+        initial_fees = item_num * (shipping_fee + payment_fee)
+        expect(order.adjustment_total).to eq initial_fees
+        expect(order.shipment.adjustment.included_tax).to eq 1.2
 
-    # Check the fees again
-    order.reload
-    order.shipment.reload
-    expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
-    expect(order.shipment.adjustment.included_tax).to eq 0.6
+        # Delete the item
+        item = order.line_items.first
+        controller.stub spree_current_user: order.user
+        request = { format: :json, id: item }
+        delete :destroy, request
+        expect(response.status).to eq 204
+
+        # Check the fees again
+        order.reload
+        order.shipment.reload
+        expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
+        expect(order.shipment.adjustment.amount).to eq shipping_fee
+        expect(order.payment.adjustment.amount).to eq payment_fee
+        expect(order.shipment.adjustment.included_tax).to eq 0.6
+      end
+    end
+
+    context "where enterprise fees apply" do
+      let(:user) { create(:user) }
+      let(:variant) { create(:variant) }
+      let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+      let(:enterprise_fee) { create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new ) }
+      let!(:exchange) { create(:exchange, sender: variant.product.supplier, receiver: order_cycle.coordinator, variants: [variant], enterprise_fees: [enterprise_fee]) }
+      let!(:order) do
+        order = create(:order, distributor: distributor, order_cycle: order_cycle, user: user)
+        order.line_items << build(:line_item, variant: variant)
+        order.update_distribution_charge!
+        order.save!
+        order
+      end
+      let(:params) { { format: :json, id: order.line_items.first } }
+
+      it "updates the fees" do
+        expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount
+
+        controller.stub spree_current_user: user
+        delete :destroy, params
+        expect(response.status).to eq 204
+
+        expect(order.reload.adjustment_total).to eq 0
+      end
+    end
   end
 end

@@ -272,7 +272,7 @@ FactoryGirl.define do
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
-      order.finalize!
+      while !order.completed? do break unless order.next! end
     end
   end
 
