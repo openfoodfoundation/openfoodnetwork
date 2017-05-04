@@ -7,7 +7,7 @@ class SpreadsheetEntry
   attr_reader :validates_as
 
   attr_accessor :line_number, :valid, :product_object, :product_validations, :on_hand_nil,
-                :has_overrides, :units, :unscaled_units, :unit_type
+                :has_overrides, :units, :unscaled_units, :unit_type, :tax_category, :shipping_category
 
   attr_accessor :id, :product_id, :producer, :producer_id, :supplier, :supplier_id, :name, :display_name, :sku,
                 :unit_value, :unit_description, :variant_unit, :variant_unit_scale, :variant_unit_name,
@@ -153,6 +153,6 @@ class SpreadsheetEntry
   end
 
   def non_product_attributes
-    ['line_number', 'valid', 'errors', 'product_object', 'product_validations', 'inventory_validations', 'validates_as', 'save_type', 'on_hand_nil', 'has_overrides']
+    ['line_number', 'valid', 'errors', 'product_object', 'product_validations', 'inventory_validations', 'validates_as', 'save_type', 'on_hand_nil', 'has_overrides', 'tax_category,' 'shipping_category']
   end
 end

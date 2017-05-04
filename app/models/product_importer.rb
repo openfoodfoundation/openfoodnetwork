@@ -166,6 +166,7 @@ class ProductImporter
         inventory_validation(entry)
       else
         category_validation(entry)
+        tax_and_shipping_validation(entry)
         product_validation(entry)
       end
     end
@@ -193,6 +194,7 @@ class ProductImporter
     end
     build_categories_index
     build_suppliers_index
+    build_tax_and_shipping_indexes
     build_producers_index if importing_into_inventory?
     #validate_all
     count_existing_items unless @import_settings.has_key?(:start)
@@ -267,6 +269,7 @@ class ProductImporter
         inventory_validation(entry)
       else
         category_validation(entry)
+        tax_and_shipping_validation(entry)
         product_validation(entry)
       end
     end
@@ -420,6 +423,29 @@ class ProductImporter
     end
   end
 
+  def tax_and_shipping_validation(entry)
+    tax_validation(entry)
+    shipping_validation(entry)
+  end
+
+  def tax_validation(entry)
+    return unless entry.tax_category.present?
+    if @tax_index.has_key? entry.tax_category
+      entry.tax_category_id = @tax_index[entry.tax_category]
+    else
+      mark_as_invalid(entry, attribute: "tax_category", error: "#{I18n.t('admin.product_import.model.not_found')}")
+    end
+  end
+
+  def shipping_validation(entry)
+    return unless entry.shipping_category.present?
+    if @shipping_index.has_key? entry.shipping_category
+      entry.shipping_category_id = @shipping_index[entry.shipping_category]
+    else
+      mark_as_invalid(entry, attribute: "shipping_category", error: "#{I18n.t('admin.product_import.model.not_found')}")
+    end
+  end
+
   def category_exists?(category_name)
     @categories_index[category_name]
   end
@@ -462,6 +488,13 @@ class ProductImporter
       @categories_index[category_name] = category_id
     end
     @categories_index
+  end
+
+  def build_tax_and_shipping_indexes
+    @tax_index = {}
+    @shipping_index = {}
+    Spree::TaxCategory.select([:id, :name]).map {|tc| @tax_index[tc.name] = tc.id }
+    Spree::ShippingCategory.select([:id, :name]).map {|sc| @shipping_index[sc.name] = sc.id }
   end
 
   def save_all_valid
