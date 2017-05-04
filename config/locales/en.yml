@@ -486,6 +486,8 @@ en:
       model:
         no_file: "error: no file uploaded"
         could_not_process: "could not process file: invalid filetype"
+        incorrect_value: incorrect value
+        conditional_blank: can't be blank if unit_type is blank
         no_product: did not match any products in the database
         not_found: not found in database
         blank: can't be blank

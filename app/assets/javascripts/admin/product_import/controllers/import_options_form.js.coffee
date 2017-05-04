@@ -3,6 +3,7 @@ angular.module("ofn.admin").controller "ImportOptionsFormCtrl", ($scope, $rootSc
   $scope.initForm = () ->
     $scope.settings = {} if $scope.settings == undefined
     $scope.settings[$scope.supplierId] = {
+      import_into: 'product_list'
       defaults:
         count_on_hand:
           mode: 'overwrite_all'
@@ -15,6 +16,10 @@ angular.module("ofn.admin").controller "ImportOptionsFormCtrl", ($scope, $rootSc
         available_on:
           mode: 'overwrite_all'
     }
+    $scope.import_into = 'product_list'
+
+  $scope.updateImportInto = () ->
+    $scope.import_into = $scope.settings[$scope.supplierId]['import_into']
 
   $scope.$watch 'settings', (updated) ->
     ProductImportService.updateSettings(updated)

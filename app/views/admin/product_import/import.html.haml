@@ -10,21 +10,26 @@
     %p #{t('admin.product_import.import.none_to_save')}
     %br
   - else
-    .progress-interface{ng: {show: 'step == "import"'}}
-      %span.filename
-        #{@original_filename}
-        %span.percentage
-          ({{percentage}})
-      .progress-bar
-        %span.progress-track{class: 'ng-binding', style: "width:{{percentage}}"}
-      %button.start_import{ng: {click: 'start()', disabled: 'started', init: "item_count = #{@importer.item_count}; import_url = '#{main_app.admin_product_import_process_async_path}'; filepath = '#{@filepath}'; import_into = '#{@import_into}'"}}
-        #{t('admin.product_import.index.import')}
-      %button.review{ng: {click: 'viewResults()', disabled: '!finished'}}
-        #{t('admin.product_import.import.review')}
+    .settings-section{ng: {show: 'step == "settings"'}}
+      = render 'import_options' if @importer.table_headings
+      %br
+      %a.button{href: '', ng: {click: 'confirmSettings()'}}
+        #{t('admin.product_import.import.proceed')}
+      %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
+
+  .progress-interface{ng: {show: 'step == "import"'}}
+    %span.filename
+      #{@original_filename}
+      %span.percentage
+        ({{percentage}})
+    .progress-bar
+      %span.progress-track{class: 'ng-binding', style: "width:{{percentage}}"}
+    %button.start_import{ng: {click: 'start()', disabled: 'started', init: "item_count = #{@importer.item_count}; import_url = '#{main_app.admin_product_import_process_async_path}'; filepath = '#{@filepath}'; import_into = '#{@import_into}'"}}
+      #{t('admin.product_import.index.import')}
+    %button.review{ng: {click: 'viewResults()', disabled: '!finished'}}
+      #{t('admin.product_import.import.review')}
 
   = form_tag false, {class: 'product-import', name: 'importForm', 'ng-show' => 'step == "results"'} do
-
-    = render 'import_options' if @importer.table_headings
 
     = render 'import_review' if @importer.table_headings
 

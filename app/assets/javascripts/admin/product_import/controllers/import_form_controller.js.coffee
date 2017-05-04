@@ -4,8 +4,6 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
   $scope.update_counts = {}
   $scope.reset_counts = {}
 
-  #$scope.import_options = {}
-
   $scope.updates = {}
   $scope.updated_total = 0
   $scope.updated_ids = []
@@ -30,7 +28,10 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
     $scope.started = false
     $scope.finished = false
 
-  $scope.step = 'import'
+  $scope.step = 'settings'
+
+  $scope.confirmSettings = () ->
+    $scope.step = 'import'
 
   $scope.viewResults = () ->
     $scope.countResettable()
@@ -62,6 +63,7 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
       i++
 
   $scope.processImport = (start, end) ->
+    $scope.getSettings() if $scope.importSettings == null
     $http(
       url: $scope.import_url
       method: 'POST'
@@ -69,7 +71,7 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
         'start': start
         'end': end
         'filepath': $scope.filepath
-        'import_into': $scope.import_into
+        'settings': $scope.importSettings
     ).success((data, status, headers, config) ->
       angular.merge($scope.entries, angular.fromJson(data['entries']))
       $scope.sortUpdates(data['reset_counts'])
@@ -100,7 +102,6 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
         'start': start
         'end': end
         'filepath': $scope.filepath
-        'import_into': $scope.import_into,
         'settings': $scope.importSettings
     ).success((data, status, headers, config) ->
       $scope.sortResults(data['results'])
@@ -137,7 +138,6 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
         method: 'POST'
         data:
           'filepath': $scope.filepath
-          'import_into': $scope.import_into,
           'settings': $scope.importSettings
           'reset_absent': true,
           'updated_ids': $scope.updated_ids,

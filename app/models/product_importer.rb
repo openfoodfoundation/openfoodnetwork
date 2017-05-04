@@ -26,7 +26,7 @@ class ProductImporter
       @inventory_updated = 0
 
       @import_time = DateTime.now
-      @import_settings = import_settings
+      @import_settings = import_settings || {}
 
       @current_user = current_user
       @editable_enterprises = {}
@@ -36,6 +36,7 @@ class ProductImporter
       @supplier_products = {}
       @reset_counts = {}
       @updated_ids = []
+      @products_reset_count = 0
 
       init_product_importer if @sheet
     else
@@ -115,7 +116,7 @@ class ProductImporter
   end
 
   def products_reset_count
-    @products_reset_count || 0
+    @products_reset_count
   end
 
   def total_saved_count
@@ -160,8 +161,11 @@ class ProductImporter
   def validate_entries
     @entries.each do |entry|
       supplier_validation(entry)
+      unit_fields_validation(entry)
 
-      if importing_into_inventory?
+      next unless entry.supplier_id.present?
+
+      if import_into_inventory?(entry)
         producer_validation(entry)
         inventory_validation(entry)
       else
@@ -170,6 +174,10 @@ class ProductImporter
         product_validation(entry)
       end
     end
+  end
+
+  def import_into_inventory?(entry)
+    entry.supplier_id and @import_settings[:settings][entry.supplier_id.to_s]['import_into'] == 'inventories'
   end
 
   def save_entries
@@ -187,7 +195,7 @@ class ProductImporter
 
   def init_product_importer
     init_permissions
-    if @import_settings.has_key?(:start) and @import_settings.has_key?(:end)
+    if @import_settings and @import_settings.has_key?(:start) and @import_settings.has_key?(:end)
       build_entries_in_range
     else
       build_entries
@@ -195,7 +203,7 @@ class ProductImporter
     build_categories_index
     build_suppliers_index
     build_tax_and_shipping_indexes
-    build_producers_index if importing_into_inventory?
+    build_producers_index ###if importing_into_inventory? #TODO: check this is still working ok
     #validate_all
     count_existing_items unless @import_settings.has_key?(:start)
   end
@@ -243,7 +251,7 @@ class ProductImporter
       line_number = i + 1
       row = @sheet.row(line_number)
       row_data = Hash[[headers, row].transpose]
-      entry = SpreadsheetEntry.new(row_data, importing_into_inventory?)
+      entry = SpreadsheetEntry.new(row_data)
       entry.line_number = line_number
       @entries.push entry
       return if @sheet.last_row == line_number # TODO: test
@@ -253,7 +261,7 @@ class ProductImporter
   def build_entries
     rows.each_with_index do |row, i|
       row_data = Hash[[headers, row].transpose]
-      entry = SpreadsheetEntry.new(row_data, importing_into_inventory?)
+      entry = SpreadsheetEntry.new(row_data)
       entry.line_number = i + 2
       @entries.push entry
     end
@@ -263,8 +271,11 @@ class ProductImporter
   def validate_all
     @entries.each do |entry|
       supplier_validation(entry)
+      unit_fields_validation(entry)
 
-      if importing_into_inventory?
+      next unless entry.supplier_id.present?
+
+      if import_into_inventory?(entry)
         producer_validation(entry)
         inventory_validation(entry)
       else
@@ -278,9 +289,9 @@ class ProductImporter
     delete_uploaded_file if item_count.zero? or !has_valid_entries?
   end
 
-  def importing_into_inventory?
-    @import_settings[:import_into] == 'inventories'
-  end
+  # def importing_into_inventory?
+  #   @import_settings[:import_into] == 'inventories'
+  # end
 
   def inventory_validation(entry)
     # Find product with matching supplier and name
@@ -340,7 +351,7 @@ class ProductImporter
     @suppliers_index.each do |supplier_name, supplier_id|
       next unless supplier_id and permission_by_id?(supplier_id)
 
-      if importing_into_inventory?
+      if import_into_inventory_by_supplier?(supplier_id)
         products_count = VariantOverride.
           where('variant_overrides.hub_id IN (?)', supplier_id).
           count
@@ -356,6 +367,10 @@ class ProductImporter
       @supplier_products[supplier_id] = products_count
       @total_supplier_products += products_count
     end
+  end
+
+  def import_into_inventory_by_supplier?(supplier_id)
+    @import_settings[:settings] and @import_settings[:settings][supplier_id.to_s] and @import_settings[:settings][supplier_id.to_s]['import_into'] == 'inventories'
   end
 
   def supplier_validation(entry)
@@ -471,6 +486,7 @@ class ProductImporter
   def build_producers_index
     @producers_index = {}
     @entries.each do |entry|
+      next unless entry.producer
       producer_name = entry.producer
       producer_id = @producers_index[producer_name] ||
           Enterprise.find_by_name(producer_name, select: 'id, name').try(:id)
@@ -499,7 +515,7 @@ class ProductImporter
 
   def save_all_valid
     @entries.each do |entry|
-      if importing_into_inventory?
+      if import_into_inventory?(entry)
         save_new_inventory_item entry if entry.is_a_valid? 'new_inventory_item'
         save_existing_inventory_item entry if entry.is_a_valid? 'existing_inventory_item'
       else
@@ -617,28 +633,30 @@ class ProductImporter
   end
 
   def reset_absent_items
-    return if total_saved_count.zero? or @updated_ids.empty? or !@import_settings.has_key?('settings')
+    return if total_saved_count.zero? or @updated_ids.empty? or !@import_settings.has_key?(:settings)
+    suppliers_to_reset_products = []
+    suppliers_to_reset_inventories = []
 
-    enterprises_to_reset = []
-    @import_settings['settings'].each do |enterprise_id, settings|
-      enterprises_to_reset.push enterprise_id if settings['reset_all_absent'] and permission_by_id?(enterprise_id)
+    @import_settings[:settings].each do |enterprise_id, settings|
+      suppliers_to_reset_products.push enterprise_id if settings['reset_all_absent'] and permission_by_id?(enterprise_id) and !import_into_inventory_by_supplier?(enterprise_id)
+      suppliers_to_reset_inventories.push enterprise_id if settings['reset_all_absent'] and permission_by_id?(enterprise_id) and import_into_inventory_by_supplier?(enterprise_id)
     end
-
-    return if enterprises_to_reset.empty?
 
     # For selected enterprises; set stock to zero for all products/inventory
     # items that were not present in the uploaded spreadsheet
-    if importing_into_inventory?
-      @products_reset_count = VariantOverride.
+    unless suppliers_to_reset_inventories.empty?
+      @products_reset_count += VariantOverride.
         where('variant_overrides.hub_id IN (?)
-        AND variant_overrides.id NOT IN (?)', enterprises_to_reset, @updated_ids).
+        AND variant_overrides.id NOT IN (?)', suppliers_to_reset_inventories, @updated_ids).
         update_all(count_on_hand: 0)
-    else
-      @products_reset_count = Spree::Variant.joins(:product).
+    end
+
+    unless suppliers_to_reset_products.empty?
+      @products_reset_count += Spree::Variant.joins(:product).
         where('spree_products.supplier_id IN (?)
         AND spree_variants.id NOT IN (?)
         AND spree_variants.is_master = false
-        AND spree_variants.deleted_at IS NULL', enterprises_to_reset, @updated_ids).
+        AND spree_variants.deleted_at IS NULL', suppliers_to_reset_products, @updated_ids).
         update_all(count_on_hand: 0)
     end
   end
@@ -667,6 +685,31 @@ class ProductImporter
     variant.on_demand = entry.on_demand if entry.on_demand
     variant.import_date = @import_time
     variant.save
+  end
+
+  def unit_fields_validation(entry)
+    unit_types = ['g', 'kg', 't', 'ml', 'l', 'kl', '']
+
+    # unit must be present and not nil
+    unless entry.units and entry.units.present?
+      #self.errors.add('units', "can't be blank")
+      mark_as_invalid(entry, attribute: 'units', error: I18n.t('admin.product_import.model.blank'))
+    end
+
+    return if import_into_inventory?(entry)
+
+    # unit_type must be valid type
+    if entry.unit_type and entry.unit_type.present?
+      unit_type = entry.unit_type.to_s.strip.downcase
+      #self.errors.add('unit_type', "incorrect value") unless unit_types.include?(unit_type)
+      mark_as_invalid(entry, attribute: 'unit_type', error: I18n.t('admin.product_import.model.incorrect_value')) unless unit_types.include?(unit_type)
+    end
+
+    # variant_unit_name must be present if unit_type not present
+    if !entry.unit_type or (entry.unit_type and entry.unit_type.blank?)
+      #self.errors.add('variant_unit_name', "can't be blank if unit_type is blank") unless attrs.has_key? 'variant_unit_name' and attrs['variant_unit_name'].present?
+      mark_as_invalid(entry, attribute: 'variant_unit_name', error: I18n.t('admin.product_import.model.conditional_blank')) unless entry.variant_unit_name and entry.variant_unit_name.present?
+    end
   end
 
   def product_validation(entry)

@@ -45,9 +45,12 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
+      click_link 'Proceed'
+
       expect(page).to have_selector 'button.start_import'
       expect(page).to have_selector "button.review[disabled='disabled']"
 
+      sleep 0.5
       click_button 'Import'
       wait_until { page.find("button.review:not([disabled='disabled'])").present? }
       click_button 'Review'
@@ -102,6 +105,9 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
+      click_link 'Proceed'
+
+      sleep 0.5
       click_button 'Import'
       wait_until { page.find("button.review:not([disabled='disabled'])").present? }
       click_button 'Review'
@@ -128,6 +134,9 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
+      click_link 'Proceed'
+
+      sleep 0.5
       click_button 'Import'
       wait_until { page.find("button.review:not([disabled='disabled'])").present? }
       click_button 'Review'
@@ -177,11 +186,17 @@ feature "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
-
       attach_file 'file', '/tmp/test.csv'
-      select 'Inventories', from: "settings_import_into", visible: false
       click_button 'Upload'
 
+      within 'div.import-settings' do
+        find('div.header-description').click  # Import settings tab
+        select 'Inventories', from: "settings_#{enterprise2.id.to_s}_import_into", visible: false
+      end
+
+      click_link 'Proceed'
+
+      sleep 0.5
       click_button 'Import'
       wait_until { page.find("button.review:not([disabled='disabled'])").present? }
       click_button 'Review'
@@ -217,6 +232,7 @@ feature "Product Import", js: true do
       Float(cabbage_override.price).should == 1.50
       cabbage_override.count_on_hand.should == 2001
 
+      sleep 0.5
       click_link 'View Inventory'
       expect(page).to have_content 'Inventory'
 
@@ -284,6 +300,9 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
+      click_link 'Proceed'
+
+      sleep 0.5
       click_button 'Import'
       wait_until { page.find("button.review:not([disabled='disabled'])").present? }
       click_button 'Review'

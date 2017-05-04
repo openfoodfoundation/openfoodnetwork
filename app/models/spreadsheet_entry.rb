@@ -14,12 +14,12 @@ class SpreadsheetEntry
                 :display_as, :category, :primary_taxon_id, :price, :on_hand, :count_on_hand, :on_demand,
                 :tax_category_id, :shipping_category_id, :description, :import_date
 
-  def initialize(attrs, is_inventory=false)
+  def initialize(attrs)
     #@product_validations = {}
     @validates_as = ''
 
-    validate_custom_unit_fields(attrs, is_inventory)
-    convert_custom_unit_fields(attrs, is_inventory)
+    #validate_custom_unit_fields(attrs, is_inventory)
+    convert_custom_unit_fields(attrs)
 
     attrs.each do |k, v|
       if self.respond_to?("#{k}=")
@@ -42,7 +42,7 @@ class SpreadsheetEntry
     }
   end
 
-  def convert_custom_unit_fields(attrs, is_inventory)
+  def convert_custom_unit_fields(attrs)
 
     # unit unit_type variant_unit_name   ->    unit_value  variant_unit_scale   variant_unit
     # 250    ml       nil      ....              0.25        0.001               volume
@@ -54,7 +54,7 @@ class SpreadsheetEntry
     attrs['variant_unit_scale'] = nil
     attrs['unit_value'] = nil
 
-    if is_inventory and attrs.has_key?('units') and attrs['units'].present?
+    if attrs.has_key?('units') and attrs['units'].present?
       attrs['unscaled_units'] = attrs['units']
     end
 
@@ -126,30 +126,8 @@ class SpreadsheetEntry
     unit_scales.has_key? unit_type
   end
 
-  def validate_custom_unit_fields(attrs, is_inventory)
-    unit_types = ['g', 'kg', 't', 'ml', 'l', 'kl', '']
-
-    # unit must be present and not nil
-    unless attrs.has_key? 'units' and attrs['units'].present?
-      self.errors.add('units', "can't be blank")
-    end
-
-    return if is_inventory
-
-    # unit_type must be valid type
-    if attrs.has_key? 'unit_type' and attrs['unit_type'].present?
-      unit_type = attrs['unit_type'].to_s.strip.downcase
-      self.errors.add('unit_type', "incorrect value") unless unit_types.include?(unit_type)
-    end
-
-    # variant_unit_name must be present if unit_type not present
-    if !attrs.has_key? 'unit_type' or ( attrs.has_key? 'unit_type' and attrs['unit_type'].blank? )
-      self.errors.add('variant_unit_name', "can't be blank if unit_type is blank") unless attrs.has_key? 'variant_unit_name' and attrs['variant_unit_name'].present?
-    end
-  end
-
   def non_display_attributes
-    ['id', 'product_id', 'unscaled_units', 'variant_id', 'supplier_id', 'primary_taxon', 'primary_taxon_id', 'category_id', 'shipping_category_id', 'tax_category_id']
+    ['id', 'product_id', 'unscaled_units', 'variant_id', 'supplier_id', 'primary_taxon', 'primary_taxon_id', 'category_id', 'shipping_category_id', 'tax_category_id', 'variant_unit_scale', 'variant_unit', 'unit_value']
   end
 
   def non_product_attributes

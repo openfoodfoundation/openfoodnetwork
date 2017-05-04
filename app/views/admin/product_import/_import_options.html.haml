@@ -12,8 +12,7 @@
         %div.header-description
           = name
       %div.panel-content{ng: {hide: '!active'}}
-        = render 'product_options_form', supplier_id: supplier_id, name: name if @import_into == 'product_list'
-        = render 'inventory_options_form', supplier_id: supplier_id, name: name if @import_into == 'inventories'
+        = render 'options_form', supplier_id: supplier_id, name: name
   - elsif name and supplier_id
     %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
       %div.panel-header

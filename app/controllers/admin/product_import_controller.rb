@@ -9,7 +9,6 @@ class Admin::ProductImportController < Spree::Admin::BaseController
     @filepath = save_uploaded_file(params[:file])
     @importer = ProductImporter.new(File.new(@filepath), spree_current_user, params[:settings])
     @original_filename = params[:file].try(:original_filename)
-    @import_into = params[:settings][:import_into]
 
     check_file_errors @importer
     check_spreadsheet_has_data @importer
@@ -25,7 +24,7 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   # end
 
   def process_data
-    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {start: params[:start], end: params[:end], import_into: params[:import_into]})
+    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {start: params[:start], end: params[:end], settings: params[:settings]})
 
     @importer.validate_entries
 
@@ -33,7 +32,7 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   end
 
   def save_data
-    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {start: params[:start], end: params[:end], import_into: params[:import_into], settings: params[:settings]})
+    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {start: params[:start], end: params[:end], settings: params[:settings]})
 
     @importer.save_entries
 
