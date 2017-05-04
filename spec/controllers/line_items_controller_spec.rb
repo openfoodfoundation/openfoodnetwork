@@ -2,25 +2,31 @@ require 'spec_helper'
 
 describe LineItemsController do
   let(:item) { create(:line_item) }
+  let(:user) { create(:user) }
+  let(:distributor) { create(:distributor_enterprise) }
+  let(:order_cycle) { create(:simple_order_cycle) }
+  let(:completed_order) do
+    order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle)
+    while !order.completed? do break unless order.next! end
+    order
+  end
   let(:item_with_oc) do
-    order_cycle = create(:simple_order_cycle)
-    distributor = create(:distributor_enterprise)
+    item.order.user = user
     item.order.order_cycle = order_cycle
     item.order.distributor = distributor
     item.order.save
     item
   end
 
-  it "lists bought items" do
-    item.order.finalize!
-    controller.stub spree_current_user: item.order.user
+  it "lists items bought by the user from the same shop in the same order_cycle" do
+    controller.stub spree_current_user: completed_order.user
     controller.stub current_order_cycle: item_with_oc.order.order_cycle
     controller.stub current_distributor: item_with_oc.order.distributor
     get :index, { format: :json }
     expect(response.status).to eq 200
     json_response = JSON.parse(response.body)
-    expect(json_response.length).to eq 1
-    expect(json_response[0]['id']).to eq item.id
+    expect(json_response.length).to eq completed_order.line_items(:reload).count
+    expect(json_response[0]['id']).to eq completed_order.line_items.first.id
   end
 
   it "fails without line item id" do
