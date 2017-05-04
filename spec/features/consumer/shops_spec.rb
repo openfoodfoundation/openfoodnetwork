@@ -100,6 +100,9 @@ feature 'Shops', js: true do
 
       expect(page).not_to have_content d1.name
       expect(page).to     have_content d2.name
+
+      toggle_filter 'Pickup'
+      expect(page).not_to have_selector '.filter-block', text: "#{I18n.t(:producers_filter)} #{I18n.t(:producers_filter_property)}"
     end
   end
 

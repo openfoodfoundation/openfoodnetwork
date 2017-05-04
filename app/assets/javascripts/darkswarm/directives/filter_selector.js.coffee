@@ -1,5 +1,5 @@
 Darkswarm.directive "filterSelector", ->
-  # Automatically builds activeSelectors for taxons
+  # Automatically builds activeSelectors for taxons or properties
   # Lots of magic here
   restrict: 'E'
   replace: true
@@ -40,6 +40,13 @@ Darkswarm.directive "filterSelector", ->
           selector = selectors_by_id[id] = scope.selectorSet.new
             object: object
           selectors.push selector
+
+      # Hide headlines and labels incase there are no options
+      if selectors.length == 0
+        elem.parents('.filter-block').hide()
+      else
+        elem.parents('.filter-block').show()
+
       selectors
 
     scope.ifDefined = (value, if_undefined) ->

@@ -21,9 +21,13 @@ feature 'Groups', js: true do
     describe "filtering by product property" do
       let!(:producer1) { create(:supplier_enterprise) }
       let!(:producer2) { create(:supplier_enterprise) }
+      let!(:producer3) { create(:supplier_enterprise) }
+
+      let(:taxon_veg) { create(:taxon, name: 'Vegetables') }
 
       let!(:product1) { create(:simple_product, supplier: producer1) }
       let!(:product2) { create(:simple_product, supplier: producer2) }
+      let!(:product3) { create(:simple_product, supplier: producer3, taxons: [taxon_veg]) }
 
       before do
         product1.set_property 'Organic', 'NASAA 12345'
@@ -34,6 +38,7 @@ feature 'Groups', js: true do
 
         group.enterprises << producer1
         group.enterprises << producer2
+        group.enterprises << producer3
 
         visit group_path(group, anchor: "/producers")
       end
@@ -51,6 +56,10 @@ feature 'Groups', js: true do
 
         expect(page).not_to have_content producer1.name
         expect(page).to     have_content producer2.name
+
+        toggle_filter 'Vegetables'
+
+        expect(page).not_to have_selector '.filter-block', text: "#{I18n.t(:producers_filter)} #{I18n.t(:producers_filter_property)}"
       end
     end
   end

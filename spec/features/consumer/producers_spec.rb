@@ -10,6 +10,7 @@ feature %q{
 
   let!(:producer1) { create(:supplier_enterprise) }
   let!(:producer2) { create(:supplier_enterprise) }
+  let!(:producer3) { create(:supplier_enterprise) }
   let!(:invisible_producer) { create(:supplier_enterprise, visible: false) }
 
   let(:taxon_fruit) { create(:taxon, name: 'Fruit') }
@@ -17,6 +18,7 @@ feature %q{
 
   let!(:product1) { create(:simple_product, supplier: producer1, taxons: [taxon_fruit]) }
   let!(:product2) { create(:simple_product, supplier: producer2, taxons: [taxon_veg]) }
+  let!(:product3) { create(:simple_product, supplier: producer3) }
 
   let(:shop) { create(:distributor_enterprise) }
   let!(:er) { create(:enterprise_relationship, parent: shop, child: producer1) }
@@ -29,10 +31,21 @@ feature %q{
     producer2.set_producer_property 'Fair Trade', 'FT123'
   end
 
-
   it "searches by URL" do
     visit producers_path(anchor: "/?query=xyzzy")
     expect(page).to have_content "Sorry, no results found for xyzzy"
+  end
+
+  describe "hides empty filter block" do
+    before { visit producers_path(anchor: "/?query=#{producer3.name}") }
+
+    it "product property" do
+      expect(page).to have_content producer3.name
+
+      toggle_filters
+      expect(page).to have_selector '.filter-block', text: "#{I18n.t(:producers_filter)} #{I18n.t(:producers_filter_type)}"
+      expect(page).not_to have_selector '.filter-block', text: "#{I18n.t(:producers_filter)} #{I18n.t(:producers_filter_property)}"
+    end
   end
 
   context "on the producers page" do

@@ -8,7 +8,7 @@ module OpenFoodNetwork
 
     # Toggle one particular filter
     def toggle_filter(name)
-      page.find('span', text: name).click
+      page.find('span.ng-binding', text: name).click
     end
   end
 end
