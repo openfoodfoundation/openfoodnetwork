@@ -11,6 +11,14 @@ angular.module("admin.utils").factory "StatusMessage", ($timeout) ->
       text: ""
       style: {}
 
+    invalidMessage: ""
+
+    setValidation: (isValid) ->
+      if isValid
+        StatusMessage.invalidMessage = ''
+      else
+        StatusMessage.invalidMessage = t("admin.form_invalid")
+
     active: ->
       @statusMessage.text != ''
 

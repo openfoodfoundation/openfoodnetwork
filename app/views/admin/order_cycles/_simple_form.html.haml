@@ -4,11 +4,13 @@
   .alpha.two.columns
     = label_tag t('.ready_for')
   .six.columns
-    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'placeholder' => t('.ready_for_placeholder'), 'ng-model' => 'outgoing_exchange.pickup_time', 'size' => 30
+    = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_time', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_time', 'required' => 'required', 'placeholder' => t('.ready_for_placeholder'), 'ng-model' => 'outgoing_exchange.pickup_time', 'size' => 30, 'maxlength' => 35
+    %span.icon-question-sign{'ofn-with-tip' => t('admin.order_cycles.edit.pickup_time_tip')}
   .two.columns
     = label_tag t('.customer_instructions')
   .six.columns.omega
     = text_field_tag 'order_cycle_outgoing_exchange_0_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_0_pickup_instructions', 'placeholder' => t('.customer_instructions_placeholder'), 'ng-model' => 'outgoing_exchange.pickup_instructions', 'size' => 30
+    %span.icon-question-sign{'ofn-with-tip' => t('admin.order_cycles.edit.pickup_instructions_tip')}
 
 = label_tag t('.products')
 %table.exchanges
