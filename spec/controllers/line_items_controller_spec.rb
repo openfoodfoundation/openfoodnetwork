@@ -1,72 +1,105 @@
 require 'spec_helper'
 
 describe LineItemsController do
-  let(:item) { create(:line_item) }
   let(:user) { create(:user) }
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }
-  let(:completed_order) do
-    order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle)
-    while !order.completed? do break unless order.next! end
-    order
-  end
-  let(:item_with_oc) do
-    item.order.user = user
-    item.order.order_cycle = order_cycle
-    item.order.distributor = distributor
-    item.order.save
-    item
+
+  context "listing bought items" do
+    let!(:completed_order) do
+      order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle)
+      while !order.completed? do break unless order.next! end
+      order
+    end
+
+    before do
+      controller.stub spree_current_user: user
+      controller.stub current_order_cycle: order_cycle
+      controller.stub current_distributor: distributor
+    end
+
+    it "lists items bought by the user from the same shop in the same order_cycle" do
+      get :index, { format: :json }
+      expect(response.status).to eq 200
+      json_response = JSON.parse(response.body)
+      expect(json_response.length).to eq completed_order.line_items(:reload).count
+      expect(json_response[0]['id']).to eq completed_order.line_items.first.id
+    end
   end
 
-  it "lists items bought by the user from the same shop in the same order_cycle" do
-    controller.stub spree_current_user: completed_order.user
-    controller.stub current_order_cycle: item_with_oc.order.order_cycle
-    controller.stub current_distributor: item_with_oc.order.distributor
-    get :index, { format: :json }
-    expect(response.status).to eq 200
-    json_response = JSON.parse(response.body)
-    expect(json_response.length).to eq completed_order.line_items(:reload).count
-    expect(json_response[0]['id']).to eq completed_order.line_items.first.id
-  end
+  describe "destroying a line item on a completed order" do
+    let(:item) do
+      order = create(:completed_order_with_totals)
+      item = create(:line_item, order: order)
+      while !order.completed? do break unless order.next! end
+      item
+    end
 
-  it "fails without line item id" do
-    expect { delete :destroy }.to raise_error
-  end
+    before { controller.stub spree_current_user: item.order.user }
 
-  it "denies deletion without order cycle" do
-    request = { format: :json, id: item }
-    delete :destroy, request
-    expect(response.status).to eq 403
-    expect { item.reload }.to_not raise_error
-  end
+    context "without a line item id" do
+      it "fails and raises an error" do
+        expect { delete :destroy }.to raise_error
+      end
+    end
 
-  it "denies deletion without user" do
-    request = { format: :json, id: item_with_oc }
-    delete :destroy, request
-    expect(response.status).to eq 403
-    expect { item.reload }.to_not raise_error
-  end
+    context "with a line item id" do
+      let(:params) { { format: :json, id: item } }
 
-  it "denies deletion if editing is not allowed" do
-    controller.stub spree_current_user: item.order.user
-    request = { format: :json, id: item_with_oc }
-    delete :destroy, request
-    expect(response.status).to eq 403
-    expect { item.reload }.to_not raise_error
-  end
+      context "without a user" do
+        it "denies deletion" do
+          delete :destroy, params
+          expect(response.status).to eq 403
+          expect { item.reload }.to_not raise_error
+        end
+      end
 
-  it "deletes the line item if allowed" do
-    controller.stub spree_current_user: item.order.user
-    distributor = item_with_oc.order.distributor
-    distributor.allow_order_changes = true
-    distributor.save
-    request = { format: :json, id: item_with_oc }
-    delete :destroy, request
-    expect(response.status).to eq 204
-    expect { item.reload }.to raise_error
-  end
+      context "where the item's order is associated with the current user" do
+        before { item.order.update_attributes(user_id: user.id) }
 
-  describe "destroying a line item" do
+        context "without an order cycle" do
+          it "denies deletion" do
+            delete :destroy, params
+            expect(response.status).to eq 403
+            expect { item.reload }.to_not raise_error
+          end
+        end
+
+        context "with an order cycle" do
+          before { item.order.update_attributes(order_cycle_id: order_cycle.id) }
+
+          context "without a distributor" do
+            it "denies deletion" do
+              delete :destroy, params
+              expect(response.status).to eq 403
+              expect { item.reload }.to_not raise_error
+            end
+          end
+
+          context "where the item's order has a distributor" do
+            before { item.order.update_attributes(distributor_id: distributor.id) }
+            context "where changes are not allowed" do
+              it "denies deletion" do
+                delete :destroy, params
+                expect(response.status).to eq 403
+                expect { item.reload }.to_not raise_error
+              end
+            end
+
+            context "where changes are allowed" do
+              before { distributor.update_attributes(allow_order_changes: true) }
+
+              it "deletes the line item" do
+                delete :destroy, params
+                expect(response.status).to eq 204
+                expect { item.reload }.to raise_error
+              end
+            end
+          end
+        end
+      end
+    end
+
     context "where shipping and payment fees apply" do
       let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
       let(:shipping_fee) { 3 }
@@ -107,19 +140,19 @@ describe LineItemsController do
       let(:variant) { create(:variant) }
       let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
       let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
-      let(:enterprise_fee) { create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new ) }
-      let!(:exchange) { create(:exchange, sender: variant.product.supplier, receiver: order_cycle.coordinator, variants: [variant], enterprise_fees: [enterprise_fee]) }
+      let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
+      let!(:exchange) { create(:exchange, incoming: true, sender: variant.product.supplier, receiver: order_cycle.coordinator, variants: [variant], enterprise_fees: [enterprise_fee]) }
       let!(:order) do
-        order = create(:order, distributor: distributor, order_cycle: order_cycle, user: user)
-        order.line_items << build(:line_item, variant: variant)
+        order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle)
+        order.reload.line_items.first.update_attributes(variant_id: variant.id)
+        while !order.completed? do break unless order.next! end
         order.update_distribution_charge!
-        order.save!
         order
       end
       let(:params) { { format: :json, id: order.line_items.first } }
 
       it "updates the fees" do
-        expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount
+        expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount
 
         controller.stub spree_current_user: user
         delete :destroy, params

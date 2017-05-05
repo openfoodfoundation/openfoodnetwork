@@ -53,7 +53,8 @@ class AbilityDecorator
 
   def add_shopping_abilities(user)
     can [:destroy], Spree::LineItem do |item|
-      item.andand.order.andand.can_remove_items? user
+      user == item.order.user &&
+      item.order.changes_allowed?
     end
     can [:cancel], Spree::Order do |order|
       order.user == user

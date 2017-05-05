@@ -263,7 +263,7 @@ FactoryGirl.define do
 
     shipping_method do
       shipping_calculator = build(:calculator_per_item, preferred_amount: shipping_fee)
-      create(:shipping_method, calculator: shipping_calculator, require_ship_address: false)
+      create(:shipping_method, calculator: shipping_calculator, require_ship_address: false, distributors: [distributor])
     end
 
     after(:create) do |order, evaluator|
