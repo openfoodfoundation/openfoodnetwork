@@ -1045,7 +1045,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_edit_checkout: Checkout
   orders_form_empty_cart: "Empty cart"
   orders_form_subtotal: Produce subtotal
-  orders_form_admin: Admin and handling
+  orders_form_admin: Admin & Handling
   orders_form_total: Total
   orders_oc_expired_headline: Orders have closed for this order cycle
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
