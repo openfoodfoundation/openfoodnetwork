@@ -897,7 +897,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   shop_changeable_orders_alert_html:
     one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
-    other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review.
+    other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
   orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
 
   products_clear_all: Clear all

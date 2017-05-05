@@ -18,6 +18,7 @@ module Spree
     end
 
     def changeable_orders
+      # Only returns open order for the current user + shop + oc combo
       return [] unless spree_current_user && current_distributor && current_order_cycle
       Spree::Order.complete.where(
         state: 'complete',
@@ -36,7 +37,7 @@ module Spree
         path: changeable_orders_link_path,
         order: changeable_orders.first.number,
         shop: current_distributor.name,
-        oc_close: l(current_order_cycle.orders_close_at, format: "%b %d, %Y %H:%M"))
+        oc_close: l(current_order_cycle.orders_close_at, format: "%A, %b %d, %Y @ %H:%M"))
     end
   end
 end
