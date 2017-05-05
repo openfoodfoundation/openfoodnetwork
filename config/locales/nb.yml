@@ -2,7 +2,7 @@ nb:
   activerecord:
     attributes:
       spree/order:
-        payment_state: Betallingsstatus
+        payment_state: Betalingsstatus
         shipment_state: Sendingsstatus
   devise:
     failure:
@@ -83,9 +83,11 @@ nb:
     clear_all: Fjern Alt
     start_date: "Startdato"
     end_date: "Sluttdato"
+    form_invalid: "Skjemaet inneholder manglende eller ugyldige felt"
     columns: Kolonner
     actions: Handlinger
     viewing: "Viser: %{current_view_name}"
+    description: Beskrivelse
     whats_this: Hva er dette?
     tag_has_rules: "Gjeldende regler for denne merkelappen: %{num}"
     has_one_rule: "har én regel"
@@ -189,6 +191,9 @@ nb:
         inherits_properties?: Arver Egenskaper?
         available_on: Tilgjengelig på
         av_on: "Til. på"
+      properties:
+        property_name: Navn på egenskap
+        inherited_property: Arvet egenskap
       variants:
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
     variant_overrides:
@@ -422,6 +427,16 @@ nb:
         next_step: Neste steg
         choose_starting_point: 'Velg ditt startpunkt:'
     order_cycles:
+      edit:
+        advanced_settings: Avanserte Innstillinger
+        update_and_close: Oppdater og Lukk
+        choose_products_from: 'Velg Produkter Fra:'
+        pickup_time_tip: Når bestillinger fra denne runden blir klar for kunden
+        pickup_instructions_tip: Disse instruksjonene vises til kunder etter de ferdigstiller en bestilling
+      exchange_form:
+        pickup_instructions_placeholder: "Henteinstruksjoner"
+        pickup_time_placeholder: "Klar til (dvs. Dato/Tid)"
+        receival_instructions_placeholder: "Mottaksinstruksjoner"
       advanced_settings:
         title: Avanserte Innstillinger
         choose_product_tip: Du kan velge å begrense alle tilgjengelige produkter (både innkommende og utgående), til kun de i %{inventory}s varelager.
@@ -439,7 +454,7 @@ nb:
         distributor: Distributør
         products: Produkter
         tags: Merker
-        delivery_detaisl: Hentings- / Leveringsdetaljer
+        delivery_details: Hente-/Leveringsdetaljer
         debug_info: Debuginformasjon
       name_and_timing_form:
         name: Navn
@@ -457,13 +472,7 @@ nb:
         customer_instructions_placeholder: Hente- eller leveringsmerknader
         products: Produkter
         fees: Avgifter
-      edit:
-        advanced_settings: Avanserte Innstillinger
-        update_and_close: Oppdater og Lukk
     producer_properties:
-      form:
-        property: Egenskap
-        value: Verdi
       index:
         title: Produsentegenskaper
     shared:
@@ -1095,7 +1104,7 @@ nb:
   balance: "Balanse"
   transaction: "Transaksjon"
   transaction_date: "Dato"
-  payment_state: "Betallingsstatus"
+  payment_state: "Betalingsstatus"
   shipping_state: "Leveringsstatus"
   value: "Verdi"
   balance_due: "Balanse forfaller"
@@ -1477,3 +1486,13 @@ nb:
     orders:
       invoice:
         tax_invoice: "AVGIFTSFAKTURA:"
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+          En forespørsel om å nullstille ditt passord er utført.
+          Hvis det ikke var du som forespurte dette kan du se bort i fra denne eposten.
+        link_text: >
+            Hvis det var du som forespurte dette kan du klikke nedenfor:
+        issue_text: |
+          Hvis URL'en ovenfor ikke fungerer prøv å kopier og lim den inn i din nettleser.
+          Hvis du fortsatt har problemer vennligst ta kontakt.
