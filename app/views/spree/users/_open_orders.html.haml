@@ -20,4 +20,4 @@
           %td.order6.text-right.show-for-large-up.brick
             %a{"ng-href" => "{{::order.path}}" }= t('.edit')
           %td.order7.text-right
-            = link_to t('.cancel'), "", method: :put, "ng-href" => "{{::order.cancel_path}}"
+            = link_to t('.cancel'), "", method: :put, "ng-href" => "{{::order.cancel_path}}", "confirm-link-click" => t('orders_confirm_cancel')
