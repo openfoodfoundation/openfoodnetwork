@@ -83,6 +83,7 @@ fr:
     clear_all: Vider
     start_date: "Date de début"
     end_date: "Date de fin"
+    form_invalid: "Le formulaire contient des champs manquants ou invalides"
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
@@ -427,6 +428,16 @@ fr:
         next_step: Etape suivante
         choose_starting_point: 'Choisissez par où commencer:'
     order_cycles:
+      edit:
+        advanced_settings: Paramétrages avancés
+        update_and_close: Mettre à jour et fermer
+        choose_products_from: 'Choisir produits depuis :'
+        pickup_time_tip: Date/heure à laquelle les commandes pour ce cycle de vente seront à disposition de / livrées à l'acheteur.
+        pickup_instructions_tip: Ces instructions seront affichées à l'acheteur une fois sa commande passée.
+      exchange_form:
+        pickup_instructions_placeholder: "Modalités de retrait/livraison"
+        pickup_time_placeholder: "Prêt pour (ex : jour + créneau horaire)"
+        receival_instructions_placeholder: "Modalités de livraison"
       advanced_settings:
         title: Paramétrages avancés
         choose_product_tip: Vous pouvez choisir de limiter le choix des produits pouvant être mis en vente dans votre boutique à ceux figurant dans le catalogue boutique de %{inventory}.
@@ -444,7 +455,7 @@ fr:
         distributor: Hub (distributeur)
         products: Produits
         tags: Tags
-        delivery_detaisl: Détails de livraison / retrait
+        delivery_details: Précisions retrait / livraison
         debug_info: Informations de débogage
       name_and_timing_form:
         name: Nom
@@ -462,9 +473,6 @@ fr:
         customer_instructions_placeholder: Commentaires pour le retrait / la livraison
         products: Produits
         fees: Commissions
-      edit:
-        advanced_settings: Paramétrages avancés
-        update_and_close: Mettre à jour et fermer
     producer_properties:
       index:
         title: Propriétés / labels du producteur
@@ -607,7 +615,7 @@ fr:
   footer_contact_email: "Nous écrire"
   footer_nav_headline: "Naviguer"
   footer_join_headline: "Nous rejoindre"
-  footer_join_body: "Créer une liste, un répertoire de boutiques ou groupes sur Open Food France."
+  footer_join_body: "Créer un profil, une boutique ou un groupe sur Open Food France."
   footer_join_cta: "Je veux en savoir plus!"
   footer_legal_call: "Lire nos"
   footer_legal_tos: "Termes et conditions"
@@ -652,7 +660,7 @@ fr:
   checkout_default_bill_address: "Sauvegarder comme adresse de facturation par défaut"
   checkout_shipping: Informations de livraison
   checkout_default_ship_address: "Sauvegarder comme adresse de livraison par défaut"
-  checkout_method_free: Gratuit
+  checkout_method_free: Pas de frais supplémentaires
   checkout_address_same: Adresse de livraison identique à l'adresse de facturation?
   checkout_ready_for: "Prêt pour:"
   checkout_instructions: "Commentaires ou demandes spécifiques?"
@@ -1488,3 +1496,14 @@ fr:
     orders:
       invoice:
         tax_invoice: "FACTURE"
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+          Votre demande de nouveau mot de passe a bien été prise en compte.
+          Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
+        link_text: >
+            Si vous êtes bien à l'origine de cette demande, veuillez cliquer sur le
+            lien ci-dessous :
+        issue_text: |
+          Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
+          Si le problème persiste, n'hésitez pas à nous contacter.
