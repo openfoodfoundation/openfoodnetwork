@@ -744,4 +744,57 @@ feature %q{
       expect(v.on_hand).to eq 18
     end
   end
+
+  describe "Updating product image with new upload interface" do
+    let!(:product) { create(:simple_product, name: "Carrots") }
+
+    it "displays product images and image upload modal" do
+      quick_login_as_admin
+      visit '/admin/products/bulk_edit'
+
+      within "table#listing_products tr#p_#{product.id}" do
+        # Displays product images
+        expect(page).to have_selector "td.image"
+
+        # Shows default image when no image set
+        expect(page).to have_css "img[src='/assets/noimage/mini.png']"
+        @old_thumb_src = page.find("a.image-modal img")['src']
+
+        # Click image
+        page.find("a.image-modal").trigger('click')
+      end
+
+      # Shows upload modal
+      expect(page).to have_selector "div.reveal-modal.product-image-upload"
+
+      within "div.reveal-modal.product-image-upload" do
+        # Shows preview of current image
+        expect(page).to have_css "img.preview"
+        old_image_src = page.find("img.preview")['src']
+
+        # Upload a new image file
+        attach_file 'image-upload', Rails.root.join("public/500.jpg"), visible: false
+
+        # Shows spinner whilst loading
+        expect(page).to have_css "img.spinner", visible: true
+        expect(page).to_not have_css "img.spinner", visible: true
+
+        # Shows new image when finished
+        expect(page).to have_css "img.preview"
+        new_image_src = page.find("img.preview")['src']
+        expect(old_image_src) != new_image_src
+
+        # Close modal
+        page.find("a.close-reveal-modal").click
+      end
+
+      expect(page).to_not have_selector "div.reveal-modal.product-image-upload"
+
+      within "table#listing_products tr#p_#{product.id}" do
+        # Updated thumbnail is shown in image column
+        new_thumb_src = page.find("a.image-modal img")['src']
+        expect(@old_thumb_src) != new_thumb_src
+      end
+    end
+  end
 end
