@@ -10,7 +10,7 @@
         %tr{ ng: { controller: 'shippingMethodsCtrl', init: "findShippingMethodByID(#{shipping_method.id})" } }
           %td= shipping_method.name
           %td= f.check_box :shipping_method_ids, { :multiple => true, 'ng-model' => 'ShippingMethod.selected' }, shipping_method.id, nil
-          %td= link_to "Edit", edit_admin_shipping_method_path(shipping_method)
+          %td= link_to t(:edit), edit_admin_shipping_method_path(shipping_method)
   %br
   .row
     .six.columns.alpha

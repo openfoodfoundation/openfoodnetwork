@@ -80,6 +80,21 @@ en:
   show_all: Show all
   show_all_with_more: "Show All (%{num}  More)"
   cancel: Cancel
+  edit: Edit
+  distributors: Distributors
+  order_cycles: Order Cycles
+  enterprise_limit: Enterprise Limit
+  bulk_order_management: Bulk Order Management
+  enterprises: Enterprises
+  enterprise_groups: Groups
+  reports: Reports
+  variant_overrides: Inventory
+  more: More
+  spree_products: Spree Products
+  all: All
+  current: Current
+  available: Available
+  dashboard: Dashboard
 
   admin:
     # Common properties / models
@@ -107,6 +122,8 @@ en:
     end_date: "End Date"
     unsaved_changes: "You have unsaved changes"
     form_invalid: "Form contains missing or invalid fields"
+    clear_filters: Clear Filters
+    clear: Clear
 
     columns: Columns
     actions: Actions
@@ -190,6 +207,7 @@ en:
         edit: 'Edit'
         update_address: 'Update Address'
         confirm_delete: 'Sure to delete?'
+        search_by_email: "Search by email/code..."
 
     cache_settings:
       show:
@@ -299,6 +317,8 @@ en:
           abn_placeholder: eg. 99 123 456 789
           acn: ACN
           acn_placeholder: eg. 123 456 789
+          display_invoice_logo: Display logo in invoices
+          invoice_text: Add customized text at the end of invoices
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
@@ -375,13 +395,16 @@ en:
           allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
           allow_guest_orders_false: "Require login to order"
           allow_guest_orders_true: "Allow guest checkout"
+          shopfront_message: Shopfront Message
           shopfront_message_placeholder: >
             An optional explanation for customers detailing how your shopfront works,
             to be displayed above the product list on your shop page.
+          shopfront_closed_message: Shopfront Closed Message
           shopfront_closed_message_placeholder: >
             A message which provides a more detailed explanation about why your shop is
             closed and/or when customers can expect it to open again. This is displayed
             on your shop only when you have no active order cycles (ie. shop is closed).
+          shopfront_category_ordering: Shopfront Category Ordering
           open_date: Open Date
           close_date: Close Date
         social:
@@ -743,6 +766,7 @@ en:
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
+  order_delivery_time: Delivery time
   order_special_instructions: "Your notes:"
   order_pickup_time: Ready for collection
   order_pickup_instructions: Collection Instructions
@@ -1122,6 +1146,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   enterprise_long_desc: "Long Description"
   enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
   enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
+  enterprise_limit: Enterprise Limit
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "eg. 99 123 456 789"
   enterprise_acn: "ACN"
@@ -1262,6 +1287,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   calculator_values: "Calculator values"
   flat_percent_per_item: "Flat Percent (per item)"
   new_order_cycles: "New Order Cycles"
+  new_order_cycle: "New Order Cycle"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
@@ -1542,6 +1568,10 @@ Please follow the instructions there to make your enterprise visible on the Open
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
 
+  producers:
+    signup:
+      start_free_profile: "Start with a free profile, and expand when you're ready!"
+
   spree:
     admin:
       products:
@@ -1559,24 +1589,7 @@ Please follow the instructions there to make your enterprise visible on the Open
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
-    zipcode: Postcode
-    shipment_states:
-      backorder: backorder
-      partial: partial
-      pending: pending
-      ready: ready
-      shipped: shipped
-    payment_states:
-      balance_due: balance due
-      completed: completed
-      checkout: checkout
-      credit_owed: credit owed
-      failed: failed
-      paid: paid
-      pending: pending
-      processing: processing
-      void: void
-      invalid: invalid
+    inventory: Inventaire
     order_mailer:
       invoice_email:
         hi: "Hi %{name}"
@@ -1597,6 +1610,23 @@ Please follow the instructions there to make your enterprise visible on the Open
     orders:
       invoice:
         tax_invoice: "TAX INVOICE: "
+    payment_states:
+      balance_due: balance due
+      completed: completed
+      checkout: checkout
+      credit_owed: credit owed
+      failed: failed
+      paid: paid
+      pending: pending
+      processing: processing
+      void: void
+      invalid: invalid
+    shipment_states:
+      backorder: backorder
+      partial: partial
+      pending: pending
+      ready: ready
+      shipped: shipped
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -1607,3 +1637,5 @@ Please follow the instructions there to make your enterprise visible on the Open
         issue_text: |
           If the above URL does not work try copying and pasting it into your browser.
           If you continue to have problems please feel free to contact us.
+    weight: Weight (per kg)
+    zipcode: Postcode

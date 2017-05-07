@@ -11,7 +11,7 @@
   .filter_select.four.columns
     %label{ :for => 'producer_filter', ng: {class: '{disabled: !hub_id}'} }=t('admin.producer')
     %br
-    %input.ofn-select2.fullwidth{ :id => 'producer_filter', type: 'number', data: 'producers', blank: "{id: 0, name: 'All'}", ng: { model: 'producerFilter', disabled: '!hub_id' } }
+    %input.ofn-select2.fullwidth{ :id => 'producer_filter', type: 'number', data: 'producers', blank: "{id: 0, name: '#{t(:all)}'}", ng: { model: 'producerFilter', disabled: '!hub_id' } }
   -# .filter_select{ :class => "three columns" }
   -#   %label{ :for => 'distributor_filter' }Hub
   -#   %br

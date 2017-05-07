@@ -26,7 +26,7 @@
     %input.fullwidth{ :type => 'text', id: "p{{product.id}}_category_id", 'ng-model' => 'product.category_id', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'category_id', 'multiple-selection' => 'false', placeholder: 'Category' }
   %td.tax_category{ 'ng-if' => 'columns.tax_category.visible' }
     %select.select2{ name: 'product_tax_category_id', 'ofn-track-product' => 'tax_category_id', ng: {model: 'product.tax_category_id', options: 'tax_category.id as tax_category.name for tax_category in tax_categories'} }
-      %option{value: ''} None
+      %option{value: ''}= t(:none)
   %td.inherits_properties{ 'ng-show' => 'columns.inherits_properties.visible' }
     %input{ 'ng-model' => 'product.inherits_properties', :name => 'inherits_properties', 'ofn-track-product' => 'inherits_properties', type: "checkbox" }
   %td.available_on{ 'ng-show' => 'columns.available_on.visible' }

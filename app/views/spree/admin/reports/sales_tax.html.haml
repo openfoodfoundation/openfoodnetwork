@@ -4,7 +4,7 @@
   .row
     .four.columns.alpha
       = label_tag nil, t(:report_distributor)
-      = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
+      = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => t(:all)}, {:class => "select2 fullwidth"})
   = label_tag nil, t(:report_customers_type)
   %br
   = select_tag(:report_type, options_for_select([[t(:report_tax_types),:tax_types],[t(:report_tax_rates),:tax_rates]], @report_type))
