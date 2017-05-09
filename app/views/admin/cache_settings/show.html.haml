@@ -13,6 +13,6 @@
       %tr
         %td= result[:distributor].name
         %td= result[:order_cycle].name
-        %td= result[:status] ? 'OK' : 'Error'
+        %td= result[:status] ? t(:ok) : t('.error')
         %td
           %pre= result[:diff].to_s(:text)

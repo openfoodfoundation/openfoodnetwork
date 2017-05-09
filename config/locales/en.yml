@@ -162,6 +162,8 @@ en:
     weight: Weight
     volume: Volume
     items: Items
+    select_all: Select all
+    obsolete_master: Obsolete master
 
     # General form elements
     quick_search: Quick Search
@@ -264,6 +266,7 @@ en:
         order_cycle: Order Cycle
         status: Status
         diff: Diff
+        error: Error
 
     contents:
       edit:
@@ -278,6 +281,8 @@ en:
         tax_category: Tax Category
         calculator: Calculator
         calculator_values: Calculator Values
+    enterprise_roles:
+      manages: manages
 
     enterprise_groups:
       index:
@@ -325,7 +330,8 @@ en:
         inventory_powertip: This is your inventory of products. To add products to your inventory, select 'New Products' from the Viewing dropdown.
         hidden_powertip: These products have been hidden from your inventory and will not be available to add to your shop. You can click 'Add' to add a product to you inventory.
         new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
-
+      controls:
+        back_to_my_inventory: Back to my inventory
     orders:
       bulk_management:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
@@ -347,7 +353,12 @@ en:
         max_fulfilled_units: "Max Fulfilled Units"
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
-
+      invoice:
+        issued_on: Issued on
+        tax_invoice: TAX INVOICE
+        code: Code
+        from: From
+        to: To
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
@@ -603,7 +614,20 @@ en:
         title: Invoice Settings
         invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
         enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
-
+    overview:
+      enterprises_header:
+        ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
+      enterprises_hubs_tabs:
+        has_no_payment_methods: "%{enterprise} has no payment methods"
+        has_no_shipping_methods: "%{enterprise} has no shipping methods"
+        has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      order_cycles:
+        manage_order_cycles: MANAGE ORDER CYCLES
+        you_have_active: "You have %{num} active %{order_cycles}."
+        order_cycle:
+          zero: order cycle
+          one: order cycle
+          other: order cycles
 # Frontend views
 #
 # These keys are referenced relatively like `t('.message')` in
@@ -1325,6 +1349,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   credit: "Credit"
   Paid: "Paid"
   Ready: "Ready"
+  ok: OK
+  not_visible: not visible
   you_have_no_orders_yet: "You have no orders yet"
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"

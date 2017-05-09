@@ -10,6 +10,6 @@
   .four.columns.omega{ ng: { show: 'views.new.visible' } }
     %button.fullwidth{ type: 'button', ng: { click: "selectView('inventory')" } }
       %i.icon-chevron-left
-      Back to my inventory
+      = t('.back_to_my_inventory')
   .four.columns.omega{ng: { show: 'views.inventory.visible' } }
     %columns-dropdown{ action: "#{controller_name}_#{action_name}" }

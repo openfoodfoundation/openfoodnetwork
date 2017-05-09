@@ -7,4 +7,6 @@
     id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_matched_shipping_methods_visibility",
     name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_matched_shipping_methods_visibility]",
     ng: { value: "'hidden'", if: "rule.is_default" } }
-  %span.text-normal{ ng: { if: "rule.is_default" } } not visible
+  %span.text-normal{ ng: { if: "rule.is_default" } }
+    = t(:not_visible)
+

@@ -7,7 +7,7 @@
           'ng-model' => 'exchange.select_all_variants',
           'ng-change' => 'setExchangeVariants(exchange, suppliedVariants(exchange.enterprise_id), exchange.select_all_variants)',
           'id' => 'order_cycle_incoming_exchange_{{ $index }}_select_all_variants' }
-        Select all
+        = t('admin.select_all')
 
     .exchange-products
       -# No need to scope product list based on permissions, because if an incoming exchange is visible,
@@ -36,7 +36,7 @@
               'ofn-sync-distributions' => '{{ product.master_id }}',
               'id' => 'order_cycle_incoming_exchange_{{ $parent.$index }}_variants_{{ product.master_id }}',
               'ng-disabled' => '!order_cycle.editable_variants_for_incoming_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_incoming_exchanges[exchange.enterprise_id].indexOf(product.master_id) < 0' }
-            Obsolete master
+            = t('admin.obsolete_master')
 
         .exchange-product-variant{'ng-repeat' => 'variant in product.variants'}
           %label

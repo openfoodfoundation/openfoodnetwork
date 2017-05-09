@@ -16,7 +16,7 @@ Orders summary
   #{line_items.first.variant.sku} - #{raw(line_items.first.product.supplier.name)} - #{raw(product_and_full_name)} (QTY: #{line_items.sum(&:quantity)}) @ #{line_items.first.single_money} = #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency)}
 \
 \
-Total: #{@total}
+#{t :total}: #{@total}
 \
 = t :producer_mail_text_after
 

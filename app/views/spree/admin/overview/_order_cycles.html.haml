@@ -12,7 +12,7 @@
     - if @order_cycle_count > 0
       %div.seven.columns.alpha.list-item
         %span.six.columns.alpha
-          = "You have #{@order_cycle_count} active order cycle#{@order_cycle_count > 1 ? "s" : ""}."
+          = t('.you_have_active', num: @order_cycle_count, order_cycles: t('.order_cycle', count: @order_cycle_count))
         %span.one.column.omega
           %span.icon-ok-sign
       %a.seven.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_order_cycles_path}" }
@@ -27,5 +27,5 @@
       %a.seven.columns.alpha.button.bottom.orange{ href: "#{main_app.admin_order_cycles_path}" }
         = t "spree_admin_enterprises_producers_manage_order_cycles"
         %span.icon-arrow-right
-        MANAGE ORDER CYCLES
+        = t ".manage_order_cycles"
         %span.icon-arrow-right

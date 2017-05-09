@@ -4,11 +4,11 @@
   %tbody
     %tr{ valign: "top" }
       %td{ :align => "left", colspan: 3 }
-        %h6= "Issued on: #{Time.zone.now.strftime("%F")}"
+        %h6= "#{t('.issued_on')}: #{Time.zone.now.strftime("%F")}"
     %tr{ valign: "top" }
       %td{ :align => "left" }
         %h4
-          = "TAX INVOICE: "
+          = "#{t('.tax_invoice')}: "
           = "#{@order.number}"
       %td{width: "10%" }
         &nbsp;
@@ -16,10 +16,10 @@
         %h4= @order.order_cycle.andand.name
     %tr{ valign: "top" }
       %td{ :align => "left" }
-        %strong= "From: #{@order.distributor.name}"
+        %strong= "#{t('.from')}: #{@order.distributor.name}"
         - if @order.distributor.abn.present?
           %br
-          = "ABN: #{@order.distributor.abn}"
+          = "#{t(:abn)} #{@order.distributor.abn}"
         %br
         = @order.distributor.address.full_address
         %br
@@ -27,10 +27,10 @@
       %td{width: "10%" }
         &nbsp;
       %td{ :align => "right" }
-        %strong= "To: #{@order.ship_address.full_name}"
+        %strong= "#{t('.to')}: #{@order.ship_address.full_name}"
         - if @order.customer.code.present?
           %br
-          = "Code: #{@order.customer.code}"
+          = "#{t('.code')}: #{@order.customer.code}"
         %br
         = @order.ship_address.full_address
         %br

@@ -37,7 +37,7 @@
       %th{ ng: { if: 'enterprises[exchange.enterprise_id].managed || order_cycle.viewing_as_coordinator' } }
         = t('.tags')
       %th= t('.delivery_details')
-      %th Fees
+      %th= t('.fees')
       %th.actions
   %tbody.panel-ctrl{ object: 'exchange', 'ng-repeat' => 'exchange in order_cycle.outgoing_exchanges'}
     = render 'exchange_form', f: f, type: 'distributor'
