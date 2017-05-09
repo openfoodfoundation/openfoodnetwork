@@ -27,7 +27,7 @@ describe Spree::UserMailer do
 
       context 'subject includes' do
         it 'translated devise instructions' do
-          expect(@message.subject).to include "Password Reset Instructions"
+          expect(@message.subject).to include "Reset password instructions"
         end
 
         it 'Spree site name' do
