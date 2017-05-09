@@ -18,53 +18,23 @@ Spree::Admin::ReportsController.class_eval do
 
   include Spree::ReportsHelper
 
-  REPORT_TYPES = {
-    orders_and_fulfillment: [
-      ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
-      ['Order Cycle Supplier Totals by Distributor',:order_cycle_supplier_totals_by_distributor],
-      ['Order Cycle Distributor Totals by Supplier',:order_cycle_distributor_totals_by_supplier],
-      ['Order Cycle Customer Totals',:order_cycle_customer_totals]
-    ],
-    products_and_inventory: [
-      ['All products', :all_products],
-      ['Inventory (on hand)', :inventory],
-      ['LettuceShare', :lettuce_share]
-    ],
-    customers: [
-      ["Mailing List", :mailing_list],
-      ["Addresses", :addresses]
-    ],
-    order_cycle_management: [
-      ["Payment Methods Report", :payment_methods],
-      ["Delivery Report", :delivery]
-    ],
-    sales_tax: [
-      ["Tax Types", :tax_types],
-      ["Tax Rates", :tax_rates]
-    ],
-    packing: [
-      ["Pack By Customer", :pack_by_customer],
-      ["Pack By Supplier", :pack_by_supplier]
-    ]
-  }
-
   # Fetches user's distributors, suppliers and order_cycles
   before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
   # Render a partial for orders and fulfillment description
   respond_override :index => { :html => { :success => lambda {
     @reports[:orders_and_fulfillment][:description] =
-      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: REPORT_TYPES[:orders_and_fulfillment]}).html_safe
+      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: report_types[:orders_and_fulfillment]}).html_safe
     @reports[:products_and_inventory][:description] =
-      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: REPORT_TYPES[:products_and_inventory]}).html_safe
+      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: report_types[:products_and_inventory]}).html_safe
     @reports[:customers][:description] =
-      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: REPORT_TYPES[:customers]}).html_safe
+      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: report_types[:customers]}).html_safe
     @reports[:order_cycle_management][:description] =
-      render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: REPORT_TYPES[:order_cycle_management]}).html_safe
+      render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: report_types[:order_cycle_management]}).html_safe
     @reports[:packing][:description] =
-        render_to_string(partial: 'packing_description', layout: false, locals: {report_types: REPORT_TYPES[:packing]}).html_safe
+        render_to_string(partial: 'packing_description', layout: false, locals: {report_types: report_types[:packing]}).html_safe
     @reports[:sales_tax][:description] =
-        render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: REPORT_TYPES[:sales_tax]}).html_safe
+        render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: report_types[:sales_tax]}).html_safe
 } } }
 
 
@@ -76,7 +46,7 @@ Spree::Admin::ReportsController.class_eval do
 
   # This action is short because we refactored it like bosses
   def customers
-    @report_types = REPORT_TYPES[:customers]
+    @report_types = report_types[:customers]
     @report_type = params[:report_type]
     @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
     render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
@@ -95,7 +65,7 @@ Spree::Admin::ReportsController.class_eval do
     @suppliers = my_suppliers | my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
 
-    @report_types = REPORT_TYPES[:order_cycle_management]
+    @report_types = report_types[:order_cycle_management]
     @report_type = params[:report_type]
 
     # -- Build Report with Order Grouper
@@ -118,7 +88,7 @@ Spree::Admin::ReportsController.class_eval do
     # My suppliers and any suppliers supplying products I distribute
     @suppliers = my_suppliers | my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
-    @report_types = REPORT_TYPES[:packing]
+    @report_types = report_types[:packing]
     @report_type = params[:report_type]
 
     # -- Build Report with Order Grouper
@@ -226,7 +196,7 @@ Spree::Admin::ReportsController.class_eval do
     @order_cycles = OrderCycle.active_or_complete.
       involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
-    @report_types = REPORT_TYPES[:orders_and_fulfillment]
+    @report_types = report_types[:orders_and_fulfillment]
     @report_type = params[:report_type]
 
     @include_blank = I18n.t(:all)
@@ -242,7 +212,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def products_and_inventory
-    @report_types = REPORT_TYPES[:products_and_inventory]
+    @report_types = report_types[:products_and_inventory]
     if params[:report_type] != 'lettuce_share'
       @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
     else
@@ -252,7 +222,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def users_and_enterprises
-    # @report_types = REPORT_TYPES[:users_and_enterprises]
+    # @report_types = report_types[:users_and_enterprises]
     @report = OpenFoodNetwork::UsersAndEnterprisesReport.new params
     render_report(@report.header, @report.table, params[:csv], "users_and_enterprises_#{timestamp}.csv")
   end
@@ -284,6 +254,38 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   private
+  def report_types
+    {
+      orders_and_fulfillment: [
+        [I18n.t('admin.reports.supplier_totals'), :order_cycle_supplier_totals],
+        [I18n.t('admin.reports.supplier_totals_by_distributor'), :order_cycle_supplier_totals_by_distributor],
+        [I18n.t('admin.reports.totals_by_supplier'), :order_cycle_distributor_totals_by_supplier],
+        [I18n.t('admin.reports.customer_totals'), :order_cycle_customer_totals]
+      ],
+      products_and_inventory: [
+        [I18n.t('admin.reports.all_products'), :all_products],
+        [I18n.t('admin.reports.inventory'), :inventory],
+        [I18n.t('admin.reports.lettuce_share'), :lettuce_share]
+      ],
+      customers: [
+        [I18n.t('admin.reports.mailing_list'), :mailing_list],
+        [I18n.t('admin.reports.addresses'), :addresses]
+      ],
+      order_cycle_management: [
+        [I18n.t('admin.reports.payment_methods'), :payment_methods],
+        [I18n.t('admin.reports.delivery'), :delivery]
+      ],
+      sales_tax: [
+        [I18n.t('admin.reports.tax_types'), :tax_types],
+        [I18n.t('admin.reports.tax_rates'), :tax_rates]
+      ],
+      packing: [
+        [I18n.t('admin.reports.pack_by_customer'), :pack_by_customer],
+        [I18n.t('admin.reports.pack_by_supplier'), :pack_by_supplier]
+      ]
+    }
+  end
+
 
   def prepare_date_params(params)
     # -- Prepare parameters
@@ -313,18 +315,18 @@ Spree::Admin::ReportsController.class_eval do
 
   def authorized_reports
     reports = {
-      :orders_and_distributors => {:name => "Orders And Distributors", :description => "Orders with distributor details"},
-      :bulk_coop => {:name => "Bulk Co-Op", :description => "Reports for Bulk Co-Op orders"},
-      :payments => {:name => "Payment Reports", :description => "Reports for Payments"},
-      :orders_and_fulfillment => {:name => "Orders & Fulfillment Reports", :description => ''},
-      :customers => {:name => "Customers", :description => 'Customer details'},
-      :products_and_inventory => {:name => "Products & Inventory", :description => ''},
-      :sales_total => { :name => "Sales Total", :description => "Sales Total For All Orders" },
-      :users_and_enterprises => { :name => "Users & Enterprises", :description => "Enterprise Ownership & Status" },
-      :order_cycle_management => {:name => "Order Cycle Management", :description => ''},
-      :sales_tax => { :name => "Sales Tax", :description => "Sales Tax For Orders" },
-      :xero_invoices => { :name => "Xero Invoices", :description => 'Invoices for import into Xero' },
-      :packing => { :name => "Packing Reports", :description => '' }
+      :orders_and_distributors => {:name => I18n.t('admin.reports.orders_and_distributors.name'), :description => I18n.t('admin.reports.orders_and_distributors.description')},
+      :bulk_coop => {:name => I18n.t('admin.reports.bulk_coop.name'), :description => I18n.t('admin.reports.bulk_coop.description')},
+      :payments => {:name => I18n.t('admin.reports.payments.name'), :description => I18n.t('admin.reports.payments.description')},
+      :orders_and_fulfillment => {:name => I18n.t('admin.reports.orders_and_fulfillment.name'), :description => ''},
+      :customers => {:name => I18n.t('admin.reports.customers.name'), :description => I18n.t('admin.reports.customers.description')},
+      :products_and_inventory => {:name => I18n.t('admin.reports.products_and_inventory.name'), :description => ''},
+      :sales_total => {:name => I18n.t('admin.reports.sales_total.name'), :description => I18n.t('admin.reports.sales_total.description')},
+      :users_and_enterprises => {:name => I18n.t('admin.reports.users_and_enterprises.name'), :description => I18n.t('admin.reports.users_and_enterprises.description')},
+      :order_cycle_management => {:name => I18n.t('admin.reports.order_cycle_management.name'), :description => ''},
+      :sales_tax => {:name => I18n.t('admin.reports.sales_tax.name'), :description => I18n.t('admin.reports.sales_tax.description')},
+      :xero_invoices => {:name => I18n.t('admin.reports.xero_invoices.name'), :description => I18n.t('admin.reports.xero_invoices.description')},
+      :packing => {:name => I18n.t('admin.reports.packing.name'), :description => ''}
     }
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }

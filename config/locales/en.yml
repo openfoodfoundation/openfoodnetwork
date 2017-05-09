@@ -628,6 +628,56 @@ en:
           zero: order cycle
           one: order cycle
           other: order cycles
+
+    reports:
+      supplier_totals: Order Cycle Supplier Totals
+      supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
+      totals_by_supplier: Order Cycle Distributor Totals by Supplier
+      customer_totals: Order Cycle Customer Totals
+      all_products: All products
+      inventory: Inventory (on hand)
+      lettuce_share: LettuceShare
+      mailing_list: Mailing List
+      addresses: Addresses
+      payment_methods: Payment Methods Report
+      delivery: Delivery Report
+      tax_types: Tax Types
+      tax_rate: Tax Rates
+      pack_by_customer: Pack By Customer
+      pack_by_supplier: Pack By Supplier
+      orders_and_distributors:
+        name: Orders And Distributors
+        description: Orders with distributor details
+      bulk_coop:
+        name: Bulk Co-Op
+        description: Reports for Bulk Co-Op orders
+      payments:
+        name: Payment Reports
+        description: Reports for Payments
+      orders_and_fulfillment:
+        name: Orders & Fulfillment Reports
+      customers:
+        name: Customers
+        description: Customer details
+      products_and_inventory:
+        name: Products & Inventory
+        description:
+      sales_total:
+        name: Sales Total
+        description: Sales Total For All Orders
+      users_and_enterprises:
+        name: Users & Enterprises
+        description: Enterprise Ownership & Status
+      order_cycle_management:
+        name: Order Cycle Management
+      sales_tax:
+        name: Sales Tax
+        description: Sales Tax For Orders
+      xero_invoices:
+        name: Xero Invoices
+        description: Invoices for import into Xero
+      packing:
+        name: Packing Reports
 # Frontend views
 #
 # These keys are referenced relatively like `t('.message')` in
