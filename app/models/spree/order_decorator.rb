@@ -234,12 +234,12 @@ Spree::Order.class_eval do
 
   def tax_adjustment_totals
     tax_adjustments.each_with_object(Hash.new) do |adjustment, hash|
-      if adjustment.originator_type == "Spree::TaxRate"
-        tax_rate = adjustment.originator.amount
-      else
-        tax_rate = (adjustment.included_tax / (adjustment.amount - adjustment.included_tax)).round(2)
-      end
-      hash.update({tax_rate => adjustment.included_tax}) { |_tax_rate, amount1, amount2| amount1 + amount2 }
+      tax_rates = adjustment.tax_rates
+      tax_rates_hash = Hash[tax_rates.collect do |tax_rate|
+        tax_amount = tax_rates.one? ? adjustment.included_tax : tax_rate.compute_tax(adjustment.amount)
+        [tax_rate.amount, tax_amount]
+      end]
+      hash.update(tax_rates_hash) { |_tax_rate, amount1, amount2| amount1 + amount2 }
     end
   end
 

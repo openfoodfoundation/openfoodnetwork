@@ -1,0 +1,13 @@
+#!/bin/sh
+
+task="$1"
+
+if [ "$task" = "run" ] || [ "$task" = "start" ]; then
+  exec bundle exec rake "karma:$task" RAILS_ENV=test
+else
+  echo "Usage:"
+  echo "  $0 run   # to run the tests once"
+  echo "  $0 start # to run the tests on every file modification"
+  exit 1
+fi
+

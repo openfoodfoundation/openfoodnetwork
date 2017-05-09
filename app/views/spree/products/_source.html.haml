@@ -1,5 +1,5 @@
 %div{:data-hook => "product_source"}
-  %h6.product-section-title SUPPLIER
+  %h6.product-section-title= t(:supplier)
   %table#product-source.table-display{:width => "100%"}
     %tbody
       - if @product.supplier
@@ -7,7 +7,7 @@
           %td= link_to @product.supplier.name, [main_app, @product.supplier]
   - if false
     %br/
-    %h6.product-section-title DISTRIBUTORS
+    %h6.product-section-title= t(:distributors)
     %table#product-source.table-display{:width => "100%"}
       %tbody
         - order = current_order(false)
@@ -18,11 +18,11 @@
               %td
                 %b= link_to(distributor.name, [main_app, distributor])
               %td
-                %b Current
+                %b= t(:current)
           - elsif order.nil? || validator.can_change_to_distributor?(distributor)
             %tr.even
               %td= link_to distributor.name, [main_app, distributor]
-              %td Available
+              %td= t(:available)
           - else
             %tr.even
               %td= link_to distributor.name, [main_app, distributor]

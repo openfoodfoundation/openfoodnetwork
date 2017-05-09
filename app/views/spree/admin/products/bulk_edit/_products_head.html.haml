@@ -20,7 +20,7 @@
   %tr{ ng: { controller: "ColumnsCtrl" } }
     %th.left-actions
       %a{ 'ng-click' => 'toggleShowAllVariants()', :style => 'color: red' }
-        Expand All
+        = t(:expand_all)
     %th.producer{ 'ng-show' => 'columns.producer.visible' }=t('admin.producer')
     %th.sku{ 'ng-show' => 'columns.sku.visible' }=t('admin.sku')
     %th.name{ 'ng-show' => 'columns.name.visible' }=t('admin.name')

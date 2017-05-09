@@ -32,20 +32,10 @@ module OpenFoodNetwork
     end
 
     def adjustment_tax(adjustable, adjustment)
-      tax_rates = rates_for(adjustable)
+      tax_rates = adjustment.tax_rates
 
       tax_rates.select(&:included_in_price).sum do |rate|
         rate.compute_tax adjustment.amount
-      end
-    end
-
-    def rates_for(adjustable)
-      case adjustable
-      when Spree::LineItem
-        tax_category = enterprise_fee.inherits_tax_category? ? adjustable.product.tax_category : enterprise_fee.tax_category
-        return tax_category ? tax_category.tax_rates.match(adjustable.order) : []
-      when Spree::Order
-        return enterprise_fee.tax_category ? enterprise_fee.tax_category.tax_rates.match(adjustable) : []
       end
     end
   end
