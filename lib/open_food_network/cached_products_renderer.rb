@@ -14,11 +14,11 @@ module OpenFoodNetwork
     end
 
     def products_json
-      raise NoProducts.new("No Products") if @distributor.nil? || @order_cycle.nil?
+      raise NoProducts.new(I18n.t(:no_products)) if @distributor.nil? || @order_cycle.nil?
 
       products_json = cached_products_json
 
-      raise NoProducts.new("No Products") if products_json.nil?
+      raise NoProducts.new(I18n.t(:no_products)) if products_json.nil?
 
       products_json
     end

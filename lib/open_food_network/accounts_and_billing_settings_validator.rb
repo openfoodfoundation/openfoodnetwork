@@ -20,21 +20,21 @@ module OpenFoodNetwork
 
     def ensure_accounts_distributor_set
       unless Enterprise.find_by_id(accounts_distributor_id)
-        errors.add(:accounts_distributor, "must be set if you wish to create invoices for enterprise users.")
+        errors.add(:accounts_distributor, I18n.t('admin.accounts_and_billing_settings.errors.accounts_distributor'))
       end
     end
 
     def ensure_default_payment_method_set
       unless Enterprise.find_by_id(accounts_distributor_id) &&
         Enterprise.find_by_id(accounts_distributor_id).payment_methods.find_by_id(default_accounts_payment_method_id)
-        errors.add(:default_payment_method, "must be set if you wish to create invoices for enterprise users.")
+        errors.add(:default_payment_method, I18n.t('admin.accounts_and_billing_settings.errors.default_payment_method'))
       end
     end
 
     def ensure_default_shipping_method_set
       unless Enterprise.find_by_id(accounts_distributor_id) &&
         Enterprise.find_by_id(accounts_distributor_id).shipping_methods.find_by_id(default_accounts_shipping_method_id)
-        errors.add(:default_shipping_method, "must be set if you wish to create invoices for enterprise users.")
+        errors.add(:default_shipping_method, I18n.t('admin.accounts_and_billing_settings.errors.default_shipping_method'))
       end
     end
   end

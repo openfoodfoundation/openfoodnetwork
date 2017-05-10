@@ -19,11 +19,27 @@ module OpenFoodNetwork
       when "bulk_coop_allocation"
         @allocation_report.header
       when "bulk_coop_packing_sheets"
-        ["Customer", "Product", "Variant", "Sum Total"]
+        [I18n.t(:report_header_customer),
+          I18n.t(:report_header_product),
+          I18n.t(:report_header_variant),
+          I18n.t(:report_header_sum_total)]
       when "bulk_coop_customer_payments"
-        ["Customer", "Date of Order", "Total Cost", "Amount Owing", "Amount Paid"]
+        [I18n.t(:report_header_customer),
+          I18n.t(:report_header_date_of_order),
+          I18n.t(:report_header_total_cost),
+          I18n.t(:report_header_amount_owing),
+          I18n.t(:report_header_amount_paid)]
       else
-        ["Supplier", "Product", "Bulk Unit Size", "Variant", "Weight", "Sum Total", "Sum Max Total", "Units Required", "Remainder"]
+        [I18n.t(:report_header_supplier),
+          I18n.t(:report_header_product),
+          I18n.t(:report_header_product),
+          I18n.t(:report_header_bulk_unit_size),
+          I18n.t(:report_header_variant),
+          I18n.t(:report_header_weight),
+          I18n.t(:report_header_sum_total),
+          I18n.t(:report_header_sum_max_total),
+          I18n.t(:report_header_units_required),
+          I18n.t(:report_header_remainder)]
       end
     end
 
@@ -42,9 +58,9 @@ module OpenFoodNetwork
       line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
         # TODO We should really be hiding customer code here too, but until we
         # have an actual association between order and customer, it's a bit tricky
-        line_item.order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.assign_attributes(email: "HIDDEN")
+        line_item.order.bill_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.ship_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.assign_attributes(email: I18n.t('admin.reports.hidden'))
       end
       line_items
     end

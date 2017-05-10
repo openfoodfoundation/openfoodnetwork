@@ -2,14 +2,26 @@ require 'open_food_network/reports/bulk_coop_report'
 
 module OpenFoodNetwork::Reports
   class BulkCoopAllocationReport < BulkCoopReport
-    header "Customer", "Product", "Bulk Unit Size", "Variant", "Variant value", "Variant unit", "Weight", "Sum Total", "Total Available", "Unallocated", "Max quantity excess"
+    def header
+      [I18n.t(:report_header_customer),
+        I18n.t(:report_header_product),
+        I18n.t(:report_header_bulk_unit_size),
+        I18n.t(:report_header_variant),
+        I18n.t(:report_header_variant_value),
+        I18n.t(:report_header_variant_unit),
+        I18n.t(:report_header_weight),
+        I18n.t(:report_header_sum_total),
+        I18n.t(:report_header_total_available),
+        I18n.t(:report_header_unallocated),
+        I18n.t(:report_header_max_quantity_excess)]
+    end
 
     organise do
       group { |li| li.product }
       sort(&:name)
 
       summary_row do
-        column { |lis| "TOTAL" }
+        column { |lis| I18n.t('admin.reports.total') }
         column { |lis| product_name(lis) }
         column { |lis| group_buy_unit_size_f(lis) }
         column { |lis| "" }

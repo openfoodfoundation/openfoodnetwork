@@ -10,9 +10,30 @@ module OpenFoodNetwork
 
     def header
       if is_payment_methods?
-        ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance"]
+        [I18n.t(:report_header_first_name),
+          I18n.t(:report_header_last_name),
+          I18n.t(:report_header_hub),
+          I18n.t(:report_header_hub_code),
+          I18n.t(:report_header_email),
+          I18n.t(:report_header_phone),
+          I18n.t(:report_header_shipping_method),
+          I18n.t(:report_header_payment_method),
+          I18n.t(:report_header_amount),
+          I18n.t(:report_header_balance)]
       else
-        ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
+        [I18n.t(:report_header_first_name),
+          I18n.t(:report_header_last_name),
+          I18n.t(:report_header_hub),
+          I18n.t(:report_header_hub_code),
+          I18n.t(:report_header_delivery_address),
+          I18n.t(:report_header_delivery_postcode),
+          I18n.t(:report_header_phone),
+          I18n.t(:report_header_shipping_method),
+          I18n.t(:report_header_payment_method),
+          I18n.t(:report_header_amount),
+          I18n.t(:report_header_balance),
+          I18n.t(:report_header_temp_controlled_items),
+          I18n.t(:report_header_special_instructions)]
       end
     end
 

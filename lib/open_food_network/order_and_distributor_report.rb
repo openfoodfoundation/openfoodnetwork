@@ -6,11 +6,25 @@ module OpenFoodNetwork
     end
 
     def header
-      ["Order date", "Order Id",
-       "Customer Name","Customer Email", "Customer Phone", "Customer City",
-       "SKU", "Item name", "Variant", "Quantity", "Max Quantity", "Cost", "Shipping cost",
-       "Payment method",
-       "Distributor", "Distributor address", "Distributor city", "Distributor postcode", "Shipping instructions"]
+      [I18n.t(:report_header_order_date),
+        I18n.t(:report_header_order_id),
+        I18n.t(:report_header_customer_name),
+        I18n.t(:report_header_customer_email),
+        I18n.t(:report_header_customer_phone),
+        I18n.t(:report_header_customer_city),
+        I18n.t(:report_header_sku),
+        I18n.t(:report_header_item_name),
+        I18n.t(:report_header_variant),
+        I18n.t(:report_header_quantity),
+        I18n.t(:report_header_max_quantity),
+        I18n.t(:report_header_cost),
+        I18n.t(:report_header_shipping_cost),
+        I18n.t(:report_header_payment_method),
+        I18n.t(:report_header_distributor),
+        I18n.t(:report_header_distributor_address),
+        I18n.t(:report_header_distributor_city),
+        I18n.t(:report_header_distributor_postcode),
+        I18n.t(:report_header_shipping_instructions)]
     end
 
     def table

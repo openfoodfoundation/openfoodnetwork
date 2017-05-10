@@ -140,7 +140,8 @@ en:
   current: Current
   available: Available
   dashboard: Dashboard
-
+  'yes': "Yes"
+  'no': "No"
   admin:
     # Common properties / models
     date: Date
@@ -206,6 +207,10 @@ en:
         finalise_user_invoices: "Finalise User Invoices"
         finalise_user_invoice_explained: "Use this button to finalize all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month."
         update_user_invoices: "Update User Invoices"
+      errors:
+        accounts_distributor: must be set if you wish to create invoices for enterprise users.
+        default_payment_method: must be set if you wish to create invoices for enterprise users.
+        default_shipping_method: must be set if you wish to create invoices for enterprise users.
 
     business_model_configuration:
       edit:
@@ -628,8 +633,22 @@ en:
           zero: order cycle
           one: order cycle
           other: order cycles
-
+    enterprise_issues:
+      create_new: Create New
+      resend_email: Resend Email
+      no_shipping: no shipping methods
+      no_payment: no payment methods
+      no_shipping_or_payment: no shipping or payment methods
+      unconfirmed: unconfirmed
+      has_no_payment_methods: "%{enterprise} currently has no payment methods"
+      has_no_shipping_methods: "%{enterprise} currently has no shipping methods"
+      email_confirmation: "Email confirmation is pending. We've sent a confirmation email to #{email}."
+      not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      hidden: HIDDEN
+      unitsize: UNITSIZE
+      total: TOTAL
+      total_items: TOTAL ITEMS
       supplier_totals: Order Cycle Supplier Totals
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
@@ -1466,7 +1485,11 @@ Please follow the instructions there to make your enterprise visible on the Open
   price: "Price"
   on_hand: "On hand"
   save_changes: "Save Changes"
+<<<<<<< HEAD
   order_saved: "Order Saved"
+=======
+  no_products: No Products
+>>>>>>> Extract translations from lib folder
   spree_admin_overview_enterprises_header: "My Enterprises"
   spree_admin_overview_enterprises_footer: "MANAGE MY ENTERPRISES"
   spree_admin_enterprises_hubs_name: "Name"
@@ -1551,11 +1574,60 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_order_cycle: "Order Cycle: "
   report_entreprises: "Enterprises: "
   report_users: "Users: "
-  report_tax_rates: "Tax rates"
-  report_tax_types: "Tax types"
-  report_header_order_number: "Order number"
-  report_header_date: "Date"
-  report_header_items: "Items"
+  report_tax_rates: Tax rates
+  report_tax_types: Tax types
+  report_tax_type: Tax type
+  report_header_tracking_name_1: Tracking Name 1
+  report_header_tracking_name_2: Tracking Name 2
+  report_header_tracking_option_1: Tracking Option 1
+  report_header_tracking_option_2: Tracking Option 2
+  report_header_branding_theme: Branding Theme
+  report_header_currency: Currency
+  report_header_order_cycle: Order Cycle
+  report_header_user: User
+  report_header_email: Email
+  report_header_status: Status
+  report_header_comments: Comments
+  report_header_contact_name: Contact Name
+  report_header_first_name: First Name
+  report_header_last_name: Last Name
+  report_header_suburb: Suburb
+  report_header_phone: Phone
+  report_header_suburb: Suburb
+  report_header_address: Address
+  report_header_billing_address: Billing Address
+  report_header_relationship: Relationship
+  report_header_hub: Hub
+  report_header_to_hub: To Hub
+  report_header_hub_code: Hub code
+  report_header_paid: Paid?
+  report_header_delivery: Delivery?
+  report_header_shipping: Shipping
+  report_header_shipping_method: Shipping Method
+  report_header_shipping_instructions: Shipping instructions
+  report_header_ship_street: Ship Street
+  report_header_ship_street_2: Ship Street 2
+  report_header_ship_city: Ship City
+  report_header_ship_postcode: Ship Postcode
+  report_header_ship_state: Ship State
+  report_header_billing_street: Billing Street
+  report_header_billing_street_2: Billing Street 2
+  report_header_billing_city: Billing City
+  report_header_billing_postcode: Billing Postcode
+  report_header_billing_region: Billing Region
+  report_header_billing_state: Billing State
+  report_header_billing_country: Billing Country
+  report_header_incoming_transport: Incoming Transport
+  report_header_special_instructions: Special instructions
+  report_header_order_number: Order number
+  report_header_invoice_number: Invoice number
+  report_header_reference: Reference
+  report_header_invoice_date: Invoice date
+  report_header_due_date: Due date
+  report_header_date: Date
+  report_header_confirmation_date: Confirmation Date
+  report_header_tags: Tags
+  report_header_items: Items
   report_header_items_total: "Items total %{currency_symbol}"
   report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
   report_header_sales_tax: "Sales Tax (%{currency_symbol})"
@@ -1563,10 +1635,104 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
-  report_header_customer: "Customer"
-  report_header_distributor: "Distributor"
+  report_header_enterprise: Enterprise
+  report_header_customer: Customer
+  report_header_customer_code: Customer Code
+  report_header_product: Product
+  report_header_product_properties: Product Properties
+  report_header_description: Description
+  report_header_qty: Qty
+  report_header_quantity: Quantity
+  report_header_max_quantity: Max Quantity
+  report_header_variant: Variant
+  report_header_variant_value: Variant Value
+  report_header_variant_unit: Variant Unit
+  report_header_total_available: Total available
+  report_header_unallocated: Unallocated
+  report_header_max_quantity_excess: Max Quantity Excess
+  report_header_taxon: Taxon
+  report_header_taxons: Taxons
+  report_header_supplier: Supplier
+  report_header_producer: Producer
+  report_header_producer_suburb: Producer Suburb
+  report_header_unit: Unit
+  report_header_group_buy_unit_quantity: Group by unit quantity
+  report_header_cost: Cost
+  report_header_shipping_cost: Shipping Cost
+  report_header_curr_cost_per_unit: Curr. Cost per Unit
+  report_header_total_shipping_cost: Total Shipping Cost
+  report_header_payment_method: Payment Method
+  report_header_sells: Sells
+  report_header_visible: Visible
+  report_header_unit_price: Unit Price
+  report_header_price: Price
+  report_header_unit_size: Unit Size
+  report_header_pack_size: Pack Size
+  report_header_distributor: Distributor
+  report_header_distributor_address: Distributor address
+  report_header_distributor_city: Distributor city
+  report_header_distributor_postcode: Distributor postcode
+  report_header_delivery_address: Delivery Address
+  report_header_delivery_postcode: Delivery Postcode
+  report_header_bulk_unit_size: Bulk Unit Size
+  report_header_weight: Weight
+  report_header_sum_total: Sum Total
+  report_header_date_of_order: Date of Order
+  report_header_amount_owing: Amount Owing
+  report_header_amount_paid: Amount Paid
+  report_header_units_required: Units Required
+  report_header_remainder: Remainder
+  report_header_order_date: Order date
+  report_header_order_id: Order Id
+  report_header_item_name: Item name
+  report_header_inventory_item_code: Inventory Item Code
+  report_header_temp_controlled_items: Temp Controlled Items?
+  report_header_customer_name: Customer Name
+  report_header_customer_email: Customer Email
+  report_header_customer_phone: Customer Phone
+  report_header_customer_city: Customer City
+  report_header_payment_state: Payment State
+  report_header_payment_type: Payment Type
+  report_header_item_price: "Item (%{currency})"
+  report_header_item_fees_price: "Item + Fees (%{currency})"
+  report_header_admin_handling_fees: "Admin & Handling (%{currency})"
+  report_header_ship_price: "Ship (%{currency})"
+  report_header_pay_fee_price: "Pay fee (%{currency})"
+  report_header_total_price: "Total (%{currency})"
+  report_header_product_total_price: "Product Total (%{currency})"
+  report_header_shipping_total_price: "Shipping Total (%{currency})"
+  report_header_outstanding_balance_price: "Outstanding Balance (%{currency})"
+  report_header_eft_price: "EFT (%{currency})"
+  report_header_paypal_price: "PayPal (%{currency})"
+  report_header_sku: SKU
+  report_header_amount: Amount
+  report_header_unit_amount: Unit Amount
+  report_header_discount: Discount
+  report_header_account_code: Account code
+  report_header_balance: Balance
+  report_header_total: Total
+  report_header_total_cost: "Total Cost"
+  report_header_total_ordered: Total Ordered
+  report_header_total_max: Total Max
+  report_header_total_units: Total Units
+  report_header_sum_max_total: "Sum Max Total"
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
+  report_header_gst_incl: GST incl.
+  report_header_grower_and_method: Grower and growing method
+  report_header_temp_controlled: TempControlled?
+  report_header_is_producer: Producer?
+  report_header_not_confirmed: Not Confirmed
+  report_header_gst_on_income: GST on Income
+  report_header_gst_free_income: GST Free Income
+  report_header_total_untaxable_produce: Total untaxable produce (no tax)
+  report_header_total_taxable_produce: Total taxable produce (tax inclusive)
+  report_header_total_untaxable_fees: Total untaxable fees (no tax)
+  report_header_total_taxable_fees: Total taxable fees (tax inclusive)
+  report_header_delivery_shipping_cost: Delivery Shipping Cost (tax inclusive)
+  report_header_transaction_fee: Transaction Fee (no tax)
+  report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
+  report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
   initial_invoice_number: "Initial invoice number:"
   invoice_date: "Invoice date:"
   due_date: "Due date:"
@@ -1601,10 +1767,11 @@ Please follow the instructions there to make your enterprise visible on the Open
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
   payment_method_fee: "Transaction fee"
-  enterprise_fees: "Enterprise Fees"
   inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
+  enterprise_fee_whole_order: Whole order
+  enterprise_fee_by: fee by
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"

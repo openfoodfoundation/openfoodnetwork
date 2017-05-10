@@ -10,30 +10,38 @@ module OpenFoodNetwork
 
     def header
       case params[:report_type]
+
       when "order_cycle_supplier_totals"
-        ["Producer", "Product", "Variant", "Amount", "Total Units", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
+        [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
+          I18n.t(:report_header_total_units), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
+          I18n.t(:report_header_status), I18n.t(:report_header_incoming_transport)]
       when "order_cycle_supplier_totals_by_distributor"
-        ["Producer", "Product", "Variant", "To Hub", "Amount", "Curr. Cost per Unit", "Total Cost", "Shipping Method"]
+        [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_to_hub),
+          I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
+          I18n.t(:report_header_shipping_method)]
       when "order_cycle_distributor_totals_by_supplier"
-        ["Hub", "Producer", "Product", "Variant", "Amount", "Curr. Cost per Unit", "Total Cost", "Total Shipping Cost", "Shipping Method"]
+        [I18n.t(:report_header_hub), I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant),
+          I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
+          I18n.t(:report_header_total_shipping_cost), I18n.t(:report_header_shipping_method)]
       when "order_cycle_customer_totals"
-        ["Hub", "Customer", "Email", "Phone", "Producer", "Product", "Variant",
-                  "Amount",
-                  "Item (#{currency_symbol})",
-                  "Item + Fees (#{currency_symbol})",
-                  "Admin & Handling (#{currency_symbol})",
-                  "Ship (#{currency_symbol})",
-                  "Pay fee (#{currency_symbol})",
-                  "Total (#{currency_symbol})",
-                  "Paid?",
-                  "Shipping", "Delivery?",
-                  "Ship Street", "Ship Street 2", "Ship City", "Ship Postcode", "Ship State",
-                  "Comments", "SKU",
-                  "Order Cycle", "Payment Method", "Customer Code", "Tags",
-                  "Billing Street 1", "Billing Street 2", "Billing City", "Billing Postcode", "Billing State"
+        [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email), I18n.t(:report_header_phone),
+          I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
+          I18n.t(:report_header_item_price, currency: currency_symbol),
+          I18n.t(:report_header_item_fees_price, currency: currency_symbol),
+          I18n.t(:report_header_admin_handling_fees, currency: currency_symbol),
+          I18n.t(:report_header_ship_price, currency: currency_symbol),
+          I18n.t(:report_header_pay_fee_price, currency: currency_symbol),
+          I18n.t(:report_header_total_price, currency: currency_symbol),
+          I18n.t(:report_header_paid), I18n.t(:report_header_shipping), I18n.t(:report_header_delivery),
+          I18n.t(:report_header_ship_street), I18n.t(:report_header_ship_street_2), I18n.t(:report_header_ship_city), I18n.t(:report_header_ship_postcode), I18n.t(:report_header_ship_state),
+          I18n.t(:report_header_comments), I18n.t(:report_header_sku),
+          I18n.t(:report_header_order_cycle), I18n.t(:report_header_payment_method), I18n.t(:report_header_customer_code), I18n.t(:report_header_tags),
+          I18n.t(:report_header_billing_street), I18n.t(:report_header_billing_street_2), I18n.t(:report_header_billing_city), I18n.t(:report_header_billing_postcode), I18n.t(:report_header_billing_state),
          ]
       else
-        ["Producer", "Product", "Variant", "Amount", "Curr. Cost per Unit", "Total Cost", "Status", "Incoming Transport"]
+        [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant),
+          I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
+          I18n.t(:report_header_status), I18n.t(:report_header_incoming_transport)]
       end
 
     end
@@ -55,9 +63,9 @@ module OpenFoodNetwork
       line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
         # TODO We should really be hiding customer code here too, but until we
         # have an actual association between order and customer, it's a bit tricky
-        line_item.order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.assign_attributes(email: "HIDDEN")
+        line_item.order.bill_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.ship_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.assign_attributes(email: I18n.t('admin.reports.hidden'))
       end
       line_items
     end
@@ -81,7 +89,7 @@ module OpenFoodNetwork
           summary_columns: [ proc { |line_items| "" },
             proc { |line_items| "" },
             proc { |line_items| "" },
-            proc { |line_items| "TOTAL" },
+            proc { |line_items| I18n.t('admin.reports.total') },
             proc { |line_items| "" },
             proc { |line_items| "" },
             proc { |line_items| line_items.sum { |li| li.amount } },
@@ -92,7 +100,7 @@ module OpenFoodNetwork
         [ { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name },
           summary_columns: [ proc { |line_items| "" },
-            proc { |line_items| "TOTAL" },
+            proc { |line_items| I18n.t('admin.reports.total') },
             proc { |line_items| "" },
             proc { |line_items| "" },
             proc { |line_items| "" },
@@ -117,7 +125,7 @@ module OpenFoodNetwork
             proc { |line_items| "" },
             proc { |line_items| "" },
             proc { |line_items| "" },
-            proc { |line_items| "TOTAL" },
+            proc { |line_items| I18n.t('admin.reports.total') },
             proc { |line_items| "" },
 
             proc { |line_items| "" },
@@ -127,7 +135,7 @@ module OpenFoodNetwork
             proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.ship_total } },
             proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.payment_fee } },
             proc { |line_items| line_items.map { |li| li.order }.uniq.sum { |o| o.total } },
-            proc { |line_items| line_items.all? { |li| li.order.paid? } ? "Yes" : "No" },
+            proc { |line_items| line_items.all? { |li| li.order.paid? } ? I18n.t(:yes) : I18n.t(:no) },
 
             proc { |line_items| "" },
             proc { |line_items| "" },
@@ -178,7 +186,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.price },
           proc { |line_items| line_items.sum { |li| li.amount } },
           proc { |line_items| "" },
-          proc { |line_items| "incoming transport" } ]
+          proc { |line_items| I18n.t(:report_header_incoming_transport) } ]
       when "order_cycle_supplier_totals_by_distributor"
         [ proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },
@@ -187,7 +195,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.sum { |li| li.quantity } },
           proc { |line_items| line_items.first.price },
           proc { |line_items| line_items.sum { |li| li.amount } },
-          proc { |line_items| "shipping method" } ]
+          proc { |line_items| I18n.t(:report_header_shipping_method) } ]
       when "order_cycle_distributor_totals_by_supplier"
         [ proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items| line_items.first.product.supplier.name },
@@ -197,7 +205,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.price },
           proc { |line_items| line_items.sum { |li| li.amount } },
           proc { |line_items| "" },
-          proc { |line_items| "shipping method" } ]
+          proc { |line_items| I18n.t(:report_header_shipping_method) } ]
       when "order_cycle_customer_totals"
         rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
         [
@@ -216,10 +224,10 @@ module OpenFoodNetwork
           proc { |line_items| "" },
           proc { |line_items| "" },
           proc { |line_items| "" },
-          proc { |line_items| line_items.all? { |li| li.order.paid? } ? "Yes" : "No" },
+          proc { |line_items| line_items.all? { |li| li.order.paid? } ? I18n.t(:yes) : I18n.t(:no) },
 
           proc { |line_items| line_items.first.order.shipping_method.andand.name },
-          proc { |line_items| rsa.call(line_items) ? 'Y' : 'N' },
+          proc { |line_items| rsa.call(line_items) ? I18n.t(:yes) : I18n.t(:no) },
 
           proc { |line_items| line_items.first.order.ship_address.andand.address1 if rsa.call(line_items) },
           proc { |line_items| line_items.first.order.ship_address.andand.address2 if rsa.call(line_items) },
@@ -248,7 +256,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.price },
           proc { |line_items| line_items.sum { |li| li.quantity * li.price } },
           proc { |line_items| "" },
-          proc { |line_items| "incoming transport" } ]
+          proc { |line_items| I18n.t(:report_header_incoming_transport) } ]
       end
     end
 

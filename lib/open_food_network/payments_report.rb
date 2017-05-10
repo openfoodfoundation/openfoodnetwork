@@ -9,13 +9,26 @@ module OpenFoodNetwork
     def header
       case params[:report_type]
       when "payments_by_payment_type"
-        ["Payment State", "Distributor", "Payment Type", "Total (#{currency_symbol})"]
+        I18n.t(:report_header_payment_type)
+        [I18n.t(:report_header_payment_state), I18n.t(:report_header_distributor), I18n.t(:report_header_payment_type),
+          I18n.t(:report_header_total_price, currency: currency_symbol)]
       when "itemised_payment_totals"
-        ["Payment State", "Distributor", "Product Total (#{currency_symbol})", "Shipping Total (#{currency_symbol})", "Outstanding Balance (#{currency_symbol})", "Total (#{currency_symbol})"]
+        [I18n.t(:report_header_payment_state), I18n.t(:report_header_distributor),
+          I18n.t(:report_header_product_total_price, currency: currency_symbol),
+          I18n.t(:report_header_shipping_total_price, currency: currency_symbol),
+          I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
+          I18n.t(:report_header_total_price, currency: currency_symbol)]
       when "payment_totals"
-        ["Payment State", "Distributor", "Product Total (#{currency_symbol})", "Shipping Total (#{currency_symbol})", "Total (#{currency_symbol})", "EFT (#{currency_symbol})", "PayPal (#{currency_symbol})", "Outstanding Balance (#{currency_symbol})"]
+        [I18n.t(:report_header_payment_state), I18n.t(:report_header_distributor),
+          I18n.t(:report_header_product_total_price, currency: currency_symbol),
+          I18n.t(:report_header_shipping_total_price, currency: currency_symbol),
+          I18n.t(:report_header_total_price, currency: currency_symbol),
+          I18n.t(:report_header_eft_price, currency: currency_symbol),
+          I18n.t(:report_header_paypal_price, currency: currency_symbol),
+          I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol)]
       else
-        ["Payment State", "Distributor", "Payment Type", "Total (#{currency_symbol})"]
+        [I18n.t(:report_header_payment_state), I18n.t(:report_header_distributor), I18n.t(:report_header_payment_type),
+          I18n.t(:report_header_total_price, currency: currency_symbol)]
       end
     end
 

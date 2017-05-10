@@ -4,16 +4,16 @@ module OpenFoodNetwork
   class LettuceShareReport < ProductsAndInventoryReportBase
     def header
       [
-        "PRODUCT",
-        "Description",
-        "Qty",
-        "Pack Size",
-        "Unit",
-        "Unit Price",
-        "Total",
-        "GST incl.",
-        "Grower and growing method",
-        "Taxon"
+        I18n.t(:report_header_product),
+        I18n.t(:report_header_description),
+        I18n.t(:report_header_qty),
+        I18n.t(:report_header_pack_size),
+        I18n.t(:report_header_unit),
+        I18n.t(:report_header_unit_price),
+        I18n.t(:report_header_total),
+        I18n.t(:report_header_gst_incl),
+        I18n.t(:report_header_grower_and_method),
+        I18n.t(:report_header_taxon)
       ]
     end
 

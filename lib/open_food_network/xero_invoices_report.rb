@@ -12,7 +12,32 @@ module OpenFoodNetwork
     end
 
     def header
-      %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
+      ["*#{I18n.t(:report_header_contact_name)}",
+        I18n.t(:report_header_email),
+        I18n.t(:report_header_billing_street),
+        I18n.t(:report_header_billing_street_2),
+        I18n.t(:report_header_billing_city),
+        I18n.t(:report_header_billing_region),
+        I18n.t(:report_header_billing_postcode),
+        I18n.t(:report_header_billing_country),
+        "*#{I18n.t(:report_header_invoice_number)}",
+        I18n.t(:report_header_reference),
+        "*#{I18n.t(:report_header_invoice_date)}",
+        "*#{I18n.t(:report_header_due_date)}",
+        I18n.t(:report_header_inventory_item_code),
+        "*#{I18n.t(:report_header_description)}",
+        "*#{I18n.t(:report_header_quantity)}",
+        "*#{I18n.t(:report_header_unit_amount)}",
+        I18n.t(:report_header_discount),
+        "*#{I18n.t(:report_header_account_code)}",
+        "*#{I18n.t(:report_header_tax_type)}",
+        I18n.t(:report_header_tracking_name_1),
+        I18n.t(:report_header_tracking_option_1),
+        I18n.t(:report_header_tracking_name_2),
+        I18n.t(:report_header_tracking_option_2),
+        I18n.t(:report_header_currency),
+        I18n.t(:report_header_branding_theme),
+        I18n.t(:report_header_paid)]
     end
 
     def search
@@ -95,26 +120,26 @@ module OpenFoodNetwork
     end
 
     def produce_summary_rows(order, invoice_number, opts)
-      [summary_row(order, 'Total untaxable produce (no tax)',       total_untaxable_products(order), invoice_number, 'GST Free Income',        opts),
-       summary_row(order, 'Total taxable produce (tax inclusive)',  total_taxable_products(order),   invoice_number, 'GST on Income',          opts)]
+      [summary_row(order, I18n.t(:report_header_total_untaxable_produce),       total_untaxable_products(order), invoice_number, I18n.t(:report_header_gst_free_income),        opts),
+       summary_row(order, I18n.t(:report_header_total_taxable_produce),  total_taxable_products(order),   invoice_number, I18n.t(:report_header_gst_on_income),          opts)]
     end
 
     def fee_summary_rows(order, invoice_number, opts)
-      [summary_row(order, 'Total untaxable fees (no tax)',          total_untaxable_fees(order),     invoice_number, 'GST Free Income',        opts),
-       summary_row(order, 'Total taxable fees (tax inclusive)',     total_taxable_fees(order),       invoice_number, 'GST on Income',          opts)]
+      [summary_row(order, I18n.t(:report_header_total_untaxable_fees),          total_untaxable_fees(order),     invoice_number, I18n.t(:report_header_gst_free_income),        opts),
+       summary_row(order, I18n.t(:report_header_total_taxable_fees),     total_taxable_fees(order),       invoice_number, I18n.t(:report_header_gst_on_income),          opts)]
     end
 
     def shipping_summary_rows(order, invoice_number, opts)
-      [summary_row(order, 'Delivery Shipping Cost (tax inclusive)', total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)]
+      [summary_row(order, I18n.t(:report_header_delivery_shipping_cost), total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)]
     end
 
     def payment_summary_rows(order, invoice_number, opts)
-      [summary_row(order, 'Transaction Fee (no tax)',               total_transaction(order),        invoice_number, 'GST Free Income', opts)]
+      [summary_row(order, I18n.t(:report_header_transaction_fee),               total_transaction(order),        invoice_number, I18n.t(:report_header_gst_free_income), opts)]
     end
 
     def admin_adjustment_summary_rows(order, invoice_number, opts)
-      [summary_row(order, 'Total untaxable admin adjustments (no tax)',      total_untaxable_admin_adjustments(order), invoice_number, 'GST Free Income', opts),
-       summary_row(order, 'Total taxable admin adjustments (tax inclusive)', total_taxable_admin_adjustments(order),   invoice_number, 'GST on Income',   opts)]
+      [summary_row(order, I18n.t(:report_header_total_untaxable_admin),      total_untaxable_admin_adjustments(order), invoice_number, I18n.t(:report_header_gst_free_income), opts),
+       summary_row(order, I18n.t(:report_header_total_taxable_admin), total_taxable_admin_adjustments(order),   invoice_number, I18n.t(:report_header_gst_on_income),   opts)]
     end
 
     def summary_row(order, description, amount, invoice_number, tax_type, opts={})
@@ -128,8 +153,6 @@ module OpenFoodNetwork
        order.email,
        order.bill_address.andand.address1,
        order.bill_address.andand.address2,
-       '',
-       '',
        order.bill_address.andand.city,
        order.bill_address.andand.state,
        order.bill_address.andand.zipcode,
@@ -151,7 +174,7 @@ module OpenFoodNetwork
        '',
        Spree::Config.currency,
        '',
-       order.paid? ? 'Y' : 'N'
+       order.paid? ? I18n.t(:yes) : I18n.t(:no)
       ]
     end
 
@@ -200,7 +223,7 @@ module OpenFoodNetwork
 
     def tax_on_shipping_s(order)
       tax_on_shipping = order.adjustments.shipping.sum(&:included_tax) > 0
-      tax_on_shipping ? 'GST on Income' : 'GST Free Income'
+      tax_on_shipping ? I18n.t(:report_header_gst_on_income) : I18n.t(:report_header_gst_free_income)
     end
 
     def total_untaxable_admin_adjustments(order)
@@ -216,7 +239,7 @@ module OpenFoodNetwork
     end
 
     def tax_type(taxable)
-      taxable.has_tax? ? 'GST on Income' : 'GST Free Income'
+      taxable.has_tax? ? I18n.t(:report_header_gst_on_income) : I18n.t(:report_header_gst_free_income)
     end
   end
 end

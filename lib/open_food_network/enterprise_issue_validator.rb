@@ -11,18 +11,18 @@ module OpenFoodNetwork
       issues = []
 
       issues << {
-        description: "#{@enterprise.name} currently has no shipping methods.",
-        link: "<a class='button fullwidth' href='#{spree.new_admin_shipping_method_path}'>Create New</a>"
+        description: I18n.t('admin.enterprise_issues.has_no_shipping_methods', enterprise: @enterprise.name),
+        link: "<a class='button fullwidth' href='#{spree.new_admin_shipping_method_path}'>#{I18n.t('admin.enterprise_issues.create_new')}</a>"
       } unless shipping_methods_ok?
 
       issues << {
-        description: "#{@enterprise.name} currently has no payment methods.",
-        link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>Create New</a>"
+        description: I18n.t('admin.enterprise_issues.has_no_payment_methods', enterprise: @enterprise.name),
+        link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>#{I18n.t('admin.enterprise_issues.create_new')}</a>"
       } unless payment_methods_ok?
 
       issues << {
-        description: "Email confirmation is pending. We've sent a confirmation email to #{@enterprise.email}.",
-        link: "<a class='button fullwidth' href='#{enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } )}' method='post'>Resend Email</a>"
+        description: I18n.t('admin.enterprise_issues.email_confirmation', email: @enterprise.email),
+        link: "<a class='button fullwidth' href='#{enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } )}' method='post'>#{I18n.t('admin.enterprise_issues.resend_email')}</a>"
       } unless confirmed?
 
       issues
@@ -30,13 +30,13 @@ module OpenFoodNetwork
 
     def issues_summary(opts={})
       if    !opts[:confirmation_only] && !shipping_methods_ok? && !payment_methods_ok?
-        'no shipping or payment methods'
+        I18n.t('admin.enterprise_issues.no_shipping_or_payment')
       elsif !opts[:confirmation_only] && !shipping_methods_ok?
-        'no shipping methods'
+        I18n.t('admin.enterprise_issues.no_shipping')
       elsif !opts[:confirmation_only] && !payment_methods_ok?
-        'no payment methods'
+        I18n.t('admin.enterprise_issues.no_payment')
       elsif !confirmed?
-        'unconfirmed'
+         I18n.t('admin.enterprise_issues.unconfirmed')
       end
     end
 
@@ -44,8 +44,8 @@ module OpenFoodNetwork
       warnings = []
 
       warnings << {
-        description: "#{@enterprise.name} is not visible and so cannot be found on the map or in searches",
-        link: "<a class='button fullwidth' href='#{edit_admin_enterprise_path(@enterprise)}'>Edit</a>"
+        description: I18n.t('admin.enterprise_issues.not_visible', enterprise: @enterprise.name),
+        link: "<a class='button fullwidth' href='#{edit_admin_enterprise_path(@enterprise)}'>#{I18n.t(:edit)}</a>"
       } unless @enterprise.visible
 
       warnings

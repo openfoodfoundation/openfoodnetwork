@@ -37,6 +37,37 @@ Spree::Admin::ReportsController.class_eval do
         render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: report_types[:sales_tax]}).html_safe
 } } }
 
+  def report_types
+    {
+      orders_and_fulfillment: [
+        [I18n.t('admin.reports.supplier_totals'), :order_cycle_supplier_totals],
+        [I18n.t('admin.reports.supplier_totals_by_distributor'), :order_cycle_supplier_totals_by_distributor],
+        [I18n.t('admin.reports.totals_by_supplier'), :order_cycle_distributor_totals_by_supplier],
+        [I18n.t('admin.reports.customer_totals'), :order_cycle_customer_totals]
+      ],
+      products_and_inventory: [
+        [I18n.t('admin.reports.all_products'), :all_products],
+        [I18n.t('admin.reports.inventory'), :inventory],
+        [I18n.t('admin.reports.lettuce_share'), :lettuce_share]
+      ],
+      customers: [
+        [I18n.t('admin.reports.mailing_list'), :mailing_list],
+        [I18n.t('admin.reports.addresses'), :addresses]
+      ],
+      order_cycle_management: [
+        [I18n.t('admin.reports.payment_methods'), :payment_methods],
+        [I18n.t('admin.reports.delivery'), :delivery]
+      ],
+      sales_tax: [
+        [I18n.t('admin.reports.tax_types'), :tax_types],
+        [I18n.t('admin.reports.tax_rates'), :tax_rates]
+      ],
+      packing: [
+        [I18n.t('admin.reports.pack_by_customer'), :pack_by_customer],
+        [I18n.t('admin.reports.pack_by_supplier'), :pack_by_supplier]
+      ]
+    }
+  end
 
   # Overide spree reports list.
   def index
@@ -254,38 +285,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   private
-  def report_types
-    {
-      orders_and_fulfillment: [
-        [I18n.t('admin.reports.supplier_totals'), :order_cycle_supplier_totals],
-        [I18n.t('admin.reports.supplier_totals_by_distributor'), :order_cycle_supplier_totals_by_distributor],
-        [I18n.t('admin.reports.totals_by_supplier'), :order_cycle_distributor_totals_by_supplier],
-        [I18n.t('admin.reports.customer_totals'), :order_cycle_customer_totals]
-      ],
-      products_and_inventory: [
-        [I18n.t('admin.reports.all_products'), :all_products],
-        [I18n.t('admin.reports.inventory'), :inventory],
-        [I18n.t('admin.reports.lettuce_share'), :lettuce_share]
-      ],
-      customers: [
-        [I18n.t('admin.reports.mailing_list'), :mailing_list],
-        [I18n.t('admin.reports.addresses'), :addresses]
-      ],
-      order_cycle_management: [
-        [I18n.t('admin.reports.payment_methods'), :payment_methods],
-        [I18n.t('admin.reports.delivery'), :delivery]
-      ],
-      sales_tax: [
-        [I18n.t('admin.reports.tax_types'), :tax_types],
-        [I18n.t('admin.reports.tax_rates'), :tax_rates]
-      ],
-      packing: [
-        [I18n.t('admin.reports.pack_by_customer'), :pack_by_customer],
-        [I18n.t('admin.reports.pack_by_supplier'), :pack_by_supplier]
-      ]
-    }
-  end
-
 
   def prepare_date_params(params)
     # -- Prepare parameters

@@ -205,7 +205,7 @@ describe Spree::Admin::ReportsController do
 
     it "assigns report types" do
       spree_get :products_and_inventory
-      assigns(:report_types).should == Spree::Admin::ReportsController::REPORT_TYPES[:products_and_inventory]
+      assigns(:report_types).should == subject.report_types[:products_and_inventory]
     end
 
     it "creates a ProductAndInventoryReport" do
@@ -223,7 +223,7 @@ describe Spree::Admin::ReportsController do
     before { login_as_admin }
 
     it "should have report types for customers" do
-      Spree::Admin::ReportsController::REPORT_TYPES[:customers].should == [
+      subject.report_types[:customers].should == [
         ["Mailing List", :mailing_list],
         ["Addresses", :addresses]
       ]
@@ -246,7 +246,7 @@ describe Spree::Admin::ReportsController do
 
     it "assigns report types" do
       spree_get :customers
-      assigns(:report_types).should == Spree::Admin::ReportsController::REPORT_TYPES[:customers]
+      assigns(:report_types).should == subject.report_types[:customers]
     end
 
     it "creates a CustomersReport" do

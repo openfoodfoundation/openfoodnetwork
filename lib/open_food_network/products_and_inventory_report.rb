@@ -4,16 +4,16 @@ module OpenFoodNetwork
   class ProductsAndInventoryReport < ProductsAndInventoryReportBase
     def header
       [
-        "Supplier",
-        "Producer Suburb",
-        "Product",
-        "Product Properties",
-        "Taxons",
-        "Variant Value",
-        "Price",
-        "Group Buy Unit Quantity",
-        "Amount",
-        "SKU"
+        I18n.t(:report_header_supplier),
+        I18n.t(:report_header_producer_suburb),
+        I18n.t(:report_header_product),
+        I18n.t(:report_header_product_properties),
+        I18n.t(:report_header_taxons),
+        I18n.t(:report_header_variant_value),
+        I18n.t(:report_header_price),
+        I18n.t(:report_header_group_buy_unit_quantity),
+        I18n.t(:report_header_amount),
+        I18n.t(:report_header_sku)
       ]
     end
 

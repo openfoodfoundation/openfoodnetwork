@@ -8,9 +8,25 @@ module OpenFoodNetwork
 
     def header
       if is_by_customer?
-        ["Hub", "Code", "First Name", "Last Name", "Supplier", "Product", "Variant", "Quantity", "TempControlled?"]
+        [I18n.t(:report_header_hub),
+          I18n.t(:report_header_code),
+          I18n.t(:report_header_first_name),
+          I18n.t(:report_header_last_name),
+          I18n.t(:report_header_supplier),
+          I18n.t(:report_header_product),
+          I18n.t(:report_header_variant),
+          I18n.t(:report_header_quantity),
+          I18n.t(:report_header_temp_controlled)]
       else
-        ["Hub", "Supplier", "Code", "First Name", "Last Name", "Product", "Variant", "Quantity", "TempControlled?"]
+        [I18n.t(:report_header_hub),
+          I18n.t(:report_header_supplier),
+          I18n.t(:report_header_code),
+          I18n.t(:report_header_first_name),
+          I18n.t(:report_header_last_name),
+          I18n.t(:report_header_product),
+          I18n.t(:report_header_variant),
+          I18n.t(:report_header_quantity),
+          I18n.t(:report_header_temp_controlled)]
       end
     end
 
@@ -30,9 +46,9 @@ module OpenFoodNetwork
       line_items.select{ |li| line_items_with_hidden_details.include? li }.each do |line_item|
         # TODO We should really be hiding customer code here too, but until we
         # have an actual association between order and customer, it's a bit tricky
-        line_item.order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-        line_item.order.assign_attributes(email: "HIDDEN")
+        line_item.order.bill_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.ship_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
+        line_item.order.assign_attributes(email: I18n.t('admin.reports.hidden'))
       end
       line_items
     end
@@ -52,7 +68,7 @@ module OpenFoodNetwork
             proc { |line_items| "" },
             proc { |line_items| "" },
             proc { |line_items| "" },
-            proc { |line_items| "TOTAL ITEMS" },
+            proc { |line_items| I18n.t('admin.reports.total_items')},
             proc { |line_items| "" },
             proc { |line_items| line_items.sum { |li| li.quantity } },
             proc { |line_items| "" } ] },
@@ -75,7 +91,7 @@ module OpenFoodNetwork
               proc { |line_items| "" },
               proc { |line_items| "" },
               proc { |line_items| "" },
-              proc { |line_items| "TOTAL ITEMS" },
+              proc { |line_items| I18n.t('admin.reports.total_items')},
               proc { |line_items| "" },
               proc { |line_items| line_items.sum { |li| li.quantity } },
               proc { |line_items| "" } ] },
