@@ -45,7 +45,12 @@ Spree::OrdersController.class_eval do
 
       render :edit and return unless apply_coupon_code
 
-      fire_event('spree.order.contents_changed')
+      if @order == current_order
+        fire_event('spree.order.contents_changed')
+      else
+        @order.update_distribution_charge!
+      end
+
       respond_with(@order) do |format|
         format.html do
           if params.has_key?(:checkout)

@@ -192,6 +192,81 @@ describe Spree::OrdersController do
   end
 
   describe "removing items from a completed order" do
+    context "with shipping and transaction fees" do
+      let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
+      let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:line_item1) { order.line_items.first }
+      let(:line_item2) { order.line_items.second }
+      let(:shipping_fee) { 3 }
+      let(:payment_fee) { 5 }
+      let(:item_num) { order.line_items.length }
+      let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
+      let(:params) { { order: { line_items_attributes: {
+        "0" => {id: line_item1.id, quantity: 1},
+        "1" => {id: line_item2.id, quantity: 0}
+      } } } }
+
+      before do
+        Spree::Config.shipment_inc_vat = true
+        Spree::Config.shipping_tax_rate = 0.25
+
+        # Sanity check the fees
+        expect(order.adjustments.length).to eq 2
+        expect(item_num).to eq 2
+        expect(order.adjustment_total).to eq expected_fees
+        expect(order.shipment.adjustment.included_tax).to eq 1.2
+
+        allow(subject).to receive(:spree_current_user) { order.user }
+        allow(subject).to receive(:order_to_update) { order }
+      end
+
+      it "updates the fees" do
+        # Setting quantity of an item to zero
+        spree_post :update, params
+
+        # Check if fees got updated
+        order.reload
+        expect(order.line_items.count).to eq 1
+        expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
+        expect(order.shipment.adjustment.included_tax).to eq 0.6
+      end
+    end
+
+    context "with enterprise fees" do
+      let(:user) { create(:user) }
+      let(:variant) { create(:variant) }
+      let(:distributor) { create(:distributor_enterprise, allow_order_changes: true) }
+      let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
+      let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
+      let!(:exchange) { create(:exchange, incoming: true, sender: variant.product.supplier, receiver: order_cycle.coordinator, variants: [variant], enterprise_fees: [enterprise_fee]) }
+      let!(:order) do
+        order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle)
+        order.reload.line_items.first.update_attributes(variant_id: variant.id)
+        while !order.completed? do break unless order.next! end
+        order.update_distribution_charge!
+        order
+      end
+      let(:params) { { order: { line_items_attributes: {
+        "0" => { id: order.line_items.first.id, quantity: 2 }
+      } } } }
+
+      before do
+        allow(subject).to receive(:spree_current_user) { order.user }
+        allow(subject).to receive(:order_to_update) { order }
+      end
+
+      it "updates the fees" do
+        expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount
+
+        controller.stub spree_current_user: user
+        spree_post :update, params
+
+        expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2
+      end
+    end
+  end
+
+  describe "removing items from a completed order" do
     let(:order) { create(:completed_order_with_totals) }
     let!(:line_item) { order.reload.line_items.first }
     let(:params) { { order: {} } }
@@ -203,7 +278,7 @@ describe Spree::OrdersController do
         params[:order][:line_items_attributes] = { "0" => {quantity: "1", id: line_item.id} }
       end
 
-      it "does not remove the item, flash suggests cancellation" do
+      it "removes the item" do
         spree_post :update, params
         expect(flash[:error]).to be nil
         expect(response).to redirect_to spree.order_path(order)
