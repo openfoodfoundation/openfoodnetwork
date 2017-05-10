@@ -16,6 +16,8 @@ module OpenFoodNetwork
         I18n.t(:report_header_email),
         I18n.t(:report_header_billing_street),
         I18n.t(:report_header_billing_street_2),
+        I18n.t(:report_header_billing_street_3),
+        I18n.t(:report_header_billing_street_4),
         I18n.t(:report_header_billing_city),
         I18n.t(:report_header_billing_region),
         I18n.t(:report_header_billing_postcode),
@@ -153,6 +155,8 @@ module OpenFoodNetwork
        order.email,
        order.bill_address.andand.address1,
        order.bill_address.andand.address2,
+       '',
+       '',
        order.bill_address.andand.city,
        order.bill_address.andand.state,
        order.bill_address.andand.zipcode,
@@ -174,7 +178,7 @@ module OpenFoodNetwork
        '',
        Spree::Config.currency,
        '',
-       order.paid? ? I18n.t(:yes) : I18n.t(:no)
+       order.paid? ? I18n.t(:y) : I18n.t(:n)
       ]
     end
 

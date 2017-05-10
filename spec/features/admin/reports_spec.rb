@@ -315,8 +315,7 @@ feature %q{
       page.should have_content "Inventory (on hand)"
       click_link 'Products & Inventory'
       page.should have_content "Supplier"
-
-      page.should have_table_row ["Supplier",             "Producer Suburb",              "Product",      "Product Properties",                               "Taxons",                     "Variant Value",  "Price",  "Group Buy Unit Quantity",         "Amount", "SKU"].map(&:upcase)
+      page.should have_table_row ["Supplier", "Producer Suburb", "Product", "Product Properties", "Taxons", "Variant Value", "Price", "Group Buy Unit Quantity", "Amount", "SKU"].map(&:upcase)
       page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
       page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Something",      "80.0",   product1.group_buy_unit_size.to_s, "",       "sku2"]
       page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,  "100g",           "99.0",   product1.group_buy_unit_size.to_s, "",       "product_sku"]
@@ -511,7 +510,9 @@ feature %q{
     end
 
     def xero_invoice_header
-      %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
+      ['*Contact Name', 'Email', 'Billing Street', 'Billing Street 2', 'Billing Street 3', 'Billing Street 4',  'Billing City', 'Billing Region', 'Billing Postcode', 'Billing Country',
+       '*Invoice Number', 'Reference', '*Invoice Date', '*Due Date', 'Inventory Item Code', '*Description', '*Quantity', '*Unit Amount', 'Discount',
+       '*Account Code', '*Tax Type', 'Tracking Name 1', 'Tracking Option 1',  'Tracking Name 2', 'Tracking Option 2', 'Currency', 'Branding Theme', 'Paid?']
     end
 
     def xero_invoice_summary_row(description, amount, tax_type, opts={})

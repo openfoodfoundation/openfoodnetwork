@@ -143,6 +143,8 @@ en:
   dashboard: Dashboard
   'yes': "Yes"
   'no': "No"
+  'y': 'Y'
+  'n': 'N'
   admin:
     # Common properties / models
     date: Date
@@ -1583,7 +1585,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_users: "Users: "
   report_tax_rates: Tax rates
   report_tax_types: Tax types
-  report_tax_type: Tax type
+  report_header_tax_type: Tax Type
   report_header_tracking_name_1: Tracking Name 1
   report_header_tracking_name_2: Tracking Name 2
   report_header_tracking_option_1: Tracking Option 1
@@ -1605,8 +1607,10 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_billing_address: Billing Address
   report_header_relationship: Relationship
   report_header_hub: Hub
+  report_header_hub_address: Hub Address
   report_header_to_hub: To Hub
-  report_header_hub_code: Hub code
+  report_header_hub_code: Hub Code
+  report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
   report_header_shipping: Shipping
@@ -1619,18 +1623,20 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_ship_state: Ship State
   report_header_billing_street: Billing Street
   report_header_billing_street_2: Billing Street 2
+  report_header_billing_street_3: Billing Street 3
+  report_header_billing_street_4: Billing Street 4
   report_header_billing_city: Billing City
   report_header_billing_postcode: Billing Postcode
   report_header_billing_region: Billing Region
   report_header_billing_state: Billing State
   report_header_billing_country: Billing Country
   report_header_incoming_transport: Incoming Transport
-  report_header_special_instructions: Special instructions
+  report_header_special_instructions: Special Instructions
   report_header_order_number: Order number
-  report_header_invoice_number: Invoice number
+  report_header_invoice_number: Invoice Number
   report_header_reference: Reference
-  report_header_invoice_date: Invoice date
-  report_header_due_date: Due date
+  report_header_invoice_date: Invoice Date
+  report_header_due_date: Due Date
   report_header_date: Date
   report_header_confirmation_date: Confirmation Date
   report_header_tags: Tags
@@ -1663,7 +1669,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_producer: Producer
   report_header_producer_suburb: Producer Suburb
   report_header_unit: Unit
-  report_header_group_buy_unit_quantity: Group by unit quantity
+  report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
   report_header_shipping_cost: Shipping Cost
   report_header_curr_cost_per_unit: Curr. Cost per Unit
@@ -1715,7 +1721,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_amount: Amount
   report_header_unit_amount: Unit Amount
   report_header_discount: Discount
-  report_header_account_code: Account code
+  report_header_account_code: Account Code
   report_header_balance: Balance
   report_header_total: Total
   report_header_total_cost: "Total Cost"
