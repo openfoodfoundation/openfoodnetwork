@@ -1,2 +1,2 @@
 / replace_contents '#shipping_method legend'
-Delivery Method
+= t(:delivery_method)

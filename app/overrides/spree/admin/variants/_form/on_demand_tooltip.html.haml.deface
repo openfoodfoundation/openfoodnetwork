@@ -1,3 +1,3 @@
 / insert_bottom "[data-hook='on_demand']"
 %div{'ofn-with-tip' => t('admin.products.variants.to_order_tip')}
-  %a What's this?
+  %a= t('admin.whats_this')

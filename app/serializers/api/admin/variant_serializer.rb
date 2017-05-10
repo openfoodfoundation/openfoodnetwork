@@ -4,7 +4,7 @@ class Api::Admin::VariantSerializer < ActiveModel::Serializer
   has_many :variant_overrides
 
   def on_hand
-    object.on_hand.nil? ? 0 : ( object.on_hand.to_f.finite? ? object.on_hand : "On demand" )
+    object.on_hand.nil? ? 0 : ( object.on_hand.to_f.finite? ? object.on_hand : I18n.t(:on_demand) )
   end
 
   def price

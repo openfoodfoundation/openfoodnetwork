@@ -8,13 +8,13 @@
     .alpha.three.columns
       = f.label :name, t(:name)
     .omega.eight.columns
-      = f.text_field :name, :class => 'fullwidth', placeholder: "eg. 'Pick-up from Primary School'"
+      = f.text_field :name, :class => 'fullwidth', placeholder: t(:spree_admin_eg_pickup_from_school)
       = error_message_on :shipping_method, :name
   .row
     .alpha.three.columns
       = f.label :description, t(:description)
     .omega.eight.columns
-      = f.text_area :description, class: 'fullwidth', rows: 2, placeholder: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
+      = f.text_area :description, class: 'fullwidth', rows: 2, placeholder: t(:spree_admin_eg_collect_your_order)
       = error_message_on :shipping_method, :description
   - if @available_zones.length == 1
     = f.hidden_field :zone_id, value: @available_zones.first.id

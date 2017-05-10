@@ -9,5 +9,5 @@
       = f.text_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
 
     .field{"data-hook" => "unit_description"}
-      = f.label :unit_description, "Unit Description"
+      = f.label :unit_description, t(:spree_admin_unit_description)
       = f.text_field :unit_description, class: "fullwidth", placeholder: t('admin.products.unit_name_placeholder')

@@ -1,11 +1,11 @@
-<!-- insert_after '[data-hook="checkout_summary_box"]'  
+<!-- insert_after '[data-hook="checkout_summary_box"]'
   sequence :before => 'add_change_distributor_form_to_checkout_address'  -->
 
 <% # Add a new 'Save and Continue/Process My Order' button under Order Summary on the checkout pages %>
 
 <div id="add_new_save_checkout_button" class="columns omega four">
-  <%= submit_tag @order.state == "payment" ? "Process My Order" : t(:save_and_continue), 
-                  :class => "continue button primary large", 
+  <%= submit_tag @order.state == "payment" ? t(:process_my_order) : t(:save_and_continue),
+                  :class => "continue button primary large",
                   :form=> "checkout_form_#{@order.state}" %>
   <script>
     //Show additional button only if form attribute is supported

@@ -127,6 +127,7 @@ en:
   cancel: Cancel
   edit: Edit
   distributors: Distributors
+  distribution: Distribution
   order_cycles: Order Cycles
   enterprise_limit: Enterprise Limit
   bulk_order_management: Bulk Order Management
@@ -1458,6 +1459,9 @@ Please follow the instructions there to make your enterprise visible on the Open
   distributor: "Distributor"
   product: "Products"
   enterprise_fees: "Enterprise Fees"
+  process_my_order: "Process My Order"
+  delivery_instructions: Delivery Instructions
+  delivery_method: Delivery Method
   fee_type: "Fee Type"
   tax_category: "Tax Category"
   calculator: "Calculator"
@@ -1485,11 +1489,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   price: "Price"
   on_hand: "On hand"
   save_changes: "Save Changes"
-<<<<<<< HEAD
   order_saved: "Order Saved"
-=======
   no_products: No Products
->>>>>>> Extract translations from lib folder
   spree_admin_overview_enterprises_header: "My Enterprises"
   spree_admin_overview_enterprises_footer: "MANAGE MY ENTERPRISES"
   spree_admin_enterprises_hubs_name: "Name"
@@ -1512,13 +1513,19 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
   spree_admin_order_cycles: "Order Cycles"
   spree_admin_order_cycles_tip: "Order cycles determine when and where your products are available to customers."
-  dashbord: "Dashboard"
   spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
   spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
   spree_admin_overview_action_required: "Action Required"
   spree_admin_overview_check_your_inbox: "Please check your inbox for further instructions. Thanks!"
+  spree_admin_unit_value: Unit Value
+  spree_admin_unit_description: Unit Description
+  spree_admin_variant_unit: Variant unit
+  spree_admin_variant_unit_scale: Variant unit scale
+  spree_admin_variant_unit_name: Variant unit name
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
+  spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
+  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
   your_profil_live: "Your profile live"
   on_ofn_map: "on the Open Food Network map"
   see: "See"

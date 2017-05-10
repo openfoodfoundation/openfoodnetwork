@@ -1,5 +1,5 @@
 / insert_after "[data-hook='category_row'] td:first-child"
 
 %td.align-center
-  = shipping_category.temperature_controlled ? 'Yes' : 'No'
+  = shipping_category.temperature_controlled ? t(:yes) : t(:no)
   %br/
