@@ -84,7 +84,7 @@ Spree::Variant.class_eval do
 
   def delete
     if product.variants == [self] # Only variant left on product
-      errors.add :product, "must have at least one variant"
+      errors.add :product, I18n.t(:spree_variant_product_error)
       false
     else
       transaction do

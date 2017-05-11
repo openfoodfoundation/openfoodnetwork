@@ -58,23 +58,23 @@ class EnterpriseGroup < ActiveRecord::Base
   }
 
   def set_unused_address_fields
-    address.firstname = address.lastname = 'unused'
+    address.firstname = address.lastname = I18n.t(:unused)
   end
 
   def set_undefined_address_fields
-    address.phone.present? || address.phone = 'undefined'
-    address.address1.present? || address.address1 = 'undefined'
-    address.city.present? || address.city = 'undefined'
+    address.phone.present? || address.phone = I18n.t(:undefined)
+    address.address1.present? || address.address1 = I18n.t(:undefined)
+    address.city.present? || address.city = I18n.t(:undefined)
     address.state.present? || address.state = address.country.states.first
-    address.zipcode.present? || address.zipcode = 'undefined'
+    address.zipcode.present? || address.zipcode = I18n.t(:undefined)
   end
 
   def unset_undefined_address_fields
     return unless address.present?
-    address.phone.sub!(/^undefined$/, '')
-    address.address1.sub!(/^undefined$/, '')
-    address.city.sub!(/^undefined$/, '')
-    address.zipcode.sub!(/^undefined$/, '')
+    address.phone.sub!(/^#{I18n.t(:undefined)}$/, '')
+    address.address1.sub!(/^#{I18n.t(:undefined)}$/, '')
+    address.city.sub!(/^#{I18n.t(:undefined)}$/, '')
+    address.zipcode.sub!(/^#{I18n.t(:undefined)}$/, '')
   end
 
   def to_param

@@ -141,6 +141,8 @@ en:
   current: Current
   available: Available
   dashboard: Dashboard
+  undefined: undefined
+  unused: unused
   'yes': "Yes"
   'no': "No"
   'y': 'Y'
@@ -266,6 +268,8 @@ en:
         update_address: 'Update Address'
         confirm_delete: 'Sure to delete?'
         search_by_email: "Search by email/code..."
+      destroy:
+        has_associated_orders: 'Delete failed: customer has associated orders with his shop'
 
     cache_settings:
       show:
@@ -1229,6 +1233,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   products_max_quantity: Max quantity
   products_distributor: Distributor
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
+  products_distribution_adjustment_label: "Product distribution by %{distributor} for %{product}"
 
   shop_trial_expires_in: "Your shopfront trial expires in"
   shop_trial_expired_notice: "Good news! We have decided to extend shopfront trials until further notice."
@@ -1258,6 +1263,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   error_required: "can't be blank"
   error_number: "must be number"
   error_email: "must be email address"
+  error_not_found_in_database: "%{name} not found in database"
+  error_no_permission_for_enterprise: "\"%{name}\": you do not have permission to manage products for this enterprise"
   item_handling_fees: "Item Handling Fees (included in item totals)"
   january: "January"
   february: "February"
@@ -1459,7 +1466,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   supplier: "Supplier"
   coordinator: "Coordinator"
   distributor: "Distributor"
-  product: "Products"
   enterprise_fees: "Enterprise Fees"
   process_my_order: "Process My Order"
   delivery_instructions: Delivery Instructions
@@ -1528,12 +1534,20 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
   spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
+  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
+  spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
+  spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
+  spree_order_populator_availability_error: "That product is not available from the chosen distributor or order cycle."
+  spree_distributors_error: "^At least one hub must be selected"
+  spree_user_enterprise_limit_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
+  spree_variant_product_error: must have at least one variant
   your_profil_live: "Your profile live"
   on_ofn_map: "on the Open Food Network map"
   see: "See"
   live: "live"
   manage: "Manage"
   resend: "Resend"
+  trial: Trial
   add_and_manage_products: "Add & manage products"
   add_and_manage_order_cycles: "Add & manage order cycles"
   manage_order_cycles: "Manage order cycles"
@@ -1790,6 +1804,16 @@ Please follow the instructions there to make your enterprise visible on the Open
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
+  content_configuration_pricing_table: "(TODO: Pricing table)"
+  content_configuration_case_studies: "(TODO: Case studies)"
+  content_configuration_detail: "(TODO: Detail)"
+  enterprise_name_error: "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at %{email}."
+  enterprise_owner_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
+  enterprise_role_uniqueness_error: "^That role is already present."
+  inventory_item_visibility_error: must be true or false
+  product_importer_file_error: "error: no file uploaded"
+  product_importer_spreadsheet_error: "could not process file: invalid filetype"
+  product_importer_products_save_error: did not save any products successfully
 
   js:
     admin:

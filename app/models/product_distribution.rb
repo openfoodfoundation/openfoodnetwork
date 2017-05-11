@@ -22,6 +22,6 @@ class ProductDistribution < ActiveRecord::Base
   end
 
   def adjustment_label_for(line_item)
-    "Product distribution by #{distributor.name} for #{line_item.product.name}"
+    I18n.t(:products_distribution_adjustment_label, distributor: distributor.name, product: line_item.product.name )
   end
 end

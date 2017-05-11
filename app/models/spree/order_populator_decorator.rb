@@ -8,7 +8,7 @@ Spree::OrderPopulator.class_eval do
     # Refactor: We may not need this validation - we can't change distribution here, so
     # this validation probably can't fail
     if !distribution_can_supply_products_in_cart(@distributor, @order_cycle)
-      errors.add(:base, "That distributor or order cycle can't supply all the products in your cart. Please choose another.")
+      errors.add(:base, I18n.t(:spree_order_populator_error))
     end
 
     if valid?
@@ -124,7 +124,7 @@ Spree::OrderPopulator.class_eval do
     if DistributionChangeValidator.new(@order).variants_available_for_distribution(@distributor, @order_cycle).include? variant
       return true
     else
-      errors.add(:base, "That product is not available from the chosen distributor or order cycle.")
+      errors.add(:base, I18n.t(:spree_order_populator_availability_error))
       return false
     end
   end

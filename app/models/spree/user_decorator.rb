@@ -83,7 +83,7 @@ Spree.user_class.class_eval do
 
   def limit_owned_enterprises
     if owned_enterprises.size > enterprise_limit
-      errors.add(:owned_enterprises, "^#{email} is not permitted to own any more enterprises (limit is #{enterprise_limit}).")
+      errors.add(:owned_enterprises, I18n.t(:spree_user_enterprise_limit_error, email: email, enterprise_limit: enterprise_limit))
     end
   end
 

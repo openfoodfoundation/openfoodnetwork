@@ -378,7 +378,7 @@ class Enterprise < ActiveRecord::Base
     dups = dups.where('id != ?', id) unless new_record?
 
     if dups.any?
-      errors.add :name, "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at #{dups.first.owner.email}."
+      errors.add :name, I18n.t(:enterprise_name_error, email: dups.first.owner.email)
     end
   end
 
@@ -427,7 +427,7 @@ class Enterprise < ActiveRecord::Base
 
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
-      errors.add(:owner, "^#{owner.email} is not permitted to own any more enterprises (limit is #{owner.enterprise_limit}).")
+      errors.add(:owner, I18n.t(:enterprise_owner_error, email: owner.email, enterprise_limit: owner.enterprise_limit ))
     end
   end
 

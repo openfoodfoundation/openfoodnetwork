@@ -25,7 +25,7 @@ class BillablePeriod < ActiveRecord::Base
   def label
     enterprise_version = enterprise.version_at(begins_at)
     category = enterprise_version.category.to_s.titleize
-    category += (trial ? " Trial" : "")
+    category += (trial ? " #{I18n.t(:trial)}" : "")
 
     "#{enterprise_version.name} (#{category})"
   end

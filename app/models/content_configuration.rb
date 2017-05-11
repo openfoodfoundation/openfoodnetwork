@@ -17,19 +17,19 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   has_attached_file :home_hero, default_url: "/assets/home/home.jpg"
 
   # Producer sign-up page
-  preference :producer_signup_pricing_table_html, :text, default: "(TODO: Pricing table)"
-  preference :producer_signup_case_studies_html, :text, default: "(TODO: Case studies)"
-  preference :producer_signup_detail_html, :text, default: "(TODO: Detail)"
+  preference :producer_signup_pricing_table_html, :text, default: I18n.t(:content_configuration_pricing_table)
+  preference :producer_signup_case_studies_html, :text, default: I18n.t(:content_configuration_case_studies)
+  preference :producer_signup_detail_html, :text, default: I18n.t(:content_configuration_detail)
 
   # Hubs sign-up page
-  preference :hub_signup_pricing_table_html, :text, default: "(TODO: Pricing table)"
-  preference :hub_signup_case_studies_html, :text, default: "(TODO: Case studies)"
-  preference :hub_signup_detail_html, :text, default: "(TODO: Detail)"
+  preference :hub_signup_pricing_table_html, :text, default: I18n.t(:content_configuration_pricing_table)
+  preference :hub_signup_case_studies_html, :text, default: I18n.t(:content_configuration_case_studies)
+  preference :hub_signup_detail_html, :text, default: I18n.t(:content_configuration_detail)
 
   # Groups sign-up page
-  preference :group_signup_pricing_table_html, :text, default: "(TODO: Pricing table)"
-  preference :group_signup_case_studies_html, :text, default: "(TODO: Case studies)"
-  preference :group_signup_detail_html, :text, default: "(TODO: Detail)"
+  preference :group_signup_pricing_table_html, :text, default: I18n.t(:content_configuration_pricing_table)
+  preference :group_signup_case_studies_html, :text, default: I18n.t(:content_configuration_case_studies)
+  preference :group_signup_detail_html, :text, default: I18n.t(:content_configuration_detail)
 
   # Footer
   preference :footer_logo, :file

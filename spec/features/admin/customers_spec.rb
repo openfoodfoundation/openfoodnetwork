@@ -62,7 +62,7 @@ feature 'Customers' do
           within "tr#c_#{customer1.id}" do
             find("a.delete-customer").trigger('click')
           end
-          expect(page).to have_selector "#info-dialog .text", text: "Delete failed: customer has associated orders"
+          expect(page).to have_selector "#info-dialog .text", text: I18n.t('admin.customers.destroy.has_associated_orders')
           click_button "OK"
         }.to_not change{Customer.count}
 

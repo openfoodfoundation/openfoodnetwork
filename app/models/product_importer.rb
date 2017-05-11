@@ -18,7 +18,7 @@ class ProductImporter
       @products_to_create = {}
       @variants_to_create = {}
       @variants_to_update = {}
-      
+
       @products_created = 0
       @variants_created = 0
       @variants_updated = 0
@@ -33,7 +33,7 @@ class ProductImporter
 
       init_product_importer if @sheet
     else
-      self.errors.add(:importer, 'error: no file uploaded')
+      self.errors.add(:importer, I18n.t(:product_importer_file_error))
     end
   end
 
@@ -140,7 +140,7 @@ class ProductImporter
     if accepted_mimetype
       Roo::Spreadsheet.open(@file, extension: accepted_mimetype)
     else
-      self.errors.add(:importer, 'could not process file: invalid filetype')
+      self.errors.add(:importer, I18n.t(:product_importer_spreadsheet_error))
       delete_uploaded_file
       nil
     end
@@ -212,17 +212,17 @@ class ProductImporter
     supplier_name = entry.supplier
 
     if supplier_name.blank?
-      mark_as_invalid(entry, attribute: "supplier", error: "can't be blank")
+      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_required))
       return
     end
 
     unless supplier_exists?(supplier_name)
-      mark_as_invalid(entry, attribute: "supplier", error: "\"#{supplier_name}\" not found in database")
+      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_not_found_in_database, name: supplier_name))
       return
     end
 
     unless permission_by_name?(supplier_name)
-      mark_as_invalid(entry, attribute: "supplier", error: "\"#{supplier_name}\": you do not have permission to manage products for this enterprise")
+      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_no_permission_for_enterprise, name: supplier_name))
       return
     end
 
@@ -237,14 +237,14 @@ class ProductImporter
     category_name = entry.category
 
     if category_name.blank?
-      mark_as_invalid(entry, attribute: "category", error: "can't be blank")
+      mark_as_invalid(entry, attribute: "category", error: I18n.t(:error_required))
       return
     end
 
     if category_exists?(category_name)
       entry.primary_taxon_id = @categories_index[category_name]
     else
-      mark_as_invalid(entry, attribute: "category", error: "\"#{category_name}\" not found in database")
+      mark_as_invalid(entry, attribute: "category", error: I18n.t(:error_not_found_in_database, name: category_name))
     end
   end
 
@@ -335,7 +335,7 @@ class ProductImporter
       end
     end
 
-    self.errors.add(:importer, "did not save any products successfully") if total_saved_count.zero?
+    self.errors.add(:importer, I18n.t(:product_importer_products_save_error)) if total_saved_count.zero?
 
     reset_absent_products
     total_saved_count

@@ -13,7 +13,7 @@ Spree::Classification.class_eval do
 
   def dont_destroy_if_primary_taxon
     if product.primary_taxon == taxon
-      errors.add :base,  "Taxon #{taxon.name} is the primary taxon of #{product.name} and cannot be deleted"
+      errors.add :base,  I18n.t(:spree_classification_primary_taxon_error, taxon: taxon.name, product: product.name)
       return false
     end
   end

@@ -9,7 +9,7 @@ class InventoryItem < ActiveRecord::Base
   validates :variant_id, uniqueness: { scope: :enterprise_id }
   validates :enterprise_id, presence: true
   validates :variant_id, presence: true
-  validates :visible, inclusion: { in: [true, false], message: "must be true or false" }
+  validates :visible, inclusion: { in: [true, false], message: I18n.t(:inventory_item_visibility_error) }
 
   scope :visible, where(visible: true)
   scope :hidden, where(visible: false)
