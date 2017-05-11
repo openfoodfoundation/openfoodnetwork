@@ -15,7 +15,7 @@
         %a.button.secondary.tiny.add_to_cart{ href: cart_path, type: :submit, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
           = "{{ Cart.dirty ? '#{t(:cart_updating)}' : (Cart.empty() ? '#{t(:cart_empty)}' : '#{t(:cart_edit)}' ) }}"
         %a.button.primary.tiny{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
-          = t 'checkout'
+          = t '.checkout'
       %table
         %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items", "id" => "cart-variant-{{ line_item.variant.id }}"}
           %td
@@ -47,4 +47,25 @@
         %a.button.secondary.tiny.add_to_cart{ href: cart_path, type: :submit, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }" }
           = "{{ Cart.dirty ? '#{t(:cart_updating)}' : (Cart.empty() ? '#{t(:cart_empty)}' : '#{t(:cart_edit)}' ) }}"
         %a.button.primary.tiny{href: checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
-          = t 'checkout'
+          = t '.checkout'
+      - if order_changes_allowed?
+        %h5{"ng-if" => "Cart.line_items_finalised.length", style: 'margin-top: 1em'}
+          = t '.already_ordered_products'
+        %table
+          %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items_finalised",
+          "id" => "cart-variant-{{ line_item.variant.id }}"}
+            %td
+              %small
+                %strong
+                  {{ line_item.variant.extended_name }}
+            %td.text-right
+              %small
+                %span.quantity {{ line_item.quantity }}
+                %i.ofn-i_009-close
+                %span.price {{ line_item.variant.price_with_fees | localizeCurrency }}
+
+            %td
+              %small
+                \=
+                %strong
+                  .total-price.right {{ line_item.total_price | localizeCurrency }}

@@ -31,21 +31,21 @@
       %label{ :for => 'supplier_filter' }
         = t("admin.producer")
       %br
-      %input#supplier_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'suppliers', blank: "{ id: 0, name: 'All' }", ng: { model: 'supplierFilter' } }
+      %input#supplier_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'suppliers', blank: "{ id: 0, name: '#{t(:all)}' }", ng: { model: 'supplierFilter' } }
     .filter_select{ :class => "three columns" }
       %label{ :for => 'distributor_filter' }
         = t("admin.shop")
       %br
-      %input#distributor_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'distributors', blank: "{ id: 0, name: 'All' }", ng: { model: 'distributorFilter' } }
+      %input#distributor_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'distributors', blank: "{ id: 0, name: '#{t(:all)}' }", ng: { model: 'distributorFilter' } }
     .filter_select{ :class => "three columns" }
       %label{ :for => 'order_cycle_filter' }
         = t("admin.order_cycle")
       %br
-      %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', blank: "{ id: 0, name: 'All' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter', change: 'refreshData()' } }
+      %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', blank: "{ id: 0, name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter', change: 'refreshData()' } }
     .filter_clear{ :class => "two columns omega" }
       %label{ :for => 'clear_all_filters' }
       %br
-      %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => "Clear All", 'ng-click' => "resetSelectFilters()" }
+      %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => t('admin.clear_all'), 'ng-click' => "resetSelectFilters()" }
 
   %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'unitsVariantSelected()' } }
 
@@ -59,7 +59,7 @@
       %h6{ :class => "eight columns alpha", 'ng-hide' => 'sharedResource', style: 'text-align: center;' } {{ selectedUnitsVariant.full_name }}
     %div{ :class => "four columns omega" }
       %h6{ :class => "four columns alpha", :style => 'text-align: right;' }
-        %a{ :href => '#', 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {};sharedResource=false;' } Clear
+        %a{ :href => '#', 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {};sharedResource=false;' }= t('admin.clear')
     %hr
     .row
       .one.column.alpha &nbsp;

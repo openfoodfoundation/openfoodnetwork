@@ -86,68 +86,14 @@
 %br
 .row
   .columns.large-12
-    %table#line-items{"data-hook" => "order_details"}
-      %col{valign: "middle"}/
-      %col{halign: "center", valign: "middle", width: "5%"}/
-      %col{halign: "center", valign: "middle", width: "5%"}/
-      %col{halign: "center", valign: "middle", width: "5%"}/
-      %thead{"data-hook" => ""}
-        %tr{"data-hook" => "order_details_line_items_headers"}
-          %th= t(:item)
-          %th.price= t(:price)
-          %th.text-center.qty= t(:qty)
-          %th.text-right.total
-            %span= t(:total)
-      %tbody{"data-hook" => ""}
-        - order.line_items.each do |item|
-          %tr{"data-hook" => "order_details_line_item_row"}
-            %td(data-hook = "order_item_description")
+    - if order.changes_allowed?
+      .alert-box.order-summary{ "ofn-inline-alert" => true, "ng-show" => "visible" }
+        = t(:orders_changeable_orders_alert_html, oc_close: l(order.order_cycle.orders_close_at, format: "%b %d, %Y %H:%M"))
+        %a.close{ "ng-click" => "close()" } &times;
 
-              %div.item-thumb-image{"data-hook" => "order_item_image"}
-                - if item.variant.images.length == 0
-                  = link_to mini_image(item.variant.product), item.variant.product
-                - else
-                  = link_to image_tag(item.variant.images.first.attachment.url(:mini)), item.variant.product
-
-
-              = render 'spree/shared/line_item_name', line_item: item
-
-            %td.text-right.price{"data-hook" => "order_item_price"}
-              %span= item.single_display_amount_with_adjustments.to_html
-            %td.text-center{"data-hook" => "order_item_qty"}= item.quantity
-            %td.text-right.total{"data-hook" => "order_item_total"}
-              %span= item.display_amount_with_adjustments.to_html
-
-      %tfoot
-        #subtotal{"data-hook" => "order_details_subtotal"}
-          %tr#subtotal-row.total
-            %td.text-right{colspan: "3"}
-              %strong
-                = t :order_produce
-            %td.text-right.total
-              %span= display_checkout_subtotal(order)
-
-        #order-charges{"data-hook" => "order_details_adjustments"}
-          - checkout_adjustments_for(order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
-            %tr.total
-              %td.text-right{:colspan => "3"}
-                %strong
-                  = adjustment.label
-              %td.text-right.total
-                %span= adjustment.display_amount.to_html
-
-        #order-total{"data-hook" => "order_details_total"}
-          %tr.total
-            %td.text-right{colspan: "3"}
-              %h5
-                = t :order_total_price
-            %td.text-right.total
-              %h5#order_total= order.display_total.to_html
-
-        - if order.total_tax > 0
-          #tax{"data-hook" => "order_details_tax"}
-            %tr#tax-row.total
-              %td.text-right{colspan: "3"}
-                = t :order_includes_tax
-              %td.text-right.total
-                %span= display_checkout_tax_total(order)
+    = form_for order, html: {id: 'update-order', name: 'update_order_form' } do |order_form|
+      - if order.changes_allowed?
+        = render 'spree/orders/form', order_form: order_form
+      -else
+        = render 'spree/orders/summary', order: order
+      = render 'spree/orders/form/update_buttons', order: order
