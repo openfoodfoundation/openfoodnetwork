@@ -93,13 +93,12 @@ module Spree
     end
 
     def create_payment_profile
-      return unless source.is_a?(CreditCard) &&
-        (source.number || source.gateway_payment_profile_id) &&
-          source.gateway_customer_profile_id.nil?
+      return unless source.is_a?(CreditCard)
+      return unless source.number || source.gateway_payment_profile_id
+      return unless source.gateway_customer_profile_id.nil?
       payment_method.create_profile(self)
     rescue ActiveMerchant::ConnectionError => e
       gateway_error e
     end
-
   end
 end

@@ -210,8 +210,8 @@ class CheckoutController < Spree::CheckoutController
     existing_card_id = params[:order].delete(:existing_card)
     if existing_card_id.present?
       credit_card = Spree::CreditCard.find(existing_card_id)
-      if credit_card.user_id != spree_current_user.id || credit_card.user_id.blank?
-        raise Core::GatewayError.new Spree.t(:invalid_credit_card)
+      if credit_card.try(:user_id).blank? || credit_card.user_id != spree_current_user.try(:id)
+        raise Spree::Core::GatewayError.new I18n.t(:invalid_credit_card)
       end
 
       # Not currently supported but maybe we should add it...?
