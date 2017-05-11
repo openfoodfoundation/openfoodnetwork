@@ -2,7 +2,7 @@ angular.module("admin.tagRules").controller "TagRulesCtrl", ($scope, $http, $fil
   $scope.tagGroups = enterprise.tag_groups
   $scope.defaultTagGroup = enterprise.default_tag_group
 
-  $scope.visibilityOptions = [ { id: "visible", name: "VISIBLE" }, { id: "hidden", name: "NOT VISIBLE" } ]
+  $scope.visibilityOptions = [ { id: "visible", name: t('js.tag_rules.visible')  }, { id: "hidden", name: t('js.tag_rules.not_visible') } ]
 
   $scope.updateRuleCounts = ->
     index = $scope.defaultTagGroup.rules.length

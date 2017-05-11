@@ -26,7 +26,7 @@ angular.module("ofn.admin").factory 'EnterpriseRelationships', ($http, enterpris
 
     permission_presentation: (permission) ->
       switch permission
-        when "add_to_order_cycle" then "add to order cycle"
-        when "manage_products" then "manage products"
-        when "edit_profile" then "edit profile"
-        when "create_variant_overrides" then "add products to inventory"
+        when "add_to_order_cycle" then t('js.services.add_to_order_cycle')
+        when "manage_products" then t('js.services.manage_products')
+        when "edit_profile" then t('js.services.edit_profile')
+        when "create_variant_overrides" then t('js.services.add_products_to_inventory')

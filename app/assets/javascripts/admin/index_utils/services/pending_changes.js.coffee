@@ -21,16 +21,16 @@ angular.module("admin.indexUtils").factory "pendingChanges", ($q, resources, Sta
     submitAll: (form=null) =>
       all = []
       @errors = []
-      StatusMessage.display('progress', "Saving...")
+      StatusMessage.display('progress', t('js.saving'))
       for id, objectChanges of @pendingChanges
         for attrName, change of objectChanges
           all.push @submit(change)
       $q.all(all).then =>
         if @errors.length == 0
-          StatusMessage.display('success', "All changes saved successfully")
+          StatusMessage.display('success', t('js.all_changes_saved_successfully'))
           form.$setPristine() if form?
         else
-          StatusMessage.display('failure', "Oh no! I was unable to save your changes")
+          StatusMessage.display('failure', t('js.oh_no'))
       all
 
     submit: (change) ->

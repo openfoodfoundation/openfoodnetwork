@@ -51,13 +51,13 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.$watch 'bulk_order_form.$dirty', (newVal, oldVal) ->
     if newVal == true
-      StatusMessage.display 'notice', "You have unsaved changes"
+      StatusMessage.display 'notice', t('js.unsaved_changes')
 
   $scope.submit = ->
     if $scope.bulk_order_form.$valid
-      StatusMessage.display 'progress', "Saving..."
+      StatusMessage.display 'progress', t('js.saving')
       $q.all(LineItems.saveAll()).then(->
-        StatusMessage.display 'success', "All changes saved"
+        StatusMessage.display 'success', t('js.all_changes_saved')
         $scope.bulk_order_form.$setPristine()
       ).catch ->
         StatusMessage.display 'failure', t "unsaved_changes_error"

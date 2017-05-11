@@ -21,7 +21,7 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $tem
           if response.data.errors
             scope.errors.push(error) for error in response.data.errors
           else
-            scope.errors.push("Sorry! Could not create '#{scope.email}'")
+            scope.errors.push(t('js.customers.could_not_create') + " '#{scope.email}'")
       return
 
     # Compile modal template
@@ -35,4 +35,4 @@ angular.module("admin.customers").directive 'newCustomerDialog', ($compile, $tem
       if CurrentShop.shop.id
         template.dialog('open')
       else
-        alert('Please select a shop first')
+        alert(t('js.customers.select_shop'))

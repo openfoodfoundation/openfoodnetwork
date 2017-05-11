@@ -15,11 +15,11 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
   $scope.currentView = -> Views.currentView
 
   $scope.views = Views.setViews
-    inventory:    { name: "Inventory Products", visible: true }
-    hidden:       { name: "Hidden Products",    visible: false }
-    new:          { name: "New Products",       visible: false }
+    inventory:    { name: t('js.variant_overrides.inventory_products'), visible: true }
+    hidden:       { name: t('js.variant_overrides.hidden_products'),    visible: false }
+    new:          { name: t('js.variant_overrides.new_products'),       visible: false }
 
-  $scope.bulkActions = [ name: "Reset Stock Levels To Defaults", callback: 'resetStock' ]
+  $scope.bulkActions = [ name: t('js.variant_overrides.reset_stock_levels'), callback: 'resetStock' ]
 
   $scope.columns = Columns.columns
 
@@ -52,22 +52,22 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
 
   $scope.displayDirty = ->
     if DirtyVariantOverrides.count() > 0
-      num = if DirtyVariantOverrides.count() == 1 then "one override" else "#{DirtyVariantOverrides.count()} overrides"
-      StatusMessage.display 'notice', "Changes to #{num} remain unsaved."
+      num = if DirtyVariantOverrides.count() == 1 then t('js.variant_overrides.one_override')  else "#{DirtyVariantOverrides.count()} " + t('js.variant_overrides.overrides')
+      StatusMessage.display 'notice', t('js.variant_overrides.changes_to') + ' ' + num + ' ' + t('js.variant_overrides.remain_unsaved')
     else
       StatusMessage.clear()
 
   $scope.update = ->
     if DirtyVariantOverrides.count() == 0
-      StatusMessage.display 'alert', 'No changes to save.'
+      StatusMessage.display 'alert', t('js.variant_overrides.no_changes_to_save')
     else
-      StatusMessage.display 'progress', 'Saving...'
+      StatusMessage.display 'progress', t('js.saving')
       DirtyVariantOverrides.save()
       .success (updatedVos) ->
         DirtyVariantOverrides.clear()
         VariantOverrides.updateIds updatedVos
         $scope.variant_overrides_form.$setPristine()
-        StatusMessage.display 'success', 'Changes saved.'
+        StatusMessage.display 'success', t('js.changes_saved')
         VariantOverrides.updateData updatedVos # Refresh page data
       .error (data, status) ->
         StatusMessage.display 'failure', $scope.updateError(data, status)
@@ -75,32 +75,32 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
 
   $scope.updateError = (data, status) ->
     if status == 401
-      "I couldn't get authorisation to save those changes, so they remain unsaved."
+      t('js.variant_overrides.no_authorisation')
 
     else if status == 400 && data.errors?
       errors = []
       for field, field_errors of data.errors
         errors = errors.concat field_errors
       errors = errors.join ', '
-      "I had some trouble saving: #{errors}"
+      t('js.variant_overrides.some_trouble') + ": #{errors}"
     else
-      "Oh no! I was unable to save your changes."
+      t('js.oh_no')
 
   $scope.resetStock = ->
     if DirtyVariantOverrides.count() > 0
-      StatusMessage.display 'alert', 'Save changes first.'
+      StatusMessage.display 'alert', t('js.save_changes_first')
       $timeout ->
         $scope.displayDirty()
       , 3000 # 3 second delay
     else
       return unless $scope.hub_id?
-      StatusMessage.display 'progress', 'Changing on hand stock levels...'
+      StatusMessage.display 'progress', t('js.variant_overrides.changing_on_hand_stock')
       $http
         method: "POST"
         url: "/admin/variant_overrides/bulk_reset"
         data: { hub_id: $scope.hub_id }
       .success (updatedVos) ->
         VariantOverrides.updateData updatedVos
-        StatusMessage.display 'success', 'Stocks reset to defaults.'
+        StatusMessage.display 'success', t('js.variant_overrides.stock_reset')
       .error (data, status) ->
         $timeout -> StatusMessage.display 'failure', $scope.updateError(data, status)

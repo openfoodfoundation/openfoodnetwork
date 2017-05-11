@@ -9,10 +9,10 @@ angular.module("admin.tagRules").directive 'newTagRuleDialog', ($compile, $templ
 
     scope.ruleTypes = [
       # { id: "DiscountOrder", name: 'Apply a discount to orders' }
-      { id: "FilterProducts", name: 'Show or Hide variants in my shopfront' }
-      { id: "FilterShippingMethods", name: 'Show or Hide shipping methods at checkout' }
-      { id: "FilterPaymentMethods", name: 'Show or Hide payment methods at checkout' }
-      { id: "FilterOrderCycles", name: 'Show or Hide order cycles in my shopfront' }
+      { id: "FilterProducts", name: t('js.tag_rules.show_hide_variants') }
+      { id: "FilterShippingMethods", name: t('js.tag_rules.show_hide_shipping') }
+      { id: "FilterPaymentMethods", name: t('js.tag_rules.show_hide_payment') }
+      { id: "FilterOrderCycles", name: t('js.tag_rules.show_hide_order_cycles') }
     ]
 
     scope.ruleType = scope.ruleTypes[0].id

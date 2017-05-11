@@ -30,27 +30,27 @@ angular.module("admin.enterprises").controller 'enterprisesCtrl', ($scope, $q, E
     $scope.producerTextFor = (enterprise) ->
       switch enterprise.is_primary_producer
         when true
-          "Producer"
+          t('js.enterprises.producer')
         else
-          "Non-Producer"
+          t('js.enterprises.non_producer')
 
     $scope.packageTextFor = (enterprise) ->
       switch enterprise.is_primary_producer
         when true
           switch enterprise.sells
             when "none"
-              "Profile"
+              t('js.profile')
             when "own"
-              "Shop"
+              t('js.shop')
             when "any"
-              "Hub"
+              t('js.hub')
             else
-              "Choose"
+              t('js.choose')
         else
           switch enterprise.sells
             when "none"
-              "Profile"
+              t('js.profile')
             when "any"
-              "Hub"
+              t('js.hub')
             else
-              "Choose"
+              t('js.choose')

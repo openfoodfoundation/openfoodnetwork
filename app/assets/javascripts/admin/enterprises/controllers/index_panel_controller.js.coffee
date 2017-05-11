@@ -14,7 +14,7 @@ angular.module("admin.enterprises").controller 'indexPanelCtrl', ($scope, Enterp
       , (response) ->
         $scope.saving = false
         if response.status == 422 && response.data.errors?
-          message = 'Please resolve the following errors:\n'
+          message = t('js.resolve_errors') + ':\n'
           for attr, msg of response.data.errors
             message += "#{attr} #{msg}\n"
           alert(message)

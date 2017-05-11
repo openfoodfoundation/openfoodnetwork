@@ -165,13 +165,13 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
           if destination?
             $window.location = destination
           else
-            StatusMessage.display 'success', 'Your order cycle has been updated.'
+            StatusMessage.display 'success', t('js.order_cycles.update_success')
         else
           console.log('Failed to update order cycle')
 
     confirmNoDistributors: ->
       if @order_cycle.outgoing_exchanges.length == 0
-        confirm 'There are no distributors in this order cycle. This order cycle will not be visible to customers until you add one. Would you like to continue saving this order cycle?'
+        confirm t('js.order_cycles.no_distributors')
       else
         true
 

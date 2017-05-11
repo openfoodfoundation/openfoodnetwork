@@ -42,7 +42,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
 
   $scope.submit = ($event, destination) ->
     $event.preventDefault()
-    StatusMessage.display 'progress', "Saving..."
+    StatusMessage.display 'progress', t('js.saving')
     OrderCycle.mirrorIncomingToOutgoingProducts()
     OrderCycle.update(destination, $scope.order_cycle_form)
 

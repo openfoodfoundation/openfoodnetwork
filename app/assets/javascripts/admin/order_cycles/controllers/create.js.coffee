@@ -84,7 +84,7 @@ angular.module('admin.orderCycles')
 
     $scope.submit = ($event, destination) ->
       $event.preventDefault()
-      StatusMessage.display 'progress', "Saving..."
+      StatusMessage.display 'progress', t('js.saving')
       OrderCycle.create(destination)
 
     $scope.cancel = (destination) ->

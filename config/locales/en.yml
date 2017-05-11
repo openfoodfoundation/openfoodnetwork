@@ -1870,6 +1870,21 @@ Please follow the instructions there to make your enterprise visible on the Open
     footer_and_external_links: Footer and External Links
     your_content: Your content
   js:
+    saving: 'Saving...'
+    changes_saved: 'Changes saved.'
+    save_changes_first: Save changes first.
+    all_changes_saved: All changes saved
+    unsaved_changes: You have unsaved changes
+    all_changes_saved_successfully: All changes saved successfully
+    oh_no: "Oh no! I was unable to save your changes."
+    unauthorized: "You are unauthorised to access this page."
+    error: Error
+    unavailable: Unavailable
+    profile: Profile
+    hub: Hub
+    shop: Shop
+    choose: Choose
+    resolve_errors: Please resolve the following errors
     admin:
       modals:
         got_it: Got it
@@ -1986,7 +2001,50 @@ Please follow the instructions there to make your enterprise visible on the Open
         in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
-
+    variant_overrides:
+      inventory_products: "Inventory Products"
+      hidden_products: "Hidden Products"
+      new_products: "New Products"
+      reset_stock_levels: Reset Stock Levels To Defaults
+      changes_to: Changes to
+      one_override: one override
+      overrides: override
+      remain_unsaved: remain unsaved.
+      no_changes_to_save: No changes to save.'
+      no_authorisation: "I couldn't get authorisation to save those changes, so they remain unsaved."
+      some_trouble: I had some trouble saving
+      changing_on_hand_stock: Changing on hand stock levels...
+      stock_reset: Stocks reset to defaults.
+    tag_rules:
+      show_hide_variants: 'Show or Hide variants in my shopfront'
+      show_hide_shipping: 'Show or Hide shipping methods at checkout'
+      show_hide_payment: 'Show or Hide payment methods at checkout'
+      show_hide_order_cycles: 'Show or Hide order cycles in my shopfront'
+      visible: VISIBLE
+      not_visible: NOT VISIBLE
+    services:
+      unsaved_changes_message: Unsaved changes currently exist, save now or ignore?
+      save: SAVE
+      ignore: IGNORE
+      add_to_order_cycle: "add to order cycle"
+      manage_products: "manage products"
+      edit_profile: "edit profile"
+      add_products_to_inventory: "add products to inventory"
+    resources:
+      could_not_delete_customer: 'Could not delete customer'
+    product_import:
+      confirmation: |
+        This will set stock level to zero on all products for this
+        enterprise that are not present in the uploaded file.
+    order_cycles:
+      update_success: 'Your order cycle has been updated.'
+      no_distributors: There are no distributors in this order cycle. This order cycle will not be visible to customers until you add one. Would you like to continue saving this order cycle?'
+    enterprises:
+      producer: "Producer"
+      non_producer: "Non-Producer"
+    customers:
+      select_shop: 'Please select a shop first'
+      could_not_create: Sorry! Could not create
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"

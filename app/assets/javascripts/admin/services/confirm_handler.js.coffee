@@ -1,6 +1,6 @@
 angular.module("ofn.admin").factory "ofnConfirmHandler", (pendingChanges, $compile, $q) ->
   return (scope, callback) ->
-    template = "<div id='dialog-div' style='padding: 10px'><h6>Unsaved changes currently exist, save now or ignore?</h6></div>"
+    template = "<div id='dialog-div' style='padding: 10px'><h6>" + t('js.services.unsaved_changes_message') + "</h6></div>"
     dialogDiv = $compile(template)(scope)
     return ->
       if pendingChanges.changeCount(pendingChanges.pendingChanges) > 0

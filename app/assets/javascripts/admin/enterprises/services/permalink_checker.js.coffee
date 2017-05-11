@@ -19,16 +19,16 @@ angular.module("admin.enterprises").factory 'PermalinkChecker', ($q, $http) ->
         if data.length > @MAX_PERMALINK_LENGTH || !data.match(/^[\w-]+$/)
           deferredRequest.resolve
             permalink: permalink
-            available: "Error"
+            available: t('js.error')
         else
           deferredRequest.resolve
             permalink: data
-            available: "Available"
+            available: t('available')
       ).error (data,status) =>
         if status == 409
           deferredRequest.resolve
             permalink: data
-            available: "Unavailable"
+            available: t('js.unavailable')
         else
           # Something went wrong or request was aborted
           deferredRequest.reject()

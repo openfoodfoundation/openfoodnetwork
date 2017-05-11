@@ -14,8 +14,8 @@ angular.module("admin.businessModelConfiguration").controller "BusinessModelConf
     $scope.cappedBill()
 
   $scope.capReached = ->
-    return "No" if !$scope.cap? || Number($scope.cap) == 0
-    if $scope.bill() >= Number($scope.cap) then "Yes" else "No"
+    return t('no') if !$scope.cap? || Number($scope.cap) == 0
+    if $scope.bill() >= Number($scope.cap) then t('yes') else t('no')
 
   $scope.includedTax = ->
     return 0 if !$scope.taxRate? || Number($scope.taxRate) == 0

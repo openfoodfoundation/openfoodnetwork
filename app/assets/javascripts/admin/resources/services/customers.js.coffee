@@ -24,7 +24,7 @@ angular.module("admin.resources").factory "Customers", ($q, InfoDialog, RequestM
         if errors?
           InfoDialog.open 'error', errors[0]
         else
-          InfoDialog.open 'error', "Could not delete customer: #{customer.email}"
+          InfoDialog.open 'error', t('js.resources.could_not_delete_customer') + ": #{customer.email}"
 
     index: (params) ->
       @clear()

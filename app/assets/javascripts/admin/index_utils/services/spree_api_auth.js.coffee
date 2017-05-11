@@ -10,7 +10,7 @@ angular.module("admin.indexUtils").factory "SpreeApiAuth", ($q, $http, SpreeApiK
           deferred.resolve()
 
       .error (response) ->
-        error = response?.error || "You are unauthorised to access this page."
+        error = response?.error || t('js.unauthorized')
         deferred.reject(error)
 
       deferred.promise

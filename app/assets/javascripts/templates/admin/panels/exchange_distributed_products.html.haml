@@ -7,7 +7,7 @@
           'ng-model' => 'exchange.select_all_variants',
           'ng-change' => 'setExchangeVariants(exchange, incomingExchangeVariantsFor(exchange.enterprise_id), exchange.select_all_variants)',
           'id' => 'order_cycle_outgoing_exchange_{{ $parent.$index }}_select_all_variants' }
-        Select all
+        = t('admin.select_all')
 
     .exchange-products
       -# Scope product list based on permissions the current user has to view variants in this exchange
