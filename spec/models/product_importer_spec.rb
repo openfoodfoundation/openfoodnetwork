@@ -7,8 +7,10 @@ describe ProductImporter do
   let!(:admin) { create(:admin_user) }
   let!(:user) { create_enterprise_user }
   let!(:user2) { create_enterprise_user }
+  let!(:user3) { create_enterprise_user }
   let!(:enterprise) { create(:enterprise, owner: user, name: "User Enterprise") }
   let!(:enterprise2) { create(:distributor_enterprise, owner: user2, name: "Another Enterprise") }
+  let!(:enterprise3) { create(:distributor_enterprise, owner: user3, name: "And Another Enterprise") }
   let!(:relationship) { create(:enterprise_relationship, parent: enterprise, child: enterprise2, permissions_list: [:create_variant_overrides]) }
 
   let!(:category) { create(:taxon, name: 'Vegetables') }
@@ -23,6 +25,8 @@ describe ProductImporter do
   let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts', unit_value: '500') }
   let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage', unit_value: '500') }
   let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce', unit_value: '500') }
+  let!(:product6) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Beetroot', unit_value: '500', on_demand: true, variant_unit_scale: 1, variant_unit: 'weight') }
+  let!(:product7) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Tomato', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight') }
   let!(:variant_override) { create(:variant_override, variant_id: product4.variants.first.id, hub: enterprise2, count_on_hand: 42) }
   let!(:variant_override2) { create(:variant_override, variant_id: product5.variants.first.id, hub: enterprise, count_on_hand: 96) }
 
@@ -31,11 +35,12 @@ describe ProductImporter do
   describe "importing products from a spreadsheet" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", ""]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "2", "kg", ""]
-        csv << ["Pea Soup", "User Enterprise", "Vegetables", "8", "5.50", "750", "ml", ""]
-        csv << ["Salad", "User Enterprise", "Vegetables", "7", "4.50", "1", "", "bags"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "on_demand"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", "", ""]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "2", "kg", "", ""]
+        csv << ["Pea Soup", "User Enterprise", "Vegetables", "8", "5.50", "750", "ml", "", "0"]
+        csv << ["Salad", "User Enterprise", "Vegetables", "7", "4.50", "1", "", "bags", ""]
+        csv << ["Hot Cross Buns", "User Enterprise", "Cake", "7", "3.50", "1", "", "buns", "1"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -45,25 +50,25 @@ describe ProductImporter do
     after { File.delete('/tmp/test-m.csv') }
 
     it "returns the number of entries" do
-      expect(@importer.item_count).to eq(4)
+      expect(@importer.item_count).to eq(5)
     end
 
     it "validates entries and returns the results as json" do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
-      expect(filter('valid', entries)).to eq 4
+      expect(filter('valid', entries)).to eq 5
       expect(filter('invalid', entries)).to eq 0
-      expect(filter('create_product', entries)).to eq 4
+      expect(filter('create_product', entries)).to eq 5
       expect(filter('update_product', entries)).to eq 0
     end
 
     it "saves the results and returns info on updated products" do
       @importer.save_entries
 
-      expect(@importer.products_created_count).to eq 4
+      expect(@importer.products_created_count).to eq 5
       expect(@importer.updated_ids).to be_a(Array)
-      expect(@importer.updated_ids.count).to eq 4
+      expect(@importer.updated_ids.count).to eq 5
 
       carrots = Spree::Product.find_by_name('Carrots')
       carrots.supplier.should == enterprise
@@ -72,6 +77,7 @@ describe ProductImporter do
       carrots.unit_value.should == 500
       carrots.variant_unit.should == 'weight'
       carrots.variant_unit_scale.should == 1
+      carrots.on_demand.should_not == true
       carrots.variants.first.import_date.should be_within(1.minute).of DateTime.now
 
       potatoes = Spree::Product.find_by_name('Potatoes')
@@ -81,6 +87,7 @@ describe ProductImporter do
       potatoes.unit_value.should == 2000
       potatoes.variant_unit.should == 'weight'
       potatoes.variant_unit_scale.should == 1000
+      potatoes.on_demand.should_not == true
       potatoes.variants.first.import_date.should be_within(1.minute).of DateTime.now
 
       pea_soup = Spree::Product.find_by_name('Pea Soup')
@@ -90,6 +97,7 @@ describe ProductImporter do
       pea_soup.unit_value.should == 0.75
       pea_soup.variant_unit.should == 'volume'
       pea_soup.variant_unit_scale.should == 0.001
+      pea_soup.on_demand.should_not == true
       pea_soup.variants.first.import_date.should be_within(1.minute).of DateTime.now
 
       salad = Spree::Product.find_by_name('Salad')
@@ -99,7 +107,18 @@ describe ProductImporter do
       salad.unit_value.should == 1
       salad.variant_unit.should == 'items'
       salad.variant_unit_scale.should == nil
+      salad.on_demand.should_not == true
       salad.variants.first.import_date.should be_within(1.minute).of DateTime.now
+
+      buns = Spree::Product.find_by_name('Hot Cross Buns')
+      buns.supplier.should == enterprise
+      #buns.on_hand.should == Infinity
+      buns.price.should == 3.50
+      buns.unit_value.should == 1
+      buns.variant_unit.should == 'items'
+      buns.variant_unit_scale.should == nil
+      buns.on_demand.should == true
+      buns.variants.first.import_date.should be_within(1.minute).of DateTime.now
     end
   end
 
@@ -230,6 +249,56 @@ describe ProductImporter do
       big_bag.product.name.should == 'Potatoes'
       big_bag.price.should == 5.50
       big_bag.on_hand.should == 6
+    end
+  end
+
+  describe "updating various fields" do
+    before do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "on_demand"]
+        csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0"]
+        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1"]
+      end
+      File.write('/tmp/test-m.csv', csv_data)
+      file = File.new('/tmp/test-m.csv')
+      settings = {enterprise3.id.to_s => {'import_into' => 'product_list'}}
+      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+    end
+    after { File.delete('/tmp/test-m.csv') }
+
+    it "validates entries" do
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 2
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('create_product', entries)).to eq 0
+      expect(filter('update_product', entries)).to eq 2
+    end
+
+    it "saves and updates" do
+
+      beetroot = Spree::Product.find_by_name('Beetroot').variants.first
+      pp beetroot
+      pp beetroot.product
+
+      @importer.save_entries
+
+      expect(@importer.products_created_count).to eq 0
+      expect(@importer.products_updated_count).to eq 2
+      expect(@importer.updated_ids).to be_a(Array)
+      expect(@importer.updated_ids.count).to eq 2
+
+      beetroot = Spree::Product.find_by_name('Beetroot').variants.first
+      pp beetroot
+      pp beetroot.product
+      beetroot.price.should == 3.50
+      beetroot.on_demand.should_not == true
+
+      tomato = Spree::Product.find_by_name('Tomato').variants.first
+      pp tomato
+      tomato.price.should == 5.50
+      tomato.on_demand.should == true
     end
   end
 
