@@ -15,9 +15,9 @@ module Spree
     end
 
     def product_variant_unit_options
-      [['Weight', 'weight'],
-       ['Volume', 'volume'],
-       ['Items', 'items']]
+      [[I18n.t(:weight), 'weight'],
+       [I18n.t(:volume), 'volume'],
+       [I18n.t(:items), 'items']]
     end
   end
 end

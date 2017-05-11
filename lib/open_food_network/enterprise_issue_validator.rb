@@ -30,13 +30,13 @@ module OpenFoodNetwork
 
     def issues_summary(opts={})
       if    !opts[:confirmation_only] && !shipping_methods_ok? && !payment_methods_ok?
-        I18n.t('admin.enterprise_issues.no_shipping_or_payment')
+        I18n.t(:no_shipping_or_payment)
       elsif !opts[:confirmation_only] && !shipping_methods_ok?
-        I18n.t('admin.enterprise_issues.no_shipping')
+        I18n.t(:no_shipping)
       elsif !opts[:confirmation_only] && !payment_methods_ok?
-        I18n.t('admin.enterprise_issues.no_payment')
+        I18n.t(:no_payment)
       elsif !confirmed?
-         I18n.t('admin.enterprise_issues.unconfirmed')
+         I18n.t(:unconfirmed)
       end
     end
 

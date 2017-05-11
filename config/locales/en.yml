@@ -82,6 +82,9 @@ en:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
       subject: "%{enterprise} is now on %{sitename}"
+  producer_mailer:
+    order_cycle:
+      subject: "Order cycle report for %{producer}"
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
@@ -143,6 +146,14 @@ en:
   dashboard: Dashboard
   undefined: undefined
   unused: unused
+  admin_and_handling: Admin & Handling
+  profile: Profile
+  supplier_only: Supplier Only
+  weight: Weight
+  volume: Volume
+  items: Items
+  summary: Summary
+  detailed: Detailed
   'yes': "Yes"
   'no': "No"
   'y': 'Y'
@@ -643,10 +654,6 @@ en:
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
-      no_shipping: no shipping methods
-      no_payment: no payment methods
-      no_shipping_or_payment: no shipping or payment methods
-      unconfirmed: unconfirmed
       has_no_payment_methods: "%{enterprise} currently has no payment methods"
       has_no_shipping_methods: "%{enterprise} currently has no shipping methods"
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to #{email}."
@@ -798,7 +805,14 @@ en:
   terms_of_service: "Terms of service"
   on_demand: On demand
   none: None
+<<<<<<< HEAD
   not_allowed: Not allowed
+=======
+  no_shipping: no shipping methods
+  no_payment: no payment methods
+  no_shipping_or_payment: no shipping or payment methods
+  unconfirmed: unconfirmed
+>>>>>>> Extract translations from mailers and helpers
 
   label_shops: "Shops"
   label_map: "Map"
@@ -1251,6 +1265,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   failed_to_create_enterprise: "Failed to create your enterprise."
   failed_to_create_enterprise_unknown: "Failed to create your enterprise.\nPlease ensure all fields are completely filled out."
   failed_to_update_enterprise_unknown: "Failed to update your enterprise.\nPlease ensure all fields are completely filled out."
+  enterprise_confirm_delete_message: "This will also delete the %{product} that this enterprise supplies. Are you sure you want to continue?"
   order_not_saved_yet: "Your order hasn't been saved yet. Give us a few seconds to finish!"
   filter_by: "Filter by"
   hide_filters: "Hide filters"

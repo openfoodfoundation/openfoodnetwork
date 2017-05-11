@@ -25,8 +25,8 @@ module Spree
     end
 
     def xero_report_types
-      [['Summary', 'summary'],
-       ['Detailed', 'detailed']]
+      [[I18n.t(:summary), 'summary'],
+       [I18n.t(:detailed), 'detailed']]
     end
 
     def currency_symbol

@@ -85,14 +85,14 @@ module OrderCyclesHelper
       disabled_message = nil
       if options[:shipping_and_payment_methods] && (e.shipping_methods.empty? || e.payment_methods.available.empty?)
         if e.shipping_methods.empty? && e.payment_methods.available.empty?
-          disabled_message = 'no shipping or payment methods'
+          disabled_message = I18n.t(:no_shipping_or_payment)
         elsif e.shipping_methods.empty?
-          disabled_message = 'no shipping methods'
+          disabled_message = I18n.t(:no_shipping)
         elsif e.payment_methods.available.empty?
-          disabled_message = 'no payment methods'
+          disabled_message = I18n.t(:no_payment)
         end
       elsif options[:confirmed] && !e.confirmed?
-        disabled_message = 'unconfirmed'
+        disabled_message = I18n.t(:unconfirmed)
       end
 
       if disabled_message

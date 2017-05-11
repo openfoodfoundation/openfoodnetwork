@@ -10,7 +10,7 @@ class ProducerMailer < Spree::BaseMailer
     @total = total_from_line_items(line_items)
     @tax_total = tax_total_from_line_items(line_items)
 
-    subject = "[#{Spree::Config.site_name}] Order cycle report for #{producer.name}"
+    subject = "[#{Spree::Config.site_name}] #{I18n.t('producer_mailer.order_cycle.subject', producer: producer.name)}"
 
     if has_orders? order_cycle, producer
       mail(to: @producer.email,

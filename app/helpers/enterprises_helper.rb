@@ -48,7 +48,7 @@ module EnterprisesHelper
 
   def enterprise_type_name(enterprise)
     if enterprise.sells == 'none'
-      enterprise.producer_profile_only ? 'Profile' : 'Supplier Only'
+      enterprise.producer_profile_only ? I18n.t(:profile) : I18n.t(:supplier_only)
     else
       "Has Shopfront"
     end
@@ -56,7 +56,7 @@ module EnterprisesHelper
 
   def enterprise_confirm_delete_message(enterprise)
     if enterprise.supplied_products.present?
-      "This will also delete the #{pluralize enterprise.supplied_products.count, 'product'} that this enterprise supplies. Are you sure you want to continue?"
+      I18n.t(:enterprise_confirm_delete_message, product: pluralize(enterprise.supplied_products.count, 'product'))
     else
       t(:are_you_sure)
     end
