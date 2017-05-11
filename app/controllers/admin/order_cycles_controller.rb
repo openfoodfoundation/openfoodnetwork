@@ -45,7 +45,7 @@ module Admin
         if @order_cycle.save
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
 
-          flash[:notice] = 'Your order cycle has been created.'
+          flash[:notice] = I18n.t(:order_cycles_create_notice)
           format.html { redirect_to admin_order_cycles_path }
           format.json { render :json => {:success => true} }
         else
@@ -64,7 +64,7 @@ module Admin
             # Only update apply exchange information if it is actually submmitted
             OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
           end
-          flash[:notice] = 'Your order cycle has been updated.' if params[:reloading] == '1'
+          flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
           format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
           format.json { render :json => {:success => true}  }
         else
@@ -76,7 +76,7 @@ module Admin
     def bulk_update
       @order_cycle_set = params[:order_cycle_set] && OrderCycleSet.new(params[:order_cycle_set])
       if @order_cycle_set.andand.save
-        redirect_to main_app.admin_order_cycles_path, :notice => 'Order cycles have been updated.'
+        redirect_to main_app.admin_order_cycles_path, :notice =>  I18n.t(:order_cycles_bulk_update_notice)
       else
         render :index
       end
@@ -85,14 +85,14 @@ module Admin
     def clone
       @order_cycle = OrderCycle.find params[:id]
       @order_cycle.clone!
-      redirect_to main_app.admin_order_cycles_path, :notice => "Your order cycle #{@order_cycle.name} has been cloned."
+      redirect_to main_app.admin_order_cycles_path, :notice => I18n.t(:order_cycles_clone_notice, name: @order_cycle.name)
     end
 
     # Send notifications to all producers who are part of the order cycle
     def notify_producers
       Delayed::Job.enqueue OrderCycleNotificationJob.new(params[:id].to_i)
 
-      redirect_to main_app.admin_order_cycles_path, :notice => 'Emails to be sent to producers have been queued for sending.'
+      redirect_to main_app.admin_order_cycles_path, :notice => I18n.t(:order_cycles_email_to_producers_notice)
     end
 
 
@@ -138,12 +138,12 @@ module Admin
       available_coordinators = permitted_coordinating_enterprises_for(@order_cycle).select(&:confirmed?)
       case available_coordinators.count
       when 0
-        flash[:error] = "None of your enterprises have permission to coordinate an order cycle"
+        flash[:error] =  I18n.t(:order_cycles_no_permission_to_coordinate_error)
         redirect_to main_app.admin_order_cycles_path
       when 1
         @order_cycle.coordinator = available_coordinators.first
       else
-        flash[:error] = "You don't have permission to create an order cycle coordinated by that enterprise" if params[:coordinator_id]
+        flash[:error] = I18n.t(:order_cycles_no_permission_to_create_error) if params[:coordinator_id]
         render :set_coordinator
       end
     end
@@ -153,7 +153,7 @@ module Admin
         yield
       rescue ActiveRecord::InvalidForeignKey
         redirect_to main_app.admin_order_cycles_url
-        flash[:error] = "That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead."
+        flash[:error] = I18n.t(:order_cycles_no_permission_to_delete_error)
       end
     end
 

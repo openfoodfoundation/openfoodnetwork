@@ -35,7 +35,7 @@ module Admin
         if params.key? :enterprise_id
           redirect_path = main_app.admin_enterprise_fees_path(enterprise_id: params[:enterprise_id])
         end
-        redirect_to redirect_path, :notice => 'Your enterprise fees have been updated.'
+        redirect_to redirect_path, :notice => I18n.t(:enterprise_fees_update_notice)
 
       else
         render :index
@@ -49,7 +49,7 @@ module Admin
       product_distribution = ProductDistribution.where(:enterprise_fee_id => @object).first
       if product_distribution
         p = product_distribution.product
-        error = "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{p.id} - #{p.name}."
+        error = I18n.t(:enterprise_fees_destroy_error, id: p.id, name: p.name)
 
         respond_with(@object) do |format|
           format.html do

@@ -154,6 +154,7 @@ en:
   items: Items
   summary: Summary
   detailed: Detailed
+  updated: Updated
   'yes': "Yes"
   'no': "No"
   'y': 'Y'
@@ -1414,6 +1415,9 @@ Please follow the instructions there to make your enterprise visible on the Open
   registration_detail_state_error: "State required"
   registration_detail_country: "Country:"
   registration_detail_country_error: "Please select a country"
+  shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
+  accounts_and_billing_task_already_running_error: "A task is already running, please wait until it has finished"
+  accounts_and_billing_start_task_notice: "Task Queued"
   fees: "Fees"
   item_cost: "Item cost"
   bulk: "Bulk"
@@ -1829,7 +1833,42 @@ Please follow the instructions there to make your enterprise visible on the Open
   product_importer_file_error: "error: no file uploaded"
   product_importer_spreadsheet_error: "could not process file: invalid filetype"
   product_importer_products_save_error: did not save any products successfully
-
+  product_import_file_not_found_notice: 'File not found or could not be opened'
+  product_import_no_data_in_spreadsheet_notice: 'No data found in spreadsheet'
+  order_choosing_hub_notice: Your hub has been selected.
+  order_cycle_selecting_notice: Your order cycle has been selected.
+  adjustments_tax_rate_error: "^Please check that the tax rate for this adjustment is correct."
+  active_distributors_not_ready_for_checkout_message_singular: >
+    The hub %{distributor_names} is listed in an active order cycle,
+    but does not have valid shipping and payment methods.
+    Until you set these up, customers will not be able to shop at this hub.
+  active_distributors_not_ready_for_checkout_message_plural: >
+    The hubs %{distributor_names} are listed in an active order cycle,
+    but do not have valid shipping and payment methods.
+    Until you set these up, customers will not be able to shop at these hubs.
+  enterprise_fees_update_notice: Your enterprise fees have been updated.
+  enterprise_fees_destroy_error: "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{id} - #{name}."
+  enterprise_register_package_error: "Please select a package"
+  enterprise_register_error: "Could not complete registration for %{enterprise}"
+  enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
+  enterprise_bulk_update_success_notice: "Enterprises updated successfully"
+  enterprise_bulk_update_error: 'Update failed'
+  order_cycles_create_notice: 'Your order cycle has been created.'
+  order_cycles_update_notice: 'Your order cycle has been updated.'
+  order_cycles_bulk_update_notice: 'Order cycles have been updated.'
+  order_cycles_clone_notice, name: "Your order cycle %{name} has been cloned."
+  order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
+  order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
+  order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
+  order_cycles_no_permission_to_delete_error: "That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead."
+  contents:
+    header: Header
+    home_page: Home page
+    producer_sign_up: Producer signup page
+    hub_signup_page: Hub signup page
+    group_signup_page: Group signup page
+    footer_and_external_links: Footer and External Links
+    your_content: Your content
   js:
     admin:
       modals:

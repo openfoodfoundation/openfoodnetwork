@@ -23,7 +23,7 @@ module Spree
           @tax_rate_id = tr_yielding_matching_tax || tr_valid_for_order
 
           if tr_yielding_matching_tax.nil?
-            @adjustment.errors.add :tax_rate_id, "^Please check that the tax rate for this adjustment is correct."
+            @adjustment.errors.add :tax_rate_id, I18n.t(:adjustments_tax_rate_error)
           end
         end
       end

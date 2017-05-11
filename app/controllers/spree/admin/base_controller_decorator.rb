@@ -51,13 +51,9 @@ Spree::Admin::BaseController.class_eval do
     distributor_names = distributors.map(&:name).join ', '
 
     if distributors.count > 1
-      "The hubs #{distributor_names} are listed in an active order cycle, " +
-        "but do not have valid shipping and payment methods. " +
-        "Until you set these up, customers will not be able to shop at these hubs."
+      I18n.t(:active_distributors_not_ready_for_checkout_message_plural, distributor_names: distributor_names)
     else
-      "The hub #{distributor_names} is listed in an active order cycle, " +
-        "but does not have valid shipping and payment methods. " +
-        "Until you set these up, customers will not be able to shop at this hub."
+      I18n.t(:active_distributors_not_ready_for_checkout_message_singular, distributor_names: distributor_names)
     end
   end
 

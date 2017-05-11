@@ -15,11 +15,11 @@ class Admin::AccountsAndBillingSettingsController < Spree::Admin::BaseController
 
   def start_job
     if @update_account_invoices_job || @finalize_account_invoices_job
-      flash[:error] = "A task is already running, please wait until it has finished"
+      flash[:error] = I18n.t(:accounts_and_billing_task_already_running_error)
     else
       new_job = "#{params[:job][:name]}".camelize.constantize.new
       Delayed::Job.enqueue new_job
-      flash[:success] = "Task Queued"
+      flash[:success] = I18n.t(:accounts_and_billing_start_task_notice)
     end
 
     redirect_to_edit

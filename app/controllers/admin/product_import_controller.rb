@@ -25,7 +25,7 @@ class Admin::ProductImportController < Spree::Admin::BaseController
 
   def validate_upload_presence
     unless params[:file] || (params[:filepath] && File.exist?(params[:filepath]))
-      redirect_to '/admin/product_import', notice: 'File not found or could not be opened'
+      redirect_to '/admin/product_import', notice: I18n.t(:product_import_file_not_found_notice)
       return
     end
   end
@@ -39,7 +39,7 @@ class Admin::ProductImportController < Spree::Admin::BaseController
 
   def check_spreadsheet_has_data(importer)
     unless importer.item_count
-      redirect_to '/admin/product_import', notice: 'No data found in spreadsheet'
+      redirect_to '/admin/product_import', notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
       return
     end
   end

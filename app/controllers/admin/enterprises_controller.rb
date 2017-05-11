@@ -57,7 +57,7 @@ module Admin
 
     def register
       if params[:sells] == 'unspecified'
-        flash[:error] = "Please select a package"
+        flash[:error] = I18n.t(:enterprise_register_package_error)
         return render :welcome, layout: "spree/layouts/bare_admin"
       end
 
@@ -68,10 +68,10 @@ module Admin
       end
 
       if @enterprise.update_attributes(attributes)
-        flash[:success] = "Congratulations! Registration for #{@enterprise.name} is complete!"
+        flash[:success] = I18n.t(:enterprise_register_success_notice, enterprise: @enterprise.name)
         redirect_to admin_path
       else
-        flash[:error] = "Could not complete registration for #{@enterprise.name}"
+        flash[:error] = I18n.t(:enterprise_register_error, enterprise: @enterprise.name)
         render :welcome, layout: "spree/layouts/bare_admin"
       end
     end
@@ -80,19 +80,19 @@ module Admin
       @enterprise_set = EnterpriseSet.new(collection, params[:enterprise_set])
       touched_enterprises = @enterprise_set.collection.select(&:changed?)
       if @enterprise_set.save
-        flash[:success] = "Enterprises updated successfully"
+        flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
         # 18-3-2015: It seems that the form for this action sometimes loads bogus values for
         # the 'sells' field, and submitting that form results in a bunch of enterprises with
         # values that have mysteriously changed. This statement is here to help debug that
         # issue, and should be removed (along with its display in index.html.haml) when the
         # issue has been resolved.
-        flash[:action] = "Updated #{pluralize(touched_enterprises.count, 'enterprise')}: #{touched_enterprises.map(&:name).join(', ')}"
+        flash[:action] = "#{I18n.t(:updated)} #{pluralize(touched_enterprises.count, 'enterprise')}: #{touched_enterprises.map(&:name).join(', ')}"
 
         redirect_to main_app.admin_enterprises_path
       else
         @enterprise_set.collection.select! { |e| touched_enterprises.include? e }
-        flash[:error] = 'Update failed'
+        flash[:error] = I18n.t(:enterprise_bulk_update_error)
         render :index
       end
     end
