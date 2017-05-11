@@ -1557,7 +1557,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
   spree_order_populator_availability_error: "That product is not available from the chosen distributor or order cycle."
-  spree_distributors_error: "^At least one hub must be selected"
+  spree_distributors_error: "At least one hub must be selected"
   spree_user_enterprise_limit_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
   spree_variant_product_error: must have at least one variant
   your_profil_live: "Your profile live"
@@ -1838,11 +1838,11 @@ Please follow the instructions there to make your enterprise visible on the Open
   order_choosing_hub_notice: Your hub has been selected.
   order_cycle_selecting_notice: Your order cycle has been selected.
   adjustments_tax_rate_error: "^Please check that the tax rate for this adjustment is correct."
-  active_distributors_not_ready_for_checkout_message_singular: >
+  active_distributors_not_ready_for_checkout_message_singular: >-
     The hub %{distributor_names} is listed in an active order cycle,
     but does not have valid shipping and payment methods.
     Until you set these up, customers will not be able to shop at this hub.
-  active_distributors_not_ready_for_checkout_message_plural: >
+  active_distributors_not_ready_for_checkout_message_plural: >-
     The hubs %{distributor_names} are listed in an active order cycle,
     but do not have valid shipping and payment methods.
     Until you set these up, customers will not be able to shop at these hubs.
@@ -1856,7 +1856,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   order_cycles_create_notice: 'Your order cycle has been created.'
   order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
-  order_cycles_clone_notice, name: "Your order cycle %{name} has been cloned."
+  order_cycles_clone_notice: "Your order cycle %{name} has been cloned."
   order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
