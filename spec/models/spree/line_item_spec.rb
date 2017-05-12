@@ -77,6 +77,56 @@ module Spree
       end
     end
 
+    describe "tracking stock when quantity is changed" do
+      context "when the order is already complete" do
+        let(:shop) { create(:distributor_enterprise)}
+        let(:order) { create(:completed_order_with_totals, distributor: shop) }
+        let!(:line_item) { order.reload.line_items.first }
+        let!(:variant) { line_item.variant }
+
+        context "when a variant override applies" do
+          let!(:vo) { create(:variant_override, hub: shop, variant: variant, count_on_hand: 3 ) }
+
+          it "draws stock from the variant override" do
+            expect(vo.reload.count_on_hand).to eq 3
+            expect{line_item.increment!(:quantity)}.to_not change{Spree::Variant.find(variant.id).on_hand}
+            expect(vo.reload.count_on_hand).to eq 2
+          end
+        end
+
+        context "when a variant override does not apply" do
+          it "draws stock from the variant" do
+            expect{line_item.increment!(:quantity)}.to change{Spree::Variant.find(variant.id).on_hand}.by(-1)
+          end
+        end
+      end
+    end
+
+    describe "tracking stock when a line item is destroyed" do
+      context "when the order is already complete" do
+        let(:shop) { create(:distributor_enterprise)}
+        let(:order) { create(:completed_order_with_totals, distributor: shop) }
+        let!(:line_item) { order.reload.line_items.first }
+        let!(:variant) { line_item.variant }
+
+        context "when a variant override applies" do
+          let!(:vo) { create(:variant_override, hub: shop, variant: variant, count_on_hand: 3 ) }
+
+          it "restores stock to the variant override" do
+            expect(vo.reload.count_on_hand).to eq 3
+            expect{line_item.destroy}.to_not change{Spree::Variant.find(variant.id).on_hand}
+            expect(vo.reload.count_on_hand).to eq 4
+          end
+        end
+
+        context "when a variant override does not apply" do
+          it "restores stock to the variant" do
+            expect{line_item.destroy}.to change{Spree::Variant.find(variant.id).on_hand}.by(1)
+          end
+        end
+      end
+    end
+
     describe "calculating price with adjustments" do
       it "does not return fractional cents" do
         li = LineItem.new

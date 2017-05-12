@@ -4,7 +4,7 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
   attributes :preferred_shopfront_message, :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order, :preferred_shopfront_order_cycle_order
   attributes :preferred_product_selection_from_inventory_only
   attributes :owner, :users, :tag_groups, :default_tag_group
-  attributes :require_login
+  attributes :require_login, :allow_guest_orders, :allow_order_changes
 
   has_one :owner, serializer: Api::Admin::UserSerializer
   has_many :users, serializer: Api::Admin::UserSerializer

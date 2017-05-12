@@ -231,7 +231,7 @@ Spree::Admin::ReportsController.class_eval do
     @report_types = REPORT_TYPES[:orders_and_fulfillment]
     @report_type = params[:report_type]
 
-    @include_blank = 'All'
+    @include_blank = I18n.t(:all)
 
     # -- Build Report with Order Grouper
     @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params

@@ -3,22 +3,26 @@
 
   .row.pad-top
     .small-12.columns.pad-top
-      %h2= accurate_title
-      .account-summary{"data-hook" => "account_summary"}
-        = @user.email
-        (#{link_to t(:edit), spree.edit_account_path})
-      %h3= t(:my_orders)
+      %h2
+        = accurate_title
+        %span.account-summary{"data-hook" => "account_summary"}
+          = @user.email
+          (#{link_to t(:edit), spree.edit_account_path})
+
       .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
-        .row
-          .small-12.columns
-            .active_table
-              %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.orders_by_distributor.length > 0", "ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
-              "ng-controller" => "DistributorNodeCtrl",
-              "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
-              id: "{{distributor.hash}}"}
-                .small-12.columns
-                  = render partial: "spree/users/skinny"
-                  = render partial: "spree/users/fat"
-          .message{"ng-if" => "Orders.orders_by_distributor.length == 0", "ng-bind" => "::'you_have_no_orders_yet' | t"}
+        .my-open-orders{ ng: { show: 'Orders.changeable_orders.length > 0' } }
+          %h3= t(:open_orders)
+          = render 'open_orders'
+
+        .active_table
+          %h3.my-orders= t(:transaction_history)
+          %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.orders_by_distributor.length > 0", "ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
+          "ng-controller" => "DistributorNodeCtrl",
+          "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
+          id: "{{distributor.hash}}"}
+            .small-12.columns
+              = render partial: "spree/users/skinny"
+              = render partial: "spree/users/fat"
+        .message{"ng-if" => "Orders.orders_by_distributor.length == 0", "ng-bind" => "::'you_have_no_orders_yet' | t"}
 
   = render partial: "shared/footer"
