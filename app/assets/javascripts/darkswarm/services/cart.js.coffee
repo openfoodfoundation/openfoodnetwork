@@ -126,7 +126,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
 
     reloadFinalisedLineItems: =>
       @line_items_finalised = []
-      $resource("/line_items").query (items) =>
+      $resource("/line_items/bought").query (items) =>
         for line_item in items
           line_item.variant.line_item = line_item
           Variants.extend line_item.variant

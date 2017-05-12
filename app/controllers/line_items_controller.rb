@@ -1,7 +1,10 @@
 class LineItemsController < BaseController
   respond_to :json
 
-  def index
+  # Taken from Spree::Api::BaseController
+  rescue_from ActiveRecord::RecordNotFound, :with => :not_found
+
+  def bought
     respond_with bought_items, each_serializer: Api::LineItemSerializer
   end
 
@@ -20,10 +23,12 @@ class LineItemsController < BaseController
     current_order_cycle.items_bought_by_user(spree_current_user, current_distributor)
   end
 
-  # Override default which just redirects
-  # See Spree::BaseController and Spree::Core::ControllerHelpers::Auth
   def unauthorized
-    render text: '', status: 403
+    render nothing: true, status: 401 and return
+  end
+
+  def not_found
+    render nothing: true, status: 404 and return
   end
 
   def destroy_with_lock(item)
