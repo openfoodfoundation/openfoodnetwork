@@ -22,8 +22,4 @@ class Api::VariantSerializer < ActiveModel::Serializer
   def product_name
     object.product.name
   end
-
-  def tag_list
-    object.tag_list if object.is_a? VariantOverride
-  end
 end
