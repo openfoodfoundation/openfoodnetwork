@@ -8,7 +8,7 @@ es:
     failure:
       invalid: |
         Correo o contraseña inválidos.
-        ¿Fue un invitado la vez pasada? Tal vez necesite crear una cuenta o recuperar su contraseña.
+        ¿Has sido invitada? Tal vez necesites crear una cuenta o recuperar tu contraseña.
     enterprise_confirmations:
       enterprise:
         confirmed: Gracias, tu dirección de email ha sido confirmada.
@@ -83,6 +83,7 @@ es:
     clear_all: Limpiar todo
     start_date: "Fecha de inicio"
     end_date: "Fecha de finalización"
+    form_invalid: "El formulario contiene campos vacíos o inválidos"
     columns: Columnas
     actions: Acciones
     viewing: "Viendo: %{current_view_name}"
@@ -328,7 +329,7 @@ es:
           create_one_button: Crear una ahora
           no_method_yet: Todavía no tienes ningún método de envío.
         shop_preferences:
-          shopfront_requires_login: "Publicidad visible en la tienda?"
+          shopfront_requires_login: "¿Visibilidad pública de la tienda?"
           shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
           shopfront_requires_login_false: "Público"
           shopfront_requires_login_true: "Visible solo para consumidores registrados"
@@ -428,6 +429,16 @@ es:
         next_step: Siguiente paso
         choose_starting_point: 'Elige tu punto de partida:'
     order_cycles:
+      edit:
+        advanced_settings: Configuración Avanzada
+        update_and_close: Actualizar y Cerrar
+        choose_products_from: 'Escoger Productos desde:'
+        pickup_time_tip: Cuándo estarán disponibles para el consumidor las ordenes de este ciclo
+        pickup_instructions_tip: Esta instrucciones se muestran a los consumidores después de que completen un pedido.
+      exchange_form:
+        pickup_instructions_placeholder: "Instrucciones de recogida"
+        pickup_time_placeholder: "Listo para ( Fecha / Hora)"
+        receival_instructions_placeholder: "Instrucciones de recepción"
       advanced_settings:
         title: Configuración Avanzada
         choose_product_tip: Puedes optar por restringir todos los productos disponibles (entrantes y salientes), solo a los de %{inventory} inventario.
@@ -445,7 +456,7 @@ es:
         distributor: Distribuidor
         products: Productos
         tags: Etiquetas
-        delivery_detaisl: Detalles de Recogida / Entrega
+        delivery_details: Detalles de Recogida / Entrega
         debug_info: Información de Debug
       name_and_timing_form:
         name: Nombre
@@ -463,9 +474,6 @@ es:
         customer_instructions_placeholder: Notas de la recogida o entrega
         products: Productos
         fees: Comisiones
-      edit:
-        advanced_settings: Configuración Avanzada
-        update_and_close: Actualizar y Cerrar
     producer_properties:
       index:
         title: Propiedades de la Productora
@@ -491,7 +499,7 @@ es:
       login: "login"
       register: "registro"
       contact: "contactar"
-      require_customer_login: "Esta tienda es solo para usuarios registrados."
+      require_customer_login: "Esta tienda es solo para consumidores registrados."
       require_login_html: "Haz %{login} si ya tienes una cuenta. De lo contrario puedes %{register}."
       require_customer_html: "%{contact} %{enterprise} para convertirte en miembro."
   invoice_billing_address: "Dirección de facturación:"
@@ -751,7 +759,7 @@ es:
   shopping_contact_social: "Seguir"
   shopping_groups_part_of: "es parte de:"
   shopping_producers_of_hub: "productoras de %{hub}:"
-  enterprises_next_closing: "Cerrando próximo pedido"
+  enterprises_next_closing: "Los pedidos se cerrarán"
   enterprises_ready_for: "Listo para"
   enterprises_choose: "Escoger cuando quieres tu pedido:"
   hubs_buy: "Comprar:"
@@ -1163,7 +1171,7 @@ es:
   producer: "Productora"
   product: "Producto"
   price: "Precio"
-  on_hand: "En mano"
+  on_hand: "Disponibles"
   save_changes: "Guardar Cambios"
   spree_admin_overview_enterprises_header: "Mis Organizaciones"
   spree_admin_overview_enterprises_footer: "GESTIONAR MIS ORGANIZACIONES"
@@ -1484,3 +1492,13 @@ es:
     orders:
       invoice:
         tax_invoice: "IMPUESTOS FACTURA:"
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+          Se ha solicitado el cambio de tu contraseña.
+          Si tu no lo has solicitado simplemente ignora este email.
+        link_text: >
+            Si has solicitado esta acción haz click en el siguiente enlace:
+        issue_text: |
+          Si el enlace no funciona prueba a copiarlo y pegarlo en tu navegador.
+          Si los problemas continúan no dudes en contactarnos.
