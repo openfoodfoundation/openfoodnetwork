@@ -30,3 +30,4 @@ Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Prod
     Variants.clear()
     Cart.clear()
     Products.update()
+    Cart.reloadFinalisedLineItems()

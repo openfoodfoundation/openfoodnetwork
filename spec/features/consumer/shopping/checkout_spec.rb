@@ -113,6 +113,24 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         user.reload.bill_address.address1.should eq '123 Your Head'
         user.reload.ship_address.address1.should eq '123 Your Head'
       end
+
+      it "it doesn't tell about previous orders" do
+        expect(page).to_not have_content("You have an order for this order cycle already.")
+      end
+
+      context "with previous orders" do
+        let!(:prev_order) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: order.user) }
+
+        before do
+          order.distributor.allow_order_changes = true
+          order.distributor.save
+        end
+
+        it "informs about previous orders" do
+          visit checkout_path
+          expect(page).to have_content("You have an order for this order cycle already.")
+        end
+      end
     end
 
     context "on the checkout page" do
@@ -135,9 +153,9 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         toggle_shipping
         choose sm2.name
 
-        page.should have_selector 'orderdetails .cart-total', text: "$11.23"
-        page.should have_selector 'orderdetails .shipping', text: "$4.56"
-        page.should have_selector 'orderdetails .total', text: "$15.79"
+        page.should have_selector 'orderdetails .cart-total', text: with_currency(11.23)
+        page.should have_selector 'orderdetails .shipping', text: with_currency(4.56)
+        page.should have_selector 'orderdetails .total', text: with_currency(15.79)
 
         # Tax should not be displayed in checkout, as the customer's choice of shipping method
         # affects the tax and we haven't written code to live-update the tax amount when they
@@ -269,7 +287,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           # + shipping tax ($ 4.56 @ 25% = $0.91)
           #                              = $1.93
           page.should have_content "(includes tax)"
-          page.should have_content "$1.93"
+          page.should have_content with_currency(1.93)
         end
 
         context "with basic details filled" do
@@ -331,14 +349,14 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           context "when we are charged a payment method fee (transaction fee)" do
             it "creates a payment including the transaction fee" do
               # Selecting the transaction fee, it is displayed
-              expect(page).to have_selector ".transaction-fee td", text: "$0.00"
-              expect(page).to have_selector ".total", text: "$11.23"
+              expect(page).to have_selector ".transaction-fee td", text: with_currency(0.00)
+              expect(page).to have_selector ".total", text: with_currency(11.23)
 
               toggle_payment
-              choose "#{pm2.name} ($5.67)"
+              choose "#{pm2.name} (#{with_currency(5.67)})"
 
-              expect(page).to have_selector ".transaction-fee td", text: "$5.67"
-              expect(page).to have_selector ".total", text: "$16.90"
+              expect(page).to have_selector ".transaction-fee td", text: with_currency(5.67)
+              expect(page).to have_selector ".total", text: with_currency(16.90)
 
               place_order
               expect(page).to have_content "Your order has been processed successfully"
@@ -402,7 +420,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         o.save!
       end
 
-      it "checks out successfully" do
+      it "checks out successfully", retry: 3 do
         visit checkout_path
         checkout_as_guest
         choose sm2.name

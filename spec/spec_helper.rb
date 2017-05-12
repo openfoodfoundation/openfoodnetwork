@@ -97,6 +97,7 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
   config.include Spree::CheckoutHelpers
+  config.include Spree::MoneyHelper
   config.include Spree::Core::TestingSupport::ControllerRequests, :type => :controller
   config.include Devise::TestHelpers, :type => :controller
   config.extend  Spree::Api::TestingSupport::Setup, :type => :controller

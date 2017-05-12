@@ -17,7 +17,7 @@
 
     = render 'spree/shared/line_item_name', line_item: line_item
 
-    - if @insufficient_stock_lines.include? line_item
+    - if @insufficient_stock_lines.andand.include? line_item
       %span.out-of-stock
         = variant.in_stock? ? t(:insufficient_stock, :on_hand => variant.on_hand) : t(:out_of_stock)
         %br/
@@ -35,6 +35,5 @@
     = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 
   %td.cart-item-delete.text-center{"data-hook" => "cart_item_delete"}
-    {{ quantity }}
     %a.delete{href: "#", id: "delete_#{dom_id(line_item)}"}
       %i.delete.ofn-i_026-trash

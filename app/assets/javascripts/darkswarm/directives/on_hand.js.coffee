@@ -6,7 +6,11 @@ Darkswarm.directive "ofnOnHand", ->
     # In cases where this field gets its value from the HTML element rather than the model,
     # initialise the model with the HTML value.
     if scope.$eval(attr.ngModel) == undefined
-      ngModel.$setViewValue elem.val()
+      # Don't dirty the model when we do this
+      setDirty = ngModel.$setDirty
+      ngModel.$setDirty = angular.noop
+      ngModel.$setViewValue(elem.val())
+      ngModel.$setDirty = setDirty
 
     ngModel.$parsers.push (viewValue) ->
       on_hand = parseInt(attr.ofnOnHand)
