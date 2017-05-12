@@ -113,6 +113,10 @@ module WebHelper
     DirtyFormDialog.new(page)
   end
 
+  def set_i18n_locale(locale = 'en')
+    page.evaluate_script("I18n.locale = '#{locale}'")
+  end
+
   def get_i18n_locale
     page.evaluate_script("I18n.locale;")
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170413083148) do
+ActiveRecord::Schema.define(:version => 20170512115519) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -998,6 +998,7 @@ ActiveRecord::Schema.define(:version => 20170413083148) do
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                :limit => 40
     t.integer  "enterprise_limit",                     :default => 1, :null => false
+    t.string   "locale",                 :limit => 5
   end
 
   add_index "spree_users", ["email"], :name => "email_idx_unique", :unique => true

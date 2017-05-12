@@ -17,7 +17,7 @@ Spree.user_class.class_eval do
   accepts_nested_attributes_for :bill_address
   accepts_nested_attributes_for :ship_address
 
-  attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit, :bill_address_attributes, :ship_address_attributes
+  attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit, :locale, :bill_address_attributes, :ship_address_attributes
   after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
