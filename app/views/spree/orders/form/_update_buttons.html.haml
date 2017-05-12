@@ -1,0 +1,24 @@
+.row
+  .columns.small-12.medium-3
+    - if current_order.andand.distributor == @order.distributor
+      - if current_order.line_items.present?
+        = link_to spree.cart_path, :class => "button expand" do
+          %i.ofn-i_008-caret-left
+          = t(:order_back_to_cart)
+      - else
+        = link_to main_app.shop_path, :class => "button expand" do
+          %i.ofn-i_008-caret-left
+          = t(:order_back_to_store)
+    - else
+      &nbsp;
+  - if order.changes_allowed?
+    .columns.show-for-medium-up.medium-3 &nbsp;
+    .columns.small-12.medium-3
+      = link_to spree.cancel_order_path(@order), method: :put, :class => "button secondary expand", "confirm-link-click" => t('orders_confirm_cancel') do
+        %i.ofn-i_009-close
+        = t(:cancel_order)
+    .columns.small-12.medium-3
+      = button_tag :class => 'button primary radius expand', :id => 'update-button', "ng-disabled" => 'update_order_form.$pristine' do
+        %i.ofn-i_051-check-big
+        %span{ ng: { show: 'update_order_form.$dirty' } }= t(:save_changes)
+        %span{ ng: { hide: 'update_order_form.$dirty' } }= t(:order_saved)

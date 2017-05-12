@@ -58,6 +58,14 @@ class VariantOverride < ActiveRecord::Base
     end
   end
 
+  def increment_stock!(quantity)
+    if stock_overridden?
+      increment! :count_on_hand, quantity
+    else
+      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
+    end
+  end
+
   def default_stock?
     default_stock.present?
   end

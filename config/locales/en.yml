@@ -80,6 +80,21 @@ en:
   show_all: Show all
   show_all_with_more: "Show All (%{num}  More)"
   cancel: Cancel
+  edit: Edit
+  distributors: Distributors
+  order_cycles: Order Cycles
+  enterprise_limit: Enterprise Limit
+  bulk_order_management: Bulk Order Management
+  enterprises: Enterprises
+  enterprise_groups: Groups
+  reports: Reports
+  variant_overrides: Inventory
+  more: More
+  spree_products: Spree Products
+  all: All
+  current: Current
+  available: Available
+  dashboard: Dashboard
 
   admin:
     # Common properties / models
@@ -107,6 +122,8 @@ en:
     end_date: "End Date"
     unsaved_changes: "You have unsaved changes"
     form_invalid: "Form contains missing or invalid fields"
+    clear_filters: Clear Filters
+    clear: Clear
 
     columns: Columns
     actions: Actions
@@ -190,9 +207,9 @@ en:
         edit: 'Edit'
         update_address: 'Update Address'
         confirm_delete: 'Sure to delete?'
+        search_by_email: "Search by email/code..."
       destroy:
         has_associated_orders: 'Delete failed: customer has associated orders with his shop'
-
     cache_settings:
       show:
         title: Caching
@@ -301,6 +318,8 @@ en:
           abn_placeholder: eg. 99 123 456 789
           acn: ACN
           acn_placeholder: eg. 123 456 789
+          display_invoice_logo: Display logo in invoices
+          invoice_text: Add customized text at the end of invoices
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
@@ -373,17 +392,25 @@ en:
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
           shopfront_requires_login_true: "Visible to registered customers only"
+          recommend_require_login: "We recommend to require users to login when orders can be changed."
           allow_guest_orders: "Guest orders"
           allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
           allow_guest_orders_false: "Require login to order"
           allow_guest_orders_true: "Allow guest checkout"
+          allow_order_changes: "Change orders"
+          allow_order_changes_tip: "Allow customers to change their order as long the order cycle is open."
+          allow_order_changes_false: "Placed orders cannot be changed"
+          allow_order_changes_true: "Customers can remove items from an order of an open order cycle"
+          shopfront_message: Shopfront Message
           shopfront_message_placeholder: >
             An optional explanation for customers detailing how your shopfront works,
             to be displayed above the product list on your shop page.
+          shopfront_closed_message: Shopfront Closed Message
           shopfront_closed_message_placeholder: >
             A message which provides a more detailed explanation about why your shop is
             closed and/or when customers can expect it to open again. This is displayed
             on your shop only when you have no active order cycles (ie. shop is closed).
+          shopfront_category_ordering: Shopfront Category Ordering
           open_date: Open Date
           close_date: Close Date
         social:
@@ -525,12 +552,25 @@ en:
         invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
         enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
 
+# Frontend views
+#
+# These keys are referenced relatively like `t('.message')` in
+# app/views/checkout/_already_ordered.html.haml.
+#
+  checkout:
+    already_ordered:
+      cart: "cart"
+      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
   home:
     hubs:
       show_closed_shops: "Show closed shops"
       hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
   shared:
+    menu:
+      cart:
+        checkout: "Checkout now"
+        already_ordered_products: "Already ordered in this order cycle"
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
@@ -606,6 +646,7 @@ en:
   terms_of_service: "Terms of service"
   on_demand: On demand
   none: None
+  not_allowed: Not allowed
 
   label_shops: "Shops"
   label_map: "Map"
@@ -628,7 +669,6 @@ en:
   items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
-  checkout: "Checkout now"
   cart_updating: "Updating cart..."
   cart_empty: "Cart empty"
   cart_edit: "Edit your cart"
@@ -636,15 +676,6 @@ en:
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
-
-  ofn_cart_headline: "Current cart for:"
-  ofn_cart_distributor: "Distributor:"
-  ofn_cart_oc: "Order cycle:"
-  ofn_cart_from: "From:"
-  ofn_cart_to: "To:"
-  ofn_cart_product: "Product:"
-  ofn_cart_quantitiy: "Quantity:"
-  ofn_cart_send: "Buy me"
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
@@ -745,6 +776,7 @@ en:
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
+  order_delivery_time: Delivery time
   order_special_instructions: "Your notes:"
   order_pickup_time: Ready for collection
   order_pickup_instructions: Collection Instructions
@@ -753,6 +785,8 @@ en:
   order_includes_tax: (includes tax)
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
   order_hub_info: Hub Info
+  order_back_to_store: Back To Store
+  order_back_to_cart: Back To Cart
 
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
 
@@ -861,6 +895,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hubs_intro: Shop in your local area
   hubs_distance: Closest to
   hubs_distance_filter: "Show me shops near %{location}"
+
+  shop_changeable_orders_alert_html:
+    one: Your order with <a href='%{path}' target='_blank'>%{shop} / %{order}</a> is open for review. You can make changes until %{oc_close}.
+    other: You have <a href='%{path}' target='_blank'>%{count} orders with %{shop}</a> currently open for review. You can make changes until %{oc_close}.
+  orders_changeable_orders_alert_html: This order has been confirmed, but you can make changes until <strong>%{oc_close}</strong>.
 
   products_clear_all: Clear all
   products_showing: "Showing:"
@@ -1007,7 +1046,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_edit_checkout: Checkout
   orders_form_empty_cart: "Empty cart"
   orders_form_subtotal: Produce subtotal
-  orders_form_admin: Admin and handling
+  orders_form_admin: Admin & Handling
   orders_form_total: Total
   orders_oc_expired_headline: Orders have closed for this order cycle
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
@@ -1017,7 +1056,18 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_oc_expired_phone: "Phone:"
   orders_show_title: Order Confirmation
   orders_show_time: Order ready on
-  orders_show_number: Order confirmation
+  orders_show_order_number: "Order #%{number}"
+  orders_show_cancelled: Cancelled
+  orders_show_confirmed: Confirmed
+  orders_your_order_has_been_cancelled: "Your order has been cancelled"
+  orders_could_not_cancel: "Sorry, the order could not be cancelled"
+  orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
+  orders_bought_items_notice:
+    one: An additional item is already confirmed for this order cycle
+    other: "%{count} additional items already confirmed for this order cycle"
+  orders_bought_edit_button: Edit confirmed items
+  orders_bought_already_confirmed: "* already confirmed"
+  orders_confirm_cancel: Are you sure you want to cancel this order?
 
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
@@ -1124,6 +1174,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   enterprise_long_desc: "Long Description"
   enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
   enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
+  enterprise_limit: Enterprise Limit
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "eg. 99 123 456 789"
   enterprise_acn: "ACN"
@@ -1264,6 +1315,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   calculator_values: "Calculator values"
   flat_percent_per_item: "Flat Percent (per item)"
   new_order_cycles: "New Order Cycles"
+  new_order_cycle: "New Order Cycle"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
@@ -1284,6 +1336,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   price: "Price"
   on_hand: "On hand"
   save_changes: "Save Changes"
+  order_saved: "Order Saved"
   spree_admin_overview_enterprises_header: "My Enterprises"
   spree_admin_overview_enterprises_footer: "MANAGE MY ENTERPRISES"
   spree_admin_enterprises_hubs_name: "Name"
@@ -1544,6 +1597,10 @@ Please follow the instructions there to make your enterprise visible on the Open
       now_out_of_stock: is now out of stock.
       only_n_remainging: "now only has %{num} remaining."
 
+  producers:
+    signup:
+      start_free_profile: "Start with a free profile, and expand when you're ready!"
+
   spree:
     admin:
       products:
@@ -1560,7 +1617,11 @@ Please follow the instructions there to make your enterprise visible on the Open
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
+    inventory: Inventory
     zipcode: Postcode
+    orders:
+      bought:
+        item: "Already ordered in this order cycle"
     shipment_states:
       backorder: backorder
       partial: partial
@@ -1598,3 +1659,46 @@ Please follow the instructions there to make your enterprise visible on the Open
     orders:
       invoice:
         tax_invoice: "TAX INVOICE: "
+    payment_states:
+      balance_due: balance due
+      completed: completed
+      checkout: checkout
+      credit_owed: credit owed
+      failed: failed
+      paid: paid
+      pending: pending
+      processing: processing
+      void: void
+      invalid: invalid
+    shipment_states:
+      backorder: backorder
+      partial: partial
+      pending: pending
+      ready: ready
+      shipped: shipped
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+          A request to reset your password has been made.
+          If you did not make this request, simply ignore this email.
+        link_text: >
+          If you did make this request just click the link below:
+        issue_text: |
+          If the above URL does not work try copying and pasting it into your browser.
+          If you continue to have problems please feel free to contact us.
+    weight: Weight (per kg)
+    zipcode: Postcode
+    users:
+      show:
+        open_orders: Open Orders
+        transaction_history: Transaction History
+      open_orders:
+        order: Order
+        shop: Shop
+        changes_allowed_until: Changes Allowed Until
+        items: Items
+        total: Total
+        edit: Edit
+        cancel: Cancel
+        closed: Closed
+        until: Until
