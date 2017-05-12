@@ -323,8 +323,8 @@ describe Spree::OrdersController do
       context "and the order is not complete" do
         let!(:order) { create(:order) }
 
-        it "returns the current_order" do
-          expect(controller.send(:order_to_update)).to eq current_order
+        it "returns nil" do
+          expect(controller.send(:order_to_update)).to eq nil
         end
       end
 
@@ -334,8 +334,8 @@ describe Spree::OrdersController do
         context "and the user doesn't have permisson to 'update' the order" do
           before { allow(controller).to receive(:can?).with(:update, order) { false } }
 
-          it "returns the current_order" do
-            expect(controller.send(:order_to_update)).to eq current_order
+          it "returns nil" do
+            expect(controller.send(:order_to_update)).to eq nil
           end
         end
 
@@ -344,8 +344,8 @@ describe Spree::OrdersController do
 
           context "and the order is not editable" do
 
-            it "returns the current_order" do
-              expect(controller.send(:order_to_update)).to eq current_order
+            it "returns nil" do
+              expect(controller.send(:order_to_update)).to eq nil
             end
           end
 
