@@ -47,6 +47,14 @@ module OpenFoodNetwork
         end
       end
 
+      def increment!(attribute, by=1)
+        if attribute == :count_on_hand && @variant_override.andand.stock_overridden?
+          @variant_override.increment_stock! by
+        else
+          super
+        end
+      end
+
       def sku
         @variant_override.andand.sku || super
       end

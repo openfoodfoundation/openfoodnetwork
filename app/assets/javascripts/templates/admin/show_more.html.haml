@@ -1,4 +1,4 @@
 %div{ ng: { show: "data.length > limit" } }
   %input{ type: 'button', value: t(:show_more), ng: { click: 'limit = limit + increment' } }
   or
-  %input{ type: 'button', value: t(:show_more_with_more, num: '{{ data.length - limit }}'), ng: { click: 'limit = data.length' } }
+  %input{ type: 'button', value: t(:show_all_with_more, num: '{{ data.length - limit }}'), ng: { click: 'limit = data.length' } }

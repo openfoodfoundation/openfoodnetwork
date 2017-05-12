@@ -1,3 +1,6 @@
+See this here post on raising a github issue:
+https://community.openfoodnetwork.org/t/how-to-raise-a-github-issue/912
+
 # Contributing
 
 We love pull requests from everyone. Here are some instructions for

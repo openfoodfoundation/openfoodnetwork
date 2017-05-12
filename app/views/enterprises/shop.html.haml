@@ -8,6 +8,11 @@
 = inject_shop_enterprises
 
 %shop.darkswarm
+  - if changeable_orders.any?
+    .alert-box.info{ "ofn-inline-alert" => true, ng: { show: "visible" } }
+      = shop_changeable_orders_alert_html
+      %a.close{ ng: { click: "close()" } } &times;
+
   - content_for :order_cycle_form do
 
     %div{"ng-controller" => "OrderCycleChangeCtrl", "ng-cloak" => true}
