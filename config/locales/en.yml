@@ -1382,6 +1382,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   edit_profile_details: "Edit profile details"
   edit_profile_details_etc: "Change your profile description, images, etc."
   order_cycle: "Order Cycle"
+  order_cycles: "Order Cycles"
+  enterprises: "Enterprises"
   remove_tax: "Remove tax"
   enterprise_terms_of_service: "Enterprise Terms of Service"
   enterprises_require_tos: "Enterprises must accept Terms of Service"
