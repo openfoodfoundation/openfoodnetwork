@@ -398,8 +398,8 @@ en:
           allow_guest_orders_true: "Allow guest checkout"
           allow_order_changes: "Change orders"
           allow_order_changes_tip: "Allow customers to change their order as long the order cycle is open."
-          allow_order_changes_false: "Placed orders cannot be changed"
-          allow_order_changes_true: "Customers can remove items from an order of an open order cycle"
+          allow_order_changes_false: "Placed orders cannot be changed / cancelled"
+          allow_order_changes_true: "Customers can change / cancel orders while order cycle is open"
           shopfront_message: Shopfront Message
           shopfront_message_placeholder: >
             An optional explanation for customers detailing how your shopfront works,
