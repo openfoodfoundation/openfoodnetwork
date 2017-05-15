@@ -34,6 +34,7 @@ module Spree
       included_tax > 0
     end
 
+    # @return [Array<Spree::TaxRate>]
     def tax_rates
       case originator
       when Spree::TaxRate
@@ -51,6 +52,9 @@ module Spree
       end
     end
 
+    # shipping fees and adjustments created from the admin panel have
+    # taxes set at creation in the included_tax field without relation
+    # to the corresponding TaxRate, so we look for the closest one
     def find_closest_tax_rates_from_included_tax
       approximation = (included_tax / (amount - included_tax))
       return [] if approximation.infinite? or approximation.zero?
