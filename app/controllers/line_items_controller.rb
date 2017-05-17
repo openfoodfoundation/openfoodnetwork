@@ -1,21 +1,24 @@
 class LineItemsController < BaseController
   respond_to :json
 
-  # Taken from Spree::Api::BaseController
-  rescue_from ActiveRecord::RecordNotFound, :with => :not_found
+  before_filter :load_line_item, only: :destroy
 
   def bought
     respond_with bought_items, each_serializer: Api::LineItemSerializer
   end
 
   def destroy
-    item = Spree::LineItem.find(params[:id])
-    authorize! :destroy, item
-    destroy_with_lock item
-    respond_with(item)
+    authorize! :destroy, @line_item
+    destroy_with_lock @line_item
+    respond_with(@line_item)
   end
 
   private
+
+  def load_line_item
+    @line_item = Spree::LineItem.find_by_id(params[:id])
+    not_found unless @line_item
+  end
 
   # List all items the user already ordered in the current order cycle
   def bought_items
@@ -24,7 +27,8 @@ class LineItemsController < BaseController
   end
 
   def unauthorized
-    render nothing: true, status: 401 and return
+    status = spree_current_user ? 403 : 401
+    render nothing: true, status: status and return
   end
 
   def not_found

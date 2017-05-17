@@ -47,11 +47,10 @@ describe LineItemsController do
     context "with a line item id" do
       let(:params) { { format: :json, id: item } }
 
-      context "without a user" do
+      context "where the item's order is not associated with the user" do
         it "denies deletion" do
           delete :destroy, params
-          expect(response.status).to eq 401
-          expect(item.reload).to be_a Spree::LineItem
+          expect(response.status).to eq 403
         end
       end
 
@@ -61,8 +60,7 @@ describe LineItemsController do
         context "without an order cycle" do
           it "denies deletion" do
             delete :destroy, params
-            expect(response.status).to eq 401
-            expect(item.reload).to be_a Spree::LineItem
+            expect(response.status).to eq 403
           end
         end
 
@@ -72,8 +70,7 @@ describe LineItemsController do
           context "without a distributor" do
             it "denies deletion" do
               delete :destroy, params
-              expect(response.status).to eq 401
-              expect(item.reload).to be_a Spree::LineItem
+              expect(response.status).to eq 403
             end
           end
 
@@ -82,8 +79,7 @@ describe LineItemsController do
             context "where changes are not allowed" do
               it "denies deletion" do
                 delete :destroy, params
-                expect(response.status).to eq 401
-                expect(item.reload).to be_a Spree::LineItem
+                expect(response.status).to eq 403
               end
             end
 
