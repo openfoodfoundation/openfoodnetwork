@@ -224,16 +224,18 @@ Spree::OrdersController.class_eval do
     n == Float::INFINITY ? 2147483647 : n
   end
 
-  # If a specific order is mentioned, check that it is COMPLETE, that changes
-  # are allowed and that the user has access. Return nil if not.
   def order_to_update
     return @order_to_update if defined? @order_to_update
     return @order_to_update = current_order unless params[:id]
-    @order_to_update = begin
-      order = Spree::Order.complete.find_by_number(params[:id])
-      order = nil unless order.andand.changes_allowed? && can?(:update, order)
-      order
-    end
+    @order_to_update = changeable_order_from_number
+  end
+
+  # If a specific order is requested, return it if it is COMPLETE and
+  # changes are allowed and the user has access. Return nil if not.
+  def changeable_order_from_number
+    order = Spree::Order.complete.find_by_number(params[:id])
+    return nil unless order.andand.changes_allowed? && can?(:update, order)
+    order
   end
 
   def check_at_least_one_line_item
