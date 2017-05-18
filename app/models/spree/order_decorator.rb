@@ -344,10 +344,10 @@ Spree::Order.class_eval do
   end
 
   def update_adjustment!(adjustment)
-    locked = adjustment.locked
-    adjustment.locked = false
+    state = adjustment.state
+    adjustment.state = 'open'
     adjustment.update!(self)
-    adjustment.locked = locked
+    adjustment.state = state
   end
 
   # object_params sets the payment amount to the order total, but it does this before
