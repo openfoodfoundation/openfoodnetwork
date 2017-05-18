@@ -19,7 +19,7 @@ class VariantOverride < ActiveRecord::Base
 
   def self.indexed(hub)
     Hash[
-      for_hubs(hub).map { |vo| [vo.variant, vo] }
+      for_hubs(hub).preload(:variant).map { |vo| [vo.variant, vo] }
     ]
   end
 
