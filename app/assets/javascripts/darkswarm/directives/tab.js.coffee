@@ -8,5 +8,5 @@ Darkswarm.directive "tab", ->
       scope.$apply ->
         ctrl.toggle(scope.name)
 
-    ctrl.registerSelectionListener (selection) ->
+    ctrl.registerSelectionListener (prefix, selection) ->
       element.toggleClass('selected', selection == scope.name)
