@@ -10,4 +10,3 @@ if current_order
     cart_count
   end
 end
-

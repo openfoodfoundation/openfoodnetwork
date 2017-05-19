@@ -10,4 +10,3 @@ module RablHelper
     include ActionView::Helpers::AssetTagHelper
   end
 end
-
