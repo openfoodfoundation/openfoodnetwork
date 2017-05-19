@@ -133,6 +133,10 @@ describe Spree::Admin::LineItemsController do
     let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [variant]) }
     let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
     let(:params) { { order_id: order.number, line_item: { variant_id: variant.id, quantity: 1 } } }
+    let!(:order_without_distributor) { create(:order, distributor: nil) }
+    let!(:variant2) { create(:variant, price: 78) }
+    let!(:vo2) { create(:variant_override, hub: distributor, variant: variant2, price: 71.11) }
+    let(:params_with_distributor) { {distributor_id: distributor.id, order_id: order_without_distributor.number, line_item: { variant_id: variant2.id, quantity: 1 } } }
 
     before { login_as_admin }
 
@@ -141,6 +145,15 @@ describe Spree::Admin::LineItemsController do
 
       order.line_items(:reload).last.price.should == 11.11
     end
+
+    context "if the order has no distributor" do
+      it "uses the distributor to from the params to scope overrides" do
+        spree_post :create, params_with_distributor
+        order_without_distributor.line_items(:reload).last.price.should == 71.11
+      end
+    end
+
+
   end
 
   describe "#update" do

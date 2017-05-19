@@ -19,7 +19,12 @@ Spree::Admin::LineItemsController.class_eval do
 
   def create
     variant = Spree::Variant.find(params[:line_item][:variant_id])
-    OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor).scope(variant)
+    dist = if @order.distributor
+      @order.distributor
+    elsif params[:distributor_id]
+      Enterprise.find(params[:distributor_id])
+    end
+    OpenFoodNetwork::ScopeVariantToHub.new(dist).scope(variant)
 
     @line_item = @order.add_variant(variant, params[:line_item][:quantity].to_i)
 
