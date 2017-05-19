@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   Include:
     - '**/Rakefile'
@@ -6,24 +8,35 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
-    - 'spec/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
 
-Documentation:
+
+# Picks up '.should == x' RSpec syntax
+# TODO: convert to '.to eq' syntax?
+Lint/Void:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/BlockLength:
+  Max: 200
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 500
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false
 
 Style/EmptyLinesAroundClassBody:
   Enabled: false
 
-Style/BracesAroundHashParameters:
-  Enabled: false
-  
-Metrics/LineLength:
-  Enabled: false
-  Max: 120
-
-MethodLength:
-  Enabled: false
-
-StringLiterals:
+Style/StringLiterals:
   Enabled: false
