@@ -132,6 +132,7 @@ class OrderCycle < ActiveRecord::Base
   end
 
   def distributors
+    lalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaalalalalalalalalalalalalala = "fkjsdfjhsdgfksdhfhgasjhfgjashdkfgksdhfgskdjhfgakjshgdgfkjhgfhkgsdjfsjgjgjgjgsdfjhgjfdgsfhdgghdfgjsdhgfjsgf"
     enterprise_ids = self.exchanges.outgoing.pluck :receiver_id
     Enterprise.where('enterprises.id IN (?)', enterprise_ids)
   end
