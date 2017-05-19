@@ -61,7 +61,6 @@ module Spree
       [Spree::TaxRate.order("ABS(amount - #{approximation})").first]
     end
 
-
     def self.without_callbacks
       skip_callback :save, :after, :update_adjustable
       skip_callback :destroy, :after, :update_adjustable

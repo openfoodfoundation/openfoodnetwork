@@ -115,7 +115,6 @@ class OrderCycle < ActiveRecord::Base
     ]
   end
 
-
   def clone!
     oc = self.dup
     oc.name = "COPY OF #{oc.name}"

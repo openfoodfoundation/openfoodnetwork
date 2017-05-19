@@ -70,7 +70,6 @@ Spree::Variant.class_eval do
     ]
   end
 
-
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)
   end

@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
     params[:action].to_sym
   end
 
-
   def require_distributor_chosen
     unless @distributor = current_distributor
       redirect_to spree.root_path
@@ -61,7 +60,6 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
     end
   end
-
 
   # All render calls within the block will be performed with the specified format
   # Useful for rendering html within a JSON response, particularly if the specified

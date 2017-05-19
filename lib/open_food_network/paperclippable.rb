@@ -25,7 +25,9 @@ module OpenFoodNetwork
     end
 
     def valid?()      true end
+
     def new_record?() true end
+
     def destroyed?()  true end
 
     def save
@@ -37,7 +39,9 @@ module OpenFoodNetwork
     def errors
       obj = Object.new
       def obj.[](key)         [] end
+
       def obj.full_messages() [] end
+
       def obj.any?()       false end
       obj
     end
