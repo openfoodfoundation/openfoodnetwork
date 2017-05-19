@@ -6,7 +6,7 @@
 .row.summary
   .small-10.medium-10.large-11.columns.summary-header
     %h3
-      %a{"ng-click" => "triggerProductModal()"}
+      %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
         %span{"ng-bind" => "::product.name"}
         %i.ofn-i_057-expand
     %small

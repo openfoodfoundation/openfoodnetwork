@@ -32,7 +32,7 @@ feature "As a consumer I want to view products", js: true do
         visit shop_path
         select "monday", :from => "order_cycle_id"
 
-        open_product_modal product
+        perform_and_ensure(:click_link, product.name, lambda{ page.has_selector?('.reveal-modal')})
         modal_should_be_open_for product
 
         within(".reveal-modal") do
@@ -47,7 +47,7 @@ feature "As a consumer I want to view products", js: true do
         visit shop_path
         select "monday", :from => "order_cycle_id"
 
-        open_product_modal product
+        perform_and_ensure(:click_link, product.name, lambda{ page.has_selector?('.reveal-modal')})
         modal_should_be_open_for product
 
         within(".reveal-modal") do

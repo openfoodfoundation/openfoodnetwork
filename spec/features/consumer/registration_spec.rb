@@ -172,17 +172,4 @@ feature "Registration", js: true do
     end
     expect(page).to have_content content
   end
-
-  def perform_and_ensure(action, *args, assertion)
-    # Buttons/Links/Checkboxes appear to be unresponsive for a while
-    # so keep clicking them until assertion is satified
-    using_wait_time 0.5 do
-      10.times do
-        send(action, *args)
-        return if assertion.call
-      end
-      # Only make it here if we have tried 10 times
-      expect(assertion.call).to be true
-    end
-  end
 end
