@@ -164,7 +164,6 @@ Spree::Order.class_eval do
     line_items.each &:cap_quantity_at_stock!
   end
 
-
   def set_distributor!(distributor)
     self.distributor = distributor
     self.order_cycle = nil unless self.order_cycle.andand.has_distributor? distributor

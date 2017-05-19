@@ -520,12 +520,6 @@ Style/EmptyElse:
     - 'app/models/spreadsheet_entry.rb'
     - 'app/serializers/api/admin/basic_order_cycle_serializer.rb'
 
-# Offense count: 73
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAdjacentOneLineDefs, NumberOfEmptyLines.
-Style/EmptyLineBetweenDefs:
-  Enabled: false
-
 # Offense count: 287
 # Cop supports --auto-correct.
 Style/EmptyLines:

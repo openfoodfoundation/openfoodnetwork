@@ -82,7 +82,6 @@ Spree::OrderPopulator.class_eval do
     [quantity_to_add, max_quantity_to_add]
   end
 
-
   def cart_remove(variant_id)
     variant = Spree::Variant.find(variant_id)
     @order.remove_variant(variant)

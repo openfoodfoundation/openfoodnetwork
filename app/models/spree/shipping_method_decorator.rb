@@ -42,7 +42,6 @@ Spree::ShippingMethod.class_eval do
     ]
   end
 
-
   def available_to_order_with_distributor_check?(order, display_on=nil)
     available_to_order_without_distributor_check?(order, display_on) &&
       self.distributors.include?(order.distributor)

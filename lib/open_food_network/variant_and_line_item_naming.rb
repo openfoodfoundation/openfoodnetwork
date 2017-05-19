@@ -44,7 +44,6 @@ module OpenFoodNetwork
       display_as
     end
 
-
     def update_units
       delete_unit_option_values
 

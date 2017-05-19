@@ -13,7 +13,6 @@ module Spree::Preferences
       end
     end
 
-
     def get_preference(key)
       if !has_preference?(key) && has_attachment?(key)
         send key
@@ -32,7 +31,6 @@ module Spree::Preferences
       end
     end
 
-
     # Spree's Configuration responds to preference methods via method_missing, but doesn't
     # override respond_to?, which consequently reports those methods as unavailable. Paperclip
     # errors if respond_to? isn't correct, so we override it here.
@@ -40,7 +38,6 @@ module Spree::Preferences
       name = method.to_s.gsub('=', '')
       super(self.class.preference_getter_method(name), include_all) || super(method, include_all)
     end
-
 
     def has_attachment?(name)
       self.class.respond_to?(:attachment_definitions) &&

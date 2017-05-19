@@ -28,7 +28,6 @@ module Spree
         end
       end
 
-
       def set_included_tax
         if params[:tax_rate_id].present?
           tax_rate = TaxRate.find params[:tax_rate_id]

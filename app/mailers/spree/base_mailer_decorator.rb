@@ -12,7 +12,6 @@ Spree::BaseMailer.class_eval do
       'test@example.com'
   end
 
-
   def roadie_options
     # This lets us specify assets using relative paths in email templates
     super.merge(url_options: {host: URI(spree.root_url).host })

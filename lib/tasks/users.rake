@@ -33,7 +33,6 @@ namespace :openfoodnetwork do
       Spree::User.all.reject { |u| u.email =~ /example.net/ }
     end
 
-
     def user_header
       ["encrypted_password", "password_salt", "email", "remember_token", "persistence_token", "reset_password_token", "perishable_token", "sign_in_count", "failed_attempts", "last_request_at", "current_sign_in_at", "last_sign_in_at", "current_sign_in_ip", "last_sign_in_ip", "login", "created_at", "updated_at", "authentication_token", "unlock_token", "locked_at", "remember_created_at", "reset_password_sent_at",
 
@@ -43,7 +42,6 @@ namespace :openfoodnetwork do
 
        "bill_address_firstname", "bill_address_lastname", "bill_address_address1", "bill_address_address2", "bill_address_city", "bill_address_zipcode", "bill_address_phone", "bill_address_state", "bill_address_country", "bill_address_created_at", "bill_address_updated_at", "bill_address_company",]
     end
-
 
     def user_row(user)
       sa = user.orders.last.andand.ship_address
@@ -57,7 +55,6 @@ namespace :openfoodnetwork do
 
        ba.andand.firstname, ba.andand.lastname, ba.andand.address1, ba.andand.address2, ba.andand.city, ba.andand.zipcode, ba.andand.phone, ba.andand.state, ba.andand.country, ba.andand.created_at, ba.andand.updated_at, ba.andand.company,]
     end
-
 
     def create_user_from(row)
       user = Spree::User.create!({password: 'changeme123', password_confirmation: 'changeme123', email: row[2], remember_token: row[3], persistence_token: row[4], reset_password_token: row[5], perishable_token: row[6], sign_in_count: row[7], failed_attempts: row[8], last_request_at: row[9], current_sign_in_at: row[10], last_sign_in_at: row[11], current_sign_in_ip: row[12], last_sign_in_ip: row[13], login: row[14], created_at: row[15], updated_at: row[16], authentication_token: row[17], unlock_token: row[18], locked_at: row[19], remember_created_at: row[20], reset_password_sent_at: row[21]}, without_protection: true)

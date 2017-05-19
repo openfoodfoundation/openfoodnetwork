@@ -240,7 +240,6 @@ class AbilityDecorator
     can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
   end
 
-
   def add_relationship_management_abilities(user)
     can [:admin, :index, :create], EnterpriseRelationship
     can [:destroy], EnterpriseRelationship do |enterprise_relationship|

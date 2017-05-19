@@ -123,7 +123,6 @@ class CheckoutController < Spree::CheckoutController
     false
   end
 
-
   def update_failed
     clear_ship_address
     respond_to do |format|

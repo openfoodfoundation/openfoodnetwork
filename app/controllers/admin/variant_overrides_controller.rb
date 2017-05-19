@@ -12,7 +12,6 @@ module Admin
     def index
     end
 
-
     def bulk_update
       # Ensure we're authorised to update all variant overrides
       @vo_set.collection.each { |vo| authorize! :update, vo }
