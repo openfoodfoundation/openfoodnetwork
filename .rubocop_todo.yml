@@ -1320,13 +1320,6 @@ Style/TernaryParentheses:
     - 'app/controllers/spree/admin/payment_methods_controller_decorator.rb'
     - 'app/controllers/spree/admin/shipping_methods_controller_decorator.rb'
 
-# Offense count: 34
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: final_newline, final_blank_line
-Style/TrailingBlankLines:
-  Enabled: false
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleForMultiline, SupportedStylesForMultiline.
