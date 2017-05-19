@@ -1,4 +1,5 @@
-inherit_from: .rubocop_todo.yml
+inherit_from:
+  - .rubocop_todo.yml
 
 AllCops:
   Include:
@@ -10,33 +11,131 @@ AllCops:
     - 'script/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
 
-
-# Picks up '.should == x' RSpec syntax
-# TODO: convert to '.to eq' syntax?
-Lint/Void:
-  Exclude:
-    - 'spec/**/*'
-
-Metrics/BlockLength:
-  Max: 200
-
-Metrics/LineLength:
-  Max: 120
-
-Metrics/MethodLength:
-  Enabled: false
-
-Metrics/ClassLength:
-  Max: 500
-
-Style/BracesAroundHashParameters:
-  Enabled: false
+# OFN settings
+# Cop settings that have been agreed upon by the OFN community
 
 Style/Documentation:
   Enabled: false
 
-Style/EmptyLinesAroundClassBody:
+Style/StringLiterals:
   Enabled: false
 
-Style/StringLiterals:
+# Relaxed.Ruby.Style settings
+# These styles are a starting point for the conversation around conventions
+# They should be removed or moved above + tweaked as decisions are made
+# NOTE: Cops which did not fail at the time of writing were removed
+
+Style/Alias:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylealias
+
+Style/BlockDelimiters:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleblockdelimiters
+
+Style/CommentAnnotation:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylecommentannotation
+
+Style/DotPosition:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledotposition
+
+Style/DoubleNegation:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledoublenegation
+
+Style/FormatString:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleformatstring
+
+Style/IfUnlessModifier:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleifunlessmodifier
+
+Style/Lambda:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylelambda
+
+Style/MultilineBlockChain:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylemultilineblockchain
+
+Style/NegatedIf:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylenegatedif
+
+Style/NegatedWhile:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylenegatedwhile
+
+Style/ParallelAssignment:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleparallelassignment
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylepercentliteraldelimiters
+
+Style/Semicolon:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesemicolon
+
+Style/SingleLineMethods:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesinglelinemethods
+
+Style/SpaceBeforeBlockBraces:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespacebeforeblockbraces
+
+Style/SpaceInsideParens:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespaceinsideparens
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styletrailingcommainarguments
+
+Style/TrailingCommaInLiteral:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styletrailingcommainliteral
+
+Style/WordArray:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylewordarray
+
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#lintambiguousregexpliteral
+
+Lint/AssignmentInCondition:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#lintassignmentincondition
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
   Enabled: false
