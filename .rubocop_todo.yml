@@ -50,11 +50,6 @@ Lint/DeprecatedClassMethods:
   Exclude:
     - 'app/controllers/admin/product_import_controller.rb'
 
-# Offense count: 1
-Lint/DuplicateMethods:
-  Exclude:
-    - 'app/controllers/admin/order_cycles_controller.rb'
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleAlignWith, SupportedStylesAlignWith, AutoCorrect.
