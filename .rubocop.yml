@@ -2,6 +2,8 @@ inherit_from:
   - .rubocop_todo.yml
 
 AllCops:
+  TargetRubyVersion: 2.1
+  TargetRailsVersion: 3.2
   Include:
     - '**/Rakefile'
     - '**/config.ru'
@@ -13,6 +15,9 @@ AllCops:
 
 # OFN SETTINGS
 # Cop settings that have been agreed upon by the OFN community
+
+Rails:
+  Enabled: true
 
 Style/Documentation:
   Enabled: false
@@ -27,6 +32,15 @@ Style/StringLiterals:
 # Don't think this is a big issue, mostly picking up RPSEC scope definitions
 # with lamdas and RSpec '.to change{}' blocks
 Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+# No alternative to this one until we upgrade to Rails 4 and can use #find_by
+Rails/DynamicFindBy:
+  Enabled: false
+
+# This should be the programmer's discretion, perhaps we should review all of
+# the uses of it an make specific exceptions though.
+Rails/SkipsModelValidations:
   Enabled: false
 
 # This should be enfored, but doing so would require changing the entire
