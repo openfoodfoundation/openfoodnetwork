@@ -11,7 +11,7 @@ AllCops:
     - 'script/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
 
-# OFN settings
+# OFN SETTINGS
 # Cop settings that have been agreed upon by the OFN community
 
 Style/Documentation:
@@ -20,16 +20,23 @@ Style/Documentation:
 Style/StringLiterals:
   Enabled: false
 
-# Suggested settings
+# TEMPORARY/CONTESTED SETTINGS
 # These are still to be decided upon, but recommended for inclusion by
 # oeoeaio after scrutinising offenses the codebase
 
+# Don't think this is a big issue, mostly picking up RPSEC scope definitions
+# with lamdas and RSpec '.to change{}' blocks
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 
-# Relaxed.Ruby.Style settings
+# This should be enfored, but doing so would require changing the entire
+# file, so should probably do when outstanding PRS are at a minimum
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# Relaxed.Ruby.Style SETTINGS
 # These styles are a starting point for the conversation around conventions
-# They should be removed or moved above + tweaked as decisions are made
+# They should be removed or tweaked and moved above as decisions are made
 # NOTE: Cops which did not fail at the time of writing were removed
 
 Style/Alias:
