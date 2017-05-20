@@ -20,6 +20,13 @@ Style/Documentation:
 Style/StringLiterals:
   Enabled: false
 
+# Suggested settings
+# These are still to be decided upon, but recommended for inclusion by
+# oeoeaio after scrutinising offenses the codebase
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
 # Relaxed.Ruby.Style settings
 # These styles are a starting point for the conversation around conventions
 # They should be removed or moved above + tweaked as decisions are made

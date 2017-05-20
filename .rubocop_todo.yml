@@ -14,10 +14,6 @@ Bundler/OrderedGems:
   Exclude:
     - 'Gemfile'
 
-# Offense count: 113
-Lint/AmbiguousBlockAssociation:
-  Enabled: false
-
 # Offense count: 48
 Lint/AmbiguousOperator:
   Enabled: false
