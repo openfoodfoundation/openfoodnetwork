@@ -106,7 +106,7 @@ describe UpdateAccountInvoices do
           end
 
           context "that starts in the future" do
-            travel_to -1.days
+            travel_to(-1.days)
 
             it "snags an error and does not update invoices" do
               updater.perform

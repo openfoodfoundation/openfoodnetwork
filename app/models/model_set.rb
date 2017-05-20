@@ -36,8 +36,8 @@ class ModelSet
   end
 
   def save
-    collection_to_delete.each &:destroy
-    collection_to_keep.all? &:save
+    collection_to_delete.each(&:destroy)
+    collection_to_keep.all?(&:save)
   end
 
   def collection_to_delete

@@ -65,9 +65,9 @@ describe TagRule::DiscountOrder, type: :model do
       it "creates a new adjustment on the order" do
         tag_rule.send(:apply!)
         expect(adjustment).to be_a Spree::Adjustment
-        expect(adjustment.amount).to eq -10.00
+        expect(adjustment.amount).to eq(-10.00)
         expect(adjustment.label).to eq "Discount"
-        expect(order.adjustment_total).to eq -10.00
+        expect(order.adjustment_total).to eq(-10.00)
         expect(order.total).to eq 90.00
       end
     end
@@ -83,7 +83,7 @@ describe TagRule::DiscountOrder, type: :model do
       it "the adjustment is made on line item total, ie. ignores the shipping amount" do
         tag_rule.send(:apply!)
         expect(adjustment).to be_a Spree::Adjustment
-        expect(adjustment.amount).to eq -10.00
+        expect(adjustment.amount).to eq(-10.00)
         expect(adjustment.label).to eq "Discount"
         expect(order.adjustment_total).to eq 15.00
         expect(order.total).to eq 115.00

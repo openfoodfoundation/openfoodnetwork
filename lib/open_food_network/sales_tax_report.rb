@@ -97,7 +97,7 @@ module OpenFoodNetwork
     end
 
     def tax_included_in(line_item)
-      line_item.adjustments.sum &:included_tax
+      line_item.adjustments.sum(&:included_tax)
     end
 
     def shipment_inc_vat

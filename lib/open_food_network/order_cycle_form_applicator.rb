@@ -172,7 +172,7 @@ module OpenFoodNetwork
     end
 
     def incoming_variant_ids
-      @order_cycle.supplied_variants.map &:id
+      @order_cycle.supplied_variants.map(&:id)
     end
 
     def variants_to_a(variants)

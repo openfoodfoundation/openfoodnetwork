@@ -6,9 +6,9 @@ module OpenFoodNetwork::Reports
     let(:proc) { Proc.new {} }
 
     it "can define a number of columns and return them as an array" do
-      row.column &proc
-      row.column &proc
-      row.column &proc
+      row.column(&proc)
+      row.column(&proc)
+      row.column(&proc)
 
       row.to_a.should == [proc, proc, proc]
     end

@@ -6,11 +6,11 @@ module OpenFoodNetwork::Reports
 
     organise do
       group { |li| li.product.supplier }
-      sort &:name
+      sort(&:name)
 
       organise do
         group { |li| li.product }
-        sort &:name
+        sort(&:name)
 
         summary_row do
           column { |lis| supplier_name(lis) }

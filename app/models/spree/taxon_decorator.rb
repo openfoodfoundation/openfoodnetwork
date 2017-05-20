@@ -57,6 +57,6 @@ Spree::Taxon.class_eval do
   private
 
   def refresh_products_cache
-    products(:reload).each &:refresh_products_cache
+    products(:reload).each(&:refresh_products_cache)
   end
 end

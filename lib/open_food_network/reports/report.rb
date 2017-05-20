@@ -24,7 +24,7 @@ module OpenFoodNetwork::Reports
         rule = rule.next
       end
 
-      rules.map &:to_h
+      rules.map(&:to_h)
     end
 
     # -- DSL

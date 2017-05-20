@@ -181,7 +181,7 @@ feature %q{
     scenario "updating an order cycle", js: true do
       # Given an order cycle with all the settings
       oc = create(:order_cycle)
-      initial_variants = oc.variants.sort_by &:id
+      initial_variants = oc.variants.sort_by(&:id)
 
       # And a coordinating, supplying and distributing enterprise with some products with variants
       coordinator = oc.coordinator

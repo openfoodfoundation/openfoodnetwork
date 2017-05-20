@@ -30,7 +30,7 @@ module Spree
     private
 
     def refresh_products_cache
-      product_properties(:reload).each &:refresh_products_cache
+      product_properties(:reload).each(&:refresh_products_cache)
     end
   end
 end

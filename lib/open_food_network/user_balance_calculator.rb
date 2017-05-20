@@ -12,11 +12,11 @@ module OpenFoodNetwork
     private
 
     def completed_order_total
-      completed_orders.sum &:total
+      completed_orders.sum(&:total)
     end
 
     def payment_total
-      payments.sum &:amount
+      payments.sum(&:amount)
     end
 
     def completed_orders

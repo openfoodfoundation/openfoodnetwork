@@ -10,23 +10,23 @@ module OpenFoodNetwork::Reports
     header 'One', 'Two', 'Three', 'Four'
 
     columns do
-      column &P1
-      column &P2
-      column &P3
-      column &P4
+      column(&P1)
+      column(&P2)
+      column(&P3)
+      column(&P4)
     end
 
     organise do
-      group &P1
-      sort  &P2
+      group(&P1)
+      sort(&P2)
 
       organise do
-        group &P3
-        sort  &P4
+        group(&P3)
+        sort(&P4)
 
         summary_row do
-          column &P1
-          column &P4
+          column(&P1)
+          column(&P4)
         end
       end
     end

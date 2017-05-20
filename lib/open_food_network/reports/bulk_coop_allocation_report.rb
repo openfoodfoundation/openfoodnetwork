@@ -6,7 +6,7 @@ module OpenFoodNetwork::Reports
 
     organise do
       group { |li| li.product }
-      sort &:name
+      sort(&:name)
 
       summary_row do
         column { |lis| "TOTAL" }

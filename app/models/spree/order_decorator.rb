@@ -161,7 +161,7 @@ Spree::Order.class_eval do
   end
 
   def cap_quantity_at_stock!
-    line_items.each &:cap_quantity_at_stock!
+    line_items.each(&:cap_quantity_at_stock!)
   end
 
   def set_distributor!(distributor)
