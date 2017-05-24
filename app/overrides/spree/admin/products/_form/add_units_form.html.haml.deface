@@ -1,6 +1,6 @@
 / insert_top "[data-hook='admin_product_form_right']"
 
-.variant_units_form{'ng-app' => 'admin.products', 'ng-controller' => 'editUnitsCtrl', 'ng-init' => 'setDropdown()'}
+.variant_units_form{ 'ng-app' => 'admin.products', 'ng-controller' => 'editUnitsCtrl' }
 
   = f.field_container :units do
     = f.label :variant_unit_with_scale, :units

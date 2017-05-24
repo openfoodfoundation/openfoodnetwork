@@ -2,7 +2,7 @@
 
 - if product_has_variant_unit_option_type?(@product)
   - if @product.variant_unit != 'items'
-    .field{"data-hook" => "unit_value", 'ng-controller' => 'variantUnitsCtrl', 'ng-init' => 'setInitialValues()'}
+    .field{"data-hook" => "unit_value", 'ng-controller' => 'variantUnitsCtrl'}
       = f.label :unit_value, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
       = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
       = text_field_tag :unit_value_human, nil, {class: "fullwidth", 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
