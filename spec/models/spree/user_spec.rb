@@ -105,15 +105,21 @@ describe Spree.user_class do
 
   describe "last incomplete spree order" do
     let(:user) { create(:user) }
-    let!(:order) { create(:order, state: 'cart', user_id: user.id) }
+    let!(:order) { create(:order, state: 'cart', user: user) }
 
-    it "returns any prior incomplete orders" do
-      expect(user.last_incomplete_spree_order).to eq order
+    context "where the user has no account invoices" do
+      it "returns any prior incomplete orders" do
+        expect(user.last_incomplete_spree_order).to eq order
+      end
     end
 
-    it "ignores prior orders linked to an account_invoice" do
-      create :account_invoice, user: user
-      expect(user.last_incomplete_spree_order).to be_nil
+    context "where the user has at least one account invoice" do
+      let(:account_invoice_order) { create(:order, state: 'cart', user: user) }
+      let(:account_invoice) { create(:account_invoice, user: user, order: account_invoice_order) }
+
+      it "ignores prior orders linked to an account invoice" do
+        expect(user.last_incomplete_spree_order).to eq order
+      end
     end
   end
 
