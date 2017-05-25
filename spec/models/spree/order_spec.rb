@@ -709,7 +709,7 @@ describe Spree::Order do
 
       it "removes transaction fees" do
         # Change the payment method
-        order.payment.update_attributes(payment_method_id: payment_method.id)
+        order.payments.first.update_attributes(payment_method_id: payment_method.id)
         order.save
 
         # Check if fees got updated
