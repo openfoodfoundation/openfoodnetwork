@@ -1,7 +1,7 @@
 class DistributionChangeValidator
 
   def initialize(order)
-    @order = order.reload
+    @order = order
   end
 
   def can_change_to_distributor?(distributor)

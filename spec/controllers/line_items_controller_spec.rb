@@ -32,6 +32,7 @@ describe LineItemsController do
       order = create(:completed_order_with_totals)
       item = create(:line_item, order: order)
       while !order.completed? do break unless order.next! end
+      order.reload
       item
     end
 
