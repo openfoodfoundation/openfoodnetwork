@@ -10,7 +10,6 @@
 }
 
 .orders {
-  margin-top: 50px;
   margin-bottom: 100px;
 
   a {
@@ -25,6 +24,10 @@
     display: block;
     width: 80px;
     height: auto;
+  }
+
+  &.active_table {
+    margin: 0px;
   }
 
   .active_table_row {

@@ -19,10 +19,14 @@
     = render 'cards'
 
   .row.tabset-ctrl#account-tabs{ style: 'margin-bottom: 100px', navigate: 'true', selected: 'orders', prefix: 'account' }
-    .small.12.medium-3.columns.tab{ name: "orders" } Orders
-    .small.12.medium-3.columns.tab{ name: "cards" } Cards
-    .small.12.medium-3.columns.tab{ name: "history" } History
-    .small.12.medium-3.columns.tab{ name: "details" } Details
+    .small.12.medium-3.columns.tab{ name: "orders" }
+      %a{ href: 'javascript:void(0)' } My Orders
+    .small.12.medium-3.columns.tab{ name: "cards" }
+      %a{ href: 'javascript:void(0)' } My Credit Cards
+    .small.12.medium-3.columns.tab{ name: "history" }
+      %a{ href: 'javascript:void(0)' } Transactions
+    .small.12.medium-3.columns.tab{ name: "details" }
+      %a{ href: 'javascript:void(0)' }My Details
     .small-12.columns.tab-view
 
   = render partial: "shared/footer"
