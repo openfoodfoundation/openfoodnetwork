@@ -1,12 +1,11 @@
 %script{ type: "text/ng-template", id: "account/history.html" }
-  .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
-    .active_table
-      %h3.my-orders= t(:transaction_history)
-      %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.orders_by_distributor.length > 0", "ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
-      "ng-controller" => "DistributorNodeCtrl",
-      "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
-      id: "{{distributor.hash}}"}
-        .small-12.columns
-          = render partial: "spree/users/skinny"
-          = render partial: "spree/users/fat"
-    .message{"ng-if" => "Orders.orders_by_distributor.length == 0", "ng-bind" => "::'you_have_no_orders_yet' | t"}
+  .active_table.orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
+    %h3.my-orders= t(:transaction_history)
+    %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.orders_by_distributor.length > 0", "ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
+    "ng-controller" => "DistributorNodeCtrl",
+    "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
+    id: "{{distributor.hash}}"}
+      .small-12.columns
+        = render partial: "spree/users/skinny"
+        = render partial: "spree/users/fat"
+  .message{"ng-if" => "Orders.orders_by_distributor.length == 0", "ng-bind" => "::'you_have_no_orders_yet' | t"}
