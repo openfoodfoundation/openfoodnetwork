@@ -17,7 +17,7 @@ feature "As a consumer I want to check out my cart", js: true do
   after { Warden.test_reset! }
 
   before do
-    set_order_into_stubbed_session order
+    set_order order
     add_product_to_cart order, product
   end
 

@@ -21,7 +21,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
     Spree::Config.shipping_tax_rate = 0.25
 
     add_enterprise_fee enterprise_fee
-    set_order_into_stubbed_session order
+    set_order order
     add_product_to_cart order, product
   end
 

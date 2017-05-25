@@ -12,8 +12,8 @@ module ShopWorkflow
     order_cycle.exchanges.outgoing.first.enterprise_fees << enterprise_fee
   end
 
-  def set_order_into_stubbed_session(order)
-    ApplicationController.any_instance.stub(:session).and_return({order_id: order.id, access_token: order.token})
+  def set_order(order)
+    inject_session(order_id: order.id, access_token: order.token)
   end
 
   def add_product_to_cart(order, product, quantity: 1)
@@ -47,6 +47,14 @@ module ShopWorkflow
     if oc.exchanges.from_enterprise(supplier).incoming.empty?
       create(:exchange, order_cycle: oc, incoming: true,
                         sender: supplier, receiver: oc.coordinator)
+    end
+  end
+
+  def inject_session(hash)
+    Warden.on_next_request do |proxy|
+      hash.each do |key, value|
+        proxy.raw_session[key] = value
+      end
     end
   end
 end
