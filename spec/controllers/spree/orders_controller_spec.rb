@@ -398,6 +398,13 @@ describe Spree::OrdersController do
       context "when the order is complete" do
         let(:order) { create(:completed_order_with_totals, user: user) }
 
+        before do
+          Spree::MailMethod.create!(
+            environment: Rails.env,
+            preferred_mails_from: 'spree@example.com'
+          )
+        end
+
         it "responds with success" do
           spree_put :cancel, params
           expect(response.status).to redirect_to spree.order_path(order)
