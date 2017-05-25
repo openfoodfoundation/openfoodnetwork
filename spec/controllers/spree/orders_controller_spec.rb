@@ -350,11 +350,17 @@ describe Spree::OrdersController do
           end
 
           context "and the order is editable" do
-            let(:order_cycle) { create(:simple_order_cycle) }
             let(:distributor) { create(:enterprise, allow_order_changes: true) }
+            let(:order_cycle) do
+              create(
+                :simple_order_cycle,
+                distributors: [distributor],
+                variants: order.line_item_variants
+              )
+            end
 
             before do
-              order.update_attributes(order_cycle_id: order_cycle.id, distributor_id: distributor.id)
+              order.update_attributes!(order_cycle_id: order_cycle.id, distributor_id: distributor.id)
             end
 
             it "returns the order" do
