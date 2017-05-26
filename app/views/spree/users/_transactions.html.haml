@@ -1,4 +1,4 @@
-%script{ type: "text/ng-template", id: "account/history.html" }
+%script{ type: "text/ng-template", id: "account/transactions.html" }
   .active_table.orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
     %h3.my-orders= t(:transaction_history)
     %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.orders_by_distributor.length > 0", "ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
