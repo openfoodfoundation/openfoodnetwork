@@ -10,6 +10,4 @@ Spree::CreditCard.class_eval do
   def has_payment_profile?
     gateway_customer_profile_id.present? || gateway_payment_profile_id.present?
   end
-
-  
 end

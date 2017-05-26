@@ -1,0 +1,13 @@
+%table
+  %tr
+    %th= t(:card_type)
+    %th= t(:card_number)
+    %th= t(:card_expiry_date)
+    %th= t(:delete?)
+  %tr.card{ id: "card{{ card.id }}", ng: { repeat: "card in savedCreditCards" } }
+    %td.brand{ ng: { bind: '::card.brand' } }
+    %td.number{ ng: { bind: '::card.number' } }
+    %td.expiry{ ng: { bind: '::card.expiry' } }
+    %td.actions
+      %a{"rel" => "nofollow", "data-method" => "delete", "ng-href" => "{{card.delete_link}}" }
+        Delete

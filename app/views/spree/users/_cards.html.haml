@@ -1,56 +1,15 @@
 %script{ type: "text/ng-template", id: "account/cards.html" }
-  %h3= t(:my_credit_cards)
   .credit_cards{"ng-controller" => "CreditCardsCtrl"}
-    %h4
-      = t(:saved_cards)
     .row
-      .card_list.small-12.columns{"ng-repeat" => "card in savedCreditCards"}
-        %p.card
-          %span{"ng-bind" => "card.formatted"}
-          %a{"rel" => "nofollow", "data-method" => "delete", "ng-href" => "{{card.delete_link}}" }
-            Delete
-    .row
-      %h4{"ng-click" => "toggle()"}
-        .columns.small-10.medium-10
-          = t(:add_new_credit_card)
-        .columns.small-2.medium-2.text-right
-          %span.margin-top
-            %i{"ng-class" => "{'ofn-i_005-caret-down' : !add_card_visible, 'ofn-i_006-caret-up' : add_card_visible}"}
-    .row
-      .new_card.small-12.columns{"ng-if" => 'add_card_visible', "ng-class" => "{'closed' : !add_card_visible, 'open' : add_card_visible}"}
-        %form{novalidate: true, "ng-submit" => "storeCard()"}
-          .row
-            .small-6.columns
-              %label
-                = t :first_name
-                -# Changing name not permitted by default (in checkout) - can be enabled by setting an allow_name_change variable in $scope
-              %input{type: :text,  "ng-model" => "secrets.first_name","ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.firstname"}
+      .small-12.medium-6.columns
+        %span{ ng: { hide: 'savedCreditCards.length > 0' } }
+          &nbsp;
+        .saved_cards{ ng: { show: 'savedCreditCards.length > 0' } }
+          %h3= t(:saved_cards)
+          = render 'saved_cards'
+        %button.button.primary{ ng: { click: 'showForm()', hide: 'CreditCard.visible' } }
+          = t(:add_a_card)
 
-            .small-6.columns
-              %label
-                = t :last_name
-              %input{type: :text, "ng-model" => "secrets.last_name", "ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.lastname"}
-
-            .small-6.columns
-              %label
-                = t(:card_number)
-              %input{type: :text, "ng-model" => "secrets.card_number", "ng-required" => "!secrets.selected_card", maxlength: 19, autocomplete: "off", "ng-disabled" => "!!secrets.selected_card"}
-            .small-6.columns
-              %label
-                = t(:card_securitycode)
-              %input{type: :text, "ng-model" => "secrets.card_verification_value", "ng-required" => "!secrets.selected_card", autocomplete: "off", "ng-disabled" => "!!secrets.selected_card"}
-
-          .row
-            .small-12.columns
-              %label{for: "secrets.card_month"}
-                = t :card_expiry_date, "ng-disabled" => "!!secrets.selected_card"
-
-          .row
-            .small-6.columns
-              %select{"ng-model" => "secrets.card_month", "ng-options" => "currMonth.value as currMonth.key for currMonth in months", name: "secrets.card_month", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"}
-            .small-6.columns
-              %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"}
-
-          %p
-            %button.button.primary{type: :submit}
-              = t :add_card
+      .small-12.medium-6.columns.new_card{ ng: { class: '{visible: CreditCard.visible}' } }
+        %h3= t(:add_a_new_card)
+        = render 'new_card_form'

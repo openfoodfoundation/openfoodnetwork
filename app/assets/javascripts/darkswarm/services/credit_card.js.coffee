@@ -1,20 +1,21 @@
-Darkswarm.factory 'CreditCard', ($injector, $rootScope, StripeJS, Navigation, $http, RailsFlashLoader, Loading)->
+Darkswarm.factory 'CreditCard', ($injector, $rootScope, CreditCards, StripeJS, Navigation, $http, RailsFlashLoader, Loading)->
   new class CreditCard
+    visible: false
     errors: {}
     secrets: {}
 
-    requestToken: (secrets) ->
-      secrets.name = @full_name(secrets)
-      StripeJS.requestToken(secrets, @submit, t("saving_credit_card"))
+    requestToken: =>
+      @setFullName()
+      StripeJS.requestToken(@secrets, @submit, t("saving_credit_card"))
 
     submit: =>
       params = @process_params()
       $http.put('/credit_cards/new_from_token', params )
-        .success (data, status) ->
-          $rootScope.$apply ->
-            Loading.clear()
-          Navigation.go '/account'
-        .error (response, status) ->
+        .success (data, status) =>
+          Loading.clear()
+          @reset()
+          CreditCards.add(data)
+        .error (response, status) =>
           if response.path
             Navigation.go response.path
           else
@@ -22,8 +23,8 @@ Darkswarm.factory 'CreditCard', ($injector, $rootScope, StripeJS, Navigation, $h
             @errors = response.errors
             RailsFlashLoader.loadFlash(response.flash)
 
-    full_name: (secrets) ->
-      secrets.first_name + " " + secrets.last_name
+    setFullName: ->
+      @secrets.name = "#{@secrets.first_name} #{@secrets.last_name}"
 
     process_params: ->
       {"exp_month": @secrets.card.exp_month,
@@ -31,3 +32,10 @@ Darkswarm.factory 'CreditCard', ($injector, $rootScope, StripeJS, Navigation, $h
       "last4": @secrets.card.last4,
       "token": @secrets.token,
       "cc_type": @secrets.card.brand}
+
+    show: => @visible = true
+
+    reset: =>
+      @visible = false
+      delete @secrets[k] for k, v of @secrets
+      delete @errors[k] for k, v of @errors

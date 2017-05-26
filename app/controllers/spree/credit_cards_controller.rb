@@ -22,7 +22,7 @@ module Spree
         @credit_card.last_digits = credit_card_params[:last_digits]
         @credit_card.user_id = @user.id
         if @credit_card.save
-          render json: @credit_card, status: :ok
+          render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
         else
           render json: "error saving credit card", status: 500
         end

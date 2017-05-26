@@ -70,11 +70,7 @@ module InjectionHelper
   end
 
   def inject_saved_credit_cards
-    if spree_current_user
-      data = spree_current_user.credit_cards
-    else
-      data = nil
-    end
+    data = spree_current_user.try(:credit_cards)
     inject_json_ams "savedCreditCards", data, Api::CreditCardSerializer
   end
 

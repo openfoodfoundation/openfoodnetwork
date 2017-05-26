@@ -21,3 +21,6 @@ Darkswarm.factory 'Navigation', ($location, $window) ->
         $window.location.href = path
       else
         $window.location.pathname = path
+
+    reload: ->
+      $window.location.reload()
