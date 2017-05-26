@@ -2156,13 +2156,16 @@ Please follow the instructions there to make your enterprise visible on the Open
     zipcode: Postcode
     users:
       show:
-        open_orders: Open Orders
-        transaction_history: Transaction History
         tabs:
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
           details: Details
+      orders:
+        open_orders: Open Orders
+        past_orders: Past Orders
+      transactions:
+        transaction_history: Transaction History
       open_orders:
         order: Order
         shop: Shop
@@ -2173,3 +2176,11 @@ Please follow the instructions there to make your enterprise visible on the Open
         cancel: Cancel
         closed: Closed
         until: Until
+      past_orders:
+        order: Order
+        shop: Shop
+        completed_at: Completed At
+        items: Items
+        total: Total
+        paid?: Paid?
+        view: View
