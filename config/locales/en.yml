@@ -2158,6 +2158,11 @@ Please follow the instructions there to make your enterprise visible on the Open
       show:
         open_orders: Open Orders
         transaction_history: Transaction History
+        tabs:
+          orders: Orders
+          cards: Credit Cards
+          transactions: Transactions
+          details: Details
       open_orders:
         order: Order
         shop: Shop
