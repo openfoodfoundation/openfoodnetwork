@@ -1,22 +1,25 @@
-Darkswarm.factory 'Orders', (orders_by_distributor, currencyConfig, CurrentHub, Taxons, Dereferencer, visibleFilter, Matcher, Geo, $rootScope)->
+Darkswarm.factory 'Orders', (orders, shops, currencyConfig)->
   new class Orders
+    all: orders
+    changeable: []
+    shops: shops
+    shopsByID: {}
+    currencySymbol = currencyConfig.symbol
+
     constructor: ->
-      # Populate Orders.orders from json in page.
-      @orders_by_distributor = orders_by_distributor
-      @changeable_orders = []
-      @currency_symbol = currencyConfig.symbol
+      for shop in @shops
+        shop.orders = []
+        shop.balance = 0.0
+        @shopsByID[shop.id] = shop
 
-      for distributor in @orders_by_distributor
-        @findChangeableOrders(distributor.distributed_orders)
-        @updateRunningBalance(distributor.distributed_orders)
+      for order in @all by -1
+        shop = @shopsByID[order.shop_id]
+        shop.orders.unshift order
 
+        @changeable.unshift(order) if order.changes_allowed
 
-    updateRunningBalance: (orders) ->
-      for order, i in orders
-        balances = orders.slice(i,orders.length).map (o) -> parseFloat(o.outstanding_balance)
-        running_balance = balances.reduce (a,b) -> a+b
-        order.running_balance = running_balance.toFixed(2)
+        @updateRunningBalance(shop, order)
 
-    findChangeableOrders: (orders) ->
-      for order in orders when order.changes_allowed
-        @changeable_orders.push(order)
+    updateRunningBalance: (shop, order) ->
+      shop.balance += parseFloat(order.outstanding_balance)
+      order.runningBalance = shop.balance.toFixed(2)

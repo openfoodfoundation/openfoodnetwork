@@ -54,32 +54,6 @@ Spree.user_class.class_eval do
     owned_enterprises(:reload).size < enterprise_limit
   end
 
-  # Returns Enterprise IDs for distributors that the user has shopped at
-  def enterprises_ordered_from
-    enterprise_ids = orders.where(state: :complete).map(&:distributor_id).uniq
-    # Exclude the accounts distributor
-    if Spree::Config.accounts_distributor_id
-      enterprise_ids = enterprise_ids.keep_if { |a| a != Spree::Config.accounts_distributor_id }
-    end
-    enterprise_ids
-  end
-
-  # Returns orders and their associated payments for all distributors that have been ordered from
-  def complete_orders_by_distributor
-    Enterprise
-      .includes(distributed_orders: { payments: :payment_method })
-      .where(enterprises: { id: enterprises_ordered_from },
-             spree_orders: { state: 'complete', user_id: id })
-      .order('spree_orders.completed_at DESC')
-  end
-
-  def orders_by_distributor
-    # Remove uncompleted payments as these will not be reflected in order balance
-    data_array = complete_orders_by_distributor.to_a
-    remove_payments_in_checkout(data_array)
-    data_array.sort! { |a, b| b.distributed_orders.length <=> a.distributed_orders.length }
-  end
-
   private
 
   def limit_owned_enterprises
