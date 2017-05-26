@@ -20,13 +20,13 @@
 
   .row.tabset-ctrl#account-tabs{ style: 'margin-bottom: 100px', navigate: 'true', selected: 'orders', prefix: 'account' }
     .small.12.medium-3.columns.tab{ name: "orders" }
-      %a{ href: 'javascript:void(0)' } My Orders
+      %a{ href: 'javascript:void(0)' }=t('.tabs.orders')
     .small.12.medium-3.columns.tab{ name: "cards" }
-      %a{ href: 'javascript:void(0)' } My Credit Cards
+      %a{ href: 'javascript:void(0)' }=t('.tabs.cards')
     .small.12.medium-3.columns.tab{ name: "history" }
-      %a{ href: 'javascript:void(0)' } Transactions
+      %a{ href: 'javascript:void(0)' }=t('.tabs.transactions')
     .small.12.medium-3.columns.tab{ name: "details" }
-      %a{ href: 'javascript:void(0)' }My Details
+      %a{ href: 'javascript:void(0)' }=t('.tabs.details')
     .small-12.columns.tab-view
 
   = render partial: "shared/footer"
