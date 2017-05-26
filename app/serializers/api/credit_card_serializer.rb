@@ -1,16 +1,22 @@
 class Api::CreditCardSerializer < ActiveModel::Serializer
-  attributes :id, :formatted, :delete_link
+  attributes :id, :brand, :number, :expiry, :formatted, :delete_link
+
+  def brand
+    object.cc_type.capitalize
+  end
+
+  def number
+    'x-' + object.last_digits
+  end
+
+  def expiry
+    m = object.month.to_i
+    m = m < 10 ? "0#{m}" : m.to_s
+    "#{m}/#{object.year}"
+  end
 
   def formatted
-    elements = []
-    elements << object.cc_type.capitalize if object.cc_type
-    if object.last_digits
-      3.times { elements << I18n.t(:card_masked_digit) * 4 }
-      elements << object.last_digits
-    end
-    elements << I18n.t(:card_expiry_abbreviation)
-    elements << object.month.to_s + "/" + object.year.to_s if object.month # TODO: I18n
-    elements.join(" ")
+    "#{brand} #{number} #{I18n.t(:card_expiry_abbreviation)}:#{expiry}"
   end
 
   def delete_link

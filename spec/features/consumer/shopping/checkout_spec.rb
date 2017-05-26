@@ -171,12 +171,12 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         end
 
         it "disables the input fields when a saved card is selected" do
-          select "Visa XXXX XXXX XXXX 1111 Exp 01/2025", from: "selected_card"
+          select "Visa x-1111 Exp:01/2025", from: "selected_card"
           page.should have_css "#secrets\\.card_number[disabled]"
         end
 
         it "allows use of a saved card" do
-          select "Visa XXXX XXXX XXXX 1111 Exp 01/2025", from: "selected_card"
+          select "Visa x-1111 Exp:01/2025", from: "selected_card"
           place_order
           page.should have_content "Your order has been processed successfully"
         end
