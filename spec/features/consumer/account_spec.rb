@@ -38,8 +38,20 @@ feature %q{
         visit "/account"
 
         # No distributors allow changes to orders
-        expect(page).to_not have_content I18n.t('spree.users.show.open_orders')
+        expect(page).to_not have_content I18n.t('spree.users.orders.open_orders')
 
+        expect(page).to have_content I18n.t('spree.users.orders.past_orders')
+
+        # Doesn't show orders from the special Accounts & Billing distributor
+        expect(page).not_to have_content accounts_distributor.name
+
+        # Lists all other orders
+        expect(page).to have_content d1o1.number.to_s
+        expect(page).to have_content d1o2.number.to_s
+        expect(page).to have_content d2o1.number.to_s
+        expect(page).to have_content credit_order.number.to_s
+
+        # Viewing transaction history
         click_link I18n.t('spree.users.show.tabs.transactions')
 
         # It shows all hubs that have been ordered from with balance or credit
@@ -67,7 +79,7 @@ feature %q{
 
         it "shows such orders in a section labelled 'Open Orders'" do
           visit '/account'
-          expect(page).to have_content I18n.t('spree.users.show.open_orders')
+          expect(page).to have_content I18n.t('spree.users.orders.open_orders')
 
           expect(page).to have_link d1o1.number, href: spree.order_path(d1o1)
           expect(page).to have_link d1o2.number, href: spree.order_path(d1o2)
