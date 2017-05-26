@@ -40,6 +40,8 @@ feature %q{
         # No distributors allow changes to orders
         expect(page).to_not have_content I18n.t('spree.users.show.open_orders')
 
+        click_link I18n.t('spree.users.show.tabs.transactions')
+
         # It shows all hubs that have been ordered from with balance or credit
         expect(page).to have_content distributor1.name
         expect(page).to have_content distributor2.name
