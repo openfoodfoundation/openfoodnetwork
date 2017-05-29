@@ -1,5 +1,5 @@
 body.embedded {
-  nav.top-bar{
+  nav.top-bar {
     ul.left, ul.center, ul.right li.current_hub {
       display: none;
     }
@@ -12,6 +12,9 @@ body.embedded {
         height: 4.6875rem;
         vertical-align: top;
       }
+      li.powered-by {
+        display: inline-block;
+      }
     }
 
     &.show-for-large-up {
@@ -23,18 +26,27 @@ body.embedded {
   }
 
   footer {
-    .footer-local {
-      display: none;
-    }
-    .footer-global {
-      padding-bottom: 0;
+    display: none;
+  }
+}
 
-      .row {
-        display: none;
-      }
-      .row:first-of-type {
-        display: block;
-      }
-    }
+nav.top-bar ul.right li.powered-by {
+  display: none;
+  margin-right: 0.4rem;
+  opacity: 0.6;
+
+  img {
+    height: 1.8em;
+    margin: 0px 0.4em 0.4em 0px;
+  }
+  span, a {
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #555;
+    padding: 0 !important;
+  }
+  a:hover {
+    color: #000;
   }
 }

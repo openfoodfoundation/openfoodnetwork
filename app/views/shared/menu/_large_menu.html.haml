@@ -37,6 +37,12 @@
               = t 'label_about'
 
     %ul.right
+      %li.powered-by
+        %img{src: '/favicon.ico'}
+        %span
+          = t 'powered_by'
+          %a{href: '/'}
+            = t 'title'
       - if spree_current_user.nil?
         = render 'shared/signed_out'
       - else

@@ -159,6 +159,8 @@ en:
   'no': "No"
   'y': 'Y'
   'n': 'N'
+  powered_by: Powered by
+
   admin:
     # Common properties / models
     date: Date
@@ -230,9 +232,9 @@ en:
         default_shipping_method: must be set if you wish to create invoices for enterprise users.
 
     shopfront_settings:
-      embedded_shopfront_settings: Embedded Shopfront Settings
-      enable_embedded_shopfronts: Enable Embedded Shopfronts
-      embedded_shopfronts_whitelist: External Domains Whitelist
+      embedded_shopfront_settings: "Embedded Shopfront Settings"
+      enable_embedded_shopfronts: "Enable Embedded Shopfronts"
+      embedded_shopfronts_whitelist: "External Domains Whitelist"
 
     business_model_configuration:
       edit:

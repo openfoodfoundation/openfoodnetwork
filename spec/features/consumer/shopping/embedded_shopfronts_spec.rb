@@ -33,6 +33,10 @@ feature "Using embedded shopfront functionality", js: true do
       visit shops_path
       expect(page.response_headers['X-Frame-Options']).to be_nil
       expect(page.response_headers['Content-Security-Policy']).to eq "frame-ancestors test.com"
+
+      visit spree.admin_path
+      expect(page.response_headers['X-Frame-Options']).to eq 'DENY'
+      expect(page.response_headers['Content-Security-Policy']).to eq "frame-ancestors 'none'"
     end
   end
 
