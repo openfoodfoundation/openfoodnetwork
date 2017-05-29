@@ -78,6 +78,7 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
 
       $scope.updateProgress()
     ).error((data, status, headers, config) ->
+      $scope.exception = data
       console.log('Error: '+status)
     )
 
@@ -114,6 +115,7 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
 
       $scope.updateProgress()
     ).error((data, status, headers, config) ->
+      $scope.exception = data
       console.log('Error: '+status)
     )
 

@@ -203,8 +203,7 @@ class ProductImporter
     build_categories_index
     build_suppliers_index
     build_tax_and_shipping_indexes
-    build_producers_index ###if importing_into_inventory? #TODO: check this is still working ok
-    #validate_all
+    build_producers_index
     count_existing_items unless @import_settings.has_key?(:start)
   end
 

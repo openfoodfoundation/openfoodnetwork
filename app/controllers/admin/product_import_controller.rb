@@ -26,17 +26,25 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   def process_data
     @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {start: params[:start], end: params[:end], settings: params[:settings]})
 
-    @importer.validate_entries
+    begin
+      @importer.validate_entries
+    rescue Exception => e
+      render json: e.message, response: 500
+    end
 
-    render json: @importer.import_results
+    render json: @importer.import_results, response: 200
   end
 
   def save_data
     @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {start: params[:start], end: params[:end], settings: params[:settings]})
 
-    @importer.save_entries
+    begin
+      @importer.save_entries
+    rescue Exception => e
+      render json: e.message, response: 500
+    end
 
-    render json: @importer.save_results
+    render json: @importer.save_results, response: 200
   end
 
   def reset_absent_products

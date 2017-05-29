@@ -28,6 +28,8 @@
       #{t('admin.product_import.index.import')}
     %button.review{ng: {click: 'viewResults()', disabled: '!finished'}}
       #{t('admin.product_import.import.review')}
+    %p.red
+      {{exception}}
 
   = form_tag false, {class: 'product-import', name: 'importForm', 'ng-show' => 'step == "results"'} do
 
@@ -64,6 +66,8 @@
       #{t('admin.product_import.import.save')}
     %button.view_results{ng: {click: 'finalResults()', disabled: '!finished'}}
       #{t('admin.product_import.import.results')}
+    %p.red
+      {{exception}}
 
   .save-results{ng: {show: 'step == "complete"'}}
     = render 'save_results'
