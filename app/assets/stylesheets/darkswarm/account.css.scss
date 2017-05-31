@@ -12,6 +12,10 @@
     }
   }
 
+  .saved_cards, .no_cards {
+    margin-bottom: 1em;
+  }
+
   .new_card {
     opacity: 0;
     -webkit-transition: opacity 0.4s linear;

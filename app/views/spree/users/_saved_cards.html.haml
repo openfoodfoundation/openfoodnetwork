@@ -10,4 +10,4 @@
     %td.expiry{ ng: { bind: '::card.expiry' } }
     %td.actions
       %a{"rel" => "nofollow", "data-method" => "delete", "ng-href" => "{{card.delete_link}}" }
-        Delete
+        = t(:delete)
