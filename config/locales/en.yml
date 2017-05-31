@@ -163,12 +163,6 @@ en:
   allow_cookies: "Allow Cookies"
   error: Error
   processing_payment: Processing payment...
-  my_credit_cards: My credit cards
-  add_new_credit_card: Add new credit card
-  saved_cards: Saved cards
-  add_a_card: Add a Card
-  add_card: Add Card
-  saving_credit_card: Saving credit card...
 
   admin:
     # Common properties / models
@@ -861,6 +855,13 @@ en:
   card_masked_digit: "X"
   card_expiry_abbreviation: "Exp"
   new_credit_card: "New credit card"
+  my_credit_cards: My credit cards
+  add_new_credit_card: Add new credit card
+  saved_cards: Saved cards
+  add_a_card: Add a Card
+  add_card: Add Card
+  saving_credit_card: Saving credit card...
+  card_has_been_removed: "Your card has been removed (number: %{number})"
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"

@@ -10,6 +10,6 @@
         %button.button.primary{ ng: { click: 'showForm()', hide: 'CreditCard.visible' } }
           = t(:add_a_card)
 
-      .small-12.medium-6.columns.new_card{ ng: { class: '{visible: CreditCard.visible}' } }
+      .small-12.medium-6.columns.new_card{ ng: { show: 'CreditCard.visible', class: '{visible: CreditCard.visible}' } }
         %h3= t(:add_a_new_card)
         = render 'new_card_form'
