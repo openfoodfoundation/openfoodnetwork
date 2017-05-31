@@ -2,11 +2,11 @@
   .credit_cards{"ng-controller" => "CreditCardsCtrl"}
     .row
       .small-12.medium-6.columns
-        %span{ ng: { hide: 'savedCreditCards.length > 0' } }
-          &nbsp;
+        %h3= t(:saved_cards)
         .saved_cards{ ng: { show: 'savedCreditCards.length > 0' } }
-          %h3= t(:saved_cards)
           = render 'saved_cards'
+        .no_cards{ ng: { hide: 'savedCreditCards.length > 0' } }
+          = t(:you_have_no_saved_cards)
         %button.button.primary{ ng: { click: 'showForm()', hide: 'CreditCard.visible' } }
           = t(:add_a_card)
 

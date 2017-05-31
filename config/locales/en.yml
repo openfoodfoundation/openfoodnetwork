@@ -860,6 +860,7 @@ en:
   saved_cards: Saved cards
   add_a_card: Add a Card
   add_card: Add Card
+  you_have_no_saved_cards: You haven't saved any cards yet
   saving_credit_card: Saving credit card...
   card_has_been_removed: "Your card has been removed (number: %{number})"
 
@@ -1519,6 +1520,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"
+  delete: Delete
   add_producer_property: "Add producer property"
   in_progress: "In Progress"
   started_at: "Started at"
