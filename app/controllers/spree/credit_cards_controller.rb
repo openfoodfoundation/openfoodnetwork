@@ -33,7 +33,8 @@ module Spree
 
     def destroy
       if @credit_card.destroy
-        redirect_to "/account"
+        flash[:success] = I18n.t(:card_has_been_removed, number: "x-#{@credit_card.last_digits}")
+        redirect_to "/account#/cards"
       end
     end
 
