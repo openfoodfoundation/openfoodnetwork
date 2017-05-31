@@ -6,6 +6,10 @@ describe Spree::CreditCardsController do
   let(:user) { create_enterprise_user }
   let(:token) { "tok_234bd2c22" }
 
+  before do
+    Stripe.api_key = "sk_test_12345"
+  end
+
   it "Creates a credit card from token + params" do
     controller.stub(:spree_current_user) { user }
 
