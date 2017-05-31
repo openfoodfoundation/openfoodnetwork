@@ -1,0 +1,6 @@
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @user }
+%h3= t('.account_settings')
+= form_for Spree::User.new, :as => @user, :url => spree.user_path(@user), :method => :put do |f|
+  = render :partial => 'spree/shared/user_form', :locals => { :f => f }
+  %p
+    = f.submit t(:update), :class => 'button primary'
