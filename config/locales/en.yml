@@ -2155,12 +2155,14 @@ Please follow the instructions there to make your enterprise visible on the Open
     weight: Weight (per kg)
     zipcode: Postcode
     users:
+      form:
+        account_settings: Account Settings
       show:
         tabs:
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
-          details: Details
+          settings: Account Settings
       orders:
         open_orders: Open Orders
         past_orders: Past Orders
