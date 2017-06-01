@@ -28,8 +28,9 @@ CURRENCY: AUD
 # GOOGLE_MAPS_API_KEY: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Stripe Connect details for instance account
-# Find these under 'API keys' and 'Connect' in your Stripe account dashboard -> Account Settings 
+# Find these under 'API keys' and 'Connect' in your Stripe account dashboard -> Account Settings
 # Under 'Connect', the Redirect URI should be set to https://YOUR_SERVER_URL/stripe/callback (e.g. https://openfoodnetwork.org.uk/stripe/connect)
 # Under 'Webhooks', you should set up a Connect endpoint pointing to https://YOUR_SERVER_URL/stripe/webhook e.g. (https://openfoodnetwork.org.uk/stripe/webhook)
-# STRIPE_INSTANCE_SECRET_KEY: yyyyy
-# STRIPE_CLIENT_ID: xxxx
+# STRIPE_INSTANCE_SECRET_KEY: "sk_test_xxxxxx" # This can be a test key or a live key
+# STRIPE_INSTANCE_PUBLISHABLE_KEY: "pk_test_xxxx" # This can be a test key or a live key
+# STRIPE_CLIENT_ID: "ca_xxxx" # This can be a development ID or a production ID
