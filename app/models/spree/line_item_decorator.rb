@@ -47,7 +47,6 @@ Spree::LineItem.class_eval do
     update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
   end
 
-
   def has_tax?
     adjustments.included_tax.any?
   end

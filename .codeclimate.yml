@@ -1,9 +1,6 @@
 engines:
   rubocop:
     enabled: true
-    exclude_fingerprints:
-    - ac41db8d4ec4cbf508c353d9b65a024f
-    - 8e3b6322aef5be9f38700b3fd0cd347e
   scss-lint:
     enabled: true
 ratings:

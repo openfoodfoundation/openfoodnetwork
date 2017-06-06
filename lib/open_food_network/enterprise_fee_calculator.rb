@@ -25,7 +25,6 @@ module OpenFoodNetwork
       end.select { |fee_type, amount| amount > 0 }
     end
 
-
     def fees_for(variant)
       per_item_enterprise_fee_applicators_for(variant).sum do |applicator|
         calculate_fee_for variant, applicator.enterprise_fee
@@ -39,7 +38,6 @@ module OpenFoodNetwork
         fees
       end.select { |fee_type, amount| amount > 0 }
     end
-
 
     def create_line_item_adjustments_for(line_item)
       variant = line_item.variant
@@ -99,7 +97,6 @@ module OpenFoodNetwork
     def indexed_enterprise_fees_for(variant)
       @indexed_enterprise_fees[variant.id] || []
     end
-
 
     def calculate_fee_for(variant, enterprise_fee)
       # Spree's Calculator interface accepts Orders or LineItems,

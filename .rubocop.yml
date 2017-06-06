@@ -1,3 +1,5 @@
+inherit_from: .rubocop_test.yml
+
 AllCops:
   Include:
     - '**/Rakefile'
@@ -6,24 +8,7 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
-    - 'spec/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
 
-Documentation:
-  Enabled: false
-
-Style/EmptyLinesAroundClassBody:
-  Enabled: false
-
-Style/BracesAroundHashParameters:
-  Enabled: false
-  
 Metrics/LineLength:
-  Enabled: false
   Max: 120
-
-MethodLength:
-  Enabled: false
-
-StringLiterals:
-  Enabled: false

@@ -52,7 +52,6 @@ module Admin
       @owner_email = @enterprise_group.andand.owner.andand.email || ""
     end
 
-
     def collection
       EnterpriseGroup.by_position
     end

@@ -80,7 +80,6 @@ module CheckoutHelper
     available_countries.map { |c| [c.name, c.id] }
   end
 
-
   def validated_input(name, path, args = {})
     attributes = {
       required: true,

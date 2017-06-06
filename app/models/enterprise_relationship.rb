@@ -61,7 +61,6 @@ class EnterpriseRelationship < ActiveRecord::Base
     relatives
   end
 
-
   def permissions_list=(perms)
     if perms.nil?
       permissions.destroy_all

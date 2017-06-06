@@ -43,7 +43,6 @@ module OrderCyclesHelper
     end
   end
 
-
   def order_cycle_options
     @order_cycles.
       with_distributor(current_distributor).

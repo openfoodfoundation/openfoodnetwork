@@ -28,5 +28,3 @@ namespace :openfoodnetwork do
     end
   end
 end
-
-
