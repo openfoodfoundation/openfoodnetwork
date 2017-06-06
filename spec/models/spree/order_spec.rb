@@ -650,4 +650,97 @@ describe Spree::Order do
       end
     end
   end
+
+  describe "a completed order with shipping and transaction fees" do
+    let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
+    let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+    let(:shipping_fee) { 3 }
+    let(:payment_fee) { 5 }
+    let(:item_num) { order.line_items.length }
+    let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
+
+    before do
+      Spree::Config.shipment_inc_vat = true
+      Spree::Config.shipping_tax_rate = 0.25
+
+      # Sanity check the fees
+      expect(order.adjustments.length).to eq 2
+      expect(item_num).to eq 2
+      expect(order.adjustment_total).to eq expected_fees
+      expect(order.shipment.adjustment.included_tax).to eq 1.2
+    end
+
+    context "removing line_items" do
+      it "updates shipping and transaction fees" do
+        # Setting quantity of an item to zero
+        order.update_attributes(line_items_attributes: [{id: order.line_items.first.id, quantity: 0}])
+
+        # Check if fees got updated
+        order.reload
+        expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
+        expect(order.shipment.adjustment.included_tax).to eq 0.6
+      end
+    end
+
+    context "changing the shipping method to one without fees" do
+      let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0)) }
+
+      it "updates shipping fees" do
+        # Change the shipping method
+        order.shipment.update_attributes(shipping_method_id: shipping_method.id)
+        order.save
+
+        # Check if fees got updated
+        order.reload
+        expect(order.adjustment_total).to eq expected_fees - (item_num * shipping_fee)
+        expect(order.shipment.adjustment.included_tax).to eq 0
+      end
+    end
+
+    context "changing the payment method to one without fees" do
+      let(:payment_method) { create(:payment_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0)) }
+
+      it "removes transaction fees" do
+        # Change the payment method
+        order.payment.update_attributes(payment_method_id: payment_method.id)
+        order.save
+
+        # Check if fees got updated
+        order.reload
+        expect(order.adjustment_total).to eq expected_fees - (item_num * payment_fee)
+      end
+    end
+  end
+
+  describe "retrieving previously ordered items" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle) }
+    let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+
+    it "returns no items if nothing has been ordered" do
+      expect(order.finalised_line_items).to eq []
+    end
+
+    context "when no order has been finalised in this order cycle" do
+      let(:product) { create(:product) }
+
+      it "returns no items even though the cart contains items" do
+        order.add_variant(product.master, 1, 3)
+        expect(order.finalised_line_items).to eq []
+      end
+    end
+
+    context "when an order has been finalised in this order cycle" do
+      let!(:prev_order) { create(:completed_order_with_totals, distributor: distributor, order_cycle: order_cycle, user: order.user) }
+      let!(:prev_order2) { create(:completed_order_with_totals, distributor: distributor, order_cycle: order_cycle, user: order.user) }
+      let(:product) { create(:product) }
+
+      it "returns previous items" do
+        prev_order.add_variant(product.master, 1, 3)
+        prev_order2.reload # to get the right response from line_items
+        expect(order.finalised_line_items.length).to eq 3
+        expect(order.finalised_line_items).to match_array(prev_order.line_items + prev_order2.line_items)
+      end
+    end
+  end
 end

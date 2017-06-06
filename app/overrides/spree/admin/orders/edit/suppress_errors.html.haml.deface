@@ -1,0 +1,6 @@
+/ replace "code[erb-loud]:contains(\'error_messages\')"
+
+-# Suppress errors when manually creating a new order - needs to proceed to edit page
+-# without having line items (which otherwise gives a validation error)
+- unless params["suppress_error_msg"]
+  = render partial: "spree/shared/error_messages", :locals => { :target => @order }

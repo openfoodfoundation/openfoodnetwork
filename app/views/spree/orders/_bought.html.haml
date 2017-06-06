@@ -1,0 +1,35 @@
+%tbody{ ng: { controller: 'EditBoughtOrderController' } }
+  %tr
+    %td.toggle-bought{ colspan: 2, ng: { click: 'showBought=!showBought' } }
+      %h5.brick
+        %i{ ng: { class: "{ 'ofn-i_007-caret-right': !showBought, 'ofn-i_005-caret-down': showBought}"} }
+        = t(:orders_bought_items_notice, count: @order.finalised_line_items.sum(&:quantity))
+    %td.text-right{ colspan: 3 }
+      %a.edit-finalised.button.radius.expand.small{ href: changeable_orders_link_path, ng: { class: "{secondary: !showBought, primary: showBought}" } }
+        = t(:orders_bought_edit_button)
+        %i.ofn-i_007-caret-right
+
+
+  - @order.finalised_line_items.each do |line_item|
+    - variant = line_item.variant
+    %tr.bought.line-item{class: "line-item-#{line_item.id} variant-#{variant.id}", ng: { show: 'showBought'} }
+      %td.cart-item-description
+
+        %div.item-thumb-image
+          - if variant.images.length == 0
+            = link_to mini_image(variant.product), variant.product
+          - else
+            = link_to image_tag(variant.images.first.attachment.url(:mini)), variant.product
+
+        = render 'spree/shared/line_item_name', line_item: line_item
+        %span.already-confirmed= t(:orders_bought_already_confirmed)
+      %td.text-right.cart-item-price
+        = line_item.single_display_amount_with_adjustments.to_html
+      %td.text-center.cart-item-quantity
+        = line_item.quantity
+      %td.cart-item-total.text-right
+        = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
+
+      %td.bought-item-delete.text-center
+        %a{ng: {click: "deleteLineItem(#{line_item.id})"}}
+          %i.ofn-i_026-trash

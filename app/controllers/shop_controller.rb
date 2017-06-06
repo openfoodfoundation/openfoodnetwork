@@ -37,6 +37,10 @@ class ShopController < BaseController
     end
   end
 
+  def changeable_orders_alert
+    render layout: false
+  end
+
   private
 
   def filtered_json(products_json)
