@@ -24,6 +24,27 @@ module Openfoodnetwork
       end
     end
 
+    # Settings dependent on locale
+    #
+    # We need to set this config before the promo environment gets loaded and
+    # after the spree environment gets loaded...
+    # This is because Spree uses `Spree::Config` while evaluating classes :scream:
+    #
+    # https://github.com/spree/spree/blob/2-0-stable/core/app/models/spree/calculator/per_item.rb#L6
+    #
+    # TODO: move back to spree initializer once we upgrade to a more recent version
+    #       of Spree
+    initializer 'ofn.spree_locale_settings', before: 'spree.promo.environment' do |app|
+      Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
+      Spree::Config['currency'] = ENV['CURRENCY']
+      if Spree::Country.table_exists?
+        country = Spree::Country.find_by_iso(ENV['DEFAULT_COUNTRY_CODE'])
+        Spree::Config['default_country_id'] = country.id if country.present?
+      else
+        Spree::Config['default_country_id'] = 12  # Australia
+      end
+    end
+
     # Register Spree calculators
     initializer 'spree.register.calculators' do |app|
       app.config.spree.calculators.shipping_methods << OpenFoodNetwork::Calculator::Weight
