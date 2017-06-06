@@ -1,6 +1,6 @@
 class DistributionChangeValidator
 
-  def initialize order
+  def initialize(order)
     @order = order
   end
 
