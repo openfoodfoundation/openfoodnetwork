@@ -129,5 +129,47 @@ feature "full-page cart", js: true do
         expect(page).to have_content item2.variant.name
       end
     end
+
+    context "checking out with insufficient stock" do
+      let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
+      let(:user) { create(:user, bill_address: address, ship_address: address) }
+      let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, user: user) }
+      let(:variant) { product_fee.variants.first }
+
+      before do
+        Spree::Config.set allow_backorders: false
+        quick_login_as user
+        add_product_to_cart order, product_fee, quantity: 10
+      end
+
+      it "isn't allowed" do
+        visit spree.cart_path
+        expect(page).to have_content product_fee.name
+        expect(Spree::Config.allow_backorders).to be_false
+
+        variant.update_attributes! on_hand: 8
+        click_link "Checkout"
+        expect(page).to have_content 'Insufficient stock available, only 8 remaining'
+      end
+
+      context "after logging back in" do
+        it "still isn't allowed" do
+          visit spree.cart_path
+          expect(page).to have_content product_fee.name
+          expect(Spree::Config.allow_backorders).to be_false
+
+          logout
+          visit root_path
+          expect(page).not_to have_content "Shopping @ #{distributor.name.upcase}"
+          variant.update_attributes! on_hand: 5
+
+          quick_login_as user
+          visit root_path
+          expect(page).to have_content "Shopping @ #{distributor.name.upcase}"
+          visit spree.cart_path
+          expect(page).to have_content 'Insufficient stock available, only 5 remaining'
+        end
+      end
+    end
   end
 end
