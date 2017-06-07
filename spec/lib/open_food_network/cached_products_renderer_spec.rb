@@ -48,11 +48,12 @@ module OpenFoodNetwork
         end
 
         describe "when the products JSON is not cached" do
-          let(:cached_json) { Rails.cache.read "products-json-#{distributor.id}-#{order_cycle.id}" }
-          let(:cache_present) { Rails.cache.exist? "products-json-#{distributor.id}-#{order_cycle.id}" }
+          let(:cache_key) { "products-json-#{distributor.id}-#{order_cycle.id}" }
+          let(:cached_json) { Rails.cache.read(cache_key) }
+          let(:cache_present) { Rails.cache.exist?(cache_key) }
 
           before do
-            Rails.cache.clear
+            Rails.cache.delete(cache_key)
             cpr.stub(:uncached_products_json) { 'fresh products' }
           end
 
