@@ -34,7 +34,7 @@
       .three.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
         = f.field_container :unit_name do
           = f.label :product_variant_unit_name, t(:unit_name)
-          %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => 'eg. bunches', :type => 'text' }
+          %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => t('admin.products.unit_name_placeholder'), :type => 'text' }
     .twelve.columns.alpha
       .six.columns.alpha
         = render 'spree/admin/products/primary_taxon_form', f: f

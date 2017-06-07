@@ -1,14 +1,18 @@
+- distributor = @order.andand.distributor || current_distributor
+
 %navigation
   %distributor.details.row
     .small-12.medium-6.large-6.columns
       #distributor_title
-        - if current_distributor.logo?
-          %img.left{src: current_distributor.logo.url(:thumb)}
+        - if distributor.logo?
+          %img.left{src: distributor.logo.url(:thumb)}
         %h3
-          = current_distributor.name
-        %location= current_distributor.address.city
+          = distributor.name
+        %location= distributor.address.city
         / Will this needs to be a drop-down to choose either pick-up point or delivery once shipping methods are implemented
+
     .small-12.medium-6.large-6.columns
       = render partial: "shopping_shared/order_cycles"
 
-= render partial: "shopping_shared/tabs"
+
+= render partial: "shopping_shared/tabs" if distributor == current_distributor

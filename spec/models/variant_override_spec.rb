@@ -97,6 +97,26 @@ describe VariantOverride do
     end
   end
 
+  describe "incrementing stock" do
+    let!(:vo) { create(:variant_override, variant: variant, hub: hub, count_on_hand: 8) }
+
+    context "when the vo overrides stock" do
+      it "increments stock" do
+        vo.increment_stock! 2
+        vo.reload.count_on_hand.should == 10
+      end
+    end
+
+    context "when the vo doesn't override stock" do
+      before { vo.update_attributes(count_on_hand: nil) }
+
+      it "silently logs an error" do
+        Bugsnag.should_receive(:notify)
+        vo.increment_stock! 2
+      end
+    end
+  end
+
   describe "checking default stock value is present" do
     it "returns true when a default stock level has been set"  do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20)

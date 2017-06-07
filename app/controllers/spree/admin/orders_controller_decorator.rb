@@ -12,6 +12,9 @@ Spree::Admin::OrdersController.class_eval do
 
   before_filter :load_distribution_choices, only: [:new, :edit, :update]
 
+  # Ensure that the distributor is set for an order when
+  before_filter :ensure_distribution, only: :new
+
   # After updating an order, the fees should be updated as well
   # Currently, adding or deleting line items does not trigger updating the
   # fees! This is a quick fix for that.
@@ -131,4 +134,16 @@ Spree::Admin::OrdersController.class_eval do
                     ocs.closed +
                     ocs.undated
   end
+
+  def ensure_distribution
+    unless @order
+      @order = Spree::Order.new
+      @order.generate_order_number
+      @order.save!
+    end
+    unless @order.distribution_set?
+      render 'set_distribution', locals: { order: @order }
+    end
+  end
+
 end

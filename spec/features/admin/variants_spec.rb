@@ -16,7 +16,7 @@ feature %q{
     visit spree.admin_product_variants_path p
     click_link 'New Variant'
 
-    fill_in 'variant_unit_value', with: '1'
+    fill_in 'unit_value_human', with: '1'
     fill_in 'variant_unit_description', with: 'foo'
     click_button 'Create'
 
@@ -43,11 +43,11 @@ feature %q{
     expect(page).to_not have_selector "div[data-hook='presentation'] input"
 
     # And I should see unit value and description fields for the unit-related option value
-    page.should have_field "variant_unit_value", with: "1"
+    page.should have_field "unit_value_human", with: "1"
     page.should have_field "variant_unit_description", with: "foo"
 
     # When I update the fields and save the variant
-    fill_in "variant_unit_value", with: "123"
+    fill_in "unit_value_human", with: "123"
     fill_in "variant_unit_description", with: "bar"
     click_button 'Update'
     page.should have_content %Q(Variant "#{p.name}" has been successfully updated!)

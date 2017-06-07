@@ -19,7 +19,7 @@ class VariantOverride < ActiveRecord::Base
 
   def self.indexed(hub)
     Hash[
-      for_hubs(hub).map { |vo| [vo.variant, vo] }
+      for_hubs(hub).preload(:variant).map { |vo| [vo.variant, vo] }
     ]
   end
 
@@ -53,6 +53,14 @@ class VariantOverride < ActiveRecord::Base
   def decrement_stock!(quantity)
     if stock_overridden?
       decrement! :count_on_hand, quantity
+    else
+      Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
+    end
+  end
+
+  def increment_stock!(quantity)
+    if stock_overridden?
+      increment! :count_on_hand, quantity
     else
       Bugsnag.notify RuntimeError.new "Attempting to decrement stock level on a VariantOverride without a count_on_hand specified."
     end

@@ -250,6 +250,13 @@ class OrderCycle < ActiveRecord::Base
     OpenFoodNetwork::ProductsCache.order_cycle_changed self
   end
 
+  def items_bought_by_user(user, distributor)
+    # The Spree::Order.complete scope only checks for completed_at date, does not ensure state is "complete"
+    orders = Spree::Order.complete.where(state: "complete", user_id: user, distributor_id: distributor, order_cycle_id: self)
+    scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+    items = Spree::LineItem.joins(:order).merge(orders)
+    items.each { |li| scoper.scope(li.variant) }
+  end
 
   private
 

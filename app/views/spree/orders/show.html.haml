@@ -10,21 +10,21 @@
     .row
       .columns.large-12.text-center
         %h2
-          = t :orders_show_number
-          = " #" + @order.number
+          = t(:orders_show_order_number, number: @order.number)
+          - if @order.canceled?
+            %span.brick
+              = t(:orders_show_cancelled)
+              %i.ofn-i_009-close
+          - elsif @order.complete?
+            %span.turquoise
+              = t(:orders_show_confirmed)
+              %i.ofn-i_051-check-big
 
     #order{"data-hook" => ""}
       - if params.has_key? :checkout_complete
         %h1= t(:thank_you_for_your_order)
 
       = render 'spree/shared/order_details', order: @order
-
-      .row
-        .columns.large-12
-          = link_to t(:back_to_store), main_app.shop_path, :class => "button"
-          - unless params.has_key? :checkout_complete
-            - if try_spree_current_user && respond_to?(:spree_account_path)
-              = link_to t(:my_account), spree_account_path, :class => "button"
 
 
 = render partial: "shared/footer"

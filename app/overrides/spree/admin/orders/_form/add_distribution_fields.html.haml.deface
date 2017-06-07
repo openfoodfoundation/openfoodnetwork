@@ -1,38 +1,3 @@
 / insert_before "[data-hook='admin_order_form_buttons']"
 
-%fieldset.no-border-bottom
-  %legend{align: 'center'} Distribution
-
-  - if @order.complete?
-    .alpha.six.columns
-      %p
-        %b Distributor:
-        = f.object.distributor.andand.name || "None"
-        = f.hidden_field :distributor_id
-    .omega.six.columns
-      %p
-        %b Order cycle:
-        = f.object.order_cycle.andand.name || "None"
-        = f.hidden_field :order_cycle_id
-
-  - else
-    .alpha.six.columns
-      .field
-        %label{for: "order_distributor_id"} Distributor
-        %input.ofn-select2.fullwidth{id: "order_distributor_id",
-        type: 'number',
-        name: "order[distributor_id]",
-        "ng-model" => 'distributor_id',
-        data: "shops" }
-
-    .omega.six.columns
-      .field
-        %label{ for: "order_order_cycle_id"} Order Cycle
-        %input.ofn-select2.fullwidth{id: "order_order_cycle_id",
-        type: 'number',
-        name: "order[order_cycle_id]",
-        "ng-model" => 'order_cycle_id',
-        "ng-disabled" => "!distributor_id",
-        data: "orderCycles",
-        text: "name_and_status",
-        filter: "validOrderCycle" }
+= render partial: 'spree/admin/orders/_form/distribution_fields'

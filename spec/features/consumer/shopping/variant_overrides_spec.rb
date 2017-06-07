@@ -40,8 +40,8 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
 
   describe "viewing products" do
     it "shows the overridden price" do
-      page.should_not have_price "$12.22" # $11.11 + 10% fee
-      page.should have_price "$61.11"
+      page.should_not have_price with_currency(12.22) # $11.11 + 10% fee
+      page.should have_price with_currency(61.11)
     end
 
     it "looks up stock from the override" do
@@ -59,9 +59,9 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
     it "calculates fees correctly" do
       page.find("#variant-#{v1.id} .graph-button").click
       page.find(".price_breakdown a").click
-      page.should have_selector 'li.cost div', text: '$55.55'
-      page.should have_selector 'li.packing-fee div', text: '$5.56'
-      page.should have_selector 'li.total div', text: '= $61.11'
+      page.should have_selector 'li.cost div', text: with_currency(55.55)
+      page.should have_selector 'li.packing-fee div', text: with_currency(5.56)
+      page.should have_selector 'li.total div', text: "= #{with_currency(61.11)}"
     end
 
     it "shows the correct prices when products are in the cart" do
@@ -69,7 +69,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       show_cart
       wait_until_enabled 'li.cart a.button'
       visit shop_path
-      page.should_not have_price '$12.22'
+      page.should_not have_price with_currency(12.22)
     end
 
     # The two specs below reveal an unrelated issue with fee calculation. See:
@@ -79,29 +79,29 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       fill_in "variants[#{v1.id}]", with: "2"
       show_cart
       page.should have_selector "#cart-variant-#{v1.id} .quantity", text: '2'
-      page.should have_selector "#cart-variant-#{v1.id} .price", text: '$61.11'
-      page.should have_selector "#cart-variant-#{v1.id} .total-price", text: '$122.22'
+      page.should have_selector "#cart-variant-#{v1.id} .price", text: with_currency(61.11)
+      page.should have_selector "#cart-variant-#{v1.id} .total-price", text: with_currency(122.22)
     end
 
     it "shows the correct prices in the shopping cart" do
       fill_in "variants[#{v1.id}]", with: "2"
       add_to_cart
 
-      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-price", text: '$61.11'
+      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-price", text: with_currency(61.11)
       page.should have_field "order[line_items_attributes][0][quantity]", with: '2'
-      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-total", text: '$122.22'
+      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-total", text: with_currency(122.22)
 
-      page.should have_selector "#edit-cart .item-total", text: '$122.22'
-      page.should have_selector "#edit-cart .grand-total", text: '$122.22'
+      page.should have_selector "#edit-cart .item-total", text: with_currency(122.22)
+      page.should have_selector "#edit-cart .grand-total", text: with_currency(122.22)
     end
 
     it "shows the correct prices in the checkout" do
       fill_in "variants[#{v1.id}]", with: "2"
       click_checkout
 
-      page.should have_selector 'form.edit_order .cart-total', text: '$122.22'
-      page.should have_selector 'form.edit_order .shipping', text: '$0.00'
-      page.should have_selector 'form.edit_order .total', text: '$122.22'
+      page.should have_selector 'form.edit_order .cart-total', text: with_currency(122.22)
+      page.should have_selector 'form.edit_order .shipping', text: with_currency(0.00)
+      page.should have_selector 'form.edit_order .total', text: with_currency(122.22)
     end
   end
 

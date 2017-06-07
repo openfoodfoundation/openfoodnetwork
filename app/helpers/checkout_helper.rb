@@ -16,7 +16,7 @@ module CheckoutHelper
     enterprise_fee_adjustments = adjustments.select { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
     adjustments.reject! { |a| a.originator_type == 'EnterpriseFee' && a.source_type != 'Spree::LineItem' }
     unless exclude.include? :admin_and_handling
-      adjustments << Spree::Adjustment.new(label: 'Admin & Handling', amount: enterprise_fee_adjustments.sum(&:amount))
+      adjustments << Spree::Adjustment.new(label: I18n.t(:orders_form_admin), amount: enterprise_fee_adjustments.sum(&:amount))
     end
 
     adjustments
@@ -55,7 +55,6 @@ module CheckoutHelper
 
   def display_adjustment_tax_rates(adjustment)
     tax_rates = adjustment.tax_rates
-    return "" if adjustment.amount == adjustment.included_tax
     tax_rates.map { |tr| number_to_percentage(tr.amount * 100, :precision => 1) }.join(", ")
   end
 

@@ -32,10 +32,10 @@ feature "full-page cart", js: true do
       it "rounds fee calculations correctly" do
         # $0.86 + 20% = $1.032
         # Fractional cents should be immediately rounded down and not carried through
-        expect(page).to have_selector '.cart-item-price',         text: '$1.03'
-        expect(page).to have_selector '.cart-item-total',         text: '$8.24'
-        expect(page).to have_selector '.order-total.item-total',  text: '$8.24'
-        expect(page).to have_selector '.order-total.grand-total', text: '$8.24'
+        expect(page).to have_selector '.cart-item-price',         text: with_currency(1.03)
+        expect(page).to have_selector '.cart-item-total',         text: with_currency(8.24)
+        expect(page).to have_selector '.order-total.item-total',  text: with_currency(8.24)
+        expect(page).to have_selector '.order-total.grand-total', text: with_currency(8.24)
       end
     end
 
@@ -82,6 +82,51 @@ feature "full-page cart", js: true do
 
         page.should have_field "order[line_items_attributes][0][quantity]", with: '1'
         page.should have_content "Insufficient stock available, only 2 remaining"
+      end
+    end
+
+    context "when ordered in the same order cycle" do
+      let(:address) { create(:address) }
+      let(:user) { create(:user, bill_address: address, ship_address: address) }
+      let!(:prev_order1) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: user) }
+      let!(:prev_order2) { create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor, user: user) }
+
+      before do
+        order.user = user
+        order.save
+        order.distributor.allow_order_changes = true
+        order.distributor.save
+        add_product_to_cart order, product_tax
+        quick_login_as user
+        visit spree.cart_path
+      end
+
+      it "shows already ordered line items" do
+        item1 = prev_order1.line_items.first
+        item2 = prev_order2.line_items.first
+
+        expect(page).to_not have_content item1.variant.name
+        expect(page).to_not have_content item2.variant.name
+
+        expect(page).to have_link I18n.t(:orders_bought_edit_button), href: spree.account_path
+        find("td.toggle-bought").click
+
+        expect(page).to have_content item1.variant.name
+        expect(page).to have_content item2.variant.name
+        page.find(".line-item-#{item1.id} td.bought-item-delete a").click
+        expect(page).to have_no_content item1.variant.name
+        expect(page).to have_content item2.variant.name
+
+        # open the dropdown cart and check there as well
+        find('#cart').click
+        expect(page).to have_no_content item1.variant.name
+        expect(page).to have_content item2.variant.name
+
+        visit spree.cart_path
+
+        find("td.toggle-bought").click
+        expect(page).to have_no_content item1.variant.name
+        expect(page).to have_content item2.variant.name
       end
     end
   end

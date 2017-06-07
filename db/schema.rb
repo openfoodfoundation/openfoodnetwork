@@ -251,6 +251,7 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.boolean  "allow_guest_orders",       :default => true,   :null => false
     t.text     "invoice_text"
     t.boolean  "display_invoice_logo",     :default => false
+    t.boolean  "allow_order_changes",      :default => false,  :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
