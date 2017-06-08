@@ -806,14 +806,11 @@ en:
   terms_of_service: "Terms of service"
   on_demand: On demand
   none: None
-<<<<<<< HEAD
   not_allowed: Not allowed
-=======
   no_shipping: no shipping methods
   no_payment: no payment methods
   no_shipping_or_payment: no shipping or payment methods
   unconfirmed: unconfirmed
->>>>>>> Extract translations from mailers and helpers
 
   label_shops: "Shops"
   label_map: "Map"
@@ -1847,7 +1844,7 @@ Please follow the instructions there to make your enterprise visible on the Open
     but do not have valid shipping and payment methods.
     Until you set these up, customers will not be able to shop at these hubs.
   enterprise_fees_update_notice: Your enterprise fees have been updated.
-  enterprise_fees_destroy_error: "That enterprise fee cannot be deleted as it is referenced by a product distribution: #{id} - #{name}."
+  enterprise_fees_destroy_error: "That enterprise fee cannot be deleted as it is referenced by a product distribution: %{id} - %{name}."
   enterprise_register_package_error: "Please select a package"
   enterprise_register_error: "Could not complete registration for %{enterprise}"
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
@@ -2008,7 +2005,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       reset_stock_levels: Reset Stock Levels To Defaults
       changes_to: Changes to
       one_override: one override
-      overrides: override
+      overrides: overrides
       remain_unsaved: remain unsaved.
       no_changes_to_save: No changes to save.'
       no_authorisation: "I couldn't get authorisation to save those changes, so they remain unsaved."
