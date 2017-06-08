@@ -13,6 +13,45 @@
 #
 #
 # See http://community.openfoodnetwork.org/t/localisation-ofn-in-your-language/397
+#
+# Changing this file
+# ==================
+#
+# You are welcome to fix typos, add missing translations and remove unused ones.
+# Here are some guidelines to make sure that this file is becoming more beautiful
+# with every change we do.
+#
+# * Change text: No problem. Fix the typo. And please enclose the text in quotes
+#   to avoid any accidents.
+#
+#   Example 1: "When you're using double quotes, they look like \"this\""
+#   Example 2: "When you’re using double quotes, they look like “this”"
+#
+#   The second example uses unicode to make it look prettier and avoid backslashes.
+#
+# * Add translations: Cool, every bit of text in the application should be here.
+#   If you add a translation for a view or mailer, please make use of the nested
+#   structure. Use the "lazy" lookup. See: http://guides.rubyonrails.org/i18n.html#looking-up-translations
+#
+#   Avoid global keys. There are a lot already. And some are okay, for example
+#   "enterprises" should be the same everywhere on the page. But in doubt,
+#   create a new translation and give it a meaningful scope.
+#
+#   Don't worry about duplication. We may use the same word in different contexts,
+#   but another language could use different words. So don't try to re-use
+#   translations between files.
+#
+#   Don't move big parts around or rename scopes with a lot of entries without
+#   a really good reason. In some cases that causes a lot of translations in
+#   other languages to be lost. That causes more work for translators.
+#
+# * Remove translations: If you are sure that they are not used anywhere,
+#   please remove them. Be aware that some translations are looked up with
+#   variables. For example app/views/admin/contents/_fieldset.html.haml looks
+#   up labels for preferences. Unfortunately, they don't have a scope.
+#
+# * Participate in the community discussions:
+#   - https://community.openfoodnetwork.org/t/workflow-to-structure-translations/932
 
 en:
   activerecord:
