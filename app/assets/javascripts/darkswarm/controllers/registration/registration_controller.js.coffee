@@ -11,5 +11,14 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
   $scope.countries = availableCountries.filter (country) ->
     country.states.length > 0
 
+  $scope.countriesById = $scope.countries.reduce (obj, country) ->
+    obj[country.id] = country
+    obj
+  , {}
+
+  $scope.setDefaultCountry = (id) ->
+    country = $scope.countriesById[id]
+    $scope.enterprise.country = country if country
+
   $scope.countryHasStates = ->
     $scope.enterprise.country.states.length > 0
