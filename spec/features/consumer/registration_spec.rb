@@ -48,7 +48,7 @@ feature "Registration", js: true do
       fill_in 'enterprise_address', with: '123 Abc Street'
       fill_in 'enterprise_city', with: 'Northcote'
       fill_in 'enterprise_zipcode', with: '3070'
-      expect(page).to have_select('enterprise_country', options: %w(Albania Australia Chad), selected: 'Albania')
+      expect(page).to have_select('enterprise_country', options: %w(Albania Australia), selected: 'Albania')
       select 'Australia', from: 'enterprise_country'
       select 'VIC', from: 'enterprise_state'
       perform_and_ensure(:click_button, "Continue", lambda { page.has_content? 'Who is responsible for managing My Awesome Enterprise?' })
