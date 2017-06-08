@@ -1814,7 +1814,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   tag_rules: "Tag Rules"
   shop_preferences: "Shop Preferences"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by: fee by
+  enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"
@@ -2009,7 +2009,7 @@ Please follow the instructions there to make your enterprise visible on the Open
       remain_unsaved: remain unsaved.
       no_changes_to_save: No changes to save.'
       no_authorisation: "I couldn't get authorisation to save those changes, so they remain unsaved."
-      some_trouble: I had some trouble saving
+      some_trouble: "I had some trouble saving: %{errors}"
       changing_on_hand_stock: Changing on hand stock levels...
       stock_reset: Stocks reset to defaults.
     tag_rules:

@@ -82,7 +82,7 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
       for field, field_errors of data.errors
         errors = errors.concat field_errors
       errors = errors.join ', '
-      t('js.variant_overrides.some_trouble') + ": #{errors}"
+      t('js.variant_overrides.some_trouble', {errors: errors})
     else
       t('js.oh_no')
 
