@@ -48,7 +48,7 @@
 //= require textAngular-rangy.min.js
 //= require textAngular-sanitize.min.js
 //= require textAngular.min.js
-//= require darkswarm/i18n.js
+//= require i18n/translations
 //= require darkswarm/i18n.translate.js
 
 
