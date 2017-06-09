@@ -5,7 +5,8 @@ Darkswarm.controller "RegistrationCtrl", ($scope, RegistrationService, Enterpris
 
   $scope.steps = ['details', 'contact', 'type', 'about', 'images', 'social']
 
-  $scope.countries = availableCountries
+  $scope.countries = availableCountries.filter (country) ->
+    country.states.length > 0
 
   $scope.countryHasStates = ->
     $scope.enterprise.country.states.length > 0
