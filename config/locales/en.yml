@@ -766,6 +766,10 @@ en:
       require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
       require_customer_html: "Please %{contact} %{enterprise} to become a customer."
 
+
+  # Front-end controller translations
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
+
   # Printable Invoice Columns
   invoice_billing_address: "Billing address:"
   invoice_column_tax: "GST"

@@ -91,27 +91,27 @@ describe 'Checkout service', ->
 
   describe "submitting", ->
     it "Posts the Checkout to the server", ->
-      $httpBackend.expectPUT("/checkout", {order: Checkout.preprocess()}).respond 200, {path: "test"}
+      $httpBackend.expectPUT("/checkout.json", {order: Checkout.preprocess()}).respond 200, {path: "test"}
       Checkout.submit()
       $httpBackend.flush()
 
     describe "when there is an error", ->
       it "redirects when a redirect is given", ->
-        $httpBackend.expectPUT("/checkout").respond 400, {path: 'path'}
+        $httpBackend.expectPUT("/checkout.json").respond 400, {path: 'path'}
         Checkout.submit()
         $httpBackend.flush()
         expect(Navigation.go).toHaveBeenCalledWith 'path'
 
       it "sends flash messages to the flash service", ->
         spyOn(FlashLoaderMock, "loadFlash") # Stubbing out writes to window.location
-        $httpBackend.expectPUT("/checkout").respond 400, {flash: {error: "frogs"}}
+        $httpBackend.expectPUT("/checkout.json").respond 400, {flash: {error: "frogs"}}
         Checkout.submit()
 
         $httpBackend.flush()
         expect(FlashLoaderMock.loadFlash).toHaveBeenCalledWith {error: "frogs"}
 
       it "puts errors into the scope", ->
-        $httpBackend.expectPUT("/checkout").respond 400, {errors: {error: "frogs"}}
+        $httpBackend.expectPUT("/checkout.json").respond 400, {errors: {error: "frogs"}}
         Checkout.submit()
         $httpBackend.flush()
         expect(Checkout.errors).toEqual {error: "frogs"}
