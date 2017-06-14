@@ -47,7 +47,7 @@ class CheckoutController < Spree::CheckoutController
           format.html do
             respond_with(@order, :location => order_path(@order))
           end
-          format.js do
+          format.json do
             render json: {path: order_path(@order)}, status: 200
           end
         end
@@ -133,7 +133,7 @@ class CheckoutController < Spree::CheckoutController
       format.html do
         render :edit
       end
-      format.js do
+      format.json do
         render json: {errors: @order.errors, flash: flash.to_hash}.to_json, status: 400
       end
     end
@@ -220,6 +220,14 @@ class CheckoutController < Spree::CheckoutController
       params[:order][:payments_attributes].first[:source] = credit_card
       params[:order][:payments_attributes].first[:payment_method_id] = credit_card.payment_method_id
       params[:order][:payments_attributes].first.delete :source_attributes
+    end
+  end
+
+  def rescue_from_spree_gateway_error(error)
+    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: { flash: flash.to_hash }, status: 400 }
     end
   end
 end
