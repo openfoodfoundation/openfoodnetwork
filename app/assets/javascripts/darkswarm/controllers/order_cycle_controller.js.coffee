@@ -10,7 +10,7 @@ Darkswarm.controller "OrderCycleCtrl", ($scope, $timeout, OrderCycle) ->
       $("#order_cycle_id").trigger("openTrigger")
 
 
-Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Products, Variants, Cart) ->
+Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Products, Variants, Cart, ChangeableOrdersAlert) ->
   # Track previous order cycle id for use with revertOrderCycle()
   $scope.previous_order_cycle_id = OrderCycle.order_cycle.order_cycle_id
   $scope.$watch 'order_cycle.order_cycle_id', (newValue, oldValue)->
@@ -30,3 +30,5 @@ Darkswarm.controller "OrderCycleChangeCtrl", ($scope, $timeout, OrderCycle, Prod
     Variants.clear()
     Cart.clear()
     Products.update()
+    Cart.reloadFinalisedLineItems()
+    ChangeableOrdersAlert.reload()

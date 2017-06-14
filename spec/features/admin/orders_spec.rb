@@ -22,6 +22,14 @@ feature %q{
     create :check_payment, order: @order, amount: @order.total
   end
 
+  def new_order_with_distribution(distributor, order_cycle)
+    visit 'admin/orders/new'
+    page.should have_selector('#s2id_order_distributor_id')
+    select2_select distributor.name, from: 'order_distributor_id'
+    select2_select order_cycle.name, from: 'order_order_cycle_id'
+    click_button 'Next'
+  end
+
   scenario "creating an order with distributor and order cycle" do
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
@@ -43,7 +51,10 @@ feature %q{
     select2_select @distributor.name, from: 'order_distributor_id'
     page.should have_select2 'order_order_cycle_id', options: ['One (open)']
     select2_select @order_cycle.name, from: 'order_order_cycle_id'
+    click_button 'Next'
 
+    # it suppresses validation errors when setting distribution
+    page.should_not have_selector '#errorExplanation'
     page.should have_content 'ADD PRODUCT'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
@@ -75,6 +86,8 @@ feature %q{
   scenario "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
+    puts d.name
+    puts @distributor.name
 
     @order.state = 'cart'; @order.completed_at = nil; @order.save
 
@@ -89,7 +102,6 @@ feature %q{
     select2_select oc.name, from: 'order_order_cycle_id'
 
     click_button 'Update And Recalculate Fees'
-
     page.should have_content "Distributor or order cycle cannot supply the products in your cart"
   end
 
@@ -127,12 +139,11 @@ feature %q{
 
     # When I create a new order
     quick_login_as @user
-    visit spree.admin_path
-
-    visit '/admin/orders'
-    click_link 'New Order'
-    select2_select @distributor.name, from: 'order_distributor_id'
-    select2_select @order_cycle.name, from: 'order_order_cycle_id'
+    new_order_with_distribution(@distributor, @order_cycle)
+    # visit '/admin/orders'
+    # click_link 'New Order'
+    # select2_select @distributor.name, from: 'order_distributor_id'
+    # select2_select @order_cycle.name, from: 'order_order_cycle_id'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
@@ -142,7 +153,7 @@ feature %q{
     # And I select that customer's email address and save the order
     targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
     click_button 'Continue'
-    within('h1.page-title') { page.should have_content "Shipments" }
+    page.should have_selector "h1.page-title", text: "Shipments"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
@@ -212,11 +223,7 @@ feature %q{
     end
 
     scenario "creating an order with distributor and order cycle" do
-      visit '/admin/orders'
-      click_link 'New Order'
-
-      select2_select distributor1.name, from: 'order_distributor_id'
-      select2_select order_cycle1.name, from: 'order_order_cycle_id'
+      new_order_with_distribution(distributor1, order_cycle1)
 
       expect(page).to have_content 'ADD PRODUCT'
       targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
@@ -240,6 +247,7 @@ feature %q{
     end
 
   end
+
 
   # Working around intermittent click failing
   # Possible causes of failure:

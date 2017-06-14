@@ -20,4 +20,7 @@ Spree::Money.class_eval do
     output
   end
 
+  def format(options={})
+    @money.format(@options.merge!(options))
+  end
 end

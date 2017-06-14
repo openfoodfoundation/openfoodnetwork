@@ -20,19 +20,10 @@
         = order_form.fields_for :line_items do |item_form|
           = render :partial => 'line_item', :locals => { :variant => item_form.object.variant, :line_item => item_form.object, :item_form => item_form }
 
+      = render 'bought' if show_bought_items? && @order.cart?
+
       %tfoot#edit-cart
-        %tr
-          %td{colspan:"2"}
-          %td
-            = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
-              %i.ofn-i_023-refresh
-              = t(:update)
-          %td
-          %td#empty-cart.text-center
-            %span#clear_cart_link{"data-hook" => ""}
-              = link_to t(:orders_form_empty_cart), empty_cart_path, method: :put, :class => 'not-bold small'
-              -#= form_tag empty_cart_path, :method => :put do
-                -#= submit_tag t(:empty_cart), :class => 'button alert expand small'
+        = render 'spree/orders/form/cart_actions_row' if @order.cart?
 
         / This is the fees row which we want to replace with the pop-over
         -# - unless @order.adjustments.eligible.blank?
@@ -51,6 +42,14 @@
           %td.text-right
             %span.order-total.distribution-total= display_checkout_admin_and_handling_adjustments_total_for(@order)
           %td
+
+        - checkout_adjustments_for(@order, exclude: [:line_item, :admin_and_handling]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+          %tr.order-adjustment
+            %td.text-right{:colspan => "3"}
+              = adjustment.label
+            %td.text-right.total
+              %span= adjustment.display_amount.to_html
+            %td
 
         %tr
           %td.text-right{colspan:"3"}

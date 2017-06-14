@@ -1,16 +1,17 @@
 / insert_top "[data-hook='admin_product_form_right']"
 
-= f.field_container :variant_unit do
-  = f.label :variant_unit, 'Variant unit'
-  = f.select :variant_unit, product_variant_unit_options, {:include_blank => true}, {:class => "select2 fullwidth"}
-  = f.error_message_on :variant_unit
+.variant_units_form{ 'ng-app' => 'admin.products', 'ng-controller' => 'editUnitsCtrl' }
 
-= f.field_container :variant_unit_scale do
-  = f.label :variant_unit_scale, 'Variant unit scale'
-  = f.text_field :variant_unit_scale
-  = f.error_message_on :variant_unit_scale
+  = f.field_container :units do
+    = f.label :variant_unit_with_scale, :units
+    %select.select2.fullwidth{ id: 'product_variant_unit_with_scale', 'ng-model' => 'variant_unit_with_scale', 'ng-change' => 'setFields()', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
+      %option{'value' => ''}
 
-= f.field_container :variant_unit_name do
-  = f.label :variant_unit_name, 'Variant unit name'
-  = f.text_field :variant_unit_name
-  = f.error_message_on :variant_unit_name
+  = f.text_field :variant_unit, {'id' => 'variant_unit', 'ng-value' => 'product.variant_unit', 'hidden' => true}
+  = f.text_field :variant_unit_scale, {'id' => 'variant_unit_scale', 'ng-value' => 'product.variant_unit_scale', 'hidden' => true}
+
+  .variant_unit_name{'ng-show' => 'product.variant_unit == "items"'}
+    = f.field_container :variant_unit_name do
+      = f.label :variant_unit_name, 'Variant unit name'
+      = f.text_field :variant_unit_name, {placeholder: t('admin.products.unit_name_placeholder')}
+      = f.error_message_on :variant_unit_name

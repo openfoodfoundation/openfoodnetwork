@@ -72,9 +72,33 @@
 
 // Shopping cart
 #cart-detail {
-  .cart-item-delete {
-    a.delete {
+  .cart-item-delete, .bought-item-delete {
+    a {
       font-size: 1.125em;
+    }
+  }
+
+  .out-of-stock {
+    color: $clr-brick;
+  }
+
+  button, .button {
+    margin: 0;
+  }
+
+  .toggle-bought {
+    cursor: pointer;
+  }
+
+  tr.bought td {
+    color: $med-grey;
+
+    h5 {
+      color: $med-grey;
+    }
+
+    .already-confirmed {
+      float: right;
     }
   }
 }
@@ -88,11 +112,5 @@
     padding-right: 0.5em;
     width: 36px;
     height: 36px;
-  }
-}
-
-#edit-cart {
-  button, .button {
-    margin: 0;
   }
 }

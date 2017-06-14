@@ -1,0 +1,24 @@
+- content_for :page_title do
+  = t(:new)
+
+- content_for :page_actions do
+  %li= button_link_to t(:back_to_orders_list), spree.admin_orders_path, :icon => 'icon-arrow-left'
+
+= admin_inject_shops 'admin.orders'
+= admin_inject_order_cycles
+
+= render 'spree/admin/shared/order_tabs', :current => 'Order Details'
+
+= csrf_meta_tags
+
+%div{"data-hook" => "admin_order_new_header"}
+  = render 'spree/shared/error_messages', :target => @order
+
+%div{"ng-app" => "admin.orders", "ng-controller" => "ordersCtrl"}
+  = form_for @order, url: admin_order_url(@order), method: :put do |f|
+    = render 'spree/admin/orders/_form/distribution_fields'
+    -# This param passed to stop validation error in next page due to no line items in order yet:
+    = hidden_field_tag 'suppress_error_msg', "true"
+    = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
+      %i.icon-arrow-right
+      = t(:next)

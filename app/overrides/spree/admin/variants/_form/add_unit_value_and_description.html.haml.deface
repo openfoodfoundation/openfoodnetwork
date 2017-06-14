@@ -1,10 +1,13 @@
 / insert_top "[data-hook='admin_variant_form_fields']"
 
 - if product_has_variant_unit_option_type?(@product)
-  .field{"data-hook" => "unit_value"}
-    = f.label :unit_value, "Unit Value"
-    = f.text_field :unit_value, class: "fullwidth"
+  - if @product.variant_unit != 'items'
+    .field{"data-hook" => "unit_value", 'ng-controller' => 'variantUnitsCtrl'}
+      = f.label :unit_value, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
+      = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
+      = text_field_tag :unit_value_human, nil, {class: "fullwidth", 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
+      = f.text_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
 
-  .field{"data-hook" => "unit_description"}
-    = f.label :unit_description, "Unit Description"
-    = f.text_field :unit_description, class: "fullwidth"
+    .field{"data-hook" => "unit_description"}
+      = f.label :unit_description, "Unit Description"
+      = f.text_field :unit_description, class: "fullwidth", placeholder: t('admin.products.unit_name_placeholder')

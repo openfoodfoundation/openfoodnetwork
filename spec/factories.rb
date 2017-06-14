@@ -1,6 +1,20 @@
 require 'ffaker'
 require 'spree/core/testing_support/factories'
 
+# http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
+#
+# The spree_core gem defines factories in several files. For example:
+#
+# - lib/spree/core/testing_support/factories/calculator_factory.rb
+#   * calculator
+#   * no_amount_calculator
+#
+# - lib/spree/core/testing_support/factories/order_factory.rb
+#   * order
+#   * order_with_totals
+#   * order_with_inventory_unit_shipped
+#   * completed_order_with_totals
+#
 FactoryGirl.define do
   factory :classification, class: Spree::Classification do
   end
@@ -53,6 +67,14 @@ FactoryGirl.define do
       variants = [ex1, ex2].map(&:variants).flatten
       [ex3, ex4].each do |exchange|
         variants.each { |v| exchange.variants << v }
+      end
+    end
+  end
+
+  factory :order_cycle_with_overrides, parent: :order_cycle do
+    after (:create) do |oc|
+      oc.variants.each do |variant|
+        create(:variant_override, variant: variant, hub: oc.distributors.first, price: variant.price + 100)
       end
     end
   end
@@ -171,6 +193,10 @@ FactoryGirl.define do
   end
 
   sequence(:calculator_amount)
+  factory :calculator_per_item, class: Spree::Calculator::PerItem do
+    preferred_amount { generate(:calculator_amount) }
+  end
+
   factory :enterprise_fee, :class => EnterpriseFee do
     ignore { amount nil }
 
@@ -178,7 +204,7 @@ FactoryGirl.define do
     sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
 
     enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
-    calculator { Spree::Calculator::PerItem.new(preferred_amount: amount || generate(:calculator_amount)) }
+    calculator { build(:calculator_per_item, preferred_amount: amount) }
 
     after(:create) { |ef| ef.calculator.save! }
   end
@@ -234,6 +260,27 @@ FactoryGirl.define do
     after(:create) do |order|
       create(:payment, amount: order.total - 1, order: order, state: "completed")
       order.reload
+    end
+  end
+
+  factory :completed_order_with_fees, parent: :order_with_totals_and_distribution do
+    ignore do
+      shipping_fee 3
+      payment_fee 5
+    end
+
+    shipping_method do
+      shipping_calculator = build(:calculator_per_item, preferred_amount: shipping_fee)
+      create(:shipping_method, calculator: shipping_calculator, require_ship_address: false, distributors: [distributor])
+    end
+
+    after(:create) do |order, evaluator|
+      create(:line_item, order: order)
+      order.create_shipment!
+      payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
+      payment_method = create(:payment_method, calculator: payment_calculator)
+      create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
+      while !order.completed? do break unless order.next! end
     end
   end
 

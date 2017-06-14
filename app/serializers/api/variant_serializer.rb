@@ -1,7 +1,6 @@
 class Api::VariantSerializer < ActiveModel::Serializer
   attributes :id, :is_master, :count_on_hand, :name_to_display, :unit_to_display
   attributes :options_text, :on_demand, :price, :fees, :price_with_fees, :product_name
-  attributes :tag_list
 
   def price
     object.price

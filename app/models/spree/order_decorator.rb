@@ -9,7 +9,7 @@ end
 
 Spree::Order.class_eval do
   belongs_to :order_cycle
-  belongs_to :distributor, :class_name => 'Enterprise'
+  belongs_to :distributor, class_name: 'Enterprise'
   belongs_to :cart
   belongs_to :customer
 
@@ -20,6 +20,9 @@ Spree::Order.class_eval do
   before_validation :shipping_address_from_distributor
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
+
+  before_save :update_shipping_fees!, if: :complete?
+  before_save :update_payment_fees!, if: :complete?
 
   checkout_flow do
     go_to_state :address
@@ -38,7 +41,6 @@ Spree::Order.class_eval do
     go_to_state :complete
     remove_transition :from => :delivery, :to => :confirm
   end
-
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -88,7 +90,7 @@ Spree::Order.class_eval do
     unless self.order_cycle == order_cycle
       self.order_cycle = order_cycle
       self.distributor = nil unless order_cycle.nil? || order_cycle.has_distributor?(distributor)
-      self.empty!
+      empty!
       save!
     end
   end
@@ -98,7 +100,6 @@ Spree::Order.class_eval do
     current_item = find_line_item_by_variant(variant)
     current_item.andand.destroy
   end
-
 
   # Overridden to support max_quantity
   def add_variant(variant, quantity = 1, max_quantity = nil, currency = nil)
@@ -126,7 +127,7 @@ Spree::Order.class_eval do
       current_item.currency = currency unless currency.nil?
       current_item.save
     else
-      current_item = Spree::LineItem.new(:quantity => quantity, max_quantity: max_quantity)
+      current_item = Spree::LineItem.new(quantity: quantity, max_quantity: max_quantity)
       current_item.variant = variant
       if currency
         current_item.currency = currency unless currency.nil?
@@ -134,11 +135,29 @@ Spree::Order.class_eval do
       else
         current_item.price    = variant.price
       end
-      self.line_items << current_item
+      line_items << current_item
     end
 
-    self.reload
+    reload
     current_item
+  end
+
+  # After changing line items of a completed order
+  def update_shipping_fees!
+    shipments.each do |shipment|
+      next if shipment.shipped?
+      update_adjustment! shipment.adjustment
+      shipment.save # updates included tax
+    end
+  end
+
+  # After changing line items of a completed order
+  def update_payment_fees!
+    payments.each do |payment|
+      next if payment.completed?
+      update_adjustment! payment.adjustment
+      payment.save
+    end
   end
 
   def cap_quantity_at_stock!
@@ -156,6 +175,10 @@ Spree::Order.class_eval do
     self.distributor = distributor
     self.order_cycle = order_cycle
     save!
+  end
+
+  def distribution_set?
+    distributor && order_cycle
   end
 
   def update_distribution_charge!
@@ -195,6 +218,12 @@ Spree::Order.class_eval do
     line_items.map(&:variant)
   end
 
+  # Show already bought line items of this order cycle
+  def finalised_line_items
+    return [] unless order_cycle && user && distributor
+    order_cycle.items_bought_by_user(user, distributor)
+  end
+
   def admin_and_handling_total
     adjustments.eligible.where("originator_type = ? AND source_type != ?", 'EnterpriseFee', 'Spree::LineItem').sum(&:amount)
   end
@@ -205,26 +234,26 @@ Spree::Order.class_eval do
 
   # Does this order have shipments that can be shipped?
   def ready_to_ship?
-    self.shipments.any?{|s| s.can_ship?}
+    shipments.any?(&:can_ship?)
   end
 
   # Ship all pending orders
   def ship
-    self.shipments.each do |s|
+    shipments.each do |s|
       s.ship if s.can_ship?
     end
   end
 
   def shipping_tax
-    adjustments(:reload).shipping.sum &:included_tax
+    adjustments(:reload).shipping.sum(&:included_tax)
   end
 
   def enterprise_fee_tax
-    adjustments(:reload).enterprise_fee.sum &:included_tax
+    adjustments(:reload).enterprise_fee.sum(&:included_tax)
   end
 
   def total_tax
-    (adjustments + price_adjustments).sum &:included_tax
+    (adjustments + price_adjustments).sum(&:included_tax)
   end
 
   def tax_adjustments
@@ -254,11 +283,12 @@ Spree::Order.class_eval do
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   # And separately, to skip sending confirmation email completely for user invoice orders
   def deliver_order_confirmation_email
-    unless account_invoice?
-      Delayed::Job.enqueue ConfirmOrderJob.new(id)
-    end
+    Delayed::Job.enqueue ConfirmOrderJob.new(id) unless account_invoice?
   end
 
+  def changes_allowed?
+    complete? && distributor.andand.allow_order_changes? && order_cycle.andand.open?
+  end
 
   private
 
@@ -272,9 +302,9 @@ Spree::Order.class_eval do
         self.ship_address = distributor.address.clone
 
         if bill_address
-          self.ship_address.firstname = bill_address.firstname
-          self.ship_address.lastname = bill_address.lastname
-          self.ship_address.phone = bill_address.phone
+          ship_address.firstname = bill_address.firstname
+          ship_address.lastname = bill_address.lastname
+          ship_address.phone = bill_address.phone
         end
       end
     end
@@ -286,11 +316,11 @@ Spree::Order.class_eval do
   end
 
   def product_distribution_for(line_item)
-    line_item.variant.product.product_distribution_for self.distributor
+    line_item.variant.product.product_distribution_for distributor
   end
 
   def require_customer?
-    return true unless new_record? or state == 'cart'
+    return true unless new_record? || state == 'cart'
   end
 
   def customer_is_valid?
@@ -312,5 +342,12 @@ Spree::Order.class_eval do
       customer_name = bill_address.andand.full_name
       self.customer = Customer.create(enterprise: distributor, email: email_for_customer, user: user, name: customer_name, bill_address: bill_address.andand.clone, ship_address: ship_address.andand.clone)
     end
+  end
+
+  def update_adjustment!(adjustment)
+    locked = adjustment.locked
+    adjustment.locked = false
+    adjustment.update!(self)
+    adjustment.locked = locked
   end
 end

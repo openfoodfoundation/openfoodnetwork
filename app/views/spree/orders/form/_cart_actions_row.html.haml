@@ -1,0 +1,10 @@
+%tr
+  %td{colspan:"2"}
+  %td
+    = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
+      %i.ofn-i_023-refresh
+      = t(:update)
+  %td
+  %td#empty-cart.text-center
+    %span#clear_cart_link{"data-hook" => ""}
+      = link_to t(:orders_form_empty_cart), empty_cart_path, method: :put, :class => 'not-bold small'

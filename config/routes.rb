@@ -28,6 +28,7 @@ Openfoodnetwork::Application.routes.draw do
     get :products
     post :order_cycle
     get :order_cycle
+    get :changeable_orders_alert
   end
 
   resources :producers, only: [:index] do
@@ -40,6 +41,10 @@ Openfoodnetwork::Application.routes.draw do
     collection do
       get :signup
     end
+  end
+
+  resources :line_items, only: [:destroy] do
+    get :bought, on: :collection
   end
 
   resources :groups, only: [:index, :show] do
@@ -262,6 +267,7 @@ Spree::Core::Engine.routes.prepend do
   resources :orders do
     get :clear, :on => :collection
     get :order_cycle_expired, :on => :collection
+    put :cancel, on: :member
   end
 
 end
