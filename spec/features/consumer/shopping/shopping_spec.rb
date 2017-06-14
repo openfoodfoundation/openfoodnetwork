@@ -6,6 +6,61 @@ feature "As a consumer I want to shop with a distributor", js: true do
   include ShopWorkflow
   include UIComponentHelper
 
+  describe "logging in with an incomplete cart" do
+    let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
+    let(:user) { create(:user, bill_address: address, ship_address: address) }
+    let(:incomplete_order) { create(:order_with_totals_and_distribution, user_id: user.id) }
+    let(:current_order) { create(:order_with_totals_and_distribution, user_id: user.id) }
+
+    context "with no items on login" do
+      before do
+        quick_login_as user
+        visit shop_path
+      end
+
+      it "should keep an empty cart" do
+        page.should have_text "0 items"
+      end
+    end
+
+    context "with no items but a previous incomplete order" do
+      before do
+        incomplete_order
+        quick_login_as user
+        visit shop_path
+      end
+
+      it "should restore incomplete order" do
+        page.should have_text "1 items"
+      end
+    end
+
+    context "with items and no incomplete order" do
+      before do
+        set_order current_order
+        quick_login_as user
+        visit shop_path
+      end
+
+      it "should keep current items" do
+        page.should have_text "1 items"
+      end
+    end
+
+    context "with items and an incomplete order" do
+      before do
+        incomplete_order
+        set_order current_order
+        quick_login_as user
+        visit shop_path
+      end
+
+      it "should keep current items" do
+        page.should have_text "1 items"
+      end
+    end
+  end
+
   describe "Viewing a distributor" do
 
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
