@@ -768,6 +768,7 @@ en:
 
 
   # Front-end controller translations
+  card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
 
   # Printable Invoice Columns

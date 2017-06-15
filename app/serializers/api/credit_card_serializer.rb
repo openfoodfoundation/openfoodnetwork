@@ -6,7 +6,7 @@ class Api::CreditCardSerializer < ActiveModel::Serializer
   end
 
   def number
-    'x-' + object.last_digits
+    "x-#{object.last_digits}"
   end
 
   def expiry
