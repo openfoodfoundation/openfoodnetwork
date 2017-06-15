@@ -5,29 +5,19 @@ module Spree
     before_filter :destroy_at_stripe, only: [:destroy]
 
     def new_from_token
-      set_user
-      # At the moment a new Customer is created for every credit card (even via ActiveMerchant),
-      # so doing the same here (for now).
-      if @customer = create_customer(params[:token])
-      # Since it's a new customer, the default_source is the card that our original token represented
-        credit_card_params = format_credit_card_params(params)
-                                .merge({gateway_payment_profile_id: @customer.default_source,
-                                        gateway_customer_profile_id: @customer.id,
-                                        cc_type: params[:cc_type]
-                                        })
-
-        @credit_card = Spree::CreditCard.new(credit_card_params)
-        # Can't mass assign these:
-        @credit_card.cc_type = credit_card_params[:cc_type]
-        @credit_card.last_digits = credit_card_params[:last_digits]
-        @credit_card.user_id = @user.id
+      # A new Customer is created for every credit card (same as via ActiveMerchant)
+      # Note that default_source is the card represented by the token
+      begin
+        @customer = create_customer(params[:token])
+        @credit_card = build_card_from(stored_card_attributes)
         if @credit_card.save
           render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
         else
-          render json: "error saving credit card", status: 500
+          message = t(:card_could_not_be_saved)
+          render json: { flash: { error: I18n.t(:spree_gateway_error_flash_for_checkout, error: message) } }, status: 400
         end
-      else
-        render json: "error creating Stripe customer", status: 500
+      rescue Stripe::CardError => e
+        return render json: { flash: { error: I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message) } }, status: 400
       end
     end
 
@@ -47,18 +37,28 @@ module Spree
 
   private
     def create_customer(token)
-      Stripe::Customer.create(email: @user.email, source: token)
+      Stripe::Customer.create(email: spree_current_user.email, source: token)
     end
 
-    def format_credit_card_params(params_hash)
-      { month: params_hash[:exp_month],
-        year: params_hash[:exp_year],
-        last_digits: params_hash[:last4]
+    def stored_card_attributes
+      return {} unless @customer.try(:default_source)
+      {
+        month: params[:exp_month],
+        year: params[:exp_year],
+        last_digits: params[:last4],
+        gateway_payment_profile_id: @customer.default_source,
+        gateway_customer_profile_id: @customer.id,
+        cc_type: params[:cc_type]
       }
     end
 
-    def set_user
-      @user = spree_current_user
+    def build_card_from(attrs)
+      card = Spree::CreditCard.new(attrs)
+      # Can't mass assign these:
+      card.cc_type = attrs[:cc_type]
+      card.last_digits = attrs[:last_digits]
+      card.user_id = spree_current_user.id
+      card
     end
 
     def set_credit_card
