@@ -118,8 +118,10 @@ nav {
 }
 
 .top-bar .ofn-logo img {
-  height: 51px;
+  height: auto;
   width: auto;
+  max-height: 51px;
+  max-width: 250px;
 }
 
 .left-off-canvas-menu {
