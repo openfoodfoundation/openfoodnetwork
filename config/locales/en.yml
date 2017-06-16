@@ -653,6 +653,7 @@ en:
     shared:
       user_guide_link:
         user_guide: User Guide
+
     invoice_settings:
       edit:
         title: Invoice Settings
@@ -723,6 +724,28 @@ en:
         description: Invoices for import into Xero
       packing:
         name: Packing Reports
+
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Settings"
+        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
+        no_api_key_msg: No Stripe account exists for this enterprise.
+        status: Status
+        ok: Ok
+        instance_secret_key: Instance Secret Key
+        account_id: Account ID
+        business_name: Business Name
+        charges_enabled: Charges Enabled
+        charges_enabled_warning: "Warning: Charges are not enabled for your account"
+        auth_fail_error: The API key you provided is invalid
+        empty_api_key_error: No Stripe API key has been provided. To set your API key, please follow the instructions at
+
+    # Admin controllers
+    controllers:
+      stripe_connect_settings:
+        resource: Stripe Connect configuration
+
 # Frontend views
 #
 # These keys are referenced relatively like `t('.message')` in
@@ -2088,6 +2111,9 @@ Please follow the instructions there to make your enterprise visible on the Open
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+      shared:
+        configuration_menu:
+          stripe_connect: Stripe Connect
       variants:
         autocomplete:
           producer_name: Producer

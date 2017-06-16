@@ -1,0 +1,50 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t('.title')
+
+%fieldset.no-border-bottom
+  %legend
+    = t('.settings')
+  = form_for @settings, as: :settings, url: main_app.admin_stripe_connect_settings_path, :method => :put do |f|
+    .row
+      .twelve.columns.alpha.omega
+        .field
+          - disabled = !@settings.stripe_connect_enabled && @stripe_account[:status] != :ok
+          = f.label :stripe_connect_enabled, t('.stripe_connect_enabled')
+          = f.check_box :stripe_connect_enabled, disabled: disabled
+    .row
+      .twelve.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
+        = button t(:update), 'icon-refresh', value: "update"
+
+%fieldset.no-border-bottom
+  %legend= t('.status')
+  - if @stripe_account[:status] == :ok
+    .alert-box.ok
+      .status
+        %strong= t(".status") + ":"
+        = t(".ok")
+        %i.icon-ok
+      .business_name
+        %strong= t(".business_name") + ":"
+        = @stripe_account[:business_name]
+      .charges_enabled
+        %strong
+        - enabled_text = t(@stripe_account[:charges_enabled] ? :say_yes : :say_no)
+        = t(".charges_enabled") + ":"
+        = enabled_text
+      .account_id
+        %strong= t(".account_id") + ":"
+        = @stripe_account[:id]
+      .secret_key
+        %strong= t('.instance_secret_key') + ":"
+        = @obfuscated_secret_key
+      .publishable_key
+        %strong= t('.instance_publishable_key') + ":"
+        = ENV["STRIPE_INSTANCE_PUBLISHABLE_KEY"]
+    - if !@stripe_account[:charges_enabled]
+      .alert-box.warning
+        = t(".charges_enabled_warning")
+  - else
+    .alert-box.error
+      = t(".#{@stripe_account[:status]}_error")

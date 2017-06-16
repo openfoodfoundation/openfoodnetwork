@@ -39,4 +39,7 @@ Spree::AppConfiguration.class_eval do
   # Invoices & Receipts
   preference :invoice_style2?, :boolean, default: false
   preference :enable_receipt_printing?, :boolean, default: false
+
+  # Stripe Connect
+  preference :stripe_connect_enabled, :boolean, default: false
 end
