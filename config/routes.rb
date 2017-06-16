@@ -171,6 +171,8 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     resource :invoice_settings, only: [:edit, :update]
+
+    resource :stripe_connect_settings, only: [:edit, :update]
   end
 
   namespace :api do
