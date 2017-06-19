@@ -55,12 +55,6 @@ module Spree
                   distributor: create(:distributor_enterprise), currency: currency)
         sm.should_not be_available_to_order o
       end
-
-      it "is available to orders with no shipping address" do
-        o = create(:order, ship_address: nil,
-                  distributor: sm.distributors.first, currency: currency)
-        sm.should be_available_to_order o
-      end
     end
 
     describe "finding services offered by all distributors" do
