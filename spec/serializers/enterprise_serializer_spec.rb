@@ -27,6 +27,6 @@ describe Api::EnterpriseSerializer do
   end
 
   it "serializes icons" do
-    serializer.to_json.should match "map_005-hub.svg"
+    serializer.to_json.should match "map_005-hub.png"
   end
 end
