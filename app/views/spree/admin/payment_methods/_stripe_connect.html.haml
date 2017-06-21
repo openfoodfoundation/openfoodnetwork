@@ -14,6 +14,9 @@
       .alert-box.warning{ ng: { hide: "stripe_account.status" } }
         = t(".loading_account_information_msg")
 
+      .alert-box.error{ ng: { show: "stripe_account.status == 'stripe_disabled'" } }
+        = t(".stripe_disabled_msg")
+
       .alert-box.error{ ng: { show: "stripe_account.status == 'request_failed'" } }
         = t(".request_failed_msg")
 
