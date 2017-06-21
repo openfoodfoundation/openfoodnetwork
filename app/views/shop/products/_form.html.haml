@@ -31,7 +31,7 @@
     %div.pad-top{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1", "infinite-scroll-disabled" => 'filteredProducts.length <= limit' }
       %product.animate-repeat{"ng-controller" => "ProductNodeCtrl", "ng-repeat" => "product in visibleProducts track by product.id", "id" => "product-{{ product.id }}"}
         = render "shop/products/summary"
-        %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.count_on_hand == 0}"}
+        %shop-variant{variant: 'variant', "ng-repeat" => "variant in product.variants | orderBy: ['name_to_display','unit_value'] track by variant.id", "id" => "variant-{{ variant.id }}", "ng-class" => "{'out-of-stock': !variant.on_demand && variant.count_on_hand == 0}"}
 
       -# Load more button, which can be used to initiate infinite scrolling.
       -# %product{ "ng-hide" => "Products.loading || !infiniteDisabled || limit >= filteredProducts.length" }
