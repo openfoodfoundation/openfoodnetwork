@@ -1,4 +1,5 @@
-= render 'admin/enterprises/form/stripe_connect'
+- if Spree::Config.stripe_connect_enabled || @enterprise.stripe_account
+  = render 'admin/enterprises/form/stripe_connect'
 
 - if @payment_methods.count > 0
   %table

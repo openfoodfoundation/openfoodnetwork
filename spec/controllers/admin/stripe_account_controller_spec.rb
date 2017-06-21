@@ -46,6 +46,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
     before do
       Stripe.api_key = "sk_test_12345"
+      Spree::Config.set({stripe_connect_enabled: false})
     end
 
     context "where I don't manage the specified enterprise" do
@@ -69,49 +70,61 @@ describe Admin::StripeAccountsController, type: :controller do
         allow(controller).to receive(:spree_current_user) { enterprise.owner }
       end
 
-      context "but it has no associated stripe account" do
-        it "returns with a status of 'account_missing'" do
+      context "but Stripe is not enabled" do
+        it "returns with a status of 'stripe_disabled'" do
           spree_get :status, params
           json_response = JSON.parse(response.body)
-          expect(json_response["status"]).to eq "account_missing"
+          expect(json_response["status"]).to eq "stripe_disabled"
         end
       end
 
-      context "and it has an associated stripe account" do
-        let!(:account) { create(:stripe_account, stripe_user_id: "acc_123", enterprise: enterprise) }
+      context "and Stripe is enabled" do
+        before { Spree::Config.set({stripe_connect_enabled: true}) }
 
-        context "which has been revoked or does not exist" do
-          before do
-            stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123").to_return(status: 404)
-          end
-
-          it "returns with a status of 'access_revoked'" do
+        context "but it has no associated stripe account" do
+          it "returns with a status of 'account_missing'" do
             spree_get :status, params
             json_response = JSON.parse(response.body)
-            expect(json_response["status"]).to eq "access_revoked"
+            expect(json_response["status"]).to eq "account_missing"
           end
         end
 
-        context "which is connected" do
-          let(:stripe_account_mock) { {
-            id: "acc_123",
-            business_name: "My Org",
-            charges_enabled: true,
-            some_other_attr: "something"
-          } }
+        context "and it has an associated stripe account" do
+          let!(:account) { create(:stripe_account, stripe_user_id: "acc_123", enterprise: enterprise) }
 
-          before do
-            stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123").to_return(body: JSON.generate(stripe_account_mock))
+          context "which has been revoked or does not exist" do
+            before do
+              stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123").to_return(status: 404)
+            end
+
+            it "returns with a status of 'access_revoked'" do
+              spree_get :status, params
+              json_response = JSON.parse(response.body)
+              expect(json_response["status"]).to eq "access_revoked"
+            end
           end
 
-          it "returns with a status of 'connected'" do
-            spree_get :status, params
-            json_response = JSON.parse(response.body)
-            expect(json_response["status"]).to eq "connected"
-            # serializes required attrs
-            expect(json_response["business_name"]).to eq "My Org"
-            # ignores other attrs
-            expect(json_response["some_other_attr"]).to be nil
+          context "which is connected" do
+            let(:stripe_account_mock) { {
+              id: "acc_123",
+              business_name: "My Org",
+              charges_enabled: true,
+              some_other_attr: "something"
+            } }
+
+            before do
+              stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123").to_return(body: JSON.generate(stripe_account_mock))
+            end
+
+            it "returns with a status of 'connected'" do
+              spree_get :status, params
+              json_response = JSON.parse(response.body)
+              expect(json_response["status"]).to eq "connected"
+              # serializes required attrs
+              expect(json_response["business_name"]).to eq "My Org"
+              # ignores other attrs
+              expect(json_response["some_other_attr"]).to be nil
+            end
           end
         end
       end

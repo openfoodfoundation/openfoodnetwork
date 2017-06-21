@@ -21,8 +21,9 @@
   .row.tabset-ctrl#account-tabs{ style: 'margin-bottom: 100px', navigate: 'true', selected: 'orders', prefix: 'account' }
     .small.12.medium-3.columns.tab{ name: "orders" }
       %a{ href: 'javascript:void(0)' }=t('.tabs.orders')
-    .small.12.medium-3.columns.tab{ name: "cards" }
-      %a{ href: 'javascript:void(0)' }=t('.tabs.cards')
+    - if Spree::Config.stripe_connect_enabled
+      .small.12.medium-3.columns.tab{ name: "cards" }
+        %a{ href: 'javascript:void(0)' }=t('.tabs.cards')
     .small.12.medium-3.columns.tab{ name: "transactions" }
       %a{ href: 'javascript:void(0)' }=t('.tabs.transactions')
     .small.12.medium-3.columns.tab{ name: "settings" }

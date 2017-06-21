@@ -157,6 +157,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         before do
           Stripe.api_key = "sk_test_123456"
+          Spree::Config.set({stripe_connect_enabled: true})
           stub_request(:post, "https://sk_test_123456:@api.stripe.com/v1/charges")
             .to_return(body: JSON.generate(response_mock))
 
@@ -166,17 +167,15 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           choose stripe_pm.name
         end
 
-        it "shows the saved credit card dropdown" do
+        it "allows use of a saved card" do
+          # shows the saved credit card dropdown
           page.should have_content "Previously Used Credit Cards"
-        end
 
-        it "disables the input fields when a saved card is selected" do
+          # disables the input fields when a saved card is selected" do
           select "Visa x-1111 Exp:01/2025", from: "selected_card"
           page.should have_css "#secrets\\.card_number[disabled]"
-        end
 
-        it "allows use of a saved card" do
-          select "Visa x-1111 Exp:01/2025", from: "selected_card"
+          # allows checkout
           place_order
           page.should have_content "Your order has been processed successfully"
         end
