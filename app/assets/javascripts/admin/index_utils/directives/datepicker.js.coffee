@@ -7,3 +7,5 @@ angular.module("admin.indexUtils").directive "datepicker", ->
         scope.$apply (scope) ->
           # Fires ngModel.$parsers
           ngModel.$setViewValue dateText
+    if attrs.value
+      ngModel.$setViewValue attrs.value

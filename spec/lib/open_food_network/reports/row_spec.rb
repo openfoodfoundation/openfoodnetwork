@@ -1,4 +1,4 @@
-require 'open_food_network/reports/row'
+require 'spec_helper'
 
 module OpenFoodNetwork::Reports
   describe Row do

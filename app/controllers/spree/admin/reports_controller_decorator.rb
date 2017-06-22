@@ -18,12 +18,14 @@ Spree::Admin::ReportsController.class_eval do
 
   include Spree::ReportsHelper
 
+  respond_to :json
+
   REPORT_TYPES = {
     orders_and_fulfillment: [
-      ['Order Cycle Supplier Totals',:order_cycle_supplier_totals],
-      ['Order Cycle Supplier Totals by Distributor',:order_cycle_supplier_totals_by_distributor],
-      ['Order Cycle Distributor Totals by Supplier',:order_cycle_distributor_totals_by_supplier],
-      ['Order Cycle Customer Totals',:order_cycle_customer_totals]
+      ['Order Cycle Supplier Totals', :supplier_totals],
+      ['Order Cycle Supplier Totals by Distributor', :supplier_totals_by_distributor],
+      ['Order Cycle Distributor Totals by Supplier', :distributor_totals_by_supplier],
+      ['Order Cycle Customer Totals', :customer_totals]
     ],
     products_and_inventory: [
       ['All products', :all_products],
@@ -45,6 +47,12 @@ Spree::Admin::ReportsController.class_eval do
     packing: [
       ["Pack By Customer", :pack_by_customer],
       ["Pack By Supplier", :pack_by_supplier]
+    ],
+    bulk_coop: [
+      ['Bulk Co-op - Totals by Supplier', :bulk_coop_supplier_report],
+      ['Bulk Co-op - Allocation', :bulk_coop_allocation],
+      ['Bulk Co-op - Packing Sheets', :bulk_coop_packing_sheets],
+      ['Bulk Co-op - Customer Payments', :bulk_coop_customer_payments]
     ]
   }
 
@@ -132,33 +140,33 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_distributors
-    prepare_date_params params
+    if request.format.json?
+      prepare_date_params params
+      @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params
 
-    permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-    @search = permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
-    orders = @search.result
-
-    # If empty array is passed in, the where clause will return all line_items, which is bad
-    orders_with_hidden_details =
-      permissions.editable_orders.empty? ? orders : orders.where('id NOT IN (?)', permissions.editable_orders)
-
-    orders.select{ |order| orders_with_hidden_details.include? order }.each do |order|
-      # TODO We should really be hiding customer code here too, but until we
-      # have an actual association between order and customer, it's a bit tricky
-      order.bill_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-      order.ship_address.andand.assign_attributes(firstname: "HIDDEN", lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-      order.assign_attributes(email: "HIDDEN")
-    end
-
-    @report = OpenFoodNetwork::OrderAndDistributorReport.new orders
-    unless params[:csv]
-      render :html => @report
+      report_data = {
+        line_items: @report.line_items_serialized,
+        orders: @report.orders_serialized,
+        products: @report.products_serialized,
+        distributors: @report.distributors_serialized,
+        variants: @report.variants_serialized }
+      render json: report_data
     else
-      csv_string = CSV.generate do |csv|
-        csv << @report.header
-        @report.table.each { |row| csv << row }
+      @show_old_version = params[:show_old_version] == '1' || false
+      prepare_date_params params
+
+      @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params
+      @search = @report.search
+
+      unless params[:csv]
+        render :html => @report
+      else
+        csv_string = CSV.generate do |csv|
+          csv << @report.header
+          @report.table.each { |row| csv << row }
+        end
+        send_data csv_string, :filename => "orders_and_distributors_#{timestamp}.csv"
       end
-      send_data csv_string, :filename => "orders_and_distributors_#{timestamp}.csv"
     end
   end
 
@@ -181,20 +189,37 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def bulk_coop
-    # -- Prepare date parameters
-    prepare_date_params params
+    if request.format.json?
+      prepare_date_params params
 
-    # -- Prepare form options
-    @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
-    @report_type = params[:report_type]
+      @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
 
-    # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
-    order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
-    @table = order_grouper.table(@report.table_items)
-    csv_file_name = "bulk_coop_#{params[:report_type]}_#{timestamp}.csv"
+      report_data = {
+        line_items: @report.line_items_serialized,
+        orders: @report.orders_serialized,
+        products: @report.products_serialized,
+        distributors: @report.distributors_serialized,
+        variants: @report.variants_serialized }
+      render json: report_data
+    else
+      prepare_date_params params
 
-    render_report(@report.header, @table, params[:csv], csv_file_name)
+      @show_old_version = params[:show_old_version] == '1' || false
+
+      @report_types = REPORT_TYPES[:bulk_coop]
+      @report_type = params[:q].andand[:report_type]
+      @report_type ||= params[:report_type] || @report_types.first.last.to_s
+      # -- Prepare form options
+      @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
+
+      # -- Build Report with Order Grouper
+      @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
+      order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
+      @table = order_grouper.table(@report.table_items)
+      csv_file_name = "bulk_coop_#{params[:report_type]}_#{timestamp}.csv"
+
+      render_report(@report.header, @table, params[:csv], csv_file_name)
+    end
   end
 
   def payments
@@ -215,31 +240,45 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_fulfillment
-    # -- Prepare Date Params
-    prepare_date_params params
+    if request.format.json?
+      # -- Prepare Date Params
+      prepare_date_params params
+      @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
 
-    # -- Prepare Form Options
-    permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-    # My distributors and any distributors distributing products I supply
-    @distributors = permissions.visible_enterprises_for_order_reports.is_distributor
-    # My suppliers and any suppliers supplying products I distribute
-    @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
+      report_data = {
+        line_items: @report.line_items_serialized,
+        orders: @report.orders_serialized,
+        products: @report.products_serialized,
+        variants: @report.variants_serialized }
+      render json: report_data
+    else
+      @show_old_version = params[:show_old_version] == '1' || false
+      prepare_date_params params
 
-    @order_cycles = OrderCycle.active_or_complete.
-    involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
+      # -- Prepare Form Options
+      permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+      # My distributors and any distributors distributing products I supply
+      @shops = permissions.visible_enterprises_for_order_reports.is_distributor
+      # My suppliers and any suppliers supplying products I distribute
+      @producers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
-    @report_types = REPORT_TYPES[:orders_and_fulfillment]
-    @report_type = params[:report_type]
+      @order_cycles = OrderCycle.active_or_complete.
+      involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
-    @include_blank = I18n.t(:all)
+      @report_types = REPORT_TYPES[:orders_and_fulfillment]
+      @report_type = params[:q].andand[:report_type]
+      @report_type ||= params[:report_type] || @report_types.first.last.to_s
 
-    # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
-    order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
-    @table = order_grouper.table(@report.table_items)
-    csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+      # -- Build Report with Order Grouper
+      @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params.merge(report_type: @report_type)
+      order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
+      @table = order_grouper.table(@report.table_items)
+      csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+      @include_blank = I18n.t(:all)
 
-    render_report(@report.header, @table, params[:csv], csv_file_name)
+      render_report(@report.header, @table, params[:csv], csv_file_name)
+
+    end
 
   end
 

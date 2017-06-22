@@ -148,16 +148,23 @@ feature %q{
     login_to_admin_section
     click_link 'Reports'
     click_link 'Orders And Distributors'
-
-    page.should have_content 'Order date'
+    page.status_code.should be 200
+    click_link 'Old version'
+    page.status_code.should be 200
+    click_link 'New version'
+    page.status_code.should be 200
   end
 
   scenario "bulk co-op report" do
     login_to_admin_section
     click_link 'Reports'
     click_link 'Bulk Co-Op'
-
     page.should have_content 'Supplier'
+    page.status_code.should be 200
+    click_link 'Old version'
+    page.status_code.should be 200
+    click_link 'New version'
+    page.status_code.should be 200
   end
 
   scenario "payments reports" do
@@ -234,19 +241,25 @@ feature %q{
       login_to_admin_section
       click_link 'Reports'
       click_link 'Orders & Fulfillment Reports'
-
       page.should have_content 'Supplier'
+      page.status_code.should be 200
+      click_link 'Old version'
+      page.status_code.should be 200
+      click_link 'New version'
+      page.status_code.should be 200
     end
 
     context "with two orders on the same day at different times" do
       let(:bill_address) { create(:address) }
       let(:distributor_address) { create(:address, :address1 => "distributor address", :city => 'The Shire', :zipcode => "1234") }
-      let(:distributor) { create(:distributor_enterprise, :address => distributor_address) }
+      let(:distributor1) { create(:distributor_enterprise, :address => distributor_address) }
+      let(:distributor2) { create(:distributor_enterprise, :address => distributor_address) }
       let(:product) { create(:product) }
       let(:product_distribution) { create(:product_distribution, :product => product, :distributor => distributor) }
       let(:shipping_instructions) { "pick up on thursday please!" }
-      let(:order1) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
-      let(:order2) { create(:order, :distributor => distributor, :bill_address => bill_address, :special_instructions => shipping_instructions) }
+      let(:order_cycle) { create(:undated_order_cycle) }
+      let(:order1) { create(:order, :distributor => distributor1, :bill_address => bill_address, :special_instructions => shipping_instructions, order_cycle: order_cycle) }
+      let(:order2) { create(:order, :distributor => distributor2, :bill_address => bill_address, :special_instructions => shipping_instructions, order_cycle: order_cycle) }
 
       before do
         Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
@@ -256,18 +269,18 @@ feature %q{
         create(:line_item, :product => product, :order => order2)
       end
 
-      it "is precise to time of day, not just date" do
+      it "is precise to time of day, not just date", js: true do
         # When I generate a customer report with a timeframe that includes one order but not the other
         login_to_admin_section
         visit spree.orders_and_fulfillment_admin_reports_path
 
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
-        select 'Order Cycle Customer Totals', from: 'report_type'
+        select 'Order Cycle Customer Totals', from: 'q_report_type'
         click_button 'Search'
 
-        # Then I should see the rows for the first order but not the second
-        all('table#listing_orders tbody tr').count.should == 2 # Two rows per order
+        page.should have_content("#{order1.distributor.name}")
+        page.should_not have_content("#{order2.distributor.name}")
       end
     end
 
@@ -278,8 +291,7 @@ feature %q{
 
       login_to_admin_section
       visit spree.orders_and_fulfillment_admin_reports_path
-
-      page.should have_content "My Order Cycle"
+      page.status_code.should be 200
     end
   end
 
@@ -316,19 +328,17 @@ feature %q{
       click_link 'Products & Inventory'
       page.should have_content "Supplier"
 
-      page.should have_table_row ["Supplier",             "Producer Suburb",              "Product",      "Product Properties",                               "Taxons",                     "Variant Value",  "Price",  "Group Buy Unit Quantity",         "Amount", "SKU"].map(&:upcase)
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Something",      "80.0",   product1.group_buy_unit_size.to_s, "",       "sku2"]
-      page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,  "100g",           "99.0",   product1.group_buy_unit_size.to_s, "",       "product_sku"]
+      page.should have_content "sku1"
+      page.should have_content "sku2"
+      page.should have_content "product_sku"
     end
 
     it "shows the LettuceShare report" do
       login_to_admin_section
       click_link 'Reports'
       click_link 'LettuceShare'
-
-      page.should have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit', 'Unit Price', 'Total', 'GST incl.', 'Grower and growing method', 'Taxon'].map(&:upcase)
-      page.should have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0', 'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
+      page.should have_content "Product 2"
+      page.should have_content "Supplier Name (Organic - NASAA 12345)"
     end
   end
 

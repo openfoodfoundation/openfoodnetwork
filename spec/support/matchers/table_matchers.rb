@@ -1,3 +1,5 @@
+# FIXME - this seems to be very slow matcher (features/admin/reports_spec.rb for products and inventory reports)
+# need to fix it before using it
 RSpec::Matchers.define :have_table_row do |row|
 
   match_for_should do |node|

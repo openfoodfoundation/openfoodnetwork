@@ -1,9 +1,17 @@
 namespace :karma  do
+  desc 'Debug on browser'
+  task :debug => :environment do |task|
+    continue_only_in_test_env task
+    with_tmp_config :start, '--browsers=Chrome --debug'
+  end
+
+  desc 'Continous run'
   task :start => :environment do |task|
     continue_only_in_test_env task
     with_tmp_config :start
   end
 
+  desc 'Single run of tests'
   task :run => :environment do |task|
     continue_only_in_test_env task
     with_tmp_config :start, "--single-run"

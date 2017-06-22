@@ -27,6 +27,10 @@ module OpenFoodNetwork::Reports
       rules.map &:to_h
     end
 
+    private
+    def permissions
+      @permissions ||= OpenFoodNetwork::Permissions.new(@user)
+    end
 
     # -- DSL
     def self.header(*columns)
