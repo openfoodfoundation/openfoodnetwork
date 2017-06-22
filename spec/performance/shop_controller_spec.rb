@@ -14,6 +14,12 @@ describe ShopController, type: :controller, performance: true do
   describe "fetching products" do
     let(:exchange) { order_cycle.exchanges.to_enterprises(d).outgoing.first }
     let(:image) { File.open(File.expand_path('../../../app/assets/images/logo-white.png', __FILE__)) }
+    let(:cache_key_patterns) do
+      [
+        'api\/taxon_serializer\/spree\/taxons',
+        'enterprise'
+      ]
+    end
 
     before do
       11.times do
@@ -28,7 +34,7 @@ describe ShopController, type: :controller, performance: true do
     end
 
     it "returns products via json" do
-      results = multi_benchmark(3) do
+      results = multi_benchmark(3, cache_key_patterns: cache_key_patterns) do
         xhr :get, :products
         response.should be_success
       end

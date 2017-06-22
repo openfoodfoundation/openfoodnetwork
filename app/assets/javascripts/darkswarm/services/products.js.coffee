@@ -42,9 +42,10 @@ Darkswarm.factory 'Products', ($resource, Enterprises, Dereferencer, Taxons, Pro
     registerVariants: ->
       for product in @products
         if product.variants
+          product.variant_names = ""
           product.variants = for variant in product.variants
             variant = Variants.register variant
             if product.name != variant.name_to_display
-              product.variant_names += variant.name_to_display
+              product.variant_names += variant.name_to_display + " "
             variant.product = product
             variant

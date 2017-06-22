@@ -6,9 +6,10 @@ describe ProductsCacheIntegrityCheckerJob do
     let(:distributor) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:job) { ProductsCacheIntegrityCheckerJob.new distributor.id, order_cycle.id }
+    let(:cache_key) { "products-json-#{distributor.id}-#{order_cycle.id}" }
 
     before do
-      Rails.cache.write "products-json-#{distributor.id}-#{order_cycle.id}", "[1, 2, 3]\n"
+      Rails.cache.write(cache_key, "[1, 2, 3]\n")
       OpenFoodNetwork::ProductsRenderer.stub(:new) { double(:pr, products_json: "[1, 3]\n") }
     end
 
@@ -18,7 +19,7 @@ describe ProductsCacheIntegrityCheckerJob do
     end
 
     it "deals with nil cached_json" do
-      Rails.cache.clear
+      Rails.cache.delete(cache_key)
       expect(Bugsnag).to receive(:notify)
       run_job job
     end

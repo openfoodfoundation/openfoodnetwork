@@ -19,11 +19,6 @@ module AuthenticationWorkflow
     admin_user
   end
 
-  def stub_authorization!
-    before(:all) { Spree::Ability.register_ability(AuthorizationHelpers::Request::SuperAbility) }
-    after(:all) { Spree::Ability.remove_ability(AuthorizationHelpers::Request::SuperAbility) }
-  end
-
   def login_to_admin_section
     admin_role = Spree::Role.find_or_create_by_name!('admin')
     admin_user = create(:user,

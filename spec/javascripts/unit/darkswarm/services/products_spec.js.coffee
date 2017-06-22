@@ -82,6 +82,12 @@ describe 'Products service', ->
     $httpBackend.flush()
     expect(Products.products[0].variants[0]).toBe Variants.variants[1]
 
+  it "stores variant names", ->
+    product.variants = [{id: 1, name_to_display: "one"}, {id: 2, name_to_display: "two"}]
+    $httpBackend.expectGET("/shop/products").respond([product])
+    $httpBackend.flush()
+    expect(Products.products[0].variant_names).toEqual "one two "
+
   it "sets primaryImageOrMissing when no images are provided", ->
     $httpBackend.expectGET("/shop/products").respond([product])
     $httpBackend.flush()
