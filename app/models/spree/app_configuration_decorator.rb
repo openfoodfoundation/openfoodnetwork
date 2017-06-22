@@ -4,6 +4,9 @@ Spree::AppConfiguration.class_eval do
   # we can allow to be modified in the UI by adding appropriate form
   # elements to existing or new configuration pages.
 
+  # State display
+  preference :state_display, :string, default: "abbr"
+
   # Terms of Service Preferences
   preference :enterprises_require_tos, :boolean, default: false
 
