@@ -9,6 +9,7 @@ feature "Credit Cards", js: true do
     before do
       quick_login_as user
 
+      Stripe.api_key = "sk_test_xxxx"
       Spree::Config.set({stripe_connect_enabled: true})
 
       stub_request(:get, "https://api.stripe.com/v1/customers/cus_AZNMJ").
