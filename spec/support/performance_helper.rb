@@ -12,7 +12,8 @@ module OpenFoodNetwork
         result.total
       end.drop(1) # Do not return the first sample
 
-      puts (results.sum / results.count * 1000).round 0
+      avg = (results.sum / results.count * 1000).round(0)
+      puts avg
 
       results
     end

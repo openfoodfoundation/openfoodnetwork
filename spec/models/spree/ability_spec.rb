@@ -438,7 +438,7 @@ module Spree
       end
 
       context 'Order Cycle co-ordinator, distributor enterprise manager' do
-        let (:user) do
+        let(:user) do
           user = create(:user)
           user.spree_roles = []
           d1.enterprise_roles.build(user: user).save
@@ -470,7 +470,7 @@ module Spree
       end
 
       context 'enterprise manager' do
-        let (:user) do
+        let(:user) do
           user = create(:user)
           user.spree_roles = []
           s1.enterprise_roles.build(user: user).save
@@ -504,7 +504,7 @@ module Spree
       end
 
       context 'enterprise owner' do
-        let (:user) { s1.owner }
+        let(:user) { s1.owner }
 
         it 'should have the ability to welcome and register enterprises that I own' do
           should have_ability([:welcome, :register], for: s1)

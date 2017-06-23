@@ -24,6 +24,7 @@ describe InjectionHelper, type: :helper, performance: true do
       puts result
     end
 
-    puts (results.sum / results.count * 1000).round 0
+    avg = (results.sum / results.count * 1000).round(0)
+    puts avg
   end
 end

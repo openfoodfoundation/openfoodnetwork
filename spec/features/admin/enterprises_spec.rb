@@ -92,7 +92,7 @@ feature %q{
     choose "Visible to registered customers only"
     expect(page).to have_no_checked_field "enterprise_require_login_false"
 
-    within (".side_menu") { click_link "Users" }
+    within(".side_menu") { click_link "Users" }
     select2_search user.email, from: 'Owner'
     expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
 

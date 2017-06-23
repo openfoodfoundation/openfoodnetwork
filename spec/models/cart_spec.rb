@@ -47,7 +47,7 @@ describe Cart do
       let(:product_from_other_distributor) { FactoryGirl.create(:product, :distributors => [other_distributor]) }
       let(:order) { FactoryGirl.create(:order, :distributor => distributor) }
 
-      before (:each) do
+      before do
         FactoryGirl.create(:line_item, :order => order, :product => product)
         order.reload
         subject.orders << order
@@ -88,7 +88,7 @@ describe Cart do
     describe 'existing order for distributor and order cycle' do
       let(:order) { FactoryGirl.create(:order, :distributor => distributor, :order_cycle => order_cycle) }
 
-      before (:each) do
+      before do
         subject.orders << order
         subject.save!
       end

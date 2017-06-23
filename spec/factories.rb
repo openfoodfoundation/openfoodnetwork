@@ -72,7 +72,7 @@ FactoryGirl.define do
   end
 
   factory :order_cycle_with_overrides, parent: :order_cycle do
-    after (:create) do |oc|
+    after(:create) do |oc|
       oc.variants.each do |variant|
         create(:variant_override, variant: variant, hub: oc.distributors.first, price: variant.price + 100)
       end
