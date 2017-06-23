@@ -56,7 +56,7 @@ class Api::CachedProductSerializer < ActiveModel::Serializer
 
   #return a sanitized html description
   def description_html
-    d = sanitize(object.description, options = {tags: "p, b, strong, em, i"})
+    d = sanitize(object.description, tags: "p, b, strong, em, i")
     d.to_s.html_safe
   end
 

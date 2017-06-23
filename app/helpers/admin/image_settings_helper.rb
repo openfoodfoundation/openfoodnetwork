@@ -5,12 +5,12 @@ module Admin
     end
 
     def admin_image_settings_geometry_from_style(style)
-      geometry, format = admin_image_settings_split_style style
+      geometry, _format = admin_image_settings_split_style style
       geometry
     end
 
     def admin_image_settings_format_from_style(style)
-      geometry, format = admin_image_settings_split_style style
+      _geometry, format = admin_image_settings_split_style style
       format
     end
 

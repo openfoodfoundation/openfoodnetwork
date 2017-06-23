@@ -154,10 +154,6 @@ Lint/UselessAccessModifier:
     - 'lib/open_food_network/reports/bulk_coop_report.rb'
     - 'spec/lib/open_food_network/reports/report_spec.rb'
 
-# Offense count: 143
-Lint/UselessAssignment:
-  Enabled: false
-
 # Offense count: 340
 Lint/Void:
   Exclude:

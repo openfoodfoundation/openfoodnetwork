@@ -21,7 +21,7 @@ module Spree
 
     def enterprise
       enterprise_id = key.match(product_selection_from_inventory_only_regex)[1]
-      enterprise = Enterprise.find enterprise_id
+      Enterprise.find(enterprise_id)
     end
 
     def product_selection_from_inventory_only_regex

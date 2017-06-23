@@ -34,6 +34,14 @@ Style/StringLiterals:
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 
+# Heaps of offences (> 100) in specs, mostly in situations where two or more
+# instances of a model are required, but only one is referenced. Difficult to
+# fix without making the spec look messy or rewriting it.
+# Should definitely fix at some point.
+Lint/UselessAssignment:
+  Exclude:
+  - spec/**/*
+
 # No alternative to this one until we upgrade to Rails 4 and can use #find_by
 Rails/DynamicFindBy:
   Enabled: false

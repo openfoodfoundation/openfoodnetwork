@@ -42,15 +42,14 @@ module OpenFoodNetwork
       tax_category = variant.product.tax_category
       if tax_category && tax_category.tax_rates.present?
         tax_rate = tax_category.tax_rates.first
-        line_item = mock_line_item(variant, tax_category)
+        line_item = mock_line_item(variant)
         tax_rate.calculator.compute line_item
       else
         0
       end
     end
 
-    def mock_line_item(variant, tax_category)
-      product = OpenStruct.new tax_category: tax_category
+    def mock_line_item(variant)
       line_item = Spree::LineItem.new quantity: 1
       line_item.define_singleton_method(:product) { variant.product }
       line_item.define_singleton_method(:price) { variant.price }

@@ -37,7 +37,7 @@ class UpdateAccountInvoices
       if billable_periods.any?
         oldest_enterprise = billable_periods.first.enterprise
         address = oldest_enterprise.address.dup
-        first, space, last = (oldest_enterprise.contact || "").partition(' ')
+        first, _space, last = (oldest_enterprise.contact || "").partition(' ')
         address.update_attributes(phone: oldest_enterprise.phone) if oldest_enterprise.phone.present?
         address.update_attributes(firstname: first, lastname: last) if first.present? && last.present?
         account_invoice.order.update_attributes(bill_address: address, ship_address: address)

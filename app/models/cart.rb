@@ -3,8 +3,6 @@ class Cart < ActiveRecord::Base
   belongs_to :user,   :class_name => Spree.user_class
 
   def add_variant variant_id, quantity, distributor, order_cycle, currency
-    variant = Spree::Variant.find(variant_id)
-
     order = create_or_find_order_for_distributor distributor, order_cycle, currency
 
     @populator = Spree::OrderPopulator.new(order, currency)

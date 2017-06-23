@@ -30,7 +30,6 @@ class DiscourseSsoController < ApplicationController
 
   def sso_url
     secret = discourse_sso_secret!
-    discourse_url = discourse_url!
     sso = Discourse::SingleSignOn.parse(request.query_string, secret)
     sso.email = spree_current_user.email
     sso.username = spree_current_user.login
