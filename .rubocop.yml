@@ -42,7 +42,8 @@ Lint/UselessAssignment:
   Exclude:
   - spec/**/*
 
-# No alternative to this one until we upgrade to Rails 4 and can use #find_by
+# AFAIK, there is no good alternative to dynamic matchers until we upgrade
+# to Rails 4 and can use #find_by. If there is a better approach, let's do it.
 Rails/DynamicFindBy:
   Enabled: false
 
