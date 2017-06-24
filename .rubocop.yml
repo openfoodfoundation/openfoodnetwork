@@ -51,11 +51,6 @@ Rails/DynamicFindBy:
 Rails/SkipsModelValidations:
   Enabled: false
 
-# This should be enfored, but doing so would require changing the entire
-# file, so should probably do when outstanding PRS are at a minimum
-Style/ClassAndModuleChildren:
-  Enabled: false
-
 # Relaxed.Ruby.Style SETTINGS
 # These styles are a starting point for the conversation around conventions
 # They should be removed or tweaked and moved above as decisions are made

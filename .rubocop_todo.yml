@@ -477,6 +477,12 @@ Style/CaseIndentation:
     - 'app/models/enterprise.rb'
     - 'app/models/product_importer.rb'
 
+# Offense count: 86
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: nested, compact
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
