@@ -22,7 +22,9 @@ env:
     - CI_NODE_INDEX=3
     - CI_NODE_INDEX=4 KARMA="true" GITHUB_DEPLOY="true"
 
-before_install: gem install bundler
+before_install:
+  - gem install bundler
+  - gem cleanup bundler
 
 before_script:
   - cp config/database.travis.yml config/database.yml
