@@ -24,7 +24,6 @@ nb:
   welcome_to: 'Velkommen til '
   site_meta_description: "Vi begynner fra grunnen. Med bønder og dyrkere klare til å fortelle sine historier, stolt og virkelig. Med distributører klare til å koble mennesker med produkter på en rettferdig og ærlig måte. Med kunder som tror på at ukentlige innkjøpsrutiner kan..."
   search_by_name: Søk på navn eller sted...
-  producers: 'Norske Produsenter'
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
   charges_sales_tax: MVA-pliktig?
   print_invoice: "Skriv ut Faktura"
@@ -62,6 +61,18 @@ nb:
   show_all: Vis alle
   show_all_with_more: "Vis Alle (%{num} Mer)"
   cancel: Avbryt
+  edit: Endre
+  distributors: Distributører
+  bulk_order_management: Bulk ordrehåndtering
+  enterprise_groups: Grupper
+  reports: Rapporter
+  variant_overrides: Varelager
+  more: Mer
+  spree_products: Spree Produkter
+  all: Alle
+  current: Nåværende
+  available: Tilgjengelig
+  dashboard: Dashboard
   admin:
     date: Dato
     email: Epost
@@ -79,11 +90,16 @@ nb:
     sku: SKU
     tags: Merker
     variant: Variant
+    weight: Vekt
+    volume: Volum
+    items: Varer
     quick_search: Hurtigsøk
     clear_all: Fjern Alt
     start_date: "Startdato"
     end_date: "Sluttdato"
     form_invalid: "Skjemaet inneholder manglende eller ugyldige felt"
+    clear_filters: Fjern filtre
+    clear: Fjern
     columns: Kolonner
     actions: Handlinger
     viewing: "Viser: %{current_view_name}"
@@ -160,6 +176,7 @@ nb:
         edit: 'Redigere'
         update_address: 'Oppdater Adresse'
         confirm_delete: 'Sikker på å slette?'
+        search_by_email: "Søk på epost/kode..."
     cache_settings:
       show:
         title: Mellomlagring
@@ -183,6 +200,7 @@ nb:
       index:
         new_button: Ny Bedriftsgruppe
     products:
+      unit_name_placeholder: 'f.eks. bunter'
       bulk_edit:
         unit: Enhet
         display_as: Vis som
@@ -260,6 +278,8 @@ nb:
           abn_placeholder: f.eks. 999 000 123
           acn: Mva. nr.
           acn_placeholder: f.eks. 999 000 123
+          display_invoice_logo: Vis logo i fakturaer
+          invoice_text: Legg til tilpasset tekst på slutten av fakturaer
         contact:
           name: Navn
           name_placeholder: f.eks. Gustav Plum
@@ -332,18 +352,26 @@ nb:
           shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
           shopfront_requires_login_false: "Offentlig"
           shopfront_requires_login_true: "Synlig kun for registrerte kunder."
+          recommend_require_login: "Vi anbefaler at brukerne logger på når bestillinger kan endres."
           allow_guest_orders: "Gjestebestillinger"
           allow_guest_orders_tip: "Tillat gjestebestillinger eller krev brukerregistrering."
           allow_guest_orders_false: "Krev innlogging for å bestille"
           allow_guest_orders_true: "Tillat gjestebestilling"
+          allow_order_changes: "Endre bestillinger"
+          allow_order_changes_tip: "Tillat at kundene kan endre bestillingen så lenge bestillingsrunden er åpen."
+          allow_order_changes_false: "Fullførte bestillinger kan ikke endres / kanselleres"
+          allow_order_changes_true: "Kunder kan endre / avbestille bestillinger mens bestillingsrunden er åpen"
+          shopfront_message: Melding Butikk
           shopfront_message_placeholder: >
               En valgfri forklaring for kunder med detaljer om hvordan din nettbutikk
               fungerer, for å vises over produktlisten på din side.
+          shopfront_closed_message: Melding Butikk Stengt
           shopfront_closed_message_placeholder: >
               En melding som gir en mer detaljert forklaring om hvorfor din butikk
               er stengt og/eller når kunder kan forvente at den åpner igjen. Dette
               vises på din butikk kun når du ikke har noen aktive bestillingsrunder
               (dvs. butikk er stengt).
+          shopfront_category_ordering: Kategorisortering Butikk
           open_date: Åpningsdato
           close_date: Stengedato
         social:
@@ -483,12 +511,20 @@ nb:
         title: Fakturainnstillinger
         invoice_style2?: Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)
         enable_receipt_printing?: 'Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? '
+  checkout:
+    already_ordered:
+      cart: "handlekurv"
+      message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
   home:
     hubs:
       show_closed_shops: "Vis stengte butikker"
       hide_closed_shops: "Skjul stengte butikker"
       show_on_map: "Vis alle på kartet"
   shared:
+    menu:
+      cart:
+        checkout: "Sjekk ut nå"
+        already_ordered_products: "Allerede bestilt i denne bestillingsrunden"
     register_call:
       selling_on_ofn: "Interessert i å bli med i Open Food Network?"
       register: "Registrer her"
@@ -558,6 +594,7 @@ nb:
   terms_of_service: "Vilkår"
   on_demand: Ved forespørsel
   none: Ingen
+  not_allowed: Ikke tillatt
   label_shops: "Butikker"
   label_map: "Kart"
   label_producers: "Produsenter"
@@ -578,21 +615,12 @@ nb:
   items: "varer"
   cart_headline: "Din handlekurv"
   total: "Sum"
-  checkout: "Gå til kassen"
   cart_updating: "Oppdaterer handlekurv..."
   cart_empty: "Handlekurven er tom"
   cart_edit: "Rediger handlekurv"
   card_number: Kortnummer
   card_securitycode: "Sikkerhetskode"
   card_expiry_date: Utløpsdato
-  ofn_cart_headline: "Gjeldende handlekurv for:"
-  ofn_cart_distributor: "Distributør:"
-  ofn_cart_oc: "Bestillingsrunde:"
-  ofn_cart_from: "Fra:"
-  ofn_cart_to: "Til:"
-  ofn_cart_product: "Produkt:"
-  ofn_cart_quantitiy: "Antall:"
-  ofn_cart_send: "Kjøp"
   ie_warning_headline: "Din nettleser er for gammel :-("
   ie_warning_text: "For den beste opplevelsen med Open Food Network anbefaler vi på det sterkeste å oppgradere nettleseren din:"
   ie_warning_chrome: Last ned Chrome
@@ -677,6 +705,7 @@ nb:
   order_billing_address: Fakturaadresse
   order_delivery_on: Levering på
   order_delivery_address: Leveringsadresse
+  order_delivery_time: Leveringstid
   order_special_instructions: "Dine kommentarer:"
   order_pickup_time: Klar for henting
   order_pickup_instructions: Henteinstruksjoner
@@ -685,6 +714,8 @@ nb:
   order_includes_tax: (inkludert MVA)
   order_payment_paypal_successful: Din betaling via PayPal har blitt godkjent.
   order_hub_info: Hub info
+  order_back_to_store: Tilbake til butikken
+  order_back_to_cart: Tilbake til handlekurven
   bom_tip: "Bruk denne siden for å endre produktmengder på tvers av flere bestillinger. Produkter kan også fjernes fra bestillinger helt hvis påkrevd."
   unsaved_changes_warning: "Ulagrede endringer finnes og vil gå tapt hvis du fortsetter."
   unsaved_changes_error: "Felt med røde kanter inneholder feil."
@@ -776,6 +807,10 @@ nb:
   hubs_intro: Handle lokalt
   hubs_distance: Nærmest
   hubs_distance_filter: "Vis meg butikker nær %{location}"
+  shop_changeable_orders_alert_html:
+    one: Din bestilling med <a href='%{path}' target='_blank'> %{shop} / %{order} </a> er åpen for vurdering. Du kan gjøre endringer til %{oc_close}.
+    other: Du har <a href='%{path}' target='_blank'> %{count} bestillinger med %{shop} </a> for øyeblikket åpen for gjennomgang. Du kan gjøre endringer til %{oc_close}.
+  orders_changeable_orders_alert_html: Denne bestillingen er bekreftet, men du kan gjøre endringer til <strong>%{oc_close}</strong>.
   products_clear_all: Fjern alt
   products_showing: "Viser:"
   products_with: med
@@ -905,7 +940,7 @@ nb:
   orders_edit_checkout: Kassen
   orders_form_empty_cart: "Tøm handlekurv"
   orders_form_subtotal: Delsum varer
-  orders_form_admin: Administrasjon og håndtering
+  orders_form_admin: Admin & Håndtering
   orders_form_total: Total
   orders_oc_expired_headline: Bestillinger stengt for denne runden
   orders_oc_expired_text: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger."
@@ -915,7 +950,18 @@ nb:
   orders_oc_expired_phone: "Telefon:"
   orders_show_title: Ordrebekreftelse
   orders_show_time: Bestilling klar for
-  orders_show_number: Ordrebekreftelse
+  orders_show_order_number: "Bestilling # %{number}"
+  orders_show_cancelled: Avbrutt
+  orders_show_confirmed: Bekreftet
+  orders_your_order_has_been_cancelled: "Din bestilling er avbrutt"
+  orders_could_not_cancel: "Beklager, bestillingen kunne ikke avbrytes"
+  orders_cannot_remove_the_final_item: "Kan ikke fjerne den siste varen fra en bestilling, vennligst avbryt bestillingen i stedet."
+  orders_bought_items_notice:
+    one: Et ekstra element er allerede bekreftet for denne bestillingsperioden
+    other: Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden
+  orders_bought_edit_button: Rediger bekreftede varer
+  orders_bought_already_confirmed: "* allerede bekreftet"
+  orders_confirm_cancel: Er du sikker på at du vil avbryte denne bestillingen?
   products_cart_distributor_choice: "Distributør for bestillingen:"
   products_cart_distributor_change: "Din distributør for denne ordren vil bli endret til %{name} hvis du legger til dette produktet i handlekurven din."
   products_cart_distributor_is: "Din distributør for denne ordren er %{name}."
@@ -1016,6 +1062,7 @@ nb:
   enterprise_long_desc: "Lang beskrivelse"
   enterprise_long_desc_placeholder: "Dette er muligheten din til å fortelle historien om din virksomhet - hva gjør deg annerledes og flott? Vi vil foreslå å holde din beskrivelse til under 600 tegn eller 150 ord."
   enterprise_long_desc_length: "%{num} tegn / opptil 600 anbefales"
+  enterprise_limit: Bedriftsgrense
   enterprise_abn: "ORG#"
   enterprise_abn_placeholder: "f.eks. 999 000 123"
   enterprise_acn: "MVA#"
@@ -1151,6 +1198,7 @@ nb:
   calculator_values: "Kalkulatorverdier"
   flat_percent_per_item: "Prosent (per stk)"
   new_order_cycles: "Nye Bestillingsrunder"
+  new_order_cycle: "Ny bestillingsrunde"
   select_a_coordinator_for_your_order_cycle: "Velg en koordinator for denne syklus"
   edit_order_cycle: "Endre Bestillingsrunde"
   roles: "Roller"
@@ -1171,6 +1219,7 @@ nb:
   price: "Pris"
   on_hand: "På lager"
   save_changes: "Lagre Endringer"
+  order_saved: "Bestilling lagret"
   spree_admin_overview_enterprises_header: "Mine Bedrifter"
   spree_admin_overview_enterprises_footer: "ADMINISTRER MINE BEDRIFTER"
   spree_admin_enterprises_hubs_name: "Navn"
@@ -1212,6 +1261,8 @@ nb:
   edit_profile_details: "Endre profildetaljer"
   edit_profile_details_etc: "Endre din profilbeskrivelse, bilder, osv."
   order_cycle: "Bestillingsrunde"
+  order_cycles: "Bestillingsrunder"
+  enterprises: "Bedrifter"
   remove_tax: "Fjern avgift"
   enterprise_terms_of_service: "Tjenestevilkår for Bedrifter"
   enterprises_require_tos: "Bedrifter må godta Tjenestevilkår"
@@ -1432,6 +1483,9 @@ nb:
           i din handlekurv gått ned. Her er hva som er endret.
       now_out_of_stock: er nå ikke på lager.
       only_n_remainging: "har nå kun %{num} igjen."
+  producers:
+    signup:
+      start_free_profile: "Start med en gratis profil, og utvid når du er klar!"
   spree:
     admin:
       products:
@@ -1448,24 +1502,7 @@ nb:
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'åå-mm-dd'
-    zipcode: Postnummer
-    shipment_states:
-      backorder: restordre
-      partial: delvis
-      pending: ventende
-      ready: klar
-      shipped: sendt
-    payment_states:
-      balance_due: balanse forfaller
-      completed: fullført
-      checkout: kasse
-      credit_owed: kreditt skyldt
-      failed: feilet
-      paid: betalt
-      pending: ventende
-      processing: behandler
-      void: ugyldig
-      invalid: ugyldig
+    inventory: Varelager
     order_mailer:
       invoice_email:
         hi: "Hei %{name}"
@@ -1486,6 +1523,23 @@ nb:
     orders:
       invoice:
         tax_invoice: "AVGIFTSFAKTURA:"
+    payment_states:
+      balance_due: balanse forfaller
+      completed: fullført
+      checkout: kasse
+      credit_owed: kreditt skyldt
+      failed: feilet
+      paid: betalt
+      pending: ventende
+      processing: behandler
+      void: ugyldig
+      invalid: ugyldig
+    shipment_states:
+      backorder: restordre
+      partial: delvis
+      pending: ventende
+      ready: klar
+      shipped: sendt
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -1496,3 +1550,19 @@ nb:
         issue_text: |
           Hvis URL'en ovenfor ikke fungerer prøv å kopier og lim den inn i din nettleser.
           Hvis du fortsatt har problemer vennligst ta kontakt.
+    weight: Vekt (per kg)
+    zipcode: Postnummer
+    users:
+      show:
+        open_orders: Åpne bestillinger
+        transaction_history: Betalingshistorie
+      open_orders:
+        order: Bestilling
+        shop: Butikk
+        changes_allowed_until: Endringer tillatt frem til
+        items: Varer
+        total: Total
+        edit: Endre
+        cancel: Avbryt
+        closed: Stengt
+        until: Inntil
