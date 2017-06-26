@@ -391,7 +391,7 @@ es:
         producer_profile: Perfil Productora
         connect_ofn: Conectar a través de OFN
         always_free: SIEMPRE GRATIS
-        producer_description_text: Añade tus productos a Open Food Network, permitiendo a los Grupos de Consumo vender tus productos.
+        sell_description_text: Añade tus productos a Open Food Network, permitiendo a los Grupos de Consumo vender tus productos.
         producer_shop: Tienda Productora
         sell_your_produce: Vende tu propia producción
         sell_description_text: Vende tus productos directamente a los consumidores con tu tienda en Open Food Network.

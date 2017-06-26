@@ -417,7 +417,7 @@ nb:
         producer_profile: Produsentprofil
         connect_ofn: Koble gjennom OFN
         always_free: GRATIS FOR ALLTID
-        producer_description_text: Legg til dine produkter til Open Food Network, tillat hubs å lagre dine produkter i sine butikker.
+        sell_description_text: Legg til dine produkter til Open Food Network, tillat hubs å lagre dine produkter i sine butikker.
         producer_shop: Produsentbutikk
         sell_your_produce: Selg dine egne produkter
         sell_description_text: Selg dine produkter direkte til kunder gjennom din egen Open Food Network nettbutikk.

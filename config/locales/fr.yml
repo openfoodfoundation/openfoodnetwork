@@ -418,7 +418,7 @@ fr:
         producer_profile: Profil producteur
         connect_ofn: Gagnez en visibilité via OFFrance
         always_free: GRATUIT
-        producer_description_text: Saisissez votre catalogue produits sur Open Food France, ce qui permettra aux hubs-distributeurs utilisant la plateforme de les proposer dans leurs boutiques (sur votre autorisation).
+        sell_description_text: Saisissez votre catalogue produits sur Open Food France, ce qui permettra aux hubs-distributeurs utilisant la plateforme de les proposer dans leurs boutiques (sur votre autorisation).
         producer_shop: Boutique Producteur
         sell_your_produce: Vendez vos propres produits
         sell_description_text: Vendez vos produits en direct aux mangeurs/restaurateurs/etc. via votre propre Boutique Producteur sur Open Food France.
