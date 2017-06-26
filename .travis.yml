@@ -34,7 +34,7 @@ before_script:
 script:
   - 'if [ "$KARMA" = "true" ]; then bundle exec rake karma:run; else echo "Skipping karma run"; fi'
   #- "KNAPSACK_GENERATE_REPORT=true bundle exec rspec spec"
-  - "bundle exec rspec spec/features/admin/reports_spec.rb"
+  - "bundle exec rspec spec/features/admin/reports_spec.rb:458"
 
 after_success:
   - >
