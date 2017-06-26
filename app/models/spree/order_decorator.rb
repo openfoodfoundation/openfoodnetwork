@@ -17,7 +17,6 @@ Spree::Order.class_eval do
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
   attr_accessible :order_cycle_id, :distributor_id
 
-  before_validation :shipping_address_from_distributor
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
 
@@ -291,24 +290,6 @@ Spree::Order.class_eval do
   end
 
   private
-
-  def shipping_address_from_distributor
-    if distributor
-      # This method is confusing to conform to the vagaries of the multi-step checkout
-      # We copy over the shipping address when we have no shipping method selected
-      # We can refactor this when we drop the multi-step checkout option
-      #
-      if shipping_method.andand.require_ship_address == false
-        self.ship_address = distributor.address.clone
-
-        if bill_address
-          ship_address.firstname = bill_address.firstname
-          ship_address.lastname = bill_address.lastname
-          ship_address.phone = bill_address.phone
-        end
-      end
-    end
-  end
 
   def provided_by_order_cycle?(line_item)
     order_cycle_variants = order_cycle.andand.variants || []
