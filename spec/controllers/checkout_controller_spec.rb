@@ -79,7 +79,12 @@ describe CheckoutController do
     end
 
     it "only clears the ship address with a pickup shipping method" do
+      shipping_method = build(:shipping_method)
+
+      order.stub(:shipping_method).and_return(shipping_method)
+      shipping_method.stub(:instance_for).with(order).and_return(Pickup.new(order))
       order.stub_chain(:shipping_method, :andand, :delivery?).and_return false
+
       # We render the page populating the last one the user used
       expect(order).to receive(:ship_address=).with(Spree::Address.default).twice
 

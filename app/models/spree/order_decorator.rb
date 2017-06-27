@@ -297,9 +297,12 @@ Spree::Order.class_eval do
 
   private
 
+  # Returns the appropriate shipping method instance for the order
+  #
+  # @return [#ship_address_on_clear]
   def shipping_method_factory
-    if shipping_method.andand.delivery?
-      Delivery.new(self)
+    if shipping_method
+      shipping_method.instance_for(self)
     else
       Pickup.new(self)
     end
