@@ -65,22 +65,25 @@ describe CheckoutController do
     end
 
     it "clears the ship address when re-rendering edit" do
-      controller.should_receive(:clear_ship_address).and_return true
       order.stub(:update_attributes).and_return false
+      expect(order).to receive(:clear_ship_address).and_return(true)
       spree_post :update, order: {}
     end
 
     it "clears the ship address when the order state cannot be advanced" do
-      controller.should_receive(:clear_ship_address).and_return true
       order.stub(:update_attributes).and_return true
       order.stub(:next).and_return false
+      expect(order).to receive(:clear_ship_address).and_return(true)
+
       spree_post :update, order: {}
     end
 
     it "only clears the ship address with a pickup shipping method" do
-      order.stub_chain(:shipping_method, :andand, :require_ship_address).and_return false
-      order.should_receive(:ship_address=)
-      controller.send(:clear_ship_address)
+      order.stub_chain(:shipping_method, :andand, :delivery?).and_return false
+      # We render the page populating the last one the user used
+      expect(order).to receive(:ship_address=).with(Spree::Address.default).twice
+
+      spree_post :update, order: {}
     end
   end
 

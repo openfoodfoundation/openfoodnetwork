@@ -289,6 +289,16 @@ Spree::Order.class_eval do
     complete? && distributor.andand.allow_order_changes? && order_cycle.andand.open?
   end
 
+  # When we have a pickup Shipping Method we don't want any data in the form,
+  # so we clear it out
+  def clear_ship_address
+    if shipping_method.andand.delivery?
+      # no op
+    else
+      self.ship_address = Spree::Address.default
+    end
+  end
+
   private
 
   def provided_by_order_cycle?(line_item)
