@@ -292,14 +292,18 @@ Spree::Order.class_eval do
   # When we have a pickup Shipping Method we don't want any data in the form,
   # so we clear it out
   def clear_ship_address
-    self.ship_address = if shipping_method.andand.delivery?
-                          Delivery.new(self).ship_address_on_clear
-                        else
-                          Pickup.new(self).ship_address_on_clear
-                        end
+    self.ship_address = shipping_method_factory.ship_address_on_clear
   end
 
   private
+
+  def shipping_method_factory
+    if shipping_method.andand.delivery?
+      Delivery.new(self)
+    else
+      Pickup.new(self)
+    end
+  end
 
   def provided_by_order_cycle?(line_item)
     order_cycle_variants = order_cycle.andand.variants || []
