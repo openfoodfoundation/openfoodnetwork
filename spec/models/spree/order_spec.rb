@@ -719,4 +719,36 @@ describe Spree::Order do
       end
     end
   end
+
+  describe '#clear_ship_address' do
+    let(:address) { build(:address) }
+    let(:order) { build(:order, ship_address: address, shipping_method: shipping_method) }
+
+    context 'when the shipping method is a delivery' do
+      let(:shipping_method) { build(:shipping_method, require_ship_address: true) }
+
+      it 'does not change the ship address' do
+        order.clear_ship_address
+        expect(order.ship_address).to eq(address)
+      end
+    end
+
+    context 'when the shipping method is a pickup' do
+      let(:shipping_method) { build(:shipping_method, require_ship_address: false) }
+
+      it 'sets the default ship address' do
+        order.clear_ship_address
+        expect(order.ship_address).to eq(Spree::Address.default)
+      end
+    end
+
+    context 'when there is no shipping method' do
+      let(:shipping_method) { nil }
+
+      it 'does not change the ship address' do
+        order.clear_ship_address
+        expect(order.ship_address).to eq(Spree::Address.default)
+      end
+    end
+  end
 end
