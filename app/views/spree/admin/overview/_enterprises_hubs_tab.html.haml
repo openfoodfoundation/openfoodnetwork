@@ -3,7 +3,8 @@
     %span.five.columns.alpha
       = t "spree_admin_enterprises_hubs_name"
     - if can? :admin, Spree::PaymentMethod
-      %span.centered.three.columns Payment Methods
+      %span.centered.three.columns
+        = t(:payment_methods)
     - if can? :admin, Spree::ShippingMethod
       %span.centered.three.columns
         = t "spree_admin_enterprises_shipping_methods"

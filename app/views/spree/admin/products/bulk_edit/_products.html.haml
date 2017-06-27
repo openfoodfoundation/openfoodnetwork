@@ -1,8 +1,8 @@
 %div.sixteen.columns.alpha{ 'ng-hide' => 'loading || filteredProducts.length == 0' }
   %form{ name: 'bulk_product_form' }
     %save-bar{ dirty: "bulk_product_form.$dirty", persist: "false" }
-      %input.red{ type: "button", value: "Save Changes", ng: { click: "submitProducts()", disabled: "!bulk_product_form.$dirty" } }
-      %input{ type: "button", value: "Close", 'ng-click' => "cancel('#{bulk_edit_admin_products_path}')" }
+      %input.red{ type: "button", value: t(:save_changes), ng: { click: "submitProducts()", disabled: "!bulk_product_form.$dirty" } }
+      %input{ type: "button", value: t(:close), 'ng-click' => "cancel('#{bulk_edit_admin_products_path}')" }
 
     %table.index#listing_products.bulk{ "infinite-scroll" => "incrementLimit()", "infinite-scroll-distance" => "1" }
 

@@ -127,7 +127,7 @@ feature %q{
     page.should_not have_select2 'order_order_cycle_id'
 
     page.should have_selector 'p', text: "Distributor: #{@order.distributor.name}"
-    page.should have_selector 'p', text: "Order cycle: None"
+    page.should have_selector 'p', text: "Order Cycle: None"
   end
 
   scenario "filling customer details" do

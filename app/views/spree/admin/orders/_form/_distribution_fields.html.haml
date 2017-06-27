@@ -1,21 +1,21 @@
 %fieldset.no-border-bottom
-  %legend{align: 'center'} Distribution
+  %legend{align: 'center'}= t('.title')
 
   - if @order.complete?
     .alpha.six.columns
       %p
-        %b Distributor:
-        = @order.distributor.andand.name || "None"
+        %b= "#{t(:distributor)}:"
+        = @order.distributor.andand.name || t(:none)
         %input{type: "hidden", id: "order_distributor_id", value: @order.distributor.andand.id}
     .omega.six.columns
       %p
-        %b Order cycle:
-        = @order.order_cycle.andand.name || "None"
+        %b= "#{t(:order_cycle)}:"
+        = @order.order_cycle.andand.name || t(:none)
         %input{type: "hidden", id: "order_order_cycle_id", value: @order.order_cycle.andand.id}
   - else
     .alpha.six.columns
       .field
-        %label{for: "order_distributor_id"} Distributor
+        %label{for: "order_distributor_id"}= t(:distributor)
         %input.ofn-select2.fullwidth{id: "order_distributor_id",
         type: 'number',
         name: "order[distributor_id]",
@@ -24,7 +24,7 @@
 
     .omega.six.columns
       .field
-        %label{ for: "order_order_cycle_id"} Order Cycle
+        %label{ for: "order_order_cycle_id"}= t(:order_cycle)
         %input.ofn-select2.fullwidth{id: "order_order_cycle_id",
         type: 'number',
         name: "order[order_cycle_id]",

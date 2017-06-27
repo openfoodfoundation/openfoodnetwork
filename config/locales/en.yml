@@ -283,6 +283,10 @@ en:
       index:
         new_button: New Enterprise Group
 
+    enterprise_roles:
+      form:
+        manages: manages
+
     products:
       unit_name_placeholder: 'eg. bunches'
       bulk_edit:
@@ -609,7 +613,7 @@ en:
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-  home:
+  shops:
     hubs:
       show_closed_shops: "Show closed shops"
       hide_closed_shops: "Hide closed shops"
@@ -1352,6 +1356,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   admin_order_cycles: "Admin Order Cycles"
   open: "Open"
   close: "Close"
+  create: "Create"
+  search: "Search"
   supplier: "Supplier"
   coordinator: "Coordinator"
   distributor: "Distributor"
@@ -1653,6 +1659,10 @@ Please follow the instructions there to make your enterprise visible on the Open
 
   spree:
     admin:
+      orders:
+        form:
+          distribution_fields:
+            title: Distribution
       products:
         bulk_edit:
           header:
@@ -1661,6 +1671,12 @@ Please follow the instructions there to make your enterprise visible on the Open
             title: LOADING PRODUCTS
             no_products: "No products yet. Why don't you add some?"
             no_results: "Sorry, no results match"
+      reports:
+        bulk_coop:
+          bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
+          bulk_coop_allocation: 'Bulk Co-op - Allocation'
+          bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
+          bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
       variants:
         autocomplete:
           producer_name: Producer

@@ -15,11 +15,11 @@
     .omega.fourteen.columns= select_tag(:payment_method_in, options_for_select(report_payment_method_options(@report.orders), params[:payment_method_in]), {class: "select2 fullwidth", multiple: true})
 
   .row
-    .alpha.two.columns= label_tag nil, "Shipping Methods: "
+    .alpha.two.columns= label_tag nil, "#{t(:shipping_methods)}: "
     .omega.fourteen.columns= select_tag(:shipping_method_in, options_for_select(report_shipping_method_options(@report.orders), params[:shipping_method_in]), {class: "select2 fullwidth", multiple: true})
 
   .row
-    .alpha.two.columns= label_tag nil, "Report Type: "
+    .alpha.two.columns= label_tag nil, "#{t(:report_type)}: "
     .omega.fourteen.columns= select_tag(:report_type, options_for_select(@report_types, @report_type))
 
   .row
