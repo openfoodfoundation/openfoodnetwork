@@ -9,9 +9,9 @@ module OpenFoodNetwork
     end
 
     def last_used_ship_address
-      recent_orders.detect { |o|
-        o.ship_address && o.shipping_method.andand.require_ship_address
-       }.andand.ship_address
+      recent_orders.detect { |order|
+        order.ship_address && order.shipping_method.andand.delivery?
+      }.andand.ship_address
     end
 
 

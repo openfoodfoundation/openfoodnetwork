@@ -65,6 +65,10 @@ Spree::ShippingMethod.class_eval do
     'Shipping'
   end
 
+  def delivery?
+    require_ship_address
+  end
+
   private
 
   def touch_distributors
