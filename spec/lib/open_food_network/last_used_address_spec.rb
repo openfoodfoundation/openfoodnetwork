@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'open_food_network/last_used_address'
 
 module OpenFoodNetwork
