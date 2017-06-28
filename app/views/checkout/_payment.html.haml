@@ -24,6 +24,7 @@
                   = radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, false,
                     required: true,
                     name: "order.payment_method_id",
+                    "ng-init" => "#{available_payment_methods.length == 1 && @current_distributor.check_the_only_payment_method}?(order.payment_method_id=#{method.id}):''",
                     "ng-model" => "order.payment_method_id"
                   = method.name
                   = "(#{payment_method_price(method, @order)})"
