@@ -2,7 +2,7 @@ engines:
   rubocop:
     enabled: true
   scss-lint:
-    enabled: true
+    enabled: false
 ratings:
   paths:
   - app/**
