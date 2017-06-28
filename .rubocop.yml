@@ -57,6 +57,18 @@ Rails/SkipsModelValidations:
 # They should be removed or tweaked and moved above as decisions are made
 # NOTE: Cops which did not fail at the time of writing were removed
 
+Layout/DotPosition:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledotposition
+
+Layout/SpaceBeforeBlockBraces:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespacebeforeblockbraces
+
+Layout/SpaceInsideParens:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespaceinsideparens
+
 Style/Alias:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylealias
@@ -68,10 +80,6 @@ Style/BlockDelimiters:
 Style/CommentAnnotation:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylecommentannotation
-
-Style/DotPosition:
-  Enabled: false
-  StyleGuide: http://relaxed.ruby.style/#styledotposition
 
 Style/DoubleNegation:
   Enabled: false
@@ -116,14 +124,6 @@ Style/Semicolon:
 Style/SingleLineMethods:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylesinglelinemethods
-
-Style/SpaceBeforeBlockBraces:
-  Enabled: false
-  StyleGuide: http://relaxed.ruby.style/#stylespacebeforeblockbraces
-
-Style/SpaceInsideParens:
-  Enabled: false
-  StyleGuide: http://relaxed.ruby.style/#stylespaceinsideparens
 
 Style/TrailingCommaInArguments:
   Enabled: false
