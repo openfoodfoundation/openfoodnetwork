@@ -129,5 +129,5 @@ group :development do
   gem 'guard-zeus'
   gem 'guard-rspec'
   gem 'parallel_tests'
-  gem 'rubocop'
+  gem 'rubocop', '>= 0.49.1'
 end
