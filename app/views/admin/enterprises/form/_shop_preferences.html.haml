@@ -75,3 +75,33 @@
     .five.columns.omega
       = f.radio_button :allow_order_changes, true, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "true"
       = f.label :allow_order_changes, t('.allow_order_changes_true'), value: :true
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      = f.label :require_phone_number, t('.enterprise_require_phone_number')
+    .eight.columns.omega
+      = f.check_box :require_phone_number
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      = f.label :require_bill_address, t('.enterprise_require_bill_address')
+    .eight.columns.omega
+      = f.check_box :require_bill_address
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      = f.label :hide_comment_box, t('.enterprise_hide_comment_box')
+    .eight.columns.omega
+      = f.check_box :hide_comment_box
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      = f.label :check_the_only_shipping_option, t('.enterprise_check_the_only_shipping_option')
+    .eight.columns.omega
+      = f.check_box :check_the_only_shipping_option
+.row
+  .alpha.eleven.columns
+    .three.columns.alpha
+      = f.label :check_the_only_payment_method, t('.enterprise_check_the_only_payment_method')
+    .eight.columns.omega
+      = f.check_box :check_the_only_payment_method
