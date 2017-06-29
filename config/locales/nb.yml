@@ -417,11 +417,11 @@ nb:
         producer_profile: Produsentprofil
         connect_ofn: Koble gjennom OFN
         always_free: GRATIS FOR ALLTID
-        sell_description_text: Legg til dine produkter til Open Food Network, tillat hubs å lagre dine produkter i sine butikker.
+        producer_description_text: Legg til dine produkter til Open Food Network, tillat hubs å lagre dine produkter i sine butikker.
         producer_shop: Produsentbutikk
         sell_your_produce: Selg dine egne produkter
-        sell_description_text: Selg dine produkter direkte til kunder gjennom din egen Open Food Network nettbutikk.
-        sell_description_text2: En Produsentbutikk er kun for dine produkter, hvis du ønsker å selge produkter dyrket/produsert en annen plass, velg 'Produsenthub'.
+        producer_shop_description_text: Selg dine produkter direkte til kunder gjennom din egen Open Food Network nettbutikk.
+        producer_shop_description_text2: En Produsentbutikk er kun for dine produkter, hvis du ønsker å selge produkter dyrket/produsert en annen plass, velg 'Produsenthub'.
         producer_hub: Produsenthub
         producer_hub_text: Selg egne produkter og produkter fra andre
         producer_hub_description_text: Din bedrift er ryggraden i ditt lokale matsystem. Du kan selge dine egne produkter og produkter samlet fra andre bedrifter gjennom din nettbutikk på Open Food Network.

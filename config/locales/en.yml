@@ -508,11 +508,11 @@ en:
         producer_profile: Producer Profile
         connect_ofn: Connect through OFN
         always_free: ALWAYS FREE
-        sell_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
+        producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
         producer_shop: Producer Shop
         sell_your_produce: Sell your own produce
-        sell_description_text: Sell your products directly to customers through your very own Open Food Network shopfront.
-        sell_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
+        producer_shop_description_text: Sell your products directly to customers through your very own Open Food Network shopfront.
+        producer_shop_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
         producer_hub: Producer Hub
         producer_hub_text: Sell produce from self and others
         producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.

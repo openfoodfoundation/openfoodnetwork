@@ -391,11 +391,11 @@ es:
         producer_profile: Perfil Productora
         connect_ofn: Conectar a través de OFN
         always_free: SIEMPRE GRATIS
-        sell_description_text: Añade tus productos a Open Food Network, permitiendo a los Grupos de Consumo vender tus productos.
+        producer_description_text: Añade tus productos a Open Food Network, permitiendo a los Grupos de Consumo vender tus productos.
         producer_shop: Tienda Productora
         sell_your_produce: Vende tu propia producción
-        sell_description_text: Vende tus productos directamente a los consumidores con tu tienda en Open Food Network.
-        sell_description_text2: Una tienda de productora es para tu producto solamente, si quieres vender productos de otros productores, selecciona 'Grupo de Consumo'.
+        producer_shop_description_text: Vende tus productos directamente a los consumidores con tu tienda en Open Food Network.
+        producer_shop_description_text2: Una tienda de productora es para tu producto solamente, si quieres vender productos de otros productores, selecciona 'Grupo de Consumo'.
         producer_hub: Hub de Productoras
         producer_hub_text: Vende tu propia producción y la de otros
         producer_hub_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos tuyos o de otras organizaciones y véndelo a través de tu tienda en Open Food Network.

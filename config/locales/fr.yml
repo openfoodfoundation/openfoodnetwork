@@ -418,11 +418,11 @@ fr:
         producer_profile: Profil producteur
         connect_ofn: Gagnez en visibilité via OFFrance
         always_free: GRATUIT
-        sell_description_text: Saisissez votre catalogue produits sur Open Food France, ce qui permettra aux hubs-distributeurs utilisant la plateforme de les proposer dans leurs boutiques (sur votre autorisation).
+        producer_description_text: Saisissez votre catalogue produits sur Open Food France, ce qui permettra aux hubs-distributeurs utilisant la plateforme de les proposer dans leurs boutiques (sur votre autorisation).
         producer_shop: Boutique Producteur
         sell_your_produce: Vendez vos propres produits
-        sell_description_text: Vendez vos produits en direct aux mangeurs/restaurateurs/etc. via votre propre Boutique Producteur sur Open Food France.
-        sell_description_text2: Une Boutique Producteur vous permet de vendre uniquement vos propres produits. Si vous voulez vendre d'autres produits, sélectionnez "Hub Producteur"
+        producer_shop_description_text: Vendez vos produits en direct aux mangeurs/restaurateurs/etc. via votre propre Boutique Producteur sur Open Food France.
+        producer_shop_description_text2: Une Boutique Producteur vous permet de vendre uniquement vos propres produits. Si vous voulez vendre d'autres produits, sélectionnez "Hub Producteur"
         producer_hub: Hub Producteur
         producer_hub_text: Vendez vos produits et ceux d'autres fournisseurs
         producer_hub_description_text: Vous vendez non seulement vos produits, mais aussi des produits d'autres producteurs de votre région, artisans, ou distributeurs afin de proposer une offre complète dans votre boutique. Vous soutenez ainsi le développement de votre système alimentaire territorial !

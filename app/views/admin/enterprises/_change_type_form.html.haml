@@ -16,7 +16,7 @@
               %p= t('.connect_ofn')
             .bottom= t('.always_free')
           %p.description
-            = t('.sell_description_text')
+            = t('.producer_description_text')
 
         .producer_shop.option.one-third.column
           %a.full-width.button.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
@@ -27,10 +27,10 @@
               %monthly-pricing-description{ joiner: "newline" }
 
           %p.description
-            = t('.sell_description_text')
+            = t('.producer_shop_description_text')
             %br
             %br
-            = t('.sell_description_text2')
+            = t('.producer_shop_description_text2')
 
         .full_hub.option.one-third.column.omega
           %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
