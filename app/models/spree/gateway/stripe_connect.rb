@@ -136,12 +136,11 @@ module Spree
     end
 
     def tokenize_instance_customer_card(customer, card)
-      begin
-        token = Stripe::Token.create({card: card, customer: customer}, { stripe_account: stripe_account_id})
-        token.id
-      rescue Stripe::InvalidRequestError
-        # Not really sure what to do here....
-      end
+      token = Stripe::Token.create({card: card, customer: customer}, {stripe_account: stripe_account_id})
+      token.id
+    rescue Stripe::StripeError => e
+      Rails.logger.error("Stripe Error: #{e}")
+      nil
     end
   end
 end
