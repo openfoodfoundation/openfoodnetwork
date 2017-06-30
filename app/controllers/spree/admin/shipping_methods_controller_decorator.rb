@@ -29,6 +29,8 @@ module Spree
         collection
       end
 
+      # SHIPPING_METHOD
+      #
       # This method was originally written because ProductDistributions referenced shipping
       # methods, and deleting a referenced shipping method would break all the reports that
       # queried it.

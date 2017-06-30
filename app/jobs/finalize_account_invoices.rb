@@ -22,6 +22,7 @@ class FinalizeAccountInvoices
     invoice_orders.select{ |order| order.present? && order.completed_at.nil? }.each{ |order| finalize(order) }
   end
 
+  # SHIPPING_METHOD
   def finalize(invoice_order)
     # TODO: When we implement per-customer and/or per-user preferences around shipping and payment methods
     # we can update these to read from those preferences

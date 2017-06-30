@@ -15,6 +15,7 @@
 
       .small-12.columns.medium-12.columns.large-6.columns
         %label{"ng-repeat" => "method in ShippingMethods.shipping_methods"}
+          -# SHIPPING_METHOD
           %input{type: :radio,
             required: true,
             name: "order.shipping_method_id",
@@ -27,6 +28,7 @@
               ({{ method.price | localizeCurrency }})
 
         %small.error.medium.input-text{"ng-show" => "!fieldValid('order.shipping_method_id')"}
+          -# SHIPPING_METHOD
           = "{{ fieldErrors('order.shipping_method_id') }}"
 
         %label{"ng-if" => "Checkout.requireShipAddress()"}

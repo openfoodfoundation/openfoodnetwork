@@ -1,4 +1,5 @@
 class Api::CurrentOrderSerializer < ActiveModel::Serializer
+  # SHIPPING_METHOD
   attributes :id, :item_total, :email, :shipping_method_id,
              :display_total, :payment_method_id
 
