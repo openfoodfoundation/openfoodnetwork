@@ -22,6 +22,9 @@ env:
     - CI_NODE_INDEX=3
     - CI_NODE_INDEX=4 KARMA="true" GITHUB_DEPLOY="true"
 
+before_install:
+  - ./script/upgrade_bundler.sh
+
 before_script:
   - cp config/database.travis.yml config/database.yml
   - cp config/application.yml.example config/application.yml
