@@ -14,7 +14,7 @@
       = render 'checkout/accordion_heading'
 
       .small-12.columns.medium-12.columns.large-6.columns
-        %label{"ng-repeat" => "method in ShippingMethods.shipping_methods"}
+        %label{"ng-repeat" => "method in ShippingMethods.shipping_methods | orderBy: 'name'"}
           %input{type: :radio,
             required: true,
             name: "order.shipping_method_id",
