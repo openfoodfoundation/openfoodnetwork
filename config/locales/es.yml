@@ -8,7 +8,7 @@ es:
     failure:
       invalid: |
         Correo o contraseña inválidos.
-        ¿Fue un invitado la vez pasada? Tal vez necesite crear una cuenta o recuperar su contraseña.
+        ¿Has sido invitada? Tal vez necesites crear una cuenta o recuperar tu contraseña.
     enterprise_confirmations:
       enterprise:
         confirmed: Gracias, tu dirección de email ha sido confirmada.
@@ -83,9 +83,11 @@ es:
     clear_all: Limpiar todo
     start_date: "Fecha de inicio"
     end_date: "Fecha de finalización"
+    form_invalid: "El formulario contiene campos vacíos o inválidos"
     columns: Columnas
     actions: Acciones
     viewing: "Viendo: %{current_view_name}"
+    description: Descripción
     whats_this: ¿Qué es esto?
     tag_has_rules: "Reglas existentes para esta etiqueta: %{num}"
     has_one_rule: "Tiene una regla"
@@ -189,6 +191,9 @@ es:
         inherits_properties?: ¿Propiedades heredadas?
         available_on: Disponible en
         av_on: "Disp. en"
+      properties:
+        property_name: Nombre de la Propiedad
+        inherited_property: Propiedad Heredada
       variants:
         to_order_tip: "Los artículos hechos según demanda no tienen un nivel de stock, como por ejemplo panes hechos según demanda."
     variant_overrides:
@@ -324,7 +329,7 @@ es:
           create_one_button: Crear una ahora
           no_method_yet: Todavía no tienes ningún método de envío.
         shop_preferences:
-          shopfront_requires_login: "Publicidad visible en la tienda?"
+          shopfront_requires_login: "¿Visibilidad pública de la tienda?"
           shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
           shopfront_requires_login_false: "Público"
           shopfront_requires_login_true: "Visible solo para consumidores registrados"
@@ -396,7 +401,7 @@ es:
         producer_hub_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos tuyos o de otras organizaciones y véndelo a través de tu tienda en Open Food Network.
         profile: Solo perfil
         get_listing: Obtener un listado
-        profile_description_text: La gente podrá encontrarte y ponerse en contacto contigo en Open Food Network. Su empresa será visible en el mapa y se podrá buscar en los listados.
+        profile_description_text: La gente podrá encontrarte y ponerse en contacto contigo en Open Food Network. Su organización será visible en el mapa y se podrá buscar en los listados.
         hub_shop: Tienda
         hub_shop_text: Vender la producción de otros
         hub_shop_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos de otras organizaciones y véndelo a través de tu tienda en Open Food Network.
@@ -424,6 +429,16 @@ es:
         next_step: Siguiente paso
         choose_starting_point: 'Elige tu punto de partida:'
     order_cycles:
+      edit:
+        advanced_settings: Configuración Avanzada
+        update_and_close: Actualizar y Cerrar
+        choose_products_from: 'Escoger Productos desde:'
+        pickup_time_tip: Cuándo estarán disponibles para el consumidor las ordenes de este ciclo
+        pickup_instructions_tip: Esta instrucciones se muestran a los consumidores después de que completen un pedido.
+      exchange_form:
+        pickup_instructions_placeholder: "Instrucciones de recogida"
+        pickup_time_placeholder: "Listo para ( Fecha / Hora)"
+        receival_instructions_placeholder: "Instrucciones de recepción"
       advanced_settings:
         title: Configuración Avanzada
         choose_product_tip: Puedes optar por restringir todos los productos disponibles (entrantes y salientes), solo a los de %{inventory} inventario.
@@ -441,7 +456,7 @@ es:
         distributor: Distribuidor
         products: Productos
         tags: Etiquetas
-        delivery_detaisl: Detalles de Recogida / Entrega
+        delivery_details: Detalles de Recogida / Entrega
         debug_info: Información de Debug
       name_and_timing_form:
         name: Nombre
@@ -459,13 +474,7 @@ es:
         customer_instructions_placeholder: Notas de la recogida o entrega
         products: Productos
         fees: Comisiones
-      edit:
-        advanced_settings: Configuración Avanzada
-        update_and_close: Actualizar y Cerrar
     producer_properties:
-      form:
-        property: Propiedad
-        value: Valor
       index:
         title: Propiedades de la Productora
     shared:
@@ -490,7 +499,7 @@ es:
       login: "login"
       register: "registro"
       contact: "contactar"
-      require_customer_login: "Esta tienda es solo para usuarios registrados."
+      require_customer_login: "Esta tienda es solo para consumidores registrados."
       require_login_html: "Haz %{login} si ya tienes una cuenta. De lo contrario puedes %{register}."
       require_customer_html: "%{contact} %{enterprise} para convertirte en miembro."
   invoice_billing_address: "Dirección de facturación:"
@@ -602,7 +611,7 @@ es:
   footer_sites_community: "Comunidad"
   footer_sites_userguide: "Guía de usuario"
   footer_secure: "Seguro y de confianza."
-  footer_secure_text: "Open Food Network usa cifrado SSL (RSA de 2048 bit) en todo lado para mantener privada la información de compras y pagos. Nuestros servidores no almacenan los detalles de tarjetas de créditos y los pagos son procesados por servicios que cumplen con PCI."
+  footer_secure_text: "Open Food Network usa cifrado SSL (RSA de 2048 bit) en toda su plataforma para mantener privada la información de compras y pagos. Nuestros servidores no almacenan los detalles de tarjetas de créditos y los pagos son procesados por servicios que cumplen con PCI."
   footer_contact_headline: "Mantenerse en contacto"
   footer_contact_email: "Envíenos un correo"
   footer_nav_headline: "Navegar"
@@ -619,7 +628,7 @@ es:
   brandstory_part1: "Nosotros empezamos desde abajo. Con granjeros y productoras listas para contar sus historias con orgullo y autenticidad. Con distribuidoras listas para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden seriamente cambiar el mundo."
   brandstory_part2: "Luego necesitamos una forma de hacerlo real. Una forma de empoderar a todos los que producen, venden y compran comida. Una forma de contar todas las historias, de manejar todas las logísticas. Una forma de convertir transacción en transformación todos los días."
   brandstory_part3: "Entonces contruímos un mercado que nivela el campo de juego. Es transparente, de forma que crea relaciones reales. Es de código abierto, de forma que todos son los dueños."
-  brandstory_part4: "Funciona en todo lado. Cambia todo."
+  brandstory_part4: "Funciona en cualquier lugar. Lo cambia todo."
   brandstory_part5_strong: "Le llamamos Open Food Network."
   brandstory_part6: "Todos amamos la comida. Ahora podemos amar nuestro sistema de comida también."
   learn_body: "Explora modelos, historias y recursos para ayudarte a desarrollar tu organización. Encuentra formación, eventos y otras oportunidades para aprender de tus compañeros."
@@ -628,18 +637,18 @@ es:
   connect_cta: "Explorar"
   system_headline: "Compras - cómo funcionan."
   system_step1: "1. Buscar"
-  system_step1_text: "Busque comida local y de temporada en nuestras tiendas diversas e independientes. Busque por barrio o categoría de comida, o si prefiere servicio de entrega o recogerla."
+  system_step1_text: "Busca comida local y de temporada en nuestras tiendas diversas e independientes. Busca por barrio y participa en un grupo de consumo."
   system_step2: "2. Comprar"
   system_step2_text: "Transforma tu consumo con comida local y asequible de diversas productoras ¡Conoce las historias detrás de tu comida y la gente que la hace!"
-  system_step3: "3. Recoger / Servicio de entrega"
-  system_step3_text: "Espere su entrega, o visite a su productora o grupo de consumo para una conexión más personal con su comida. Compra de comida tan diversa como la naturaleza lo previó."
+  system_step3: "3. Recogida"
+  system_step3_text: "Visita tu Grupo de Consumo para un vínculo más directo con las productoras y tus vecinos, también puedes comprar directamente a algunas productoras o centrales de compras. Compra tu comida de una manera tan diversa como la naturaleza."
   cta_headline: "Compras que hacen el mundo un mejor lugar."
-  cta_label: "Estoy listo"
-  stats_headline: "Estamos creando un nuevo sistema de comida."
-  stats_producers: "productoras de comida"
-  stats_shops: "tiendas de comida"
-  stats_shoppers: "compradores de comida"
-  stats_orders: "pedidos de comida"
+  cta_label: "Estoy lista"
+  stats_headline: "Entre todas creamos un nuevo sistema de producción, distribución y consumo."
+  stats_producers: "productoras"
+  stats_shops: "tiendas"
+  stats_shoppers: "consumidoras"
+  stats_orders: "pedidos"
   checkout_title: Revisar el carrito
   checkout_now: Revisare el carrito ahora
   checkout_order_ready: Pedido preparado para
@@ -690,14 +699,14 @@ es:
   email_registered: "ahora es parte de"
   email_userguide_html: "La Guía de Usuario con soporte detallado para configurar su Productora o Grupo de Consumo está aquí: %{link}"
   email_admin_html: "Puede administrar su cuenta iniciando sesión en %{link} o haciendo clic en el engrane arriba a la derecha de la página de inicio, y seleccionando Administración."
-  email_community_html: "También tenemos un foro en líea para la discusión comunal relacionada con el programa OFN y los retos únicos del funcionamiento de una empresa de alimentación. Lo invitamos a unirse. Estamos evolucionando de forma constante y su aporte en este formo le dará forma a lo que pase luego. %{link}"
+  email_community_html: "También tenemos un foro en líea para la discusión comunal relacionada con el programa OFN y los retos únicos del funcionamiento de una organización de alimentación. Lo invitamos a unirse. Estamos evolucionando de forma constante y su aporte en este formo le dará forma a lo que pase luego. %{link}"
   join_community: "Unirse a la comunidad"
   email_help: "Si tiene dificultades, revise nuestras preguntas frecuentes, navegue el foro o haga una entrada de con tema de 'Soporte' y ¡alguien le ayudará!"
   email_confirmation_greeting: "Hola, %{contact}!"
   email_confirmation_profile_created: "¡Se creó un un perfil para %{name} con éxito! Para activar su Perfil necesitamos que confirme esta dirección de correos."
   email_confirmation_click_link: "Por favor haga clic en el enlace de abajo para confirmar el correo electrónico y continuar configurando su perfil."
   email_confirmation_link_label: "Confirmar este correo electrónico »"
-  email_confirmation_help_html: "Después de confirmar el correo electrónico puede accesar su cuenta de administración para esta empresa. Vea el %{link} para encontrar más acerca de las características de %{sitename} e iniciar a usar su perfil o tienda en línea."
+  email_confirmation_help_html: "Después de confirmar el correo electrónico puedes acceder a tu cuenta de administración para esta organización. Visita %{link} para encontrar más información sobre las características de %{sitename} y empieza a usar tu perfil o tienda online."
   email_confirmation_userguide: "Guía de Usuario"
   email_social: "Conecte con nosotros:"
   email_contact: "Envíenos un correo electrónico:"
@@ -732,7 +741,7 @@ es:
   email_signup_login: Su nombre de usuario
   email_signup_email: Tu correo electrónico para el inicio de sesión es
   email_signup_shop_html: "Puede empezar a comprar en línea ahora en %{link}."
-  email_signup_text: "Gracias por unirte a la red. Si eres un comprador, ¡esperamos presentarte a muchos agricultores, grupos de consumo y deliciosa comida! Si eres una productora o formas parte de una empresa de alimentos, estamos emocionados de que formes parte de la red."
+  email_signup_text: "Gracias por unirte a la red. Si eres un comprador, ¡esperamos presentarte a muchos agricultores, grupos de consumo y deliciosa comida! Si eres una productora o formas parte de una organización de alimentos, estamos emocionados de que formes parte de la red."
   email_signup_help_html: "Agradecemos todas tus preguntas y feedback; puedes usar el botón de <em>Enviar Feedback</em> en el sitio o escribir un email a %{email}"
   producer_mail_greeting: "Estimada"
   producer_mail_text_before: "Ahora tenemos todas los pedidos de las consumidoras para la siguiente ronda."
@@ -750,7 +759,7 @@ es:
   shopping_contact_social: "Seguir"
   shopping_groups_part_of: "es parte de:"
   shopping_producers_of_hub: "productoras de %{hub}:"
-  enterprises_next_closing: "Cerrando próximo pedido"
+  enterprises_next_closing: "Los pedidos se cerrarán"
   enterprises_ready_for: "Listo para"
   enterprises_choose: "Escoger cuando quieres tu pedido:"
   hubs_buy: "Comprar:"
@@ -834,7 +843,7 @@ es:
   modal_how_pickup: Recogida, entrega y gastos de envío
   modal_how_pickup_explained: Algunos grupos de consumo hacen entregas hasta su puerta, mientras otros requieren que recojas las compras. Puedes ver que opciones están disponibles en su página de inicio, y seleccionar cuál te gustaría en las páginas de compras y revisión. Las entregas costarán más, y el precio cambia entre grupos de consumo. Cada grupo es un punto de venta con operaciones y logística independientes, las diferencias son normales y deseables.
   modal_how_more: Aprender más
-  modal_how_more_explained: "Si quiere aprender más acerca del Open Food Network, cómo trabaja y colaborar, revise:"
+  modal_how_more_explained: "Si quieres saber más acerca de Open Food Network, cómo trabajamos y nos organizamos, visita:"
   modal_producers: "Productoras"
   modal_producers_explained: "Nuestras productoras hacen todos los deliciosos alimentos que puedes comprar en Open Food Network."
   producers_about: Acerca de nosotras
@@ -852,7 +861,7 @@ es:
   producers_signup_headline: Productoras de alimentos, empoderadas.
   producers_signup_motivation: Venda sus alimentos y cuente sus historias en distintos nuevos mercados. Ahorre tiempo y dinero en costos administrativos. Apoyamos la innovación sin el riesgo. Hemos nivelado el campo de juego.
   producers_signup_send: Únase ahora
-  producers_signup_enterprise: Cuentas de empresa
+  producers_signup_enterprise: Cuentas de organización
   producers_signup_studies: Historias de nuestras productoras.
   producers_signup_cta_headline: ¡Únase ahora!
   producers_signup_cta_action: Únase ahora
@@ -885,7 +894,7 @@ es:
   shops_signup_headline: Grupos de Consumo, sin límites.
   shops_signup_motivation: Cualquiera que sea su modelo, lo apoyamos. De cualquier forma que cambie, estamos con usted. Somos una organización sin findes de lucro, independiente, y de código abierto. Somos los socios de software con los que ha soñado.
   shops_signup_action: Únase ahora
-  shops_signup_pricing: Cuentas de empresa
+  shops_signup_pricing: Cuentas de organización
   shops_signup_stories: Historias de nuestros grupos de consumo.
   shops_signup_help: Estamos listos para ayudar.
   shops_signup_help_text: Usted necesita un mejor retorno. Usted necesita nuevos compradores y socios de logística. Usted necesita que su historia sea contada a través de ventas al por mayor, al detalle y en la mesa de la cocina.
@@ -931,9 +940,9 @@ es:
   going_back_to_home_page: "Le estamos llevando de vuelta a la página de inicio"
   creating: Creando
   updating: Actualizando
-  failed_to_create_enterprise: "Error al crear su empresa."
-  failed_to_create_enterprise_unknown: "Error al crear su empresa.\nAsegúrese que haya llenado todos los campos de forma completa."
-  failed_to_update_enterprise_unknown: "Error al actualizar su empresa.\nAsegurese que haya llenado todos los campos de forma completa."
+  failed_to_create_enterprise: "Error al crear tu organización."
+  failed_to_create_enterprise_unknown: "Error al crear tu organización.\nAsegúrate de haber rellenado todos los campos."
+  failed_to_update_enterprise_unknown: "Error al actualizar tu organización.\nAsegúrate de haber rellenado todos los campos."
   order_not_saved_yet: "Su orden aun no ha sido guardada. ¡Denos unos cuantos segundos para terminar!"
   filter_by: "Fitrar por"
   hide_filters: "Esconder filtros"
@@ -982,7 +991,7 @@ es:
   continue: "Continuar"
   limit_reached_headline: "¡Ay no!"
   limit_reached_message: "¡Ha alcanzado el límite!"
-  limit_reached_text: "Ha alcanzado el límite del número de empresas de las que puede ser dueño en el"
+  limit_reached_text: "Has alcanzado el límite de organizaciones de las que puedes gestionar en "
   limit_reached_action: "Regresar a la página de inicio"
   select_promo_image: "Paso 3. Seleccione una imagen promocional"
   promo_image_tip: "Consejo: Se muestra como una pancarta, el tamaño preferido es 1200×260px"
@@ -1000,14 +1009,14 @@ es:
   review_logo: "Paso 2. Revise su logo"
   review_logo_tip: "Consejo: para mejores resultados, su logo debería llenar el espacio disponible"
   logo_placeholder: "El logo aparecerá aquí para ser revisado cuando se haya subido"
-  enterprise_about_headline: "¡Buena esa!"
+  enterprise_about_headline: "¡Seguimos!"
   enterprise_about_message: "Ahora vamos a profundizar en los detalles acerca de"
-  enterprise_success: "¡Éxito! %{enterprise} se agregó a la Open Food Network "
+  enterprise_success: "¡Felicidades! %{enterprise} se agregó a Open Food Network "
   enterprise_registration_exit_message: "Si sale de este asistente en cualquier etapa, debe hacer clic en el enlace de confirmación el el correo electrónico que recibió. Esto lo llevará a la interfaz de administración en la que puede continuar configurando su perfil."
   enterprise_description: "Descripción corta"
-  enterprise_description_placeholder: "Una oración corta que describa su empresa"
+  enterprise_description_placeholder: "Una frase corta que describa tu organización"
   enterprise_long_desc: "Descripción larga"
-  enterprise_long_desc_placeholder: "Esta es su oportunidad de contar la historia de su empresa - ¿qué la hace diferente y asombrosa? Le sugerimos mantener la descripción en menos de 600 caracteres o 150 palabras."
+  enterprise_long_desc_placeholder: "Esta es tu oportunidad de contar la historia de tu organización - ¿qué la hace diferente? Sugerimos mantener la descripción en menos de 600 caracteres o 150 palabras."
   enterprise_long_desc_length: "%{num} caracteres / recomentdamos hasta 600"
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "eg. 99 123 456 789"
@@ -1036,15 +1045,15 @@ es:
   registration_logo: "Su imagen de logo"
   registration_promo_image: "Imagen en formato apaisado para su perfil"
   registration_about_us: "Texto 'Acerca de nosotras'"
-  registration_outcome_headline: "¿Qué recibo?"
+  registration_outcome_headline: "¿Para qué sirve?"
   registration_outcome1_html: "Su perfil le ayuda a las personas a <strong>encontrarle</strong> y <strong>contactarle</strong> en la Open Food Network."
-  registration_outcome2: "Use este espacio para contar la historia de su empresa, para ayudar a dirigir conexiones a su presencia social y en línea."
-  registration_outcome3: "También es un primer paso para negociar en la Open Food Network, o abrir una tienda en línea."
+  registration_outcome2: "Usa este espacio para contar la historia de tu organización, para ayudar a crear vínculos con tu comunidad."
+  registration_outcome3: "También es el primer paso para empezar en Open Food Network, o abrir una tienda online."
   registration_finished_headline: "¡Terminado!"
   registration_finished_thanks: "Gracias por llenar los detalles de %{enterprise}."
   registration_finished_login: "Puede cambiar o actualizar su negocio en cualquier etapa iniciando sesión en Open Food Network y yendo a Admin."
   registration_finished_activate: "Activar %{enterprise}."
-  registration_finished_activate_instruction_html: "Hemos enviado un correo de confirmación a <strong>%{email}</strong> si no ha sido activado antes.<br/> Siga las instrucciones ahí para hacer su empresa visible en Open Food Network."
+  registration_finished_activate_instruction_html: "Hemos enviado un correo de confirmación a <strong>%{email}</strong> si no has activado tu cuenta ya.<br/> Sigue las instrucciones para hacer tu organización visible en Open Food Network."
   registration_finished_action: "Página de inicio de Open Food Network"
   registration_type_headline: "¡Último paso para agregar %{enterprise}!"
   registration_type_question: "¿Eres una productora?"
@@ -1054,15 +1063,15 @@ es:
   registration_type_producer_help: "Las productoras hacen cosas deliciosas para comer y/o beber. Eres una productora si lo cultivas, lo haces crecer, lo preparas, lo horneas, lo fermentas, lo ordeñas, ..."
   registration_type_no_producer_help: "Si no eres una productora, probablemente conozcas a alguien que venda o distribuya comida. También podrías convertirte en un grupo de consumo u otro tipo de organización."
   create_profile: "Crear Perfil"
-  registration_images_headline: "¡Gracias!"
-  registration_images_description: "¡Suba algunas buenas fotografías así el perfil se verá muy bien! :)"
+  registration_images_headline: "¡Ya casi lo tenemos!"
+  registration_images_description: "¡Sube algunas fotografías así el perfil se verá mucho mejor! :)"
   registration_detail_headline: "Empecemos..."
-  registration_detail_enterprise: "¡Bien! Primero necesitamos saber un poco más acerca de tu organización:"
-  registration_detail_producer: "¡Bien! Primero necesitamos saber un poco más acerca de su productora:"
+  registration_detail_enterprise: "¡Bien! Primero necesitamos saber un poco más sobre tu organización:"
+  registration_detail_producer: "¡Bien! Primero necesitamos saber un poco más sobre tu productora:"
   registration_detail_name_enterprise: "Nombre de la Organización:"
   registration_detail_name_producer: "Nombre de la granja:"
   registration_detail_name_placeholder: "e.j. Cooperativa de Consum Pastanaga Feliç"
-  registration_detail_name_error: "Por favor elija un nombre único para su empresa"
+  registration_detail_name_error: "Por favor elije un nombre único para tu organización"
   registration_detail_address1: "Línea de dirección 1:"
   registration_detail_address1_placeholder: "e.j. Torrent de l'Olla 24"
   registration_detail_address1_error: "Ingrese una dirección"
@@ -1162,7 +1171,7 @@ es:
   producer: "Productora"
   product: "Producto"
   price: "Precio"
-  on_hand: "En mano"
+  on_hand: "Disponibles"
   save_changes: "Guardar Cambios"
   spree_admin_overview_enterprises_header: "Mis Organizaciones"
   spree_admin_overview_enterprises_footer: "GESTIONAR MIS ORGANIZACIONES"
@@ -1209,7 +1218,7 @@ es:
   enterprise_terms_of_service: "Términos del Servicio de la Organización"
   enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
   enterprise_tos_link: "Enlace a los Términos del Servicio de la Organización"
-  enterprise_tos_message: "Queremos trabajar con personas que compartan nuestros objetivos y valores. Por ello, pedimos a las nuevas empresas que acepten"
+  enterprise_tos_message: "Queremos trabajar con personas que compartan nuestros objetivos y valores. Por ello, pedimos a las nuevas organizaciones que acepten"
   enterprise_tos_link_text: "Términos del Servicio."
   enterprise_tos_agree: "Estoy de acuerdo con los Términos del Servicio"
   tax_settings: "Configuración de Impuestos"
@@ -1354,10 +1363,9 @@ es:
               Tu organización no se activará completamente hasta que selecciones un
               paquete de las opciones de la izquierda.
 
-          choose_package_text2: >+
+          choose_package_text2: >
               Haz click en una opción para ver información más detallada acerca de
               cada paquete, y pulsa el botón rojo GUARDAR cuando hayas terminado.
-
           profile_only: Solo perfil
           profile_only_cost: "COSTE: GRATUITO PARA SIEMPRE"
           profile_only_text1: >+
@@ -1484,3 +1492,13 @@ es:
     orders:
       invoice:
         tax_invoice: "IMPUESTOS FACTURA:"
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+          Se ha solicitado el cambio de tu contraseña.
+          Si tu no lo has solicitado simplemente ignora este email.
+        link_text: >
+            Si has solicitado esta acción haz click en el siguiente enlace:
+        issue_text: |
+          Si el enlace no funciona prueba a copiarlo y pegarlo en tu navegador.
+          Si los problemas continúan no dudes en contactarnos.
