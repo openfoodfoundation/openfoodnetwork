@@ -4,6 +4,12 @@ nb:
       spree/order:
         payment_state: Betalingsstatus
         shipment_state: Sendingsstatus
+    errors:
+      models:
+        spree/user:
+          attributes:
+            email:
+              taken: "Det finnes allerede en konto for denne e-posten. Vennligst logg inn eller tilbakestill passordet ditt."
   devise:
     failure:
       invalid: |
