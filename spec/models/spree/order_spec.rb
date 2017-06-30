@@ -383,18 +383,18 @@ describe Spree::Order do
   end
 
   describe "emptying the order" do
-    it "removes shipping method" do
-      subject.shipping_method = create(:shipping_method)
+    it "removes shipments" do
+      subject.shipments << create(:shipment)
       subject.save!
       subject.empty!
-      subject.shipping_method.should == nil
+      expect(subject.shipments).to be_empty
     end
 
     it "removes payments" do
       subject.payments << create(:payment)
       subject.save!
       subject.empty!
-      subject.payments.should == []
+      expect(subject.payments).to be_empty
     end
   end
 

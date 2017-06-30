@@ -83,7 +83,7 @@ Spree::Order.class_eval do
   def empty_with_clear_shipping_and_payments!
     empty_without_clear_shipping_and_payments!
     payments.clear
-    update_attributes(shipping_method_id: nil)
+    shipments.destroy_all
   end
   alias_method_chain :empty!, :clear_shipping_and_payments
 
