@@ -18,6 +18,7 @@
 //= require admin/spree_auth
 //= require admin/spree_promo
 //= require admin/spree_paypal_express
+//= require ../shared/util
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ng-tags-input.min.js
 //= require angular-rails-templates

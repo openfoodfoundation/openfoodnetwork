@@ -1,0 +1,10 @@
+%input{ type: 'text', name: "#{model}[#{attribute}_parsed]", value: value, class: "fullwidth js-#{attribute}-parsed" }
+%input{ type: 'hidden', name: "#{model}[#{attribute}]", value: value, class: "js-#{attribute}-hidden" }
+
+:javascript
+  $(".js-#{attribute}-parsed").change(function () {
+    var string_price = $(this).prop('value');
+    var number_price = string_to_float(string_price);
+
+    $(".js-#{attribute}-hidden").prop('value', number_price);
+  });
