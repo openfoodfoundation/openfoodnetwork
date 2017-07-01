@@ -4,6 +4,12 @@ fr:
       spree/order:
         payment_state: Statut du paiement
         shipment_state: Statut livraison
+    errors:
+      models:
+        spree/user:
+          attributes:
+            email:
+              taken: "Un compte existe déjà pour cet e-mail. Connectez-vous ou demandez un nouveau mot de passe."
   devise:
     failure:
       invalid: |
