@@ -1,4 +1,4 @@
-%input{ type: 'text', name: "#{model}[#{attribute}_parsed]", value: value, class: "fullwidth js-#{attribute}-parsed" }
+%input{ type: 'text', name: "#{model}[#{attribute}_parsed]", id: "#{model}_#{attribute}", value: value, class: "fullwidth js-#{attribute}-parsed" }
 %input{ type: 'hidden', name: "#{model}[#{attribute}]", value: value, class: "js-#{attribute}-hidden" }
 
 :javascript
