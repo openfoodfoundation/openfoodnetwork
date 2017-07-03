@@ -57,6 +57,11 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
       munged_order
 
     shippingMethod: ->
+      # Used to get the shiping method data from the passed in id.
+      #
+      # We should store the shipping method object once retrieved. Otherwise we
+      # fetch it every time we call the method, which is few times.
+      #
       # SHIPPING_METHOD
       ShippingMethods.shipping_methods_by_id[@order.shipping_method_id] if @order.shipping_method_id
 
