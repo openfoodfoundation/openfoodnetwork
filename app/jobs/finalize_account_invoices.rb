@@ -9,7 +9,7 @@ class FinalizeAccountInvoices
     @end_date = Time.zone.local(@year, @month) + 1.month
   end
 
-  def before(job)
+  def before(_job)
     UpdateBillablePeriods.new(year, month).perform
     UpdateAccountInvoices.new(year, month).perform
   end
@@ -17,9 +17,10 @@ class FinalizeAccountInvoices
   def perform
     return unless settings_are_valid?
 
-
     invoice_orders = AccountInvoice.where(year: year, month: month).map(&:order)
-    invoice_orders.select{ |order| order.present? && order.completed_at.nil? }.each{ |order| finalize(order) }
+    invoice_orders
+      .select { |order| order.present? && order.completed_at.nil? }
+      .each { |order| finalize(order) }
   end
 
   # SHIPPING_METHOD
@@ -31,12 +32,12 @@ class FinalizeAccountInvoices
     while invoice_order.state != "complete"
       if invoice_order.errors.any?
         Bugsnag.notify(RuntimeError.new("FinalizeInvoiceError"), {
-          job: "FinalizeAccountInvoices",
-          error: "Cannot finalize invoice due to errors",
-          data: {
-            errors: invoice_order.errors.full_messages
-          }
-        })
+                         job: "FinalizeAccountInvoices",
+                         error: "Cannot finalize invoice due to errors",
+                         data: {
+                           errors: invoice_order.errors.full_messages
+                         }
+                       })
         break
       else
         invoice_order.next
@@ -49,46 +50,46 @@ class FinalizeAccountInvoices
   def settings_are_valid?
     unless end_date <= Time.zone.now
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "FinalizeAccountInvoices",
-        error: "end_date is in the future",
-        data: {
-          end_date: end_date.in_time_zone.strftime("%F %T"),
-          now: Time.zone.now.strftime("%F %T")
-        }
-      })
+                       job: "FinalizeAccountInvoices",
+                       error: "end_date is in the future",
+                       data: {
+                         end_date: end_date.in_time_zone.strftime("%F %T"),
+                         now: Time.zone.now.strftime("%F %T")
+                       }
+                     })
       return false
     end
 
     unless @accounts_distributor = Enterprise.find_by_id(Spree::Config.accounts_distributor_id)
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "FinalizeAccountInvoices",
-        error: "accounts_distributor_id is invalid",
-        data: {
-          accounts_distributor_id: Spree::Config.accounts_distributor_id
-        }
-      })
+                       job: "FinalizeAccountInvoices",
+                       error: "accounts_distributor_id is invalid",
+                       data: {
+                         accounts_distributor_id: Spree::Config.accounts_distributor_id
+                       }
+                     })
       return false
     end
 
     unless @accounts_distributor.payment_methods.find_by_id(Spree::Config.default_accounts_payment_method_id)
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "FinalizeAccountInvoices",
-        error: "default_accounts_payment_method_id is invalid",
-        data: {
-          default_accounts_payment_method_id: Spree::Config.default_accounts_payment_method_id
-        }
-      })
+                       job: "FinalizeAccountInvoices",
+                       error: "default_accounts_payment_method_id is invalid",
+                       data: {
+                         default_accounts_payment_method_id: Spree::Config.default_accounts_payment_method_id
+                       }
+                     })
       return false
     end
 
     unless @accounts_distributor.shipping_methods.find_by_id(Spree::Config.default_accounts_shipping_method_id)
       Bugsnag.notify(RuntimeError.new("InvalidJobSettings"), {
-        job: "FinalizeAccountInvoices",
-        error: "default_accounts_shipping_method_id is invalid",
-        data: {
-          default_accounts_shipping_method_id: Spree::Config.default_accounts_shipping_method_id
-        }
-      })
+                       job: "FinalizeAccountInvoices",
+                       error: "default_accounts_shipping_method_id is invalid",
+                       data: {
+                         default_accounts_shipping_method_id: Spree::Config.default_accounts_shipping_method_id
+                       }
+                     })
       return false
     end
 
