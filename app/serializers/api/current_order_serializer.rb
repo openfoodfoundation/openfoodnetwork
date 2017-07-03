@@ -1,5 +1,5 @@
 class Api::CurrentOrderSerializer < ActiveModel::Serializer
-  # SHIPPING_METHOD
+  # Read the shipping_method_id from shipments
   attributes :id, :item_total, :email, :shipping_method_id,
              :display_total, :payment_method_id
 
