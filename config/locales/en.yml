@@ -2023,6 +2023,8 @@ Please follow the instructions there to make your enterprise visible on the Open
       start_free_profile: "Start with a free profile, and expand when you're ready!"
 
   spree:
+    # TODO: remove `email` key once we get to Spree 2.0
+    email: Email
     admin:
       orders:
         invoice:
