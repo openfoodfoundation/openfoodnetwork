@@ -18,4 +18,20 @@ describe Api::CurrentOrderSerializer do
   it "includes variants of line items" do
     expect(serializer).to match li.variant.name
   end
+
+  context 'when there is no shipment' do
+    it 'includes the shipping method of the order' do
+      expect(serializer).to match('\"shipping_method_id\":null')
+    end
+  end
+
+  context 'when there is a shipment' do
+    before { create(:shipment, order: order, shipping_method: shipping_method) }
+
+    let(:shipping_method) { create(:shipping_method) }
+
+    it 'includes the shipping method of the order' do
+      expect(serializer).to match("\"shipping_method_id\":#{shipping_method.id}")
+    end
+  end
 end

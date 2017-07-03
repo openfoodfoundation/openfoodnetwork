@@ -1,5 +1,4 @@
 class Api::CurrentOrderSerializer < ActiveModel::Serializer
-  # Read the shipping_method_id from shipments
   attributes :id, :item_total, :email, :shipping_method_id,
              :display_total, :payment_method_id
 
@@ -15,5 +14,10 @@ class Api::CurrentOrderSerializer < ActiveModel::Serializer
 
   def display_total
     object.display_total.money.to_f
+  end
+
+  def shipping_method_id
+    return unless object.shipments.any?
+    object.shipments.last.shipping_method_id
   end
 end
