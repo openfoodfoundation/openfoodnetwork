@@ -52,6 +52,10 @@ Rails/DynamicFindBy:
 Rails/SkipsModelValidations:
   Enabled: false
 
+# Use before_filter instead of before_action. #TODO: remove when upgraded to Rails 4
+Rails/ActionFilter:
+  EnforcedStyle: filter  
+
 # Relaxed.Ruby.Style SETTINGS
 # These styles are a starting point for the conversation around conventions
 # They should be removed or tweaked and moved above as decisions are made
