@@ -42,31 +42,38 @@ module OpenFoodNetwork
         end
 
         it "builds a table from a list of variants" do
-          a = create(:address)
-          d = create(:distributor_enterprise)
-          o = create(:order, distributor: d, bill_address: a)
-          o.shipping_method = create(:shipping_method)
+          address = create(:address)
+          distributor = create(:distributor_enterprise)
+          order = create(:order, distributor: distributor, bill_address: address)
 
-          subject.stub(:orders).and_return [o]
-          subject.table.should == [[
-            a.firstname, a.lastname,
-            [a.address1, a.address2, a.city].join(" "),
-            o.email, a.phone, d.name,
-            [d.address.address1, d.address.address2, d.address.city].join(" "),
-            o.shipping_method.name
-          ]]
+          shipping_method = create(:shipping_method)
+          order.shipments << build(:shipment, shipping_method: shipping_method)
+
+          allow(subject).to receive(:orders).and_return([order])
+
+          expect(subject.table).to eq(
+            [
+              [
+                address.firstname, address.lastname,
+                [address.address1, address.address2, address.city].join(" "),
+                order.email, address.phone, distributor.name,
+                [distributor.address.address1, distributor.address.address2, distributor.address.city].join(" "),
+                shipping_method.name
+              ]
+            ]
+          )
         end
       end
 
       describe "fetching orders" do
         it "fetches completed orders" do
-          o1 = create(:order)
+          create(:order)
           o2 = create(:order, completed_at: 1.day.ago)
           subject.orders.should == [o2]
         end
 
         it "does not show cancelled orders" do
-          o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
+          create(:order, state: "canceled", completed_at: 1.day.ago)
           o2 = create(:order, completed_at: 1.day.ago)
           subject.orders.should == [o2]
         end
@@ -138,7 +145,7 @@ module OpenFoodNetwork
           d1 = create(:distributor_enterprise)
           d2 = create(:distributor_enterprise)
           order1 = create(:order, distributor: d1)
-          order2 = create(:order, distributor: d2)
+          create(:order, distributor: d2)
 
           subject.stub(:params).and_return(distributor_id: d1.id)
           subject.filter(orders).should == [order1]
@@ -148,7 +155,7 @@ module OpenFoodNetwork
           oc1 = create(:simple_order_cycle)
           oc2 = create(:simple_order_cycle)
           order1 = create(:order, order_cycle: oc1)
-          order2 = create(:order, order_cycle: oc2)
+          create(:order, order_cycle: oc2)
 
           subject.stub(:params).and_return(order_cycle_id: oc1.id)
           subject.filter(orders).should == [order1]

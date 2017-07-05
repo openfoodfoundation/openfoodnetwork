@@ -50,14 +50,13 @@ feature 'shipping methods' do
     end
 
     scenario "deleting a shipping method referenced by an order" do
-      o = create(:order)
-      o.shipping_method = @sm
-      o.save!
+      order = create(:order)
+      order.shipping_method = @sm
+      order.save!
 
       visit_delete spree.admin_shipping_method_path(@sm)
 
-      page.should have_content "That shipping method cannot be deleted as it is referenced by an order: #{o.number}."
-      Spree::ShippingMethod.find(@sm.id).should_not be_nil
+      expect(@sm.reload.deleted_at).not_to be_nil
     end
   end
 

@@ -14,13 +14,13 @@ module OpenFoodNetwork
 
       describe "fetching orders" do
         it "fetches completed orders" do
-          o1 = create(:order)
+          create(:order)
           o2 = create(:order, completed_at: 1.day.ago)
           subject.orders.should == [o2]
         end
 
         it "does not show cancelled orders" do
-          o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
+          create(:order, state: "canceled", completed_at: 1.day.ago)
           o2 = create(:order, completed_at: 1.day.ago)
           subject.orders.should == [o2]
         end
@@ -44,7 +44,7 @@ module OpenFoodNetwork
           d2.enterprise_roles.create!(user: create(:user))
 
           o1 = create(:order, distributor: d1, completed_at: 1.day.ago)
-          o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
+          create(:order, distributor: d2, completed_at: 1.day.ago)
 
           subject.should_receive(:filter).with([o1]).and_return([o1])
           subject.orders.should == [o1]
@@ -63,14 +63,23 @@ module OpenFoodNetwork
       end
 
       describe "filtering orders" do
-        let!(:orders) { Spree::Order.scoped }
+        let!(:orders) { Spree::Order.scoped.eager_load(shipments: :shipping_method) }
         let!(:supplier) { create(:supplier_enterprise) }
 
         let!(:oc1) { create(:simple_order_cycle) }
         let!(:pm1) { create(:payment_method, name: "PM1") }
         let!(:sm1) { create(:shipping_method, name: "ship1") }
-        let!(:order1) { create(:order, shipping_method: sm1, order_cycle: oc1) }
+        let!(:order1) { create(:order, order_cycle: oc1) }
         let!(:payment1) { create(:payment, order: order1, payment_method: pm1) }
+
+        before do
+          order1.shipments << build(
+            :shipment,
+            shipping_method: sm1,
+            inventory_units: [create(:inventory_unit)]
+          )
+          order1.save!
+        end
 
         it "returns all orders sans-params" do
           subject.filter(orders).should == orders
@@ -78,7 +87,7 @@ module OpenFoodNetwork
 
         it "filters to a specific order cycle" do
           oc2 = create(:simple_order_cycle)
-          order2 = create(:order, order_cycle: oc2)
+          create(:order, order_cycle: oc2)
 
           subject.stub(:params).and_return(order_cycle_id: oc1.id)
           subject.filter(orders).should == [order1]
@@ -87,21 +96,33 @@ module OpenFoodNetwork
         it "filters to a payment method" do
           pm2 = create(:payment_method, name: "PM2")
           pm3 = create(:payment_method, name: "PM3")
-          order2 = create(:order, payments: [create(:payment, payment_method: pm2)])
+          create(:order, payments: [create(:payment, payment_method: pm2)])
           order3 = create(:order, payments: [create(:payment, payment_method: pm3)])
-          # payment2 = create(:payment, order: order2, payment_method: pm2)
 
           subject.stub(:params).and_return(payment_method_in: [pm1.id, pm3.id] )
           subject.filter(orders).should match_array [order1, order3]
         end
 
         it "filters to a shipping method" do
-          sm2 = create(:shipping_method, name: "ship2")
-          sm3 = create(:shipping_method, name: "ship3")
-          order2 = create(:order, shipping_method: sm2)
-          order3 = create(:order, shipping_method: sm3)
+          shipping_method2 = create(:shipping_method, name: "ship2")
+          shipping_method3 = create(:shipping_method, name: "ship3")
+          order2 = create(:order)
+          order3 = create(:order)
 
-          subject.stub(:params).and_return(shipping_method_in: [sm1.id, sm3.id])
+          order2.shipments << build(
+            :shipment,
+            shipping_method: shipping_method2,
+            inventory_units: [create(:inventory_unit)]
+          )
+          order2.save!
+          order3.shipments << build(
+            :shipment,
+            shipping_method: shipping_method3,
+            inventory_units: [create(:inventory_unit)]
+          )
+          order2.save!
+
+          allow(subject).to receive(:params).and_return(shipping_method_in: [sm1.id, shipping_method3.id])
           expect(subject.filter(orders)).to match_array [order1, order3]
         end
 

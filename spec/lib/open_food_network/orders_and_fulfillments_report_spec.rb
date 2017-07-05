@@ -112,5 +112,121 @@ module OpenFoodNetwork
         end
       end
     end
+
+    describe '#columns' do
+      let(:d1) { create(:distributor_enterprise) }
+      let(:oc1) { create(:simple_order_cycle) }
+      let(:bill_address) { create(:address) }
+      let(:o1) do
+        create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1, bill_address: bill_address)
+      end
+      let(:li1) { build(:line_item) }
+      let(:user) { create(:admin_user)}
+      let(:shipping_method) { create(:shipping_method, require_ship_address: false) }
+
+      before { o1.line_items << li1 }
+
+      let(:order_cycle_customer_totals) do
+        OrdersAndFulfillmentsReport.new(user, report_type: 'order_cycle_customer_totals')
+      end
+      let(:table) do
+        order_grouper = OrderGrouper.new(
+          order_cycle_customer_totals.rules,
+          order_cycle_customer_totals.columns
+        )
+        order_grouper.table(order_cycle_customer_totals.table_items)
+      end
+      let(:table_row) { table.first }
+
+      context 'when there is shipping method for the order' do
+        before do
+          o1.shipments << build(
+            :shipment,
+            shipping_method: shipping_method,
+            inventory_units: [create(:inventory_unit)]
+          )
+          o1.save!
+        end
+
+        it 'builds the table rows' do
+          expect(table_row[0]).to eq(o1.distributor.name)
+          expect(table_row[1]).to eq('John Doe')
+          expect(table_row[2]).to eq(o1.email)
+          expect(table_row[3]).to eq(bill_address.phone)
+          expect(table_row[4]).to eq(li1.product.supplier.name)
+          expect(table_row[5]).to eq(li1.product.name)
+          expect(table_row[6]).to eq('1g')
+          expect(table_row[7]).to eq(1)
+          expect(table_row[8]).to eq(li1.amount)
+          expect(table_row[9]).to eq(li1.amount_with_adjustments)
+          expect(table_row[14]).to eq('No')
+          expect(table_row[16]).to eq('N')
+          expect(table_row[23]).to eq('ABC')
+          expect(table_row[24]).to eq(oc1.name)
+          expect(table_row[28]).to eq('10 Lovely Street')
+          expect(table_row[29]).to eq('Northwest')
+          expect(table_row[30]).to eq('Herndon')
+          expect(table_row[31]).to eq('20170')
+        end
+      end
+
+      context 'when the shipping method is deleted' do
+        before do
+          o1.shipments << build(
+            :shipment,
+            shipping_method: shipping_method,
+            inventory_units: [create(:inventory_unit)]
+          )
+          o1.save!
+
+          shipping_method.distributor_shipping_methods.last.destroy
+          shipping_method.touch(:deleted_at)
+        end
+
+        it 'builds the table rows' do
+          expect(table_row[0]).to eq(o1.distributor.name)
+          expect(table_row[1]).to eq('John Doe')
+          expect(table_row[2]).to eq(o1.email)
+          expect(table_row[3]).to eq(bill_address.phone)
+          expect(table_row[4]).to eq(li1.product.supplier.name)
+          expect(table_row[5]).to eq(li1.product.name)
+          expect(table_row[6]).to eq('1g')
+          expect(table_row[7]).to eq(1)
+          expect(table_row[8]).to eq(li1.amount)
+          expect(table_row[9]).to eq(li1.amount_with_adjustments)
+          expect(table_row[14]).to eq('No')
+          expect(table_row[16]).to eq('N')
+          expect(table_row[23]).to eq('ABC')
+          expect(table_row[24]).to eq(oc1.name)
+          expect(table_row[28]).to eq('10 Lovely Street')
+          expect(table_row[29]).to eq('Northwest')
+          expect(table_row[30]).to eq('Herndon')
+          expect(table_row[31]).to eq('20170')
+        end
+      end
+
+      context 'when there is no shipping method for the order' do
+        it 'builds the table rows' do
+          expect(table_row[0]).to eq(o1.distributor.name)
+          expect(table_row[1]).to eq('John Doe')
+          expect(table_row[2]).to eq(o1.email)
+          expect(table_row[3]).to eq(bill_address.phone)
+          expect(table_row[4]).to eq(li1.product.supplier.name)
+          expect(table_row[5]).to eq(li1.product.name)
+          expect(table_row[6]).to eq('1g')
+          expect(table_row[7]).to eq(1)
+          expect(table_row[8]).to eq(li1.amount)
+          expect(table_row[9]).to eq(li1.amount_with_adjustments)
+          expect(table_row[14]).to eq('No')
+          expect(table_row[16]).to eq('N')
+          expect(table_row[23]).to eq('ABC')
+          expect(table_row[24]).to eq(oc1.name)
+          expect(table_row[28]).to eq('10 Lovely Street')
+          expect(table_row[29]).to eq('Northwest')
+          expect(table_row[30]).to eq('Herndon')
+          expect(table_row[31]).to eq('20170')
+        end
+      end
+    end
   end
 end

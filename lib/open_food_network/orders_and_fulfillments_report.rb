@@ -42,10 +42,22 @@ module OpenFoodNetwork
       permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
     end
 
+    # Returns the line items associated to the given orders
+    #
+    # @param orders [ActiveRecord::Relation]
+    # @return [ActiveRecord::Relation]
+    def line_items_for(orders)
+      Spree::LineItem.where(order_id: orders)
+    end
+
     def table_items
       orders = search.result
 
-      line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
+      line_items = permissions
+        .visible_line_items
+        .merge(line_items_for(orders))
+        .eager_load(order: { shipments: :shipping_method })
+
       line_items = line_items.supplied_by_any(params[:supplier_id_in]) if params[:supplier_id_in].present?
 
       # If empty array is passed in, the where clause will return all line_items, which is bad
@@ -199,7 +211,7 @@ module OpenFoodNetwork
           proc { |line_items| "" },
           proc { |line_items| "shipping method" } ]
       when "order_cycle_customer_totals"
-        rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
+        rsa = proc { |line_items| shipping_method_to_display(line_items.first.order).require_ship_address }
         [
           proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
@@ -218,7 +230,7 @@ module OpenFoodNetwork
           proc { |line_items| "" },
           proc { |line_items| line_items.all? { |li| li.order.paid? } ? "Yes" : "No" },
 
-          proc { |line_items| line_items.first.order.shipping_method.andand.name },
+          proc { |line_items| shipping_method_to_display(line_items.first.order).name },
           proc { |line_items| rsa.call(line_items) ? 'Y' : 'N' },
 
           proc { |line_items| line_items.first.order.ship_address.andand.address1 if rsa.call(line_items) },
@@ -266,6 +278,19 @@ module OpenFoodNetwork
         li.quantity * li.unit_value / scale_factor
       end
       total_units.round(3)
+    end
+
+    # Returns the appropriate shipping method to display for the given order
+    #
+    # @param order [Spree::Order]
+    # @return [#name]
+    def shipping_method_to_display(order)
+      shipment = order.shipments.last
+      if shipment
+        shipment.shipping_method
+      else
+        NullShippingMethod.new
+      end
     end
   end
 end
