@@ -1,3 +1,17 @@
+# This class is part of the system that charges hubs for using OFN. It does so
+# by creating orders. These are not orders for food that customers place, but
+# instead are orders for OFN usage, so to speak. Thus, they're technically not
+# "shipped" anywhere, so they're just given a default shipping method.
+#
+# The "orders" used by this class are not real orders, they are basically
+# "invoices" that enterprise owners need to pay for use of an open food network
+# instance. The amount that the enterprise owner is charged is configurable by
+# the instance, and can be based on a combination of a percentage of their
+# turnover, fixed fees, caps and floors and trial periods. This "orders" hold
+# the billing information for a particular enterprise owner for a given month.
+#
+# We assign them also a default shipping method because there is a validation
+# on Spree::Shipment that requires it.
 class FinalizeAccountInvoices
   attr_reader :year, :month, :start_date, :end_date
 
