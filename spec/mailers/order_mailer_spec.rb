@@ -74,7 +74,7 @@ describe Spree::OrderMailer do
         body = Spree::OrderMailer.deliveries.last.body.encoded
         expect(body).to include "This order was automatically created for you."
         expect(body).to include "Unfortunately, not all products that you requested were available."
-        expect(body).to include "href=\"#{spree.order_url(order, host: 'demo.spreecommerce.com')}\""
+        expect(body).to include "href=\"#{spree.order_url(order)}\""
       end
     end
 
@@ -89,7 +89,7 @@ describe Spree::OrderMailer do
         body = Spree::OrderMailer.deliveries.last.body.encoded
         expect(body).to include "This order was automatically created for you."
         expect(body).to_not include "Unfortunately, not all products that you requested were available."
-        expect(body).to include "href=\"#{spree.order_url(order, host: 'demo.spreecommerce.com')}\""
+        expect(body).to include "href=\"#{spree.order_url(order)}\""
       end
     end
   end
@@ -108,7 +108,7 @@ describe Spree::OrderMailer do
     it "sends the email" do
       body = Spree::OrderMailer.deliveries.last.body.encoded
       expect(body).to include "This order was automatically placed for you"
-      expect(body).to include "href=\"#{spree.order_url(order, host: 'demo.spreecommerce.com')}\""
+      expect(body).to include "href=\"#{spree.order_url(order)}\""
     end
   end
 
