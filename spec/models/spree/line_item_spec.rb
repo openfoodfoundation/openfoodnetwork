@@ -78,10 +78,15 @@ module Spree
 
       context "when a variant override is in place" do
         let!(:hub) { create(:distributor_enterprise) }
-
-        before { li.order.update_attributes(distributor_id: hub.id) }
-
         let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 2) }
+
+        before do
+          li.order.update_attributes(distributor_id: hub.id)
+
+          # li#scoper is memoised, and this makes it difficult to update test conditions
+          # so we reset it after the line_item is created for each spec
+          li.remove_instance_variable(:@scoper)
+        end
 
         it "caps quantity to override stock level" do
           li.cap_quantity_at_stock!
@@ -141,32 +146,42 @@ module Spree
     end
 
     describe "determining if sufficient stock is present" do
-      let!(:v) { create(:variant, on_demand: false, on_hand: 10) }
-      let!(:li) { create(:line_item, variant: v, quantity: 5, max_quantity: 5) }
       let!(:hub) { create(:distributor_enterprise) }
+      let!(:o) { create(:order, distributor: hub) }
+      let!(:v) { create(:variant, on_demand: false, on_hand: 10) }
+      let!(:li) { create(:line_item, variant: v, order: o, quantity: 5, max_quantity: 5) }
 
       before do
         Spree::Config.set allow_backorders: false
-        li.order.update_attributes(distributor_id: hub.id)
+
+        # li#scoper is memoised, and this makes it difficult to update test conditions
+        # so we reset it after the line_item is created for each spec
+        li.remove_instance_variable(:@scoper)
       end
 
-      context "when no variant override is in place" do
-        it "uses stock level on the variant" do
-          expect(li.sufficient_stock?).to be_true
-          v.update_attributes(on_hand: 4)
-          expect(li.sufficient_stock?).to be_false
+      context "when stock on the variant is sufficient" do
+        it { expect(li.sufficient_stock?).to be true }
+      end
+
+      context "when the stock on the variant is not sufficient" do
+        before { v.update_attributes(on_hand: 4) }
+
+        context "when no variant override is in place" do
+          it { expect(li.sufficient_stock?).to be false }
         end
-      end
 
-      context "when a variant override is in place" do
-        let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 5) }
+        context "when a variant override is in place" do
+          let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 5) }
 
-        it "uses stock level on the override" do
-          expect(li.sufficient_stock?).to be_true
-          v.update_attributes(on_hand: 4)
-          expect(li.sufficient_stock?).to be_true
-          vo.update_attributes(count_on_hand: 4)
-          expect(li.sufficient_stock?).to be_false
+          context "and stock on the variant override is sufficient" do
+            it { expect(li.sufficient_stock?).to be true }
+          end
+
+          context "and stock on the variant override is not sufficient" do
+            before { vo.update_attributes(count_on_hand: 4) }
+
+            it { expect(li.sufficient_stock?).to be false }
+          end
         end
       end
     end
