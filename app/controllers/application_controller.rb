@@ -20,6 +20,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def shopfront_session
+    session[:safari_fix] = true
+    render 'shop/shopfront_session', layout: false
+  end
+
   def enable_embedded_styles
     session[:embedded_shopfront] = true
     render json: {}, status: 200

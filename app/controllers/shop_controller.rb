@@ -2,8 +2,7 @@ require 'open_food_network/cached_products_renderer'
 
 class ShopController < BaseController
   layout "darkswarm"
-  before_filter :require_distributor_chosen
-  before_filter :set_order_cycles
+  before_filter :require_distributor_chosen, :set_order_cycles, except: :changeable_orders_alert
   before_filter :enable_embedded_shopfront
 
   def show

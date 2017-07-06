@@ -1,0 +1,14 @@
+:javascript
+  $(document).ready(function() {
+    document.cookie = 'cookie_test=true';
+    if(document.cookie == '') {
+      $('.blocked-cookies').removeClass('hidden');
+    }
+  });
+
+.alert-box.blocked-cookies.hidden
+  %p= t('blocked_cookies_alert')
+
+  %a.button.allow{target: '_blank', href: "#{spree.root_url}embedded_shopfront/shopfront_session/"}
+    = t('allow_cookies')
+    

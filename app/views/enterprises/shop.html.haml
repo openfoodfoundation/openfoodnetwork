@@ -8,6 +8,9 @@
 = inject_shop_enterprises
 
 %shop.darkswarm
+  - if @shopfront_layout == 'embedded'
+    = render partial: 'shop/blocked_cookies'
+
   .alert-box.changeable-orders-alert.info.animate-show{ ng: { show: "alert.visible && alert.html", cloak: true } }
     %span{ ng: { bind: { html: "alert.html" } } }
     %a.close{ ng: { click: "alert.close()" } } &times;
