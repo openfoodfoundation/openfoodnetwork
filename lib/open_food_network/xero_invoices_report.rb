@@ -12,7 +12,8 @@ module OpenFoodNetwork
     end
 
     def header
-      ["*#{I18n.t(:report_header_contact_name)}",
+      [
+        "*#{I18n.t(:report_header_contact_name)}",
         I18n.t(:report_header_email),
         I18n.t(:report_header_billing_street),
         I18n.t(:report_header_billing_street_2),
@@ -39,7 +40,8 @@ module OpenFoodNetwork
         I18n.t(:report_header_tracking_option_2),
         I18n.t(:report_header_currency),
         I18n.t(:report_header_branding_theme),
-        I18n.t(:report_header_paid)]
+        I18n.t(:report_header_paid),
+      ]
     end
 
     def search
@@ -122,26 +124,26 @@ module OpenFoodNetwork
     end
 
     def produce_summary_rows(order, invoice_number, opts)
-      [summary_row(order, I18n.t(:report_header_total_untaxable_produce),       total_untaxable_products(order), invoice_number, I18n.t(:report_header_gst_free_income),        opts),
-       summary_row(order, I18n.t(:report_header_total_taxable_produce),  total_taxable_products(order),   invoice_number, I18n.t(:report_header_gst_on_income),          opts)]
+      [summary_row(order, I18n.t(:report_header_total_untaxable_produce), total_untaxable_products(order), invoice_number, I18n.t(:report_header_gst_free_income), opts),
+       summary_row(order, I18n.t(:report_header_total_taxable_produce), total_taxable_products(order), invoice_number, I18n.t(:report_header_gst_on_income), opts)]
     end
 
     def fee_summary_rows(order, invoice_number, opts)
-      [summary_row(order, I18n.t(:report_header_total_untaxable_fees),          total_untaxable_fees(order),     invoice_number, I18n.t(:report_header_gst_free_income),        opts),
-       summary_row(order, I18n.t(:report_header_total_taxable_fees),     total_taxable_fees(order),       invoice_number, I18n.t(:report_header_gst_on_income),          opts)]
+      [summary_row(order, I18n.t(:report_header_total_untaxable_fees), total_untaxable_fees(order), invoice_number, I18n.t(:report_header_gst_free_income), opts),
+       summary_row(order, I18n.t(:report_header_total_taxable_fees), total_taxable_fees(order), invoice_number, I18n.t(:report_header_gst_on_income), opts)]
     end
 
     def shipping_summary_rows(order, invoice_number, opts)
-      [summary_row(order, I18n.t(:report_header_delivery_shipping_cost), total_shipping(order),           invoice_number, tax_on_shipping_s(order), opts)]
+      [summary_row(order, I18n.t(:report_header_delivery_shipping_cost), total_shipping(order), invoice_number, tax_on_shipping_s(order), opts)]
     end
 
     def payment_summary_rows(order, invoice_number, opts)
-      [summary_row(order, I18n.t(:report_header_transaction_fee),               total_transaction(order),        invoice_number, I18n.t(:report_header_gst_free_income), opts)]
+      [summary_row(order, I18n.t(:report_header_transaction_fee), total_transaction(order), invoice_number, I18n.t(:report_header_gst_free_income), opts)]
     end
 
     def admin_adjustment_summary_rows(order, invoice_number, opts)
-      [summary_row(order, I18n.t(:report_header_total_untaxable_admin),      total_untaxable_admin_adjustments(order), invoice_number, I18n.t(:report_header_gst_free_income), opts),
-       summary_row(order, I18n.t(:report_header_total_taxable_admin), total_taxable_admin_adjustments(order),   invoice_number, I18n.t(:report_header_gst_on_income),   opts)]
+      [summary_row(order, I18n.t(:report_header_total_untaxable_admin), total_untaxable_admin_adjustments(order), invoice_number, I18n.t(:report_header_gst_free_income), opts),
+       summary_row(order, I18n.t(:report_header_total_taxable_admin), total_taxable_admin_adjustments(order), invoice_number, I18n.t(:report_header_gst_on_income), opts)]
     end
 
     def summary_row(order, description, amount, invoice_number, tax_type, opts={})

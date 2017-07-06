@@ -18,13 +18,15 @@ module OpenFoodNetwork
     end
 
     def header
-      [I18n.t(:report_header_supplier),
+      [
+        I18n.t(:report_header_supplier),
         I18n.t(:report_header_product),
         I18n.t(:report_header_unit_size),
         I18n.t(:report_header_variant),
         I18n.t(:report_header_weight),
         I18n.t(:report_header_total_ordered),
-        I18n.t(:report_header_total_max)]
+        I18n.t(:report_header_total_max),
+      ]
     end
 
     def variants_and_quantities

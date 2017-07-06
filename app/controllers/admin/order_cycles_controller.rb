@@ -76,7 +76,7 @@ module Admin
     def bulk_update
       @order_cycle_set = params[:order_cycle_set] && OrderCycleSet.new(params[:order_cycle_set])
       if @order_cycle_set.andand.save
-        redirect_to main_app.admin_order_cycles_path, :notice =>  I18n.t(:order_cycles_bulk_update_notice)
+        redirect_to main_app.admin_order_cycles_path, notice: I18n.t(:order_cycles_bulk_update_notice)
       else
         render :index
       end
@@ -85,14 +85,14 @@ module Admin
     def clone
       @order_cycle = OrderCycle.find params[:id]
       @order_cycle.clone!
-      redirect_to main_app.admin_order_cycles_path, :notice => I18n.t(:order_cycles_clone_notice, name: @order_cycle.name)
+      redirect_to main_app.admin_order_cycles_path, notice: I18n.t(:order_cycles_clone_notice, name: @order_cycle.name)
     end
 
     # Send notifications to all producers who are part of the order cycle
     def notify_producers
       Delayed::Job.enqueue OrderCycleNotificationJob.new(params[:id].to_i)
 
-      redirect_to main_app.admin_order_cycles_path, :notice => I18n.t(:order_cycles_email_to_producers_notice)
+      redirect_to main_app.admin_order_cycles_path, notice: I18n.t(:order_cycles_email_to_producers_notice)
     end
 
 
@@ -138,7 +138,7 @@ module Admin
       available_coordinators = permitted_coordinating_enterprises_for(@order_cycle).select(&:confirmed?)
       case available_coordinators.count
       when 0
-        flash[:error] =  I18n.t(:order_cycles_no_permission_to_coordinate_error)
+        flash[:error] = I18n.t(:order_cycles_no_permission_to_coordinate_error)
         redirect_to main_app.admin_order_cycles_path
       when 1
         @order_cycle.coordinator = available_coordinators.first

@@ -10,14 +10,15 @@ module OpenFoodNetwork
     end
 
     def header
-      [I18n.t(:report_header_user),
+      [
+        I18n.t(:report_header_user),
         I18n.t(:report_header_relationship),
         I18n.t(:report_header_enterprise),
         I18n.t(:report_header_is_producer),
         I18n.t(:report_header_sells),
         I18n.t(:report_header_visible),
-        I18n.t(:report_header_confirmation_date)
-        ]
+        I18n.t(:report_header_confirmation_date),
+      ]
     end
 
     def table

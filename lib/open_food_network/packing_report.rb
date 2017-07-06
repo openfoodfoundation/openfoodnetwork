@@ -8,7 +8,8 @@ module OpenFoodNetwork
 
     def header
       if is_by_customer?
-        [I18n.t(:report_header_hub),
+        [
+          I18n.t(:report_header_hub),
           I18n.t(:report_header_code),
           I18n.t(:report_header_first_name),
           I18n.t(:report_header_last_name),
@@ -16,9 +17,11 @@ module OpenFoodNetwork
           I18n.t(:report_header_product),
           I18n.t(:report_header_variant),
           I18n.t(:report_header_quantity),
-          I18n.t(:report_header_temp_controlled)]
+          I18n.t(:report_header_temp_controlled),
+        ]
       else
-        [I18n.t(:report_header_hub),
+        [
+          I18n.t(:report_header_hub),
           I18n.t(:report_header_supplier),
           I18n.t(:report_header_code),
           I18n.t(:report_header_first_name),
@@ -26,7 +29,8 @@ module OpenFoodNetwork
           I18n.t(:report_header_product),
           I18n.t(:report_header_variant),
           I18n.t(:report_header_quantity),
-          I18n.t(:report_header_temp_controlled)]
+          I18n.t(:report_header_temp_controlled),
+        ]
       end
     end
 
@@ -68,7 +72,7 @@ module OpenFoodNetwork
             proc { |line_items| "" },
             proc { |line_items| "" },
             proc { |line_items| "" },
-            proc { |line_items| I18n.t('admin.reports.total_items')},
+            proc { |line_items| I18n.t('admin.reports.total_items') },
             proc { |line_items| "" },
             proc { |line_items| line_items.sum { |li| li.quantity } },
             proc { |line_items| "" } ] },
@@ -91,7 +95,7 @@ module OpenFoodNetwork
               proc { |line_items| "" },
               proc { |line_items| "" },
               proc { |line_items| "" },
-              proc { |line_items| I18n.t('admin.reports.total_items')},
+              proc { |line_items| I18n.t('admin.reports.total_items') },
               proc { |line_items| "" },
               proc { |line_items| line_items.sum { |li| li.quantity } },
               proc { |line_items| "" } ] },

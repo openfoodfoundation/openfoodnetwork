@@ -36,7 +36,7 @@ module OpenFoodNetwork
       elsif !opts[:confirmation_only] && !payment_methods_ok?
         I18n.t(:no_payment)
       elsif !confirmed?
-         I18n.t(:unconfirmed)
+        I18n.t(:unconfirmed)
       end
     end
 
