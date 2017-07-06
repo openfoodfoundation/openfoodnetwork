@@ -204,7 +204,6 @@ feature %q{
     end
 
     context "viewing the edit page" do
-      before { Rails.application.routes.default_url_options[:host] = "test.host" }
       it "shows the dropdown menu" do
         distributor1.update_attribute(:abn, '12345678')
         order = create(:completed_order_with_totals, distributor: distributor1)
