@@ -6,7 +6,6 @@ describe UserPasswordsController, type: :controller do
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
-    ActionMailer::Base.default_url_options[:host] = "test.host"
   end
 
   describe "create" do

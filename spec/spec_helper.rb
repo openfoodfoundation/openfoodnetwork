@@ -47,6 +47,9 @@ Capybara.default_max_wait_time = 30
 
 require "paperclip/matchers"
 
+# Override setting in Spree engine: Spree::Core::MailSettings
+ActionMailer::Base.default_url_options[:host] = 'test.host'
+
 RSpec.configure do |config|
   # ## Mock Framework
   #

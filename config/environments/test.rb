@@ -45,7 +45,6 @@ Openfoodnetwork::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  config.action_mailer.default_url_options = { :host => "test.host" }
 
   # To block requests before running the database cleaner
   require 'open_food_network/rack_request_blocker'
@@ -55,3 +54,4 @@ end
 
 # Allows us to use _url helpers in Rspec
 Rails.application.routes.default_url_options[:host] = 'test.host'
+Spree::Core::Engine.routes.default_url_options[:host] = 'test.host'
