@@ -29,7 +29,7 @@
         = order.bill_address.phone
 
   .columns.large-6
-    - if order.shipping_method.andand.require_ship_address
+    - if order.shipping_method.andand.delivery?
       // Delivery option
       .order-summary.text-small
         %strong= order.shipping_method.name

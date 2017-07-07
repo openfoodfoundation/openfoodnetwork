@@ -124,7 +124,8 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update_failed
-    clear_ship_address
+    current_order.clear_ship_address
+
     respond_to do |format|
       format.html do
         render :edit
@@ -132,14 +133,6 @@ class CheckoutController < Spree::CheckoutController
       format.js do
         render json: {errors: @order.errors, flash: flash.to_hash}.to_json, status: 400
       end
-    end
-  end
-
-  # When we have a pickup Shipping Method, we clone the distributor address into ship_address before_save
-  # We don't want this data in the form, so we clear it out
-  def clear_ship_address
-    unless current_order.shipping_method.andand.require_ship_address
-      current_order.ship_address = Spree::Address.default
     end
   end
 

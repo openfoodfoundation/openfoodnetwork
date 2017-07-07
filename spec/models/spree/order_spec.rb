@@ -197,7 +197,7 @@ describe Spree::Order do
   end
 
   describe "a paid order without a shipment" do
-    let(:order)           { create(:order) }
+    let(:order) { create(:order) }
 
     before do
       order.payment_state = 'paid'
@@ -496,37 +496,13 @@ describe Spree::Order do
   end
 
   describe "shipping address prepopulation" do
-    let(:distributor) { create(:distributor_enterprise) }
-    let(:order) { build(:order, distributor: distributor) }
-
-    before do
-      order.ship_address = distributor.address.clone
-      order.save # just to trigger our autopopulate the first time ;)
-    end
-
-    it "autopopulates the shipping address on save" do
-      order.should_receive(:shipping_address_from_distributor).and_return true
-      order.save
-    end
-
-    it "populates the shipping address if the shipping method doesn't require a delivery address" do
-      order.shipping_method = create(:shipping_method, require_ship_address: false)
-      order.ship_address.update_attribute :firstname, "will"
-      order.save
-      order.ship_address.firstname.should == distributor.address.firstname
-    end
-
-    it "does not populate the shipping address if the shipping method requires a delivery address" do
-      order.shipping_method = create(:shipping_method, require_ship_address: true)
-      order.ship_address.update_attribute :firstname, "will"
-      order.save
-      order.ship_address.firstname.should == "will"
-    end
+    let(:order) { build(:order) }
 
     it "doesn't attempt to create a shipment if the order is not yet valid" do
       order.shipping_method = create(:shipping_method, require_ship_address: false)
-      #Shipment.should_not_r
-      order.create_shipment!
+      allow(order.ship_address).to receive(:valid?).and_return(false)
+      order.save
+      expect(order.shipments).to be_empty
     end
   end
 
@@ -740,6 +716,38 @@ describe Spree::Order do
         prev_order2.reload # to get the right response from line_items
         expect(order.finalised_line_items.length).to eq 3
         expect(order.finalised_line_items).to match_array(prev_order.line_items + prev_order2.line_items)
+      end
+    end
+  end
+
+  describe '#clear_ship_address' do
+    let(:address) { build(:address) }
+    let(:order) { build(:order, ship_address: address, shipping_method: shipping_method) }
+
+    context 'when the shipping method is a delivery' do
+      let(:shipping_method) { build(:shipping_method, require_ship_address: true) }
+
+      it 'does not change the ship address' do
+        order.clear_ship_address
+        expect(order.ship_address).to eq(address)
+      end
+    end
+
+    context 'when the shipping method is a pickup' do
+      let(:shipping_method) { build(:shipping_method, require_ship_address: false) }
+
+      it 'sets the default ship address' do
+        order.clear_ship_address
+        expect(order.ship_address).to eq(Spree::Address.default)
+      end
+    end
+
+    context 'when there is no shipping method' do
+      let(:shipping_method) { nil }
+
+      it 'does not change the ship address' do
+        order.clear_ship_address
+        expect(order.ship_address).to eq(Spree::Address.default)
       end
     end
   end

@@ -64,6 +64,21 @@ Spree::ShippingMethod.class_eval do
     'Shipping'
   end
 
+  def delivery?
+    require_ship_address
+  end
+
+  # Returns a particular instance of shipping method
+  #
+  # @return [#ship_address_on_clear]
+  def instance_for(order)
+    if delivery?
+      Delivery.new(order)
+    else
+      Pickup.new(order)
+    end
+  end
+
   private
 
   def touch_distributors

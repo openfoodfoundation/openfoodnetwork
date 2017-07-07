@@ -199,7 +199,7 @@ module OpenFoodNetwork
           proc { |line_items| "" },
           proc { |line_items| "shipping method" } ]
       when "order_cycle_customer_totals"
-        rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
+        rsa = proc { |line_items| line_items.first.order.shipping_method.andand.delivery? }
         [
           proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items| line_items.first.order.bill_address.firstname + " " + line_items.first.order.bill_address.lastname },
