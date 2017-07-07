@@ -9,9 +9,9 @@ Spree::UsersController.class_eval do
   def show
     @orders = @user.orders.where(state: 'complete').order('completed_at desc')
 
-    if Spree::Config.accounts_distributor_id
-      @orders = @orders.where('distributor_id != ?', Spree::Config.accounts_distributor_id)
-    end
+    return unless Spree::Config.accounts_distributor_id
+
+    @orders = @orders.where('distributor_id != ?', Spree::Config.accounts_distributor_id)
   end
 
   private
