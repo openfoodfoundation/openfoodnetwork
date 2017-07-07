@@ -7,7 +7,7 @@ module Admin
       attrs = %i[id business_name charges_enabled]
       @obfuscated_secret_key = obfuscated_secret_key
       @stripe_account = Stripe::Account.retrieve.to_hash.slice(*attrs).merge(status: :ok)
-    rescue Stripe::AuthenticationError => e
+    rescue Stripe::AuthenticationError
       @stripe_account = { status: :auth_fail }
     end
 
