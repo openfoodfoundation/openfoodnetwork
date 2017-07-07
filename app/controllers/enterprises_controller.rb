@@ -38,8 +38,6 @@ class EnterprisesController < BaseController
     end
   end
 
-
-
   private
 
   def set_enterprise

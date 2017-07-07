@@ -67,7 +67,6 @@ class Enterprise < ActiveRecord::Base
   supports_s3 :logo
   supports_s3 :promo_image
 
-
   validates :name, presence: true
   validate :name_is_unique
   validates :sells, presence: true, inclusion: {in: SELLS}
@@ -78,7 +77,6 @@ class Enterprise < ActiveRecord::Base
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
-
 
   before_save :confirmation_check, if: lambda { email_changed? }
 
@@ -95,7 +93,6 @@ class Enterprise < ActiveRecord::Base
   after_create :send_welcome_email, if: lambda { email_is_known? }
 
   after_rollback :restore_permalink
-
 
   scope :by_name, order('name')
   scope :visible, where(visible: true)
@@ -365,7 +362,6 @@ class Enterprise < ActiveRecord::Base
   def can_invoice?
     abn.present?
   end
-
 
   protected
 
