@@ -43,6 +43,7 @@ describe Spree::Gateway::StripeConnect, type: :model do
 
     context "when the credit card provided does not have a gateway_payment_profile_id" do
       before { allow(creditcard).to receive(:gateway_payment_profile_id) { nil } }
+      before { allow(creditcard).to receive(:gateway_customer_profile_id) { "customer_id123" } }
 
       it "returns nil....?" do
         result = subject.send(:token_from_card_profile_ids, creditcard)

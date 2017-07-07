@@ -1,30 +1,33 @@
 module Admin
   class StripeAccountsController < BaseController
-    include Admin::StripeHelper
     protect_from_forgery except: :destroy_from_webhook
 
     def destroy
-      if deauthorize_stripe(params[:id])
-        respond_to do |format|
-          format.html { redirect_to main_app.edit_admin_enterprise_path(params[:enterprise_id]), notice: "Stripe account disconnected."}
-          format.json { render json: stripe_account }
-        end
+      stripe_account = StripeAccount.find(params[:id])
+      authorize! :destroy, stripe_account
+
+      if stripe_account.deauthorize_and_destroy
+        flash[:success] = "Stripe account disconnected."
       else
-        respond_to do |format|
-          format.html { redirect_to main_app.edit_admin_enterprise_path(params[:enterprise_id]), notice: "Failed to disconnect Stripe."}
-          format.json { render json: stripe_account }
-        end
+        flash[:error] = "Failed to disconnect Stripe."
       end
+
+      redirect_to main_app.edit_admin_enterprise_path(stripe_account.enterprise)
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Failed to disconnect Stripe."
+      redirect_to spree.admin_path
     end
 
     def destroy_from_webhook
-      # Fetch the event again direct from stripe for extra security
-      event = fetch_event_from_stripe(request)
-      if event.type == "account.application.deauthorized"
-        StripeAccount.where(stripe_user_id: event.user_id).map{ |account| account.destroy }
+      # TODO is there a sensible way to confirm this webhook call is actually from Stripe?
+      event = Stripe::Event.construct_from(params)
+      return render nothing: true, status: 400 unless event.type == "account.application.deauthorized"
+
+      destroyed = StripeAccount.where(stripe_user_id: event.user_id).destroy_all
+      if destroyed.any?
         render text: "Account #{event.user_id} deauthorized", status: 200
       else
-        render json: nil, status: 501
+        render nothing: true, status: 400
       end
     end
 

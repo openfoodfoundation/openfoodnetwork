@@ -208,19 +208,19 @@ class CheckoutController < Spree::CheckoutController
 
   def construct_saved_card_attributes
     existing_card_id = params[:order].delete(:existing_card)
-    if existing_card_id.present?
-      credit_card = Spree::CreditCard.find(existing_card_id)
-      if credit_card.try(:user_id).blank? || credit_card.user_id != spree_current_user.try(:id)
-        raise Spree::Core::GatewayError.new I18n.t(:invalid_credit_card)
-      end
+    return if existing_card_id.blank?
 
-      # Not currently supported but maybe we should add it...?
-      credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
-
-      params[:order][:payments_attributes].first[:source] = credit_card
-      params[:order][:payments_attributes].first[:payment_method_id] = credit_card.payment_method_id
-      params[:order][:payments_attributes].first.delete :source_attributes
+    credit_card = Spree::CreditCard.find(existing_card_id)
+    if credit_card.try(:user_id).blank? || credit_card.user_id != spree_current_user.try(:id)
+      raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
     end
+
+    # Not currently supported but maybe we should add it...?
+    credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
+
+    params[:order][:payments_attributes].first[:source] = credit_card
+    params[:order][:payments_attributes].first[:payment_method_id] = credit_card.payment_method_id
+    params[:order][:payments_attributes].first.delete :source_attributes
   end
 
   def rescue_from_spree_gateway_error(error)

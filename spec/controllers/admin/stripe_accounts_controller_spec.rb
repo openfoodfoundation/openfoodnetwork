@@ -3,40 +3,103 @@ require 'spec_helper'
 describe Admin::StripeAccountsController, type: :controller do
 
   describe "destroy_from_webhook" do
+    let!(:stripe_account) { create(:stripe_account, stripe_user_id: "webhook_id") }
+    let(:params) do
+      {
+        "format"=> "json",
+        "id" => "evt_123",
+        "object" => "event",
+        "data" => { "object" => { "id" => "ca_9B" } },
+        "type" => "account.application.deauthorized",
+        "user_id" => "webhook_id"
+      }
+    end
+
     it "deletes Stripe accounts in response to a webhook" do
-      # https://stripe.com/docs/api#retrieve_event
-      allow(controller).to receive(:fetch_event_from_stripe)
-        .and_return(Stripe::Event.construct_from({"id"=>"evt_wrfwg4323fw",
-                     "object"=>"event",
-                     "api_version"=>nil,
-                     "created"=>1484870684,
-                     "data"=>
-                      {"object"=>
-                        {"id"=>"application_id",
-                         "object"=>"application",
-                         "name"=>"Open Food Network UK"}},
-                     "livemode"=>false,
-                     "pending_webhooks"=>1,
-                     "request"=>nil,
-                     "type"=>"account.application.deauthorized",
-                     "user_id"=>"webhook_id"}))
-      account = create(:stripe_account, stripe_user_id: "webhook_id")
-      expect(Stripe::Event).not_to receive(:retrieve) # should not retrieve direct for a deauth event
-      post 'destroy_from_webhook', {"id"=>"evt_wrfwg4323fw",
-                                     "object"=>"event",
-                                     "api_version"=>nil,
-                                     "created"=>1484870684,
-                                     "data"=>
-                                      {"object"=>
-                                        {"id"=>"ca_9ByaSyyyXj5O73DWisU0KLluf0870Vro",
-                                         "object"=>"application",
-                                         "name"=>"Open Food Network UK"}},
-                                     "livemode"=>false,
-                                     "pending_webhooks"=>1,
-                                     "request"=>nil,
-                                     "type"=>"account.application.deauthorized",
-                                     "user_id"=>"webhook_id"}
-      expect(StripeAccount.all).not_to include account
+      post 'destroy_from_webhook', params
+      expect(response.status).to eq 200
+      expect(response.body).to eq "Account webhook_id deauthorized"
+      expect(StripeAccount.all).not_to include stripe_account
+    end
+
+    context "when the user_id on the event does not match any known accounts" do
+      before do
+        params["user_id"] = "webhook_id1"
+      end
+
+      it "does nothing" do
+        post 'destroy_from_webhook', params
+        expect(response.status).to eq 400
+        expect(StripeAccount.all).to include stripe_account
+      end
+    end
+
+    context "when the event is not a deauthorize event" do
+      before do
+        params["type"] = "account.application.authorized"
+      end
+
+      it "does nothing" do
+        post 'destroy_from_webhook', params
+        expect(response.status).to eq 400
+        expect(StripeAccount.all).to include stripe_account
+      end
+    end
+  end
+
+  describe "destroy" do
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:params) { { format: :json, id: "some_id"  } }
+
+    context "when the specified stripe account doesn't exist" do
+      it "raises an error?" do
+        spree_delete :destroy, params
+      end
+    end
+
+    context "when the specified stripe account exists" do
+      let(:stripe_account) { create(:stripe_account, enterprise: enterprise) }
+
+      before do
+        # So that we can stub #deauthorize_and_destroy
+        allow(StripeAccount).to receive(:find) { stripe_account }
+        params[:id] = stripe_account.id
+      end
+
+      context "when I don't manage the enterprise linked to the stripe account" do
+        let(:some_user) { create(:user) }
+
+        before { allow(controller).to receive(:spree_current_user) { some_user } }
+
+        it "redirects to unauthorized" do
+          spree_delete :destroy, params
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+
+      context "when I manage the enterprise linked to the stripe account" do
+        before { allow(controller).to receive(:spree_current_user) { enterprise.owner } }
+
+        context "and the attempt to deauthorize_and_destroy succeeds" do
+          before { allow(stripe_account).to receive(:deauthorize_and_destroy) { stripe_account } }
+
+          it "redirects to unauthorized" do
+            spree_delete :destroy, params
+            expect(response).to redirect_to edit_admin_enterprise_path(enterprise)
+            expect(flash[:success]).to eq "Stripe account disconnected."
+          end
+        end
+
+        context "and the attempt to deauthorize_and_destroy fails" do
+          before { allow(stripe_account).to receive(:deauthorize_and_destroy) { false } }
+
+          it "redirects to unauthorized" do
+            spree_delete :destroy, params
+            expect(response).to redirect_to edit_admin_enterprise_path(enterprise)
+            expect(flash[:error]).to eq "Failed to disconnect Stripe."
+          end
+        end
+      end
     end
   end
 
