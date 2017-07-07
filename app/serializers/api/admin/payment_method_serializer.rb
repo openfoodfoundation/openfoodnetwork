@@ -1,7 +1,5 @@
 class Api::Admin::PaymentMethodSerializer < ActiveModel::Serializer
-  def serializable_hash
-    method_serializer.serializable_hash
-  end
+  delegate :serializable_hash, to: :method_serializer
 
   def method_serializer
     if object.type == 'Spree::Gateway::StripeConnect'

@@ -1,7 +1,7 @@
 class StripeAccount < ActiveRecord::Base
   belongs_to :enterprise
-  validates_presence_of :stripe_user_id, :stripe_publishable_key
-  validates_uniqueness_of :enterprise_id
+  validates :stripe_user_id, :stripe_publishable_key, presence: true
+  validates :enterprise_id, uniqueness: true
 
   def deauthorize_and_destroy
     accounts = StripeAccount.where(stripe_user_id: stripe_user_id)

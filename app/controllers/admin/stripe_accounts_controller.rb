@@ -39,7 +39,7 @@ module Admin
 
       begin
         status = Stripe::Account.retrieve(stripe_account.stripe_user_id)
-        attrs = [:id, :business_name, :charges_enabled]
+        attrs = %i[id business_name charges_enabled]
         render json: status.to_hash.slice(*attrs).merge( status: :connected)
       rescue Stripe::APIError => e
         render json: { status: :access_revoked }

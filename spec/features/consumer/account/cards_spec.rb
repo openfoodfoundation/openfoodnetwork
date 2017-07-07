@@ -10,13 +10,13 @@ feature "Credit Cards", js: true do
       quick_login_as user
 
       Stripe.api_key = "sk_test_xxxx"
-      Spree::Config.set({stripe_connect_enabled: true})
+      Spree::Config.set(stripe_connect_enabled: true)
 
       stub_request(:get, "https://api.stripe.com/v1/customers/cus_AZNMJ").
-      to_return(:status => 200, :body => JSON.generate({id: "cus_AZNMJ"}))
+        to_return(:status => 200, :body => JSON.generate(id: "cus_AZNMJ"))
 
       stub_request(:delete, "https://api.stripe.com/v1/customers/cus_AZNMJ").
-      to_return(:status => 200, :body => JSON.generate({deleted: true, id: "cus_AZNMJ"}))
+        to_return(:status => 200, :body => JSON.generate(deleted: true, id: "cus_AZNMJ"))
     end
 
     it "lists saved cards, shows interface for adding new cards" do

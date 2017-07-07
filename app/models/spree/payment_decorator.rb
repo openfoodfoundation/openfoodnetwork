@@ -78,10 +78,10 @@ module Spree
     # Import from future Spree
     def build_source
       return if source_attributes.nil?
-      if payment_method and payment_method.payment_source_class
+      if payment_method && payment_method.payment_source_class
         self.source = payment_method.payment_source_class.new(source_attributes)
-        self.source.payment_method_id = payment_method.id
-        self.source.user_id = self.order.user_id if self.order
+        source.payment_method_id = payment_method.id
+        source.user_id = order.user_id if order
       end
     end
 

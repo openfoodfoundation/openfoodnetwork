@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe Admin::StripeAccountsController, type: :controller do
-
   describe "destroy_from_webhook" do
     let!(:stripe_account) { create(:stripe_account, stripe_user_id: "webhook_id") }
     let(:params) do
       {
-        "format"=> "json",
+        "format" => "json",
         "id" => "evt_123",
         "object" => "event",
         "data" => { "object" => { "id" => "ca_9B" } },
@@ -49,7 +48,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
   describe "destroy" do
     let(:enterprise) { create(:distributor_enterprise) }
-    let(:params) { { format: :json, id: "some_id"  } }
+    let(:params) { { format: :json, id: "some_id" } }
 
     context "when the specified stripe account doesn't exist" do
       it "raises an error?" do
@@ -109,7 +108,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
     before do
       Stripe.api_key = "sk_test_12345"
-      Spree::Config.set({stripe_connect_enabled: false})
+      Spree::Config.set(stripe_connect_enabled: false)
     end
 
     context "where I don't manage the specified enterprise" do
@@ -117,7 +116,7 @@ describe Admin::StripeAccountsController, type: :controller do
       let(:enterprise2) { create(:enterprise) }
       before do
         user.owned_enterprises << enterprise2
-        params.merge!({enterprise_id: enterprise.id})
+        params[:enterprise_id] = enterprise.id
         allow(controller).to receive(:spree_current_user) { user }
       end
 
@@ -129,7 +128,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
     context "where I manage the specified enterprise" do
       before do
-        params.merge!({enterprise_id: enterprise.id})
+        params[:enterprise_id] = enterprise.id
         allow(controller).to receive(:spree_current_user) { enterprise.owner }
       end
 
@@ -142,7 +141,7 @@ describe Admin::StripeAccountsController, type: :controller do
       end
 
       context "and Stripe is enabled" do
-        before { Spree::Config.set({stripe_connect_enabled: true}) }
+        before { Spree::Config.set(stripe_connect_enabled: true) }
 
         context "but it has no associated stripe account" do
           it "returns with a status of 'account_missing'" do
@@ -168,12 +167,14 @@ describe Admin::StripeAccountsController, type: :controller do
           end
 
           context "which is connected" do
-            let(:stripe_account_mock) { {
-              id: "acc_123",
-              business_name: "My Org",
-              charges_enabled: true,
-              some_other_attr: "something"
-            } }
+            let(:stripe_account_mock) do
+              {
+                id: "acc_123",
+                business_name: "My Org",
+                charges_enabled: true,
+                some_other_attr: "something"
+              }
+            end
 
             before do
               stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123").to_return(body: JSON.generate(stripe_account_mock))

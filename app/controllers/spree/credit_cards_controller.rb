@@ -1,24 +1,22 @@
 module Spree
   class CreditCardsController < BaseController
-
     before_filter :set_credit_card, only: [:destroy]
     before_filter :destroy_at_stripe, only: [:destroy]
 
     def new_from_token
       # A new Customer is created for every credit card (same as via ActiveMerchant)
       # Note that default_source is the card represented by the token
-      begin
-        @customer = create_customer(params[:token])
-        @credit_card = build_card_from(stored_card_attributes)
-        if @credit_card.save
-          render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
-        else
-          message = t(:card_could_not_be_saved)
-          render json: { flash: { error: I18n.t(:spree_gateway_error_flash_for_checkout, error: message) } }, status: 400
-        end
-      rescue Stripe::CardError => e
-        return render json: { flash: { error: I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message) } }, status: 400
+
+      @customer = create_customer(params[:token])
+      @credit_card = build_card_from(stored_card_attributes)
+      if @credit_card.save
+        render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
+      else
+        message = t(:card_could_not_be_saved)
+        render json: { flash: { error: I18n.t(:spree_gateway_error_flash_for_checkout, error: message) } }, status: 400
       end
+    rescue Stripe::CardError => e
+      return render json: { flash: { error: I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message) } }, status: 400
     end
 
     def destroy
@@ -35,7 +33,8 @@ module Spree
       end
     end
 
-  private
+    private
+
     def create_customer(token)
       Stripe::Customer.create(email: spree_current_user.email, source: token)
     end
