@@ -903,6 +903,7 @@ en:
   you_have_no_saved_cards: You haven't saved any cards yet
   saving_credit_card: Saving credit card...
   card_has_been_removed: "Your card has been removed (number: %{number})"
+  card_could_not_be_removed: Sorry, the card could not be removed
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"

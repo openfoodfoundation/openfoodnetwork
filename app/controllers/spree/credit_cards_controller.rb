@@ -22,8 +22,10 @@ module Spree
     def destroy
       if @credit_card.destroy
         flash[:success] = I18n.t(:card_has_been_removed, number: "x-#{@credit_card.last_digits}")
-        redirect_to "/account#/cards"
+      else
+        flash[:error] = I18n.t(:card_could_not_be_removed)
       end
+      redirect_to "/account#/cards"
     end
 
     # Currently can only destroy the whole customer object
