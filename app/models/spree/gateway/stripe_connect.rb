@@ -30,25 +30,25 @@ module Spree
       provider.purchase(*options_for_purchase_or_auth(money, creditcard, gateway_options))
     end
 
-    def authorize(money, creditcard, gateway_options)
-      provider.authorize(*options_for_purchase_or_auth(money, creditcard, gateway_options))
-    end
+    # def authorize(money, creditcard, gateway_options)
+    #   provider.authorize(*options_for_purchase_or_auth(money, creditcard, gateway_options))
+    # end
 
-    def capture(money, response_code, gateway_options)
-      provider.capture(money, response_code, gateway_options)
-    end
+    # def capture(money, response_code, gateway_options)
+    #   provider.capture(money, response_code, gateway_options)
+    # end
 
-    def credit(money, creditcard, response_code, gateway_options)
-      provider.refund(money, response_code, {})
-    end
+    # def credit(money, creditcard, response_code, gateway_options)
+    #   provider.refund(money, response_code, {})
+    # end
 
-    def void(response_code, creditcard, gateway_options)
-      provider.void(response_code, {})
-    end
+    # def void(response_code, creditcard, gateway_options)
+    #   provider.void(response_code, {})
+    # end
 
-    def cancel(response_code)
-      provider.void(response_code, {})
-    end
+    # def cancel(response_code)
+    #   provider.void(response_code, {})
+    # end
 
     def create_profile(payment)
       return unless payment.source.gateway_customer_profile_id.nil?
@@ -57,12 +57,7 @@ module Spree
         login: Stripe.api_key,
       }.merge! address_for(payment)
 
-      source = update_source!(payment.source)
-      if source.number.blank? && source.gateway_payment_profile_id.present?
-        creditcard = source.gateway_payment_profile_id
-      else
-        creditcard = source
-      end
+      creditcard = card_to_store(payment.source)
 
       response = provider.store(creditcard, options)
       if response.success?
@@ -71,7 +66,6 @@ module Spree
           gateway_customer_profile_id: response.params['id'],
           gateway_payment_profile_id: response.params['default_source'] || response.params['default_card']
         })
-
       else
         payment.send(:gateway_error, response.message)
       end
@@ -120,6 +114,17 @@ module Spree
     def update_source!(source)
       source.cc_type = CARD_TYPE_MAPPING[source.cc_type] if CARD_TYPE_MAPPING.include?(source.cc_type)
       source
+    end
+
+    def card_to_store(source)
+      source = update_source!(source)
+      if source.number.blank? && source.gateway_payment_profile_id.present?
+        # StripeJS Token
+        source.gateway_payment_profile_id
+      else
+        # Spree::CreditCard object
+        source
+      end
     end
 
     def token_from_card_profile_ids(creditcard)
