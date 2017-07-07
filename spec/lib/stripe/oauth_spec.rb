@@ -15,7 +15,7 @@ module Stripe
         uri = URI.parse(url)
         params = CGI.parse(uri.query)
         expect(params.keys).to include 'client_id', 'response_type', 'state', 'scope'
-        expect(params["state"]).to eq [OAuth.jwt_encode(enterprise_id: enterprise_id)]
+        expect(params["state"]).to eq [OAuth.send(:jwt_encode, enterprise_id: enterprise_id)]
         expect(uri.scheme).to eq 'https'
         expect(uri.host).to eq 'connect.stripe.com'
         expect(uri.path).to eq '/oauth/authorize'
