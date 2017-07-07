@@ -8,5 +8,4 @@ feature "Connecting a Stripe Account" do
   before(:each) do
     login_to_admin_as enterprise_user
   end
-
 end

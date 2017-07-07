@@ -10,9 +10,9 @@ describe StripeAccount do
     context "when the Stripe API disconnect fails" do
       before do
         Stripe::OAuth.client
-          .deauthorize(stripe_account.stripe_user_id)
-          .stub(:deauthorize_request)
-          .and_return(nil)
+                     .deauthorize(stripe_account.stripe_user_id)
+                     .stub(:deauthorize_request)
+                     .and_return(nil)
       end
 
       it "doesn't destroy the record" do
@@ -24,9 +24,9 @@ describe StripeAccount do
     context "when the Stripe API disconnect succeeds" do
       before do
         Stripe::OAuth.client
-          .deauthorize(stripe_account.stripe_user_id)
-          .stub(:deauthorize_request)
-          .and_return("something truthy")
+                     .deauthorize(stripe_account.stripe_user_id)
+                     .stub(:deauthorize_request)
+                     .and_return("something truthy")
       end
 
       it "destroys the record" do

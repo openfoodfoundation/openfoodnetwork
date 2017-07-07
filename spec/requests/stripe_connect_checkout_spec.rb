@@ -21,8 +21,8 @@ describe "Submitting Stripe Connect charge requests", type: :request do
     { format: :json, order: {
       shipping_method_id: shipping_method.id,
       payments_attributes: [{payment_method_id: payment_method.id, source_attributes: { gateway_payment_profile_id: token, cc_type: "visa", last_digits: "4242", month: 10, year: 2025 }}],
-      bill_address_attributes: address.attributes.slice("firstname","lastname","address1","address2","phone","city","zipcode","state_id","country_id"),
-      ship_address_attributes: address.attributes.slice("firstname","lastname","address1","address2","phone","city","zipcode","state_id","country_id")
+      bill_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id"),
+      ship_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id")
     } }
   end
 

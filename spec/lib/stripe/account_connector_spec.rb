@@ -13,7 +13,7 @@ module Stripe
 
       context "when params have no 'code' key" do
         it "raises a StripeError" do
-           expect{ AccountConnector.new(user, params) }.to raise_error StripeError
+          expect{ AccountConnector.new(user, params) }.to raise_error StripeError
         end
       end
 
@@ -53,7 +53,7 @@ module Stripe
 
             it "allows creations of a new Stripe Account from the callback params" do
               connector = AccountConnector.new(user, params)
-              expect{connector.create_account}.to change(StripeAccount, :count).by(1)
+              expect{ connector.create_account }.to change(StripeAccount, :count).by(1)
             end
           end
 
@@ -67,7 +67,7 @@ module Stripe
 
             it "allows creations of a new Stripe Account from the callback params" do
               connector = AccountConnector.new(user, params)
-              expect{connector.create_account}.to change(StripeAccount, :count).by(1)
+              expect{ connector.create_account }.to change(StripeAccount, :count).by(1)
             end
           end
         end

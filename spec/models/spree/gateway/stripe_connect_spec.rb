@@ -11,7 +11,7 @@ describe Spree::Gateway::StripeConnect, type: :model do
 
   before do
     Stripe.api_key = "sk_test_123456"
-    subject.stub(:options_for_purchase_or_auth).and_return(['money','cc','opts'])
+    subject.stub(:options_for_purchase_or_auth).and_return(['money', 'cc', 'opts'])
     subject.stub(:provider).and_return provider
   end
 
@@ -59,8 +59,8 @@ describe Spree::Gateway::StripeConnect, type: :model do
 
     before do
       stub_request(:post, "https://api.stripe.com/v1/tokens")
-      .with(body: { "card"=>"card123", "customer"=>"customer123"})
-      .to_return(body: JSON.generate(token_mock))
+        .with(body: { "card" => "card123", "customer" => "customer123"})
+        .to_return(body: JSON.generate(token_mock))
     end
 
     it "requests a new token for the customer and card from Stripe, and returns the id of the response" do

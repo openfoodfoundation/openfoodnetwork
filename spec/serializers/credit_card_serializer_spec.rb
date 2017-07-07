@@ -12,5 +12,4 @@ describe Api::CreditCardSerializer do
   it "formats an identifying string with the card number masked" do
     expect(serializer.formatted).to eq "Visa x-1111 Exp:12/2013"
   end
-
 end

@@ -8,7 +8,7 @@ module Spree
       'American Express' => 'american_express',
       'Diners Club' => 'diners_club',
       'Visa' => 'visa'
-    }
+    }.freeze
 
     def method_type
       'stripe'
@@ -61,11 +61,9 @@ module Spree
 
       response = provider.store(creditcard, options)
       if response.success?
-        payment.source.update_attributes!({
-          cc_type: payment.source.cc_type, # side-effect of update_source!
-          gateway_customer_profile_id: response.params['id'],
-          gateway_payment_profile_id: response.params['default_source'] || response.params['default_card']
-        })
+        payment.source.update_attributes!( cc_type: payment.source.cc_type, # side-effect of update_source!
+                                           gateway_customer_profile_id: response.params['id'],
+                                           gateway_payment_profile_id: response.params['default_source'] || response.params['default_card'])
       else
         payment.send(:gateway_error, response.message)
       end
@@ -87,21 +85,21 @@ module Spree
 
       creditcard = token_from_card_profile_ids(creditcard)
 
-      return money, creditcard, options
+      [money, creditcard, options]
     end
 
     def address_for(payment)
       {}.tap do |options|
         if address = payment.order.bill_address
-          options.merge!(address: {
+          options[:address] = {
             address1: address.address1,
             address2: address.address2,
             city: address.city,
             zip: address.zipcode
-          })
+          }
 
           if country = address.country
-            options[:address].merge!(country: country.name)
+            options[:address][:country] = country.name
           end
 
           if state = address.state
@@ -142,7 +140,7 @@ module Spree
     end
 
     def tokenize_instance_customer_card(customer, card)
-      token = Stripe::Token.create({card: card, customer: customer}, {stripe_account: stripe_account_id})
+      token = Stripe::Token.create({card: card, customer: customer}, stripe_account: stripe_account_id)
       token.id
     rescue Stripe::StripeError => e
       Rails.logger.error("Stripe Error: #{e}")

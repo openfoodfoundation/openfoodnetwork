@@ -26,7 +26,7 @@ describe Spree::CreditCardsController do
 
   describe "#new_from_token" do
     context "when the request to store the customer/card with Stripe is successful" do
-      let(:response_mock) { { status: 200, body: JSON.generate({ id: "cus_AZNMJ", default_source: "card_1AEEb" }) } }
+      let(:response_mock) { { status: 200, body: JSON.generate(id: "cus_AZNMJ", default_source: "card_1AEEb") } }
 
       it "saves the card locally" do
         expect{ post :new_from_token, params }.to change(Spree::CreditCard, :count).by(1)
@@ -54,7 +54,7 @@ describe Spree::CreditCardsController do
     end
 
     context "when the request to store the customer/card with Stripe fails" do
-      let(:response_mock) { { status: 402, body: JSON.generate({ error: { message: "Bup-bow..." }}) } }
+      let(:response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..." }) } }
       it "doesn't save the card locally, and renders a flash error" do
         expect{ post :new_from_token, params }.to_not change(Spree::CreditCard, :count)
 
