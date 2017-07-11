@@ -106,8 +106,8 @@ class UpdateBillablePeriods
     end
 
     obsolete_billable_periods.includes({ account_invoice: :order}).
-    where('spree_orders.state <> \'complete\' OR account_invoices.order_id IS NULL').
-    each(&:delete)
+      where('spree_orders.state <> \'complete\' OR account_invoices.order_id IS NULL').
+      each(&:delete)
   end
 
   private

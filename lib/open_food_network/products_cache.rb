@@ -49,8 +49,8 @@ module OpenFoodNetwork
     def self.producer_property_changed(producer_property)
       products = producer_property.producer.supplied_products
       variants = Spree::Variant.
-                 where(is_master: false, deleted_at: nil).
-                 where(product_id: products)
+        where(is_master: false, deleted_at: nil).
+        where(product_id: products)
 
       exchanges_featuring_variants(variants).each do |exchange|
         refresh_cache exchange.receiver, exchange.order_cycle

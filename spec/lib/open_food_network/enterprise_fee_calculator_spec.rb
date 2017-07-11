@@ -228,9 +228,9 @@ module OpenFoodNetwork
 
           it "makes fee applicators for a line item" do
             expect(efc.send(:per_item_enterprise_fee_applicators_for, line_item.variant))
-            .to eq [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, line_item.variant, 'supplier'),
-                    OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, line_item.variant, 'distributor'),
-                    OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, line_item.variant, 'coordinator')]
+              .to eq [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, line_item.variant, 'supplier'),
+                      OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, line_item.variant, 'distributor'),
+                      OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, line_item.variant, 'coordinator')]
           end
         end
 
@@ -264,9 +264,9 @@ module OpenFoodNetwork
 
           it "makes fee applicators for an order" do
             expect(efc.send(:per_order_enterprise_fee_applicators_for, order))
-            .to eq [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, nil, 'supplier'),
-                    OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, nil, 'distributor'),
-                    OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, nil, 'coordinator')]
+              .to eq [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, nil, 'supplier'),
+                      OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, nil, 'distributor'),
+                      OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, nil, 'coordinator')]
           end
         end
 

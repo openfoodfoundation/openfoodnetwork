@@ -36,9 +36,9 @@ class OrderCycle < ActiveRecord::Base
 
   scope :distributing_product, lambda { |product|
     joins(:exchanges).
-    merge(Exchange.outgoing).
-    merge(Exchange.with_product(product)).
-    select('DISTINCT order_cycles.*') }
+      merge(Exchange.outgoing).
+      merge(Exchange.with_product(product)).
+      select('DISTINCT order_cycles.*') }
 
   scope :with_distributor, lambda { |distributor|
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
@@ -59,14 +59,14 @@ class OrderCycle < ActiveRecord::Base
       scoped
     else
       with_exchanging_enterprises_outer.
-      where('order_cycles.coordinator_id IN (?) OR enterprises.id IN (?)', user.enterprises, user.enterprises).
-      select('DISTINCT order_cycles.*')
+        where('order_cycles.coordinator_id IN (?) OR enterprises.id IN (?)', user.enterprises, user.enterprises).
+        select('DISTINCT order_cycles.*')
     end
   }
 
   scope :with_exchanging_enterprises_outer, lambda {
     joins('LEFT OUTER JOIN exchanges ON (exchanges.order_cycle_id = order_cycles.id)').
-    joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
+      joins('LEFT OUTER JOIN enterprises ON (enterprises.id = exchanges.sender_id OR enterprises.id = exchanges.receiver_id)')
   }
 
   scope :involving_managed_distributors_of, lambda { |user|
@@ -75,8 +75,8 @@ class OrderCycle < ActiveRecord::Base
     # Order cycles where I managed an enterprise at either end of an outgoing exchange
     # ie. coordinator or distibutor
     joins(:exchanges).merge(Exchange.outgoing).
-    where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
-    select('DISTINCT order_cycles.*')
+      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
+      select('DISTINCT order_cycles.*')
   }
 
   scope :involving_managed_producers_of, lambda { |user|
@@ -85,8 +85,8 @@ class OrderCycle < ActiveRecord::Base
     # Order cycles where I managed an enterprise at either end of an incoming exchange
     # ie. coordinator or producer
     joins(:exchanges).merge(Exchange.incoming).
-    where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
-    select('DISTINCT order_cycles.*')
+      where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
+      select('DISTINCT order_cycles.*')
   }
 
   def self.first_opening_for(distributor)
@@ -106,12 +106,12 @@ class OrderCycle < ActiveRecord::Base
   def self.earliest_closing_times
     Hash[
       Exchange.
-      outgoing.
-      joins(:order_cycle).
-      merge(OrderCycle.active).
-      group('exchanges.receiver_id').
-      select('exchanges.receiver_id AS receiver_id, MIN(order_cycles.orders_close_at) AS earliest_close_at').
-      map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
+        outgoing.
+        joins(:order_cycle).
+        merge(OrderCycle.active).
+        group('exchanges.receiver_id').
+        select('exchanges.receiver_id AS receiver_id, MIN(order_cycles.orders_close_at) AS earliest_close_at').
+        map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
     ]
   end
 

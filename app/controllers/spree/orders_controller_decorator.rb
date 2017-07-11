@@ -239,7 +239,7 @@ Spree::OrdersController.class_eval do
     return unless order_to_update.andand.complete?
 
     items = params[:order][:line_items_attributes]
-    .andand.select{ |k,attrs| attrs["quantity"].to_i > 0 }
+      .andand.select{ |k,attrs| attrs["quantity"].to_i > 0 }
 
     if items.empty?
       flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)

@@ -21,7 +21,7 @@ class EnterpriseRelationship < ActiveRecord::Base
 
   scope :with_permission, ->(permission) {
     joins(:permissions).
-    where('enterprise_relationship_permissions.name = ?', permission)
+      where('enterprise_relationship_permissions.name = ?', permission)
   }
 
   scope :by_name, with_enterprises.order('child_enterprises.name, parent_enterprises.name')

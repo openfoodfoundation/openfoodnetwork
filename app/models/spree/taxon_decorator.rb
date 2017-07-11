@@ -38,13 +38,13 @@ Spree::Taxon.class_eval do
   # Format: {enterprise_id => [taxon_id, ...]}
   def self.distributed_taxons(which_taxons=:all)
     ents_and_vars = ExchangeVariant.joins(exchange: :order_cycle).merge(Exchange.outgoing)
-    .select("DISTINCT variant_id, receiver_id AS enterprise_id")
+      .select("DISTINCT variant_id, receiver_id AS enterprise_id")
 
     ents_and_vars = ents_and_vars.merge(OrderCycle.active) if which_taxons == :current
 
     taxons = Spree::Taxon
-    .select("DISTINCT spree_taxons.id, ents_and_vars.enterprise_id").joins(products: :variants_including_master)
-    .joins("INNER JOIN (#{ents_and_vars.to_sql}) AS ents_and_vars ON spree_variants.id = ents_and_vars.variant_id")
+      .select("DISTINCT spree_taxons.id, ents_and_vars.enterprise_id").joins(products: :variants_including_master)
+      .joins("INNER JOIN (#{ents_and_vars.to_sql}) AS ents_and_vars ON spree_variants.id = ents_and_vars.variant_id")
 
     taxons.inject({}) do |ts, t|
       ts[t.enterprise_id.to_i] ||= Set.new

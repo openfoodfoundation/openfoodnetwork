@@ -129,7 +129,7 @@ module OpenFoodNetwork
 
     def editable_variant_ids_for_outgoing_exchange_between(sender, receiver)
       OpenFoodNetwork::OrderCyclePermissions.new(@spree_current_user, @order_cycle).
-      editable_variants_for_outgoing_exchanges_to(receiver).pluck(:id)
+        editable_variants_for_outgoing_exchanges_to(receiver).pluck(:id)
     end
 
     def find_exchange(sender_id, receiver_id, incoming)

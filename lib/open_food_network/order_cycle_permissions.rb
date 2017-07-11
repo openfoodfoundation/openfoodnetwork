@@ -90,7 +90,7 @@ module OpenFoodNetwork
       else
         # All variants of the producer if it has granted P-OC to any of my managed hubs that are in this order cycle
         permitted = EnterpriseRelationship.permitting(managed_participating_hubs).
-        permitted_by(producer).with_permission(:add_to_order_cycle).present?
+          permitted_by(producer).with_permission(:add_to_order_cycle).present?
         if permitted
           Spree::Variant.joins(:product).where('spree_products.supplier_id = (?)', producer)
         else
@@ -146,7 +146,7 @@ module OpenFoodNetwork
         # PLUS any of my incoming producers' variants that are already in an outgoing exchange of this hub, so things don't break
         # TODO: Remove this when all P-OC are sorted out
         active_variants = Spree::Variant.joins(:exchanges, :product).
-        where("exchanges.receiver_id = (?) AND spree_products.supplier_id IN (?) AND incoming = 'f'", hub, managed_enterprises.is_primary_producer)
+          where("exchanges.receiver_id = (?) AND spree_products.supplier_id IN (?) AND incoming = 'f'", hub, managed_enterprises.is_primary_producer)
 
         Spree::Variant.where(id: permitted_variants | active_variants)
       end
