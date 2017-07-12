@@ -245,13 +245,16 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       describe "purchasing" do
         it "takes us to the order confirmation page when we submit a complete form" do
           toggle_details
+
           within "#details" do
             fill_in "First Name", with: "Will"
             fill_in "Last Name", with: "Marshall"
             fill_in "Email", with: "test@test.com"
             fill_in "Phone", with: "0468363090"
           end
+
           toggle_billing
+
           within "#billing" do
             fill_in "Address", with: "123 Your Face"
             select "Australia", from: "Country"
@@ -259,35 +262,40 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
             fill_in "City", with: "Melbourne"
             fill_in "Postcode", with: "3066"
           end
+
           toggle_shipping
+
           within "#shipping" do
             choose sm2.name
             fill_in 'Any comments or special instructions?', with: "SpEcIaL NoTeS"
           end
+
           toggle_payment
+
           within "#payment" do
             choose pm1.name
           end
 
           expect do
             place_order
-            page.should have_content "Your order has been processed successfully"
+            expect(page).to have_content "Your order has been processed successfully"
           end.to enqueue_job ConfirmOrderJob
 
           # And the order's special instructions should be set
-          o = Spree::Order.complete.first
-          expect(o.special_instructions).to eq "SpEcIaL NoTeS"
+          order = Spree::Order.complete.first
+          expect(order.special_instructions).to eq "SpEcIaL NoTeS"
 
           # And the Spree tax summary should not be displayed
-          page.should_not have_content product.tax_category.name
+          expect(page).not_to have_content product.tax_category.name
 
           # And the total tax for the order, including shipping and fee tax, should be displayed
           # product tax    ($10.00 @ 10% = $0.91)
           # + fee tax      ($ 1.23 @ 10% = $0.11)
           # + shipping tax ($ 4.56 @ 25% = $0.91)
           #                              = $1.93
-          page.should have_content "(includes tax)"
-          page.should have_content with_currency(1.93)
+          expect(page).to have_content '(includes tax)'
+          expect(page).to have_content with_currency(1.93)
+          expect(page).to have_content 'Back To Store'
         end
 
         context "with basic details filled" do

@@ -40,6 +40,8 @@ class CheckoutController < Spree::CheckoutController
         set_default_bill_address
         set_default_ship_address
 
+        reset_order
+
         flash[:success] = t(:order_processed_successfully)
         respond_to do |format|
           format.html do

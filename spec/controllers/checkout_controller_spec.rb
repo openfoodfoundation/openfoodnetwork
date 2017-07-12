@@ -106,6 +106,8 @@ describe CheckoutController do
     end
 
     it "returns order confirmation url on success" do
+      expect(controller).to receive(:reset_order)
+
       order.stub(:update_attributes).and_return true
       order.stub(:state).and_return "complete"
 
@@ -116,6 +118,8 @@ describe CheckoutController do
 
     describe "stale object handling" do
       it "retries when a stale object error is encountered" do
+        expect(controller).to receive(:reset_order)
+
         order.stub(:update_attributes).and_return true
         controller.stub(:state_callback)
 
