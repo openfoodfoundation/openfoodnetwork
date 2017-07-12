@@ -2,8 +2,14 @@ es:
   activerecord:
     attributes:
       spree/order:
-        payment_state: Estado de pago
+        payment_state: Estado del pago
         shipment_state: Estado del envío
+    errors:
+      models:
+        spree/user:
+          attributes:
+            email:
+              taken: "Ya existe una cuenta con este email. Inicie sesión o restablezca tu contraseña."
   devise:
     failure:
       invalid: |
@@ -24,7 +30,6 @@ es:
   welcome_to: 'Bienvenido a '
   site_meta_description: "Nosotros empezamos desde abajo. Con granjeros y productoras listas para contar sus historias con orgullo y autenticidad. Con distribuidoras listas para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden..."
   search_by_name: Buscar por nombre o barrio...
-  producers: 'Productoras Australianos'
   producers_join: Las productoras australianas ahora son bienvenidas a unirse a Open Food Network.
   charges_sales_tax: ¿Cargos de GST?
   print_invoice: "Imprimir factura"
@@ -50,7 +55,7 @@ es:
   say_no: "No"
   say_yes: "Si"
   then: Entonces
-  sort_order_cycles_on_shopfront_by: "Ciclos de Pedidos en Shopfront por"
+  sort_order_cycles_on_shopfront_by: "Ciclos de Pedidos en Tienda por"
   required_fields: Los campos obligatorios se indican con un asterisco
   select_continue: Selecciona y Continua
   remove: Eliminar
@@ -62,6 +67,18 @@ es:
   show_all: Mostrar todos
   show_all_with_more: "Mostrar todo (%{num}  Más)"
   cancel: Cancelar
+  edit: Editar
+  distributors: Distribuidores
+  bulk_order_management: Gestión de pedidos en bloque
+  enterprise_groups: Grupos
+  reports: Informes
+  variant_overrides: Inventario
+  more: Más
+  spree_products: Productos Spree
+  all: Todos
+  current: Actual
+  available: Disponible
+  dashboard: Panel de inicio
   admin:
     date: Fecha
     email: Email
@@ -79,11 +96,16 @@ es:
     sku: número de referencia
     tags: Etiquetas
     variant: Variedad
+    weight: Peso
+    volume: Volumen
+    items: Artículos
     quick_search: Búsqueda rápida
     clear_all: Limpiar todo
     start_date: "Fecha de inicio"
     end_date: "Fecha de finalización"
     form_invalid: "El formulario contiene campos vacíos o inválidos"
+    clear_filters: Limpiar filtros
+    clear: Limpiar
     columns: Columnas
     actions: Acciones
     viewing: "Viendo: %{current_view_name}"
@@ -160,6 +182,7 @@ es:
         edit: 'Editar'
         update_address: 'Actualizar Dirección'
         confirm_delete: '¿Confirmas que quieres borrar?'
+        search_by_email: "Buscar por email/código"
     cache_settings:
       show:
         title: Almacenando
@@ -172,7 +195,7 @@ es:
         title: Contenido
     enterprise_fees:
       index:
-        title: Comisiones de la Organicación
+        title: Comisiones de la Organización
         enterprise: Organización
         fee_type: Tipo de Comisión
         name: Nombre
@@ -183,6 +206,7 @@ es:
       index:
         new_button: Nuevo Grupo de Organizaciones
     products:
+      unit_name_placeholder: 'ej. manojos'
       bulk_edit:
         unit: Unidad
         display_as: Mostrar como
@@ -246,7 +270,7 @@ es:
         title: Organizaciones
         new_enterprise: Nueva Organización
         producer?: "Productora?"
-        package: Paquete
+        package: Perfil
         status: Estado
         manage: Gestionar
       form:
@@ -260,6 +284,8 @@ es:
           abn_placeholder: ej. 99 123 456 789
           acn: ACN
           acn_placeholder: ej. 123 456 789
+          display_invoice_logo: Mostrar logo en facturas
+          invoice_text: Añadir texto personalizado al final de las facturas
         contact:
           name: Nombre
           name_placeholder: ej. Gustav Plum
@@ -333,19 +359,27 @@ es:
           shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
           shopfront_requires_login_false: "Público"
           shopfront_requires_login_true: "Visible solo para consumidores registrados"
+          recommend_require_login: "Recomendamos requerir a los usuarios que accedan cuando sus pedidos puedan cambiar."
           allow_guest_orders: "Pedidos de invitados"
-          allow_guest_orders_tip: "Permitir la compra como invitado o solo permitir usuarios registrados."
+          allow_guest_orders_tip: "Permitir pedidos como invitado o solo como usuarios registrados."
           allow_guest_orders_false: "Se necesita hacer login para realizar un pedido"
-          allow_guest_orders_true: "Permitir pedido de un invitado"
+          allow_guest_orders_true: "Permitir pedidos a invitados"
+          allow_order_changes: "Cambiar pedidos"
+          allow_order_changes_tip: "Permitir a los clientes cambiar sus pedidos mientras que el ciclo de pedido siga abierto."
+          allow_order_changes_false: "Los pedidos efectuados no pueden ser cambiados / cancelados"
+          allow_order_changes_true: "Los clientes pueden cambiar / cancelar pedidos mientras el ciclo de pedido está abierto"
+          shopfront_message: Mensaje de la Tienda
           shopfront_message_placeholder: >
               Una explicación opcional para los consumidores que detallan cómo funciona
               su tienda, que se mostrará por encima de la lista de productos en su
               página de tienda.
+          shopfront_closed_message: Mensaje de tienda cerrada
           shopfront_closed_message_placeholder: >
               Un mensaje que proporciona una explicación más detallada sobre por qué
               tu tienda está cerrada y/o cuándo se abrirá de nuevo. Esto se muestra
               en tu tienda sólo cuando no tienes ciclos de pedidos activos (p.e. la
               tienda está cerrada).
+          shopfront_category_ordering: Orden de las categorías de la tienda
           open_date: Fecha de Inicio
           close_date: Fecha de Finalización
         social:
@@ -485,12 +519,20 @@ es:
         title: Configuración de Factura
         invoice_style2?: Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)
         enable_receipt_printing?: ¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?
+  checkout:
+    already_ordered:
+      cart: "carrito"
+      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
   home:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
       hide_closed_shops: "Ocultar tiendas cerradas"
       show_on_map: "Mostrar todo en el mapa"
   shared:
+    menu:
+      cart:
+        checkout: "Validar ahora"
+        already_ordered_products: "Ya realizó un pedido en este ciclo de pedido"
     register_call:
       selling_on_ofn: "¿Estás interesada en entrar en Open Food Network?"
       register: "Regístrate aquí"
@@ -560,6 +602,7 @@ es:
   terms_of_service: "Términos de servicio"
   on_demand: Bajo demanda
   none: Ninguno
+  not_allowed: No permitido
   label_shops: "Tiendas"
   label_map: "Mapa"
   label_producers: "Productoras"
@@ -580,21 +623,12 @@ es:
   items: "artículos"
   cart_headline: "Su carrito de compras"
   total: "Total"
-  checkout: "Revisar el carrito de compras"
   cart_updating: "Actualizando el carrito..."
   cart_empty: "Carrito vacío"
   cart_edit: "Editar carrito"
   card_number: Número de tarjeta
   card_securitycode: "Código de seguridad"
   card_expiry_date: Fecha de expiración
-  ofn_cart_headline: "Tarjeta actual para:"
-  ofn_cart_distributor: "Distribuidor:"
-  ofn_cart_oc: "Ciclo de pedido:"
-  ofn_cart_from: "De:"
-  ofn_cart_to: "Para:"
-  ofn_cart_product: "Producto:"
-  ofn_cart_quantitiy: "Cantidad:"
-  ofn_cart_send: "Comprar me"
   ie_warning_headline: "Su navegador está desactualizado :-("
   ie_warning_text: "Para la mejor esperiencia de Open Food Network, recomendamos actualizar su navegador:"
   ie_warning_chrome: Descargar Chrome
@@ -649,13 +683,13 @@ es:
   stats_shops: "tiendas"
   stats_shoppers: "consumidoras"
   stats_orders: "pedidos"
-  checkout_title: Revisar el carrito
-  checkout_now: Revisare el carrito ahora
+  checkout_title: Validar el carrito
+  checkout_now: Validar el carrito ahora
   checkout_order_ready: Pedido preparado para
   checkout_hide: Esconder
   checkout_expand: Expandir
-  checkout_headline: "Esta bien, ¿listo para pagar?"
-  checkout_as_guest: "Pagar como invitado"
+  checkout_headline: "Esta bien, ¿listo para realizar el pedido?"
+  checkout_as_guest: "Hacer pedido como invitado"
   checkout_details: "Sus detalles"
   checkout_billing: "Información de cobro"
   checkout_default_bill_address: "Guardar como dirección de facturación por defecto"
@@ -679,6 +713,7 @@ es:
   order_billing_address: Dirección de cobro
   order_delivery_on: Entregar en
   order_delivery_address: Dirección de entrega
+  order_delivery_time: Tiempo de entrega
   order_special_instructions: "Sus notas:"
   order_pickup_time: Listo para la recolección
   order_pickup_instructions: Instrucciones de recolección
@@ -687,6 +722,8 @@ es:
   order_includes_tax: (incluye impuesto)
   order_payment_paypal_successful: Su pago a través de PayPal ha sido procesado con éxito.
   order_hub_info: Información del Grupo
+  order_back_to_store: Volver a la Tienda
+  order_back_to_cart: Volver al Carrito
   bom_tip: "Usa esta página para alterar la cantidad del producto en varios pedidos a la vez. Los productos pueden ser eliminados de los pedidos si es necesario. "
   unsaved_changes_warning: "Hay cambios no guardados, se perderán si continúas."
   unsaved_changes_error: "Los campos con bordes rojos contienen errores."
@@ -778,6 +815,10 @@ es:
   hubs_intro: Comprar en su área local
   hubs_distance: Más cercano a
   hubs_distance_filter: "Mustreme tiendas cerca de %{location}"
+  shop_changeable_orders_alert_html:
+    one: Su pedido con <a href='%{path}' target='_blank'> %{shop} / %{order} </a> está abierto para revisión. Puede realizar cambios hasta %{oc_close}.
+    other: 'Usted tiene <a href=''%{path}'' target=''_blank''> %{count} órdenes con %{shop} </a> actualmente abierto para revisión. Puede realizar cambios hasta %{oc_close}. '
+  orders_changeable_orders_alert_html: Este pedido ha sido confirmado, pero puede realizar cambios hasta <strong>%{oc_close}</strong>.
   products_clear_all: Limpiar todo
   products_showing: "Mostrando:"
   products_with: con
@@ -793,7 +834,7 @@ es:
   products_update_error_data: "Error al guardar datos no válidos:"
   products_changes_saved: "Cambios guardados."
   search_no_results_html: "Lo sentimos, no hay resultados para %{query}. ¿Intentar otra búsqueda?"
-  components_profiles_popover: "Los perfiles no tienen escaparate en Open Food Network, pero pueden tener su propia tienda física o en línea en otro lugar"
+  components_profiles_popover: "Los perfiles no tienen una tienda en Open Food Network, pero pueden tener su propia tienda física o en línea en otro lugar"
   components_profiles_show: "Mostrar perfiles"
   components_filters_nofilters: "Sin filtros"
   components_filters_clearfilters: "Limpiar todos los filtros"
@@ -904,10 +945,10 @@ es:
   orders_edit_headline: Su carrito de compras
   orders_edit_time: Pedido listo para
   orders_edit_continue: Continuar comprando
-  orders_edit_checkout: Revisar
+  orders_edit_checkout: Validar
   orders_form_empty_cart: "Vaciar carrito"
   orders_form_subtotal: Subtotal de productos
-  orders_form_admin: Administración y gestión
+  orders_form_admin: Administrar y Gestionar
   orders_form_total: Total
   orders_oc_expired_headline: Los pedidos están cerrados para este ciclo
   orders_oc_expired_text: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu grupo de consumo directamente para ver si pueden aceptar pedidos tardíos."
@@ -917,7 +958,18 @@ es:
   orders_oc_expired_phone: "Teléfono:"
   orders_show_title: Confirmación del pedido
   orders_show_time: Pedido listo en
-  orders_show_number: Confirmación del pedido
+  orders_show_order_number: "Pedido #%{number}"
+  orders_show_cancelled: Cancelado
+  orders_show_confirmed: Confirmado
+  orders_your_order_has_been_cancelled: "Su pedido ha sido cancelado"
+  orders_could_not_cancel: "Lo sentimos, no se pudo cancelar el pedido"
+  orders_cannot_remove_the_final_item: "No se puede quitar el último artículo de un pedido, en su lugar, por favor cancele el pedido."
+  orders_bought_items_notice:
+    one: Un elemento adicional ya está confirmado para este ciclo de pedido
+    other: '%{count} artículos adicionales ya confirmados para este ciclo de pedido'
+  orders_bought_edit_button: Editar artículos confirmados
+  orders_bought_already_confirmed: "* ya confirmados"
+  orders_confirm_cancel: Seguro que desea cancelar este pedido?
   products_cart_distributor_choice: "Distribuidora para tu pedido:"
   products_cart_distributor_change: "Su distribuidora para este pedido se cambiará a %{name} si agregas este producto al carrito."
   products_cart_distributor_is: "Tu distribuidora para este pedido es %{name}."
@@ -1018,6 +1070,7 @@ es:
   enterprise_long_desc: "Descripción larga"
   enterprise_long_desc_placeholder: "Esta es tu oportunidad de contar la historia de tu organización - ¿qué la hace diferente? Sugerimos mantener la descripción en menos de 600 caracteres o 150 palabras."
   enterprise_long_desc_length: "%{num} caracteres / recomentdamos hasta 600"
+  enterprise_limit: Límite de la Organización
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "eg. 99 123 456 789"
   enterprise_acn: "ACN"
@@ -1117,7 +1170,7 @@ es:
   running_balance: "Saldo actual"
   outstanding_balance: "Saldo extraordinario"
   admin_entreprise_relationships: "Relaciones de la Organización"
-  admin_entreprise_relationships_everything: "Todo"
+  admin_entreprise_relationships_everything: "Marcar todos"
   admin_entreprise_relationships_permits: "Permisos"
   admin_entreprise_relationships_seach_placeholder: "Buscar"
   admin_entreprise_relationships_button_create: "Crear"
@@ -1153,6 +1206,7 @@ es:
   calculator_values: "Calculadora de valores"
   flat_percent_per_item: "Porcentaje fijo (por artículo)"
   new_order_cycles: "Nuevos Ciclos de Pedidos"
+  new_order_cycle: "Nuevo Ciclo de Pedido"
   select_a_coordinator_for_your_order_cycle: "Selecciona un coordinador para vuestro ciclo de pedido"
   edit_order_cycle: "Editar Ciclo de Pedido"
   roles: "Roles"
@@ -1173,6 +1227,7 @@ es:
   price: "Precio"
   on_hand: "Disponibles"
   save_changes: "Guardar Cambios"
+  order_saved: "Pedido Guardado"
   spree_admin_overview_enterprises_header: "Mis Organizaciones"
   spree_admin_overview_enterprises_footer: "GESTIONAR MIS ORGANIZACIONES"
   spree_admin_enterprises_hubs_name: "Nombre"
@@ -1199,7 +1254,7 @@ es:
   spree_admin_single_enterprise_alert_mail_sent: "Te hemos enviado un mail a"
   spree_admin_overview_action_required: "Acción Requerida"
   spree_admin_overview_check_your_inbox: "Revisa tu bandeja de entrada para las siguientes instrucciones. Gracias!"
-  change_package: "Cambiar paquete"
+  change_package: "Cambiar Perfil"
   spree_admin_single_enterprise_hint: "Sugerencia: Para permitir que la gente te encuentre, activa tu visibilidad"
   your_profil_live: "Tu perfil en directo"
   on_ofn_map: "en el mapa Open Food Network"
@@ -1214,6 +1269,8 @@ es:
   edit_profile_details: "Editar detalles del perfil"
   edit_profile_details_etc: "Cambia tu descripción, imágenes, etc."
   order_cycle: "Ciclo de Pedido"
+  order_cycles: "Ciclos de Pedidos"
+  enterprises: "Empresas"
   remove_tax: "Eliminar impuesto"
   enterprise_terms_of_service: "Términos del Servicio de la Organización"
   enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
@@ -1314,7 +1371,7 @@ es:
   js:
     admin:
       modals:
-        got_it: Lo tengo
+        got_it: Lo entiendo
         tag_rule_help:
           title: Reglas de las Etiquetas
           overview: Visión general
@@ -1358,14 +1415,13 @@ es:
           hub_shop_text3: >
               Si también quieres vender tus propios productos, tendrás que cambiar
               esta organización para ser una productora.
-          choose_package: Selecciona un Paquete
-          choose_package_text1: >+
-              Tu organización no se activará completamente hasta que selecciones un
-              paquete de las opciones de la izquierda.
-
+          choose_package: Seleccione un Perfil
+          choose_package_text1: >
+              Su organización no se activará completamente hasta que seleccione un
+              perfil de las opciones de la izquierda.
           choose_package_text2: >
-              Haz click en una opción para ver información más detallada acerca de
-              cada paquete, y pulsa el botón rojo GUARDAR cuando hayas terminado.
+              Haga click en una opción para ver información más detallada acerca de
+              cada perfil, y pulse el botón rojo GUARDAR cuando hayas terminado.
           profile_only: Solo perfil
           profile_only_cost: "COSTE: GRATUITO PARA SIEMPRE"
           profile_only_text1: >+
@@ -1438,6 +1494,9 @@ es:
           de tu carrito se han reducido. Aquí está lo que ha cambiado:
       now_out_of_stock: está ahora fuera de stock.
       only_n_remainging: "Solo quedan %{num} ."
+  producers:
+    signup:
+      start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
   spree:
     admin:
       products:
@@ -1454,24 +1513,7 @@ es:
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-dd'
-    zipcode: Código Postal
-    shipment_states:
-      backorder: orden pendiente
-      partial: parcial
-      pending: pendiente
-      ready: Listo
-      shipped: enviado
-    payment_states:
-      balance_due: saldo debido
-      completed: completado
-      checkout: revisar
-      credit_owed: crédito debido
-      failed: fallido
-      paid: pagado
-      pending: pendiente
-      processing: procesando
-      void: vacío
-      invalid: inválido
+    inventory: Inventario
     order_mailer:
       invoice_email:
         hi: "Hola %{name}"
@@ -1492,6 +1534,23 @@ es:
     orders:
       invoice:
         tax_invoice: "IMPUESTOS FACTURA:"
+    payment_states:
+      balance_due: saldo debido
+      completed: completado
+      checkout: validar
+      credit_owed: crédito debido
+      failed: fallido
+      paid: pagado
+      pending: pendiente
+      processing: procesando
+      void: vacío
+      invalid: inválido
+    shipment_states:
+      backorder: orden pendiente
+      partial: parcial
+      pending: pendiente
+      ready: Listo
+      shipped: enviado
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
@@ -1502,3 +1561,19 @@ es:
         issue_text: |
           Si el enlace no funciona prueba a copiarlo y pegarlo en tu navegador.
           Si los problemas continúan no dudes en contactarnos.
+    weight: Peso (en kg)
+    zipcode: Código Postal
+    users:
+      show:
+        open_orders: Pedidos Abiertos
+        transaction_history: Historial de Transacciones
+      open_orders:
+        order: Pedido
+        shop: Tienda
+        changes_allowed_until: Se permiten cambios hasta
+        items: Artículos
+        total: Total
+        edit: Editar
+        cancel: Cancelar
+        closed: Cerrado
+        until: Hasta
