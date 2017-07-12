@@ -103,9 +103,9 @@ class Enterprise < ActiveRecord::Base
   scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
   scope :ready_for_checkout, lambda {
     joins(:shipping_methods).
-    joins(:payment_methods).
-    merge(Spree::PaymentMethod.available).
-    select('DISTINCT enterprises.*')
+      joins(:payment_methods).
+      merge(Spree::PaymentMethod.available).
+      select('DISTINCT enterprises.*')
   }
   scope :not_ready_for_checkout, lambda {
     # When ready_for_checkout is empty, ActiveRecord generates the SQL:
@@ -152,25 +152,25 @@ class Enterprise < ActiveRecord::Base
 
   scope :active_distributors, lambda {
     with_distributed_products_outer.with_order_cycles_as_distributor_outer.
-    where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.zone.now, Time.zone.now, Time.zone.now).
-    select('DISTINCT enterprises.*')
+      where('(product_distributions.product_id IS NOT NULL AND spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0) OR (order_cycles.id IS NOT NULL AND order_cycles.orders_open_at <= ? AND order_cycles.orders_close_at >= ?)', Time.zone.now, Time.zone.now, Time.zone.now).
+      select('DISTINCT enterprises.*')
   }
 
   scope :distributors_with_active_order_cycles, lambda {
     with_order_cycles_as_distributor_outer.
-    merge(OrderCycle.active).
-    select('DISTINCT enterprises.*')
+      merge(OrderCycle.active).
+      select('DISTINCT enterprises.*')
   }
 
   scope :distributing_products, lambda { |products|
     # TODO: remove this when we pull out product distributions
     pds = joins("INNER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id").
-    where("product_distributions.product_id IN (?)", products).select('DISTINCT enterprises.id')
+      where("product_distributions.product_id IN (?)", products).select('DISTINCT enterprises.id')
 
     exs = joins("INNER JOIN exchanges ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')").
-    joins('INNER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
-    joins('INNER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)').
-    where('spree_variants.product_id IN (?)', products).select('DISTINCT enterprises.id')
+      joins('INNER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
+      joins('INNER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)').
+      where('spree_variants.product_id IN (?)', products).select('DISTINCT enterprises.id')
 
     where(id: pds | exs)
   }

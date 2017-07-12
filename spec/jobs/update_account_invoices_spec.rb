@@ -62,9 +62,9 @@ describe UpdateAccountInvoices do
           it "updates invoices from the previous month" do
             updater.perform
             expect(updater).to have_received(:update).once
-            .with(june_account_invoice)
+              .with(june_account_invoice)
             expect(updater).to_not have_received(:update)
-            .with(july_account_invoice)
+              .with(july_account_invoice)
           end
         end
 
@@ -74,7 +74,7 @@ describe UpdateAccountInvoices do
           it "updates invoices from the current month" do
             updater.perform
             expect(updater).to have_received(:update).once
-            .with(july_account_invoice)
+              .with(july_account_invoice)
           end
         end
 
@@ -91,7 +91,7 @@ describe UpdateAccountInvoices do
             it "updates invoices from the previous month" do
               updater.perform
               expect(updater).to have_received(:update).once
-              .with(july_account_invoice)
+                .with(july_account_invoice)
             end
           end
 
@@ -101,7 +101,7 @@ describe UpdateAccountInvoices do
             it "updates invoices from that current month" do
               updater.perform
               expect(updater).to have_received(:update).once
-              .with(july_account_invoice)
+                .with(july_account_invoice)
             end
           end
 

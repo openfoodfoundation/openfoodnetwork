@@ -25,7 +25,7 @@ describe UpdateBillablePeriods do
 
           it "processes the previous month" do
             expect(updater).to receive(:split_for_trial)
-            .with(enterprise, start_of_july - 1.month, start_of_july, nil, nil)
+              .with(enterprise, start_of_july - 1.month, start_of_july, nil, nil)
             updater.perform
           end
         end
@@ -35,7 +35,7 @@ describe UpdateBillablePeriods do
 
           it "processes the current month up until previous midnight" do
             expect(updater).to receive(:split_for_trial)
-            .with(enterprise, start_of_july, start_of_july + 1.day, nil, nil)
+              .with(enterprise, start_of_july, start_of_july + 1.day, nil, nil)
             updater.perform
           end
         end
@@ -53,7 +53,7 @@ describe UpdateBillablePeriods do
 
           it "processes the month" do
             expect(updater).to receive(:split_for_trial)
-            .with(enterprise, start_of_july - 1.month, start_of_july, nil, nil)
+              .with(enterprise, start_of_july - 1.month, start_of_july, nil, nil)
             updater.perform
           end
         end
@@ -63,7 +63,7 @@ describe UpdateBillablePeriods do
 
           it "processes the current month up to the previous midnight" do
             expect(updater).to receive(:split_for_trial)
-            .with(enterprise, start_of_july - 1.month, start_of_july-3.days, nil, nil)
+              .with(enterprise, start_of_july - 1.month, start_of_july-3.days, nil, nil)
             updater.perform
           end
         end
@@ -89,7 +89,7 @@ describe UpdateBillablePeriods do
 
           it "begins at the start of the month" do
             expect(updater).to receive(:split_for_trial)
-            .with(enterprise, start_of_july, start_of_july + 28.days, nil, nil)
+              .with(enterprise, start_of_july, start_of_july + 28.days, nil, nil)
             updater.perform
           end
         end
@@ -109,10 +109,10 @@ describe UpdateBillablePeriods do
             updater.perform
 
             expect(updater).to have_received(:split_for_trial)
-            .with(enterprise.versions.first.reify, start_of_july, start_of_july + 10.days, nil, nil)
+              .with(enterprise.versions.first.reify, start_of_july, start_of_july + 10.days, nil, nil)
 
             expect(updater).to have_received(:split_for_trial)
-            .with(enterprise, start_of_july + 10.days, start_of_july + 28.days, nil, nil)
+              .with(enterprise, start_of_july + 10.days, start_of_july + 28.days, nil, nil)
           end
         end
 
@@ -133,10 +133,10 @@ describe UpdateBillablePeriods do
             updater.perform
 
             expect(updater).to have_received(:split_for_trial)
-            .with(enterprise.versions.first.reify, start_of_july, start_of_july + 10.days, nil, nil)
+              .with(enterprise.versions.first.reify, start_of_july, start_of_july + 10.days, nil, nil)
 
             expect(updater).to have_received(:split_for_trial)
-            .with(enterprise, start_of_july + 10.days, start_of_july + 28.days, nil, nil)
+              .with(enterprise, start_of_july + 10.days, start_of_july + 28.days, nil, nil)
           end
         end
 
@@ -155,7 +155,7 @@ describe UpdateBillablePeriods do
             allow(updater).to receive(:split_for_trial).once
             updater.perform
             expect(updater).to have_received(:split_for_trial)
-            .with(enterprise, start_of_july, start_of_july + 28.days, nil, nil)
+              .with(enterprise, start_of_july, start_of_july + 28.days, nil, nil)
           end
         end
 
@@ -179,7 +179,7 @@ describe UpdateBillablePeriods do
             allow(updater).to receive(:split_for_trial).once
             updater.perform
             expect(updater).to have_received(:split_for_trial)
-            .with(enterprise, start_of_july, start_of_july + 28.days, nil, nil)
+              .with(enterprise, start_of_july, start_of_july + 28.days, nil, nil)
           end
         end
 
@@ -201,7 +201,7 @@ describe UpdateBillablePeriods do
             allow(updater).to receive(:split_for_trial).once
             updater.perform
             expect(updater).to have_received(:split_for_trial)
-            .with(enterprise, start_of_july, start_of_july + 15.days, nil, nil)
+              .with(enterprise, start_of_july, start_of_july + 15.days, nil, nil)
           end
         end
       end
@@ -218,7 +218,7 @@ describe UpdateBillablePeriods do
           allow(updater).to receive(:split_for_trial).once
           updater.perform
           expect(updater).to have_received(:split_for_trial)
-          .with(enterprise, start_of_july + 10.days, start_of_july + 28.days, nil, nil)
+            .with(enterprise, start_of_july + 10.days, start_of_july + 28.days, nil, nil)
         end
       end
 
@@ -249,7 +249,7 @@ describe UpdateBillablePeriods do
           allow(updater).to receive(:split_for_trial)
           updater.perform
           expect(updater).to have_received(:split_for_trial)
-          .with(enterprise, start_of_july, start_of_july + 20.days, nil, nil)
+            .with(enterprise, start_of_july, start_of_july + 20.days, nil, nil)
         end
       end
     end
@@ -270,7 +270,7 @@ describe UpdateBillablePeriods do
 
         it "calls update_billable_period once for the entire period" do
           expect(updater).to have_received(:update_billable_period)
-          .with(enterprise, begins_at, ends_at, false)
+            .with(enterprise, begins_at, ends_at, false)
         end
       end
 
@@ -285,7 +285,7 @@ describe UpdateBillablePeriods do
 
         it "calls update_billable_period once for the entire period" do
           expect(updater).to have_received(:update_billable_period)
-          .with(enterprise, begins_at, ends_at, false)
+            .with(enterprise, begins_at, ends_at, false)
         end
       end
 
@@ -302,7 +302,7 @@ describe UpdateBillablePeriods do
 
           it "calls update_billable_period once for the entire period" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, begins_at, ends_at, false)
+              .with(enterprise, begins_at, ends_at, false)
           end
         end
 
@@ -316,12 +316,12 @@ describe UpdateBillablePeriods do
 
           it "calls update_billable_period once for the trial period" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, begins_at, trial_expiry, true)
+              .with(enterprise, begins_at, trial_expiry, true)
           end
 
           it "calls update_billable_period once for the non-trial period" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, trial_expiry, ends_at, false)
+              .with(enterprise, trial_expiry, ends_at, false)
           end
         end
 
@@ -335,7 +335,7 @@ describe UpdateBillablePeriods do
 
           it "calls update_billable_period once for the entire (trial) period" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, begins_at, ends_at, true)
+              .with(enterprise, begins_at, ends_at, true)
           end
         end
       end
@@ -354,7 +354,7 @@ describe UpdateBillablePeriods do
 
           it "calls update_billable_period once for the entire period" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, begins_at, ends_at, false)
+              .with(enterprise, begins_at, ends_at, false)
           end
         end
 
@@ -368,17 +368,17 @@ describe UpdateBillablePeriods do
 
           it "calls update_billable_period once for the non-trial period before the trial" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, begins_at, trial_start, false)
+              .with(enterprise, begins_at, trial_start, false)
           end
 
           it "calls update_billable_period once for the trial period" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, trial_start, trial_expiry, true)
+              .with(enterprise, trial_start, trial_expiry, true)
           end
 
           it "calls update_billable_period once for the non-trial period after the trial" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, trial_expiry, ends_at, false)
+              .with(enterprise, trial_expiry, ends_at, false)
           end
         end
 
@@ -392,12 +392,12 @@ describe UpdateBillablePeriods do
 
           it "calls update_billable_period once for the non-trial period" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, begins_at, trial_start, false)
+              .with(enterprise, begins_at, trial_start, false)
           end
 
           it "calls update_billable_period once for the trial period" do
             expect(updater).to have_received(:update_billable_period)
-            .with(enterprise, trial_start, ends_at, true)
+              .with(enterprise, trial_start, ends_at, true)
           end
         end
       end
@@ -464,8 +464,8 @@ describe UpdateBillablePeriods do
               expect{
                 updater.update_billable_period(enterprise, start_of_july, start_of_july + 20.days, false)
               }.to change{ existing.reload.updated_at }
-              .from(start_of_july + 3.days)
-              .to(start_of_july + 10.days)
+                .from(start_of_july + 3.days)
+                .to(start_of_july + 10.days)
             }
           end
         end

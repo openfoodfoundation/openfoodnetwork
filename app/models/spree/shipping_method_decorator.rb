@@ -15,14 +15,14 @@ Spree::ShippingMethod.class_eval do
       scoped
     else
       joins(:distributors).
-      where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises).
-      select('DISTINCT spree_shipping_methods.*')
+        where('distributors_shipping_methods.distributor_id IN (?)', user.enterprises).
+        select('DISTINCT spree_shipping_methods.*')
     end
   }
 
   scope :for_distributor, lambda { |distributor|
     joins(:distributors).
-    where('enterprises.id = ?', distributor)
+      where('enterprises.id = ?', distributor)
   }
 
   scope :by_name, order('spree_shipping_methods.name ASC')
@@ -33,12 +33,12 @@ Spree::ShippingMethod.class_eval do
   def self.services
     Hash[
       Spree::ShippingMethod.
-      joins(:distributor_shipping_methods).
-      group('distributor_id').
-      select("distributor_id").
-      select("BOOL_OR(spree_shipping_methods.require_ship_address = 'f') AS pickup").
-      select("BOOL_OR(spree_shipping_methods.require_ship_address = 't') AS delivery").
-      map { |sm| [sm.distributor_id.to_i, {pickup: sm.pickup == 't', delivery: sm.delivery == 't'}] }
+        joins(:distributor_shipping_methods).
+        group('distributor_id').
+        select("distributor_id").
+        select("BOOL_OR(spree_shipping_methods.require_ship_address = 'f') AS pickup").
+        select("BOOL_OR(spree_shipping_methods.require_ship_address = 't') AS delivery").
+        map { |sm| [sm.distributor_id.to_i, {pickup: sm.pickup == 't', delivery: sm.delivery == 't'}] }
     ]
   end
 

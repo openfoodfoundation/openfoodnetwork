@@ -100,10 +100,10 @@ module Admin
     def collection
       ocs = if params[:as] == "distributor"
         OrderCycle.ransack(params[:q]).result.
-        involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
+          involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
       elsif params[:as] == "producer"
         OrderCycle.ransack(params[:q]).result.
-        involving_managed_producers_of(spree_current_user).order('updated_at DESC')
+          involving_managed_producers_of(spree_current_user).order('updated_at DESC')
       else
         OrderCycle.ransack(params[:q]).result.accessible_by(spree_current_user)
       end

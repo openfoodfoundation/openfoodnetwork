@@ -19,14 +19,14 @@ Spree::PaymentMethod.class_eval do
       scoped
     else
       joins(:distributors).
-      where('distributors_payment_methods.distributor_id IN (?)', user.enterprises).
-      select('DISTINCT spree_payment_methods.*')
+        where('distributors_payment_methods.distributor_id IN (?)', user.enterprises).
+        select('DISTINCT spree_payment_methods.*')
     end
   }
 
   scope :for_distributor, lambda { |distributor|
     joins(:distributors).
-    where('enterprises.id = ?', distributor)
+      where('enterprises.id = ?', distributor)
   }
 
   scope :by_name, order('spree_payment_methods.name ASC')
@@ -34,8 +34,8 @@ Spree::PaymentMethod.class_eval do
   # Rewrite Spree's ruby-land class method as a scope
   scope :available, lambda { |display_on='both'|
     where(active: true).
-    where('spree_payment_methods.display_on=? OR spree_payment_methods.display_on=? OR spree_payment_methods.display_on IS NULL', display_on, '').
-    where('spree_payment_methods.environment=? OR spree_payment_methods.environment=? OR spree_payment_methods.environment IS NULL', Rails.env, '')
+      where('spree_payment_methods.display_on=? OR spree_payment_methods.display_on=? OR spree_payment_methods.display_on IS NULL', display_on, '').
+      where('spree_payment_methods.environment=? OR spree_payment_methods.environment=? OR spree_payment_methods.environment IS NULL', Rails.env, '')
   }
 
   def init

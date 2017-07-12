@@ -19,28 +19,28 @@ Spree::LineItem.class_eval do
     else
       # Find line items that are from orders distributed by the user or supplied by the user
       joins(:variant => :product).
-      joins(:order).
-      where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)', user.enterprises, user.enterprises).
-      select('spree_line_items.*')
+        joins(:order).
+        where('spree_orders.distributor_id IN (?) OR spree_products.supplier_id IN (?)', user.enterprises, user.enterprises).
+        select('spree_line_items.*')
     end
   }
 
   scope :supplied_by, lambda { |enterprise|
     joins(:product).
-    where('spree_products.supplier_id = ?', enterprise)
+      where('spree_products.supplier_id = ?', enterprise)
   }
   scope :supplied_by_any, lambda { |enterprises|
     joins(:product).
-    where('spree_products.supplier_id IN (?)', enterprises)
+      where('spree_products.supplier_id IN (?)', enterprises)
   }
 
   scope :with_tax, joins(:adjustments).
-                   where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
-                   select('DISTINCT spree_line_items.*')
+    where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
+    select('DISTINCT spree_line_items.*')
 
   # Line items without a Spree::TaxRate-originated adjustment
   scope :without_tax, joins("LEFT OUTER JOIN spree_adjustments ON (spree_adjustments.adjustable_id=spree_line_items.id AND spree_adjustments.adjustable_type = 'Spree::LineItem' AND spree_adjustments.originator_type='Spree::TaxRate')").
-                      where('spree_adjustments.id IS NULL')
+    where('spree_adjustments.id IS NULL')
 
 
   def cap_quantity_at_stock!

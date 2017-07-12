@@ -19,7 +19,7 @@ module OpenFoodNetwork
 
     def table
       variants.select { |v| v.in_stock? }
-      .map do |variant|
+        .map do |variant|
         [
           variant.product.name,
           variant.full_name,

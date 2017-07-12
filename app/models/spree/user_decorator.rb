@@ -27,8 +27,8 @@ Spree.user_class.class_eval do
       Spree::User.scoped
     else
       Spree::User
-      .includes(:enterprises)
-      .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)", id)
+        .includes(:enterprises)
+        .where("enterprises.id IN (SELECT enterprise_id FROM enterprise_roles WHERE user_id = ?)", id)
     end
   end
 

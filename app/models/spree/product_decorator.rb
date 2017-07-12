@@ -47,17 +47,17 @@ Spree::Product.class_eval do
   scope :with_product_distributions_outer, joins('LEFT OUTER JOIN product_distributions ON product_distributions.product_id = spree_products.id')
 
   scope :with_order_cycles_outer, joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
-                                  joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = o_spree_variants.id)').
-                                  joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
-                                  joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
+    joins('LEFT OUTER JOIN exchange_variants AS o_exchange_variants ON (o_exchange_variants.variant_id = o_spree_variants.id)').
+    joins('LEFT OUTER JOIN exchanges AS o_exchanges ON (o_exchanges.id = o_exchange_variants.exchange_id)').
+    joins('LEFT OUTER JOIN order_cycles AS o_order_cycles ON (o_order_cycles.id = o_exchanges.order_cycle_id)')
 
   scope :with_order_cycles_inner, joins(:variants_including_master => {:exchanges => :order_cycle})
 
   scope :visible_for, lambda { |enterprise|
     joins('LEFT OUTER JOIN spree_variants AS o_spree_variants ON (o_spree_variants.product_id = spree_products.id)').
-    joins('LEFT OUTER JOIN inventory_items AS o_inventory_items ON (o_spree_variants.id = o_inventory_items.variant_id)').
-    where('o_inventory_items.enterprise_id = (?) AND visible = (?)', enterprise, true).
-    select('DISTINCT spree_products.*')
+      joins('LEFT OUTER JOIN inventory_items AS o_inventory_items ON (o_spree_variants.id = o_inventory_items.variant_id)').
+      where('o_inventory_items.enterprise_id = (?) AND visible = (?)', enterprise, true).
+      select('DISTINCT spree_products.*')
   }
 
 
@@ -73,16 +73,16 @@ Spree::Product.class_eval do
     distributor = distributor.respond_to?(:id) ? distributor.id : distributor.to_i
 
     with_product_distributions_outer.with_order_cycles_outer.
-    where('product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', distributor, false, distributor).
-    select('distinct spree_products.*')
+      where('product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', distributor, false, distributor).
+      select('distinct spree_products.*')
   }
 
   scope :in_product_distribution_by, lambda { |distributor|
     distributor = distributor.respond_to?(:id) ? distributor.id : distributor.to_i
 
     with_product_distributions_outer.
-    where('product_distributions.distributor_id = ?', distributor).
-    select('distinct spree_products.*')
+      where('product_distributions.distributor_id = ?', distributor).
+      select('distinct spree_products.*')
   }
 
   # Find products that are supplied by a given enterprise or distributed via that enterprise EITHER through a product distribution OR through an order cycle
@@ -90,19 +90,19 @@ Spree::Product.class_eval do
     enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
 
     with_product_distributions_outer.with_order_cycles_outer.
-    where('spree_products.supplier_id = ? OR product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', enterprise, enterprise, false, enterprise).
-    select('distinct spree_products.*')
+      where('spree_products.supplier_id = ? OR product_distributions.distributor_id = ? OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)', enterprise, enterprise, false, enterprise).
+      select('distinct spree_products.*')
   }
 
   # Find products that are distributed by the given order cycle
   scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
-                                                merge(Exchange.outgoing).
-                                                where('order_cycles.id = ?', order_cycle) }
+    merge(Exchange.outgoing).
+    where('order_cycles.id = ?', order_cycle) }
 
   scope :in_an_active_order_cycle, lambda { with_order_cycles_inner.
-                                                merge(OrderCycle.active).
-                                                merge(Exchange.outgoing).
-                                                where('order_cycles.id IS NOT NULL') }
+    merge(OrderCycle.active).
+    merge(Exchange.outgoing).
+    where('order_cycles.id IS NOT NULL') }
 
   scope :by_producer, joins(:supplier).order('enterprises.name')
   scope :by_name, order('name')

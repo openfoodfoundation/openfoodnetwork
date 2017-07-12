@@ -11,6 +11,7 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
+    - 'vendor/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
 
 # OFN SETTINGS
@@ -24,6 +25,10 @@ Style/Documentation:
 
 Style/StringLiterals:
   Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
 
 # TEMPORARY/CONTESTED SETTINGS
 # These are still to be decided upon, but recommended for inclusion by

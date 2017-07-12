@@ -88,7 +88,7 @@ class CheckoutController < Spree::CheckoutController
 
   def check_order_for_phantom_fees
     phantom_fees = @order.adjustments.joins('LEFT OUTER JOIN spree_line_items ON spree_line_items.id = spree_adjustments.source_id').
-    where("originator_type = 'EnterpriseFee' AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
+      where("originator_type = 'EnterpriseFee' AND source_type = 'Spree::LineItem' AND spree_line_items.id IS NULL")
 
     if phantom_fees.any?
       Bugsnag.notify(RuntimeError.new("Phantom Fees"), {

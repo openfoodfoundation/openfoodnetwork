@@ -43,10 +43,10 @@ module OpenFoodNetwork
       # Permissions granted by create_variant_overrides relationship from producer to hub
       permissions = Hash[
            EnterpriseRelationship.
-           permitting(hubs).
-           with_permission(:create_variant_overrides).
-           group_by { |er| er.child_id }.
-           map { |child_id, ers| [child_id, ers.map { |er| er.parent_id }] }
+             permitting(hubs).
+             with_permission(:create_variant_overrides).
+             group_by { |er| er.child_id }.
+             map { |child_id, ers| [child_id, ers.map { |er| er.parent_id }] }
           ]
 
       # Allow a producer hub to override it's own products without explicit permission
@@ -68,11 +68,11 @@ module OpenFoodNetwork
       # P-OC to the distributor AND the order contains products of at least one of THE SAME producers
       granted_distributors = related_enterprises_granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer)
       produced = Spree::Order.with_line_items_variants_and_products_outer.
-      where(
+        where(
       "spree_orders.distributor_id IN (?) AND spree_products.supplier_id IN (?)",
       granted_distributors,
       related_enterprises_granting(:add_to_order_cycle, to: granted_distributors).merge(managed_enterprises.is_primary_producer)
-      ).pluck(:id)
+        ).pluck(:id)
 
       Spree::Order.where(id: editable | produced)
     end
@@ -94,7 +94,7 @@ module OpenFoodNetwork
 
       # Any from visible orders, where the product is produced by one of my managed producers
       produced = Spree::LineItem.where(order_id: visible_orders.pluck(:id)).joins(:product).
-      where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer.pluck(:id))
+        where('spree_products.supplier_id IN (?)', managed_enterprises.is_primary_producer.pluck(:id))
 
       Spree::LineItem.where(id: editable | produced)
     end
