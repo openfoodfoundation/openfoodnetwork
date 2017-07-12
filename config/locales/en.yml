@@ -378,6 +378,7 @@ en:
       index:
         capture: "Capture"
         ship: "Ship"
+      invoice_email_sent: 'Invoice sent'
       bulk_management:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"
