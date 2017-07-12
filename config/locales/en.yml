@@ -271,7 +271,7 @@ en:
 
     enterprise_fees:
       index:
-        title: Entreprise Fees
+        title: Enterprise Fees
         enterprise: Enterprise
         fee_type: Fee Type
         name: Name
