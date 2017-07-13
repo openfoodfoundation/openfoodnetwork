@@ -755,6 +755,9 @@ en:
 
     # Admin controllers
     controllers:
+      enterprises:
+        stripe_connect_success: "Stripe account connected successfully"
+        stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
 
