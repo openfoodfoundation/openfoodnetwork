@@ -74,7 +74,7 @@ Spree::Admin::OrdersController.class_eval do
   # This uses a new template. See mailers/spree/order_mailer_decorator.rb.
   def resend
     Spree::OrderMailer.confirm_email_for_customer(@order.id, true).deliver
-    flash[:success] = t(:order_email_resent)
+    flash[:success] = t('admin.orders.order_email_resent')
 
     respond_with(@order) { |format| format.html { redirect_to :back } }
   end
@@ -83,7 +83,7 @@ Spree::Admin::OrdersController.class_eval do
     template = if Spree::Config.invoice_style2? then "spree/admin/orders/invoice2" else "spree/admin/orders/invoice" end
     pdf = render_to_string pdf: "invoice-#{@order.number}.pdf", template: template, formats: [:html], encoding: "UTF-8"
     Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
-    flash[:success] = t(:invoice_email_sent)
+    flash[:success] = t('admin.orders.invoice_email_sent')
 
     respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
   end
