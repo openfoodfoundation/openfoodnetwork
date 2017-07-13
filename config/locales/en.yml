@@ -323,6 +323,9 @@ en:
         new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
 
     orders:
+      index:
+        capture: "Capture"
+        ship: "Ship"
       bulk_management:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"

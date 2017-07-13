@@ -4,4 +4,4 @@
   - if !payment.nil?
     - payment.actions.grep(/^capture$/).each do |action|
       - # copied from backend/app/views/spree/admin/payments/_list.html.erb
-      = link_to_with_icon "icon-#{action}", t(action), fire_admin_order_payment_path(order, payment, :e => action), :method => :put, :no_text => true, :data => {:action => action}
+      = link_to_with_icon "icon-#{action}", t('admin.orders.index.capture'), fire_admin_order_payment_path(order, payment, :e => action), :method => :put, :no_text => true, :data => {:action => action}

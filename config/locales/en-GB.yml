@@ -178,6 +178,9 @@ en-GB:
         hidden_powertip: These products have been hidden from your inventory and will not be available to add to your shop. You can click 'Add' to add a product to you inventory.
         new_powertip: These products are available to be added to your inventory. Click 'Add' to add a product to your inventory, or 'Hide' to hide it from view. You can always change your mind later!
     orders:
+      index:
+        capture: "Mark as paid"
+        ship: "Mark as delivered"
       bulk_management:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"
