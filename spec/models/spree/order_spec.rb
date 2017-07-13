@@ -398,6 +398,48 @@ describe Spree::Order do
     end
   end
 
+  describe "#variants_still_available_in_order_cycle?" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:simple_order_cycle) }
+    let(:variant)    { create(:variant) }
+    let(:variant2)    { create(:variant) }
+    let(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false) }
+
+    it "passes if order is empty" do # not needed scenario as empty order won't be valid anyway
+      subject.set_order_cycle! order_cycle
+      expect(subject.variants_still_available_in_order_cycle?).to eql true
+    end
+
+    it "passes with some line items" do
+      exchange.variants << variant
+      allow(order_cycle).to receive(:distributors).and_return([distributor])
+      allow(order_cycle.exchanges).to receive(:outgoing).and_return([exchange])
+
+      subject.set_order_cycle! order_cycle
+      subject.add_variant variant
+
+      expect(subject.variants_still_available_in_order_cycle?).to eql true
+    end
+
+    it "fails with variant missing in order_cycle" do
+      subject.set_order_cycle! order_cycle
+      subject.add_variant variant
+      expect(subject.variants_still_available_in_order_cycle?).to eql false
+    end
+
+    it "fails when at least one variant is missing in order_cycle" do
+      exchange.variants << variant
+      allow(order_cycle).to receive(:distributors).and_return([distributor])
+      allow(order_cycle.exchanges).to receive(:outgoing).and_return([exchange])
+
+      subject.set_order_cycle! order_cycle
+      subject.add_variant variant
+      subject.add_variant variant2
+
+      expect(subject.variants_still_available_in_order_cycle?).to eql false
+    end
+  end
+
   describe "setting the order cycle" do
     let(:oc) { create(:simple_order_cycle) }
 
@@ -674,7 +716,6 @@ describe Spree::Order do
       it "updates shipping and transaction fees" do
         # Setting quantity of an item to zero
         order.update_attributes(line_items_attributes: [{id: order.line_items.first.id, quantity: 0}])
-
         # Check if fees got updated
         order.reload
         expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
