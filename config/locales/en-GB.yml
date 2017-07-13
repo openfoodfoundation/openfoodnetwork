@@ -36,7 +36,7 @@ en-GB:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "Please enter your company number."
+  must_have_valid_business_number: "%{enterprise_name} must have a valid company number before invoices can be sent."
   invoice: "Invoice"
   percentage_of_sales: "%{percentage} of sales"
   capped_at_cap: "capped at %{cap}"
@@ -212,6 +212,11 @@ en-GB:
         status: Status
         manage: Manage
       form:
+        business_details:
+          abn: "Company Number"
+          abn_placeholder: "eg. 00123456789"
+          acn: "Charity Number"
+          acn_placeholder: "eg. 00123456789"
         shop_preferences:
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
@@ -730,10 +735,10 @@ en-GB:
   enterprise_long_desc: "Long Description"
   enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
   enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
-  enterprise_abn: "ABN"
-  enterprise_abn_placeholder: "eg. 99 123 456 789"
-  enterprise_acn: "ACN"
-  enterprise_acn_placeholder: "eg. 123 456 789"
+  enterprise_abn: "Company Number"
+  enterprise_abn_placeholder: "eg. 00123456789"
+  enterprise_acn: "Charity Number"
+  enterprise_acn_placeholder: "eg. 00123456789"
   enterprise_tax_required: "You need to make a selection."
   enterprise_final_step: "Final step!"
   enterprise_social_text: "How can people find %{enterprise} online?"
