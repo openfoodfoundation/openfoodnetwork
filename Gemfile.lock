@@ -258,7 +258,7 @@ GEM
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
     erubis (2.7.0)
-    eventmachine (1.0.8)
+    eventmachine (1.2.3)
     excon (0.45.4)
     execjs (2.6.0)
     factory_girl (3.3.0)
@@ -693,6 +693,7 @@ DEPENDENCIES
   deface!
   delayed_job_active_record
   diffy
+  eventmachine (>= 1.2.3)
   factory_girl_rails
   figaro
   foreigner
