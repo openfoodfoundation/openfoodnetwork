@@ -364,6 +364,9 @@ en:
       controls:
         back_to_my_inventory: Back to my inventory
     orders:
+      index:
+        capture: "Capture"
+        ship: "Ship"
       bulk_management:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"
