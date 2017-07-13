@@ -759,6 +759,7 @@ en:
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
+  invoice_tax_total: "GST Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
   total_excl_tax: "Total (Excl. tax):"
@@ -2095,9 +2096,6 @@ Please follow the instructions there to make your enterprise visible on the Open
       resumed: resumed
       returned: returned
       skrill: skrill
-    orders:
-      invoice:
-        tax_invoice: "TAX INVOICE: "
     payment_states:
       balance_due: balance due
       completed: completed

@@ -205,6 +205,12 @@ en-GB:
         max_fulfilled_units: "Max Fulfilled Units"
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
+      invoice:
+        issued_on: Issued on
+        tax_invoice: TAX INVOICE
+        code: Code
+        from: From
+        to: To
     order_cycles:
       edit:
         choose_products_from: 'Choose Products From:'
@@ -250,10 +256,20 @@ en-GB:
       require_customer_login: "This shop is for customers only."
       require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
       require_customer_html: "Please %{contact} %{enterprise} to become a customer."
-  invoice_column_item: "Item"
-  invoice_column_qty: "Qty"
   invoice_column_tax: "VAT"
   invoice_column_price: "Price"
+  invoice_column_item: "Item"
+  invoice_column_qty: "Qty"
+  invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"
+  invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
+  invoice_column_price_with_taxes: "Total price (Incl. tax)"
+  invoice_column_price_without_taxes: "Total price (Excl. tax)"
+  invoice_column_tax_rate: "Tax rate"
+  tax_invoice: "INVOICE"
+  tax_total: "Total tax (%{rate}):"
+  total_excl_tax: "Total (Excl. tax):"
+  total_incl_tax: "Total (Incl. tax):"
+  invoice_tax_total: "VAT Total:"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -1020,6 +1036,14 @@ en-GB:
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
   spree:
+    admin:
+      orders:
+        invoice:
+          issued_on: Issued on
+          tax_invoice: INVOICE
+          code: Code
+          from: From
+          to: To
     zipcode: Postcode
     shipment_states:
       backorder: backorder
