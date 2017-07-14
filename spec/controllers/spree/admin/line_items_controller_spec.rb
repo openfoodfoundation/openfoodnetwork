@@ -172,41 +172,82 @@ describe Spree::Admin::LineItemsController do
           controller.stub spree_current_user: coordinator.owner
         end
 
-        it "updates the line item" do
-          xhr :put, :update, params
-          line_item1.reload
-          expect(line_item1.quantity).to eq 3
-          expect(line_item1.final_weight_volume).to eq 3000
-          expect(line_item1.price).to eq 3.00
-        end
-
-        it "returns an empty JSON response" do
-          xhr :put, :update, params
-          expect(response.body).to eq ' '
-        end
-
-        it 'returns a 204 response' do
-          xhr :put, :update, params
-          expect(response.status).to eq 204
-        end
-
-        context 'when the line item params are not correct' do
-          let(:line_item_params) { { price: 'hola' } }
-          let(:errors) { { 'price' => ['is not a number'] } }
-
-          it 'returns a JSON with the errors' do
+        # Used in admin/orders/edit
+        context 'when the request is JS/XHR (jquery-rails gem)' do
+          it "updates the line item" do
             xhr :put, :update, params
-            expect(JSON.parse(response.body)['errors']).to eq(errors)
+            line_item1.reload
+            expect(line_item1.quantity).to eq 3
+            expect(line_item1.final_weight_volume).to eq 3000
+            expect(line_item1.price).to eq 3.00
           end
 
-          it 'returns a 412 response' do
+          it "returns an empty JSON response" do
             xhr :put, :update, params
-            expect(response.status).to eq 412
+            expect(response.body).to eq ' '
+          end
+
+          it 'returns a 204 response' do
+            xhr :put, :update, params
+            expect(response.status).to eq 204
+          end
+
+          context 'when the line item params are not correct' do
+            let(:line_item_params) { { price: 'hola' } }
+            let(:errors) { { 'price' => ['is not a number'] } }
+
+            it 'returns a JSON with the errors' do
+              xhr :put, :update, params
+              expect(JSON.parse(response.body)['errors']).to eq(errors)
+            end
+
+            it 'returns a 412 response' do
+              xhr :put, :update, params
+              expect(response.status).to eq 412
+            end
+          end
+        end
+
+        # Used in admin/orders/bulk_management
+        context 'when the request is JSON (angular)' do
+          before { params[:format] = :json }
+
+          it "updates the line item" do
+            spree_put :update, params
+            line_item1.reload
+            expect(line_item1.quantity).to eq 3
+            expect(line_item1.final_weight_volume).to eq 3000
+            expect(line_item1.price).to eq 3.00
+          end
+
+          it "returns an empty JSON response" do
+            spree_put :update, params
+            expect(response.body).to eq ' '
+          end
+
+          it 'returns a 204 response' do
+            spree_put :update, params
+            expect(response.status).to eq 204
+          end
+
+          context 'when the line item params are not correct' do
+            let(:line_item_params) { { price: 'hola' } }
+            let(:errors) { { 'price' => ['is not a number'] } }
+
+            it 'returns a JSON with the errors' do
+              spree_put :update, params
+              expect(JSON.parse(response.body)['errors']).to eq(errors)
+            end
+
+            it 'returns a 412 response' do
+              spree_put :update, params
+              expect(response.status).to eq 412
+            end
           end
         end
 
         context 'when the request is HTML' do
-          before { params.merge(format: :html) }
+          before { params[:format] = :html }
 
           it 'returns an HTML response with the order form' do
             spree_put :update, params
@@ -246,20 +287,44 @@ describe Spree::Admin::LineItemsController do
       controller.stub spree_current_user: coordinator.owner
     end
 
-    it 'destroys the line item' do
-      expect {
+    # Used in admin/orders/edit
+    context 'when the request is JS/XHR (jquery-rails gem)' do
+      it 'destroys the line item' do
+        expect {
+          xhr :delete, :destroy, params
+        }.to change { Spree::LineItem.where(id: line_item1).count }.from(1).to(0)
+      end
+
+      it 'returns an empty JSON response' do
         xhr :delete, :destroy, params
-      }.to change { Spree::LineItem.where(id: line_item1).count }.from(1).to(0)
+        expect(response.body).to eq ' '
+      end
+
+      it 'returns a 204 response' do
+        xhr :delete, :destroy, params
+        expect(response.status).to eq 204
+      end
     end
 
-    it 'returns an empty JSON response' do
-      xhr :delete, :destroy, params
-      expect(response.body).to eq ' '
-    end
+    # Used in admin/orders/bulk_management
+    context 'when the request is JSON (angular)' do
+      before { params[:format] = :json }
 
-    it 'returns a 204 response' do
-      xhr :delete, :destroy, params
-      expect(response.status).to eq 204
+      it 'destroys the line item' do
+        expect {
+          spree_delete :destroy, params
+        }.to change { Spree::LineItem.where(id: line_item1).count }.from(1).to(0)
+      end
+
+      it 'returns an empty JSON response' do
+        spree_delete :destroy, params
+        expect(response.body).to eq ' '
+      end
+
+      it 'returns a 204 response' do
+        spree_delete :destroy, params
+        expect(response.status).to eq 204
+      end
     end
 
     context 'when the request is HTML' do
