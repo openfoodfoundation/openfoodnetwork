@@ -4,7 +4,7 @@
 
 module Stripe
   class AccountConnector
-    attr_reader :oauth_response, :enterprise, :user, :params
+    attr_reader :token, :enterprise, :user, :params
 
     def initialize(user, params)
       @user = user
@@ -14,7 +14,7 @@ module Stripe
       raise CanCan::AccessDenied unless state.keys.include? "enterprise_id"
 
       # Request an access token based on the code provided
-      @oauth_response = OAuth.request_access_token(params["code"])
+      @token = OAuth.token(grant_type: 'authorization_code', code: params["code"])
 
       # Find the Enterprise
       @enterprise = Enterprise.find_by_permalink(state["enterprise_id"])
@@ -22,14 +22,14 @@ module Stripe
       return if user.enterprises.include?(enterprise) || user.admin?
 
       # Local authorisation issue, so request disconnection from Stripe
-      OAuth.deauthorize(oauth_response["stripe_user_id"])
+      OAuth.deauthorize(stripe_user_id: token.stripe_user_id)
       raise CanCan::AccessDenied
     end
 
     def create_account
       StripeAccount.create(
-        stripe_user_id: oauth_response["stripe_user_id"],
-        stripe_publishable_key: oauth_response["stripe_publishable_key"],
+        stripe_user_id: token.stripe_user_id,
+        stripe_publishable_key: token.stripe_publishable_key,
         enterprise: enterprise
       )
     end
@@ -37,7 +37,9 @@ module Stripe
     private
 
     def state
-      OAuth.send(:jwt_decode, params["state"])
+      # Returns the original payload
+      key = Openfoodnetwork::Application.config.secret_token
+      JWT.decode(params["state"], key, true, algorithm: 'HS256')[0]
     end
   end
 end

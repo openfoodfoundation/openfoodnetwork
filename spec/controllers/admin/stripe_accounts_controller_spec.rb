@@ -6,12 +6,14 @@ describe Admin::StripeAccountsController, type: :controller do
   describe "#connect" do
     before do
       allow(controller).to receive(:spree_current_user) { enterprise.owner }
-      allow(Stripe::OAuth).to receive(:authorize_url) { "some_url" }
     end
 
     it "redirects to Stripe Authorization url constructed OAuth" do
       spree_get :connect
-      expect(response).to redirect_to "some_url"
+      expect(response.location).to match %r(\Ahttps://connect.stripe.com)
+      uri = URI.parse(response.location)
+      params = CGI.parse(uri.query)
+      expect(params.keys).to include 'client_id', 'response_type', 'state', 'scope'
     end
   end
 
