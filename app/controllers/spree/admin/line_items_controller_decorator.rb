@@ -35,11 +35,11 @@ Spree::Admin::LineItemsController.class_eval do
   def update
     respond_to do |format|
       format.html { render_order_form }
-      format.json {
+      format.js {
         if @line_item.update_attributes(params[:line_item])
           render nothing: true, status: 204 # No Content, does not trigger ng resource auto-update
         else
-          render json: {errors: @line_item.errors}, status: 412
+          render json: { errors: @line_item.errors }, status: 412
         end
       }
     end
