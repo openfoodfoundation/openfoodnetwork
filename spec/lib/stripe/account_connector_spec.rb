@@ -28,15 +28,17 @@ module Stripe
 
         context "and the decoded state param contains an 'enterprise_id' key" do
           let(:payload) { { enterprise_id: enterprise.permalink } }
-          let(:access_token) { { "stripe_user_id" => "some_user_id", "stripe_publishable_key" => "some_key" } }
+          let(:token_response) { { "stripe_user_id" => "some_user_id", "stripe_publishable_key" => "some_key" } }
 
           before do
-            expect(OAuth).to receive(:request_access_token) { access_token }
+            stub_request(:post, "https://connect.stripe.com/oauth/token").
+              with(body: {"code"=>"code", "grant_type"=>"authorization_code"}).
+              to_return(status: 200, body: JSON.generate(token_response) )
           end
 
           context "but the user doesn't manage own or manage the corresponding enterprise" do
             it "makes a request to cancel the Stripe connection and raises an error" do
-              expect(OAuth).to receive(:deauthorize).with("some_user_id")
+              expect(OAuth).to receive(:deauthorize).with(stripe_user_id: "some_user_id")
               expect{ AccountConnector.new(user, params) }.to raise_error CanCan::AccessDenied
             end
           end
@@ -54,6 +56,9 @@ module Stripe
             it "allows creations of a new Stripe Account from the callback params" do
               connector = AccountConnector.new(user, params)
               expect{ connector.create_account }.to change(StripeAccount, :count).by(1)
+              account = StripeAccount.last
+              expect(account.stripe_user_id).to eq "some_user_id"
+              expect(account.stripe_publishable_key).to eq "some_key"
             end
           end
 
@@ -68,6 +73,9 @@ module Stripe
             it "allows creations of a new Stripe Account from the callback params" do
               connector = AccountConnector.new(user, params)
               expect{ connector.create_account }.to change(StripeAccount, :count).by(1)
+              account = StripeAccount.last
+              expect(account.stripe_user_id).to eq "some_user_id"
+              expect(account.stripe_publishable_key).to eq "some_key"
             end
           end
         end

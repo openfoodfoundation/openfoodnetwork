@@ -1,12 +1,14 @@
 require 'stripe/account_connector'
-require 'stripe/oauth'
 
 module Admin
   class StripeAccountsController < BaseController
     protect_from_forgery except: :destroy_from_webhook
 
     def connect
-      redirect_to Stripe::OAuth.authorize_url(params[:enterprise_id])
+      payload = params.slice(:enterprise_id)
+      key = Openfoodnetwork::Application.config.secret_token
+      url_params = { state: JWT.encode(payload, key, 'HS256'), scope: "read_write" }
+      redirect_to Stripe::OAuth.authorize_url(url_params)
     end
 
     def connect_callback
