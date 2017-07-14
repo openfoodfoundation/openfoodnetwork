@@ -116,7 +116,6 @@ describe "Submitting Stripe Connect charge requests", type: :request do
     let(:credit_card) do
       create(
         :credit_card,
-        payment_method_id: payment_method.id,
         user_id: order.user_id,
         gateway_payment_profile_id: card_id,
         gateway_customer_profile_id: customer_id,
