@@ -9,8 +9,11 @@ describe Spree::Gateway::StripeConnect, type: :model do
     end
   end
 
+  let(:stripe_account_id) { "acct_123"  }
+
   before do
     Stripe.api_key = "sk_test_123456"
+    allow(subject).to receive(:stripe_account_id) { stripe_account_id }
     subject.stub(:options_for_purchase_or_auth).and_return(['money', 'cc', 'opts'])
     subject.stub(:provider).and_return provider
   end
