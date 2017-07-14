@@ -11,6 +11,10 @@ module Stripe
       let(:state) { JWT.encode(payload, Openfoodnetwork::Application.config.secret_token) }
       let(:params) { { "state" => state } }
 
+      before do
+        allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+      end
+
       context "when params have no 'code' key" do
         it "raises a StripeError" do
           expect{ AccountConnector.new(user, params) }.to raise_error StripeError

@@ -17,8 +17,8 @@ describe Spree::CreditCardsController do
   end
 
   before do
-    Stripe.api_key = "sk_test_12345"
-    controller.stub(:spree_current_user) { user }
+    allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+    allow(controller).to receive(:spree_current_user) { user }
     stub_request(:post, "https://api.stripe.com/v1/customers")
       .with(:body => { email: user.email, source: token })
       .to_return(response_mock)
