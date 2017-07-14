@@ -8,7 +8,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
   let!(:enterprise) { create(:distributor_enterprise) }
   let!(:exchange) { create(:exchange, order_cycle: order_cycle, sender: order_cycle.coordinator, receiver: enterprise, incoming: false, pickup_time: "Monday") }
   let!(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0), distributors: [enterprise]) }
-  let!(:payment_method) { create(:payment_method, type: "Spree::Gateway::StripeConnect", distributors: [enterprise]) }
+  let!(:payment_method) { create(:stripe_payment_method, distributors: [enterprise], preferred_enterprise_id: enterprise.id) }
   let!(:stripe_account) { create(:stripe_account, enterprise: enterprise) }
   let!(:line_item) { create(:line_item, price: 12.34) }
   let!(:order) { line_item.order }

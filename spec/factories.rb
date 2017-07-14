@@ -363,6 +363,11 @@ FactoryGirl.define do
     end
   end
 
+  factory :stripe_payment_method, :class => Spree::Gateway::StripeConnect do
+    name 'Stripe'
+    environment 'test'
+  end
+
   factory :stripe_account do
     enterprise { FactoryGirl.create :distributor_enterprise }
     stripe_user_id "abc123"
