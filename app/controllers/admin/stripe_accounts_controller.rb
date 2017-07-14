@@ -1,6 +1,25 @@
+require 'stripe/account_connector'
+require 'stripe/oauth'
+
 module Admin
   class StripeAccountsController < BaseController
     protect_from_forgery except: :destroy_from_webhook
+
+    def connect
+      redirect_to Stripe::OAuth.authorize_url(params[:enterprise_id])
+    end
+
+    def connect_callback
+      connector = Stripe::AccountConnector.new(spree_current_user, params)
+      if connector.create_account
+        flash[:success] = t('admin.controllers.enterprises.stripe_connect_success')
+        redirect_to main_app.edit_admin_enterprise_path(connector.enterprise)
+      else
+        render text: t('admin.controllers.enterprises.stripe_connect_fail'), status: 500
+      end
+    rescue Stripe::StripeError => e
+      render text: e.message, status: 500
+    end
 
     def destroy
       stripe_account = StripeAccount.find(params[:id])
@@ -18,7 +37,7 @@ module Admin
       redirect_to spree.admin_path
     end
 
-    def destroy_from_webhook
+    def deauthorize
       # TODO is there a sensible way to confirm this webhook call is actually from Stripe?
       event = Stripe::Event.construct_from(params)
       return render nothing: true, status: 400 unless event.type == "account.application.deauthorized"

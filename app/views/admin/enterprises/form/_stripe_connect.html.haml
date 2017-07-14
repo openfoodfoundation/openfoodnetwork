@@ -3,7 +3,7 @@
     .row
       = t('.stripe_account_connected')
     .row
-      =link_to t('.disconnect'), main_app.admin_enterprise_stripe_account_path(@enterprise,@stripe_account), method: :delete, class: 'button'
+      =link_to t('.disconnect'), main_app.admin_stripe_account_path(@stripe_account), method: :delete, class: 'button'
 - else
   .row.stripe-info
     .six.columns.alpha
@@ -15,5 +15,5 @@
       -# What, if any, fees the platform charges.
       =t('.stripe_connect_info')
     .five.columns.omega.text-right
-      %a.stripe-connect{href: 'stripe_connect'}
+      %a.stripe-connect{ href: main_app.connect_admin_stripe_accounts_path(enterprise_id: @enterprise) }
         %span= t('.connect_with_stripe')
