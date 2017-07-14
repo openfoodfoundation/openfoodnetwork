@@ -219,7 +219,6 @@ class CheckoutController < Spree::CheckoutController
     credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
 
     params[:order][:payments_attributes].first[:source] = credit_card
-    params[:order][:payments_attributes].first[:payment_method_id] = credit_card.payment_method_id
     params[:order][:payments_attributes].first.delete :source_attributes
   end
 
