@@ -1,0 +1,3 @@
+/ replace_contents 'header#order_tab_summary dl.additional-info dd#date_complete'
+
+<%= l(@order.completed? ? @order.completed_at : @order.created_at, format: "%b %d, %Y %H:%M") %>
