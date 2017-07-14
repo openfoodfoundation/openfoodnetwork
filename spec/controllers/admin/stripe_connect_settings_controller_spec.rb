@@ -22,7 +22,9 @@ describe Admin::StripeConnectSettingsController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { admin } }
 
       context "when a Stripe API key is not set" do
-        before { Stripe.api_key = nil }
+        before do
+          allow(Stripe).to receive(:api_key) { nil }
+        end
 
         it "sets the account status to :empty_api_key" do
           spree_get :edit
@@ -32,7 +34,9 @@ describe Admin::StripeConnectSettingsController, type: :controller do
       end
 
       context "when a Stripe API key is set" do
-        before { Stripe.api_key = "sk_test_xxxx" }
+        before do
+          allow(Stripe).to receive(:api_key) { "sk_test_xxxx" }
+        end
 
         context "and the request to retrieve Stripe account info fails" do
           before do

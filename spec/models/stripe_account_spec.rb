@@ -10,6 +10,7 @@ describe StripeAccount do
     let!(:stripe_account) { create(:stripe_account, enterprise: enterprise, stripe_user_id: stripe_user_id) }
 
     before do
+      allow(Stripe).to receive(:api_key) { "sk_test_12345" }
       allow(Stripe).to receive(:client_id) { client_id }
     end
 
