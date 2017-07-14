@@ -1004,8 +1004,13 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.string   "api_key",                :limit => 40
     t.integer  "enterprise_limit",                     :default => 1, :null => false
     t.string   "locale",                 :limit => 5
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "spree_users", ["confirmation_token"], :name => "index_spree_users_on_confirmation_token", :unique => true
   add_index "spree_users", ["email"], :name => "email_idx_unique", :unique => true
   add_index "spree_users", ["persistence_token"], :name => "index_users_on_persistence_token"
 

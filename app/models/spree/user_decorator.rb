@@ -19,9 +19,16 @@ Spree.user_class.class_eval do
   accepts_nested_attributes_for :ship_address
 
   attr_accessible :enterprise_ids, :enterprise_roles_attributes, :enterprise_limit, :locale, :bill_address_attributes, :ship_address_attributes
-  after_create :send_signup_confirmation
 
   validate :limit_owned_enterprises
+
+  # We use the same options as Spree and add :confirmable
+  devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
+    :rememberable, :trackable, :validatable, :confirmable, :encryptable,
+    :reconfirmable => true, confirmation_keys: [ :id, :email ], :encryptor => 'authlogic_sha512'
+  handle_asynchronously :send_confirmation_instructions
+  # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
+  after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
 
   def known_users
     if admin?
@@ -44,6 +51,14 @@ Spree.user_class.class_eval do
   def customer_of(enterprise)
     return nil unless enterprise
     customers.find_by_enterprise_id(enterprise)
+  end
+
+  def welcome_after_confirm
+    # Send welcome email if we are confirming an user's email
+    # Note: this callback only runs on email confirmation
+    if confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
+      send_signup_confirmation
+    end
   end
 
   def send_signup_confirmation
