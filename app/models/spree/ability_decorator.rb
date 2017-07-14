@@ -96,7 +96,7 @@ class AbilityDecorator
     can [:welcome, :register], Enterprise do |enterprise|
       enterprise.owner == user
     end
-    can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees, :stripe_account], Enterprise do |enterprise|
+    can [:manage_payment_methods, :manage_shipping_methods, :manage_enterprise_fees], Enterprise do |enterprise|
       user.enterprises.include? enterprise
     end
 
@@ -122,7 +122,7 @@ class AbilityDecorator
     # Not sure how to restrict these methods to a non-resource Controller
     can [:stripe_connect, :stripe_connect_callback, :stripe_disconnect], :all
 
-    can [:destroy], StripeAccount do |stripe_account|
+    can [:status, :destroy], StripeAccount do |stripe_account|
       user.enterprises.include? stripe_account.enterprise
     end
   end
