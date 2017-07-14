@@ -61,9 +61,6 @@ Openfoodnetwork::Application.routes.draw do
   post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'
   post 'embedded_shopfront/disable', to: 'application#disable_embedded_styles'
 
-  get '/stripe/callback', :to => 'admin/enterprises#stripe_connect_callback'
-  post '/stripe/webhook', :to => 'admin/stripe_accounts#destroy_from_webhook'
-
   resources :enterprises do
     collection do
       post :search
@@ -96,10 +93,6 @@ Openfoodnetwork::Application.routes.draw do
         get :for_line_items
         post :bulk_update, as: :bulk_update
       end
-
-      get "/stripe_connect", to: "enterprises#stripe_connect"
-      get "/stripe_account", to: "stripe_accounts#status"
-      resources :stripe_accounts, only: [:destroy]
 
       member do
         get :welcome
@@ -169,6 +162,13 @@ Openfoodnetwork::Application.routes.draw do
     resource :invoice_settings, only: [:edit, :update]
 
     resource :stripe_connect_settings, only: [:edit, :update]
+
+    resources :stripe_accounts, only: [:destroy] do
+      get :connect, on: :collection
+      get :connect_callback, on: :collection
+      get :status, on: :collection
+      post :deauthorize, on: :collection
+    end
   end
 
   namespace :api do

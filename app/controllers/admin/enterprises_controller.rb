@@ -1,6 +1,4 @@
 require 'open_food_network/referer_parser'
-require 'stripe/account_connector'
-require 'stripe/oauth'
 
 module Admin
   class EnterprisesController < ResourceController
@@ -113,22 +111,6 @@ module Admin
           render_as_json @collection, ams_prefix: 'basic', spree_current_user: spree_current_user
         end
       end
-    end
-
-    def stripe_connect
-      redirect_to Stripe::OAuth.authorize_url(params[:enterprise_id])
-    end
-
-    def stripe_connect_callback
-      connector = Stripe::AccountConnector.new(spree_current_user, params)
-      if connector.create_account
-        flash[:success] = t('admin.controllers.enterprises.stripe_connect_success')
-        redirect_to main_app.edit_admin_enterprise_path(connector.enterprise)
-      else
-        render text: t('admin.controllers.enterprises.stripe_connect_fail'), status: 500
-      end
-    rescue Stripe::StripeError => e
-      render text: e.message, status: 500
     end
 
     protected
