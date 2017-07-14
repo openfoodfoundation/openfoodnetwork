@@ -858,11 +858,9 @@ fr:
   email_community_html: "Nous avons aussi un forum de discussion en ligne (en anglais) pour échanger avec la communauté sur des questions liées au logiciel OFN et aux défis de la gestion d'un food hub.  Nous vous invitons à y participer. Nous sommes en constante évolution et vos contributions à ce forum vont façonner les prochaines étapes. %{link}"
   join_community: "Rejoindre la communauté"
   email_help: "En cas de difficulté, consultez notre FAQ, parcourez le forum (en anglais) ou postez un message dans la section 'Support' et quelqu'un viendra vous aider!"
-  email_confirmation_greeting: "Bonjour %{contact}!"
-  email_confirmation_profile_created: "Le profil pour %{name} a été créé avec succès! Pour activer votre Profil nous devons vérifier cette adresse email."
+  email_confirmation_activate_account: "Pour activer votre compte, vous devez confirmer votre adresse email."
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
-  email_confirmation_help_html: "Après confirmation de votre email, vous pourrez accéder au compte d'administration de cette entreprise. Voir %{link} pour en savoir plus à propos de %{sitename} et commencer à utiliser votre profil et/ou boutique en ligne."
   email_confirmation_userguide: "Guide Utilisateur"
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
@@ -894,8 +892,7 @@ fr:
   email_special_instructions: "Vos commentaires:"
   email_signup_greeting: Bonjour!
   email_signup_welcome: "Bienvenue sur %{sitename}!"
-  email_signup_login: Votre login
-  email_signup_email: Votre email de connexion est
+  email_signup_confirmed_email: "Merci d'avoir confirmé votre adresse email."
   email_signup_shop_html: "Vous pouvez maintenant commencer vos achats sur %{link}."
   email_signup_text: "Merci d'avoir rejoint le réseau. Si vous êtes un client, nous sommes impatients de vous faire découvrir de nombreux agriculteurs fantastiques, de merveilleux hubs de distribution et des plats délicieux! Si vous êtes un producteur ou autre entreprise alimentaire, nous sommes ravis de vous compter parmi les membres du réseau."
   email_signup_help_html: "Vos questions et feedbacks sont les bienvenus! Cliquez sur le bouton <em>Envoyer un commentaire</em> sur le site ou envoyez-nous un email à %{email}"
@@ -1960,6 +1957,8 @@ fr:
         issue_text: |
           Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
           Si le problème persiste, n'hésitez pas à nous contacter.
+      confirmation_instructions:
+        subject: Veuillez confirmer votre compte OFN
     weight: Poids (au kg)
     zipcode: Code postal
     users:
