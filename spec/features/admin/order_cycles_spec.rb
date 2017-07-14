@@ -58,6 +58,39 @@ feature %q{
     end
   end
 
+  describe 'listing order cycles with other locales' do
+    let!(:oc_de) { create(:simple_order_cycle, name: 'oc', orders_open_at: '2012-01-01 00:00:00') }
+
+    around(:each) do |spec|
+      I18n.locale = :de
+      spec.run
+      I18n.locale = :en
+    end
+
+    context 'using datepickers' do
+      it "correctly open the datepicker and changes the date field" do
+        login_to_admin_section
+        visit admin_order_cycles_path
+
+        within("tr.order-cycle-#{oc_de.id}") do
+          expect(all('input').first.value).to start_with '2012-01-01 00:00:00'
+          find('img.ui-datepicker-trigger', match: :first).click
+        end
+
+        within("#ui-datepicker-div") do
+          expect(page).to have_selector 'a.ui-state-active', text: '1'
+
+          click_link '30'
+          find('button.ui-datepicker-close', match: :first).click
+        end
+
+        within("tr.order-cycle-#{oc_de.id}") do
+          expect(all('input').first.value).to eq '2012-01-30 00:00'
+        end
+      end
+    end
+  end
+
   context "with specific time" do
     let(:order_cycle_opening_time) { Time.zone.local(2040, 11, 06, 06, 00, 00) }
     let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 00, 00) }
