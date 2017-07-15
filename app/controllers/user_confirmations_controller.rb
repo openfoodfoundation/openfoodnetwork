@@ -13,10 +13,10 @@ class UserConfirmationsController < DeviseController
 
     self.resource = resource_class.send_confirmation_instructions(resource_params)
 
-    if successfully_sent?(resource)
-      set_flash_message(:success, :confirmation_sent) if is_navigational_format?
-    else
-      set_flash_message(:error, :confirmation_not_sent) if is_navigational_format?
+    if successfully_sent?(resource) && is_navigational_format?
+      set_flash_message(:success, :confirmation_sent)
+    elsif is_navigational_format?
+      set_flash_message(:error, :confirmation_not_sent)
     end
 
     respond_with_navigational(resource){ redirect_to spree.admin_path }
@@ -26,10 +26,10 @@ class UserConfirmationsController < DeviseController
   def show
     self.resource = resource_class.confirm_by_token(params[:confirmation_token])
 
-    if resource.errors.empty?
-      set_flash_message(:success, :confirmed) if is_navigational_format?
-    else
-      set_flash_message(:error, :not_confirmed) if is_navigational_format?
+    if resource.errors.empty? && is_navigational_format?
+      set_flash_message(:success, :confirmed)
+    elsif is_navigational_format?
+      set_flash_message(:error, :not_confirmed)
     end
 
     respond_with_navigational(resource){ redirect_to login_path }
