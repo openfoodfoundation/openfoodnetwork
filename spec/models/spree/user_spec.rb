@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Spree.user_class do
   include AuthenticationWorkflow
 
@@ -71,9 +73,18 @@ describe Spree.user_class do
   end
 
   context "#create" do
-    it "should send a signup email" do
+    it "should send a confirmation email" do
       expect do
-        create(:user)
+        create(:user, confirmed_at: nil)
+      end.to enqueue_job Delayed::PerformableMethod
+      Delayed::Job.last.payload_object.method_name.should == :send_on_create_confirmation_instructions_without_delay
+    end
+  end
+
+  context "confirming email" do
+    it "should send a welcome email" do
+      expect do
+        create(:user, confirmed_at: nil).confirm!
       end.to enqueue_job ConfirmSignupJob
     end
   end
