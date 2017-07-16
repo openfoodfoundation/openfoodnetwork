@@ -83,7 +83,7 @@ Spree::Order.class_eval do
   def variants_still_available_in_order_cycle?
     available = true
     if order_cycle.andand.exchanges
-      not_available_variants = line_item_variants - order_cycle.exchanges.outgoing.collect {|exchange| exchange.variants}.flatten
+      not_available_variants = line_item_variants - order_cycle.exchanges.outgoing.collect(&:variants).flatten
 
       if not_available_variants.any?
         not_available_variants.each do |variant|

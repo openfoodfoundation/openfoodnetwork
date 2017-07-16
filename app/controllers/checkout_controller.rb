@@ -9,6 +9,7 @@ class CheckoutController < Spree::CheckoutController
   prepend_before_filter :require_distributor_chosen
 
   skip_before_filter :check_registration
+  before_filter :check_and_redirect_if_variants_not_available_in_order_cycle, only: %i[edit update]
 
   include OrderCyclesHelper
   include EnterprisesHelper

@@ -9,6 +9,7 @@ Spree::OrdersController.class_eval do
   prepend_before_filter :require_distributor_chosen, only: :edit
   before_filter :check_hub_ready_for_checkout, only: :edit
   before_filter :check_at_least_one_line_item, only: :update
+  before_filter :check_and_redirect_if_variants_not_available_in_order_cycle, only: %i[edit update]
 
   include OrderCyclesHelper
   layout 'darkswarm'

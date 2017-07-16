@@ -61,6 +61,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_and_redirect_if_variants_not_available_in_order_cycle
+    flash.keep unless flash[:error].nil? # there are too many redirects between cart and shop, need to keep flash errors
+    unless current_order(true).variants_still_available_in_order_cycle?
+      flash[:error] = current_order.errors.full_messages.join(', ')
+      redirect_to cart_path
+    end
+  end
+
   # All render calls within the block will be performed with the specified format
   # Useful for rendering html within a JSON response, particularly if the specified
   # template or partial then goes on to render further partials without specifying

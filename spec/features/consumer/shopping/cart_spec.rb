@@ -130,6 +130,35 @@ feature "full-page cart", js: true do
       end
     end
 
+    context "checking out with variants removed from order cycle" do
+      let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
+      let(:user) { create(:user, bill_address: address, ship_address: address) }
+      let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor, user: user) }
+      let(:variant) { product_fee.variants.first }
+      let(:variant_2) { product_tax.variants.first }
+
+      before do
+        allow(Spree::Config).to receive(:allow_backorders).and_return(false)
+        quick_login_as user
+        add_product_to_cart order, product_fee, quantity: 10
+        add_product_to_cart order, product_tax, quantity: 2
+        order_cycle.exchanges.outgoing.first.variants.delete(variant)
+      end
+
+      it "notifies user and stays in the cart if only one variant does not exist anymore" do
+        visit spree.cart_path
+        expect(page).to have_content "#{variant.name} does not exist anymore"
+        expect(page).to have_content "Your shopping cart"
+      end
+
+      it "notifies user and redirects to shop if no variants exist" do
+        order_cycle.exchanges.outgoing.first.variants.delete(variant_2)
+        visit spree.cart_path
+        expect(page).to have_content "#{variant.name} does not exist anymore"
+        expect(page).not_to have_content "Your shopping cart"
+      end
+    end
+
     context "checking out with insufficient stock" do
       let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
       let(:user) { create(:user, bill_address: address, ship_address: address) }
@@ -137,7 +166,7 @@ feature "full-page cart", js: true do
       let(:variant) { product_fee.variants.first }
 
       before do
-        Spree::Config.set allow_backorders: false
+        allow(Spree::Config).to receive(:allow_backorders).and_return(false)
         quick_login_as user
         add_product_to_cart order, product_fee, quantity: 10
       end
@@ -145,7 +174,6 @@ feature "full-page cart", js: true do
       it "isn't allowed" do
         visit spree.cart_path
         expect(page).to have_content product_fee.name
-        expect(Spree::Config.allow_backorders).to be_false
 
         variant.update_attributes! on_hand: 8
         click_link "Checkout"
