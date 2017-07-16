@@ -23,8 +23,9 @@ Spree.user_class.class_eval do
   validate :limit_owned_enterprises
 
   # We use the same options as Spree and add :confirmable
-  devise :confirmable, reconfirmable: true, confirmation_keys: [:id, :email]
+  devise :confirmable, reconfirmable: true
   handle_asynchronously :send_confirmation_instructions
+  handle_asynchronously :send_on_create_confirmation_instructions
   # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
   after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
 

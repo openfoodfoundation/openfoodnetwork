@@ -6,13 +6,12 @@ class UserRegistrationsController < Spree::UserRegistrationsController
     @user = build_resource(params[:spree_user])
     if resource.save
       set_flash_message(:success, :signed_up)
-      sign_in(:spree_user, @user)
       session[:spree_user_signup] = true
       associate_user
 
       respond_to do |format|
         format.html do
-          sign_in_and_redirect(:spree_user, @user)
+          redirect_to after_sign_in_path_for(@user)
         end
         format.js do
           render json: { email: @user.email }
