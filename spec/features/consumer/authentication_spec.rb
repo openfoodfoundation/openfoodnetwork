@@ -81,8 +81,8 @@ feature "Authentication", js: true, retry: 3 do
             expect do
               click_signup_button
               page.should have_content "Welcome! You have signed up successfully"
-            end.to enqueue_job ConfirmSignupJob
-            page.should be_logged_in_as "test@foo.com"
+            end.to enqueue_job Delayed::PerformableMethod
+            Delayed::Job.last.payload_object.method_name.should == :send_on_create_confirmation_instructions_without_delay
           end
         end
 

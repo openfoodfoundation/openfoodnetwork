@@ -221,8 +221,8 @@ ActiveRecord::Schema.define(:version => 20170710145821) do
     t.integer  "address_id"
     t.string   "pickup_times"
     t.string   "next_collection_at"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.text     "distributor_info"
     t.string   "logo_file_name"
     t.string   "logo_content_type"
