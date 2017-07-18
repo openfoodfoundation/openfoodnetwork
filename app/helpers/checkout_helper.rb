@@ -104,10 +104,6 @@ module CheckoutHelper
     render "shared/validated_select", name: name, path: path, options: options, attributes: attributes
   end
 
-  def reset_order
-    ResetOrderService.new(self, current_order).call
-  end
-
   def payment_method_price(method, order)
     price = method.compute_amount(order)
     if price == 0
