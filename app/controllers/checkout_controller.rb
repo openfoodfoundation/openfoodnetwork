@@ -26,15 +26,15 @@ class CheckoutController < Spree::CheckoutController
           return if redirect_to_paypal_express_form_if_needed
         end
 
-        unless advance_order_state(@order)
-          if @order.errors.present?
-            flash[:error] = @order.errors.full_messages.to_sentence
-          else
-            flash[:error] = t(:payment_processing_failed)
-          end
-          update_failed
-          return
+        next if advance_order_state(@order)
+
+        if @order.errors.present?
+          flash[:error] = @order.errors.full_messages.to_sentence
+        else
+          flash[:error] = t(:payment_processing_failed)
         end
+        update_failed
+        return
       end
       if @order.state == "complete" ||  @order.completed?
         set_default_bill_address

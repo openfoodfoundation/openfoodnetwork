@@ -5,7 +5,7 @@ Spree::Admin::PaymentsController.class_eval do
   # When a user fires an event, take them back to where they came from
   # (we can't use respond_override because Spree no longer uses respond_with)
   def fire
-    return unless event = params[:e] and @payment.payment_source
+    return unless event = params[:e] && @payment.payment_source
 
     # Because we have a transition method also called void, we do this to avoid conflicts.
     event = "void_transaction" if event == "void"
@@ -15,7 +15,7 @@ Spree::Admin::PaymentsController.class_eval do
       flash[:error] = t(:cannot_perform_operation)
     end
   rescue Spree::Core::GatewayError => ge
-    flash[:error] = "#{ge.message}"
+    flash[:error] = ge.message
   ensure
     redirect_to request.referer
   end
