@@ -31,8 +31,7 @@ module Spree
         html_options = {class: "remove_fields #{options[:class]}", data: {action: 'remove'}, title: t(:remove)}
         html_options.merge!(options[:html]) if options.key? :html
 
-        link_to_with_icon('icon-trash', name, '#', html_options).gsub('href="#" ', '').html_safe +
-          f.hidden_field(:_destroy)
+        link_to_with_icon('icon-trash', name, '#', html_options).gsub('href="#" ', '') + f.hidden_field(:_destroy)
       end
     end
   end
