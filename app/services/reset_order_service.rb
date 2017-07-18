@@ -1,22 +1,23 @@
-class ResetOrderService < SimpleDelegator
-  def call
-    distributor = current_order.distributor
-    token = current_order.token
+class ResetOrderService
+  def initialize(controller, order)
+    @controller = controller
+    @distributor = order.distributor
+    @token = order.token
+  end
 
+  def call
     controller.expire_current_order
-    build_new_order(distributor, token)
+    build_new_order
   end
 
   private
 
-  def build_new_order(distributor, token)
-    current_order(true)
-    current_order.set_distributor!(distributor)
-    current_order.tokenized_permission.token = token
-    current_order.tokenized_permission.save!
-  end
+  attr_reader :controller, :distributor, :token
 
-  def controller
-    __getobj__
+  def build_new_order
+    new_order = controller.current_order(true)
+    new_order.set_distributor!(distributor)
+    new_order.tokenized_permission.token = token
+    new_order.tokenized_permission.save!
   end
 end

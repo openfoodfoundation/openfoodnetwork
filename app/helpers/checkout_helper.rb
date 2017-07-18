@@ -105,7 +105,7 @@ module CheckoutHelper
   end
 
   def reset_order
-    ResetOrderService.new(self).call
+    ResetOrderService.new(self, current_order).call
   end
 
   def payment_method_price(method, order)

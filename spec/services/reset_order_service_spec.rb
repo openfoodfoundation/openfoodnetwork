@@ -1,15 +1,19 @@
 require 'spec_helper'
 
 describe ResetOrderService do
-  let(:current_distributor) { double(:distributor) }
   let(:current_token) { double(:current_token) }
-  let(:current_order) { double(:current_order) }
+  let(:current_distributor) { double(:distributor) }
+  let(:current_order) do
+    double(
+      :current_order,
+      token: current_token,
+      distributor: current_distributor
+    )
+  end
   let(:tokenized_permission) { double(:tokenized_permission, save!: true) }
   let(:new_order) do
     double(
       :new_order,
-      distributor: current_distributor,
-      token: current_token,
       set_distributor!: true,
       tokenized_permission: tokenized_permission,
     )
@@ -21,10 +25,10 @@ describe ResetOrderService do
       expire_current_order: true
     )
   end
-  let(:reset_order_service) { described_class.new(controller) }
+  let(:reset_order_service) { described_class.new(controller, current_order) }
 
   before do
-    allow(current_order)
+    allow(new_order)
       .to receive(:tokenized_permission)
       .and_return(tokenized_permission)
 
@@ -48,7 +52,7 @@ describe ResetOrderService do
     it 'sets the token of the tokenized permissions' do
       reset_order_service.call
 
-      expect(current_order.tokenized_permission)
+      expect(new_order.tokenized_permission)
         .to have_received(:token=).with(current_token)
     end
 

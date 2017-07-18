@@ -40,7 +40,7 @@ class CheckoutController < Spree::CheckoutController
         set_default_bill_address
         set_default_ship_address
 
-        ResetOrderService.new(self).call
+        ResetOrderService.new(self, current_order).call
         session[:access_token] = current_order.token
 
         flash[:success] = t(:order_processed_successfully)

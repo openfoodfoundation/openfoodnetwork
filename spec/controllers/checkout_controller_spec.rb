@@ -146,7 +146,7 @@ describe CheckoutController do
     end
 
     it "returns order confirmation url on success" do
-      allow(ResetOrderService).to receive(:new).with(controller) { reset_order_service }
+      allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
       expect(reset_order_service).to receive(:call)
 
       order.stub(:update_attributes).and_return true
@@ -159,7 +159,7 @@ describe CheckoutController do
 
     describe "stale object handling" do
       it "retries when a stale object error is encountered" do
-        allow(ResetOrderService).to receive(:new).with(controller) { reset_order_service }
+        allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
         expect(reset_order_service).to receive(:call)
 
         order.stub(:update_attributes).and_return true
