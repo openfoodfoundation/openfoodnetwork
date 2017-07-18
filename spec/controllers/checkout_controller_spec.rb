@@ -4,6 +4,8 @@ describe CheckoutController do
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:order) { create(:order) }
+  let(:reset_order_service) { double(ResetOrderService) }
+
   before do
     order.stub(:checkout_allowed?).and_return true
     controller.stub(:check_authorization).and_return true
@@ -106,7 +108,8 @@ describe CheckoutController do
     end
 
     it "returns order confirmation url on success" do
-      expect(controller).to receive(:reset_order)
+      allow(ResetOrderService).to receive(:new).with(controller) { reset_order_service }
+      expect(reset_order_service).to receive(:call)
 
       order.stub(:update_attributes).and_return true
       order.stub(:state).and_return "complete"
@@ -118,7 +121,8 @@ describe CheckoutController do
 
     describe "stale object handling" do
       it "retries when a stale object error is encountered" do
-        expect(controller).to receive(:reset_order)
+        allow(ResetOrderService).to receive(:new).with(controller) { reset_order_service }
+        expect(reset_order_service).to receive(:call)
 
         order.stub(:update_attributes).and_return true
         controller.stub(:state_callback)
