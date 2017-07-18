@@ -41,7 +41,7 @@ describe ResetOrderService do
       expect(controller.instance_variable_get(:@current_order)).to be_nil
     end
 
-    it 'sets the distributor of the order' do
+    it 'sets the new order\'s distributor to the same as the old order' do
       reset_order_service.call
 
       expect(new_order)

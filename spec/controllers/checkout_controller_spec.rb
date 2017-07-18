@@ -84,6 +84,12 @@ describe CheckoutController do
       order.should_receive(:ship_address=)
       controller.send(:clear_ship_address)
     end
+
+    it "sets the new order's token to the same as the old order" do
+      order = controller.current_order(true)
+      spree_post :update, order: {}
+      expect(controller.current_order.token).to eq order.token
+    end
   end
 
   context "via xhr" do
