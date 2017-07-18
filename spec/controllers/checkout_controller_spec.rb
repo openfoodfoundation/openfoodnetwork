@@ -85,10 +85,42 @@ describe CheckoutController do
       controller.send(:clear_ship_address)
     end
 
-    it "sets the new order's token to the same as the old order" do
-      order = controller.current_order(true)
-      spree_post :update, order: {}
-      expect(controller.current_order.token).to eq order.token
+    context 'when completing the order' do
+      before do
+        order.state = 'complete'
+        allow(order).to receive(:update_attributes).and_return(true)
+        allow(order).to receive(:next).and_return(true)
+        allow(order).to receive(:set_distributor!).and_return(true)
+      end
+
+      it "sets the new order's token to the same as the old order" do
+        order = controller.current_order(true)
+        spree_post :update, order: {}
+        expect(controller.current_order.token).to eq order.token
+      end
+
+      it 'expires the current order' do
+        allow(controller).to receive(:expire_current_order)
+        put :update, order: {}
+        expect(controller).to have_received(:expire_current_order)
+      end
+
+      it 'sets the access_token of the session' do
+        put :update, order: {}
+        expect(session[:access_token]).to eq(controller.current_order.token)
+      end
+    end
+  end
+
+  describe '#expire_current_order' do
+    it 'empties the order_id of the session' do
+      expect(session).to receive(:[]=).with(:order_id, nil)
+      controller.expire_current_order
+    end
+
+    it 'resets the @current_order ivar' do
+      controller.expire_current_order
+      expect(controller.instance_variable_get(:@current_order)).to be_nil
     end
   end
 
