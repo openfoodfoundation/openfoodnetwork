@@ -72,6 +72,8 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeJ
               last_digits: @secrets.card.last4
               month: @secrets.card.exp_month
               year: @secrets.card.exp_year
+              first_name: @order.bill_address.firstname
+              last_name: @order.bill_address.lastname
           }
       munged_order
 
