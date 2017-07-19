@@ -1,9 +1,9 @@
 %div.dashboard_item.seven.columns.omega#order_cycles
-  %div.header.seven.columns.alpha{ :class => "#{@order_cycle_count > 0 ? "" : "orange"}"}
+  %div.header.seven.columns.alpha{ class: @order_cycle_count > 0 ? "" : "orange"}
     %h3.four.columns.alpha
       = t "spree_admin_order_cycles"
     - if @order_cycle_count > 0
-      %a.three.columns.omega.icon-plus.button.blue{ href: "#{main_app.new_admin_order_cycle_path}" }
+      %a.three.columns.omega.icon-plus.button.blue{ href: main_app.new_admin_order_cycle_path }
         = t "spree_admin_enterprises_create_new"
     - else
       %a{ "ofn-with-tip" => t(:spree_admin_order_cycles_tip) }
@@ -15,7 +15,7 @@
           = t('.you_have_active', count: @order_cycle_count)
         %span.one.column.omega
           %span.icon-ok-sign
-      %a.seven.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_order_cycles_path}" }
+      %a.seven.columns.alpha.button.bottom.blue{ href: main_app.admin_order_cycles_path }
         = t "spree_admin_enterprises_producers_manage_order_cycles"
         %span.icon-arrow-right
     - else
@@ -24,7 +24,7 @@
           = t "spree_admin_enterprises_producers_orders_cycle_text"
         %span.one.column.omega
           %span.icon-warning-sign
-      %a.seven.columns.alpha.button.bottom.orange{ href: "#{main_app.admin_order_cycles_path}" }
+      %a.seven.columns.alpha.button.bottom.orange{ href: main_app.admin_order_cycles_path }
         = t "spree_admin_enterprises_producers_manage_order_cycles"
         %span.icon-arrow-right
         = t ".manage_order_cycles"
