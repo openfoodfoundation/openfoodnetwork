@@ -1523,12 +1523,9 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree_admin_enterprises_producers_order_cycles_title: ""
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_tabs_producers: "PRODUCERS"
-  spree_admin_enterprises_producers_manage_order_cycles: "MANAGE ORDER CYCLES"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
   spree_admin_enterprises_any_active_products_text: "You don't have any active products."
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
-  spree_admin_order_cycles: "Order Cycles"
-  spree_admin_order_cycles_tip: "Order cycles determine when and where your products are available to customers."
   spree_admin_single_enterprise_alert_mail_confirmation: "Please confirm the email address for"
   spree_admin_single_enterprise_alert_mail_sent: "We've sent an email to"
   spree_admin_overview_action_required: "Action Required"
@@ -2046,10 +2043,13 @@ Please follow the instructions there to make your enterprise visible on the Open
             title: Distribution
       overview:
         order_cycles:
+          order_cycles: "Order Cycles"
+          order_cycles_tip: "Order cycles determine when and where your products are available to customers."
           you_have_active:
             zero: "You don't have any active order cycles."
             one: "You have one active order cycle."
             other: "You have %{count} active order cycles."
+          manage_order_cycles: "MANAGE ORDER CYCLES"
       products:
         bulk_edit:
           header:

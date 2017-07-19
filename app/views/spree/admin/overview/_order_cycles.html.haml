@@ -3,12 +3,12 @@
 %div.dashboard_item.seven.columns.omega#order_cycles
   %div.header.seven.columns.alpha{class: color_class}
     %h3.four.columns.alpha
-      = t "spree_admin_order_cycles"
+      = t ".order_cycles"
     - if @order_cycle_count > 0
       %a.three.columns.omega.icon-plus.button.blue{ href: main_app.new_admin_order_cycle_path }
         = t "spree_admin_enterprises_create_new"
     - else
-      %a{ "ofn-with-tip" => t(:spree_admin_order_cycles_tip) }
+      %a{ "ofn-with-tip" => t(".order_cycles_tip") }
         = t "admin.whats_this"
   %div.seven.columns.alpha.list
     %div.seven.columns.alpha.list-item{class: color_class}
@@ -17,5 +17,5 @@
       %span.one.column.omega
         %span{class: icon_class}
     %a.seven.columns.alpha.button.bottom{ href: main_app.admin_order_cycles_path, class: color_class }
-      = t "spree_admin_enterprises_producers_manage_order_cycles"
+      = t ".manage_order_cycles"
       %span.icon-arrow-right
