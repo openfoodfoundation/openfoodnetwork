@@ -11,7 +11,7 @@
         %span.filter-shopfront.property-selectors.pad-top
           %ul.inline-block
             %li{"ng-repeat" => "property in enterprise.supplied_properties"}
-              %a.button.tiny{"ng-bind" => "property.presentation"}
+              %a.button.tiny.disabled{"ng-bind" => "property.presentation"}
 
       .about-container.pad-top
         %img.enterprise-logo{"ng-src" => "{{::enterprise.logo}}", "ng-if" => "::enterprise.logo"}
