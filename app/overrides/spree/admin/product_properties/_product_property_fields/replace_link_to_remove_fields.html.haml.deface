@@ -1,4 +1,0 @@
-/ replace_contents "[data-hook='product_property'] .actions"
-
-- unless @product.properties.empty?
-  = link_to_remove_fields_without_url t(:remove), f, no_text: true
