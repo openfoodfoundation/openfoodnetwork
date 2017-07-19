@@ -12,9 +12,6 @@ class Enterprise < ActiveRecord::Base
   # their inventory if they so choose
   preference :product_selection_from_inventory_only, :boolean, default: false
 
-  devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
-  handle_asynchronously :send_confirmation_instructions
-  handle_asynchronously :send_on_create_confirmation_instructions
   has_paper_trail only: [:owner_id, :sells], on: [:update]
 
   self.inheritance_column = nil
@@ -78,9 +75,6 @@ class Enterprise < ActiveRecord::Base
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
 
-
-  before_save :confirmation_check, if: lambda { email_changed? }
-
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
   before_validation :ensure_email_set
@@ -89,18 +83,14 @@ class Enterprise < ActiveRecord::Base
 
   after_touch :touch_distributors
   after_create :relate_to_owners_enterprises
-  # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
-  after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
-  after_create :send_welcome_email, if: lambda { email_is_known? }
+  after_create :send_welcome_email
 
   after_rollback :restore_permalink
 
 
   scope :by_name, order('name')
   scope :visible, where(visible: true)
-  scope :confirmed, where('confirmed_at IS NOT NULL')
-  scope :unconfirmed, where('confirmed_at IS NULL')
-  scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
+  scope :activated, where("sells != 'unspecified'")
   scope :ready_for_checkout, lambda {
     joins(:shipping_methods).
       joins(:payment_methods).
@@ -199,7 +189,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def activated?
-    confirmed_at.present? && sells != 'unspecified'
+    sells != 'unspecified'
   end
 
   def set_producer_property(property_name, property_value)
@@ -352,11 +342,6 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
-  # Based on a devise method, but without adding errors
-  def pending_any_confirmation?
-    !confirmed? || pending_reconfirmation?
-  end
-
   def shop_trial_expiry
     shop_trial_start_date.andand + Spree::Config[:shop_trial_length_days].days
   end
@@ -379,25 +364,6 @@ class Enterprise < ActiveRecord::Base
 
     if dups.any?
       errors.add :name, "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at #{dups.first.owner.email}."
-    end
-  end
-
-  def email_is_known?
-    owner.enterprises.confirmed.map(&:email).include?(email)
-  end
-
-  def confirmation_check
-    # Skip confirmation/reconfirmation if the new email has already been confirmed
-    if email_is_known?
-      new_record? ? skip_confirmation! : skip_reconfirmation!
-    end
-  end
-
-  def welcome_after_confirm
-    # Send welcome email if we are confirming a newly created enterprise
-    # Note: this callback only runs on email confirmation
-    if confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
-      send_welcome_email
     end
   end
 

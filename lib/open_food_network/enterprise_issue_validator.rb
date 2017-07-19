@@ -20,11 +20,6 @@ module OpenFoodNetwork
         link: "<a class='button fullwidth' href='#{spree.new_admin_payment_method_path}'>Create New</a>"
       } unless payment_methods_ok?
 
-      issues << {
-        description: "Email confirmation is pending. We've sent a confirmation email to #{@enterprise.email}.",
-        link: "<a class='button fullwidth' href='#{enterprise_confirmation_path(enterprise: { id: @enterprise.id, email: @enterprise.email } )}' method='post'>Resend Email</a>"
-      } unless confirmed?
-
       issues
     end
 
@@ -35,8 +30,6 @@ module OpenFoodNetwork
         'no shipping methods'
       elsif !opts[:confirmation_only] && !payment_methods_ok?
         'no payment methods'
-      elsif !confirmed?
-        'unconfirmed'
       end
     end
 
@@ -63,10 +56,6 @@ module OpenFoodNetwork
     def payment_methods_ok?
       return true unless @enterprise.is_distributor
       @enterprise.payment_methods.available.any?
-    end
-
-    def confirmed?
-      @enterprise.confirmed?
     end
   end
 end

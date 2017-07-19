@@ -28,18 +28,6 @@ feature %q{
         page.should have_selector ".dashboard_item .button.bottom", text: "SEE #{d1.name.upcase} LIVE"
       end
 
-      context "when enterprise has not been confirmed" do
-        before do
-          d1.confirmed_at = nil
-          d1.save!
-        end
-
-        it "displays a message telling to user to confirm" do
-          visit '/admin'
-          page.should have_selector ".alert-box", text: "Please confirm the email address for #{d1.name}. We've sent an email to #{d1.email}."
-        end
-      end
-
       context "when visibilty is set to false" do
         before do
           d1.visible = false

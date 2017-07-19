@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161215230219) do
+ActiveRecord::Schema.define(:version => 20170719125120) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -238,10 +238,6 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "linkedin"
     t.integer  "owner_id",                                     :null => false
     t.string   "sells",                    :default => "none", :null => false
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
     t.datetime "shop_trial_start_date"
     t.boolean  "producer_profile_only",    :default => false
     t.string   "permalink",                                    :null => false
@@ -255,7 +251,6 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
-  add_index "enterprises", ["confirmation_token"], :name => "index_enterprises_on_confirmation_token", :unique => true
   add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
   add_index "enterprises", ["name"], :name => "index_enterprises_on_name", :unique => true
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"

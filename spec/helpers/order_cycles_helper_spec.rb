@@ -9,7 +9,7 @@ describe OrderCyclesHelper do
     end
 
     it "asks for a validation option list" do
-      expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true})
+      expect(helper).to receive(:validated_enterprise_options).with("enterprise list")
       helper.permitted_producer_enterprise_options_for(oc)
     end
   end
@@ -20,7 +20,7 @@ describe OrderCyclesHelper do
     end
 
     it "asks for a validation option list" do
-      expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true})
+      expect(helper).to receive(:validated_enterprise_options).with("enterprise list")
       helper.permitted_coordinating_enterprise_options_for(oc)
     end
   end
@@ -31,7 +31,7 @@ describe OrderCyclesHelper do
     end
 
     it "asks for a validation option list" do
-      expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {confirmed: true, shipping_and_payment_methods: true})
+      expect(helper).to receive(:validated_enterprise_options).with("enterprise list", {shipping_and_payment_methods: true})
       helper.permitted_hub_enterprise_options_for(oc)
     end
   end
@@ -56,14 +56,6 @@ describe OrderCyclesHelper do
       create(:payment_method, distributors: [e], active: false)
       expect(helper.send(:validated_enterprise_options, [e], shipping_and_payment_methods: true))
         .to eq [['enterprise (no payment methods)', e.id, {disabled: true}]]
-    end
-
-    it "returns unconfirmed enterprises as disabled" do
-      create(:shipping_method, distributors: [e])
-      create(:payment_method, distributors: [e])
-      e.stub(:confirmed_at) { nil }
-      expect(helper.send(:validated_enterprise_options, [e], confirmed: true))
-        .to eq [['enterprise (unconfirmed)', e.id, {disabled: true}]]
     end
 
     it "returns enterprises with neither shipping nor payment methods as disabled" do
