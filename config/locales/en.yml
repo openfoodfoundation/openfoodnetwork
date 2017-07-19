@@ -669,7 +669,7 @@ en:
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       tax_types: Tax Types
-      tax_rate: Tax Rates
+      tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       orders_and_distributors:
