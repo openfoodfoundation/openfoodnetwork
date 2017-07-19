@@ -647,11 +647,6 @@ en:
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
       order_cycles:
         manage_order_cycles: MANAGE ORDER CYCLES
-        you_have_active: "You have %{num} active %{order_cycles}."
-        order_cycle:
-          zero: order cycle
-          one: order cycle
-          other: order cycles
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -2052,6 +2047,12 @@ Please follow the instructions there to make your enterprise visible on the Open
         form:
           distribution_fields:
             title: Distribution
+      overview:
+        order_cycles:
+          you_have_active:
+            zero: "You have no active order cycles."
+            one: "You have one active order cycle."
+            other: "You have %{count} active order cycles."
       products:
         bulk_edit:
           header:
