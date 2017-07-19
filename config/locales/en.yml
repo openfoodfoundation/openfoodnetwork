@@ -295,6 +295,13 @@ en:
     contents:
       edit:
         title: Content
+        header: Header
+        home_page: Home page
+        producer_signup_page: Producer signup page
+        hub_signup_page: Hub signup page
+        group_signup_page: Group signup page
+        footer_and_external_links: Footer and External Links
+        your_content: Your content
 
     enterprise_fees:
       index:
@@ -1847,14 +1854,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   order_cycles_no_permission_to_delete_error: "That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead."
-  contents:
-    header: Header
-    home_page: Home page
-    producer_signup_page: Producer signup page
-    hub_signup_page: Hub signup page
-    group_signup_page: Group signup page
-    footer_and_external_links: Footer and External Links
-    your_content: Your content
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
