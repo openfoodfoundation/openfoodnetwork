@@ -312,8 +312,6 @@ en:
         tax_category: Tax Category
         calculator: Calculator
         calculator_values: Calculator Values
-    enterprise_roles:
-      manages: manages
 
     enterprise_groups:
       index:
@@ -321,6 +319,8 @@ en:
 
     enterprise_roles:
       form:
+        manages: manages
+      enterprise_role:
         manages: manages
 
     products:
