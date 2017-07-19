@@ -4,12 +4,12 @@
   - if @order.complete?
     .alpha.six.columns
       %p
-        %b= "#{t(:distributor)}:"
+        %b= t('.distributor')
         = @order.distributor.andand.name || t(:none)
         %input{type: "hidden", id: "order_distributor_id", value: @order.distributor.andand.id}
     .omega.six.columns
       %p
-        %b= "#{t(:order_cycle)}:"
+        %b= t('.order_cycle')
         = @order.order_cycle.andand.name || t(:none)
         %input{type: "hidden", id: "order_order_cycle_id", value: @order.order_cycle.andand.id}
   - else
@@ -24,7 +24,7 @@
 
     .omega.six.columns
       .field
-        %label{ for: "order_order_cycle_id"}= t(:order_cycle)
+        %label{for: "order_order_cycle_id"}= t(:order_cycle)
         %input.ofn-select2.fullwidth{id: "order_order_cycle_id",
         type: 'number',
         name: "order[order_cycle_id]",

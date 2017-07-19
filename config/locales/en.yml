@@ -2041,6 +2041,8 @@ Please follow the instructions there to make your enterprise visible on the Open
         form:
           distribution_fields:
             title: Distribution
+            distributor: "Distributor:"
+            order_cycle: "Order cycle:"
       overview:
         order_cycles:
           order_cycles: "Order Cycles"
