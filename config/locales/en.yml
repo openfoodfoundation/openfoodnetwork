@@ -1850,7 +1850,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   contents:
     header: Header
     home_page: Home page
-    producer_sign_up: Producer signup page
+    producer_signup_page: Producer signup page
     hub_signup_page: Hub signup page
     group_signup_page: Group signup page
     footer_and_external_links: Footer and External Links
