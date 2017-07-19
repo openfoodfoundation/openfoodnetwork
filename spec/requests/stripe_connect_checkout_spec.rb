@@ -20,7 +20,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
   let(:params) do
     { format: :json, order: {
       shipping_method_id: shipping_method.id,
-      payments_attributes: [{payment_method_id: payment_method.id, source_attributes: { gateway_payment_profile_id: token, cc_type: "visa", last_digits: "4242", month: 10, year: 2025 }}],
+      payments_attributes: [{payment_method_id: payment_method.id, source_attributes: { gateway_payment_profile_id: token, cc_type: "visa", last_digits: "4242", month: 10, year: 2025, first_name: 'Jill', last_name: 'Jeffreys' }}],
       bill_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id"),
       ship_address_attributes: address.attributes.slice("firstname", "lastname", "address1", "address2", "phone", "city", "zipcode", "state_id", "country_id")
     } }
@@ -64,6 +64,10 @@ describe "Submitting Stripe Connect charge requests", type: :request do
         card = order.payments.completed.first.source
         expect(card.gateway_customer_profile_id).to eq customer_id
         expect(card.gateway_payment_profile_id).to eq card_id
+        expect(card.cc_type).to eq "visa"
+        expect(card.last_digits).to eq "4242"
+        expect(card.first_name).to eq "Jill"
+        expect(card.last_name).to eq "Jeffreys"
       end
     end
 
@@ -119,6 +123,10 @@ describe "Submitting Stripe Connect charge requests", type: :request do
         user_id: order.user_id,
         gateway_payment_profile_id: card_id,
         gateway_customer_profile_id: customer_id,
+        last_digits: "4321",
+        cc_type: "master",
+        first_name: "Sammy",
+        last_name: "Signpost",
         month: 11, year: 2026
       )
     end
@@ -142,7 +150,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
     end
 
     context "and the charge and token requests are accepted" do
-      it "should process the payment, and keep the profile ids" do
+      it "should process the payment, and keep the profile ids and other card details" do
         put update_checkout_path, params
         json_response = JSON.parse(response.body)
         expect(json_response["path"]).to eq spree.order_path(order)
@@ -150,6 +158,10 @@ describe "Submitting Stripe Connect charge requests", type: :request do
         card = order.payments.completed.first.source
         expect(card.gateway_customer_profile_id).to eq customer_id
         expect(card.gateway_payment_profile_id).to eq card_id
+        expect(card.cc_type).to eq "master"
+        expect(card.last_digits).to eq "4321"
+        expect(card.first_name).to eq "Sammy"
+        expect(card.last_name).to eq "Signpost"
       end
     end
 

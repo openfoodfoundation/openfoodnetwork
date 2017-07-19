@@ -54,9 +54,7 @@ module Spree
 
     def build_card_from(attrs)
       card = Spree::CreditCard.new(attrs)
-      # Can't mass assign these:
-      card.cc_type = attrs[:cc_type]
-      card.last_digits = attrs[:last_digits]
+      # Can't mass assign user:
       card.user_id = spree_current_user.id
       card
     end
