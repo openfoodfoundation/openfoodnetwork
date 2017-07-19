@@ -197,6 +197,8 @@ describe 'Checkout service', ->
         expect(source_attributes.last_digits).toBe "1234"
         expect(source_attributes.year).toBe "2099"
         expect(source_attributes.month).toBe "10"
+        expect(source_attributes.first_name).toBe orderData.bill_address.firstname
+        expect(source_attributes.last_name).toBe orderData.bill_address.lastname
 
     describe "when a saved card from Stripe is used", ->
       beforeEach ->
