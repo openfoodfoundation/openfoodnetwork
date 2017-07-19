@@ -256,7 +256,8 @@ en:
         update_address: 'Update Address'
         confirm_delete: 'Sure to delete?'
         search_by_email: "Search by email/code..."
-
+      destroy:
+        has_associated_orders: 'Delete failed: customer has associated orders with his shop'
     cache_settings:
       show:
         title: Caching

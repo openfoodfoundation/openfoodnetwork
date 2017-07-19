@@ -66,4 +66,22 @@ describe Customer, type: :model do
       expect(c.user).to eq user2
     end
   end
+
+  describe '#destroy' do
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:different_enterprise) { create(:distributor_enterprise) }
+    let(:customer) { create(:customer, enterprise: enterprise) }
+
+    it "doesn't allow to remove customer if it has orders with current shop" do
+      create(:order, customer: customer, distributor: enterprise)
+      expect(customer.destroy).to be false
+      expect(customer.errors.full_messages).to include I18n.t('admin.customers.destroy.has_associated_orders')
+    end
+
+    it "allows to remove customer if it doesn't have orders with current shop" do
+      create(:order, customer: customer, distributor: different_enterprise)
+      expect(customer.destroy).to eq customer
+    end
+
+  end
 end
