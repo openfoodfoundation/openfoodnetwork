@@ -5,7 +5,8 @@ Spree::Admin::PaymentsController.class_eval do
   # When a user fires an event, take them back to where they came from
   # (we can't use respond_override because Spree no longer uses respond_with)
   def fire
-    return unless event = params[:e] && @payment.payment_source
+    event = params[:e]
+    return unless event && @payment.payment_source
 
     # Because we have a transition method also called void, we do this to avoid conflicts.
     event = "void_transaction" if event == "void"
