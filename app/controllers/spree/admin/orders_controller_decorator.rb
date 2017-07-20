@@ -70,7 +70,7 @@ Spree::Admin::OrdersController.class_eval do
   # This uses a new template. See mailers/spree/order_mailer_decorator.rb.
   def resend
     Spree::OrderMailer.confirm_email_for_customer(@order.id, true).deliver
-    flash[:success] = t('admin.orders.order_email_resent')
+    flash[:success] = t(:order_email_resent)
 
     respond_with(@order) { |format| format.html { redirect_to :back } }
   end
