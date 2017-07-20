@@ -1,7 +1,6 @@
 # Builds a new order based on the one specified. This implements the "continue
 # shopping" feature once an order is completed.
 class ResetOrderService
-
   # Constructor
   #
   # @param controller [#expire_current_order, #current_order]
