@@ -14,6 +14,18 @@ module Spree
       let(:li1) { create(:line_item, order: o, product: p1) }
       let(:li2) { create(:line_item, order: o, product: p2) }
 
+      
+      let(:p3) {create(:product, name: 'Clear Honey') }
+      let(:p4) {create(:product, name: 'Apricots') }
+      let(:v1) {create(:variant, product: p3, unit_value: 500) }
+      let(:v2) {create(:variant, product: p3, unit_value: 250) }
+      let(:v3) {create(:variant, product: p4, unit_value: 500) }
+      let(:v4) {create(:variant, product: p4, unit_value: 1000) }
+      let(:li3) { create(:line_item, order: o, product: p3, variant: v1) }
+      let(:li4) { create(:line_item, order: o, product: p3, variant: v2) }
+      let(:li5) { create(:line_item, order: o, product: p4, variant: v3) }
+      let(:li6) { create(:line_item, order: o, product: p4, variant: v4) }
+
       it "finds line items for products supplied by a particular enterprise" do
         LineItem.supplied_by(s1).should == [li1]
         LineItem.supplied_by(s2).should == [li2]
@@ -39,6 +51,10 @@ module Spree
         it "finds line items without tax" do
           LineItem.without_tax.should == [li2]
         end
+      end
+
+      it "finds line items sorted by name and unit_value" do
+        o.line_items.sorted_by_name_and_unit_value.should == [li5,li6,li4,li3]
       end
     end
 
