@@ -92,12 +92,7 @@ Spree::LineItem.class_eval do
   end
 
   def display_name
-    if variant.display_name.blank?
-print 'jejeje'
-      return variant.name
-    else
-      return variant.display_name
-    end
+    return variant.display_name
   end
 
   def unit_value
