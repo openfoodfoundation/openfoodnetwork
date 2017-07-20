@@ -54,7 +54,7 @@ module Spree
       end
 
       it "finds line items sorted by name and unit_value" do
-        o.line_items.sorted_by_name_and_unit_value.should == [li5,li6,li4,li3]
+        expect(o.line_items.sorted_by_name_and_unit_value).to eq([li5,li6,li4,li3])
       end
     end
 
