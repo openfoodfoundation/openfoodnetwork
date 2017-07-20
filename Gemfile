@@ -126,7 +126,6 @@ group :development do
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'guard-rails'
-  gem 'guard-zeus'
   gem 'guard-rspec'
   gem 'parallel_tests'
   gem 'rubocop', '>= 0.49.1'
