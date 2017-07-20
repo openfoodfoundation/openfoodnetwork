@@ -92,7 +92,7 @@ Spree::LineItem.class_eval do
   end
 
   def display_name
-    return variant.display_name
+    variant.display_name
   end
 
   def unit_value
