@@ -71,8 +71,6 @@ Openfoodnetwork::Application.routes.draw do
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
   get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
 
-  devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
-
   namespace :admin do
     resources :order_cycles do
       post :bulk_update, on: :collection, as: :bulk_update
