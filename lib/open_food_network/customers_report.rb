@@ -1,6 +1,7 @@
 module OpenFoodNetwork
   class CustomersReport
     attr_reader :params
+
     def initialize(user, params = {})
       @params = params
       @user = user
@@ -17,22 +18,9 @@ module OpenFoodNetwork
     def table
       orders.map do |order|
         if is_mailing_list?
-          [order.email,
-           order.billing_address.firstname,
-           order.billing_address.lastname,
-           order.billing_address.city]
+          mailing_list_row(order)
         else
-          ba = order.billing_address
-          da = order.distributor.andand.address
-          [ba.firstname,
-            ba.lastname,
-            [ba.address1, ba.address2, ba.city].join(" "),
-            order.email,
-            ba.phone,
-            order.distributor.andand.name,
-            [da.andand.address1, da.andand.address2, da.andand.city].join(" "),
-            order.shipping_method.andand.name
-          ]
+          non_mailing_list_row(order)
         end
       end
     end
@@ -73,8 +61,43 @@ module OpenFoodNetwork
 
     private
 
+    def mailing_list_row(order)
+      [order.email,
+       order.billing_address.firstname,
+       order.billing_address.lastname,
+       order.billing_address.city]
+    end
+
+    def non_mailing_list_row(order)
+      billing_address = order.billing_address
+      distributor_address = order.distributor.andand.address
+
+      [billing_address.firstname,
+       billing_address.lastname,
+       [billing_address.address1, billing_address.address2, billing_address.city].join(" "),
+       order.email,
+       billing_address.phone,
+       order.distributor.andand.name,
+       [distributor_address.andand.address1, distributor_address.andand.address2, distributor_address.andand.city].join(" "),
+       shipping_method_to_display(order).name,
+      ]
+    end
+
     def is_mailing_list?
       params[:report_type] == "mailing_list"
+    end
+
+    # Returns the appropriate shipping method to display for the given order
+    #
+    # @param order [Spree::Order]
+    # @return [#name]
+    def shipping_method_to_display(order)
+      shipment = order.shipments.last
+      if shipment
+        shipment.shipping_method
+      else
+        NullShippingMethod.new
+      end
     end
   end
 end

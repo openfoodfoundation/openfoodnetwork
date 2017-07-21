@@ -259,4 +259,116 @@ describe Spree::Admin::ReportsController do
       assigns(:report).should == report
     end
   end
+
+  describe '#order_cycle_management' do
+    let(:shipping_method) { create(:shipping_method) }
+
+    before do
+      login_as_admin
+
+      create(:payment, order: orderA1)
+      create(:payment, order: orderA2)
+      create(:payment, order: orderB1)
+      create(:payment, order: orderB2)
+    end
+
+    context 'when the shipping method of the order is deleted' do
+      before do
+        orderA1.shipments << build(
+          :shipment,
+          shipping_method: shipping_method,
+          inventory_units: [create(:inventory_unit)]
+        )
+        orderA1.save!
+
+        shipping_method.distributor_shipping_methods.last.destroy
+        shipping_method.touch(:deleted_at)
+      end
+
+      let(:params) { { shipping_method_in: [shipping_method.id] } }
+      let(:table_items) do
+        [
+          orderA1.billing_address.firstname,
+          orderA1.billing_address.lastname,
+          orderA1.distributor.andand.name,
+          '',
+          "#{orderA1.ship_address.address1} #{orderA1.ship_address.address2} #{orderA1.ship_address.city}",
+          orderA1.ship_address.zipcode,
+          orderA1.ship_address.phone,
+          shipping_method.name,
+          orderA1.payments.first.andand.payment_method.andand.name,
+          orderA1.payments.first.amount,
+          OpenFoodNetwork::UserBalanceCalculator.new(orderA1.email, orderA1.distributor).balance,
+          false,
+          orderA1.special_instructions
+        ]
+      end
+
+      it 'renders the report table' do
+        spree_get(:order_cycle_management, params)
+        expect(assigns(:table)).to include(table_items)
+      end
+    end
+
+    context 'when the shipping method of the order is not deleted' do
+      before do
+        orderA1.shipments << build(
+          :shipment,
+          shipping_method: shipping_method,
+          inventory_units: [create(:inventory_unit)]
+        )
+        orderA1.save!
+      end
+
+      let(:params) { { shipping_method_in: [shipping_method.id] } }
+      let(:table_items) do
+        [
+          orderA1.billing_address.firstname,
+          orderA1.billing_address.lastname,
+          orderA1.distributor.name,
+          '',
+          "#{orderA1.ship_address.address1} #{orderA1.ship_address.address2} #{orderA1.ship_address.city}",
+          orderA1.ship_address.zipcode,
+          orderA1.ship_address.phone,
+          shipping_method.name,
+          orderA1.payments.first.payment_method.name,
+          orderA1.payments.first.amount,
+          OpenFoodNetwork::UserBalanceCalculator.new(orderA1.email, orderA1.distributor).balance,
+          false,
+          orderA1.special_instructions
+        ]
+      end
+
+      it 'renders the report table' do
+        spree_get(:order_cycle_management, params)
+        expect(assigns(:table)).to include(table_items)
+      end
+    end
+
+    context 'when there is no shipping method for the order' do
+      let(:params) { {} }
+      let(:table_items) do
+        [
+          orderA1.billing_address.firstname,
+          orderA1.billing_address.lastname,
+          orderA1.distributor.name,
+          '',
+          "#{orderA1.ship_address.address1} #{orderA1.ship_address.address2} #{orderA1.ship_address.city}",
+          orderA1.ship_address.zipcode,
+          orderA1.ship_address.phone,
+          nil,
+          orderA1.payments.first.payment_method.name,
+          orderA1.payments.first.amount,
+          OpenFoodNetwork::UserBalanceCalculator.new(orderA1.email, orderA1.distributor).balance,
+          false,
+          orderA1.special_instructions
+        ]
+      end
+
+      it 'renders the report table' do
+        spree_get(:order_cycle_management, params)
+        expect(assigns(:table)).to include(table_items)
+      end
+    end
+  end
 end
