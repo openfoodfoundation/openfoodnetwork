@@ -4,6 +4,5 @@ class ShopsController < BaseController
   before_filter :enable_embedded_shopfront
 
   def index
-    #@embeddable = "test"
   end
 end

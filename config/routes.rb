@@ -57,6 +57,9 @@ Openfoodnetwork::Application.routes.draw do
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
 
+  post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'
+  post 'embedded_shopfront/disable', to: 'application#disable_embedded_styles'
+
   resources :enterprises do
     collection do
       post :search

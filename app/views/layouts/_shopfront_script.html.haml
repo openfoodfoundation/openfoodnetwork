@@ -1,0 +1,29 @@
+:javascript
+  $(document).ready(function() {
+    var in_iframe = function(){
+      try {
+        return window.self !== window.top;
+      } catch (e) {
+        return true;
+      }
+    };
+
+    var embedded_styles_active = $('body.off-canvas').hasClass('embedded');
+
+    var set_shopfront_styles = function(state) {
+      $.ajax({
+        url: '/embedded_shopfront/'+state,
+        type: 'POST'
+      });
+    };
+
+    if (in_iframe() && !embedded_styles_active){
+      $('body.off-canvas').addClass('embedded');
+      set_shopfront_styles('enable');
+    }
+
+    if (!in_iframe() && embedded_styles_active) {
+      $('body.off-canvas').removeClass('embedded');
+      set_shopfront_styles('disable');
+    }
+  });

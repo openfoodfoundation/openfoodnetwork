@@ -1,0 +1,40 @@
+body.embedded {
+  nav.top-bar{
+    ul.left, ul.center, ul.right li.current_hub {
+      display: none;
+    }
+
+    ul.right {
+      width: auto !important;
+      li {
+        float: left;
+        line-height: 4.6875rem;
+        height: 4.6875rem;
+        vertical-align: top;
+      }
+    }
+
+    &.show-for-large-up {
+      display: inherit !important;
+    }
+    &.show-for-medium-down {
+      display: none !important;
+    }
+  }
+
+  footer {
+    .footer-local {
+      display: none;
+    }
+    .footer-global {
+      padding-bottom: 0;
+
+      .row {
+        display: none;
+      }
+      .row:first-of-type {
+        display: block;
+      }
+    }
+  }
+}

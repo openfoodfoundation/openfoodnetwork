@@ -21,10 +21,12 @@
     = render "layouts/bugherd_script"
     = csrf_meta_tags
 
-  %body.off-canvas{"ng-app" => "Darkswarm"}
+  %body.off-canvas{class: @shopfront_layout, ng: {app: "Darkswarm"}}
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
+
+    = render "layouts/shopfront_script" if @shopfront_layout
 
     = inject_current_hub
     = inject_json "user", "current_user"
