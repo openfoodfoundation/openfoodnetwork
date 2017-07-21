@@ -657,7 +657,7 @@ en:
       resend_email: Resend Email
       has_no_payment_methods: "%{enterprise} currently has no payment methods"
       has_no_shipping_methods: "%{enterprise} currently has no shipping methods"
-      email_confirmation: "Email confirmation is pending. We've sent a confirmation email to #{email}."
+      email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
       hidden: HIDDEN
