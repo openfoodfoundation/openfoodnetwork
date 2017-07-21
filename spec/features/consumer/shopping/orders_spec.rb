@@ -21,6 +21,11 @@ feature "Order Management", js: true do
       quick_login_as user
     end
 
+    it 'shows the name of the shipping method' do
+      visit spree.order_path(order)
+      expect(find('#order')).to have_content(shipping_method.name)
+    end
+
     context "when the distributor doesn't allow changes to be made to orders" do
       before do
         order.distributor.update_attributes(allow_order_changes: false)

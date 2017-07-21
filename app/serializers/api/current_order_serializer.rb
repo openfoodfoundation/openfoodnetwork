@@ -15,4 +15,9 @@ class Api::CurrentOrderSerializer < ActiveModel::Serializer
   def display_total
     object.display_total.money.to_f
   end
+
+  def shipping_method_id
+    return unless object.shipments.any?
+    object.shipments.last.shipping_method_id
+  end
 end

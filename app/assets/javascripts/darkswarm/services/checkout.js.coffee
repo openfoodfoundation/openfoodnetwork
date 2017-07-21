@@ -30,6 +30,7 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
             munged_order["ship_address_attributes"] = value
           when "payment_method_id"
             munged_order["payments_attributes"] = [{payment_method_id: value}]
+          # SHIPPING_METHOD
           when "shipping_method_id", "payment_method_id", "email", "special_instructions"
             munged_order[name] = value
           else
@@ -56,6 +57,12 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
       munged_order
 
     shippingMethod: ->
+      # Used to get the shiping method data from the passed in id.
+      #
+      # We should store the shipping method object once retrieved. Otherwise we
+      # fetch it every time we call the method, which is few times.
+      #
+      # SHIPPING_METHOD
       ShippingMethods.shipping_methods_by_id[@order.shipping_method_id] if @order.shipping_method_id
 
     requireShipAddress: ->

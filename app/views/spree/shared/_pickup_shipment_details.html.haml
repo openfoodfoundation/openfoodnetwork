@@ -1,0 +1,25 @@
+.order-summary.text-small
+  %strong= order.shipments.last.shipping_method.name
+.pad
+  .text-big
+    = t :order_pickup_time
+    %strong #{order.order_cycle.pickup_time_for(order.distributor)}
+  %p.text-small.text-skinny.pre-line
+    %em= order.shipments.last.shipping_method.description.andand.html_safe || ""
+
+  - if order.order_cycle.pickup_instructions_for(order.distributor).present?
+    %br
+    %p.text-small
+      %strong
+        = t :order_pickup_instructions
+      %br
+      #{order.order_cycle.pickup_instructions_for(order.distributor)}
+
+  - if order.special_instructions.present?
+    %br
+    %p.light.small
+      %strong
+        = t :order_special_instructions
+      %br
+      = order.special_instructions
+

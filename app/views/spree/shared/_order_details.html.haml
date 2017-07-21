@@ -29,60 +29,11 @@
         = order.bill_address.phone
 
   .columns.large-6
-    - if order.shipping_method.andand.require_ship_address
-      // Delivery option
-      .order-summary.text-small
-        %strong= order.shipping_method.name
-      .pad
-        .text-big
-          = t :order_delivery_time
-          %strong #{order.order_cycle.pickup_time_for(order.distributor)}
-        %p.text-small.text-skinny.pre-line
-          %em= order.shipping_method.description.andand.html_safe || ""
-      .order-summary.text-small
-        %strong
-          = t :order_delivery_address
-      .pad
-        %p.text-small
-          = order.ship_address.firstname + " " + order.ship_address.lastname
-          %br
-          = order.ship_address.full_address
-          %br
-          = order.ship_address.phone
-        - if order.special_instructions.present?
-          %br
-          %p.light.small
-            %strong
-              = t :order_special_instructions
-            %br
-            = order.special_instructions
+    - shipment = order.shipments.last
+    - if shipment.shipping_method.andand.require_ship_address
+      = render 'spree/shared/delivery_shipment_details', order: order, shipment: shipment
     - else
-      // Collection option
-      .order-summary.text-small
-        %strong= order.shipping_method.name
-      .pad
-        .text-big
-          = t :order_pickup_time
-          %strong #{order.order_cycle.pickup_time_for(order.distributor)}
-        %p.text-small.text-skinny.pre-line
-          %em= order.shipping_method.description.andand.html_safe || ""
-
-        - if order.order_cycle.pickup_instructions_for(order.distributor).present?
-          %br
-          %p.text-small
-            %strong
-              = t :order_pickup_instructions
-            %br
-            #{order.order_cycle.pickup_instructions_for(order.distributor)}
-
-        - if order.special_instructions.present?
-          %br
-          %p.light.small
-            %strong
-              = t :order_special_instructions
-            %br
-            = order.special_instructions
-
+      = render 'spree/shared/pickup_shipment_details', order: order, shipment: shipment
 %br
 .row
   .columns.large-12

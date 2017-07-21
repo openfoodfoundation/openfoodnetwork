@@ -7,6 +7,7 @@ Darkswarm.controller "CheckoutCtrl", ($scope, localStorageService, Checkout, Cur
   prefix = "order_#{Checkout.order.id}#{CurrentUser.id or ""}#{CurrentHub.hub.id}"
 
   for field in $scope.fieldsToBind
+    # SHIPPING_METHOD
     localStorageService.bind $scope, "Checkout.order.#{field}", Checkout.order[field], "#{prefix}_#{field}"
 
   localStorageService.bind $scope, "Checkout.ship_address_same_as_billing", true, "#{prefix}_sameasbilling"
