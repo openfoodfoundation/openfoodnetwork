@@ -8,9 +8,6 @@ class UserConfirmationsController < DeviseController
 
   # POST /resource/confirmation
   def create
-    self.resource = resource_class.find_by_unconfirmed_email_with_errors(resource_params)
-    authorize! :resend_confirmation, resource
-
     self.resource = resource_class.send_confirmation_instructions(resource_params)
 
     if successfully_sent?(resource) && is_navigational_format?
@@ -19,7 +16,7 @@ class UserConfirmationsController < DeviseController
       set_flash_message(:error, :confirmation_not_sent)
     end
 
-    respond_with_navigational(resource){ redirect_to spree.admin_path }
+    respond_with_navigational(resource){ redirect_to login_path }
   end
 
   # GET /resource/confirmation?confirmation_token=abcdef
