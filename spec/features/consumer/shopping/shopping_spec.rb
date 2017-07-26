@@ -405,6 +405,33 @@ feature "As a consumer I want to shop with a distributor", js: true do
       end
     end
 
+    context "when an item goes out of stock after it is added to the cart" do
+      let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
+      let(:user) { create(:user, bill_address: address, ship_address: address) }
+      let(:variant) { create(:variant, product: product, on_hand: 5) }
+      let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
+
+      before do
+        Spree::Config.set allow_backorders: false
+        add_variant_to_order_cycle(exchange, variant)
+        set_order_cycle(order, oc1)
+        order.line_items << create(:line_item, variant: variant, quantity: 5)
+        variant.update_attributes! on_hand: 3
+      end
+
+      context "and the user logs in" do
+        before do
+          quick_login_as user
+        end
+
+        it 'shows notification if there is insufficient stock' do
+          visit shop_path
+          expect(Spree::Config.allow_backorders).to be_false
+          expect(page).to have_content 'Insufficient stock available, only 3 remaining'
+        end
+      end
+    end
+
     context "when no order cycles are available" do
       it "tells us orders are closed" do
         visit shop_path

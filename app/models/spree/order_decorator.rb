@@ -79,6 +79,23 @@ Spree::Order.class_eval do
     errors.add(:base, I18n.t(:spree_order_availability_error)) unless DistributionChangeValidator.new(self).can_change_to_distribution?(distributor, order_cycle)
   end
 
+  # This method should go as validation but it is not efficient as too many tests are failing and refactoring would take too much of time
+  def variants_still_available_in_order_cycle?
+    available = true
+    if order_cycle.andand.exchanges
+      not_available_variants = line_item_variants - order_cycle.exchanges.outgoing.collect(&:variants).flatten
+
+      if not_available_variants.any?
+        not_available_variants.each do |variant|
+          errors.add(:base, I18n.t(:order_variant_not_available, name: variant.name))
+          remove_variant(variant)
+        end
+        available = false
+      end
+    end
+    available
+  end
+
   def empty_with_clear_shipping_and_payments!
     empty_without_clear_shipping_and_payments!
     payments.clear

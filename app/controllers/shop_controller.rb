@@ -6,6 +6,7 @@ class ShopController < BaseController
   before_filter :set_order_cycles
 
   def show
+    flash.keep # too many redirects, keeping flash
     redirect_to main_app.enterprise_shop_path(current_distributor)
   end
 
