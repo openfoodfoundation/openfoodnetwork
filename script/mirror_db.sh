@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Used to pull data from production or staging servers into local dev database
+# Useful for when you want to test a migration against production data, or see
+# the effect of codebase changes on real-life data
+
 # Usage: script/mirror_db.sh [ofn-staging1|ofn-staging2|ofn-prod]
 
 set -e
