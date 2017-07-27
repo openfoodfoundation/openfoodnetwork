@@ -536,6 +536,8 @@ en:
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
           managers: Managers
           managers_tip: The other users with permission to manage this enterprise.
+          email_confirmed: "Email confirmed"
+          email_not_confirmed: "Email not confirmed"
       actions:
         edit_profile: Edit Profile
         properties: Properties

@@ -1,3 +1,21 @@
-form[name="enterprise_form"] div.row.warning {
-  color: #DA7F52;
+form[name="enterprise_form"] {
+  div.row.warning {
+    color: #DA7F52;
+  }
+
+  table.managers {
+    i.confirmation {
+      float: right;
+      font-size: 1.5em;
+      cursor: pointer;
+
+      &.confirmed {
+        color: #1ece1e;
+      }
+
+      &.unconfirmed {
+        color: #ed9524;
+      }
+    }
+  }
 }
