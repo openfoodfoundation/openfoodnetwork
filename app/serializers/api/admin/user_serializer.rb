@@ -1,7 +1,7 @@
 require 'open_food_network/last_used_address'
 
 class Api::Admin::UserSerializer < ActiveModel::Serializer
-  attributes :id, :email
+  attributes :id, :email, :confirmed
 
   has_one :ship_address, serializer: Api::AddressSerializer
   has_one :bill_address, serializer: Api::AddressSerializer
@@ -14,5 +14,9 @@ class Api::Admin::UserSerializer < ActiveModel::Serializer
   def bill_address
     object.bill_address ||
       OpenFoodNetwork::LastUsedAddress.new(object.email).last_used_bill_address
+  end
+
+  def confirmed
+    object.confirmed?
   end
 end

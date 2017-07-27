@@ -44,7 +44,7 @@
       %a= t('admin.whats_this')
   .eight.columns.omega
     - if full_permissions
-      %table
+      %table.managers
         %tr
           %td
             - # Ignore this input in the submit
@@ -55,6 +55,8 @@
           %td
             = hidden_field_tag "enterprise[user_ids][]", nil, multiple: true, 'ng-value' => 'manager.id'
             {{ manager.email }}
+            %i.confirmation.confirmed.fa.fa-check-circle{ 'ofn-with-tip' => t('.email_confirmed'), ng: {show: 'manager.confirmed'} }
+            %i.confirmation.unconfirmed.fa.fa-exclamation-triangle{ 'ofn-with-tip' => t('.email_not_confirmed'), ng: {show: '!manager.confirmed'} }
           %td.actions
             %a{ ng: {click: 'removeManager(manager)', class: "{disabled: manager.id == Enterprise.owner.id}"}, :class => "icon-trash no-text" }
     - else
