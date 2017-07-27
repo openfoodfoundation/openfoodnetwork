@@ -35,6 +35,8 @@ angular.module("admin.enterprises")
 
     $scope.removeManager = (manager) ->
       if manager.id?
+        if manager.id == $scope.Enterprise.owner.id
+          return
         for i, user of $scope.Enterprise.users when user.id == manager.id
           $scope.Enterprise.users.splice i, 1
         if $scope.enterprise_form?

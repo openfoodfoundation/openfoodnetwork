@@ -56,7 +56,7 @@
             = hidden_field_tag "enterprise[user_ids][]", nil, multiple: true, 'ng-value' => 'manager.id'
             {{ manager.email }}
           %td.actions
-            %a{ 'ng-click' => 'removeManager(manager)', :class => "icon-trash no-text" }
+            %a{ ng: {click: 'removeManager(manager)', class: "{disabled: manager.id == Enterprise.owner.id}"}, :class => "icon-trash no-text" }
     - else
       - @enterprise.users.each do |manager|
         = manager.email
