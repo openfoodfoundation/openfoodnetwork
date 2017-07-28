@@ -409,7 +409,7 @@ GEM
     guard-rails (0.7.2)
       guard (~> 2.11)
       guard-compat (~> 1.0)
-    guard-rspec (4.7.3)
+    guard-rspec (4.4.1)
       guard (~> 2.1)
       rspec (>= 2.99.0, < 4.0)
     haml (4.0.4)
@@ -716,7 +716,7 @@ DEPENDENCIES
   guard
   guard-livereload
   guard-rails
-  guard-rspec
+  guard-rspec (= 4.4.1)
   haml
   i18n (~> 0.6.11)
   i18n-js (~> 3.0.0)

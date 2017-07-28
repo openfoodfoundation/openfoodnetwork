@@ -127,7 +127,7 @@ group :development do
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'guard-rails'
-  gem 'guard-rspec'
+  gem 'guard-rspec', '4.4.1'
   gem 'parallel_tests'
   gem 'rubocop', '>= 0.49.1'
 
