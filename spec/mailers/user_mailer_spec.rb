@@ -37,7 +37,7 @@ describe Spree::UserMailer do
 
       context 'body includes' do
         it 'password reset url' do
-          expect(@message.body.raw_source).to include root_url + "user/spree_user/password/edit"
+          expect(@message.body.raw_source).to include spree.edit_spree_user_password_url
         end
       end
     end
