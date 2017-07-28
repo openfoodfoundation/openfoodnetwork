@@ -4,7 +4,6 @@ angular.module("admin.enterprises")
     $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
     $scope.navClear = NavigationCheck.clear
-    $scope.pristineEmail = $scope.Enterprise.email
     $scope.menu = SideMenu
     $scope.newManager = { id: '', email: (t('add_manager')) }
 

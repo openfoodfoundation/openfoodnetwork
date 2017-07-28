@@ -22,7 +22,7 @@ module Api
 
       describe "creating an enterprise" do
         let(:australia) { Spree::Country.find_by_name('Australia') }
-        let(:new_enterprise_params) { {enterprise: {name: 'name', email: 'email@example.com', address_attributes: {address1: '123 Abc Street', city: 'Northcote', zipcode: '3070', state_id: australia.states.first, country_id: australia.id } } } }
+        let(:new_enterprise_params) { {enterprise: {name: 'name', address_attributes: {address1: '123 Abc Street', city: 'Northcote', zipcode: '3070', state_id: australia.states.first, country_id: australia.id } } } }
 
         it "creates as sells=any when it is not a producer" do
           spree_post :create, new_enterprise_params

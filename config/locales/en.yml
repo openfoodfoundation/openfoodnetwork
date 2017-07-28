@@ -422,8 +422,9 @@ en:
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
-          email_address: Email Address
-          email_address_placeholder: eg. gustav@truffles.com
+          email_address: Public Email Address
+          email_address_placeholder: eg. inquiries@fresh-food.com
+          email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
           website: Website

@@ -32,6 +32,7 @@ class Enterprise < ActiveRecord::Base
   has_many :enterprise_roles, :dependent => :destroy
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_enterprises
+  belongs_to :contact, class_name: 'Spree::User', foreign_key: :contact_id, inverse_of: :contact_enterprises
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
@@ -68,7 +69,6 @@ class Enterprise < ActiveRecord::Base
   validate :name_is_unique
   validates :sells, presence: true, inclusion: {in: SELLS}
   validates :address, presence: true, associated: true
-  validates :email, presence: true
   validates_presence_of :owner
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
@@ -77,11 +77,11 @@ class Enterprise < ActiveRecord::Base
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
-  before_validation :ensure_email_set
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
   after_touch :touch_distributors
+  before_create :set_default_contact
   after_create :relate_to_owners_enterprises
   after_create :send_welcome_email
 
@@ -189,7 +189,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def activated?
-    owner.confirmed? && sells != 'unspecified'
+    contact.confirmed? && sells != 'unspecified'
   end
 
   def set_producer_property(property_name, property_value)
@@ -387,14 +387,14 @@ class Enterprise < ActiveRecord::Base
     users << owner unless users.include?(owner) || owner.admin?
   end
 
-  def ensure_email_set
-    self.email = owner.email if email.blank? && owner.present?
-  end
-
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
       errors.add(:owner, I18n.t(:enterprise_owner_error, email: owner.email, enterprise_limit: owner.enterprise_limit ))
     end
+  end
+
+  def set_default_contact
+    self.contact_id = self.owner_id if self.contact_id.nil?
   end
 
   def relate_to_owners_enterprises

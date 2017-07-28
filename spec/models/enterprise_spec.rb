@@ -10,7 +10,7 @@ describe Enterprise do
 
       it "sends a welcome email" do
         expect do
-          create(:enterprise, owner: user, email: enterprise.email)
+          create(:enterprise, owner: user)
         end.to enqueue_job WelcomeEnterpriseJob
       end
     end
@@ -145,11 +145,9 @@ describe Enterprise do
         enterprise.should be_valid
       end
 
-      it "takes the owner's email address as default email" do
-        enterprise.email = nil
-        enterprise.should be_valid
-        enterprise.email.should be_present
-        enterprise.email.should eq owner.email
+      it "sets the enterprise contact to the owner by default" do
+        enterprise.contact.should be_present
+        enterprise.contact.should eq enterprise.owner
       end
     end
 
@@ -218,13 +216,16 @@ describe Enterprise do
     end
 
     describe "activated" do
-      let!(:inactive_enterprise) { create(:enterprise, sells: "unspecified") ;}
+      let!(:unconfirmed_user) { create(:user, confirmed_at: nil, enterprise_limit: 2) }
+      let!(:inactive_enterprise1) { create(:enterprise, sells: "unspecified", owner: unconfirmed_user) }
+      let!(:inactive_enterprise2) { create(:enterprise, sells: "none", owner: unconfirmed_user) }
       let!(:active_enterprise) { create(:enterprise, sells: "none") }
 
-      it "finds enterprises that have a sells property other than 'unspecified'" do
+      it "finds enterprises that have a sells property other than 'unspecified' and have a confirmed user" do
         activated_enterprises = Enterprise.activated
         expect(activated_enterprises).to include active_enterprise
-        expect(activated_enterprises).to_not include inactive_enterprise
+        expect(activated_enterprises).to_not include inactive_enterprise1
+        expect(activated_enterprises).to_not include inactive_enterprise2
       end
     end
 

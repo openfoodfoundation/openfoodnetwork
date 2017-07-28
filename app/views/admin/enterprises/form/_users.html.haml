@@ -14,23 +14,26 @@
     - else
       = owner_email
 
-.row
-  .three.columns.alpha
-    = f.label :email, t('.notifications')
-    - if full_permissions
-      %span.required *
-    .with-tip{'data-powertip' => t('.notifications_tip')}
-      %a= t('admin.whats_this')
-  .eight.columns.omega
-    - if full_permissions
-      = f.text_field :email, { placeholder: t('.notifications_placeholder'), "ng-model" => "Enterprise.email" }
-    - else
-      = @enterprise.email
-.row{ ng: { hide: "pristineEmail == null || pristineEmail == Enterprise.email"} }
-  .alpha.three.columns
-    &nbsp;
-  .omega.eight.columns
-    = t('.notifications_note')
+
+-# TODO: add contact field, possibly re-use some of these tooltip keys
+
+-#.row
+-#  .three.columns.alpha
+-#    = f.label :email, t('.notifications')
+-#    - if full_permissions
+-#      %span.required *
+-#    .with-tip{'data-powertip' => t('.notifications_tip')}
+-#      %a= t('admin.whats_this')
+-#  .eight.columns.omega
+-#    - if full_permissions
+-#      = f.text_field :email, { placeholder: t('.notifications_placeholder'), "ng-model" => "Enterprise.email" }
+-#    - else
+-#      = @enterprise.email
+-#.row{ ng: { hide: "pristineEmail == null || pristineEmail == Enterprise.email"} }
+-#  .alpha.three.columns
+-#    &nbsp;
+-#  .omega.eight.columns
+-#    = t('.notifications_note')
 
 .row
   .three.columns.alpha
