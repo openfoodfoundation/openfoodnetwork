@@ -697,7 +697,6 @@ en:
         name: Orders & Fulfillment Reports
       customers:
         name: Customers
-        description: Customer details
       products_and_inventory:
         name: Products & Inventory
         description:
@@ -711,7 +710,6 @@ en:
         name: Order Cycle Management
       sales_tax:
         name: Sales Tax
-        description: Sales Tax For Orders
       xero_invoices:
         name: Xero Invoices
         description: Invoices for import into Xero

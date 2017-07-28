@@ -21,22 +21,6 @@ Spree::Admin::ReportsController.class_eval do
   # Fetches user's distributors, suppliers and order_cycles
   before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]
 
-  # Render a partial for orders and fulfillment description
-  respond_override :index => { :html => { :success => lambda {
-    @reports[:orders_and_fulfillment][:description] =
-      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: report_types[:orders_and_fulfillment]}).html_safe
-    @reports[:products_and_inventory][:description] =
-      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: report_types[:products_and_inventory]}).html_safe
-    @reports[:customers][:description] =
-      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: report_types[:customers]}).html_safe
-    @reports[:order_cycle_management][:description] =
-      render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: report_types[:order_cycle_management]}).html_safe
-    @reports[:packing][:description] =
-        render_to_string(partial: 'packing_description', layout: false, locals: {report_types: report_types[:packing]}).html_safe
-    @reports[:sales_tax][:description] =
-        render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: report_types[:sales_tax]}).html_safe
-} } }
-
   def report_types
     {
       orders_and_fulfillment: [
@@ -318,15 +302,29 @@ Spree::Admin::ReportsController.class_eval do
       :bulk_coop => {:name => I18n.t('admin.reports.bulk_coop.name'), :description => I18n.t('admin.reports.bulk_coop.description')},
       :payments => {:name => I18n.t('admin.reports.payments.name'), :description => I18n.t('admin.reports.payments.description')},
       :orders_and_fulfillment => {:name => I18n.t('admin.reports.orders_and_fulfillment.name'), :description => ''},
-      :customers => {:name => I18n.t('admin.reports.customers.name'), :description => I18n.t('admin.reports.customers.description')},
+      :customers => {:name => I18n.t('admin.reports.customers.name'), :description => ''},
       :products_and_inventory => {:name => I18n.t('admin.reports.products_and_inventory.name'), :description => ''},
       :sales_total => {:name => I18n.t('admin.reports.sales_total.name'), :description => I18n.t('admin.reports.sales_total.description')},
       :users_and_enterprises => {:name => I18n.t('admin.reports.users_and_enterprises.name'), :description => I18n.t('admin.reports.users_and_enterprises.description')},
       :order_cycle_management => {:name => I18n.t('admin.reports.order_cycle_management.name'), :description => ''},
-      :sales_tax => {:name => I18n.t('admin.reports.sales_tax.name'), :description => I18n.t('admin.reports.sales_tax.description')},
+      :sales_tax => {:name => I18n.t('admin.reports.sales_tax.name'), :description => ''},
       :xero_invoices => {:name => I18n.t('admin.reports.xero_invoices.name'), :description => I18n.t('admin.reports.xero_invoices.description')},
       :packing => {:name => I18n.t('admin.reports.packing.name'), :description => ''}
     }
+
+    reports[:orders_and_fulfillment][:description] =
+      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: report_types[:orders_and_fulfillment]}).html_safe
+    reports[:products_and_inventory][:description] =
+      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: report_types[:products_and_inventory]}).html_safe
+    reports[:customers][:description] =
+      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: report_types[:customers]}).html_safe
+    reports[:order_cycle_management][:description] =
+      render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: report_types[:order_cycle_management]}).html_safe
+    reports[:packing][:description] =
+        render_to_string(partial: 'packing_description', layout: false, locals: {report_types: report_types[:packing]}).html_safe
+    reports[:sales_tax][:description] =
+        render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: report_types[:sales_tax]}).html_safe
+
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
   end
