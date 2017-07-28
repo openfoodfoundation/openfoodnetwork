@@ -2,7 +2,6 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
   new class EnterpriseRegistrationService
     enterprise:
       user_ids: [CurrentUser.id]
-      email: CurrentUser.email
       email_address: CurrentUser.email
       address: {}
       country: availableCountries[0]

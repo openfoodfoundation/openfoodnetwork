@@ -18,7 +18,7 @@
       '\x0A',
       '#{j(@order.distributor.address.address_part1)}' + '\x0A',     // text and line break
       '#{j(@order.distributor.address.address_part2)}' + '\x0A',
-      '#{j(@order.distributor.email)}' + '\x0A',
+      '#{j(@order.distributor.contact.email)}' + '\x0A',
       '\x0A',                   // line break    
       '\x1B' + '\x61' + '\x32', // right align
       '#{j(l(Time.zone.now.to_date))}' + '\x0A',

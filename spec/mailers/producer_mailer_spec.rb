@@ -59,16 +59,16 @@ describe ProducerMailer do
     ActionMailer::Base.deliveries.count.should == 1
   end
 
-  it "sets a reply-to of the enterprise email" do
-    mail.reply_to.should == [s1.email]
+  it "sets a reply-to of the oc coordinator's email" do
+    expect(mail.reply_to).to eq [order_cycle.coordinator.contact.email]
   end
 
   it "includes receival instructions" do
     mail.body.encoded.should include 'Outside shed.'
   end
 
-  it "cc's the enterprise" do
-    mail.cc.should == [s1.email]
+  it "cc's the oc coordinator" do
+    expect(mail.cc).to eq [order_cycle.coordinator.contact.email]
   end
 
   it "contains an aggregated list of produce" do

@@ -34,7 +34,7 @@ describe Spree::OrderMailer do
 
     it "sets a reply-to of the enterprise email" do
       Spree::OrderMailer.confirm_email_for_customer(@order1.id).deliver
-      ActionMailer::Base.deliveries.first.reply_to.should == [@distributor.email]
+      ActionMailer::Base.deliveries.first.reply_to.should == [@distributor.contact.email]
     end
   end
 
@@ -42,7 +42,7 @@ describe Spree::OrderMailer do
     it "sends an email to the shop owner when given an order" do
       Spree::OrderMailer.confirm_email_for_shop(@order1.id).deliver
       ActionMailer::Base.deliveries.count.should == 1
-      ActionMailer::Base.deliveries.first.to.should == [@distributor.email]
+      ActionMailer::Base.deliveries.first.to.should == [@distributor.contact.email]
     end
 
     it "sends an email even if a footer_email is given" do
