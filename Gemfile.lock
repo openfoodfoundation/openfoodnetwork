@@ -718,7 +718,7 @@ DEPENDENCIES
   guard-rails
   guard-rspec (= 4.4.1)
   haml
-  i18n (~> 0.6.11)
+  i18n (~> 0.8.1)
   i18n-js (~> 3.0.0)
   immigrant
   jquery-migrate-rails

@@ -3,7 +3,7 @@ ruby "2.1.5"
 
 gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
-gem 'i18n', '~> 0.6.11'
+gem 'i18n', '~> 0.8.1'
 gem 'i18n-js', '~> 3.0.0'
 
 # Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
