@@ -1677,8 +1677,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_customer_code: Customer Code
   report_header_product: Product
   report_header_product_properties: Product Properties
-  report_header_description: Description
-  report_header_qty: Qty
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
@@ -1687,7 +1685,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_total_available: Total available
   report_header_unallocated: Unallocated
   report_header_max_quantity_excess: Max Quantity Excess
-  report_header_taxon: Taxon
   report_header_taxons: Taxons
   report_header_supplier: Supplier
   report_header_producer: Producer
@@ -1701,10 +1698,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_payment_method: Payment Method
   report_header_sells: Sells
   report_header_visible: Visible
-  report_header_unit_price: Unit Price
   report_header_price: Price
   report_header_unit_size: Unit Size
-  report_header_pack_size: Pack Size
   report_header_distributor: Distributor
   report_header_distributor_address: Distributor address
   report_header_distributor_city: Distributor city
@@ -1743,7 +1738,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_sku: SKU
   report_header_amount: Amount
   report_header_balance: Balance
-  report_header_total: Total
   report_header_total_cost: "Total Cost"
   report_header_total_ordered: Total Ordered
   report_header_total_max: Total Max
@@ -1751,8 +1745,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_sum_max_total: "Sum Max Total"
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
-  report_header_gst_incl: GST incl.
-  report_header_grower_and_method: Grower and growing method
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed

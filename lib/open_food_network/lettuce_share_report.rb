@@ -3,17 +3,18 @@ require 'open_food_network/products_and_inventory_report_base'
 module OpenFoodNetwork
   class LettuceShareReport < ProductsAndInventoryReportBase
     def header
+      # NOTE: These are NOT to be translated, they need to be in this exact format to work with LettucShare
       [
-        I18n.t(:report_header_product),
-        I18n.t(:report_header_description),
-        I18n.t(:report_header_qty),
-        I18n.t(:report_header_pack_size),
-        I18n.t(:report_header_unit),
-        I18n.t(:report_header_unit_price),
-        I18n.t(:report_header_total),
-        I18n.t(:report_header_gst_incl),
-        I18n.t(:report_header_grower_and_method),
-        I18n.t(:report_header_taxon)
+        "PRODUCT",
+        "Description",
+        "Qty",
+        "Pack Size",
+        "Unit",
+        "Unit Price",
+        "Total",
+        "GST incl.",
+        "Grower and growing method",
+        "Taxon"
       ]
     end
 
