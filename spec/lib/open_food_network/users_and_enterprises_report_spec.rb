@@ -26,18 +26,10 @@ module OpenFoodNetwork
     describe "sorting results" do
       let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new {} }
 
-      it "sorts unconfirmed enterprises to the top" do
+      it "sorts by creation date" do
         uae_mock = [
-          { "confirmed_at" => "2015-01-01", "name" => "aaa" },
-          { "confirmed_at" => nil, "name" => "bbb" }
-        ]
-        expect(subject.sort uae_mock).to eq [ uae_mock[1], uae_mock[0] ]
-      end
-
-      it "then sorts by confirmation date" do
-        uae_mock = [
-          { "confirmed_at" => "2015-01-01", "name" => "bbb" },
-          { "confirmed_at" => "2015-01-02", "name" => "aaa" }
+          { "created_at" => "2015-01-01", "name" => "bbb" },
+          { "created_at" => "2015-01-02", "name" => "aaa" }
         ]
         expect(subject.sort uae_mock).to eq [ uae_mock[1], uae_mock[0] ]
       end
