@@ -72,10 +72,6 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-  # TODO - remove this line after Spree upgrade. Current Spree specs do not have `type: :controller` definitions.
-  # This is a workaround to pass tests in Travis i.e. https://travis-ci.org/openfoodfoundation/openfoodnetwork/jobs/235601640
-  config.infer_spec_type_from_file_location!
-
   # Filters
   config.filter_run_excluding :skip => true, :future => true, :to_figure_out => true
 
