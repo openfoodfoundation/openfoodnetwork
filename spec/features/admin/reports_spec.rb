@@ -510,9 +510,7 @@ feature %q{
     end
 
     def xero_invoice_header
-      ['*Contact Name', 'Email', 'Billing Street', 'Billing Street 2', 'Billing Street 3', 'Billing Street 4',  'Billing City', 'Billing Region', 'Billing Postcode', 'Billing Country',
-       '*Invoice Number', 'Reference', '*Invoice Date', '*Due Date', 'Inventory Item Code', '*Description', '*Quantity', '*Unit Amount', 'Discount',
-       '*Account Code', '*Tax Type', 'Tracking Name 1', 'Tracking Option 1',  'Tracking Name 2', 'Tracking Option 2', 'Currency', 'Branding Theme', 'Paid?']
+      %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
     end
 
     def xero_invoice_summary_row(description, amount, tax_type, opts={})

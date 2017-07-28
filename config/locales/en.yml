@@ -1623,19 +1623,11 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_users: "Users: "
   report_tax_rates: Tax rates
   report_tax_types: Tax types
-  report_header_tax_type: Tax Type
-  report_header_tracking_name_1: Tracking Name 1
-  report_header_tracking_name_2: Tracking Name 2
-  report_header_tracking_option_1: Tracking Option 1
-  report_header_tracking_option_2: Tracking Option 2
-  report_header_branding_theme: Branding Theme
-  report_header_currency: Currency
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email
   report_header_status: Status
   report_header_comments: Comments
-  report_header_contact_name: Contact Name
   report_header_first_name: First Name
   report_header_last_name: Last Name
   report_header_suburb: Suburb
@@ -1665,16 +1657,10 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_billing_street_4: Billing Street 4
   report_header_billing_city: Billing City
   report_header_billing_postcode: Billing Postcode
-  report_header_billing_region: Billing Region
   report_header_billing_state: Billing State
-  report_header_billing_country: Billing Country
   report_header_incoming_transport: Incoming Transport
   report_header_special_instructions: Special Instructions
   report_header_order_number: Order number
-  report_header_invoice_number: Invoice Number
-  report_header_reference: Reference
-  report_header_invoice_date: Invoice Date
-  report_header_due_date: Due Date
   report_header_date: Date
   report_header_confirmation_date: Confirmation Date
   report_header_tags: Tags
@@ -1736,7 +1722,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_order_date: Order date
   report_header_order_id: Order Id
   report_header_item_name: Item name
-  report_header_inventory_item_code: Inventory Item Code
   report_header_temp_controlled_items: Temp Controlled Items?
   report_header_customer_name: Customer Name
   report_header_customer_email: Customer Email
@@ -1757,9 +1742,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_paypal_price: "PayPal (%{currency})"
   report_header_sku: SKU
   report_header_amount: Amount
-  report_header_unit_amount: Unit Amount
-  report_header_discount: Discount
-  report_header_account_code: Account Code
   report_header_balance: Balance
   report_header_total: Total
   report_header_total_cost: "Total Cost"

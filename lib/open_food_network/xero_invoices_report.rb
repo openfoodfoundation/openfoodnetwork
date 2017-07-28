@@ -12,36 +12,8 @@ module OpenFoodNetwork
     end
 
     def header
-      [
-        "*#{I18n.t(:report_header_contact_name)}",
-        I18n.t(:report_header_email),
-        I18n.t(:report_header_billing_street),
-        I18n.t(:report_header_billing_street_2),
-        I18n.t(:report_header_billing_street_3),
-        I18n.t(:report_header_billing_street_4),
-        I18n.t(:report_header_billing_city),
-        I18n.t(:report_header_billing_region),
-        I18n.t(:report_header_billing_postcode),
-        I18n.t(:report_header_billing_country),
-        "*#{I18n.t(:report_header_invoice_number)}",
-        I18n.t(:report_header_reference),
-        "*#{I18n.t(:report_header_invoice_date)}",
-        "*#{I18n.t(:report_header_due_date)}",
-        I18n.t(:report_header_inventory_item_code),
-        "*#{I18n.t(:report_header_description)}",
-        "*#{I18n.t(:report_header_quantity)}",
-        "*#{I18n.t(:report_header_unit_amount)}",
-        I18n.t(:report_header_discount),
-        "*#{I18n.t(:report_header_account_code)}",
-        "*#{I18n.t(:report_header_tax_type)}",
-        I18n.t(:report_header_tracking_name_1),
-        I18n.t(:report_header_tracking_option_1),
-        I18n.t(:report_header_tracking_name_2),
-        I18n.t(:report_header_tracking_option_2),
-        I18n.t(:report_header_currency),
-        I18n.t(:report_header_branding_theme),
-        I18n.t(:report_header_paid),
-      ]
+      # NOTE: These are NOT to be translated, they need to be in this exact format to work with Xero
+      %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4 POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
     end
 
     def search
