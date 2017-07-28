@@ -12,16 +12,6 @@ class EnterpriseMailer < Spree::BaseMailer
          :subject => subject)
   end
 
-  def confirmation_instructions(record, token)
-    @token = token
-    find_enterprise(record)
-    subject = t('enterprise_mailer.confirmation_instructions.subject',
-                enterprise: @enterprise.name)
-    mail(to: (@enterprise.unconfirmed_email || @enterprise.email),
-         from: from_address,
-         subject: subject)
-  end
-
   private
 
   def find_enterprise(enterprise)

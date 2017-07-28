@@ -135,7 +135,7 @@ module Admin
         return
       end
 
-      available_coordinators = permitted_coordinating_enterprises_for(@order_cycle).select(&:confirmed?)
+      available_coordinators = permitted_coordinating_enterprises_for(@order_cycle)
       case available_coordinators.count
       when 0
         flash[:error] = I18n.t(:order_cycles_no_permission_to_coordinate_error)

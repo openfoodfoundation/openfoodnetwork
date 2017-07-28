@@ -8,77 +8,10 @@ describe Enterprise do
       let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
       let!(:enterprise) { create(:enterprise, owner: user) }
 
-      context "when the email address has not already been confirmed" do
-        it "sends a confirmation email" do
-          expect do
-            create(:enterprise, owner: user, email: "unknown@email.com", confirmed_at: nil )
-          end.to enqueue_job Delayed::PerformableMethod
-          Delayed::Job.last.payload_object.method_name.should == :send_on_create_confirmation_instructions_without_delay
-        end
-
-        it "does not send a welcome email" do
-          expect(EnterpriseMailer).to_not receive(:welcome)
-          create(:enterprise, owner: user, email: "unknown@email.com", confirmed_at: nil )
-        end
-      end
-
-      context "when the email address has already been confirmed" do
-        it "does not send a confirmation email" do
-          expect(EnterpriseMailer).to_not receive(:confirmation_instructions)
-          create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
-        end
-
-        it "sends a welcome email" do
-          expect do
-            create(:enterprise, owner: user, email: enterprise.email, confirmed_at: nil)
-          end.to enqueue_job WelcomeEnterpriseJob
-        end
-      end
-    end
-
-    describe "on update of email" do
-      let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
-      let!(:enterprise) { create(:enterprise, owner: user) }
-
-      it "when the email address has not already been confirmed" do
+      it "sends a welcome email" do
         expect do
-          enterprise.update_attributes(email: "unknown@email.com")
-        end.to enqueue_job Delayed::PerformableMethod
-        Delayed::Job.last.payload_object.method_name.should == :send_confirmation_instructions_without_delay
-      end
-
-      it "when the email address has already been confirmed" do
-        create(:enterprise, owner: user, email: "second.known.email@email.com") # Another enterpise with same owner but different email
-        expect(EnterpriseMailer).to_not receive(:confirmation_instructions)
-        enterprise.update_attributes!(email: "second.known.email@email.com")
-      end
-    end
-
-    describe "on email confirmation" do
-      let!(:user) { create_enterprise_user( enterprise_limit: 2 ) }
-      let!(:unconfirmed_enterprise) { create(:enterprise, owner: user, confirmed_at: nil) }
-
-      context "when we are confirming an email address for the first time for the enterprise" do
-        it "sends a welcome email" do
-          # unconfirmed_email is blank if we are not reconfirming an email
-          unconfirmed_enterprise.unconfirmed_email = nil
-          unconfirmed_enterprise.save!
-
-          expect do
-            unconfirmed_enterprise.confirm!
-          end.to enqueue_job WelcomeEnterpriseJob, enterprise_id: unconfirmed_enterprise.id
-        end
-      end
-
-      context "when we are reconfirming the email address for the enterprise" do
-        it "does not send a welcome email" do
-          # unconfirmed_email is present if we are reconfirming an email
-          unconfirmed_enterprise.unconfirmed_email = "unconfirmed@email.com"
-          unconfirmed_enterprise.save!
-
-          expect(EnterpriseMailer).to_not receive(:welcome)
-          unconfirmed_enterprise.confirm!
-        end
+          create(:enterprise, owner: user, email: enterprise.email)
+        end.to enqueue_job WelcomeEnterpriseJob
       end
     end
   end
@@ -284,38 +217,14 @@ describe Enterprise do
       end
     end
 
-    describe "confirmed" do
-      it "find enterprises with a confirmed date" do
-        s1 = create(:supplier_enterprise)
-        d1 = create(:distributor_enterprise)
-        s2 = create(:supplier_enterprise, confirmed_at: nil)
-        d2 = create(:distributor_enterprise, confirmed_at: nil)
-        expect(Enterprise.confirmed).to include s1, d1
-        expect(Enterprise.confirmed).to_not include s2, d2
-      end
-    end
-
-    describe "unconfirmed" do
-      it "find enterprises without a confirmed date" do
-        s1 = create(:supplier_enterprise)
-        d1 = create(:distributor_enterprise)
-        s2 = create(:supplier_enterprise, confirmed_at: nil)
-        d2 = create(:distributor_enterprise, confirmed_at: nil)
-        expect(Enterprise.unconfirmed).to_not include s1, d1
-        expect(Enterprise.unconfirmed).to include s2, d2
-      end
-    end
-
     describe "activated" do
-      let!(:inactive_enterprise1) { create(:enterprise, sells: "unspecified", confirmed_at: Time.zone.now) ;}
-      let!(:inactive_enterprise2) { create(:enterprise, sells: "none", confirmed_at: nil) }
-      let!(:active_enterprise) { create(:enterprise, sells: "none", confirmed_at: Time.zone.now) }
+      let!(:inactive_enterprise) { create(:enterprise, sells: "unspecified") ;}
+      let!(:active_enterprise) { create(:enterprise, sells: "none") }
 
-      it "finds enterprises that have a sells property other than 'unspecified' and that are confirmed" do
+      it "finds enterprises that have a sells property other than 'unspecified'" do
         activated_enterprises = Enterprise.activated
         expect(activated_enterprises).to include active_enterprise
-        expect(activated_enterprises).to_not include inactive_enterprise1
-        expect(activated_enterprises).to_not include inactive_enterprise2
+        expect(activated_enterprises).to_not include inactive_enterprise
       end
     end
 

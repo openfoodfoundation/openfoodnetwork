@@ -124,12 +124,12 @@ describe EnterpriseRelationship do
     end
 
     it "finds inactive enterprises by default" do
-      e1.update_attribute :confirmed_at, nil
+      e1.update_attribute :sells, 'unspecified'
       EnterpriseRelationship.relatives[e2.id][:producers].should == Set.new([e1.id])
     end
 
     it "does not find inactive enterprises when requested" do
-      e1.update_attribute :confirmed_at, nil
+      e1.update_attribute :sells, 'unspecified'
       EnterpriseRelationship.relatives(true)[e2.id][:producers].should be_empty
     end
 

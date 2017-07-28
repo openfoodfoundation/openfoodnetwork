@@ -1818,7 +1818,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   report_header_special_instructions: Special Instructions
   report_header_order_number: Order number
   report_header_date: Date
-  report_header_confirmation_date: Confirmation Date
+  report_header_creation_date: Creation Date
   report_header_tags: Tags
   report_header_items: Items
   report_header_items_total: "Items total %{currency_symbol}"

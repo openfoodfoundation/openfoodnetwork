@@ -5,7 +5,7 @@ module OpenFoodNetwork
     describe "relatives" do
       let!(:enterprise) { create(:distributor_enterprise) }
       let!(:producer) { create(:supplier_enterprise) }
-      let!(:producer_inactive) { create(:supplier_enterprise, confirmed_at: nil) }
+      let!(:producer_inactive) { create(:supplier_enterprise, sells: 'unspecified') }
       let!(:er_p)  { create(:enterprise_relationship, parent: producer, child: enterprise) }
       let!(:er_pi) { create(:enterprise_relationship, parent: producer_inactive, child: enterprise) }
 
