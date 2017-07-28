@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170719125120) do
+ActiveRecord::Schema.define(:version => 20170727104900) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20170719125120) do
   create_table "enterprise_roles", :force => true do |t|
     t.integer "user_id"
     t.integer "enterprise_id"
+    t.boolean "receives_notifications", :default => false
   end
 
   add_index "enterprise_roles", ["enterprise_id", "user_id"], :name => "index_enterprise_roles_on_enterprise_id_and_user_id", :unique => true
