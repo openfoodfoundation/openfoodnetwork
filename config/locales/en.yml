@@ -395,12 +395,6 @@ en:
         max_fulfilled_units: "Max Fulfilled Units"
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
-      invoice:
-        issued_on: Issued on
-        tax_invoice: TAX INVOICE
-        code: Code
-        from: From
-        to: To
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
@@ -2022,6 +2016,12 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree:
     admin:
       orders:
+        invoice:
+          issued_on: Issued on
+          tax_invoice: TAX INVOICE
+          code: Code
+          from: From
+          to: To
         form:
           distribution_fields:
             title: Distribution
