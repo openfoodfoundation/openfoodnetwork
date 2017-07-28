@@ -5,7 +5,7 @@
   %li.more
     %a.dropdown{ data: { dropdown: "{{ 'show-more-' + selectorName }}" }, ng: { class: "{active: selectedOverFlowSelectors().length > 0}" } }
       %span
-        + {{ overFlowSelectors().length }}= t(:more)
+        = t('js.more_items', count: "{{ overFlowSelectors().length }}")
       %i.ofn-i_052-point-down
     .f-dropdown.text-right.content{ ng: { attr: { id: "{{ 'show-more-' + selectorName }}" } } }
       %ul

@@ -1856,6 +1856,7 @@ Please follow the instructions there to make your enterprise visible on the Open
     shop: Shop
     choose: Choose
     resolve_errors: Please resolve the following errors
+    more_items: "+ %{count} More"
     admin:
       modals:
         got_it: Got it
