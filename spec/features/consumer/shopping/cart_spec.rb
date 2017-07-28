@@ -71,12 +71,14 @@ feature "full-page cart", js: true do
       let(:variant) { product_tax.variants.first }
 
       before do
-        Spree::Config.set allow_backorders: false
         add_product_to_cart order, product_tax
       end
 
-      after do
-        Spree::Config.set allow_backorders: true
+      around do |example|
+        original = Spree::Config.allow_backorders
+        Spree::Config.allow_backorders = false
+        example.run
+        Spree::Config.allow_backorders = original
       end
 
       it "prevents me from entering an invalid value" do
