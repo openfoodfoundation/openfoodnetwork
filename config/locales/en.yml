@@ -1602,7 +1602,6 @@ Please follow the instructions there to make your enterprise visible on the Open
   hub_sidebar_blue: "blue"
   hub_sidebar_red: "red"
   shop_trial_in_progress: "Your shopfront trial expires in %{days}."
-  shop_trial_expired: "Good news! We have decided to extend shopfront trials until further notice (probably around March 2015)." #FIXME
   report_customers_distributor: "Distributor"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
