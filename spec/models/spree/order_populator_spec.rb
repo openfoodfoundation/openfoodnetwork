@@ -196,7 +196,9 @@ module Spree
       let(:v) { double(:variant, on_hand: 10) }
 
       context "when backorders are not allowed" do
-        before { Spree::Config.allow_backorders = false }
+        around(:each) do |example|
+          with_spree_config({ allow_backorders: false }, &example)
+        end
 
         context "when max_quantity is not provided" do
           it "returns full amount when available" do
@@ -220,10 +222,8 @@ module Spree
       end
 
       context "when backorders are allowed" do
-        around do |example|
-          Spree::Config.allow_backorders = true
-          example.run
-          Spree::Config.allow_backorders = false
+        around(:each) do |example|
+          with_spree_config({ allow_backorders: true }, &example)
         end
 
         it "does not limit quantity" do
