@@ -33,7 +33,7 @@ gem 'bugsnag'
 gem 'newrelic_rpm'
 gem 'haml'
 gem 'sass', "~> 3.3"
-gem 'sass-rails', '~> 3.2.3', groups: [:default, :assets]
+gem 'sass-rails', '~> 3.2.6', groups: [:default, :assets]
 gem 'redcarpet'
 gem 'aws-sdk'
 gem 'db2fog'
@@ -73,6 +73,7 @@ gem 'whenever', require: false
 group :assets do
   gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'csso-rails', '~> 0.8.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer'

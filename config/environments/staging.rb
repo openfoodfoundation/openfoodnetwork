@@ -48,6 +48,10 @@ Openfoodnetwork::Application.configure do
   require 'uglifier'
   config.assets.js_compressor = Uglifier.new(mangle: false)
 
+  Sprockets::Compressors.register_css_compressor(:scss, 'Sass::Rails::Compressor', require: 'sass/rails/compressor')
+  Sprockets::Compressors.register_css_compressor(:csso, 'Csso::Compressor', require: 'csso')
+  config.assets.css_compressor = :csso
+
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
