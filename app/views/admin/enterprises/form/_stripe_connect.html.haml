@@ -1,3 +1,5 @@
+= render 'admin/enterprises/form/stripe_connect/confirm_modal'
+
 - if @stripe_account = @enterprise.stripe_account
   .stripe-info
     .row
@@ -7,13 +9,7 @@
 - else
   .row.stripe-info
     .six.columns.alpha
-      -# Recommended info to impart (from Stripe Connect docs):
-      -# indicate to the user what you’re responsible for and what they’ll be expected to do. It’s particularly important to communicate:
-      -# That they’ll need to create and maintain their Stripe account.
-      -# That they’ll need to handle chargebacks and all customer service issues.
-      -# Who is responsible for paying the Stripe fees.
-      -# What, if any, fees the platform charges.
-      =t('.stripe_connect_info')
+      =t('.stripe_connect_intro')
     .five.columns.omega.text-right
-      %a.stripe-connect{ href: main_app.connect_admin_stripe_accounts_path(enterprise_id: @enterprise) }
+      %a.stripe-connect.help-modal{ template: 'admin/modals/stripe_connect_confirm.html' }
         %span= t('.connect_with_stripe')
