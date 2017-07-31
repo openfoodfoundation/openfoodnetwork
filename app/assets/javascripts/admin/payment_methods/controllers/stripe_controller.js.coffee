@@ -15,4 +15,4 @@ angular.module("admin.paymentMethods").controller "StripeController", ($scope, $
     permalink = shops.filter((shop) ->
       shop.id == $scope.paymentMethod.preferred_enterprise_id
     )[0].permalink
-    "/admin/enterprises/#{permalink}/edit#stripe"
+    "/admin/enterprises/#{permalink}/edit#/payment_methods"
