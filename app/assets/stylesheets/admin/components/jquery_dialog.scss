@@ -42,21 +42,25 @@ light: #ccc
 .ui-dialog .ui-corner-all{
   border-radius: 8px;
 }
-.ui-dialog  {
-  .ui-state-hover, .ui-state-focus{
-    border: none;
-    background: none;
-    color: #545454;
-  }
-}
+// .ui-dialog  {
+//   .ui-state-hover, .ui-state-focus{
+//     border: none;
+//     background: none;
+//     color: #545454;
+//   }
+// }
 
 .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-widget-content .ui-state-hover {
   background-color: #ffffff;
   background: none;
 }
 
-.ui-dialog-titlebar-close {
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
   float: right;
+
+  border: none;
+  background: none;
+
   &:before {
     color: #000000;
     font-size: 2em;
@@ -76,9 +80,18 @@ light: #ccc
       display: none;
     }
   }
+
+  .ui-button-text {
+    display: none;
+  }
 }
 
 .ui-widget-overlay {
   background: #000000;
   opacity: 0.5;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  left: 0px;
+  top: 0px;
 }
