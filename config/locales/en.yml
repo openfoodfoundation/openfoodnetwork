@@ -525,9 +525,16 @@ en:
           twitter_placeholder: eg. @the_prof
         stripe_connect:
           connect_with_stripe: "Connect with Stripe"
-          stripe_connect_info: "Connect your Stripe account by clicking the button below. This will allow Open Food Network to charge your customers on your behalf. You will need to maintain your Stripe account, pay Stripe fees and handle any chargebacks and customer service."
+          stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
           stripe_account_connected: "Stripe account connected."
           disconnect: "Disconnect account"
+          confirm_modal:
+            title: Connect with Stripe
+            part1: Stripe is a payment processing service that allows shops on the OFN to accept credit card payments from customers.
+            part2: To use this feature, you must connect your Stripe account the OFN. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account to your OFN, or create a new one if you don't already have one.
+            part3: This will allow the Open Food Network to accept credit card payments from customers on your behalf. Please note that you will need to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
+            i_agree: I Agree
+            cancel: Cancel
         tag_rules:
           default_rules:
             by_default: By Default

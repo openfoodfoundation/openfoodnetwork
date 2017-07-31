@@ -1,0 +1,27 @@
+%script{ type: "text/ng-template", id: "admin/modals/stripe_connect_confirm.html" }
+  -# Recommended info to impart (from Stripe Connect docs):
+  -# indicate to the user what you’re responsible for and what they’ll be expected to do. It’s particularly important to communicate:
+  -# That they’ll need to create and maintain their Stripe account.
+  -# That they’ll need to handle chargebacks and all customer service issues.
+  -# Who is responsible for paying the Stripe fees.
+  -# What, if any, fees the platform charges.
+
+  #stripe-connect-confirm
+    .margin-bottom-30.text-center
+      .text-big
+        = t('.title')
+
+    .margin-bottom-30
+      %p= t('.part1')
+
+    .margin-bottom-30
+      %p= t('.part2')
+
+    .margin-bottom-30
+      %p= t('.part3')
+
+    .text-center
+      %a.button.icon-ok{ href: main_app.connect_admin_stripe_accounts_path(enterprise_id: @enterprise) }
+        = t('.i_agree')
+      %a.button.red.icon-remove{ href: 'javascript:void(0)', ng: { click: 'close()' } }
+        = t('.cancel')
