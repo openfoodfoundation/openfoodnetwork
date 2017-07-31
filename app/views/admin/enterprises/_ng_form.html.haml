@@ -4,7 +4,7 @@
 = form_for [main_app, :admin, @enterprise], html: { name: "enterprise_form",
   "ng-controller" => 'enterpriseCtrl',
   'onchange' => 'angular.element(enterprise_form).scope().setFormDirty()',
-  } do |f|
+  "ng-cloak" => true } do |f|
 
   %save-bar{ dirty: "enterprise_form.$dirty", persist: "true" }
     %input.red{ type: "button", value: t(:update), ng: { click: "submit()", disabled: "!enterprise_form.$dirty" } }
