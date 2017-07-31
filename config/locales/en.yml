@@ -2129,6 +2129,7 @@ Please follow the instructions there to make your enterprise visible on the Open
           enter_new_card: Enter details for a new card
           used_saved_card: "Use a saved card:"
           or_enter_new_card: "Or, enter details for a new card:"
+          remember_this_card: Remember this card?
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'

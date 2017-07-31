@@ -10,5 +10,10 @@
 %div{ ng: { if: '!secrets.selected_card' } }
   = render "spree/checkout/payment/gateway", payment_method: payment_method
 
+.row
+  .small-12.columns.text-right
+    = check_box_tag 'secrets.save_requested_by_customer'
+    = label_tag 'secrets.save_requested_by_customer', t('.remember_this_card')
+
 :javascript
   Stripe.setPublishableKey("#{ENV['STRIPE_INSTANCE_PUBLISHABLE_KEY']}")
