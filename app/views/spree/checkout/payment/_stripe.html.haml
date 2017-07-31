@@ -1,10 +1,14 @@
-.row{ "ng-show" => "savedCreditCards != null && savedCreditCards.length > 1" }
+.row{ "ng-show" => "savedCreditCards != null && savedCreditCards.length > 0" }
   .small-12.columns
-    %label
-      = t :previously_used_credit_cards
-    %select{"ng-model" => "secrets.selected_card", "ng-options" => "card.id as card.formatted for card in savedCreditCards", name: "selected_card", required: false}
+    %h6= t('.used_saved_card')
+    %select{ name: "selected_card", required: false, ng: { model: "secrets.selected_card", options: "card.id as card.formatted for card in savedCreditCards" } }
+      %option{ value: "" }= "{{ secrets.selected_card ? '#{t('.enter_new_card')}' : '#{t('.choose_one')}' }}"
 
-= render "spree/checkout/payment/gateway", payment_method: payment_method
+    %h6{ ng: { if: '!secrets.selected_card' } }
+      = t('.or_enter_new_card')
+
+%div{ ng: { if: '!secrets.selected_card' } }
+  = render "spree/checkout/payment/gateway", payment_method: payment_method
 
 :javascript
   Stripe.setPublishableKey("#{ENV['STRIPE_INSTANCE_PUBLISHABLE_KEY']}")
