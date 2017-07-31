@@ -6,7 +6,6 @@ Spree.user_class.class_eval do
   has_many :enterprise_roles, :dependent => :destroy
   has_many :enterprises, through: :enterprise_roles
   has_many :owned_enterprises, class_name: 'Enterprise', foreign_key: :owner_id, inverse_of: :owner
-  has_many :contact_enterprises, class_name: 'Enterprise', foreign_key: :contact_id, inverse_of: :contact
   has_many :owned_groups, class_name: 'EnterpriseGroup', foreign_key: :owner_id, inverse_of: :owner
   has_many :account_invoices
   has_many :billable_periods, foreign_key: :owner_id, inverse_of: :owner

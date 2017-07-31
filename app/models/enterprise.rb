@@ -32,7 +32,6 @@ class Enterprise < ActiveRecord::Base
   has_many :enterprise_roles, :dependent => :destroy
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User', foreign_key: :owner_id, inverse_of: :owned_enterprises
-  belongs_to :contact, class_name: 'Spree::User', foreign_key: :contact_id, inverse_of: :contact_enterprises
   has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods', class_name: 'Spree::PaymentMethod', foreign_key: 'distributor_id'
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :shipping_methods, through: :distributor_shipping_methods
@@ -81,7 +80,7 @@ class Enterprise < ActiveRecord::Base
   after_validation :geocode_address
 
   after_touch :touch_distributors
-  before_create :set_default_contact
+  after_create :set_default_contact
   after_create :relate_to_owners_enterprises
   after_create :send_welcome_email
 
@@ -186,6 +185,10 @@ class Enterprise < ActiveRecord::Base
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
     count(distinct: true)
+  end
+
+  def contact
+    EnterpriseRole.receives_notifications_for self.id
   end
 
   def activated?
@@ -394,7 +397,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def set_default_contact
-    self.contact_id = self.owner_id if self.contact_id.nil?
+    EnterpriseRole.set_notification_user self.owner_id, self.id
   end
 
   def relate_to_owners_enterprises

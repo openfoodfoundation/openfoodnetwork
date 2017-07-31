@@ -2,7 +2,6 @@ module Api
   class EnterprisesController < Spree::Api::BaseController
 
     before_filter :override_owner, only: [:create, :update]
-    before_filter :set_contact, only: [:create]
     before_filter :check_type, only: :update
     before_filter :override_sells, only: [:create, :update]
     before_filter :override_visible, only: [:create, :update]
@@ -52,10 +51,6 @@ module Api
 
     def override_owner
       params[:enterprise][:owner_id] = current_api_user.id
-    end
-
-    def set_contact
-      params[:enterprise][:contact_id] = current_api_user.id
     end
 
     def check_type
