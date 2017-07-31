@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170727104900) do
+ActiveRecord::Schema.define(:version => 20170728140134) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -212,9 +212,7 @@ ActiveRecord::Schema.define(:version => 20170727104900) do
     t.string   "description"
     t.text     "long_description"
     t.boolean  "is_primary_producer"
-    t.string   "contact"
     t.string   "phone"
-    t.string   "email"
     t.string   "website"
     t.string   "twitter"
     t.string   "abn"
