@@ -169,15 +169,16 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         it "allows use of a saved card" do
           # shows the saved credit card dropdown
-          page.should have_content "Previously Used Credit Cards"
+          expect(page).to have_content I18n.t("spree.checkout.payment.stripe.used_saved_card")
 
-          # disables the input fields when a saved card is selected" do
+          # removes the input fields when a saved card is selected"
+          expect(page).to have_input "secrets.card_number"
           select "Visa x-1111 Exp:01/2025", from: "selected_card"
-          page.should have_css "#secrets\\.card_number[disabled]"
+          expect(page).to_not have_input "secrets.card_number"
 
           # allows checkout
           place_order
-          page.should have_content "Your order has been processed successfully"
+          expect(page).to have_content "Your order has been processed successfully"
         end
       end
     end

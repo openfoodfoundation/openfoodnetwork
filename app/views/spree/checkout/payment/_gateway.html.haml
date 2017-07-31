@@ -11,17 +11,17 @@
     %input{type: :text, "ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.lastname"}
 
   .small-6.columns
-    = validated_input t(:card_number), "secrets.card_number", "ng-required" => "!secrets.selected_card", maxlength: 19, autocomplete: "off", "ng-disabled" => "!!secrets.selected_card"
+    = validated_input t(:card_number), "secrets.card_number", maxlength: 19, autocomplete: "off"
   .small-6.columns
-    = validated_input t(:card_securitycode), "secrets.card_verification_value", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"
+    = validated_input t(:card_securitycode), "secrets.card_verification_value"
 
 .row
   .small-12.columns
     %label{for: "secrets.card_month"}
-      = t :card_expiry_date, "ng-disabled" => "!!secrets.selected_card"
+      = t :card_expiry_date
 
 .row
   .small-6.columns
-    %select{"ng-model" => "secrets.card_month", "ng-options" => "currMonth.value as currMonth.key for currMonth in months", name: "secrets.card_month", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"}
+    %select{"ng-model" => "secrets.card_month", "ng-options" => "currMonth.value as currMonth.key for currMonth in months", name: "secrets.card_month"}
   .small-6.columns
-    %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year", "ng-required" => "!secrets.selected_card", "ng-disabled" => "!!secrets.selected_card"}
+    %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year"}

@@ -2122,6 +2122,13 @@ Please follow the instructions there to make your enterprise visible on the Open
       variants:
         autocomplete:
           producer_name: Producer
+    checkout:
+      payment:
+        stripe:
+          choose_one: Choose one
+          enter_new_card: Enter details for a new card
+          used_saved_card: "Use a saved card:"
+          or_enter_new_card: "Or, enter details for a new card:"
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
