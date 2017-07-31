@@ -67,7 +67,7 @@ feature "Registration", js: true do
       expect(e.address.address1).to eq "123 Abc Street"
       expect(e.sells).to eq "unspecified"
       expect(e.is_primary_producer).to eq true
-      expect(e.contact_id).to eq e.owner_id
+      expect(e.contact.id).to eq e.owner_id
 
       # Filling in about
       fill_in 'enterprise_description', with: 'Short description'
