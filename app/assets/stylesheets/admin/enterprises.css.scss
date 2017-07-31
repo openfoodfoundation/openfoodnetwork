@@ -4,10 +4,18 @@ form[name="enterprise_form"] {
   }
 
   table.managers {
-    i.confirmation {
+    i.role {
       float: right;
+      margin-left: 0.5em;
       font-size: 1.5em;
       cursor: pointer;
+    }
+
+    i.confirmation {
+      margin-left: 0.2em;
+      font-size: 1.2em;
+      cursor: pointer;
+      vertical-align: bottom;
 
       &.confirmed {
         color: #1ece1e;

@@ -10,30 +10,25 @@
       %a= t('admin.whats_this')
   .eight.columns.omega
     - if full_permissions
-      = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner'
+      = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner', 'ng-model' => 'Enterprise.owner'
     - else
       = owner_email
 
+.row
+  .three.columns.alpha
+    =f.label :user_ids, t('.contact')
+    - if full_permissions
+      %span.required *
+    %div{'ofn-with-tip' => t('.contact_tip')}
+      %a= t('admin.whats_this')
 
--# TODO: add contact field, possibly re-use some of these tooltip keys
-
--#.row
--#  .three.columns.alpha
--#    = f.label :email, t('.notifications')
--#    - if full_permissions
--#      %span.required *
--#    .with-tip{'data-powertip' => t('.notifications_tip')}
--#      %a= t('admin.whats_this')
--#  .eight.columns.omega
--#    - if full_permissions
--#      = f.text_field :email, { placeholder: t('.notifications_placeholder'), "ng-model" => "Enterprise.email" }
--#    - else
--#      = @enterprise.email
--#.row{ ng: { hide: "pristineEmail == null || pristineEmail == Enterprise.email"} }
--#  .alpha.three.columns
--#    &nbsp;
--#  .omega.eight.columns
--#    = t('.notifications_note')
+  .eight.columns.omega
+    - if full_permissions
+      %select.select2.fullwidth{name: 'receives_notifications', ng: {model: 'receivesNotifications', init: "receivesNotifications = '#{@notification_user}'"}}
+        %option{ng: {repeat: 'user in Enterprise.users', selected: "user.id == #{@notification_user}", hide: '!user.confirmed'}, value: '{{user.id}}'}
+          {{user.email}}
+    - else
+      = @notification_user
 
 .row
   .three.columns.alpha
@@ -57,8 +52,11 @@
             {{ manager.email }}
             %i.confirmation.confirmed.fa.fa-check-circle{ 'ofn-with-tip' => t('.email_confirmed'), ng: {show: 'manager.confirmed'} }
             %i.confirmation.unconfirmed.fa.fa-exclamation-triangle{ 'ofn-with-tip' => t('.email_not_confirmed'), ng: {show: '!manager.confirmed'} }
+            %i.role.contact.fa.fa-envelope-o{ 'ofn-with-tip' => t('.contact'), ng: {show: 'manager.id == receivesNotifications'} }
+            %i.role.owner.fa.fa-star{ 'ofn-with-tip' => t('.owner'), ng: {show: 'manager.id == Enterprise.owner.id'} }
           %td.actions
-            %a{ ng: {click: 'removeManager(manager)', class: "{disabled: manager.id == Enterprise.owner.id}"}, :class => "icon-trash no-text" }
+            %a{ ng: {click: 'removeManager(manager)', class: "{disabled: manager.id == Enterprise.owner.id || manager.id == receivesNotifications}"}, :class => "icon-trash no-text" }
+
     - else
       - @enterprise.users.each do |manager|
         = manager.email

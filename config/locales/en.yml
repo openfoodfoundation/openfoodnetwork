@@ -529,6 +529,8 @@ en:
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
+          contact: "Contact"
+          contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
