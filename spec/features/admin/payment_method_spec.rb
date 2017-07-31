@@ -54,6 +54,8 @@ feature %q{
 
         select2_select "Missing", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .alert-box.error", text: I18n.t("spree.admin.payment_methods.stripe_connect.account_missing_msg")
+        connect_one = I18n.t("spree.admin.payment_methods.stripe_connect.connect_one")
+        expect(page).to have_link connect_one, href: edit_admin_enterprise_path(missing_account_enterprise, anchor: "/payment_methods")
 
         select2_select "Revoked", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .alert-box.error", text: I18n.t("spree.admin.payment_methods.stripe_connect.access_revoked_msg")
