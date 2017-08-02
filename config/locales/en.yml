@@ -2109,6 +2109,10 @@ Please follow the instructions there to make your enterprise visible on the Open
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+      payments:
+        source_forms:
+          stripe:
+            no_payment_via_admin_backend: Creating Stripe-based payments from the admin backend is not possible at this time
       products:
         bulk_edit:
           header:
