@@ -144,7 +144,7 @@ feature %q{
     click_link 'Add'
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     click_button 'Update'
-    within('h1.page-title') { expect(page).to have_content "Customer Details" }
+    expect(page).to have_selector 'h1.page-title', text: "Customer Details"
 
     # And I select that customer's email address and save the order
     targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
