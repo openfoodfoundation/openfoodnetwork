@@ -140,10 +140,6 @@ feature %q{
     # When I create a new order
     quick_login_as @user
     new_order_with_distribution(@distributor, @order_cycle)
-    # visit '/admin/orders'
-    # click_link 'New Order'
-    # select2_select @distributor.name, from: 'order_distributor_id'
-    # select2_select @order_cycle.name, from: 'order_order_cycle_id'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
