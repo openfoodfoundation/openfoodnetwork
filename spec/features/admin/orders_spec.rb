@@ -24,7 +24,7 @@ feature %q{
 
   def new_order_with_distribution(distributor, order_cycle)
     visit 'admin/orders/new'
-    page.should have_selector('#s2id_order_distributor_id')
+    expect(page).to have_selector('#s2id_order_distributor_id')
     select2_select distributor.name, from: 'order_distributor_id'
     select2_select order_cycle.name, from: 'order_order_cycle_id'
     click_button 'Next'
@@ -148,17 +148,17 @@ feature %q{
     click_link 'Add'
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     click_button 'Update'
-    within('h1.page-title') { page.should have_content "Customer Details" }
+    within('h1.page-title') { expect(page).to have_content "Customer Details" }
 
     # And I select that customer's email address and save the order
     targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
     click_button 'Continue'
-    page.should have_selector "h1.page-title", text: "Shipments"
+    expect(page).to have_selector "h1.page-title", text: "Shipments"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
-    order.ship_address.lastname.should == @customer.ship_address.lastname
-    order.bill_address.lastname.should == @customer.bill_address.lastname
+    expect(order.ship_address.lastname).to eq @customer.ship_address.lastname
+    expect(order.bill_address.lastname).to eq @customer.bill_address.lastname
   end
 
   scenario "capture multiple payments from the orders index page" do
