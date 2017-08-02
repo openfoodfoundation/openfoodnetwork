@@ -70,7 +70,7 @@ module Openfoodnetwork
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = ENV["LOCALE"]
+    config.i18n.default_locale = ENV["LOCALE"] || ENV["I18N_LOCALE"] || "en"
     config.i18n.available_locales = ENV["AVAILABLE_LOCALES"].andand.split(',').andand.map(&:strip) || [config.i18n.default_locale]
     I18n.locale = config.i18n.locale = config.i18n.default_locale
 
