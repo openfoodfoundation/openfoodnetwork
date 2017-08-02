@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Used to pull data from production or staging servers into local dev database
+# Useful for when you want to test a migration against production data, or see
+# the effect of codebase changes on real-life data
+
 # Usage: script/mirror_db.sh [ofn-staging1|ofn-staging2|ofn-prod]
 
 set -e
@@ -18,12 +22,13 @@ else
   DB_DATABASE='openfoodnetwork'
 fi
 
+DB_OPTIONS='--exclude-table-data=sessions'
 
 # -- Mirror database
 echo "Mirroring database..."
 echo "drop database open_food_network_dev" | psql -h localhost -U ofn open_food_network_test
 echo "create database open_food_network_dev" | psql -h localhost -U ofn open_food_network_test
-ssh $1 "pg_dump -h localhost -U $DB_USER $DB_DATABASE |gzip" |gunzip |psql -h localhost -U ofn open_food_network_dev
+ssh $1 "pg_dump -h localhost -U $DB_USER $DB_DATABASE $DB_OPTIONS |gzip" |gunzip |psql -h localhost -U ofn open_food_network_dev
 
 
 # -- Disable S3
