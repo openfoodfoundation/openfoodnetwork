@@ -1,0 +1,8 @@
+-# We can remove this file as soon as we have a version of better_spree_paypal_express that includes:
+-# https://github.com/spree-contrib/better_spree_paypal_express/commit/4360a1fb82d30d7601bc6a98e7b74819f0b377f0
+
+-# The selectors in app/assets/javascripts/spree/backend/paypal_express.js don't work with the version
+-# of the views we are using, so the warning below wasn't displaying without this override.
+
+#paypal-warning
+  %strong= t('no_payment_via_admin_backend', :scope => 'paypal')
