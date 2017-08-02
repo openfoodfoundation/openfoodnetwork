@@ -1,4 +1,4 @@
-# This is coppied from https://github.com/fnando/i18n-js/blob/master/lib/i18n/js.rb
+# This is copied from https://github.com/fnando/i18n-js/blob/master/lib/i18n/js.rb
 # As in spree core en.yml there are translations -
 # en:
 #   no: "No"
