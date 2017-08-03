@@ -1,6 +1,7 @@
 module Spree
   module Admin
     PaymentMethodsController.class_eval do
+      before_filter :restrict_stripe_account_change, only: [:update]
       before_filter :force_environment, only: [:create, :update]
       skip_before_filter :load_resource, only: [:show_provider_preferences]
       before_filter :load_hubs, only: [:new, :edit, :update]
@@ -69,6 +70,16 @@ module Spree
       # current payment_method is already a Stripe method
       def show_stripe?
         Spree::Config.stripe_connect_enabled || @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
+      end
+
+      def restrict_stripe_account_change
+        return unless @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
+        return unless @payment_method.preferred_enterprise_id
+
+        @stripe_account_holder = Enterprise.find(@payment_method.preferred_enterprise_id)
+        unless spree_current_user.enterprises.include? @stripe_account_holder
+          params[:payment_method][:preferred_enterprise_id] = @stripe_account_holder.id
+        end
       end
     end
   end
