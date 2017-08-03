@@ -119,9 +119,6 @@ class AbilityDecorator
       column_preference.user == user
     end
 
-    # Not sure how to restrict these methods to a non-resource Controller
-    can [:stripe_connect, :stripe_connect_callback, :stripe_disconnect], :all
-
     can [:status, :destroy], StripeAccount do |stripe_account|
       user.enterprises.include? stripe_account.enterprise
     end
