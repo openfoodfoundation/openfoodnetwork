@@ -5,10 +5,13 @@
     = fields_for :payment_method, @payment_method do |payment_method_form|
       = payment_method_form.label :stripe_account_owner
       %br
-      %input.ofn-select2.fullwidth#payment_method_preferred_enterprise_id{ type: 'number',
-        name: 'payment_method[preferred_enterprise_id]',
-        placeholder: t(".enterprise_select_placeholder"),
-        data: 'shops', ng: { model: 'paymentMethod.preferred_enterprise_id' } }
+      - if @stripe_account_holder.nil? || spree_current_user.enterprises.include?(@stripe_account_holder)
+        %input.ofn-select2.fullwidth#payment_method_preferred_enterprise_id{ type: 'number',
+          name: 'payment_method[preferred_enterprise_id]',
+          placeholder: t(".enterprise_select_placeholder"),
+          data: 'shops', ng: { model: 'paymentMethod.preferred_enterprise_id' } }
+      - else
+        %strong= Enterprise.find_by_id(@payment_method).andand.name
 
     #stripe-account-status{ ng: { show: "paymentMethod.preferred_enterprise_id" } }
       .alert-box.warning{ ng: { hide: "stripe_account.status" } }
