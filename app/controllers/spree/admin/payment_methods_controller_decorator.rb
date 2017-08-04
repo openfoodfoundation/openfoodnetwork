@@ -77,9 +77,9 @@ module Spree
         return unless @payment_method.preferred_enterprise_id
 
         @stripe_account_holder = Enterprise.find(@payment_method.preferred_enterprise_id)
-        unless spree_current_user.enterprises.include? @stripe_account_holder
-          params[:payment_method][:preferred_enterprise_id] = @stripe_account_holder.id
-        end
+        return if spree_current_user.enterprises.include? @stripe_account_holder
+
+        params[:payment_method][:preferred_enterprise_id] = @stripe_account_holder.id
       end
     end
   end
