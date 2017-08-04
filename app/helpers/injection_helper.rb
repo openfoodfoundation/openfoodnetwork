@@ -74,7 +74,7 @@ module InjectionHelper
   end
 
   def inject_saved_credit_cards
-    data = spree_current_user.try(:credit_cards)
+    data = spree_current_user.credit_cards.with_payment_profile.all
     inject_json_ams "savedCreditCards", data, Api::CreditCardSerializer
   end
 
@@ -98,5 +98,4 @@ module InjectionHelper
     @enterprise_injection_data ||= OpenFoodNetwork::EnterpriseInjectionData.new
     {data: @enterprise_injection_data}
   end
-
 end
