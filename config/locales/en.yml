@@ -748,6 +748,7 @@ en:
       edit:
         title: "Stripe Connect"
         settings: "Settings"
+        stripe_beta_warning: "Warning: The Stripe Connect integration is currently in beta and should not be enabled in production yet"
         stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
         no_api_key_msg: No Stripe account exists for this enterprise.
         configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.

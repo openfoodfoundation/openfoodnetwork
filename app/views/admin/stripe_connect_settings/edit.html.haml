@@ -6,6 +6,8 @@
 %fieldset.no-border-bottom
   %legend
     = t('.settings')
+  .alert-box.warning
+    = t(".stripe_beta_warning")
   = form_for @settings, as: :settings, url: main_app.admin_stripe_connect_settings_path, :method => :put do |f|
     .row
       .twelve.columns.alpha.omega
