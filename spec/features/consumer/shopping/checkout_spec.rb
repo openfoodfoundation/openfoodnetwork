@@ -163,11 +163,12 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         page.should_not have_content product.tax_category.name
       end
 
-      it "shows all shipping methods" do
+      it "shows all shipping methods in order by name" do
         toggle_shipping
-        page.should have_content "Frogs"
-        page.should have_content "Donkeys"
-        page.should have_content "Local"
+        shipping_methods = page.all(:xpath, '//*[@id="shipping"]/ng-form/dd/div/div[1]').map {|row| row.all('label').map(&:text)}.flatten
+        expect(shipping_methods[0]).to include(sm2.name) # Donkeys
+        expect(shipping_methods[1]).to include(sm1.name) # Frogs
+        expect(shipping_methods[2]).to include(sm3.name) # Local       
       end
 
       context "when shipping method requires an address" do
