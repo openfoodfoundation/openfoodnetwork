@@ -157,22 +157,19 @@ feature %q{
     expect(order.bill_address.lastname).to eq @customer.bill_address.lastname
   end
 
-  scenario "capture multiple payments from the orders index page" do
-    # d.cook: could also test for an order that has had payment voided, then a new check payment created but not yet captured. But it's not critical and I know it works anyway.
-
+  scenario "capture payment from the orders index page" do
     login_to_admin_section
 
-    visit '/admin/orders'
+    visit spree.admin_orders_path
     expect(page).to have_current_path spree.admin_orders_path
 
     # click the 'capture' link for the order
     page.find("[data-action=capture][href*=#{@order.number}]").click
 
-    page.should have_content "Payment Updated"
+    expect(page).to have_content "Payment Updated"
 
     # check the order was captured
-    @order.reload
-    @order.payment_state.should == "paid"
+    expect(@order.reload.payment_state).to eq "paid"
 
     # we should still be on the same page
     expect(page).to have_current_path spree.admin_orders_path
