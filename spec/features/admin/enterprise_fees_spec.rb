@@ -97,14 +97,16 @@ feature %q{
     # When I go to the enterprise fees page
     login_to_admin_section
     click_link 'Configuration'
+    expect(page).to have_link 'Enterprise Fees'
     click_link 'Enterprise Fees'
+    expect(page).to have_content 'Enterprise Fees'
 
     # And I click delete
     find("a.delete-resource").click
 
     # Then my enterprise fee should have been deleted
     visit admin_enterprise_fees_path
-    page.should_not have_selector "input[value='#{fee.name}']"
+    expect(page).to have_no_selector "input[value='#{fee.name}']"
   end
 
   scenario "deleting a shipping method referenced by a product distribution" do
