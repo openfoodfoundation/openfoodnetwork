@@ -61,7 +61,7 @@ describe Admin::StripeAccountsController, type: :controller do
           expect(connector).to receive(:enterprise) { enterprise }
           spree_get :connect_callback, params
           expect(flash[:success]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_success')
-          expect(response).to redirect_to edit_admin_enterprise_path(enterprise)
+          expect(response).to redirect_to edit_admin_enterprise_path(enterprise, anchor: 'payment_methods')
         end
       end
 

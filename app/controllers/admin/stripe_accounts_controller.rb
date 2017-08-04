@@ -15,7 +15,7 @@ module Admin
       connector = Stripe::AccountConnector.new(spree_current_user, params)
       if connector.create_account
         flash[:success] = t('admin.controllers.enterprises.stripe_connect_success')
-        redirect_to main_app.edit_admin_enterprise_path(connector.enterprise)
+        redirect_to main_app.edit_admin_enterprise_path(connector.enterprise, anchor: 'payment_methods')
       else
         render text: t('admin.controllers.enterprises.stripe_connect_fail'), status: 500
       end
