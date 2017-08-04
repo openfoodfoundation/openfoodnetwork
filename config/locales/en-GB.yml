@@ -1,4 +1,4 @@
-en_GB:
+en-GB:
   activerecord:
     attributes:
       spree/order:
