@@ -524,7 +524,7 @@ en:
           confirm_modal:
             title: Connect with Stripe
             part1: Stripe is a payment processing service that allows shops on the OFN to accept credit card payments from customers.
-            part2: To use this feature, you must connect your Stripe account the OFN. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account to your OFN, or create a new one if you don't already have one.
+            part2: To use this feature, you must connect your Stripe account to the OFN. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account, or create a new one if you don't already have one.
             part3: This will allow the Open Food Network to accept credit card payments from customers on your behalf. Please note that you will need to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
             i_agree: I Agree
             cancel: Cancel
