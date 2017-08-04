@@ -19,6 +19,7 @@
 
 %fieldset.no-border-bottom
   %legend= t('.status')
+  %strong= t('.configuration_explanation_html')
   - if @stripe_account[:status] == :ok
     .alert-box.ok
       .status
