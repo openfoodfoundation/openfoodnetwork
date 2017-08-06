@@ -1,4 +1,4 @@
-Darkswarm.controller "PaymentCtrl", ($scope, $timeout, savedCreditCards, Dates) ->
+Darkswarm.controller "PaymentCtrl", ($scope, $timeout, savedCreditCards, StripeElements, Dates) ->
   angular.extend(this, new FieldsetMixin($scope))
 
   $scope.savedCreditCards = savedCreditCards
@@ -11,5 +11,8 @@ Darkswarm.controller "PaymentCtrl", ($scope, $timeout, savedCreditCards, Dates) 
 
   $scope.summary = ->
     [$scope.Checkout.paymentMethod()?.name]
+
+  $scope.mountElements = ->
+    StripeElements.mountElements()
 
   $timeout $scope.onTimeout

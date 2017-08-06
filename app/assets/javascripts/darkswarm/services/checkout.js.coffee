@@ -1,4 +1,4 @@
-Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeJS, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
+Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeElements, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
   new class Checkout
     errors: {}
     secrets: {}
@@ -6,7 +6,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeJ
 
     purchase: ->
       if @paymentMethod()?.method_type == 'stripe' && !@secrets.selected_card
-        StripeJS.requestToken(@secrets, @submit)
+        StripeElements.requestToken(@secrets, @submit)
       else
         @submit()
 
