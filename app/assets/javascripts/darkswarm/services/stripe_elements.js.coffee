@@ -2,8 +2,9 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader, stri
   new class StripeElements
     # This is the global Stripe object created by Stripe.js [v3+], included in the _stripe partial
     stripe = stripeObject
+    # TODO: add locale here for translations of error messages etc. from Stripe
     elements = stripe.elements()
-    card = elements.create('card', hidePostalCode = false)
+    card = elements.create('card', {hidePostalCode: false})
 
     mountElements: ->
       card.mount('#card-element')
@@ -21,14 +22,14 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader, stri
     # New Stripe Elements method
     requestToken: (secrets, submit, loading_message = t("processing_payment")) ->
       Loading.message = loading_message
+      cardData = @makeCardData(secrets)
 
-      stripe.createToken(card).then (response) =>
+      stripe.createToken(card, cardData).then (response) =>
         if(response.error)
           $rootScope.$apply ->
             Loading.clear()
             RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
         else
-          console.log(response)
           secrets.token = response.token.id
           secrets.cc_type = @mapCC(response.token.card.brand)
           secrets.card = response.token.card
@@ -48,3 +49,10 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader, stri
       else if ccType == 'JCB'
         return 'jcb'
       return
+
+    # It doesn't matter if any of these are nil, all are optional.
+    makeCardData: (secrets) ->
+      {'name': secrets.name,
+      'address1': secrets.address1,
+      'city': secrets.city,
+      'zipcode': secrets.zipcode}

@@ -1,4 +1,4 @@
-Darkswarm.controller "CreditCardsCtrl", ($scope, $timeout, CreditCard, CreditCards, StripeJS, Dates) ->
+Darkswarm.controller "CreditCardsCtrl", ($scope, $timeout, CreditCard, CreditCards, StripeElements, Dates) ->
   angular.extend(this, new FieldsetMixin($scope))
   $scope.savedCreditCards = CreditCards.saved
   $scope.CreditCard = CreditCard
@@ -8,5 +8,6 @@ Darkswarm.controller "CreditCardsCtrl", ($scope, $timeout, CreditCard, CreditCar
 
   $scope.allow_name_change = true
   $scope.disable_fields = false
-  $scope.months = Dates.months
-  $scope.years = Dates.years
+  
+  $scope.mountElements = ->
+    StripeElements.mountElements()

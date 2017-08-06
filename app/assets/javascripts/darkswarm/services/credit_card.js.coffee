@@ -1,4 +1,4 @@
-Darkswarm.factory 'CreditCard', ($injector, $rootScope, CreditCards, StripeJS, Navigation, $http, RailsFlashLoader, Loading)->
+Darkswarm.factory 'CreditCard', ($injector, $rootScope, CreditCards, StripeElements, Navigation, $http, RailsFlashLoader, Loading)->
   new class CreditCard
     visible: false
     errors: {}
@@ -6,7 +6,7 @@ Darkswarm.factory 'CreditCard', ($injector, $rootScope, CreditCards, StripeJS, N
 
     requestToken: =>
       @setFullName()
-      StripeJS.requestToken(@secrets, @submit, t("saving_credit_card"))
+      StripeElements.requestToken(@secrets, @submit, t("saving_credit_card"))
 
     submit: =>
       params = @process_params()
