@@ -1,5 +1,10 @@
 %form{ novalidate: true, "ng-submit" => "storeCard()" }
   .row
+    .small-12.columns
+      %label
+        = t(:card_details)
+      = render '/checkout/payment/stripe'
+  .row
     .small-6.columns
       %label
         = t(:first_name)
@@ -11,8 +16,7 @@
         = t(:last_name)
       %input#last_name{type: :text, "ng-model" => "secrets.last_name", "ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.lastname"}
   .row
-    .small-12.columns
-      = render '/checkout/payment/stripe'
-  %p
-    %button.button.primary{type: :submit}
-      = t(:add_card)
+    .small-4.columns
+      %p
+        %button.button.primary{type: :submit}
+          = t(:add_card)
