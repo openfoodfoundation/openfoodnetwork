@@ -8,8 +8,8 @@ GIT
 
 GIT
   remote: git://github.com/coopdevs/spree.git
-  revision: 62f1ae8a9a9e36960ddf0213857dd89f9f052c60
-  branch: spree-upgrade-step-6
+  revision: 3cd52439c3f78fb4fd6e5d72a4623bc8ff96d32b
+  branch: fix-odd-even
   specs:
     spree (1.3.99)
       spree_api (= 1.3.99)

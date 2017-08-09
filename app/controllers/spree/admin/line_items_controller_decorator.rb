@@ -35,18 +35,6 @@ Spree::Admin::LineItemsController.class_eval do
     end
   end
 
-  # TODO: simplify this, 3 formats per action is too much:
-  #       we need `js` format for admin/orders/edit (jquery-rails gem)
-  #       we don't know if `html` format is needed
-  def destroy
-    @line_item.destroy
-
-    respond_to do |format|
-      format.html { render_order_form }
-      format.js { render nothing: true, status: 204 } # No Content
-    end
-  end
-
   private
 
   def render_order_form
