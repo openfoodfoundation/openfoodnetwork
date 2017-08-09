@@ -34,7 +34,7 @@ describe "LineItemsCtrl", ->
     lineItem = { id: 7, quantity: 3, order: { id: 9 }, supplier: { id: 1 } }
 
     httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_gt%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond [order]
-    httpBackend.expectGET("/admin/line_items.json?q%5Border%5D%5Bcompleted_at_gt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
+    httpBackend.expectGET("/admin/bulk_line_items.json?q%5Border%5D%5Bcompleted_at_gt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
     httpBackend.expectGET("/admin/enterprises/for_line_items.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
     httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
     httpBackend.expectGET("/admin/enterprises/for_line_items.json?ams_prefix=basic&q%5Bis_primary_producer_eq%5D=true").respond [supplier]
@@ -106,7 +106,7 @@ describe "LineItemsCtrl", ->
 
       describe "where the request is successful", ->
         beforeEach ->
-          httpBackend.expectDELETE("/admin/orders/R12345678/line_items/1.json").respond "nothing"
+          httpBackend.expectDELETE("/admin/bulk_line_items/1.json").respond "nothing"
           scope.deleteLineItem line_item1
           httpBackend.flush()
 
@@ -115,7 +115,7 @@ describe "LineItemsCtrl", ->
 
       describe "where the request is unsuccessful", ->
         beforeEach ->
-          httpBackend.expectDELETE("/admin/orders/R12345678/line_items/1.json").respond 404, "NO CONTENT"
+          httpBackend.expectDELETE("/admin/bulk_line_items/1.json").respond 404, "NO CONTENT"
           scope.deleteLineItem line_item1
           httpBackend.flush()
 
