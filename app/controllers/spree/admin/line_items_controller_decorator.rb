@@ -2,19 +2,6 @@ Spree::Admin::LineItemsController.class_eval do
   prepend_before_filter :load_order, except: :index
   around_filter :apply_enterprise_fees_with_lock, only: :update
 
-  # TODO make updating line items faster by creating a bulk update method
-
-  def index
-    respond_to do |format|
-      format.json do
-        order_params = params[:q].andand.delete :order
-        orders = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(order_params).result
-        line_items = OpenFoodNetwork::Permissions.new(spree_current_user).editable_line_items.where(order_id: orders).ransack(params[:q])
-        render_as_json line_items.result.reorder('order_id ASC, id ASC')
-      end
-    end
-  end
-
   def create
     variant = Spree::Variant.find(params[:line_item][:variant_id])
     OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor).scope(variant)
@@ -34,7 +21,6 @@ Spree::Admin::LineItemsController.class_eval do
 
   # TODO: simplify this, 3 formats per action is too much
   #       we need `js` format for admin/orders/edit (jquery-rails gem)
-  #       we need `json` format for admin/orders/bulk_management (angular)
   #       we don't know if `html` format is needed
   def update
     respond_to do |format|
@@ -46,19 +32,11 @@ Spree::Admin::LineItemsController.class_eval do
           render json: { errors: @line_item.errors }, status: 412
         end
       }
-      format.json {
-        if @line_item.update_attributes(params[:line_item])
-          render nothing: true, status: 204 # No Content, does not trigger ng resource auto-update
-        else
-          render json: { errors: @line_item.errors }, status: 412
-        end
-      }
     end
   end
 
   # TODO: simplify this, 3 formats per action is too much:
   #       we need `js` format for admin/orders/edit (jquery-rails gem)
-  #       we need `json` format for admin/orders/bulk_management (angular)
   #       we don't know if `html` format is needed
   def destroy
     @line_item.destroy
@@ -66,7 +44,6 @@ Spree::Admin::LineItemsController.class_eval do
     respond_to do |format|
       format.html { render_order_form }
       format.js { render nothing: true, status: 204 } # No Content
-      format.json { render nothing: true, status: 204 } # No Content
     end
   end
 

@@ -53,6 +53,10 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  namespace :admin do
+    resources :bulk_line_items
+  end
+
   get '/checkout', :to => 'checkout#edit' , :as => :checkout
   put '/checkout', :to => 'checkout#update' , :as => :update_checkout
   get '/checkout/paypal_payment/:order_id', to: 'checkout#paypal_payment', as: :paypal_payment
@@ -265,8 +269,6 @@ Spree::Core::Engine.routes.prepend do
       get :print_ticket, on: :member
       get :managed, on: :collection
     end
-
-    resources :line_items, only: [:index], format: :json
   end
 
   resources :orders do

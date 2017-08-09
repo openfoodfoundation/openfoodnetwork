@@ -1,5 +1,5 @@
 angular.module("admin.resources").factory 'LineItemResource', ($resource) ->
-  $resource('/admin/:orders/:order_number/line_items/:id.json', {}, {
+  $resource('/admin/bulk_line_items/:id.json', {}, {
     'index':
       method: 'GET'
       isArray: true
