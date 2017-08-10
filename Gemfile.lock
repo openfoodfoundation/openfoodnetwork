@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/coopdevs/spree.git
-  revision: 5cc88578255b42ed710c91fc014a21d86561c74e
+  revision: 62f1ae8a9a9e36960ddf0213857dd89f9f052c60
   branch: spree-upgrade-step-6
   specs:
     spree (1.3.99)
