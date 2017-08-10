@@ -177,6 +177,13 @@ describe Admin::BulkLineItemsController do
             expect(response.status).to eq 204
           end
 
+          it 'applies enterprise fees locking the order with an exclusive row lock' do
+            expect_any_instance_of(Spree::Order).to receive(:reload).with(lock: true)
+            expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
+
+            spree_put :update, params
+          end
+
           context 'when the line item params are not correct' do
             let(:line_item_params) { { price: 'hola' } }
             let(:errors) { { 'price' => ['is not a number'] } }

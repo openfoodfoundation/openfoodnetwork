@@ -14,12 +14,15 @@ module Admin
     #
     def update
       load_line_item
-      authorize! :update, @line_item.order
+      authorize_update!
 
-      if @line_item.update_attributes(params[:line_item])
-        render nothing: true, status: 204 # No Content, does not trigger ng resource auto-update
-      else
-        render json: { errors: @line_item.errors }, status: 412
+      order.with_lock do
+        if @line_item.update_attributes(params[:line_item])
+          order.update_distribution_charge!
+          render nothing: true, status: 204 # No Content, does not trigger ng resource auto-update
+        else
+          render json: { errors: @line_item.errors }, status: 412
+        end
       end
     end
 
@@ -27,7 +30,7 @@ module Admin
     #
     def destroy
       load_line_item
-      authorize! :update, @line_item.order
+      authorize! :update, order
 
       @line_item.destroy
       render nothing: true, status: 204 # No Content, does not trigger ng resource auto-update
@@ -48,6 +51,15 @@ module Admin
     # @return [Api::Admin::LineItemSerializer]
     def serializer(_ams_prefix)
       Api::Admin::LineItemSerializer
+    end
+
+    def authorize_update!
+      authorize! :update, order
+      authorize! :read, order
+    end
+
+    def order
+      @line_item.order
     end
   end
 end
