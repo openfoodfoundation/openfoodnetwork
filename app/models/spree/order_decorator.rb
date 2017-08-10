@@ -181,6 +181,10 @@ Spree::Order.class_eval do
   end
 
   def update_distribution_charge!
+    # `with_lock` acquires an exclusive row lock on order so no other
+    # requests can update it until the transaction is commited.
+    # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
+    # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
     with_lock do
       EnterpriseFee.clear_all_adjustments_on_order self
 
