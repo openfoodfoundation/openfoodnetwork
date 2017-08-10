@@ -4,7 +4,7 @@ Spree::Admin::OrdersController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   helper CheckoutHelper
   before_filter :load_spree_api_key, :only => :bulk_management
-  before_filter :load_order, only: %i[show edit update fire resend invoice print open_adjustments close_adjustments]
+  before_filter :load_order, only: %i[show edit update fire resend invoice print]
 
   before_filter :load_distribution_choices, only: [:new, :edit, :update]
 
