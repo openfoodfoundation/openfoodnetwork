@@ -191,7 +191,6 @@ namespace :openfoodnetwork do
     # Creates an order cycle for the provided enterprise and selecting all the
     # variants specified for both incoming and outgoing exchanges
     class CreateOrderCycle
-
       # Constructor
       #
       # @param enterprise [Enterprise]
