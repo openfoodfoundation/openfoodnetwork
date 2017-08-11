@@ -1,4 +1,4 @@
-- if @order.shipping_method.andand.require_ship_address
+- if @order.shipping_method.andand.delivery?
   / Delivery details
   %p.callout
     %strong
