@@ -89,7 +89,7 @@ feature %q{
     puts d.name
     puts @distributor.name
 
-    @order.state = 'cart'; @order.completed_at = nil; @order.save
+    @order.state = 'payment'; @order.completed_at = nil; @order.save
 
     login_to_admin_section
     visit '/admin/orders'

@@ -20,6 +20,7 @@ Spree::Order.class_eval do
   before_validation :shipping_address_from_distributor
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
+  before_validation :recheck_stock_availability, if: lambda { state == 'cart' }
 
   before_save :update_shipping_fees!, if: :complete?
   before_save :update_payment_fees!, if: :complete?
@@ -77,6 +78,25 @@ Spree::Order.class_eval do
   def products_available_from_new_distribution
     # Check that the line_items in the current order are available from a newly selected distribution
     errors.add(:base, I18n.t(:spree_order_availability_error)) unless DistributionChangeValidator.new(self).can_change_to_distribution?(distributor, order_cycle)
+  end
+
+  def recheck_stock_availability
+    # Adds a validation error if items in the cart have been removed
+    # from the order cycle after a cart was created but before
+    # checkout has been completed.
+    return if self.order_cycle.blank? || self.order_cycle.exchanges.outgoing.blank?
+    outgoing_variants = self.order_cycle.exchanges.outgoing.first.variants.pluck(:id)
+
+    items_available = true
+
+    self.line_items.each do |line_item|
+      unless outgoing_variants.include? line_item.variant_id
+        self.remove_variant(Spree::Variant.find(line_item.variant_id))
+        items_available = false
+      end
+    end
+
+    self.errors.add :items_removed, I18n.t('checkout.items_removed_from_order_cycle') unless items_available
   end
 
   def empty_with_clear_shipping_and_payments!

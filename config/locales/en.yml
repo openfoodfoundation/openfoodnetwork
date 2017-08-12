@@ -724,6 +724,7 @@ en:
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    items_removed_from_order_cycle: "Items in your cart have been removed from the order cycle. Please review your order before proceeding."
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
