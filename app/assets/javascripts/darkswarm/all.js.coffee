@@ -16,7 +16,7 @@
 #= require ../shared/angular-local-storage.js
 #= require ../shared/angular-slideables.js
 #= require angularjs-file-upload
-
+#= require i18n/translations
 
 #= require angular-rails-templates
 #= require_tree ../templates

@@ -35,6 +35,7 @@ Openfoodnetwork::Application.configure do
 
   # Tests assume English text on the site.
   config.i18n.default_locale = "en"
+  config.i18n.available_locales = ['en', 'es']
   I18n.locale = config.i18n.locale = config.i18n.default_locale
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.

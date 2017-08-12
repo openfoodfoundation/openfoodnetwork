@@ -1,6 +1,9 @@
 require 'spree/core/controller_helpers/respond_with_decorator'
 
 Spree::Admin::BaseController.class_eval do
+  include I18nHelper
+
+  before_filter :set_locale
   before_filter :warn_invalid_order_cycles
 
   # Warn the user when they have an active order cycle with hubs that are not ready

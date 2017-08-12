@@ -64,6 +64,15 @@ Spree::ShippingMethod.class_eval do
     'Shipping'
   end
 
+  # Checks whether the shipping method is of delivery type, meaning that it
+  # requires the user to specify a ship address at checkout. Note this is
+  # a setting we added onto the +spree_shipping_methods+ table.
+  #
+  # @return [Boolean]
+  def delivery?
+    require_ship_address
+  end
+
   private
 
   def touch_distributors
