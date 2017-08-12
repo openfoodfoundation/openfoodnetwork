@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'open_food_network/last_used_address'
 
 module OpenFoodNetwork
@@ -35,11 +36,16 @@ module OpenFoodNetwork
       let(:order_without_ship_address) { double(:order, ship_address: nil) }
 
       it "returns the ship address when present" do
+        allow(delivery).to receive(:delivery?).and_return(true)
         lua.stub(:recent_orders) { [order_with_ship_address] }
         lua.last_used_ship_address.should == address
       end
 
       it "returns nil when the order doesn't require a ship address" do
+        allow(order_with_unrequired_ship_address.shipping_method)
+          .to receive(:delivery?)
+          .and_return(false)
+
         lua.stub(:recent_orders) { [order_with_unrequired_ship_address] }
         lua.last_used_ship_address.should be_nil
       end

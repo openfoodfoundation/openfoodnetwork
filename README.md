@@ -108,6 +108,9 @@ If you want karma to automatically rerun the tests on file modification, use:
 
     ./script/karma start
 
+### Multilingual
+Do not forget to run `rake tmp:cache:clear` after locales are updated to reload I18n js translations.
+
 ## Credits
 
 * Andrew Spinks (http://github.com/andrewspinks)

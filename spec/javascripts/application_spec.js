@@ -13,6 +13,7 @@
 //= require textAngular-sanitize.min.js
 //= require textAngular.min.js
 //= require moment
+//= require i18n
 
 angular.module('templates', [])
 angular.module('google-maps', []);

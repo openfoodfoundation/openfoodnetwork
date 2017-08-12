@@ -1,9 +1,0 @@
-<%# Defines a global I18n object containing the language of the current locale %>
-<%
-  # Invalidate this asset if locale changes.
-  Dir[Rails.root.join('config', 'locales', "#{I18n.default_locale}.yml").to_s].each do |f|
-    depend_on(f)
-  end
-%>
-<%- I18n.backend.send(:init_translations) unless I18n.backend.initialized? %>
-window.I18n = <%= I18n.backend.send(:translations)[I18n.default_locale].with_indifferent_access.to_json.html_safe %>
