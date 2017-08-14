@@ -320,24 +320,24 @@ feature %q{
 
     describe "when manually placing an order" do
       let!(:order_cycle) { create(:order_cycle_with_overrides, name: "Overidden") }
+      let(:distributor) { order_cycle.distributors.first }
+      let(:product) { order_cycle.products.first }
 
       before do
-        dist = order_cycle.distributors.first
         login_to_admin_section
+
         visit 'admin/orders/new'
-        select2_select dist.name, from: 'order_distributor_id'
-        page.should have_select2 'order_order_cycle_id', with_options: ['Overidden (open)']
+        select2_select distributor.name, from: 'order_distributor_id'
         select2_select order_cycle.name, from: 'order_order_cycle_id'
         click_button 'Next'
       end
 
       # Reproducing a bug, issue #1446
       it "shows the overridden price" do
-        product = order_cycle.products.first
         targetted_select2_search product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
         click_link 'Add'
-        page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
-        page.should have_content product.variants.first.variant_overrides.first.price
+        expect(page).to have_selector("table.index tbody[data-hook='admin_order_form_line_items'] tr") # Wait for JS
+        expect(page).to have_content(product.variants.first.variant_overrides.first.price)
       end
     end
 
