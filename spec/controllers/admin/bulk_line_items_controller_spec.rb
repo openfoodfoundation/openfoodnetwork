@@ -177,8 +177,11 @@ describe Admin::BulkLineItemsController do
           end
 
           it 'applies enterprise fees locking the order with an exclusive row lock' do
-            expect_any_instance_of(Spree::Order).to receive(:reload).with(lock: true)
-            expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
+            allow(Spree::LineItem)
+              .to receive(:find).with(line_item1.id.to_s).and_return(line_item1)
+
+            expect(line_item1.order).to receive(:reload).with(lock: true)
+            expect(line_item1.order).to receive(:update_distribution_charge!)
 
             spree_put :update, params
           end
