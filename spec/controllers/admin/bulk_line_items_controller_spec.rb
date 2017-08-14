@@ -6,7 +6,7 @@ describe Admin::BulkLineItemsController do
   describe '#index' do
     render_views
 
-    let(:line_item_attributes) { [:id, :quantity, :max_quantity, :price, :supplier, :final_weight_volume, :units_product, :units_variant, :order] }
+    let(:line_item_attributes) { %i[id quantity max_quantity price supplier final_weight_volume units_product units_variant order] }
     let!(:dist1) { FactoryGirl.create(:distributor_enterprise) }
     let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: 1.day.ago, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
     let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
@@ -26,7 +26,6 @@ describe Admin::BulkLineItemsController do
     end
 
     context "as an administrator" do
-
       before do
         controller.stub spree_current_user: quick_login_as_admin
       end
@@ -37,7 +36,7 @@ describe Admin::BulkLineItemsController do
         end
 
         it "retrieves a list of line_items with appropriate attributes, including line items with appropriate attributes" do
-          keys = json_response.first.keys.map{ |key| key.to_sym }
+          keys = json_response.first.keys.map(&:to_sym)
           line_item_attributes.all?{ |attr| keys.include? attr }.should == true
         end
 
@@ -52,7 +51,7 @@ describe Admin::BulkLineItemsController do
         end
 
         it "returns distributor object with id key" do
-          json_response.map{ |line_item| line_item['supplier'] }.all?{ |d| d.has_key?('id') }.should == true
+          json_response.map{ |line_item| line_item['supplier'] }.all?{ |d| d.key?('id') }.should == true
         end
       end
 
@@ -107,7 +106,7 @@ describe Admin::BulkLineItemsController do
         end
 
         it "retrieves a list of line_items" do
-          keys = json_response.first.keys.map{ |key| key.to_sym }
+          keys = json_response.first.keys.map(&:to_sym)
           line_item_attributes.all?{ |attr| keys.include? attr }.should == true
         end
       end
@@ -119,7 +118,7 @@ describe Admin::BulkLineItemsController do
         end
 
         it "retrieves a list of line_items" do
-          keys = json_response.first.keys.map{ |key| key.to_sym }
+          keys = json_response.first.keys.map(&:to_sym)
           line_item_attributes.all?{ |attr| keys.include? attr }.should == true
         end
       end
