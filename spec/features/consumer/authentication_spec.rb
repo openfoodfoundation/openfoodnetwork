@@ -80,7 +80,7 @@ feature "Authentication", js: true, retry: 3 do
             fill_in "Confirm password", with: "test12345"
             expect do
               click_signup_button
-              page.should have_content "Welcome! You have signed up successfully"
+              page.should have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
             end.to enqueue_job Delayed::PerformableMethod
             expect(Delayed::Job.last.payload_object.method_name).to eq(:send_on_create_confirmation_instructions_without_delay)
           end

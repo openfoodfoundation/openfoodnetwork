@@ -67,10 +67,14 @@ en:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
   devise:
+    user_registrations:
+      spree_user:
+       signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
     failure:
       invalid: |
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
+      unconfirmed: "You have to confirm your account before continuing."
     enterprise_confirmations:
       enterprise:
         confirmed: Thank you, your email address has been confirmed.
