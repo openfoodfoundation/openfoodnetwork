@@ -10,4 +10,16 @@
     background: #fff;
     padding-top: 10px;
   }
+
+  .alert-box {
+    a {
+      color: white;
+      text-decoration: underline;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: underline;
+      }
+    }
+  }
 }

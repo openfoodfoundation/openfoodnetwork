@@ -4,6 +4,10 @@
       .large-12.columns
         .alert-box.alert{"ng-show" => "errors != null"}
           {{ errors }}
+          %a{ng: {show: 'user_unconfirmed', click: 'resend_confirmation()'}}
+            = t('devise.confirmations.resend_confirmation_email')
+        .alert-box.success{ng: {show: 'messages != null'}}
+          {{ messages }}
     .row
       .large-12.columns
         %label{for: "email"} {{'email' | t}}

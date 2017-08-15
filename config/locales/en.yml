@@ -67,6 +67,10 @@ en:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
   devise:
+    confirmations:
+      send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+      failed_to_send: "An error occurred whilst sending your confirmation email."
+      resend_confirmation_email: "Resend confirmation email."
     user_registrations:
       spree_user:
        signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
