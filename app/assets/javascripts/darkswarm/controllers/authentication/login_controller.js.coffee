@@ -10,4 +10,4 @@ Darkswarm.controller "LoginCtrl", ($scope, $http, $window, AuthenticationService
         $window.location.href = $window.location.origin + $window.location.pathname  # Strips out hash fragments
     .error (data) ->
       Loading.clear()
-      $scope.errors = data.message
+      $scope.errors = data.message || data.error
