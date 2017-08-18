@@ -28,27 +28,27 @@ feature 'Shops', js: true do
     end
 
     it "shows hubs" do
-      page.should have_content distributor.name
+      expect(page).to have_content distributor.name
       expand_active_table_node distributor.name
-      page.should have_content "OUR PRODUCERS"
+      expect(page).to have_content "OUR PRODUCERS"
     end
 
     it "does not show invisible hubs" do
-      page.should_not have_content invisible_distributor.name
+      expect(page).not_to have_content invisible_distributor.name
     end
 
     it "should not show hubs that are not in an order cycle" do
       create(:simple_product, distributors: [d1, d2])
       visit shops_path
-      page.should have_no_selector 'hub.inactive'
-      page.should have_no_selector 'hub',   text: d2.name
+      expect(page).to have_no_selector 'hub.inactive'
+      expect(page).to have_no_selector 'hub',   text: d2.name
     end
 
     it "should show closed shops after clicking the button" do
       create(:simple_product, distributors: [d1, d2])
       visit shops_path
       click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
-      page.should have_selector 'hub.inactive', text: d2.name
+      expect(page).to have_selector 'hub.inactive', text: d2.name
     end
 
     it "should link to the hub page" do
@@ -66,8 +66,8 @@ feature 'Shops', js: true do
     it "does not show hubs that are not ready for checkout" do
       visit shops_path
 
-      Enterprise.ready_for_checkout.should_not include hub
-      page.should_not have_content hub.name
+      expect(Enterprise.ready_for_checkout).not_to include hub
+      expect(page).not_to have_content hub.name
     end
   end
 
@@ -184,7 +184,7 @@ feature 'Shops', js: true do
 
     it "shows closed shops" do
       #click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
-      page.should have_selector 'hub.inactive', text: d2.name
+      expect(page).to have_selector 'hub.inactive', text: d2.name
     end
   end
 
