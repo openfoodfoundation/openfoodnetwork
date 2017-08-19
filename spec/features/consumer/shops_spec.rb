@@ -6,6 +6,7 @@ feature 'Shops', js: true do
 
   let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:invisible_distributor) { create(:distributor_enterprise, visible: false) }
+  let!(:profile) { create(:distributor_enterprise, sells: 'none') }
   let!(:d1) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:d2) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise)) }
@@ -42,6 +43,10 @@ feature 'Shops', js: true do
       expect(page).to have_no_selector 'hub',   text: d2.name
     end
 
+    it "does not show profiles" do
+      expect(page).not_to have_content profile.name
+    end
+
     it "shows closed shops after clicking the button" do
       click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
       expect(page).to have_selector 'hub.inactive', text: d2.name
@@ -50,6 +55,21 @@ feature 'Shops', js: true do
     it "links to the hub page" do
       follow_active_table_node distributor.name
       expect(page).to have_current_path enterprise_shop_path(distributor)
+    end
+
+    describe "showing profiles" do
+      before do
+        check "Show profiles"
+      end
+
+      it "still shows hubs" do
+        expect(page).to have_content distributor.name
+      end
+
+      # https://github.com/openfoodfoundation/openfoodnetwork/issues/1718
+      xit "shows profiles" do
+        expect(page).to have_content profile.name
+      end
     end
   end
 
