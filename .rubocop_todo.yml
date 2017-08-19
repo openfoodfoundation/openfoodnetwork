@@ -455,7 +455,6 @@ Layout/LeadingCommentSpace:
     - 'spec/factories.rb'
     - 'spec/features/admin/products_spec.rb'
     - 'spec/features/admin/reports_spec.rb'
-    - 'spec/features/consumer/shops_spec.rb'
     - 'spec/jobs/finalize_account_invoices_spec.rb'
     - 'spec/lib/open_food_network/order_and_distributor_report_spec.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'

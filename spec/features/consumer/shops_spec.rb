@@ -22,7 +22,7 @@ feature 'Shops', js: true do
   end
 
 
-  context "on the shops path" do
+  describe "listing shops" do
     before do
       visit shops_path
     end
@@ -37,21 +37,17 @@ feature 'Shops', js: true do
       expect(page).not_to have_content invisible_distributor.name
     end
 
-    it "should not show hubs that are not in an order cycle" do
-      create(:simple_product, distributors: [d1, d2])
-      visit shops_path
+    it "does not show hubs that are not in an order cycle" do
       expect(page).to have_no_selector 'hub.inactive'
       expect(page).to have_no_selector 'hub',   text: d2.name
     end
 
-    it "should show closed shops after clicking the button" do
-      create(:simple_product, distributors: [d1, d2])
-      visit shops_path
+    it "shows closed shops after clicking the button" do
       click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
       expect(page).to have_selector 'hub.inactive', text: d2.name
     end
 
-    it "should link to the hub page" do
+    it "links to the hub page" do
       follow_active_table_node distributor.name
       expect(page).to have_current_path enterprise_shop_path(distributor)
     end
@@ -183,7 +179,6 @@ feature 'Shops', js: true do
     end
 
     it "shows closed shops" do
-      #click_link_and_ensure("Show closed shops", -> { page.has_selector? 'hub.inactive' })
       expect(page).to have_selector 'hub.inactive', text: d2.name
     end
   end
