@@ -26,6 +26,10 @@ fr:
       subject: "Confirmez l'adresse email pour %{enterprise}"
     welcome:
       subject: "%{enterprise} est maintenant sur %{sitename}"
+  producer_mailer:
+    order_cycle:
+      subject: "Rapport de cycle de vente pour %{producer}"
+  home: "OFF"
   title: Open Food Network France
   welcome_to: 'Bienvenue sur '
   site_meta_description: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent ..."
@@ -69,16 +73,33 @@ fr:
   cancel: Annuler
   edit: Modifier
   distributors: Distributeurs
+  distribution: Distribution
   bulk_order_management: Gestion des commandes par lot
   enterprise_groups: Groupes
   reports: Rapports
   variant_overrides: Catalogue boutique
-  more: Plus
   spree_products: Produits
   all: Tous
   current: Actuel
   available: Disponible
   dashboard: Tableau de bord
+  undefined: indéfini
+  unused: inutilisé
+  admin_and_handling: Frais de gestion
+  profile: Profil
+  supplier_only: Uniquement Producteur
+  weight: Poids
+  volume: Volume
+  summary: Résumé
+  detailed: Détaillé
+  updated: Mis à jour
+  'yes': "Ou"
+  'no': "Non"
+  y: 'O'
+  n: 'N'
+  powered_by: Propulsé par
+  blocked_cookies_alert: "Votre navigateur semble bloquer des cookies nécessaires à l'utilisation de ce site. Cliquez ci-dessous pour autoriser les cookies et rechargez la page."
+  allow_cookies: "Autoriser les cookies"
   admin:
     date: Date
     email: Email
@@ -99,6 +120,8 @@ fr:
     weight: Poids
     volume: Volume
     items: Pièce
+    select_all: Tout sélectionner
+    obsolete_master: Master obsolète
     quick_search: Recherche rapide
     clear_all: Vider
     start_date: "Date de début"
@@ -133,6 +156,14 @@ fr:
         finalise_user_invoices: "Finaliser les factures utilisateurs"
         finalise_user_invoice_explained: "Cliquez ici pour finaliser toutes les factures pour le mois calendaire précédent. Cette tâche peut-être définie pour être opérée automatiquement une fois par mois."
         update_user_invoices: "Mettre à jour les factures utilisateurs"
+      errors:
+        accounts_distributor: 'doit être défini si vous souhaitez générer des factures pour les utilisateurs entreprises. '
+        default_payment_method: 'doit être défini si vous souhaitez générer des factures pour les utilisateurs entreprises. '
+        default_shipping_method: doit être défini si vous souhaitez générer des factures pour les utilisateurs entreprises.
+    shopfront_settings:
+      embedded_shopfront_settings: "Paramètres Boutiques Intégrées"
+      enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
+      embedded_shopfronts_whitelist: "Liste blanche des Domaines Externes"
     business_model_configuration:
       edit:
         business_model_configuration: "Modèle économique"
@@ -183,6 +214,8 @@ fr:
         update_address: 'Mettre à jour l''adresse'
         confirm_delete: 'Confirmer suppression?'
         search_by_email: "Recherche par email/code..."
+      destroy:
+        has_associated_orders: 'Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique'
     cache_settings:
       show:
         title: Mise en cache
@@ -190,12 +223,20 @@ fr:
         order_cycle: Cycle de vente
         status: Statut
         diff: Diff
+        error: Erreur
     contents:
       edit:
         title: Contenu
+        header: Titre
+        home_page: Page d'accueil
+        producer_signup_page: Page d'inscription Producteur
+        hub_signup_page: Page d'inscription Hub
+        group_signup_page: Page d'inscription Groupe
+        footer_and_external_links: Pied de page et Liens Externes
+        your_content: Votre contenu
     enterprise_fees:
       index:
-        title: Marges et commissions
+        title: Marges et Commissions
         enterprise: Entreprise
         fee_type: Type de marge
         name: Nom
@@ -205,6 +246,11 @@ fr:
     enterprise_groups:
       index:
         new_button: Nouveau groupe d'entreprises
+    enterprise_roles:
+      form:
+        manages: gère
+      enterprise_role:
+        manages: gère
     products:
       unit_name_placeholder: 'ex: botte'
       bulk_edit:
@@ -242,7 +288,12 @@ fr:
         inventory_powertip: Ceci est votre catalogue produits. Pour ajouter des produits à votre catalogue, sélectionnez "Nouveaux Produits" dans le menu déroulant.
         hidden_powertip: Ces produits ont été masqués de votre catalogue, vous ne pourrez pas les proposer dans votre boutique. Vous pouvez cliquer sur "Ajouter" pour ajouter un produit à votre catalogue.
         new_powertip: Ces produits peuvent être ajoutés à votre catalogue. Cliquez sur "Ajouter" pour ajouter un produit à votre catalogue, ou 'Masquer" pour ne plus l'afficher. Vous pourrez changer d'avis plus tard!
+      controls:
+        back_to_my_inventory: Retour à mon catalogue boutique
     orders:
+      index:
+        capture: "Valider"
+        ship: "Expédier"
       bulk_management:
         tip: "Utilisez cette page pour changer les quantités d'un produit sur plusieurs commandes. Les produits peuvent aussi être supprimés de toutes les commandes, si nécessaire."
         shared: "Ressource partagée?"
@@ -259,10 +310,10 @@ fr:
         group_buy_unit_size: "Quantité totale du lot"
         total_qtt_ordered: "Quantité totale commandée"
         max_qtt_ordered: "Quantité max commandée"
-        current_fulfilled_units: "Nombre de lots commandés"
-        max_fulfilled_units: "Nombre max de lots commandés"
+        current_fulfilled_units: "Nombre d'unités commandées"
+        max_fulfilled_units: "Nombre max d'unités commandées"
         order_error: "Des erreurs doivent être résolues avant de pouvoir mettre à jour les commandes.\nLes champs entourés en rouge contiennent des erreurs."
-        variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de valeur unitaire"
+        variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -518,13 +569,77 @@ fr:
         title: Paramètres de facturation
         invoice_style2?: Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)
         enable_receipt_printing?: Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?
+    overview:
+      enterprises_header:
+        ofn_with_tip: Les Entreprises sont des Producteurs et/ou Hubs distributeurs, et sont donc les organisations de base qui utilisent Open Food France.
+      enterprises_hubs_tabs:
+        has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
+        has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
+        has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
+    enterprise_issues:
+      create_new: Créer Nouveau
+      resend_email: Renvoyer l'email
+      has_no_payment_methods: "%{enterprise} n'a pas de méthode de paiement active"
+      has_no_shipping_methods: "%{enterprise} n'a pas de méthode de livraison active"
+      email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
+      not_visible: "%{enterprise}n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
+    reports:
+      hidden: Masqué
+      unitsize: Contenu Unitaire
+      total: Total
+      total_items: Nb Articles
+      supplier_totals: Totaux Cycle de Vente par Producteur
+      supplier_totals_by_distributor: Totaux Cycle de Vente par Producteur pour chaque Hub Distributeur
+      totals_by_supplier: Totaux Cycle de Vente par Hub Distributeur pour chaque Producteur
+      customer_totals: Totaux Cycle de Vente par Acheteur
+      all_products: Tous les produits
+      inventory: Catalogue boutique (en stock)
+      lettuce_share: LettuceShare
+      mailing_list: Liste de mails
+      addresses: Adresses
+      payment_methods: Rapport Méthodes de Paiement
+      delivery: Rapport de Livraison
+      tax_types: Par type de taxe
+      tax_rates: Par taux de taxe
+      pack_by_customer: Préparation des commandes par Acheteur
+      pack_by_supplier: Préparation des commandes par Producteur
+      orders_and_distributors:
+        name: Commandes et Hubs Distributeurs
+        description: Liste des Commandes avec les détails des Hubs Ditributeurs
+      bulk_coop:
+        name: Achat groupés en vrac (non utilisé)
+        description: Rapports achats groupés vrac (non utilisé)
+      payments:
+        name: Rapports des paiements
+        description: Rapports des paiements reçus
+      orders_and_fulfillment:
+        name: Rapports des commandes
+      customers:
+        name: Acheteurs
+      products_and_inventory:
+        name: Produits et Catalogues
+      sales_total:
+        name: Total des Ventes
+        description: Total des Ventes pour toutes les Commandes
+      users_and_enterprises:
+        name: Managers & Entreprises
+        description: Managers de l'Entreprise & Droits
+      order_cycle_management:
+        name: Gestion des Cycles de Vente
+      sales_tax:
+        name: TVA
+      xero_invoices:
+        name: Facture Xero
+        description: Factures pour import dans Xero
+      packing:
+        name: Rapports de préparation des paniers
   checkout:
     already_ordered:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
-  home:
+  shops:
     hubs:
-      show_closed_shops: "Aficher les boutiques fermées"
+      show_closed_shops: "Afficher les boutiques fermées"
       hide_closed_shops: "Masquer les boutiques fermées"
       show_on_map: "Tout afficher sur la carte"
   shared:
@@ -553,6 +668,7 @@ fr:
   invoice_column_price_with_taxes: "Prix total TTC"
   invoice_column_price_without_taxes: "Prix total HT"
   invoice_column_tax_rate: "TVA applicable"
+  invoice_tax_total: "Total TVA :"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
   total_excl_tax: "Total HT :"
@@ -602,6 +718,10 @@ fr:
   on_demand: A volonté
   none: Aucun
   not_allowed: Non autorisé
+  no_shipping: pas de méthode de livraison
+  no_payment: pas de méthode de paiement
+  no_shipping_or_payment: pas de méthode de livraison ou de paiement
+  unconfirmed: non confirmé
   label_shops: "Boutiques"
   label_map: "Carte"
   label_producers: "Producteurs"
@@ -981,6 +1101,7 @@ fr:
   products_max_quantity: Quantité max
   products_distributor: Distributeur
   products_distributor_info: Quand vous choisissez un distributeur pour votre commande, les adresse et date de retrait seront affichées ici.
+  products_distribution_adjustment_label: "Distribution par %{distributor}du produit %{product}"
   shop_trial_expires_in: "Votre période de test se termine dans"
   shop_trial_expired_notice: "Vous pouvez continuer à utiliser la plateforme en contrepartie d'une contribution libre et volontaire. Merci de nous informer de la façon dont vous souhaitez contribuer :-)"
   password: Mot de passe
@@ -994,6 +1115,7 @@ fr:
   failed_to_create_enterprise: "Impossible de créer votre entreprise"
   failed_to_create_enterprise_unknown: "Impossible de créer votre entreprise.\nVérifiez que tous les champs sont remplis."
   failed_to_update_enterprise_unknown: "Impossible de mettre à jour votre entreprise.\nVérifiez que tous les champs sont remplis."
+  enterprise_confirm_delete_message: "Cette action supprimera également le produit %{product} que cette entreprise distibue. Voulez-vous vraiment continuer ?"
   order_not_saved_yet: "Votre commande n'a pas encore été enregistrée. Attendez quelques secondes!"
   filter_by: "Filtrer par"
   hide_filters: "Masquer les filtres"
@@ -1006,6 +1128,8 @@ fr:
   error_required: "Champ obligatoire"
   error_number: "saisir un nombre"
   error_email: "saisir une adresse email"
+  error_not_found_in_database: "%{name} n'existe pas"
+  error_no_permission_for_enterprise: "\"%{name}\" : vous n'avez pas les droits requis pour gérer les produits de cette entreprise"
   item_handling_fees: "Frais logistiques (inclus dans le prix affiché)"
   january: "Janvier"
   february: "Février"
@@ -1138,6 +1262,9 @@ fr:
   registration_detail_state_error: "Veuillez saisir un Département"
   registration_detail_country: "Pays:"
   registration_detail_country_error: "Veuillez saisir une Pays"
+  shipping_method_destroy_error: "Cette méthode de livraison ne peut pas être supprimée car elle est référencée dans une commande : %{number}."
+  accounts_and_billing_task_already_running_error: "Une autre tache est en cours, merci de patienter un instant..."
+  accounts_and_billing_start_task_notice: "Tache mise en file d'attente"
   fees: "Frais"
   item_cost: "Coût du produit"
   bulk: "Vrac"
@@ -1165,6 +1292,8 @@ fr:
   credit: "Crédit"
   Paid: "Payé"
   Ready: "Prêt"
+  ok: OK
+  not_visible: invisible
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
@@ -1196,9 +1325,15 @@ fr:
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
   close: "Ferme"
+  create: "Créer"
+  search: "Rechercher"
   supplier: "Fournisseurs"
   coordinator: "Coordinateur"
   distributor: "Distributeur"
+  enterprise_fees: "Marges et commissions"
+  process_my_order: "Valider ma Commande"
+  delivery_instructions: Instructions de Livraison
+  delivery_method: Méthode de Livraison
   fee_type: "Type de marge"
   tax_category: "TVA applicable"
   calculator: "Calculateur"
@@ -1227,6 +1362,7 @@ fr:
   on_hand: "En stock"
   save_changes: "Sauvegarder les modifications"
   order_saved: "Commande Sauvegardée"
+  no_products: Pas de Produits
   spree_admin_overview_enterprises_header: "Mes entreprises"
   spree_admin_overview_enterprises_footer: "GÉRER MES ENTREPRISES"
   spree_admin_enterprises_hubs_name: "Nom"
@@ -1241,26 +1377,36 @@ fr:
   spree_admin_enterprises_producers_order_cycles: "Produits dans le cycle de vente"
   spree_admin_enterprises_tabs_hubs: "HUBS"
   spree_admin_enterprises_tabs_producers: "PRODUCTEURS"
-  spree_admin_enterprises_producers_manage_order_cycles: "GÉRER LES CYCLES DE VENTES"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
-  spree_admin_enterprises_producers_orders_cycle_text: "Vous n'avez pas de cycle de vente actif."
   spree_admin_enterprises_any_active_products_text: "Vous n'avez aucun produit actif."
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
-  spree_admin_order_cycles: "Cycles de vente"
-  spree_admin_order_cycles_tip: "Les cycles de vente déterminent quand et où vos produits peuvent être commandés et reçus par les acheteurs."
-  dashbord: "Tableau de bord"
   spree_admin_single_enterprise_alert_mail_confirmation: "Veuillez confirmer l'adresse mail pour"
   spree_admin_single_enterprise_alert_mail_sent: "Email envoyé à "
   spree_admin_overview_action_required: "Action requise"
   spree_admin_overview_check_your_inbox: "Veuillez vérifier votre boîte mail pour les prochaines étapes. Merci!"
+  spree_admin_unit_value: Nb Unités
+  spree_admin_unit_description: 'Description complémentaire (ex: "(vrac)")'
+  spree_admin_variant_unit: Unité
+  spree_admin_variant_unit_scale: Echelle unitaire (en g ou L)
+  spree_admin_variant_unit_name: Nom de la pièce (si vendu à la pièce)
   change_package: "Changer de type de compte"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
+  spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
+  spree_admin_eg_collect_your_order: "ex : \"Veuillez récupérer votre commande au 34 rue Victor Hugo, 75018 Paris\""
+  spree_classification_primary_taxon_error: "L'intitulé %{taxon}est l'intitulé de base pour %{product} et ne peut être supprimé"
+  spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
+  spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
+  spree_order_populator_availability_error: "Ce produit n'est pas disponible pour ce cycle de vente / distributeur."
+  spree_distributors_error: "Veuillez sélectionner au moins un hub"
+  spree_user_enterprise_limit_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
+  spree_variant_product_error: doit avoir au moins une variante
   your_profil_live: "Votre profil en ligne"
   on_ofn_map: "sur la carte Open Food France"
   see: "Voir"
   live: "en ligne"
   manage: "Gérer"
   resend: "Renvoyer"
+  trial: Découverte
   add_and_manage_products: "Ajouter & gérer des produits"
   add_and_manage_order_cycles: "Ajouter & gérer des cycles de vente"
   manage_order_cycles: "Gérer les cycles de vente"
@@ -1292,7 +1438,6 @@ fr:
   hub_sidebar_blue: "bleu"
   hub_sidebar_red: "rouge"
   shop_trial_in_progress: "Votre période de test se termine dans %{days}."
-  shop_trial_expired: "Bonne nouvelle! Nous avons décidé d'étendre la période de test pour votre hub, nous vous informerons avant la fin de la période."
   report_customers_distributor: "Distributeur"
   report_customers_supplier: "Fournisseurs"
   report_customers_cycle: "Cycle de vente"
@@ -1310,11 +1455,49 @@ fr:
   report_order_cycle: "Cycle de vente:"
   report_entreprises: "Entreprises:"
   report_users: "Managers:"
-  report_tax_rates: "TVA par taux"
-  report_tax_types: "TVA par type de produit/service"
-  report_header_order_number: "N° commande"
-  report_header_date: "Date"
-  report_header_items: "Produits"
+  report_tax_rates: TVA par taux
+  report_tax_types: TVA par type de produit/service
+  report_header_order_cycle: Cycle de Vente
+  report_header_user: Utilisateur
+  report_header_email: Email
+  report_header_status: Statut
+  report_header_comments: Commentaire
+  report_header_first_name: Prénom
+  report_header_last_name: Nom
+  report_header_phone: n° tel
+  report_header_suburb: Ville
+  report_header_address: Adresse
+  report_header_billing_address: Adresse de facturation
+  report_header_relationship: Droits
+  report_header_hub: Hub
+  report_header_hub_address: Adresse du Hub
+  report_header_to_hub: Au Hub
+  report_header_hub_code: Code du Hub
+  report_header_code: Code
+  report_header_paid: Payé ?
+  report_header_delivery: Livré ?
+  report_header_shipping: Livraison
+  report_header_shipping_method: Méthode de Livraison
+  report_header_shipping_instructions: Instructions de Livraison
+  report_header_ship_street: Rue Livraison
+  report_header_ship_street_2: ' Rue (2) Livraison'
+  report_header_ship_city: Ville Livraison
+  report_header_ship_postcode: Code Postal Livraison
+  report_header_ship_state: Département Livraison
+  report_header_billing_street: Rue Facturation
+  report_header_billing_street_2: Rue (2) Facturation
+  report_header_billing_street_3: Rue (3) Facturation
+  report_header_billing_street_4: Rue (4) Facturation
+  report_header_billing_city: Ville Facturation
+  report_header_billing_postcode: Code Postal Facturation
+  report_header_billing_state: Département Facturation
+  report_header_incoming_transport: Transport réception
+  report_header_special_instructions: Note au producteur
+  report_header_order_number: N° commande
+  report_header_date: Date
+  report_header_confirmation_date: Date de confirmation
+  report_header_tags: Tags
+  report_header_items: Produits
   report_header_items_total: "Montant des produits %{currency_symbol}"
   report_header_taxable_items_total: "Montant produits soumis à TVA (%{currency_symbol})"
   report_header_sales_tax: "TVA sur produits (%{currency_symbol})"
@@ -1322,10 +1505,92 @@ fr:
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission hub (%{currency_symbol})"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
-  report_header_customer: "Client"
-  report_header_distributor: "Distributeur"
+  report_header_enterprise: Entreprise
+  report_header_customer: Client
+  report_header_customer_code: Code acheteur
+  report_header_product: Produit
+  report_header_product_properties: Propriétés / labels Produits
+  report_header_quantity: Quantité
+  report_header_max_quantity: Quantité Max
+  report_header_variant: Variante
+  report_header_variant_value: Nb Unités Variante
+  report_header_variant_unit: Unité
+  report_header_total_available: Total disponible
+  report_header_unallocated: Non alloué
+  report_header_max_quantity_excess: Dépassement Qté Max
+  report_header_taxons: Intitulés
+  report_header_supplier: Fournisseur
+  report_header_producer: Producteur
+  report_header_producer_suburb: Ville Producteur
+  report_header_unit: Unité
+  report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
+  report_header_cost: Coût
+  report_header_shipping_cost: Coût de livraison
+  report_header_curr_cost_per_unit: Prix de revient par unité
+  report_header_total_shipping_cost: Coût de livraison total
+  report_header_payment_method: Méthode de paiement
+  report_header_sells: Vend
+  report_header_visible: Visible
+  report_header_price: Prix
+  report_header_unit_size: Contenu Unitaire
+  report_header_distributor: Distributeur
+  report_header_distributor_address: Adresse Hub Distributeur
+  report_header_distributor_city: Ville Distributeur
+  report_header_distributor_postcode: Code Postal Distributeur
+  report_header_delivery_address: Adresse Livraison
+  report_header_delivery_postcode: Code Postal Livraison
+  report_header_bulk_unit_size: Quantité totale du lot
+  report_header_weight: Poids
+  report_header_sum_total: Somme Totale
+  report_header_date_of_order: Date de Commande
+  report_header_amount_owing: Montant dû
+  report_header_amount_paid: Montant payé
+  report_header_units_required: Nb Unités Requises
+  report_header_remainder: Reste à payer
+  report_header_order_date: Date de commande
+  report_header_order_id: N° Commande
+  report_header_item_name: Nom de la pièce
+  report_header_temp_controlled_items: Article à température contrôlée ?
+  report_header_customer_name: Nom Acheteur
+  report_header_customer_email: E-mail Acheteur
+  report_header_customer_phone: Tel Acheteur
+  report_header_customer_city: Ville Acheteur
+  report_header_payment_state: Statut du Paiement
+  report_header_payment_type: Type de Paiement
+  report_header_item_price: "Pièce (%{currency})"
+  report_header_item_fees_price: "Pièce + Marge (%{currency})"
+  report_header_admin_handling_fees: "Frais de Gestion (%{currency})"
+  report_header_ship_price: "Livraison (%{currency})"
+  report_header_pay_fee_price: "Frais de Transaction (%{currency})"
+  report_header_total_price: "Total (%{currency})"
+  report_header_product_total_price: "Total Produit (%{currency})"
+  report_header_shipping_total_price: "Total Livaison (%{currency})"
+  report_header_outstanding_balance_price: "Solde (%{currency})"
+  report_header_eft_price: "TEF / Transfert Electronique (%{currency})"
+  report_header_paypal_price: "Paypal (%{currency})"
+  report_header_sku: Référence Produit
+  report_header_amount: Montant
+  report_header_balance: Solde
+  report_header_total_cost: "Coût Total"
+  report_header_total_ordered: Total Commandé
+  report_header_total_max: Max Total
+  report_header_total_units: Nb total d'articles
+  report_header_sum_max_total: "Somme Max Total"
   report_header_total_excl_vat: "Total HT (%{currency_symbol})"
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
+  report_header_temp_controlled: Temp Contrôlée ?
+  report_header_is_producer: Producteur ?
+  report_header_not_confirmed: Non confirmé
+  report_header_gst_on_income: TVA
+  report_header_gst_free_income: Revenu TVA déduite
+  report_header_total_untaxable_produce: Total produits non taxable
+  report_header_total_taxable_produce: Total produits soumis à TVA (inclut TVA)
+  report_header_total_untaxable_fees: Total marges et frais annexes non taxables
+  report_header_total_taxable_fees: Total marges et frais annexes soumis à TVA (inclut TVA)
+  report_header_delivery_shipping_cost: Coût de Livraison (incl. TVA)
+  report_header_transaction_fee: Frais de Transaction (TVA non incluse)
+  report_header_total_untaxable_admin: Total ajustements non taxables
+  report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
   initial_invoice_number: "N° de facture initial:"
   invoice_date: "Date de facture:"
   due_date: "Date d'échéance:"
@@ -1358,16 +1623,73 @@ fr:
   shipping_methods: "Méthodes de livraison"
   payment_methods: "Méthodes de paiement"
   payment_method_fee: "Frais de transaction"
-  enterprise_fees: "Marges et commissions"
   inventory_settings: "Catalogue boutique"
   tag_rules: "Règles de tag"
   shop_preferences: "Préférences boutique"
+  enterprise_fee_whole_order: Commande totale
+  enterprise_fee_by: "%{type}marges/frais par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un hub"
   validation_msg_product_category_cant_be_blank: "^Veuillez sélectionner la catégorie produit"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
   validation_msg_is_associated_with_an_exising_customer: "est associé à un acheteur existant"
+  content_configuration_pricing_table: "(A FAIRE : Tableau des tarifs)"
+  content_configuration_case_studies: "(A FAIRE : Etudes de Cas)"
+  content_configuration_detail: "(A FAIRE : Détails)"
+  enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, merci de contacter le manager actuel du profil à %{email}."
+  enterprise_owner_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
+  enterprise_role_uniqueness_error: "^Ce rôle existe déjà."
+  inventory_item_visibility_error: doit être vrai ou faux
+  product_importer_file_error: "erreur : aucun document importé"
+  product_importer_spreadsheet_error: "impossible de traiter le fichier : type de fichier invalide"
+  product_importer_products_save_error: n'a pu sauvegarder aucun produit :-(
+  product_import_file_not_found_notice: 'Fichier non trouvé ou impossible à ouvrir'
+  product_import_no_data_in_spreadsheet_notice: 'Aucune donnée trouvée dans le tableau'
+  order_choosing_hub_notice: Votre hub a été sélectionné.
+  order_cycle_selecting_notice: Votre cycle de vente a été sélectionné.
+  adjustments_tax_rate_error: "^Veuillez vérifier la TVA applicable pour cet ajustement."
+  active_distributors_not_ready_for_checkout_message_singular: >-
+      Le hub %{distributor_names} est sélectionné comme distributeur dans un cycle
+      de vente actif, mais n'a pas paramétré de méthode de livraison et/ou de paiement.
+      La boutique de ce hub restera inaccessible jusqu'à ce qu'une méthode de livraison
+      et une méthode de paiement aient été paramétrées.
+  active_distributors_not_ready_for_checkout_message_plural: >-
+      Les hubs %{distributor_names} sont sélectionnés comme distributeurs dans un
+      cycle de vente actif, mais n'ont pas paramétré de méthode de livraison et/ou
+      de paiement. Les boutiques de ces hubs resteront inaccessibles jusqu'à ce qu'une
+      méthode de livraison et une méthode de paiement aient été paramétrées.
+  enterprise_fees_update_notice: Les marges et commissions de votre entreprise ont été mises à jour.
+  enterprise_fees_destroy_error: "Cette marge ou commission ne peut être supprimée car elle est utilisée par la vente suivante : %{id} - %{name}."
+  enterprise_register_package_error: "Veuillez choisir une option"
+  enterprise_register_error: "L'inscription a échoué pour %{enterprise}"
+  enterprise_register_success_notice: "Bravo ! L'entreprise %{enterprise} est maintenant inscrite sur Open Food France :-)"
+  enterprise_bulk_update_success_notice: "Entreprises mises à jour avec succès"
+  enterprise_bulk_update_error: 'Echec dans la mise à jour'
+  order_cycles_create_notice: 'Votre cycle de vente a été créé.'
+  order_cycles_update_notice: 'Votre cycle de vente a été mis à jour.'
+  order_cycles_bulk_update_notice: 'Des cycles de vente ont été mis à jour.'
+  order_cycles_clone_notice: "Votre cycle de vente %{name} a été dupliqué."
+  order_cycles_email_to_producers_notice: 'Les emails à destination des producteurs ont été mis en file d''attente.'
+  order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
+  order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
+  order_cycles_no_permission_to_delete_error: "Ce cycle de vente a été utilisé par un acheteur et ne peut pas être supprimé. Pour fermer l'accès à ce cycle de vente, veuillez le clôturer et le dupliquer pour en ouvrir un nouveau."
   js:
+    saving: 'Enregistrement en cours...'
+    changes_saved: 'Modifications sauvegardées.'
+    save_changes_first: Veuillez d'abord sauvegarder les modifications.
+    all_changes_saved: Toutes les modifications ont été sauvegardées.
+    unsaved_changes: Des modifications n'ont pas été sauvegardées
+    all_changes_saved_successfully: Toutes les modifications ont été sauvegardées avec succès
+    oh_no: "Oups ! Nous n'avons pas réussi à sauvegarder vos modification :-("
+    unauthorized: "Vous n'avez pas les droits d'accès à cette page."
+    error: Erreur
+    unavailable: Non disponible
+    profile: Profil
+    hub: Hub
+    shop: Faire mes courses
+    choose: Choisir
+    resolve_errors: Veuillez corriger les erreurs suivantes
+    more_items: "+ %{count} en plus"
     admin:
       modals:
         got_it: J'ai compris
@@ -1499,11 +1821,76 @@ fr:
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
       only_n_remainging: "plus que %{num} en stock."
+    variant_overrides:
+      inventory_products: "Produits du Catalogue Boutique"
+      hidden_products: "Produits Masqués"
+      new_products: "Nouveaux Produits"
+      reset_stock_levels: Réinitialiser les niveaux de stock (par défaut)
+      changes_to: Devient
+      one_override: une modification
+      overrides: modifications
+      remain_unsaved: n'a pas encore été sauvegardé.
+      no_changes_to_save: Aucune modification à sauvegarder.'
+      no_authorisation: "Nous n'avons pas pu sauvegarder ces modifications, elles ne sont donc pas enregistrées."
+      some_trouble: "Nous n'avons pas pu sauvegarder : %{errors}"
+      changing_on_hand_stock: Modification des niveaux de stock en cours...
+      stock_reset: Les niveaux de stock ont été réinitiatlisés (valeurs par défaut)
+    tag_rules:
+      show_hide_variants: 'Afficher ou Masquer les variantes dans ma boutique'
+      show_hide_shipping: 'Afficher ou Montrer les méthodes de livraison lors de la finalisation de commande'
+      show_hide_payment: 'Afficher ou Montrer les méthodes de paiement lors de la finalisation de commande'
+      show_hide_order_cycles: 'Afficher ou Masquer les cycles de vente de ma boutique'
+      visible: VISIBLE
+      not_visible: INVISIBLE
+    services:
+      unsaved_changes_message: Des modifications n'ont pas encore été sauvegardées, sauvegarder maintenant ou ignorer ?
+      save: SAUVEGARDER
+      ignore: IGNORER
+      add_to_order_cycle: "vendre les produits (ajouter au cycle de vente)"
+      manage_products: "modifier les produits"
+      edit_profile: "modifier le profil"
+      add_products_to_inventory: "ajouter les produits au catalogue boutique"
+    resources:
+      could_not_delete_customer: 'L''acheteur n''a pas pu être supprimé'
+    product_import:
+      confirmation: |
+        Cette action remettra tous les niveaux de stock à zero pour cette
+        entreprises pour les produits non présents dans ce fichier.
+    order_cycles:
+      update_success: 'Votre cycle de vente a été mis à jour.'
+      no_distributors: Il n'y a pas de distributeur pour ce cycle de vente. Il ne sera pas visible aux acheteurs tant qu'il n'y aura pas de distributeur. Voulez-vous tout de même sauvegarder ce cycle de vente ?
+    enterprises:
+      producer: "Producteur"
+      non_producer: "Non-producteur"
+    customers:
+      select_shop: 'Veuillez d''abord choisir une boutique'
+      could_not_create: Oups ! Création impossible...
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
   spree:
     admin:
+      orders:
+        invoice:
+          issued_on: Editée le
+          tax_invoice: FACTURE
+          code: Code
+          from: De
+          to: A
+        form:
+          distribution_fields:
+            title: Distribution
+            distributor: "Distributeur : "
+            order_cycle: "Cycle de vente : "
+      overview:
+        order_cycles:
+          order_cycles: "Cycles de vente"
+          order_cycles_tip: "Les cycles de vente définissent quand et où vos produits peuvent être commandés par vos acheteurs."
+          you_have_active:
+            zero: "Vous n'avez aucun cycle de vente actif."
+            one: "Vous avez un cycle de vente actif."
+            other: "Vous avez %{count} cycles de vente actifs."
+          manage_order_cycles: "GERER LES CYCLES DE VENTE"
       products:
         bulk_edit:
           header:
@@ -1512,6 +1899,12 @@ fr:
             title: CHARGEMENT DES PRODUITS
             no_products: "Aucun produit trouvé. Ajouter un produit ?"
             no_results: "Désolé, aucun résultat trouvé"
+      reports:
+        bulk_coop:
+          bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
+          bulk_coop_allocation: 'Achats groupés - Allocation'
+          bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
+          bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
       variants:
         autocomplete:
           producer_name: Producteur
@@ -1519,6 +1912,9 @@ fr:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-jj'
     inventory: Catalogue boutique
+    orders:
+      bought:
+        item: "Déjà commandé dans ce cycle de vente"
     order_mailer:
       invoice_email:
         hi: "Bonjour %{name}"
@@ -1536,9 +1932,6 @@ fr:
       resumed: recommencé
       returned: retourné
       skrill: cash
-    orders:
-      invoice:
-        tax_invoice: "FACTURE"
     payment_states:
       balance_due: solde dû
       completed: effectué
