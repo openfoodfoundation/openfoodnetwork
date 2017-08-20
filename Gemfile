@@ -19,7 +19,7 @@ gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch:
 # - Change type of password from string to password to hide it in the form
 gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "spree-upgrade-intermediate"
 #gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
-gem 'stripe', '~> 3.0.1'
+gem 'stripe', '~> 3.3.1'
 gem 'activemerchant', '~> 1.71.0'
 
 gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
