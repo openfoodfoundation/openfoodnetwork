@@ -5,12 +5,12 @@ class UserRegistrationsController < Spree::UserRegistrationsController
   def create
     @user = build_resource(params[:spree_user])
     if resource.save
-      set_flash_message(:success, :signed_up_but_unconfirmed)
       session[:spree_user_signup] = true
       associate_user
 
       respond_to do |format|
         format.html do
+          set_flash_message(:success, :signed_up_but_unconfirmed)
           redirect_to after_sign_in_path_for(@user)
         end
         format.js do
