@@ -75,7 +75,7 @@ module Spree
       end
     end
 
-    # Import from future Spree
+    # Import from future Spree v.2.3.0 d470b31798f37
     def build_source
       return if source_attributes.nil?
       return unless payment_method.andand.payment_source_class
