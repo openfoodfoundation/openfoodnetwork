@@ -150,7 +150,8 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           year: "2025",
           cc_type: "Visa",
           number: "1111111111111111",
-          payment_method_id: stripe_pm.id)
+          payment_method_id: stripe_pm.id,
+          gateway_customer_profile_id: "i_am_saved")
         }
 
         let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000} }

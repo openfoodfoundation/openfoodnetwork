@@ -74,7 +74,10 @@ module InjectionHelper
   end
 
   def inject_saved_credit_cards
-    data = spree_current_user.credit_cards.with_payment_profile.all
+    if spree_current_user
+      data = spree_current_user.credit_cards.with_payment_profile.all
+    end
+
     inject_json_ams "savedCreditCards", data, Api::CreditCardSerializer
   end
 
