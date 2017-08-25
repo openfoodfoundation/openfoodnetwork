@@ -4,6 +4,12 @@ sv:
       spree/order:
         payment_state: Betalningstatus
         shipment_state: Leveranstatus
+    errors:
+      models:
+        spree/user:
+          attributes:
+            email:
+              taken: "Det finns redan ett konto med denna mailadress. Logga in eller återställ ditt lösenord."
   devise:
     failure:
       invalid: |
@@ -20,11 +26,14 @@ sv:
       subject: "Vänligen bekräfta e-postadressen för %{enterprise}"
     welcome:
       subject: "%{enterprise} är nu på %{sitename}"
+  producer_mailer:
+    order_cycle:
+      subject: "Sammanställning över beställningsperiod för %{producer}"
+  home: "OFN"
   title: Open Food Network
   welcome_to: 'Välkommen till'
   site_meta_description: "dölja"
   search_by_name: Sök på ortnamn eller förort...
-  producers: 'Svenska producenter'
   producers_join: Svenska producenter kan nu gå med i Open Food Network. Välkomna!
   charges_sales_tax: Debiterar Moms?
   print_invoice: "Skriv ut faktura"
@@ -62,6 +71,35 @@ sv:
   show_all: Visa alla
   show_all_with_more: "Visa alla (%{num} More)"
   cancel: Makulera
+  edit: Redigera
+  distributors: Distributörer
+  distribution: Distribution
+  bulk_order_management: Hantera flera beställningar
+  enterprise_groups: Grupper
+  reports: Rapporter
+  variant_overrides: Lager
+  spree_products: Produkter i Spree
+  all: Alla
+  current: Nuvarande
+  available: Tillgängliga
+  dashboard: Panel
+  undefined: odefinierad
+  unused: oanvänd
+  admin_and_handling: Administration och hantering
+  profile: Profil
+  supplier_only: 'Endast leverantör '
+  weight: Vikt
+  volume: Volym
+  summary: Sammanfattning
+  detailed: Detaljerad
+  updated: Uppdaterad
+  'yes': "Ja"
+  'no': "Nej"
+  y: 'J'
+  n: 'N'
+  powered_by: Drivs av
+  blocked_cookies_alert: "Din webbläsare kan blockera cookies som behövs för att använda den här butiken. Klicka nedan för att tillåta cookies och ladda om sidan."
+  allow_cookies: "Tillåt cookies"
   admin:
     date: Datum
     email: epost
@@ -79,10 +117,18 @@ sv:
     sku: Orderrad
     tags: Taggar
     variant: Variant
+    weight: Vikt
+    volume: Volym
+    items: Artiklar
+    select_all: Välj alla
+    obsolete_master: Föråldrad mästare
     quick_search: Snabb sökning
     clear_all: Rensa allt
     start_date: "Startdatum"
     end_date: "Slutdatum"
+    form_invalid: "Formuläret saknar data eller har innehåller ogiltiga fält"
+    clear_filters: Rensa filterinställningar
+    clear: Rensa
     columns: Kolumner
     actions: Handlingar
     viewing: "Tittar på: %{current_view_name}"
@@ -110,6 +156,14 @@ sv:
         finalise_user_invoices: "Slutför användarfakturor"
         finalise_user_invoice_explained: "Använd denna knapp för att slutföra alla fakturor i systemet avseende föregående kalendermånad. Det går att ställa in denna bearbetning så att den utförs automatiskt en gång per månad."
         update_user_invoices: "Uppdatera användarfakturor"
+      errors:
+        accounts_distributor: måste ställas in om du vill skapa fakturor för företagsanvändare.
+        default_payment_method: måste ställas in om du vill skapa fakturor för företagsanvändare.
+        default_shipping_method: måste ställas in om du vill skapa fakturor för företagsanvändare.
+    shopfront_settings:
+      embedded_shopfront_settings: "Inställningar för inbäddning av nätbutik"
+      enable_embedded_shopfronts: "Aktivera inbäddning av butiker"
+      embedded_shopfronts_whitelist: "Lista av tillåtna externa domäner"
     business_model_configuration:
       edit:
         business_model_configuration: "Företagsmodell"
@@ -159,6 +213,9 @@ sv:
         edit: 'Ändra'
         update_address: 'Uppdatera Adress'
         confirm_delete: 'Vill du verkligen radera?'
+        search_by_email: "Sök via e-post/kod..."
+      destroy:
+        has_associated_orders: 'Radering misslyckades: kunden har associerade order med sin butik'
     cache_settings:
       show:
         title: Inkomst
@@ -166,9 +223,17 @@ sv:
         order_cycle: Ordercykel
         status: Status
         diff: Differens
+        error: Fel
     contents:
       edit:
         title: Innehåll
+        header: Rubrik
+        home_page: Hemsida
+        producer_signup_page: Registreringssida för producenter
+        hub_signup_page: Registreringssida för hubbar
+        group_signup_page: Registreringssida för grupper
+        footer_and_external_links: Sidfot och externa länkar
+        your_content: Ditt innehåll
     enterprise_fees:
       index:
         title: Företagsavgifter
@@ -181,7 +246,13 @@ sv:
     enterprise_groups:
       index:
         new_button: Ny företagsgrupp
+    enterprise_roles:
+      form:
+        manages: hanterar
+      enterprise_role:
+        manages: hanterar
     products:
+      unit_name_placeholder: 't.ex. klasar'
       bulk_edit:
         unit: Enhet
         display_as: Visa som
@@ -217,7 +288,12 @@ sv:
         inventory_powertip: Detta är ditt förråd av produkter. För att lägga till produkter till ditt förråd, välj 'Nya Produkter' från rullistan Vyer.
         hidden_powertip: Dessa produkter har tagits bort från din inventeringslista och kan inte beställas till din butik. Du kan klicka "Add" för att lägga till en produkt till din inventarielista.ä
         new_powertip: 'Dessa produkter finns tillgängliga för att ingå i din inventarieförteckning. Klicka på "Add" för att lägga till en produkt till din förteckning eller "Hide" så att den inte visas. Du kan ändra dig vid ett senare tillfälle. '
+      controls:
+        back_to_my_inventory: Tillbaka till mitt lager
     orders:
+      index:
+        capture: "Fånga"
+        ship: "Frakta"
       bulk_management:
         tip: "Använd den här sidan för att ändra produktkvantitet på ett antal order. Om så önskas kan produkter tas bort helt från flera order."
         shared: "Delad Resurs?"
@@ -259,6 +335,8 @@ sv:
           abn_placeholder: ex 070 56 78 90
           acn: ACN
           acn_placeholder: ex 123 456 789
+          display_invoice_logo: Visa logotyp i fakturor
+          invoice_text: Lägg till anpassad text i slutet av faktura
         contact:
           name: Namn
           name_placeholder: ex. Gustav Persson
@@ -332,18 +410,26 @@ sv:
           shopfront_requires_login_tip: "Välj om kunderna måste logga in för att se skyltfönstret eller om det skall visas för alla."
           shopfront_requires_login_false: "Offentlig"
           shopfront_requires_login_true: "Endast synlig för registrerade kunder"
+          recommend_require_login: "Vi rekommenderar att användare måste logga in när beställningar kan ändras."
           allow_guest_orders: "Gästbeställningar"
           allow_guest_orders_tip: "Tillåt leveranskontroll som gäst eller registrerad kund"
           allow_guest_orders_false: "Kräv inloggning för att beställa"
           allow_guest_orders_true: "Tillåt checkout för gäster"
+          allow_order_changes: "Ändra beställning"
+          allow_order_changes_tip: "Tillåt kunder att ändra sin beställning så länge beställningscykeln är öppen."
+          allow_order_changes_false: "Lagda beställningar kan inte ändras/avbrytas"
+          allow_order_changes_true: "Kunder kan ändra/avbryta beställningar medan beställningscykeln är öppen"
+          shopfront_message: Butiksmeddelande
           shopfront_message_placeholder: >
               En frivillig förklaring för kunder som beskriver hur ditt skyltfönster
               skall användas. Den visas ovanför produktlistan i affärsfönstret.
+          shopfront_closed_message: Meddelande för stängd butik
           shopfront_closed_message_placeholder: >
               Ett meddelande som ger en mer detaljerad förklaring varför din affär
               är stängd/eller när kunder kan förvänta att den öppnar igen. Detta visas
               i din affär endast när du inte har en aktiv ordercykel (dvs när affären
               är stängd).
+          shopfront_category_ordering: Sorteringsordning av kategorier i butik
           open_date: Öppningsdatum
           close_date: Stängningsdatum
         social:
@@ -392,8 +478,8 @@ sv:
         producer_description_text: 'Lägg till dina produkter till OFN, tillåt lagringscentraler att lagra dina varor i sina lokaler. '
         producer_shop: Producentaffär
         sell_your_produce: Sälj dina egna produkter
-        sell_description_text: Sälj dina egna produkter direkt till kunder via ditt eget OFN skyltfönster.
-        sell_description_text2: En producentaffär är enbart för din produkt, Om du önskar sälja produkter odlade/producerade på annat håll, välj "Producer Hub".
+        producer_shop_description_text: Sälj dina produkter direkt till kunderna genom din egen Open Food butik
+        producer_shop_description_text2: En Producent Butik är endast för dina produkter. Om du vill sälja produkter som odlas/produceras av andra, välj "Producent Hub".
         producer_hub: Producentcentral
         producer_hub_text: Sälj produkter av egen eller annans tillverkning
         producer_hub_description_text: Ditt företag är grunden i ert lokala livsmedelssystem. Du kan sälja av egen tillverkning likväl som varor samlade från andra företag genom ditt skyltfönster i OFN.
@@ -427,6 +513,16 @@ sv:
         next_step: Nästa steg
         choose_starting_point: 'Välj din startpunkt:'
     order_cycles:
+      edit:
+        advanced_settings: Avancerade inställningar
+        update_and_close: Uppdatera och Stäng
+        choose_products_from: 'Välj produkter från:'
+        pickup_time_tip: När beställningar från denna Beställningsomgång kommer att vara redo för kunden
+        pickup_instructions_tip: Dessa instruktioner visas för kunderna efter att de har slutfört en beställning
+      exchange_form:
+        pickup_instructions_placeholder: "Instruktioner för upphämtning"
+        pickup_time_placeholder: "Klar för (dvs. Datum/Tid)"
+        receival_instructions_placeholder: "Instruktioner för mottagning"
       advanced_settings:
         title: Avancerade inställningar
         choose_product_tip: Du kan välja att begränsa alla tillgängliga produkter (både inkommande och utgående), till enbart dem i %{inventory}'s inventory.
@@ -444,7 +540,7 @@ sv:
         distributor: Distributör
         products: Produkter
         tags: Etiketter
-        delivery_detaisl: Hämtade/levererade detaljer
+        delivery_details: Upphämtning/Leveransdetaljer
         debug_info: Felinformation
       name_and_timing_form:
         name: Namn
@@ -462,9 +558,6 @@ sv:
         customer_instructions_placeholder: Hämtnings eller leverans meddelanden
         products: Produkter
         fees: Avgifter
-      edit:
-        advanced_settings: Avancerade inställningar
-        update_and_close: Uppdatera och Stäng
     producer_properties:
       index:
         title: Producentegenskaper
@@ -476,12 +569,84 @@ sv:
         title: Fakturainställningar
         invoice_style2?: Använd den alternativa faktureringsmodellen som inkluderar totala skattefördelning per beräkning och skatt per artikel (ännu inte passande för länder som visar priser exklusive skatt)
         enable_receipt_printing?: 'Visa alternativ för att skriva ut recept genom att använda termiska skrivare i ordermenyn? '
-  home:
+    overview:
+      enterprises_header:
+        ofn_with_tip: Företag är Producenter och/eller Hubbar och är den grundläggande organisationsenheten inom Open Food Network.
+      enterprises_hubs_tabs:
+        has_no_payment_methods: "%{enterprise} har inga betalningsmetoder"
+        has_no_shipping_methods: "%{enterprise} har inga fraktmetoder"
+        has_no_enterprise_fees: "%{enterprise} har inga avgifter"
+    enterprise_issues:
+      create_new: Skapa ny
+      resend_email: Skicka igen
+      has_no_payment_methods: "%{enterprise} har för närvarande inga betalningsmetoder"
+      has_no_shipping_methods: "%{enterprise} har för närvarande inga leveransmetoder"
+      email_confirmation: "E-postbekräftelse är pågående. Vi har skickat ett bekräftelsemail till %{email}."
+      not_visible: "%{enterprise} är inte synlig och kan därför inte hittas på kartan eller i sökningar"
+    reports:
+      hidden: DOLD
+      unitsize: ENHETSTORLEK
+      total: SUMMA
+      total_items: ANTAL ARTIKLAR
+      supplier_totals: Summering för beställningsomgång
+      supplier_totals_by_distributor: Summering för beställningsomgång efter distributör
+      totals_by_supplier: Summering för beställningsomgång efter leverantör
+      customer_totals: Summa kunder för beställningsomgång
+      all_products: Alla produkter
+      inventory: Lagersaldo (tillgänglig)
+      lettuce_share: LettuceShare
+      mailing_list: Mailinglista
+      addresses: Adresser
+      payment_methods: 'Rapport för betalningsmetoder '
+      delivery: Leveransrapport
+      tax_types: Skatteformer
+      tax_rates: Skattesatser
+      pack_by_customer: Packas av kund
+      pack_by_supplier: Packas av leverantör
+      orders_and_distributors:
+        name: Beställningar och distributörer
+        description: Beställningar med distributörsinformation
+      bulk_coop:
+        name: Bulk Co-Op
+        description: Rapporter för Bulk Co-Op beställningar
+      payments:
+        name: Betalningsrapporter
+        description: Rapporter för betalningar
+      orders_and_fulfillment:
+        name: Beställningar och uppföljningsrapporter
+      customers:
+        name: Kunder
+      products_and_inventory:
+        name: Produkter och lagersaldo
+      sales_total:
+        name: Summa försäljning
+        description: Summa försäljning för alla beställningar
+      users_and_enterprises:
+        name: Användare och företag
+        description: Ägarstruktur och status för företag
+      order_cycle_management:
+        name: Hantering av beställningsomgång
+      sales_tax:
+        name: Moms
+      xero_invoices:
+        name: Xero-fakturor
+        description: Fakturor för import till Xero
+      packing:
+        name: Förpackningsrapporter
+  checkout:
+    already_ordered:
+      cart: "vagn"
+      message_html: "Du har redan en beställning för denna beställningsomgång. Kontrollera %{cart} för att se föremålen du beställde tidigare. Du kan också ta bort varor/artiklar så länge som beställningsomgången är öppen."
+  shops:
     hubs:
-      show_closed_shops: "Visa stängda affärer"
-      hide_closed_shops: "Göm stängda affärer"
-      show_on_map: "Visa alla på kartan"
+      show_closed_shops: "Visa stängda butiker"
+      hide_closed_shops: "Dölj stängda butiker"
+      show_on_map: "Visa allt på kartan"
   shared:
+    menu:
+      cart:
+        checkout: "Slutför beställning"
+        already_ordered_products: "Redan beställd i denna beställningsomgång"
     register_call:
       selling_on_ofn: "Intresserad av att gå med i Open Food Network?"
       register: "Registrera dig här"
@@ -503,6 +668,7 @@ sv:
   invoice_column_price_with_taxes: "Slutsumma (inkl skatt)"
   invoice_column_price_without_taxes: "Slutsumma (Exkl skatt)"
   invoice_column_tax_rate: "Skattesats"
+  invoice_tax_total: "Summa moms"
   tax_invoice: "SKATTEFAKTURA"
   tax_total: "Summa skatter (%{rate}):"
   total_excl_tax: "Summa (Exkl skatt):"
@@ -551,6 +717,11 @@ sv:
   terms_of_service: "Användarvillkor "
   on_demand: 'På begäran '
   none: Ingen
+  not_allowed: Inte tillåtet
+  no_shipping: inga fraktmetoder
+  no_payment: inga betalningsmetoder
+  no_shipping_or_payment: inga frakt- eller betalningsmetoder
+  unconfirmed: obekräftad
   label_shops: "Butiker"
   label_map: "Karta"
   label_producers: "Producenter "
@@ -571,21 +742,12 @@ sv:
   items: "artiklar"
   cart_headline: "Din varukorg"
   total: "Summa "
-  checkout: "Gå vidare till kassan"
   cart_updating: "Uppdatera din varukorg"
   cart_empty: "Tom varukorg"
   cart_edit: "Redigera din varukorg "
   card_number: Kortnummer
   card_securitycode: "Säkerhetskod"
   card_expiry_date: Förfallodatum
-  ofn_cart_headline: "Nuvarande varukorg för:"
-  ofn_cart_distributor: "Distributör:"
-  ofn_cart_oc: "Ordercykel:"
-  ofn_cart_from: "Från:"
-  ofn_cart_to: "Till:"
-  ofn_cart_product: "Produkt:"
-  ofn_cart_quantitiy: "Antal:"
-  ofn_cart_send: "Köp mig"
   ie_warning_headline: "Din webbläsare är föråldrad :("
   ie_warning_text: "För den bästa upplevelsen av Open Food Network rekommenderas att uppdatera din webbläsare:"
   ie_warning_chrome: Hämta Chrome
@@ -670,6 +832,7 @@ sv:
   order_billing_address: 'Faktureringsadress '
   order_delivery_on: Leverans på
   order_delivery_address: 'Leveransadress '
+  order_delivery_time: Leveranstid
   order_special_instructions: "Dina anteckningar:"
   order_pickup_time: Redo för upphämtning
   order_pickup_instructions: Upphämtningsinstruktioner
@@ -678,6 +841,8 @@ sv:
   order_includes_tax: (inkluderar skatter)
   order_payment_paypal_successful: Din betalning via PayPal har gått bra.
   order_hub_info: Hub-information
+  order_back_to_store: Tillbaka till butik
+  order_back_to_cart: Tillbaka till varukorgen
   bom_tip: "Använd denna sida för att ändra produktkvantiteter på flera order samtidigt. Produkter kan också tas bort från fler order samtidigt, om så erfordras."
   unsaved_changes_warning: "Osparade förändringar existerar och kommer förloras om du fortsätter."
   unsaved_changes_error: "Fält med röda kanter innehåller fel."
@@ -769,6 +934,10 @@ sv:
   hubs_intro: Handla i ditt närområde
   hubs_distance: Närmast till
   hubs_distance_filter: "Visa mig butiker nära %{location}"
+  shop_changeable_orders_alert_html:
+    one: Din beställning med <a href='%{path}' target='_blank'> %{shop} / %{order} </a> är öppen för recension. Du kan göra ändringar till %{oc_close}.
+    other: Du har <a href='%{path}' target='_blank'> %{count} beställningar hos %{shop} </a> som granskas för tillfället. Du kan göra ändringar till och med%{oc_close}.
+  orders_changeable_orders_alert_html: Denna beställning har bekräftats, men du kan göra ändringar till och med <strong>%{oc_close}</strong>.
   products_clear_all: Rensa allt
   products_showing: "Visande:"
   products_with: med
@@ -898,7 +1067,7 @@ sv:
   orders_edit_checkout: Utcheckning
   orders_form_empty_cart: "Tom varukorg"
   orders_form_subtotal: Framställ delsumma
-  orders_form_admin: Administration och behandling
+  orders_form_admin: Administration och hantering
   orders_form_total: 'Summa '
   orders_oc_expired_headline: Denna orderomgång är stängd för nya order
   orders_oc_expired_text: "Tyvärr, order för denna orderomgång stängde  för %{time} sedan! Var vänlig kontakta ditt matcenter för att se om de kan ta emot en sen order. "
@@ -908,7 +1077,18 @@ sv:
   orders_oc_expired_phone: "Telefon:"
   orders_show_title: Orderbekräftelse
   orders_show_time: Order redo den
-  orders_show_number: Orderbekräftelse
+  orders_show_order_number: "Beställning # %{number}"
+  orders_show_cancelled: Avbokad
+  orders_show_confirmed: Bekräftad
+  orders_your_order_has_been_cancelled: "Din beställning har avbrutits"
+  orders_could_not_cancel: "Tyvärr kan denna beställning inte avbrytas"
+  orders_cannot_remove_the_final_item: "Det går inte att ta bort det sista varan från en beställning, var god och avbryt beställningen istället."
+  orders_bought_items_notice:
+    one: Ett ytterligare objekt är redan bekräftat för denna ordercykel
+    other: '%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång'
+  orders_bought_edit_button: Redigera bekräftade varor
+  orders_bought_already_confirmed: "* redan bekräftad"
+  orders_confirm_cancel: Är du säker på att du vill avbryta denna beställning?
   products_cart_distributor_choice: "Distributör för din order:"
   products_cart_distributor_change: "Din distributör för denna order kommer att ändras till %{name} om du lägger denna produkt i din kundkorg."
   products_cart_distributor_is: "Din distributör för denna order är %{name}."
@@ -921,6 +1101,7 @@ sv:
   products_max_quantity: Maxkvantitet
   products_distributor: Distributör
   products_distributor_info: När du väljer distributör för din order kommer leveranstider att visas här
+  products_distribution_adjustment_label: "Distribution för %{distributor} av %{product}"
   shop_trial_expires_in: "Din försökstid för skyltfönster gå ut om"
   shop_trial_expired_notice: "Goda nyheter! Vi har beslutat utöka skyltfönstrets försökstid tills vidare. "
   password: Lösenord
@@ -934,6 +1115,7 @@ sv:
   failed_to_create_enterprise: "Misslyckades att skapa ditt företag."
   failed_to_create_enterprise_unknown: "Misslyckades att skapa ditt företag. Var vänlig kontrollera att alla fält är rätt ifyllda."
   failed_to_update_enterprise_unknown: "Misslyckades att uppdatera ditt företag. Var vänlig kontrollera att alla fält är rätt ifyllda."
+  enterprise_confirm_delete_message: "Detta kommer också att ta bort %{product} som företaget tillhandahåller. Är du säker på att du vill fortsätta?"
   order_not_saved_yet: "Din order har inte sparats ännu. Ge oss några sekunder att avsluta!"
   filter_by: "Filtrera med"
   hide_filters: "Göm filter"
@@ -946,6 +1128,8 @@ sv:
   error_required: "kan inte vara blank"
   error_number: "måste vara ett nummer"
   error_email: "måste vara en e-postadress"
+  error_not_found_in_database: "%{name} hittades inte i databasen"
+  error_no_permission_for_enterprise: "\"%{name}\": Du har inte behörighet att hantera produkter för det här företaget"
   item_handling_fees: "Varukostnader (inkluderat i varusumman)"
   january: "Januari"
   february: "Februari"
@@ -1009,6 +1193,7 @@ sv:
   enterprise_long_desc: "Lång beskrivning"
   enterprise_long_desc_placeholder: "Detta är ditt tillfälle att beskriva ditt företag - vad som gör dig speciell och intressant. Vi föreslår att du begränsar beskrivningen till 600 tecken eller 150 ord."
   enterprise_long_desc_length: "%{num} tecken / upp till 600 rekommenderas"
+  enterprise_limit: Företagets gräns
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "t.ex. 99 123 456 789"
   enterprise_acn: "ACN"
@@ -1077,6 +1262,9 @@ sv:
   registration_detail_state_error: "Land måste fyllas i "
   registration_detail_country: "Område:"
   registration_detail_country_error: "Var vänlig ange ett område"
+  shipping_method_destroy_error: "Denna leveransmetod kan inte raderas eftersom den hänvisas till av beställning: %{number}."
+  accounts_and_billing_task_already_running_error: "En jobb är redan igång. Vänta tills den är klar"
+  accounts_and_billing_start_task_notice: "Jobbet lades till kön"
   fees: "Avgifter"
   item_cost: "Artikelkostnad"
   bulk: "Grupp"
@@ -1104,6 +1292,8 @@ sv:
   credit: "Kredit"
   Paid: "Betald"
   Ready: "Klar"
+  ok: OK
+  not_visible: inte synlig
   you_have_no_orders_yet: "Du har inga order ännu"
   running_balance: "Saldo"
   outstanding_balance: "Utestående behållning"
@@ -1135,15 +1325,22 @@ sv:
   admin_order_cycles: "Administratörens order cykel"
   open: "Öppen"
   close: "Stängd"
+  create: "Skapa"
+  search: "Sök"
   supplier: "Leverantör"
   coordinator: "Koordinator"
   distributor: "Distributör"
+  enterprise_fees: "Företagsavgifter"
+  process_my_order: "Behandla min beställning"
+  delivery_instructions: Leveransanvisningar
+  delivery_method: Leveransmetod
   fee_type: "Avgiftstyp"
   tax_category: "Taxområde"
   calculator: "Kalkulator"
   calculator_values: "Kalkulatorvärden"
   flat_percent_per_item: "Procent (per vara)"
   new_order_cycles: "Ny beställningsrunda"
+  new_order_cycle: "Ny beställningsomgång"
   select_a_coordinator_for_your_order_cycle: "Utse en koordinator för din beställningsrunda"
   edit_order_cycle: "Redigera beställningsrundan"
   roles: "Uppgifter"
@@ -1164,6 +1361,8 @@ sv:
   price: "Pris"
   on_hand: "På hand"
   save_changes: "Spara ändringar"
+  order_saved: "Beställningen sparades"
+  no_products: Inga produkter
   spree_admin_overview_enterprises_header: "Mina företag"
   spree_admin_overview_enterprises_footer: "ADMINISTRERA MINA FÖRETAG"
   spree_admin_enterprises_hubs_name: "Namn"
@@ -1178,26 +1377,36 @@ sv:
   spree_admin_enterprises_producers_order_cycles: "Produkter i beställningsrunda"
   spree_admin_enterprises_tabs_hubs: "MATSTÄLLEN"
   spree_admin_enterprises_tabs_producers: "PRODUCENTER"
-  spree_admin_enterprises_producers_manage_order_cycles: "HANTERA BESTÄLLNINGSRUNDOR"
   spree_admin_enterprises_producers_manage_products: "HANTERA PRODUKTER"
-  spree_admin_enterprises_producers_orders_cycle_text: "Du har inga aktiva beställningsrundor"
   spree_admin_enterprises_any_active_products_text: "Du har inga aktiva produkter."
   spree_admin_enterprises_create_new_product: "SKAPA EN NY PRODUKT"
-  spree_admin_order_cycles: "Beställningsrundor"
-  spree_admin_order_cycles_tip: "Beställningsrundor avgör när och var dina produkter är tillgängliga för kunder."
-  dashbord: "Panel"
   spree_admin_single_enterprise_alert_mail_confirmation: "Var vänlig och fastställ e-postadressen för"
   spree_admin_single_enterprise_alert_mail_sent: "Vi har sänt e-post till "
   spree_admin_overview_action_required: "Ett ställningstagande behövs"
   spree_admin_overview_check_your_inbox: "Var vänlig kontrollera din inkorg för ytterligare instruktioner. Tack!"
+  spree_admin_unit_value: Enhetspris
+  spree_admin_unit_description: Enhetsbeskrivning
+  spree_admin_variant_unit: Variant enhet
+  spree_admin_variant_unit_scale: Variant enhetsskala
+  spree_admin_variant_unit_name: 'Variant enhetsnamn '
   change_package: "Ändra förpackning"
   spree_admin_single_enterprise_hint: "Tips: För att folk skall hitta dig lättare, slå på din reklam under"
+  spree_admin_eg_pickup_from_school: "t.ex. \"Upphämtning från grundskolan\""
+  spree_admin_eg_collect_your_order: "t.ex. \"Var snäll och samla din beställning från Exempelgatan,  100 00 Stad '"
+  spree_classification_primary_taxon_error: "Gruppen %{taxon} är den primära gruppen för %{product} och kan inte raderas"
+  spree_order_availability_error: "Distributören eller beställningsomgången kan inte leverera produkterna i din kundvagn"
+  spree_order_populator_error: "Denna distributör eller beställningsomgång kan inte leverera alla produkter i din kundvagn. Vänligen välj en annan."
+  spree_order_populator_availability_error: "Den produkten är inte tillgänglig från den valda distributören eller denna beställningsomgång."
+  spree_distributors_error: "Minst en hub måste väljas"
+  spree_user_enterprise_limit_error: "^ %{email} har inte rätt att äga några fler företag (gränsen är %{enterprise_limit})."
+  spree_variant_product_error: måste ha minst en variant
   your_profil_live: "Din profil direkt"
   on_ofn_map: "Öppna kartan över Open Food Network"
   see: "Se"
   live: "direkt"
   manage: "Hantera"
   resend: "Återsänd"
+  trial: Prövoperiod
   add_and_manage_products: "Lägg till och hantera produkter"
   add_and_manage_order_cycles: "Addera och hantera beställningsrundor"
   manage_order_cycles: "Hantera beställningsrundor"
@@ -1205,6 +1414,8 @@ sv:
   edit_profile_details: "Redigera detaljer i profilen"
   edit_profile_details_etc: "Ändra beskrivningen av din profil, bilder, etc"
   order_cycle: "Ordercykel"
+  order_cycles: "Beställningsomgångar"
+  enterprises: "Företag"
   remove_tax: "Tag bort skatt"
   enterprise_terms_of_service: "Företagets servicevillkor"
   enterprises_require_tos: "Företag måste acceptera servicevillkoren"
@@ -1227,7 +1438,6 @@ sv:
   hub_sidebar_blue: "blå"
   hub_sidebar_red: "röd"
   shop_trial_in_progress: "Ditt skyltfönsterförsök avslutas om %{days}."
-  shop_trial_expired: "Goda nyheter! Vi har beslutat att utsträcka ditt skyltfönsterförsök till (probably around March 2015)."
   report_customers_distributor: "Distributör"
   report_customers_supplier: "Leverantör"
   report_customers_cycle: "Ordercykel"
@@ -1245,11 +1455,49 @@ sv:
   report_order_cycle: "Beställningsrundor"
   report_entreprises: "Företag:"
   report_users: "Användare:"
-  report_tax_rates: "Skattesatser"
-  report_tax_types: "Typer av skatt"
-  report_header_order_number: "Ordernummer"
-  report_header_date: "Datum"
-  report_header_items: "Varor"
+  report_tax_rates: Skattesatser
+  report_tax_types: Typer av skatt
+  report_header_order_cycle: Beställningsomgång
+  report_header_user: Användare
+  report_header_email: E-post
+  report_header_status: Status
+  report_header_comments: Kommentarer
+  report_header_first_name: Förnamn
+  report_header_last_name: Efternamn
+  report_header_phone: Telefonnummer
+  report_header_suburb: Stadsdel
+  report_header_address: Adress
+  report_header_billing_address: Fakturerirngsadress
+  report_header_relationship: Förhållande
+  report_header_hub: Hub
+  report_header_hub_address: Hubadress
+  report_header_to_hub: Till hub
+  report_header_hub_code: Hubkod
+  report_header_code: Kod
+  report_header_paid: Betald?
+  report_header_delivery: Leverans?
+  report_header_shipping: Frakt
+  report_header_shipping_method: Fraktmetod
+  report_header_shipping_instructions: Leveransinstruktioner
+  report_header_ship_street: Leveransadress
+  report_header_ship_street_2: Leveransadress 2
+  report_header_ship_city: Leveransstad
+  report_header_ship_postcode: Leveranspostnummer
+  report_header_ship_state: Leveranslän
+  report_header_billing_street: Betalning - gata
+  report_header_billing_street_2: Betalning - gata 3
+  report_header_billing_street_3: Betalning - gata 3
+  report_header_billing_street_4: Betalning - gata 4
+  report_header_billing_city: Betalning - stad
+  report_header_billing_postcode: Betalning -  postkod
+  report_header_billing_state: Betalning -  län
+  report_header_incoming_transport: Inkommande transport
+  report_header_special_instructions: Särskilda instruktioner
+  report_header_order_number: Ordernummer
+  report_header_date: Datum
+  report_header_confirmation_date: Bekräftelsedatum
+  report_header_tags: Taggar
+  report_header_items: Varor
   report_header_items_total: "Varusumma %{currency_symbol}"
   report_header_taxable_items_total: "Skattepliktig varusumma (%{currency_symbol})"
   report_header_sales_tax: "Skatt på försäljning (%{currency_symbol})"
@@ -1257,10 +1505,92 @@ sv:
   report_header_tax_on_delivery: "Leveransskatt (%{currency_symbol})"
   report_header_tax_on_fees: "Skatt på avgifter (%{currency_symbol})"
   report_header_total_tax: "Summa skatter (%{currency_symbol})"
-  report_header_customer: "Kund"
-  report_header_distributor: "Distributör"
+  report_header_enterprise: Företag
+  report_header_customer: Kund
+  report_header_customer_code: Kundnummer
+  report_header_product: Produkt
+  report_header_product_properties: Produktegenskaper
+  report_header_quantity: Antal
+  report_header_max_quantity: Max antal
+  report_header_variant: Variant
+  report_header_variant_value: Värde för variant
+  report_header_variant_unit: Enhet för variant
+  report_header_total_available: Totalt tillgängligt
+  report_header_unallocated: Oallokerat
+  report_header_max_quantity_excess: Max överskott
+  report_header_taxons: Grupper
+  report_header_supplier: Leverantör
+  report_header_producer: Producent
+  report_header_producer_suburb: Producent stadsdel
+  report_header_unit: Enhet
+  report_header_group_buy_unit_quantity: Gruppköp Enhet Antal
+  report_header_cost: Kostnad
+  report_header_shipping_cost: Fraktkostnad
+  report_header_curr_cost_per_unit: Aktuell kostnad per enhet
+  report_header_total_shipping_cost: Total fraktkostnad
+  report_header_payment_method: Betalningsmetod
+  report_header_sells: Försäljningar
+  report_header_visible: Synlig
+  report_header_price: Pris
+  report_header_unit_size: Enhetsstorlek
+  report_header_distributor: Distributör
+  report_header_distributor_address: Distributör - adress
+  report_header_distributor_city: Distributör - stad
+  report_header_distributor_postcode: Distributör - postnummer
+  report_header_delivery_address: Leveransadress
+  report_header_delivery_postcode: Leverans Postnummer
+  report_header_bulk_unit_size: Bulk enhetsstorlek
+  report_header_weight: Vikt
+  report_header_sum_total: Summa Totalt
+  report_header_date_of_order: Beställningsdatum
+  report_header_amount_owing: Utestående belopp
+  report_header_amount_paid: Betalt
+  report_header_units_required: Enheter som krävs
+  report_header_remainder: Rest
+  report_header_order_date: Beställningsdatum
+  report_header_order_id: Beställningsnummer
+  report_header_item_name: Varunamn
+  report_header_temp_controlled_items: Temperaturkontrollerade varor?
+  report_header_customer_name: Kundens namn
+  report_header_customer_email: Kundens e-postadress
+  report_header_customer_phone: Kundens telefonnummer
+  report_header_customer_city: Kundens stad
+  report_header_payment_state: Betalningsstatus
+  report_header_payment_type: Betalningstyp
+  report_header_item_price: "Artikel (%{currency})"
+  report_header_item_fees_price: "Vara + Avgifter (%{currency})"
+  report_header_admin_handling_fees: "Administration & Hantering (%{currency})"
+  report_header_ship_price: "Frakta (%{currency})"
+  report_header_pay_fee_price: "Betalningsavgift (%{currency})"
+  report_header_total_price: "Totalt (%{currency})"
+  report_header_product_total_price: "Produkt Totalt (%{currency})"
+  report_header_shipping_total_price: "Frakt Totalt (%{currency})"
+  report_header_outstanding_balance_price: "Utestående balans (%{currency})"
+  report_header_eft_price: "EFT (%{currency})"
+  report_header_paypal_price: "PayPal (%{currency})"
+  report_header_sku: SKU
+  report_header_amount: Belopp
+  report_header_balance: Saldo
+  report_header_total_cost: "Totalkostnad"
+  report_header_total_ordered: Totalt beställt
+  report_header_total_max: Totalt Max
+  report_header_total_units: Totala enheter
+  report_header_sum_max_total: "Summa Max Totalt"
   report_header_total_excl_vat: "Summa exkl skatt (%{currency_symbol})"
   report_header_total_incl_vat: "Summa inkl skatt (%{currency_symbol})"
+  report_header_temp_controlled: Temperaturkontrollerad?
+  report_header_is_producer: Producent?
+  report_header_not_confirmed: Inte bekräftad
+  report_header_gst_on_income: Moms på intäkter
+  report_header_gst_free_income: Momsfri intäkt
+  report_header_total_untaxable_produce: Totalt obeskattade produkter (ingen moms)
+  report_header_total_taxable_produce: Totalt skattepliktiga produkter (inklusive moms)
+  report_header_total_untaxable_fees: Totalt obeskattade avgifter (ingen moms)
+  report_header_total_taxable_fees: Totalt skattepliktiga avgifter (inklusive moms)
+  report_header_delivery_shipping_cost: Fraktkostnad (inklusive moms)
+  report_header_transaction_fee: Transaktionsavgift (ingen moms)
+  report_header_total_untaxable_admin: Totalt obeskattade justeringar (ingen moms)
+  report_header_total_taxable_admin: Totalt obeskattade justeringar (inklusive moms)
   initial_invoice_number: "Initialt fakturanummer"
   invoice_date: "Fakturadatum:"
   due_date: "Sista betalningsdag:"
@@ -1293,16 +1623,71 @@ sv:
   shipping_methods: "Transportmetoder"
   payment_methods: "Betalningsmetoder"
   payment_method_fee: "Transaktionsvgift"
-  enterprise_fees: "Företagsavgifter"
   inventory_settings: "Lagerstatus"
   tag_rules: "Etikettregler"
   shop_preferences: "Butiksinställningar"
+  enterprise_fee_whole_order: Hela beställningen
+  enterprise_fee_by: "%{type} avgift vid %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den förbindelsen är redan upprättad."
   validation_msg_at_least_one_hub: "^Åtminstone ett matställe måste väljas"
   validation_msg_product_category_cant_be_blank: "^Produktkategori kan inte vara blank"
   validation_msg_tax_category_cant_be_blank: "^Skattekategori kan inte vara blank"
   validation_msg_is_associated_with_an_exising_customer: "är knuten till en existerande kund"
+  content_configuration_pricing_table: "(TODO: Pristabell)"
+  content_configuration_case_studies: "(TODO: Case studies)"
+  content_configuration_detail: "(TODO: Detalj)"
+  enterprise_name_error: "är redan registrerad. Om det här är ditt företag och du vill göra anspråk på den, vänligen kontakta nuvarande administratör för den här profilen på %{email}."
+  enterprise_owner_error: "^ %{email} har inte rätt att äga några fler företag (gränsen är %{enterprise_limit})."
+  enterprise_role_uniqueness_error: "^ Den rollen existerar redan."
+  inventory_item_visibility_error: Måste vara 'true' eller 'false'
+  product_importer_file_error: "Fel: ingen fil laddades upp"
+  product_importer_spreadsheet_error: "kunde inte hantera filen: ogiltig filtyp"
+  product_importer_products_save_error: sparade inte några produkter
+  product_import_file_not_found_notice: 'Filen hittades inte eller kunde inte öppnas'
+  product_import_no_data_in_spreadsheet_notice: 'Ingen data hittades i kalkylbladet'
+  order_choosing_hub_notice: Din hub har valts.
+  order_cycle_selecting_notice: Din beställningsomgång har valts.
+  adjustments_tax_rate_error: "^ Kontrollera att skattesatsen för denna justering är korrekt."
+  active_distributors_not_ready_for_checkout_message_singular: >-
+      Hubben %{distributor_names} är listat i en aktiv beställningsomgång, men har
+      inga giltiga frakt- och betalningsmetoder. Kunderna kommer inte kunna handla
+      tills du konfigurerar dessa satser.
+  active_distributors_not_ready_for_checkout_message_plural: >-
+      Hubbarna %{distributor_names} är listade i en aktiv beställningsomgång, men
+      har inga giltiga frakt- och betalningsmetoder. Kunderna kommer inte kunna handla
+      tills du konfigurerar dessa satser.
+  enterprise_fees_update_notice: Dina företagsavgifter har uppdaterats.
+  enterprise_fees_destroy_error: "Denna företagsavgift kan inte raderas eftersom den hänvisas till av en produktdistribution: %{id} - %{name}."
+  enterprise_register_package_error: "Vänligen välj ett paket"
+  enterprise_register_error: "Det gick inte att slutföra registreringen för %{enterprise}"
+  enterprise_register_success_notice: "Grattis! Registrering för %{enterprise} är klar!"
+  enterprise_bulk_update_success_notice: "Företagen uppdateras framgångsrikt"
+  enterprise_bulk_update_error: 'Uppdateringen misslyckades'
+  order_cycles_create_notice: 'Din beställningsomgång har skapats.'
+  order_cycles_update_notice: 'Din beställningsomgång har uppdaterats.'
+  order_cycles_bulk_update_notice: 'Beställningsomgångarna har uppdaterats.'
+  order_cycles_clone_notice: "Din beställningscykel %{name} har klonats."
+  order_cycles_email_to_producers_notice: 'E-postmeddelanden till producenter har blivit placerade i kön för att skickas.'
+  order_cycles_no_permission_to_coordinate_error: "Ingen av dina företag har tillstånd att samordna en beställningsomgång"
+  order_cycles_no_permission_to_create_error: "Du har inte behörighet att skapa en beställningsomgång som samordnas av företaget"
+  order_cycles_no_permission_to_delete_error: "Denna beställningsomgång har valts av en kund och kan inte raderas. För att förhindra att kunder får tillgång till det, stäng det istället."
   js:
+    saving: 'Sparar...'
+    changes_saved: 'Ändringar sparade.'
+    save_changes_first: Spara ändringarna först.
+    all_changes_saved: Alla ändringar sparades
+    unsaved_changes: Du har osparade ändringar
+    all_changes_saved_successfully: Alla ändringar sparades framgångsrikt
+    oh_no: "Å nej! Jag kunde inte spara dina ändringar."
+    unauthorized: "Du saknar behörighet för att komma åt den här sidan."
+    error: Fel
+    unavailable: Inte tillgänglig
+    profile: Profil
+    hub: Hub
+    shop: Butik
+    choose: Välj
+    resolve_errors: Vänligen lös följande fel
+    more_items: "+ %{count} Mer"
     admin:
       modals:
         got_it: Förstått
@@ -1421,8 +1806,75 @@ sv:
           kundvagn minskat. Detta har ändrats:
       now_out_of_stock: Är nu slut
       only_n_remainging: "nu  återstår endast %{num}"
+    variant_overrides:
+      inventory_products: "Lagerstatus produkter"
+      hidden_products: "Dolda produkter"
+      new_products: "Nya produkter"
+      reset_stock_levels: Återställ lagernivåer till standardvärden
+      changes_to: Ändras till
+      one_override: överskrift
+      overrides: överskrifter
+      remain_unsaved: förbli osparad.
+      no_changes_to_save: Inga ändringar för att spara.'
+      no_authorisation: "Jag kunde inte få auktorisation för att spara dessa ändringar, så de förblir osparade."
+      some_trouble: "Jag hade problem med att spara: %{errors}"
+      changing_on_hand_stock: Byter lagersaldon...
+      stock_reset: Lagersaldon återställdes till standardvärden.
+    tag_rules:
+      show_hide_variants: 'Visa eller dölj varianter i mitt butik'
+      show_hide_shipping: 'Visa eller dölj leveransmetoder vid kassan'
+      show_hide_payment: 'Visa eller dölj betalningsmetoder vid kassan'
+      show_hide_order_cycles: 'Visa eller dölj beställningsomgångar i min butik'
+      visible: SYNLIG
+      not_visible: INTE SYNLIG
+    services:
+      unsaved_changes_message: Det finns osparade ändringar. Spara nu eller ignorera?
+      save: SPARA
+      ignore: IGNORERA
+      add_to_order_cycle: "Lägg till i beställningsomgång"
+      manage_products: "Hantera produkter"
+      edit_profile: "redigera profil"
+      add_products_to_inventory: "Lägg till produkter i lager"
+    resources:
+      could_not_delete_customer: 'Kunde inte radera kund'
+    product_import:
+      confirmation: |
+        Detta kommer att ställa lagersaldot till noll på alla produkter för detta företag, som inte är närvarande i den uppladdade filen.
+    order_cycles:
+      update_success: 'Din beställningsomgång har uppdaterats.'
+      no_distributors: Det finns inga distributörer i denna beställningsomgång. Den kommer inte att vara synlig för kunderna tills du lägger till en distributör. Vill du fortsätta och spara denna beställningsomgång? '
+    enterprises:
+      producer: "Producent"
+      non_producer: "Ickeproducent"
+    customers:
+      select_shop: 'Var god välj en butik först'
+      could_not_create: Tyvärr, det gick inte att skapa
+  producers:
+    signup:
+      start_free_profile: "Börja med en gratis profil och uppgradera när du är redo!"
   spree:
     admin:
+      orders:
+        invoice:
+          issued_on: Utfärdat den
+          tax_invoice: FAKTURA
+          code: Kod
+          from: Från
+          to: Till
+        form:
+          distribution_fields:
+            title: Distribution
+            distributor: "Distributör:"
+            order_cycle: "Beställningsomgång:"
+      overview:
+        order_cycles:
+          order_cycles: "Beställningsomgångar"
+          order_cycles_tip: "Beställningsomgångar bestämmer när och var dina produkter är tillgängliga för kunderna."
+          you_have_active:
+            zero: "Du har inga aktiva beställningsomgångar."
+            one: "Du har en aktiv beställningsomgång."
+            other: "Du har %{count} aktiva beställningsomgångar."
+          manage_order_cycles: "HANTERA BESTÄLLNINGSOMGÅNGAR"
       products:
         bulk_edit:
           header:
@@ -1431,30 +1883,22 @@ sv:
             title: LADDAR PRODUKTER
             no_products: "Inga produkter ännu. Varför lägger du inte till några?"
             no_results: "Ledsen, inga resultat stämmer överens"
+      reports:
+        bulk_coop:
+          bulk_coop_supplier_report: 'Bulk Co-op - Totaler per leverantör'
+          bulk_coop_allocation: 'Bulk Co-op - Allokering'
+          bulk_coop_packing_sheets: 'Bulk Co-op - Förpackningssedlar'
+          bulk_coop_customer_payments: 'Bulk Co-op - kundbetalningar'
       variants:
         autocomplete:
           producer_name: Producent
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'åå-mm-dd'
-    zipcode: Postkod
-    shipment_states:
-      backorder: restorder
-      partial: delvis
-      pending: oavslutad
-      ready: klar
-      shipped: levererad
-    payment_states:
-      balance_due: behållning
-      completed: avslutad
-      checkout: leveranskontroll
-      credit_owed: kredit i skuld
-      failed: misslyckades
-      paid: betald
-      pending: oavslutad
-      processing: behandlas
-      void: annulerad
-      invalid: felaktig
+    inventory: Lager
+    orders:
+      bought:
+        item: "Redan beställd i denna beställningsomgång"
     order_mailer:
       invoice_email:
         hi: "Hi %{name}"
@@ -1472,6 +1916,46 @@ sv:
       resumed: återupptagen
       returned: returnerad
       skrill: skrill
-    orders:
-      invoice:
-        tax_invoice: "SKATTEFAKTURA:"
+    payment_states:
+      balance_due: behållning
+      completed: avslutad
+      checkout: leveranskontroll
+      credit_owed: kredit i skuld
+      failed: misslyckades
+      paid: betald
+      pending: oavslutad
+      processing: behandlas
+      void: annulerad
+      invalid: felaktig
+    shipment_states:
+      backorder: restorder
+      partial: delvis
+      pending: oavslutad
+      ready: klar
+      shipped: levererad
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+          En begäran om att återställa ditt lösenord har gjorts.
+          Om du inte gjorde denna förfrågan ignorerar du bara det här e-postmeddelandet.
+        link_text: >
+            Om du gjorde denna förfrågan klickar du bara på länken nedan:
+        issue_text: |
+          Om den ovan nämnda webbadressen inte fungerar kan du försöka kopiera och klistra in den i webbläsaren.
+          Om du får problem, var god kontakta oss.
+    weight: Vikt (kg)
+    zipcode: Postkod
+    users:
+      show:
+        open_orders: Öppna beställningar
+        transaction_history: Transaktionshistorik
+      open_orders:
+        order: Beställningar
+        shop: 'Butik '
+        changes_allowed_until: Ändringar är tillåtna fram till
+        items: Artiklar
+        total: Summa
+        edit: Redigera
+        cancel: Avbryt
+        closed: Stängd
+        until: Fram tills
