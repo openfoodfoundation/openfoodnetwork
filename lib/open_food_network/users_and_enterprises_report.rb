@@ -30,7 +30,7 @@ module OpenFoodNetwork
         uae["sells"],
         uae["visible"],
         to_local_datetime(uae["confirmed_at"])
-        ]
+      ]
       end
     end
 
