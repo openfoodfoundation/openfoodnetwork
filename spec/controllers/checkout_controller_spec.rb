@@ -4,6 +4,7 @@ describe CheckoutController do
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:order) { create(:order) }
+
   before do
     order.stub(:checkout_allowed?).and_return true
     controller.stub(:check_authorization).and_return true
@@ -67,14 +68,14 @@ describe CheckoutController do
     it "clears the ship address when re-rendering edit" do
       controller.should_receive(:clear_ship_address).and_return true
       order.stub(:update_attributes).and_return false
-      spree_post :update, order: {}
+      spree_post :update, format: :json, order: {}
     end
 
     it "clears the ship address when the order state cannot be advanced" do
       controller.should_receive(:clear_ship_address).and_return true
       order.stub(:update_attributes).and_return true
       order.stub(:next).and_return false
-      spree_post :update, order: {}
+      spree_post :update, format: :json, order: {}
     end
 
     it "only clears the ship address with a pickup shipping method" do
@@ -93,7 +94,7 @@ describe CheckoutController do
     end
 
     it "returns errors" do
-      xhr :post, :update, order: {}, use_route: :spree
+      spree_post :update, format: :json, order: {}
       response.status.should == 400
       response.body.should == {errors: assigns[:order].errors, flash: {}}.to_json
     end
@@ -101,7 +102,7 @@ describe CheckoutController do
     it "returns flash" do
       order.stub(:update_attributes).and_return true
       order.stub(:next).and_return false
-      xhr :post, :update, order: {}, use_route: :spree
+      spree_post :update, format: :json, order: {}
       response.body.should == {errors: assigns[:order].errors, flash: {error: "Payment could not be processed, please check the details you entered"}}.to_json
     end
 
@@ -109,7 +110,7 @@ describe CheckoutController do
       order.stub(:update_attributes).and_return true
       order.stub(:state).and_return "complete"
 
-      xhr :post, :update, order: {}, use_route: :spree
+      spree_post :update, format: :json, order: {}
       response.status.should == 200
       response.body.should == {path: spree.order_path(order)}.to_json
     end
@@ -127,7 +128,7 @@ describe CheckoutController do
           true
         end
 
-        xhr :post, :update, order: {}, use_route: :spree
+        spree_post :update, format: :json, order: {}
         response.status.should == 200
       end
 
@@ -135,7 +136,7 @@ describe CheckoutController do
         order.stub(:update_attributes).and_return true
         order.stub(:next) { raise ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update') }
 
-        xhr :post, :update, order: {}, use_route: :spree
+        spree_post :update, format: :json, order: {}
         response.status.should == 400
       end
     end

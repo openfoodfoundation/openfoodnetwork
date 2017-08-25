@@ -4,6 +4,8 @@ module Spree
 
     after_save :ensure_correct_adjustment, :update_order
 
+    attr_accessible :source
+
     def ensure_correct_adjustment
       # Don't charge for invalid payments.
       # PayPalExpress always creates a payment that is invalidated later.
@@ -73,6 +75,15 @@ module Spree
       end
     end
 
+    # Import from future Spree v.2.3.0 d470b31798f37
+    def build_source
+      return if source_attributes.nil?
+      return unless payment_method.andand.payment_source_class
+
+      self.source = payment_method.payment_source_class.new(source_attributes)
+      source.payment_method_id = payment_method.id
+      source.user_id = order.user_id if order
+    end
 
     private
 
@@ -81,5 +92,14 @@ module Spree
       refund_amount.to_f
     end
 
+    def create_payment_profile
+      return unless source.is_a?(CreditCard)
+      return unless source.try(:save_requested_by_customer?)
+      return unless source.number || source.gateway_payment_profile_id
+      return unless source.gateway_customer_profile_id.nil?
+      payment_method.create_profile(self)
+    rescue ActiveMerchant::ConnectionError => e
+      gateway_error e
+    end
   end
 end

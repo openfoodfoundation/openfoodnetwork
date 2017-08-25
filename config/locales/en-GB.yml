@@ -239,6 +239,12 @@ en-GB:
           allow_guest_orders_tip: "Allow checkout as guest or require a registered user."
           allow_guest_orders_false: "Require login to order"
           allow_guest_orders_true: "Allow guest checkout"
+          shopfront_requires_login_true: "Require customers to login"
+        stripe_connect:
+          connect_with_stripe: "Connect with Stripe"
+          stripe_connect_info: "Connect your Stripe account by clicking the button. This will allow Open Food Network to charge your customers on your behalf. You will need to maintain your Stripe account, pay Stripe fees and handle any chargebacks and customer service."
+          stripe_account_connected: "Stripe account connected."
+          disconnect: "Disconnect account"
   home:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -329,6 +335,9 @@ en-GB:
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
+  new_credit_card: "New credit card"
   ofn_cart_headline: "Current cart for:"
   ofn_cart_distributor: "Distributor:"
   ofn_cart_oc: "Order cycle:"
@@ -1035,6 +1044,14 @@ en-GB:
   validation_msg_product_category_cant_be_blank: "^Product Category cant be blank"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
   validation_msg_is_associated_with_an_exising_customer: "is associated with an existing customer"
+  error: Error
+  processing_payment: Processing payment...
+  my_credit_cards: My credit cards
+  add_new_credit_card: Add new credit card
+  saved_cards: Saved cards
+  add_card: Add card
+  saving_credit_card: Saving credit card...
+    
   spree:
     admin:
       orders:

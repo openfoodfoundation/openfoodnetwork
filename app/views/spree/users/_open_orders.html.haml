@@ -9,12 +9,12 @@
         %th.order5.text-right= t('.total')
         %th.order6.text-right.show-for-large-up= t('.edit')
         %th.order7.text-right= t('.cancel')
-      %tbody.transaction-group{"ng-repeat" => "order in Orders.changeable_orders", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
+      %tbody.transaction-group{"ng-repeat" => "order in Orders.changeable", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
         %tr.order-row
           %td.order1
             %a{"ng-href" => "{{::order.path}}", "ng-bind" => "::order.number"}
-          %td.order2{"ng-bind" => "::order.shop_name"}
-          %td.order3.show-for-large-up{"ng-bind" => "order.changes_allowed_until"}
+          %td.order2{"ng-bind" => "::Orders.shopsByID[order.shop_id].name"}
+          %td.order3.show-for-large-up{"ng-bind" => "::order.changes_allowed_until"}
           %td.order4.show-for-large-up{"ng-bind" => "::order.item_count"}
           %td.order5.text-right{"ng-class" => "{'credit' : order.total < 0, 'debit' : order.total > 0, 'paid' : order.total == 0}","ng-bind" => "::order.total | localizeCurrency"}
           %td.order6.text-right.show-for-large-up.brick

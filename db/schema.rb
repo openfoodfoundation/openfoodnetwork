@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161215230219) do
+ActiveRecord::Schema.define(:version => 20170304151129) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -469,7 +469,12 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.datetime "updated_at",                  :null => false
     t.string   "gateway_customer_profile_id"
     t.string   "gateway_payment_profile_id"
+    t.integer  "user_id"
+    t.integer  "payment_method_id"
   end
+
+  add_index "spree_credit_cards", ["payment_method_id"], :name => "index_spree_credit_cards_on_payment_method_id"
+  add_index "spree_credit_cards", ["user_id"], :name => "index_spree_credit_cards_on_user_id"
 
   create_table "spree_gateways", :force => true do |t|
     t.string   "type"
@@ -1040,6 +1045,14 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.datetime "updated_at",                            :null => false
     t.boolean  "default_tax",        :default => false
     t.integer  "zone_members_count", :default => 0
+  end
+
+  create_table "stripe_accounts", :force => true do |t|
+    t.string   "stripe_user_id"
+    t.string   "stripe_publishable_key"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.integer  "enterprise_id"
   end
 
   create_table "suburbs", :force => true do |t|

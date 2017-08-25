@@ -43,6 +43,13 @@ input.red {
   margin-right: 5px;
 }
 
+a.button.red {
+  &:not(:hover) {
+    color: #fff;
+    background-color: #DA5354;
+  }
+}
+
 input.orange {
 	background-color: #FF9848;
   margin-right: 5px;

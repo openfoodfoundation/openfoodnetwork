@@ -39,7 +39,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       end
     end
 
-
     before do
       distributor.shipping_methods << sm1
       distributor.shipping_methods << sm2
@@ -61,13 +60,11 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         page.should have_content "An item in your cart has become unavailable"
       end
     end
+
     context 'login in as user' do
       let(:user) { create(:user) }
 
-      before do
-        quick_login_as(user)
-        visit checkout_path
-
+      def fill_out_form
         toggle_shipping
         choose sm1.name
         toggle_payment
@@ -94,28 +91,39 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         check "Save as default shipping address"
       end
 
-      it "sets user's default billing address and shipping address" do
-        user.bill_address.should be_nil
-        user.ship_address.should be_nil
-
-        order.bill_address.should be_nil
-        order.ship_address.should be_nil
-
-        place_order
-        page.should have_content "Your order has been processed successfully"
-
-        order.reload.bill_address.address1.should eq '123 Your Head'
-        order.reload.ship_address.address1.should eq '123 Your Head'
-
-        order.customer.bill_address.address1.should eq '123 Your Head'
-        order.customer.ship_address.address1.should eq '123 Your Head'
-
-        user.reload.bill_address.address1.should eq '123 Your Head'
-        user.reload.ship_address.address1.should eq '123 Your Head'
+      before do
+        quick_login_as(user)
       end
 
-      it "it doesn't tell about previous orders" do
-        expect(page).to_not have_content("You have an order for this order cycle already.")
+      context "with details filled out" do
+        before do
+          visit checkout_path
+          fill_out_form
+        end
+
+        it "sets user's default billing address and shipping address" do
+          user.bill_address.should be_nil
+          user.ship_address.should be_nil
+
+          order.bill_address.should be_nil
+          order.ship_address.should be_nil
+
+          place_order
+          page.should have_content "Your order has been processed successfully"
+
+          order.reload.bill_address.address1.should eq '123 Your Head'
+          order.reload.ship_address.address1.should eq '123 Your Head'
+
+          order.customer.bill_address.address1.should eq '123 Your Head'
+          order.customer.ship_address.address1.should eq '123 Your Head'
+
+          user.reload.bill_address.address1.should eq '123 Your Head'
+          user.reload.ship_address.address1.should eq '123 Your Head'
+        end
+
+        it "it doesn't tell about previous orders" do
+          expect(page).to_not have_content("You have an order for this order cycle already.")
+        end
       end
 
       context "with previous orders" do
@@ -124,11 +132,54 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         before do
           order.distributor.allow_order_changes = true
           order.distributor.save
+          visit checkout_path
         end
 
         it "informs about previous orders" do
-          visit checkout_path
           expect(page).to have_content("You have an order for this order cycle already.")
+        end
+      end
+
+      context "with Stripe" do
+        let!(:stripe_pm) { create(:payment_method, distributors: [distributor], name: "Stripe", type: "Spree::Gateway::StripeConnect") }
+
+        let!(:saved_card) {
+          create(:credit_card,
+          user_id: user.id,
+          month: "01",
+          year: "2025",
+          cc_type: "Visa",
+          number: "1111111111111111",
+          payment_method_id: stripe_pm.id,
+          gateway_customer_profile_id: "i_am_saved")
+        }
+
+        let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000} }
+
+        before do
+          allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+          Spree::Config.set(stripe_connect_enabled: true)
+          stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
+            .to_return(body: JSON.generate(response_mock))
+
+          visit checkout_path
+          fill_out_form
+          toggle_payment
+          choose stripe_pm.name
+        end
+
+        it "allows use of a saved card" do
+          # shows the saved credit card dropdown
+          expect(page).to have_content I18n.t("spree.checkout.payment.stripe.used_saved_card")
+
+          # removes the input fields when a saved card is selected"
+          expect(page).to have_input "secrets.card_number"
+          select "Visa x-1111 Exp:01/2025", from: "selected_card"
+          expect(page).to_not have_input "secrets.card_number"
+
+          # allows checkout
+          place_order
+          expect(page).to have_content "Your order has been processed successfully"
         end
       end
     end

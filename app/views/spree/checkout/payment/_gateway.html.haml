@@ -2,17 +2,18 @@
   .small-6.columns
     %label
       = t :first_name
-    %input{type: :text, disabled: true, "ng-value" => "order.bill_address.firstname"}
+      -# Changing name not permitted by default (in checkout) - can be enabled by setting an allow_name_change variable in $scope
+    %input{type: :text, "ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.firstname"}
 
   .small-6.columns
     %label
       = t :last_name
-    %input{type: :text, disabled: true, "ng-value" => "order.bill_address.lastname"}
+    %input{type: :text, "ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.lastname"}
 
   .small-6.columns
-    = validated_input t(:card_number), "secrets.card_number", required: true, maxlength: 19, autocomplete: "off"
+    = validated_input t(:card_number), "secrets.card_number", maxlength: 19, autocomplete: "off"
   .small-6.columns
-    = validated_input t(:card_securitycode), "secrets.card_verification_value", required: true
+    = validated_input t(:card_securitycode), "secrets.card_verification_value"
 
 .row
   .small-12.columns
@@ -21,6 +22,6 @@
 
 .row
   .small-6.columns
-    %select{"ng-model" => "secrets.card_month", "ng-options" => "currMonth.value as currMonth.key for currMonth in months", name: "secrets.card_month", required: true}
+    %select{"ng-model" => "secrets.card_month", "ng-options" => "currMonth.value as currMonth.key for currMonth in months", name: "secrets.card_month"}
   .small-6.columns
-    %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year", required: true}
+    %select{"ng-model" => "secrets.card_year", "ng-options" => "year for year in years", name: "secrets.card_year"}

@@ -118,6 +118,10 @@ class AbilityDecorator
     can [:admin, :bulk_update], ColumnPreference do |column_preference|
       column_preference.user == user
     end
+
+    can [:status, :destroy], StripeAccount do |stripe_account|
+      user.enterprises.include? stripe_account.enterprise
+    end
   end
 
   def add_product_management_abilities(user)

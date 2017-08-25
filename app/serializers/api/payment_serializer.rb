@@ -2,7 +2,7 @@ module Api
   class PaymentSerializer < ActiveModel::Serializer
     attributes :amount, :updated_at, :payment_method, :state
     def payment_method
-      object.payment_method.name
+      object.payment_method.try(:name)
     end
 
     def amount
@@ -10,7 +10,7 @@ module Api
     end
 
     def updated_at
-      I18n.l(object.updated_at, format: :long)
+      I18n.l(object.updated_at, format: "%b %d, %Y %H:%M")
     end
   end
 end

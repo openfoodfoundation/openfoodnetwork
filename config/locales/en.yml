@@ -161,6 +161,8 @@ en:
   powered_by: Powered by
   blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
   allow_cookies: "Allow Cookies"
+  error: Error
+  processing_payment: Processing payment...
 
   admin:
     # Common properties / models
@@ -514,6 +516,18 @@ en:
           close_date: Close Date
         social:
           twitter_placeholder: eg. @the_prof
+        stripe_connect:
+          connect_with_stripe: "Connect with Stripe"
+          stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
+          stripe_account_connected: "Stripe account connected."
+          disconnect: "Disconnect account"
+          confirm_modal:
+            title: Connect with Stripe
+            part1: Stripe is a payment processing service that allows shops on the OFN to accept credit card payments from customers.
+            part2: To use this feature, you must connect your Stripe account to the OFN. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account, or create a new one if you don't already have one.
+            part3: This will allow the Open Food Network to accept credit card payments from customers on your behalf. Please note that you will need to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
+            i_agree: I Agree
+            cancel: Cancel
         tag_rules:
           default_rules:
             by_default: By Default
@@ -642,9 +656,11 @@ en:
     producer_properties:
       index:
         title: Producer Properties
+
     shared:
       user_guide_link:
         user_guide: User Guide
+
     invoice_settings:
       edit:
         title: Invoice Settings
@@ -715,6 +731,33 @@ en:
         description: Invoices for import into Xero
       packing:
         name: Packing Reports
+
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Settings"
+        stripe_beta_warning: "Warning: The Stripe Connect integration is currently in beta and should not be enabled in production yet"
+        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
+        no_api_key_msg: No Stripe account exists for this enterprise.
+        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
+        status: Status
+        ok: Ok
+        instance_secret_key: Instance Secret Key
+        account_id: Account ID
+        business_name: Business Name
+        charges_enabled: Charges Enabled
+        charges_enabled_warning: "Warning: Charges are not enabled for your account"
+        auth_fail_error: The API key you provided is invalid
+        empty_api_key_error: No Stripe API key has been provided. To set your API key, please follow the instructions at
+
+    # Admin controllers
+    controllers:
+      enterprises:
+        stripe_connect_success: "Stripe account connected successfully"
+        stripe_connect_fail: Sorry, the connection of your Stripe account failed
+      stripe_connect_settings:
+        resource: Stripe Connect configuration
+
 # Frontend views
 #
 # These keys are referenced relatively like `t('.message')` in
@@ -745,6 +788,11 @@ en:
       require_customer_login: "This shop is for customers only."
       require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
       require_customer_html: "Please %{contact} %{enterprise} to become a customer."
+
+
+  # Front-end controller translations
+  card_could_not_be_saved: card could not be saved
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
 
   # Printable Invoice Columns
   invoice_billing_address: "Billing address:"
@@ -844,6 +892,18 @@ en:
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
+  new_credit_card: "New credit card"
+  my_credit_cards: My credit cards
+  add_new_credit_card: Add new credit card
+  saved_cards: Saved cards
+  add_a_card: Add a Card
+  add_card: Add Card
+  you_have_no_saved_cards: You haven't saved any cards yet
+  saving_credit_card: Saving credit card...
+  card_has_been_removed: "Your card has been removed (number: %{number})"
+  card_could_not_be_removed: Sorry, the card could not be removed
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
@@ -1501,6 +1561,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"
+  delete: Delete
   add_producer_property: "Add producer property"
   in_progress: "In Progress"
   started_at: "Started at"
@@ -2036,6 +2097,24 @@ Please follow the instructions there to make your enterprise visible on the Open
             one: "You have one active order cycle."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+      payment_methods:
+        stripe_connect:
+          enterprise_select_placeholder: Choose...
+          loading_account_information_msg: Loading account information from stripe, please wait...
+          stripe_disabled_msg: Stripe payments have been disabled by the system administrator.
+          request_failed_msg: Sorry. Something went wrong when trying to verify account details with Stripe...
+          account_missing_msg: No Stripe account exists for this enterprise.
+          connect_one: Connect One
+          access_revoked_msg: Access to this Stripe account has been revoked, please reconnect your account.
+          status: Status
+          connected: Connected
+          account_id: Account ID
+          business_name: Business Name
+          charges_enabled: Charges Enabled
+      payments:
+        source_forms:
+          stripe:
+            no_payment_via_admin_backend: Creating Stripe-based payments from the admin backend is not possible at this time
       products:
         bulk_edit:
           header:
@@ -2050,9 +2129,20 @@ Please follow the instructions there to make your enterprise visible on the Open
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+      shared:
+        configuration_menu:
+          stripe_connect: Stripe Connect
       variants:
         autocomplete:
           producer_name: Producer
+    checkout:
+      payment:
+        stripe:
+          choose_one: Choose one
+          enter_new_card: Enter details for a new card
+          used_saved_card: "Use a saved card:"
+          or_enter_new_card: "Or, enter details for a new card:"
+          remember_this_card: Remember this card?
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
@@ -2125,8 +2215,18 @@ Please follow the instructions there to make your enterprise visible on the Open
     weight: Weight (per kg)
     zipcode: Postcode
     users:
+      form:
+        account_settings: Account Settings
       show:
+        tabs:
+          orders: Orders
+          cards: Credit Cards
+          transactions: Transactions
+          settings: Account Settings
+      orders:
         open_orders: Open Orders
+        past_orders: Past Orders
+      transactions:
         transaction_history: Transaction History
       open_orders:
         order: Order
@@ -2138,3 +2238,11 @@ Please follow the instructions there to make your enterprise visible on the Open
         cancel: Cancel
         closed: Closed
         until: Until
+      past_orders:
+        order: Order
+        shop: Shop
+        completed_at: Completed At
+        items: Items
+        total: Total
+        paid?: Paid?
+        view: View

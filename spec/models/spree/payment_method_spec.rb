@@ -21,6 +21,7 @@ module Spree
       Spree::Gateway::Migs.clean_name.should == "MasterCard Internet Gateway Service (MIGS)"
       Spree::Gateway::Pin.clean_name.should == "Pin Payments"
       Spree::Gateway::PayPalExpress.clean_name.should == "PayPal Express"
+      Spree::Gateway::StripeConnect.clean_name.should == "Stripe"
 
       # Testing else condition
       Spree::Gateway::BogusSimple.clean_name.should == "BogusSimple"

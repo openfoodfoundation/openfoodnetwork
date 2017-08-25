@@ -47,7 +47,7 @@ class CheckoutController < Spree::CheckoutController
           format.html do
             respond_with(@order, :location => order_path(@order))
           end
-          format.js do
+          format.json do
             render json: {path: order_path(@order)}, status: 200
           end
         end
@@ -111,6 +111,9 @@ class CheckoutController < Spree::CheckoutController
     if (params[:order][:payments_attributes])
       params[:order][:payments_attributes].first[:amount] = @order.total
     end
+    if params[:order][:existing_card]
+      construct_saved_card_attributes
+    end
     params[:order]
   end
 
@@ -130,7 +133,7 @@ class CheckoutController < Spree::CheckoutController
       format.html do
         render :edit
       end
-      format.js do
+      format.json do
         render json: {errors: @order.errors, flash: flash.to_hash}.to_json, status: 400
       end
     end
@@ -201,5 +204,29 @@ class CheckoutController < Spree::CheckoutController
 
     render json: {path: spree.paypal_express_url(payment_method_id: payment_method.id)}, status: 200
     true
+  end
+
+  def construct_saved_card_attributes
+    existing_card_id = params[:order].delete(:existing_card)
+    return if existing_card_id.blank?
+
+    credit_card = Spree::CreditCard.find(existing_card_id)
+    if credit_card.try(:user_id).blank? || credit_card.user_id != spree_current_user.try(:id)
+      raise Spree::Core::GatewayError, I18n.t(:invalid_credit_card)
+    end
+
+    # Not currently supported but maybe we should add it...?
+    credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
+
+    params[:order][:payments_attributes].first[:source] = credit_card
+    params[:order][:payments_attributes].first.delete :source_attributes
+  end
+
+  def rescue_from_spree_gateway_error(error)
+    flash[:error] = t(:spree_gateway_error_flash_for_checkout, error: error.message)
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: { flash: flash.to_hash }, status: 400 }
+    end
   end
 end

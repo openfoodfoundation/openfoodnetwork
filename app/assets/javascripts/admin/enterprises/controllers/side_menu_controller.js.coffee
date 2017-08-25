@@ -22,7 +22,7 @@ angular.module("admin.enterprises")
       { name: 'users', label: t('users'), icon_class: "icon-user" }
     ]
 
-    $scope.select(0)
+    SideMenu.init()
 
     $scope.showItem = (item) ->
       if item.show?

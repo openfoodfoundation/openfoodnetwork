@@ -1,0 +1,15 @@
+= render 'admin/enterprises/form/stripe_connect/confirm_modal'
+
+- if @stripe_account = @enterprise.stripe_account
+  .stripe-info
+    .row
+      = t('.stripe_account_connected')
+    .row
+      =link_to t('.disconnect'), main_app.admin_stripe_account_path(@stripe_account), method: :delete, class: 'button'
+- else
+  .row.stripe-info
+    .six.columns.alpha
+      =t('.stripe_connect_intro')
+    .five.columns.omega.text-right
+      %a.stripe-connect.help-modal{ template: 'admin/modals/stripe_connect_confirm.html' }
+        %span= t('.connect_with_stripe')
