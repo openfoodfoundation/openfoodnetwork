@@ -3,8 +3,9 @@
   = inject_shops
   = inject_saved_credit_cards
 
-  :javascript
-    angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
+  - if Stripe.publishable_key
+    :javascript
+      angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
   .row.pad-top
     .small-12.columns.pad-top
@@ -21,7 +22,7 @@
   .row.tabset-ctrl#account-tabs{ style: 'margin-bottom: 100px', navigate: 'true', selected: 'orders', prefix: 'account' }
     .small.12.medium-3.columns.tab{ name: "orders" }
       %a{ href: 'javascript:void(0)' }=t('.tabs.orders')
-    - if Spree::Config.stripe_connect_enabled
+    - if Spree::Config.stripe_connect_enabled && Stripe.publishable_key
       .small.12.medium-3.columns.tab{ name: "cards" }
         %a{ href: 'javascript:void(0)' }=t('.tabs.cards')
     .small.12.medium-3.columns.tab{ name: "transactions" }

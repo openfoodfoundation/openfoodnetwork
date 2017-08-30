@@ -10,6 +10,7 @@ feature "Credit Cards", js: true do
       quick_login_as user
 
       allow(Stripe).to receive(:api_key) { "sk_test_xxxx" }
+      allow(Stripe).to receive(:publishable_key) { "some_token" }
       Spree::Config.set(stripe_connect_enabled: true)
 
       stub_request(:get, "https://api.stripe.com/v1/customers/cus_AZNMJ").

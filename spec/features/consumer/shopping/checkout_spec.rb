@@ -158,6 +158,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         before do
           allow(Stripe).to receive(:api_key) { "sk_test_12345" }
+          allow(Stripe).to receive(:publishable_key) { "some_key" }
           Spree::Config.set(stripe_connect_enabled: true)
           stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
             .to_return(body: JSON.generate(response_mock))

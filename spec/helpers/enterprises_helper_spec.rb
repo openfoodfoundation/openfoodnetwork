@@ -233,7 +233,10 @@ describe EnterprisesHelper do
       end
 
       context "and Stripe Connect is enabled" do
-        before { Spree::Config.set(stripe_connect_enabled: true) }
+        before do
+          Spree::Config.set(stripe_connect_enabled: true)
+          allow(Stripe).to receive(:publishable_key) { "some_key" }
+        end
 
         it "includes the Stripe payment method" do
           expect(helper.available_payment_methods.map(&:id)).to include pm3.id
