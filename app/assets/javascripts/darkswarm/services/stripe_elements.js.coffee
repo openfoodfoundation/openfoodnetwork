@@ -1,30 +1,19 @@
-Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader, stripeObject) ->
+Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
   new class StripeElements
-    # This is the global Stripe object created by Stripe.js [v3+], included in the _stripe partial
-    stripe = stripeObject
     # TODO: add locale here for translations of error messages etc. from Stripe
-    elements = stripe.elements()
-    card = elements.create('card', {hidePostalCode: false})
 
-    mountElements: ->
-      card.mount('#card-element')
-      # Elements validates user input as it is typed. To help your customers
-      # catch mistakes, you should listen to change events on the card Element
-      # and display any errors:
-      card.addEventListener 'change', (event) ->
-        displayError = document.getElementById('card-errors')
-        if event.error
-          displayError.textContent = event.error.message
-        else
-          displayError.textContent = ''
-        return
+    # These are both set from the StripeElements directive
+    stripe: null
+    card: null
 
     # New Stripe Elements method
     requestToken: (secrets, submit, loading_message = t("processing_payment")) ->
+      return unless @stripe? && @card?
+
       Loading.message = loading_message
       cardData = @makeCardData(secrets)
 
-      stripe.createToken(card, cardData).then (response) =>
+      @stripe.createToken(@card, cardData).then (response) =>
         if(response.error)
           $rootScope.$apply ->
             Loading.clear()

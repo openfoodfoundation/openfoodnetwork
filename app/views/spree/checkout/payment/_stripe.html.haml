@@ -8,7 +8,7 @@
       = t('.or_enter_new_card')
 
 %div{ ng: { if: '!secrets.selected_card' } }
-  = render "/checkout/payment/stripe"
+  %stripe-elements
 
   .row
     .small-12.columns.text-right
