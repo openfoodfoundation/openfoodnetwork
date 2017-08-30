@@ -17,5 +17,6 @@ Darkswarm.factory "OfnMap", (Enterprises, EnterpriseModal, visibleFilter) ->
         longitude: enterprise.longitude
         icon: enterprise.icon
         id: enterprise.id
+        getEnterprise: => enterprise
         reveal: =>
           EnterpriseModal.open enterprise
