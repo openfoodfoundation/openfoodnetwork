@@ -44,7 +44,7 @@
         = @obfuscated_secret_key
       .publishable_key
         %strong= t('.instance_publishable_key') + ":"
-        = ENV["STRIPE_INSTANCE_PUBLISHABLE_KEY"]
+        = Stripe.publishable_key
     - if !@stripe_account[:charges_enabled]
       .alert-box.warning
         = t(".charges_enabled_warning")

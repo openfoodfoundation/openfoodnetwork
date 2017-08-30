@@ -4,7 +4,7 @@
   = inject_saved_credit_cards
 
   :javascript
-    angular.module('Darkswarm').value("stripeObject", Stripe("#{ENV['STRIPE_INSTANCE_PUBLISHABLE_KEY']}"))
+    angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
   .row.pad-top
     .small-12.columns.pad-top
