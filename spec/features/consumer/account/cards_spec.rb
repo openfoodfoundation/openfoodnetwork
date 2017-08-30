@@ -35,8 +35,7 @@ feature "Credit Cards", js: true do
       # Shows the interface for adding a card
       click_button I18n.t(:add_a_card)
       expect(page).to have_field 'first_name'
-      expect(page).to have_field 'card_number'
-      expect(page).to have_field 'card_month'
+      expect(page).to have_selector '#card-element.StripeElement'
 
       # Allows deletion of cards
       click_link I18n.t(:delete)

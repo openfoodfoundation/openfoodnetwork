@@ -174,9 +174,9 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           expect(page).to have_content I18n.t("spree.checkout.payment.stripe.used_saved_card")
 
           # removes the input fields when a saved card is selected"
-          expect(page).to have_input "secrets.card_number"
+          expect(page).to have_selector "#card-element.StripeElement"
           select "Visa x-1111 Exp:01/2025", from: "selected_card"
-          expect(page).to_not have_input "secrets.card_number"
+          expect(page).to_not have_selector "#card-element.StripeElement"
 
           # allows checkout
           place_order
