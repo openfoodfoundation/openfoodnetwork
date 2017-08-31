@@ -53,8 +53,8 @@ describe ProducerMailer do
     ActionMailer::Base.deliveries.count.should == 1
   end
 
-  it "sets a reply-to of the enterprise email" do
-    mail.reply_to.should == [s1.email]
+  it "sets a from of the enterprise email" do
+    mail.from.should == [s1.email]
   end
 
   it "includes receival instructions" do
