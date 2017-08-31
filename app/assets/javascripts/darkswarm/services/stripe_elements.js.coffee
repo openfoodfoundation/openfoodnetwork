@@ -15,9 +15,8 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
 
       @stripe.createToken(@card, cardData).then (response) =>
         if(response.error)
-          $rootScope.$apply ->
-            Loading.clear()
-            RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
+          Loading.clear()
+          RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
         else
           secrets.token = response.token.id
           secrets.cc_type = @mapCC(response.token.card.brand)

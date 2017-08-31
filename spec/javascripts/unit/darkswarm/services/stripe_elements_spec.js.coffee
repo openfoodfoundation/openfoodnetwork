@@ -1,6 +1,7 @@
-describe 'StripeJS Service', ->
-  $httpBackend = StripeJS = null
-  StripeMock = { card: {} }
+describe 'StripeElements Service', ->
+  $httpBackend = $q = $rootScope = StripeElements = null
+  StripeMock = { createToken: null }
+  CardMock = { some: "card" }
 
   beforeEach ->
     module 'Darkswarm'
@@ -8,9 +9,11 @@ describe 'StripeJS Service', ->
       $provide.value "railsFlash", null
       null
 
-    inject (_StripeJS_, _$httpBackend_) ->
+    inject (_StripeElements_, _$httpBackend_, _$q_, _$rootScope_) ->
       $httpBackend = _$httpBackend_
-      StripeJS = _StripeJS_
+      StripeElements = _StripeElements_
+      $q = _$q_
+      $rootScope = _$rootScope_
 
   describe "requestToken", ->
     secrets = {}
@@ -18,16 +21,18 @@ describe 'StripeJS Service', ->
     response = null
 
     beforeEach inject ($window) ->
-      $window.Stripe = StripeMock
+      StripeElements.stripe = StripeMock
+      StripeElements.card = CardMock
 
     describe "with satifactory data", ->
       beforeEach ->
         submit = jasmine.createSpy()
-        response = { id: "token", card: { brand: 'MasterCard', last4: "5678", exp_month: 10, exp_year: 2099 } }
-        StripeMock.card.createToken = (params, callback) => callback(200, response)
+        response = { token: { id: "token", card: { brand: 'MasterCard', last4: "5678", exp_month: 10, exp_year: 2099 } } }
+        StripeMock.createToken = => $q.when(response)
 
       it "saves the response data to secrets, and submits the form", ->
-        StripeJS.requestToken(secrets, submit)
+        StripeElements.requestToken(secrets, submit)
+        $rootScope.$digest() # required for #then to by called
         expect(secrets.token).toEqual "token"
         expect(secrets.cc_type).toEqual "mastercard"
         expect(submit).toHaveBeenCalled()
@@ -35,13 +40,14 @@ describe 'StripeJS Service', ->
     describe "with unsatifactory data", ->
       beforeEach ->
         submit = jasmine.createSpy()
-        response = { id: "token", error: { message: 'There was a problem' } }
-        StripeMock.card.createToken = (params, callback) => callback(400, response)
+        response = { token: {id: "token" }, error: { message: 'There was a problem' } }
+        StripeMock.createToken = => $q.when(response)
 
       it "doesn't submit the form, shows an error message instead", inject (Loading, RailsFlashLoader) ->
         spyOn(Loading, "clear")
         spyOn(RailsFlashLoader, "loadFlash")
-        StripeJS.requestToken(secrets, submit)
+        StripeElements.requestToken(secrets, submit)
+        $rootScope.$digest() # required for #then to by called
         expect(submit).not.toHaveBeenCalled()
         expect(Loading.clear).toHaveBeenCalled()
         expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({error: "Error: There was a problem"})

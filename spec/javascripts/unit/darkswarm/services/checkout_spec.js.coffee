@@ -117,19 +117,19 @@ describe 'Checkout service', ->
         expect(Checkout.errors).toEqual {error: "frogs"}
 
     describe "when using the Stripe Connect gateway", ->
-      beforeEach inject ($injector, StripeJS) ->
+      beforeEach inject ($injector, StripeElements) ->
         Checkout.order.payment_method_id = 666
 
-      it "requests a Stripe token before submitting", inject (StripeJS) ->
-        spyOn(StripeJS, "requestToken")
+      it "requests a Stripe token before submitting", inject (StripeElements) ->
+        spyOn(StripeElements, "requestToken")
         Checkout.purchase()
-        expect(StripeJS.requestToken).toHaveBeenCalled()
+        expect(StripeElements.requestToken).toHaveBeenCalled()
 
-      it "doesn't hit Stripe when reusing a credit card", inject (StripeJS) ->
-        spyOn(StripeJS, "requestToken")
+      it "doesn't hit Stripe when reusing a credit card", inject (StripeElements) ->
+        spyOn(StripeElements, "requestToken")
         Checkout.secrets.selected_card = 1
         Checkout.purchase()
-        expect(StripeJS.requestToken).not.toHaveBeenCalled()
+        expect(StripeElements.requestToken).not.toHaveBeenCalled()
 
   describe "data preprocessing", ->
     beforeEach ->
