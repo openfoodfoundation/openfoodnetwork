@@ -12,7 +12,7 @@
 
   - if can? :notify_producers, @order_cycle
     %li
-      = button_to "Notify producers", main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers', :confirm => t(:are_you_sure)
+      = button_to t(:notify_producers), main_app.notify_producers_admin_order_cycle_path, :id => 'admin_notify_producers', :confirm => t(:are_you_sure)
   %li
     %button#toggle_settings{ onClick: 'toggleSettings()' }
       = t('.advanced_settings')
@@ -30,7 +30,7 @@
   %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
     %input.red{ type: "button", value: t(:update), ng: { click: "submit($event, null)", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
     %input.red{ type: "button", value: t('.update_and_close'), ng: { click: "submit($event, '#{main_app.admin_order_cycles_path}')", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
-    %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? 'Cancel' : 'Close'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
+    %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? '#{t(:cancel)}' : '#{t(:close)}'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
 
   - if order_cycles_simple_form
     = render 'simple_form', f: f
