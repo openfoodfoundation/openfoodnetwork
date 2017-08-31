@@ -68,12 +68,12 @@ feature %q{
     end
 
     context 'using datepickers' do
-      it "correctly open the datepicker and changes the date field" do
+      it "correctly opens the datepicker and changes the date field" do
         login_to_admin_section
         visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_de.id}") do
-          expect(all('input').first.value).to start_with '2012-01-01 00:00:00'
+          expect(find('input.datetimepicker', match: :first).value).to start_with '2012-01-01 00:00:00'
           find('img.ui-datepicker-trigger', match: :first).click
         end
 
@@ -85,7 +85,7 @@ feature %q{
         end
 
         within("tr.order-cycle-#{oc_de.id}") do
-          expect(all('input').first.value).to eq '2012-01-30 00:00'
+          expect(find('input.datetimepicker', match: :first).value).to eq '2012-01-30 00:00'
         end
       end
     end
