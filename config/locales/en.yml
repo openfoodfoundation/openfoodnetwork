@@ -985,8 +985,13 @@ en:
   join_community: "Join the community"
   email_help: "If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!"
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
+  email_confirmation_greeting: "Hi, %{contact}!"
+  email_confirmation_profile_created: "A profile for %{name} has been successfully created!
+To activate your Profile we need to confirm this email address."
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
+  email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise.
+See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
   email_signoff: "Cheers,"
