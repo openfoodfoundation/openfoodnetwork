@@ -1312,9 +1312,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   registration_greeting: "Greetings!"
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
   enterprise_contact: "Primary Contact"
+  enterprise_contact_placeholder: "Contact Name"
   enterprise_contact_required: "You need to enter a primary contact."
   enterprise_email_address: "Email address"
+  enterprise_email_placeholder: "eg. charlie@thefarm.com"
   enterprise_phone: "Phone number"
+  enterprise_phone_placeholder: "eg. (03) 1234 5678"
   back: "Back"
   continue: "Continue"
   limit_reached_headline: "Oh no!"
@@ -1385,6 +1388,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   registration_finished_activate_instruction_html: "We've sent a confirmation email to <strong>%{email}</strong> if it hasn't been activated before.<br/>
 Please follow the instructions there to make your enterprise visible on the Open Food Network."
   registration_finished_action: "Open Food Network home"
+  registration_contact_name: 'Contact Name'
   registration_type_headline: "Last step to add %{enterprise}!"
   registration_type_question: "Are you a producer?"
   registration_type_producer: "Yes, I'm a producer"
