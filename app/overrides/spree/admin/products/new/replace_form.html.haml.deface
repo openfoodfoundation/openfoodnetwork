@@ -19,14 +19,14 @@
     .twelve.columns.alpha{ 'ng-controller' => 'unitsCtrl' }
       .six.columns.alpha
         = f.field_container :units do
-          = f.label :variant_unit_with_scale, :units
+          = f.label :variant_unit_with_scale, t(:units)
           %select.select2.fullwidth{ id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
             %option{'value' => '', 'ng-hide' => "hasUnit(product)"}
           %input{ type: 'hidden', 'ng-value' => 'product.variant_unit', name: 'product[variant_unit]' }
           %input{ type: 'hidden', 'ng-value' => 'product.variant_unit_scale', name: 'product[variant_unit_scale]' }
       .three.columns
         = f.field_container :unit_value do
-          = f.label :product_unit_value_with_description, :value, 'ng-disabled' => "!hasUnit(product)"
+          = f.label :product_unit_value_with_description, t(:value), 'ng-disabled' => "!hasUnit(product)"
           %input.fullwidth{ id: 'product_unit_value_with_description', 'ng-model' => 'product.master.unit_value_with_description', :type => 'text', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
           %input{ type: 'hidden', 'ng-value' => 'product.master.unit_value', name: 'product[unit_value]' }
           %input{ type: 'hidden', 'ng-value' => 'product.master.unit_description', name: 'product[unit_description]' }
@@ -87,7 +87,7 @@
     = button t('actions.create'), 'icon-ok', :submit, value: "create"
     %span.or
       = t(:or)
-    = button "Create And Add Another", 'icon-repeat', :submit, value: 'add_another'
+    = button t('actions.create_and_add_another'), 'icon-repeat', :submit, value: 'add_another'
     %span.or
       = t(:or)
     = link_to_with_icon 'icon-remove', t('actions.cancel'), bulk_edit_admin_products_path, :class => 'button'
