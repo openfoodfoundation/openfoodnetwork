@@ -36,9 +36,14 @@ nav {
   .top-bar-section .has-dropdown > a {
     padding-right: ($topbar-height / 3) !important;
 
-    i.ofn-i_022-cog {
+    i.ofn-i_022-cog, i.fa{
       font-size: 24px;
       line-height: $topbar-height;
+    }
+
+    i.fa.fa-globe {
+      color: #666;
+      font-size: 27px
     }
   }
 
@@ -93,6 +98,11 @@ nav {
 
 .tab-bar {
   background-color: white;
+}
+
+.off-canvas-list li.language-switcher ul li {
+  list-style-type: none;
+  padding-left: 0.5em;
 }
 
 .off-canvas-wrap.move-right .tab-bar .menu-icon {

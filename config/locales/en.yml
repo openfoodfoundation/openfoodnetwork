@@ -55,6 +55,7 @@
 
 en:
   # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
+  language_name: "English" # Localised name of this language
   activerecord:
     attributes:
       spree/order:

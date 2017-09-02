@@ -68,4 +68,36 @@ feature 'Multilingual', js: true do
       expect(page).to have_content 'TIENDAS'
     end
   end
+
+  describe "using the language switcher UI" do
+    context "when there is only one language available" do
+      around do |example|
+        I18n.available_locales = ['en']
+        example.run
+        I18n.available_locales = ['en', 'es']
+      end
+
+      it "hides the dropdown language menu" do
+        visit root_path
+        expect(page).to_not have_css 'ul.right li.language-switcher.has-dropdown'
+      end
+    end
+
+    it "allows switching language via the main navigation" do
+      visit root_path
+
+      expect(page).to have_content 'SHOPS'
+
+      find('ul.right li.language-switcher').click
+      within'ul.right li.language-switcher ul.dropdown' do
+        expect(page).to have_link I18n.t('language_name', locale: :en), href: '?locale=en'
+        expect(page).to have_link I18n.t('language_name', locale: :es, default: 'Language Name'), href: '?locale=es'
+
+        find('li a[href="?locale=es"]').click
+      end
+
+      expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+      expect(page).to have_content 'TIENDAS'
+    end
+  end
 end

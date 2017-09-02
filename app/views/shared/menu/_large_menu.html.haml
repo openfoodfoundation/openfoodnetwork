@@ -60,6 +60,14 @@
           = t 'powered_by'
           %a{href: '/'}
             = t 'title'
+      - if I18n.available_locales.count > 1
+        %li.language-switcher.has-dropdown.not-click
+          %a{href: '#'}
+            %i.fa.fa-globe
+          %ul.dropdown
+            - I18n.available_locales.each do |l|
+              %li
+                %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)
       - if spree_current_user.nil?
         = render 'shared/signed_out'
       - else
