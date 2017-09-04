@@ -161,7 +161,8 @@ en:
   powered_by: Powered by
   blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
   allow_cookies: "Allow Cookies"
-
+  actions:
+      create_and_add_another: "Create and Add Another"
   admin:
     # Common properties / models
     date: Date
@@ -1484,6 +1485,9 @@ Please follow the instructions there to make your enterprise visible on the Open
   create: "Create"
   search: "Search"
   supplier: "Supplier"
+  product_name: "Product Name"
+  product_description: "Product Description"
+  units: "Unit Size"
   coordinator: "Coordinator"
   distributor: "Distributor"
   enterprise_fees: "Enterprise Fees"
@@ -2037,6 +2041,7 @@ Please follow the instructions there to make your enterprise visible on the Open
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       products:
+        unit_name_placeholder: 'eg. bunches'
         bulk_edit:
           header:
             title: Bulk Edit Products
@@ -2044,6 +2049,11 @@ Please follow the instructions there to make your enterprise visible on the Open
             title: LOADING PRODUCTS
             no_products: "No products yet. Why don't you add some?"
             no_results: "Sorry, no results match"
+          product_name: Product Name
+        primary_taxon_form:
+          product_category: Product Category
+        display_as:
+          display_as: Display As
       reports:
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
