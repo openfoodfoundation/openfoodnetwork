@@ -101,7 +101,7 @@ feature "Using embedded shopfront functionality", js: true do
         find('ul.right li#login-link a').click
         login_with_modal
 
-        wait_until { page.find('ul.right li.has-dropdown').value.present? }
+        wait_until { page.find('ul.right li.user-menu.has-dropdown').value.present? }
         logout_via_navigation
 
         expect(page).to have_text 'My Embedded Hub'
@@ -120,7 +120,7 @@ feature "Using embedded shopfront functionality", js: true do
   end
 
   def logout_via_navigation
-    first('ul.right li.has-dropdown a').click
+    first('ul.right li.user-menu a').click
     find('ul.right ul.dropdown li a[title="Logout"]').click
   end
 end
