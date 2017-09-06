@@ -2056,6 +2056,8 @@ Please follow the instructions there to make your enterprise visible on the Open
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
       products:
+        new:
+          title: 'New Product'
         unit_name_placeholder: 'eg. bunches'
         bulk_edit:
           header:
