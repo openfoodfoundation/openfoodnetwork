@@ -157,7 +157,7 @@ describe UpdateAccountInvoices do
         context "where the order is not complete" do
           before do
             allow(invoice_order).to receive(:complete?) { false }
-            june_billable_period1.enterprise.update_attributes(contact: "Firstname Lastname Something Else", phone: '12345')
+            june_billable_period1.enterprise.update_attributes(phone: '12345')
             updater.update(june_account_invoice)
           end
 
@@ -175,8 +175,6 @@ describe UpdateAccountInvoices do
             [:address1, :address2, :city, :zipcode, :state_id, :country_id].each do |attr|
               expect(invoice_order.billing_address[attr]).to eq june_billable_period1.enterprise.address[attr]
             end
-            expect(invoice_order.billing_address.firstname).to eq "Firstname"
-            expect(invoice_order.billing_address.lastname).to eq "Lastname Something Else"
             expect(invoice_order.billing_address.phone).to eq "12345"
           end
 
@@ -354,7 +352,7 @@ describe UpdateAccountInvoices do
 
     before do
       Spree::Config.set({ accounts_distributor_id: accounts_distributor.id })
-      july_billable_period2.enterprise.update_attributes(contact: 'Anna Karenina', phone: '3433523')
+      july_billable_period2.enterprise.update_attributes(phone: '3433523')
     end
 
     context "when no invoice_order currently exists" do
@@ -377,8 +375,6 @@ describe UpdateAccountInvoices do
           [:address1, :address2, :city, :zipcode, :state_id, :country_id].each do |attr|
             expect(invoice_order.billing_address[attr]).to eq july_billable_period2.enterprise.address[attr]
           end
-          expect(invoice_order.billing_address.firstname).to eq "Anna"
-          expect(invoice_order.billing_address.lastname).to eq "Karenina"
           expect(invoice_order.billing_address.phone).to eq "3433523"
         end
       end

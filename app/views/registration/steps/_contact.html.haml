@@ -12,14 +12,8 @@
         .small-12.medium-12.large-7.columns
           .row
             .small-12.columns.field
-              %label{ for: 'enterprise_contact' } {{'enterprise_contact' | t}}:
-              %input.chunky.small-12.columns{ id: 'enterprise_contact', name: 'contact', required: true, placeholder: "Contact Name", ng: { model: 'enterprise.contact' } }
-              %span.error.small-12.columns{ ng: { show: "contact.contact.$error.required && submitted" } }
-                {{'enterprise_contact_required' | t}}
-          .row
-            .small-12.columns.field
-              %label{ for: 'enterprise_email_address' } {{'enterprise_email_address' | t}}:
-              %input.chunky.small-12.columns{ id: 'enterprise_email_address', name: 'email_address', type: 'email', placeholder: "eg. charlie@thefarm.com", ng: { model: 'enterprise.email_address' } }
+              %label{ for: 'enterprise_email_address' } {{'admin.enterprises.form.contact.email_address' | t}}:
+              %input.chunky.small-12.columns{ id: 'enterprise_email_address', name: 'email_address', type: 'email', placeholder: t('admin.enterprises.form.contact.email_address_placeholder'), ng: { model: 'enterprise.email_address' } }
           .row
             .small-12.columns.field
               %label{ for: 'enterprise_phone' } {{'enterprise_phone' | t}}:

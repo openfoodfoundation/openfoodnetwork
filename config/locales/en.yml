@@ -431,8 +431,9 @@ en:
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
-          email_address: Email Address
-          email_address_placeholder: eg. gustav@truffles.com
+          email_address: Public Email Address
+          email_address_placeholder: eg. inquiries@fresh-food.com
+          email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
           website: Website
@@ -537,6 +538,8 @@ en:
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
+          contact: "Contact"
+          contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
@@ -544,6 +547,8 @@ en:
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
           managers: Managers
           managers_tip: The other users with permission to manage this enterprise.
+          email_confirmed: "Email confirmed"
+          email_not_confirmed: "Email not confirmed"
       actions:
         edit_profile: Edit Profile
         properties: Properties

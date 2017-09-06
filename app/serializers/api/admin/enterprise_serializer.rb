@@ -1,12 +1,13 @@
 class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
   attributes :name, :id, :is_primary_producer, :is_distributor, :sells, :category, :payment_method_ids, :shipping_method_ids
-  attributes :producer_profile_only, :email, :long_description, :permalink
+  attributes :producer_profile_only, :long_description, :permalink
   attributes :preferred_shopfront_message, :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order, :preferred_shopfront_order_cycle_order
   attributes :preferred_product_selection_from_inventory_only
-  attributes :owner, :users, :tag_groups, :default_tag_group
+  attributes :owner, :contact, :users, :tag_groups, :default_tag_group
   attributes :require_login, :allow_guest_orders, :allow_order_changes
 
   has_one :owner, serializer: Api::Admin::UserSerializer
+  has_one :contact, serializer: Api::Admin::UserSerializer
   has_many :users, serializer: Api::Admin::UserSerializer
 
   def tag_groups

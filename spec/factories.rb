@@ -152,9 +152,7 @@ FactoryGirl.define do
     sells 'any'
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
-    email 'enterprise@example.com'
     address { FactoryGirl.create(:address) }
-    confirmed_at { Time.zone.now }
   end
 
   factory :supplier_enterprise, :parent => :enterprise do

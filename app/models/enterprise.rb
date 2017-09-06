@@ -12,9 +12,6 @@ class Enterprise < ActiveRecord::Base
   # their inventory if they so choose
   preference :product_selection_from_inventory_only, :boolean, default: false
 
-  devise :confirmable, reconfirmable: true, confirmation_keys: [ :id, :email ]
-  handle_asynchronously :send_confirmation_instructions
-  handle_asynchronously :send_on_create_confirmation_instructions
   has_paper_trail only: [:owner_id, :sells], on: [:update]
 
   self.inheritance_column = nil
@@ -71,36 +68,28 @@ class Enterprise < ActiveRecord::Base
   validate :name_is_unique
   validates :sells, presence: true, inclusion: {in: SELLS}
   validates :address, presence: true, associated: true
-  validates :email, presence: true
   validates_presence_of :owner
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
   validates_length_of :description, :maximum => 255
 
-
-  before_save :confirmation_check, if: lambda { email_changed? }
-
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
-  before_validation :ensure_email_set
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
   after_touch :touch_distributors
+  after_create :set_default_contact
   after_create :relate_to_owners_enterprises
-  # TODO: Later versions of devise have a dedicated after_confirmation callback, so use that
-  after_update :welcome_after_confirm, if: lambda { confirmation_token_changed? && confirmation_token.nil? }
-  after_create :send_welcome_email, if: lambda { email_is_known? }
+  after_create :send_welcome_email
 
   after_rollback :restore_permalink
 
 
   scope :by_name, order('name')
   scope :visible, where(visible: true)
-  scope :confirmed, where('confirmed_at IS NOT NULL')
-  scope :unconfirmed, where('confirmed_at IS NULL')
-  scope :activated, where("confirmed_at IS NOT NULL AND sells != 'unspecified'")
+  scope :activated, where("sells != 'unspecified'")
   scope :ready_for_checkout, lambda {
     joins(:shipping_methods).
       joins(:payment_methods).
@@ -198,8 +187,12 @@ class Enterprise < ActiveRecord::Base
     count(distinct: true)
   end
 
+  def contact
+    EnterpriseRole.receives_notifications_for self.id
+  end
+
   def activated?
-    confirmed_at.present? && sells != 'unspecified'
+    contact.confirmed? && sells != 'unspecified'
   end
 
   def set_producer_property(property_name, property_value)
@@ -352,11 +345,6 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
-  # Based on a devise method, but without adding errors
-  def pending_any_confirmation?
-    !confirmed? || pending_reconfirmation?
-  end
-
   def shop_trial_expiry
     shop_trial_start_date.andand + Spree::Config[:shop_trial_length_days].days
   end
@@ -382,25 +370,6 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
-  def email_is_known?
-    owner.enterprises.confirmed.map(&:email).include?(email)
-  end
-
-  def confirmation_check
-    # Skip confirmation/reconfirmation if the new email has already been confirmed
-    if email_is_known?
-      new_record? ? skip_confirmation! : skip_reconfirmation!
-    end
-  end
-
-  def welcome_after_confirm
-    # Send welcome email if we are confirming a newly created enterprise
-    # Note: this callback only runs on email confirmation
-    if confirmed? && unconfirmed_email.nil? && !unconfirmed_email_changed?
-      send_welcome_email
-    end
-  end
-
   def send_welcome_email
     Delayed::Job.enqueue WelcomeEnterpriseJob.new(self.id)
   end
@@ -421,14 +390,14 @@ class Enterprise < ActiveRecord::Base
     users << owner unless users.include?(owner) || owner.admin?
   end
 
-  def ensure_email_set
-    self.email = owner.email if email.blank? && owner.present?
-  end
-
   def enforce_ownership_limit
     unless owner.can_own_more_enterprises?
       errors.add(:owner, I18n.t(:enterprise_owner_error, email: owner.email, enterprise_limit: owner.enterprise_limit ))
     end
+  end
+
+  def set_default_contact
+    EnterpriseRole.set_notification_user self.owner_id, self.id
   end
 
   def relate_to_owners_enterprises

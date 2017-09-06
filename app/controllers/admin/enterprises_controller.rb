@@ -11,6 +11,7 @@ module Admin
     before_filter :load_methods_and_fees, :only => [:edit, :update]
     before_filter :load_groups, :only => [:new, :edit, :update, :create]
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
+    before_filter :load_roles, only: :edit
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
     before_filter :check_can_change_owner, only: :update
@@ -39,6 +40,7 @@ module Admin
       invoke_callbacks(:update, :before)
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
+      update_enterprise_notifications
       if @object.update_attributes(params[object_name])
         invoke_callbacks(:update, :after)
         flash[:success] = flash_message_for(@object, :successfully_updated)
@@ -184,6 +186,11 @@ module Admin
       @taxons = Spree::Taxon.order(:name)
     end
 
+    def load_roles
+      @enterprise_roles = EnterpriseRole.find_all_by_enterprise_id(@enterprise.id)
+      @notification_user = EnterpriseRole.receives_notifications_for(@enterprise.id).try(:id)
+    end
+
     def update_tag_rules(tag_rules_attributes)
       # Due to the combination of trying to use nested attributes and type inheritance
       # we cannot apply all attributes to tag rules in one hit because mass assignment
@@ -195,6 +202,13 @@ module Admin
           create_calculator_for(rule, attrs) if rule.type == "TagRule::DiscountOrder" && rule.calculator.nil?
           rule.update_attributes(attrs)
         end
+      end
+    end
+
+    def update_enterprise_notifications
+      notify_user = params[:receives_notifications]
+      if notify_user.present?
+        EnterpriseRole.set_notification_user notify_user, @object.id
       end
     end
 

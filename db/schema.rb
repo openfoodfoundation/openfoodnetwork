@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170710145821) do
+ActiveRecord::Schema.define(:version => 20170728140134) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20170710145821) do
   create_table "enterprise_roles", :force => true do |t|
     t.integer "user_id"
     t.integer "enterprise_id"
+    t.boolean "receives_notifications", :default => false
   end
 
   add_index "enterprise_roles", ["enterprise_id", "user_id"], :name => "index_enterprise_roles_on_enterprise_id_and_user_id", :unique => true
@@ -211,9 +212,7 @@ ActiveRecord::Schema.define(:version => 20170710145821) do
     t.string   "description"
     t.text     "long_description"
     t.boolean  "is_primary_producer"
-    t.string   "contact"
     t.string   "phone"
-    t.string   "email"
     t.string   "website"
     t.string   "twitter"
     t.string   "abn"
@@ -260,7 +259,6 @@ ActiveRecord::Schema.define(:version => 20170710145821) do
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
-  add_index "enterprises", ["confirmation_token"], :name => "index_enterprises_on_confirmation_token", :unique => true
   add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
   add_index "enterprises", ["name"], :name => "index_enterprises_on_name", :unique => true
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
