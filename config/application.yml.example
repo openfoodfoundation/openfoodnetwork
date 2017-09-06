@@ -16,6 +16,13 @@ CHECKOUT_ZONE: Australia
 # Find currency codes at http://en.wikipedia.org/wiki/ISO_4217.
 CURRENCY: AUD
 
+# Customize how states are shown in select tags
+#
+# Valid fields:
+#  - 'abbr' state abbreviation, the default
+#  - 'name' state name
+# STATE_TEXT_ATTRIBUTE: 'abbr'
+
 # SingleSignOn login for Discourse
 #
 # DISCOURSE_SSO_SECRET should be a random string. It must be the same as provided to your Discourse instance.
