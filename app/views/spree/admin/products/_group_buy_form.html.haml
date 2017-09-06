@@ -1,14 +1,14 @@
 = f.field_container :group_buy do
-  = f.label :group_buy, 'Group buy?'
+  = f.label :group_buy, t('.group_buy')
   %br
   .alpha.two.columns
-    = f.radio_button :group_buy, '1', :checked => f.object.group_buy
-    = f.label :group_buy_1, 'Yes'
+    = f.radio_button :group_buy, '1', checked: f.object.group_buy
+    = f.label :group_buy_1, t(:yes)
   .alpha.two.columns
-    = f.radio_button :group_buy, '0', :checked => !f.object.group_buy
-    = f.label :group_buy_0, 'No'
+    = f.radio_button :group_buy, '0', checked: !f.object.group_buy
+    = f.label :group_buy_0, t(:no)
 %br.clear
 = f.field_container :group_buy_unit_size do
-  = f.label :group_buy_unit_size, "Bulk unit size"
+  = f.label :group_buy_unit_size, t('.bulk_unit_size')
   %br
   = f.text_field :group_buy_unit_size

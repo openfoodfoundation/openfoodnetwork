@@ -3,7 +3,7 @@
 .variant_units_form{ 'ng-app' => 'admin.products', 'ng-controller' => 'editUnitsCtrl' }
 
   = f.field_container :units do
-    = f.label :variant_unit_with_scale, :units
+    = f.label :variant_unit_with_scale, t(:spree_admin_variant_unit_scale)
     %select.select2.fullwidth{ id: 'product_variant_unit_with_scale', 'ng-model' => 'variant_unit_with_scale', 'ng-change' => 'setFields()', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
       %option{'value' => ''}
 

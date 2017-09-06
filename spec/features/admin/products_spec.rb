@@ -95,7 +95,7 @@ feature %q{
       visit spree.edit_admin_product_path(product)
 
       choose 'product_group_buy_1'
-      fill_in 'Bulk unit size', :with => '10'
+      fill_in 'product_group_buy_unit_size', with: '10'
 
       click_button 'Update'
 
