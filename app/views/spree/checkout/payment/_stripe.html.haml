@@ -10,7 +10,8 @@
 %div{ ng: { if: '!secrets.selected_card' } }
   %stripe-elements
 
-  .row
-    .small-12.columns.text-right
-      = check_box_tag 'secrets.save_requested_by_customer', '1', false, 'ng-model' => 'secrets.save_requested_by_customer'
-      = label_tag 'secrets.save_requested_by_customer', t('.remember_this_card')
+  - if spree_current_user
+    .row
+      .small-12.columns.text-right
+        = check_box_tag 'secrets.save_requested_by_customer', '1', false, 'ng-model' => 'secrets.save_requested_by_customer'
+        = label_tag 'secrets.save_requested_by_customer', t('.remember_this_card')
