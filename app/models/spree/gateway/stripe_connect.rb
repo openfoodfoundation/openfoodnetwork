@@ -31,6 +31,11 @@ module Spree
         provider.purchase(*options_for_purchase_or_auth(money, creditcard, gateway_options))
       end
 
+      def void(response_code, creditcard, gateway_options)
+        gateway_options[:stripe_account] = stripe_account_id
+        provider.void(response_code, gateway_options)
+      end
+
       def create_profile(payment)
         return unless payment.source.gateway_customer_profile_id.nil?
         options = {
