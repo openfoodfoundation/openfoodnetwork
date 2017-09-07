@@ -66,12 +66,12 @@ feature %q{
 
         context "with no overrides" do
           it "displays the list of products with variants" do
-            page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND']
-            page.should have_table_row [producer.name, product.name, '', '']
+            page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND', 'ON DEMAND?']
+            page.should have_table_row [producer.name, product.name, '', '', '']
             page.should have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
             page.should have_input "variant-overrides-#{variant.id}-count_on_hand", placeholder: '12'
 
-            page.should have_table_row [producer_related.name, product_related.name, '', '']
+            page.should have_table_row [producer_related.name, product_related.name, '', '', '']
             page.should have_input "variant-overrides-#{variant_related.id}-price", placeholder: '2.34'
             page.should have_input "variant-overrides-#{variant_related.id}-count_on_hand", placeholder: '23'
 
@@ -133,7 +133,6 @@ feature %q{
           it "creates new overrides" do
             first("div#columns-dropdown", :text => "COLUMNS").click
             first("div#columns-dropdown div.menu div.menu_item", text: "SKU").click
-            first("div#columns-dropdown div.menu div.menu_item", text: "On Demand").click
             first("div#columns-dropdown", :text => "COLUMNS").click
 
             fill_in "variant-overrides-#{variant.id}-sku", with: 'NEWSKU'
