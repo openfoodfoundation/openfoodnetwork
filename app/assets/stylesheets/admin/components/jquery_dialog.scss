@@ -24,8 +24,6 @@ light: #ccc
   }
 }
 
-/*.ui-dialog .ui-icon-closethick{background:url(/static/assets/dialogCloseButton.png);}*/
-
 .ui-dialog .ui-widget-header{
   background-image: none;
   background-color: #ffffff;
@@ -42,13 +40,6 @@ light: #ccc
 .ui-dialog .ui-corner-all{
   border-radius: 8px;
 }
-// .ui-dialog  {
-//   .ui-state-hover, .ui-state-focus{
-//     border: none;
-//     background: none;
-//     color: #545454;
-//   }
-// }
 
 .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-widget-content .ui-state-hover {
   background-color: #ffffff;
