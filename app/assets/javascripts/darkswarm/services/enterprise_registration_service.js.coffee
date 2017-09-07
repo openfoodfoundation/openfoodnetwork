@@ -11,7 +11,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       for key, value of enterpriseAttributes
         @enterprise[key] = value
 
-    create: =>
+    create: (callback) =>
       Loading.message = t('creating') + " " + @enterprise.name
       $http(
         method: "POST"
@@ -25,6 +25,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
         @enterprise.id = data
         EnterpriseImageService.configure(@enterprise)
         RegistrationService.select('about')
+        callback.call()
       ).error((data) =>
         Loading.clear()
         if data?.errors?
@@ -32,6 +33,8 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
           alert t('failed_to_create_enterprise') + "\n" + errors.join('\n')
         else
           alert(t('failed_to_create_enterprise_unknown'))
+
+        callback.call()
       )
 
     update: (step) =>

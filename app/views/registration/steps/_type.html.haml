@@ -45,4 +45,4 @@
       .row.buttons
         .small-12.columns
           %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('contact')" } }
-          %input.button.primary.right{ type: "submit", value: "{{'create_profile' | t}}" }
+          %input.button.primary.right{ ng: { disabled: 'isDisabled' }, type: "submit", value: "{{'create_profile' | t}}" }
