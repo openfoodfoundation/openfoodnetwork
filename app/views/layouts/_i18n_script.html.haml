@@ -1,4 +1,15 @@
-%script
+:javascript
   I18n.default_locale = "#{I18n.default_locale}";
   I18n.locale = "#{I18n.locale}";
   I18n.fallbacks = true;
+
+  switch(I18n.locale) {
+    case "es":
+      moment.lang('es');
+      break;
+    case "fr":
+      moment.lang('fr');
+      break;
+    default:
+      moment.lang('en');
+  }
