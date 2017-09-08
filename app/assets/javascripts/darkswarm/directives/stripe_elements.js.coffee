@@ -9,7 +9,15 @@ Darkswarm.directive "stripeElements", ($injector, StripeElements) ->
     if $injector.has('stripeObject')
       stripe = $injector.get('stripeObject')
 
-      card = stripe.elements().create('card', {hidePostalCode: false})
+      card = stripe.elements().create 'card',
+        hidePostalCode: false
+        style:
+          base:
+            fontFamily: "Roboto, Arial, sans-serif"
+            fontSize: '16px'
+            color: '#4c4c4c'
+            '::placeholder':
+              color: '#6c6c6c'
       card.mount('#card-element')
 
       # Elements validates user input as it is typed. To help your customers
