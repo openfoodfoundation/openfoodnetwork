@@ -11,6 +11,10 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       for key, value of enterpriseAttributes
         @enterprise[key] = value
 
+    # Creates the enterprise and redirects to the about step on success.
+    #
+    # @param callback [Function] executed at the end of the operation both in
+    #   case of success or failure.
     create: (callback) =>
       Loading.message = t('creating') + " " + @enterprise.name
       $http(
