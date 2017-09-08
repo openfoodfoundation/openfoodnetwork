@@ -75,8 +75,6 @@ Openfoodnetwork::Application.routes.draw do
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
   get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
 
-  devise_for :enterprise, controllers: { confirmations: 'enterprise_confirmations' }
-
   namespace :admin do
     resources :order_cycles do
       post :bulk_update, on: :collection, as: :bulk_update
@@ -198,7 +196,8 @@ Spree::Core::Engine.routes.draw do
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
                                :registrations => 'user_registrations',
-                               :passwords => 'user_passwords' },
+                               :passwords => 'user_passwords',
+                               :confirmations => 'user_confirmations'},
              :skip => [:unlocks, :omniauth_callbacks],
              :path_names => { :sign_out => 'logout' },
              :path_prefix => :user

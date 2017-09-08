@@ -67,10 +67,18 @@ en:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
   devise:
+    confirmations:
+      send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+      failed_to_send: "An error occurred whilst sending your confirmation email."
+      resend_confirmation_email: "Resend confirmation email."
+    user_registrations:
+      spree_user:
+       signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
     failure:
       invalid: |
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
+      unconfirmed: "You have to confirm your account before continuing."
     enterprise_confirmations:
       enterprise:
         confirmed: Thank you, your email address has been confirmed.
@@ -425,8 +433,9 @@ en:
         contact:
           name: Name
           name_placeholder: eg. Gustav Plum
-          email_address: Email Address
-          email_address_placeholder: eg. gustav@truffles.com
+          email_address: Public Email Address
+          email_address_placeholder: eg. inquiries@fresh-food.com
+          email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
           website: Website
@@ -531,6 +540,8 @@ en:
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
+          contact: "Contact"
+          contact_tip: "The manager who will receive enterprise emails for orders and notifications. Must have a confirmed email adress."
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
@@ -538,6 +549,8 @@ en:
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
           managers: Managers
           managers_tip: The other users with permission to manage this enterprise.
+          email_confirmed: "Email confirmed"
+          email_not_confirmed: "Email not confirmed"
       actions:
         edit_profile: Edit Profile
         properties: Properties
@@ -980,6 +993,7 @@ en:
 %{link}"
   join_community: "Join the community"
   email_help: "If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!"
+  email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
   email_confirmation_profile_created: "A profile for %{name} has been successfully created!
 To activate your Profile we need to confirm this email address."
@@ -987,7 +1001,6 @@ To activate your Profile we need to confirm this email address."
   email_confirmation_link_label: "Confirm this email address »"
   email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise.
 See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
-  email_confirmation_userguide: "User Guide"
   email_social: "Connect with Us:"
   email_contact: "Email us:"
   email_signoff: "Cheers,"
@@ -1020,9 +1033,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   email_signup_greeting: Hello!
   email_signup_welcome: "Welcome to %{sitename}!"
-  email_signup_login: Your login
-  email_signup_email: Your login email is
-  email_signup_shop_html: "You can start shopping online now at %{link}."
+  email_signup_confirmed_email: "Thanks for confirming your email."
+  email_signup_shop_html: "You can now log in at %{link}."
   email_signup_text: "Thanks for joining the network.
   If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food!
   If you are a producer or food enterprise, we are excited to have you as a part of the network."
@@ -2140,6 +2152,8 @@ Please follow the instructions there to make your enterprise visible on the Open
         issue_text: |
           If the above URL does not work try copying and pasting it into your browser.
           If you continue to have problems please feel free to contact us.
+      confirmation_instructions:
+        subject: Please confirm your OFN account
     weight: Weight (per kg)
     zipcode: Postcode
     users:

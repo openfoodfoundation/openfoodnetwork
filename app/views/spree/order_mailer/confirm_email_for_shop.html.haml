@@ -4,9 +4,7 @@
       %table.column{:align => "left"}
         %tr
           %td
-            %h3 
-              = t :email_confirm_shop_greeting, name: @order.distributor.contact
-            %h4
+            %h3
               = t :email_confirm_shop_order_html, distributor: @order.distributor.name
       %table.column{:align => "left"}
         %tr

@@ -45,15 +45,6 @@ module Admin
     end
 
     describe "new" do
-      describe "when the user manages no distributor enterprises suitable for coordinator" do
-        let!(:distributor) { create(:distributor_enterprise, owner: distributor_owner, confirmed_at: nil) }
-
-        it "redirects to order cycles index" do
-          spree_get :new
-          expect(response).to redirect_to admin_order_cycles_path
-        end
-      end
-
       describe "when the user manages a single distributor enterprise suitable for coordinator" do
         let!(:distributor) { create(:distributor_enterprise, owner: distributor_owner) }
 

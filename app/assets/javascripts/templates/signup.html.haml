@@ -2,6 +2,10 @@
   %form{ ng: { controller: "SignupCtrl", submit: "submit()" } }
     .row
       .large-12.columns
+        .alert-box.success{ng: {show: 'messages != null'}}
+          {{ messages }}
+    .row
+      .large-12.columns
         %label{for: "email"} {{'signup_email' | t}}
         %input.title.input-text{name: "email",
           type: "email",

@@ -10,4 +10,11 @@ Darkswarm.controller "LoginCtrl", ($scope, $http, $window, AuthenticationService
         $window.location.href = $window.location.origin + $window.location.pathname  # Strips out hash fragments
     .error (data) ->
       Loading.clear()
-      $scope.errors = data.message
+      $scope.errors = data.message || data.error
+      $scope.user_unconfirmed = (data.error == t('devise.failure.unconfirmed'))
+
+  $scope.resend_confirmation = ->
+    $http.post("/user/spree_user/confirmation", {spree_user: $scope.spree_user}).success (data)->
+      $scope.messages = t('devise.confirmations.send_instructions')
+    .error (data) ->
+      $scope.errors = t('devise.confirmations.failed_to_send')

@@ -9,8 +9,4 @@
             %p {{'registration_finished_login' | t}}
     .row
       .small-12.columns.text-center
-        %h4{ "ng-bind" => "'registration_finished_activate' | t:{enterprise: enterprise.name}" }
-
-        %p{ "ng-bind-html" => "'registration_finished_activate_instruction_html' | t:{email: enterprise.email}"}
-
         %a.button.primary{ type: "button", href: "/" } {{'registration_finished_action' | t}} &gt;

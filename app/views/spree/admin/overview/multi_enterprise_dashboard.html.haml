@@ -6,12 +6,6 @@
   %h1{ :style => 'margin-bottom: 30px' }
     = t "dashbord"
 
-  - if @enterprises.unconfirmed.any?
-
-    = render partial: "unconfirmed"
-
-    %hr
-
   - if @enterprises.empty?
 
     = render partial: "enterprises"

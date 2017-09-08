@@ -1,13 +1,12 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, $window, NavigationCheck, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
+  .controller "enterpriseCtrl", ($scope, $window, NavigationCheck, enterprise, enterpriseRoles, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
     $scope.Enterprise = enterprise
+    $scope.EnterpriseRoles = enterpriseRoles
     $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
     $scope.navClear = NavigationCheck.clear
-    $scope.pristineEmail = $scope.Enterprise.email
     $scope.menu = SideMenu
     $scope.newManager = { id: '', email: (t('add_manager')) }
-
     $scope.StatusMessage = StatusMessage
 
     $scope.$watch 'enterprise_form.$dirty', (newValue) ->
@@ -36,6 +35,8 @@ angular.module("admin.enterprises")
 
     $scope.removeManager = (manager) ->
       if manager.id?
+        if manager.id == $scope.Enterprise.owner.id or manager.id == parseInt($scope.receivesNotifications)
+          return
         for i, user of $scope.Enterprise.users when user.id == manager.id
           $scope.Enterprise.users.splice i, 1
         if $scope.enterprise_form?

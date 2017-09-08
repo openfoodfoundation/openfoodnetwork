@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161215230219) do
+ActiveRecord::Schema.define(:version => 20170728140134) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
   create_table "enterprise_roles", :force => true do |t|
     t.integer "user_id"
     t.integer "enterprise_id"
+    t.boolean "receives_notifications", :default => false
   end
 
   add_index "enterprise_roles", ["enterprise_id", "user_id"], :name => "index_enterprise_roles_on_enterprise_id_and_user_id", :unique => true
@@ -211,9 +212,7 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "description"
     t.text     "long_description"
     t.boolean  "is_primary_producer"
-    t.string   "contact"
     t.string   "phone"
-    t.string   "email"
     t.string   "website"
     t.string   "twitter"
     t.string   "abn"
@@ -232,30 +231,34 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.string   "promo_image_content_type"
     t.integer  "promo_image_file_size"
     t.datetime "promo_image_updated_at"
-    t.boolean  "visible",                  :default => true
+    t.boolean  "visible",                        :default => true
     t.string   "facebook"
     t.string   "instagram"
     t.string   "linkedin"
-    t.integer  "owner_id",                                     :null => false
-    t.string   "sells",                    :default => "none", :null => false
+    t.integer  "owner_id",                                           :null => false
+    t.string   "sells",                          :default => "none", :null => false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.datetime "shop_trial_start_date"
-    t.boolean  "producer_profile_only",    :default => false
-    t.string   "permalink",                                    :null => false
-    t.boolean  "charges_sales_tax",        :default => false,  :null => false
+    t.boolean  "producer_profile_only",          :default => false
+    t.string   "permalink",                                          :null => false
+    t.boolean  "charges_sales_tax",              :default => false,  :null => false
     t.string   "email_address"
-    t.boolean  "require_login",            :default => false,  :null => false
-    t.boolean  "allow_guest_orders",       :default => true,   :null => false
+    t.boolean  "require_login",                  :default => false,  :null => false
+    t.boolean  "allow_guest_orders",             :default => true,   :null => false
     t.text     "invoice_text"
-    t.boolean  "display_invoice_logo",     :default => false
-    t.boolean  "allow_order_changes",      :default => false,  :null => false
+    t.boolean  "display_invoice_logo",           :default => false
+    t.boolean  "allow_order_changes",            :default => false,  :null => false
+    t.boolean  "require_phone_number",           :default => true
+    t.boolean  "require_bill_address",           :default => true
+    t.boolean  "hide_comment_box",               :default => false
+    t.boolean  "check_the_only_shipping_option", :default => false
+    t.boolean  "check_the_only_payment_method",  :default => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
-  add_index "enterprises", ["confirmation_token"], :name => "index_enterprises_on_confirmation_token", :unique => true
   add_index "enterprises", ["is_primary_producer", "sells"], :name => "index_enterprises_on_is_primary_producer_and_sells"
   add_index "enterprises", ["name"], :name => "index_enterprises_on_name", :unique => true
   add_index "enterprises", ["owner_id"], :name => "index_enterprises_on_owner_id"
@@ -997,8 +1000,13 @@ ActiveRecord::Schema.define(:version => 20161215230219) do
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                :limit => 40
     t.integer  "enterprise_limit",                     :default => 1, :null => false
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "spree_users", ["confirmation_token"], :name => "index_spree_users_on_confirmation_token", :unique => true
   add_index "spree_users", ["email"], :name => "email_idx_unique", :unique => true
   add_index "spree_users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
