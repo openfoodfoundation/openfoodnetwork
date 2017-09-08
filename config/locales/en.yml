@@ -1349,6 +1349,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             phone_field_placeholder: 'eg. (03) 1234 5678'
           type:
             title: 'Type'
+            headline: "Last step to add %{enterprise}!"
+            question: "Are you a producer?"
+            yes_producer: "Yes, I'm a producer"
+            no_producer: "No, I'm not a producer"
+            producer_field_error: "Please choose one. Are you are producer?"
+            yes_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
+            no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
+
           about:
             title: 'About'
           images:
