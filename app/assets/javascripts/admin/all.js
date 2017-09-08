@@ -50,7 +50,6 @@
 //= require i18n/translations
 //= require darkswarm/i18n.translate.js
 //= require moment
-//= require moment/es.js
-//= require moment/fr.js
+//= require moment/.
 
 //= require_tree .
