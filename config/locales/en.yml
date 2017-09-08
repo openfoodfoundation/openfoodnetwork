@@ -1363,6 +1363,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             title: 'Images'
           social:
             title: 'Social'
+  # TODO: Remove these once the enterprise.registration.modal keys are translated
   enterprise_contact: "Primary Contact"
   enterprise_contact_placeholder: "Contact Name"
   enterprise_contact_required: "You need to enter a primary contact."
@@ -1370,6 +1371,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   enterprise_email_placeholder: "eg. charlie@thefarm.com"
   enterprise_phone: "Phone number"
   enterprise_phone_placeholder: "eg. (03) 1234 5678"
+  # END
   back: "Back"
   continue: "Continue"
   limit_reached_headline: "Oh no!"
@@ -1441,6 +1443,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 Please follow the instructions there to make your enterprise visible on the Open Food Network."
   registration_finished_action: "Open Food Network home"
   registration_contact_name: 'Contact Name'
+
+  # TODO: Remove these once the enterprise.registration.modal keys are translated
   registration_type_headline: "Last step to add %{enterprise}!"
   registration_type_question: "Are you a producer?"
   registration_type_producer: "Yes, I'm a producer"
@@ -1448,9 +1452,13 @@ Please follow the instructions there to make your enterprise visible on the Open
   registration_type_error: "Please choose one. Are you are producer?"
   registration_type_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
   registration_type_no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
+  # END
   create_profile: "Create Profile"
   registration_images_headline: "Thanks!"
   registration_images_description: "Let's upload some pretty pictures so your profile looks great! :)"
+
+
+  # TODO: Remove these once the enterprise.registration.modal keys are translated
   registration_detail_headline: "Let's Get Started"
   registration_detail_enterprise: "Woot! First we need to know a little bit about your enterprise:"
   registration_detail_producer: "Woot! First we need to know a little bit about your farm:"
@@ -1472,6 +1480,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   registration_detail_state_error: "State required"
   registration_detail_country: "Country:"
   registration_detail_country_error: "Please select a country"
+  # END
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   accounts_and_billing_task_already_running_error: "A task is already running, please wait until it has finished"
   accounts_and_billing_start_task_notice: "Task Queued"
