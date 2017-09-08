@@ -221,14 +221,19 @@ describe EnterprisesHelper do
     end
 
     context "when StripeConnect payment methods are present" do
-      let!(:pm3) { create(:payment_method, type: "Spree::Gateway::StripeConnect", distributors: [distributor])}
-      before { allow(helper).to receive(:current_distributor) { distributor } }
+      let!(:pm3) { create(:stripe_payment_method, distributors: [distributor], preferred_enterprise_id: distributor.id) }
+      let!(:pm4) { create(:stripe_payment_method, distributors: [distributor], preferred_enterprise_id: distributor.id) }
+
+      before do
+        allow(helper).to receive(:current_distributor) { distributor }
+        pm4.update_attribute(:preferred_enterprise_id, nil)
+      end
 
       context "and Stripe Connect is disabled" do
         before { Spree::Config.set(stripe_connect_enabled: false) }
 
-        it "ignores the Stripe payment method" do
-          expect(helper.available_payment_methods.map(&:id)).to_not include pm3.id
+        it "ignores Stripe payment methods" do
+          expect(helper.available_payment_methods.map(&:id)).to_not include pm3.id, pm4.id
         end
       end
 
@@ -238,8 +243,9 @@ describe EnterprisesHelper do
           allow(Stripe).to receive(:publishable_key) { "some_key" }
         end
 
-        it "includes the Stripe payment method" do
+        it "includes Stripe payment methods with a preferred_enterprise_id" do
           expect(helper.available_payment_methods.map(&:id)).to include pm3.id
+          expect(helper.available_payment_methods.map(&:id)).to_not include pm4.id
         end
       end
     end

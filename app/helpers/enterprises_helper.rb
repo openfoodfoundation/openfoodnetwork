@@ -22,8 +22,7 @@ module EnterprisesHelper
     return [] unless current_distributor.present?
     payment_methods = current_distributor.payment_methods.available(:front_end).all
 
-    stripe_enabled = Spree::Config.stripe_connect_enabled && Stripe.publishable_key
-    payment_methods.reject!{ |p| p.type.ends_with? "StripeConnect" } unless stripe_enabled
+    apply_stripe_filters_to(payment_methods)
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterPaymentMethods", current_customer.andand.tag_list)
     applicator.filter!(payment_methods)
@@ -98,5 +97,14 @@ module EnterprisesHelper
 
   def show_bought_items?
     order_changes_allowed? && current_order.finalised_line_items.present?
+  end
+
+  def apply_stripe_filters_to(payment_methods)
+    stripe_enabled = Spree::Config.stripe_connect_enabled && Stripe.publishable_key
+    if stripe_enabled
+      payment_methods.reject!{ |p| p.type.ends_with?("StripeConnect") && p.preferred_enterprise_id == 0 }
+    else
+      payment_methods.reject!{ |p| p.type.ends_with?("StripeConnect") }
+    end
   end
 end
