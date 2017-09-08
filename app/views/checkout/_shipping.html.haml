@@ -18,6 +18,7 @@
           %input{type: :radio,
             required: true,
             name: "order.shipping_method_id",
+            "ng-init" => "ShippingMethods.shipping_methods.length==1&&#{@current_distributor.check_the_only_shipping_option}?(order.shipping_method_id=method.id):''",
             "ng-value" => "method.id",
             "ng-model" => "order.shipping_method_id"}
             {{ method.name }}
@@ -52,7 +53,10 @@
 
       .row
         .small-12.columns
-          = f.text_area :special_instructions, label: t(:checkout_instructions), size: "60x4", "ng-model" => "order.special_instructions"
+          - if @current_distributor.hide_comment_box
+            = f.hidden_field :special_instructions
+          - else
+            = f.text_area :special_instructions, label: t(:checkout_instructions), size: "60x4", "ng-model" => "order.special_instructions"
 
       .row
         .small-12.columns.text-right

@@ -2,6 +2,9 @@ Spree::Address.class_eval do
   has_one :enterprise
   belongs_to :country, class_name: "Spree::Country"
 
+  self.reset_callbacks(:validate)
+  validates :firstname, :lastname, :presence => true
+
   after_save :touch_enterprise
 
   geocoded_by :geocode_address
@@ -30,6 +33,12 @@ Spree::Address.class_eval do
     address_part2= [city, zipcode, state.andand.name]
     filtered_address = address_part2.select{ |field| !field.nil? && field != '' }
     filtered_address.compact.join(', ')
+  end
+
+  def validate_required_address
+    [:address1, :city, :zipcode, :country].each do |field|
+      errors.add(field, :blank) if send(field).blank?
+    end
   end
 
   private

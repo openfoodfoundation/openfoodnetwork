@@ -18,6 +18,7 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update
+    @order.bill_address.validate_required_address unless @current_distributor.require_bill_address
     if @order.update_attributes(object_params)
       check_order_for_phantom_fees
       fire_event('spree.checkout.update')

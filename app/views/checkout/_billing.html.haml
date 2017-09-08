@@ -22,22 +22,22 @@
       = f.fields_for :bill_address, @order.bill_address do |ba|
         .row
           .small-12.columns
-            = validated_input t(:address), "order.bill_address.address1", "ofn-focus" => "accordion['billing']"
+            = validated_input t(:address), "order.bill_address.address1", "ofn-focus" => "accordion['billing']", required: @current_distributor.require_bill_address
         .row
           .small-12.columns
             = validated_input t(:address2), "order.bill_address.address2", required: false
         .row
           .small-6.columns
-            = validated_input t(:city), "order.bill_address.city"
+            = validated_input t(:city), "order.bill_address.city", required: @current_distributor.require_bill_address
 
           .small-6.columns
-            = validated_select t(:state), "order.bill_address.state_id", checkout_state_options(:billing)
+            = validated_select t(:state), "order.bill_address.state_id", checkout_state_options(:billing), required: @current_distributor.require_bill_address
         .row
           .small-6.columns
-            = validated_input t(:postcode), "order.bill_address.zipcode"
+            = validated_input t(:postcode), "order.bill_address.zipcode", required: @current_distributor.require_bill_address
 
           .small-6.columns.right
-            = validated_select t(:country), "order.bill_address.country_id", checkout_country_options
+            = validated_select t(:country), "order.bill_address.country_id", checkout_country_options, required: @current_distributor.require_bill_address
 
       .row
         .small-12.columns.text-right
