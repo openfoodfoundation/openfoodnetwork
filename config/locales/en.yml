@@ -1311,6 +1311,50 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   reset_password: "Reset password"
   registration_greeting: "Greetings!"
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
+  enterprise:
+    registration:
+      modal:
+        steps:
+          details:
+            title: 'Details'
+            headline: "Let's Get Started"
+            enterprise: "Woot! First we need to know a little bit about your enterprise:"
+            producer: "Woot! First we need to know a little bit about your farm:"
+            enterprise_name_field: "Enterprise Name:"
+            producer_name_field: "Farm Name:"
+            producer_name_field_placeholder: "e.g. Charlie's Awesome Farm"
+            producer_name_field_error: "Please choose a unique name for your enterprise"
+            address1_field: "Address line 1:"
+            address1_field_placeholder: "e.g. 123 Cranberry Drive"
+            address1_field_error: "Please enter an address"
+            address2_field: "Address line 2:"
+            suburb_field: "Suburb:"
+            suburb_field_placeholder: "e.g. Northcote"
+            suburb_field_error: "Please enter a suburb"
+            postcode_field: "Postcode:"
+            postcode_field_placeholder: "e.g. 3070"
+            postcode_field_error: "Postcode required"
+            state_field: "State:"
+            state_field_error: "State required"
+            country_field: "Country:"
+            country_field_error: "Please select a country"
+          contact:
+            title: 'Contact'
+            contact_field: 'Primary Contact'
+            contact_field_placeholder: 'Contact Name'
+            contact_field_required: "You need to enter a primary contact."
+            email_field: 'Email address'
+            email_field_placeholder: 'eg. charlie@thefarm.com'
+            phone_field: 'Phone number'
+            phone_field_placeholder: 'eg. (03) 1234 5678'
+          type:
+            title: 'Type'
+          about:
+            title: 'About'
+          images:
+            title: 'Images'
+          social:
+            title: 'Social'
   enterprise_contact: "Primary Contact"
   enterprise_contact_placeholder: "Contact Name"
   enterprise_contact_required: "You need to enter a primary contact."
