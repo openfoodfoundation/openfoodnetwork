@@ -3,6 +3,8 @@ module Spree
     class StripeConnect < Gateway
       preference :enterprise_id, :integer
 
+      validate :ensure_enterprise_selected
+
       attr_accessible :preferred_enterprise_id
 
       CARD_TYPE_MAPPING = {
@@ -131,6 +133,11 @@ module Spree
       rescue Stripe::StripeError => e
         Rails.logger.error("Stripe Error: #{e}")
         nil
+      end
+
+      def ensure_enterprise_selected
+        return if preferred_enterprise_id.andand > 0
+        errors.add(:stripe_account_owner, I18n.t(:error_required))
       end
     end
   end

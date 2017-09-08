@@ -20,12 +20,36 @@ describe Spree::Admin::PaymentMethodsController do
           end
         end
 
-        context "as a user that does not manage the existing stripe account holder" do
+        context "as a user that manages the existing stripe account holder" do
           before { enterprise2.update_attributes!(owner_id: user.id) }
 
           it "allows the stripe account holder to be updated" do
             spree_put :update, params
             expect(payment_method.reload.preferred_enterprise_id).to eq enterprise1.id
+          end
+
+          context "when no enterprise is selected as the account holder" do
+            before { payment_method.update_attribute(:preferred_enterprise_id, nil) }
+
+            context "id not provided at all" do
+              before { params[:payment_method].delete(:preferred_enterprise_id) }
+
+              it "does not save the payment method" do
+                spree_put :update, params
+                expect(response).to render_template :edit
+                expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
+              end
+            end
+
+            context "enterprise_id of 0" do
+              before { params[:payment_method][:preferred_enterprise_id] = 0 }
+
+              it "does not save the payment method" do
+                spree_put :update, params
+                expect(response).to render_template :edit
+                expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
+              end
+            end
           end
         end
       end
