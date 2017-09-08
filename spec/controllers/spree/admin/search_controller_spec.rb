@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::SearchController do
+describe Spree::Admin::SearchController, type: :controller do
   include AuthenticationWorkflow
   context "Distributor Enterprise User" do
     let!(:owner) { create_enterprise_user( email: "test1@email.com" ) }
@@ -47,12 +47,12 @@ describe Spree::Admin::SearchController do
           it 'returns a list of customers of the enterprise' do
             expect(@results.size).to eq 2
 
-            expect(@results.find { |c| c['id'] == customer_1.id}).to be_true
-            expect(@results.find { |c| c['id'] == customer_2.id}).to be_true
+            expect(@results.find { |c| c['id'] == customer_1.id}).to be_truthy
+            expect(@results.find { |c| c['id'] == customer_2.id}).to be_truthy
           end
 
           it 'does not return the customer of other enterprises' do
-            expect(@results.find { |c| c['id'] == customer_3.id}).to be_false
+            expect(@results.find { |c| c['id'] == customer_3.id}).to be_nil
             p customer_3
             p enterprise
           end

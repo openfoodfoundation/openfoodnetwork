@@ -3,7 +3,7 @@ ruby "2.1.5"
 
 gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
-gem 'i18n', '~> 0.6.11'
+gem 'i18n', '~> 0.8.1'
 gem 'i18n-js', '~> 3.0.0'
 
 # Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
@@ -98,7 +98,7 @@ group :test, :development do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
   gem 'fuubar'
-  gem 'rspec-rails'
+  gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', :require => false
   gem 'capybara'
@@ -127,7 +127,7 @@ group :development do
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'guard-rails'
-  gem 'guard-rspec'
+  gem 'guard-rspec', '4.4.1'
   gem 'parallel_tests'
   gem 'rubocop', '>= 0.49.1'
 

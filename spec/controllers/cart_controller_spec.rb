@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
 module OpenFoodNetwork
-  describe CartController do
+  describe CartController, type: :controller do
     render_views
 
     let(:user) { FactoryGirl.create(:user) }

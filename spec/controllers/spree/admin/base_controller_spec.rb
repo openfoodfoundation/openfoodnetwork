@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::BaseController do
+describe Spree::Admin::BaseController, type: :controller do
   controller(Spree::Admin::BaseController) do
     def index
       before_filter :unauthorized
@@ -9,8 +9,8 @@ describe Spree::Admin::BaseController do
   end
 
   it "redirects to Angular login" do
-    get :index
-    response.should redirect_to root_path(anchor: "login?after_login=/anonymous")
+    spree_get :index
+    response.should redirect_to root_path(anchor: "login?after_login=/spree/admin/base")
   end
 
   describe "displaying error messages for active distributors not ready for checkout" do
@@ -88,15 +88,15 @@ describe Spree::Admin::BaseController do
 
   describe "determining the name of the serializer to be used" do
     before do
-      class Api::Admin::AllowedPrefixAnonymouSerializer;end;
-      class Api::Admin::AnonymouSerializer;end;
+      class Api::Admin::AllowedPrefixBaseSerializer;end;
+      class Api::Admin::BaseSerializer;end;
       allow(controller).to receive(:ams_prefix_whitelist) { [:allowed_prefix] }
     end
 
     context "when a prefix is passed in" do
       context "and the prefix appears in the whitelist" do
         it "returns the requested serializer" do
-          expect(controller.send(:serializer, 'allowed_prefix')).to eq Api::Admin::AllowedPrefixAnonymouSerializer
+          expect(controller.send(:serializer, 'allowed_prefix')).to eq Api::Admin::AllowedPrefixBaseSerializer
         end
       end
 
@@ -109,7 +109,7 @@ describe Spree::Admin::BaseController do
 
     context "when no prefix is passed in" do
       it "returns the default serializer" do
-        expect(controller.send(:serializer, nil)).to eq Api::Admin::AnonymouSerializer
+        expect(controller.send(:serializer, nil)).to eq Api::Admin::BaseSerializer
       end
     end
   end

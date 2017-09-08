@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Admin::PaymentMethodsController do
+describe Spree::Admin::PaymentMethodsController, type: :controller do
   context "Requesting provider preference fields" do
     let(:enterprise) { create(:distributor_enterprise) }
     let(:user) do

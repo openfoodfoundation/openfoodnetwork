@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::Api::LineItemsController do
+  describe Spree::Api::LineItemsController, type: :controller do
     render_views
 
     before do

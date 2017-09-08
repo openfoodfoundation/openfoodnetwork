@@ -1,12 +1,11 @@
 require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
-describe UserPasswordsController do
+describe UserPasswordsController, type: :controller do
   let(:user) { create(:user) }
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
-    ActionMailer::Base.default_url_options[:host] = "test.host"
   end
 
   describe "create" do

@@ -272,7 +272,7 @@ module OpenFoodNetwork
             applicator = OrderCycleFormApplicator.new(nil, user)
             applicator.stub(:permitted_enterprises) { [e] }
 
-            applicator.send(:permission_for, ex).should be_true
+            applicator.send(:permission_for, ex).should be true
           end
 
           it "returns false otherwise" do
@@ -282,7 +282,7 @@ module OpenFoodNetwork
             applicator = OrderCycleFormApplicator.new(nil, user)
             applicator.stub(:permitted_enterprises) { [] }
 
-            applicator.send(:permission_for, ex).should be_false
+            applicator.send(:permission_for, ex).should be false
           end
         end
       end
@@ -298,12 +298,12 @@ module OpenFoodNetwork
         exchange = FactoryGirl.create(:exchange, order_cycle: oc)
         applicator = OrderCycleFormApplicator.new(oc, user)
 
-        applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, exchange.incoming).should be_true
-        applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, !exchange.incoming).should be_false
-        applicator.send(:exchange_exists?, exchange.receiver_id, exchange.sender_id, exchange.incoming).should be_false
-        applicator.send(:exchange_exists?, exchange.sender_id, 999999, exchange.incoming).should be_false
-        applicator.send(:exchange_exists?, 999999, exchange.receiver_id, exchange.incoming).should be_false
-        applicator.send(:exchange_exists?, 999999, 888888, exchange.incoming).should be_false
+        applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, exchange.incoming).should be true
+        applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, !exchange.incoming).should be false
+        applicator.send(:exchange_exists?, exchange.receiver_id, exchange.sender_id, exchange.incoming).should be false
+        applicator.send(:exchange_exists?, exchange.sender_id, 999999, exchange.incoming).should be false
+        applicator.send(:exchange_exists?, 999999, exchange.receiver_id, exchange.incoming).should be false
+        applicator.send(:exchange_exists?, 999999, 888888, exchange.incoming).should be false
       end
 
       describe "adding exchanges" do

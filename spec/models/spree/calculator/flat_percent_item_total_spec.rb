@@ -1,6 +1,8 @@
+require 'spec_helper'
+
  describe Spree::Calculator::FlatPercentItemTotal do
   let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new }
-  let(:line_item) { mock_model(Spree::LineItem, amount: 10) }
+  let(:line_item) { instance_double(Spree::LineItem, amount: 10) }
 
   before { calculator.stub :preferred_flat_percent => 10 }
 

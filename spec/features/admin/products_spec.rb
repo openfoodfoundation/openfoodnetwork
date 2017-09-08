@@ -54,7 +54,7 @@ feature %q{
       product.tax_category_id.should == tax_category.id
       product.shipping_category.should == shipping_category
       product.description.should == "A description..."
-      product.group_buy.should be_false
+      product.group_buy.should be_falsey
       product.master.option_values.map(&:name).should == ['5kg']
       product.master.options_text.should == "5kg"
     end
@@ -84,7 +84,7 @@ feature %q{
       product = Spree::Product.find_by_name('Hot Cakes')
       product.variants.count.should == 1
       variant = product.variants.first
-      variant.on_demand.should be_true
+      variant.on_demand.should be true
     end
 
     scenario "making a product into a group buy product" do
@@ -101,7 +101,7 @@ feature %q{
 
       flash_message.should == 'Product "group buy product" has been successfully updated!'
       product.reload
-      product.group_buy.should be_true
+      product.group_buy.should be true
       product.group_buy_unit_size.should == 10.0
     end
   end

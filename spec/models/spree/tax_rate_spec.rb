@@ -35,13 +35,13 @@ module Spree
 
       it "sets included_in_price to true" do
         tax_rate.send(:with_tax_included_in_price) do
-          tax_rate.included_in_price.should be_true
+          tax_rate.included_in_price.should be true
         end
       end
 
       it "sets the included_in_price value accessible to the calculator to true" do
         tax_rate.send(:with_tax_included_in_price) do
-          tax_rate.calculator.calculable.included_in_price.should be_true
+          tax_rate.calculator.calculable.included_in_price.should be true
         end
       end
 
@@ -53,8 +53,8 @@ module Spree
 
       it "restores both values to their original afterwards" do
         tax_rate.send(:with_tax_included_in_price) {}
-        tax_rate.included_in_price.should be_false
-        tax_rate.calculator.calculable.included_in_price.should be_false
+        tax_rate.included_in_price.should be false
+        tax_rate.calculator.calculable.included_in_price.should be false
       end
 
       it "restores both values when an exception is raised" do
@@ -62,8 +62,8 @@ module Spree
           tax_rate.send(:with_tax_included_in_price) { raise Exception.new 'oops' }
         end.to raise_error 'oops'
 
-        tax_rate.included_in_price.should be_false
-        tax_rate.calculator.calculable.included_in_price.should be_false
+        tax_rate.included_in_price.should be false
+        tax_rate.calculator.calculable.included_in_price.should be false
       end
     end
   end

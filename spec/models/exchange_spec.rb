@@ -285,7 +285,7 @@ describe Exchange do
     ex1.update_attribute(:tag_list, "wholesale")
     ex2 = ex1.clone! new_oc
 
-    ex1.eql?(ex2).should be_true
+    ex1.eql?(ex2).should be true
     expect(ex2.reload.tag_list).to eq ["wholesale"]
   end
 
@@ -331,14 +331,14 @@ describe Exchange do
       e1.stub(:to_h) { {'sender_id' => 456} }
       e2.stub(:to_h) { {'sender_id' => 456} }
 
-      e1.eql?(e2).should be_true
+      e1.eql?(e2).should be true
     end
 
     it "compares other objects using super" do
       exchange = Exchange.new
       exchange_fee = ExchangeFee.new
 
-      exchange.eql?(exchange_fee).should be_false
+      exchange.eql?(exchange_fee).should be false
     end
   end
 end

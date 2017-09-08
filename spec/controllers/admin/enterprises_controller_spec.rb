@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 
 module Admin
-  describe EnterprisesController do
+  describe EnterprisesController, type: :controller do
     include AuthenticationWorkflow
 
     let(:user) { create(:user) }

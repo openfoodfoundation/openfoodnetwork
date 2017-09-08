@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HtmlHelper do
+describe HtmlHelper, type: :helper do
   describe "stripping html from a string" do
     it "strips tags" do
       helper.strip_html('<p><b>Hello</b> <em>world</em>!</p>').should == "Hello world!"

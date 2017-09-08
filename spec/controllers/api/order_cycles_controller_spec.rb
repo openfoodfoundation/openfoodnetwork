@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'spree/api/testing_support/helpers'
 
 module Api
-  describe OrderCyclesController, :type => :controller do
+  describe OrderCyclesController, type: :controller do
     include Spree::Api::TestingSupport::Helpers
     include AuthenticationWorkflow
     render_views

@@ -47,6 +47,9 @@ Capybara.default_max_wait_time = 30
 
 require "paperclip/matchers"
 
+# Override setting in Spree engine: Spree::Core::MailSettings
+ActionMailer::Base.default_url_options[:host] = 'test.host'
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -88,7 +91,7 @@ RSpec.configure do |config|
   end
 
   # Geocoding
-  config.before(:each) { Spree::Address.any_instance.stub(:geocode).and_return([1,1]) }
+  config.before(:each) { allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1,1]) }
 
   # Ensure we start with consistent config settings
   config.before(:each) { Spree::Config.products_require_tax_category = false }

@@ -24,7 +24,7 @@ feature %q{
 
   def new_order_with_distribution(distributor, order_cycle)
     visit 'admin/orders/new'
-    page.should have_selector('#s2id_order_distributor_id')
+    expect(page).to have_selector('#s2id_order_distributor_id')
     select2_select distributor.name, from: 'order_distributor_id'
     select2_select order_cycle.name, from: 'order_order_cycle_id'
     click_button 'Next'
@@ -140,43 +140,36 @@ feature %q{
     # When I create a new order
     quick_login_as @user
     new_order_with_distribution(@distributor, @order_cycle)
-    # visit '/admin/orders'
-    # click_link 'New Order'
-    # select2_select @distributor.name, from: 'order_distributor_id'
-    # select2_select @order_cycle.name, from: 'order_order_cycle_id'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
     click_button 'Update'
-    within('h1.page-title') { page.should have_content "Customer Details" }
+    expect(page).to have_selector 'h1.page-title', text: "Customer Details"
 
     # And I select that customer's email address and save the order
     targetted_select2_search @customer.email, from: '#customer_search_override', dropdown_css: '.select2-drop'
     click_button 'Continue'
-    page.should have_selector "h1.page-title", text: "Shipments"
+    expect(page).to have_selector "h1.page-title", text: "Shipments"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
-    order.ship_address.lastname.should == @customer.ship_address.lastname
-    order.bill_address.lastname.should == @customer.bill_address.lastname
+    expect(order.ship_address.lastname).to eq @customer.ship_address.lastname
+    expect(order.bill_address.lastname).to eq @customer.bill_address.lastname
   end
 
-  scenario "capture multiple payments from the orders index page" do
-    # d.cook: could also test for an order that has had payment voided, then a new check payment created but not yet captured. But it's not critical and I know it works anyway.
-
+  scenario "capture payment from the orders index page" do
     login_to_admin_section
 
-    visit '/admin/orders'
+    visit spree.admin_orders_path
     expect(page).to have_current_path spree.admin_orders_path
 
     # click the 'capture' link for the order
     page.find("[data-action=capture][href*=#{@order.number}]").click
 
-    page.should have_content "Payment Updated"
+    expect(page).to have_content "Payment Updated"
 
     # check the order was captured
-    @order.reload
-    @order.payment_state.should == "paid"
+    expect(@order.reload.payment_state).to eq "paid"
 
     # we should still be on the same page
     expect(page).to have_current_path spree.admin_orders_path
@@ -204,7 +197,6 @@ feature %q{
     end
 
     context "viewing the edit page" do
-      before { Rails.application.routes.default_url_options[:host] = "test.host" }
       it "shows the dropdown menu" do
         distributor1.update_attribute(:abn, '12345678')
         order = create(:completed_order_with_totals, distributor: distributor1)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::OrdersController do
+describe Spree::OrdersController, type: :controller do
   let(:distributor) { double(:distributor) }
   let(:order) { create(:order) }
   let(:order_cycle) { create(:simple_order_cycle) }

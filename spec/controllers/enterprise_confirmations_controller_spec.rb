@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EnterpriseConfirmationsController do
+describe EnterpriseConfirmationsController, type: :controller do
   include AuthenticationWorkflow
   let!(:user) { create_enterprise_user( enterprise_limit: 10 ) }
   let!(:unconfirmed_enterprise) { create(:distributor_enterprise, confirmed_at: nil, owner: user) }

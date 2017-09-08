@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe CheckoutHelper do
+describe CheckoutHelper, type: :helper do
   it "generates html for validated inputs" do
     helper.should_receive(:render).with(
       "shared/validated_input",
