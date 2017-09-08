@@ -1,10 +1,5 @@
 %form{ novalidate: true, "ng-submit" => "storeCard()" }
   .row
-    .small-12.columns
-      %label
-        = t(:card_details)
-      %stripe-elements
-  .row
     .small-6.columns
       %label
         = t(:first_name)
@@ -15,6 +10,11 @@
       %label
         = t(:last_name)
       %input#last_name{type: :text, "ng-model" => "secrets.last_name", "ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.lastname"}
+  .row
+    .small-12.columns
+      %label
+        = t(:card_details)
+      %stripe-elements
   .row
     .small-4.columns
       %p

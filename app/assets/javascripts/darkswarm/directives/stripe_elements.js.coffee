@@ -15,7 +15,7 @@ Darkswarm.directive "stripeElements", ($injector, StripeElements) ->
           base:
             fontFamily: "Roboto, Arial, sans-serif"
             fontSize: '16px'
-            color: '#4c4c4c'
+            color: '#5c5c5c'
             '::placeholder':
               color: '#6c6c6c'
       card.mount('#card-element')
