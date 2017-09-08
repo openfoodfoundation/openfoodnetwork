@@ -1,0 +1,15 @@
+%h3
+  = t :email_signup_greeting
+%p.lead
+  = t :email_signup_welcome, sitename: Spree::Config[:site_name]
+%p= t :email_confirmation_activate_account
+
+%p.callout
+  = t :email_confirmation_click_link
+  %br
+  %strong
+    = link_to t(:email_confirmation_link_label), spree.spree_user_confirmation_url(:confirmation_token => @user.confirmation_token)
+
+= render 'shared/mailers/signoff'
+
+= render 'shared/mailers/social_and_contact'
