@@ -161,8 +161,10 @@ en:
   powered_by: Powered by
   blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
   allow_cookies: "Allow Cookies"
+  none: None
+  notes: Notes
   actions:
-      create_and_add_another: "Create and Add Another"
+    create_and_add_another: "Create and Add Another"
   admin:
     # Common properties / models
     date: Date
@@ -937,6 +939,7 @@ en:
   checkout_shipping_price: Shipping
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
+  cost_currency: "Cost Currency"
 
   order_paid: PAID
   order_not_paid: NOT PAID
@@ -1549,6 +1552,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree_admin_unit_description: Unit Description
   spree_admin_variant_unit: Variant unit
   spree_admin_variant_unit_scale: Variant unit scale
+  spree_admin_supplier: Supplier
+  spree_admin_product_category: Product Category
   spree_admin_variant_unit_name: Variant unit name
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
@@ -2052,6 +2057,9 @@ Please follow the instructions there to make your enterprise visible on the Open
           product_name: Product Name
         primary_taxon_form:
           product_category: Product Category
+        group_buy_form:
+          group_buy: "Group Buy?"
+          bulk_unit_size: Bulk unit size
         display_as:
           display_as: Display As
       reports:

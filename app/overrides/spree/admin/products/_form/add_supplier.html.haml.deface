@@ -1,7 +1,7 @@
 / insert_top "[data-hook='admin_product_form_right']"
 
 = f.field_container :supplier do
-  = f.label :supplier
+  = f.label :supplier, t(:spree_admin_supplier)
   %br
   = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2"})
   = f.error_message_on :supplier
