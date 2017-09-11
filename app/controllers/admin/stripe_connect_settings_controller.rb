@@ -1,5 +1,7 @@
 module Admin
   class StripeConnectSettingsController < Spree::Admin::BaseController
+    StripeConnectSettings = Struct.new(:stripe_connect_enabled)
+
     before_filter :load_settings, only: [:edit]
 
     def edit
@@ -21,8 +23,7 @@ module Admin
     private
 
     def load_settings
-      klass = Struct.new(:stripe_connect_enabled)
-      @settings = klass.new(Spree::Config[:stripe_connect_enabled])
+      @settings = StripeConnectSettings.new(Spree::Config[:stripe_connect_enabled])
     end
 
     def redirect_to_edit
