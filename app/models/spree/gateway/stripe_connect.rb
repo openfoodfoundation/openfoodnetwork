@@ -1,3 +1,5 @@
+require 'stripe/profile_storer'
+
 module Spree
   class Gateway
     class StripeConnect < Gateway
@@ -40,21 +42,9 @@ module Spree
 
       def create_profile(payment)
         return unless payment.source.gateway_customer_profile_id.nil?
-        options = {
-          email: payment.order.email,
-          login: Stripe.api_key,
-        }.merge! address_for(payment)
 
-        creditcard = card_to_store(payment.source)
-
-        response = provider.store(creditcard, options)
-        if response.success?
-          payment.source.update_attributes!( cc_type: payment.source.cc_type, # side-effect of update_source!
-                                             gateway_customer_profile_id: response.params['id'],
-                                             gateway_payment_profile_id: response.params['default_source'] || response.params['default_card'])
-        else
-          payment.send(:gateway_error, response.message)
-        end
+        profile_storer = Stripe::ProfileStorer.new(payment, provider)
+        profile_storer.create_customer_from_token
       end
 
       private
@@ -76,41 +66,9 @@ module Spree
         [money, creditcard, options]
       end
 
-      def address_for(payment)
-        {}.tap do |options|
-          if address = payment.order.bill_address
-            options[:address] = {
-              address1: address.address1,
-              address2: address.address2,
-              city: address.city,
-              zip: address.zipcode
-            }
-
-            if country = address.country
-              options[:address][:country] = country.name
-            end
-
-            if state = address.state
-              options[:address].merge!(state: state.name)
-            end
-          end
-        end
-      end
-
       def update_source!(source)
         source.cc_type = CARD_TYPE_MAPPING[source.cc_type] if CARD_TYPE_MAPPING.include?(source.cc_type)
         source
-      end
-
-      def card_to_store(source)
-        source = update_source!(source)
-        if source.number.blank? && source.gateway_payment_profile_id.present?
-          # StripeJS Token
-          source.gateway_payment_profile_id
-        else
-          # Spree::CreditCard object
-          source
-        end
       end
 
       def token_from_card_profile_ids(creditcard)
