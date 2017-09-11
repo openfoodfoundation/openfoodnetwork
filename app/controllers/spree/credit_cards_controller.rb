@@ -1,8 +1,5 @@
 module Spree
   class CreditCardsController < BaseController
-    before_filter :set_credit_card, only: [:destroy]
-    before_filter :destroy_at_stripe, only: [:destroy]
-
     def new_from_token
       # A new Customer is created for every credit card (same as via ActiveMerchant)
       # Note that default_source is the card represented by the token
@@ -20,6 +17,9 @@ module Spree
     end
 
     def destroy
+      @credit_card = Spree::CreditCard.find(params[:id])
+      destroy_at_stripe
+
       if @credit_card.destroy
         flash[:success] = I18n.t(:card_has_been_removed, number: "x-#{@credit_card.last_digits}")
       else
@@ -57,10 +57,6 @@ module Spree
       # Can't mass assign user:
       card.user_id = spree_current_user.id
       card
-    end
-
-    def set_credit_card
-      @credit_card = Spree::CreditCard.find(params[:id])
     end
   end
 end

@@ -11,11 +11,12 @@ class EnterprisesController < BaseController
 
   before_filter :clean_permalink, only: :check_permalink
   before_filter :enable_embedded_shopfront
-  before_filter :set_enterprise, only: :relatives
 
   respond_to :js, only: :permalink_checker
 
   def relatives
+    set_enterprise
+
     respond_to do |format|
       format.json do
         enterprises = @enterprise.andand.relatives.andand.activated
