@@ -62,7 +62,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
       if @paymentMethod()?.method_type == 'stripe'
         if @secrets.selected_card
           angular.extend munged_order, {
-            existing_card: @secrets.selected_card
+            existing_card_id: @secrets.selected_card
           }
         else
           angular.extend munged_order.payments_attributes[0], {

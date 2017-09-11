@@ -119,7 +119,7 @@ class CheckoutController < Spree::CheckoutController
     if (params[:order][:payments_attributes])
       params[:order][:payments_attributes].first[:amount] = @order.total
     end
-    if params[:order][:existing_card]
+    if params[:order][:existing_card_id]
       construct_saved_card_attributes
     end
     params[:order]
@@ -207,7 +207,7 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def construct_saved_card_attributes
-    existing_card_id = params[:order].delete(:existing_card)
+    existing_card_id = params[:order].delete(:existing_card_id)
     return if existing_card_id.blank?
 
     credit_card = Spree::CreditCard.find(existing_card_id)

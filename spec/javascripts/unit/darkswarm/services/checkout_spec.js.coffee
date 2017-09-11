@@ -208,4 +208,4 @@ describe 'Checkout service', ->
         Checkout.secrets.selected_card = 1
         source_attributes = Checkout.preprocess()
         expect(source_attributes).toBeDefined()
-        expect(source_attributes.existing_card).toBe 1
+        expect(source_attributes.existing_card_id).toBe 1

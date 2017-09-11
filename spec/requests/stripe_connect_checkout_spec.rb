@@ -176,7 +176,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
     let(:charge_response_mock) { { status: 200, body: JSON.generate(id: "ch_1234", object: "charge", amount: 2000) } }
 
     before do
-      params[:order][:existing_card] = credit_card.id
+      params[:order][:existing_card_id] = credit_card.id
       quick_login_as(order.user)
 
       # Requests a token
