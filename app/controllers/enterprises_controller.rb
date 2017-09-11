@@ -42,7 +42,7 @@ class EnterprisesController < BaseController
   private
 
   def set_enterprise
-    @enterprise = Enterprise.find(params[:id])
+    @enterprise = Enterprise.find_by_id(params[:id])
   end
 
   def clean_permalink
