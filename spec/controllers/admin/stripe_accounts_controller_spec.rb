@@ -32,7 +32,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
       it "returns a 500 error" do
         spree_get :connect_callback, params
-        response.status.should be 500
+        expect(response.status).to be 500
       end
     end
 
