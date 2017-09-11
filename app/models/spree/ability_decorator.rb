@@ -56,8 +56,13 @@ class AbilityDecorator
       user == item.order.user &&
       item.order.changes_allowed?
     end
+
     can [:cancel], Spree::Order do |order|
       order.user == user
+    end
+
+    can [:destroy], Spree::CreditCard do |credit_card|
+      credit_card.user == user
     end
   end
 

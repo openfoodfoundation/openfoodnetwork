@@ -12,6 +12,8 @@ Spree::CreditCard.class_eval do
   # https://github.com/spree/spree/commit/411010f3975c919ab298cb63962ee492455b415c
   belongs_to :payment_method
 
+  belongs_to :user
+
   # Allows us to use a gateway_payment_profile_id to store Stripe Tokens
   # Should be able to remove once we reach Spree v2.2.0
   # Commit: https://github.com/spree/spree/commit/5a4d690ebc64b264bf12904a70187e7a8735ef3f
