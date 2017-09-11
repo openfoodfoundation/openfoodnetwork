@@ -7,16 +7,11 @@ module Stripe
     def initialize(payment, provider)
       @payment = payment
       @provider = provider
-
-      @options = {
-        email: @payment.order.email,
-        login: Stripe.api_key,
-      }.merge! address_for(@payment)
     end
 
     def create_customer_from_token
       token = @payment.source.gateway_payment_profile_id
-      response = @provider.store(token, @options)
+      response = @provider.store(token, options)
 
       if response.success?
         attrs = source_attrs_from(response)
@@ -28,22 +23,30 @@ module Stripe
 
     private
 
+    def options
+      {
+        email: @payment.order.email,
+        login: Stripe.api_key,
+        address: address_for(@payment)
+      }
+    end
+
     def address_for(payment)
-      {}.tap do |options|
+      {}.tap do |hash|
         if address = payment.order.bill_address
-          options[:address] = {
+          hash = {
             address1: address.address1,
             address2: address.address2,
             city: address.city,
             zip: address.zipcode
           }
 
-          if country = address.country
-            options[:address][:country] = country.name
+          if address.country
+            hash[:country] = address.country.name
           end
 
-          if state = address.state
-            options[:address].merge!(state: state.name)
+          if address.state
+            hash[:state] = address.state.name
           end
         end
       end
