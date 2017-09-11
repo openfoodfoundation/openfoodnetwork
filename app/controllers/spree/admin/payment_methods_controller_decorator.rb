@@ -73,7 +73,8 @@ module Spree
       end
 
       def restrict_stripe_account_change
-        return unless @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
+        return unless @payment_method
+        return unless @payment_method.type == "Spree::Gateway::StripeConnect"
         return unless @payment_method.preferred_enterprise_id.andand > 0
 
         @stripe_account_holder = Enterprise.find(@payment_method.preferred_enterprise_id)
