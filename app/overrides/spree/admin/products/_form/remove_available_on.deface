@@ -1,0 +1,2 @@
+remove "code[erb-loud]:contains('f.label :available_on')"
+closing_selector("code[erb-loud]:contains('f.text_field :available_on')")

@@ -275,6 +275,8 @@ Spree::Core::Engine.routes.prepend do
 
     resources :products do
       get :product_distributions, on: :member
+      get :group_buy_options, on: :member
+      get :seo, on: :member
 
       post :bulk_update, :on => :collection, :as => :bulk_update
     end

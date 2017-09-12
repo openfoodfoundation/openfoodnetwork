@@ -1,5 +1,4 @@
-/ insert_top "[data-hook='admin_product_form_right']"
-
+/ insert_before "code[erb-loud]:contains('f.field_container :price')"
 = f.field_container :supplier do
   = f.label :supplier, t(:spree_admin_supplier)
   %br

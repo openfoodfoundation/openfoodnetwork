@@ -1,0 +1,2 @@
+/ replace "[data-hook=admin_product_form_right] code[erb-loud]:contains('f.label :price')"
+= f.label :price, raw(t(:price) + content_tag(:span, ' *', :class => 'required'))

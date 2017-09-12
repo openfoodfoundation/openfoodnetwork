@@ -86,24 +86,6 @@ feature %q{
       variant = product.variants.first
       variant.on_demand.should be_true
     end
-
-    scenario "making a product into a group buy product" do
-      product = create(:simple_product, name: 'group buy product')
-
-      login_to_admin_section
-
-      visit spree.edit_admin_product_path(product)
-
-      choose 'product_group_buy_1'
-      fill_in 'product_group_buy_unit_size', with: '10'
-
-      click_button 'Update'
-
-      flash_message.should == 'Product "group buy product" has been successfully updated!'
-      product.reload
-      product.group_buy.should be_true
-      product.group_buy_unit_size.should == 10.0
-    end
   end
 
   context "as an enterprise user" do
@@ -119,15 +101,6 @@ feature %q{
              permissions_list: [:manage_products])
 
       login_to_admin_as @new_user
-    end
-
-
-    context "additional fields" do
-      it "should have a notes field" do
-        product = create(:simple_product, supplier: @supplier2)
-        visit spree.edit_admin_product_path product
-        page.should have_content "Notes"
-      end
     end
 
     context "products do not require a tax category" do
@@ -174,6 +147,22 @@ feature %q{
       product.tax_category.should == tax_category
     end
 
+    scenario "editing product group buy options" do
+      product = product = create(:simple_product, supplier: @supplier2)
+
+      visit spree.edit_admin_product_path product
+      within('#sidebar') { click_link 'Group Buy Options' }
+      choose('product_group_buy_1')
+      fill_in 'Bulk unit size', :with => '10'
+
+      click_button 'Update'
+
+      flash_message.should == "Product \"#{product.name}\" has been successfully updated!"
+      product.reload
+      product.group_buy.should be_true
+      product.group_buy_unit_size.should == 10.0
+    end
+
     scenario "editing product distributions" do
       product = create(:simple_product, supplier: @supplier2)
 
@@ -195,6 +184,20 @@ feature %q{
       product.distributors.should == [@distributors[0]]
     end
 
+    scenario "editing product SEO" do
+      product = product = create(:simple_product, supplier: @supplier2)
+      visit spree.edit_admin_product_path product
+      within('#sidebar') { click_link 'SEO' }
+      fill_in "product_meta_keywords", :with => 'Meta Keywords'
+      fill_in 'Meta Description', :with => 'Meta Description'
+      fill_in 'Notes', :with => 'Just testing Notes'
+      click_button 'Update'
+      flash_message.should == "Product \"#{product.name}\" has been successfully updated!"
+      product.reload
+      product.notes.should == 'Just testing Notes'
+      product.meta_keywords.should == 'Meta Keywords'
+      product.meta_description.should == 'Meta Description'
+    end
 
     scenario "deleting product properties", js: true do
       # Given a product with a property
