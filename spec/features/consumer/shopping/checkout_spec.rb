@@ -141,18 +141,23 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
       end
 
       context "with Stripe" do
-        let!(:stripe_pm) { create(:payment_method, distributors: [distributor], name: "Stripe", type: "Spree::Gateway::StripeConnect") }
+        let!(:stripe_pm) do
+          create(:stripe_payment_method,
+            distributors: [distributor],
+            name: "Stripe",
+            preferred_enterprise_id: distributor.id)
+        end
 
-        let!(:saved_card) {
+        let!(:saved_card) do
           create(:credit_card,
           user_id: user.id,
           month: "01",
           year: "2025",
-          cc_type: "Visa",
+          cc_type: "visa",
           number: "1111111111111111",
           payment_method_id: stripe_pm.id,
           gateway_customer_profile_id: "i_am_saved")
-        }
+        end
 
         let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000} }
 
@@ -161,7 +166,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           allow(Stripe).to receive(:publishable_key) { "some_key" }
           Spree::Config.set(stripe_connect_enabled: true)
           stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-            .to_return(body: JSON.generate(response_mock))
+            .to_return(status: 200, body: JSON.generate(response_mock))
 
           visit checkout_path
           fill_out_form
