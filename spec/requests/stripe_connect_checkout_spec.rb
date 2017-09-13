@@ -42,8 +42,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
       before do
         # Charges the card
         stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-          .with(:body => {"amount" => "1234", "card" => token, "currency" => "aud", "description" => "Spree Order ID: #{order.number}", "payment_user_agent" => "Stripe/v1 ActiveMerchantBindings/1.63.0"})
-          .to_return(charge_response_mock)
+          .with(body: /#{token}.*#{order.number}/).to_return(charge_response_mock)
       end
 
       context "and the charge request is successful" do
@@ -91,8 +90,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
 
         # Charges the card
         stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-          .with(:body => {"amount" => "1234", "card" => new_token, "currency" => "aud", "description" => "Spree Order ID: #{order.number}", "payment_user_agent" => "Stripe/v1 ActiveMerchantBindings/1.63.0"})
-          .to_return(charge_response_mock)
+          .with(body: /#{token}.*#{order.number}/).to_return(charge_response_mock)
       end
 
       context "and the store, token and charge requests are successful" do
@@ -142,8 +140,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
         before do
           # Attempts to charge the card without a token, which will return an error
           stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-            .with(:body => {"amount" => "1234", "currency" => "aud", "description" => "Spree Order ID: #{order.number}", "payment_user_agent" => "Stripe/v1 ActiveMerchantBindings/1.63.0"})
-            .to_return(charge_response_mock)
+            .with(body: /#{order.number}/).to_return(charge_response_mock)
         end
 
         it "should not process the payment" do
@@ -186,8 +183,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
 
       # Charges the card
       stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-        .with(:body => {"amount" => "1234", "card" => new_token, "currency" => "aud", "description" => "Spree Order ID: #{order.number}", "payment_user_agent" => "Stripe/v1 ActiveMerchantBindings/1.63.0"} )
-        .to_return(charge_response_mock)
+        .with(body: /#{token}.*#{order.number}/).to_return(charge_response_mock)
     end
 
     context "and the charge and token requests are accepted" do
@@ -225,8 +221,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
       before do
         # Attempts to charge the card without a token, which will return an error
         stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-          .with(:body => {"amount" => "1234", "currency" => "aud", "description" => "Spree Order ID: #{order.number}", "payment_user_agent" => "Stripe/v1 ActiveMerchantBindings/1.63.0"})
-          .to_return(charge_response_mock)
+          .with(body: /#{order.number}/).to_return(charge_response_mock)
       end
 
       it "should not process the payment" do
