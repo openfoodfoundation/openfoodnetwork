@@ -1029,7 +1029,7 @@ ActiveRecord::Schema.define(:version => 20180204235108) do
     t.string   "spree_api_key",          :limit => 48
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                :limit => 40
-    t.integer  "enterprise_limit",                     :default => 1, :null => false
+    t.integer  "enterprise_limit",                     :default => 5, :null => false
     t.string   "locale",                 :limit => 5
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
