@@ -30,7 +30,7 @@ module Spree
         flash[:error] = I18n.t(:card_could_not_be_removed)
       end
       redirect_to account_path(anchor: 'cards')
-    rescue Stripe::CardError => e
+    rescue Stripe::CardError
       flash[:error] = I18n.t(:card_could_not_be_removed)
       redirect_to account_path(anchor: 'cards')
     end
