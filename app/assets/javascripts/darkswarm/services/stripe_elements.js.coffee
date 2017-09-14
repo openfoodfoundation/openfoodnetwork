@@ -23,19 +23,20 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
           secrets.card = response.token.card
           submit()
 
+    # Maps the brand returned by Stripe to that required by activemerchant
     mapCC: (ccType) ->
       if ccType == 'MasterCard'
-        return 'mastercard'
+        return 'master'
       else if ccType == 'Visa'
         return 'visa'
       else if ccType == 'American Express'
-        return 'amex'
+        return 'american_express'
       else if ccType == 'Discover'
         return 'discover'
-      else if ccType == 'Diners Club'
-        return 'dinersclub'
       else if ccType == 'JCB'
         return 'jcb'
+      else if ccType == 'Diners Club'
+        return 'diners_club'
       return
 
     # It doesn't matter if any of these are nil, all are optional.

@@ -34,7 +34,7 @@ describe 'StripeElements Service', ->
         StripeElements.requestToken(secrets, submit)
         $rootScope.$digest() # required for #then to by called
         expect(secrets.token).toEqual "token"
-        expect(secrets.cc_type).toEqual "mastercard"
+        expect(secrets.cc_type).toEqual "master"
         expect(submit).toHaveBeenCalled()
 
     describe "with unsatifactory data", ->
@@ -51,3 +51,12 @@ describe 'StripeElements Service', ->
         expect(submit).not.toHaveBeenCalled()
         expect(Loading.clear).toHaveBeenCalled()
         expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({error: "Error: There was a problem"})
+
+  describe 'mapCC', ->
+    it "maps the brand returned by Stripe to that required by activemerchant", ->
+      expect(StripeElements.mapCC('MasterCard')).toEqual "master"
+      expect(StripeElements.mapCC('Visa')).toEqual "visa"
+      expect(StripeElements.mapCC('American Express')).toEqual "american_express"
+      expect(StripeElements.mapCC('Discover')).toEqual "discover"
+      expect(StripeElements.mapCC('JCB')).toEqual "jcb"
+      expect(StripeElements.mapCC('Diners Club')).toEqual "diners_club"
