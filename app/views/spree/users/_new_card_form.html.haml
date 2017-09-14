@@ -1,15 +1,28 @@
-%form{ novalidate: true, "ng-submit" => "storeCard()" }
+%form{ novalidate: true, name: 'new_card_form', "ng-submit" => "storeCard()" }
   .row
     .small-6.columns
       %label
         = t(:first_name)
         -# Changing name not permitted by default (in checkout) - can be enabled by setting an allow_name_change variable in $scope
-      %input#first_name{type: :text,  "ng-model" => "secrets.first_name","ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.firstname"}
+      %input#first_name{ type: :text,
+        name: 'first_name',
+        required: true,
+        ng: { model: "secrets.first_name",
+          disabled: "!allow_name_change",
+          value: "order.bill_address.firstname"} }
+      %small.error{ ng: { show: 'new_card_form.$submitted && new_card_form.first_name.$error.required' } }= t(:error_required)
 
     .small-6.columns
       %label
         = t(:last_name)
-      %input#last_name{type: :text, "ng-model" => "secrets.last_name", "ng-disabled" => "!allow_name_change", "ng-value" => "order.bill_address.lastname"}
+      %input#last_name{type: :text,
+      name: "last_name",
+      required: true,
+      ng: { model: "secrets.last_name",
+        disabled: "!allow_name_change",
+        value: "order.bill_address.lastname" } }
+      %small.error{ ng: { show: 'new_card_form.$submitted && new_card_form.last_name.$error.required' } }= t(:error_required)
+
   .row
     .small-12.columns
       %label

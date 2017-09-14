@@ -4,7 +4,9 @@ Darkswarm.controller "CreditCardsCtrl", ($scope, $timeout, CreditCard, CreditCar
   $scope.CreditCard = CreditCard
   $scope.secrets = CreditCard.secrets
   $scope.showForm = CreditCard.show
-  $scope.storeCard = CreditCard.requestToken
+  $scope.storeCard = ->
+    if $scope.new_card_form.$valid
+      CreditCard.requestToken()
 
   $scope.allow_name_change = true
   $scope.disable_fields = false

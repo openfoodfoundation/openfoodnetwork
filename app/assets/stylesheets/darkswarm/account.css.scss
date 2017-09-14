@@ -23,6 +23,10 @@
     &.visible {
       opacity: 1;
     }
+
+    input.ng-invalid {
+      margin-bottom: 0px;
+    }
   }
 }
 
