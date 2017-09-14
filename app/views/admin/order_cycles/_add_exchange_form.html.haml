@@ -3,4 +3,4 @@
     {{ enterprise.name }}
     = "{{ enterprise.issues_summary_#{type} ? '('+enterprise.issues_summary_#{type}+')' : '' }}"
 
-= f.submit "Add #{type}", 'ng-click' => "add#{type.capitalize}($event)", 'ng-disabled' => "!new_#{type}_id || !OrderCycle.novel#{type.capitalize}(new_#{type}_id)"
+= f.submit t(".add_#{type}"), 'ng-click' => "add#{type.capitalize}($event)", 'ng-disabled' => "!new_#{type}_id || !OrderCycle.novel#{type.capitalize}(new_#{type}_id)"
