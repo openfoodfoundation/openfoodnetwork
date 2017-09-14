@@ -31,7 +31,7 @@ Darkswarm.factory 'CreditCard', ($injector, $rootScope, CreditCards, StripeEleme
       "exp_year": @secrets.card.exp_year,
       "last4": @secrets.card.last4,
       "token": @secrets.token,
-      "cc_type": @secrets.card.brand}
+      "cc_type": @secrets.cc_type}
 
     show: => @visible = true
 
