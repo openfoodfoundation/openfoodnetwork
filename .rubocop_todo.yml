@@ -2190,7 +2190,6 @@ Style/UnneededPercentQ:
 Style/VariableName:
   Exclude:
     - 'app/controllers/spree/admin/reports_controller_decorator.rb'
-    - 'app/helpers/admin/injection_helper.rb'
 
 # Offense count: 16
 # Configuration parameters: EnforcedStyle, SupportedStyles.

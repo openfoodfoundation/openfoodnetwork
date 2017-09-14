@@ -35,12 +35,12 @@ module Admin
       admin_inject_json_ams "admin.shippingMethods", "shippingMethod", @shipping_method, Api::Admin::ShippingMethodSerializer
     end
 
-    def admin_inject_shops(ngModule='admin.customers')
-      admin_inject_json_ams_array ngModule, "shops", @shops, Api::Admin::IdNameSerializer
+    def admin_inject_shops(ng_module='admin.customers')
+      admin_inject_json_ams_array ng_module, "shops", @shops, Api::Admin::IdNameSerializer
     end
 
-    def admin_inject_available_countries(ngModule='admin.customers')
-      admin_inject_json_ams_array ngModule, 'availableCountries', available_countries, Api::CountrySerializer
+    def admin_inject_available_countries(ng_module='admin.customers')
+      admin_inject_json_ams_array ng_module, 'availableCountries', available_countries, Api::CountrySerializer
     end
 
     def admin_inject_hubs(opts={module: 'ofn.admin'})
@@ -110,19 +110,19 @@ module Admin
       render partial: "admin/json/injection_ams", locals: {ngModule: 'admin.indexUtils', name: 'SpreeApiKey', json: "'#{@spree_api_key.to_s}'"}
     end
 
-    def admin_inject_json(ngModule, name, data)
+    def admin_inject_json(ng_module, name, data)
       json = data.to_json
-      render partial: "admin/json/injection_ams", locals: {ngModule: ngModule, name: name, json: json}
+      render partial: "admin/json/injection_ams", locals: {ngModule: ng_module, name: name, json: json}
     end
 
-    def admin_inject_json_ams(ngModule, name, data, serializer, opts = {})
+    def admin_inject_json_ams(ng_module, name, data, serializer, opts = {})
       json = serializer.new(data, scope: spree_current_user).to_json
-      render partial: "admin/json/injection_ams", locals: {ngModule: ngModule, name: name, json: json}
+      render partial: "admin/json/injection_ams", locals: {ngModule: ng_module, name: name, json: json}
     end
 
-    def admin_inject_json_ams_array(ngModule, name, data, serializer, opts = {})
+    def admin_inject_json_ams_array(ng_module, name, data, serializer, opts = {})
       json = ActiveModel::ArraySerializer.new(data, {each_serializer: serializer, scope: spree_current_user}.merge(opts)).to_json
-      render partial: "admin/json/injection_ams", locals: {ngModule: ngModule, name: name, json: json}
+      render partial: "admin/json/injection_ams", locals: {ngModule: ng_module, name: name, json: json}
     end
   end
 end
