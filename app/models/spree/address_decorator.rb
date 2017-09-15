@@ -32,6 +32,15 @@ Spree::Address.class_eval do
     filtered_address.compact.join(', ')
   end
 
+  def state_text
+    case Rails.configuration.state_text_attribute
+    when 'abbr'
+      state.try(:abbr)
+    when 'name'
+      state.try(:name) || state_name
+    end
+  end
+
   private
 
   def touch_enterprise

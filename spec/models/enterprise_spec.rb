@@ -262,7 +262,7 @@ describe Enterprise do
     it { should delegate(:latitude).to(:address) }
     it { should delegate(:longitude).to(:address) }
     it { should delegate(:city).to(:address) }
-    it { should delegate(:state_name).to(:address) }
+    it { should delegate(:state_text).to(:address) }
   end
 
   describe "callbacks" do

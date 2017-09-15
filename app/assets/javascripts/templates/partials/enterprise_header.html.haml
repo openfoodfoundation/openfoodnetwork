@@ -9,5 +9,5 @@
         %i{"ng-class" => "::enterprise.icon_font"}
         %span{"ng-bind" => "::enterprise.name"}
     .small-12.medium-5.large-4.columns.text-right.small-only-text-left
-      %p{"ng-bind" => "::[enterprise.address.city, enterprise.address.state_name] | printArray"}
+      %p{"ng-bind" => "::[enterprise.address.city, enterprise.address.state_text] | printArray"}
   %img.hero-img{"ng-src" => "{{::enterprise.promo_image}}"}

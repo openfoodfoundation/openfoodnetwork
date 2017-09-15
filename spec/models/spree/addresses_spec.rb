@@ -69,4 +69,28 @@ describe Spree::Address do
       a.save validate: false
     end
   end
+
+  describe '#state_text' do
+    let(:address) { FactoryGirl.build(:address) }
+
+    before do
+      allow(Rails.configuration).to receive(:state_text_attribute).and_return(attribute)
+    end
+
+    context 'when the state text attribute is set to `abbr`' do
+      let(:attribute) { 'abbr' }
+
+      it 'returns the State abbreviation' do
+        expect(address.state_text).to eq(address.state.abbr)
+      end
+    end
+
+    context 'when the state text attribute is set to `name`' do
+      let(:attribute) { 'name' }
+
+      it 'returns the State name' do
+        expect(address.state_text).to eq(address.state.name)
+      end
+    end
+  end
 end

@@ -44,7 +44,7 @@ class Enterprise < ActiveRecord::Base
   has_many :tag_rules
   has_one :stripe_account, dependent: :destroy
 
-  delegate :latitude, :longitude, :city, :state_name, :to => :address
+  delegate :latitude, :longitude, :city, :state_text, :to => :address
 
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :producer_properties, allow_destroy: true, reject_if: lambda { |pp| pp[:property_name].blank? }
