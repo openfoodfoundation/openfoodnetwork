@@ -87,7 +87,7 @@ describe Admin::StripeAccountsController, type: :controller do
         "object" => "event",
         "data" => { "object" => { "id" => "ca_9B" } },
         "type" => "account.application.deauthorized",
-        "user_id" => "webhook_id"
+        "stripe_account" => { "id" => "webhook_id" }
       }
     end
 
@@ -98,9 +98,9 @@ describe Admin::StripeAccountsController, type: :controller do
       expect(StripeAccount.all).not_to include stripe_account
     end
 
-    context "when the user_id on the event does not match any known accounts" do
+    context "when the stripe_account id on the event does not match any known accounts" do
       before do
-        params["user_id"] = "webhook_id1"
+        params["stripe_account"]["id"] = "webhook_id1"
       end
 
       it "does nothing" do
