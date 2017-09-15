@@ -16,7 +16,7 @@ module Admin
     end
 
     def admin_inject_enterprise_roles
-      admin_inject_json_ams_array "ofn.admin", "enterpriseRoles", @enterprise_roles, Api::Admin::EnterpriseRoleSerializer
+      admin_inject_json_ams_array "admin.enterpriseRoles", "enterpriseRoles", @enterprise_roles, Api::Admin::EnterpriseRoleSerializer
     end
 
     def admin_inject_payment_methods
