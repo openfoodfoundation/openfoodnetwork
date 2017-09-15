@@ -28,8 +28,8 @@
         %a{href: "", "ng-click" => "showDistanceMatches()"}
           = t :hubs_distance_filter, location: "{{ nameMatchesFiltered[0].name }}"
   .more-controls
-    %a.button{href: "", ng: {click: "showClosedShops()", show: "filterExpression.active"}}
+    %a.button{href: "", ng: {click: "showClosedShops()", show: "!show_closed"}}
       = t '.show_closed_shops'
-    %a.button{href: "", ng: {click: "hideClosedShops()", show: "!filterExpression.active"}}
+    %a.button{href: "", ng: {click: "hideClosedShops()", show: "show_closed"}}
       = t '.hide_closed_shops'
     %a.button{href: main_app.map_path}= t '.show_on_map'

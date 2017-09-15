@@ -67,7 +67,7 @@ feature 'Shops', js: true do
       end
 
       # https://github.com/openfoodfoundation/openfoodnetwork/issues/1718
-      xit "shows profiles" do
+      it "shows profiles" do
         expect(page).to have_content profile.name
       end
     end
