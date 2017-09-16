@@ -23,11 +23,16 @@ describe Admin::StripeAccountsController, type: :controller do
 
   context "#connect_callback" do
     let(:params) { { id: enterprise.permalink } }
-    before { allow(controller).to receive(:spree_current_user) { enterprise.owner } }
+    let(:connector) { double(:connector) }
 
-    context "when the connector raises a StripeError" do
+    before do
+      allow(controller).to receive(:spree_current_user) { enterprise.owner }
+      allow(Stripe::AccountConnector).to receive(:new) { connector }
+    end
+
+    context "when the connector.create_account raises a StripeError" do
       before do
-        allow(Stripe::AccountConnector).to receive(:new).and_raise Stripe::StripeError, "some error"
+        allow(connector).to receive(:create_account).and_raise Stripe::StripeError, "some error"
       end
 
       it "returns a 500 error" do
@@ -36,9 +41,9 @@ describe Admin::StripeAccountsController, type: :controller do
       end
     end
 
-    context "when the connector raises an AccessDenied error" do
+    context "when the connector.create_account raises an AccessDenied error" do
       before do
-        allow(Stripe::AccountConnector).to receive(:new).and_raise CanCan::AccessDenied, "some error"
+        allow(connector).to receive(:create_account).and_raise CanCan::AccessDenied, "some error"
       end
 
       it "redirects to unauthorized" do
@@ -47,33 +52,40 @@ describe Admin::StripeAccountsController, type: :controller do
       end
     end
 
-    context "when initializing the connector does not raise an error" do
-      let(:connector) { double(:connector) }
+    context "when the connector fails in creating a new stripe account record" do
+      before { allow(connector).to receive(:create_account) { false } }
 
-      before do
-        allow(Stripe::AccountConnector).to receive(:new) { connector }
-      end
+      context "when the user cancelled the connection" do
+        before { allow(connector).to receive(:connection_cancelled_by_user?) { true } }
 
-      context "when the connector succeeds in creating a new stripe account record" do
-        before { allow(connector).to receive(:create_account) { true } }
-
-        it "redirects to the enterprise edit path" do
-          expect(connector).to receive(:enterprise) { enterprise }
+        it "renders a failure message" do
+          allow(connector).to receive(:enterprise) { enterprise }
           spree_get :connect_callback, params
-          expect(flash[:success]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_success')
+          expect(flash[:notice]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_cancelled')
           expect(response).to redirect_to edit_admin_enterprise_path(enterprise, anchor: 'payment_methods')
         end
       end
 
-      context "when the connector succeeds in creating a new stripe account record" do
-        before { allow(connector).to receive(:create_account) { false } }
+      context "when some other error caused the failure" do
+        before { allow(connector).to receive(:connection_cancelled_by_user?) { false } }
 
         it "renders a failure message" do
-          expect(connector).to_not receive(:enterprise)
+          allow(connector).to receive(:enterprise) { enterprise }
           spree_get :connect_callback, params
-          expect(response.body).to eq I18n.t('admin.controllers.enterprises.stripe_connect_fail')
-          expect(response.status).to be 500
+          expect(flash[:error]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_fail')
+          expect(response).to redirect_to edit_admin_enterprise_path(enterprise, anchor: 'payment_methods')
         end
+      end
+    end
+
+    context "when the connector succeeds in creating a new stripe account record" do
+      before { allow(connector).to receive(:create_account) { true } }
+
+      it "redirects to the enterprise edit path" do
+        allow(connector).to receive(:enterprise) { enterprise }
+        spree_get :connect_callback, params
+        expect(flash[:success]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_success')
+        expect(response).to redirect_to edit_admin_enterprise_path(enterprise, anchor: 'payment_methods')
       end
     end
   end

@@ -13,12 +13,15 @@ module Admin
 
     def connect_callback
       connector = Stripe::AccountConnector.new(spree_current_user, params)
+
       if connector.create_account
         flash[:success] = t('admin.controllers.enterprises.stripe_connect_success')
-        redirect_to main_app.edit_admin_enterprise_path(connector.enterprise, anchor: 'payment_methods')
+      elsif connector.connection_cancelled_by_user?
+        flash[:notice] = t('admin.controllers.enterprises.stripe_connect_cancelled')
       else
-        render text: t('admin.controllers.enterprises.stripe_connect_fail'), status: 500
+        flash[:error] = t('admin.controllers.enterprises.stripe_connect_fail')
       end
+      redirect_to main_app.edit_admin_enterprise_path(connector.enterprise, anchor: 'payment_methods')
     rescue Stripe::StripeError => e
       render text: e.message, status: 500
     end
