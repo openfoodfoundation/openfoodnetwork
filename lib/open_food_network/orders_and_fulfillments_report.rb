@@ -3,6 +3,11 @@ include Spree::ReportsHelper
 
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport < Reports::BaseReport
+    def initialize(user, params = {})
+      @params = params
+      @user = user
+    end
+
     def header
       case params[:report_type]
       when "order_cycle_supplier_totals"
@@ -37,7 +42,6 @@ module OpenFoodNetwork
           I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
           I18n.t(:report_header_status), I18n.t(:report_header_incoming_transport)]
       end
-
     end
 
     def search
@@ -48,7 +52,7 @@ module OpenFoodNetwork
       orders = search.result
 
       line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
-      line_items = line_items.preload([:order, :variant, :product])
+      line_items = line_items.preload(%i[order variant product])
       line_items = line_items.supplied_by_any(params[:q][:supplier_id_in]) if params[:q].andand[:supplier_id_in].present?
 
       # If empty array is passed in, the where clause will return all line_items, which is bad
@@ -163,11 +167,17 @@ module OpenFoodNetwork
             proc { |line_items| "" },
             proc { |line_items| "" }
           ] },
-
           { group_by: proc { |line_item| line_item.product },
           sort_by: proc { |product| product.name } },
           { group_by: proc { |line_item| line_item.full_name },
            sort_by: proc { |full_name| full_name } } ]
+      else
+        [ { group_by: proc { |line_item| line_item.product.supplier },
+            sort_by: proc { |supplier| supplier.name } },
+          { group_by: proc { |line_item| line_item.product },
+            sort_by: proc { |product| product.name } },
+          { group_by: proc { |line_item| line_item.full_name },
+            sort_by: proc { |full_name| full_name } } ]
       end
     end
 

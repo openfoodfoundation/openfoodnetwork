@@ -189,7 +189,7 @@ Spree::Admin::ReportsController.class_eval do
 
       @show_old_version = params[:show_old_version] == '1' || false
 
-      @report_types = REPORT_TYPES[:bulk_coop]
+      @report_types = report_types[:bulk_coop]
       @report_type = params[:q].andand[:report_type]
       @report_type ||= params[:report_type] || @report_types.first.last.to_s
       # -- Prepare form options
@@ -248,7 +248,7 @@ Spree::Admin::ReportsController.class_eval do
       @order_cycles = OrderCycle.active_or_complete.
         involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
 
-      @report_types = REPORT_TYPES[:orders_and_fulfillment]
+      @report_types = report_types[:orders_and_fulfillment]
       @report_type = params[:q].andand[:report_type]
       @report_type ||= params[:report_type] || @report_types.first.last.to_s
 

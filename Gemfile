@@ -1,3 +1,8 @@
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
 source 'https://rubygems.org'
 ruby "2.1.5"
 
@@ -142,3 +147,4 @@ group :development do
   # greater than 1.0.9, so we just required the latest available version here.
   gem 'eventmachine', '>= 1.2.3'
 end
+
