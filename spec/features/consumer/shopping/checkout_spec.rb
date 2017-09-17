@@ -461,7 +461,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
                   fill_in 'Security Code', with: '123'
 
                   place_order
-                  page.should have_content "Payment could not be processed, please check the details you entered"
+                  page.should have_content 'Bogus Gateway: Forced failure'
 
                   # Does not show duplicate shipping fee
                   visit checkout_path
