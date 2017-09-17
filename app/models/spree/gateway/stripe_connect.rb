@@ -33,6 +33,9 @@ module Spree
 
       def purchase(money, creditcard, gateway_options)
         provider.purchase(*options_for_purchase_or_auth(money, creditcard, gateway_options))
+      rescue Stripe::StripeError => e
+        # This will be an error caused by generating a stripe token
+        failed_activemerchant_billing_response(e.message)
       end
 
       def void(response_code, _creditcard, gateway_options)
@@ -88,9 +91,10 @@ module Spree
       def tokenize_instance_customer_card(customer, card)
         token = Stripe::Token.create({card: card, customer: customer}, stripe_account: stripe_account_id)
         token.id
-      rescue Stripe::StripeError => e
-        Rails.logger.error("Stripe Error: #{e}")
-        nil
+      end
+
+      def failed_activemerchant_billing_response(error_message)
+        ActiveMerchant::Billing::Response.new(false, error_message)
       end
 
       def ensure_enterprise_selected

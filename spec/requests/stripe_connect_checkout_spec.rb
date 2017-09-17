@@ -62,13 +62,13 @@ describe "Submitting Stripe Connect charge requests", type: :request do
       end
 
       context "when the charge request returns an error message" do
-        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..."}) } }
+        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure"}) } }
 
         it "should not process the payment" do
           put update_checkout_path, params
           expect(response.status).to be 400
           json_response = JSON.parse(response.body)
-          expect(json_response["flash"]["error"]).to eq "Bup-bow..."
+          expect(json_response["flash"]["error"]).to eq "charge-failure"
           expect(order.payments.completed.count).to be 0
         end
       end
@@ -110,44 +110,38 @@ describe "Submitting Stripe Connect charge requests", type: :request do
       end
 
       context "when the store request returns an error message" do
-        let(:store_response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..."}) } }
+        let(:store_response_mock) { { status: 402, body: JSON.generate(error: { message: "store-failure"}) } }
 
         it "should not process the payment" do
           put update_checkout_path, params
           expect(response.status).to be 400
           json_response = JSON.parse(response.body)
-          expect(json_response["flash"]["error"]).to eq I18n.t(:spree_gateway_error_flash_for_checkout, error: 'Bup-bow...')
+          expect(json_response["flash"]["error"]).to eq I18n.t(:spree_gateway_error_flash_for_checkout, error: 'store-failure')
           expect(order.payments.completed.count).to be 0
         end
       end
 
       context "when the charge request returns an error message" do
-        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..."}) } }
+        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure"}) } }
 
         it "should not process the payment" do
           put update_checkout_path, params
           expect(response.status).to be 400
           json_response = JSON.parse(response.body)
-          expect(json_response["flash"]["error"]).to eq "Bup-bow..."
+          expect(json_response["flash"]["error"]).to eq "charge-failure"
           expect(order.payments.completed.count).to be 0
         end
       end
 
       context "when the token request returns an error message" do
-        let(:token_response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..."}) } }
-        let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..."}) } }
+        let(:token_response_mock) { { status: 402, body: JSON.generate(error: { message: "token-failure"}) } }
 
-        before do
-          # Attempts to charge the card without a token, which will return an error
-          stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-            .with(body: /#{order.number}/).to_return(charge_response_mock)
-        end
-
+        # Note, no requests have been stubbed
         it "should not process the payment" do
           put update_checkout_path, params
           expect(response.status).to be 400
           json_response = JSON.parse(response.body)
-          expect(json_response["flash"]["error"]).to eq "Bup-bow..."
+          expect(json_response["flash"]["error"]).to eq "token-failure"
           expect(order.payments.completed.count).to be 0
         end
       end
@@ -203,32 +197,25 @@ describe "Submitting Stripe Connect charge requests", type: :request do
     end
 
     context "when the charge request returns an error message" do
-      let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..."}) } }
+      let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "charge-failure"}) } }
 
       it "should not process the payment" do
         put update_checkout_path, params
         expect(response.status).to be 400
         json_response = JSON.parse(response.body)
-        expect(json_response["flash"]["error"]).to eq "Bup-bow..."
+        expect(json_response["flash"]["error"]).to eq "charge-failure"
         expect(order.payments.completed.count).to be 0
       end
     end
 
     context "when the token request returns an error message" do
-      let(:token_response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..."}) } }
-      let(:charge_response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..."}) } }
-
-      before do
-        # Attempts to charge the card without a token, which will return an error
-        stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-          .with(body: /#{order.number}/).to_return(charge_response_mock)
-      end
+      let(:token_response_mock) { { status: 402, body: JSON.generate(error: { message: "token-error"}) } }
 
       it "should not process the payment" do
         put update_checkout_path, params
         expect(response.status).to be 400
         json_response = JSON.parse(response.body)
-        expect(json_response["flash"]["error"]).to eq "Bup-bow..."
+        expect(json_response["flash"]["error"]).to eq "token-error"
         expect(order.payments.completed.count).to be 0
       end
     end
