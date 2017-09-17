@@ -68,7 +68,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
           put update_checkout_path, params
           expect(response.status).to be 400
           json_response = JSON.parse(response.body)
-          expect(json_response["flash"]["error"]).to eq I18n.t(:payment_processing_failed)
+          expect(json_response["flash"]["error"]).to eq "Bup-bow..."
           expect(order.payments.completed.count).to be 0
         end
       end
@@ -128,7 +128,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
           put update_checkout_path, params
           expect(response.status).to be 400
           json_response = JSON.parse(response.body)
-          expect(json_response["flash"]["error"]).to eq I18n.t(:payment_processing_failed)
+          expect(json_response["flash"]["error"]).to eq "Bup-bow..."
           expect(order.payments.completed.count).to be 0
         end
       end
@@ -147,7 +147,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
           put update_checkout_path, params
           expect(response.status).to be 400
           json_response = JSON.parse(response.body)
-          expect(json_response["flash"]["error"]).to eq I18n.t(:payment_processing_failed)
+          expect(json_response["flash"]["error"]).to eq "Bup-bow..."
           expect(order.payments.completed.count).to be 0
         end
       end
@@ -209,7 +209,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
         put update_checkout_path, params
         expect(response.status).to be 400
         json_response = JSON.parse(response.body)
-        expect(json_response["flash"]["error"]).to eq I18n.t(:payment_processing_failed)
+        expect(json_response["flash"]["error"]).to eq "Bup-bow..."
         expect(order.payments.completed.count).to be 0
       end
     end
@@ -228,7 +228,7 @@ describe "Submitting Stripe Connect charge requests", type: :request do
         put update_checkout_path, params
         expect(response.status).to be 400
         json_response = JSON.parse(response.body)
-        expect(json_response["flash"]["error"]).to eq I18n.t(:payment_processing_failed)
+        expect(json_response["flash"]["error"]).to eq "Bup-bow..."
         expect(order.payments.completed.count).to be 0
       end
     end

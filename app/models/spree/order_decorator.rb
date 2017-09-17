@@ -293,6 +293,24 @@ Spree::Order.class_eval do
     complete? && distributor.andand.allow_order_changes? && order_cycle.andand.open?
   end
 
+  # Override of existing Spree method. Can remove when we reach 2-0-stable
+  # See commit: https://github.com/spree/spree/commit/5fca58f658273451193d5711081d018c317814ed
+  # Allows GatewayError to show useful error messages in checkout
+  def process_payments!
+    pending_payments.each do |payment|
+      break if payment_total >= total
+
+      payment.process!
+
+      if payment.completed?
+        self.payment_total += payment.amount
+      end
+    end
+  rescue Spree::Core::GatewayError => e # This section changed
+    result = !!Spree::Config[:allow_checkout_on_gateway_error]
+    errors.add(:base, e.message) and return result
+  end
+
   private
 
   def shipping_address_from_distributor
