@@ -45,10 +45,6 @@ class DiscourseSsoController < ApplicationController
   end
 
   def require_activation?
-    !admin_user? && !email_validated?
-  end
-
-  def email_validated?
-    spree_current_user.enterprises.confirmed.map(&:email).include?(spree_current_user.email)
+    !admin_user? && !spree_current_user.confirmed?
   end
 end
