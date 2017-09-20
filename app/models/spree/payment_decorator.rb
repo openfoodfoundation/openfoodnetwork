@@ -5,6 +5,7 @@ module Spree
     after_save :ensure_correct_adjustment, :update_order
 
     def ensure_correct_adjustment
+      destroy_orphaned_paypal_payments if payment_method.is_a?(Spree::Gateway::PayPalExpress)
       # Don't charge for invalid payments.
       # PayPalExpress always creates a payment that is invalidated later.
       # Unknown: What about failed payments?
@@ -81,5 +82,10 @@ module Spree
       refund_amount.to_f
     end
 
+    def destroy_orphaned_paypal_payments
+      return unless source_type == "Spree::PaypalExpressCheckout"
+      orphaned_payments = order.payments.where(payment_method_id: payment_method_id, source_id: nil)
+      orphaned_payments.each(&:destroy)
+    end
   end
 end
