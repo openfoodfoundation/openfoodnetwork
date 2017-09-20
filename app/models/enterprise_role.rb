@@ -9,6 +9,7 @@ class EnterpriseRole < ActiveRecord::Base
 
   def self.receives_notifications_for(enterprise_id)
     manager = EnterpriseRole.find_by_enterprise_id_and_receives_notifications(enterprise_id, true)
+    return nil if manager.blank?
     Spree::User.find(manager.user_id)
   end
 

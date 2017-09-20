@@ -146,7 +146,6 @@ describe Enterprise do
       end
 
       it "sets the enterprise contact to the owner by default" do
-        enterprise.contact.should be_present
         enterprise.contact.should eq enterprise.owner
       end
     end
@@ -217,15 +216,13 @@ describe Enterprise do
 
     describe "activated" do
       let!(:unconfirmed_user) { create(:user, confirmed_at: nil, enterprise_limit: 2) }
-      let!(:inactive_enterprise1) { create(:enterprise, sells: "unspecified", owner: unconfirmed_user) }
-      let!(:inactive_enterprise2) { create(:enterprise, sells: "none", owner: unconfirmed_user) }
+      let!(:inactive_enterprise) { create(:enterprise, sells: "unspecified") }
       let!(:active_enterprise) { create(:enterprise, sells: "none") }
 
-      it "finds enterprises that have a sells property other than 'unspecified' and have a confirmed user" do
+      it "finds enterprises that have a sells property other than 'unspecified'" do
         activated_enterprises = Enterprise.activated
         expect(activated_enterprises).to include active_enterprise
-        expect(activated_enterprises).to_not include inactive_enterprise1
-        expect(activated_enterprises).to_not include inactive_enterprise2
+        expect(activated_enterprises).to_not include inactive_enterprise
       end
     end
 

@@ -188,7 +188,7 @@ module Admin
 
     def load_roles
       @enterprise_roles = EnterpriseRole.find_all_by_enterprise_id(@enterprise.id)
-      @notification_user = EnterpriseRole.receives_notifications_for(@enterprise.id).try(:id)
+      @notification_user = EnterpriseRole.receives_notifications_for(@enterprise.id).try(:id) || @enterprise.owner.id
     end
 
     def update_tag_rules(tag_rules_attributes)

@@ -178,7 +178,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def contact
-    EnterpriseRole.receives_notifications_for self.id
+    EnterpriseRole.receives_notifications_for id || owner
   end
 
   def activated?
