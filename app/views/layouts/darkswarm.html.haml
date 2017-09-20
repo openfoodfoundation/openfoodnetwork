@@ -22,7 +22,7 @@
     = render "layouts/bugherd_script"
     = csrf_meta_tags
 
-  %body.off-canvas{class: @shopfront_layout, ng: {app: "Darkswarm"}}
+  %body{class: body_classes, ng: {app: "Darkswarm"}}
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
@@ -39,7 +39,7 @@
 
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
-        = render "shared/menu/menu"
+        = render "shared/menu/menu" unless @hide_menu
 
         %section{ role: "main" }
           = yield
