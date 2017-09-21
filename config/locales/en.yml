@@ -901,7 +901,7 @@ en:
   label_less: "Show less"
   label_notices: "Notices"
 
-  items: "items"
+  cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
   cart_updating: "Updating cart..."
