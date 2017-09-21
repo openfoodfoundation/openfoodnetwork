@@ -166,13 +166,14 @@ describe Enterprise do
       end
 
       it "validates ownership limit" do
-        expect(u1.enterprise_limit).to be 1
+        expect(u1.enterprise_limit).to be 5
         expect(u1.owned_enterprises(:reload)).to eq [e]
-        e2 = create(:enterprise, owner: u2 )
-        expect{
+        4.times { create(:enterprise, owner: u1) }
+        e2 = create(:enterprise, owner: u2)
+        expect {
           e2.owner = u1
           e2.save!
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: #{u1.email} is not permitted to own any more enterprises (limit is 1)."
+        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: #{u1.email} is not permitted to own any more enterprises (limit is 5)."
       end
     end
   end

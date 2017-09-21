@@ -296,7 +296,7 @@ feature %q{
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Yet Another Distributor') }
-    let(:enterprise_user) { create_enterprise_user }
+    let(:enterprise_user) { create_enterprise_user(enterprise_limit: 1) }
     let!(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
 
     before(:each) do
