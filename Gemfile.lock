@@ -7,10 +7,32 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: git://github.com/coopdevs/spree.git
-  revision: 6705667ac8acd9f5f4add580a7679bc5b524325c
-  ref: 6705667
-  branch: spree-upgrade-step-6
+  remote: git://github.com/jeremydurham/custom-err-msg.git
+  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
+  specs:
+    custom_error_message (1.1.1)
+
+GIT
+  remote: git://github.com/openfoodfoundation/better_spree_paypal_express.git
+  revision: 8d95f4544c682634812becaf50999fba0cd04df0
+  branch: spree-upgrade-intermediate
+  specs:
+    spree_paypal_express (2.0.3)
+      paypal-sdk-merchant (= 1.106.1)
+      spree_core (~> 1.3.99)
+
+GIT
+  remote: git://github.com/openfoodfoundation/ofn-qz.git
+  revision: 024680ccea429b2e5428d7b964fa67c52add34ec
+  specs:
+    ofn-qz (0.1.0)
+      railties (~> 3.1)
+
+GIT
+  remote: git://github.com/openfoodfoundation/spree.git
+  revision: 48febb250a3b1eb2d42812b27b93457e89cde589
+  ref: 48febb2
+  branch: step-6-adjustment-state-migration
   specs:
     spree (1.3.99)
       spree_api (= 1.3.99)
@@ -67,28 +89,6 @@ GIT
       stringex (~> 1.3.2)
     spree_sample (1.3.99)
       spree_core (= 1.3.99)
-
-GIT
-  remote: git://github.com/jeremydurham/custom-err-msg.git
-  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
-  specs:
-    custom_error_message (1.1.1)
-
-GIT
-  remote: git://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 8d95f4544c682634812becaf50999fba0cd04df0
-  branch: spree-upgrade-intermediate
-  specs:
-    spree_paypal_express (2.0.3)
-      paypal-sdk-merchant (= 1.106.1)
-      spree_core (~> 1.3.99)
-
-GIT
-  remote: git://github.com/openfoodfoundation/ofn-qz.git
-  revision: 024680ccea429b2e5428d7b964fa67c52add34ec
-  specs:
-    ofn-qz (0.1.0)
-      railties (~> 3.1)
 
 GIT
   remote: git://github.com/openfoodfoundation/spree_auth_devise.git
