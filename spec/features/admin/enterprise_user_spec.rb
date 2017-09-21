@@ -19,7 +19,7 @@ feature %q{
   describe "creating an enterprise user" do
     context "with a limitted number of owned enterprises" do
       scenario "setting the enterprise ownership limit" do
-        user.enterprise_limit.should == 1
+        user.enterprise_limit.should == 5
         login_to_admin_section
         click_link 'Users'
         click_link user.email
