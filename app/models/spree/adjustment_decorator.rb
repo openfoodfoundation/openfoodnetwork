@@ -6,8 +6,6 @@ module Spree
     has_one :metadata, class_name: 'AdjustmentMetadata'
     belongs_to :tax_rate, foreign_key: 'originator_id', conditions: "spree_adjustments.originator_type = 'Spree::TaxRate'"
 
-    before_validation :initialize_state
-
     scope :enterprise_fee,  where(originator_type: 'EnterpriseFee')
     scope :billable_period, where(source_type: 'BillablePeriod')
     scope :admin,           where(source_type: nil, originator_type: nil)
@@ -76,15 +74,5 @@ module Spree
       result
     end
 
-    private
-
-    # Required after Spree Upgrade Step 6, as existing adjustments did not have
-    # a state, and so failed validation. New adjustments are not affected.
-    def initialize_state
-      return unless state.nil?
-      # (static: true) only updates state when not already set
-      # use (static: :force) to force initialization
-      initialize_state_machines(static: true)
-    end
   end
 end
