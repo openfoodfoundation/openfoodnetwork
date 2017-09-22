@@ -47,9 +47,9 @@ module Admin
       event = Stripe::Event.construct_from(params)
       return render nothing: true, status: 400 unless event.type == "account.application.deauthorized"
 
-      destroyed = StripeAccount.where(stripe_user_id: event.stripe_account.id).destroy_all
+      destroyed = StripeAccount.where(stripe_user_id: event.account).destroy_all
       if destroyed.any?
-        render text: "Account #{event.stripe_account.id} deauthorized", status: 200
+        render text: "Account #{event.account} deauthorized", status: 200
       else
         render nothing: true, status: 400
       end

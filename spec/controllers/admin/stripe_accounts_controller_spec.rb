@@ -99,7 +99,7 @@ describe Admin::StripeAccountsController, type: :controller do
         "object" => "event",
         "data" => { "object" => { "id" => "ca_9B" } },
         "type" => "account.application.deauthorized",
-        "stripe_account" => { "id" => "webhook_id" }
+        "account" => "webhook_id"
       }
     end
 
@@ -112,7 +112,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
     context "when the stripe_account id on the event does not match any known accounts" do
       before do
-        params["stripe_account"]["id"] = "webhook_id1"
+        params["account"] = "webhook_id1"
       end
 
       it "does nothing" do
