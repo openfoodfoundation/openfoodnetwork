@@ -159,6 +159,8 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           gateway_customer_profile_id: "i_am_saved")
         end
 
+        let!(:stripe_account) { create(:stripe_account, enterprise_id: distributor.id, stripe_user_id: 'some_id') }
+
         let(:response_mock) { { id: "ch_1234", object: "charge", amount: 2000} }
 
         before do
