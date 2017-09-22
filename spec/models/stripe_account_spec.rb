@@ -21,9 +21,10 @@ describe StripeAccount do
           to_return(status: 400, body: JSON.generate(error: 'invalid_grant', error_description: "Some Message"))
       end
 
-      it "doesn't destroy the record" do
+      it "destroys the record and notifies Bugsnag" do
+        expect(Bugsnag).to receive(:notify)
         stripe_account.deauthorize_and_destroy
-        expect(StripeAccount.all).to include(stripe_account)
+        expect(StripeAccount.all).to_not include(stripe_account)
       end
     end
 
@@ -41,11 +42,12 @@ describe StripeAccount do
     end
 
     context "if the account is also associated with another Enterprise" do
-      let!(:another_stripe_account) { create(:stripe_account, enterprise: enterprise2, stripe_user_id: stripe_account.stripe_user_id) }
+      let!(:another_stripe_account) { create(:stripe_account, enterprise: enterprise2, stripe_user_id: stripe_user_id) }
 
       it "Doesn't make a Stripe API disconnection request " do
         expect(Stripe::OAuth).to_not receive(:deauthorize)
         stripe_account.deauthorize_and_destroy
+        expect(StripeAccount.all).not_to include(stripe_account)
       end
     end
   end

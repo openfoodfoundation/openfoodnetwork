@@ -7,12 +7,15 @@ class StripeAccount < ActiveRecord::Base
     accounts = StripeAccount.where(stripe_user_id: stripe_user_id)
 
     # Only deauthorize the user if it is not linked to multiple accounts
-    if accounts.count > 1 || Stripe::OAuth.deauthorize(stripe_user_id: stripe_user_id)
-      destroy
-    else
-      false
-    end
+    return destroy if accounts.count > 1
+
+    destroy && Stripe::OAuth.deauthorize(stripe_user_id: stripe_user_id)
   rescue Stripe::OAuth::OAuthError
-    false
+    Bugsnag.notify(
+      RuntimeError.new("StripeDeauthorizeFailure"),
+      stripe_account: stripe_user_id,
+      enterprise_id: enterprise_id
+    )
+    true
   end
 end
