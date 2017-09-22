@@ -117,7 +117,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
       it "does nothing" do
         post 'deauthorize', params
-        expect(response.status).to eq 400
+        expect(response.status).to eq 204
         expect(StripeAccount.all).to include stripe_account
       end
     end
@@ -129,7 +129,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
       it "does nothing" do
         post 'deauthorize', params
-        expect(response.status).to eq 400
+        expect(response.status).to eq 204
         expect(StripeAccount.all).to include stripe_account
       end
     end
