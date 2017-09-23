@@ -7,12 +7,10 @@ module Spree
     attr_accessible :source
 
     def ensure_correct_adjustment
-      # Don't charge for invalid payments.
-      # PayPalExpress always creates a payment that is invalidated later.
-      # Unknown: What about failed payments?
-      if state == "invalid"
-        adjustment.andand.destroy
-      elsif adjustment
+      revoke_adjustment_eligibility if ['failed', 'invalid'].include?(state)
+      return if adjustment.try(:finalized?)
+
+      if adjustment
         adjustment.originator = payment_method
         adjustment.label = adjustment_label
         adjustment.save
@@ -100,6 +98,17 @@ module Spree
       payment_method.create_profile(self)
     rescue ActiveMerchant::ConnectionError => e
       gateway_error e
+    end
+
+    # Don't charge fees for invalid or failed payments.
+    # This is called twice for failed payments, because the persistence of the 'failed'
+    # state is acheived through some trickery using an after_rollback callback on the
+    # payment model. See Spree::Payment#persist_invalid
+    def revoke_adjustment_eligibility
+      return unless adjustment.reload
+      return if adjustment.finalized?
+      adjustment.update_attribute(:eligible, false)
+      adjustment.finalize!
     end
   end
 end
