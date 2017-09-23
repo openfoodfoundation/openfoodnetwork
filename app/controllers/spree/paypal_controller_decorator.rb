@@ -19,7 +19,7 @@ Spree::PaypalController.class_eval do
 
   def reset_order_when_complete
     if current_order.complete?
-      flash[:success] = t(:order_processed_successfully)
+      flash[:notice] = t(:order_processed_successfully)
 
       ResetOrderService.new(self, current_order).call
       session[:access_token] = current_order.token
