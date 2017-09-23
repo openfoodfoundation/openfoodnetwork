@@ -3,7 +3,7 @@ Spree::PaypalController.class_eval do
   before_filter :enable_embedded_shopfront
 
   def cancel
-    flash[:notice] = t('flash.cancel', :scope => 'paypal')
+    flash[:notice] = Spree.t('flash.cancel', :scope => 'paypal')
     redirect_to main_app.checkout_path
   end
 
