@@ -5,7 +5,6 @@ module Spree
     after_save :ensure_correct_adjustment, :update_order
 
     def ensure_correct_adjustment
-      destroy_orphaned_paypal_payments if payment_method.is_a?(Spree::Gateway::PayPalExpress)
       # Don't charge for invalid payments.
       # PayPalExpress always creates a payment that is invalidated later.
       # Unknown: What about failed payments?
@@ -80,21 +79,6 @@ module Spree
     def calculate_refund_amount(refund_amount=nil)
       refund_amount ||= credit_allowed >= order.outstanding_balance.abs ? order.outstanding_balance.abs : credit_allowed.abs
       refund_amount.to_f
-    end
-
-    # See #1074 and #1837 for more detail on why we need this
-    # An 'orphaned' Spree::Payment is created for every call to CheckoutController#update
-    # for orders that are processed using a Spree::Gateway::PayPalExpress payment method
-    # These payments are 'orphaned' because they are never used by the spree_paypal_express gem
-    # which creates a brand new Spree::Payment from scratch in PayPalController#confirm
-    # However, the 'orphaned' payments are useful when applying a transaction fee, because the fees
-    # need to be calculated before the order details are sent to PayPal for confirmation
-    # This is our best hook for removing the orphaned payments at an appropriate time. ie. after
-    # the payment details have been confirmed, but before any payments have been processed
-    def destroy_orphaned_paypal_payments
-      return unless source_type == "Spree::PaypalExpressCheckout"
-      orphaned_payments = order.payments.where(payment_method_id: payment_method_id, source_id: nil)
-      orphaned_payments.each(&:destroy)
     end
   end
 end
