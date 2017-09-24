@@ -4,7 +4,6 @@ require 'open_food_network/reports/bulk_coop_allocation_report'
 
 module OpenFoodNetwork
   class BulkCoopReport < Reports::BaseReport
-
     def initialize(user, params = {})
       @params = params
       @user = user

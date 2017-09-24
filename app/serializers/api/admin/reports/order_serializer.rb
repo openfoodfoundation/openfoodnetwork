@@ -1,7 +1,7 @@
 class Api::Admin::Reports::OrderSerializer < ActiveModel::Serializer
   attributes :id, :number, :display_total, :total, :customer, :customer_id, :email, :created_at, :completed_at, :payment_method,
-    :special_instructions, :outstanding_balance, :payment_total, :shipping_method, :require_ship_address, :order_cycle_name,
-    :customer_code, :customer_tags, :admin_and_handling_total, :ship_total, :payment_fee, :total
+             :special_instructions, :outstanding_balance, :payment_total, :shipping_method, :require_ship_address, :order_cycle_name,
+             :customer_code, :customer_tags, :admin_and_handling_total, :ship_total, :payment_fee, :total
 
   has_one :distributor, serializer: Api::Admin::IdNameSerializer
   has_one :ship_address, serializer: Api::Admin::Reports::AddressSerializer
@@ -56,8 +56,8 @@ class Api::Admin::Reports::OrderSerializer < ActiveModel::Serializer
   end
 
   private
+
   def require_ship_address?
     @require_ship_address ||= object.shipping_method.andand.require_ship_address
   end
-
 end

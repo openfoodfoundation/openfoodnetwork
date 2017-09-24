@@ -43,7 +43,6 @@ describe Api::Admin::Reports::LineItemSerializer do
     it '#paid?' do
       expect(subject.paid?).to eq "No"
     end
-
   end
   # let(:customer) { create(:customer, tag_list: "one, two, three") }
   # let!(:tag_rule) { create(:tag_rule, enterprise: customer.enterprise, preferred_customer_tags: "two") }

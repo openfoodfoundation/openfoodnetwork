@@ -6,9 +6,9 @@ module OpenFoodNetwork::Reports
       let(:user) { create(:admin_user) }
 
       context 'blank object' do
-        let(:report) { BaseReport.new(user, {query: 'keyword'}) }
+        let(:report) { BaseReport.new(user, query: 'keyword') }
         it 'new instance accepts 3 arguments' do
-          expect(report.params).to eq({query: 'keyword'})
+          expect(report.params).to eq(query: 'keyword')
         end
 
         it 'gets search object via permissions' do
@@ -74,9 +74,7 @@ module OpenFoodNetwork::Reports
             expect(report.distributors_serialized.options[:each_serializer]).to eq(Api::Admin::Reports::EnterpriseSerializer)
           end
         end
-
       end
     end
-
   end
 end

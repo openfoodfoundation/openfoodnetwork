@@ -97,7 +97,6 @@ feature "Using embedded shopfront functionality", js: true do
 
     it "redirects to embedded hub on logout when embedded" do
       within_frame 'test_iframe' do
-
         find('ul.right li#login-link a').click
         login_with_modal
 

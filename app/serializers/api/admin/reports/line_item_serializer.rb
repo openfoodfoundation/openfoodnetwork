@@ -45,6 +45,7 @@ class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
   end
 
   private
+
   def group_buy_unit_size
     (object.variant.product.group_buy_unit_size || 0.0) / (object.product.variant_unit_scale || 1)
   end
@@ -56,5 +57,4 @@ class Api::Admin::Reports::LineItemSerializer < ActiveModel::Serializer
   def max_quantity_amount
     [object.max_quantity || 0, object.quantity || 0].max * scaled_unit_value
   end
-
 end

@@ -132,7 +132,8 @@ Spree::Admin::ReportsController.class_eval do
         orders: @report.orders_serialized,
         products: @report.products_serialized,
         distributors: @report.distributors_serialized,
-        variants: @report.variants_serialized }
+        variants: @report.variants_serialized
+      }
       render json: report_data
     else
       @show_old_version = params[:show_old_version] == '1' || false
@@ -172,9 +173,8 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def bulk_coop
+    prepare_date_params params
     if request.format.json?
-      prepare_date_params params
-
       @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
 
       report_data = {
@@ -182,11 +182,10 @@ Spree::Admin::ReportsController.class_eval do
         orders: @report.orders_serialized,
         products: @report.products_serialized,
         distributors: @report.distributors_serialized,
-        variants: @report.variants_serialized }
+        variants: @report.variants_serialized
+      }
       render json: report_data
     else
-      prepare_date_params params
-
       @show_old_version = params[:show_old_version] == '1' || false
 
       @report_types = report_types[:bulk_coop]
@@ -232,7 +231,8 @@ Spree::Admin::ReportsController.class_eval do
         line_items: @report.line_items_serialized,
         orders: @report.orders_serialized,
         products: @report.products_serialized,
-        variants: @report.variants_serialized }
+        variants: @report.variants_serialized
+      }
       render json: report_data
     else
       @show_old_version = params[:show_old_version] == '1' || false

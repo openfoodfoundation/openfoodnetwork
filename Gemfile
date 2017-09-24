@@ -147,4 +147,3 @@ group :development do
   # greater than 1.0.9, so we just required the latest available version here.
   gem 'eventmachine', '>= 1.2.3'
 end
-

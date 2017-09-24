@@ -41,7 +41,7 @@ module OpenFoodNetwork
 
       # FIXME - Maybe we just need orders instead of line_items?
       line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))
-      line_items = line_items.preload([:order, :variant, :product])
+      line_items = line_items.preload(%i[order variant product])
       line_items = line_items.supplied_by_any(params[:q][:supplier_id_in]) if params[:q].andand[:supplier_id_in].present?
 
       # If empty array is passed in, the where clause will return all line_items, which is bad

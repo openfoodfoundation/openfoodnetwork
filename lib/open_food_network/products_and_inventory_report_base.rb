@@ -22,7 +22,7 @@ module OpenFoodNetwork
     def child_variants
       Spree::Variant.
         where(is_master: false).
-        includes({:product => [:supplier, :properties, :taxons]}, :prices, :option_values).
+        includes({:product => %i{supplier properties taxons}}, :prices, :option_values).
         merge(visible_products).
         order('spree_products.name')
     end
