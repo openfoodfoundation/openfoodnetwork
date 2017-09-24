@@ -38,6 +38,9 @@ Openfoodnetwork::Application.configure do
   config.i18n.available_locales = ['en', 'es']
   I18n.locale = config.i18n.locale = config.i18n.default_locale
 
+  # Tests assume Aus timezone.
+  config.time_zone = "Australia/Melbourne"
+
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
@@ -55,3 +58,7 @@ end
 
 # Allows us to use _url helpers in Rspec
 Rails.application.routes.default_url_options[:host] = 'test.host'
+# Set the timezone for phantomjs with TZ
+ENV['TZ'] = Rails.application.config.time_zone
+# Set the timezone for karma with TIMEZONE
+ENV['TIMEZONE'] = Rails.application.config.time_zone
