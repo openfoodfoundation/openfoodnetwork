@@ -1,5 +1,11 @@
-class Api::Admin::Reports::EnterpriseSerializer < ActiveModel::Serializer
-  attributes :id, :name
+module Api
+  module Admin
+    module Reports
+      class EnterpriseSerializer < ActiveModel::Serializer
+        attributes :id, :name
 
-  has_one :address, serializer: Api::Admin::Reports::AddressSerializer
+        has_one :address, serializer: Api::Admin::Reports::AddressSerializer
+      end
+    end
+  end
 end
