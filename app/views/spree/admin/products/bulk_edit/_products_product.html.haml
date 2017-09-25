@@ -32,8 +32,8 @@
   %td.available_on{ 'ng-show' => 'columns.available_on.visible' }
     %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
   %td.actions
-    %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text" }
+    %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text", 'ofn-with-tip' => t(:edit) }
   %td.actions
-    %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text" }
+    %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text", 'ofn-with-tip' => t(:clone) }
   %td.actions
-    %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text" }
+    %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text", 'ofn-with-tip' => t(:remove) }

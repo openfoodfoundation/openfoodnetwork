@@ -23,8 +23,8 @@
   %td{ 'ng-show' => 'columns.inherits_properties.visible' }
   %td{ 'ng-show' => 'columns.available_on.visible' }
   %td.actions
-    %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)" }
+    %a{ 'ng-click' => 'editWarn(product,variant)', :class => "edit-variant icon-edit no-text", 'ng-show' => "variantSaved(variant)", 'ofn-with-tip' => t(:edit)  }
   %td.actions
     %span.icon-warning-sign{ 'ng-if' => 'variant.variant_overrides', 'ofn-with-tip' => "This variant has {{variant.variant_overrides.length}} override(s)" }
   %td.actions
-    %a{ 'ng-click' => 'deleteVariant(product,variant)', "ng-class" => '{disabled: product.variants.length < 2}', :class => "delete-variant icon-trash no-text" }
+    %a{ 'ng-click' => 'deleteVariant(product,variant)', "ng-class" => '{disabled: product.variants.length < 2}', :class => "delete-variant icon-trash no-text", 'ofn-with-tip' => t(:remove)  }

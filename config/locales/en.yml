@@ -132,6 +132,7 @@ en:
   show_all_with_more: "Show All (%{num}  More)"
   cancel: Cancel
   edit: Edit
+  clone: Clone
   distributors: Distributors
   distribution: Distribution
   order_cycles: Order Cycles
