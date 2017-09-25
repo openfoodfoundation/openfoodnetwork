@@ -69,4 +69,10 @@ table#listing_products.bulk {
       margin-bottom: 0.5em;
     }
   }
+
+  td.left-actions {
+    a.view-variants, a.add-variant {
+      cursor: pointer;
+    }
+  }
 }
