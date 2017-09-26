@@ -346,15 +346,6 @@ en:
 
     products:
       unit_name_placeholder: 'eg. bunches'
-      bulk_edit:
-        name: Name
-        unit: Unit
-        display_as: Display As
-        category: Category
-        tax_category: Tax Category
-        inherits_properties?: Inherits Properties?
-        available_on: Available On
-        av_on: "Av. On"
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
@@ -2222,6 +2213,15 @@ Please follow the instructions there to make your enterprise visible on the Open
             title: LOADING PRODUCTS
             no_products: "No products yet. Why don't you add some?"
             no_results: "Sorry, no results match"
+          products_head:
+            name: Name
+            unit: Unit
+            display_as: Display As
+            category: Category
+            tax_category: Tax Category
+            inherits_properties?: Inherits Properties?
+            available_on: Available On
+            av_on: "Av. On"
           product_name: Product Name
         primary_taxon_form:
           product_category: Product Category
