@@ -85,7 +85,7 @@ fr:
   dashboard: Tableau de bord
   undefined: indéfini
   unused: inutilisé
-  admin_and_handling: Frais de gestion
+  admin_and_handling: Frais si par commande
   profile: Profil
   supplier_only: Uniquement Producteur
   weight: Poids
@@ -255,7 +255,7 @@ fr:
       unit_name_placeholder: 'ex: botte'
       bulk_edit:
         unit: Unité
-        display_as: Affiché
+        display_as: Unité affichéé
         category: Catégorie
         tax_category: TVA appliquée
         inherits_properties?: Hériter des propriétés producteur?
@@ -652,11 +652,11 @@ fr:
       register: "Démarrez ici"
   shop:
     messages:
-      login: "login"
+      login: "se connecter"
       register: "s'inscrire"
       contact: "contact"
       require_customer_login: "La boutique est réservée aux membres."
-      require_login_html: "Déjà inscrit? %{Connectez-vous}. Sinon, %{inscrivez-vous} pour pouvoir faire vos achats."
+      require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
       require_customer_html: "Veuillez %{contacter} %{l'entreprise} pour devenir membre."
   invoice_billing_address: "Adresse de facturation :"
   invoice_column_tax: "TVA"
@@ -1416,6 +1416,7 @@ fr:
   order_cycle: "Cycle de vente"
   order_cycles: "Cycles de Vente"
   enterprises: "Entreprises"
+  enterprise_relationships: "Permissions inter-entreprises"
   remove_tax: "Retirer TVA"
   enterprise_terms_of_service: "Conditions Générales d'Utilisation"
   enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
@@ -1471,7 +1472,7 @@ fr:
   report_header_relationship: Droits
   report_header_hub: Hub
   report_header_hub_address: Adresse du Hub
-  report_header_to_hub: Au Hub
+  report_header_to_hub: Distributeur
   report_header_hub_code: Code du Hub
   report_header_code: Code
   report_header_paid: Payé ?
@@ -1510,7 +1511,7 @@ fr:
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
-  report_header_quantity: Quantité
+  report_header_quantity: Nb commandé
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
   report_header_variant_value: Nb Unités Variante
@@ -1526,8 +1527,8 @@ fr:
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
   report_header_cost: Coût
   report_header_shipping_cost: Coût de livraison
-  report_header_curr_cost_per_unit: Prix de revient par unité
-  report_header_total_shipping_cost: Coût de livraison total
+  report_header_curr_cost_per_unit: Prix prod unitaire
+  report_header_total_shipping_cost: Prix prod total
   report_header_payment_method: Méthode de paiement
   report_header_sells: Vend
   report_header_visible: Visible
@@ -1557,10 +1558,10 @@ fr:
   report_header_customer_city: Ville Acheteur
   report_header_payment_state: Statut du Paiement
   report_header_payment_type: Type de Paiement
-  report_header_item_price: "Pièce (%{currency})"
-  report_header_item_fees_price: "Pièce + Marge (%{currency})"
-  report_header_admin_handling_fees: "Frais de Gestion (%{currency})"
-  report_header_ship_price: "Livraison (%{currency})"
+  report_header_item_price: "Coût produits (%{currency})"
+  report_header_item_fees_price: "Coût produits + Marge (%{currency})"
+  report_header_admin_handling_fees: "Frais si par commande (%{currency})"
+  report_header_ship_price: "Frais de livraison (%{currency})"
   report_header_pay_fee_price: "Frais de Transaction (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Total Produit (%{currency})"
@@ -1569,12 +1570,12 @@ fr:
   report_header_eft_price: "TEF / Transfert Electronique (%{currency})"
   report_header_paypal_price: "Paypal (%{currency})"
   report_header_sku: Référence Produit
-  report_header_amount: Montant
+  report_header_amount: Quantité
   report_header_balance: Solde
   report_header_total_cost: "Coût Total"
   report_header_total_ordered: Total Commandé
   report_header_total_max: Max Total
-  report_header_total_units: Nb total d'articles
+  report_header_total_units: Vol. total
   report_header_sum_max_total: "Somme Max Total"
   report_header_total_excl_vat: "Total HT (%{currency_symbol})"
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
@@ -1894,7 +1895,7 @@ fr:
       products:
         bulk_edit:
           header:
-            title: Edition des produits par lots
+            title: Gestion du catalogue produits
           indicators:
             title: CHARGEMENT DES PRODUITS
             no_products: "Aucun produit trouvé. Ajouter un produit ?"
