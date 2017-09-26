@@ -2,7 +2,7 @@ es:
   activerecord:
     attributes:
       spree/order:
-        payment_state: Estado del pagos
+        payment_state: Estado del pago
         shipment_state: Estado del envío
     errors:
       models:
@@ -75,7 +75,7 @@ es:
   distributors: Distribuidores
   distribution: Distribución
   bulk_order_management: Gestión de pedidos en bloque
-  enterprise_groups: Grupos
+  enterprise_groups: Redes
   reports: Informes
   variant_overrides: Inventario
   spree_products: Productos Spree
@@ -379,9 +379,9 @@ es:
         primary_details:
           name: Nombre
           name_placeholder: ej. Professor Plum's Biodynamic Truffles
-          groups: Grupos
-          groups_tip: Seleccione los grupos o zonas de los que es miembro. Esto ayudará a los clientes a encontrar su organización.
-          groups_placeholder: Escribe para buscar los grupos disponibles...
+          groups: Redes
+          groups_tip: Seleccione las redes o zonas de los que es miembro. Esto ayudará a los consumidores a encontrar tu organización.
+          groups_placeholder: Escribe para buscar las redes disponibles...
           primary_producer: Productora Principal?
           primary_producer_tip: Seleciona "Productora" si eres la principal productora.
           producer: Productora
@@ -434,7 +434,7 @@ es:
           open_date: Fecha de Inicio
           close_date: Fecha de Finalización
         social:
-          twitter_placeholder: ej. @the_prof
+          twitter_placeholder: 'ej: the_prof'
         tag_rules:
           default_rules:
             by_default: Por Defecto
@@ -481,7 +481,7 @@ es:
         sell_your_produce: Vende tu propia producción
         producer_shop_description_text: Vender sus productos directamente a los clientes a través de su propia tienda.
         producer_shop_description_text2: Una tienda de productora es para sus productos solamente, si quieres vender productos de otros productores, selecciona "Grupo de Productoras"
-        producer_hub: Grupo de Productoras
+        producer_hub: Grupo
         producer_hub_text: Vende tu propia producción y la de otros
         producer_hub_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos tuyos o de otras organizaciones y véndelo a través de tu tienda en Open Food Network.
         profile: Solo perfil
@@ -657,7 +657,7 @@ es:
       register: "registro"
       contact: "contactar"
       require_customer_login: "Esta tienda es solo para consumidores registrados."
-      require_login_html: "Haz %{login} si ya tienes una cuenta. De lo contrario puedes %{register}."
+      require_login_html: "Haz %{login} si ya tienes una cuenta. De lo contrario realiza un %{register}y contacta con la organización para que acepten tu solicitud."
       require_customer_html: "%{contact} %{enterprise} para convertirte en miembro."
   invoice_billing_address: "Dirección de facturación:"
   invoice_column_tax: "Impuesto sobre bienes y servicios"
@@ -709,7 +709,7 @@ es:
   address_placeholder: ej. Carrer Torrent de l'Olla
   address2: Dirección (cont.)
   city: Ciudad
-  city_placeholder: ej. Gràcia
+  city_placeholder: ej. Barcelona
   postcode: Código postal
   postcode_placeholder: ej. 08025
   state: Estado
@@ -726,12 +726,12 @@ es:
   label_shops: "Tiendas"
   label_map: "Mapa"
   label_producers: "Productoras"
-  label_groups: "Grupos"
+  label_groups: "Redes"
   label_about: "Acerca de"
   label_connect: "Conectar"
   label_learn: "Aprender"
   label_shopping: "Tienda"
-  label_login: "Iniciar de sesión"
+  label_login: "Iniciar sesión"
   label_logout: "Cerrar sesión"
   label_signup: "Registrarse"
   label_administration: "Administración"
@@ -958,11 +958,11 @@ es:
   components_profiles_show: "Mostrar perfiles"
   components_filters_nofilters: "Sin filtros"
   components_filters_clearfilters: "Limpiar todos los filtros"
-  groups_title: Groupos
-  groups_headline: Groupos / regiones
-  groups_text: "Cada productora es única. Cada organización tiene algo diferente que ofrecer. Nuestros grupos son colectivos de productoras, grupos y distribuidoras que comparten valores agroecológicos. Esto hace que tu experiencia de compra sea más fácil. Puedes buscar en nuestros grupos y estar seguro que se ha hecho una selección de proyectos con estos criterios."
+  groups_title: Redes
+  groups_headline: Redes / regiones
+  groups_text: "Cada productora es única. Cada organización tiene algo diferente que ofrecer. Nuestras redes son colectivos de productoras, grupos y distribuidoras que comparten valores agroecológicos. Esto hace que tu experiencia de compra sea más fácil. Puedes buscar las redes y estar seguro que se ha hecho una selección de proyectos con estos criterios."
   groups_search: "Buscar nombre o palabra clave"
-  groups_no_groups: "No se encontraron grupos"
+  groups_no_groups: "No se encontraron redes"
   groups_about: "Acerca de nosotras"
   groups_producers: "Nuestras productoras"
   groups_hubs: "Nuestros Grupos de Consumo"
@@ -973,7 +973,7 @@ es:
   groups_contact_website: Visite nuestro sitio web
   groups_contact_facebook: Síganos en Facebook
   groups_signup_title: Registrarse como un grupo
-  groups_signup_headline: Registro de grupos
+  groups_signup_headline: Registro de redes
   groups_signup_intro: "Somos una asombrosa plataforma de mercadeo colaborativo, la forma más sencilla para que sus miembros e interesados encuentren nuevos mercados. No tenemos fines de lucro, somos asequibles y simples."
   groups_signup_email: Envíenos un correo electrónico
   groups_signup_motivation1: Nosotros transformamos sistemas de comida de forma justa.
@@ -995,9 +995,9 @@ es:
   modal_hubs_abstract: ¡Nuestros Grupos de Consumo son el punto de contacto entre usted y la gente que hace su comida!
   modal_hubs_content1: Puede buscar un grupo de consumo conveniente por ubicación o nombre. Algunos grupos de consumo tienen múltiples puntos en loa que puede recoger las compras, y algunos también brindan opciones de entrega a domicilio. Cada Grupo de Consumo es un punto de venta con operaciones de negocio y logística independientes, entonces puede esperar diferencias entre Grupos de Consumo.
   modal_hubs_content2: Sólo puedes comprar en un grupo de consumo a la vez.
-  modal_groups: "Grupos / Regiones"
+  modal_groups: "Redes / Regiones"
   modal_groups_content1: Estas son las organizaciones y relaciones entre grupos de consumo que conforman el Open Food Network.
-  modal_groups_content2: Algunos grupos están organizados por ubicación o junta, otros por similaridades no geográficas.
+  modal_groups_content2: Algunas redes están organizadas por ubicación, otros por afinidades no geográficas.
   modal_how: "Cómo funciona"
   modal_how_shop: Comprar en Open Food Network
   modal_how_shop_explained: ¡Buscar un grupo de consumo cerca de ti para empezar a comprar! Puedes expandir cada grupo de consumo para ver qué tipos de productos están disponibles, y hacer clic para empezar a comprar. (Sólo puedes comprar en un grupo de consumo a la vez.)
@@ -1040,7 +1040,7 @@ es:
   sell_motivation: "Muestra tus preciosos alimentos."
   sell_producers: "Productoras"
   sell_hubs: "Grupos de Consumo"
-  sell_groups: "Grupos"
+  sell_groups: "Redes"
   sell_producers_detail: "Crea tu perfil en OFN en cuestión de minutos. En cualquier momento puedes actualizar tu perfil a una tienda en línea y vender tus productos directamente a los consumidores."
   sell_hubs_detail: "Crea un perfil para tu organización en OFN. En cualquier momento puedes actualizar tu perfil a una tienda de varias productoras."
   sell_groups_detail: "Crea un directorio personalizado de organizaciones (productoras u otras organizaciones) para tu región o para tu organización."
@@ -1209,9 +1209,9 @@ es:
   linkedin: "LinkedIn"
   linkedin_placeholder: "eg. www.linkedin.com/SuNombreAquí"
   twitter: "Twitter"
-  twitter_placeholder: "eg. @usuario_de_twitter"
+  twitter_placeholder: "usuario_de_twitter"
   instagram: "Instagram"
-  instagram_placeholder: "ej. @usuario_de_instagram"
+  instagram_placeholder: "usuario_de_instagram"
   registration_greeting: "¡Hola!"
   registration_intro: "Ahora puede crear un perfil para su Productora o Grupo de Consumo"
   registration_action: "¡Empecemos!"
@@ -1235,7 +1235,7 @@ es:
   registration_type_headline: "¡Último paso para agregar %{enterprise}!"
   registration_type_question: "¿Eres una productora?"
   registration_type_producer: "Sí, soy una productora"
-  registration_type_no_producer: "No, no soy un produtor"
+  registration_type_no_producer: "No, no soy un productor"
   registration_type_error: "Escoja una. ¿Es una productora?"
   registration_type_producer_help: "Las productoras hacen cosas deliciosas para comer y/o beber. Eres una productora si lo cultivas, lo haces crecer, lo preparas, lo horneas, lo fermentas, lo ordeñas, ..."
   registration_type_no_producer_help: "Si no eres una productora, probablemente conozcas a alguien que venda o distribuya comida. También podrías convertirte en un grupo de consumo u otro tipo de organización."
@@ -1253,8 +1253,8 @@ es:
   registration_detail_address1_placeholder: "e.j. Torrent de l'Olla 24"
   registration_detail_address1_error: "Ingrese una dirección"
   registration_detail_address2: "Línea de dirección 2:"
-  registration_detail_suburb: "Barrio:"
-  registration_detail_suburb_placeholder: "e.j. Gràcia"
+  registration_detail_suburb: "Ciudad:"
+  registration_detail_suburb_placeholder: "ej. Barcelona"
   registration_detail_suburb_error: "Ingrese el barrio"
   registration_detail_postcode: "Código postal:"
   registration_detail_postcode_placeholder: "e.j. 08025"
@@ -1303,7 +1303,7 @@ es:
   admin_entreprise_relationships_permits: "Permisos"
   admin_entreprise_relationships_seach_placeholder: "Buscar"
   admin_entreprise_relationships_button_create: "Crear"
-  admin_entreprise_groups: "Grupos de organizaciones"
+  admin_entreprise_groups: "Redes de organizaciones"
   admin_entreprise_groups_name: "Nombre"
   admin_entreprise_groups_owner: "Propietaria"
   admin_entreprise_groups_on_front_page: "¿En la página principal?"
@@ -1315,17 +1315,17 @@ es:
   admin_entreprise_groups_contact_phone_placeholder: "ej. 98 7654 3210"
   admin_entreprise_groups_contact_address1_placeholder: "ej. C/Torrent de l'Olla"
   admin_entreprise_groups_contact_city: "Barrio"
-  admin_entreprise_groups_contact_city_placeholder: "ej. Gràcia"
+  admin_entreprise_groups_contact_city_placeholder: "ej. Barcelona"
   admin_entreprise_groups_contact_zipcode: "Código Postal"
   admin_entreprise_groups_contact_zipcode_placeholder: "ej. 08025"
   admin_entreprise_groups_contact_state_id: "Región"
   admin_entreprise_groups_contact_country_id: "País"
   admin_entreprise_groups_web: "Recursos Web"
-  admin_entreprise_groups_web_twitter: "ej. @the_prof"
+  admin_entreprise_groups_web_twitter: "ej. the_prof"
   admin_entreprise_groups_web_website_placeholder: "ej. www.truffles.com"
   admin_order_cycles: "Ciclos de Pedidos del Admin"
   open: "Abierta"
-  close: "Cerrada"
+  close: "Cerrar"
   create: "Crear"
   search: "Buscar"
   supplier: "Proveedora"
@@ -1417,6 +1417,7 @@ es:
   order_cycle: "Ciclo de Pedido"
   order_cycles: "Ciclos de Pedidos"
   enterprises: "Organizaciones"
+  enterprise_relationships: "Relaciones entre organizaciones"
   remove_tax: "Eliminar impuesto"
   enterprise_terms_of_service: "Términos del Servicio de la Organización"
   enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
@@ -1556,9 +1557,7 @@ es:
   report_header_customer_email: Correo electrónico de la consumidora
   report_header_customer_phone: Teléfono de la Consumidora
   report_header_customer_city: Ciudad de la Consumidora
-  report_header_payment_state: 'Estado del pagos
-
-    nterpr'
+  report_header_payment_state: Estado del pago
   report_header_payment_type: Tipo de pago
   report_header_item_price: "Artículo (%{currency})"
   report_header_item_fees_price: "Artículo + Comisiones (%{currency})"
@@ -1802,7 +1801,7 @@ es:
           producer_desc: Productoras
           producer_example: ej. AGRICULTORES, PRODUCTORAS
           non_producer_desc: Todas las demás organizaciones
-          non_producer_example: ej. Grupos de consumo, Tiendas de proximidad, Cooperativas de alimentación
+          non_producer_example: ej. Grupos de consumo, Tiendas de proximidad, ...
         enterprise_status:
           status_title: "%{name} está configurado y listo para funcionar!"
           severity: Gravedad
