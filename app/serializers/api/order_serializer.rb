@@ -28,10 +28,6 @@ module Api
       I18n.l(object.order_cycle.andand.orders_close_at, format: "%b %d, %Y %H:%M")
     end
 
-    def total
-      object.total.to_money.to_s
-    end
-
     def shipment_state
       object.shipment_state ? object.shipment_state : nil
     end

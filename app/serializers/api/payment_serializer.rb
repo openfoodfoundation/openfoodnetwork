@@ -5,10 +5,6 @@ module Api
       object.payment_method.try(:name)
     end
 
-    def amount
-      object.amount.to_money.to_s
-    end
-
     def updated_at
       I18n.l(object.updated_at, format: "%b %d, %Y %H:%M")
     end
