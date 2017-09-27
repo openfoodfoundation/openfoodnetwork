@@ -2227,6 +2227,8 @@ Please follow the instructions there to make your enterprise visible on the Open
             inherits_properties?: Inherits Properties?
             available_on: Available On
             av_on: "Av. On"
+          products_variant:
+            variant_has_n_overrides: "This variant has %{n} override(s)"
           product_name: Product Name
         primary_taxon_form:
           product_category: Product Category
