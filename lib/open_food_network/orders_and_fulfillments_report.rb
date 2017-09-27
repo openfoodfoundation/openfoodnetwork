@@ -10,19 +10,19 @@ module OpenFoodNetwork
 
     def header
       case params[:report_type]
-      when "order_cycle_supplier_totals"
+      when "supplier_totals"
         [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
           I18n.t(:report_header_total_units), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
           I18n.t(:report_header_status), I18n.t(:report_header_incoming_transport)]
-      when "order_cycle_supplier_totals_by_distributor"
+      when "supplier_totals_by_distributor"
         [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_to_hub),
           I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
           I18n.t(:report_header_shipping_method)]
-      when "order_cycle_distributor_totals_by_supplier"
+      when "distributor_totals_by_supplier"
         [I18n.t(:report_header_hub), I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant),
           I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
           I18n.t(:report_header_total_shipping_cost), I18n.t(:report_header_shipping_method)]
-      when "order_cycle_customer_totals"
+      when "customer_totals"
         [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email), I18n.t(:report_header_phone),
           I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
           I18n.t(:report_header_item_price, currency: currency_symbol),

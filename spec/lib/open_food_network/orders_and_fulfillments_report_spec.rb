@@ -103,7 +103,7 @@ module OpenFoodNetwork
 
       before { o1.line_items << li1 }
 
-      it 'has aligned columsn' do
+      it 'has aligned columns' do
         report_types = ["supplier_totals", "supplier_totals_by_distributor", "distributor_totals_by_supplier", "customer_totals"]
 
         report_types.each do |report_type|
