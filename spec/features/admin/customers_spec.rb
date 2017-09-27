@@ -137,7 +137,7 @@ feature 'Customers' do
           expect(page).to have_content "This code is used already."
         end
         click_button "Save Changes"
-
+        sleep 0.2
         within "tr#c_#{customer1.id}" do
           expect(page).to have_css "input[name=code].update-success"
         end
