@@ -7,7 +7,7 @@ class EnterprisesController < BaseController
 
   # These prepended filters are in the reverse order of execution
   prepend_before_filter :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
-  before_filter :check_stock_levels, only: :shop
+  before_filter :check_stock_levels, :set_noindex_meta_tag, only: :shop
 
   before_filter :clean_permalink, only: :check_permalink
   before_filter :enable_embedded_shopfront
@@ -79,5 +79,9 @@ class EnterprisesController < BaseController
   def reset_order_cycle(order, distributor)
     order_cycle_options = OrderCycle.active.with_distributor(distributor)
     order.order_cycle = order_cycle_options.first if order_cycle_options.count == 1
+  end
+
+  def set_noindex_meta_tag
+    @noindex_meta_tag = true unless current_distributor.visible?
   end
 end
