@@ -26,3 +26,5 @@ CURRENCY: AUD
 
 # see: https://developers.google.com/maps/documentation/javascript/get-api-key
 # GOOGLE_MAPS_API_KEY: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+STAGING_LOG_LEVEL: 'info'
