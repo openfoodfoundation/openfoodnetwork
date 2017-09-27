@@ -10,19 +10,19 @@ module OpenFoodNetwork
 
     def header
       case params[:report_type]
-      when "supplier_totals"
+      when "order_cycle_supplier_totals"
         [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
           I18n.t(:report_header_total_units), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
           I18n.t(:report_header_status), I18n.t(:report_header_incoming_transport)]
-      when "supplier_totals_by_distributor"
+      when "order_cycle_supplier_totals_by_distributor"
         [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_to_hub),
           I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
           I18n.t(:report_header_shipping_method)]
-      when "distributor_totals_by_supplier"
+      when "order_cycle_distributor_totals_by_supplier"
         [I18n.t(:report_header_hub), I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant),
           I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
           I18n.t(:report_header_total_shipping_cost), I18n.t(:report_header_shipping_method)]
-      when "customer_totals"
+      when "order_cycle_customer_totals"
         [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email), I18n.t(:report_header_phone),
           I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant), I18n.t(:report_header_amount),
           I18n.t(:report_header_item_price, currency: currency_symbol),
@@ -79,14 +79,14 @@ module OpenFoodNetwork
 
     def rules
       case params[:report_type]
-      when "supplier_totals"
+      when "order_cycle_supplier_totals"
         [ { group_by: proc { |line_item| line_item.product.supplier },
           sort_by: proc { |supplier| supplier.name } },
           { group_by: proc { |line_item| line_item.product },
           sort_by: proc { |product| product.name } },
           { group_by: proc { |line_item| line_item.full_name },
           sort_by: proc { |full_name| full_name } } ]
-      when "supplier_totals_by_distributor"
+      when "order_cycle_supplier_totals_by_distributor"
         [ { group_by: proc { |line_item| line_item.product.supplier },
           sort_by: proc { |supplier| supplier.name } },
           { group_by: proc { |line_item| line_item.product },
@@ -103,7 +103,7 @@ module OpenFoodNetwork
             proc { |line_items| "" } ] },
           { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name } } ]
-      when "distributor_totals_by_supplier"
+      when "order_cycle_distributor_totals_by_supplier"
         [ { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name },
           summary_columns: [ proc { |line_items| "" },
@@ -121,7 +121,7 @@ module OpenFoodNetwork
           sort_by: proc { |product| product.name } },
           { group_by: proc { |line_item| line_item.full_name },
           sort_by: proc { |full_name| full_name } } ]
-      when "customer_totals"
+      when "order_cycle_customer_totals"
         [ { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name } },
           { group_by: proc { |line_item| line_item.order },
@@ -183,7 +183,7 @@ module OpenFoodNetwork
 
     def columns
       case params[:report_type]
-      when "supplier_totals"
+      when "order_cycle_supplier_totals"
         [ proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },
           proc { |line_items| line_items.first.full_name },
@@ -193,7 +193,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.sum { |li| li.amount } },
           proc { |line_items| "" },
           proc { |line_items| I18n.t(:report_header_incoming_transport) } ]
-      when "supplier_totals_by_distributor"
+      when "order_cycle_supplier_totals_by_distributor"
         [ proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },
           proc { |line_items| line_items.first.full_name },
@@ -202,7 +202,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.price },
           proc { |line_items| line_items.sum { |li| li.amount } },
           proc { |line_items| I18n.t(:report_header_shipping_method) } ]
-      when "distributor_totals_by_supplier"
+      when "order_cycle_distributor_totals_by_supplier"
         [ proc { |line_items| line_items.first.order.distributor.name },
           proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },
@@ -212,7 +212,7 @@ module OpenFoodNetwork
           proc { |line_items| line_items.sum { |li| li.amount } },
           proc { |line_items| "" },
           proc { |line_items| I18n.t(:report_header_shipping_method) } ]
-      when "customer_totals"
+      when "order_cycle_customer_totals"
         rsa = proc { |line_items| line_items.first.order.shipping_method.andand.require_ship_address }
         [
           proc { |line_items| line_items.first.order.distributor.name },
