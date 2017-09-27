@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Spree.user_class do
   include AuthenticationWorkflow
 
@@ -100,6 +102,20 @@ describe Spree.user_class do
       it "returns all users" do
         expect(admin.known_users).to include u1, u2, u3
       end
+    end
+  end
+
+  describe "last incomplete spree order" do
+    let(:user) { create(:user) }
+    let!(:order) { create(:order, state: 'cart', user_id: user.id) }
+
+    it "returns any prior incomplete orders" do
+      expect(user.last_incomplete_spree_order).to eq order
+    end
+
+    it "ignores prior orders linked to an account_invoice" do
+      create :account_invoice, user: user
+      expect(user.last_incomplete_spree_order).to eq order
     end
   end
 
