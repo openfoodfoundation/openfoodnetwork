@@ -5,6 +5,8 @@
     %meta{property: "og:title", content: content_for?(:title) ? yield(:title) : t(:title)}
     %meta{property: "og:description", content: content_for?(:description) ? yield(:description) : t(:site_meta_description)}
     %meta{property: "og:image", content: content_for?(:image) ? yield(:image) : ContentConfig.logo.url}
+    - if !Rails.env.production? || @noindex_meta_tag
+      %meta{name: "robots", content: "noindex"}
     %title= content_for?(:title) ? "#{yield(:title)} - #{t(:title)}".html_safe : "#{t(:welcome_to)} #{t(:title)}"
     - if Rails.env.production?
       = favicon_link_tag
