@@ -4,7 +4,7 @@ feature "Account Settings", js: true do
   include AuthenticationWorkflow
 
   describe "as a logged in user" do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, email: 'old@email.com') }
 
     before do
       quick_login_as user
@@ -21,7 +21,10 @@ feature "Account Settings", js: true do
 
       expect(find(".alert-box.success").text.strip).to eq "#{I18n.t(:account_updated)} ×"
       user.reload
-      expect(user.email).to eq 'new@email.com'
+      expect(user.email).to eq 'old@email.com'
+      expect(user.unconfirmed_email).to eq 'new@email.com'
+      click_link I18n.t('spree.users.show.tabs.settings')
+      expect(page).to have_content I18n.t('spree.users.show.unconfirmed_email', unconfirmed_email: 'new@email.com')
     end
   end
 end

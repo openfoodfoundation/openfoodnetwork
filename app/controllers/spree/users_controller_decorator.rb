@@ -9,6 +9,7 @@ Spree::UsersController.class_eval do
   # Ignores invoice orders, only order where state: 'complete'
   def show
     @orders = @user.orders.where(state: 'complete').order('completed_at desc')
+    @unconfirmed_email = spree_current_user.unconfirmed_email
 
     return unless Spree::Config.accounts_distributor_id
 

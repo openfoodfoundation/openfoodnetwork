@@ -1,0 +1,5 @@
+/ insert_before "#password-credentials"
+
+- if @unconfirmed_email
+  %p.alert-box
+    = t('spree.users.show.unconfirmed_email', unconfirmed_email: @unconfirmed_email)

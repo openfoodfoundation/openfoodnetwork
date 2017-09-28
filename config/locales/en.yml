@@ -2361,6 +2361,7 @@ Please follow the instructions there to make your enterprise visible on the Open
           cards: Credit Cards
           transactions: Transactions
           settings: Account Settings
+        unconfirmed_email: "Pending email confirmation for: %{unconfirmed_email}. Your email address will be updated once the new email is confirmed."
       orders:
         open_orders: Open Orders
         past_orders: Past Orders
