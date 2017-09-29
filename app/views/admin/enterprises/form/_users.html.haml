@@ -60,3 +60,16 @@
       - @enterprise.users.each do |manager|
         = manager.email
         %br
+
+- if full_permissions
+  %form
+    .row
+      .three.columns.alpha
+        %label
+          = t('.invite_manager')
+        %div{'ofn-with-tip' => t('.invite_manager_tip')}
+          %a= t('admin.whats_this')
+      .eight.columns.omega
+        .row
+          %a.button.help-modal{template: 'admin/modals/invite_manager.html'}
+            = t('.add_unregistered_user')

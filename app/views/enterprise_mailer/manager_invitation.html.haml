@@ -1,0 +1,16 @@
+%h3
+  = t('invite_email.greeting')
+%p.lead
+  = t('invite_email.invited_to_manage', enterprise: @enterprise.name, instance: @instance)
+
+%p
+  = t('invite_email.confirm_your_email')
+%p
+  = t('invite_email.mistakenly_sent', owner_email: @enterprise.owner.email, instance: @instance, instance_email: @instance_email)
+
+%p
+  = t :email_help
+
+= render 'shared/mailers/signoff'
+
+= render 'shared/mailers/social_and_contact'
