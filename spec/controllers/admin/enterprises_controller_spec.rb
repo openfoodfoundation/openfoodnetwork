@@ -634,5 +634,41 @@ module Admin
         end
       end
     end
+
+    describe "#invite_manager" do
+      context "when given email matches an existing user" do
+        let!(:existing_user) { create(:user) }
+        let!(:enterprise) { create(:enterprise) }
+        let(:admin) { create(:admin_user) }
+
+        before do
+          controller.stub spree_current_user: admin
+        end
+
+        it "returns an error" do
+          spree_post :invite_manager, {email: user.email, enterprise: enterprise.id}
+
+          expect(response.status).to eq 422
+          expect(json_response['errors']).to eq I18n.t('admin.enterprises.invite_manager.user_already_exists')
+        end
+      end
+
+      context "signing up a new user" do
+        let!(:enterprise) { create(:enterprise) }
+        let(:admin) { create(:admin_user) }
+
+        before do
+          controller.stub spree_current_user: admin
+        end
+
+        it "creates a new user, sends an invitation email, and returns the user id" do
+          spree_post :invite_manager, {email: 'un.registered@email.com', enterprise: enterprise.id}
+
+          expect(Delayed::Job.last.payload_object.class.to_s).to eq('ManagerInvitationJob')
+          expect(response.status).to eq 200
+          expect(json_response['user']).to eq Spree::User.find_by_email('un.registered@email.com').id
+        end
+      end
+    end
   end
 end

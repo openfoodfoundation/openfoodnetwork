@@ -114,7 +114,9 @@ feature %q{
 
           # user3 has been added and has an unconfirmed email address
           expect(page).to have_css "tr#manager-#{user3.id}"
-          expect(page).to have_css 'i.unconfirmed'
+          within "tr#manager-#{user3.id}" do
+            expect(page).to have_css 'i.unconfirmed'
+          end
         end
       end
 
@@ -130,6 +132,31 @@ feature %q{
           end
           within "tr#manager-#{user2.id}" do
             expect(page).to have_css 'i.contact'
+          end
+        end
+      end
+
+      it "can invite unregistered users to be managers" do
+        new_email = 'new@manager.com'
+
+        find('a.button.help-modal').click
+        expect(page).to have_css '#invite-manager-modal'
+
+        within '#invite-manager-modal' do
+          fill_in 'invite_email', with: new_email
+          click_button I18n.t('js.admin.modals.invite')
+          expect(page).to have_content I18n.t('user_invited', email: new_email)
+          click_button I18n.t('js.admin.modals.close')
+        end
+
+        new_user = Spree::User.find_by_email_and_confirmed_at(new_email, nil)
+        expect(Enterprise.managed_by(new_user)).to include enterprise
+
+        within 'table.managers' do
+          expect(page).to have_content new_email
+
+          within "tr#manager-#{new_user.id}" do
+            expect(page).to have_css 'i.unconfirmed'
           end
         end
       end

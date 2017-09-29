@@ -15,7 +15,7 @@ class EnterpriseMailer < Spree::BaseMailer
   def manager_invitation(enterprise, user)
     @enterprise = enterprise
     @instance = Spree::Config[:site_name]
-    @instance_email = Spree::Config[:preferred_mails_from]
+    @instance_email = from_address
 
     subject = t('enterprise_mailer.invite_manager.subject', enterprise: @enterprise.name)
 
