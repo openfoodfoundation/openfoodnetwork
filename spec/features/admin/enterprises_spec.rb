@@ -343,6 +343,7 @@ feature %q{
 
         # And I should be managing it
         Enterprise.managed_by(enterprise_user).should include enterprise
+        expect(EnterpriseRole.receives_notifications_for(enterprise.id)).to eq enterprise.owner
       end
 
       context "overstepping my owned enterprises limit" do

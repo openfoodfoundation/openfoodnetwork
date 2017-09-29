@@ -78,6 +78,62 @@ feature %q{
       page.should_not have_relationship u, e
       EnterpriseRole.where(id: er.id).should be_empty
     end
+
+    describe "using the enterprise managers interface" do
+      let!(:user1) { create(:user, email: 'user1@example.com') }
+      let!(:user2) { create(:user, email: 'user2@example.com') }
+      let!(:user3) { create(:user, email: 'user3@example.com', confirmed_at: nil) }
+
+      let!(:enterprise) { create(:enterprise, name: 'Test Enterprise', owner: user1) }
+      let!(:enterprise_role) { create(:enterprise_role, user_id: user2.id, enterprise_id: enterprise.id) }
+
+      before do
+        click_link 'Enterprises'
+        click_link 'Test Enterprise'
+        within('.side_menu') { click_link 'Users' }
+      end
+
+      it "lists managers and shows icons for owner, contact, and email confirmation" do
+        within 'table.managers' do
+          expect(page).to have_content user1.email
+          expect(page).to have_content user2.email
+
+          within "tr#manager-#{user1.id}" do
+            # user1 is both the enterprise owner and contact, and has email confirmed
+            expect(page).to have_css 'i.owner'
+            expect(page).to have_css 'i.contact'
+            expect(page).to have_css 'i.confirmed'
+          end
+        end
+      end
+
+      it "allows adding new managers" do
+        within 'table.managers' do
+          targetted_select2_search user3.email, from: '#s2id_ignored'
+          find('a.icon-plus.no-text').click
+
+          # user3 has been added and has an unconfirmed email address
+          expect(page).to have_css "tr#manager-#{user3.id}"
+          expect(page).to have_css 'i.unconfirmed'
+        end
+      end
+
+      it "shows changes to enterprise contact or owner" do
+        select user2.email, from: 'receives_notifications_dropdown', visible: false
+        within('#save-bar') { click_button 'Update' }
+        within('.side_menu') { click_link 'Users' }
+
+        within 'table.managers' do
+          within "tr#manager-#{user1.id}" do
+            expect(page).to have_css 'i.owner'
+            expect(page).to_not have_css 'i.contact'
+          end
+          within "tr#manager-#{user2.id}" do
+            expect(page).to have_css 'i.contact'
+          end
+        end
+      end
+    end
   end
 
 

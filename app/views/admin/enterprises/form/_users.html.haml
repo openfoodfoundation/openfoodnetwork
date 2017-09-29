@@ -24,7 +24,7 @@
 
   - if full_permissions
     .eight.columns.omega
-      %select.select2.fullwidth{name: 'receives_notifications', ng: {model: 'receivesNotifications', init: "receivesNotifications = '#{@notification_user}'"}}
+      %select.select2.fullwidth{id: 'receives_notifications_dropdown', name: 'receives_notifications', ng: {model: 'receivesNotifications', init: "receivesNotifications = '#{@notification_user}'"}}
         %option{ng: {repeat: 'user in Enterprise.users', selected: "user.id == #{@notification_user}", hide: '!user.confirmed'}, value: '{{user.id}}'}
           {{user.email}}
 
@@ -44,7 +44,7 @@
             = hidden_field_tag :ignored, :new_manager, class: "select2 fullwidth", 'user-select' => 'newManager', 'ng-model' => 'newManager'
           %td.actions
             %a{ 'ng-click' => 'addManager(newManager)', :class => "icon-plus no-text" }
-        %tr.animate-repeat{ ng: { repeat: 'manager in Enterprise.users' }}
+        %tr.animate-repeat{ id: "manager-{{manager.id}}", ng: { repeat: 'manager in Enterprise.users' }}
           %td
             = hidden_field_tag "enterprise[user_ids][]", nil, multiple: true, 'ng-value' => 'manager.id'
             {{ manager.email }}
