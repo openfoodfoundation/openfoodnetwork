@@ -29,7 +29,6 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
         @enterprise.id = data
         EnterpriseImageService.configure(@enterprise)
         RegistrationService.select('about')
-        callback.call()
       ).error((data) =>
         Loading.clear()
         if data?.errors?
@@ -37,9 +36,8 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
           alert t('failed_to_create_enterprise') + "\n" + errors.join('\n')
         else
           alert(t('failed_to_create_enterprise_unknown'))
-
-        callback.call()
       )
+      callback.call() if callback?
 
     update: (step) =>
       Loading.message = t('updating') + " " + @enterprise.name
