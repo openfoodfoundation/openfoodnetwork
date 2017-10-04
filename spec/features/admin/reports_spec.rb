@@ -276,7 +276,6 @@ feature %q{
 
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 15:00:00'
-        select 'Order Cycle Customer Totals', from: 'q_report_type'
         click_button 'Search'
 
         page.should have_content("#{order1.distributor.name}")

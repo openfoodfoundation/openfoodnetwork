@@ -3,11 +3,11 @@ require 'spec_helper'
 describe "confirming an order with paypal express payment method", type: :request do
   include ShopWorkflow
 
-  let!(:user) { create(:user) }
   let!(:address) { create(:address) }
-  let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-  let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
-  let!(:order) { create(:order, user: user, distributor: distributor) }
+  let!(:shop) { create(:enterprise) }
+  let!(:shipping_method) { create(:shipping_method, distributor_ids: [shop.id]) }
+  let!(:order) { create(:order, user: create(:user, id: 1462), distributor: shop, ship_address: address.dup, bill_address: address.dup) }
+  let!(:shipment) { create(:shipment, order: order, shipping_method: shipping_method) }
   let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
   let!(:payment_method) { Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [create(:distributor_enterprise).id], environment: Rails.env) }
   let(:params) { { token: 'lalalala', PayerID: 'payer1', payment_method_id: payment_method.id } }
