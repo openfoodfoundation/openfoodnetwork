@@ -11,7 +11,11 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
       for key, value of enterpriseAttributes
         @enterprise[key] = value
 
-    create: =>
+    # Creates the enterprise and redirects to the about step on success.
+    #
+    # @param callback [Function] executed at the end of the operation both in
+    #   case of success or failure.
+    create: (callback) =>
       Loading.message = t('creating') + " " + @enterprise.name
       $http(
         method: "POST"
@@ -33,6 +37,7 @@ Darkswarm.factory "EnterpriseRegistrationService", ($http, RegistrationService, 
         else
           alert(t('failed_to_create_enterprise_unknown'))
       )
+      callback.call() if callback?
 
     update: (step) =>
       Loading.message = t('updating') + " " + @enterprise.name
