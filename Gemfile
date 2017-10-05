@@ -126,7 +126,8 @@ group :test do
 end
 
 group :development do
-  gem 'pry-byebug'
+  gem 'byebug', '~> 9.0.0' # 9.1 requires ruby 2.2
+  gem 'pry-byebug', '>= 3.4.3'
   gem 'debugger-linecache'
   gem 'guard'
   gem 'guard-livereload'
