@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Submitting Stripe Connect charge requests", type: :request do
+describe "checking out an order with a Stripe Connect payment method", type: :request do
   include ShopWorkflow
   include AuthenticationWorkflow
 

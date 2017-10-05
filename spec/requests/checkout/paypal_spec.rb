@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "confirming an order with paypal express payment method", type: :request do
+describe "checking out an order with a paypal express payment method", type: :request do
   include ShopWorkflow
 
   let!(:address) { create(:address) }
