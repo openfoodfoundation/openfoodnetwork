@@ -17,7 +17,7 @@ class EnterpriseRole < ActiveRecord::Base
     managers_for(enterprise_id).map do |m|
       if m.user_id == user_id.to_i
         m.update_attributes receives_notifications: true
-      elsif m.user_id != user_id.to_i && m.receives_notifications
+      elsif m.receives_notifications
         m.update_attributes receives_notifications: false
       end
     end

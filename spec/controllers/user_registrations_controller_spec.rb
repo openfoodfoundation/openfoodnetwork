@@ -21,6 +21,7 @@ describe UserRegistrationsController, type: :controller do
       response.status.should == 200
       json = JSON.parse(response.body)
       json.should == {"email" => "test@test.com"}
+      expect(controller.spree_current_user).to be_nil
     end
   end
 
