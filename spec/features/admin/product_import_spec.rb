@@ -45,31 +45,20 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
 
-      expect(page).to have_selector 'button.start_import'
-      expect(page).to have_selector "button.review[disabled='disabled']"
-
-      sleep 0.5
-      click_button 'Import'
-      wait_until { page.find("button.review:not([disabled='disabled'])").present? }
-      click_button 'Review'
+      import_data
 
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to_not have_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "2"
       expect(page).to_not have_selector '.update-count'
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
 
-      expect(page).to have_selector 'button.start_save'
-      expect(page).to have_selector "button.view_results[disabled='disabled']"
-
-      sleep 0.5
-      click_button 'Save'
-      wait_until { page.find("button.view_results:not([disabled='disabled'])").present? }
-
-      click_button 'Results'
+      save_data
 
       expect(page).to have_selector '.created-count', text: '2'
       expect(page).to_not have_selector '.updated-count'
@@ -105,12 +94,10 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
 
-      sleep 0.5
-      click_button 'Import'
-      wait_until { page.find("button.review:not([disabled='disabled'])").present? }
-      click_button 'Review'
+      import_data
 
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to have_selector '.invalid-count', text: "2"
@@ -134,18 +121,15 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
 
-      sleep 0.5
-      click_button 'Import'
-      wait_until { page.find("button.review:not([disabled='disabled'])").present? }
-      click_button 'Review'
+      import_data
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
-      sleep 0.5
-      click_button 'Save'
-      wait_until { page.find("button.view_results:not([disabled='disabled'])").present? }
-      click_button 'Results'
+
+      save_data
 
       carrots = Spree::Product.find_by_name('Carrots')
       carrots.variants.first.import_date.should be_within(1.minute).of DateTime.now
@@ -158,12 +142,12 @@ feature "Product Import", js: true do
 
       expect(page).to have_field "product_name", with: carrots.name
       expect(page).to have_field "product_name", with: potatoes.name
-      find("div#columns-dropdown", :text => "COLUMNS").click
+      find("div#columns-dropdown", text: "COLUMNS").click
       find("div#columns-dropdown div.menu div.menu_item", text: "Import").click
-      find("div#columns-dropdown", :text => "COLUMNS").click
+      find("div#columns-dropdown", text: "COLUMNS").click
 
       within "tr#p_#{carrots.id} td.import_date" do
-        expect(page).to have_content DateTime.now.year
+        expect(page).to have_content Time.zone.now.year
       end
 
       expect(page).to have_selector 'div#s2id_import_date_filter'
@@ -194,12 +178,10 @@ feature "Product Import", js: true do
         select 'Inventories', from: "settings_#{enterprise2.id.to_s}_import_into", visible: false
       end
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
 
-      sleep 0.5
-      click_button 'Import'
-      wait_until { page.find("button.review:not([disabled='disabled'])").present? }
-      click_button 'Review'
+      import_data
 
       expect(page).to have_selector '.item-count', text: "3"
       expect(page).to_not have_selector '.invalid-count'
@@ -208,11 +190,10 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.inv-create-count', text: "2"
       expect(page).to have_selector '.inv-update-count', text: "1"
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
-      sleep 0.5
-      click_button 'Save'
-      wait_until { page.find("button.view_results:not([disabled='disabled'])").present? }
-      click_button 'Results'
+
+      save_data
 
       expect(page).to_not have_selector '.created-count'
       expect(page).to_not have_selector '.updated-count'
@@ -232,7 +213,6 @@ feature "Product Import", js: true do
       Float(cabbage_override.price).should == 1.50
       cabbage_override.count_on_hand.should == 2001
 
-      sleep 0.5
       click_link 'View Inventory'
       expect(page).to have_content 'Inventory'
 
@@ -266,7 +246,7 @@ feature "Product Import", js: true do
       visit main_app.admin_product_import_path
       click_button 'Upload'
 
-      expect(flash_message).to eq I18n.t(:product_import_file_not_found_notice)
+      expect(page).to have_content I18n.t(:product_import_file_not_found_notice)
     end
 
     it "handles cases where no meaningful data can be read from the file" do
@@ -300,29 +280,51 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
 
-      sleep 0.5
-      click_button 'Import'
-      wait_until { page.find("button.review:not([disabled='disabled'])").present? }
-      click_button 'Review'
+      import_data
 
+      expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to have_selector '.invalid-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
 
       expect(page.body).to have_content 'you do not have permission'
 
+      expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
-      sleep 0.5
-      click_button 'Save'
-      wait_until { page.find("button.view_results:not([disabled='disabled'])").present? }
-      click_button 'Results'
+
+      save_data
 
       expect(page).to have_selector '.created-count', text: '1'
 
       Spree::Product.find_by_name('My Carrots').should be_a Spree::Product
       Spree::Product.find_by_name('Your Potatoes').should == nil
     end
+  end
+
+  private
+
+  def import_data
+    expect(page).to have_selector 'button.start_import', visible: true
+    expect(page).to have_selector "button.review[disabled='disabled']"
+
+    find('button.start_import').trigger 'click'
+    wait_until { page.find("button.review:not([disabled='disabled'])").present? }
+
+    find('button.review').trigger 'click'
+    expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
+  end
+
+  def save_data
+    expect(page).to have_selector 'button.start_save', visible: true
+    expect(page).to have_selector "button.view_results[disabled='disabled']"
+
+    find('button.start_save').trigger 'click'
+    wait_until { page.find("button.view_results:not([disabled='disabled'])").present? }
+
+    find('button.view_results').trigger 'click'
+    expect(page).to have_content I18n.t('admin.product_import.save.final_results')
   end
 end

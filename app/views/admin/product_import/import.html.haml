@@ -13,7 +13,7 @@
     .settings-section{ng: {show: 'step == "settings"'}}
       = render 'import_options' if @importer.table_headings
       %br
-      %a.button{href: '', ng: {click: 'confirmSettings()'}}
+      %a.button.proceed{href: '', ng: {click: 'confirmSettings()'}}
         #{t('admin.product_import.import.proceed')}
       %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
 
@@ -48,7 +48,7 @@
       = hidden_field_tag :filepath, @filepath
       = hidden_field_tag "settings[import_into]", @import_into
 
-      %a.button{href: '', ng: {click: 'acceptResults()'}}
+      %a.button.proceed{href: '', ng: {click: 'acceptResults()'}}
         #{t('admin.product_import.import.proceed')}
 
       %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
