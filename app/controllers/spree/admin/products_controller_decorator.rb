@@ -102,7 +102,7 @@ Spree::Admin::ProductsController.class_eval do
     @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
     @taxons = Spree::Taxon.order(:name)
     import_dates = [{id: '0', name: ''}]
-    product_import_dates.map {|i| import_dates.push({id: i.to_date, name: i.to_date.to_formatted_s(:long)}) }
+    product_import_dates.map { |i| import_dates.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
     @import_dates = import_dates.uniq.to_json
   end
 

@@ -58,7 +58,7 @@ module Admin
       @inventory_items = InventoryItem.where(enterprise_id: @hubs)
 
       import_dates = [{id: '0', name: 'All'}]
-      inventory_import_dates.map {|i| import_dates.push({id: i.to_date, name: i.to_date.to_formatted_s(:long)}) }
+      inventory_import_dates.map { |i| import_dates.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
       @import_dates = import_dates.uniq.to_json
     end
 

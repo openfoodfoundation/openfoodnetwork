@@ -2,7 +2,7 @@ require 'roo'
 
 class Admin::ProductImportController < Spree::Admin::BaseController
 
-  before_filter :validate_upload_presence, except: [:index, :process_data]
+  before_filter :validate_upload_presence, except: %i[index process_data]
 
   def import
     # Save uploaded file to tmp directory
@@ -24,11 +24,11 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   # end
 
   def process_data
-    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {start: params[:start], end: params[:end], settings: params[:settings]})
+    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
 
     begin
       @importer.validate_entries
-    rescue Exception => e
+    rescue StandardError => e
       render json: e.message, response: 500
     end
 
@@ -36,11 +36,11 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   end
 
   def save_data
-    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {start: params[:start], end: params[:end], settings: params[:settings]})
+    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
 
     begin
       @importer.save_entries
-    rescue Exception => e
+    rescue StandardError => e
       render json: e.message, response: 500
     end
 
@@ -48,9 +48,9 @@ class Admin::ProductImportController < Spree::Admin::BaseController
   end
 
   def reset_absent_products
-    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, {import_into: params[:import_into], enterprises_to_reset: params[:enterprises_to_reset], updated_ids: params[:updated_ids], 'settings' => params[:settings]})
+    @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, import_into: params[:import_into], enterprises_to_reset: params[:enterprises_to_reset], updated_ids: params[:updated_ids], 'settings' => params[:settings])
 
-    if params.has_key?(:enterprises_to_reset) and params.has_key?(:updated_ids)
+    if params.key?(:enterprises_to_reset) && params.key?(:updated_ids)
       @importer.reset_absent(params[:updated_ids])
     end
 

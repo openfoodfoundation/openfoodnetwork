@@ -43,7 +43,6 @@ class SpreadsheetEntry
   end
 
   def convert_custom_unit_fields(attrs)
-
     # unit unit_type variant_unit_name   ->    unit_value  variant_unit_scale   variant_unit
     # 250    ml       nil      ....              0.25        0.001               volume
     # 50     g        nil      ....              50          1                   weight
@@ -54,11 +53,11 @@ class SpreadsheetEntry
     attrs['variant_unit_scale'] = nil
     attrs['unit_value'] = nil
 
-    if attrs.has_key?('units') and attrs['units'].present?
+    if attrs.key?('units') && attrs['units'].present?
       attrs['unscaled_units'] = attrs['units']
     end
 
-    if attrs.has_key?('units') and attrs.has_key?('unit_type') and attrs['units'].present? and attrs['unit_type'].present?
+    if attrs.key?('units') && attrs.key?('unit_type') && attrs['units'].present? && attrs['unit_type'].present?
       units = attrs['units'].to_f
       unit_type = attrs['unit_type'].to_s.downcase
 
@@ -69,11 +68,11 @@ class SpreadsheetEntry
       end
     end
 
-    if attrs.has_key?('units') and attrs.has_key?('variant_unit_name') and attrs['units'].present? and attrs['variant_unit_name'].present?
-      attrs['variant_unit'] = 'items'
-      attrs['variant_unit_scale'] = nil
-      attrs['unit_value'] = units || 1
-    end
+    return unless attrs.key?('units') && attrs.key?('variant_unit_name') && attrs['units'].present? && attrs['variant_unit_name'].present?
+
+    attrs['variant_unit'] = 'items'
+    attrs['variant_unit_scale'] = nil
+    attrs['unit_value'] = units || 1
   end
 
   def persisted?
@@ -123,7 +122,7 @@ class SpreadsheetEntry
   private
 
   def valid_unit_type?(unit_type)
-    unit_scales.has_key? unit_type
+    unit_scales.key? unit_type
   end
 
   def non_display_attributes
@@ -131,6 +130,6 @@ class SpreadsheetEntry
   end
 
   def non_product_attributes
-    ['line_number', 'valid', 'errors', 'product_object', 'product_validations', 'inventory_validations', 'validates_as', 'save_type', 'on_hand_nil', 'has_overrides', 'tax_category,' 'shipping_category']
+    ['line_number', 'valid', 'errors', 'product_object', 'product_validations', 'inventory_validations', 'validates_as', 'save_type', 'on_hand_nil', 'has_overrides', 'tax_category', 'shipping_category']
   end
 end

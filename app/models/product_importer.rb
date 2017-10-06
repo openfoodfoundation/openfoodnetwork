@@ -25,7 +25,7 @@ class ProductImporter
       @inventory_created = 0
       @inventory_updated = 0
 
-      @import_time = DateTime.now
+      @import_time = Time.zone.now
       @import_settings = import_settings || {}
 
       @current_user = current_user
@@ -54,7 +54,7 @@ class ProductImporter
 
   def has_valid_entries?
     @entries.each do |entry|
-      return true unless entry.validates_as.blank?
+      return true if entry.validates_as.present?
     end
     false
   end
@@ -90,7 +90,8 @@ class ProductImporter
       entries[entry.line_number] = {
         attributes: entry.displayable_attributes,
         validates_as: entry.validates_as,
-        errors: entry.invalid_attributes }
+        errors: entry.invalid_attributes
+      }
     end
     entries.to_json
   end
@@ -163,7 +164,7 @@ class ProductImporter
       supplier_validation(entry)
       unit_fields_validation(entry)
 
-      next unless entry.supplier_id.present?
+      next if entry.supplier_id.blank?
 
       if import_into_inventory?(entry)
         producer_validation(entry)
@@ -211,8 +212,8 @@ class ProductImporter
     permissions = OpenFoodNetwork::Permissions.new(@current_user)
 
     permissions.editable_enterprises.
-        order('is_primary_producer ASC, name').
-        map { |e| @editable_enterprises[e.name] = e.id }
+      order('is_primary_producer ASC, name').
+      map { |e| @editable_enterprises[e.name] = e.id }
 
     @inventory_permissions = permissions.variant_override_enterprises_per_hub
   end
@@ -272,7 +273,7 @@ class ProductImporter
       supplier_validation(entry)
       unit_fields_validation(entry)
 
-      next unless entry.supplier_id.present?
+      next if entry.supplier_id.blank?
 
       if import_into_inventory?(entry)
         producer_validation(entry)
@@ -350,18 +351,19 @@ class ProductImporter
     @suppliers_index.each do |supplier_name, supplier_id|
       next unless supplier_id and permission_by_id?(supplier_id)
 
-      if import_into_inventory_by_supplier?(supplier_id)
-        products_count = VariantOverride.
-          where('variant_overrides.hub_id IN (?)', supplier_id).
-          count
-      else
-        products_count = Spree::Variant.
-          joins(:product).
-          where('spree_products.supplier_id IN (?)
-          AND spree_variants.is_master = false
-          AND spree_variants.deleted_at IS NULL', supplier_id).
-          count
-      end
+      products_count =
+        if import_into_inventory_by_supplier?(supplier_id)
+          VariantOverride.
+            where('variant_overrides.hub_id IN (?)', supplier_id).
+            count
+        else
+          Spree::Variant.
+            joins(:product).
+            where('spree_products.supplier_id IN (?)
+            AND spree_variants.is_master = false
+            AND spree_variants.deleted_at IS NULL', supplier_id).
+            count
+        end
 
       @supplier_products[supplier_id] = products_count
       @total_supplier_products += products_count
@@ -443,20 +445,20 @@ class ProductImporter
   end
 
   def tax_validation(entry)
-    return unless entry.tax_category.present?
+    return if entry.tax_category.blank?
     if @tax_index.has_key? entry.tax_category
       entry.tax_category_id = @tax_index[entry.tax_category]
     else
-      mark_as_invalid(entry, attribute: "tax_category", error: "#{I18n.t('admin.product_import.model.not_found')}")
+      mark_as_invalid(entry, attribute: "tax_category", error: I18n.t('admin.product_import.model.not_found'))
     end
   end
 
   def shipping_validation(entry)
-    return unless entry.shipping_category.present?
+    return if entry.shipping_category.blank?
     if @shipping_index.has_key? entry.shipping_category
       entry.shipping_category_id = @shipping_index[entry.shipping_category]
     else
-      mark_as_invalid(entry, attribute: "shipping_category", error: "#{I18n.t('admin.product_import.model.not_found')}")
+      mark_as_invalid(entry, attribute: "shipping_category", error: I18n.t('admin.product_import.model.not_found'))
     end
   end
 
@@ -498,8 +500,7 @@ class ProductImporter
     @categories_index = {}
     @entries.each do |entry|
       category_name = entry.category
-      category_id = @categories_index[category_name] ||
-          Spree::Taxon.find_by_name(category_name, :select => 'id, name').try(:id)
+      category_id = @categories_index[category_name] || Spree::Taxon.find_by_name(category_name, :select => 'id, name').try(:id)
       @categories_index[category_name] = category_id
     end
     @categories_index
@@ -508,8 +509,8 @@ class ProductImporter
   def build_tax_and_shipping_indexes
     @tax_index = {}
     @shipping_index = {}
-    Spree::TaxCategory.select([:id, :name]).map {|tc| @tax_index[tc.name] = tc.id }
-    Spree::ShippingCategory.select([:id, :name]).map {|sc| @shipping_index[sc.name] = sc.id }
+    Spree::TaxCategory.select(%i[id name]).map { |tc| @tax_index[tc.name] = tc.id }
+    Spree::ShippingCategory.select(%i[id name]).map { |sc| @shipping_index[sc.name] = sc.id }
   end
 
   def save_all_valid
@@ -560,8 +561,8 @@ class ProductImporter
     unless is_new
       existing_item = InventoryItem.where(
         variant_id: variant_override.variant_id,
-        enterprise_id: variant_override.hub_id).
-        first
+        enterprise_id: variant_override.hub_id
+      ).first
 
       if existing_item
         existing_item.assign_attributes(visible: true)
@@ -573,8 +574,8 @@ class ProductImporter
     InventoryItem.new(
       variant_id: variant_override.variant_id,
       enterprise_id: variant_override.hub_id,
-      visible: true).
-      save
+      visible: true
+    ).save
   end
 
   def save_new_inventory_item(entry)
@@ -724,8 +725,8 @@ class ProductImporter
     # Otherwise, if a variant exists with matching display_name and unit_value, update it
     match.variants.each do |existing_variant|
       if existing_variant.display_name == entry.display_name \
-      and existing_variant.unit_value == entry.unit_value.to_f \
-      and existing_variant.deleted_at == nil
+        && existing_variant.unit_value == entry.unit_value.to_f \
+        && existing_variant.deleted_at.nil?
 
         mark_as_existing_variant(entry, existing_variant)
         return
@@ -783,7 +784,7 @@ class ProductImporter
   end
 
   def check_on_hand_nil(entry, object)
-    return unless entry.on_hand.blank?
+    return if entry.on_hand.present?
 
     object.on_hand = 0 if object.respond_to?(:on_hand)
     object.count_on_hand = 0 if object.respond_to?(:count_on_hand)
