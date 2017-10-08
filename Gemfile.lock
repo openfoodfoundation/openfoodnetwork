@@ -782,8 +782,8 @@ DEPENDENCIES
   representative_view
   roadie-rails (~> 1.0.3)
   roo (~> 2.7.0)
-  roo-xls
   rspec-rails (>= 3.5.2)
+  roo-xls (~> 1.1.0)
   rspec-retry
   rubocop (>= 0.49.1)
   sass (~> 3.3)
