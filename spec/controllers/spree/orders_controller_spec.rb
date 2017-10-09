@@ -51,7 +51,6 @@ describe Spree::OrdersController do
     let(:line_item) { order.line_items.last }
 
     before do
-      Spree::Config.allow_backorders = false
       order.set_distribution! d, oc
       order.add_variant variant, 5
       variant.update_attributes! on_hand: 3

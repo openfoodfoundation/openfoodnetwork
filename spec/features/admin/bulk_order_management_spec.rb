@@ -109,7 +109,6 @@ feature %q{
       let!(:li1) { create(:line_item, order: o1, :quantity => 5 ) }
 
       before :each do
-        Spree::Config.set(allow_backorders: false)
         li1.variant.update_attributes(on_hand: 1, on_demand: false)
         visit '/admin/orders/bulk_management'
       end
