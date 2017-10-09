@@ -18,6 +18,9 @@ Spree.config do |config|
   config.shipping_instructions = true
   config.address_requires_state = true
 
+  # Set allow_backorders to false by default in test environment
+  config.allow_backorders = false if Rails.env == 'test'
+
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
   config.auto_capture = true

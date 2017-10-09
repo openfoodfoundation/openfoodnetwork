@@ -47,7 +47,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
     describe "when I have an out of stock product in my cart" do
       before do
-        Spree::Config.set allow_backorders: false
         variant.on_hand = 0
         variant.save!
       end
@@ -388,7 +387,6 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           end
 
           it "takes us to the cart page with an error when a product becomes out of stock just before we purchase", js: true do
-            Spree::Config.set allow_backorders: false
             variant.on_hand = 0
             variant.save!
 

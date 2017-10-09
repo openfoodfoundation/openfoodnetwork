@@ -196,8 +196,6 @@ module Spree
       let(:v) { double(:variant, on_hand: 10) }
 
       context "when backorders are not allowed" do
-        before { Spree::Config.allow_backorders = false }
-
         context "when max_quantity is not provided" do
           it "returns full amount when available" do
             op.quantities_to_add(v, 5, nil).should == [5, nil]
