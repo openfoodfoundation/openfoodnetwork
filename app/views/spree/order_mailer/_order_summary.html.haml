@@ -11,7 +11,7 @@
         %h4
           = t :email_order_summary_price
   %tbody
-    - @order.line_items.each do |item|
+    - @order.line_items.sorted_by_name_and_unit_value.each do |item|
       %tr
         %td
           = render 'spree/shared/line_item_name', line_item: item
