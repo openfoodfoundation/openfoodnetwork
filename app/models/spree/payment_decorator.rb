@@ -105,7 +105,7 @@ module Spree
     # state is acheived through some trickery using an after_rollback callback on the
     # payment model. See Spree::Payment#persist_invalid
     def revoke_adjustment_eligibility
-      return unless adjustment.reload
+      return unless adjustment.try(:reload)
       return if adjustment.finalized?
       adjustment.update_attribute(:eligible, false)
       adjustment.finalize!
