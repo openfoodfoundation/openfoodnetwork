@@ -61,9 +61,9 @@
           %a{href: '/'}
             = t 'title'
       - if I18n.available_locales.count > 1
-        %li.language-switcher.has-dropdown.not-click
+        %li.language-switcher.has-dropdown
           %a{href: '#'}
-            %i.fa.fa-globe
+            %i.ofn-i_071-globe
           %ul.dropdown
             - I18n.available_locales.each do |l|
               %li
