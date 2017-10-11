@@ -17,7 +17,6 @@ describe StripeController do
     it "deletes Stripe accounts in response to a webhook" do
       post 'webhook', params
       expect(response.status).to eq 200
-      expect(response.body).to eq "Account webhook_id deauthorized"
       expect(StripeAccount.all).not_to include stripe_account
     end
 
