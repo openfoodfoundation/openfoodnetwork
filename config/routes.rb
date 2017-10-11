@@ -53,6 +53,10 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  resource :stripe, only: [] do
+    post :deauthorize
+  end
+
   namespace :admin do
     resources :bulk_line_items
   end
@@ -171,7 +175,6 @@ Openfoodnetwork::Application.routes.draw do
       get :connect, on: :collection
       get :connect_callback, on: :collection
       get :status, on: :collection
-      post :deauthorize, on: :collection
     end
   end
 
