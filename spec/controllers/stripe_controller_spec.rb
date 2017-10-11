@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe StripeController do
-  describe "#deauthorize" do
+  describe "#webhook" do
     let!(:stripe_account) { create(:stripe_account, stripe_user_id: "webhook_id") }
     let(:params) do
       {
@@ -15,7 +15,7 @@ describe StripeController do
     end
 
     it "deletes Stripe accounts in response to a webhook" do
-      post 'deauthorize', params
+      post 'webhook', params
       expect(response.status).to eq 200
       expect(response.body).to eq "Account webhook_id deauthorized"
       expect(StripeAccount.all).not_to include stripe_account
@@ -27,7 +27,7 @@ describe StripeController do
       end
 
       it "does nothing" do
-        post 'deauthorize', params
+        post 'webhook', params
         expect(response.status).to eq 204
         expect(StripeAccount.all).to include stripe_account
       end
@@ -39,7 +39,7 @@ describe StripeController do
       end
 
       it "does nothing" do
-        post 'deauthorize', params
+        post 'webhook', params
         expect(response.status).to eq 204
         expect(StripeAccount.all).to include stripe_account
       end

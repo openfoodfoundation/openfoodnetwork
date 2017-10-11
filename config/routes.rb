@@ -54,7 +54,7 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   resource :stripe, only: [] do
-    post :deauthorize
+    post :webhook
   end
 
   namespace :admin do

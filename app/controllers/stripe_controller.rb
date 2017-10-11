@@ -1,5 +1,5 @@
 class StripeController < BaseController
-  def deauthorize
+  def webhook
     # TODO is there a sensible way to confirm this webhook call is actually from Stripe?
     event = Stripe::Event.construct_from(params)
     return render nothing: true, status: 204 unless event.type == "account.application.deauthorized"
