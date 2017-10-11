@@ -1,6 +1,4 @@
 describe Spree.user_class do
-  include AuthenticationWorkflow
-
   describe "associations" do
     it { should have_many(:owned_enterprises) }
 
@@ -95,7 +93,7 @@ describe Spree.user_class do
     end
 
     describe "as admin" do
-      let(:admin) { quick_login_as_admin }
+      let(:admin) { create(:admin_user) }
 
       it "returns all users" do
         expect(admin.known_users).to include u1, u2, u3
