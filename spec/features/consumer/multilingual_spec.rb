@@ -72,9 +72,10 @@ feature 'Multilingual', js: true do
   describe "using the language switcher UI" do
     context "when there is only one language available" do
       around do |example|
+        available_locales = I18n.available_locales
         I18n.available_locales = ['en']
         example.run
-        I18n.available_locales = ['en', 'es']
+        I18n.available_locales = available_locales
       end
 
       it "hides the dropdown language menu" do
