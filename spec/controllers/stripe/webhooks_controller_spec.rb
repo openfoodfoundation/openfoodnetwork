@@ -53,8 +53,8 @@ describe Stripe::WebhooksController do
           end
         end
 
-        context "when the result returned by the handler is :failure" do
-          before { allow(handler).to receive(:handle) { :failure } }
+        context "when the result returned by the handler is :unknown" do
+          before { allow(handler).to receive(:handle) { :unknown } }
 
           it "responds with 202" do
             post 'create', params

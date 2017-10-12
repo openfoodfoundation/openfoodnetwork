@@ -45,18 +45,18 @@ module Stripe
           allow(handler).to receive(:event_mappings) { { 'some.other.event' => :some_method } }
         end
 
-        it "does not call the handler method, and returns :failure" do
+        it "does not call the handler method, and returns :unknown" do
           expect(handler).to_not receive(:some_method)
-          expect(handler.handle).to be :failure
+          expect(handler.handle).to be :unknown
         end
       end
     end
 
     describe "deauthorize" do
       context "when the event has no 'account' attribute" do
-        it "does destroy stripe accounts, returns :silent_fail" do
+        it "does destroy stripe accounts, returns :ignored" do
           expect(handler).to_not receive(:destroy_stripe_accounts_linked_to)
-          expect(handler.send(:deauthorize)).to be :silent_fail
+          expect(handler.send(:deauthorize)).to be :ignored
         end
       end
 
@@ -78,7 +78,7 @@ module Stripe
             allow(handler).to receive(:destroy_stripe_accounts_linked_to).with('some.account') { [] }
           end
 
-          it { expect(handler.send(:deauthorize)).to be :silent_fail }
+          it { expect(handler.send(:deauthorize)).to be :ignored }
         end
       end
     end
