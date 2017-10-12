@@ -77,55 +77,52 @@ describe Admin::StripeAccountsController, type: :controller do
   end
 
   describe "#status" do
-    let(:params) { { format: :json } }
+    let(:params) { { format: :json, enterprise_id: enterprise.id } }
 
     before do
       allow(Stripe).to receive(:api_key) { "sk_test_12345" }
       Spree::Config.set(stripe_connect_enabled: false)
     end
 
-    context "when Stripe is not enabled" do
-      it "returns with a status of 'stripe_disabled'" do
+    context "when I don't manage the specified enterprise" do
+      let(:user) { create(:user) }
+
+      before do
+        allow(controller).to receive(:spree_current_user) { user }
+      end
+
+      it "redirects to unauthorized" do
         spree_get :status, params
-        json_response = JSON.parse(response.body)
-        expect(json_response["status"]).to eq "stripe_disabled"
+        expect(response).to redirect_to spree.unauthorized_path
       end
     end
 
-    context "when Stripe is enabled" do
-      before { Spree::Config.set(stripe_connect_enabled: true) }
+    context "when I manage the specified enterprise" do
+      before do
+        allow(controller).to receive(:spree_current_user) { enterprise.owner }
+      end
 
-      context "but no stripe account is associated with the specified enterprise" do
-        it "returns with a status of 'account_missing'" do
+      context "when Stripe is not enabled" do
+        it "returns with a status of 'stripe_disabled'" do
           spree_get :status, params
           json_response = JSON.parse(response.body)
-          expect(json_response["status"]).to eq "account_missing"
+          expect(json_response["status"]).to eq "stripe_disabled"
         end
       end
 
-      context "and a stripe account is associated with the specified enterprise" do
-        let!(:account) { create(:stripe_account, stripe_user_id: "acc_123", enterprise: enterprise) }
+      context "when Stripe is enabled" do
+        before { Spree::Config.set(stripe_connect_enabled: true) }
 
-        context "but I don't manage the enterprise" do
-          let(:user) { create(:user) }
-          let(:enterprise2) { create(:enterprise) }
-          before do
-            user.owned_enterprises << enterprise2
-            params[:enterprise_id] = enterprise.id
-            allow(controller).to receive(:spree_current_user) { user }
-          end
-
-          it "redirects to unauthorized" do
+        context "when no stripe account is associated with the specified enterprise" do
+          it "returns with a status of 'account_missing'" do
             spree_get :status, params
-            expect(response).to redirect_to spree.unauthorized_path
+            json_response = JSON.parse(response.body)
+            expect(json_response["status"]).to eq "account_missing"
           end
         end
 
-        context "and I manage the enterprise" do
-          before do
-            params[:enterprise_id] = enterprise.id
-            allow(controller).to receive(:spree_current_user) { enterprise.owner }
-          end
+        context "when a stripe account is associated with the specified enterprise" do
+          let!(:account) { create(:stripe_account, stripe_user_id: "acc_123", enterprise: enterprise) }
 
           context "but access has been revoked or does not exist on stripe's servers" do
             before do

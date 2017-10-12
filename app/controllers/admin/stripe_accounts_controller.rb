@@ -1,9 +1,7 @@
 require 'stripe/account_connector'
 
 module Admin
-  class StripeAccountsController < BaseController
-    protect_from_forgery except: :destroy_from_webhook
-
+  class StripeAccountsController < Spree::Admin::BaseController
     def connect
       payload = params.slice(:enterprise_id)
       key = Openfoodnetwork::Application.config.secret_token
@@ -40,6 +38,12 @@ module Admin
       rescue Stripe::APIError
         render json: { status: :access_revoked }
       end
+    end
+
+    private
+
+    def model_class
+      StripeAccount
     end
   end
 end

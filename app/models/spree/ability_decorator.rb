@@ -124,7 +124,7 @@ class AbilityDecorator
       column_preference.user == user
     end
 
-    can [:status, :destroy], StripeAccount do |stripe_account|
+    can [:admin, :connect, :status, :destroy], StripeAccount do |stripe_account|
       user.enterprises.include? stripe_account.enterprise
     end
   end
