@@ -40,10 +40,26 @@ describe Stripe::WebhooksController do
         allow(Stripe::Webhook).to receive(:construct_event) { Stripe::Event.construct_from(params) }
       end
 
-      context "when an event with an unknown type is received" do
-        it "responds with a 202" do
-          post 'create', params
-          expect(response.status).to eq 202
+      describe "setting the response status" do
+        let(:handler) { double(:handler) }
+        before { allow(Stripe::WebhookHandler).to receive(:new) { handler } }
+
+        context "when an unknown result is returned by the handler" do
+          before { allow(handler).to receive(:handle) { :garbage } }
+
+          it "falls back to 200" do
+            post 'create', params
+            expect(response.status).to eq 200
+          end
+        end
+
+        context "when the result returned by the handler is :failure" do
+          before { allow(handler).to receive(:handle) { :failure } }
+
+          it "responds with 202" do
+            post 'create', params
+            expect(response.status).to eq 202
+          end
         end
       end
 
