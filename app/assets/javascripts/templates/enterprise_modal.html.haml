@@ -1,4 +1,4 @@
-%div{"ng-repeat" => "enterprise in enterprises"}
+%div{"ng-repeat" => "enterprise in enterprise ? [ enterprise ] : enterprises"}
   %ng-include{src: "'partials/enterprise_header.html'"}
   %ng-include{src: "'partials/enterprise_details.html'"}
   %ng-include{src: "'partials/hub_details.html'"}
