@@ -13,34 +13,62 @@ describe Stripe::WebhooksController do
       }
     end
 
-    context "when an event with an unknown type is received" do
-      it "responds with a 202" do
+    context "when invalid json is provided" do
+      before do
+        allow(Stripe::Webhook).to receive(:construct_event).and_raise JSON::ParserError, "parsing failed"
+      end
+
+      it "responds with a 400" do
         post 'create', params
-        expect(response.status).to eq 202
+        expect(response.status).to eq 400
       end
     end
 
-    describe "when an account.application.deauthorized event is received" do
-      let!(:stripe_account) { create(:stripe_account, stripe_user_id: "webhook_id") }
+    context "when event signature verification fails" do
       before do
-        params["type"] = "account.application.deauthorized"
+        allow(Stripe::Webhook).to receive(:construct_event).and_raise Stripe::SignatureVerificationError.new("verfication failed", "header")
       end
 
-      context "when the stripe_account id on the event does not match any known accounts" do
-        it "doesn't delete any Stripe accounts, responds with 204" do
+      it "responds with a 401" do
+        post 'create', params
+        expect(response.status).to eq 401
+      end
+    end
+
+    context "when event signature verification succeeds" do
+      before do
+        allow(Stripe::Webhook).to receive(:construct_event) { Stripe::Event.construct_from(params) }
+      end
+
+      context "when an event with an unknown type is received" do
+        it "responds with a 202" do
           post 'create', params
-          expect(response.status).to eq 204
-          expect(StripeAccount.all).to include stripe_account
+          expect(response.status).to eq 202
         end
       end
 
-      context "when the stripe_account id on the event matches a known account" do
-        before { params["account"] = "webhook_id" }
+      describe "when an account.application.deauthorized event is received" do
+        let!(:stripe_account) { create(:stripe_account, stripe_user_id: "webhook_id") }
+        before do
+          params["type"] = "account.application.deauthorized"
+        end
 
-        it "deletes Stripe accounts in response to a webhook" do
-          post 'create', params
-          expect(response.status).to eq 200
-          expect(StripeAccount.all).not_to include stripe_account
+        context "when the stripe_account id on the event does not match any known accounts" do
+          it "doesn't delete any Stripe accounts, responds with 204" do
+            post 'create', params
+            expect(response.status).to eq 204
+            expect(StripeAccount.all).to include stripe_account
+          end
+        end
+
+        context "when the stripe_account id on the event matches a known account" do
+          before { params["account"] = "webhook_id" }
+
+          it "deletes Stripe accounts in response to a webhook" do
+            post 'create', params
+            expect(response.status).to eq 200
+            expect(StripeAccount.all).not_to include stripe_account
+          end
         end
       end
     end

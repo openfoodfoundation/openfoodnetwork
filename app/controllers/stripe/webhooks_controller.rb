@@ -3,26 +3,35 @@ require 'stripe/webhook_handler'
 module Stripe
   class WebhooksController < BaseController
     protect_from_forgery except: :create
+    before_filter :verify_webhook
 
     # POST /stripe/webhook
     def create
-      # TODO is there a sensible way to confirm this webhook call is actually from Stripe?
-      event = Event.construct_from(params)
-      handler = WebhookHandler.new(event)
+      handler = WebhookHandler.new(@event)
       result = handler.handle
 
-      render nothing: true, status: status_mappings[result]
+      render nothing: true, status: status_mappings[result] || 200
     end
 
     private
 
+    def verify_webhook
+      payload = request.raw_post
+      signature = request.headers["HTTP_STRIPE_SIGNATURE"]
+      @event = Webhook.construct_event(payload, signature, Stripe.endpoint_secret)
+    rescue JSON::ParserError
+      render nothing: true, status: 400
+    rescue Stripe::SignatureVerificationError
+      render nothing: true, status: 401
+    end
+
     # Stripe interprets a 4xx or 3xx response as a failure to receive the webhook,
-    # and will stop sending events if too many of these are returned.
+    # and will stop sending events if too many of either of these are returned.
     def status_mappings
       {
-        success: 200,
-        failure: 202,
-        silent_fail: 204
+        success: 200, # The event was handled successfully
+        unknown: 202, # The event was of an unknown type
+        ignored: 204  # No action was taken in response to the event
       }
     end
   end
