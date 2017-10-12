@@ -1,6 +1,8 @@
 Spree::UsersController.class_eval do
   layout 'darkswarm'
+  include I18nHelper
 
+  before_filter :set_locale
   before_filter :enable_embedded_shopfront
 
   # Override of spree_auth_devise default
