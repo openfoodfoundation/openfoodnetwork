@@ -5,7 +5,7 @@ module Stripe
     end
 
     def handle
-      return false unless known_event?
+      return :failure unless known_event?
       send(event_mappings[@event.type])
     end
 
@@ -22,9 +22,9 @@ module Stripe
     end
 
     def deauthorize
-      return false unless @event.respond_to?(:account)
+      return :silent_fail unless @event.respond_to?(:account)
       destroyed = destroy_stripe_accounts_linked_to(@event.account)
-      destroyed.any?
+      destroyed.any? ? :success : :silent_fail
     end
 
     def destroy_stripe_accounts_linked_to(account)
