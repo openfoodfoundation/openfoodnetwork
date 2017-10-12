@@ -1,7 +1,7 @@
 module Stripe
   class WebhookHandler
-    def initialize(params)
-      @event = Event.construct_from(params)
+    def initialize(event)
+      @event = event
     end
 
     def handle

@@ -7,7 +7,8 @@ module Stripe
     # POST /stripe/webhook
     def create
       # TODO is there a sensible way to confirm this webhook call is actually from Stripe?
-      handler = WebhookHandler.new(params)
+      event = Event.construct_from(params)
+      handler = WebhookHandler.new(event)
       result = handler.handle
 
       render nothing: true, status: status_mappings[result]

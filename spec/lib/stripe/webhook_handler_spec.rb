@@ -3,8 +3,8 @@ require 'stripe/webhook_handler'
 
 module Stripe
   describe WebhookHandler do
-    let(:params) { { type: 'some.event' } }
-    let(:handler) { WebhookHandler.new(params) }
+    let(:event) { double(:event, type: 'some.event') }
+    let(:handler) { WebhookHandler.new(event) }
 
     describe "event_mappings" do
       it { expect(handler.send(:event_mappings)).to be_a Hash }
@@ -62,7 +62,7 @@ module Stripe
 
       context "when the event has an 'account' attribute" do
         before do
-          params[:account] = 'some.account'
+          allow(event).to receive(:account) { 'some.account' }
         end
 
         context "when some stripe accounts are destroyed" do
