@@ -29,7 +29,7 @@ CURRENCY: AUD
 
 # Stripe Connect details for instance account
 # Find these under 'API keys' and 'Connect' in your Stripe account dashboard -> Account Settings
-# Under 'Connect', the Redirect URI should be set to https://YOUR_SERVER_URL/admin/stripe_accounts/connect_callback (e.g. https://openfoodnetwork.org.uk/admin/stripe_accounts/connect_callback)
+# Under 'Connect', the Redirect URI should be set to https://YOUR_SERVER_URL/stripe/callbacks (e.g. https://openfoodnetwork.org.uk/stripe/callbacks)
 # Under 'Webhooks', you should set up a Connect endpoint pointing to https://YOUR_SERVER_URL/stripe/webhooks e.g. (https://openfoodnetwork.org.uk/stripe/webhooks)
 # STRIPE_INSTANCE_SECRET_KEY: "sk_test_xxxxxx" # This can be a test key or a live key
 # STRIPE_INSTANCE_PUBLISHABLE_KEY: "pk_test_xxxx" # This can be a test key or a live key

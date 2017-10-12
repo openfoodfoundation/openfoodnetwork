@@ -54,6 +54,7 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   namespace :stripe do
+    resources :callbacks, only: [:index]
     resources :webhooks, only: [:create]
   end
 
@@ -173,7 +174,6 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :stripe_accounts, only: [:destroy] do
       get :connect, on: :collection
-      get :connect_callback, on: :collection
       get :status, on: :collection
     end
   end
