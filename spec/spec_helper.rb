@@ -29,6 +29,7 @@ require 'spree/api/testing_support/setup'
 require 'spree/api/testing_support/helpers'
 require 'spree/api/testing_support/helpers_decorator'
 require 'spree/testing_support/authorization_helpers'
+require 'spree/testing_support/config_stub'
 
 # Capybara config
 require 'capybara/poltergeist'
@@ -49,6 +50,12 @@ require "paperclip/matchers"
 
 # Override setting in Spree engine: Spree::Core::MailSettings
 ActionMailer::Base.default_url_options[:host] = 'test.host'
+
+Spree::AppConfiguration.class_eval do
+  prepend Spree::TestingSupport::ConfigStub
+end
+
+Spree::Config.setup_config_stub!
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -94,7 +101,7 @@ RSpec.configure do |config|
   config.before(:each) { Spree::Address.any_instance.stub(:geocode).and_return([1,1]) }
 
   # Ensure we start with consistent config settings
-  config.before(:each) { Spree::Config.products_require_tax_category = false }
+  config.before(:each) { Spree::Config.reset_config_stub! }
 
   # Helpers
   config.include Rails.application.routes.url_helpers

@@ -9,6 +9,7 @@
 require 'spree/product_filters'
 require 'spree/core/calculated_adjustments_decorator'
 
+require "#{Rails.root}/app/models/spree/app_configuration_decorator"
 require "#{Rails.root}/app/models/spree/payment_method_decorator"
 require "#{Rails.root}/app/models/spree/gateway_decorator"
 
@@ -17,6 +18,13 @@ Spree::Api::Config[:requires_authentication] = true
 Spree.config do |config|
   config.shipping_instructions = true
   config.address_requires_state = true
+
+  # Set defaults for testing
+  if Rails.env.test?
+    config.stripe_connect_enabled = false
+    config.enable_embedded_shopfronts = false
+    config.products_require_tax_category = false
+  end
 
   # -- spree_paypal_express
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
