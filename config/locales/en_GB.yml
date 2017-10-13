@@ -1415,6 +1415,7 @@ en_GB:
   order_cycle: "Order Cycle"
   order_cycles: "Order Cycles"
   enterprises: "Enterprises"
+  enterprise_relationships: "Enterprise relationships"
   remove_tax: "Remove tax"
   enterprise_terms_of_service: "Enterprise Terms of Service"
   enterprises_require_tos: "Enterprises must accept Terms of Service"
