@@ -8,6 +8,10 @@ Spree::Product.class_eval do
   # https://github.com/rails/rails/issues/7618
   has_many :option_types, :through => :product_option_types, :dependent => :destroy
 
+  # This is to overwrite `has_many :variants, :conditions => { :is_master => false, :deleted_at => nil }`
+  # conditions inside spree_core for admin/reports
+  has_many :all_variants, :class_name => 'Spree::Variant'
+
   belongs_to :supplier, :class_name => 'Enterprise', touch: true
   belongs_to :primary_taxon, class_name: 'Spree::Taxon'
 

@@ -1,9 +1,9 @@
+require 'open_food_network/reports/base_report'
 require 'open_food_network/reports/bulk_coop_supplier_report'
 require 'open_food_network/reports/bulk_coop_allocation_report'
 
 module OpenFoodNetwork
-  class BulkCoopReport
-    attr_reader :params
+  class BulkCoopReport < Reports::BaseReport
     def initialize(user, params = {})
       @params = params
       @user = user

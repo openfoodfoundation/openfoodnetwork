@@ -27,19 +27,27 @@ module OpenFoodNetwork::Reports
       rules.map(&:to_h)
     end
 
-    # -- DSL
-    def self.header(*columns)
-      self._header = columns
+    private
+
+    def permissions
+      @permissions ||= OpenFoodNetwork::Permissions.new(@user)
     end
 
-    def self.columns(&block)
-      self._columns = Row.new
-      Blockenspiel.invoke block, self._columns
-    end
+    class << self
+      # -- DSL
+      def header(*columns)
+        self._header = columns
+      end
 
-    def self.organise(&block)
-      self._rules_head = Rule.new
-      Blockenspiel.invoke block, self._rules_head
+      def columns(&block)
+        self._columns = Row.new
+        Blockenspiel.invoke block, self._columns
+      end
+
+      def organise(&block)
+        self._rules_head = Rule.new
+        Blockenspiel.invoke block, self._rules_head
+      end
     end
   end
 end

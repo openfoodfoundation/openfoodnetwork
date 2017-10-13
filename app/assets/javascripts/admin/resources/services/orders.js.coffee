@@ -1,5 +1,6 @@
-angular.module("admin.resources").factory 'Orders', ($q, OrderResource) ->
+angular.module("admin.resources").factory 'Orders', ($q, $injector, OrderResource) ->
   new class Orders
+    all: []
     byID: {}
     pristineByID: {}
 
@@ -10,6 +11,7 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource) ->
 
     load: (orders) ->
       for order in orders
+        @all.push order
         @byID[order.id] = order
         @pristineByID[order.id] = angular.copy(order)
 
@@ -34,3 +36,9 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource) ->
 
     resetAttribute: (order, attribute) ->
       order[attribute] = @pristineByID[order.id][attribute]
+
+    linkToDistributors: ->
+      if $injector.has('Enterprises')
+        enterprisesByID = $injector.get('Enterprises').byID
+        for id, order of @byID
+          order.distributor = enterprisesByID[order.distributor.id] if order.distributor?

@@ -209,6 +209,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (1.0.17)
+      capybara (>= 1.0, < 3)
+      launchy
     celluloid (0.15.2)
       timers (~> 1.1.0)
     chronic (0.10.2)
@@ -674,7 +677,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-    warden (1.2.6)
+    warden (1.2.7)
       rack (>= 1.0)
     webmock (1.8.11)
       addressable (>= 2.2.7)
@@ -708,6 +711,7 @@ DEPENDENCIES
   blockenspiel
   bugsnag
   capybara
+  capybara-screenshot
   coffee-rails (~> 3.2.1)
   compass-rails
   css_splitter

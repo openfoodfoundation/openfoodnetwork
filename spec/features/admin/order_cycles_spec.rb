@@ -705,7 +705,7 @@ feature %q{
 
       scenario "cloning an order cycle" do
         oc = create(:simple_order_cycle, coordinator: distributor_managed)
-
+        login_to_admin_section
         click_link "Order Cycles"
         first('a.clone-order-cycle').click
         flash_message.should == "Your order cycle #{oc.name} has been cloned."

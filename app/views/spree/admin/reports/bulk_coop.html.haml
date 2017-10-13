@@ -1,32 +1,60 @@
-= form_for @report.search, :url => spree.bulk_coop_admin_reports_path do |f|
-  = render 'date_range_form', f: f
+- if @show_old_version
+  = form_for @report.search, :url => spree.bulk_coop_admin_reports_path do |f|
+    = hidden_field_tag :show_old_version, 1
+    = render 'date_range_form', f: f
+    .row
+      .four.columns.alpha
+        = label_tag nil, "Distributor: "
+        = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth"})
+    = label_tag nil, "Report Type: "
+    %br
+    = select_tag(:report_type, options_for_select(@report_types, @report_type))
+    %br
+    %br
+    = check_box_tag :csv
+    = label_tag :csv, "Download as csv"
+    %br
+    .row
+      .alpha.two.columns= button t(:search)
+      .omega.fourteen.columns.align-right
+        =link_to 'New version', spree.bulk_coop_admin_reports_path(report_type: @report_type, show_old_version: 0), {class: 'button'}
+  %br
+  %br
+  %table#listing_orders.index
+    %thead
+      %tr{'data-hook' => "orders_header"}
+        - @report.header.each do |heading|
+          %th=heading
+    %tbody
+      - @table.each do |row|
+        %tr
+          - row.each do |column|
+            %td= column
+      - if @table.empty?
+        %tr
+          %td{:colspan => "2"}= t(:none)
 
-  .row
-    .four.columns.alpha
-      = label_tag nil, t(:report_distributor)
-      = f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => t(:all)}, {:class => "select2 fullwidth"})
-  = label_tag nil, t(:report_type)
-  %br
-  = select_tag(:report_type, options_for_select([:bulk_coop_supplier_report, :bulk_coop_allocation, :bulk_coop_packing_sheets, :bulk_coop_customer_payments].map{ |e| [t(".#{e}"), e] }, @report_type))
-  %br
-  %br
-  = check_box_tag :csv
-  = label_tag :csv, t(:report_customers_csv)
-  %br
-  %br
-  = button t(:search)
-%br
-%br
-%table#listing_orders.index
-  %thead
-    %tr{'data-hook' => "orders_header"}
-      - @report.header.each do |heading|
-        %th=heading
-  %tbody
-    - @table.each do |row|
-      %tr
-        - row.each do |column|
-          %td= column
-    - if @table.empty?
-      %tr
-        %td{:colspan => "2"}= t(:none)
+- else
+
+  = admin_inject_json_ams_array "admin.reports", "distributors", @distributors, Api::Admin::Reports::EnterpriseSerializer
+  = admin_inject_json_ams "admin.reports", "currencyConfig", {}, Api::CurrencyConfigSerializer
+  = admin_inject_json "admin.reports", "reportType", @report_type
+
+  %div{ ng: { app: 'admin.reports', controller: 'bulkCoopCtrl' } }
+    %form{ name: 'bulk_coop_report_form', ng: { submit: 'load()' } }
+      = render 'ng_date_range_form', search: @search
+      .row
+        .alpha.two.columns= label_tag :distributor_id_in, t(:distributor)
+        .omega.fourteen.columns
+          %input.ofn-select2.fullwidth#distributor_id_in{ type: 'text', name: 'q[distributor_id_in]', data: 'distributors', multiple: 'true', ng: { model: 'q.distributor_id_in' } }
+      .row
+        .alpha.two.columns= label_tag :report_type, t(:report_type)
+        .omega.fourteen.columns
+          = select_tag('q[report_type]', options_for_select(@report_types, @report_type), {'ng-model' => 'q.report_type', 'ng-change' => 'reload()'})
+
+      .row
+        .alpha.two.columns= submit_tag t(:search)
+        .omega.fourteen.columns.align-right
+          = render 'ng_download_buttons'
+          =link_to 'Old version', spree.bulk_coop_admin_reports_path(show_old_version: 1, report_type: @report_type), {'ng-href' => spree.bulk_coop_admin_reports_path(show_old_version: 1) + '&report_type={{reportType}}', class: 'button'}
+    = render 'ng_report_grid'

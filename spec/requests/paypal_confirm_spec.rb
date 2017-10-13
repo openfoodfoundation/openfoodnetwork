@@ -6,7 +6,7 @@ describe "confirming an order with paypal express payment method", type: :reques
   let!(:address) { create(:address) }
   let!(:shop) { create(:enterprise) }
   let!(:shipping_method) { create(:shipping_method, distributor_ids: [shop.id]) }
-  let!(:order) { create(:order, distributor: shop, ship_address: address.dup, bill_address: address.dup) }
+  let!(:order) { create(:order, user: create(:user, id: 1462), distributor: shop, ship_address: address.dup, bill_address: address.dup) }
   let!(:shipment) { create(:shipment, order: order, shipping_method: shipping_method) }
   let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
   let!(:payment_method) { Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [create(:distributor_enterprise).id], environment: Rails.env) }
@@ -33,7 +33,7 @@ describe "confirming an order with paypal express payment method", type: :reques
     set_order order
 
     stub_request(:post, "https://api-3t.sandbox.paypal.com/2.0/")
-    .to_return(:status => 200, :body => mocked_xml_response )
+      .to_return(:status => 200, :body => mocked_xml_response )
   end
 
   context "with a flat percent calculator" do
