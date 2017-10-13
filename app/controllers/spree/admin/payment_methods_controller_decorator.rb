@@ -1,6 +1,7 @@
 module Spree
   module Admin
     PaymentMethodsController.class_eval do
+      before_filter :restrict_stripe_account_change, only: [:update]
       before_filter :force_environment, only: [:create, :update]
       skip_before_filter :load_resource, only: [:show_provider_preferences]
       before_filter :load_hubs, only: [:new, :edit, :update]
@@ -57,11 +58,29 @@ module Spree
         else
           @providers = Gateway.providers.reject{ |p| p.name.include? "Bogus" }.sort{|p1, p2| p1.name <=> p2.name }
         end
+        @providers.reject!{ |p| p.name.ends_with? "StripeConnect" } unless show_stripe?
         @calculators = PaymentMethod.calculators.sort_by(&:name)
       end
 
       def load_hubs
         @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [(@payment_method.has_distributor? d) ? 0 : 1, d.name] }
+      end
+
+      # Show Stripe as an option if enabled, or if the
+      # current payment_method is already a Stripe method
+      def show_stripe?
+        Spree::Config.stripe_connect_enabled || @payment_method.try(:type) == "Spree::Gateway::StripeConnect"
+      end
+
+      def restrict_stripe_account_change
+        return unless @payment_method
+        return unless @payment_method.type == "Spree::Gateway::StripeConnect"
+        return unless @payment_method.preferred_enterprise_id.andand > 0
+
+        @stripe_account_holder = Enterprise.find(@payment_method.preferred_enterprise_id)
+        return if spree_current_user.enterprises.include? @stripe_account_holder
+
+        params[:payment_method][:preferred_enterprise_id] = @stripe_account_holder.id
       end
     end
   end

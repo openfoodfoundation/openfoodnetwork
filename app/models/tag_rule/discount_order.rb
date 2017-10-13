@@ -1,5 +1,5 @@
 class TagRule::DiscountOrder < TagRule
-  calculated_adjustments
+  include Spree::Core::CalculatedAdjustments
 
   private
 

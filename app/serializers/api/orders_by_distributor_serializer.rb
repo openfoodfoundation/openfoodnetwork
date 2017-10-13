@@ -4,7 +4,7 @@ module Api
     has_many :distributed_orders, serializer: Api::OrderSerializer
 
     def balance
-      object.distributed_orders.map(&:outstanding_balance).reduce(:+).to_money.to_s
+      object.distributed_orders.map(&:outstanding_balance).reduce(:+)
     end
 
     def hash

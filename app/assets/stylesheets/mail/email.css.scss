@@ -408,3 +408,12 @@ ul {
   display: inline-block;
   margin: 0px;
 }
+
+/*
+ * Fix overlapping table header on second page of long invoices.
+ * Problem description: https://github.com/openfoodfoundation/openfoodnetwork/issues/1738
+ * Solution: https://github.com/wkhtmltopdf/wkhtmltopdf/issues/1770#issuecomment-73530576
+ */
+thead { display: table-header-group }
+tfoot { display: table-row-group }
+tr { page-break-inside: avoid }

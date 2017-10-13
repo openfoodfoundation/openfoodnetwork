@@ -1,7 +1,7 @@
 class AbilityDecorator
   include CanCan::Ability
 
-  # All abilites are allocated from this initialiser, currently in 5 chunks.
+  # All abilites are allocated from this initialiser.
   # Spree also defines other abilities.
   def initialize(user)
     add_shopping_abilities user
@@ -56,8 +56,13 @@ class AbilityDecorator
       user == item.order.user &&
       item.order.changes_allowed?
     end
+
     can [:cancel], Spree::Order do |order|
       order.user == user
+    end
+
+    can [:destroy], Spree::CreditCard do |credit_card|
+      credit_card.user == user
     end
   end
 
@@ -118,12 +123,16 @@ class AbilityDecorator
     can [:admin, :bulk_update], ColumnPreference do |column_preference|
       column_preference.user == user
     end
+
+    can [:admin, :connect, :status, :destroy], StripeAccount do |stripe_account|
+      user.enterprises.include? stripe_account.enterprise
+    end
   end
 
   def add_product_management_abilities(user)
     # Enterprise User can only access products that they are a supplier for
     can [:create], Spree::Product
-    can [:admin, :read, :update, :product_distributions, :bulk_edit, :bulk_update, :clone, :delete, :destroy], Spree::Product do |product|
+    can [:admin, :read, :update, :product_distributions, :seo, :group_buy_options, :bulk_edit, :bulk_update, :clone, :delete, :destroy], Spree::Product do |product|
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? product.supplier
     end
 
@@ -193,6 +202,7 @@ class AbilityDecorator
     end
     can [:admin, :bulk_management, :managed], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
     can [:admin , :for_line_items], Enterprise
+    can [:admin, :index, :create, :update, :destroy], :line_item
     can [:admin, :index, :create], Spree::LineItem
     can [:destroy, :update], Spree::LineItem do |item|
       order = item.order

@@ -1,0 +1,17 @@
+.row{ "ng-show" => "savedCreditCards != null && savedCreditCards.length > 0" }
+  .small-12.columns
+    %h6= t('.used_saved_card')
+    %select{ name: "selected_card", required: false, ng: { model: "secrets.selected_card", options: "card.id as card.formatted for card in savedCreditCards" } }
+      %option{ value: "" }= "{{ secrets.selected_card ? '#{t('.enter_new_card')}' : '#{t('.choose_one')}' }}"
+
+    %h6{ ng: { if: '!secrets.selected_card' } }
+      = t('.or_enter_new_card')
+
+%div{ ng: { if: '!secrets.selected_card' } }
+  %stripe-elements
+
+  - if spree_current_user
+    .row
+      .small-12.columns.text-right
+        = check_box_tag 'secrets.save_requested_by_customer', '1', false, 'ng-model' => 'secrets.save_requested_by_customer'
+        = label_tag 'secrets.save_requested_by_customer', t('.remember_this_card')

@@ -10,15 +10,20 @@ gem 'i18n-js', '~> 3.0.0'
 gem 'nokogiri', '>= 1.6.7.1'
 
 gem 'pg'
-gem 'spree', github: 'openfoodfoundation/spree', branch: 'spree-upgrade-step1c'
+gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: '5a76d45'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
-gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '1-3-stable'
+gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch: 'spree-upgrade-intermediate'
 
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
-gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "hide-password"
+gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "spree-upgrade-intermediate"
 #gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
+gem 'stripe', '~> 3.3.1'
+gem 'activemerchant', '~> 1.71.0'
+
+gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
+gem 'jwt', '~> 1.5'
 
 gem 'delayed_job_active_record'
 gem 'daemons'
@@ -121,7 +126,8 @@ group :test do
 end
 
 group :development do
-  gem 'pry-byebug'
+  gem 'byebug', '~> 9.0.0' # 9.1 requires ruby 2.2
+  gem 'pry-byebug', '>= 3.4.3'
   gem 'debugger-linecache'
   gem 'guard'
   gem 'guard-livereload'

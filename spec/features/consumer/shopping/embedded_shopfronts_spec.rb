@@ -9,37 +9,6 @@ feature "Using embedded shopfront functionality", js: true do
 
   Capybara.server_port = 9999
 
-  describe "enabling embedded shopfronts" do
-    before do
-      Spree::Config[:enable_embedded_shopfronts] = false
-    end
-
-    it "disables iframes by default" do
-      visit shops_path
-      expect(page.response_headers['X-Frame-Options']).to eq 'DENY'
-      expect(page.response_headers['Content-Security-Policy']).to eq "frame-ancestors 'none'"
-    end
-
-    it "allows iframes on certain pages when enabled in configuration" do
-      quick_login_as_admin
-
-      visit spree.edit_admin_general_settings_path
-
-      check 'enable_embedded_shopfronts'
-      fill_in 'embedded_shopfronts_whitelist', with: "test.com"
-
-      click_button 'Update'
-
-      visit shops_path
-      expect(page.response_headers['X-Frame-Options']).to be_nil
-      expect(page.response_headers['Content-Security-Policy']).to eq "frame-ancestors test.com"
-
-      visit spree.admin_path
-      expect(page.response_headers['X-Frame-Options']).to eq 'DENY'
-      expect(page.response_headers['Content-Security-Policy']).to eq "frame-ancestors 'none'"
-    end
-  end
-
   describe "using iframes" do
     let(:distributor) { create(:distributor_enterprise, name: 'My Embedded Hub', permalink: 'test_enterprise', with_payment_and_shipping: true) }
     let(:supplier) { create(:supplier_enterprise) }

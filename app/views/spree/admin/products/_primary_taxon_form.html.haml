@@ -1,5 +1,5 @@
 = f.field_container :primary_taxon_id do
-  = f.label :primary_taxon_id, t(:product_category)
+  = f.label :primary_taxon_id, t('.product_category')
   %span.required *
   %br
   = f.collection_select(:primary_taxon_id, Spree::Taxon.all, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})

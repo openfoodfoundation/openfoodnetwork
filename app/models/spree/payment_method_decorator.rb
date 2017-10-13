@@ -1,13 +1,14 @@
 Spree::PaymentMethod.class_eval do
+  include Spree::Core::CalculatedAdjustments
+
   Spree::PaymentMethod::DISPLAY = [:both, :front_end, :back_end]
 
   acts_as_taggable
 
   has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods', :class_name => 'Enterprise', association_foreign_key: 'distributor_id'
+  has_many :credit_cards, class_name: "Spree::CreditCard" # from Spree v.2.3.0 d470b31798f37
 
   attr_accessible :distributor_ids, :tag_list
-
-  calculated_adjustments
 
   after_initialize :init
 
@@ -39,7 +40,10 @@ Spree::PaymentMethod.class_eval do
   }
 
   def init
-    self.class.calculated_adjustments unless reflections.keys.include? :calculator
+    unless reflections.keys.include? :calculator
+      self.class.include Spree::Core::CalculatedAdjustments
+    end
+
     self.calculator ||= Spree::Calculator::FlatRate.new(preferred_amount: 0)
   end
 
@@ -55,6 +59,8 @@ Spree::PaymentMethod.class_eval do
       "MasterCard Internet Gateway Service (MIGS)"
     when "Spree::Gateway::Pin"
       "Pin Payments"
+    when "Spree::Gateway::StripeConnect"
+      "Stripe"
     when "Spree::Gateway::PayPalExpress"
       "PayPal Express"
     else

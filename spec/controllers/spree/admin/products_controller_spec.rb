@@ -12,7 +12,7 @@ describe Spree::Admin::ProductsController do
     end
 
     it "denies access" do
-      response.should redirect_to "http://test.host/unauthorized"
+      response.should redirect_to spree.unauthorized_url
     end
 
     it "does not update any product" do

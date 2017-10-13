@@ -1,0 +1,48 @@
+%fieldset.alpha.eleven.columns.no-border-bottom#gateway_fields
+  %legend{ align: "center"}
+    = t(:provider_settings)
+  .preference-settings{ ng: { controller: "StripeController" } }
+    = fields_for :payment_method, @payment_method do |payment_method_form|
+      = payment_method_form.label :stripe_account_owner
+      %br
+      - if @stripe_account_holder.nil? || spree_current_user.enterprises.include?(@stripe_account_holder)
+        %input.ofn-select2.fullwidth#payment_method_preferred_enterprise_id{ type: 'number',
+          name: 'payment_method[preferred_enterprise_id]',
+          placeholder: t(".enterprise_select_placeholder"),
+          data: 'shops', ng: { model: 'paymentMethod.preferred_enterprise_id' } }
+      - else
+        %strong= Enterprise.find_by_id(@payment_method).andand.name
+
+    #stripe-account-status{ ng: { show: "paymentMethod.preferred_enterprise_id" } }
+      .alert-box.warning{ ng: { hide: "stripe_account.status" } }
+        = t(".loading_account_information_msg")
+
+      .alert-box.error{ ng: { show: "stripe_account.status == 'stripe_disabled'" } }
+        = t(".stripe_disabled_msg")
+
+      .alert-box.error{ ng: { show: "stripe_account.status == 'request_failed'" } }
+        = t(".request_failed_msg")
+
+      .alert-box.error{ ng: { show: "stripe_account.status == 'account_missing'" } }
+        = t(".account_missing_msg")
+        %a.button{ ng: { href: "{{current_enterprise_stripe_path()}}" }, target: 'blank' }
+          = t(".connect_one")
+          %i.icon-chevron-right
+
+      .alert-box.error{ ng: { show: "stripe_account.status == 'access_revoked'" } }
+        = t(".access_revoked_msg")
+
+      .alert-box.ok{ ng: { show: "stripe_account.status == 'connected'" } }
+        .status
+          %strong= t(".status") + ":"
+          = t(".connected")
+          %i.icon-ok
+        .account_id
+          %strong= t(".account_id") + ":"
+          {{ stripe_account.id }}
+        .business_name
+          %strong= t(".business_name") + ":"
+          {{ stripe_account.business_name }}
+        .charges_enabled
+          %strong= t(".charges_enabled") + ":"
+          {{ stripe_account.charges_enabled ? "say_yes" : "say_no" | t }}

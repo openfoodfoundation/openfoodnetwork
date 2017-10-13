@@ -71,7 +71,7 @@ class BillablePeriod < ActiveRecord::Base
       source: self,
       originator: nil, # enterprise.package
       mandatory: true,
-      locked: false
+      state: 'closed'
     }
   end
 end

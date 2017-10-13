@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher) ->
+angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher, $http) ->
   new class BulkProducts
     products: []
 
@@ -11,14 +11,8 @@ angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher) 
       PagedFetcher.fetch url, (data) => @addProducts data.products
 
     cloneProduct: (product) ->
-      dataFetcher("/admin/products/" + product.permalink_live + "/clone.json").then (data) =>
-        # Ideally we would use Spree's built in respond_override helper here to redirect the
-        # user after a successful clone with .json in the accept headers
-        # However, at the time of writing there appears to be an issue which causes the
-        # respond_with block in the destroy action of Spree::Admin::Product to break
-        # when a respond_overrride for the clone action is used.
-        id = data.product.id
-        dataFetcher("/api/products/" + id + "?template=bulk_show").then (newProduct) =>
+      $http.post("/api/products/" + product.id + "/clone").success (data) =>
+        dataFetcher("/api/products/" + data.id + "?template=bulk_show").then (newProduct) =>
           @unpackProduct newProduct
           @insertProductAfter(product, newProduct)
 

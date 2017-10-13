@@ -35,6 +35,9 @@ describe LineItemsController do
       item
     end
 
+    let(:order) { item.order }
+    let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [order.line_item_variants]) }
+
     before { controller.stub spree_current_user: item.order.user }
 
     context "without a line item id" do
@@ -55,42 +58,32 @@ describe LineItemsController do
       end
 
       context "where the item's order is associated with the current user" do
-        before { item.order.update_attributes(user_id: user.id) }
+        before { order.update_attributes!(user_id: user.id) }
 
-        context "without an order cycle" do
+        context "without an order cycle or distributor" do
           it "denies deletion" do
             delete :destroy, params
             expect(response.status).to eq 403
           end
         end
 
-        context "with an order cycle" do
-          before { item.order.update_attributes(order_cycle_id: order_cycle.id) }
+        context "with an order cycle and distributor" do
+          before { order.update_attributes!(order_cycle_id: order_cycle.id, distributor_id: distributor.id) }
 
-          context "without a distributor" do
+          context "where changes are not allowed" do
             it "denies deletion" do
               delete :destroy, params
               expect(response.status).to eq 403
             end
           end
 
-          context "where the item's order has a distributor" do
-            before { item.order.update_attributes(distributor_id: distributor.id) }
-            context "where changes are not allowed" do
-              it "denies deletion" do
-                delete :destroy, params
-                expect(response.status).to eq 403
-              end
-            end
+          context "where changes are allowed" do
+            before { distributor.update_attributes!(allow_order_changes: true) }
 
-            context "where changes are allowed" do
-              before { distributor.update_attributes(allow_order_changes: true) }
-
-              it "deletes the line item" do
-                delete :destroy, params
-                expect(response.status).to eq 204
-                expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
-              end
+            it "deletes the line item" do
+              delete :destroy, params
+              expect(response.status).to eq 204
+              expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
             end
           end
         end
@@ -127,7 +120,7 @@ describe LineItemsController do
         order.shipments.last.reload
         expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
         expect(order.shipments.last.adjustment.amount).to eq shipping_fee
-        expect(order.payment.adjustment.amount).to eq payment_fee
+        expect(order.payments.first.adjustment.amount).to eq payment_fee
         expect(order.shipments.last.adjustment.included_tax).to eq 0.6
       end
     end

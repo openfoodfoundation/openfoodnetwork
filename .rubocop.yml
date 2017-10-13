@@ -143,6 +143,10 @@ Style/WordArray:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylewordarray
 
+Style/SymbolArray:
+  Enabled: false
+  StyleGuide: https://rubocop.readthedocs.io/en/latest/cops_style/#stylesymbolarray
+
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#lintambiguousregexpliteral

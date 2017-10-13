@@ -123,7 +123,7 @@ Do not forget to run `rake tmp:cache:clear` after locales are updated to reload 
 * Maikel Linke (https://github.com/mkllnk)
 * Lynne Davis (https://github.com/lin-d-hop)
 * Paul Mackay (https://github.com/pmackay)
-* Steve Petitt (https://github.com/stveep)
+* Steve Pettitt (https://github.com/stveep)
 
 
 ## Licence

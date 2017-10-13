@@ -19,7 +19,7 @@ describe "LineItems service", ->
 
     beforeEach ->
       response = [{ id: 5, name: 'LineItem 1'}]
-      $httpBackend.expectGET('/admin/line_items.json').respond 200, response
+      $httpBackend.expectGET('/admin/bulk_line_items.json').respond 200, response
       result = LineItems.index()
       $httpBackend.flush()
 
@@ -41,7 +41,7 @@ describe "LineItems service", ->
 
       beforeEach ->
         lineItem = new LineItemResource({ id: 15, order: { number: '12345678'} })
-        $httpBackend.expectPUT('/admin/orders/12345678/line_items/15.json').respond 200, { id: 15, name: 'LineItem 1'}
+        $httpBackend.expectPUT('/admin/bulk_line_items/15.json').respond 200, { id: 15, name: 'LineItem 1'}
         LineItems.save(lineItem).then( -> resolved = true)
         $httpBackend.flush()
 
@@ -60,7 +60,7 @@ describe "LineItems service", ->
 
       beforeEach ->
         lineItem = new LineItemResource( { id: 15, order: { number: '12345678'} } )
-        $httpBackend.expectPUT('/admin/orders/12345678/line_items/15.json').respond 422, { error: 'obj' }
+        $httpBackend.expectPUT('/admin/bulk_line_items/15.json').respond 422, { error: 'obj' }
         LineItems.save(lineItem).catch( -> rejected = true)
         $httpBackend.flush()
 
@@ -115,7 +115,7 @@ describe "LineItems service", ->
         lineItem = new LineItemResource({ id: 15, order: { number: '12345678'} })
         LineItems.pristineByID[15] = lineItem
         LineItems.byID[15] = lineItem
-        $httpBackend.expectDELETE('/admin/orders/12345678/line_items/15.json').respond 200, { id: 15, name: 'LineItem 1'}
+        $httpBackend.expectDELETE('/admin/bulk_line_items/15.json').respond 200, { id: 15, name: 'LineItem 1'}
         LineItems.delete(lineItem, callback).then( -> resolved = true).catch( -> rejected = true)
         $httpBackend.flush()
 
@@ -140,7 +140,7 @@ describe "LineItems service", ->
         lineItem = new LineItemResource({ id: 15, order: { number: '12345678'} })
         LineItems.pristineByID[15] = lineItem
         LineItems.byID[15] = lineItem
-        $httpBackend.expectDELETE('/admin/orders/12345678/line_items/15.json').respond 422, { error: 'obj' }
+        $httpBackend.expectDELETE('/admin/bulk_line_items/15.json').respond 422, { error: 'obj' }
         LineItems.delete(lineItem, callback).then( -> resolved = true).catch( -> rejected = true)
         $httpBackend.flush()
 

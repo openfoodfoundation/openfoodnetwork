@@ -1,0 +1,15 @@
+.row{"data-hook" => "admin_product_meta_form"}
+  .alpha.eleven.columns
+    = f.field_container :meta_description do
+      = f.label :meta_keywords, t(:meta_keywords)
+      %br/
+      = f.text_field :meta_keywords, :class => 'fullwidth', :rows => 6
+    = f.field_container :meta_description do
+      = f.label :meta_description, t(:meta_description)
+      %br/
+      = f.text_field :meta_description, :class => 'fullwidth', :rows => 6
+  .alpha.eleven.columns
+    = f.field_container :notes do
+      = f.label :notes, t(:notes)
+      = f.text_area :notes, { :class => 'fullwidth', rows: 5 }
+      = f.error_message_on :notes

@@ -1,0 +1,2 @@
+remove "code[erb-loud]:contains('f.field_container :cost_currency')"
+closing_selector("code[erb-silent]:contains('end')")

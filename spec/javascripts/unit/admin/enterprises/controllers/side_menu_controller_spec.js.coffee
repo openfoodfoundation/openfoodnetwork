@@ -17,6 +17,7 @@ describe "menuCtrl", ->
     inject ($rootScope, $controller, _SideMenu_) ->
       scope = $rootScope
       SideMenu = _SideMenu_
+      spyOn(SideMenu, "init").and.callThrough()
       spyOn(SideMenu, "select").and.callThrough()
       spyOn(SideMenu, "setItems").and.callThrough()
       ctrl = $controller 'sideMenuCtrl', {$scope: scope, enterprise: enterprise, SideMenu: SideMenu, enterprisePermissions: {}}
@@ -30,7 +31,7 @@ describe "menuCtrl", ->
       expect(scope.menu.items).toBe SideMenu.items
 
     it "sets the initally selected value", ->
-      expect(SideMenu.select).toHaveBeenCalledWith 0
+      expect(SideMenu.init).toHaveBeenCalled()
 
 
   describe "selecting an item", ->

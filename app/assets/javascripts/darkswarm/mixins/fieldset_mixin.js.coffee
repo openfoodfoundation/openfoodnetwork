@@ -1,6 +1,7 @@
 window.FieldsetMixin = ($scope)->
   $scope.next = (event = false)->
     event.preventDefault() if event
+    return unless $scope.nextPanel
     $scope.show $scope.nextPanel
 
   $scope.onTimeout = ->

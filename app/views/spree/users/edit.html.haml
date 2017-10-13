@@ -1,8 +1,3 @@
 .darkswarm
   .row
-    = render :partial => 'spree/shared/error_messages', :locals => { :target => @user }
-    %h1= t(:editing_user)
-    = form_for Spree::User.new, :as => @user, :url => spree.user_path(@user), :method => :put do |f|
-      = render :partial => 'spree/shared/user_form', :locals => { :f => f }
-      %p
-        = f.submit t(:update), :class => 'button primary'
+    = render 'form'

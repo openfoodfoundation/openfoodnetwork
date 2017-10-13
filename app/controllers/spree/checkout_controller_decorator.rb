@@ -32,8 +32,4 @@ Spree::CheckoutController.class_eval do
     @order.bill_address ||= preferred_bill_address || last_used_bill_address || Spree::Address.default
     @order.ship_address ||= preferred_ship_address || last_used_ship_address || nil
   end
-
-  def after_complete
-    reset_order
-  end
 end

@@ -140,7 +140,7 @@ describe Spree::Order do
     it "returns the sum of eligible enterprise fee adjustments" do
       ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_locked_adjustment("adjustment", o, o, true)
+      a = ef.create_adjustment("adjustment", o, o, true)
 
       o.admin_and_handling_total.should == 123.45
     end
@@ -148,7 +148,7 @@ describe Spree::Order do
     it "does not include ineligible adjustments" do
       ef = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new )
       ef.calculator.set_preference :amount, 123.45
-      a = ef.create_locked_adjustment("adjustment", o, o, true)
+      a = ef.create_adjustment("adjustment", o, o, true)
 
       a.update_column :eligible, false
 
@@ -487,6 +487,13 @@ describe Spree::Order do
 
   describe "scopes" do
     describe "not_state" do
+      before do
+        Spree::MailMethod.create!(
+          environment: Rails.env,
+          preferred_mails_from: 'spree@example.com'
+        )
+      end
+
       it "finds only orders not in specified state" do
         o = FactoryGirl.create(:completed_order_with_totals)
         o.cancel!
@@ -702,7 +709,7 @@ describe Spree::Order do
 
       it "removes transaction fees" do
         # Change the payment method
-        order.payment.update_attributes(payment_method_id: payment_method.id)
+        order.payments.first.update_attributes(payment_method_id: payment_method.id)
         order.save
 
         # Check if fees got updated
@@ -741,6 +748,17 @@ describe Spree::Order do
         expect(order.finalised_line_items.length).to eq 3
         expect(order.finalised_line_items).to match_array(prev_order.line_items + prev_order2.line_items)
       end
+    end
+  end
+
+  describe "determining checkout steps for an order" do
+    let!(:enterprise) { create(:enterprise) }
+    let!(:order) { create(:order, distributor: enterprise) }
+    let!(:payment_method) { create(:stripe_payment_method, distributor_ids: [enterprise.id], preferred_enterprise_id: enterprise.id) }
+    let!(:payment) { create(:payment, order: order, payment_method: payment_method) }
+
+    it "does not include the :confirm step" do
+      expect(order.checkout_steps).to_not include "confirm"
     end
   end
 end

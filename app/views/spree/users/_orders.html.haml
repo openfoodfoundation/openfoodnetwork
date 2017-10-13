@@ -1,0 +1,10 @@
+%script{ type: "text/ng-template", id: "account/orders.html" }
+  .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
+    .my-open-orders{ ng: { show: 'Orders.changeable.length > 0' } }
+      %h3= t('.open_orders')
+      = render 'open_orders'
+
+    .past-orders{ ng: { show: 'pastOrders.length > 0' } }
+      %h3= t('.past_orders')
+      = render 'past_orders'
+    .message{"ng-if" => "Orders.all.length == 0", "ng-bind" => "::'you_have_no_orders_yet' | t"}

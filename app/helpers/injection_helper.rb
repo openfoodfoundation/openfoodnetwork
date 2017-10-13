@@ -64,9 +64,21 @@ module InjectionHelper
     render partial: "json/injection_ams", locals: {name: 'enterpriseAttributes', json: "#{@enterprise_attributes.to_json}"}
   end
 
-  def inject_orders_by_distributor
-    data_array = spree_current_user.orders_by_distributor
-    inject_json_ams "orders_by_distributor", data_array, Api::OrdersByDistributorSerializer
+  def inject_orders
+    inject_json_ams "orders", @orders.all, Api::OrderSerializer
+  end
+
+  def inject_shops
+    shops = Enterprise.where(id: @orders.pluck(:distributor_id).uniq)
+    inject_json_ams "shops", shops.all, Api::ShopForOrdersSerializer
+  end
+
+  def inject_saved_credit_cards
+    if spree_current_user
+      data = spree_current_user.credit_cards.with_payment_profile.all
+    end
+
+    inject_json_ams "savedCreditCards", data, Api::CreditCardSerializer
   end
 
   def inject_json(name, partial, opts = {})
@@ -89,5 +101,4 @@ module InjectionHelper
     @enterprise_injection_data ||= OpenFoodNetwork::EnterpriseInjectionData.new
     {data: @enterprise_injection_data}
   end
-
 end

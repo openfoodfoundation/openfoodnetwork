@@ -161,7 +161,14 @@ en:
   powered_by: Powered by
   blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
   allow_cookies: "Allow Cookies"
+  none: None
+  notes: Notes
+  error: Error
+  processing_payment: Processing payment...
 
+
+  actions:
+    create_and_add_another: "Create and Add Another"
   admin:
     # Common properties / models
     date: Date
@@ -375,6 +382,8 @@ en:
       index:
         capture: "Capture"
         ship: "Ship"
+      invoice_email_sent: 'Invoice email has been sent'
+      order_email_resent: 'Order email has been resent'
       bulk_management:
         tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
         shared: "Shared Resource?"
@@ -514,6 +523,18 @@ en:
           close_date: Close Date
         social:
           twitter_placeholder: eg. @the_prof
+        stripe_connect:
+          connect_with_stripe: "Connect with Stripe"
+          stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
+          stripe_account_connected: "Stripe account connected."
+          disconnect: "Disconnect account"
+          confirm_modal:
+            title: Connect with Stripe
+            part1: Stripe is a payment processing service that allows shops on the OFN to accept credit card payments from customers.
+            part2: To use this feature, you must connect your Stripe account to the OFN. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account, or create a new one if you don't already have one.
+            part3: This will allow the Open Food Network to accept credit card payments from customers on your behalf. Please note that you will need to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
+            i_agree: I Agree
+            cancel: Cancel
         tag_rules:
           default_rules:
             by_default: By Default
@@ -597,12 +618,17 @@ en:
         advanced_settings: Advanced Settings
         update_and_close: Update and Close
         choose_products_from: 'Choose Products From:'
-        pickup_time_tip: When orders from this OC will be ready for the customer
-        pickup_instructions_tip: These instructions are shown to customers after they complete an order
       exchange_form:
+        pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
+        pickup_instructions_tip: These instructions are shown to customers after they complete an order
         pickup_time_placeholder: "Ready for (ie. Date / Time)"
         receival_instructions_placeholder: "Receival instructions"
+        add_fee: 'Add fee'
+        selected: 'selected'
+      add_exchange_form:
+        add_supplier: 'Add supplier'
+        add_distributor: 'Add distributor'
       advanced_settings:
         title: Advanced Settings
         choose_product_tip: You can opt to restrict all available products (both incoming and outgoing), to only those in %{inventory}'s inventory.
@@ -642,9 +668,11 @@ en:
     producer_properties:
       index:
         title: Producer Properties
+
     shared:
       user_guide_link:
         user_guide: User Guide
+
     invoice_settings:
       edit:
         title: Invoice Settings
@@ -715,6 +743,34 @@ en:
         description: Invoices for import into Xero
       packing:
         name: Packing Reports
+
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Settings"
+        stripe_beta_warning: "Warning: The Stripe Connect integration is currently in beta and should not be enabled in production yet"
+        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
+        no_api_key_msg: No Stripe account exists for this enterprise.
+        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
+        status: Status
+        ok: Ok
+        instance_secret_key: Instance Secret Key
+        account_id: Account ID
+        business_name: Business Name
+        charges_enabled: Charges Enabled
+        charges_enabled_warning: "Warning: Charges are not enabled for your account"
+        auth_fail_error: The API key you provided is invalid
+        empty_api_key_error: No Stripe API key has been provided. To set your API key, please follow the instructions at
+
+    # Admin controllers
+    controllers:
+      enterprises:
+        stripe_connect_cancelled: "Connection to Stripe has been cancelled"
+        stripe_connect_success: "Stripe account connected successfully"
+        stripe_connect_fail: Sorry, the connection of your Stripe account failed
+      stripe_connect_settings:
+        resource: Stripe Connect configuration
+
 # Frontend views
 #
 # These keys are referenced relatively like `t('.message')` in
@@ -745,6 +801,11 @@ en:
       require_customer_login: "This shop is for customers only."
       require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
       require_customer_html: "Please %{contact} %{enterprise} to become a customer."
+
+
+  # Front-end controller translations
+  card_could_not_be_saved: card could not be saved
+  spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
 
   # Printable Invoice Columns
   invoice_billing_address: "Billing address:"
@@ -844,6 +905,18 @@ en:
   card_number: Card Number
   card_securitycode: "Security Code"
   card_expiry_date: Expiry Date
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
+  new_credit_card: "New credit card"
+  my_credit_cards: My credit cards
+  add_new_credit_card: Add new credit card
+  saved_cards: Saved cards
+  add_a_card: Add a Card
+  add_card: Add Card
+  you_have_no_saved_cards: You haven't saved any cards yet
+  saving_credit_card: Saving credit card...
+  card_has_been_removed: "Your card has been removed (number: %{number})"
+  card_could_not_be_removed: Sorry, the card could not be removed
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
@@ -936,6 +1009,7 @@ en:
   checkout_shipping_price: Shipping
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
+  cost_currency: "Cost Currency"
 
   order_paid: PAID
   order_not_paid: NOT PAID
@@ -1311,10 +1385,67 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   reset_password: "Reset password"
   registration_greeting: "Greetings!"
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
+  enterprise:
+    registration:
+      modal:
+        steps:
+          details:
+            title: 'Details'
+            headline: "Let's Get Started"
+            enterprise: "Woot! First we need to know a little bit about your enterprise:"
+            producer: "Woot! First we need to know a little bit about your farm:"
+            enterprise_name_field: "Enterprise Name:"
+            producer_name_field: "Farm Name:"
+            producer_name_field_placeholder: "e.g. Charlie's Awesome Farm"
+            producer_name_field_error: "Please choose a unique name for your enterprise"
+            address1_field: "Address line 1:"
+            address1_field_placeholder: "e.g. 123 Cranberry Drive"
+            address1_field_error: "Please enter an address"
+            address2_field: "Address line 2:"
+            suburb_field: "Suburb:"
+            suburb_field_placeholder: "e.g. Northcote"
+            suburb_field_error: "Please enter a suburb"
+            postcode_field: "Postcode:"
+            postcode_field_placeholder: "e.g. 3070"
+            postcode_field_error: "Postcode required"
+            state_field: "State:"
+            state_field_error: "State required"
+            country_field: "Country:"
+            country_field_error: "Please select a country"
+          contact:
+            title: 'Contact'
+            contact_field: 'Primary Contact'
+            contact_field_placeholder: 'Contact Name'
+            contact_field_required: "You need to enter a primary contact."
+            email_field: 'Email address'
+            email_field_placeholder: 'eg. charlie@thefarm.com'
+            phone_field: 'Phone number'
+            phone_field_placeholder: 'eg. (03) 1234 5678'
+          type:
+            title: 'Type'
+            headline: "Last step to add %{enterprise}!"
+            question: "Are you a producer?"
+            yes_producer: "Yes, I'm a producer"
+            no_producer: "No, I'm not a producer"
+            producer_field_error: "Please choose one. Are you are producer?"
+            yes_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
+            no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
+
+          about:
+            title: 'About'
+          images:
+            title: 'Images'
+          social:
+            title: 'Social'
+  # TODO: Remove these once the enterprise.registration.modal keys are translated
   enterprise_contact: "Primary Contact"
+  enterprise_contact_placeholder: "Contact Name"
   enterprise_contact_required: "You need to enter a primary contact."
   enterprise_email_address: "Email address"
+  enterprise_email_placeholder: "eg. charlie@thefarm.com"
   enterprise_phone: "Phone number"
+  enterprise_phone_placeholder: "eg. (03) 1234 5678"
+  # END
   back: "Back"
   continue: "Continue"
   limit_reached_headline: "Oh no!"
@@ -1385,6 +1516,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   registration_finished_activate_instruction_html: "We've sent a confirmation email to <strong>%{email}</strong> if it hasn't been activated before.<br/>
 Please follow the instructions there to make your enterprise visible on the Open Food Network."
   registration_finished_action: "Open Food Network home"
+  registration_contact_name: 'Contact Name'
+
+  # TODO: Remove these once the enterprise.registration.modal keys are translated
   registration_type_headline: "Last step to add %{enterprise}!"
   registration_type_question: "Are you a producer?"
   registration_type_producer: "Yes, I'm a producer"
@@ -1392,9 +1526,13 @@ Please follow the instructions there to make your enterprise visible on the Open
   registration_type_error: "Please choose one. Are you are producer?"
   registration_type_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
   registration_type_no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
+  # END
   create_profile: "Create Profile"
   registration_images_headline: "Thanks!"
   registration_images_description: "Let's upload some pretty pictures so your profile looks great! :)"
+
+
+  # TODO: Remove these once the enterprise.registration.modal keys are translated
   registration_detail_headline: "Let's Get Started"
   registration_detail_enterprise: "Woot! First we need to know a little bit about your enterprise:"
   registration_detail_producer: "Woot! First we need to know a little bit about your farm:"
@@ -1416,6 +1554,7 @@ Please follow the instructions there to make your enterprise visible on the Open
   registration_detail_state_error: "State required"
   registration_detail_country: "Country:"
   registration_detail_country_error: "Please select a country"
+  # END
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   accounts_and_billing_task_already_running_error: "A task is already running, please wait until it has finished"
   accounts_and_billing_start_task_notice: "Task Queued"
@@ -1484,6 +1623,9 @@ Please follow the instructions there to make your enterprise visible on the Open
   create: "Create"
   search: "Search"
   supplier: "Supplier"
+  product_name: "Product Name"
+  product_description: "Product Description"
+  units: "Unit Size"
   coordinator: "Coordinator"
   distributor: "Distributor"
   enterprise_fees: "Enterprise Fees"
@@ -1498,9 +1640,11 @@ Please follow the instructions there to make your enterprise visible on the Open
   new_order_cycles: "New Order Cycles"
   new_order_cycle: "New Order Cycle"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"
+  notify_producers: 'Notify producers'
   edit_order_cycle: "Edit Order Cycle"
   roles: "Roles"
   update: "Update"
+  delete: Delete
   add_producer_property: "Add producer property"
   in_progress: "In Progress"
   started_at: "Started at"
@@ -1545,6 +1689,8 @@ Please follow the instructions there to make your enterprise visible on the Open
   spree_admin_unit_description: Unit Description
   spree_admin_variant_unit: Variant unit
   spree_admin_variant_unit_scale: Variant unit scale
+  spree_admin_supplier: Supplier
+  spree_admin_product_category: Product Category
   spree_admin_variant_unit_name: Variant unit name
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
@@ -2014,6 +2160,10 @@ Please follow the instructions there to make your enterprise visible on the Open
       start_free_profile: "Start with a free profile, and expand when you're ready!"
 
   spree:
+    # TODO: remove `email` key once we get to Spree 2.0
+    email: Email
+    # TODO: remove 'account_updated' key once we get to Spree 2.0
+    account_updated: "Account updated!"
     admin:
       orders:
         invoice:
@@ -2036,7 +2186,28 @@ Please follow the instructions there to make your enterprise visible on the Open
             one: "You have one active order cycle."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+      payment_methods:
+        stripe_connect:
+          enterprise_select_placeholder: Choose...
+          loading_account_information_msg: Loading account information from stripe, please wait...
+          stripe_disabled_msg: Stripe payments have been disabled by the system administrator.
+          request_failed_msg: Sorry. Something went wrong when trying to verify account details with Stripe...
+          account_missing_msg: No Stripe account exists for this enterprise.
+          connect_one: Connect One
+          access_revoked_msg: Access to this Stripe account has been revoked, please reconnect your account.
+          status: Status
+          connected: Connected
+          account_id: Account ID
+          business_name: Business Name
+          charges_enabled: Charges Enabled
+      payments:
+        source_forms:
+          stripe:
+            no_payment_via_admin_backend: Creating Stripe-based payments from the admin backend is not possible at this time
       products:
+        new:
+          title: 'New Product'
+        unit_name_placeholder: 'eg. bunches'
         bulk_edit:
           header:
             title: Bulk Edit Products
@@ -2044,15 +2215,34 @@ Please follow the instructions there to make your enterprise visible on the Open
             title: LOADING PRODUCTS
             no_products: "No products yet. Why don't you add some?"
             no_results: "Sorry, no results match"
+          product_name: Product Name
+        primary_taxon_form:
+          product_category: Product Category
+        group_buy_form:
+          group_buy: "Group Buy?"
+          bulk_unit_size: Bulk unit size
+        display_as:
+          display_as: Display As
       reports:
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+      shared:
+        configuration_menu:
+          stripe_connect: Stripe Connect
       variants:
         autocomplete:
           producer_name: Producer
+    checkout:
+      payment:
+        stripe:
+          choose_one: Choose one
+          enter_new_card: Enter details for a new card
+          used_saved_card: "Use a saved card:"
+          or_enter_new_card: "Or, enter details for a new card:"
+          remember_this_card: Remember this card?
     date_picker:
       format: ! '%Y-%m-%d'
       js_format: 'yy-mm-dd'
@@ -2125,8 +2315,18 @@ Please follow the instructions there to make your enterprise visible on the Open
     weight: Weight (per kg)
     zipcode: Postcode
     users:
+      form:
+        account_settings: Account Settings
       show:
+        tabs:
+          orders: Orders
+          cards: Credit Cards
+          transactions: Transactions
+          settings: Account Settings
+      orders:
         open_orders: Open Orders
+        past_orders: Past Orders
+      transactions:
         transaction_history: Transaction History
       open_orders:
         order: Order
@@ -2138,3 +2338,11 @@ Please follow the instructions there to make your enterprise visible on the Open
         cancel: Cancel
         closed: Closed
         until: Until
+      past_orders:
+        order: Order
+        shop: Shop
+        completed_at: Completed At
+        items: Items
+        total: Total
+        paid?: Paid?
+        view: View

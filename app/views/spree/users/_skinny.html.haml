@@ -1,10 +1,10 @@
 .row.active_table_row.skinny-head.margin-top{"ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open()}"}
   .columns.small-2
-    %img.margin-top.account-logo{"logo-fallback" => true, "ng-src" => "{{distributor.logo}}"}
+    %img.margin-top.account-logo{"logo-fallback" => true, "ng-src" => "{{shop.logo}}"}
   .columns.small-5
-    %h3.margin-top{"ng-bind" => "::distributor.name"}
+    %h3.margin-top{"ng-bind" => "::shop.name"}
   .columns.small-4.text-right
-    %h3.margin-top.distributor-balance{"ng-bind" => "::distributor.balance | formatBalance", "ng-class" => "{'credit' : distributor.balance < 0, 'debit' : distributor.balance > 0, 'paid' : distributor.balance == 0}" }
+    %h3.margin-top.distributor-balance{"ng-bind" => "::shop.balance | formatBalance", "ng-class" => "{'credit' : shop.balance < 0, 'debit' : shop.balance > 0, 'paid' : shop.balance == 0}" }
   .columns.small-1.text-right
     %h3.margin-top
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}

@@ -1,3 +1,5 @@
+require 'open_food_network/available_payment_method_filter'
+
 module EnterprisesHelper
   def current_distributor
     @current_distributor ||= current_order(false).andand.distributor
@@ -21,6 +23,9 @@ module EnterprisesHelper
   def available_payment_methods
     return [] unless current_distributor.present?
     payment_methods = current_distributor.payment_methods.available(:front_end).all
+
+    filter = OpenFoodNetwork::AvailablePaymentMethodFilter.new
+    filter.filter!(payment_methods)
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterPaymentMethods", current_customer.andand.tag_list)
     applicator.filter!(payment_methods)

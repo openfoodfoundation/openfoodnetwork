@@ -1,6 +1,61 @@
 require 'spec_helper'
 
 describe Spree::Admin::PaymentMethodsController do
+  describe "#update" do
+    context "on a StripeConnect payment method" do
+      let!(:user) { create(:user, enterprise_limit: 2) }
+      let!(:enterprise1) { create(:distributor_enterprise, owner: user) }
+      let!(:enterprise2) { create(:distributor_enterprise, owner: create(:user)) }
+      let!(:payment_method) { create(:stripe_payment_method, distributor_ids: [enterprise1.id, enterprise2.id], preferred_enterprise_id: enterprise2.id) }
+
+      before { allow(controller).to receive(:spree_current_user) { user } }
+
+      context "when an attempt is made to change the stripe account holder (preferred_enterprise_id)" do
+        let(:params) { { id: payment_method.id, payment_method: { type: "Spree::Gateway::StripeConnect", preferred_enterprise_id: enterprise1.id } } }
+
+        context "as a user that does not manage the existing stripe account holder" do
+          it "prevents the stripe account holder from being updated" do
+            spree_put :update, params
+            expect(payment_method.reload.preferred_enterprise_id).to eq enterprise2.id
+          end
+        end
+
+        context "as a user that manages the existing stripe account holder" do
+          before { enterprise2.update_attributes!(owner_id: user.id) }
+
+          it "allows the stripe account holder to be updated" do
+            spree_put :update, params
+            expect(payment_method.reload.preferred_enterprise_id).to eq enterprise1.id
+          end
+
+          context "when no enterprise is selected as the account holder" do
+            before { payment_method.update_attribute(:preferred_enterprise_id, nil) }
+
+            context "id not provided at all" do
+              before { params[:payment_method].delete(:preferred_enterprise_id) }
+
+              it "does not save the payment method" do
+                spree_put :update, params
+                expect(response).to render_template :edit
+                expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
+              end
+            end
+
+            context "enterprise_id of 0" do
+              before { params[:payment_method][:preferred_enterprise_id] = 0 }
+
+              it "does not save the payment method" do
+                spree_put :update, params
+                expect(response).to render_template :edit
+                expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
   context "Requesting provider preference fields" do
     let(:enterprise) { create(:distributor_enterprise) }
     let(:user) do

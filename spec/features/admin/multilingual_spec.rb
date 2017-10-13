@@ -3,9 +3,13 @@ require 'spec_helper'
 feature 'Multilingual', js: true do
   include AuthenticationWorkflow
   include WebHelper
+  let(:admin_role) { Spree::Role.find_or_create_by_name!('admin') }
+  let(:admin_user) { create(:user) }
 
   background do
-    login_to_admin_section
+    admin_user.spree_roles << admin_role
+    quick_login_as admin_user
+    visit spree.admin_path
   end
 
   it 'has two locales available' do
@@ -18,11 +22,14 @@ feature 'Multilingual', js: true do
     expect(get_i18n_locale).to eq 'en'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
     expect(page).to have_content 'My Enterprises'
+    expect(admin_user.locale).to be_nil
 
     visit spree.admin_path(locale: 'es')
     expect(get_i18n_locale).to eq 'es'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'Mis Organizaciones'
     expect(page).to have_content 'Mis Organizaciones'
+    admin_user.reload
+    expect(admin_user.locale).to eq 'es'
   end
 
   it 'fallbacks to default_locale' do
@@ -34,6 +41,7 @@ feature 'Multilingual', js: true do
     visit spree.admin_path(locale: 'it')
     expect(get_i18n_locale).to eq 'it'
     expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'My Enterprises'
+    expect(admin_user.locale).to be_nil
     # This still is italian until we change enforce_available_locales to `true`
     expect(page).to have_content 'Le Mie Aziende'
   end

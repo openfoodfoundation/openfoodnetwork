@@ -16,6 +16,7 @@ describe "CheckoutCtrl", ->
       $provide.value "CurrentHub", CurrentHubMock
       null
     Checkout =
+      purchase: ->
       submit: ->
       navigate: ->
       bindFieldsToLocalStorage: ->
@@ -42,17 +43,17 @@ describe "CheckoutCtrl", ->
         preventDefault: ->
 
       beforeEach ->
-        spyOn(Checkout, "submit")
+        spyOn(Checkout, "purchase")
         scope.submitted = false
 
       it "delegates to the service when valid", ->
         scope.purchase(event, {$valid: true})
-        expect(Checkout.submit).toHaveBeenCalled()
+        expect(Checkout.purchase).toHaveBeenCalled()
         expect(scope.submitted).toBe(true)
 
       it "does nothing when invalid", ->
         scope.purchase(event, {$valid: false})
-        expect(Checkout.submit).not.toHaveBeenCalled()
+        expect(Checkout.purchase).not.toHaveBeenCalled()
         expect(scope.submitted).toBe(true)
 
     it "is enabled", ->

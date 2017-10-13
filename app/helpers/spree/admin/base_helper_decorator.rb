@@ -22,7 +22,6 @@ module Spree
 
         link_to_with_icon('icon-trash', name, '#', html_options) + f.hidden_field(:_destroy)
       end
-
     end
   end
 end

@@ -1,5 +1,11 @@
 .darkswarm
-  = inject_orders_by_distributor
+  = inject_orders
+  = inject_shops
+  = inject_saved_credit_cards
+
+  - if Stripe.publishable_key
+    :javascript
+      angular.module('Darkswarm').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
   .row.pad-top
     .small-12.columns.pad-top
@@ -7,22 +13,22 @@
         = accurate_title
         %span.account-summary{"data-hook" => "account_summary"}
           = @user.email
-          (#{link_to t(:edit), spree.edit_account_path})
 
-      .orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
-        .my-open-orders{ ng: { show: 'Orders.changeable_orders.length > 0' } }
-          %h3= t(:open_orders)
-          = render 'open_orders'
+    = render 'orders'
+    = render 'cards'
+    = render 'transactions'
+    = render 'settings'
 
-        .active_table
-          %h3.my-orders= t(:transaction_history)
-          %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.orders_by_distributor.length > 0", "ng-repeat" => "(key, distributor) in Orders.orders_by_distributor",
-          "ng-controller" => "DistributorNodeCtrl",
-          "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !distributor.active}",
-          id: "{{distributor.hash}}"}
-            .small-12.columns
-              = render partial: "spree/users/skinny"
-              = render partial: "spree/users/fat"
-        .message{"ng-if" => "Orders.orders_by_distributor.length == 0", "ng-bind" => "::'you_have_no_orders_yet' | t"}
+  .row.tabset-ctrl#account-tabs{ style: 'margin-bottom: 100px', navigate: 'true', selected: 'orders', prefix: 'account' }
+    .small.12.medium-3.columns.tab{ name: "orders" }
+      %a{ href: 'javascript:void(0)' }=t('.tabs.orders')
+    - if Spree::Config.stripe_connect_enabled && Stripe.publishable_key
+      .small.12.medium-3.columns.tab{ name: "cards" }
+        %a{ href: 'javascript:void(0)' }=t('.tabs.cards')
+    .small.12.medium-3.columns.tab{ name: "transactions" }
+      %a{ href: 'javascript:void(0)' }=t('.tabs.transactions')
+    .small.12.medium-3.columns.tab{ name: "settings" }
+      %a{ href: 'javascript:void(0)' }=t('.tabs.settings')
+    .small-12.columns.tab-view
 
   = render partial: "shared/footer"

@@ -4,6 +4,8 @@ describe CheckoutController do
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:order) { create(:order) }
+  let(:reset_order_service) { double(ResetOrderService) }
+
   before do
     order.stub(:checkout_allowed?).and_return true
     controller.stub(:check_authorization).and_return true
@@ -67,20 +69,58 @@ describe CheckoutController do
     it "clears the ship address when re-rendering edit" do
       controller.should_receive(:clear_ship_address).and_return true
       order.stub(:update_attributes).and_return false
-      spree_post :update, order: {}
+      spree_post :update, format: :json, order: {}
     end
 
     it "clears the ship address when the order state cannot be advanced" do
       controller.should_receive(:clear_ship_address).and_return true
       order.stub(:update_attributes).and_return true
       order.stub(:next).and_return false
-      spree_post :update, order: {}
+      spree_post :update, format: :json, order: {}
     end
 
     it "only clears the ship address with a pickup shipping method" do
       order.stub_chain(:shipping_method, :andand, :require_ship_address).and_return false
       order.should_receive(:ship_address=)
       controller.send(:clear_ship_address)
+    end
+
+    context 'when completing the order' do
+      before do
+        order.state = 'complete'
+        allow(order).to receive(:update_attributes).and_return(true)
+        allow(order).to receive(:next).and_return(true)
+        allow(order).to receive(:set_distributor!).and_return(true)
+      end
+
+      it "sets the new order's token to the same as the old order" do
+        order = controller.current_order(true)
+        spree_post :update, order: {}
+        expect(controller.current_order.token).to eq order.token
+      end
+
+      it 'expires the current order' do
+        allow(controller).to receive(:expire_current_order)
+        put :update, order: {}
+        expect(controller).to have_received(:expire_current_order)
+      end
+
+      it 'sets the access_token of the session' do
+        put :update, order: {}
+        expect(session[:access_token]).to eq(controller.current_order.token)
+      end
+    end
+  end
+
+  describe '#expire_current_order' do
+    it 'empties the order_id of the session' do
+      expect(session).to receive(:[]=).with(:order_id, nil)
+      controller.expire_current_order
+    end
+
+    it 'resets the @current_order ivar' do
+      controller.expire_current_order
+      expect(controller.instance_variable_get(:@current_order)).to be_nil
     end
   end
 
@@ -93,7 +133,7 @@ describe CheckoutController do
     end
 
     it "returns errors" do
-      xhr :post, :update, order: {}, use_route: :spree
+      spree_post :update, format: :json, order: {}
       response.status.should == 400
       response.body.should == {errors: assigns[:order].errors, flash: {}}.to_json
     end
@@ -101,21 +141,27 @@ describe CheckoutController do
     it "returns flash" do
       order.stub(:update_attributes).and_return true
       order.stub(:next).and_return false
-      xhr :post, :update, order: {}, use_route: :spree
+      spree_post :update, format: :json, order: {}
       response.body.should == {errors: assigns[:order].errors, flash: {error: "Payment could not be processed, please check the details you entered"}}.to_json
     end
 
     it "returns order confirmation url on success" do
+      allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
+      expect(reset_order_service).to receive(:call)
+
       order.stub(:update_attributes).and_return true
       order.stub(:state).and_return "complete"
 
-      xhr :post, :update, order: {}, use_route: :spree
+      spree_post :update, format: :json, order: {}
       response.status.should == 200
       response.body.should == {path: spree.order_path(order)}.to_json
     end
 
     describe "stale object handling" do
       it "retries when a stale object error is encountered" do
+        allow(ResetOrderService).to receive(:new).with(controller, order) { reset_order_service }
+        expect(reset_order_service).to receive(:call)
+
         order.stub(:update_attributes).and_return true
         controller.stub(:state_callback)
 
@@ -127,7 +173,7 @@ describe CheckoutController do
           true
         end
 
-        xhr :post, :update, order: {}, use_route: :spree
+        spree_post :update, format: :json, order: {}
         response.status.should == 200
       end
 
@@ -135,7 +181,7 @@ describe CheckoutController do
         order.stub(:update_attributes).and_return true
         order.stub(:next) { raise ActiveRecord::StaleObjectError.new(Spree::Variant.new, 'update') }
 
-        xhr :post, :update, order: {}, use_route: :spree
+        spree_post :update, format: :json, order: {}
         response.status.should == 400
       end
     end
@@ -144,16 +190,72 @@ describe CheckoutController do
   describe "Paypal routing" do
     let(:payment_method) { create(:payment_method, type: "Spree::Gateway::PayPalExpress") }
     before do
-      controller.stub(:current_distributor).and_return(distributor)
-      controller.stub(:current_order_cycle).and_return(order_cycle)
-      controller.stub(:current_order).and_return(order)
+      allow(controller).to receive(:current_distributor) { distributor }
+      allow(controller).to receive(:current_order_cycle) { order_cycle }
+      allow(controller).to receive(:current_order) { order }
+      allow(controller).to receive(:restart_checkout)
     end
 
     it "should check the payment method for Paypalness if we've selected one" do
-      Spree::PaymentMethod.should_receive(:find).with(payment_method.id.to_s).and_return payment_method
-      order.stub(:update_attributes).and_return true
-      order.stub(:state).and_return "payment"
+      expect(Spree::PaymentMethod).to receive(:find).with(payment_method.id.to_s) { payment_method }
+      allow(order).to receive(:update_attributes) { true }
+      allow(order).to receive(:state) { "payment" }
       spree_post :update, order: {payments_attributes: [{payment_method_id: payment_method.id}]}
+    end
+  end
+
+  describe "#update_failed" do
+    before do
+      controller.instance_variable_set(:@order, order)
+    end
+
+    it "clears the shipping address and restarts the checkout" do
+      expect(controller).to receive(:clear_ship_address)
+      expect(controller).to receive(:restart_checkout)
+      expect(controller).to receive(:respond_to)
+      controller.send(:update_failed)
+    end
+  end
+
+  describe "#restart_checkout" do
+    let!(:shipment_pending) { create(:shipment, order: order, state: 'pending') }
+    let!(:payment_checkout) { create(:payment, order: order, state: 'checkout') }
+    let!(:payment_failed) { create(:payment, order: order, state: 'failed') }
+
+    before do
+      order.update_attribute(:shipping_method_id, shipment_pending.shipping_method_id)
+      controller.instance_variable_set(:@order, order.reload)
+    end
+
+    context "when the order is already in the 'cart' state" do
+      it "does nothing" do
+        expect(order).to_not receive(:restart_checkout!)
+        controller.send(:restart_checkout)
+      end
+    end
+
+    context "when the order is in a subsequent state" do
+      before do
+        order.update_attribute(:state, "payment")
+      end
+
+      # NOTE: at the time of writing, it was not possible to create a shipment with a state other than
+      # 'pending' when the order has not been completed, so this is not a case that requires testing.
+      it "resets the order state, and clears incomplete shipments and payments" do
+        expect(order).to receive(:restart_checkout!).and_call_original
+        expect(order.shipping_method_id).to_not be nil
+        expect(order.shipments.count).to be 1
+        expect(order.adjustments.shipping.count).to be 1
+        expect(order.payments.count).to be 2
+        expect(order.adjustments.payment_fee.count).to be 2
+        controller.send(:restart_checkout)
+        expect(order.reload.state).to eq 'cart'
+        expect(order.shipping_method_id).to be nil
+        expect(order.shipments.count).to be 0
+        expect(order.adjustments.shipping.count).to be 0
+        expect(order.payments.count).to be 1
+        expect(order.adjustments.payment_fee.count).to be 1
+      end
     end
   end
 end

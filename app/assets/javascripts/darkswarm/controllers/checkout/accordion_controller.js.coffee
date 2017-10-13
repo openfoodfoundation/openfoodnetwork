@@ -13,8 +13,9 @@ Darkswarm.controller "AccordionCtrl", ($scope, localStorageService, $timeout, $d
     # scroll location is closed by show(), scrollTo() will scroll to the old location of
     # the element. Putting this in a 50 ms timeout is enough delay for the DOM to
     # have updated.
-    $timeout (->
-      $document.scrollTo $("##{section}"), offset_height, 500), 50
+    $timeout ->
+      $document.scrollTo($("##{section}"), offset_height, 500)
+    , 50
 
   $scope.$on 'purchaseFormInvalid', (event, form) ->
     # Scroll to first invalid section

@@ -13,6 +13,7 @@
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
 
     = yield :scripts
+    %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
     %script{src: "//maps.googleapis.com/maps/api/js?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''} "}
     = split_stylesheet_link_tag "darkswarm/all"
     = javascript_include_tag "darkswarm/all"
@@ -21,7 +22,7 @@
     = render "layouts/bugherd_script"
     = csrf_meta_tags
 
-  %body.off-canvas{class: @shopfront_layout, ng: {app: "Darkswarm"}}
+  %body{class: body_classes, ng: {app: "Darkswarm"}}
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
       = javascript_include_tag "iehack"
@@ -38,7 +39,7 @@
 
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
-        = render "shared/menu/menu"
+        = render "shared/menu/menu" unless @hide_menu
 
         %section{ role: "main" }
           = yield

@@ -1,0 +1,20 @@
+<html>
+  <head><title>Embedded Group</title></head>
+  <body>
+
+    <p>
+    This is a preview page for embedded groups.
+    Choose a group to display by copying its permalink id into the URL after the question mark.
+    Example: <code>embedded-group-preview.html?flavour-crusader</code>
+    </p>
+
+    <iframe style="width:100%;min-height:35em"></iframe>
+    <script>
+      var unsafeGroupName = window.location.search.substr(1);
+      var group = unsafeGroupName.replace(/[^a-z0-9-]/g, '');
+      var iframe = document.querySelector("iframe");
+      iframe.src = "/groups/" + group + "?embedded_shopfront=true";
+    </script>
+
+  </body>
+</html>

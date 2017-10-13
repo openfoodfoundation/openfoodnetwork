@@ -144,7 +144,6 @@ module Admin
           expect(distributor.users).to_not include user
         end
 
-
         describe "enterprise properties" do
           let(:producer) { create(:enterprise) }
           let!(:property) { create(:property, name: "A nice name") }

@@ -1,12 +1,18 @@
-Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
+Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeElements, PaymentMethods, $http, Navigation, CurrentHub, RailsFlashLoader, Loading)->
   new class Checkout
     errors: {}
     secrets: {}
     order: CurrentOrder.order
 
-    submit: ->
+    purchase: ->
+      if @paymentMethod()?.method_type == 'stripe' && !@secrets.selected_card
+        StripeElements.requestToken(@secrets, @submit)
+      else
+        @submit()
+
+    submit: =>
       Loading.message = t 'submitting_order'
-      $http.put('/checkout', {order: @preprocess()}).success (data, status)=>
+      $http.put('/checkout.json', {order: @preprocess()}).success (data, status)=>
         Navigation.go data.path
       .error (response, status)=>
         if response.path
@@ -53,6 +59,23 @@ Darkswarm.factory 'Checkout', (CurrentOrder, ShippingMethods, PaymentMethods, $h
             last_name: @order.bill_address.lastname
         }
 
+      if @paymentMethod()?.method_type == 'stripe'
+        if @secrets.selected_card
+          angular.extend munged_order, {
+            existing_card_id: @secrets.selected_card
+          }
+        else
+          angular.extend munged_order.payments_attributes[0], {
+            source_attributes:
+              gateway_payment_profile_id: @secrets.token
+              cc_type: @secrets.cc_type
+              last_digits: @secrets.card.last4
+              month: @secrets.card.exp_month
+              year: @secrets.card.exp_year
+              first_name: @order.bill_address.firstname
+              last_name: @order.bill_address.lastname
+              save_requested_by_customer: @secrets.save_requested_by_customer
+          }
       munged_order
 
     shippingMethod: ->

@@ -107,5 +107,43 @@ module Spree
         product1.deleted_at.should_not be_nil
       end
     end
+
+    describe '#clone' do
+      before do
+        spree_post :clone, product_id: product1.id, format: :json
+      end
+
+      context 'as a normal user' do
+        sign_in_as_user!
+
+        it 'denies access' do
+          assert_unauthorized!
+        end
+      end
+
+      context 'as an enterprise user' do
+        sign_in_as_enterprise_user! [:supplier]
+
+        it 'responds with a successful response' do
+          expect(response.status).to eq(201)
+        end
+
+        it 'clones the product' do
+          expect(json_response['name']).to eq("COPY OF #{product1.name}")
+        end
+      end
+
+      context 'as an administrator' do
+        sign_in_as_admin!
+
+        it 'responds with a successful response' do
+          expect(response.status).to eq(201)
+        end
+
+        it 'clones the product' do
+          expect(json_response['name']).to eq("COPY OF #{product1.name}")
+        end
+      end
+    end
   end
 end

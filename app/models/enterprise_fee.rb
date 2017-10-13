@@ -1,4 +1,6 @@
 class EnterpriseFee < ActiveRecord::Base
+  include Spree::Core::CalculatedAdjustments
+
   belongs_to :enterprise
   belongs_to :tax_category, class_name: 'Spree::TaxCategory', foreign_key: 'tax_category_id'
 
@@ -12,9 +14,6 @@ class EnterpriseFee < ActiveRecord::Base
   after_save :refresh_products_cache
   # After destroy, the products cache is refreshed via the after_destroy hook for
   # coordinator_fees and exchange_fees
-
-
-  calculated_adjustments
 
 
   attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :inherits_tax_category
@@ -52,19 +51,6 @@ class EnterpriseFee < ActiveRecord::Base
 
   def self.clear_all_adjustments_on_order(order)
     order.adjustments.where(originator_type: 'EnterpriseFee').destroy_all
-  end
-
-  # Create an adjustment that starts as locked. Preferable to making an adjustment and locking it since
-  # the unlocked adjustment tends to get hit by callbacks before we have a chance to lock it.
-  def create_locked_adjustment(label, target, calculable, mandatory=false)
-    amount = compute_amount(calculable)
-    return if amount == 0 && !mandatory
-    target.adjustments.create({ :amount => amount,
-                                :source => calculable,
-                                :originator => self,
-                                :label => label,
-                                :mandatory => mandatory,
-                                :locked => true}, :without_protection => true)
   end
 
 

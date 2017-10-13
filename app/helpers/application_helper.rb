@@ -20,4 +20,10 @@ module ApplicationHelper
       super
     end
   end
+
+  def body_classes
+    classes = []
+    classes << "off-canvas" unless @hide_menu
+    classes << @shopfront_layout
+  end
 end

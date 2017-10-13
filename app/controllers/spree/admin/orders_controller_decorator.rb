@@ -4,11 +4,7 @@ Spree::Admin::OrdersController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
   helper CheckoutHelper
   before_filter :load_spree_api_key, :only => :bulk_management
-
-  # We need to add expections for collection actions other than :index here
-  # because spree_auth_devise causes load_order to be called, which results
-  # in an auth failure as the @order object is nil for collection actions
-  before_filter :check_authorization, except: [:bulk_management, :managed]
+  before_filter :load_order, only: %i[show edit update fire resend invoice print]
 
   before_filter :load_distribution_choices, only: [:new, :edit, :update]
 
@@ -83,7 +79,7 @@ Spree::Admin::OrdersController.class_eval do
     template = if Spree::Config.invoice_style2? then "spree/admin/orders/invoice2" else "spree/admin/orders/invoice" end
     pdf = render_to_string pdf: "invoice-#{@order.number}.pdf", template: template, formats: [:html], encoding: "UTF-8"
     Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
-    flash[:success] = t(:invoice_email_sent)
+    flash[:success] = t('admin.orders.invoice_email_sent')
 
     respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
   end

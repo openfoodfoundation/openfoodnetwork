@@ -26,7 +26,7 @@ angular.module("admin.resources").factory 'LineItems', ($q, LineItemResource) ->
     save: (lineItem) ->
       deferred = $q.defer()
       lineItem.errors = {}
-      lineItem.$update({id: lineItem.id, orders: "orders", order_number: lineItem.order.number})
+      lineItem.$update({id: lineItem.id})
       .then( (data) =>
         @pristineByID[lineItem.id] = angular.copy(lineItem)
         deferred.resolve(data)
@@ -54,7 +54,7 @@ angular.module("admin.resources").factory 'LineItems', ($q, LineItemResource) ->
 
     delete: (lineItem, callback=null) ->
       deferred = $q.defer()
-      lineItem.$delete({id: lineItem.id, orders: "orders", order_number: lineItem.order.number})
+      lineItem.$delete({id: lineItem.id})
       .then( (data) =>
         delete @byID[lineItem.id]
         delete @pristineByID[lineItem.id]

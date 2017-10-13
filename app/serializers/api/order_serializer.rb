@@ -1,13 +1,18 @@
 module Api
   class OrderSerializer < ActiveModel::Serializer
     attributes :number, :completed_at, :total, :state, :shipment_state, :payment_state
-    attributes :outstanding_balance, :payments, :path, :cancel_path, :changes_allowed, :changes_allowed_until
-    attributes :shop_name, :item_count
+    attributes :outstanding_balance, :payments, :path, :cancel_path
+    attributes :changes_allowed, :changes_allowed_until, :item_count
+    attributes :shop_id
 
     has_many :payments, serializer: Api::PaymentSerializer
 
-    def shop_name
-      object.distributor.andand.name
+    def payments
+      object.payments.joins(:payment_method).completed
+    end
+
+    def shop_id
+      object.distributor_id
     end
 
     def item_count
@@ -21,10 +26,6 @@ module Api
     def changes_allowed_until
       return I18n.t(:not_allowed) unless object.changes_allowed?
       I18n.l(object.order_cycle.andand.orders_close_at, format: "%b %d, %Y %H:%M")
-    end
-
-    def total
-      object.total.to_money.to_s
     end
 
     def shipment_state

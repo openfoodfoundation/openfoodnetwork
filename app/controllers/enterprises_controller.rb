@@ -15,10 +15,11 @@ class EnterprisesController < BaseController
   respond_to :js, only: :permalink_checker
 
   def relatives
+    set_enterprise
+
     respond_to do |format|
       format.json do
-        enterprise = Enterprise.find(params[:id])
-        enterprises = enterprise.andand.relatives.andand.activated
+        enterprises = @enterprise.andand.relatives.andand.activated
         render(json: enterprises,
                each_serializer: Api::EnterpriseSerializer,
                data: OpenFoodNetwork::EnterpriseInjectionData.new)
@@ -39,6 +40,10 @@ class EnterprisesController < BaseController
   end
 
   private
+
+  def set_enterprise
+    @enterprise = Enterprise.find_by_id(params[:id])
+  end
 
   def clean_permalink
     params[:permalink] = params[:permalink].parameterize

@@ -1,5 +1,5 @@
 .active_table
-  %hub.active_table_node.row{"ng-repeat" => "hub in #{enterprises}Filtered = (#{enterprises} | filter:filterExpression | taxons:activeTaxons | properties:activeProperties:'distributed_properties' | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+distance', '+orders_close_at'])",
+  %hub.active_table_node.row{"ng-repeat" => "hub in #{enterprises}Filtered = (#{enterprises} | closedShops:show_closed | taxons:activeTaxons | properties:activeProperties:'distributed_properties' | shipping:shippingTypes | showHubProfiles:show_profiles | orderBy:['-active', '+distance', '+orders_close_at'])",
   "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
   "ng-controller" => "HubNodeCtrl",
   id: "{{hub.hash}}"}

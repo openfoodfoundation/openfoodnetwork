@@ -1,5 +1,5 @@
 require 'ffaker'
-require 'spree/core/testing_support/factories'
+require 'spree/testing_support/factories'
 
 # http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
 #
@@ -361,6 +361,17 @@ FactoryGirl.define do
     before(:create) do |tr|
       tr.calculator = Spree::Calculator::FlatPercentItemTotal.new(calculable: tr)
     end
+  end
+
+  factory :stripe_payment_method, :class => Spree::Gateway::StripeConnect do
+    name 'Stripe'
+    environment 'test'
+  end
+
+  factory :stripe_account do
+    enterprise { FactoryGirl.create :distributor_enterprise }
+    stripe_user_id "abc123"
+    stripe_publishable_key "xyz456"
   end
 end
 

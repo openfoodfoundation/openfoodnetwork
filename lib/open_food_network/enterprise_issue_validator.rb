@@ -1,7 +1,7 @@
 module OpenFoodNetwork
   class EnterpriseIssueValidator
     include Rails.application.routes.url_helpers
-    include Spree::Core::UrlHelpers
+    include Spree::TestingSupport::UrlHelpers
 
     def initialize(enterprise)
       @enterprise = enterprise

@@ -6,10 +6,9 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location
   $scope.openModal = EnterpriseModal.open
   $scope.activeTaxons = []
   $scope.show_profiles = false
+  $scope.show_closed = false
   $scope.filtersActive = false
   $scope.distanceMatchesShown = false
-  $scope.filterExpression = {active: true}
-
 
   $scope.$watch "query", (query)->
     Enterprises.flagMatching query
@@ -36,7 +35,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location
   # When filter settings change, this could change which name match is at the top, or even
   # result in no matches. This affects the reference point that the distance matches are
   # calculated from, so we need to recalculate distances.
-  $scope.$watch '[activeTaxons, activeProperties, shippingTypes, show_profiles]', ->
+  $scope.$watch '[activeTaxons, activeProperties, shippingTypes, show_profiles, show_closed]', ->
     $timeout ->
       Enterprises.calculateDistance $scope.query, $scope.firstNameMatch()
       $rootScope.$broadcast 'enterprisesChanged'
@@ -74,9 +73,9 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location
       undefined
 
   $scope.showClosedShops = ->
-    delete $scope.filterExpression['active']
+    $scope.show_closed = true
     $location.search('show_closed', '1')
 
   $scope.hideClosedShops = ->
-    $scope.filterExpression['active'] = true
+    $scope.show_closed = false
     $location.search('show_closed', null)

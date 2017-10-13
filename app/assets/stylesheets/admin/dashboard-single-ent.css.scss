@@ -1,27 +1,5 @@
 @import "../darkswarm/mixins";
 
-.alert-box {
-  position: relative;
-  display: block;
-  background-color: #eff5dc;
-  border: 1px solid #9fc820;
-  color: #666;
-  margin-top: 1em;
-  margin-bottom: 1em;
-
-  @include border-radius(3px);
-
-  transition: opacity 300ms ease-out;
-  padding: 0.77778em 1.33333em 0.77778em 0.77778em;
-
-  a.close {
-    position: absolute;
-    right: 5px;
-    top: 0px;
-    font-size: 1.5em;
-  }
-}
-
 .dashboard_item.single-ent {
   .header {
     padding: 0.77778em 1.33333em 0.77778em 0.77778em;

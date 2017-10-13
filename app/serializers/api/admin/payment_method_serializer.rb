@@ -1,11 +1,15 @@
-class Api::Admin::PaymentMethodSerializer < ActiveModel::Serializer
-  attributes :id, :name, :type, :tag_list, :tags
+module Api
+  module Admin
+    class PaymentMethodSerializer < ActiveModel::Serializer
+      delegate :serializable_hash, to: :method_serializer
 
-  def tag_list
-    object.tag_list.join(",")
-  end
-
-  def tags
-    object.tag_list.map{ |t| { text: t } }
+      def method_serializer
+        if object.type == 'Spree::Gateway::StripeConnect'
+          Api::Admin::PaymentMethod::StripeSerializer.new(object)
+        else
+          Api::Admin::PaymentMethod::BaseSerializer.new(object)
+        end
+      end
+    end
   end
 end
