@@ -1,7 +1,7 @@
 %tr.variant{ :id => "v_{{variant.id}}", 'ng-repeat' => 'variant in product.variants', 'ng-show' => 'DisplayProperties.showVariants(product.id)', 'ng-class-even' => "'even'", 'ng-class-odd' => "'odd'" }
   %td.left-actions
     %a{ :class => "variant-item icon-caret-right", 'ng-hide' => "$last" }
-    %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last" }
+    %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last", 'ofn-with-tip' => t('.new_variant') }
   %td{ 'ng-show' => 'columns.producer.visible' }
   %td{ 'ng-show' => 'columns.sku.visible' }
     %input{ 'ng-model' => "variant.sku", :name => 'variant_sku', 'ofn-track-variant' => 'sku', :type => 'text' }

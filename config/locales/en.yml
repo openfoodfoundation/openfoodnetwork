@@ -2229,6 +2229,7 @@ Please follow the instructions there to make your enterprise visible on the Open
             av_on: "Av. On"
           products_variant:
             variant_has_n_overrides: "This variant has %{n} override(s)"
+            new_variant: "New variant"
           product_name: Product Name
         primary_taxon_form:
           product_category: Product Category
