@@ -223,6 +223,7 @@ describe CheckoutController do
     let!(:payment_failed) { create(:payment, order: order, state: 'failed') }
 
     before do
+      order.update_attribute(:shipping_method_id, shipment_pending.shipping_method_id)
       controller.instance_variable_set(:@order, order.reload)
     end
 
@@ -242,12 +243,14 @@ describe CheckoutController do
       # 'pending' when the order has not been completed, so this is not a case that requires testing.
       it "resets the order state, and clears incomplete shipments and payments" do
         expect(order).to receive(:restart_checkout!).and_call_original
+        expect(order.shipping_method_id).to_not be nil
         expect(order.shipments.count).to be 1
         expect(order.adjustments.shipping.count).to be 1
         expect(order.payments.count).to be 2
         expect(order.adjustments.payment_fee.count).to be 2
         controller.send(:restart_checkout)
         expect(order.reload.state).to eq 'cart'
+        expect(order.shipping_method_id).to be nil
         expect(order.shipments.count).to be 0
         expect(order.adjustments.shipping.count).to be 0
         expect(order.payments.count).to be 1
