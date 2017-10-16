@@ -1,8 +1,11 @@
 Darkswarm.factory "EnterpriseModal", ($modal, $rootScope)->
   # Build a modal popup for an enterprise.
   new class EnterpriseModal
-    open: (enterprise)->
+    open: (enterprises)->
       scope = $rootScope.$new(true) # Spawn an isolate to contain the enterprise
+      scope.enterprises = if angular.isArray(enterprises)
+        enterprises
+      else
+        [enterprises]
 
-      scope.enterprise = enterprise
       $modal.open(templateUrl: "enterprise_modal.html", scope: scope)

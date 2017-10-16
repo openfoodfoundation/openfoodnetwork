@@ -1,9 +1,28 @@
-Darkswarm.factory "MapConfiguration", ->
+#https://stackoverflow.com/questions/3548920/google-maps-api-v3-multiple-markers-on-exact-same-spot
+
+MAX_ZOOM_LEVEL = 18
+
+Darkswarm.factory "MapConfiguration", (EnterpriseModal) ->
   new class MapConfiguration
     options:
+      doCluster: true
+      clusterOptions: {imagePath: 'assets/map_005-cluster', imageExtension: 'png', imageSizes: [36]}
+      clusterEvents:
+        click: (cluster, clusterModels) ->
+          map = cluster.map_
+
+          should_open_modal = (
+            map.zoom == MAX_ZOOM_LEVEL
+          )
+
+          return unless should_open_modal
+
+          cluster.markerClusterer_.zoomOnClick_ = false
+          enterprises = clusterModels.map((model) -> model.getEnterprise())
+          EnterpriseModal.open enterprises
       center:
-        latitude: -37.4713077
-        longitude: 144.7851531
+        latitude: -37.916246
+        longitude: 145.343687
       zoom: 12
       additional_options:
         # mapTypeId: 'satellite'
