@@ -7,12 +7,12 @@ module Admin
     before_filter :load_settings, only: [:edit]
 
     def edit
-      return @stripe_account = { status: :empty_api_key } if Stripe.api_key.blank?
+      return @stripe_account = { status: :empty_api_key_error_html } if Stripe.api_key.blank?
       attrs = %i[id business_name charges_enabled]
       @obfuscated_secret_key = obfuscated_secret_key
       @stripe_account = Stripe::Account.retrieve.to_hash.slice(*attrs).merge(status: :ok)
     rescue Stripe::AuthenticationError
-      @stripe_account = { status: :auth_fail }
+      @stripe_account = { status: :auth_fail_error }
     end
 
     def update

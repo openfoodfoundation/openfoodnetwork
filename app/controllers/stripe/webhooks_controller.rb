@@ -5,7 +5,7 @@ module Stripe
     protect_from_forgery except: :create
     before_filter :verify_webhook
 
-    # POST /stripe/webhook
+    # POST /stripe/webhooks
     def create
       handler = WebhookHandler.new(@event)
       result = handler.handle

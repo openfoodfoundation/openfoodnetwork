@@ -2,6 +2,7 @@ require 'stripe/account_connector'
 
 module Stripe
   class CallbacksController < BaseController
+    # GET /stripe/callbacks
     def index
       connector = Stripe::AccountConnector.new(spree_current_user, params)
 
