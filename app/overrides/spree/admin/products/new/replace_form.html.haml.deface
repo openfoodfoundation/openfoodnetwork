@@ -43,7 +43,7 @@
           = f.label :price, t(:price)
           %span.required *
           %br/
-          = f.text_field :price, class: 'fullwidth'
+          = float_string_field :price, { model: 'product', value: @product.price }
           = f.error_message_on :price
       .two.columns
         = f.field_container :on_hand do
