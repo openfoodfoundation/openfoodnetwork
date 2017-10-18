@@ -181,7 +181,7 @@ describe Spree::Order do
   end
 
   describe "an unpaid order with a shipment" do
-    let(:order)           { create(:order, shipping_method: shipping_method) }
+    let(:order)           { create(:order_with_totals, shipping_method: shipping_method) }
     let(:shipping_method) { create(:shipping_method) }
 
     before do
