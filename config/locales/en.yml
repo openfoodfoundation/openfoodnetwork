@@ -54,12 +54,15 @@
 #   - https://community.openfoodnetwork.org/t/workflow-to-structure-translations/932
 
 en:
+  # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
   activerecord:
-    # Overridden here due to a bug in spree i18n (Issue #870)
     attributes:
       spree/order:
         payment_state: Payment State
         shipment_state: Shipment State
+        completed_at: Completed At
+        number: Number
+        email: Customer E-Mail
     errors:
       models:
         spree/user:
@@ -165,6 +168,9 @@ en:
   notes: Notes
   error: Error
   processing_payment: Processing payment...
+  show_only_unfulfilled_orders: Show only unfulfilled orders
+  filter_results: Filter Results
+  quantity: Quantity
 
 
   actions:
@@ -340,14 +346,6 @@ en:
 
     products:
       unit_name_placeholder: 'eg. bunches'
-      bulk_edit:
-        unit: Unit
-        display_as: Display As
-        category: Category
-        tax_category: Tax Category
-        inherits_properties?: Inherits Properties?
-        available_on: Available On
-        av_on: "Av. On"
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
@@ -894,7 +892,7 @@ en:
   label_less: "Show less"
   label_notices: "Notices"
 
-  items: "items"
+  cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
   cart_updating: "Updating cart..."
@@ -1075,6 +1073,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_order_summary_price: "Price"
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
+  email_order_summary_includes_tax: "(includes tax):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
   email_payment_summary: Payment summary
@@ -2214,6 +2213,15 @@ Please follow the instructions there to make your enterprise visible on the Open
             title: LOADING PRODUCTS
             no_products: "No products yet. Why don't you add some?"
             no_results: "Sorry, no results match"
+          products_head:
+            name: Name
+            unit: Unit
+            display_as: Display As
+            category: Category
+            tax_category: Tax Category
+            inherits_properties?: Inherits Properties?
+            available_on: Available On
+            av_on: "Av. On"
           product_name: Product Name
         primary_taxon_form:
           product_category: Product Category

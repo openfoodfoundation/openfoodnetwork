@@ -56,7 +56,7 @@ module OpenFoodNetwork
     end
 
     def products_bulk_edit_columns
-      node = "admin.products.bulk_edit"
+      node = "spree.admin.products.bulk_edit.products_head"
       {
         producer:             { name: I18n.t("admin.producer"),                visible: true },
         sku:                  { name: I18n.t("admin.sku"),                     visible: false },

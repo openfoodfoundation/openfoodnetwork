@@ -44,7 +44,7 @@
     - if @order.total_tax > 0
       %tr
         %td{:align => "right", :colspan => "2"}
-          (includes tax):
+          = t :email_order_summary_includes_tax
         %td{:align => "right"}
           = display_checkout_tax_total(@order)
 %p &nbsp;

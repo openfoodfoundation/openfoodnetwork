@@ -12,11 +12,10 @@ angular.module("admin.products").factory "VariantUnitManager", ->
 
     @variantUnitOptions: ->
       options = for unit_type, scale_with_name of @unitNames
-        unit_type_cap = unit_type[0].toUpperCase() + unit_type[1..-1]
         for scale in @unitScales(unit_type)
           name = @getUnitName(scale, unit_type)
-          ["#{unit_type_cap} (#{name})", "#{unit_type}_#{scale}"]
-      options.push [['Items', 'items']]
+          ["#{I18n.t(unit_type)} (#{name})", "#{unit_type}_#{scale}"]
+      options.push [[I18n.t('items'), 'items']]
       [].concat options...
 
     @getScale: (value, unitType) ->
