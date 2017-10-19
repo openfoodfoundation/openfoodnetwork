@@ -687,6 +687,26 @@ describe Spree::Order do
         expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
         expect(order.shipment.adjustment.included_tax).to eq 0.6
       end
+
+      context "when finalized fee adjustments exist on the order" do
+        let(:payment_fee_adjustment) { order.adjustments.payment_fee.first }
+        let(:shipping_fee_adjustment) { order.adjustments.shipping.first }
+
+        before do
+          payment_fee_adjustment.finalize!
+          shipping_fee_adjustment.finalize!
+          order.reload
+        end
+
+        it "does not attempt to update such adjustments" do
+          order.update_attributes(line_items_attributes: [{id: order.line_items.first.id, quantity: 0}])
+
+          # Check if fees got updated
+          order.reload
+          expect(order.adjustment_total).to eq expected_fees
+          expect(order.shipment.adjustment.included_tax).to eq 1.2
+        end
+      end
     end
 
     context "changing the shipping method to one without fees" do

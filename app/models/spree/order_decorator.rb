@@ -144,6 +144,8 @@ Spree::Order.class_eval do
   end
 
   # After changing line items of a completed order
+  # TODO: perhaps this should be triggered from a controller
+  # rather than an after_save callback?
   def update_shipping_fees!
     shipments.each do |shipment|
       next if shipment.shipped?
@@ -153,6 +155,8 @@ Spree::Order.class_eval do
   end
 
   # After changing line items of a completed order
+  # TODO: perhaps this should be triggered from a controller
+  # rather than an after_save callback?
   def update_payment_fees!
     payments.each do |payment|
       next if payment.completed?
@@ -367,6 +371,7 @@ Spree::Order.class_eval do
   end
 
   def update_adjustment!(adjustment)
+    return if adjustment.finalized?
     state = adjustment.state
     adjustment.state = 'open'
     adjustment.update!(self)
