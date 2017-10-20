@@ -2,7 +2,7 @@ es:
   activerecord:
     attributes:
       spree/order:
-        payment_state: Estado del pagos
+        payment_state: Estado del pago
         shipment_state: Estado del envío
     errors:
       models:
@@ -75,7 +75,7 @@ es:
   distributors: Distribuidores
   distribution: Distribución
   bulk_order_management: Gestión de pedidos en bloque
-  enterprise_groups: Grupos
+  enterprise_groups: Redes
   reports: Informes
   variant_overrides: Inventario
   spree_products: Productos Spree
@@ -100,6 +100,11 @@ es:
   powered_by: Powered by
   blocked_cookies_alert: "Es posible que su navegador esté bloqueando las cookies necesarias para utilizar esta tienda. Haga clic a continuación para permitir las cookies y vuelva a cargar la página."
   allow_cookies: "Permitir cookies"
+  notes: Notas
+  error: Error
+  processing_payment: Procesando el pago...
+  actions:
+    create_and_add_another: "Crear y agregar otro"
   admin:
     date: Fecha
     email: Email
@@ -294,6 +299,8 @@ es:
       index:
         capture: "Captura"
         ship: "Envío"
+      invoice_email_sent: 'Se ha enviado correo electrónico con la factura.'
+      order_email_resent: 'El correo electrónico del pedido se ha reenviado'
       bulk_management:
         tip: "Usa esta página para alterar la cantidad del producto en varios pedidos a la vez. Los productos pueden ser eliminados de los pedidos si es necesario. "
         shared: "¿Recurso compartido?"
@@ -379,9 +386,9 @@ es:
         primary_details:
           name: Nombre
           name_placeholder: ej. Professor Plum's Biodynamic Truffles
-          groups: Grupos
-          groups_tip: Seleccione los grupos o zonas de los que es miembro. Esto ayudará a los clientes a encontrar su organización.
-          groups_placeholder: Escribe para buscar los grupos disponibles...
+          groups: Redes
+          groups_tip: Seleccione las redes o zonas de los que es miembro. Esto ayudará a los consumidores a encontrar tu organización.
+          groups_placeholder: Escribe para buscar las redes disponibles...
           primary_producer: Productora Principal?
           primary_producer_tip: Seleciona "Productora" si eres la principal productora.
           producer: Productora
@@ -434,7 +441,19 @@ es:
           open_date: Fecha de Inicio
           close_date: Fecha de Finalización
         social:
-          twitter_placeholder: ej. @the_prof
+          twitter_placeholder: 'ej: the_prof'
+        stripe_connect:
+          connect_with_stripe: "Conectar con Stripe"
+          stripe_connect_intro: "Para aceptar pagos con tarjeta de crédito, necesitarás conectar tu cuenta Stripe con Open Food Network. Usa el botón a la derecha para comenzar."
+          stripe_account_connected: "Cuenta de Stripe conectada."
+          disconnect: "Desconectar cuenta"
+          confirm_modal:
+            title: Conectar con Stripe
+            part1: Stripe es un servicio de pagos que permite a las tiendas aceptar pagos con tarjeta de crédito de las consumidoras.
+            part2: Para usar esta función, debes conectar tu cuenta Stripe con OFN. Al hacer clic en 'Acepto' a continuación, se redireccionará al sitio web de Stripe donde puedes conectar una cuenta de Stripe existente o crear una nueva si aún no la tienes.
+            part3: Esto permitirá que Open Food Network acepte pagos con tarjeta de crédito de los clientes en tu nombre. Ten en cuenta que deberás mantener tu propia cuenta de Stripe, pagar las tarifas de Stripe y gestionar los reembolsos y el servicio al cliente.
+            i_agree: Estoy de acuerdo
+            cancel: Cancelar
         tag_rules:
           default_rules:
             by_default: Por Defecto
@@ -481,7 +500,7 @@ es:
         sell_your_produce: Vende tu propia producción
         producer_shop_description_text: Vender sus productos directamente a los clientes a través de su propia tienda.
         producer_shop_description_text2: Una tienda de productora es para sus productos solamente, si quieres vender productos de otros productores, selecciona "Grupo de Productoras"
-        producer_hub: Grupo de Productoras
+        producer_hub: Grupo
         producer_hub_text: Vende tu propia producción y la de otros
         producer_hub_description_text: Tu organización es la columna vertebral de un sistema de consumo local. Agrega productos tuyos o de otras organizaciones y véndelo a través de tu tienda en Open Food Network.
         profile: Solo perfil
@@ -518,12 +537,17 @@ es:
         advanced_settings: Configuración Avanzada
         update_and_close: Actualizar y Cerrar
         choose_products_from: 'Escoger Productos desde:'
-        pickup_time_tip: Cuándo estarán disponibles para el consumidor las ordenes de este ciclo
-        pickup_instructions_tip: Esta instrucciones se muestran a los consumidores después de que completen un pedido.
       exchange_form:
+        pickup_time_tip: Cuando los pedidos de este ciclo de pedido estarán listos para la consumidora
         pickup_instructions_placeholder: "Instrucciones de recogida"
+        pickup_instructions_tip: Estas instrucciones se muestran a las consumidoras después de completar un pedido.
         pickup_time_placeholder: "Listo para ( Fecha / Hora)"
         receival_instructions_placeholder: "Instrucciones de recepción"
+        add_fee: 'Añadir tarifa'
+        selected: 'seleccionado'
+      add_exchange_form:
+        add_supplier: 'Añadir proveedora'
+        add_distributor: 'Añadir distribuidora'
       advanced_settings:
         title: Configuración Avanzada
         choose_product_tip: Puedes optar por restringir todos los productos disponibles (entrantes y salientes), solo a los de %{inventory} inventario.
@@ -634,6 +658,29 @@ es:
         description: Facturas para la importación en Xero
       packing:
         name: Informes de empaquetado
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Configuración"
+        stripe_connect_enabled: ¿Permitir a las tiendas aceptar pagos mediante Stripe Connect?
+        no_api_key_msg: No existe una cuenta Stripe para esta organización.
+        configuration_explanation_html: Para obtener instrucciones detalladas sobre cómo configurar la integración con Stripe Connect, <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'> consulte esta guía </a>.
+        status: Estado
+        ok: Ok
+        instance_secret_key: Clave secreta de instancia
+        account_id: Account ID
+        business_name: Nombre de la Organización
+        charges_enabled: Cargos habilitados
+        charges_enabled_warning: "Advertencia: los cargos no están habilitados para su cuenta"
+        auth_fail_error: La clave API que proporcionó no es válida.
+        empty_api_key_error_html: No se ha proporcionado ninguna clave API Stripe. Para configurar su clave API, <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">siga estas instrucciones</a>
+    controllers:
+      enterprises:
+        stripe_connect_cancelled: "Se ha cancelado la conexión a Stripe"
+        stripe_connect_success: "La cuenta Stripe se ha conectado correctamente"
+        stripe_connect_fail: Lo sentimos, la conexión de tu cuenta Stripe ha fallado
+      stripe_connect_settings:
+        resource: Configuración de Stripe Connect
   checkout:
     already_ordered:
       cart: "carrito"
@@ -657,8 +704,10 @@ es:
       register: "registro"
       contact: "contactar"
       require_customer_login: "Esta tienda es solo para consumidores registrados."
-      require_login_html: "Haz %{login} si ya tienes una cuenta. De lo contrario puedes %{register}."
+      require_login_html: "Haz %{login} si ya tienes una cuenta. De lo contrario realiza un %{register}y contacta con la organización para que acepten tu solicitud."
       require_customer_html: "%{contact} %{enterprise} para convertirte en miembro."
+  card_could_not_be_saved: la tarjeta no se pudo guardar
+  spree_gateway_error_flash_for_checkout: "Hubo un problema con tu información de pago: %{error}"
   invoice_billing_address: "Dirección de facturación:"
   invoice_column_tax: "Impuesto sobre bienes y servicios"
   invoice_column_price: "Precio"
@@ -709,7 +758,7 @@ es:
   address_placeholder: ej. Carrer Torrent de l'Olla
   address2: Dirección (cont.)
   city: Ciudad
-  city_placeholder: ej. Gràcia
+  city_placeholder: ej. Barcelona
   postcode: Código postal
   postcode_placeholder: ej. 08025
   state: Estado
@@ -726,12 +775,12 @@ es:
   label_shops: "Tiendas"
   label_map: "Mapa"
   label_producers: "Productoras"
-  label_groups: "Grupos"
+  label_groups: "Redes"
   label_about: "Acerca de"
   label_connect: "Conectar"
   label_learn: "Aprender"
   label_shopping: "Tienda"
-  label_login: "Iniciar de sesión"
+  label_login: "Iniciar sesión"
   label_logout: "Cerrar sesión"
   label_signup: "Registrarse"
   label_administration: "Administración"
@@ -749,6 +798,18 @@ es:
   card_number: Número de tarjeta
   card_securitycode: "Código de seguridad"
   card_expiry_date: Fecha de expiración
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
+  new_credit_card: "Nueva tarjeta de crédito"
+  my_credit_cards: Mis tarjetas de credito
+  add_new_credit_card: Añadir nueva tarjeta de crédito
+  saved_cards: Tarjetas guardadas
+  add_a_card: Añade una tarjeta
+  add_card: Añadir tarjeta
+  you_have_no_saved_cards: Aún no has guardado ninguna tarjeta.
+  saving_credit_card: Guardando tarjeta de crédito...
+  card_has_been_removed: "Su tarjeta ha sido eliminada (número: %{number})"
+  card_could_not_be_removed: Lo sentimos, la tarjeta no se pudo quitar
   ie_warning_headline: "Su navegador está desactualizado :-("
   ie_warning_text: "Para la mejor esperiencia de Open Food Network, recomendamos actualizar su navegador:"
   ie_warning_chrome: Descargar Chrome
@@ -826,6 +887,7 @@ es:
   checkout_shipping_price: Envío
   checkout_total_price: Total
   checkout_back_to_cart: "De vuelta al carrito"
+  cost_currency: "Moneda"
   order_paid: PAGADO
   order_not_paid: NO PAGADO
   order_total: Pedido total
@@ -958,11 +1020,11 @@ es:
   components_profiles_show: "Mostrar perfiles"
   components_filters_nofilters: "Sin filtros"
   components_filters_clearfilters: "Limpiar todos los filtros"
-  groups_title: Groupos
-  groups_headline: Groupos / regiones
-  groups_text: "Cada productora es única. Cada organización tiene algo diferente que ofrecer. Nuestros grupos son colectivos de productoras, grupos y distribuidoras que comparten valores agroecológicos. Esto hace que tu experiencia de compra sea más fácil. Puedes buscar en nuestros grupos y estar seguro que se ha hecho una selección de proyectos con estos criterios."
+  groups_title: Redes
+  groups_headline: Redes / regiones
+  groups_text: "Cada productora es única. Cada organización tiene algo diferente que ofrecer. Nuestras redes son colectivos de productoras, grupos y distribuidoras que comparten valores agroecológicos. Esto hace que tu experiencia de compra sea más fácil. Puedes buscar las redes y estar seguro que se ha hecho una selección de proyectos con estos criterios."
   groups_search: "Buscar nombre o palabra clave"
-  groups_no_groups: "No se encontraron grupos"
+  groups_no_groups: "No se encontraron redes"
   groups_about: "Acerca de nosotras"
   groups_producers: "Nuestras productoras"
   groups_hubs: "Nuestros Grupos de Consumo"
@@ -973,7 +1035,7 @@ es:
   groups_contact_website: Visite nuestro sitio web
   groups_contact_facebook: Síganos en Facebook
   groups_signup_title: Registrarse como un grupo
-  groups_signup_headline: Registro de grupos
+  groups_signup_headline: Registro de redes
   groups_signup_intro: "Somos una asombrosa plataforma de mercadeo colaborativo, la forma más sencilla para que sus miembros e interesados encuentren nuevos mercados. No tenemos fines de lucro, somos asequibles y simples."
   groups_signup_email: Envíenos un correo electrónico
   groups_signup_motivation1: Nosotros transformamos sistemas de comida de forma justa.
@@ -995,9 +1057,9 @@ es:
   modal_hubs_abstract: ¡Nuestros Grupos de Consumo son el punto de contacto entre usted y la gente que hace su comida!
   modal_hubs_content1: Puede buscar un grupo de consumo conveniente por ubicación o nombre. Algunos grupos de consumo tienen múltiples puntos en loa que puede recoger las compras, y algunos también brindan opciones de entrega a domicilio. Cada Grupo de Consumo es un punto de venta con operaciones de negocio y logística independientes, entonces puede esperar diferencias entre Grupos de Consumo.
   modal_hubs_content2: Sólo puedes comprar en un grupo de consumo a la vez.
-  modal_groups: "Grupos / Regiones"
+  modal_groups: "Redes / Regiones"
   modal_groups_content1: Estas son las organizaciones y relaciones entre grupos de consumo que conforman el Open Food Network.
-  modal_groups_content2: Algunos grupos están organizados por ubicación o junta, otros por similaridades no geográficas.
+  modal_groups_content2: Algunas redes están organizadas por ubicación, otros por afinidades no geográficas.
   modal_how: "Cómo funciona"
   modal_how_shop: Comprar en Open Food Network
   modal_how_shop_explained: ¡Buscar un grupo de consumo cerca de ti para empezar a comprar! Puedes expandir cada grupo de consumo para ver qué tipos de productos están disponibles, y hacer clic para empezar a comprar. (Sólo puedes comprar en un grupo de consumo a la vez.)
@@ -1040,7 +1102,7 @@ es:
   sell_motivation: "Muestra tus preciosos alimentos."
   sell_producers: "Productoras"
   sell_hubs: "Grupos de Consumo"
-  sell_groups: "Grupos"
+  sell_groups: "Redes"
   sell_producers_detail: "Crea tu perfil en OFN en cuestión de minutos. En cualquier momento puedes actualizar tu perfil a una tienda en línea y vender tus productos directamente a los consumidores."
   sell_hubs_detail: "Crea un perfil para tu organización en OFN. En cualquier momento puedes actualizar tu perfil a una tienda de varias productoras."
   sell_groups_detail: "Crea un directorio personalizado de organizaciones (productoras u otras organizaciones) para tu región o para tu organización."
@@ -1159,10 +1221,64 @@ es:
   password_reset_sent: "¡Le enviamos un correo electrónico con instrucciones para restaurar la contraseña!"
   reset_password: "Restaurar contraseña"
   who_is_managing_enterprise: "¿Quién es responsable de administrar %{enterprise}?"
+  enterprise:
+    registration:
+      modal:
+        steps:
+          details:
+            title: 'Detalles'
+            headline: "Empecemos"
+            enterprise: "Primero necesitamos saber un poco sobre tu organización:"
+            producer: "Primero necesitamos saber un poco sobre tu productora:"
+            enterprise_name_field: "Nombre de la organización:"
+            producer_name_field: "Nombre de la productora:"
+            producer_name_field_placeholder: "p.ej. La impresionante granja de Charlie"
+            producer_name_field_error: "Elija un nombre único para su organización."
+            address1_field: "Dirección Línea 1:"
+            address1_field_placeholder: "p.ej. Passeig Sant Joan"
+            address1_field_error: "Introduce una dirección"
+            address2_field: "Dirección línea 2:"
+            suburb_field: "Barrio:"
+            suburb_field_placeholder: "e.g. Gràcia"
+            suburb_field_error: "Introduce un barrio"
+            postcode_field: "Código postal:"
+            postcode_field_placeholder: "p.ej. 08025"
+            postcode_field_error: "Requiere un código postal"
+            state_field: "Región:"
+            state_field_error: "Región requerida"
+            country_field: "País:"
+            country_field_error: "Por favor selecciona un país"
+          contact:
+            title: 'Contacto'
+            contact_field: 'Contacto principal'
+            contact_field_placeholder: 'Nombre de contacto'
+            contact_field_required: "Debes introducir un contacto principal."
+            email_field: 'Dirección de correo electrónico'
+            email_field_placeholder: 'p.ej. charlie@thefarm.com'
+            phone_field: 'Número de teléfono'
+            phone_field_placeholder: 'p.ej. 651 01 20 54'
+          type:
+            title: 'Tipo'
+            headline: "Último paso para añadir %{enterprise}!"
+            question: "¿Eres una productora?"
+            yes_producer: "Si soy una productora"
+            no_producer: "No, no soy una productora"
+            producer_field_error: "Por favor elige uno. ¿Eres una productora?"
+            yes_producer_help: "Las productoras hacen cosas deliciosas para comer y/o beber. Eres una productora si lo cultivas, lo haces crecer, lo preparas, lo horneas, lo fermentas, lo ordeñas, ..."
+            no_producer_help: "Si no eres una productora, probablemente conozcas a alguien que venda o distribuya comida. También podrías convertirte en un grupo de consumo u otro tipo de organización."
+          about:
+            title: 'Acerca de'
+          images:
+            title: 'Imágenes'
+          social:
+            title: 'Social'
   enterprise_contact: "Contacto principal"
+  enterprise_contact_placeholder: "Nombre de contacto"
   enterprise_contact_required: "Debe ingresar un contacto principal."
   enterprise_email_address: "Dirección d Email"
+  enterprise_email_placeholder: "p.ej. charlie@thefarm.com"
   enterprise_phone: "Número de teléfono"
+  enterprise_phone_placeholder: "p.ej. 93 250 16 45"
   back: "Atrás"
   continue: "Continuar"
   limit_reached_headline: "¡Ay no!"
@@ -1209,9 +1325,9 @@ es:
   linkedin: "LinkedIn"
   linkedin_placeholder: "eg. www.linkedin.com/SuNombreAquí"
   twitter: "Twitter"
-  twitter_placeholder: "eg. @usuario_de_twitter"
+  twitter_placeholder: "usuario_de_twitter"
   instagram: "Instagram"
-  instagram_placeholder: "ej. @usuario_de_instagram"
+  instagram_placeholder: "usuario_de_instagram"
   registration_greeting: "¡Hola!"
   registration_intro: "Ahora puede crear un perfil para su Productora o Grupo de Consumo"
   registration_action: "¡Empecemos!"
@@ -1232,10 +1348,11 @@ es:
   registration_finished_activate: "Activar %{enterprise}."
   registration_finished_activate_instruction_html: "Hemos enviado un correo de confirmación a <strong>%{email}</strong> si no has activado tu cuenta ya.<br/> Sigue las instrucciones para hacer tu organización visible en Open Food Network."
   registration_finished_action: "Página de inicio de Open Food Network"
+  registration_contact_name: 'Nombre de contacto'
   registration_type_headline: "¡Último paso para agregar %{enterprise}!"
   registration_type_question: "¿Eres una productora?"
   registration_type_producer: "Sí, soy una productora"
-  registration_type_no_producer: "No, no soy un produtor"
+  registration_type_no_producer: "No, no soy un productor"
   registration_type_error: "Escoja una. ¿Es una productora?"
   registration_type_producer_help: "Las productoras hacen cosas deliciosas para comer y/o beber. Eres una productora si lo cultivas, lo haces crecer, lo preparas, lo horneas, lo fermentas, lo ordeñas, ..."
   registration_type_no_producer_help: "Si no eres una productora, probablemente conozcas a alguien que venda o distribuya comida. También podrías convertirte en un grupo de consumo u otro tipo de organización."
@@ -1246,15 +1363,15 @@ es:
   registration_detail_enterprise: "¡Bien! Primero necesitamos saber un poco más sobre tu organización:"
   registration_detail_producer: "¡Bien! Primero necesitamos saber un poco más sobre tu productora:"
   registration_detail_name_enterprise: "Nombre de la Organización:"
-  registration_detail_name_producer: "Nombre de la granja:"
+  registration_detail_name_producer: "Nombre de la productora:"
   registration_detail_name_placeholder: "e.j. Cooperativa de Consum Pastanaga Feliç"
   registration_detail_name_error: "Por favor elije un nombre único para tu organización"
   registration_detail_address1: "Línea de dirección 1:"
   registration_detail_address1_placeholder: "e.j. Torrent de l'Olla 24"
   registration_detail_address1_error: "Ingrese una dirección"
   registration_detail_address2: "Línea de dirección 2:"
-  registration_detail_suburb: "Barrio:"
-  registration_detail_suburb_placeholder: "e.j. Gràcia"
+  registration_detail_suburb: "Ciudad:"
+  registration_detail_suburb_placeholder: "ej. Barcelona"
   registration_detail_suburb_error: "Ingrese el barrio"
   registration_detail_postcode: "Código postal:"
   registration_detail_postcode_placeholder: "e.j. 08025"
@@ -1303,7 +1420,7 @@ es:
   admin_entreprise_relationships_permits: "Permisos"
   admin_entreprise_relationships_seach_placeholder: "Buscar"
   admin_entreprise_relationships_button_create: "Crear"
-  admin_entreprise_groups: "Grupos de organizaciones"
+  admin_entreprise_groups: "Redes de organizaciones"
   admin_entreprise_groups_name: "Nombre"
   admin_entreprise_groups_owner: "Propietaria"
   admin_entreprise_groups_on_front_page: "¿En la página principal?"
@@ -1315,20 +1432,23 @@ es:
   admin_entreprise_groups_contact_phone_placeholder: "ej. 98 7654 3210"
   admin_entreprise_groups_contact_address1_placeholder: "ej. C/Torrent de l'Olla"
   admin_entreprise_groups_contact_city: "Barrio"
-  admin_entreprise_groups_contact_city_placeholder: "ej. Gràcia"
+  admin_entreprise_groups_contact_city_placeholder: "ej. Barcelona"
   admin_entreprise_groups_contact_zipcode: "Código Postal"
   admin_entreprise_groups_contact_zipcode_placeholder: "ej. 08025"
   admin_entreprise_groups_contact_state_id: "Región"
   admin_entreprise_groups_contact_country_id: "País"
   admin_entreprise_groups_web: "Recursos Web"
-  admin_entreprise_groups_web_twitter: "ej. @the_prof"
+  admin_entreprise_groups_web_twitter: "ej. the_prof"
   admin_entreprise_groups_web_website_placeholder: "ej. www.truffles.com"
   admin_order_cycles: "Ciclos de Pedidos del Admin"
   open: "Abierta"
-  close: "Cerrada"
+  close: "Cerrar"
   create: "Crear"
   search: "Buscar"
   supplier: "Proveedora"
+  product_name: "nombre del producto"
+  product_description: "Descripción del producto"
+  units: "Tamaño por unidad"
   coordinator: "Coordinadora"
   distributor: "Distribuidor"
   enterprise_fees: "Comisiones de la Organización"
@@ -1343,9 +1463,11 @@ es:
   new_order_cycles: "Nuevos Ciclos de Pedidos"
   new_order_cycle: "Nuevo Ciclo de Pedido"
   select_a_coordinator_for_your_order_cycle: "Selecciona un coordinador para vuestro ciclo de pedido"
+  notify_producers: 'Notificar a las productoras'
   edit_order_cycle: "Editar Ciclo de Pedido"
   roles: "Roles"
   update: "Actualizar"
+  delete: Borrar
   add_producer_property: "Añadir propiedad de productora"
   in_progress: "En Proceso"
   started_at: "Empezo el"
@@ -1389,6 +1511,8 @@ es:
   spree_admin_unit_description: Descripción de la unidad
   spree_admin_variant_unit: Variante
   spree_admin_variant_unit_scale: Escala de unidad
+  spree_admin_supplier: Proveedora
+  spree_admin_product_category: categoría del producto
   spree_admin_variant_unit_name: Nombre de la variante
   change_package: "Cambiar Perfil"
   spree_admin_single_enterprise_hint: "Sugerencia: Para permitir que la gente te encuentre, activa tu visibilidad"
@@ -1417,6 +1541,7 @@ es:
   order_cycle: "Ciclo de Pedido"
   order_cycles: "Ciclos de Pedidos"
   enterprises: "Organizaciones"
+  enterprise_relationships: "Relaciones entre organizaciones"
   remove_tax: "Eliminar impuesto"
   enterprise_terms_of_service: "Términos del Servicio de la Organización"
   enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
@@ -1556,9 +1681,7 @@ es:
   report_header_customer_email: Correo electrónico de la consumidora
   report_header_customer_phone: Teléfono de la Consumidora
   report_header_customer_city: Ciudad de la Consumidora
-  report_header_payment_state: 'Estado del pagos
-
-    nterpr'
+  report_header_payment_state: Estado del pago
   report_header_payment_type: Tipo de pago
   report_header_item_price: "Artículo (%{currency})"
   report_header_item_fees_price: "Artículo + Comisiones (%{currency})"
@@ -1802,7 +1925,7 @@ es:
           producer_desc: Productoras
           producer_example: ej. AGRICULTORES, PRODUCTORAS
           non_producer_desc: Todas las demás organizaciones
-          non_producer_example: ej. Grupos de consumo, Tiendas de proximidad, Cooperativas de alimentación
+          non_producer_example: ej. Grupos de consumo, Tiendas de proximidad, ...
         enterprise_status:
           status_title: "%{name} está configurado y listo para funcionar!"
           severity: Gravedad
@@ -1865,6 +1988,8 @@ es:
     signup:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
   spree:
+    email: Email
+    account_updated: "Cuenta actualizada!"
     admin:
       orders:
         invoice:
@@ -1887,7 +2012,28 @@ es:
             one: "Tienes un ciclo de pedido activo."
             other: "Tienes %{count} ciclos de pedido activos."
           manage_order_cycles: "GESTIONA LOS CICLOS DE PEDIDO"
+      payment_methods:
+        stripe_connect:
+          enterprise_select_placeholder: Escoge...
+          loading_account_information_msg: Cargando la información de la cuenta de Stripe, espere un momento ...
+          stripe_disabled_msg: El administrador del sistema ha deshabilitado los pagos por Stripe.
+          request_failed_msg: Lo sentimos. Algo salió mal al intentar verificar los detalles de la cuenta con Stripe ...
+          account_missing_msg: No existe una cuenta Stripe para esta organización.
+          connect_one: Connect One
+          access_revoked_msg: El acceso a esta cuenta de Stripe ha sido anulado, por favor, vuelve a conectar tu cuenta.
+          status: Estado
+          connected: Conectado
+          account_id: Account ID
+          business_name: Nombre de la Organización
+          charges_enabled: Cargos habilitados
+      payments:
+        source_forms:
+          stripe:
+            no_payment_via_admin_backend: La creación de pagos basados ​​en Stripe desde el administrador no es posible en este momento.
       products:
+        new:
+          title: 'Nuevo producto'
+        unit_name_placeholder: 'ej. manojos'
         bulk_edit:
           header:
             title: Editar varios Productos
@@ -1895,15 +2041,34 @@ es:
             title: CARGANDO PRODUCTOS
             no_products: "Todavía no hay productos. Añade algunos antes"
             no_results: "No se han encontrado resultados"
+          product_name: nombre del producto
+        primary_taxon_form:
+          product_category: categoría del producto
+        group_buy_form:
+          group_buy: "¿Agrupado por?"
+          bulk_unit_size: Tamaño de la unidad a granel
+        display_as:
+          display_as: Mostrar como
       reports:
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totales por Proveedor'
           bulk_coop_allocation: 'Bulk Co-op - Asignación'
           bulk_coop_packing_sheets: 'Bulk Co-op - Hojas de Empaquetado'
           bulk_coop_customer_payments: 'Bulk Co-op - Pagos de las Consumidoras'
+      shared:
+        configuration_menu:
+          stripe_connect: Conectar con Stripe
       variants:
         autocomplete:
           producer_name: Productora
+    checkout:
+      payment:
+        stripe:
+          choose_one: Elige uno
+          enter_new_card: Introduce los detalles para una nueva tarjeta
+          used_saved_card: "Usa una tarjeta guardada:"
+          or_enter_new_card: "O introduce los detalles de una nueva tarjeta:"
+          remember_this_card: ¿Recordar esta tarjeta?
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-dd'
@@ -1958,9 +2123,16 @@ es:
     weight: Peso (en kg)
     zipcode: Código Postal
     users:
+      form:
+        account_settings: Configuración de la cuenta
       show:
+        tabs:
+          orders: Pedidos
+          cards: Tarjetas de crédito
+          transactions: Transacciones
+          settings: Configuración de la cuenta
+      orders:
         open_orders: Pedidos Abiertos
-        transaction_history: Historial de Transacciones
       open_orders:
         order: Pedido
         shop: Tienda

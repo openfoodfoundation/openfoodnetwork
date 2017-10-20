@@ -4,6 +4,9 @@ fr:
       spree/order:
         payment_state: Statut du paiement
         shipment_state: Statut livraison
+        completed_at: 'Passée à '
+        number: N° commande
+        email: Email acheteur
     errors:
       models:
         spree/user:
@@ -85,21 +88,30 @@ fr:
   dashboard: Tableau de bord
   undefined: indéfini
   unused: inutilisé
-  admin_and_handling: Frais de gestion
+  admin_and_handling: Frais si par commande
   profile: Profil
   supplier_only: Uniquement Producteur
   weight: Poids
   volume: Volume
+  items: Pièces
   summary: Résumé
   detailed: Détaillé
   updated: Mis à jour
-  'yes': "Ou"
+  'yes': "Oui"
   'no': "Non"
   y: 'O'
   n: 'N'
   powered_by: Propulsé par
   blocked_cookies_alert: "Votre navigateur semble bloquer des cookies nécessaires à l'utilisation de ce site. Cliquez ci-dessous pour autoriser les cookies et rechargez la page."
   allow_cookies: "Autoriser les cookies"
+  notes: Commentaires
+  error: Erreur
+  processing_payment: Paiement en cours...
+  show_only_unfulfilled_orders: Ne montrer que les commandes non finalisées
+  filter_results: Filtrer les résultats
+  quantity: Quantité
+  actions:
+    create_and_add_another: "Créer et ajouter nouveau"
   admin:
     date: Date
     email: Email
@@ -253,14 +265,6 @@ fr:
         manages: gère
     products:
       unit_name_placeholder: 'ex: botte'
-      bulk_edit:
-        unit: Unité
-        display_as: Affiché
-        category: Catégorie
-        tax_category: TVA appliquée
-        inherits_properties?: Hériter des propriétés producteur?
-        available_on: Disponible sur
-        av_on: "Disp. sur"
       properties:
         property_name: Nom du label
         inherited_property: Label producteur appliqué par défaut
@@ -294,6 +298,8 @@ fr:
       index:
         capture: "Valider"
         ship: "Expédier"
+      invoice_email_sent: 'L''email de facturation a bien été envoyé'
+      order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
         tip: "Utilisez cette page pour changer les quantités d'un produit sur plusieurs commandes. Les produits peuvent aussi être supprimés de toutes les commandes, si nécessaire."
         shared: "Ressource partagée?"
@@ -434,6 +440,18 @@ fr:
           close_date: Date de fermeture
         social:
           twitter_placeholder: ex. @OpenFoodNet_fr
+        stripe_connect:
+          connect_with_stripe: "Connecter avec Stripe"
+          stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à Open Food France. Cliquez sur le bouton à droite pour commencer."
+          stripe_account_connected: "Compte Stripe connecté."
+          disconnect: "Compte déconnecté"
+          confirm_modal:
+            title: Connecter avec Stripe
+            part1: Stripe est un système de paiement qui permet aux boutiques sur Open Food France d'accepter des paiements par carte bancaire de leurs acheteurs.
+            part2: Pour utiliser cette fonctionnalité, vous devez connecter votre compte Stripe à Open Food France. En cliquant sur "J'accepte" ci-dessous, vous serez redirigé vers le site internet de Stripe, où vous pourrez connecter votre compte existant ou en créer un si vous n'en avez pas encore.
+            part3: Cela permettra à Open Food France d'accepter en votre nom les paiements par carte de crédit en provenance de vos acheteurs. Veuillez noter que c'est à vous de gérer votre compte Stripe, de payer les frais dus à Stripe et de gérer les éventuels remboursements et le service après vente.
+            i_agree: J'accepte
+            cancel: Annuler
         tag_rules:
           default_rules:
             by_default: Règles à appliquer "par défaut"
@@ -517,12 +535,17 @@ fr:
         advanced_settings: Paramétrages avancés
         update_and_close: Mettre à jour et fermer
         choose_products_from: 'Choisir produits depuis :'
-        pickup_time_tip: Date/heure à laquelle les commandes pour ce cycle de vente seront à disposition de / livrées à l'acheteur.
-        pickup_instructions_tip: Ces instructions seront affichées à l'acheteur une fois sa commande passée.
       exchange_form:
+        pickup_time_tip: Quand des commandes liées à ce cycle de vente seront prêtes à être soumises à l'acheteur
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
+        pickup_instructions_tip: Ces instructions sont affichées aux acheteurs après passage d'une commande
         pickup_time_placeholder: "Prêt pour (ex : jour + créneau horaire)"
         receival_instructions_placeholder: "Modalités de livraison"
+        add_fee: 'Ajouter une commission'
+        selected: 'sélectionné'
+      add_exchange_form:
+        add_supplier: 'Ajouter un fournisseur'
+        add_distributor: 'Ajouter un distributeur'
       advanced_settings:
         title: Paramétrages avancés
         choose_product_tip: Vous pouvez choisir de limiter le choix des produits pouvant être mis en vente dans votre boutique à ceux figurant dans le catalogue boutique de %{inventory}.
@@ -633,6 +656,29 @@ fr:
         description: Factures pour import dans Xero
       packing:
         name: Rapports de préparation des paniers
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Paramètres"
+        stripe_connect_enabled: Permettre aux boutiques d'accepter les paiements via Stripe Connect ?
+        no_api_key_msg: Aucun compte Stripe n'existe pour cette entreprise.
+        configuration_explanation_html: Pour des instructions précises sur comment configurer Stripe Connect, veuillez <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consulter ce guide</a>.
+        status: Statut
+        ok: Ok
+        instance_secret_key: Clé Secrète de l'Instance
+        account_id: Identifiant Compte
+        business_name: Nom de l'entreprise
+        charges_enabled: Frais activés
+        charges_enabled_warning: "Attention : les Frais ne sont pas activés pour votre compte"
+        auth_fail_error: La clé de l'API est invalide
+        empty_api_key_error_html: Aucune clé d'API Stripe n'a été fournie. Pour mettre en place votre clé d'API, veuillez suivre <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">ces instructions</a>
+    controllers:
+      enterprises:
+        stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
+        stripe_connect_success: "Compte Stripe connecté avec succès"
+        stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
+      stripe_connect_settings:
+        resource: Configuration de Stripe Connect
   checkout:
     already_ordered:
       cart: "panier"
@@ -652,12 +698,14 @@ fr:
       register: "Démarrez ici"
   shop:
     messages:
-      login: "login"
+      login: "se connecter"
       register: "s'inscrire"
       contact: "contact"
       require_customer_login: "La boutique est réservée aux membres."
-      require_login_html: "Déjà inscrit? %{Connectez-vous}. Sinon, %{inscrivez-vous} pour pouvoir faire vos achats."
+      require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
       require_customer_html: "Veuillez %{contacter} %{l'entreprise} pour devenir membre."
+  card_could_not_be_saved: la carte n'a pas pu être sauvegardée
+  spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
   invoice_billing_address: "Adresse de facturation :"
   invoice_column_tax: "TVA"
   invoice_column_price: "Prix"
@@ -739,7 +787,7 @@ fr:
   label_more: "Afficher plus"
   label_less: "Masquer"
   label_notices: "Informations"
-  items: "produits"
+  cart_items: "Produits"
   cart_headline: "Votre panier"
   total: "Total"
   cart_updating: "Mettre à jour le panier"
@@ -748,6 +796,18 @@ fr:
   card_number: Numéro de carte
   card_securitycode: "Cryptogramme visuel"
   card_expiry_date: Date d'expiration
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
+  new_credit_card: "Nouvelle carte de crédit"
+  my_credit_cards: Mes cartes bancaires
+  add_new_credit_card: Ajouter nouvelle carte de crédit
+  saved_cards: Sauvegarder cartes
+  add_a_card: Ajouter une Carte
+  add_card: Ajouter Carte
+  you_have_no_saved_cards: Vous n'avez pas encore sauvegardé de carte
+  saving_credit_card: Enregistrement de la carte de crédit...
+  card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
+  card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
   ie_warning_headline: "Votre navigateur n'est pas à jour :-("
   ie_warning_text: "Pour une expérience optimale sur Open Food France, nous vous recommandons fortement de mettre à jour votre navigateur:"
   ie_warning_chrome: Télécharger Chrome
@@ -825,6 +885,7 @@ fr:
   checkout_shipping_price: Livraison
   checkout_total_price: Total
   checkout_back_to_cart: "Retour au Panier"
+  cost_currency: "Devise du Coût"
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -917,7 +978,7 @@ fr:
   shopping_producers_of_hub: "Les producteurs de %{hub}:"
   enterprises_next_closing: "Clôture des commandes pour ce cycle"
   enterprises_ready_for: "Prêt pour"
-  enterprises_choose: "Choisissez votre option de livraison/retrait:"
+  enterprises_choose: "Choisissez votre option:"
   hubs_buy: "Acheter:"
   hubs_shopping_here: "Achats en cours"
   hubs_orders_closed: "Boutique fermée"
@@ -1158,10 +1219,64 @@ fr:
   password_reset_sent: "Un email contenant les instructions pour changer votre mot de passe a été envoyé!"
   reset_password: "Changer de mot de passe"
   who_is_managing_enterprise: "Qui gère %{enterprise}?"
+  enterprise:
+    registration:
+      modal:
+        steps:
+          details:
+            title: 'Détails'
+            headline: "Commençons !"
+            enterprise: "Hey ! Nous avons d'abord besoin de quelques informations sur votre entreprise :"
+            producer: "Hey ! Nous avons d'abord besoin de quelques informations sur votre ferme :"
+            enterprise_name_field: "Nom de l'entreprise :"
+            producer_name_field: "Nom de la ferme :"
+            producer_name_field_placeholder: "ex: La Ferme du Marais"
+            producer_name_field_error: "Veuillez choisir le nom de votre entreprise"
+            address1_field: "Adresse ligne 1"
+            address1_field_placeholder: "ex : 35 rue du bac"
+            address1_field_error: "Veuillez saisir une adresse"
+            address2_field: "Adresse ligne 2"
+            suburb_field: "Ville :"
+            suburb_field_placeholder: "ex : Nantes"
+            suburb_field_error: "Veuillez saisir une ville"
+            postcode_field: "Code postal :"
+            postcode_field_placeholder: "ex : 44000"
+            postcode_field_error: "Veuillez saisir le code postal"
+            state_field: "Département :"
+            state_field_error: "Veuillez saisir un Département"
+            country_field: "Pays :"
+            country_field_error: "Veuillez saisir une Pays"
+          contact:
+            title: 'Contact'
+            contact_field: 'Personne référente'
+            contact_field_placeholder: 'Nom du contact principal'
+            contact_field_required: "Vous devez saisir une personne référente"
+            email_field: 'Adresse email'
+            email_field_placeholder: 'ex : robert@mabelleferme.fr'
+            phone_field: 'Numéro de téléphone'
+            phone_field_placeholder: 'ex : 06 24 53 26 53'
+          type:
+            title: 'Catégorie'
+            headline: "Dernière étape pour ajouter %{enterprise} !"
+            question: "Etes-vous un producteur ?"
+            yes_producer: "Oui, je suis un producteur"
+            no_producer: "Non, je ne suis pas un producteur"
+            producer_field_error: "Veuillez faire un choix. Etes vous un producteur?"
+            yes_producer_help: "Un producteur fabrique de bonnes choses à boire et à manger. Vous êtes un producteur si vous les faites pousser, les élevez, les pétrissez, transformez, fermentez, les réduisez en grains, etc."
+            no_producer_help: "Si vous n'êtes pas un producteur, vous êtes probablement un revendeur ou distributeur alimentaire : un \"hub\", une coopérative, un groupement d'achat, un revendeur, un grossiste, ou autre."
+          about:
+            title: 'A propos'
+          images:
+            title: 'Images'
+          social:
+            title: 'Réseaux sociaux'
   enterprise_contact: "Personne référente"
+  enterprise_contact_placeholder: "Nom du contact principal"
   enterprise_contact_required: "Vous devez saisir une personne référente"
   enterprise_email_address: "Adresse email"
+  enterprise_email_placeholder: "ex : robert@mabelleferme.fr"
   enterprise_phone: "Numéro de téléphone"
+  enterprise_phone_placeholder: "ex : 06 24 53 26 53"
   back: "Retour"
   continue: "Suivant"
   limit_reached_headline: "Oh non!"
@@ -1231,6 +1346,7 @@ fr:
   registration_finished_activate: "Activez %{enterprise}."
   registration_finished_activate_instruction_html: "Nous avons envoyé un email de confirmation à <strong>%{email}</strong> s'il n'a pas été activé auparavant.<br/> Veuillez suivre les instructions dans l'email pour rendre votre organisation visible sur Open Food France."
   registration_finished_action: "Accueil Open Food France"
+  registration_contact_name: 'Nom du contact principal'
   registration_type_headline: "Dernière étape pour ajouter %{enterprise}!"
   registration_type_question: "Etes-vous un producteur?"
   registration_type_producer: "Oui, je suis un producteur"
@@ -1328,6 +1444,9 @@ fr:
   create: "Créer"
   search: "Rechercher"
   supplier: "Fournisseurs"
+  product_name: "Nom du Produit"
+  product_description: "Description du Produit"
+  units: "Contenu Unitaire"
   coordinator: "Coordinateur"
   distributor: "Distributeur"
   enterprise_fees: "Marges et commissions"
@@ -1342,9 +1461,11 @@ fr:
   new_order_cycles: "Nouveau cycle de vente"
   new_order_cycle: "Nouveau Cycle de Vente"
   select_a_coordinator_for_your_order_cycle: "Choisissez un coordinateur pour votre cycle de vente"
+  notify_producers: 'Notifier les producteurs'
   edit_order_cycle: "Modifier le cycle de vente"
   roles: "Roles"
   update: "Mettre à jour"
+  delete: Supprimer
   add_producer_property: "Ajouter une propriété"
   in_progress: "En cours"
   started_at: "Commencé à"
@@ -1388,6 +1509,8 @@ fr:
   spree_admin_unit_description: 'Description complémentaire (ex: "(vrac)")'
   spree_admin_variant_unit: Unité
   spree_admin_variant_unit_scale: Echelle unitaire (en g ou L)
+  spree_admin_supplier: Fournisseur
+  spree_admin_product_category: Catégorie Produit
   spree_admin_variant_unit_name: Nom de la pièce (si vendu à la pièce)
   change_package: "Changer de type de compte"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
@@ -1416,6 +1539,7 @@ fr:
   order_cycle: "Cycle de vente"
   order_cycles: "Cycles de Vente"
   enterprises: "Entreprises"
+  enterprise_relationships: "Permissions inter-entreprises"
   remove_tax: "Retirer TVA"
   enterprise_terms_of_service: "Conditions Générales d'Utilisation"
   enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
@@ -1471,7 +1595,7 @@ fr:
   report_header_relationship: Droits
   report_header_hub: Hub
   report_header_hub_address: Adresse du Hub
-  report_header_to_hub: Au Hub
+  report_header_to_hub: Distributeur
   report_header_hub_code: Code du Hub
   report_header_code: Code
   report_header_paid: Payé ?
@@ -1510,7 +1634,7 @@ fr:
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
-  report_header_quantity: Quantité
+  report_header_quantity: Nb commandé
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
   report_header_variant_value: Nb Unités Variante
@@ -1526,8 +1650,8 @@ fr:
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
   report_header_cost: Coût
   report_header_shipping_cost: Coût de livraison
-  report_header_curr_cost_per_unit: Prix de revient par unité
-  report_header_total_shipping_cost: Coût de livraison total
+  report_header_curr_cost_per_unit: Prix prod unitaire
+  report_header_total_shipping_cost: Prix prod total
   report_header_payment_method: Méthode de paiement
   report_header_sells: Vend
   report_header_visible: Visible
@@ -1557,10 +1681,10 @@ fr:
   report_header_customer_city: Ville Acheteur
   report_header_payment_state: Statut du Paiement
   report_header_payment_type: Type de Paiement
-  report_header_item_price: "Pièce (%{currency})"
-  report_header_item_fees_price: "Pièce + Marge (%{currency})"
-  report_header_admin_handling_fees: "Frais de Gestion (%{currency})"
-  report_header_ship_price: "Livraison (%{currency})"
+  report_header_item_price: "Coût produits (%{currency})"
+  report_header_item_fees_price: "Coût produits + Marge (%{currency})"
+  report_header_admin_handling_fees: "Frais si par commande (%{currency})"
+  report_header_ship_price: "Frais de livraison (%{currency})"
   report_header_pay_fee_price: "Frais de Transaction (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Total Produit (%{currency})"
@@ -1569,12 +1693,12 @@ fr:
   report_header_eft_price: "TEF / Transfert Electronique (%{currency})"
   report_header_paypal_price: "Paypal (%{currency})"
   report_header_sku: Référence Produit
-  report_header_amount: Montant
+  report_header_amount: Quantité
   report_header_balance: Solde
   report_header_total_cost: "Coût Total"
   report_header_total_ordered: Total Commandé
   report_header_total_max: Max Total
-  report_header_total_units: Nb total d'articles
+  report_header_total_units: Vol. total
   report_header_sum_max_total: "Somme Max Total"
   report_header_total_excl_vat: "Total HT (%{currency_symbol})"
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
@@ -1869,6 +1993,8 @@ fr:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
   spree:
+    email: Email
+    account_updated: "Compte mis à jour!"
     admin:
       orders:
         invoice:
@@ -1891,23 +2017,63 @@ fr:
             one: "Vous avez un cycle de vente actif."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
+      payment_methods:
+        stripe_connect:
+          enterprise_select_placeholder: Choisir...
+          loading_account_information_msg: Informations de compte en cours de chargement depuis Stripe, veuillez patienter...
+          stripe_disabled_msg: Les paiements via Stripe ont été désactivés par l'administrateur système.
+          request_failed_msg: Désolé, une erreur est survenue lors de la vérification du compte par Stripe...
+          account_missing_msg: Aucun compte Stripe n'existe pour cette entreprise.
+          connect_one: En connecter un
+          access_revoked_msg: L'accès à ce compte Stripe a été révoqué, veuillez reconnecter votre compte.
+          status: Statut
+          connected: Connecté
+          account_id: Identifiant Compte
+          business_name: Nom de l'entreprise
+          charges_enabled: Frais activés
+      payments:
+        source_forms:
+          stripe:
+            no_payment_via_admin_backend: La création de paiements via Stripe depuis le back office d'administration n'est pas possible pour le moment
       products:
+        new:
+          title: 'Nouveau Produit'
+        unit_name_placeholder: 'ex: botte'
         bulk_edit:
           header:
-            title: Edition des produits par lots
+            title: Gestion du catalogue produits
           indicators:
             title: CHARGEMENT DES PRODUITS
             no_products: "Aucun produit trouvé. Ajouter un produit ?"
             no_results: "Désolé, aucun résultat trouvé"
+          product_name: Nom du Produit
+        primary_taxon_form:
+          product_category: Catégorie Produit
+        group_buy_form:
+          group_buy: "Achat groupé de lots fixes ?"
+          bulk_unit_size: Quantité totale du lot
+        display_as:
+          display_as: Unité affichéé
       reports:
         bulk_coop:
           bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
           bulk_coop_allocation: 'Achats groupés - Allocation'
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
+      shared:
+        configuration_menu:
+          stripe_connect: Stripe Connect
       variants:
         autocomplete:
           producer_name: Producteur
+    checkout:
+      payment:
+        stripe:
+          choose_one: En choisir un
+          enter_new_card: Entrer les informations pour la nouvelle carte
+          used_saved_card: "Utiliser une carte sauvegardée :"
+          or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
+          remember_this_card: Se souvenir de cette carte ?
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'aa-mm-jj'
@@ -1963,8 +2129,18 @@ fr:
     weight: Poids (au kg)
     zipcode: Code postal
     users:
+      form:
+        account_settings: Paramètres du Compte
       show:
+        tabs:
+          orders: Commandes
+          cards: Cartes bancaires
+          transactions: Achats
+          settings: Paramètres du Compte
+      orders:
         open_orders: Commandes Ouvertes
+        past_orders: Commandes Passées
+      transactions:
         transaction_history: Historique des Transactions
       open_orders:
         order: Commander
@@ -1976,3 +2152,11 @@ fr:
         cancel: Annuler
         closed: Fermée
         until: Jusqu'à
+      past_orders:
+        order: Commande
+        shop: Boutique
+        completed_at: 'Passée à :'
+        items: Produits
+        total: Total
+        paid?: Payé ?
+        view: Afficher
