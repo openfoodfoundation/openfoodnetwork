@@ -32,13 +32,13 @@ Spree::Address.class_eval do
     filtered_address.compact.join(', ')
   end
 
+  # Proxy method to display state in UI
+  # Delegates to State.
+  #
+  # @return [String]
   def state_text
-    case Rails.configuration.state_text_attribute
-    when 'abbr'
-      state.try(:abbr)
-    when 'name'
-      state.try(:name) || state_name
-    end
+    return state_name unless state
+    state.display_name
   end
 
   private
