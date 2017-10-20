@@ -72,18 +72,22 @@ createuser -s -P ofn
 ```
 
 Create the development and test databases, using the settings specified in `config/database.yml`, and populate them with a schema and seed data:
-
-    rake db:setup
-
+```
+bundle exec rake db:setup
+```
 Load some default data for your environment:
-
-    rake openfoodnetwork:dev:load_sample_data
-
+```
+bundle exec rake openfoodnetwork:dev:load_sample_data
+```
 At long last, your dreams of spinning up a development server can be realised:
-
-    rails server
-
-
+```
+bundle exec rails server
+```
+To login as Spree default user, use:
+```
+email: spree@example.com
+password: spree123
+```
 ### Testing
 
 Tests, both unit and integration, are based on RSpec. To run the test suite, first prepare the test database:
