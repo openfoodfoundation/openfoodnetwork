@@ -3,13 +3,16 @@ nb:
     attributes:
       spree/order:
         payment_state: Betalingsstatus
-        shipment_state: Sendingsstatus
+        shipment_state: Leveringsstatus
+        completed_at: Fullført på
+        number: Nummer
+        email: Epost Kunde
     errors:
       models:
         spree/user:
           attributes:
             email:
-              taken: "Det finnes allerede en konto for denne e-posten. Vennligst logg inn eller tilbakestill passordet ditt."
+              taken: "Det finnes allerede en konto for denne eposten. Vennligst logg inn eller tilbakestill passordet ditt."
   devise:
     failure:
       invalid: |
@@ -17,13 +20,13 @@ nb:
         Var du gjest forrige gang? Kanskje du må opprette en konto eller nullstille passordet.
     enterprise_confirmations:
       enterprise:
-        confirmed: Takk, e-postadressen din er bekreftet.
+        confirmed: Takk, epostadressen din er bekreftet.
         not_confirmed: Din epostadresse kan ikke bekreftes. Kanskje du allerede har fullført dette steget?
-        confirmation_sent: "Bekreftelse på epost er sendt!"
-        confirmation_not_sent: "Kunne ikke sende bekreftelse på epost."
+        confirmation_sent: "Bekreftelsesepost er sendt!"
+        confirmation_not_sent: "Kunne ikke sende bekreftelsesepost."
   enterprise_mailer:
     confirmation_instructions:
-      subject: "Vennligst bekreft e-postadressen til %{enterprise}"
+      subject: "Vennligst bekreft epostadressen til %{enterprise}"
     welcome:
       subject: "%{enterprise} er nå på %{sitename}"
   producer_mailer:
@@ -90,6 +93,7 @@ nb:
   supplier_only: Kun leverandør
   weight: Vekt
   volume: Volum
+  items: Elementer
   summary: Sammendrag
   detailed: Detaljert
   updated: Oppdatert
@@ -103,6 +107,9 @@ nb:
   notes: Merknader
   error: Feil
   processing_payment: Behandler betaling ...
+  show_only_unfulfilled_orders: Vis kun uoppfylte ordrer
+  filter_results: Filtrer Resultater
+  quantity: Mengde
   actions:
     create_and_add_another: "Opprett og legg til en annen"
   admin:
@@ -258,14 +265,6 @@ nb:
         manages: administrerer
     products:
       unit_name_placeholder: 'f.eks. bunter'
-      bulk_edit:
-        unit: Enhet
-        display_as: Vis som
-        category: Kategori
-        tax_category: Avgiftskategori
-        inherits_properties?: Arver Egenskaper?
-        available_on: Tilgjengelig på
-        av_on: "Tilgj. på"
       properties:
         property_name: Navn på egenskap
         inherited_property: Arvet egenskap
@@ -660,7 +659,6 @@ nb:
       edit:
         title: "Stripe Connect"
         settings: "Innstillinger"
-        stripe_beta_warning: "Advarsel: Stripe Connect-integrasjonen er for øyeblikket i beta og bør ikke aktiveres i produksjon ennå"
         stripe_connect_enabled: Sette butikker i stand til å godta betaling ved hjelp av Stripe Connect?
         no_api_key_msg: Ingen Stripe-konto eksisterer for denne bedriften.
         configuration_explanation_html: For detaljerte instruksjoner om konfigurering av Stripe Connect-integrasjonen, vennligst <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'> se denne veiledningen </a>.
@@ -672,7 +670,7 @@ nb:
         charges_enabled: Avgifter Aktivert
         charges_enabled_warning: "Advarsel: Avgifter er ikke aktivert for kontoen din"
         auth_fail_error: API-nøkkelen du oppga er ugyldig
-        empty_api_key_error: Ingen Stripe API-nøkkel er gitt. For å angi API-nøkkelen din, følg instruksjonene på
+        empty_api_key_error_html: Ingen Stripe API-nøkkel er gitt. For å angi din API-nøkkelen, følg <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank"> disse instruksjonene </a>
     controllers:
       enterprises:
         stripe_connect_cancelled: "Tilkobling til Stripe har blitt avbrutt"
@@ -788,7 +786,7 @@ nb:
   label_more: "Vis mer"
   label_less: "Vis mindre"
   label_notices: "Meldinger"
-  items: "varer"
+  cart_items: "Elementer"
   cart_headline: "Din handlekurv"
   total: "Sum"
   cart_updating: "Oppdaterer handlekurv..."
@@ -2127,6 +2125,9 @@ nb:
           settings: Kontoinnstillinger
       orders:
         open_orders: Åpne Bestillinger
+        past_orders: Tidligere Bestillinger
+      transactions:
+        transaction_history: Transaksjonshistorie
       open_orders:
         order: Bestilling
         shop: Butikk
@@ -2137,3 +2138,11 @@ nb:
         cancel: Avbryt
         closed: Stengt
         until: Inntil
+      past_orders:
+        order: Bestilling
+        shop: Butikk
+        completed_at: Fullført på
+        items: Elementer
+        total: Total
+        paid?: Betalt?
+        view: Vis
