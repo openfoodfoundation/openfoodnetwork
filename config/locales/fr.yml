@@ -4,6 +4,9 @@ fr:
       spree/order:
         payment_state: Statut du paiement
         shipment_state: Statut livraison
+        completed_at: 'Passée à '
+        number: N° commande
+        email: Email acheteur
     errors:
       models:
         spree/user:
@@ -90,6 +93,7 @@ fr:
   supplier_only: Uniquement Producteur
   weight: Poids
   volume: Volume
+  items: Pièces
   summary: Résumé
   detailed: Détaillé
   updated: Mis à jour
@@ -103,6 +107,9 @@ fr:
   notes: Commentaires
   error: Erreur
   processing_payment: Paiement en cours...
+  show_only_unfulfilled_orders: Ne montrer que les commandes non finalisées
+  filter_results: Filtrer les résultats
+  quantity: Quantité
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
   admin:
@@ -258,14 +265,6 @@ fr:
         manages: gère
     products:
       unit_name_placeholder: 'ex: botte'
-      bulk_edit:
-        unit: Unité
-        display_as: Unité affichéé
-        category: Catégorie
-        tax_category: TVA appliquée
-        inherits_properties?: Hériter des propriétés producteur?
-        available_on: Disponible sur
-        av_on: "Disp. sur"
       properties:
         property_name: Nom du label
         inherited_property: Label producteur appliqué par défaut
@@ -788,7 +787,7 @@ fr:
   label_more: "Afficher plus"
   label_less: "Masquer"
   label_notices: "Informations"
-  items: "produits"
+  cart_items: "Produits"
   cart_headline: "Votre panier"
   total: "Total"
   cart_updating: "Mettre à jour le panier"
@@ -2140,6 +2139,9 @@ fr:
           settings: Paramètres du Compte
       orders:
         open_orders: Commandes Ouvertes
+        past_orders: Commandes Passées
+      transactions:
+        transaction_history: Historique des Transactions
       open_orders:
         order: Commander
         shop: Faire mes courses
@@ -2150,3 +2152,11 @@ fr:
         cancel: Annuler
         closed: Fermée
         until: Jusqu'à
+      past_orders:
+        order: Commande
+        shop: Boutique
+        completed_at: 'Passée à :'
+        items: Produits
+        total: Total
+        paid?: Payé ?
+        view: Afficher
