@@ -39,7 +39,7 @@
     .alpha.three.columns
       -# The 'Category' label here is just a logical descriptor for the data we are trying to collect for 'requires_ship_address'
       -# and does not relate to shipping categories in any way.
-      = f.label :require_ship_address, "Category"
+      = f.label :require_ship_address, t(:category)
     .two.columns
       = f.radio_button :require_ship_address, true
       &nbsp;

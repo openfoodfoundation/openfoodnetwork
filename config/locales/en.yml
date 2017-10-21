@@ -171,6 +171,7 @@ en:
   show_only_unfulfilled_orders: Show only unfulfilled orders
   filter_results: Filter Results
   quantity: Quantity
+  pick_up: Pick up
 
 
   actions:
@@ -645,6 +646,7 @@ en:
         distributor: Distributor
         products: Products
         tags: Tags
+        add_a_tag: Add a tag
         delivery_details: Pickup / Delivery details
         debug_info: Debug information
       name_and_timing_form:

@@ -1,4 +1,5 @@
 %tags-input{ template: 'admin/tag.html',
+  "placeholder" => t('admin.order_cycles.form.add_a_tag'),
   ng: { model: 'object[tagsAttr]', class: "{'limit-reached': limitReached}"},
   on: { tag: { added: 'tagAdded()', removed:'tagRemoved()' } } }
   %auto-complete{ ng: { if: "findTags" }, source: "findTags({query: $query})",
