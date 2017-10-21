@@ -15,10 +15,9 @@
 #= require ../shared/ng-infinite-scroll.min.js
 #= require ../shared/angular-local-storage.js
 #= require ../shared/angular-slideables.js
-#= require ../shared/ofn-stripe.js
 #= require angularjs-file-upload
 #= require i18n/translations
-
+#
 #= require angular-rails-templates
 #= require_tree ../templates
 #
@@ -35,6 +34,10 @@
 #= require moment/sv.js
 #
 #= require modernizr
+#
+#= require ../shared/ofn-loading.js
+#= require ../shared/rails-flash-loader.js
+#= require ../shared/ofn-stripe.js
 #
 #= require foundation
 #= require ./darkswarm

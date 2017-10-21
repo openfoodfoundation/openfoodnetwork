@@ -14,12 +14,15 @@
 //= require angular-resource
 //= require angular-animate
 //= require angular-sanitize
+//= require angular-flash.min.js
 //= require admin/spree_backend
 //= require admin/spree_auth
 //= require admin/spree_paypal_express
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ng-tags-input.min.js
 //= require moment
+//= require ../shared/ofn-loading.js
+//= require ../shared/rails-flash-loader.js
 //= require ../shared/ofn-stripe.js
 //= require angular-rails-templates
 //= require_tree ../templates/admin
@@ -37,6 +40,7 @@
 //= require ./orders/orders
 //= require ./order_cycles/order_cycles
 //= require ./payment_methods/payment_methods
+//= require ./payments/payments
 //= require ./products/products
 //= require ./resources/resources
 //= require ./shipping_methods/shipping_methods
