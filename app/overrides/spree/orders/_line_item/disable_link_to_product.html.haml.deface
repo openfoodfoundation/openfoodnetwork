@@ -1,0 +1,7 @@
+/ replace ".item-thumb-image"
+
+%div.item-thumb-image{"data-hook" => "cart_item_image"}
+  - if variant.images.length == 0
+    = mini_image(variant.product)
+  - else
+    = image_tag(variant.images.first.attachment.url(:mini))
