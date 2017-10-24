@@ -28,7 +28,7 @@ feature "full-page cart", js: true do
     end
 
     describe "product description" do
-      it "should not try to link to the product page" do
+      it "does not link to the product page" do
         add_product_to_cart order, product_fee, quantity: 2
         visit spree.cart_path
         expect(page).to_not have_selector '.item-thumb-image a'
