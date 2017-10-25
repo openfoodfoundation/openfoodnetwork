@@ -515,10 +515,9 @@ GEM
     paypal-sdk-merchant (1.106.1)
       paypal-sdk-core (~> 0.2.3)
     pg (0.13.2)
-    poltergeist (1.9.0)
+    poltergeist (1.16.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
-      multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
@@ -683,7 +682,7 @@ GEM
     webmock (1.8.11)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
-    websocket-driver (0.6.3)
+    websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     whenever (0.9.2)
@@ -759,7 +758,7 @@ DEPENDENCIES
   paperclip
   parallel_tests
   pg
-  poltergeist
+  poltergeist (>= 1.16.0)
   pry-byebug (>= 3.4.3)
   rabl
   rack-livereload
