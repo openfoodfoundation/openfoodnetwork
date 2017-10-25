@@ -106,7 +106,7 @@ group :test, :development do
   gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', :require => false
-  gem 'capybara'
+  gem 'capybara', '>= 2.15.4'
   gem 'database_cleaner', '0.7.1', :require => false
   gem 'awesome_print'
   gem 'letter_opener'
@@ -130,6 +130,7 @@ group :development do
   gem 'pry-byebug', '>= 3.4.3'
   gem 'debugger-linecache'
   gem 'guard'
+  gem 'listen', '3.0.8' # 3.1.0 requires ruby 2.2
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'guard-rails'
