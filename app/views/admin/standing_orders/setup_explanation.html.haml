@@ -26,6 +26,9 @@
             = t('.set_up_shipping_and_payment_methods_html',
               shipping_link: link_to(t('admin.shipping'), admin_shipping_methods_path, target: '_blank'),
               payment_link: link_to(t('admin.payment'), admin_payment_methods_path, target: '_blank'))
+        .steps
+          %div
+            = t('.set_up_shipping_and_payment_methods_note_html')
     .row.margin-bottom-20.todo{ class: customers_ok?(@shop) ? 'done' : '' }
       .one.columns.alpha
         %i.text-big.icon-check-empty
