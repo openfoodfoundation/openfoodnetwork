@@ -816,6 +816,7 @@ en:
         enable_standing_orders_step_1_html: 1. Go to the %{enterprises_link} page, find your shop, and click "Manage"
         enable_standing_orders_step_2: 2. Under "Shop Preferences", enable the Standing Orders option
         set_up_shipping_and_payment_methods_html: Set up %{shipping_link} and %{payment_link} methods
+        set_up_shipping_and_payment_methods_note_html: Note that only Cash and Stripe payment methods may<br />be used with standing orders
         ensure_at_least_one_customer_html: Ensure that at least one %{customer_link} exists
         create_at_least_one_schedule: Create at least one Schedule
         create_at_least_one_schedule_step_1_html: 1. Go to the on the %{order_cycles_link} page

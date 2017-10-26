@@ -13,7 +13,8 @@ describe Admin::StandingOrdersHelper, type: :helper do
       it { expect(helper.standing_orders_setup_complete?([shop])).to be false }
     end
 
-    context "when a shop has no payment methods present" do
+    context "when a shop has no Cash or Stripe payment methods present" do
+      let!(:paypal) { Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [shop.id]) }
       before { customer; shipping_method; schedule }
       it { expect(helper.standing_orders_setup_complete?([shop])).to be false }
     end

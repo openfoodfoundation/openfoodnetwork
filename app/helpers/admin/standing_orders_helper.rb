@@ -7,7 +7,7 @@ module Admin
     end
 
     def shipping_and_payment_methods_ok?(shop)
-      shop.present? && shop.shipping_methods.any? && shop.payment_methods.any?
+      shop.present? && shop.shipping_methods.any? && shop.payment_methods.for_standing_orders.any?
     end
 
     def customers_ok?(shop)
