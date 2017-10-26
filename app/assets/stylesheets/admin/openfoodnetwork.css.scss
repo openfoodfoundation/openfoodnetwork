@@ -38,9 +38,10 @@ span.error, div.error:not(.flash) {
   margin-bottom: 0;
 }
 
-input.red {
+input.red, a.button.red, button.red {
 	background-color: #DA5354;
   margin-right: 5px;
+  color: #ffffff;
 }
 
 a.button.red {
