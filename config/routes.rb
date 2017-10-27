@@ -145,6 +145,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :customers, only: [:index, :create, :update, :destroy] do
       get :addresses, on: :member
+      get :cards, on: :member
     end
 
     resources :tag_rules, only: [], format: :json do

@@ -64,6 +64,13 @@ module Admin
       render json: { bill_address: bill_address, ship_address: ship_address }
     end
 
+    # GET /admin/customers/:id/cards
+    # Used by standing orders form to load details for selected customer
+    def cards
+      cards = Spree::CreditCard.where(user_id: @customer.user_id)
+      render json: { cards: ActiveModel::ArraySerializer.new(cards, each_serializer: Api::CreditCardSerializer) }
+    end
+
     private
 
     def collection

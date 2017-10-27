@@ -181,4 +181,59 @@ describe Admin::CustomersController, type: :controller do
       end
     end
   end
+
+  describe "#cards" do
+    let(:user) { create(:user) }
+    let!(:enterprise) { create(:enterprise) }
+    let!(:credit_card1) { create(:credit_card, user: user) }
+    let!(:credit_card2) { create(:credit_card) }
+    let(:managed_customer) { create(:customer, enterprise: enterprise) }
+    let(:unmanaged_customer) { create(:customer) }
+    let(:params) { { format: :json } }
+
+    before { login_as_enterprise_user [enterprise] }
+
+    context "when I manage the customer" do
+      before { params.merge!(id: managed_customer.id) }
+
+      context "when the customer is not associated with a user" do
+        it "returns with an empty array" do
+          spree_get :cards, params
+          json_response = JSON.parse(response.body)
+          expect(json_response.keys).to include "cards"
+          expect(json_response["cards"]).to eq []
+        end
+      end
+
+      context "when the customer is associated with a user" do
+        before { managed_customer.update_attributes(user_id: user.id) }
+
+        it "returns with serialized cards for the customer" do
+          spree_get :cards, params
+          json_response = JSON.parse(response.body)
+          expect(json_response.keys).to include "cards"
+          expect(json_response["cards"].length).to be 1
+          expect(json_response["cards"].first["id"]).to eq credit_card1.id
+        end
+      end
+    end
+
+    context "when I don't manage the customer" do
+      before { params.merge!({customer_id: unmanaged_customer.id}) }
+
+      it "redirects to unauthorised" do
+        spree_get :cards, params
+        expect(response).to redirect_to spree.unauthorized_path
+      end
+    end
+
+    context "when no customer with a matching id exists" do
+      before { params.merge!({customer_id: 1}) }
+
+      it "redirects to unauthorised" do
+        spree_get :cards, params
+        expect(response).to redirect_to spree.unauthorized_path
+      end
+    end
+  end
 end
