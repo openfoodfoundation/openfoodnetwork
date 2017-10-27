@@ -111,7 +111,7 @@ class AbilityDecorator
       user.enterprises.include? enterprise_fee.enterprise
     end
 
-    can [:admin, :known_users, :customers, :customer_addresses], :search
+    can [:admin, :known_users, :customers], :search
 
     can [:admin, :show], :account
 
@@ -251,7 +251,7 @@ class AbilityDecorator
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
 
     can [:create], Customer
-    can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    can [:admin, :index, :update, :destroy, :addresses], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
     can [:admin, :new, :index], StandingOrder
     can [:create, :edit, :update, :cancel, :pause, :unpause], StandingOrder do |standing_order|
       user.enterprises.include?(standing_order.shop)
