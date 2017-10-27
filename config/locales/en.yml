@@ -849,6 +849,7 @@ en:
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
+        allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
