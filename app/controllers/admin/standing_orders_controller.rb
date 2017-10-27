@@ -93,7 +93,7 @@ module Admin
     def load_form_data
       @customers = Customer.of(@standing_order.shop)
       @schedules = Schedule.with_coordinator(@standing_order.shop)
-      @payment_methods = Spree::PaymentMethod.for_distributor(@standing_order.shop)
+      @payment_methods = Spree::PaymentMethod.for_distributor(@standing_order.shop).for_standing_orders
       @shipping_methods = Spree::ShippingMethod.for_distributor(@standing_order.shop)
       @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
       @fee_calculator = fee_calculator

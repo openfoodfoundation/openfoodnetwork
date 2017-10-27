@@ -15,7 +15,9 @@
 
   .row
     .seven.columns.alpha.field
-      %label{ for: 'payment_method_id'}= t('admin.payment_method')
+      %label{ for: 'payment_method_id'}
+        = t('admin.payment_method')
+        %span.with-tip.icon-question-sign{ data: { powertip: "#{t('.allowed_payment_method_types_tip')}" } }
       %input.ofn-select2.fullwidth#payment_method_id{ name: 'payment_method_id', type: 'number', data: 'paymentMethods', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.payment_method_id' } }
       .error{ ng: { show: 'standing_order_form.$submitted && standing_order_details_form.payment_method_id.$error.required' } }= t(:error_required)
       .error{ ng: { repeat: 'error in errors.payment_method', show: 'standing_order_details_form.payment_method_id.$pristine' } } {{ error }}
