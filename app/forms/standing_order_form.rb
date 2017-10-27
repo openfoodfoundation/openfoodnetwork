@@ -235,8 +235,14 @@ class StandingOrderForm
   end
 
   def payment_method_allowed?
-    if payment_method && payment_method.distributors.exclude?(shop)
+    return unless payment_method
+
+    if payment_method.distributors.exclude?(shop)
       errors[:payment_method] << "is not available to #{shop.name}"
+    end
+
+    if StandingOrder::ALLOWED_PAYMENT_METHOD_TYPES.exclude? payment_method.type
+      errors[:payment_method] << "must be a Cash or Stripe method"
     end
   end
 

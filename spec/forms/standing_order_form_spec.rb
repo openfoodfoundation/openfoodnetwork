@@ -169,6 +169,7 @@ describe StandingOrderForm do
     let(:payment_method) { standing_order.payment_method }
     let(:new_payment_method) { create(:payment_method, distributors: [standing_order.shop]) }
     let(:invalid_payment_method) { create(:payment_method, distributors: [create(:enterprise)]) }
+    let(:bogus_payment_method) { create(:bogus_payment_method, distributors: [standing_order.shop]) }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     context "when the payment method on an order is the same as the standing order" do
@@ -198,6 +199,22 @@ describe StandingOrderForm do
           expect(payments.with_state('void').count).to be 0
           expect(payments.with_state('checkout').count).to be 1
           expect(payments.with_state('checkout').first.payment_method).to eq payment_method
+          expect(form.errors[:payment_method]).to include "is not available to #{standing_order.shop.name}"
+        end
+      end
+
+      context "and the submitted shipping method is not associated with the shop" do
+        let(:params) { { payment_method_id: bogus_payment_method.id } }
+
+        it "returns false and does not void existing payments or create a new payment" do
+          expect(order.payments.reload.first.payment_method).to eq payment_method
+          expect(form.save).to be false
+          payments = order.reload.payments
+          expect(payments.count).to be 1
+          expect(payments.with_state('void').count).to be 0
+          expect(payments.with_state('checkout').count).to be 1
+          expect(payments.with_state('checkout').first.payment_method).to eq payment_method
+          expect(form.errors[:payment_method]).to include "must be a Cash or Stripe method"
         end
       end
     end

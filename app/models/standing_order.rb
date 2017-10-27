@@ -1,4 +1,6 @@
 class StandingOrder < ActiveRecord::Base
+  ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check", "Spree::Gateway::StripeConnect"]
+
   belongs_to :shop, class_name: 'Enterprise'
   belongs_to :customer
   belongs_to :schedule
