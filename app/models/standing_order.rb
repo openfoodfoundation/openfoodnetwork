@@ -8,6 +8,7 @@ class StandingOrder < ActiveRecord::Base
   belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
   belongs_to :bill_address, foreign_key: :bill_address_id, class_name: Spree::Address
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: Spree::Address
+  belongs_to :credit_card, foreign_key: :credit_card_id, class_name: 'Spree::CreditCard'
   has_many :standing_line_items, inverse_of: :standing_order
   has_many :order_cycles, through: :schedule
   has_many :proxy_orders

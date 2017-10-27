@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170921065259) do
+ActiveRecord::Schema.define(:version => 20171027005930) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -1107,9 +1107,11 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.integer  "ship_address_id",    :null => false
     t.datetime "canceled_at"
     t.datetime "paused_at"
+    t.integer  "credit_card_id"
   end
 
   add_index "standing_orders", ["bill_address_id"], :name => "index_standing_orders_on_bill_address_id"
+  add_index "standing_orders", ["credit_card_id"], :name => "index_standing_orders_on_credit_card_id"
   add_index "standing_orders", ["customer_id"], :name => "index_standing_orders_on_customer_id"
   add_index "standing_orders", ["payment_method_id"], :name => "index_standing_orders_on_payment_method_id"
   add_index "standing_orders", ["schedule_id"], :name => "index_standing_orders_on_schedule_id"
@@ -1357,6 +1359,7 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
   add_foreign_key "standing_orders", "schedules", name: "oc_standing_orders_schedule_id_fk"
   add_foreign_key "standing_orders", "spree_addresses", name: "standing_orders_bill_address_id_fk", column: "bill_address_id"
   add_foreign_key "standing_orders", "spree_addresses", name: "standing_orders_ship_address_id_fk", column: "ship_address_id"
+  add_foreign_key "standing_orders", "spree_credit_cards", name: "standing_orders_credit_card_id_fk", column: "credit_card_id"
   add_foreign_key "standing_orders", "spree_payment_methods", name: "oc_standing_orders_payment_method_id_fk", column: "payment_method_id"
   add_foreign_key "standing_orders", "spree_shipping_methods", name: "oc_standing_orders_shipping_method_id_fk", column: "shipping_method_id"
 
