@@ -47,7 +47,7 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
 
   $scope.$watch "standingOrder.customer_id", (newValue, oldValue) ->
     return if !newValue? || newValue == oldValue
-    $http.get("/admin/search/customer_addresses", params: { customer_id: newValue })
+    $http.get("/admin/customers/#{newValue}/addresses")
     .success (response) =>
       delete response.bill_address.id
       delete response.ship_address.id

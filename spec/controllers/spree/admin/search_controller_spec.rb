@@ -70,45 +70,5 @@ describe Spree::Admin::SearchController, type: :controller do
         end
       end
     end
-
-    describe "searching for customer addresses" do
-      let(:bill_address) { create(:address, firstname: "Dominic", address1: "123 Lala Street" ) }
-      let(:ship_address) { create(:address, firstname: "Dom", address1: "123 Sesame Street") }
-      let(:managed_customer) { create(:customer, enterprise: enterprise, bill_address: bill_address, ship_address: ship_address) }
-      let(:unmanaged_customer) { create(:customer) }
-      let(:params) { { format: :json } }
-
-      context "when I manage the customer" do
-        before { params.merge!({customer_id: managed_customer.id}) }
-
-        it "returns with serialized addresses for the customer" do
-          spree_get :customer_addresses, params
-          json_response = JSON.parse(response.body)
-          expect(json_response.keys).to include "bill_address", "ship_address"
-          expect(json_response["bill_address"]["firstname"]).to eq "Dominic"
-          expect(json_response["bill_address"]["address1"]).to eq "123 Lala Street"
-          expect(json_response["ship_address"]["firstname"]).to eq "Dom"
-          expect(json_response["ship_address"]["address1"]).to eq "123 Sesame Street"
-        end
-      end
-
-      context "when I don't manage the customer" do
-        before { params.merge!({customer_id: unmanaged_customer.id}) }
-
-        it "redirects to unauthorised" do
-          spree_get :customer_addresses, params
-          expect(response).to redirect_to spree.unauthorized_path
-        end
-      end
-
-      context "when no customer with a matching id exists" do
-        before { params.merge!({customer_id: 1}) }
-
-        it "redirects to unauthorised" do
-          spree_get :customer_addresses, params
-          expect(response).to redirect_to spree.unauthorized_path
-        end
-      end
-    end
   end
 end

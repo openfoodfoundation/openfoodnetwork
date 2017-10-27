@@ -1,3 +1,5 @@
+require 'open_food_network/address_finder'
+
 module Admin
   class CustomersController < ResourceController
     before_filter :load_managed_shops, only: :index, if: :html_request?
@@ -51,6 +53,15 @@ module Admin
           format.json { render json: { errors: @object.errors.full_messages }, status: :conflict }
         end
       end
+    end
+
+    # GET /admin/customers/:id/addresses
+    # Used by standing orders form to load details for selected customer
+    def addresses
+      finder = OpenFoodNetwork::AddressFinder.new(@customer, @customer.email)
+      bill_address = Api::AddressSerializer.new(finder.bill_address).serializable_hash
+      ship_address = Api::AddressSerializer.new(finder.ship_address).serializable_hash
+      render json: { bill_address: bill_address, ship_address: ship_address }
     end
 
     private
