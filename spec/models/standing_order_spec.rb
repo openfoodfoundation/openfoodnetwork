@@ -1,6 +1,21 @@
 require 'spec_helper'
 
 describe StandingOrder, type: :model do
+  describe "associations" do
+    it { expect(subject).to belong_to(:shop) }
+    it { expect(subject).to belong_to(:customer) }
+    it { expect(subject).to belong_to(:schedule) }
+    it { expect(subject).to belong_to(:shipping_method) }
+    it { expect(subject).to belong_to(:payment_method) }
+    it { expect(subject).to belong_to(:ship_address) }
+    it { expect(subject).to belong_to(:bill_address) }
+    it { expect(subject).to belong_to(:credit_card) }
+    it { expect(subject).to have_many(:standing_line_items) }
+    it { expect(subject).to have_many(:order_cycles) }
+    it { expect(subject).to have_many(:proxy_orders) }
+    it { expect(subject).to have_many(:orders) }
+  end
+
   describe "cancel" do
     let!(:standing_order) { create(:standing_order) }
     let!(:proxy_order1) { create(:proxy_order, order_cycle: create(:simple_order_cycle)) }
