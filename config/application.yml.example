@@ -2,19 +2,19 @@
 #
 # Change this, it has serious security implications.
 # Minimum 30 but usually 128 characters. To obtain run 'rake secret', or faster, 'openssl rand -hex 128'
-SECRET_TOKEN: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+SECRET_TOKEN: 1fde9ca97c704f4d43346783d0ed0bb103a21b927aa07d93226cfc29f27289d
 
-TIMEZONE: Melbourne
+TIMEZONE: Madrid
 # Default country for dropdowns etc. See for codes: http://en.wikipedia.org/wiki/ISO_3166-1
-DEFAULT_COUNTRY_CODE: AU
+DEFAULT_COUNTRY_CODE: ES
 # Locale for translation.
 LOCALE: en
 # For multilingual - ENV doesn't have array so pass it as string with commas
 AVAILABLE_LOCALES: en,es,en-GB
 # Spree zone.
-CHECKOUT_ZONE: Australia
+CHECKOUT_ZONE: Spain
 # Find currency codes at http://en.wikipedia.org/wiki/ISO_4217.
-CURRENCY: AUD
+CURRENCY: EUR
 
 # Customize how states are shown in select tags
 #

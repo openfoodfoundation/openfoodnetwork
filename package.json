@@ -6,6 +6,7 @@
     "url": "https://github.com/openfoodfoundation/openfoodnetwork"
   },
   "devDependencies": {
+    "jquery": "3.2.1",
     "phantomjs-prebuilt": "~2.1.7",
     "karma": "~0.13.22",
     "karma-jasmine": "~0.3.8",
