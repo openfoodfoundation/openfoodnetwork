@@ -21,8 +21,8 @@ angular.module("admin.products")
           $scope.product.variant_unit = $scope.product.variant_unit_with_scale
           $scope.product.variant_unit_scale = null
       else
-        $scope.product.variant_unit = $scope.product.variant_unit || angular.element('#product_variant_unit').val() || null
-        $scope.product.variant_unit_scale = $scope.product.variant_unit_scale || parseFloat(angular.element('#product_variant_unit_scale').val()) || null
+        $scope.product.variant_unit = $scope.product.variant_unit || angular.element(document.querySelector('#product_variant_unit')).val() || null
+        $scope.product.variant_unit_scale = $scope.product.variant_unit_scale || parseFloat(angular.element(document.querySelector('#product_variant_unit_scale')).val()) || null
         $scope.product.variant_unit_scale = null if isNaN($scope.product.variant_unit_scale)
         $scope.product.variant_unit_with_scale = $scope.product.variant_unit + '_' + $scope.product.variant_unit_scale if !!$scope.product.variant_unit
         setTimeout(->
@@ -30,7 +30,7 @@ angular.module("admin.products")
         , 1000)
 
     $scope.processUnitValueWithDescription = ->
-      if $scope.product.master.hasOwnProperty("unit_value_with_description")
+      if $scope.product.master.hasOwnProperty("unit_value_with_description") && !!$scope.product.master.unit_value_with_description
         match = $scope.product.master.unit_value_with_description.match(/^([\d\.]+(?= *|$)|)( *)(.*)$/)
         if match
           $scope.product.master.unit_value  = parseFloat(match[1])
