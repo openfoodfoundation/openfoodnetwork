@@ -24,6 +24,7 @@
 //= require ../shared/ofn-loading.js
 //= require ../shared/rails-flash-loader.js
 //= require ../shared/ofn-stripe.js
+//= require ../shared/navigation.js
 //= require angular-rails-templates
 //= require_tree ../templates/admin
 //= require ./admin_ofn

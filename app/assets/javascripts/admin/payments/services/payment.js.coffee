@@ -1,4 +1,4 @@
-angular.module('admin.payments').factory 'Payment', (StripeElements, currentOrderNumber, paymentMethods, PaymentMethods, PaymentResource)->
+angular.module('admin.payments').factory 'Payment', (StripeElements, currentOrderNumber, paymentMethods, PaymentMethods, PaymentResource, Navigation, RailsFlashLoader)->
   new class Payment
     order: currentOrderNumber
     form_data: {}
@@ -7,7 +7,6 @@ angular.module('admin.payments').factory 'Payment', (StripeElements, currentOrde
       PaymentMethods.byID[@form_data.payment_method].method_type
 
     preprocess: ->
-      # WIP - figure out required format
       munged_payment = {}
       munged_payment["payment"] = {payment_method_id: @form_data.payment_method, amount: @form_data.amount}
       munged_payment["order_id"] = @order
@@ -41,5 +40,8 @@ angular.module('admin.payments').factory 'Payment', (StripeElements, currentOrde
 
     submit: =>
       munged = @preprocess()
-      PaymentResource.create({order_id: @order}, munged).$promise.then (response)=>
-        # Do things
+      PaymentResource.create({order_id: munged.order_id}, munged, (response, headers, status)=>
+        Navigation.go "/admin/orders/" + munged.order_id + "/payments"
+      , (response) ->
+        RailsFlashLoader.loadFlash({error: t("error saving payment")})
+      )
