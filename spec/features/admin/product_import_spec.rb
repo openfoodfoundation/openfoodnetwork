@@ -244,9 +244,10 @@ feature "Product Import", js: true do
 
     it "returns an error if nothing was uploaded" do
       visit main_app.admin_product_import_path
+      expect(page).to have_content 'Select a spreadsheet to upload'
       click_button 'Upload'
 
-      expect(page).to have_content I18n.t(:product_import_file_not_found_notice)
+      expect(flash_message).to eq I18n.t(:product_import_file_not_found_notice)
     end
 
     it "handles cases where no meaningful data can be read from the file" do
