@@ -56,10 +56,20 @@ module Admin
         variant_override_enterprises_per_hub
 
       @inventory_items = InventoryItem.where(enterprise_id: @hubs)
+      @import_dates = inventory_import_dates.uniq.to_json
+    end
 
-      import_dates = [{id: '0', name: 'All'}]
-      inventory_import_dates.map { |i| import_dates.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
-      @import_dates = import_dates.uniq.to_json
+    def inventory_import_dates
+      options = [{id: '0', name: 'All'}]
+
+      import_dates = VariantOverride.
+        select('variant_overrides.import_date').
+        where('variant_overrides.hub_id IN (?)
+        AND variant_overrides.import_date IS NOT NULL', editable_enterprises.collect(&:id))
+
+      import_dates.uniq.collect(&:import_date).sort.reverse.map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
+
+      options
     end
 
     def load_collection

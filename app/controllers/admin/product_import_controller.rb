@@ -17,12 +17,6 @@ class Admin::ProductImportController < Spree::Admin::BaseController
     @shipping_categories = Spree::ShippingCategory.order('name ASC')
   end
 
-  # def save
-  #   @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, params[:settings])
-  #   @importer.save_all if @importer.has_valid_entries?
-  #   @import_into = params[:settings][:import_into]
-  # end
-
   def process_data
     @importer = ProductImporter.new(File.new(params[:filepath]), spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
 

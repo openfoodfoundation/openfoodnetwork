@@ -80,12 +80,10 @@ class SpreadsheetEntry
   end
 
   def is_a_valid?(type)
-    #@validates_as[type]
     @validates_as == type
   end
 
   def is_a_valid(type)
-    #@validates_as.push type
     @validates_as = type
   end
 
