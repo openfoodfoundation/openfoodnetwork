@@ -73,6 +73,11 @@ module OpenFoodNetwork
         Spree::Product.any_instance.stub(:primary_taxon).and_return taxon
         pr.products_json.should include taxon.name
       end
+
+      it "loads tag_list for variants" do
+        VariantOverride.create(variant: variant, hub: distributor, tag_list: 'lalala')
+        expect(pr.products_json).to include "[\"lalala\"]"
+      end
     end
 
     describe "loading variants" do
@@ -96,7 +101,6 @@ module OpenFoodNetwork
         expect(variants[p.id]).to include v1, v3
         expect(variants[p.id]).to_not include v4
       end
-
 
       context "when hub opts to only see variants in its inventory" do
         before do
