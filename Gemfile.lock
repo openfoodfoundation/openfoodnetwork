@@ -669,7 +669,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-    warden (1.2.7)
+    warden (1.2.6)
       rack (>= 1.0)
     webmock (1.8.11)
       addressable (>= 2.2.7)
