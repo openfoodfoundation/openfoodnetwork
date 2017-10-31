@@ -1,4 +1,4 @@
-.row.active_table_row{"ng-if" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
+.row.active_table_row{"ng-if" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : open()}"}
 
   .columns.small-12.medium-7.large-7.fat
     / Will add in long description available once clean up HTML formatting producer.long_description
@@ -77,7 +77,7 @@
         %a.cta-hub{"ng-repeat" => "hub in producer.hubs | visible | orderBy:'-active'",
         "ng-href" => "{{::hub.path}}", "ofn-change-hub" => "hub",
         "ng-class" => "::{primary: hub.active, secondary: !hub.active}"}
-          %i.ofn-i_033-open-sign{"ng-if" => "::hub.active"}
-          %i.ofn-i_032-closed-sign{"ng-if" => "::!hub.active"}
+          %i.ofn-i_068-shop-reversed{"ng-if" => "::hub.active"}
+          %i.ofn-i_068-shop-reversed{"ng-if" => "::!hub.active"}
           .hub-name{"ng-bind" => "::hub.name"}
           .button-address{"ng-bind" => "::[hub.address.city, hub.address.state_name] | printArray"}

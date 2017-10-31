@@ -12,7 +12,7 @@
 
   .columns.small-4.medium-3.large-3.text-right{"ng-if" => "::hub.active"}
     %a.hub.open_closed{"ng-href" => "{{::hub.path}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
-      %i.ofn-i_033-open-sign
+      %i.ofn-i_068-shop-reversed
       %span.margin-top{ ng: { if: "::current()" } }
         %em= t :hubs_shopping_here
       %span.margin-top{ ng: { if: "::!current()" } }
@@ -20,11 +20,11 @@
 
   .columns.small-4.medium-3.large-3.text-right{"ng-if" => "::!hub.active"}
     %a.hub.open_closed{"ng-href" => "{{::hub.path}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
-      %i.ofn-i_032-closed-sign
       %span.margin-top{ ng: { if: "::current()" } }
         %em= t :hubs_shopping_here
       %span.margin-top{ ng: { if: "::!current()" } }
         = t :hubs_orders_closed
+      %i.ofn-i_068-shop-reversed
 
   .columns.small-2.medium-1.large-1.text-right
     %span.margin-top

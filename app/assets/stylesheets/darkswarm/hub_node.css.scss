@@ -8,6 +8,14 @@
       white-space: nowrap;
       overflow-x: hidden;
       overflow-y: visible;
+
+      i {
+        margin-right: 0.5rem;
+      }
+    }
+
+    .active_table_row {
+      line-height: 1rem;
     }
 
     //Generic text link style
@@ -30,7 +38,7 @@
     //Closed & Open column
     .open_closed {
       i {
-        font-size: 2rem;
+        font-size: 1.75rem;
         float: right;
         margin-left: 0.5rem;
       }

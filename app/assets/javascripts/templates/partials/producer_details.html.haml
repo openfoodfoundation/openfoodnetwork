@@ -14,7 +14,7 @@
         %a.cta-hub{"ng-repeat" => "hub in enterprise.hubs | filter:{id: '!'+enterprise.id} | orderBy:'-active'",
         "ng-href" => "{{::hub.path}}", "ofn-empties-cart" => "hub",
         "ng-class" => "::{primary: hub.active, secondary: !hub.active}"}
-          %i.ofn-i_033-open-sign{"ng-if" => "::hub.active"}
-          %i.ofn-i_032-closed-sign{"ng-if" => "::!hub.active"}
           .hub-name{"ng-bind" => "::hub.name"}
+          %span{"ng-if" => "::hub.active"} ({{'maps_open' | t}})
+          %span{"ng-if" => "::!hub.active"} ({{'maps_closed' | t}})
           .button-address{"ng-bind" => "::[hub.address.city, hub.address.state_name] | printArray"}

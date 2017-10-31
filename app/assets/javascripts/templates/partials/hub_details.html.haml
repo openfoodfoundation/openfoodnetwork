@@ -17,8 +17,8 @@
         %a.cta-hub{"ng-href" => "{{::enterprise.path}}",
         "ng-class" => "{primary: enterprise.active, secondary: !enterprise.active}",
         "ofn-change-hub" => "enterprise"}
-          %i.ofn-i_033-open-sign{"ng-if" => "::enterprise.active"}
-          %i.ofn-i_032-closed-sign{"ng-if" => "::!enterprise.active"}
           .hub-name{"ng-bind" => "::enterprise.name"}
+          %span{"ng-if" => "::enterprise.active"} ({{'maps_open' | t}})
+          %span{"ng-if" => "::!enterprise.active"} ({{'maps_closed' | t}})
           .button-address{"ng-bind" => "::[enterprise.address.city, enterprise.address.state_name] | printArray"}
           / %i.ofn-i_007-caret-right
