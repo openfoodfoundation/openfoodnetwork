@@ -224,10 +224,13 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
       it "shows all shipping methods in order by name" do
         toggle_shipping
-        shipping_methods = page.all(:xpath, '//*[@id="shipping"]/ng-form/dd/div/div[1]').map {|row| row.all('label').map(&:text)}.flatten
-        expect(shipping_methods[0]).to include(sm2.name) # Donkeys
-        expect(shipping_methods[1]).to include(sm1.name) # Frogs
-        expect(shipping_methods[2]).to include(sm3.name) # Local       
+        within '#shipping' do
+          expect(page).to have_selector "label", count: 4 # Three shipping methods + instructions label
+          labels = page.all('label').map(&:text)
+          expect(labels[0]).to start_with("Donkeys") # sm2
+          expect(labels[1]).to start_with("Frogs") # sm1
+          expect(labels[2]).to start_with("Local") # sm3
+        end
       end
 
       context "when shipping method requires an address" do
