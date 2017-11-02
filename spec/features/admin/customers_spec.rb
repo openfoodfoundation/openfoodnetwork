@@ -132,15 +132,19 @@ feature 'Customers' do
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input[name=code].update-pending"
         end
-        within "tr#c_#{customer2.id}" do
-          fill_in "code", with: "new-customer-code"
-          expect(page).to have_content "This code is used already."
-        end
+
         click_button "Save Changes"
 
         within "tr#c_#{customer1.id}" do
           expect(page).to have_css "input[name=code].update-success"
         end
+
+        within "tr#c_#{customer2.id}" do
+          fill_in "code", with: "new-customer-code"
+          expect(page).to have_content "This code is used already."
+        end
+
+        click_button "Save Changes"
 
         within "tr#c_#{customer2.id}" do
           expect(page).to have_css "input[name=code].update-error"
