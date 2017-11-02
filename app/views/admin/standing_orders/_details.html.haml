@@ -14,13 +14,18 @@
       .error{ ng: { repeat: 'error in errors.schedule', show: 'standing_order_details_form.schedule_id.$pristine'} } {{ error }}
 
   .row
-    .seven.columns.alpha.field
+    .columns.alpha.field{ ng: { class: '{four: cardRequired, seven: !cardRequired}' } }
       %label{ for: 'payment_method_id'}
         = t('admin.payment_method')
         %span.with-tip.icon-question-sign{ data: { powertip: "#{t('.allowed_payment_method_types_tip')}" } }
       %input.ofn-select2.fullwidth#payment_method_id{ name: 'payment_method_id', type: 'number', data: 'paymentMethods', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.payment_method_id' } }
       .error{ ng: { show: 'standing_order_form.$submitted && standing_order_details_form.payment_method_id.$error.required' } }= t(:error_required)
       .error{ ng: { repeat: 'error in errors.payment_method', show: 'standing_order_details_form.payment_method_id.$pristine' } } {{ error }}
+    .three.columns.field{ ng: { show: 'cardRequired' } }
+      %label{ for: 'credit_card_id'}= t('.credit_card')
+      %input.ofn-select2.fullwidth#credit_card_id{ name: 'credit_card_id', type: 'number', data: 'creditCards', text: 'formatted', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.credit_card_id' } }
+      .error{ ng: { show: 'standing_order_form.$submitted && standing_order_details_form.credit_card_id.$error.required' } }= t(:error_required)
+      .error{ ng: { repeat: 'error in errors.credit_card', show: 'standing_order_details_form.credit_card_id.$pristine' } } {{ error }}
     .two.columns &nbsp;
     .seven.columns.omega.field
       %label{ for: 'shipping_method_id'}= t('admin.shipping_method')
