@@ -92,7 +92,7 @@ module WebHelper
   end
 
   def handle_js_confirm(accept=true)
-    page.evaluate_script "window.confirm = function(msg) { return #{!!accept }; }"
+    page.execute_script "window.confirm = function(msg) { return #{!!accept }; }"
     yield
   end
 
@@ -114,7 +114,7 @@ module WebHelper
   end
 
   def set_i18n_locale(locale = 'en')
-    page.evaluate_script("I18n.locale = '#{locale}'")
+    page.execute_script("I18n.locale = '#{locale}'")
   end
 
   def get_i18n_locale
@@ -173,11 +173,11 @@ module WebHelper
   end
 
   def open_select2(selector)
-    page.evaluate_script "jQuery('#{selector}').select2('open');"
+    page.execute_script "jQuery('#{selector}').select2('open');"
   end
 
   def close_select2(selector)
-    page.evaluate_script "jQuery('#{selector}').select2('close');"
+    page.execute_script "jQuery('#{selector}').select2('close');"
   end
 
   def perform_and_ensure(action, *args, assertion)
