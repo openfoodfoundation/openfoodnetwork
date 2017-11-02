@@ -7,7 +7,7 @@ module OpenFoodNetwork
     let(:order_cycle) { double(:order_cycle, id: 456) }
     let(:cpr) { CachedProductsRenderer.new(distributor, order_cycle) }
 
-    describe "fetching cached products JSON" do
+    describe "#products_json" do
       context "when in testing / development" do
         let(:products_renderer) do
           double(ProductsRenderer, products_json: 'uncached products')
@@ -131,18 +131,6 @@ module OpenFoodNetwork
       it "does not log a warning in development or test" do
         expect(Bugsnag).to receive(:notify).never
         cpr.send(:log_warning)
-      end
-    end
-
-    describe "fetching uncached products from ProductsRenderer" do
-      let(:pr) { double(:products_renderer, products_json: 'uncached products') }
-
-      before do
-        ProductsRenderer.stub(:new) { pr }
-      end
-
-      it "returns the uncached products" do
-        expect(cpr.send(:uncached_products_json)).to eq 'uncached products'
       end
     end
   end
