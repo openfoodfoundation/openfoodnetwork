@@ -188,7 +188,7 @@ describe StandingOrderForm do
         end
       end
 
-      context "and the submitted shipping method is not associated with the shop" do
+      context "and the submitted payment method is not associated with the shop" do
         let(:params) { { payment_method_id: invalid_payment_method.id } }
 
         it "returns false and does not void existing payments or create a new payment" do
@@ -203,7 +203,7 @@ describe StandingOrderForm do
         end
       end
 
-      context "and the submitted shipping method is not associated with the shop" do
+      context "and the submitted payment method is not a Stripe or Cash method" do
         let(:params) { { payment_method_id: bogus_payment_method.id } }
 
         it "returns false and does not void existing payments or create a new payment" do
