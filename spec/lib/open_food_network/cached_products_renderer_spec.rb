@@ -9,8 +9,14 @@ module OpenFoodNetwork
 
     describe "fetching cached products JSON" do
       context "when in testing / development" do
+        let(:products_renderer) do
+          double(ProductsRenderer, products_json: 'uncached products')
+        end
+
         before do
-          allow(cpr).to receive(:uncached_products_json) { "uncached products" }
+          allow(ProductsRenderer)
+            .to receive(:new)
+            .with(distributor, order_cycle) { products_renderer }
         end
 
         it "returns uncaches products JSON" do
@@ -50,10 +56,16 @@ module OpenFoodNetwork
           let(:cache_key) { "products-json-#{distributor.id}-#{order_cycle.id}" }
           let(:cached_json) { Rails.cache.read(cache_key) }
           let(:cache_present) { Rails.cache.exist?(cache_key) }
+          let(:products_renderer) do
+            double(ProductsRenderer, products_json: 'fresh products')
+          end
 
           before do
             Rails.cache.delete(cache_key)
-            cpr.stub(:uncached_products_json) { 'fresh products' }
+
+            allow(ProductsRenderer)
+              .to receive(:new)
+              .with(distributor, order_cycle) { products_renderer }
           end
 
           describe "when there are products" do
@@ -73,7 +85,15 @@ module OpenFoodNetwork
           end
 
           describe "when there are no products" do
-            before { cpr.stub(:uncached_products_json).and_raise ProductsRenderer::NoProducts }
+            let(:products_renderer) { double(ProductsRenderer) }
+
+            before do
+              allow(products_renderer).to receive(:products_json).and_raise ProductsRenderer::NoProducts
+
+              allow(ProductsRenderer)
+                .to receive(:new)
+                .with(distributor, order_cycle) { products_renderer }
+            end
 
             it "raises an error" do
               expect { cpr.products_json }.to raise_error CachedProductsRenderer::NoProducts
