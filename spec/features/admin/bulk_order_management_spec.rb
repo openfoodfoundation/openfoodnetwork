@@ -246,7 +246,7 @@ feature %q{
           Enterprise.is_primary_producer.map(&:name).each do |sn|
             expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: sn
           end
-          close_select2 "div.select2-container#s2id_supplier_filter"
+          close_select2 "#s2id_supplier_filter"
           select2_select s1.name, from: "supplier_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
@@ -284,7 +284,7 @@ feature %q{
           Enterprise.is_distributor.map(&:name).each do |dn|
             expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: dn
           end
-          close_select2 "div.select2-container#s2id_distributor_filter"
+          close_select2 "#s2id_distributor_filter"
           select2_select d1.name, from: "distributor_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
