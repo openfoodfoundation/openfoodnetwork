@@ -93,7 +93,7 @@ RSpec.configure do |config|
   def restart_phantomjs
     Capybara.send('session_pool').values
       .select { |s| s.driver.is_a?(Capybara::Poltergeist::Driver) }
-      .each { |driver| driver.restart}
+      .each { |s| s.driver.restart}
   end
 
   config.before(:all) { restart_phantomjs }
