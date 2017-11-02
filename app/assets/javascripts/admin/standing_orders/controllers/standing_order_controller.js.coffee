@@ -9,6 +9,7 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
   $scope.view = if $scope.standingOrder.id? then 'review' else 'details'
   $scope.nextCallbacks = {}
   $scope.backCallbacks = {}
+  $scope.creditCards = []
 
   successCallback = (response) ->
     StatusMessage.display 'success', 'Saved. Redirecting...'
@@ -54,6 +55,8 @@ angular.module("admin.standingOrders").controller "StandingOrderController", ($s
       angular.extend($scope.standingOrder.bill_address, response.bill_address)
       angular.extend($scope.standingOrder.ship_address, response.ship_address)
       $scope.shipAddressFromBilling() unless response.ship_address.address1?
+    $http.get("/admin/customers/#{newValue}/cards")
+    .success (response) => $scope.creditCards = response.cards
 
   $scope.shipAddressFromBilling = =>
     angular.extend($scope.standingOrder.ship_address, $scope.standingOrder.bill_address)
