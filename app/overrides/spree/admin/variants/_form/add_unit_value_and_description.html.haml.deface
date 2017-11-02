@@ -11,3 +11,8 @@
     .field{"data-hook" => "unit_description"}
       = f.label :unit_description, t(:spree_admin_unit_description)
       = f.text_field :unit_description, class: "fullwidth", placeholder: t('admin.products.unit_name_placeholder')
+
+    :javascript
+      angular.element(document.getElementById("new_variant")).ready(function() {
+        angular.bootstrap(document.getElementById("new_variant"), ['admin.products']);
+      });
