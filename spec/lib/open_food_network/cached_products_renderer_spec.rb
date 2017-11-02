@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'open_food_network/cached_products_renderer'
-require 'open_food_network/products_renderer'
 
 module OpenFoodNetwork
   describe CachedProductsRenderer do
