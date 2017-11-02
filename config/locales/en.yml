@@ -834,6 +834,7 @@ en:
         invalid_error: Oops! Please fill in all of the required fields...
         allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
         credit_card: Credit Card
+        no_cards_available: No cards available
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
