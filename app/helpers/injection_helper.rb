@@ -87,10 +87,12 @@ module InjectionHelper
 
   def inject_json_ams(name, data, serializer, opts = {})
     if data.is_a?(Array)
-      json = ActiveModel::ArraySerializer.new(data, {each_serializer: serializer}.merge(opts)).to_json
-    else
-      json = serializer.new(data, opts).to_json
+      opts = { each_serializer: serializer }.merge(opts)
+      serializer = ActiveModel::ArraySerializer
     end
+
+    serializer_instance = serializer.new(data, opts)
+    json = serializer_instance.to_json
     render partial: "json/injection_ams", locals: {name: name, json: json}
   end
 
