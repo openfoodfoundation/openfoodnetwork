@@ -1,24 +1,24 @@
 RSpec::Matchers.define :have_table_row do |row|
 
-  match_for_should do |node|
+  match do |node|
     @row = row
 
     node.has_selector? "tr", text: row.join(" ").strip # Check for appearance
     rows_under(node).include? row # Robust check of columns
   end
 
-  match_for_should_not do |node|
+  match_when_negated do |node|
     @row = row
 
     node.has_no_selector? "tr", text: row.join(" ").strip # Check for appearance
     !rows_under(node).include? row # Robust check of columns
   end
 
-  failure_message_for_should do |text|
+  failure_message do |text|
     "expected to find table row #{@row}"
   end
 
-  failure_message_for_should_not do |text|
+  failure_message_when_negated do |text|
     "expected not to find table row #{@row}"
   end
 
@@ -32,7 +32,7 @@ end
 # find("#my-table").should match_table [[...]]
 RSpec::Matchers.define :match_table do |expected_table|
 
-  match_for_should do |node|
+  match do |node|
     rows = node.
       all("tr").
       map { |r| r.all("th,td").map { |c| c.text.strip } }
@@ -62,7 +62,7 @@ RSpec::Matchers.define :match_table do |expected_table|
     @failure_message.nil?
   end
 
-  failure_message_for_should do |text|
+  failure_message do |text|
     @failure_message
   end
 
