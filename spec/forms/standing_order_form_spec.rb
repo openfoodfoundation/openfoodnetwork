@@ -176,15 +176,70 @@ describe StandingOrderForm do
       let(:params) { { payment_method_id: new_payment_method.id } }
 
       context "and the submitted payment method is associated with the shop" do
-        it "voids existing payments and creates a new payment with the relevant payment method" do
-          expect(order.payments.reload.first.payment_method).to eq payment_method
-          expect(form.save).to be true
-          payments = order.reload.payments
-          expect(payments.count).to be 2
-          expect(payments.with_state('void').count).to be 1
-          expect(payments.with_state('checkout').count).to be 1
-          expect(payments.with_state('void').first.payment_method).to eq payment_method
-          expect(payments.with_state('checkout').first.payment_method).to eq new_payment_method
+        context "and the submitted payment method is a Cash method" do
+          it "voids existing payments and creates a new payment with the relevant payment method" do
+            expect(order.payments.reload.first.payment_method).to eq payment_method
+            expect(form.save).to be true
+            payments = order.reload.payments
+            expect(payments.count).to be 2
+            expect(payments.with_state('void').count).to be 1
+            expect(payments.with_state('checkout').count).to be 1
+            expect(payments.with_state('void').first.payment_method).to eq payment_method
+            expect(payments.with_state('checkout').first.payment_method).to eq new_payment_method
+          end
+        end
+
+        context "and the submitted payment method is a Stripe method" do
+          let(:new_payment_method) { create(:stripe_payment_method, distributors: [standing_order.shop], preferred_enterprise_id: standing_order.shop.id) }
+
+          context "with a credit card" do
+            let!(:user) { create(:user) }
+            let!(:credit_card) { create(:credit_card, user: user) }
+
+            before do
+              standing_order.customer.update_attributes(user_id: user.id)
+              params[:credit_card_id] = credit_card.id
+            end
+
+            it "voids existing payments and creates a new payment with the relevant payment method" do
+              expect(order.payments.reload.first.payment_method).to eq payment_method
+              expect(form.save).to be true
+              payments = order.reload.payments
+              expect(payments.count).to be 2
+              expect(payments.with_state('void').count).to be 1
+              expect(payments.with_state('checkout').count).to be 1
+              expect(payments.with_state('void').first.payment_method).to eq payment_method
+              expect(payments.with_state('checkout').first.payment_method).to eq new_payment_method
+            end
+          end
+
+          context "without a credit_card_id" do
+            it "requires a credit_card_id" do
+              expect(order.payments.reload.first.payment_method).to eq payment_method
+              expect(form.save).to be false
+              payments = order.reload.payments
+              expect(payments.count).to be 1
+              expect(payments.with_state('void').count).to be 0
+              expect(payments.with_state('checkout').count).to be 1
+              expect(payments.with_state('checkout').first.payment_method).to eq payment_method
+              expect(form.errors[:credit_card]).to include "is required"
+            end
+          end
+        end
+
+        context "and the submitted payment method is not a Stripe or Cash method" do
+          let(:params) { { payment_method_id: bogus_payment_method.id } }
+
+          it "returns false and does not void existing payments or create a new payment" do
+            expect(order.payments.reload.first.payment_method).to eq payment_method
+            expect(form.save).to be false
+            payments = order.reload.payments
+            expect(payments.count).to be 1
+            expect(payments.with_state('void').count).to be 0
+            expect(payments.with_state('checkout').count).to be 1
+            expect(payments.with_state('checkout').first.payment_method).to eq payment_method
+            expect(form.errors[:payment_method]).to include "must be a Cash or Stripe method"
+          end
         end
       end
 
@@ -200,21 +255,6 @@ describe StandingOrderForm do
           expect(payments.with_state('checkout').count).to be 1
           expect(payments.with_state('checkout').first.payment_method).to eq payment_method
           expect(form.errors[:payment_method]).to include "is not available to #{standing_order.shop.name}"
-        end
-      end
-
-      context "and the submitted payment method is not a Stripe or Cash method" do
-        let(:params) { { payment_method_id: bogus_payment_method.id } }
-
-        it "returns false and does not void existing payments or create a new payment" do
-          expect(order.payments.reload.first.payment_method).to eq payment_method
-          expect(form.save).to be false
-          payments = order.reload.payments
-          expect(payments.count).to be 1
-          expect(payments.with_state('void').count).to be 0
-          expect(payments.with_state('checkout').count).to be 1
-          expect(payments.with_state('checkout').first.payment_method).to eq payment_method
-          expect(form.errors[:payment_method]).to include "must be a Cash or Stripe method"
         end
       end
     end

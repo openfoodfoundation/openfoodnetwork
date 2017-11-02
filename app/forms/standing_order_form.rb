@@ -10,6 +10,7 @@ class StandingOrderForm
   delegate :schedule, :schedule_id, to: :standing_order
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
   delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
+  delegate :credit_card_id, to: :standing_order
 
   validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method
   validates_presence_of :bill_address, :ship_address, :begins_at
@@ -20,6 +21,7 @@ class StandingOrderForm
   validate :shipping_method_allowed?
   validate :standing_line_items_present?
   validate :standing_line_items_available?
+  validate :credit_card_ok?
 
   def initialize(standing_order, params={}, fee_calculator=nil)
     @standing_order = standing_order
@@ -266,6 +268,13 @@ class StandingOrderForm
         errors.add(:standing_line_items, :not_available, name: name)
       end
     end
+  end
+
+  def credit_card_ok?
+    return unless payment_method.andand.type == "Spree::Gateway::StripeConnect"
+    return errors[:credit_card] << "is required" unless credit_card_id
+    return if customer.andand.user.andand.credit_card_ids.andand.include? credit_card_id
+    errors[:credit_card] << "is not available"
   end
 
   def variant_ids_for_shop_and_schedule
