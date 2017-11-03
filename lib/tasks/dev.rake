@@ -193,6 +193,8 @@ namespace :openfoodnetwork do
         .where('spree_products.supplier_id = ?', enterprise2.id)
 
       CreateOrderCycle.new(enterprise2, variants).call
+
+      EnterpriseRole.create!(user: Spree::User.first, enterprise: enterprise2)
     end
 
     # Creates an order cycle for the provided enterprise and selecting all the
