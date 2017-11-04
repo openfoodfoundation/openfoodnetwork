@@ -883,6 +883,8 @@ en:
   label_about: "About"
   label_connect: "Connect"
   label_learn: "Learn"
+  label_blog: "Blog"
+  label_support: "Support"
   label_shopping: "Shopping"
   label_login: "Login"
   label_logout: "Logout"

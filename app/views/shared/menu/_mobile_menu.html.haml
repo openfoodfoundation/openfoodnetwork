@@ -51,6 +51,27 @@
           %span.nav-primary
             %i.ofn-i_013-help
             = t 'label_learn'
+    - elsif feature? :about_blog_homepage
+      %li.li-menu
+        %a{href: "http://about.openfoodnetwork.org.uk/"}
+          %span.nav-primary
+            %i.ofn-i_019-map-pin
+            = t 'label_about'
+      %li.li-menu
+        %a{href: "http://about.openfoodnetwork.org.uk/blog"}
+          %span.nav-primary
+            %i.ofn-i_037-map
+            = t 'label_blog'
+      %li.li-menu
+        %a{href: "http://about.openfoodnetwork.org.uk/support"}
+          %span.nav-primary
+            %i.ofn-i_013-help
+            = t 'label_support'
+      %li.li-menu
+        %a{href: main_app.groups_path}
+          %span.nav-primary
+            %i.ofn-i_035-groups
+            = t 'label_groups'
     - else
       %li.li-menu
         %a{href: main_app.groups_path}
