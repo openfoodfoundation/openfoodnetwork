@@ -49,7 +49,14 @@
 //= require textAngular.min.js
 //= require i18n/translations
 //= require darkswarm/i18n.translate.js
+//
 //= require moment
-//= require moment/.
+//= require moment/en-gb.js
+//= require moment/es.js
+//= require moment/fr.js
+//= require moment/it.js
+//= require moment/nb.js
+//= require moment/pt-br.js
+//= require moment/sv.js
 
 //= require_tree .
