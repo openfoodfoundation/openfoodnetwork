@@ -30,4 +30,5 @@ describe CheckoutHelper do
     order.distributor.allow_guest_orders = false
     expect(helper.guest_checkout_allowed?).to be false
   end
+
 end
