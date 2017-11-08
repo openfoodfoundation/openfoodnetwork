@@ -35,13 +35,13 @@
           %td.text-right
             %span.order-total.item-total= display_checkout_subtotal(@order)
           %td
-
-        %tr
-          %td.text-right{colspan:"3"}
-            = t :orders_form_admin
-          %td.text-right
-            %span.order-total.distribution-total= display_checkout_admin_and_handling_adjustments_total_for(@order)
-          %td
+        -if display_checkout_admin_and_handling_adjustments_total_for(@order)
+          %tr
+            %td.text-right{colspan:"3"}
+              = t :orders_form_admin
+            %td.text-right
+              %span.order-total.distribution-total= display_checkout_admin_and_handling_adjustments_total_for(@order)
+            %td
 
         - checkout_adjustments_for(@order, exclude: [:line_item, :admin_and_handling]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
           %tr.order-adjustment

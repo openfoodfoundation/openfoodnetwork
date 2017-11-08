@@ -24,8 +24,12 @@ module CheckoutHelper
 
   def display_checkout_admin_and_handling_adjustments_total_for(order)
     adjustments = order.adjustments.eligible.where('originator_type = ? AND source_type != ? ', 'EnterpriseFee', 'Spree::LineItem')
-    Spree::Money.new adjustments.sum(&:amount) , currency: order.currency
+    amount = Spree::Money.new adjustments.sum(&:amount) , currency: order.currency
+    # amount = Spree::Money.new 50, currency: order.currency
+    check_zero = Spree::Money.new 0 , currency: order.currency
+    return amount == check_zero ? false : amount
   end
+
 
   def checkout_line_item_adjustments(order)
     order.adjustments.eligible.where(source_type: "Spree::LineItem")
@@ -112,4 +116,5 @@ module CheckoutHelper
       "{{ #{price} | localizeCurrency }}"
     end
   end
+
 end
