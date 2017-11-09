@@ -42,19 +42,9 @@ class StandingOrderPlacementJob
   end
 
   def move_to_completion(order)
-    until order.completed?
-      unless order.next!
-        Bugsnag.notify(RuntimeError.new("StandingOrderPlacementError"), {
-          job: "StandingOrderPlacement",
-          error: "Cannot process order due to errors",
-          data: {
-            order_number: order.number,
-            errors: order.errors.full_messages
-          }
-        })
-        break
-      end
-    end
+    until order.completed? do order.next! end
+  rescue StateMachine::InvalidTransition
+    log_completion_issue(order)
   end
 
   def unavailable_stock_lines_for(order)
@@ -72,5 +62,11 @@ class StandingOrderPlacementJob
 
   def send_empty_email(order, changes)
     Spree::OrderMailer.standing_order_email(order.id, 'empty', changes).deliver
+  end
+
+  def log_completion_issue(order)
+    line1 = "StandingOrderPlacementError: Cannot process order #{order.number} due to errors"
+    line2 = "Errors: #{order.errors.full_messages.join(", ")}"
+    Rails.logger.info("#{line1}\n#{line2}")
   end
 end

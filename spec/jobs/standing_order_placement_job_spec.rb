@@ -166,6 +166,15 @@ describe StandingOrderPlacementJob do
           expect{job.send(:process, order)}.to_not enqueue_job ConfirmOrderJob
           expect(job).to have_received(:send_placement_email).with(order, anything).once
         end
+
+        context "when progression of the order fails" do
+          before { allow(order).to receive(:next) { false } }
+
+          it "logs an error" do
+            expect(Rails.logger).to receive(:info)
+            job.send(:process, order)
+          end
+        end
       end
     end
   end
