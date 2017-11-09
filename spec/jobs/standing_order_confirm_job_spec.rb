@@ -118,5 +118,24 @@ describe StandingOrderConfirmJob do
       expect(job).to have_received(:send_confirm_email).with(order).once
       expect(ActionMailer::Base.deliveries.count).to be 1
     end
+
+    context "when payments need to be processed" do
+      let(:payment_updater_mock) { double(:payment_updater) }
+      let(:payment) { double(:payment, amount: 10) }
+
+      before do
+        allow(order).to receive(:payment_total) { 0 }
+        allow(order).to receive(:total) { 10 }
+        allow(order).to receive(:pending_payments) { [payment] }
+      end
+
+      it "updates the payment total and processes payments as required" do
+        expect(OpenFoodNetwork::StandingOrderPaymentUpdater).to receive(:new) { payment_updater_mock }
+        expect(payment_updater_mock).to receive(:update!) { true }
+        expect(payment).to receive(:process!)
+        expect(payment).to receive(:completed?) { true }
+        job.send(:process, order)
+      end
+    end
   end
 end
