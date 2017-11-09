@@ -54,7 +54,6 @@ First, check your dependencies: Ensure that you have Ruby 2.1.5 installed:
 Install the project's gem dependencies:
 
     cd openfoodnetwork
-    ./script/upgrade_bundler.sh
     bundle install
 
 Configure the site:
