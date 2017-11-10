@@ -74,6 +74,7 @@ describe Admin::ProxyOrdersController, type: :controller do
 
     before do
       # Processing order to completion
+      allow(Spree::OrderMailer).to receive(:cancel_email) { double(:email, deliver: true) }
       order.update_attribute(:shipping_method_id, shipping_method.id)
       while !order.completed? do break unless order.next! end
       proxy_order.update_attribute(:canceled_at, Time.zone.now)
