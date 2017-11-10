@@ -200,8 +200,7 @@ describe Admin::CustomersController, type: :controller do
         it "returns with an empty array" do
           spree_get :cards, params
           json_response = JSON.parse(response.body)
-          expect(json_response.keys).to include "cards"
-          expect(json_response["cards"]).to eq []
+          expect(json_response).to eq []
         end
       end
 
@@ -211,9 +210,9 @@ describe Admin::CustomersController, type: :controller do
         it "returns with serialized cards for the customer" do
           spree_get :cards, params
           json_response = JSON.parse(response.body)
-          expect(json_response.keys).to include "cards"
-          expect(json_response["cards"].length).to be 1
-          expect(json_response["cards"].first["id"]).to eq credit_card1.id
+          expect(json_response).to be_an Array
+          expect(json_response.length).to be 1
+          expect(json_response.first["id"]).to eq credit_card1.id
         end
       end
     end
