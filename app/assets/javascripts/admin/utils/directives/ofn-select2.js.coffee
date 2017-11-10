@@ -17,6 +17,8 @@ angular.module("admin.utils").directive "ofnSelect2", ($sanitize, $timeout, $fil
       scope.placeholder ?= t('admin.choose')
 
       if scope.data.$promise
+        # Initialize with empty data set, while we wait for data
+        element.select2(data:[], placeholder: scope.placeholder)
         scope.data.$promise.then -> init()
       else
         init()
