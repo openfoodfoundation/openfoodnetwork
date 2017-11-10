@@ -23,6 +23,7 @@ describe ProxyOrder, type: :model do
         let(:order) { create(:completed_order_with_totals) }
 
         it "returns true and sets canceled_at to the current time, and cancels the order" do
+          expect(Spree::OrderMailer).to receive(:cancel_email) { double(:email, deliver: true) }
           expect(proxy_order.cancel).to be true
           expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
           expect(order.reload.state).to eq 'canceled'
@@ -89,8 +90,11 @@ describe ProxyOrder, type: :model do
       end
 
       context "and the order has already been cancelled" do
-        before { while !order.completed? do break unless order.next! end }
-        before { order.cancel }
+        before do
+          allow(Spree::OrderMailer).to receive(:cancel_email) { double(:email, deliver: true) }
+          while !order.completed? do break unless order.next! end
+          order.cancel
+        end
 
         it "returns true, clears canceled_at and resumes the order" do
           expect(proxy_order.resume).to be true
@@ -126,8 +130,11 @@ describe ProxyOrder, type: :model do
       end
 
       context "and the order has been cancelled" do
-        before { while !order.completed? do break unless order.next! end }
-        before { order.cancel }
+        before do
+          allow(Spree::OrderMailer).to receive(:cancel_email) { double(:email, deliver: true) }
+          while !order.completed? do break unless order.next! end
+          order.cancel
+        end
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false
