@@ -28,7 +28,6 @@ module CheckoutHelper
     zero = Spree::Money.new 0 , currency: order.currency
     return adjustment_amount == zero ? false : adjustment_amount
   end
-  # adjustment_amount = Spree::Money.new 50, currency: order.currency
 
 
   def checkout_line_item_adjustments(order)
