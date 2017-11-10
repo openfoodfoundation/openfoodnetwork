@@ -742,6 +742,12 @@ en:
       index:
         title: Producer Properties
 
+    proxy_orders:
+      cancel:
+        could_not_cancel_the_order: Could not cancel the order
+      resume:
+        could_not_resume_the_order: Could not resume the order
+
     shared:
       user_guide_link:
         user_guide: User Guide
