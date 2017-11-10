@@ -23,8 +23,8 @@
       .error{ ng: { repeat: 'error in errors.payment_method', show: 'standing_order_details_form.payment_method_id.$pristine' } } {{ error }}
     .three.columns.field{ ng: { show: 'cardRequired' } }
       %label{ for: 'credit_card_id'}= t('.credit_card')
-      %input.ofn-select2.fullwidth#credit_card_id{ name: 'credit_card_id', type: 'number', data: 'creditCards', text: 'formatted', required: true, placeholder: t('admin.choose'), ng: { model: 'standingOrder.credit_card_id' } }
-      .error{ ng: { show: 'creditCards.length == 0' } }= t('.no_cards_available')
+      %input.ofn-select2.fullwidth#credit_card_id{ name: 'credit_card_id', type: 'number', data: 'creditCards', text: 'formatted', placeholder: t('admin.choose'), ng: { model: 'standingOrder.credit_card_id', required: "cardRequired" } }
+      .error{ ng: { show: 'creditCards.$promise && creditCards.$resolved && creditCards.length == 0' } }= t('.no_cards_available')
       .error{ ng: { show: 'standing_order_form.$submitted && standing_order_details_form.credit_card_id.$error.required' } }= t(:error_required)
       .error{ ng: { repeat: 'error in errors.credit_card', show: 'standing_order_details_form.credit_card_id.$pristine' } } {{ error }}
     .two.columns &nbsp;
