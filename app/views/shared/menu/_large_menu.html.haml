@@ -26,6 +26,23 @@
           %a{href: "https://openfoodnetwork.org/au/learn/"}
             %span.nav-primary
               = t 'label_learn'
+      - elsif feature? :about_blog_homepage
+        %li
+          %a{href: main_app.groups_path}
+            %span.nav-primary
+              = t 'label_groups'
+        %li
+          %a{href: "http://about.openfoodnetwork.org.uk/"}
+            %span.nav-primary
+              = t 'label_about'
+        %li
+          %a{href: "http://about.openfoodnetwork.org.uk/blog/"}
+            %span.nav-primary
+              = t 'label_blog'
+        %li
+          %a{href: "http://about.openfoodnetwork.org.uk/support/"}
+            %span.nav-primary
+              = t 'label_support'
       - else
         %li
           %a{href: main_app.groups_path}
