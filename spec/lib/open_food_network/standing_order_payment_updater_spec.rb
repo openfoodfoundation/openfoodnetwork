@@ -54,19 +54,110 @@ module OpenFoodNetwork
       context "when a payment is present" do
         before { allow(updater).to receive(:payment) { payment } }
 
-        context "when the payment total doesn't match the outstanding balance on the order" do
-          before { allow(order).to receive(:outstanding_balance) { 5 } }
-          it "updates the payment total to reflect the outstanding balance" do
-            expect{updater.update!}.to change(payment, :amount).from(10).to(5)
+        context "when a credit card is not required" do
+          before do
+            allow(updater).to receive(:card_required?) { false }
+            expect(updater).to_not receive(:card_available?)
+            expect(updater).to_not receive(:ensure_credit_card)
+          end
+
+          context "when the payment total doesn't match the outstanding balance on the order" do
+            before { allow(order).to receive(:outstanding_balance) { 5 } }
+            it "updates the payment total to reflect the outstanding balance" do
+              expect{updater.update!}.to change(payment, :amount).from(10).to(5)
+            end
+          end
+
+          context "when the payment total matches the outstanding balance on the order" do
+            before { allow(order).to receive(:outstanding_balance) { 10 } }
+
+            it "does nothing" do
+              expect{updater.update!}.to_not change(payment, :amount).from(10)
+            end
           end
         end
 
-        context "when the payment total matches the outstanding balance on the order" do
-          before { allow(order).to receive(:outstanding_balance) { 10 } }
-
-          it "does nothing" do
-            expect{updater.update!}.to_not change(payment, :amount).from(10)
+        context "when a credit card is required" do
+          before do
+            expect(updater).to receive(:card_required?) { true }
           end
+
+          context "and the payment source is not a credit card" do
+            before { expect(updater).to receive(:card_set?) { false } }
+
+            context "and no credit card is available on the standing order" do
+              before { expect(updater).to receive(:ensure_credit_card) { false } }
+
+              it "does not update the payment" do
+                expect(payment).to_not receive(:update_attributes)
+                updater.update!
+              end
+            end
+
+            context "but a credit card is available on the standing order" do
+              before { expect(updater).to receive(:ensure_credit_card) { true } }
+
+              context "when the payment total doesn't match the outstanding balance on the order" do
+                before { allow(order).to receive(:outstanding_balance) { 5 } }
+                it "updates the payment total to reflect the outstanding balance" do
+                  expect{updater.update!}.to change(payment, :amount).from(10).to(5)
+                end
+              end
+
+              context "when the payment total matches the outstanding balance on the order" do
+                before { allow(order).to receive(:outstanding_balance) { 10 } }
+
+                it "does nothing" do
+                  expect{updater.update!}.to_not change(payment, :amount).from(10)
+                end
+              end
+            end
+          end
+
+          context "and the payment source is already a credit card" do
+            before { expect(updater).to receive(:card_set?) { true } }
+
+            context "when the payment total doesn't match the outstanding balance on the order" do
+              before { allow(order).to receive(:outstanding_balance) { 5 } }
+              it "updates the payment total to reflect the outstanding balance" do
+                expect{updater.update!}.to change(payment, :amount).from(10).to(5)
+              end
+            end
+
+            context "when the payment total matches the outstanding balance on the order" do
+              before { allow(order).to receive(:outstanding_balance) { 10 } }
+
+              it "does nothing" do
+                expect{updater.update!}.to_not change(payment, :amount).from(10)
+              end
+            end
+          end
+        end
+      end
+    end
+
+    describe "#ensure_credit_card" do
+      let!(:payment) { create(:payment, source: nil) }
+      before { allow(updater).to receive(:payment) { payment } }
+
+      context "when no credit card is specified by the standing order" do
+        before { allow(updater).to receive(:saved_credit_card) { nil } }
+
+        it "returns false and down not update the payment source" do
+          expect do
+            expect(updater.send(:ensure_credit_card)).to be false
+          end.to_not change(payment, :source).from(nil)
+        end
+      end
+
+      context "when a credit card is specified by the standing order" do
+        let(:credit_card) { create(:credit_card) }
+        before { allow(updater).to receive(:saved_credit_card) { credit_card } }
+
+        it "returns true and stores the credit card as the payment source" do
+          expect do
+            expect(updater.send(:ensure_credit_card)).to be true
+          end.to change(payment, :source_id).from(nil).to(credit_card.id)
         end
       end
     end
