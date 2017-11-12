@@ -25,20 +25,18 @@ describe StandingOrderSyncJob do
   describe "performing the job" do
     let(:schedule) { double(:schedule) }
     let(:standing_order) { double(:standing_order) }
-    let(:form) { double(:form) }
+    let(:syncer) { double(:syncer) }
     let!(:job) { StandingOrderSyncJob.new(schedule) }
 
     before do
       allow(job).to receive(:standing_orders) { [standing_order] }
-      allow(StandingOrderForm).to receive(:new) { form }
-      allow(form).to receive(:initialise_proxy_orders!)
-      allow(form).to receive(:remove_obsolete_proxy_orders!)
+      allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer }
+      allow(syncer).to receive(:sync!)
     end
 
-    it "calls initialize_orders! and remove_obsolete_proxy_orders! on each form" do
+    it "calls sync!" do
       job.perform
-      expect(form).to have_received(:initialise_proxy_orders!).once
-      expect(form).to have_received(:remove_obsolete_proxy_orders!).once
+      expect(syncer).to have_received(:sync!).once
     end
   end
 end

@@ -1,3 +1,5 @@
+require 'open_food_network/proxy_order_syncer'
+
 class StandingOrderSyncJob
   attr_accessor :schedule
 
@@ -6,16 +8,16 @@ class StandingOrderSyncJob
   end
 
   def perform
-    standing_orders.each do |standing_order|
-      form = StandingOrderForm.new(standing_order)
-      form.send(:initialise_proxy_orders!)
-      form.send(:remove_obsolete_proxy_orders!)
-    end
+    proxy_order_syncer.sync!
   end
 
   private
 
   def standing_orders
     StandingOrder.not_ended.not_canceled.where(schedule_id: schedule)
+  end
+
+  def proxy_order_syncer
+    OpenFoodNetwork::ProxyOrderSyncer.new(standing_orders)
   end
 end
