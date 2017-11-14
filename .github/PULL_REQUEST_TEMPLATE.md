@@ -1,5 +1,7 @@
 #### What? Why?
 
+Closes #[the issue number this PR is related to]
+
 [Explain why is this change needed and the solution you propose. Provide
 context for others to understand it]
 
