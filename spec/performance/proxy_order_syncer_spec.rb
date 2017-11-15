@@ -24,15 +24,15 @@ module OpenFoodNetwork
         times = []
         10.times do
           syncer = ProxyOrderSyncer.new(standing_orders.reload)
-          sleep 1
+
           t1 = Time.now
           syncer.sync!
           t2 = Time.now
           times << t2-t1
           puts (t2-t1).round(2)
+
           expect(ProxyOrder.count).to be 1500
           ProxyOrder.destroy_all
-          sleep 1
         end
         puts "AVG: #{(times.sum/times.count).round(2)}"
       end
@@ -47,15 +47,15 @@ module OpenFoodNetwork
           expect(ProxyOrder.count).to be 1500
           standing_orders.update_all(begins_at: start + 8.days + 1.minute)
           syncer = ProxyOrderSyncer.new(standing_orders.reload)
-          sleep 1
+
           t1 = Time.now
           syncer.sync!
           t2 = Time.now
           times << t2-t1
           puts (t2-t1).round(2)
+
           expect(ProxyOrder.count).to be 300
           standing_orders.update_all(begins_at: start)
-          sleep 1
         end
         puts "AVG: #{(times.sum/times.count).round(2)}"
       end
