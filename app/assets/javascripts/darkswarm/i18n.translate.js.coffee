@@ -1,6 +1,3 @@
-# Old aliases before i18n-js was introduced.
-# TODO - delete it after everything is moved to i18n-js
-
 # Declares the translation function t.
 # You can use translate('login') or t('login') in Javascript.
 window.translate = (key, options = {}) ->
