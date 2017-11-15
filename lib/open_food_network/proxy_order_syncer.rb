@@ -52,7 +52,7 @@ module OpenFoodNetwork
     end
 
     def remove_obsolete_proxy_orders!
-      obsolete_proxy_orders.destroy_all
+      obsolete_proxy_orders.scoped.delete_all
     end
 
     def obsolete_proxy_orders
