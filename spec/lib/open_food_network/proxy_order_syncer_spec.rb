@@ -6,8 +6,8 @@ module OpenFoodNetwork
       let!(:standing_order) { create(:standing_order) }
 
       it "raises an error when initialized with an object that is not a StandingOrder or an ActiveRecord::Relation" do
-        expect{ProxyOrderSyncer.new(standing_order)}.to_not raise_error RuntimeError
-        expect{ProxyOrderSyncer.new(StandingOrder.where(id: standing_order.id))}.to_not raise_error RuntimeError
+        expect{ProxyOrderSyncer.new(standing_order)}.to_not raise_error
+        expect{ProxyOrderSyncer.new(StandingOrder.where(id: standing_order.id))}.to_not raise_error
         expect{ProxyOrderSyncer.new("something")}.to raise_error RuntimeError
       end
     end
@@ -31,8 +31,8 @@ module OpenFoodNetwork
         let!(:po2) { create(:proxy_order, standing_order: standing_order, order_cycle: oc7) }
         let!(:po3) { create(:proxy_order, standing_order: standing_order, order_cycle: oc8) }
 
-        it "performs both initialise and remove actions to rectify proxy orders" do
-          expect(syncer).to receive(:initialise_proxy_orders!).and_call_original
+        it "performs both create and remove actions to rectify proxy orders" do
+          expect(syncer).to receive(:create_proxy_orders!).and_call_original
           expect(syncer).to receive(:remove_obsolete_proxy_orders!).and_call_original
           syncer.sync!
           standing_order.reload
@@ -44,9 +44,19 @@ module OpenFoodNetwork
       end
 
       describe "#initialise_proxy_orders!" do
-        it "adds proxy orders for in-range order cycles that are not already closed" do
+        let(:new_standing_order) { build(:standing_order, schedule: schedule, begins_at: now + 1.minute, ends_at: now + 2.minutes) }
+        it "builds proxy orders for in-range order cycles that are not already closed" do
+          allow(syncer).to receive(:standing_order) { new_standing_order }
+          expect{syncer.send(:initialise_proxy_orders!)}.to_not change(ProxyOrder, :count).from(0)
+          expect{new_standing_order.save!}.to change(ProxyOrder, :count).from(0).to(2)
+          expect(new_standing_order.proxy_orders.map(&:order_cycle_id)).to include oc3.id, oc4.id
+        end
+      end
+
+      describe "#create_proxy_orders!" do
+        it "creates proxy orders for in-range order cycles that are not already closed" do
           allow(syncer).to receive(:standing_order) { standing_order }
-          expect{syncer.send(:initialise_proxy_orders!)}.to change(ProxyOrder, :count).from(0).to(2)
+          expect{syncer.send(:create_proxy_orders!)}.to change(ProxyOrder, :count).from(0).to(2)
           expect(standing_order.proxy_orders.map(&:order_cycle)).to include oc3, oc4
         end
       end

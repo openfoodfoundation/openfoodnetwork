@@ -17,7 +17,8 @@ module OpenFoodNetwork
 
     def sync!
       return sync_all! if @standing_orders
-      initialise_proxy_orders!
+      return initialise_proxy_orders! unless @standing_order.id
+      create_proxy_orders!
       remove_obsolete_proxy_orders!
     end
 
@@ -26,7 +27,7 @@ module OpenFoodNetwork
     def sync_all!
       @standing_orders.each do |standing_order|
         @standing_order = standing_order
-        initialise_proxy_orders!
+        create_proxy_orders!
         remove_obsolete_proxy_orders!
       end
     end
@@ -35,6 +36,15 @@ module OpenFoodNetwork
       uninitialised_order_cycle_ids.each do |order_cycle_id|
         proxy_orders << ProxyOrder.new(standing_order: standing_order, order_cycle_id: order_cycle_id)
       end
+    end
+
+    def create_proxy_orders!
+      return unless not_closed_in_range_order_cycles.any?
+      query = "INSERT INTO proxy_orders (standing_order_id, order_cycle_id, updated_at, created_at)"
+      query << " VALUES #{insert_values}"
+      query << " ON CONFLICT DO NOTHING"
+
+      ActiveRecord::Base.connection.exec_query(query)
     end
 
     def uninitialised_order_cycle_ids
@@ -49,6 +59,13 @@ module OpenFoodNetwork
       in_range_order_cycle_ids = in_range_order_cycles.pluck(:id)
       return proxy_orders unless in_range_order_cycle_ids.any?
       proxy_orders.where('order_cycle_id NOT IN (?)', in_range_order_cycle_ids)
+    end
+
+    def insert_values
+      now = Time.now.utc.iso8601
+      not_closed_in_range_order_cycles
+        .map{ |oc| "(#{standing_order.id},#{oc.id},'#{now}','#{now}')" }
+        .join(",")
     end
 
     def not_closed_in_range_order_cycles
