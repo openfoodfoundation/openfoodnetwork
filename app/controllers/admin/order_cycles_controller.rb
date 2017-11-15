@@ -1,5 +1,6 @@
 require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_form_applicator'
+require 'open_food_network/proxy_order_syncer'
 
 module Admin
   class OrderCyclesController < ResourceController
@@ -208,9 +209,10 @@ module Admin
       removed_ids = @existing_schedule_ids - @order_cycle.schedule_ids
       new_ids = @order_cycle.schedule_ids - @existing_schedule_ids
       if removed_ids.any? || new_ids.any?
-        Schedule.where(id: removed_ids + new_ids).each do |schedule|
-          Delayed::Job.enqueue StandingOrderSyncJob.new(schedule)
-        end
+        schedules = Schedule.where(id: removed_ids + new_ids)
+        standing_orders = StandingOrder.where(schedule_id: schedules)
+        syncer = OpenFoodNetwork::ProxyOrderSyncer.new(standing_orders)
+        syncer.sync!
       end
     end
 

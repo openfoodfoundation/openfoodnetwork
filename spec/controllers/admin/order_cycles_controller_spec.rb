@@ -198,16 +198,14 @@ module Admin
           expect(coordinated_order_cycle.reload.schedules).to_not include coordinated_schedule, uncoordinated_schedule
         end
 
-        it "enqueues a StandingOrderSyncJob when schedule_ids change" do
-          expect do
-            spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id, coordinated_schedule2.id] }
-          end.to enqueue_job StandingOrderSyncJob
-          expect do
-            spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
-          end.to enqueue_job StandingOrderSyncJob
-          expect do
-            spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
-          end.to_not enqueue_job StandingOrderSyncJob
+        it "syncs proxy orders when schedule_ids change" do
+          syncer_mock = double(:syncer)
+          allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer_mock }
+          expect(syncer_mock).to receive(:sync!).exactly(2).times
+
+          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id, coordinated_schedule2.id] }
+          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
+          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
         end
       end
     end
