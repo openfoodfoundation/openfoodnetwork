@@ -14,7 +14,7 @@ class StandingOrderSyncJob
   private
 
   def standing_orders
-    StandingOrder.not_ended.not_canceled.where(schedule_id: schedule)
+    StandingOrder.where(schedule_id: schedule)
   end
 
   def proxy_order_syncer

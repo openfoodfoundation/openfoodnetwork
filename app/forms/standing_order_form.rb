@@ -129,7 +129,7 @@ class StandingOrderForm
   end
 
   def proxy_order_syncer
-    OpenFoodNetwork::ProxyOrderSyncer.new([standing_order])
+    OpenFoodNetwork::ProxyOrderSyncer.new(standing_order)
   end
 
   def changed_standing_line_items
