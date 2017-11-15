@@ -19,7 +19,7 @@ module OpenFoodNetwork
     end
 
     context "measuring performance for initialisation" do
-      it "reports the average run time for 150 x 10 OCs" do
+      it "reports the average run time for adding 10 OCs to 150 standing orders" do
         expect(ProxyOrder.count).to be 0
         times = []
         10.times do
@@ -32,6 +32,29 @@ module OpenFoodNetwork
           puts (t2-t1).round(2)
           expect(ProxyOrder.count).to be 1500
           ProxyOrder.destroy_all
+          sleep 1
+        end
+        puts "AVG: #{(times.sum/times.count).round(2)}"
+      end
+    end
+
+    context "measuring performance for removal" do
+      it "reports the average run time for removing 8 OCs from 150 standing orders" do
+        times = []
+        10.times do
+          syncer = ProxyOrderSyncer.new(standing_orders.reload)
+          syncer.sync!
+          expect(ProxyOrder.count).to be 1500
+          standing_orders.update_all(begins_at: start + 8.days + 1.minute)
+          syncer = ProxyOrderSyncer.new(standing_orders.reload)
+          sleep 1
+          t1 = Time.now
+          syncer.sync!
+          t2 = Time.now
+          times << t2-t1
+          puts (t2-t1).round(2)
+          expect(ProxyOrder.count).to be 300
+          standing_orders.update_all(begins_at: start)
           sleep 1
         end
         puts "AVG: #{(times.sum/times.count).round(2)}"
