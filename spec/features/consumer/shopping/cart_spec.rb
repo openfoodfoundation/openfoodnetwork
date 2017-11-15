@@ -158,10 +158,10 @@ feature "full-page cart", js: true do
       it "shows row if order include adjustments" do
         visit spree.cart_path
 
-        add_product_to_cart order, product_fee, quantity: 2
+        #needs and order with adjustments
 
-        expect(page).to_not have_content('Admin & Handling')
-        expect(page).to have_content('$0.00')
+        expect(page).to have_content('Admin & Handling')
+        expect(page).to have_content()
     end
   end
 end

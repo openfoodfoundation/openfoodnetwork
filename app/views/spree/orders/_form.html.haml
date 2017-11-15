@@ -35,7 +35,7 @@
           %td.text-right
             %span.order-total.item-total= display_checkout_subtotal(@order)
           %td
-        -if display_checkout_admin_and_handling_adjustments_total_for(@order)
+        -if display_checkout_admin_and_handling_adjustments_total_for(@order) != Spree::Money.new(0 , currency: @order.currency)
           %tr
             %td.text-right{colspan:"3"}
               = t :orders_form_admin

@@ -24,9 +24,7 @@ module CheckoutHelper
 
   def display_checkout_admin_and_handling_adjustments_total_for(order)
     adjustments = order.adjustments.eligible.where('originator_type = ? AND source_type != ? ', 'EnterpriseFee', 'Spree::LineItem')
-    adjustment_amount = Spree::Money.new adjustments.sum(&:amount) , currency: order.currency
-    zero = Spree::Money.new 0 , currency: order.currency
-    return adjustment_amount == zero ? false : adjustment_amount
+    Spree::Money.new adjustments.sum(&:amount) , currency: order.currency
   end
 
 
