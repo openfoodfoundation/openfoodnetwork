@@ -5,18 +5,31 @@ module OpenFoodNetwork
     delegate :order_cycles, :proxy_orders, :begins_at, :ends_at, to: :standing_order
 
     def initialize(standing_orders)
-      @standing_orders = standing_orders
+      case standing_orders
+      when StandingOrder
+        @standing_order = standing_orders
+      when ActiveRecord::Relation
+        @standing_orders = standing_orders.not_ended.not_canceled
+      else
+        raise "ProxyOrderSyncer must be initialized with an instance of StandingOrder or ActiveRecord::Relation"
+      end
     end
 
     def sync!
+      return sync_all! if @standing_orders
+      initialise_proxy_orders!
+      remove_obsolete_proxy_orders!
+    end
+
+    private
+
+    def sync_all!
       @standing_orders.each do |standing_order|
         @standing_order = standing_order
         initialise_proxy_orders!
         remove_obsolete_proxy_orders!
       end
     end
-
-    private
 
     def initialise_proxy_orders!
       uninitialised_order_cycle_ids.each do |order_cycle_id|
