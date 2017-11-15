@@ -89,16 +89,14 @@ describe Admin::SchedulesController, type: :controller do
           expect(coordinated_schedule.reload.order_cycles).to_not include coordinated_order_cycle, uncoordinated_order_cycle2
         end
 
-        it "enqueues a StandingOrderSyncJob when order_cycle_ids change" do
-          expect do
-            spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id] }
-          end.to enqueue_job StandingOrderSyncJob
-          expect do
-            spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id,] }
-          end.to enqueue_job StandingOrderSyncJob
-          expect do
-            spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id] }
-          end.to_not enqueue_job StandingOrderSyncJob
+        it "syncs proxy orders when order_cycle_ids change" do
+          syncer_mock = double(:syncer)
+          allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer_mock }
+          expect(syncer_mock).to receive(:sync!).exactly(2).times
+
+          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id] }
+          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id] }
+          spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: [coordinated_order_cycle.id] }
         end
       end
 
@@ -151,8 +149,12 @@ describe Admin::SchedulesController, type: :controller do
             expect(schedule.order_cycles).to_not include uncoordinated_order_cycle
           end
 
-          it "enqueues StandingOrderSyncJob" do
-            expect { create_schedule params }.to enqueue_job StandingOrderSyncJob
+          it "sync proxy orders" do
+            syncer_mock = double(:syncer)
+            allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer_mock }
+            expect(syncer_mock).to receive(:sync!).once
+
+            create_schedule params
           end
         end
 
