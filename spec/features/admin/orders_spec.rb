@@ -30,6 +30,19 @@ feature %q{
     click_button 'Next'
   end
 
+  scenario "order cycles appear in descending order by close date on orders page" do
+    create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now)
+    create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
+    create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now)
+
+    login_to_admin_section
+    visit 'admin/orders'
+
+    open_select2('#s2id_q_order_cycle_id_in')
+
+    expect(find('#q_order_cycle_id_in', visible: :all)[:innerHTML]).to have_content(/.*One.*Two.*Three.*Four/m)
+  end
+
   scenario "creating an order with distributor and order cycle" do
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')

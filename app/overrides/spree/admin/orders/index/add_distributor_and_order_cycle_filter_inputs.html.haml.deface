@@ -9,5 +9,5 @@
 .field-block.alpha.eight.columns
   = label_tag nil, t(:order_cycles)
   = select_tag("q[order_cycle_id_in]",
-    options_for_select(OrderCycle.managed_by(spree_current_user).map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
+    options_for_select(OrderCycle.managed_by(spree_current_user).order('order_cycles.orders_close_at ASC').map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
     {class: "select2 fullwidth", multiple: true})
