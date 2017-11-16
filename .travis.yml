@@ -4,6 +4,8 @@ cache: bundler
 bundler_args: --without development
 rvm:
   - "2.1.5"
+addons:
+  postgresql: "9.5"
 
 # Set the timezone for phantomjs with TZ
 # Set the timezone for karma with TIMEZONE
