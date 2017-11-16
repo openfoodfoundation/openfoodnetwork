@@ -1217,6 +1217,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_so_empty_intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
   email_so_empty_explainer_html: "Unfortunately, none of products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
   email_so_empty_details_html: "Here are the details of the unplaced order for <strong>%{distributor}</strong>:"
+  email_so_failed_payment_intro_html: "We tried to process a payment, but had some problems..."
+  email_so_failed_payment_explainer_html: "The payment for your subscription with <strong>%{distributor}</strong> failed because of a problem with your credit card. <strong>%{distributor}</strong> has been notified of this failed payment."
+  email_so_failed_payment_details_html: "Here are the details of the failure provided by the payment gateway:"
   email_shipping_delivery_details: Delivery details
   email_shipping_delivery_time: "Delivery on:"
   email_shipping_delivery_address: "Delivery address:"

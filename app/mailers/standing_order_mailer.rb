@@ -21,6 +21,11 @@ class StandingOrderMailer < Spree::BaseMailer
     send_mail(order)
   end
 
+  def failed_payment_email(order)
+    @order = order
+    send_mail(order)
+  end
+
   private
 
   def send_mail(order)
