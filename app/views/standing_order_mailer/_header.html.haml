@@ -1,0 +1,18 @@
+%table.social.white-bg{:width => "100%"}
+  %tr
+    %td
+      %table.column{:align => "left"}
+        %tr
+          %td
+            %h3
+              = t :email_confirm_customer_greeting, name: @order.bill_address.firstname
+            %h4
+              - if @order.paid? && type == 'confirmation'
+                = t :email_so_payment_success_intro_html, distributor: @order.distributor.name
+              - else
+                = t("email_so_#{type}_intro_html", distributor: @order.distributor.name)
+      %table.column{:align => "left"}
+        %tr
+          %td{:align => "right"}
+            %img.float-right{:src => "#{@order.distributor.logo.url(:medium)}"}/
+      %span.clear

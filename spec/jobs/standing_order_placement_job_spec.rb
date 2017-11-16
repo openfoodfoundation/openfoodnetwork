@@ -187,7 +187,7 @@ describe StandingOrderPlacementJob do
     let(:changes) { double(:changes) }
 
     before do
-      allow(Spree::OrderMailer).to receive(:standing_order_email) { mail_mock }
+      allow(StandingOrderMailer).to receive(:placement_email) { mail_mock }
       allow(mail_mock).to receive(:deliver)
     end
 
@@ -196,7 +196,7 @@ describe StandingOrderPlacementJob do
 
       it "sends the email" do
         job.send(:send_placement_email, order, changes)
-        expect(Spree::OrderMailer).to have_received(:standing_order_email).with(order.id, 'placement', changes)
+        expect(StandingOrderMailer).to have_received(:placement_email).with(order, changes)
         expect(mail_mock).to have_received(:deliver)
       end
     end
@@ -204,7 +204,7 @@ describe StandingOrderPlacementJob do
     context "when the order is incomplete" do
       it "does not send the email" do
         job.send(:send_placement_email, order, changes)
-        expect(Spree::OrderMailer).to_not have_received(:standing_order_email)
+        expect(StandingOrderMailer).to_not have_received(:placement_email)
         expect(mail_mock).to_not have_received(:deliver)
       end
     end
