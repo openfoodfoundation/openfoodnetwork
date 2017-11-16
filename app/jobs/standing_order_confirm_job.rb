@@ -25,7 +25,7 @@ class StandingOrderConfirmJob
   end
 
   def send_confirm_email(order)
-    Spree::OrderMailer.standing_order_email(order.id, 'confirmation', {}).deliver
+    StandingOrderMailer.confirmation_email(order).deliver
   end
 
   def recently_closed_order_cycles

@@ -1,0 +1,22 @@
+= render 'header', type: @type
+
+%p.callout
+  = t("email_so_confirmation_explainer_html")
+  = t("email_so_edit_false_html",
+    orders_close_at: l(@order.order_cycle.orders_close_at, format: "%a %b %d @ %l:%M%p"),
+    order_url: spree.order_url(@order))
+  = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.email)
+
+%p &nbsp;
+%h4
+  = t :email_confirm_customer_number_html, number: @order.number
+%p
+  = t("email_so_confirmation_details_html", distributor: @order.distributor.name)
+
+= render 'spree/order_mailer/order_summary'
+
+= render 'spree/order_mailer/payment'
+= render 'spree/order_mailer/shipping'
+= render 'spree/order_mailer/special_instructions'
+
+= render 'spree/order_mailer/signoff'

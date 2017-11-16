@@ -39,17 +39,6 @@ Spree::OrderMailer.class_eval do
          :reply_to => @order.distributor.email)
   end
 
-  def standing_order_email(order, type, changes)
-    @type = type
-    @changes = changes
-    find_order(order) # Finds an order instance from an id
-    subject = "#{Spree::Config[:site_name]} #{t('order_mailer.confirm_email.subject')} ##{@order.number}"
-    mail(:to => @order.email,
-         :from => from_address,
-         :subject => subject,
-         :reply_to => @order.distributor.email)
-  end
-
   def find_order(order)
     @order = order.respond_to?(:id) ? order : Spree::Order.find(order)
   end

@@ -57,11 +57,11 @@ class StandingOrderPlacementJob
 
   def send_placement_email(order, changes)
     return unless order.completed?
-    Spree::OrderMailer.standing_order_email(order.id, 'placement', changes).deliver
+    StandingOrderMailer.placement_email(order, changes).deliver
   end
 
   def send_empty_email(order, changes)
-    Spree::OrderMailer.standing_order_email(order.id, 'empty', changes).deliver
+    StandingOrderMailer.empty_email(order, changes).deliver
   end
 
   def log_completion_issue(order)
