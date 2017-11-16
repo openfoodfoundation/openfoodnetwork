@@ -1,4 +1,5 @@
-= render 'header', type: @type
+- intro_key = @order.paid? ? "email_so_payment_success_intro_html" : "email_so_confirmation_intro_html"
+= render 'header', intro: t(intro_key, distributor: @order.distributor.name)
 
 %p.callout
   = t("email_so_confirmation_explainer_html")
