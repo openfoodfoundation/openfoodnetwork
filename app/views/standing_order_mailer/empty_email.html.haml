@@ -1,4 +1,5 @@
-= render 'header', type: @type
+- intro_key = "email_so_empty_intro_html"
+= render 'header', intro: t(intro_key, distributor: @order.distributor.name)
 
 %p.callout
   = t("email_so_empty_explainer_html")
