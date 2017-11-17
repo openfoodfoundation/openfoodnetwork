@@ -1,3 +1,7 @@
-class Api::Admin::IdEmailSerializer < ActiveModel::Serializer
-  attributes :id, :email
+module Api
+  module Admin
+    class IdEmailSerializer < ActiveModel::Serializer
+      attributes :id, :email
+    end
+  end
 end
