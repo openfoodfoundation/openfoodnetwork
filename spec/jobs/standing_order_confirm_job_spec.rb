@@ -70,7 +70,7 @@ describe StandingOrderConfirmJob do
 
       it "marks confirmable proxy_orders as processed by setting confirmed_at" do
         expect{ job.perform }.to change{ proxy_order.reload.confirmed_at }
-        expect(proxy_order.confirmed_at).to be_within(5.seconds).of Time.now
+        expect(proxy_order.confirmed_at).to be_within(5.seconds).of Time.zone.now
       end
 
       it "processes confirmable proxy_orders" do

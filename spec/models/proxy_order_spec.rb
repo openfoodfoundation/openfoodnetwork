@@ -14,7 +14,7 @@ describe ProxyOrder, type: :model do
 
         it "returns true and sets canceled_at to the current time" do
           expect(proxy_order.cancel).to be true
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
           expect(proxy_order.state).to eq 'canceled'
         end
       end
@@ -25,7 +25,7 @@ describe ProxyOrder, type: :model do
         it "returns true and sets canceled_at to the current time, and cancels the order" do
           expect(Spree::OrderMailer).to receive(:cancel_email) { double(:email, deliver: true) }
           expect(proxy_order.cancel).to be true
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
           expect(order.reload.state).to eq 'canceled'
           expect(proxy_order.state).to eq 'canceled'
         end
@@ -36,7 +36,7 @@ describe ProxyOrder, type: :model do
 
         it "returns true and sets canceled_at to the current time" do
           expect(proxy_order.cancel).to be true
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
           expect(order.reload.state).to eq 'cart'
           expect(proxy_order.state).to eq 'canceled'
         end
@@ -124,7 +124,7 @@ describe ProxyOrder, type: :model do
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
           expect(proxy_order.state).to eq 'canceled'
         end
       end
@@ -138,7 +138,7 @@ describe ProxyOrder, type: :model do
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
           expect(order.reload.state).to eq 'canceled'
           expect(proxy_order.state).to eq 'canceled'
         end
@@ -149,7 +149,7 @@ describe ProxyOrder, type: :model do
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
           expect(order.reload.state).to eq 'complete'
           expect(proxy_order.state).to eq 'canceled'
         end

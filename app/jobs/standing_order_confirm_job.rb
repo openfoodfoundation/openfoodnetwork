@@ -3,7 +3,7 @@ require 'open_food_network/standing_order_payment_updater'
 class StandingOrderConfirmJob
   def perform
     ids = proxy_orders.pluck(:id)
-    proxy_orders.update_all(confirmed_at: Time.now)
+    proxy_orders.update_all(confirmed_at: Time.zone.now)
     ProxyOrder.where(id: ids).each do |proxy_order|
       @order = proxy_order.order
       process!
@@ -20,7 +20,7 @@ class StandingOrderConfirmJob
   end
 
   def recently_closed_order_cycles
-    OrderCycle.closed.where('order_cycles.orders_close_at BETWEEN (?) AND (?) OR order_cycles.updated_at BETWEEN (?) AND (?)', 1.hour.ago, Time.now, 1.hour.ago, Time.now)
+    OrderCycle.closed.where('order_cycles.orders_close_at BETWEEN (?) AND (?) OR order_cycles.updated_at BETWEEN (?) AND (?)', 1.hour.ago, Time.zone.now, 1.hour.ago, Time.zone.now)
   end
 
   def process!

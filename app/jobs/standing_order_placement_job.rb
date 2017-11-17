@@ -1,7 +1,7 @@
 class StandingOrderPlacementJob
   def perform
     ids = proxy_orders.pluck(:id)
-    proxy_orders.update_all(placed_at: Time.now)
+    proxy_orders.update_all(placed_at: Time.zone.now)
     ProxyOrder.where(id: ids).each do |proxy_order|
       proxy_order.initialise_order!
       process(proxy_order.order)

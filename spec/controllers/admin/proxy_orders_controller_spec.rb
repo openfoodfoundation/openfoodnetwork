@@ -44,7 +44,7 @@ describe Admin::ProxyOrdersController, type: :controller do
               json_response = JSON.parse(response.body)
               expect(json_response['state']).to eq "canceled"
               expect(json_response['id']).to eq proxy_order.id
-              expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+              expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
             end
           end
 
