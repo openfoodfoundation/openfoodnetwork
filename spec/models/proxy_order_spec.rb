@@ -74,7 +74,7 @@ describe ProxyOrder, type: :model do
     let!(:payment_method) { create(:payment_method) }
     let(:order) { create(:order_with_totals, shipping_method: create(:shipping_method)) }
     let(:proxy_order) { create(:proxy_order, order: order, canceled_at: Time.zone.now) }
-    let(:order_cycle) { proxy_order.order_cycle}
+    let(:order_cycle) { proxy_order.order_cycle }
 
     context "when the order cycle is not yet closed" do
       before { order_cycle.update_attributes(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
@@ -163,7 +163,7 @@ describe ProxyOrder, type: :model do
       let!(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
 
       it "builds a new order based the standing order" do
-        expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
+        expect{ proxy_order.initialise_order! }.to change{ Spree::Order.count }.by(1)
         expect(proxy_order.reload.order).to be_a Spree::Order
         order = proxy_order.order
         expect(order.line_items.count).to eq standing_order.standing_line_items.count
@@ -189,7 +189,7 @@ describe ProxyOrder, type: :model do
         end
 
         it "initialises the order with the requested quantity regardless" do
-          expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
+          expect{ proxy_order.initialise_order! }.to change{ Spree::Order.count }.by(1)
           expect(proxy_order.reload.order).to be_a Spree::Order
           order = proxy_order.order
           expect(order.line_items.find_by_variant_id(variant.id).quantity).to eq 5
@@ -202,7 +202,7 @@ describe ProxyOrder, type: :model do
         end
 
         it "initialises the order without a user_id" do
-          expect{ proxy_order.initialise_order! }.to change{Spree::Order.count}.by(1)
+          expect{ proxy_order.initialise_order! }.to change{ Spree::Order.count }.by(1)
           expect(proxy_order.reload.order).to be_a Spree::Order
           order = proxy_order.order
           expect(order.user).to be nil
@@ -217,7 +217,7 @@ describe ProxyOrder, type: :model do
       it "returns the existing order" do
         expect do
           expect(proxy_order.initialise_order!).to eq existing_order
-        end.to_not change{Spree::Order.count}
+        end.to_not change{ Spree::Order.count }
       end
     end
   end

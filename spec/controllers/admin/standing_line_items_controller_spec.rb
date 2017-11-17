@@ -13,7 +13,7 @@ describe Admin::StandingLineItemsController, type: :controller do
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 3.50) }
     let!(:order_cycle) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
     let!(:outgoing_exchange) { order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant], enterprise_fees: [enterprise_fee]) }
-    let!(:schedule) { create(:schedule, order_cycles: [order_cycle])}
+    let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
     let(:unmanaged_schedule) { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: unmanaged_shop)]) }
 
     context "json" do
@@ -30,7 +30,7 @@ describe Admin::StandingLineItemsController, type: :controller do
         end
 
         context "and an unmanaged shop_id is provided" do
-          before { params.merge!({ shop_id: unmanaged_shop.id }) }
+          before { params.merge!(shop_id: unmanaged_shop.id) }
 
           it "returns an error" do
             spree_post :build, params
@@ -39,7 +39,7 @@ describe Admin::StandingLineItemsController, type: :controller do
         end
 
         context "where a managed shop_id is provided" do
-          before { params.merge!({ shop_id: shop.id }) }
+          before { params.merge!(shop_id: shop.id) }
 
           context "but the shop doesn't have permission to sell product in question" do
             it "returns an error" do
@@ -66,7 +66,7 @@ describe Admin::StandingLineItemsController, type: :controller do
             end
 
             context "but an unmanaged schedule_id is provided" do
-              before { params.merge!({ schedule_id: unmanaged_schedule.id }) }
+              before { params.merge!(schedule_id: unmanaged_schedule.id) }
 
               it "returns a serialized standing line item without a price estimate" do
                 spree_post :build, params
@@ -79,7 +79,7 @@ describe Admin::StandingLineItemsController, type: :controller do
             end
 
             context "and a managed schedule_id is provided" do
-              before { params.merge!({ schedule_id: schedule.id }) }
+              before { params.merge!(schedule_id: schedule.id) }
 
               it "returns a serialized standing line item with a price estimate" do
                 spree_post :build, params

@@ -36,7 +36,7 @@ module OpenFoodNetwork
     end
 
     def ensure_credit_card
-      return false unless saved_credit_card.present?
+      return false if saved_credit_card.blank?
       payment.update_attributes(source: saved_credit_card)
     end
 

@@ -33,7 +33,7 @@ describe "checking out an order with a paypal express payment method", type: :re
     set_order order
 
     stub_request(:post, "https://api-3t.sandbox.paypal.com/2.0/")
-    .to_return(:status => 200, :body => mocked_xml_response )
+      .to_return(:status => 200, :body => mocked_xml_response )
   end
 
   context "with a flat percent calculator" do

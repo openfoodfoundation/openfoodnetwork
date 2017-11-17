@@ -13,8 +13,8 @@ class StandingOrderPlacementJob
   def proxy_orders
     # Loads proxy orders for open order cycles that have not been placed yet
     ProxyOrder.not_canceled.where(placed_at: nil)
-    .joins(:order_cycle).merge(OrderCycle.active)
-    .joins(:standing_order).merge(StandingOrder.not_canceled.not_paused)
+      .joins(:order_cycle).merge(OrderCycle.active)
+      .joins(:standing_order).merge(StandingOrder.not_canceled.not_paused)
   end
 
   def process(order)
@@ -66,7 +66,7 @@ class StandingOrderPlacementJob
 
   def log_completion_issue(order)
     line1 = "StandingOrderPlacementError: Cannot process order #{order.number} due to errors"
-    line2 = "Errors: #{order.errors.full_messages.join(", ")}"
+    line2 = "Errors: #{order.errors.full_messages.join(', ')}"
     Rails.logger.info("#{line1}\n#{line2}")
   end
 end

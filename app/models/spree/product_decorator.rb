@@ -116,7 +116,7 @@ Spree::Product.class_eval do
   }
 
   scope :stockable_by, lambda { |enterprise|
-    return where('1=0') unless enterprise.present?
+    return where('1=0') if enterprise.blank?
     permitted_producer_ids = EnterpriseRelationship.joins(:parent).permitting(enterprise)
       .with_permission(:add_to_order_cycle).where(enterprises: { is_primary_producer: true }).pluck(:parent_id)
     return where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)

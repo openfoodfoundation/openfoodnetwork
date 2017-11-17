@@ -48,7 +48,7 @@ describe StandingOrderPlacementJob do
       end
 
       it "marks placeable proxy_orders as processed by setting placed_at" do
-        expect{job.perform}.to change{proxy_order.reload.placed_at}
+        expect{ job.perform }.to change{ proxy_order.reload.placed_at }
         expect(proxy_order.placed_at).to be_within(5.seconds).of Time.now
       end
 
@@ -134,7 +134,7 @@ describe StandingOrderPlacementJob do
 
       it "ignores it" do
         ActionMailer::Base.deliveries.clear
-        expect{job.send(:process, order)}.to_not change{order.reload.state}
+        expect{ job.send(:process, order) }.to_not change{ order.reload.state }
         expect(order.payments.first.state).to eq "checkout"
         expect(ActionMailer::Base.deliveries.count).to be 0
       end
@@ -147,7 +147,7 @@ describe StandingOrderPlacementJob do
         end
 
         it "does not place the order, sends an empty_order email" do
-          expect{job.send(:process, order)}.to_not change{order.reload.completed_at}.from(nil)
+          expect{ job.send(:process, order) }.to_not change{ order.reload.completed_at }.from(nil)
           expect(job).to_not have_received(:send_placement_email)
           expect(job).to have_received(:send_empty_email)
         end
@@ -157,13 +157,13 @@ describe StandingOrderPlacementJob do
         it "processes the order to completion, but does not process the payment" do
           # If this spec starts complaining about no shipping methods being available
           # on CI, there is probably another spec resetting the currency though Rails.cache.clear
-          expect{job.send(:process, order)}.to change{order.reload.completed_at}.from(nil)
+          expect{ job.send(:process, order) }.to change{ order.reload.completed_at }.from(nil)
           expect(order.completed_at).to be_within(5.seconds).of Time.now
           expect(order.payments.first.state).to eq "checkout"
         end
 
         it "does not enqueue confirmation emails" do
-          expect{job.send(:process, order)}.to_not enqueue_job ConfirmOrderJob
+          expect{ job.send(:process, order) }.to_not enqueue_job ConfirmOrderJob
           expect(job).to have_received(:send_placement_email).with(order, anything).once
         end
 

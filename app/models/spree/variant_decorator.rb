@@ -44,9 +44,9 @@ Spree::Variant.class_eval do
 
   scope :in_schedule, lambda { |schedule|
     joins(exchanges: { order_cycle: :schedule}).
-    merge(Exchange.outgoing).
-    where(schedules: { id: schedule}).
-    select('DISTINCT spree_variants.*')
+      merge(Exchange.outgoing).
+      where(schedules: { id: schedule}).
+      select('DISTINCT spree_variants.*')
   }
 
   scope :for_distribution, lambda { |order_cycle, distributor|

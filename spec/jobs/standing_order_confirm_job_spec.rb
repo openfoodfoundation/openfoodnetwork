@@ -32,7 +32,7 @@ describe StandingOrderConfirmJob do
     end
 
     it "ignores cancelled proxy orders" do
-      proxy_order.update_attributes!(canceled_at: 5.minute.ago)
+      proxy_order.update_attributes!(canceled_at: 5.minutes.ago)
       expect(proxy_orders).to_not include proxy_order
     end
 
@@ -69,7 +69,7 @@ describe StandingOrderConfirmJob do
       end
 
       it "marks confirmable proxy_orders as processed by setting confirmed_at" do
-        expect{job.perform}.to change{proxy_order.reload.confirmed_at}
+        expect{ job.perform }.to change{ proxy_order.reload.confirmed_at }
         expect(proxy_order.confirmed_at).to be_within(5.seconds).of Time.now
       end
 
@@ -117,7 +117,7 @@ describe StandingOrderConfirmJob do
       before { expect(payment_updater_mock).to receive(:update!) { :no_card } }
 
       it "adds and error to the order" do
-        expect{job.send(:update_payment!)}.to change(order.errors, :count).from(0).to(1)
+        expect{ job.send(:update_payment!) }.to change(order.errors, :count).from(0).to(1)
         expect(order.errors.full_messages).to include I18n.t("activerecord.errors.models.standing_order.no_card")
       end
     end
@@ -185,7 +185,7 @@ describe StandingOrderConfirmJob do
 
           it "sends only a standing order confirm email, no regular confirmation emails" do
             ActionMailer::Base.deliveries.clear
-            expect{job.send(:process!)}.to_not enqueue_job ConfirmOrderJob
+            expect{ job.send(:process!) }.to_not enqueue_job ConfirmOrderJob
             expect(job).to have_received(:send_confirm_email).once
             expect(ActionMailer::Base.deliveries.count).to be 1
           end

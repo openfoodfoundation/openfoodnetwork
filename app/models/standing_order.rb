@@ -1,5 +1,5 @@
 class StandingOrder < ActiveRecord::Base
-  ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check", "Spree::Gateway::StripeConnect"]
+  ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check", "Spree::Gateway::StripeConnect"].freeze
 
   belongs_to :shop, class_name: 'Enterprise'
   belongs_to :customer
@@ -35,7 +35,7 @@ class StandingOrder < ActiveRecord::Base
 
   def cancel(keep_ids = [])
     transaction do
-      self.update_column(:canceled_at, Time.zone.now)
+      update_column(:canceled_at, Time.zone.now)
       proxy_orders.reject{ |o| keep_ids.include? o.id }.each(&:cancel)
       true
     end

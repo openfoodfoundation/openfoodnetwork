@@ -189,7 +189,7 @@ module Admin
         end
 
         it "allows me to assign only schedules that already I coordinate to the order cycle" do
-          schedule_ids = [coordinated_schedule2.id, uncoordinated_schedule.id ]
+          schedule_ids = [coordinated_schedule2.id, uncoordinated_schedule.id]
           spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: schedule_ids }
           expect(assigns(:order_cycle)).to eq coordinated_order_cycle
           # coordinated_order_cycle2 is added

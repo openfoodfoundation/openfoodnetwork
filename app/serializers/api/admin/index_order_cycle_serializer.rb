@@ -39,12 +39,12 @@ class Api::Admin::IndexOrderCycleSerializer < ActiveModel::Serializer
 
   def producers
     producers = object.suppliers.merge(visible_enterprises)
-    ActiveModel::ArraySerializer.new(producers, {each_serializer: Api::Admin::IdNameSerializer})
+    ActiveModel::ArraySerializer.new(producers, each_serializer: Api::Admin::IdNameSerializer)
   end
 
   def shops
     shops = object.distributors.merge(visible_enterprises)
-    ActiveModel::ArraySerializer.new(shops, {each_serializer: Api::Admin::IdNameSerializer})
+    ActiveModel::ArraySerializer.new(shops, each_serializer: Api::Admin::IdNameSerializer)
   end
 
   def edit_path

@@ -31,7 +31,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         context "where the request succeeds" do
           before do
             stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges/ch_1a2b3c/refunds").
-            to_return(:status => 200, :body => JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
+              to_return(:status => 200, :body => JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
 
           it "voids the payment" do
@@ -49,7 +49,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         context "where the request fails" do
           before do
             stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges/ch_1a2b3c/refunds").
-            to_return(:status => 200, :body => JSON.generate(error: { message: "Bup-bow!"}) )
+              to_return(:status => 200, :body => JSON.generate(error: { message: "Bup-bow!"}) )
           end
 
           it "does not void the payment" do

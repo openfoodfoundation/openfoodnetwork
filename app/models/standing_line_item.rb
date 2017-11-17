@@ -4,7 +4,7 @@ class StandingLineItem < ActiveRecord::Base
 
   validates :standing_order, presence: true
   validates :variant, presence: true
-  validates :quantity, { presence: true, numericality: { only_integer: true } }
+  validates :quantity, presence: true, numericality: { only_integer: true }
 
   def total_estimate
     (price_estimate || 0) * (quantity || 0)

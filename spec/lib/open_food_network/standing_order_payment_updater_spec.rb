@@ -57,7 +57,7 @@ module OpenFoodNetwork
         end
 
         it "creates a new payment on the order" do
-          expect{updater.update!}.to change(Spree::Payment, :count).by(1)
+          expect{ updater.update! }.to change(Spree::Payment, :count).by(1)
           expect(order.payments.first.amount).to eq 5
         end
       end
@@ -75,7 +75,7 @@ module OpenFoodNetwork
           context "when the payment total doesn't match the outstanding balance on the order" do
             before { allow(order).to receive(:outstanding_balance) { 5 } }
             it "updates the payment total to reflect the outstanding balance" do
-              expect{updater.update!}.to change(payment, :amount).from(10).to(5)
+              expect{ updater.update! }.to change(payment, :amount).from(10).to(5)
             end
           end
 
@@ -83,7 +83,7 @@ module OpenFoodNetwork
             before { allow(order).to receive(:outstanding_balance) { 10 } }
 
             it "does nothing" do
-              expect{updater.update!}.to_not change(payment, :amount).from(10)
+              expect{ updater.update! }.to_not change(payment, :amount).from(10)
             end
           end
         end
@@ -111,7 +111,7 @@ module OpenFoodNetwork
               context "when the payment total doesn't match the outstanding balance on the order" do
                 before { allow(order).to receive(:outstanding_balance) { 5 } }
                 it "updates the payment total to reflect the outstanding balance" do
-                  expect{updater.update!}.to change(payment, :amount).from(10).to(5)
+                  expect{ updater.update! }.to change(payment, :amount).from(10).to(5)
                 end
               end
 
@@ -119,7 +119,7 @@ module OpenFoodNetwork
                 before { allow(order).to receive(:outstanding_balance) { 10 } }
 
                 it "does nothing" do
-                  expect{updater.update!}.to_not change(payment, :amount).from(10)
+                  expect{ updater.update! }.to_not change(payment, :amount).from(10)
                 end
               end
             end
@@ -131,7 +131,7 @@ module OpenFoodNetwork
             context "when the payment total doesn't match the outstanding balance on the order" do
               before { allow(order).to receive(:outstanding_balance) { 5 } }
               it "updates the payment total to reflect the outstanding balance" do
-                expect{updater.update!}.to change(payment, :amount).from(10).to(5)
+                expect{ updater.update! }.to change(payment, :amount).from(10).to(5)
               end
             end
 
@@ -139,7 +139,7 @@ module OpenFoodNetwork
               before { allow(order).to receive(:outstanding_balance) { 10 } }
 
               it "does nothing" do
-                expect{updater.update!}.to_not change(payment, :amount).from(10)
+                expect{ updater.update! }.to_not change(payment, :amount).from(10)
               end
             end
           end

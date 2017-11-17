@@ -17,7 +17,7 @@ describe StandingOrderMailer do
         changes[order.line_items.first.id] = 2
         expect do
           StandingOrderMailer.placement_email(order, changes).deliver
-        end.to change{StandingOrderMailer.deliveries.count}.by(1)
+        end.to change{ StandingOrderMailer.deliveries.count }.by(1)
       end
 
       it "sends the email, which notifies the customer of changes made" do
@@ -32,7 +32,7 @@ describe StandingOrderMailer do
       before do
         expect do
           StandingOrderMailer.placement_email(order, {}).deliver
-        end.to change{StandingOrderMailer.deliveries.count}.by(1)
+        end.to change{ StandingOrderMailer.deliveries.count }.by(1)
       end
 
       it "sends the email" do
@@ -52,7 +52,7 @@ describe StandingOrderMailer do
     before do
       expect do
         StandingOrderMailer.confirmation_email(order).deliver
-      end.to change{StandingOrderMailer.deliveries.count}.by(1)
+      end.to change{ StandingOrderMailer.deliveries.count }.by(1)
     end
 
     it "sends the email" do
@@ -70,7 +70,7 @@ describe StandingOrderMailer do
     before do
       expect do
         StandingOrderMailer.empty_email(order, {}).deliver
-      end.to change{StandingOrderMailer.deliveries.count}.by(1)
+      end.to change{ StandingOrderMailer.deliveries.count }.by(1)
     end
 
     it "sends the email" do
@@ -90,7 +90,7 @@ describe StandingOrderMailer do
 
       expect do
         StandingOrderMailer.failed_payment_email(order).deliver
-      end.to change{StandingOrderMailer.deliveries.count}.by(1)
+      end.to change{ StandingOrderMailer.deliveries.count }.by(1)
     end
 
     it "sends the email" do

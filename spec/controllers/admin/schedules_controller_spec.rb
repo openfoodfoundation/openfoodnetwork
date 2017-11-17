@@ -80,7 +80,7 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         it "allows me to add/remove only order cycles I coordinate to/from the schedule" do
-          order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id, uncoordinated_order_cycle3.id ]
+          order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id, uncoordinated_order_cycle3.id]
           spree_put :update, format: :json, id: coordinated_schedule.id, schedule: { order_cycle_ids: order_cycle_ids }
           expect(assigns(:schedule)).to eq coordinated_schedule
           # coordinated_order_cycle2 is added, uncoordinated_order_cycle is NOT removed
@@ -198,7 +198,7 @@ describe Admin::SchedulesController, type: :controller do
         before { allow(controller).to receive(:spree_current_user) { user } }
 
         context "where I manage at least one of the schedule's coordinators" do
-          before { params.merge!({id: coordinated_schedule.id}) }
+          before { params.merge!(id: coordinated_schedule.id) }
 
           it "allows me to destroy the schedule" do
             expect { spree_delete :destroy, params }.to change(Schedule, :count).by(-1)
@@ -206,7 +206,7 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         context "where I don't manage any of the schedule's coordinators" do
-          before { params.merge!({id: uncoordinated_schedule.id}) }
+          before { params.merge!(id: uncoordinated_schedule.id) }
 
           it "prevents me from destroying the schedule" do
             expect { spree_delete :destroy, params }.to_not change(Schedule, :count)

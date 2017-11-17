@@ -27,7 +27,7 @@ class ProxyOrder < ActiveRecord::Base
   def cancel
     return false unless order_cycle.orders_close_at.andand > Time.zone.now
     transaction do
-      self.update_column(:canceled_at, Time.zone.now)
+      update_column(:canceled_at, Time.zone.now)
       order.send('cancel') if order
       true
     end
@@ -36,7 +36,7 @@ class ProxyOrder < ActiveRecord::Base
   def resume
     return false unless order_cycle.orders_close_at.andand > Time.zone.now
     transaction do
-      self.update_column(:canceled_at, nil)
+      update_column(:canceled_at, nil)
       order.send('resume') if order
       true
     end
@@ -44,13 +44,13 @@ class ProxyOrder < ActiveRecord::Base
 
   def initialise_order!
     return order if order.present?
-    create_order!({
+    create_order!(
       customer_id: standing_order.customer_id,
       email: standing_order.customer.email,
       order_cycle_id: order_cycle_id,
       distributor_id: standing_order.shop_id,
-      shipping_method_id: standing_order.shipping_method_id,
-    })
+      shipping_method_id: standing_order.shipping_method_id
+    )
     order.update_attribute(:user, standing_order.customer.user)
     standing_order.standing_line_items.each do |sli|
       order.line_items.build(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: true)
@@ -67,6 +67,6 @@ class ProxyOrder < ActiveRecord::Base
 
   def placed_and_open?
     order.andand.state == 'complete' &&
-    order_cycle.orders_close_at > Time.now
+      order_cycle.orders_close_at > Time.now
   end
 end

@@ -80,7 +80,7 @@ module Admin
     def collection
       if request.format.json?
         permissions.editable_standing_orders.ransack(params[:q]).result
-        .preload([:shop,:customer,:schedule,:standing_line_items,:ship_address,:bill_address,proxy_orders: {order: :order_cycle}])
+          .preload([:shop, :customer, :schedule, :standing_line_items, :ship_address, :bill_address, proxy_orders: {order: :order_cycle}])
       else
         StandingOrder.where("1=0")
       end
@@ -125,7 +125,7 @@ module Admin
       return if params[:open_orders] == 'cancel'
       @open_orders_to_keep = @standing_order.proxy_orders.placed_and_open.pluck(:id)
       return if @open_orders_to_keep.empty? || params[:open_orders] == 'keep'
-      return render json: { errors: { open_orders: t('admin.standing_orders.confirm_cancel_open_orders_msg') } }, status: :conflict
+      render json: { errors: { open_orders: t('admin.standing_orders.confirm_cancel_open_orders_msg') } }, status: :conflict
     end
 
     def strip_banned_attrs
