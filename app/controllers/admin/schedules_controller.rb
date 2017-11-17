@@ -28,6 +28,7 @@ module Admin
     end
 
     private
+
     def collection
       return Schedule.where("1=0") unless json_request?
       permissions.visible_schedules

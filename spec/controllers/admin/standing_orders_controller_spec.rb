@@ -130,7 +130,7 @@ describe Admin::StandingOrdersController, type: :controller do
 
       context 'when I submit insufficient params' do
         it 'returns errors' do
-          expect{ spree_post :create, params }.to_not change{StandingOrder.count}
+          expect{ spree_post :create, params }.to_not change{ StandingOrder.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method', 'shipping_method', 'begins_at'
         end
@@ -145,18 +145,18 @@ describe Admin::StandingOrdersController, type: :controller do
         let(:unmanaged_shipping_method) { create(:shipping_method, distributors: [unmanaged_enterprise]) }
 
         before do
-          params[:standing_order].merge!({
+          params[:standing_order].merge!(
             schedule_id: unmanaged_schedule.id,
             customer_id: unmanaged_customer.id,
             payment_method_id: unmanaged_payment_method.id,
             shipping_method_id: unmanaged_shipping_method.id,
             begins_at: 2.days.ago,
             ends_at: 3.weeks.ago
-          })
+          )
         end
 
         it 'returns errors' do
-          expect{ spree_post :create, params }.to_not change{StandingOrder.count}
+          expect{ spree_post :create, params }.to_not change{ StandingOrder.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method', 'shipping_method', 'ends_at'
         end
@@ -167,34 +167,34 @@ describe Admin::StandingOrdersController, type: :controller do
         let(:variant) { create(:variant) }
 
         before do
-          params[:standing_order].merge!({
+          params[:standing_order].merge!(
             schedule_id: schedule.id,
             customer_id: customer.id,
             payment_method_id: payment_method.id,
             shipping_method_id: shipping_method.id,
             begins_at: 2.days.ago,
             ends_at: 3.months.from_now
-          })
-          params.merge!({
+          )
+          params.merge!(
             bill_address: address.attributes.except('id'),
             ship_address: address.attributes.except('id'),
             standing_line_items: [{ quantity: 2, variant_id: variant.id}]
-          })
+          )
         end
 
         context 'where the specified variants are not available from the shop' do
           it 'returns an error' do
-            expect{ spree_post :create, params }.to_not change{StandingOrder.count}
+            expect{ spree_post :create, params }.to_not change{ StandingOrder.count }
             json_response = JSON.parse(response.body)
             expect(json_response['errors']['standing_line_items']).to eq ["#{variant.product.name} - #{variant.full_name} is not available from the selected schedule"]
           end
         end
 
         context 'where the specified variants are available from the shop' do
-          let!(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant])}
+          let!(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant]) }
 
           it 'creates standing line items for the standing order' do
-            expect{ spree_post :create, params }.to change{StandingOrder.count}.by(1)
+            expect{ spree_post :create, params }.to change{ StandingOrder.count }.by(1)
             standing_order = StandingOrder.last
             expect(standing_order.schedule).to eq schedule
             expect(standing_order.customer).to eq customer
@@ -220,13 +220,14 @@ describe Admin::StandingOrdersController, type: :controller do
     let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
-    let!(:standing_order) { create(:standing_order,
-      shop: shop,
-      customer: customer1,
-      schedule: schedule,
-      payment_method: payment_method,
-      shipping_method: shipping_method
-    ) }
+    let!(:standing_order) {
+      create(:standing_order,
+             shop: shop,
+             customer: customer1,
+             schedule: schedule,
+             payment_method: payment_method,
+             shipping_method: shipping_method)
+    }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
@@ -251,15 +252,16 @@ describe Admin::StandingOrdersController, type: :controller do
     let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
-    let!(:standing_order) { create(:standing_order,
-      shop: shop,
-      customer: customer,
-      schedule: schedule,
-      payment_method: payment_method,
-      shipping_method: shipping_method,
-      standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)]
-    ) }
-    let(:standing_line_item1) { standing_order.standing_line_items.first}
+    let!(:standing_order) {
+      create(:standing_order,
+             shop: shop,
+             customer: customer,
+             schedule: schedule,
+             payment_method: payment_method,
+             shipping_method: shipping_method,
+             standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)])
+    }
+    let(:standing_line_item1) { standing_order.standing_line_items.first }
     let(:params) { { format: :json, id: standing_order.id, standing_order: {} } }
 
     context 'as an non-manager of the standing order shop' do
@@ -283,7 +285,7 @@ describe Admin::StandingOrdersController, type: :controller do
         let!(:new_schedule) { create(:schedule, order_cycles: [order_cycle]) }
 
         before do
-          params[:standing_order].merge!({ schedule_id: new_schedule.id, customer_id: new_customer.id})
+          params[:standing_order].merge!(schedule_id: new_schedule.id, customer_id: new_customer.id)
         end
 
         it 'does not alter customer_id or schedule_id' do
@@ -301,14 +303,14 @@ describe Admin::StandingOrdersController, type: :controller do
         let(:unmanaged_shipping_method) { create(:shipping_method, distributors: [unmanaged_enterprise]) }
 
         before do
-          params[:standing_order].merge!({
+          params[:standing_order].merge!(
             payment_method_id: unmanaged_payment_method.id,
-            shipping_method_id: unmanaged_shipping_method.id,
-          })
+            shipping_method_id: unmanaged_shipping_method.id
+          )
         end
 
         it 'returns errors' do
-          expect{ spree_post :update, params }.to_not change{StandingOrder.count}
+          expect{ spree_post :update, params }.to_not change{ StandingOrder.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'payment_method', 'shipping_method'
           standing_order.reload
@@ -322,7 +324,10 @@ describe Admin::StandingOrdersController, type: :controller do
         let!(:new_shipping_method) { create(:shipping_method, distributors: [shop]) }
 
         before do
-          params[:standing_order].merge!({payment_method_id: new_payment_method.id, shipping_method_id: new_shipping_method.id})
+          params[:standing_order].merge!(
+            payment_method_id: new_payment_method.id,
+            shipping_method_id: new_shipping_method.id
+          )
         end
 
         it 'updates the standing order' do
@@ -344,7 +349,7 @@ describe Admin::StandingOrdersController, type: :controller do
 
           context 'where the specified variants are not available from the shop' do
             it 'returns an error' do
-              expect{ spree_post :update, params }.to_not change{standing_order.standing_line_items.count}
+              expect{ spree_post :update, params }.to_not change{ standing_order.standing_line_items.count }
               json_response = JSON.parse(response.body)
               expect(json_response['errors']['standing_line_items']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
             end
@@ -354,7 +359,7 @@ describe Admin::StandingOrdersController, type: :controller do
             before { outgoing_exchange.update_attributes(variants: [variant1, variant2]) }
 
             it 'creates standing line items for the standing order' do
-              expect{ spree_post :update, params }.to change{standing_order.standing_line_items.count}.by(1)
+              expect{ spree_post :update, params }.to change{ standing_order.standing_line_items.count }.by(1)
               standing_order.reload
               expect(standing_order.standing_line_items.count).to be 2
               standing_line_item = standing_order.standing_line_items.last
@@ -419,7 +424,7 @@ describe Admin::StandingOrdersController, type: :controller do
             end
 
             context "when 'keep' has been provided as the 'open_orders' directive" do
-              before { params.merge!({ open_orders: 'keep'}) }
+              before { params.merge!(open_orders: 'keep') }
 
               it 'renders the cancelled standing_order as json, and does not cancel the open order' do
                 spree_put :cancel, params
@@ -436,7 +441,7 @@ describe Admin::StandingOrdersController, type: :controller do
               let(:mail_mock) { double(:mail) }
 
               before do
-                params.merge!({ open_orders: 'cancel'})
+                params[:open_orders] = 'cancel'
                 allow(Spree::OrderMailer).to receive(:cancel_email) { mail_mock }
                 allow(mail_mock).to receive(:deliver)
               end
@@ -518,7 +523,7 @@ describe Admin::StandingOrdersController, type: :controller do
             end
 
             context "when 'keep' has been provided as the 'open_orders' directive" do
-              before { params.merge!({ open_orders: 'keep'}) }
+              before { params.merge!(open_orders: 'keep') }
 
               it 'renders the paused standing_order as json, and does not cancel the open order' do
                 spree_put :pause, params
@@ -535,7 +540,7 @@ describe Admin::StandingOrdersController, type: :controller do
               let(:mail_mock) { double(:mail) }
 
               before do
-                params.merge!({ open_orders: 'cancel'})
+                params[:open_orders] = 'cancel'
                 allow(Spree::OrderMailer).to receive(:cancel_email) { mail_mock }
                 allow(mail_mock).to receive(:deliver)
               end

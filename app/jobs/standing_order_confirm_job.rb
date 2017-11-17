@@ -14,9 +14,9 @@ class StandingOrderConfirmJob
 
   def proxy_orders
     ProxyOrder.not_canceled.where('confirmed_at IS NULL AND placed_at IS NOT NULL')
-    .joins(:order_cycle).merge(recently_closed_order_cycles)
-    .joins(:standing_order).merge(StandingOrder.not_canceled.not_paused)
-    .joins(:order).merge(Spree::Order.complete)
+      .joins(:order_cycle).merge(recently_closed_order_cycles)
+      .joins(:standing_order).merge(StandingOrder.not_canceled.not_paused)
+      .joins(:order).merge(Spree::Order.complete)
   end
 
   def recently_closed_order_cycles

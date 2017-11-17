@@ -25,7 +25,7 @@ class StandingOrderForm
   validate :standing_line_items_available?
   validate :credit_card_ok?
 
-  def initialize(standing_order, params={}, fee_calculator=nil)
+  def initialize(standing_order, params = {}, fee_calculator = nil)
     @standing_order = standing_order
     @params = params
     @fee_calculator = fee_calculator
@@ -44,9 +44,8 @@ class StandingOrderForm
   end
 
   def json_errors
-    errors.messages.inject({}) do |errors, (k,v)|
+    errors.messages.each_with_object({}) do |(k, v), errors|
       errors[k] = v.map { |msg| build_msg_from(k, msg) }
-      errors
     end
   end
 
@@ -142,7 +141,7 @@ class StandingOrderForm
 
   def validate_price_estimates
     item_attributes = params[:standing_line_items_attributes]
-    return unless item_attributes.present?
+    return if item_attributes.blank?
     if fee_calculator
       item_attributes.each do |item_attrs|
         if variant = Spree::Variant.find_by_id(item_attrs[:variant_id])
@@ -167,13 +166,13 @@ class StandingOrderForm
   end
 
   def relevant_address_attrs
-    ["firstname","lastname","address1","zipcode","city","state_id","country_id","phone"]
+    ["firstname", "lastname", "address1", "zipcode", "city", "state_id", "country_id", "phone"]
   end
 
   def addresses_match?(order_address, standing_order_address)
     relevant_address_attrs.all? do |attr|
       order_address[attr] == standing_order_address.send("#{attr}_was") ||
-      order_address[attr] == standing_order_address[attr]
+        order_address[attr] == standing_order_address[attr]
     end
   end
 
@@ -256,15 +255,15 @@ class StandingOrderForm
 
   def variant_ids_for_shop_and_schedule
     Spree::Variant.joins(exchanges: { order_cycle: :schedules})
-    .where(id: standing_line_items.map(&:variant_id))
-    .where(schedules: { id: schedule}, exchanges: { incoming: false, receiver_id: shop })
-    .merge(OrderCycle.not_closed)
-    .select('DISTINCT spree_variants.id')
-    .pluck(:id)
+      .where(id: standing_line_items.map(&:variant_id))
+      .where(schedules: { id: schedule}, exchanges: { incoming: false, receiver_id: shop })
+      .merge(OrderCycle.not_closed)
+      .select('DISTINCT spree_variants.id')
+      .pluck(:id)
   end
 
   def build_msg_from(k, msg)
     return msg[1..-1] if msg.starts_with?("^")
-    errors.full_message(k,msg)
+    errors.full_message(k, msg)
   end
 end

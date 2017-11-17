@@ -87,7 +87,7 @@ module Admin
         end
       else
         respond_to do |format|
-          format.json { render :json => {:success => false}  }
+          format.json { render :json => {:success => false} }
         end
       end
     end

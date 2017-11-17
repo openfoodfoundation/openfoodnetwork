@@ -281,15 +281,16 @@ feature 'Standing Orders' do
         let!(:variant3_ex) { variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3]) }
         let!(:payment_method) { create(:payment_method, distributors: [shop]) }
         let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
-        let!(:standing_order) { create(:standing_order,
-          shop: shop,
-          customer: customer,
-          schedule: schedule,
-          payment_method: payment_method,
-          shipping_method: shipping_method,
-          standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)],
-          with_proxy_orders: true
-        ) }
+        let!(:standing_order) {
+          create(:standing_order,
+                 shop: shop,
+                 customer: customer,
+                 schedule: schedule,
+                 payment_method: payment_method,
+                 shipping_method: shipping_method,
+                 standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)],
+                 with_proxy_orders: true)
+        }
 
         it "passes the smoke test" do
           visit edit_admin_standing_order_path(standing_order)

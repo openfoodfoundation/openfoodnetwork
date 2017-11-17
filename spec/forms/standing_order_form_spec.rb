@@ -9,8 +9,8 @@ describe StandingOrderForm do
     let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
     let!(:variant3) { create(:variant, product: product2, unit_value: '1000', price: 2.50, option_values: [], count_on_hand: 1) }
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
-    let!(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 9.days.ago, orders_close_at: 2.day.ago) }
-    let!(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.day.ago, orders_close_at: 5.days.from_now) }
+    let!(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 9.days.ago, orders_close_at: 2.days.ago) }
+    let!(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.ago, orders_close_at: 5.days.from_now) }
     let!(:order_cycle3) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 5.days.from_now, orders_close_at: 12.days.from_now) }
     let!(:order_cycle4) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 12.days.from_now, orders_close_at: 19.days.from_now) }
     let!(:outgoing_exchange1) { order_cycle1.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2, variant3], enterprise_fees: [enterprise_fee]) }
@@ -23,22 +23,23 @@ describe StandingOrderForm do
     let!(:address) { create(:address) }
     let(:standing_order) { StandingOrder.new }
 
-    let!(:params) { {
-      shop_id: shop.id,
-      customer_id: customer.id,
-      schedule_id: schedule.id,
-      bill_address_attributes: address.clone.attributes,
-      ship_address_attributes: address.clone.attributes,
-      payment_method_id: payment_method.id,
-      shipping_method_id: shipping_method.id,
-      begins_at: 4.days.ago,
-      ends_at: 14.days.from_now,
-      standing_line_items_attributes: [
-        {variant_id: variant1.id, quantity: 1},
-        {variant_id: variant2.id, quantity: 2},
-        {variant_id: variant3.id, quantity: 3}
-      ]
-    } }
+    let!(:params) {
+      {
+        shop_id: shop.id,
+        customer_id: customer.id,
+        schedule_id: schedule.id,
+        bill_address_attributes: address.clone.attributes,
+        ship_address_attributes: address.clone.attributes,
+        payment_method_id: payment_method.id,
+        shipping_method_id: shipping_method.id,
+        begins_at: 4.days.ago,
+        ends_at: 14.days.from_now,
+        standing_line_items_attributes: [
+          {variant_id: variant1.id, quantity: 1},
+          {variant_id: variant2.id, quantity: 2},
+          {variant_id: variant3.id, quantity: 3}
+        ]
+      } }
 
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
@@ -450,7 +451,7 @@ describe StandingOrderForm do
 
       context "but the shipping method is being changed to one that requires a ship_address" do
         let(:new_shipping_method) { create(:shipping_method, require_ship_address: true) }
-        before { params.merge!({ shipping_method_id: new_shipping_method.id }) }
+        before { params.merge!(shipping_method_id: new_shipping_method.id) }
 
         it "updates ship_address attrs" do
           expect(form.save).to be true
@@ -511,7 +512,7 @@ describe StandingOrderForm do
     before { variant.update_attribute(:count_on_hand, 2) }
 
     context "when quantity is within available stock" do
-      let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 2} ] } }
+      let(:params) { { standing_line_items_attributes: [{ id: sli.id, quantity: 2}] } }
       let(:form) { StandingOrderForm.new(standing_order, params) }
 
       it "updates the line_item quantities and totals on all orders" do
@@ -524,7 +525,7 @@ describe StandingOrderForm do
     end
 
     context "when quantity is greater than available stock" do
-      let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 3} ] } }
+      let(:params) { { standing_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
       let(:form) { StandingOrderForm.new(standing_order, params) }
 
       it "updates the line_item quantities and totals on all orders" do
@@ -537,7 +538,7 @@ describe StandingOrderForm do
     end
 
     context "where the quantity of the item on an initialised order has already been changed" do
-      let(:params) { { standing_line_items_attributes: [ { id: sli.id, quantity: 3} ] } }
+      let(:params) { { standing_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
       let(:form) { StandingOrderForm.new(standing_order, params) }
       let(:changed_line_item) { order.line_items.find_by_variant_id(sli.variant_id) }
 
@@ -574,13 +575,13 @@ describe StandingOrderForm do
     let(:unavailable_variant) { create(:variant) }
     let(:shop) { create(:enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, variants: [variant], coordinator: shop, distributors: [shop]) }
-    let(:schedule) { create(:schedule, order_cycles: [order_cycle] )}
+    let(:schedule) { create(:schedule, order_cycles: [order_cycle] ) }
     let(:standing_order) { create(:standing_order, schedule: schedule, shop: shop, with_items: true, with_proxy_orders: true) }
     let(:order) { standing_order.proxy_orders.first.initialise_order! }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     context "that is available from the selected schedule" do
-      let(:params) { { standing_line_items_attributes: [ { id: nil, variant_id: variant.id, quantity: 1} ] } }
+      let(:params) { { standing_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1}] } }
 
       it "adds the line item and updates the total on all orders" do
         expect(order.reload.total.to_f).to eq 59.97
@@ -592,7 +593,7 @@ describe StandingOrderForm do
     end
 
     context "that is not available from the selected schedule" do
-      let(:params) { { standing_line_items_attributes: [ { id: nil, variant_id: unavailable_variant.id, quantity: 1} ] } }
+      let(:params) { { standing_line_items_attributes: [{ id: nil, variant_id: unavailable_variant.id, quantity: 1}] } }
 
       it "returns false and does not add the line item or update the total on orders" do
         expect(order.reload.total.to_f).to eq 59.97
@@ -609,8 +610,8 @@ describe StandingOrderForm do
     let(:standing_order) { create(:standing_order, with_items: true, with_proxy_orders: true) }
     let(:order) { standing_order.proxy_orders.first.initialise_order! }
     let(:sli) { standing_order.standing_line_items.first }
-    let(:variant) { sli.variant}
-    let(:params) { { standing_line_items_attributes: [ { id: sli.id, _destroy: true } ] } }
+    let(:variant) { sli.variant }
+    let(:params) { { standing_line_items_attributes: [{ id: sli.id, _destroy: true }] } }
     let(:form) { StandingOrderForm.new(standing_order, params) }
 
     context "that is not the last remaining item" do
@@ -625,8 +626,8 @@ describe StandingOrderForm do
 
     context "that is the last remaining item" do
       before do
-        standing_order.standing_line_items.where('variant_id != ?',variant.id).destroy_all
-        order.line_items.where('variant_id != ?',variant.id).destroy_all
+        standing_order.standing_line_items.where('variant_id != ?', variant.id).destroy_all
+        order.line_items.where('variant_id != ?', variant.id).destroy_all
         standing_order.reload
         order.reload
       end
@@ -657,7 +658,7 @@ describe StandingOrderForm do
 
     context "when line_item params are present" do
       before do
-        params[:standing_line_items_attributes] = [ { id: 1, price_estimate: 2.50 }, { id: 2, price_estimate: 3.50 }]
+        params[:standing_line_items_attributes] = [{ id: 1, price_estimate: 2.50 }, { id: 2, price_estimate: 3.50 }]
       end
 
       context "when no fee calculator is present" do

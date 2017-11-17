@@ -164,7 +164,7 @@ describe Admin::CustomersController, type: :controller do
     end
 
     context "when I don't manage the customer" do
-      before { params.merge!({customer_id: unmanaged_customer.id}) }
+      before { params.merge!(customer_id: unmanaged_customer.id) }
 
       it "redirects to unauthorised" do
         spree_get :addresses, params
@@ -173,7 +173,7 @@ describe Admin::CustomersController, type: :controller do
     end
 
     context "when no customer with a matching id exists" do
-      before { params.merge!({customer_id: 1}) }
+      before { params.merge!(customer_id: 1) }
 
       it "redirects to unauthorised" do
         spree_get :addresses, params
@@ -218,7 +218,7 @@ describe Admin::CustomersController, type: :controller do
     end
 
     context "when I don't manage the customer" do
-      before { params.merge!({customer_id: unmanaged_customer.id}) }
+      before { params.merge!(customer_id: unmanaged_customer.id) }
 
       it "redirects to unauthorised" do
         spree_get :cards, params
@@ -227,7 +227,7 @@ describe Admin::CustomersController, type: :controller do
     end
 
     context "when no customer with a matching id exists" do
-      before { params.merge!({customer_id: 1}) }
+      before { params.merge!(customer_id: 1) }
 
       it "redirects to unauthorised" do
         spree_get :cards, params
