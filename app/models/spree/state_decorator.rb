@@ -1,7 +1,6 @@
 # Refers to an administrative division, unit, entity, area or region
 # of a country.
 Spree::State.class_eval do
-
   # Method for displaying the state in the UI
   #
   # @return [String]

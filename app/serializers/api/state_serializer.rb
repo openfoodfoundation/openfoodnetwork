@@ -1,9 +1,7 @@
 class Api::StateSerializer < ActiveModel::Serializer
   attributes :id, :name, :abbr, :display_name
 
-  def display_name
-    object.display_name
-  end
+  delegate :display_name, to: :object
 
   def abbr
     object.abbr.upcase
