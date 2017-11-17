@@ -73,6 +73,8 @@ en:
   activemodel:
     errors:
       models:
+        standing_order:
+          no_card: There are no valid credit cards available
         standing_order_form:
           attributes:
             standing_line_items:

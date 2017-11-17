@@ -65,7 +65,7 @@ describe StandingOrderConfirmJob do
       before do
         proxy_order.initialise_order!
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }
-        allow(job).to receive(:process)
+        allow(job).to receive(:process!)
       end
 
       it "marks confirmable proxy_orders as processed by setting confirmed_at" do
@@ -75,7 +75,8 @@ describe StandingOrderConfirmJob do
 
       it "processes confirmable proxy_orders" do
         job.perform
-        expect(job).to have_received(:process).with(proxy_order.reload.order)
+        expect(job).to have_received(:process!)
+        expect(job.instance_variable_get(:@order)).to eq proxy_order.reload.order
       end
     end
   end
@@ -94,6 +95,34 @@ describe StandingOrderConfirmJob do
     end
   end
 
+  describe "updating the payment" do
+    let(:order) { create(:order) }
+    let(:payment_updater_mock) { double(:payment_updater) }
+
+    before do
+      job.instance_variable_set(:@order, order)
+      allow(OpenFoodNetwork::StandingOrderPaymentUpdater).to receive(:new) { payment_updater_mock }
+    end
+
+    context "when the updater returns true" do
+      before { expect(payment_updater_mock).to receive(:update!) { true } }
+
+      it "does nothing" do
+        job.send(:update_payment!)
+        expect(order.errors).to be_empty
+      end
+    end
+
+    context "when the updater returns an error code" do
+      before { expect(payment_updater_mock).to receive(:update!) { :no_card } }
+
+      it "adds and error to the order" do
+        expect{job.send(:update_payment!)}.to change(order.errors, :count).from(0).to(1)
+        expect(order.errors.full_messages).to include I18n.t("activerecord.errors.models.standing_order.no_card")
+      end
+    end
+  end
+
   describe "processing an order" do
     let(:shop) { create(:distributor_enterprise) }
     let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop) }
@@ -106,21 +135,15 @@ describe StandingOrderConfirmJob do
     before do
       while !order.completed? do break unless order.next! end
       allow(job).to receive(:send_confirm_email).and_call_original
+      job.instance_variable_set(:@order, order)
       Spree::MailMethod.create!(
         environment: Rails.env,
         preferred_mails_from: 'spree@example.com'
       )
     end
 
-    it "sends only a standing order confirm email, no regular confirmation emails" do
-      ActionMailer::Base.deliveries.clear
-      expect{job.send(:process, order)}.to_not enqueue_job ConfirmOrderJob
-      expect(job).to have_received(:send_confirm_email).with(order).once
-      expect(ActionMailer::Base.deliveries.count).to be 1
-    end
-
     context "when payments need to be processed" do
-      let(:payment_updater_mock) { double(:payment_updater) }
+      let(:payment_method) { create(:payment_method) }
       let(:payment) { double(:payment, amount: 10) }
 
       before do
@@ -129,12 +152,44 @@ describe StandingOrderConfirmJob do
         allow(order).to receive(:pending_payments) { [payment] }
       end
 
-      it "updates the payment total and processes payments as required" do
-        expect(OpenFoodNetwork::StandingOrderPaymentUpdater).to receive(:new) { payment_updater_mock }
-        expect(payment_updater_mock).to receive(:update!) { true }
-        expect(payment).to receive(:process!)
-        expect(payment).to receive(:completed?) { true }
-        job.send(:process, order)
+      context "and an error is added to the order when updating payments" do
+        before { expect(job).to receive(:update_payment!) { order.errors.add(:base, "a payment error") } }
+
+        it "sends a failed payment email" do
+          expect(job).to receive(:send_failed_payment_email)
+          expect(job).to_not receive(:send_confirm_email)
+          job.send(:process!)
+        end
+      end
+
+      context "and no errors are added when updating payments" do
+        before { expect(job).to receive(:update_payment!) { true } }
+
+        context "when an error occurs while processing the payment" do
+          before do
+            expect(payment).to receive(:process!).and_raise Spree::Core::GatewayError, "payment failure error"
+          end
+
+          it "sends a failed payment email" do
+            expect(job).to receive(:send_failed_payment_email)
+            expect(job).to_not receive(:send_confirm_email)
+            job.send(:process!)
+          end
+        end
+
+        context "when payments are processed without error" do
+          before do
+            expect(payment).to receive(:process!) { true }
+            expect(payment).to receive(:completed?) { true }
+          end
+
+          it "sends only a standing order confirm email, no regular confirmation emails" do
+            ActionMailer::Base.deliveries.clear
+            expect{job.send(:process!)}.to_not enqueue_job ConfirmOrderJob
+            expect(job).to have_received(:send_confirm_email).once
+            expect(ActionMailer::Base.deliveries.count).to be 1
+          end
+        end
       end
     end
   end
