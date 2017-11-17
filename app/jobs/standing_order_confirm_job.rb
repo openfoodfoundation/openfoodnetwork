@@ -5,7 +5,8 @@ class StandingOrderConfirmJob
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(confirmed_at: Time.now)
     ProxyOrder.where(id: ids).each do |proxy_order|
-      process(proxy_order.order)
+      @order = proxy_order.order
+      process!
     end
   end
 
@@ -18,18 +19,32 @@ class StandingOrderConfirmJob
     .joins(:order).merge(Spree::Order.complete)
   end
 
-  def process(order)
-    payment_updater.new(order).update!
-    order.process_payments! if order.payment_required?
-    send_confirm_email(order)
-  end
-
-  def send_confirm_email(order)
-    StandingOrderMailer.confirmation_email(order).deliver
-  end
-
   def recently_closed_order_cycles
     OrderCycle.closed.where('order_cycles.orders_close_at BETWEEN (?) AND (?) OR order_cycles.updated_at BETWEEN (?) AND (?)', 1.hour.ago, Time.now, 1.hour.ago, Time.now)
+  end
+
+  def process!
+    update_payment! if @order.payment_required?
+    return send_failed_payment_email if @order.errors.present?
+    @order.process_payments! if @order.payment_required?
+    return send_failed_payment_email if @order.errors.present?
+    send_confirm_email
+  end
+
+  def update_payment!
+    result = payment_updater.new(@order).update!
+    case result
+    when :no_card
+      @order.errors.add(:base, I18n.t("activerecord.errors.models.standing_order.no_card"))
+    end
+  end
+
+  def send_confirm_email
+    StandingOrderMailer.confirmation_email(@order).deliver
+  end
+
+  def send_failed_payment_email
+    StandingOrderMailer.failed_payment_email(@order).deliver
   end
 
   def payment_updater

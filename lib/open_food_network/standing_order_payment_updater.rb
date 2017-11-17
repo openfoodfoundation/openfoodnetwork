@@ -8,7 +8,7 @@ module OpenFoodNetwork
       create_payment if payment.blank?
 
       if card_required? && !card_set?
-        return unless ensure_credit_card
+        return :no_card unless ensure_credit_card
       end
 
       payment.update_attributes(amount: @order.outstanding_balance)
