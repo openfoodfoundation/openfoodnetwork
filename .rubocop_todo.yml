@@ -1312,6 +1312,8 @@ Lint/Void:
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
   Max: 672
+  Exclude:
+    - 'spec/**/*'
 
 # Offense count: 1
 Performance/Caller:
@@ -1428,6 +1430,8 @@ Rails/HasAndBelongsToMany:
   Exclude:
     - 'app/models/enterprise.rb'
     - 'app/models/enterprise_group.rb'
+    - 'app/models/order_cycle.rb'
+    - 'app/models/schedule.rb'
     - 'app/models/spree/line_item_decorator.rb'
     - 'app/models/spree/payment_method_decorator.rb'
 
