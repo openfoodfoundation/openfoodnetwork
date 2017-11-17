@@ -42,8 +42,8 @@ describe Admin::BulkLineItemsController, type: :controller do
 
         it "sorts line_items in ascending id line_item" do
           ids = json_response.map{ |line_item| line_item['id'] }
-          ids[0].should < ids[1]
-          ids[1].should < ids[2]
+          expect(ids[0]).to be < ids[1]
+          expect(ids[1]).to be < ids[2]
         end
 
         it "formats final_weight_volume as a float" do

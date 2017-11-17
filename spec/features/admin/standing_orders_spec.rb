@@ -159,7 +159,7 @@ feature 'Standing Orders' do
         click_button('Next')
         expect(page).to have_content 'can\'t be blank', count: 2
         expect(page).to have_content 'Oops! Please fill in all of the required fields...'
-        fill_in 'begins_at', with: Date.today.strftime('%F')
+        fill_in 'begins_at', with: Time.zone.today.strftime('%F')
         select2_select card2_option, from: 'credit_card_id'
 
         click_button('Next')

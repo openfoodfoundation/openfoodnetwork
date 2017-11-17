@@ -374,7 +374,7 @@ feature %q{
 
       # And it should have some variants selected
       selected_initial_variants = initial_variants.take initial_variants.size - 1
-      oc.variants.map(&:id).should match_array (selected_initial_variants.map(&:id) + [v1.id, v2.id])
+      oc.variants.map(&:id).should match_array((selected_initial_variants.map(&:id) + [v1.id, v2.id]))
 
       # And the collection details should have been updated
       oc.exchanges.where(pickup_time: 'New time 0', pickup_instructions: 'New instructions 0').should be_present

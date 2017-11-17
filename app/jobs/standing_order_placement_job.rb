@@ -29,16 +29,15 @@ class StandingOrderPlacementJob
 
   def cap_quantity_and_store_changes(order)
     changes = {}
-    insufficient_stock_lines = order.insufficient_stock_lines
-    insufficient_stock_lines.each_with_object(changes) do |line_item, changes|
+    order.insufficient_stock_lines.each do |line_item|
       changes[line_item.id] = line_item.quantity
       line_item.cap_quantity_at_stock!
     end
-    unavailable_stock_lines = unavailable_stock_lines_for(order)
-    unavailable_stock_lines.each_with_object(changes) do |line_item, changes|
+    unavailable_stock_lines_for(order).each do |line_item|
       changes[line_item.id] = changes[line_item.id] || line_item.quantity
       line_item.update_attributes(quantity: 0)
     end
+    changes
   end
 
   def move_to_completion(order)
