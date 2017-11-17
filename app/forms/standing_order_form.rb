@@ -185,31 +185,30 @@ class StandingOrderForm
   end
 
   def standing_order_valid?
-    unless standing_order.valid?
-      standing_order.errors.each do |k, msg|
-        errors.add(k, msg)
-      end
+    return if standing_order.valid?
+    standing_order.errors.each do |k, msg|
+      errors.add(k, msg)
     end
   end
 
   def ends_at_after_begins_at?
-    # Returns true even if ends_at is false
+    # Does not add error even if ends_at is nil
     # Note: presence of begins_at validated on the model
-    if begins_at.present? && ends_at.present? && ends_at <= begins_at
-      errors.add(:ends_at, "must be after begins at")
-    end
+    return if begins_at.blank? || ends_at.blank?
+    return if ends_at > begins_at
+    errors.add(:ends_at, "must be after begins at")
   end
 
   def customer_allowed?
-    if customer && customer.enterprise != shop
-      errors[:customer] << "does not belong to #{shop.name}"
-    end
+    return unless customer
+    return if customer.enterprise == shop
+    errors[:customer] << "does not belong to #{shop.name}"
   end
 
   def schedule_allowed?
-    if schedule && schedule.coordinators.exclude?(shop)
-      errors[:schedule] << "is not coordinated by #{shop.name}"
-    end
+    return unless schedule
+    return if schedule.coordinators.include?(shop)
+    errors[:schedule] << "is not coordinated by #{shop.name}"
   end
 
   def payment_method_allowed?
@@ -219,21 +218,19 @@ class StandingOrderForm
       errors[:payment_method] << "is not available to #{shop.name}"
     end
 
-    if StandingOrder::ALLOWED_PAYMENT_METHOD_TYPES.exclude? payment_method.type
-      errors[:payment_method] << "must be a Cash or Stripe method"
-    end
+    return if StandingOrder::ALLOWED_PAYMENT_METHOD_TYPES.include? payment_method.type
+    errors[:payment_method] << "must be a Cash or Stripe method"
   end
 
   def shipping_method_allowed?
-    if shipping_method && shipping_method.distributors.exclude?(shop)
-      errors[:shipping_method] << "is not available to #{shop.name}"
-    end
+    return unless shipping_method
+    return if shipping_method.distributors.include?(shop)
+    errors[:shipping_method] << "is not available to #{shop.name}"
   end
 
   def standing_line_items_present?
-    unless standing_line_items.reject(&:marked_for_destruction?).any?
-      errors.add(:standing_line_items, :at_least_one_product)
-    end
+    return if standing_line_items.reject(&:marked_for_destruction?).any?
+    errors.add(:standing_line_items, :at_least_one_product)
   end
 
   def standing_line_items_available?

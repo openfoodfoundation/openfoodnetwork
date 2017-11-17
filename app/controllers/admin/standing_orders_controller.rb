@@ -113,12 +113,16 @@ module Admin
         end
         params[:standing_order][:standing_line_items_attributes] = attributes
       end
-      if bill_address_attrs = params[:bill_address]
-        params[:standing_order][:bill_address_attributes] = bill_address_attrs.slice(*Spree::Address.attribute_names)
-      end
-      if ship_address_attrs = params[:ship_address]
-        params[:standing_order][:ship_address_attributes] = ship_address_attrs.slice(*Spree::Address.attribute_names)
-      end
+      wrap_bill_address_attrs if params[:bill_address]
+      wrap_ship_address_attrs if params[:ship_address]
+    end
+
+    def wrap_bill_address_attrs
+      params[:standing_order][:bill_address_attributes] = params[:bill_address].slice(*Spree::Address.attribute_names)
+    end
+
+    def wrap_ship_address_attrs
+      params[:standing_order][:ship_address_attributes] = params[:ship_address].slice(*Spree::Address.attribute_names)
     end
 
     def check_for_open_orders
