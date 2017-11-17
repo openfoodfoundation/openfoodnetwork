@@ -7,8 +7,8 @@ class ProxyOrder < ActiveRecord::Base
 
   scope :closed, -> { joins(:order_cycle).merge(OrderCycle.closed) }
   scope :not_closed, -> { joins(:order_cycle).merge(OrderCycle.not_closed) }
-  scope :not_canceled, where('proxy_orders.canceled_at IS NULL')
-  scope :placed_and_open, joins(:order).not_closed.where(spree_orders: { state: 'complete' })
+  scope :not_canceled, -> { where('proxy_orders.canceled_at IS NULL') }
+  scope :placed_and_open, -> { joins(:order).not_closed.where(spree_orders: { state: 'complete' }) }
 
   def state
     return 'canceled' if canceled?

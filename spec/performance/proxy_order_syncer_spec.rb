@@ -28,8 +28,9 @@ module OpenFoodNetwork
           t1 = Time.zone.now
           syncer.sync!
           t2 = Time.zone.now
-          times << t2 - t1
-          puts (t2 - t1).round(2)
+          diff = t2 - t1
+          times << diff
+          puts diff.round(2)
 
           expect(ProxyOrder.count).to be 1500
           ProxyOrder.destroy_all
@@ -51,8 +52,9 @@ module OpenFoodNetwork
           t1 = Time.zone.now
           syncer.sync!
           t2 = Time.zone.now
-          times << t2 - t1
-          puts (t2 - t1).round(2)
+          diff = t2 - t1
+          times << diff
+          puts diff.round(2)
 
           expect(ProxyOrder.count).to be 300
           standing_orders.update_all(begins_at: start)

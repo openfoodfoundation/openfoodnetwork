@@ -98,7 +98,7 @@ module OpenFoodNetwork
     end
 
     def standing_orders_index_columns
-      node = "admin.standing_orders.index"
+      _node = "admin.standing_orders.index"
       {
         customer:         { name: I18n.t("admin.customer"),         visible: true },
         schedule:         { name: I18n.t("admin.schedule"),         visible: true },

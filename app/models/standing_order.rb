@@ -21,8 +21,8 @@ class StandingOrder < ActiveRecord::Base
   accepts_nested_attributes_for :bill_address, :ship_address
 
   scope :not_ended, -> { where('standing_orders.ends_at > (?) OR standing_orders.ends_at IS NULL', Time.zone.now) }
-  scope :not_canceled, where('standing_orders.canceled_at IS NULL')
-  scope :not_paused, where('standing_orders.paused_at IS NULL')
+  scope :not_canceled, -> { where('standing_orders.canceled_at IS NULL') }
+  scope :not_paused, -> { where('standing_orders.paused_at IS NULL') }
   scope :active, -> { not_canceled.not_ended.not_paused.where('standing_orders.begins_at <= (?)', Time.zone.now) }
 
   def closed_proxy_orders
