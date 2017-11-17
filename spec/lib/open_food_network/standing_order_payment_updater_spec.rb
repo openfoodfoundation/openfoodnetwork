@@ -46,13 +46,24 @@ module OpenFoodNetwork
     describe "#update!" do
       let!(:payment){ create(:payment, amount: 10) }
 
-      context "when no payment is present" do
-        before { allow(updater).to receive(:payment) { nil } }
-        it { expect(updater.update!).to be nil }
+      context "when no pending payments are present" do
+        let(:payment_method) { create(:payment_method) }
+        let(:standing_order) { double(:standing_order, payment_method_id: payment_method.id) }
+
+        before do
+          allow(order).to receive(:pending_payments).once { [] }
+          allow(order).to receive(:outstanding_balance) { 5 }
+          allow(order).to receive(:standing_order) { standing_order }
+        end
+
+        it "creates a new payment on the order" do
+          expect{updater.update!}.to change(Spree::Payment, :count).by(1)
+          expect(order.payments.first.amount).to eq 5
+        end
       end
 
       context "when a payment is present" do
-        before { allow(updater).to receive(:payment) { payment } }
+        before { allow(order).to receive(:pending_payments).once { [payment] } }
 
         context "when a credit card is not required" do
           before do
