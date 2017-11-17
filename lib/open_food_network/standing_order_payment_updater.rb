@@ -5,7 +5,7 @@ module OpenFoodNetwork
     end
 
     def update!
-      return if payment.blank?
+      create_payment if payment.blank?
 
       if card_required? && !card_set?
         return unless ensure_credit_card
@@ -18,6 +18,13 @@ module OpenFoodNetwork
 
     def payment
       @payment ||= @order.pending_payments.last
+    end
+
+    def create_payment
+      @payment = @order.payments.create(
+        payment_method_id: @order.standing_order.payment_method_id,
+        amount: @order.outstanding_balance
+      )
     end
 
     def card_required?
