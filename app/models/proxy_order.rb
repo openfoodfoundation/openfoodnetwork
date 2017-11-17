@@ -12,7 +12,7 @@ class ProxyOrder < ActiveRecord::Base
 
   def state
     return 'canceled' if canceled?
-    if !order || order_cycle.orders_open_at > Time.now
+    if !order || order_cycle.orders_open_at > Time.zone.now
       standing_order.paused? ? 'paused' : 'pending'
     else
       return 'cart' if placed_and_open?
@@ -67,6 +67,6 @@ class ProxyOrder < ActiveRecord::Base
 
   def placed_and_open?
     order.andand.state == 'complete' &&
-      order_cycle.orders_close_at > Time.now
+      order_cycle.orders_close_at > Time.zone.now
   end
 end

@@ -431,7 +431,7 @@ describe Admin::StandingOrdersController, type: :controller do
                 json_response = JSON.parse(response.body)
                 expect(json_response['canceled_at']).to_not be nil
                 expect(json_response['id']).to eq standing_order.id
-                expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+                expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'complete'
                 expect(proxy_order.reload.canceled_at).to be nil
               end
@@ -451,9 +451,9 @@ describe Admin::StandingOrdersController, type: :controller do
                 json_response = JSON.parse(response.body)
                 expect(json_response['canceled_at']).to_not be nil
                 expect(json_response['id']).to eq standing_order.id
-                expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+                expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'canceled'
-                expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+                expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(mail_mock).to have_received(:deliver)
               end
             end
@@ -465,7 +465,7 @@ describe Admin::StandingOrdersController, type: :controller do
               json_response = JSON.parse(response.body)
               expect(json_response['canceled_at']).to_not be nil
               expect(json_response['id']).to eq standing_order.id
-              expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+              expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
             end
           end
         end
@@ -530,7 +530,7 @@ describe Admin::StandingOrdersController, type: :controller do
                 json_response = JSON.parse(response.body)
                 expect(json_response['paused_at']).to_not be nil
                 expect(json_response['id']).to eq standing_order.id
-                expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.now
+                expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'complete'
                 expect(proxy_order.reload.canceled_at).to be nil
               end
@@ -550,9 +550,9 @@ describe Admin::StandingOrdersController, type: :controller do
                 json_response = JSON.parse(response.body)
                 expect(json_response['paused_at']).to_not be nil
                 expect(json_response['id']).to eq standing_order.id
-                expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.now
+                expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'canceled'
-                expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+                expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(mail_mock).to have_received(:deliver)
               end
             end
@@ -564,7 +564,7 @@ describe Admin::StandingOrdersController, type: :controller do
               json_response = JSON.parse(response.body)
               expect(json_response['paused_at']).to_not be nil
               expect(json_response['id']).to eq standing_order.id
-              expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.now
+              expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.zone.now
             end
           end
         end

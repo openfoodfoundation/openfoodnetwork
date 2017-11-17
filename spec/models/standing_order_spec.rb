@@ -31,7 +31,7 @@ describe StandingOrder, type: :model do
 
       it "marks the standing order as cancelled and calls #cancel on all proxy_orders" do
         standing_order.cancel
-        expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.now
+        expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
         expect(proxy_order1).to have_received(:cancel)
         expect(proxy_order2).to have_received(:cancel)
       end

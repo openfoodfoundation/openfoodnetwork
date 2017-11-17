@@ -25,9 +25,9 @@ module OpenFoodNetwork
         10.times do
           syncer = ProxyOrderSyncer.new(standing_orders.reload)
 
-          t1 = Time.now
+          t1 = Time.zone.now
           syncer.sync!
-          t2 = Time.now
+          t2 = Time.zone.now
           times << t2 - t1
           puts (t2 - t1).round(2)
 
@@ -48,9 +48,9 @@ module OpenFoodNetwork
           standing_orders.update_all(begins_at: start + 8.days + 1.minute)
           syncer = ProxyOrderSyncer.new(standing_orders.reload)
 
-          t1 = Time.now
+          t1 = Time.zone.now
           syncer.sync!
-          t2 = Time.now
+          t2 = Time.zone.now
           times << t2 - t1
           puts (t2 - t1).round(2)
 

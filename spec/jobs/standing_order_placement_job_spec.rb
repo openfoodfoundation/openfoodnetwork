@@ -49,7 +49,7 @@ describe StandingOrderPlacementJob do
 
       it "marks placeable proxy_orders as processed by setting placed_at" do
         expect{ job.perform }.to change{ proxy_order.reload.placed_at }
-        expect(proxy_order.placed_at).to be_within(5.seconds).of Time.now
+        expect(proxy_order.placed_at).to be_within(5.seconds).of Time.zone.now
       end
 
       it "processes placeable proxy_orders" do
@@ -158,7 +158,7 @@ describe StandingOrderPlacementJob do
           # If this spec starts complaining about no shipping methods being available
           # on CI, there is probably another spec resetting the currency though Rails.cache.clear
           expect{ job.send(:process, order) }.to change{ order.reload.completed_at }.from(nil)
-          expect(order.completed_at).to be_within(5.seconds).of Time.now
+          expect(order.completed_at).to be_within(5.seconds).of Time.zone.now
           expect(order.payments.first.state).to eq "checkout"
         end
 

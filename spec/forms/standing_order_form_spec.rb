@@ -324,7 +324,7 @@ describe StandingOrderForm do
         expect(standing_order.reload.proxy_orders.count).to be 1
         expect(standing_order.reload.orders.count).to be 1
         expect(form.save).to be false
-        expect(standing_order.reload.begins_at).to be_within(5.seconds).of Time.now
+        expect(standing_order.reload.begins_at).to be_within(5.seconds).of Time.zone.now
         expect(standing_order.proxy_orders.count).to be 1
         expect(standing_order.orders.count).to be 1
       end
