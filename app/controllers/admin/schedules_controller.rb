@@ -59,11 +59,10 @@ module Admin
       return unless params[:schedule][:order_cycle_ids]
       removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
       new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
-      if removed_ids.any? || new_ids.any?
-        standing_orders = StandingOrder.where(schedule_id: @schedule)
-        syncer = OpenFoodNetwork::ProxyOrderSyncer.new(standing_orders)
-        syncer.sync!
-      end
+      return unless removed_ids.any? || new_ids.any?
+      standing_orders = StandingOrder.where(schedule_id: @schedule)
+      syncer = OpenFoodNetwork::ProxyOrderSyncer.new(standing_orders)
+      syncer.sync!
     end
   end
 end
