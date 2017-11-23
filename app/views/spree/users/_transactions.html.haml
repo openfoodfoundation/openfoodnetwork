@@ -1,6 +1,6 @@
 %script{ type: "text/ng-template", id: "account/transactions.html" }
   .active_table.orders{"ng-controller" => "OrdersCtrl", "ng-cloak" => true}
-    %h3.my-orders= t(:transaction_history)
+    %h3.my-orders= t(".transaction_history")
     %distributor.active_table_node.row.animate-repeat{"ng-if" => "Orders.shops.length > 0", "ng-repeat" => "shop in Orders.shops",
     "ng-controller" => "ShopNodeCtrl",
     "ng-class" => "{'closed' : !open(), 'open' : open(), 'inactive' : !shop.active}",
