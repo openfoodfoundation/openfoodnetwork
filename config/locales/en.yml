@@ -2171,6 +2171,7 @@ Please follow the instructions there to make your enterprise visible on the Open
     email: Email
     # TODO: remove 'account_updated' key once we get to Spree 2.0
     account_updated: "Account updated!"
+    my_account: "My account"
     admin:
       orders:
         invoice:
