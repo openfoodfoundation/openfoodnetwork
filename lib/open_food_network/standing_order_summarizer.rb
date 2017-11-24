@@ -16,7 +16,7 @@ module OpenFoodNetwork
       summary_for(order).record_success(order)
     end
 
-    def record_issue(type, order, message)
+    def record_issue(type, order, message=nil)
       summary_for(order).record_issue(type, order, message)
     end
 

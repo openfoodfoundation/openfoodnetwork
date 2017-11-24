@@ -132,8 +132,9 @@ describe StandingOrderPlacementJob do
     context "when the order is already complete" do
       before { while !order.completed? do break unless order.next! end }
 
-      it "ignores it" do
+      it "records an issue and ignores it" do
         ActionMailer::Base.deliveries.clear
+        expect(job).to receive(:record_issue).with(:complete, order).once
         expect{ job.send(:process, order) }.to_not change{ order.reload.state }
         expect(order.payments.first.state).to eq "checkout"
         expect(ActionMailer::Base.deliveries.count).to be 0
@@ -170,8 +171,8 @@ describe StandingOrderPlacementJob do
         context "when progression of the order fails" do
           before { allow(order).to receive(:next) { false } }
 
-          it "logs an error" do
-            expect(Rails.logger).to receive(:info)
+          it "records a failure and does not attempt to send an email" do
+            expect(job).to receive(:record_failure).once
             job.send(:process, order)
           end
         end
@@ -179,34 +180,51 @@ describe StandingOrderPlacementJob do
     end
   end
 
-  describe "sending placement email" do
-    let(:standing_order) { create(:standing_order, with_items: true) }
-    let(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
-    let!(:order) { proxy_order.initialise_order! }
-    let(:mail_mock) { double(:mailer_mock) }
-    let(:changes) { double(:changes) }
+  describe "#send_placement_email" do
+    let!(:order) { double(:order) }
+    let(:mail_mock) { double(:mailer_mock, deliver: true) }
 
     before do
       allow(StandingOrderMailer).to receive(:placement_email) { mail_mock }
-      allow(mail_mock).to receive(:deliver)
     end
 
-    context "when the order is complete" do
-      before { while !order.completed? do break unless order.next! end }
+    context "when changes are present" do
+      let(:changes) { double(:changes) }
 
-      it "sends the email" do
+      it "logs an issue and sends the email" do
+        expect(job).to receive(:record_issue).with(:changes, order).once
         job.send(:send_placement_email, order, changes)
         expect(StandingOrderMailer).to have_received(:placement_email).with(order, changes)
         expect(mail_mock).to have_received(:deliver)
       end
     end
 
-    context "when the order is incomplete" do
-      it "does not send the email" do
+    context "when no changes are present" do
+      let(:changes) { {} }
+
+      it "logs a success and sends the email" do
+        expect(job).to receive(:record_success).with(order).once
         job.send(:send_placement_email, order, changes)
-        expect(StandingOrderMailer).to_not have_received(:placement_email)
-        expect(mail_mock).to_not have_received(:deliver)
+        expect(StandingOrderMailer).to have_received(:placement_email)
+        expect(mail_mock).to have_received(:deliver)
       end
+    end
+  end
+
+  describe "#send_empty_email" do
+    let!(:order) { double(:order) }
+    let(:changes) { double(:changes) }
+    let(:mail_mock) { double(:mailer_mock, deliver: true) }
+
+    before do
+      allow(StandingOrderMailer).to receive(:empty_email) { mail_mock }
+    end
+
+    it "logs an issue and sends the email" do
+      expect(job).to receive(:record_issue).with(:empty, order).once
+      job.send(:send_empty_email, order, changes)
+      expect(StandingOrderMailer).to have_received(:empty_email).with(order, changes)
+      expect(mail_mock).to have_received(:deliver)
     end
   end
 end
