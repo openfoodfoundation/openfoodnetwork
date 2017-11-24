@@ -20,11 +20,13 @@ module OpenFoodNetwork
       summary_for(order).record_issue(type, order, message)
     end
 
-    def record_failure(order)
-      line1 = "StandingOrderPlacementError: Cannot process order #{order.number} due to errors"
+    def record_and_log_error(type, order)
+      return record_issue(type, order) unless order.errors.any?
+      error = "StandingOrder#{type.to_s.camelize}Error"
+      line1 = "#{error}: Cannot process order #{order.number} due to errors"
       line2 = "Errors: #{order.errors.full_messages.join(', ')}"
       Rails.logger.info("#{line1}\n#{line2}")
-      record_issue(:failure, order, line2)
+      record_issue(type, order, line2)
     end
 
     def send_placement_summary_emails

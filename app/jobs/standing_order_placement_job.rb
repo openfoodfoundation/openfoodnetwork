@@ -4,7 +4,7 @@ class StandingOrderPlacementJob
   attr_accessor :summarizer
 
   delegate :record_order, :record_success, :record_issue, to: :summarizer
-  delegate :record_failure, :send_placement_summary_emails, to: :summarizer
+  delegate :record_and_log_error, :send_placement_summary_emails, to: :summarizer
 
   def initialize
     @summarizer = OpenFoodNetwork::StandingOrderSummarizer.new
@@ -42,7 +42,7 @@ class StandingOrderPlacementJob
     move_to_completion(order)
     send_placement_email(order, changes)
   rescue StateMachine::InvalidTransition
-    record_failure(order)
+    record_and_log_error(:processing, order)
   end
 
   def cap_quantity_and_store_changes(order)

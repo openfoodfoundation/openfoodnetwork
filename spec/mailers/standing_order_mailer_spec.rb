@@ -136,7 +136,7 @@ describe StandingOrderMailer do
         allow(summary).to receive(:order_count) { 37 }
         allow(summary).to receive(:success_count) { 35 }
         allow(summary).to receive(:issue_count) { 2 }
-        allow(summary).to receive(:issues) { { failure: { 1 => "Some Error Message", 2 => nil } } }
+        allow(summary).to receive(:issues) { { processing: { 1 => "Some Error Message", 2 => nil } } }
         allow(summary).to receive(:orders_affected_by) { [order1, order2] }
       end
 
@@ -147,8 +147,8 @@ describe StandingOrderMailer do
           expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
           expect(body).to include I18n.t("#{scope}.summary_overview.success_some", count: 35)
           expect(body).to include I18n.t("#{scope}.summary_overview.issues")
-          expect(body).to include I18n.t("#{scope}.summary_detail.failure.title", count: 2)
-          expect(body).to include I18n.t("#{scope}.summary_detail.failure.explainer")
+          expect(body).to include I18n.t("#{scope}.summary_detail.processing.title", count: 2)
+          expect(body).to include I18n.t("#{scope}.summary_detail.processing.explainer")
 
           # Lists orders for which an error was encountered
           expect(body).to include order1.number
@@ -171,8 +171,8 @@ describe StandingOrderMailer do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           expect(summary).to receive(:orders_affected_by).with(:other) { [order3, order4] }
           StandingOrderMailer.placement_summary_email(summary).deliver
-          expect(body).to include I18n.t("#{scope}.summary_detail.failure.title", count: 2)
-          expect(body).to include I18n.t("#{scope}.summary_detail.failure.explainer")
+          expect(body).to include I18n.t("#{scope}.summary_detail.processing.title", count: 2)
+          expect(body).to include I18n.t("#{scope}.summary_detail.processing.explainer")
           expect(body).to include I18n.t("#{scope}.summary_detail.other.title", count: 2)
           expect(body).to include I18n.t("#{scope}.summary_detail.other.explainer")
 

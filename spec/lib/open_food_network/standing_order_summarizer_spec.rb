@@ -58,21 +58,33 @@ module OpenFoodNetwork
         end
       end
 
-      describe "#record_failure" do
+      describe "#record_and_log_error" do
         before do
           allow(order).to receive(:number) { "123" }
-          allow(order).to receive(:errors) { double(:errors, full_messages: ["Some error"]) }
-          allow(summarizer).to receive(:record_issue)
         end
 
-        it "sends error info to the rails logger" do
-          expect(Rails.logger).to receive(:info)
-          summarizer.record_failure(order)
+        context "when errors exist on the order" do
+          before do
+            allow(order).to receive(:errors) { double(:errors, any?: true, full_messages: ["Some error"]) }
+          end
+
+          it "sends error info to the rails logger and calls #record_issue on itself with an error message" do
+            expect(Rails.logger).to receive(:info)
+            expect(summarizer).to receive(:record_issue).with(:processing, order, "Errors: Some error")
+            summarizer.record_and_log_error(:processing, order)
+          end
         end
 
-        it "calls #record_issue on itself" do
-          summarizer.record_failure(order)
-          expect(summarizer).to have_received(:record_issue)
+        context "when no errors exist on the order" do
+          before do
+            allow(order).to receive(:errors) { double(:errors, any?: false) }
+          end
+
+          it "falls back to calling record_issue" do
+            expect(Rails.logger).to_not receive(:info)
+            expect(summarizer).to receive(:record_issue).with(:processing, order)
+            summarizer.record_and_log_error(:processing, order)
+          end
         end
       end
     end
