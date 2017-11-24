@@ -171,9 +171,9 @@ describe StandingOrderPlacementJob do
         context "when progression of the order fails" do
           before { allow(order).to receive(:next) { false } }
 
-          it "records a failure and does not attempt to send an email" do
+          it "records an error and does not attempt to send an email" do
             expect(job).to_not receive(:send_placement_email)
-            expect(job).to receive(:record_failure).once
+            expect(job).to receive(:record_and_log_error).once
             job.send(:process, order)
           end
         end

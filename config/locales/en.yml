@@ -129,8 +129,8 @@ en:
       complete:
         title: Already Processed (%{count} orders)
         explainer: These orders were already marked as complete, and were therefore left untouched
-      failure:
-        title: Failed To Process (%{count} orders)
+      processing:
+        title: Error Encountered (%{count} orders)
         explainer: Automatic processing of these orders failed due to an error. The error has been listed where possible.
       other:
         title: Other failure (%{count} orders)
