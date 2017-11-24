@@ -101,11 +101,15 @@ en:
       subject: "Order cycle report for %{producer}"
   standing_order_mailer:
     placement_summary_email:
-      subject: Your Standing Order summary
+      subject: A summary of recently placed standing orders
       greeting: "Hi %{name},"
       intro: "Below is a summary of the standing orders that have just been placed for %{shop}."
+    confirmation_summary_email:
+      subject: A summary of recently confirmed standing orders
+      greeting: "Hi %{name},"
+      intro: "Below is a summary of the standing orders that have just been finalised for %{shop}."
     summary_overview:
-      total: A total of %{count} standing orders were marked for automatic placement.
+      total: A total of %{count} standing orders were marked for automatic processing.
       success_zero: Of these, none were processed successfully.
       success_some: Of these, %{count} were processed successfully.
       success_all: All were processed successfully.
@@ -124,6 +128,9 @@ en:
       processing:
         title: Error Encountered (%{count} orders)
         explainer: Automatic processing of these orders failed due to an error. The error has been listed where possible.
+      failed_payment:
+        title: Failed Payment (%{count} orders)
+        explainer: Automatic processing of payment for these orders failed due to an error. The error has been listed where possible.
       other:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.

@@ -34,6 +34,14 @@ class StandingOrderMailer < Spree::BaseMailer
          :subject => "#{Spree::Config[:site_name]} #{t('standing_order_mailer.placement_summary_email.subject')}")
   end
 
+  def confirmation_summary_email(summary)
+    @shop = Enterprise.find(summary.shop_id)
+    @summary = summary
+    mail(:to => @shop.email,
+         :from => from_address,
+         :subject => "#{Spree::Config[:site_name]} #{t('standing_order_mailer.confirmation_summary_email.subject')}")
+  end
+
   private
 
   def send_mail(order)
