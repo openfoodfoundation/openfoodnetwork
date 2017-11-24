@@ -172,6 +172,7 @@ describe StandingOrderPlacementJob do
           before { allow(order).to receive(:next) { false } }
 
           it "records a failure and does not attempt to send an email" do
+            expect(job).to_not receive(:send_placement_email)
             expect(job).to receive(:record_failure).once
             job.send(:process, order)
           end
