@@ -35,6 +35,12 @@ module OpenFoodNetwork
       end
     end
 
+    def send_confirmation_summary_emails
+      @summaries.values.each do |summary|
+        StandingOrderMailer.confirmation_summary_email(summary).deliver
+      end
+    end
+
     private
 
     def summary_for(order)
