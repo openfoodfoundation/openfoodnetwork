@@ -1,0 +1,10 @@
+%p.callout
+  = t(".total", count: summary.order_count)
+  - if summary.issue_count == 0
+    = t(".success_all")
+  - elsif summary.issue_count < summary.order_count
+    = t(".success_some", count: summary.success_count)
+  - else
+    = t(".success_zero")
+
+  = t(".issues") if summary.issue_count > 0

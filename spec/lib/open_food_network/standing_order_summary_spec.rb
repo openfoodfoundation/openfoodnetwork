@@ -69,7 +69,7 @@ module OpenFoodNetwork
       end
     end
 
-    describe "#lissue_count" do
+    describe "#issue_count" do
       let(:order_ids) { [1,3,5,7,9] }
       let(:success_ids) { [1,2,3,4,5] }
 
@@ -77,6 +77,48 @@ module OpenFoodNetwork
         summary.instance_variable_set(:@order_ids, order_ids)
         summary.instance_variable_set(:@success_ids, success_ids)
         expect(summary.issue_count).to be 2 # 7 & 9
+      end
+    end
+
+    describe "#orders_affected_by" do
+      let(:order1) { create(:order) }
+      let(:order2) { create(:order) }
+
+      before do
+        allow(summary).to receive(:unrecorded_ids) { [order1.id] }
+        allow(summary).to receive(:issues) { { failure: { order2.id => "A message" } } }
+      end
+
+      context "when the issue type is :other" do
+        let(:orders) { summary.orders_affected_by(:other) }
+
+        it "returns orders specified by unrecorded_ids" do
+          expect(orders).to include order1
+          expect(orders).to_not include order2
+        end
+      end
+
+      context "when the issue type is :other" do
+        let(:orders) { summary.orders_affected_by(:failure) }
+
+        it "returns orders specified by the relevant issue hash" do
+          expect(orders).to include order2
+          expect(orders).to_not include order1
+        end
+      end
+    end
+
+    describe "#unrecorded_ids" do
+      let(:issues) { { type: { 7 => "message", 8 => "message" } } }
+
+      before do
+        summary.instance_variable_set(:@order_ids, [1,3,5,7,9])
+        summary.instance_variable_set(:@success_ids, [1,2,3,4,5])
+        summary.instance_variable_set(:@issues, issues)
+      end
+
+      it "returns order_ids that are not marked as an issue or a success" do
+        expect(summary.unrecorded_ids).to eq [9]
       end
     end
   end

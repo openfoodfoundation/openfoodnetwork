@@ -99,6 +99,35 @@ en:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+  standing_order_mailer:
+    placement_summary_email:
+      subject: Your Standing Order summary
+      greeting: "Hi %{name},"
+      intro: "Below is a summary of the standing orders that have just been placed for %{shop}."
+    summary_overview:
+      total: A total of %{count} standing orders were marked for automatic placement.
+      success_zero: Of these, none were processed successfully.
+      success_some: Of these, %{count} were processed successfully.
+      success_all: All were processed successfully.
+      issues: Details of the issues encountered are provided below.
+    summary_detail:
+      no_message_provided: No error message provided
+      changes:
+        title: Insufficient Stock (%{count} orders)
+        explainer: These orders were processed but insufficient stock was available for some requested items
+      empty:
+        title: No stock (%{count} orders)
+        explainer: These orders were unable to be processed because no stock was available for any requested items
+      complete:
+        title: Already Processed (%{count} orders)
+        explainer: These orders were already marked as complete, and were therefore left untouched
+      failure:
+        title: Failed To Process (%{count} orders)
+        explainer: Automatic processing of these orders failed due to an error. The error has been listed where possible.
+      other:
+        title: Other failure (%{count} orders)
+        explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
+
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '

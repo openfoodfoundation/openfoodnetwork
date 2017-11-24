@@ -1,0 +1,22 @@
+%table.social.white-bg{:width => "100%"}
+  %tr
+    %td
+      %table.column{:align => "left"}
+        %tr
+          %td
+            %h3
+              = t(".greeting", name: @shop.contact)
+            %h4
+              = t(".intro")
+      %table.column{:align => "left"}
+        %tr
+          %td{:align => "right"}
+            %img.float-right{:src => "#{@shop.logo.url(:medium)}"}/
+      %span.clear
+
+= render 'summary_overview', summary: @summary
+= render 'summary_detail', summary: @summary
+
+%p &nbsp;
+= render 'shared/mailers/signoff'
+= render 'shared/mailers/social_and_contact'
