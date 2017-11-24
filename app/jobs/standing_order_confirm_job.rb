@@ -1,6 +1,16 @@
 require 'open_food_network/standing_order_payment_updater'
+require 'open_food_network/standing_order_summarizer'
 
 class StandingOrderConfirmJob
+  attr_accessor :summarizer
+
+  delegate :record_order, :record_success, :record_issue, to: :summarizer
+  delegate :record_and_log_error, :send_confirmation_summary_emails, to: :summarizer
+
+  def initialize
+    @summarizer = OpenFoodNetwork::StandingOrderSummarizer.new
+  end
+
   def perform
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(confirmed_at: Time.zone.now)
@@ -8,6 +18,8 @@ class StandingOrderConfirmJob
       @order = proxy_order.order
       process!
     end
+
+    send_confirmation_summary_emails
   end
 
   private
@@ -24,6 +36,7 @@ class StandingOrderConfirmJob
   end
 
   def process!
+    log_order(@order)
     update_payment! if @order.payment_required?
     return send_failed_payment_email if @order.errors.present?
     @order.process_payments! if @order.payment_required?
@@ -40,10 +53,12 @@ class StandingOrderConfirmJob
   end
 
   def send_confirm_email
+    record_success(@order)
     StandingOrderMailer.confirmation_email(@order).deliver
   end
 
   def send_failed_payment_email
+    record_and_log_error(:failed_payment, @order)
     StandingOrderMailer.failed_payment_email(@order).deliver
   end
 

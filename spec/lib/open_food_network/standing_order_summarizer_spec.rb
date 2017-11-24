@@ -104,5 +104,21 @@ module OpenFoodNetwork
         summarizer.send_placement_summary_emails
       end
     end
+
+    describe "#send_placement_summary_emails" do
+      let(:summary1) { double(:summary) }
+      let(:summary2) { double(:summary) }
+      let(:summaries) { { 1 => summary1, 2 => summary2 } }
+      let(:mail_mock) { double(:mail, deliver: true) }
+
+      before do
+        summarizer.instance_variable_set(:@summaries, summaries)
+      end
+
+      it "sends a placement summary email for each summary" do
+        expect(StandingOrderMailer).to receive(:confirmation_summary_email).twice { mail_mock }
+        summarizer.send_confirmation_summary_emails
+      end
+    end
   end
 end

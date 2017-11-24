@@ -66,6 +66,7 @@ describe StandingOrderConfirmJob do
         proxy_order.initialise_order!
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }
         allow(job).to receive(:process!)
+        allow(job).to receive(:send_confirmation_summary_emails)
       end
 
       it "marks confirmable proxy_orders as processed by setting confirmed_at" do
@@ -77,6 +78,11 @@ describe StandingOrderConfirmJob do
         job.perform
         expect(job).to have_received(:process!)
         expect(job.instance_variable_get(:@order)).to eq proxy_order.reload.order
+      end
+
+      it "sends a summary email" do
+        job.perform
+        expect(job).to have_received(:send_confirmation_summary_emails)
       end
     end
   end
@@ -140,6 +146,7 @@ describe StandingOrderConfirmJob do
         environment: Rails.env,
         preferred_mails_from: 'spree@example.com'
       )
+      expect(job).to receive(:log_order).with(order)
     end
 
     context "when payments need to be processed" do
@@ -191,6 +198,40 @@ describe StandingOrderConfirmJob do
           end
         end
       end
+    end
+  end
+
+  describe "#send_confirm_email" do
+    let(:order) { double(:order) }
+    let(:mail_mock) { double(:mailer_mock, deliver: true) }
+
+    before do
+      job.instance_variable_set(:@order, order)
+      allow(StandingOrderMailer).to receive(:confirmation_email) { mail_mock }
+    end
+
+    it "records a success and sends the email" do
+      expect(job).to receive(:record_success).with(order).once
+      job.send(:send_confirm_email)
+      expect(StandingOrderMailer).to have_received(:confirmation_email).with(order)
+      expect(mail_mock).to have_received(:deliver)
+    end
+  end
+
+  describe "#send_failed_payment_email" do
+    let(:order) { double(:order) }
+    let(:mail_mock) { double(:mailer_mock, deliver: true) }
+
+    before do
+      job.instance_variable_set(:@order, order)
+      allow(StandingOrderMailer).to receive(:failed_payment_email) { mail_mock }
+    end
+
+    it "records and logs an error and sends the email" do
+      expect(job).to receive(:record_and_log_error).with(:failed_payment, order).once
+      job.send(:send_failed_payment_email)
+      expect(StandingOrderMailer).to have_received(:failed_payment_email).with(order)
+      expect(mail_mock).to have_received(:deliver)
     end
   end
 end
