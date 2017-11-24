@@ -1,0 +1,21 @@
+- summary.issues.each do |type, messages|
+  - orders = summary.orders_affected_by(type)
+
+  %h4= t(".#{type}.title", count: orders.count)
+  %p= t(".#{type}.explainer")
+
+  - separator = messages.values.any? ? ": " : ", "
+  - orders.each_with_index do |order, i|
+    %a{ href: spree.order_url(order) }>= order.number
+    = separator if messages.values.any? || i < orders.count - 1
+    - if messages.values.any?
+      = messages[order.id] || t(".no_message_provided")
+      %br
+
+- if summary.unrecorded_ids.any?
+  - orders = summary.orders_affected_by(:other)
+  %h4= t(".other.title", count: orders.count)
+  %p= t(".other.explainer")
+  - orders.each_with_index do |order, i|
+    %a{ href: spree.order_url(order) }>= order.number
+    = ", " if i < orders.count - 1

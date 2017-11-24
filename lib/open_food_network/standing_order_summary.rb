@@ -33,5 +33,17 @@ module OpenFoodNetwork
     def issue_count
       (@order_ids - @success_ids).count
     end
+
+    def orders_affected_by(type)
+      case type
+        when :other then Spree::Order.where(id: unrecorded_ids)
+        else Spree::Order.where(id: issues[type].keys)
+      end
+    end
+
+    def unrecorded_ids
+      recorded_ids = issues.values.map(&:keys).flatten
+      @order_ids - @success_ids - recorded_ids
+    end
   end
 end
