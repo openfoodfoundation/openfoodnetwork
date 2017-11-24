@@ -116,7 +116,7 @@ en:
         title: Insufficient Stock (%{count} orders)
         explainer: These orders were processed but insufficient stock was available for some requested items
       empty:
-        title: No stock (%{count} orders)
+        title: No Stock (%{count} orders)
         explainer: These orders were unable to be processed because no stock was available for any requested items
       complete:
         title: Already Processed (%{count} orders)
@@ -125,7 +125,7 @@ en:
         title: Error Encountered (%{count} orders)
         explainer: Automatic processing of these orders failed due to an error. The error has been listed where possible.
       other:
-        title: Other failure (%{count} orders)
+        title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
 
   home: "OFN"
