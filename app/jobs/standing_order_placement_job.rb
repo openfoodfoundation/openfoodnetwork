@@ -41,6 +41,8 @@ class StandingOrderPlacementJob
 
     move_to_completion(order)
     send_placement_email(order, changes)
+  rescue StateMachine::InvalidTransition
+    record_failure(order)
   end
 
   def cap_quantity_and_store_changes(order)
@@ -58,8 +60,6 @@ class StandingOrderPlacementJob
 
   def move_to_completion(order)
     until order.completed? do order.next! end
-  rescue StateMachine::InvalidTransition
-    record_failure(order)
   end
 
   def unavailable_stock_lines_for(order)
