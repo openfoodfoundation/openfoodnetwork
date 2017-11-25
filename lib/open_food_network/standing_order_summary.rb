@@ -36,8 +36,8 @@ module OpenFoodNetwork
 
     def orders_affected_by(type)
       case type
-        when :other then Spree::Order.where(id: unrecorded_ids)
-        else Spree::Order.where(id: issues[type].keys)
+      when :other then Spree::Order.where(id: unrecorded_ids)
+      else Spree::Order.where(id: issues[type].keys)
       end
     end
 
