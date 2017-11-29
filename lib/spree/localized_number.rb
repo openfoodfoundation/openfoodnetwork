@@ -9,19 +9,22 @@ module Spree
     def localize_number(*attributes)
       validate :validate_localizable_number
 
+      define_setter_methods(attributes)
+      define_validate_method
+    end
+
+    def define_setter_methods(attributes)
       attributes.each do |attribute|
         setter = "#{attribute}="
         old_setter = instance_method(setter) if table_exists? && !column_names.include?(attribute.to_s)
 
         define_method(setter) do |number|
-          if Spree::Config.enable_localized_number?
-            if Spree::LocalizedNumber.valid_localizable_number?(number)
-              number = Spree::LocalizedNumber.parse(number)
-            else
-              @invalid_localized_number ||= []
-              @invalid_localized_number << attribute
-              number = nil
-            end
+          if Spree::LocalizedNumber.valid_localizable_number?(number)
+            number = Spree::LocalizedNumber.parse(number)
+          else
+            @invalid_localized_number ||= []
+            @invalid_localized_number << attribute
+            number = nil
           end
 
           if has_attribute?(attribute)
@@ -30,13 +33,14 @@ module Spree
             old_setter.bind(self).call(number)
           end
         end
+      end
+    end
 
-        define_method(:validate_localizable_number) do
-          return unless Spree::Config.enable_localized_number?
-
-          @invalid_localized_number.andand.each do |error_attribute|
-            errors.set(error_attribute, [I18n.t('spree.localized_number.invalid_format')])
-          end
+    def define_validate_method
+      define_method(:validate_localizable_number) do
+        return unless Spree::Config.enable_localized_number?
+        @invalid_localized_number.andand.each do |error_attribute|
+          errors.set(error_attribute, [I18n.t('spree.localized_number.invalid_format')])
         end
       end
     end
@@ -53,16 +57,18 @@ module Spree
 
       number = number.gsub(/[^\d.,-]/, '') # Replace all Currency Symbols, Letters and -- from the string
 
-      if number =~ /^.*[\.,]\d{1}$/        # If string ends in a single digit (e.g. ,2)
-        number += "0"                      # make it ,20 in order for the result to be in "cents"
-      end
-
-      unless number =~ /^.*[\.,]\d{2}$/    # If does not end in ,00 / .00 then
-        number += "00"                     # add trailing 00 to turn it into cents
-      end
+      add_trailing_zeros(number)
 
       number = number.gsub(/[\.,]/, '')    # Replace all (.) and (,) so the string result becomes in "cents"
       number.to_d / 100                    # Let to_decimal do the rest
+    end
+
+    def self.add_trailing_zeros(number)
+      # If string ends in a single digit (e.g. ,2), make it ,20 in order for the result to be in "cents"
+      number << "0" if number =~ /^.*[\.,]\d{1}$/
+
+      # If does not end in ,00 / .00 then add trailing 00 to turn it into cents
+      number << "00" unless number =~ /^.*[\.,]\d{2}$/
     end
   end
 end
