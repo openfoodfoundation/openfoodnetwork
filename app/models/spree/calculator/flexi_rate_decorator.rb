@@ -1,5 +1,12 @@
+require 'spree/localized_number'
+
 module Spree
   Calculator::FlexiRate.class_eval do
+    extend Spree::LocalizedNumber
+
+    localize_number :preferred_first_item,
+                    :preferred_additional_item
+
     def compute(object)
       sum = 0
       max = self.preferred_max_items.to_i

@@ -1,4 +1,6 @@
 class VariantOverride < ActiveRecord::Base
+  extend Spree::LocalizedNumber
+
   acts_as_taggable
 
   belongs_to :hub, class_name: 'Enterprise'
@@ -16,6 +18,8 @@ class VariantOverride < ActiveRecord::Base
   scope :for_hubs, lambda { |hubs|
     where(hub_id: hubs)
   }
+
+  localize_number :price
 
   def self.indexed(hub)
     Hash[

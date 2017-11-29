@@ -1,10 +1,16 @@
+require 'spree/localized_number'
+
 module Spree
   Payment.class_eval do
+    extend Spree::LocalizedNumber
+
     has_one :adjustment, as: :source, dependent: :destroy
 
     after_save :ensure_correct_adjustment, :update_order
 
     attr_accessible :source
+
+    localize_number :amount
 
     def ensure_correct_adjustment
       revoke_adjustment_eligibility if ['failed', 'invalid'].include?(state)

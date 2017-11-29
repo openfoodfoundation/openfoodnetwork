@@ -1,5 +1,11 @@
+require 'spree/localized_number'
+
 module Spree
   Calculator::PerItem.class_eval do
+    extend Spree::LocalizedNumber
+
+    localize_number :preferred_amount
+
     def compute(object=nil)
       return 0 if object.nil?
       self.preferred_amount * line_items_for(object).reduce(0) do |sum, value|
