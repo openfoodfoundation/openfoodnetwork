@@ -1,4 +1,12 @@
 shared_examples "a model using the LocalizedNumber module" do |attributes|
+  before do
+    Spree::Config[:enable_localized_number?] = true
+  end
+
+  after do
+    Spree::Config[:enable_localized_number?] = false
+  end
+
   attributes.each do |attribute|
     setter = "#{attribute}="
 
