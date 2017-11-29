@@ -208,5 +208,9 @@ module Spree
         end
       end
     end
+
+    context "extends LocalizedNumber" do
+      it_behaves_like "a model using the LocalizedNumber module", [:amount]
+    end
   end
 end

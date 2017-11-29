@@ -147,4 +147,8 @@ describe VariantOverride do
       vo.reload.count_on_hand.should == 12
     end
   end
+
+  context "extends LocalizedNumber" do
+    it_behaves_like "a model using the LocalizedNumber module", [:price]
+  end
 end
