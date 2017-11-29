@@ -14,12 +14,14 @@ module Spree
         old_setter = instance_method(setter) if table_exists? && !column_names.include?(attribute.to_s)
 
         define_method(setter) do |number|
-          if Spree::LocalizedNumber.valid_localizable_number?(number)
-            number = Spree::LocalizedNumber.parse(number)
-          else
-            @invalid_localized_number ||= []
-            @invalid_localized_number << attribute
-            number = nil
+          if Spree::Config.enable_localized_number?
+            if Spree::LocalizedNumber.valid_localizable_number?(number)
+              number = Spree::LocalizedNumber.parse(number)
+            else
+              @invalid_localized_number ||= []
+              @invalid_localized_number << attribute
+              number = nil
+            end
           end
 
           if has_attribute?(attribute)
@@ -30,6 +32,8 @@ module Spree
         end
 
         define_method(:validate_localizable_number) do
+          return unless Spree::Config.enable_localized_number?
+
           @invalid_localized_number.andand.each do |error_attribute|
             errors.set(error_attribute, [I18n.t('spree.localized_number.invalid_format')])
           end

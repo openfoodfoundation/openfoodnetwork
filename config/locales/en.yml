@@ -252,6 +252,10 @@ en:
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
 
+    number_localization:
+      number_localization_settings: "Number Localization Settings"
+      enable_localized_number: "Use the international thousand/decimal separator logic"
+
     business_model_configuration:
       edit:
         business_model_configuration: "Business Model"
