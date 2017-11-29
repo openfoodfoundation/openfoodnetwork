@@ -2357,3 +2357,5 @@ Please follow the instructions there to make your enterprise visible on the Open
         total: Total
         paid?: Paid?
         view: View
+    localized_number:
+      invalid_format: has an invalid format. Please enter a number.
