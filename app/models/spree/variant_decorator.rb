@@ -3,6 +3,7 @@ require 'open_food_network/variant_and_line_item_naming'
 require 'open_food_network/products_cache'
 
 Spree::Variant.class_eval do
+  extend Spree::LocalizedNumber
   # Remove method From Spree, so method from the naming module is used instead
   # This file may be double-loaded in delayed job environment, so we check before
   # removing the Spree method to prevent error.
@@ -54,6 +55,8 @@ Spree::Variant.class_eval do
     joins("LEFT OUTER JOIN (SELECT * from inventory_items WHERE enterprise_id = #{sanitize enterprise.andand.id}) AS o_inventory_items ON o_inventory_items.variant_id = spree_variants.id")
       .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = (?)", true)
   }
+
+  localize_number :price, :cost_price, :weight
 
   # Define sope as class method to allow chaining with other scopes filtering id.
   # In Rails 3, merging two scopes on the same column will consider only the last scope.
