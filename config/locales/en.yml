@@ -70,11 +70,11 @@ en:
           attributes:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
+        spree/order:
+          no_card: There are no valid credit cards available
   activemodel:
     errors:
       models:
-        standing_order:
-          no_card: There are no valid credit cards available
         standing_order_form:
           attributes:
             standing_line_items:

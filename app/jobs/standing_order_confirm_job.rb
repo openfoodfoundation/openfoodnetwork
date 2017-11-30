@@ -48,7 +48,7 @@ class StandingOrderConfirmJob
     result = payment_updater.new(@order).update!
     case result
     when :no_card
-      @order.errors.add(:base, I18n.t("activerecord.errors.models.standing_order.no_card"))
+      @order.errors.add(:base, :no_card)
     end
   end
 
