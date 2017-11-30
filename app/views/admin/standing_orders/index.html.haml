@@ -9,6 +9,8 @@
     %a.button.icon-plus#new-standing-order{ href: "javascript:void(0)", "new-standing-order-dialog" => true }
       = t('admin.standing_orders.new')
 
+= render :partial => 'spree/admin/shared/order_sub_menu'
+
 = admin_inject_column_preferences module: 'admin.standingOrders'
 = render 'data'
 = render 'order_update_issues_dialog'
