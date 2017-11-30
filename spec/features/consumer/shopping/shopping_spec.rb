@@ -12,7 +12,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     let(:supplier) { create(:supplier_enterprise) }
     let(:oc1) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now) }
     let(:oc2) { create(:simple_order_cycle, distributors: [distributor], coordinator: create(:distributor_enterprise), orders_close_at: 3.days.from_now) }
-    let(:product) { create(:simple_product, supplier: supplier) }
+    let(:product) { create(:simple_product, supplier: supplier, meta_keywords: "Domestic") }
     let(:variant) { product.variants.first }
     let(:order) { create(:order, distributor: distributor) }
 
@@ -169,7 +169,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
     describe "after selecting an order cycle with products visible" do
       let(:variant1) { create(:variant, product: product, price: 20) }
       let(:variant2) { create(:variant, product: product, price: 30, display_name: "Badgers") }
-      let(:product2) { create(:simple_product, supplier: supplier, name: "Meercats") }
+      let(:product2) { create(:simple_product, supplier: supplier, name: "Meercats", meta_keywords: "Wild") }
       let(:variant3) { create(:variant, product: product2, price: 40, display_name: "Ferrets") }
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
 
@@ -212,6 +212,10 @@ feature "As a consumer I want to shop with a distributor", js: true do
         fill_in "search", with: "Meer"           # For product named "Meercats"
         page.should have_content product2.name
         page.should_not have_content product.name
+
+        fill_in "search", with: "Dome"           # For product with meta_keywords "Domestic"
+        page.should have_content product.name
+        page.should_not have_content product2.name
       end
 
       it "returns search results for products where the search term matches one of the product's variant names" do

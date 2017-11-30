@@ -1,5 +1,5 @@
 / insert_bottom "[data-hook='admin_product_tabs']"
 
-- klass = current == 'SEO' ? 'active' : ''
+- klass = current == 'Search' ? 'active' : ''
 %li{:class => klass}
-  = link_to_with_icon 'icon-tasks', t('admin.products.seo'), seo_admin_product_url(@product)
+  = link_to_with_icon 'icon-tasks', 'Search', seo_admin_product_url(@product)

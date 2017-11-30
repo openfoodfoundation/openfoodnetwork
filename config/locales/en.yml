@@ -450,6 +450,8 @@ en:
         available_on: Available On
         av_on: "Av. On"
         upload_an_image: Upload an image
+      product_search_keywords: Product Search Keywords
+      SEO_keywords: SEO Keywords
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
