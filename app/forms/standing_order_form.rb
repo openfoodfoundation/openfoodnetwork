@@ -12,7 +12,7 @@ class StandingOrderForm
   delegate :schedule, :schedule_id, to: :standing_order
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
   delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
-  delegate :credit_card_id, to: :standing_order
+  delegate :credit_card_id, :credit_card, to: :standing_order
 
   validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method
   validates_presence_of :bill_address, :ship_address, :begins_at
@@ -196,36 +196,36 @@ class StandingOrderForm
     # Note: presence of begins_at validated on the model
     return if begins_at.blank? || ends_at.blank?
     return if ends_at > begins_at
-    errors.add(:ends_at, "must be after begins at")
+    errors.add(:ends_at, :after_begins_at)
   end
 
   def customer_allowed?
     return unless customer
     return if customer.enterprise == shop
-    errors[:customer] << "does not belong to #{shop.name}"
+    errors.add(:customer, :does_not_belong_to_shop, shop: shop.name)
   end
 
   def schedule_allowed?
     return unless schedule
     return if schedule.coordinators.include?(shop)
-    errors[:schedule] << "is not coordinated by #{shop.name}"
+    errors.add(:schedule, :not_coordinated_by_shop, shop: shop.name)
   end
 
   def payment_method_allowed?
     return unless payment_method
 
     if payment_method.distributors.exclude?(shop)
-      errors[:payment_method] << "is not available to #{shop.name}"
+      errors.add(:payment_method, :not_available_to_shop, shop: shop.name)
     end
 
     return if StandingOrder::ALLOWED_PAYMENT_METHOD_TYPES.include? payment_method.type
-    errors[:payment_method] << "must be a Cash or Stripe method"
+    errors.add(:payment_method, :invalid_type)
   end
 
   def shipping_method_allowed?
     return unless shipping_method
     return if shipping_method.distributors.include?(shop)
-    errors[:shipping_method] << "is not available to #{shop.name}"
+    errors.add(:shipping_method, :not_available_to_shop, shop: shop.name)
   end
 
   def standing_line_items_present?
@@ -245,9 +245,9 @@ class StandingOrderForm
 
   def credit_card_ok?
     return unless payment_method.andand.type == "Spree::Gateway::StripeConnect"
-    return errors[:credit_card] << "is required" unless credit_card_id
+    return errors.add(:credit_card, :blank) unless credit_card_id
     return if customer.andand.user.andand.credit_card_ids.andand.include? credit_card_id
-    errors[:credit_card] << "is not available"
+    errors.add(:credit_card, :not_available)
   end
 
   def variant_ids_for_shop_and_schedule

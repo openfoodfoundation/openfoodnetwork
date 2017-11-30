@@ -80,6 +80,20 @@ en:
             standing_line_items:
               at_least_one_product: "^Please add at least one product"
               not_available: "^%{name} is not available from the selected schedule"
+            ends_at:
+              after_begins_at: "must be after begins at"
+            customer:
+              does_not_belong_to_shop: "does not belong to %{shop}"
+            schedule:
+              not_coordinated_by_shop: "is not coordinated by %{shop}"
+            payment_method:
+              not_available_to_shop: "is not available to %{shop}"
+              invalid_type: "must be a Cash or Stripe method"
+            shipping_method:
+              not_available_to_shop: "is not available to %{shop}"
+            credit_card:
+              not_available: "is not available"
+              blank: "is required"
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
