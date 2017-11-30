@@ -124,7 +124,7 @@ describe StandingOrderConfirmJob do
 
       it "adds and error to the order" do
         expect{ job.send(:update_payment!) }.to change(order.errors, :count).from(0).to(1)
-        expect(order.errors.full_messages).to include I18n.t("activerecord.errors.models.standing_order.no_card")
+        expect(order.errors.full_messages).to include I18n.t("activerecord.errors.models.spree/order.no_card")
       end
     end
   end
