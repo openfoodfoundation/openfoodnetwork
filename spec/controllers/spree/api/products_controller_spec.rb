@@ -15,8 +15,7 @@ module Spree
     let(:attributes) { [:id, :name, :supplier, :price, :on_hand, :available_on, :permalink_live] }
 
     before do
-      stub_authentication!
-      Spree.user_class.stub :find_by_spree_api_key => current_api_user
+      allow(controller).to receive(:spree_current_user) { current_api_user }
     end
 
     context "as a normal user" do
@@ -109,14 +108,11 @@ module Spree
     end
 
     describe '#clone' do
-      before do
-        spree_post :clone, product_id: product1.id, format: :json
-      end
-
       context 'as a normal user' do
         sign_in_as_user!
 
         it 'denies access' do
+          spree_post :clone, product_id: product1.id, format: :json
           assert_unauthorized!
         end
       end
@@ -125,10 +121,12 @@ module Spree
         sign_in_as_enterprise_user! [:supplier]
 
         it 'responds with a successful response' do
+          spree_post :clone, product_id: product1.id, format: :json
           expect(response.status).to eq(201)
         end
 
         it 'clones the product' do
+          spree_post :clone, product_id: product1.id, format: :json
           expect(json_response['name']).to eq("COPY OF #{product1.name}")
         end
       end
@@ -137,10 +135,12 @@ module Spree
         sign_in_as_admin!
 
         it 'responds with a successful response' do
+          spree_post :clone, product_id: product1.id, format: :json
           expect(response.status).to eq(201)
         end
 
         it 'clones the product' do
+          spree_post :clone, product_id: product1.id, format: :json
           expect(json_response['name']).to eq("COPY OF #{product1.name}")
         end
       end
