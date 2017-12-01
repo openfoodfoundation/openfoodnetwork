@@ -191,10 +191,10 @@ feature %q{
       fill_in 'Product Search Keywords', :with => 'Product Search Keywords'
       fill_in 'Notes', :with => 'Just testing Notes'
       click_button 'Update'
-      flash_message.should == "Product \"#{product.name}\" has been successfully updated!"
+      expect(flash_message).to eq("Product \"#{product.name}\" has been successfully updated!")
       product.reload
-      product.notes.should == 'Just testing Notes'
-      product.meta_keywords.should == 'Product Search Keywords'
+      expect(product.notes).to eq('Just testing Notes')
+      expect(product.meta_keywords).to eq('Product Search Keywords')
     end
 
     scenario "deleting product properties", js: true do
