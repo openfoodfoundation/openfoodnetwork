@@ -1,8 +1,8 @@
-require 'spree/localized_number'
+require 'spree/localize_number'
 
 module Spree
   Payment.class_eval do
-    extend Spree::LocalizedNumber
+    extend Spree::LocalizeNumber
 
     has_one :adjustment, as: :source, dependent: :destroy
 

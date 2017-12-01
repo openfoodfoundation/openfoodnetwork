@@ -1,8 +1,8 @@
-require 'spree/localized_number'
+require 'spree/localize_number'
 
 module Spree
   Calculator::FlexiRate.class_eval do
-    extend Spree::LocalizedNumber
+    extend Spree::LocalizeNumber
 
     localize_number :preferred_first_item,
                     :preferred_additional_item

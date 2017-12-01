@@ -1,5 +1,5 @@
 require_dependency 'spree/calculator'
-require 'spree/localized_number'
+require 'spree/localize_number'
 
 class Calculator::FlatPercentPerItem < Spree::Calculator
   # Spree's FlatPercentItemTotal calculator sums all amounts, and then calculates a percentage
@@ -7,7 +7,7 @@ class Calculator::FlatPercentPerItem < Spree::Calculator
   # In the cart, we display line item individual amounts rounded, so to have consistent
   # calculations we do the same internally. Here, we round adjustments at the individual
   # item level first, then multiply by the item quantity.
-  extend Spree::LocalizedNumber
+  extend Spree::LocalizeNumber
 
   preference :flat_percent, :decimal, :default => 0
 

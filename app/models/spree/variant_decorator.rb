@@ -3,7 +3,7 @@ require 'open_food_network/variant_and_line_item_naming'
 require 'open_food_network/products_cache'
 
 Spree::Variant.class_eval do
-  extend Spree::LocalizedNumber
+  extend Spree::LocalizeNumber
   # Remove method From Spree, so method from the naming module is used instead
   # This file may be double-loaded in delayed job environment, so we check before
   # removing the Spree method to prevent error.
