@@ -16,9 +16,9 @@ angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher, 
           @unpackProduct newProduct
           @insertProductAfter(product, newProduct)
 
-    updateVariantLists: (serverProducts, productsWithUnsavedVariants) ->
-      for product in productsWithUnsavedVariants
-        server_product = @findProductInList(product.id, serverProducts)
+    updateVariantLists: (serverProducts) ->
+      for server_product in serverProducts
+        product = @findProductInList(server_product.id, @products)
         product.variants = server_product.variants
         @loadVariantUnitValues product
 

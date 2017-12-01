@@ -32,7 +32,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.filteredProducts = []
     $scope.currentFilters = []
     $scope.limit = 15
-    $scope.productsWithUnsavedVariants = []
     $scope.query = ""
     $scope.DisplayProperties = DisplayProperties
 
@@ -114,7 +113,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         display_name: null
         on_hand: null
         price: null
-      $scope.productsWithUnsavedVariants.push product
       DisplayProperties.setShowVariants product.id, true
 
 
@@ -196,7 +194,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
           filters: $scope.currentFilters
       ).success((data) ->
         DirtyProducts.clear()
-        BulkProducts.updateVariantLists(data.products, $scope.productsWithUnsavedVariants)
+        BulkProducts.updateVariantLists(data.products || [])
         $timeout -> $scope.displaySuccess()
       ).error (data, status) ->
         if status == 400 && data.errors? && data.errors.length > 0

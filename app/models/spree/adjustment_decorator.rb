@@ -1,5 +1,9 @@
+require 'spree/localized_number'
+
 module Spree
   Adjustment.class_eval do
+    extend Spree::LocalizedNumber
+
     # Deletion of metadata is handled in the database.
     # So we don't need the option `dependent: :destroy` as long as
     # AdjustmentMetadata has no destroy logic itself.
@@ -16,6 +20,8 @@ module Spree
     scope :payment_fee,     where(originator_type: 'Spree::PaymentMethod')
 
     attr_accessible :included_tax
+
+    localize_number :amount
 
     def set_included_tax!(rate)
       tax = amount - (amount / (1 + rate))
@@ -73,6 +79,5 @@ module Spree
 
       result
     end
-
   end
 end

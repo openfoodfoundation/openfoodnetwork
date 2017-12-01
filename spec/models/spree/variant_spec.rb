@@ -511,6 +511,12 @@ module Spree
         }.to change(Spree::OptionValue, :count).by(0)
       end
     end
+
+    context "extends LocalizedNumber" do
+      subject! { build(:variant) }
+
+      it_behaves_like "a model using the LocalizedNumber module", [:price, :cost_price, :weight]
+    end
   end
 
   describe "destruction" do

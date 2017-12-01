@@ -9,4 +9,8 @@ describe Spree::Calculator::PerItem do
     calculator.stub(calculable: shipping_calculable)
     calculator.compute(line_item).to_f.should == 50 # 5 x 10
   end
+
+  context "extends LocalizedNumber" do
+    it_behaves_like "a model using the LocalizedNumber module", [:preferred_amount]
+  end
 end
