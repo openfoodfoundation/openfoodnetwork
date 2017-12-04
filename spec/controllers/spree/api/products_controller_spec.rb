@@ -4,23 +4,19 @@ module Spree
   describe Spree::Api::ProductsController, type: :controller do
     render_views
 
-    let(:supplier) { FactoryGirl.create(:supplier_enterprise) }
-    let(:supplier2) { FactoryGirl.create(:supplier_enterprise) }
-    let!(:product1) { FactoryGirl.create(:product, supplier: supplier) }
-    let!(:product2) { FactoryGirl.create(:product, supplier: supplier) }
-    let!(:product3) { FactoryGirl.create(:product, supplier: supplier) }
-    let(:product_other_supplier) { FactoryGirl.create(:product, supplier: supplier2) }
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:supplier2) { create(:supplier_enterprise) }
+    let!(:product1) { create(:product, supplier: supplier) }
+    let(:product_other_supplier) { create(:product, supplier: supplier2) }
     let(:attributes) { [:id, :name, :supplier, :price, :on_hand, :available_on, :permalink_live] }
+
+    let(:current_api_user) { build_stubbed(:user) }
 
     before do
       allow(controller).to receive(:spree_current_user) { current_api_user }
     end
 
     context "as a normal user" do
-      let(:current_api_user) do
-        build_stubbed(:user, enterprises: [], owned_groups: [])
-      end
-
       before do
         allow(current_api_user)
           .to receive(:has_spree_role?).with("admin").and_return(false)
@@ -61,10 +57,6 @@ module Spree
     end
 
     context "as an administrator" do
-      let(:current_api_user) do
-        build_stubbed(:user, enterprises: [], owned_groups: [])
-      end
-
       before do
         allow(current_api_user)
           .to receive(:has_spree_role?).with("admin").and_return(true)
@@ -83,7 +75,11 @@ module Spree
       end
 
       it "sorts products in ascending id order" do
+        FactoryGirl.create(:product, supplier: supplier)
+        FactoryGirl.create(:product, supplier: supplier)
+
         spree_get :index, { :template => 'bulk_index', :format => :json }
+
         ids = json_response.map{ |product| product['id'] }
         ids[0].should < ids[1]
         ids[1].should < ids[2]
@@ -101,14 +97,14 @@ module Spree
 
       it "should allow available_on to be nil" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        json_response.size.should == 3
+        json_response.size.should == 1
 
         product5 = FactoryGirl.create(:product)
         product5.available_on = nil
         product5.save!
 
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        json_response.size.should == 4
+        json_response.size.should == 2
       end
 
       it "soft deletes a product" do
@@ -121,10 +117,6 @@ module Spree
 
     describe '#clone' do
       context 'as a normal user' do
-        let(:current_api_user) do
-          build_stubbed(:user, enterprises: [], owned_groups: [])
-        end
-
         before do
           allow(current_api_user)
             .to receive(:has_spree_role?).with("admin").and_return(false)
@@ -155,10 +147,6 @@ module Spree
       end
 
       context 'as an administrator' do
-        let(:current_api_user) do
-          build_stubbed(:user, enterprises: [], owned_groups: [])
-        end
-
         before do
           allow(current_api_user)
             .to receive(:has_spree_role?).with("admin").and_return(true)
