@@ -103,7 +103,6 @@ describe EnterprisesController, type: :controller do
         order.set_distribution! current_distributor, order_cycle
         order.line_items << line_item
 
-        Spree::Config.set allow_backorders: false
         variant.on_hand = 0
         variant.save!
       end

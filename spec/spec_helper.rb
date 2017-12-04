@@ -29,6 +29,7 @@ require 'spree/api/testing_support/setup'
 require 'spree/api/testing_support/helpers'
 require 'spree/api/testing_support/helpers_decorator'
 require 'spree/testing_support/authorization_helpers'
+require 'spree/testing_support/preferences'
 
 # Capybara config
 require 'capybara/poltergeist'
@@ -101,8 +102,23 @@ RSpec.configure do |config|
   # Geocoding
   config.before(:each) { allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1,1]) }
 
+  default_country_id = Spree::Config[:default_country_id]
+  checkout_zone  = Spree::Config[:checkout_zone]
+  currency = Spree::Config[:currency]
   # Ensure we start with consistent config settings
-  config.before(:each) { Spree::Config.products_require_tax_category = false }
+  config.before(:each) do
+    reset_spree_preferences do |spree_config|
+      # These are all settings that differ from Spree's defaults
+      spree_config.default_country_id = default_country_id
+      spree_config.checkout_zone = checkout_zone
+      spree_config.currency = currency
+      spree_config.shipping_instructions = true
+      spree_config.auto_capture = true
+      spree_config.allow_backorders = false
+    end
+
+    Spree::Api::Config[:requires_authentication] = true
+  end
 
   # Helpers
   config.include Rails.application.routes.url_helpers
@@ -110,6 +126,7 @@ RSpec.configure do |config|
   config.include Spree::CheckoutHelpers
   config.include Spree::MoneyHelper
   config.include Spree::TestingSupport::ControllerRequests, :type => :controller
+  config.include Spree::TestingSupport::Preferences
   config.include Devise::TestHelpers, :type => :controller
   config.extend  Spree::Api::TestingSupport::Setup, :type => :controller
   config.include Spree::Api::TestingSupport::Helpers, :type => :controller

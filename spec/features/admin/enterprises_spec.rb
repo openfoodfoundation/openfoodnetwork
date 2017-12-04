@@ -273,6 +273,10 @@ feature %q{
     before do
       Delayed::Job.destroy_all
       quick_login_as_admin
+
+      # This test relies on preference persistence, so we'll turn it on for this spec only.
+      # It will be turned off again automatically by reset_spree_preferences in spec_helper.
+      Spree::Preferences::Store.instance.persistence = true
     end
 
     it "refreshes the cache when I change what products appear on my shopfront" do
