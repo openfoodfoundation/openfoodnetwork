@@ -1,9 +1,7 @@
 require 'spec_helper'
-require 'spree/api/testing_support/helpers'
 
 module Spree
   describe Spree::Api::ProductsController, type: :controller do
-    include Spree::Api::TestingSupport::Helpers
     render_views
 
     let(:supplier) { FactoryGirl.create(:supplier_enterprise) }
@@ -19,7 +17,14 @@ module Spree
     end
 
     context "as a normal user" do
-      sign_in_as_user!
+      let(:current_api_user) do
+        build_stubbed(:user, enterprises: [], owned_groups: [])
+      end
+
+      before do
+        allow(current_api_user)
+          .to receive(:has_spree_role?).with("admin").and_return(false)
+      end
 
       it "should deny me access to managed products" do
         spree_get :managed, { :template => 'bulk_index', :format => :json }
@@ -28,10 +33,10 @@ module Spree
     end
 
     context "as an enterprise user" do
-      sign_in_as_enterprise_user! [:supplier]
-
-      before :each do
-        spree_get :index, { :template => 'bulk_index', :format => :json }
+      let(:current_api_user) do
+        user = create(:user)
+        user.enterprise_roles.create(enterprise: supplier)
+        user
       end
 
       it "retrieves a list of managed products" do
@@ -56,7 +61,14 @@ module Spree
     end
 
     context "as an administrator" do
-      sign_in_as_admin!
+      let(:current_api_user) do
+        build_stubbed(:user, enterprises: [], owned_groups: [])
+      end
+
+      before do
+        allow(current_api_user)
+          .to receive(:has_spree_role?).with("admin").and_return(true)
+      end
 
       it "retrieves a list of managed products" do
         spree_get :managed, { :template => 'bulk_index', :format => :json }
@@ -109,7 +121,14 @@ module Spree
 
     describe '#clone' do
       context 'as a normal user' do
-        sign_in_as_user!
+        let(:current_api_user) do
+          build_stubbed(:user, enterprises: [], owned_groups: [])
+        end
+
+        before do
+          allow(current_api_user)
+            .to receive(:has_spree_role?).with("admin").and_return(false)
+        end
 
         it 'denies access' do
           spree_post :clone, product_id: product1.id, format: :json
@@ -118,7 +137,11 @@ module Spree
       end
 
       context 'as an enterprise user' do
-        sign_in_as_enterprise_user! [:supplier]
+        let(:current_api_user) do
+          user = create(:user)
+          user.enterprise_roles.create(enterprise: supplier)
+          user
+        end
 
         it 'responds with a successful response' do
           spree_post :clone, product_id: product1.id, format: :json
@@ -132,7 +155,15 @@ module Spree
       end
 
       context 'as an administrator' do
-        sign_in_as_admin!
+        let(:current_api_user) do
+          build_stubbed(:user, enterprises: [], owned_groups: [])
+        end
+
+        before do
+          allow(current_api_user)
+            .to receive(:has_spree_role?).with("admin").and_return(true)
+        end
+
 
         it 'responds with a successful response' do
           spree_post :clone, product_id: product1.id, format: :json
