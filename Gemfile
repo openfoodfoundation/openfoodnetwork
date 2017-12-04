@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 ruby "2.1.5"
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'rails', '3.2.21'
 gem 'rails-i18n', '~> 3.0.0'
@@ -17,8 +18,8 @@ gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch:
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
-gem 'spree_paypal_express', :github => "openfoodfoundation/better_spree_paypal_express", :branch => "spree-upgrade-intermediate"
-#gem 'spree_paypal_express', :github => "spree-contrib/better_spree_paypal_express", :branch => "1-3-stable"
+gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "spree-upgrade-intermediate"
+#gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "1-3-stable"
 gem 'stripe', '~> 3.3.1'
 gem 'activemerchant', '~> 1.71.0'
 
@@ -30,7 +31,7 @@ gem 'daemons'
 
 # Fix bug in simple_form preventing collection_check_boxes usage within form_for block
 # When merged, revert to upstream gem
-gem 'simple_form', :github => 'RohanM/simple_form'
+gem 'simple_form', github: 'RohanM/simple_form'
 
 gem 'unicorn'
 gem 'angularjs-rails', '1.5.5'
@@ -48,14 +49,14 @@ gem 'representative_view'
 gem 'rabl'
 gem "active_model_serializers"
 gem 'oj'
-gem 'deface', :github => 'spree/deface', :ref => '1110a13'
+gem 'deface', github: 'spree/deface', ref: '1110a13'
 gem 'paperclip'
 gem 'dalli'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'spinjs-rails'
-gem 'rack-ssl', :require => 'rack/ssl'
-gem 'custom_error_message', :github => 'jeremydurham/custom-err-msg'
+gem 'rack-ssl', require: 'rack/ssl'
+gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.6'
 gem 'roadie-rails', '~> 1.0.3'
 gem 'figaro'
@@ -101,13 +102,13 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz'
 
 group :test, :development do
   # Pretty printed test output
-  gem 'turn', '~> 0.8.3', :require => false
+  gem 'turn', '~> 0.8.3', require: false
   gem 'fuubar', '~> 2.2.0'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails', :require => false
+  gem 'factory_girl_rails', require: false
   gem 'capybara', '>= 2.15.4'
-  gem 'database_cleaner', '0.7.1', :require => false
+  gem 'database_cleaner', '0.7.1', require: false
   gem 'awesome_print'
   gem 'letter_opener'
   gem 'timecop'
