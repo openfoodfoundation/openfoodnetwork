@@ -1,26 +1,27 @@
 require 'spec_helper'
-require 'spree/api/testing_support/helpers'
 
 module Spree
   describe Spree::Api::ProductsController, type: :controller do
-    include Spree::Api::TestingSupport::Helpers
     render_views
 
-    let(:supplier) { FactoryGirl.create(:supplier_enterprise) }
-    let(:supplier2) { FactoryGirl.create(:supplier_enterprise) }
-    let!(:product1) { FactoryGirl.create(:product, supplier: supplier) }
-    let!(:product2) { FactoryGirl.create(:product, supplier: supplier) }
-    let!(:product3) { FactoryGirl.create(:product, supplier: supplier) }
-    let(:product_other_supplier) { FactoryGirl.create(:product, supplier: supplier2) }
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:supplier2) { create(:supplier_enterprise) }
+    let!(:product1) { create(:product, supplier: supplier) }
+    let(:product_other_supplier) { create(:product, supplier: supplier2) }
     let(:attributes) { [:id, :name, :supplier, :price, :on_hand, :available_on, :permalink_live] }
 
+    let(:current_api_user) { build_stubbed(:user) }
+
     before do
-      stub_authentication!
-      Spree.user_class.stub :find_by_spree_api_key => current_api_user
+      puts "Spree::Api::Config[:requires_authentication] = #{Spree::Api::Config[:requires_authentication]}"
+      allow(controller).to receive(:spree_current_user) { current_api_user }
     end
 
     context "as a normal user" do
-      sign_in_as_user!
+      before do
+        allow(current_api_user)
+          .to receive(:has_spree_role?).with("admin").and_return(false)
+      end
 
       it "should deny me access to managed products" do
         spree_get :managed, { :template => 'bulk_index', :format => :json }
@@ -29,10 +30,10 @@ module Spree
     end
 
     context "as an enterprise user" do
-      sign_in_as_enterprise_user! [:supplier]
-
-      before :each do
-        spree_get :index, { :template => 'bulk_index', :format => :json }
+      let(:current_api_user) do
+        user = create(:user)
+        user.enterprise_roles.create(enterprise: supplier)
+        user
       end
 
       it "retrieves a list of managed products" do
@@ -57,7 +58,10 @@ module Spree
     end
 
     context "as an administrator" do
-      sign_in_as_admin!
+      before do
+        allow(current_api_user)
+          .to receive(:has_spree_role?).with("admin").and_return(true)
+      end
 
       it "retrieves a list of managed products" do
         spree_get :managed, { :template => 'bulk_index', :format => :json }
@@ -72,7 +76,11 @@ module Spree
       end
 
       it "sorts products in ascending id order" do
+        FactoryGirl.create(:product, supplier: supplier)
+        FactoryGirl.create(:product, supplier: supplier)
+
         spree_get :index, { :template => 'bulk_index', :format => :json }
+
         ids = json_response.map{ |product| product['id'] }
         ids[0].should < ids[1]
         ids[1].should < ids[2]
@@ -90,14 +98,14 @@ module Spree
 
       it "should allow available_on to be nil" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        json_response.size.should == 3
+        json_response.size.should == 1
 
         product5 = FactoryGirl.create(:product)
         product5.available_on = nil
         product5.save!
 
         spree_get :index, { :template => 'bulk_index', :format => :json }
-        json_response.size.should == 4
+        json_response.size.should == 2
       end
 
       it "soft deletes a product" do
@@ -109,38 +117,50 @@ module Spree
     end
 
     describe '#clone' do
-      before do
-        spree_post :clone, product_id: product1.id, format: :json
-      end
-
       context 'as a normal user' do
-        sign_in_as_user!
+        before do
+          allow(current_api_user)
+            .to receive(:has_spree_role?).with("admin").and_return(false)
+        end
 
         it 'denies access' do
+          spree_post :clone, product_id: product1.id, format: :json
           assert_unauthorized!
         end
       end
 
       context 'as an enterprise user' do
-        sign_in_as_enterprise_user! [:supplier]
+        let(:current_api_user) do
+          user = create(:user)
+          user.enterprise_roles.create(enterprise: supplier)
+          user
+        end
 
         it 'responds with a successful response' do
+          spree_post :clone, product_id: product1.id, format: :json
           expect(response.status).to eq(201)
         end
 
         it 'clones the product' do
+          spree_post :clone, product_id: product1.id, format: :json
           expect(json_response['name']).to eq("COPY OF #{product1.name}")
         end
       end
 
       context 'as an administrator' do
-        sign_in_as_admin!
+        before do
+          allow(current_api_user)
+            .to receive(:has_spree_role?).with("admin").and_return(true)
+        end
+
 
         it 'responds with a successful response' do
+          spree_post :clone, product_id: product1.id, format: :json
           expect(response.status).to eq(201)
         end
 
         it 'clones the product' do
+          spree_post :clone, product_id: product1.id, format: :json
           expect(json_response['name']).to eq("COPY OF #{product1.name}")
         end
       end

@@ -12,7 +12,7 @@ require 'spree/core/calculated_adjustments_decorator'
 require "#{Rails.root}/app/models/spree/payment_method_decorator"
 require "#{Rails.root}/app/models/spree/gateway_decorator"
 
-Spree::Api::Config[:requires_authentication] = true
+Spree::Api::Config[:requires_authentication] = false
 
 Spree.config do |config|
   config.shipping_instructions = true
