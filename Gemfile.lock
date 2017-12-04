@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/RohanM/simple_form.git
+  remote: https://github.com/RohanM/simple_form.git
   revision: 45f08a213b40f3d4bda5f5398db841137587160a
   specs:
     simple_form (2.0.2)
@@ -7,13 +7,13 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: git://github.com/jeremydurham/custom-err-msg.git
+  remote: https://github.com/jeremydurham/custom-err-msg.git
   revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
   specs:
     custom_error_message (1.1.1)
 
 GIT
-  remote: git://github.com/openfoodfoundation/better_spree_paypal_express.git
+  remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
   revision: 8d95f4544c682634812becaf50999fba0cd04df0
   branch: spree-upgrade-intermediate
   specs:
@@ -22,14 +22,14 @@ GIT
       spree_core (~> 1.3.99)
 
 GIT
-  remote: git://github.com/openfoodfoundation/ofn-qz.git
+  remote: https://github.com/openfoodfoundation/ofn-qz.git
   revision: 024680ccea429b2e5428d7b964fa67c52add34ec
   specs:
     ofn-qz (0.1.0)
       railties (~> 3.1)
 
 GIT
-  remote: git://github.com/openfoodfoundation/spree.git
+  remote: https://github.com/openfoodfoundation/spree.git
   revision: 5a76d456ff70aea7aae3d25156558d71eb7febf2
   ref: 5a76d45
   branch: step-6a
@@ -91,7 +91,7 @@ GIT
       spree_core (= 1.3.99)
 
 GIT
-  remote: git://github.com/openfoodfoundation/spree_auth_devise.git
+  remote: https://github.com/openfoodfoundation/spree_auth_devise.git
   revision: da9eecefc6fe13dedf4c6f3febec79caad839ec3
   branch: spree-upgrade-intermediate
   specs:
@@ -103,7 +103,7 @@ GIT
       spree_frontend (~> 1.3.6)
 
 GIT
-  remote: git://github.com/spree/deface.git
+  remote: https://github.com/spree/deface.git
   revision: 1110a1336252109bce7f98f9182042e0bc2930ae
   ref: 1110a13
   specs:
@@ -113,7 +113,7 @@ GIT
       rails (>= 3.1)
 
 GIT
-  remote: git://github.com/spree/spree_i18n.git
+  remote: https://github.com/spree/spree_i18n.git
   revision: 752eb67204e9c5a4e22b62591a8fd55fe2285e43
   branch: 1-3-stable
   specs:
@@ -123,7 +123,7 @@ GIT
       spree_core (>= 1.1)
 
 GIT
-  remote: git://github.com/willrjmarshall/foundation_rails_helper.git
+  remote: https://github.com/willrjmarshall/foundation_rails_helper.git
   revision: 4d5d53fdc4b1fb71e66524d298c5c635de82cfbb
   branch: rails3
   specs:
