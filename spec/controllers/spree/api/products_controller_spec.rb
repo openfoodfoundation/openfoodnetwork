@@ -13,6 +13,7 @@ module Spree
     let(:current_api_user) { build_stubbed(:user) }
 
     before do
+      puts "Spree::Api::Config[:requires_authentication] = #{Spree::Api::Config[:requires_authentication]}"
       allow(controller).to receive(:spree_current_user) { current_api_user }
     end
 
