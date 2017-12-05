@@ -11,7 +11,7 @@ gem 'i18n-js', '~> 3.0.0'
 gem 'nokogiri', '>= 1.6.7.1'
 
 gem 'pg'
-gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: 'b1b33c7ec682e042bc939aac39dfa1f2de446227'
+gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: '86bf87f1b1e1b299edc8cd10a2486e44ba0a3987'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch: 'spree-upgrade-intermediate'
 

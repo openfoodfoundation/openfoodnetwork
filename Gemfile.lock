@@ -30,8 +30,8 @@ GIT
 
 GIT
   remote: https://github.com/openfoodfoundation/spree.git
-  revision: b1b33c7ec682e042bc939aac39dfa1f2de446227
-  ref: b1b33c7ec682e042bc939aac39dfa1f2de446227
+  revision: 86bf87f1b1e1b299edc8cd10a2486e44ba0a3987
+  ref: 86bf87f1b1e1b299edc8cd10a2486e44ba0a3987
   branch: step-6a
   specs:
     spree (1.3.99)
@@ -807,4 +807,4 @@ RUBY VERSION
    ruby 2.1.5p273
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
