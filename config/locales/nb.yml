@@ -75,6 +75,7 @@ nb:
   show_all_with_more: "Vis Alle (%{num} Mer)"
   cancel: Avbryt
   edit: Endre
+  clone: Klon
   distributors: Distributører
   distribution: Distribusjon
   bulk_order_management: Bulk ordrehåndtering
@@ -110,6 +111,7 @@ nb:
   show_only_unfulfilled_orders: Vis kun uoppfylte ordrer
   filter_results: Filtrer Resultater
   quantity: Mengde
+  pick_up: Hent
   actions:
     create_and_add_another: "Opprett og legg til en annen"
   admin:
@@ -941,6 +943,7 @@ nb:
   email_order_summary_price: "Pris"
   email_order_summary_subtotal: "Delsum:"
   email_order_summary_total: "Sum:"
+  email_order_summary_includes_tax: "(inkluderer avgift):"
   email_payment_paid: BETALT
   email_payment_not_paid: IKKE BETALT
   email_payment_summary: Betalingssammendrag
@@ -2033,6 +2036,15 @@ nb:
             title: LASTER PRODUKTER
             no_products: "Ingen produkter ennå. Ønsker du å legge til noen?"
             no_results: "Beklager, ingen resultater passer"
+          products_head:
+            name: Navn
+            unit: Enhet
+            display_as: Vis Som
+            category: Kategori
+            tax_category: Avgiftskategori
+            inherits_properties?: Arver Egenskaper?
+            available_on: Tilgjengelig På
+            av_on: "Tilgj. På"
           product_name: Produktnavn
         primary_taxon_form:
           product_category: Produktkategori
