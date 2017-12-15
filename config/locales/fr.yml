@@ -75,6 +75,7 @@ fr:
   show_all_with_more: "Voir tous (%{num} en plus)"
   cancel: Annuler
   edit: Modifier
+  clone: Dupliquer
   distributors: Distributeurs
   distribution: Distribution
   bulk_order_management: Gestion des commandes par lot
@@ -110,6 +111,7 @@ fr:
   show_only_unfulfilled_orders: Ne montrer que les commandes non finalisées
   filter_results: Filtrer les résultats
   quantity: Quantité
+  pick_up: Retrait
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
   admin:
@@ -296,7 +298,7 @@ fr:
         back_to_my_inventory: Retour à mon catalogue boutique
     orders:
       index:
-        capture: "Valider"
+        capture: "Payée"
         ship: "Expédier"
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
@@ -691,7 +693,7 @@ fr:
   shared:
     menu:
       cart:
-        checkout: "Finaliser la commande"
+        checkout: "Poursuivre la commande"
         already_ordered_products: "Déjà commandé dans ce cycle de vente"
     register_call:
       selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food France?"
@@ -703,7 +705,7 @@ fr:
       contact: "contact"
       require_customer_login: "La boutique est réservée aux membres."
       require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
-      require_customer_html: "Veuillez %{contacter} %{l'entreprise} pour devenir membre."
+      require_customer_html: "Veuillez %{contact} %{enterprise} pour devenir membre."
   card_could_not_be_saved: la carte n'a pas pu être sauvegardée
   spree_gateway_error_flash_for_checkout: "Il y a eu un problème avec vos informations de paiement : %{error}"
   invoice_billing_address: "Adresse de facturation :"
@@ -778,8 +780,8 @@ fr:
   label_connect: "Se connecter"
   label_learn: "Apprendre"
   label_shopping: "Achats"
-  label_login: "Login"
-  label_logout: "Logout"
+  label_login: "Se connecter"
+  label_logout: "Déconnexion"
   label_signup: "Inscription"
   label_administration: "Administration"
   label_admin: "Admin"
@@ -942,6 +944,7 @@ fr:
   email_order_summary_price: "Prix"
   email_order_summary_subtotal: "Sous-total:"
   email_order_summary_total: "Total:"
+  email_order_summary_includes_tax: "(dont TVA)"
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_summary: Résumé du paiement
@@ -955,7 +958,7 @@ fr:
   email_special_instructions: "Vos commentaires:"
   email_signup_greeting: Bonjour!
   email_signup_welcome: "Bienvenue sur %{sitename}!"
-  email_signup_login: Votre login
+  email_signup_login: Vos identifiants de connection
   email_signup_email: Votre email de connexion est
   email_signup_shop_html: "Vous pouvez maintenant commencer vos achats sur %{link}."
   email_signup_text: "Merci d'avoir rejoint le réseau. Si vous êtes un client, nous sommes impatients de vous faire découvrir de nombreux agriculteurs fantastiques, de merveilleux hubs de distribution et des plats délicieux! Si vous êtes un producteur ou autre entreprise alimentaire, nous sommes ravis de vous compter parmi les membres du réseau."
@@ -1125,7 +1128,7 @@ fr:
   orders_edit_headline: Votre panier
   orders_edit_time: Commande prête pour
   orders_edit_continue: Poursuivre mes achats
-  orders_edit_checkout: Passer ma commande
+  orders_edit_checkout: Poursuivre ma commande
   orders_form_empty_cart: "Vider le panier"
   orders_form_subtotal: Sous-total
   orders_form_admin: Admin & traitements
@@ -2046,6 +2049,15 @@ fr:
             title: CHARGEMENT DES PRODUITS
             no_products: "Aucun produit trouvé. Ajouter un produit ?"
             no_results: "Désolé, aucun résultat trouvé"
+          products_head:
+            name: Produit/Variante
+            unit: Unité
+            display_as: Unité affichéé
+            category: Catégorie
+            tax_category: TVA applicable
+            inherits_properties?: Hériter des propriétés producteur?
+            available_on: Disponible via
+            av_on: "Disp. via"
           product_name: Nom du Produit
         primary_taxon_form:
           product_category: Catégorie Produit
@@ -2076,7 +2088,7 @@ fr:
           remember_this_card: Se souvenir de cette carte ?
     date_picker:
       format: '%Y-%m-%d'
-      js_format: 'aa-mm-jj'
+      js_format: 'yy-mm-dd'
     inventory: Catalogue boutique
     orders:
       bought:
