@@ -1,4 +1,6 @@
-<!--- If what you want to file is not a bug, please go to [other_issues] -->
+<!--- If what you want to file is not a bug, please use the [Feature
+template](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Feature-template)
+instead -->
 
 <!--- Provide a general summary of the issue in the Title above -->
 
