@@ -1,13 +1,15 @@
 %a.close-reveal-modal{"ng-click" => "$close()"}
   %i.ofn-i_009-close
 
-%h3= t('js.out_of_stock.reduced_stock_available')
+%h3
+  {{ 'js.out_of_stock.reduced_stock_available' | t }}
 
-%p= t('js.out_of_stock.out_of_stock_text')
+%p
+  {{ 'js.out_of_stock.out_of_stock_text' | t }}
 
 %p{'ng-repeat' => "v in variants"}
   %em {{ v.name_to_display }} - {{ v.unit_to_display }}
   %span{'ng-if' => "v.count_on_hand == 0"}
-    = t('js.out_of_stock.now_out_of_stock')
+    {{ 'js.out_of_stock.now_out_of_stock' | t }}
   %span{'ng-if' => "v.count_on_hand > 0"}
-    = t('js.out_of_stock.only_n_remainging', num: '{{ v.count_on_hand }}')
+    {{ 'js.out_of_stock.only_n_remainging' | t:{ num: v.count_on_hand } }}

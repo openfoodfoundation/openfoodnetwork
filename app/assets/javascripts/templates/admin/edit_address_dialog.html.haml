@@ -2,7 +2,7 @@
   %h2 {{ addressType === 'bill_address' ?  "#{t('admin.customers.index.edit_bill_address')}" : "#{t('admin.customers.index.edit_ship_address')}" }}
   %form{ name: 'edit_address_form', novalidate: true, ng: { submit: 'updateAddress()'}}
     .row
-      = t('admin.customers.index.required_fileds')
+      {{ 'admin.customers.index.required_fileds' | t }}
       (
       %span.required *
       )
@@ -11,62 +11,62 @@
     %table.no-borders
       %tr
         %td{style: 'width: 30%'}
-          = t('spree.firstname')
+          {{ 'spree.firstname' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'firstname', required: true, ng: { model: 'address.firstname'} }
       %tr
         %td
-          = t('spree.lastname')
+          {{ 'spree.lastname' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'lastname', required: true, ng: { model: 'address.lastname'} }
       %tr
         %td
-          = t('spree.street_address')
+          {{ 'spree.street_address' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'address1', required: true, ng: { model: 'address.address1'} }
       %tr
         %td
-          = t('spree.street_address_1')
+          {{ 'spree.street_address_1' | t }}
         %td
           %input{ type: 'text', name: 'address2', ng: { model: 'address.address2'} }
       %tr
         %td
-          = t('spree.city')
+          {{ 'spree.city' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'city', required: true, ng: { model: 'address.city'} }
       %tr
         %td
-          = t('spree.zipcode')
+          {{ 'spree.zipcode' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'zipcode', required: true, ng: { model: 'address.zipcode'} }
       %tr
         %td
-          = t('spree.country')
+          {{ 'spree.country' | t }}
           %span.required *
         %td
           %select{ name: 'country', required: true, ng: { model: 'address.country_id' } }
             %option{value: ''}
-              = t('admin.customers.index.select_country')
+              {{ 'admin.customers.index.select_country' | t }}
             %option{ ng: { repeat: 'country in availableCountries' }, value: '{{country.id}}' }
               {{country.name}}
       %tr
         %td
-          = t('spree.state')
+          {{ 'spree.state' | t }}
           %span.required *
         %td
           %select{ name: 'state', required: true, ng: { model: 'address.state_id' } }
             %option{value: ''}
-              = t('admin.customers.index.select_state')
+              {{ 'admin.customers.index.select_state' | t }}
             %option{ ng: { repeat: 'state in states' }, value: '{{state.id}}' }
               {{state.name}}
       %tr
         %td
-          = t('spree.phone')
+          {{ 'spree.phone' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'phone', required: true, ng: { model: 'address.phone'} }

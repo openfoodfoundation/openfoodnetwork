@@ -2,128 +2,162 @@
   .alpha.eight.columns
     %div{ ng: { if: "!enterprise.is_primary_producer", switch: "enterprise.sells" } }
       .info{ ng: { switch: { when: "none" } } }
-        %h3= t('js.admin.panels.enterprise_package.hub_profile')
+        %h3
+          {{ 'js.admin.panels.enterprise_package.hub_profile' | t }}
 
         %p
-          %strong= t('js.admin.panels.enterprise_package.hub_profile_cost')
+          %strong
+            {{ 'js.admin.panels.enterprise_package.hub_profile_cost' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.hub_profile_text1')
+        %p
+          {{ 'js.admin.panels.enterprise_package.hub_profile_text1' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.hub_profile_text2')
+        %p
+          {{ 'js.admin.panels.enterprise_package.hub_profile_text2' | t }}
 
       .info{ ng: { switch: { when: "any" } } }
-        %h3= t('js.admin.panels.enterprise_package.hub_shop')
+        %h3
+          {{ 'js.admin.panels.enterprise_package.hub_shop' | t }}
 
         %p
           %strong
             %monthly-pricing-description{ joiner: "comma" }
 
-        %p= t('js.admin.panels.enterprise_package.hub_shop_text1')
+        %p
+          {{ 'js.admin.panels.enterprise_package.hub_shop_text1' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.hub_shop_text2')
+        %p
+          {{ 'js.admin.panels.enterprise_package.hub_shop_text2' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.hub_shop_text3')
+        %p
+          {{ 'js.admin.panels.enterprise_package.hub_shop_text3' | t }}
 
       .info{ ng: { switch: { default: true } } }
         %h3
-          = t('js.admin.panels.enterprise_package.choose_package')
+          {{ 'js.admin.panels.enterprise_package.choose_package' | t }}
           %i.icon-arrow-right
 
         %p
-          %strong= t('js.admin.panels.enterprise_package.choose_package_text1')
+          %strong
+            {{ 'js.admin.panels.enterprise_package.choose_package_text1' | t }}
 
         %p
-          = t('js.admin.panels.enterprise_package.choose_package_text2')
+          {{ 'js.admin.panels.enterprise_package.choose_package_text2' | t }}
 
     %div{ ng: { if: "enterprise.is_primary_producer", switch: "enterprise.sells" } }
       .info{ ng: { switch: { when: "none" } } }
-        %h3= t('js.admin.panels.enterprise_package.profile_only')
+        %h3
+          {{ 'js.admin.panels.enterprise_package.profile_only' | t }}
 
         %p
-          %strong= t('js.admin.panels.enterprise_package.profile_only_cost')
+          %strong
+            {{ 'js.admin.panels.enterprise_package.profile_only_cost' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.profile_only_text1')
+        %p
+          {{ 'js.admin.panels.enterprise_package.profile_only_text1' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.profile_only_text2')
+        %p
+          {{ 'js.admin.panels.enterprise_package.profile_only_text2' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.profile_only_text3')
+        %p
+          {{ 'js.admin.panels.enterprise_package.profile_only_text3' | t }}
 
       .info{ ng: { switch: { when: "own" } } }
-        %h3= t('js.admin.panels.enterprise_package.producer_shop')
+        %h3
+          {{ 'js.admin.panels.enterprise_package.producer_shop' | t }}
 
         %p
           %strong
             %monthly-pricing-description{ joiner: "comma" }
 
-        %p= t('js.admin.panels.enterprise_package.producer_shop_text1')
+        %p
+          {{ 'js.admin.panels.enterprise_package.producer_shop_text1' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.producer_shop_text2')
+        %p
+          {{ 'js.admin.panels.enterprise_package.producer_shop_text2' | t }}
 
       .info{ ng: { switch: { when: "any" } } }
-        %h3= t('js.admin.panels.enterprise_package.producer_hub')
+        %h3
+          {{ 'js.admin.panels.enterprise_package.producer_hub' | t }}
 
         %p
           %strong
             %monthly-pricing-description{ joiner: "comma" }
 
-        %p= t('js.admin.panels.enterprise_package.producer_hub_text1')
+        %p
+          {{ 'js.admin.panels.enterprise_package.producer_hub_text1' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.producer_hub_text2')
+        %p
+          {{ 'js.admin.panels.enterprise_package.producer_hub_text2' | t }}
 
-        %p= t('js.admin.panels.enterprise_package.producer_hub_text3')
+        %p
+          {{ 'js.admin.panels.enterprise_package.producer_hub_text3' | t }}
 
       .info{ ng: { switch: { default: true } } }
         %h3
-          = t('js.admin.panels.enterprise_package.choose_package')
+          {{ 'js.admin.panels.enterprise_package.choose_package' | t }}
           %i.icon-arrow-right
 
         %p
-          %strong= t('js.admin.panels.enterprise_package.choose_package_text1')
+          %strong
+            {{ 'js.admin.panels.enterprise_package.choose_package_text1' | t }}
 
         %p
-          = t('js.admin.panels.enterprise_package.choose_package_text2')
+          {{ 'js.admin.panels.enterprise_package.choose_package_text2' | t }}
 
   .omega.eight.columns{ ng: { switch: "enterprise.is_primary_producer" } }
     %div{ ng: { switch: { when: "false" } } }
       %a.button.selector.hub-profile{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
         .top
-          %h3= t('js.admin.panels.enterprise_package.profile_only')
-          %p= t('js.admin.panels.enterprise_package.get_listing')
-        .bottom= t('js.admin.panels.enterprise_package.always_free')
+          %h3
+            {{ 'js.admin.panels.enterprise_package.profile_only' | t }}
+          %p
+            {{ 'js.admin.panels.enterprise_package.get_listing' | t }}
+        .bottom
+          {{ 'js.admin.panels.enterprise_package.always_free' | t }}
       %a.button.selector.hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
         .top
-          %h3= t('js.admin.panels.enterprise_package.hub_shop')
-          %p= t('js.admin.panels.enterprise_package.sell_produce_others')
+          %h3
+            {{ 'js.admin.panels.enterprise_package.hub_shop' | t }}
+          %p
+            {{ 'js.admin.panels.enterprise_package.sell_produce_others' | t }}
         .bottom
           %monthly-pricing-description{ joiner: "newline" }
 
     %div{ ng: { switch: { when: "true" } } }
       %a.button.selector.producer-profile{ ng: { click: "enterprise.owned && (enterprise.sells='none')", class: "{selected: enterprise.sells=='none', disabled: !enterprise.owned}" } }
         .top
-          %h3= t('js.admin.panels.enterprise_package.profile_only')
-          %p= t('js.admin.panels.enterprise_package.get_listing')
-        .bottom= t('js.admin.panels.enterprise_package.always_free')
+          %h3
+            {{ 'js.admin.panels.enterprise_package.profile_only' | t }}
+          %p
+            {{ 'js.admin.panels.enterprise_package.get_listing' | t }}
+        .bottom
+          {{ 'js.admin.panels.enterprise_package.always_free' | t }}
       %a.button.selector.producer-shop{ ng: { click: "enterprise.owned && (enterprise.sells='own')", class: "{selected: enterprise.sells=='own', disabled: !enterprise.owned}" } }
         .top
-          %h3= t('js.admin.panels.enterprise_package.producer_shop')
-          %p= t('js.admin.panels.enterprise_package.sell_own_produce')
+          %h3
+            {{ 'js.admin.panels.enterprise_package.producer_shop' | t }}
+          %p
+            {{ 'js.admin.panels.enterprise_package.sell_own_produce' | t }}
         .bottom
           %monthly-pricing-description{ joiner: "newline" }
 
       %a.button.selector.producer-hub{ ng: { click: "enterprise.owned && (enterprise.sells='any')", class: "{selected: enterprise.sells=='any', disabled: !enterprise.owned}" } }
         .top
-          %h3= t('js.admin.panels.enterprise_package.producer_hub')
-          %p= t('js.admin.panels.enterprise_package.sell_both')
+          %h3
+            {{ 'js.admin.panels.enterprise_package.producer_hub' | t }}
+          %p
+            {{ 'js.admin.panels.enterprise_package.sell_both' | t }}
         .bottom
           %monthly-pricing-description{ joiner: "newline" }
 
     %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
       %span{ ng: {hide: "saved() || saving" } }
-        = t('js.admin.panels.save')
+        {{ 'js.admin.panels.save' | t }}
         %i.icon-save
       %span{ ng: {show: "saved() && !saving" } }
-        = t('js.admin.panels.saved')
+        {{ 'js.admin.panels.saved' | t }}
         %i.icon-ok-sign
       %span{ ng: {show: "saving" } }
-        = t('js.admin.panels.saving')
+        {{ 'js.admin.panels.saving' | t }}
         %i.icon-refresh

@@ -2,16 +2,16 @@
   .alpha.omega.sixteen.columns
     %h4.status-ok.text-center{ ng: { show: "issues.length == 0 && warnings.length == 0" } }
       %i.icon-ok-sign
-      = t('js.admin.panels.enterprise_status.status_title', name: '{{ object.name }}')
+      {{ 'js.admin.panels.enterprise_status.status_title' | t:{ name: object.name } }}
 
     %table{ ng: { show: "issues.length > 0 || warnings.length > 0" } }
       %thead
         %th.severity
-          = t('js.admin.panels.enterprise_status.severity')
+          {{ 'js.admin.panels.enterprise_status.severity' | t }}
         %th.description
-          = t('js.admin.panels.enterprise_status.description')
+          {{ 'js.admin.panels.enterprise_status.description' | t }}
         %th.resolve
-          = t('js.admin.panels.enterprise_status.resolve')
+          {{ 'js.admin.panels.enterprise_status.resolve' | t }}
       %tr{ ng: { repeat: "issue in issues"} }
         %td.severity
           %i.icon-warning-sign.issue

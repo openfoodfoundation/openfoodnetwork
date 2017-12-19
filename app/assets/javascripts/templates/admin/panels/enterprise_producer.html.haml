@@ -1,37 +1,47 @@
 .row.enterprise_producer_panel{ ng: { controller: 'indexProducerPanelCtrl' } }
   .alpha.eight.columns
     .info{ ng: { show: "enterprise.is_primary_producer==true" } }
-      %h3= t('js.admin.panels.enterprise_producer.producer')
-      %p= t('js.admin.panels.enterprise_producer.producer_text1')
-
-      %p= t('js.admin.panels.enterprise_producer.producer_text2')
+      %h3
+        {{ 'js.admin.panels.enterprise_producer.producer' | t }}
+      %p
+        {{ 'js.admin.panels.enterprise_producer.producer_text1' | t }}
+      %p
+        {{ 'js.admin.panels.enterprise_producer.producer_text2' | t }}
 
     .info{ ng: { show: "enterprise.is_primary_producer==false" } }
-      %h3= t('js.admin.panels.enterprise_producer.non_producer')
-      %p= t('js.admin.panels.enterprise_producer.non_producer_text1')
-
-      %p= t('js.admin.panels.enterprise_producer.non_producer_text2')
+      %h3
+        {{ 'js.admin.panels.enterprise_producer.non_producer' | t }}
+      %p
+        {{ 'js.admin.panels.enterprise_producer.non_producer_text1' | t }}
+      %p
+        {{ 'js.admin.panels.enterprise_producer.non_producer_text2' | t }}
 
   .omega.eight.columns
     %a.button.selector.producer{ ng: { click: 'enterprise.owned && changeToProducer()', class: "{selected: enterprise.is_primary_producer==true, disabled: !enterprise.owned}" } }
       .top
-        %h3= t('js.admin.panels.enterprise_producer.producer')
-        %p= t('js.admin.panels.enterprise_producer.producer_desc')
-      .bottom= t('js.admin.panels.enterprise_producer.producer_example')
+        %h3
+          {{ 'js.admin.panels.enterprise_producer.producer' | t }}
+        %p
+          {{ 'js.admin.panels.enterprise_producer.producer_desc' | t }}
+      .bottom
+        {{ 'js.admin.panels.enterprise_producer.producer_example' | t }}
 
     %a.button.selector.non-producer{ ng: { click: 'enterprise.owned && changeToNonProducer()', class: "{selected: enterprise.is_primary_producer==false, disabled: !enterprise.owned}" } }
       .top
-        %h3= t('js.admin.panels.enterprise_producer.non_producer')
-        %p= t('js.admin.panels.enterprise_producer.non_producer_desc')
-      .bottom= t('js.admin.panels.enterprise_producer.non_producer_example')
+        %h3
+          {{ 'js.admin.panels.enterprise_producer.non_producer' | t }}
+        %p
+          {{ 'js.admin.panels.enterprise_producer.non_producer_desc' | t }}
+      .bottom
+        {{ 'js.admin.panels.enterprise_producer.non_producer_example' | t }}
 
     %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
       %span{ ng: {hide: "saved() || saving" } }
-        = t('js.admin.panels.save')
+        {{ 'js.admin.panels.save' | t }}
         %i.icon-save
       %span{ ng: {show: "saved() && !saving" } }
-        = t('js.admin.panels.saved')
+        {{ 'js.admin.panels.saved' | t }}
         %i.icon-ok-sign
       %span{ ng: {show: "saving" } }
-        = t('js.admin.panels.saving')
+        {{ 'js.admin.panels.saving' | t }}
         %i.icon-refresh
