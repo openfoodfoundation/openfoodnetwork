@@ -21,10 +21,9 @@ instead -->
 3.
 4.
 
-## Gif
-<!-- Provide a brief gif reproducing the bug. Linux users can use
-[Peek](https://github.com/phw/peek#ubuntu) while Mac users can use
-[Recordit](http://recordit.co/) -->
+## Animated Gif/Screenshot
+<!-- Provide a screenshot or brief animated gif reproducing the bug. Linux users can use
+[Peek](https://github.com/phw/peek#ubuntu) while Mac users can use [Recordit](http://recordit.co/) -->
 
 ## Context
 <!--- How has this bug affected you? What were you trying to accomplish? -->
