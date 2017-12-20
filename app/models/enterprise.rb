@@ -120,16 +120,6 @@ class Enterprise < ActiveRecord::Base
   scope :is_distributor, where('sells != ?', 'none')
   scope :is_hub, where(sells: 'any')
   scope :supplying_variant_in, lambda { |variants| joins(:supplied_products => :variants_including_master).where('spree_variants.id IN (?)', variants).select('DISTINCT enterprises.*') }
-  scope :with_supplied_active_products_on_hand, lambda {
-    joins(:supplied_products)
-      .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.zone.now)
-      .uniq
-  }
-  scope :with_distributed_active_products_on_hand, lambda {
-    joins(:distributed_products)
-      .where('spree_products.deleted_at IS NULL AND spree_products.available_on <= ? AND spree_products.count_on_hand > 0', Time.zone.now)
-      .uniq
-  }
 
   scope :with_distributed_products_outer,
     joins('LEFT OUTER JOIN product_distributions ON product_distributions.distributor_id = enterprises.id').
