@@ -6,6 +6,7 @@ feature %q{
 }, js: true do
   include AuthenticationWorkflow
   include WebHelper
+  include CheckoutHelper
 
   background do
     @user = create(:user)
@@ -175,7 +176,6 @@ feature %q{
     expect(page).to have_current_path spree.admin_orders_path
   end
 
-
   context "as an enterprise manager" do
     let(:coordinator1) { create(:distributor_enterprise) }
     let(:coordinator2) { create(:distributor_enterprise) }
@@ -196,20 +196,64 @@ feature %q{
       login_to_admin_as @enterprise_user
     end
 
-    context "viewing the edit page" do
-      it "shows the dropdown menu" do
-        distributor1.update_attribute(:abn, '12345678')
-        order = create(:completed_order_with_totals, distributor: distributor1)
-        visit spree.admin_order_path(order)
+    feature "viewing the edit page" do
+      background do
+        Spree::Config[:enable_receipt_printing?] = true
 
+        distributor1.update_attribute(:abn, '12345678')
+        @order = create(:completed_order_with_totals, distributor: distributor1)
+
+        visit spree.admin_order_path(@order)
+      end
+
+      scenario "shows the dropdown menu" do
         find("#links-dropdown .ofn-drop-down").click
         within "#links-dropdown" do
-          expect(page).to have_link "Edit", href: spree.edit_admin_order_path(order)
-          expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(order)
-          expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
-          expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
-          # expect(page).to have_link "Ship Order", href: spree.fire_admin_order_path(order, :e => 'ship')
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, :e => 'cancel')
+          expect(page).to have_link "Edit", href: spree.edit_admin_order_path(@order)
+          expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(@order)
+          expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(@order)
+          expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(@order)
+          # expect(page).to have_link "Ship Order", href: spree.fire_admin_order_path(@order, :e => 'ship')
+          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(@order, :e => 'cancel')
+        end
+      end
+
+      scenario "can print an order's ticket" do
+        find("#links-dropdown .ofn-drop-down").click
+
+        ticket_window = window_opened_by do
+          within('#links-dropdown') do
+            click_link('Print Ticket')
+          end
+        end
+
+        within_window ticket_window do
+          print_data = page.evaluate_script('printData');
+          elements_in_print_data =
+            [
+              @order.distributor.name,
+              @order.distributor.address.address_part1,
+              @order.distributor.address.address_part2,
+              @order.distributor.email,
+              @order.number,
+              @order.line_items.map { |line_item|
+                [line_item.quantity.to_s,
+                 line_item.product.name,
+                 line_item.single_display_amount_with_adjustments.format(symbol: false, with_currency: false),
+                 line_item.display_amount_with_adjustments.format(symbol: false, with_currency: false)]
+              },
+              checkout_adjustments_for(@order, exclude: [:line_item]).reject { |a| a.amount == 0 }.map { |adjustment|
+                [raw(adjustment.label),
+                 display_adjustment_amount(adjustment).format(symbol: false, with_currency: false)]
+              },
+              @order.display_total.format(with_currency: false),
+              display_checkout_taxes_hash(@order).map { |tax_rate, tax_value|
+                [tax_rate,
+                 tax_value.format(with_currency: false)]
+              },
+              display_checkout_total_less_tax(@order).format(with_currency: false)
+            ]
+          expect(print_data.join).to include(*elements_in_print_data.flatten)
         end
       end
     end
