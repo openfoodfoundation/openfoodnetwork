@@ -13,22 +13,11 @@ class RemoveEmailFromEnterprises < ActiveRecord::Migration
     EnterpriseRole.reset_column_information
 
     Enterprise.select([:id, :email, :owner_id]).each do |enterprise|
-      contact_user = Spree::User.find_by_email enterprise.email
-      unless contact_user
-        password = Devise.friendly_token.first(8)
-        contact_user = Spree::User.create(email: enterprise.email, password: password, password_confirmation: password)
-        contact_user.send_reset_password_instructions if contact_user.persisted?
-      end
-
-      unless contact_user.persisted?
-        contact_user = Spree::User.find enterprise.owner_id
-      end
-
-      manager = EnterpriseRole.find_or_initialize_by_user_id_and_enterprise_id(contact_user.id, enterprise.id)
-      manager.update_attribute :receives_notifications, true
+      update_enterprise_contact enterprise
     end
 
-    remove_columns :enterprises, :email, :contact
+    remove_column :enterprises, :email
+    rename_column :enterprises, :contact, :contact_name
   end
 
   def down
@@ -37,12 +26,30 @@ class RemoveEmailFromEnterprises < ActiveRecord::Migration
     EnterpriseRole.reset_column_information
 
     add_column :enterprises, :email, :string
-    add_column :enterprises, :contact, :string
+    rename_column :enterprises, :contact_name, :contact
 
     Enterprise.select(:id).each do |e|
       manager = EnterpriseRole.find_by_enterprise_id_and_receives_notifications(e.id, true)
       user = Spree::User.find(manager.user_id)
       e.update_attribute :email, user.email
     end
+  end
+
+  def update_enterprise_contact(enterprise)
+    contact_user = Spree::User.find_by_email(enterprise.email) || create_contact_user(enterprise)
+
+    unless contact_user.persisted?
+      contact_user = Spree::User.find enterprise.owner_id
+    end
+
+    manager = EnterpriseRole.find_or_initialize_by_user_id_and_enterprise_id(contact_user.id, enterprise.id)
+    manager.update_attribute :receives_notifications, true
+  end
+
+  def create_contact_user(enterprise)
+    password = Devise.friendly_token.first(8)
+    contact_user = Spree::User.create(email: enterprise.email, password: password, password_confirmation: password)
+    contact_user.send_reset_password_instructions if contact_user.persisted?
+    contact_user
   end
 end

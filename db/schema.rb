@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.text     "invoice_text"
     t.boolean  "display_invoice_logo",     :default => false
     t.boolean  "allow_order_changes",      :default => false,  :null => false
+    t.string   "contact_name"
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"

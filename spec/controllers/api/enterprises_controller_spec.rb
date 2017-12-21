@@ -20,7 +20,7 @@ module Api
         let(:new_enterprise_params) do
           {
             enterprise: {
-              name: 'name', email: 'email@example.com', address_attributes: {
+              name: 'name', contact_name: 'Sheila', address_attributes: {
                 address1: '123 Abc Street',
                 city: 'Northcote',
                 zipcode: '3070',

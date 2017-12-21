@@ -1,5 +1,10 @@
 .row
   .alpha.three.columns
+    = f.label :contact_name, t('.name')
+  .omega.eight.columns
+    = f.text_field :contact_name, { placeholder: t('.name_placeholder') }
+.row
+  .alpha.three.columns
     = f.label :email_address, t('.email_address')
     %div{'ofn-with-tip' => t('.email_address_tip')}
       %a= t('admin.whats_this')
