@@ -529,7 +529,7 @@ en_GB:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
         next_step: Next step
-        choose_starting_point: 'Choose your starting point:'
+        choose_starting_point: 'Choose your package:'
     order_cycles:
       edit:
         advanced_settings: Advanced Settings
