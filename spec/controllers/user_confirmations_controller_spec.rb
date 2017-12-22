@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UserConfirmationsController do
+describe UserConfirmationsController, type: :controller do
   include AuthenticationWorkflow
   let!(:user) { create_enterprise_user }
   let!(:confirmed_user) { create_enterprise_user(confirmed_at: nil) }
