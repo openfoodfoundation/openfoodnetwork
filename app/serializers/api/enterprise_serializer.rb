@@ -141,11 +141,11 @@ class Api::CachedEnterpriseSerializer < ActiveModel::Serializer
   # Map svg icons.
   def icon
     icons = {
-      :hub => "/assets/map_005-hub.svg",
-      :hub_profile => "/assets/map_006-hub-profile.svg",
-      :producer_hub => "/assets/map_005-hub.svg",
-      :producer_shop => "/assets/map_003-producer-shop.svg",
-      :producer => "/assets/map_001-producer-only.svg",
+      :hub => "/assets/map_005-hub.png",
+      :hub_profile => "/assets/map_006-hub-profile.png",
+      :producer_hub => "/assets/map_005-hub.png",
+      :producer_shop => "/assets/map_003-producer-shop.png",
+      :producer => "/assets/map_001-producer-only.png",
     }
     icons[object.category]
   end
