@@ -119,7 +119,12 @@
             %i.ofn-i_050-mail-circle
           =link_to_service "http://", @group.website, title: t(:groups_contact_website) do
             %i.ofn-i_049-web
-        %p
-          &nbsp;
+        - if @show_powered_by_OFN
+          .powered-by-embedded
+            %img{src: '/favicon.ico'}
+            %span
+              = t 'powered_by'
+            %span
+              = t 'title'
 
 = render "shared/footer"

@@ -6,7 +6,7 @@ feature "Using embedded shopfront functionality", js: true do
 
   describe 'embedded groups' do
 	let(:enterprise) { create(:distributor_enterprise) }
-  	let!(:group) { create(:enterprise_group, enterprises: [enterprise], on_front_page: true) }
+  	let!(:group) { create(:enterprise_group, enterprises: [enterprise], permalink: 'group1', on_front_page: true) }
 
 
   	before do
@@ -18,6 +18,10 @@ feature "Using embedded shopfront functionality", js: true do
 
   	end
 
+    after do
+      Spree::Config[:enable_embedded_shopfronts] = false
+    end
+
 	it "displays in an iframe" do
 	  expect(page).to have_selector 'iframe#group_test_iframe'
 
@@ -28,7 +32,20 @@ feature "Using embedded shopfront functionality", js: true do
 	  	end
 	  end	  
 	end
-  
+
+  	it "displays powered by OFN text at bottom of page" do
+	  expect(page).to have_selector 'iframe#group_test_iframe'
+
+	  within_frame 'group_test_iframe' do
+	  	within 'div#group-page' do
+	  	  expect(page).to have_selector 'div.powered-by-embedded'
+	  	  expect(page).to have_css "img[src*='favicon.ico']"
+	  	  expect(page).to have_content 'Powered by'
+	  	  expect(page).to have_content 'Open Food Network'
+	    end
+	  end
+	end	
+
   end
 
 end
