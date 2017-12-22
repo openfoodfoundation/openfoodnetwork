@@ -234,7 +234,7 @@ feature %q{
               @order.distributor.name,
               @order.distributor.address.address_part1,
               @order.distributor.address.address_part2,
-              @order.distributor.email,
+              @order.distributor.contact.email,
               @order.number,
               @order.line_items.map { |line_item|
                 [line_item.quantity.to_s,
