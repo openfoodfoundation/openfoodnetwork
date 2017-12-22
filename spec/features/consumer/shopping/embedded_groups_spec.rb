@@ -5,30 +5,45 @@ feature "Using embedded shopfront functionality", js: true do
   Capybara.server_port = 9999
 
   describe 'embedded groups' do
-	let(:enterprise) { create(:distributor_enterprise) }
-  	let!(:group) { create(:enterprise_group, enterprises: [enterprise], on_front_page: true) }
+    let(:enterprise) { create(:distributor_enterprise) }
+    let!(:group) { create(:enterprise_group, enterprises: [enterprise], permalink: 'group1', on_front_page: true) }
 
-
-  	before do
-  	  Spree::Config[:enable_embedded_shopfronts] = true
+    before do
+      Spree::Config[:enable_embedded_shopfronts] = true
       Spree::Config[:embedded_shopfronts_whitelist] = 'localhost'
 
       page.driver.browser.js_errors = false
-	  Capybara.current_session.driver.visit('spec/support/views/group_iframe_test.html')
+      Capybara.current_session.driver.visit('spec/support/views/group_iframe_test.html')
+    end
 
-  	end
+    after do
+      Spree::Config[:enable_embedded_shopfronts] = false
+    end
 
-	it "displays in an iframe" do
-	  expect(page).to have_selector 'iframe#group_test_iframe'
+    it "displays in an iframe" do
+      expect(page).to have_selector 'iframe#group_test_iframe'
 
-	  within_frame 'group_test_iframe' do
-	  	within 'div#group-page' do
-	  	  expect(page).to have_selector 'h2.group-name'
-	  	  expect(page).to have_content 'About Us'
-	  	end
-	  end	  
-	end
-  
+      within_frame 'group_test_iframe' do
+        within 'div#group-page' do
+          expect(page).to have_selector 'h2.group-name'
+          expect(page).to have_content 'About Us'
+        end
+      end
+    end
+
+    it "displays powered by OFN text at bottom of page" do
+      expect(page).to have_selector 'iframe#group_test_iframe'
+
+      within_frame 'group_test_iframe' do
+        within 'div#group-page' do
+          expect(page).to have_selector 'div.powered-by-embedded'
+          expect(page).to have_css "img[src*='favicon.ico']"
+          expect(page).to have_content 'Powered by'
+          expect(page).to have_content 'Open Food Network'
+        end
+      end
+    end
+
   end
 
 end
