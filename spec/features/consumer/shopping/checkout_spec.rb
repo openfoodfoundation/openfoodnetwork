@@ -16,6 +16,11 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
   let(:variant) { product.variants.first }
   let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
 
+  let(:product2) { create(:taxed_product, supplier: supplier, price: 11, zone: zone, tax_rate_amount: 0.1) }
+  let(:variant2) { product2.variants.first }
+  let!(:order_cycle2) { create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor], coordinator: create(:distributor_enterprise), variants: [variant, variant2]) }
+  let(:order2) { create(:order, order_cycle: order_cycle2, distributor: distributor) }
+
   before do
     Spree::Config.shipment_inc_vat = true
     Spree::Config.shipping_tax_rate = 0.25
@@ -362,27 +367,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
 
         context "with basic details filled" do
           before do
-            toggle_shipping
-            choose sm1.name
-            toggle_payment
-            choose pm1.name
-            toggle_details
-            within "#details" do
-              fill_in "First Name", with: "Will"
-              fill_in "Last Name", with: "Marshall"
-              fill_in "Email", with: "test@test.com"
-              fill_in "Phone", with: "0468363090"
-            end
-            toggle_billing
-            within "#billing" do
-              fill_in "City", with: "Melbourne"
-              fill_in "Postcode", with: "3066"
-              fill_in "Address", with: "123 Your Face"
-              select "Australia", from: "Country"
-              select "Victoria", from: "State"
-            end
-            toggle_shipping
-            check "Shipping address same as billing address?"
+            fill_in_basic_checkout_details
           end
 
           it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
@@ -502,5 +487,60 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         end.to enqueue_job ConfirmOrderJob
       end
     end
+
+    context "when the order cycle is modified before checkout is completed" do
+      before do
+        set_order order2
+        add_product_to_cart order2, product
+        add_product_to_cart order2, product2
+
+        # Remove one of the cart items from the OC
+        order_cycle2.exchanges.each do |e|
+          e.exchange_variants.first.delete
+        end
+
+        order_cycle2.save
+      end
+
+      it "redirects to cart page with message if items have been removed from the oc" do
+        visit checkout_path
+        checkout_as_guest
+
+        expect(order_cycle2.exchanges.outgoing.first.exchange_variants.count).to eq 1
+
+        fill_in_basic_checkout_details
+
+        place_order
+
+        expect(page).to have_content 'Your shopping cart'
+        expect(page).to have_content 'Items in your cart have been removed from the order cycle. Please review your order before proceeding.'
+      end
+    end
+  end
+
+  private
+
+  def fill_in_basic_checkout_details
+    toggle_shipping
+    choose sm1.name
+    toggle_payment
+    choose pm1.name
+    toggle_details
+    within "#details" do
+      fill_in "First Name", with: "Will"
+      fill_in "Last Name", with: "Marshall"
+      fill_in "Email", with: "test@test.com"
+      fill_in "Phone", with: "0468363090"
+    end
+    toggle_billing
+    within "#billing" do
+      fill_in "City", with: "Melbourne"
+      fill_in "Postcode", with: "3066"
+      fill_in "Address", with: "123 Your Face"
+      select "Australia", from: "Country"
+      select "Victoria", from: "State"
+    end
+    toggle_shipping
+    check "Shipping address same as billing address?"
   end
 end

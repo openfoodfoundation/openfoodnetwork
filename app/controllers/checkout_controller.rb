@@ -59,6 +59,9 @@ class CheckoutController < Spree::CheckoutController
       else
         update_failed
       end
+    elsif @order.errors.messages[:items_removed].present?
+      flash[:error] = @order.errors.messages[:items_removed].to_sentence
+      raise_insufficient_quantity
     else
       update_failed
     end
