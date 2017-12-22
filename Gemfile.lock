@@ -245,6 +245,8 @@ GEM
       addressable
     css_splitter (0.4.5)
       sprockets (>= 2.0.0)
+    csso-rails (0.8.1)
+      execjs (>= 1)
     daemons (1.2.2)
     dalli (2.7.2)
     database_cleaner (0.7.1)
@@ -722,6 +724,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   compass-rails
   css_splitter
+  csso-rails (~> 0.8.1)
   custom_error_message!
   daemons
   dalli
@@ -781,7 +784,7 @@ DEPENDENCIES
   rspec-retry
   rubocop (>= 0.49.1)
   sass (~> 3.3)
-  sass-rails (~> 3.2.3)
+  sass-rails (~> 3.2.6)
   shoulda-matchers
   simple_form!
   spinjs-rails
