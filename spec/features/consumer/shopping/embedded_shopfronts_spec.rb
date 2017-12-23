@@ -25,6 +25,7 @@ feature "Using embedded shopfront functionality", js: true do
       Spree::Config[:embedded_shopfronts_whitelist] = 'localhost'
 
       page.driver.browser.js_errors = false
+      allow_any_instance_of(ApplicationController).to receive(:embedded_shopfront_referer).and_return('localhost')
       Capybara.current_session.driver.visit('spec/support/views/iframe_test.html')
     end
 
