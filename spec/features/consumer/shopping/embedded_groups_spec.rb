@@ -8,7 +8,6 @@ feature "Using embedded shopfront functionality", js: true do
 	let(:enterprise) { create(:distributor_enterprise) }
   	let!(:group) { create(:enterprise_group, enterprises: [enterprise], permalink: 'group1', on_front_page: true) }
 
-
   	before do
   	  Spree::Config[:enable_embedded_shopfronts] = true
       Spree::Config[:embedded_shopfronts_whitelist] = 'localhost'
@@ -28,6 +27,18 @@ feature "Using embedded shopfront functionality", js: true do
 	  	end
 	  end	  
 	end
+
+	it "doesn't display contact details when embedded" do
+	  expect(page).to have_selector 'iframe#group_test_iframe'
+
+	  within_frame 'group_test_iframe' do
+	    within 'div#group-page' do
+          expect(page).to have_no_selector 'div.contact-container'
+          expect(page).to have_no_content '#{group.address.address1}'
+	  	end
+	  end
+	end
+
   
   end
 

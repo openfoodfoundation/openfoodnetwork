@@ -29,9 +29,7 @@
           %h2.group-name= @group.name
           %p= @group.description
 
-  .small-12.columns.pad-top
-    .row
-      .small-12.medium-12.large-9.columns
+      - content_for(:tabs) do   
         %div{"ng-controller" => "GroupTabsCtrl"}
           %tabset
             %tab{heading: t(:label_map),
@@ -103,8 +101,20 @@
 
                       = render 'shared/components/enterprise_no_results'
 
+
+
+  .small-12.columns.pad-top
+    .row
+    - if @hide_contact_details
+      .small-12.medium-12.large-12.columns
+        = content_for :tabs
+    - else 
+      .small-12.medium-12.large-9.columns
+        = content_for :tabs 
+
       .small-12.medium-12.large-3.columns
-        = render 'contact'
+        - unless @hide_contact_details
+          = render 'contact'
 
   .small-12.columns.pad-top
     .row.pad-top
