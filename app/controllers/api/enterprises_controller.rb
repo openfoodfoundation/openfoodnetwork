@@ -17,7 +17,8 @@ module Api
 
       @enterprise = Enterprise.new(params[:enterprise])
       if @enterprise.save
-        render text: @enterprise.id, :status => 201
+        render text: Api::Admin::BasicEnterpriseSerializer.new(@enterprise).to_json,
+               status: 201
       else
         invalid_resource!(@enterprise)
       end

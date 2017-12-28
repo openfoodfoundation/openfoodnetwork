@@ -32,7 +32,7 @@ describe "EnterpriseRegistrationService", ->
     describe "success", ->
       beforeEach ->
         spyOn(RegistrationServiceMock, "select")
-        $httpBackend.expectPOST("/api/enterprises?token=keykeykeykey").respond 200, 6
+        $httpBackend.expectPOST("/api/enterprises?token=keykeykeykey").respond 201, {"id": 6, "name": "wonderful name"}
         EnterpriseRegistrationService.create()
         $httpBackend.flush()
 

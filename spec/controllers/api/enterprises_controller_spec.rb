@@ -21,15 +21,30 @@ module Api
       end
 
       describe "creating an enterprise" do
-        let(:australia) { Spree::Country.find_by_name('Australia') }
-        let(:new_enterprise_params) { {enterprise: {name: 'name', email: 'email@example.com', address_attributes: {address1: '123 Abc Street', city: 'Northcote', zipcode: '3070', state_id: australia.states.first, country_id: australia.id } } } }
+        let(:address) { build(:address) }
+        let(:new_enterprise_params) {{
+          enterprise: {
+            name: 'name',
+            email: 'email@example.com',
+            address_attributes: {
+              address1: '123 Abc Street',
+              city: 'Northcote',
+              zipcode: '3070',
+              state_id: address.state_id,
+              country_id: address.country_id
+            }
+          },
+          format: :json
+        }}
 
-        it "creates as sells=any when it is not a producer" do
+        it "responds successfully" do
           spree_post :create, new_enterprise_params
-          response.should be_success
+          expect(response.status).to eq 201
+        end
 
-          enterprise = Enterprise.last
-          enterprise.sells.should == 'any'
+        it "creates a sells=any when it is not a producer" do
+          spree_post :create, new_enterprise_params
+          expect(json_response['sells']).to eq('any')
         end
       end
     end
