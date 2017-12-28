@@ -10,6 +10,7 @@ Spree::Variant.class_eval do
   remove_method :options_text if instance_methods(false).include? :options_text
   include OpenFoodNetwork::VariantAndLineItemNaming
 
+  acts_as_taggable
 
   has_many :exchange_variants
   has_many :exchanges, through: :exchange_variants
