@@ -14,7 +14,7 @@ Darkswarm.controller "EnterprisesCtrl", ($scope, $rootScope, $timeout, $location
     Enterprises.flagMatching query
     Search.search query
     $rootScope.$broadcast 'enterprisesChanged'
-    $scope.distanceMatchesShown = false
+    $scope.distanceMatchesShown = true
 
     $timeout ->
       Enterprises.calculateDistance query, $scope.firstNameMatch()
