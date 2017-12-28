@@ -57,10 +57,10 @@ class ApplicationController < ActionController::Base
   def enable_embedded_shopfront
     whitelist = Spree::Config[:embedded_shopfronts_whitelist]
     return unless Spree::Config[:enable_embedded_shopfronts] && whitelist.present?
-    return if request.referer && URI(request.referer).scheme != 'https' && !Rails.env.test? && !Rails.env.development?
+    return if request.referer && URI(request.referer).scheme != 'https' && !Rails.env.test? && !Rails.env.development? && !whitelist.include?(URI(request.referer).host)
 
     response.headers.delete 'X-Frame-Options'
-    response.headers['Content-Security-Policy'] = "frame-ancestors #{whitelist}"
+    response.headers['Content-Security-Policy'] = "frame-ancestors #{URI(request.referer).host}"
 
     check_embedded_request
     set_embedded_layout
