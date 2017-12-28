@@ -8,8 +8,8 @@ class GroupsController < BaseController
   def show
     enable_embedded_shopfront
     if @shopfront_layout == 'embedded'
-       @hide_menu = true
-       @hide_contact_details = true
+      @hide_menu = true
+      @hide_contact_details = true
     end
     @group = EnterpriseGroup.find_by_permalink(params[:id]) || EnterpriseGroup.find(params[:id])
   end
