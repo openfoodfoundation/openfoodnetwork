@@ -40,6 +40,17 @@ feature "Using embedded shopfront functionality", js: true do
         end
       end
     end
+
+    it "doesn't display contact details when embedded" do
+      expect(page).to have_selector 'iframe#group_test_iframe'
+
+	  within_frame 'group_test_iframe' do
+        within 'div#group-page' do
+          expect(page).to have_no_selector 'div.contact-container'
+          expect(page).to have_no_content '#{group.address.address1}'
+	  	end
+	  end
+	end
   
   end
 
