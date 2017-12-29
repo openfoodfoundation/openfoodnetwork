@@ -15,23 +15,9 @@
 
 #group-page.row.pad-top.footer-pad{"ng-controller" => "GroupPageCtrl"}
   .small-12.columns.pad-top
-    %header
-      .row
-        .small-12.columns
-          - if @group.promo_image.present?
-            %img{"src" => @group.promo_image}
-      .row
-        .small-12.columns.group-header.pad-top
-          - if @group.logo.present?
-            %img.group-logo{"src" => @group.logo}
-          - else
-            %img.group-logo{"src" => '/assets/noimage/group.png'}
-          %h2.group-name= @group.name
-          %p= @group.description
-
   .small-12.columns.pad-top
     .row
-      .small-12.medium-12.large-12.columns
+      .small-12.medium-12.large-.columns
         %div{"ng-controller" => "GroupTabsCtrl"}
           %tabset
             %tab{heading: t(:label_map),

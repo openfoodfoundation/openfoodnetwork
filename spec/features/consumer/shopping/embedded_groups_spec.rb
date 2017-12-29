@@ -51,6 +51,18 @@ feature "Using embedded shopfront functionality", js: true do
 	  	end
 	  end
 	end
+
+	it "does not display the header when embedded" do
+	  expect(page).to have_selector 'iframe#group_test_iframe'
+
+	  within_frame 'group_test_iframe' do
+	  	within 'div#group-page' do
+	  		expect(page).to have_no_selector 'header'
+	  	    expect(page).to have_no_selector 'img.group-logo'
+	  	    expect(page).to have_no_selector 'h2.group-name'
+	  	end
+	  end
+	end
   
   end
 
