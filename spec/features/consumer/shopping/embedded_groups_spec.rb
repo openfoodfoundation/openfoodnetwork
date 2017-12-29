@@ -27,6 +27,19 @@ feature "Using embedded shopfront functionality", js: true do
 	  	end
 	  end	  
 	end
+
+	it "displays powered by OFN text at bottom of page" do
+      expect(page).to have_selector 'iframe#group_test_iframe'
+ 
+      within_frame 'group_test_iframe' do
+        within 'div#group-page' do
+          expect(page).to have_selector 'div.powered-by-embedded'
+          expect(page).to have_css "img[src*='favicon.ico']"
+          expect(page).to have_content 'Powered by'
+          expect(page).to have_content 'Open Food Network'
+        end
+      end
+    end
   
   end
 
