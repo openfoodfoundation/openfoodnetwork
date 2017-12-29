@@ -9,5 +9,10 @@ class GroupsController < BaseController
     enable_embedded_shopfront
     @hide_menu = true if @shopfront_layout == 'embedded'
     @group = EnterpriseGroup.find_by_permalink(params[:id]) || EnterpriseGroup.find(params[:id])
+
+    if params[:embedded_shopfront]
+      render 'embedded'
+    end
+
   end
 end
