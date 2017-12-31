@@ -32,16 +32,6 @@ module Admin
         distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first.should be
       end
 
-      it "does not grant management permission to admins" do
-        controller.stub spree_current_user: admin_user
-        enterprise_params[:enterprise][:owner_id] = admin_user
-
-        spree_put :create, enterprise_params
-        enterprise = Enterprise.find_by_name 'zzz'
-        response.should redirect_to edit_admin_enterprise_path enterprise
-        admin_user.enterprise_roles.where(enterprise_id: enterprise).should be_empty
-      end
-
       it "overrides the owner_id submitted by the user (when not super admin)" do
         controller.stub spree_current_user: distributor_manager
         enterprise_params[:enterprise][:owner_id] = user

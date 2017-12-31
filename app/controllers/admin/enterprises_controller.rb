@@ -188,7 +188,7 @@ module Admin
 
     def load_roles
       @enterprise_roles = EnterpriseRole.find_all_by_enterprise_id(@enterprise.id)
-      @notification_user = EnterpriseRole.receives_notifications_for(@enterprise.id).try(:id) || @enterprise.owner.id
+      @current_contact = @enterprise.contact.id
     end
 
     def update_tag_rules(tag_rules_attributes)
@@ -206,9 +206,8 @@ module Admin
     end
 
     def update_enterprise_notifications
-      notify_user = params[:receives_notifications]
-      if notify_user.present?
-        EnterpriseRole.set_notification_user notify_user, @object.id
+      if params.key? :receives_notifications
+        @enterprise.update_contact params[:receives_notifications]
       end
     end
 

@@ -178,7 +178,12 @@ class Enterprise < ActiveRecord::Base
   end
 
   def contact
-    EnterpriseRole.receives_notifications_for id || owner
+    contact = users.where(enterprise_roles: {receives_notifications: true}).first
+    contact || owner
+  end
+
+  def update_contact(user_id)
+    enterprise_roles.update_all(["receives_notifications=(user_id=?)", user_id])
   end
 
   def activated?
@@ -387,7 +392,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def set_default_contact
-    EnterpriseRole.set_notification_user self.owner_id, self.id
+    update_contact self.owner_id
   end
 
   def relate_to_owners_enterprises
