@@ -45,41 +45,15 @@ You can download the source with the command:
 
 ### Get it running
 
-For those new to Rails, the following tutorial will help get you up to speed with configuring a [Rails environment](http://guides.rubyonrails.org/getting_started.html).  If you run into any issues getting your local environment up and running please consult [the wiki](https://github.com/openfoodfoundation/openfoodnetwork/wiki).
+For those new to Rails, the following tutorial will help get you up to speed with configuring a [Rails environment](http://guides.rubyonrails.org/getting_started.html).
 
+When ready, run `script/setup`. If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
 
-First, check your dependencies: Ensure that you have Ruby 2.1.5 installed:
+If you run into any other issues getting your local environment up and running please consult [the wiki](https://github.com/openfoodfoundation/openfoodnetwork/wiki).
 
-    ruby --version
+If still you get stuck do not hesitate to open an issue reporting the full output of the script.
 
-Install the project's gem dependencies:
-
-    cd openfoodnetwork
-    bundle install
-    
-Configure the site:
-
-    cp config/application.yml.example config/application.yml
-    edit config/application.yml
-
-Create a PostgreSQL user:
-
-* Login as your system postrgresql priviledged user: `sudo -i -u postgres` (this may vary on your OS). Now your prompt looks like: `[postgres@your_host ~]$`
-* Create the `ofn` database superuser and give it the password `f00d`:
-
-```
-createuser -s -P ofn
-```
-
-Create the development and test databases, using the settings specified in `config/database.yml`, and populate them with a schema and seed data:
-```
-bundle exec rake db:setup
-```
-Load some default data for your environment:
-```
-bundle exec rake openfoodnetwork:dev:load_sample_data
-```
-At long last, your dreams of spinning up a development server can be realised:
+Now, your dreams of spinning up a development server can be realised:
 ```
 bundle exec rails server
 ```
