@@ -4,6 +4,9 @@ en_GB:
       spree/order:
         payment_state: Payment State
         shipment_state: Shipment State
+        completed_at: Completed At
+        number: Number
+        email: Customer E-Mail
     errors:
       models:
         spree/user:
@@ -72,6 +75,7 @@ en_GB:
   show_all_with_more: "Show All (%{num}  More)"
   cancel: Cancel
   edit: Edit
+  clone: Clone
   distributors: Distributors
   distribution: Distribution
   bulk_order_management: Bulk Order Management
@@ -90,6 +94,7 @@ en_GB:
   supplier_only: Supplier Only
   weight: Weight
   volume: Volume
+  items: Items
   summary: Summary
   detailed: Detailed
   updated: Updated
@@ -103,6 +108,10 @@ en_GB:
   notes: Notes
   error: Error
   processing_payment: Processing payment...
+  show_only_unfulfilled_orders: Show only unfulfilled orders
+  filter_results: Filter Results
+  quantity: Quantity
+  pick_up: Pick up
   actions:
     create_and_add_another: "Create and Add Another"
   admin:
@@ -169,6 +178,9 @@ en_GB:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
+    number_localization:
+      number_localization_settings: "Number Localisation Settings"
+      enable_localized_number: "Use the international thousand/decimal separator logic"
     business_model_configuration:
       edit:
         business_model_configuration: "Business Model"
@@ -258,14 +270,6 @@ en_GB:
         manages: manages
     products:
       unit_name_placeholder: 'eg. bunches'
-      bulk_edit:
-        unit: Unit
-        display_as: Display As
-        category: Category
-        tax_category: Tax Category
-        inherits_properties?: Inherits Properties?
-        available_on: Available On
-        av_on: "Av. On"
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
@@ -563,6 +567,7 @@ en_GB:
         distributor: Distributor
         products: Products
         tags: Tags
+        add_a_tag: Add a tag
         delivery_details: Pickup / Delivery details
         debug_info: Debug information
       name_and_timing_form:
@@ -660,7 +665,6 @@ en_GB:
       edit:
         title: "Stripe Connect"
         settings: "Settings"
-        stripe_beta_warning: "Warning: The Stripe Connect integration is currently in beta and should not be enabled in production yet"
         stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
         no_api_key_msg: No Stripe account exists for this enterprise.
         configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
@@ -672,7 +676,7 @@ en_GB:
         charges_enabled: Charges Enabled
         charges_enabled_warning: "Warning: Charges are not enabled for your account"
         auth_fail_error: The API key you provided is invalid
-        empty_api_key_error: No Stripe API key has been provided. To set your API key, please follow the instructions at
+        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
@@ -778,6 +782,8 @@ en_GB:
   label_about: "About"
   label_connect: "Connect"
   label_learn: "Learn"
+  label_blog: "Blog"
+  label_support: "Support"
   label_shopping: "Shopping"
   label_login: "Login"
   label_logout: "Logout"
@@ -788,7 +794,7 @@ en_GB:
   label_more: "Show more"
   label_less: "Show less"
   label_notices: "Community Forum"
-  items: "items"
+  cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
   cart_updating: "Updating cart..."
@@ -837,8 +843,8 @@ en_GB:
   footer_legal_visit: "Find us on"
   footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
   home_shop: Shop Now
-  brandstory_headline: "Food, unincorporated."
-  brandstory_intro: "Sometimes the best way to fix the system is to start a new one…"
+  brandstory_headline: "Re-imagining Local Food"
+  brandstory_intro: "Online tools for buying, selling & distributing local food"
   brandstory_part1: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
   brandstory_part2: "Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transaction into transformation every day."
   brandstory_part3: "So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people start versions across the world."
@@ -943,6 +949,7 @@ en_GB:
   email_order_summary_price: "Price"
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
+  email_order_summary_includes_tax: "(includes tax):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
   email_payment_summary: Payment summary
@@ -1985,6 +1992,7 @@ en_GB:
   spree:
     email: Email
     account_updated: "Account updated!"
+    my_account: "My account"
     admin:
       orders:
         invoice:
@@ -2036,6 +2044,18 @@ en_GB:
             title: LOADING PRODUCTS
             no_products: "No products yet. Why don't you add some?"
             no_results: "Sorry, no results match"
+          products_head:
+            name: Name
+            unit: Unit
+            display_as: Display As
+            category: Category
+            tax_category: Tax Category
+            inherits_properties?: Inherits Properties?
+            available_on: Available On
+            av_on: "Av. On"
+          products_variant:
+            variant_has_n_overrides: "This variant has %{n} override(s)"
+            new_variant: "New variant"
           product_name: Product Name
         primary_taxon_form:
           product_category: Product Category
@@ -2128,6 +2148,9 @@ en_GB:
           settings: Account Settings
       orders:
         open_orders: Open Orders
+        past_orders: Past Orders
+      transactions:
+        transaction_history: Transaction History
       open_orders:
         order: Order
         shop: Shop
@@ -2138,3 +2161,13 @@ en_GB:
         cancel: Cancel
         closed: Closed
         until: Until
+      past_orders:
+        order: Order
+        shop: Shop
+        completed_at: Completed At
+        items: Items
+        total: Total
+        paid?: Paid?
+        view: View
+    localized_number:
+      invalid_format: has an invalid format. Please enter a number.
