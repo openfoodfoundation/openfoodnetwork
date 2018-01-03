@@ -10,6 +10,7 @@ RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
 RUBY_VERSION=$(cat .ruby-version)
+NODE_VERSION=$(cat .node-version)
 POSTGRESQL_VERSION='9.5'
 
 DB_USER='ofn'
@@ -19,6 +20,11 @@ DB_PASSWORD='f00d'
 if ! ruby --version | grep $RUBY_VERSION > /dev/null; then
   printf "${RED}Open Food Network requires ruby ${RUBY_VERSION}${NO_COLOR}\n"
   exit 1
+fi
+
+# Check node version
+if ! node --version | grep $NODE_VERSION > /dev/null; then
+  printf "${RED}Open Food Network requires node ${NODE_VERSION}${NO_COLOR}\n"
 fi
 
 # Check postgresql version
@@ -32,7 +38,9 @@ if ! command -v bundle > /dev/null; then
   gem install bundler
 fi
 
+# Install all dependencies
 bundle check || bundle install
+npm install
 
 # Set up configurable environment variables
 if [ ! -f config/application.yml ]; then
