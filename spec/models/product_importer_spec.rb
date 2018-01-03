@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'open_food_network/permissions'
 
-describe ProductImporter do
+describe ProductImport::ProductImporter do
   include AuthenticationWorkflow
 
   let!(:admin) { create(:admin_user) }
@@ -45,7 +45,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise.id.to_s => {'import_into' => 'product_list'}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
 
@@ -71,54 +71,54 @@ describe ProductImporter do
       expect(@importer.updated_ids.count).to eq 5
 
       carrots = Spree::Product.find_by_name('Carrots')
-      carrots.supplier.should == enterprise
-      carrots.on_hand.should == 5
-      carrots.price.should == 3.20
-      carrots.unit_value.should == 500
-      carrots.variant_unit.should == 'weight'
-      carrots.variant_unit_scale.should == 1
-      carrots.on_demand.should_not == true
-      carrots.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(carrots.supplier).to eq enterprise
+      expect(carrots.on_hand).to eq 5
+      expect(carrots.price).to eq 3.20
+      expect(carrots.unit_value).to eq 500
+      expect(carrots.variant_unit).to eq 'weight'
+      expect(carrots.variant_unit_scale).to eq 1
+      expect(carrots.on_demand).to_not eq true
+      expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       potatoes = Spree::Product.find_by_name('Potatoes')
-      potatoes.supplier.should == enterprise
-      potatoes.on_hand.should == 6
-      potatoes.price.should == 6.50
-      potatoes.unit_value.should == 2000
-      potatoes.variant_unit.should == 'weight'
-      potatoes.variant_unit_scale.should == 1000
-      potatoes.on_demand.should_not == true
-      potatoes.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(potatoes.supplier).to eq enterprise
+      expect(potatoes.on_hand).to eq 6
+      expect(potatoes.price).to eq 6.50
+      expect(potatoes.unit_value).to eq 2000
+      expect(potatoes.variant_unit).to eq 'weight'
+      expect(potatoes.variant_unit_scale).to eq 1000
+      expect(potatoes.on_demand).to_not eq true
+      expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       pea_soup = Spree::Product.find_by_name('Pea Soup')
-      pea_soup.supplier.should == enterprise
-      pea_soup.on_hand.should == 8
-      pea_soup.price.should == 5.50
-      pea_soup.unit_value.should == 0.75
-      pea_soup.variant_unit.should == 'volume'
-      pea_soup.variant_unit_scale.should == 0.001
-      pea_soup.on_demand.should_not == true
-      pea_soup.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(pea_soup.supplier).to eq enterprise
+      expect(pea_soup.on_hand).to eq 8
+      expect(pea_soup.price).to eq 5.50
+      expect(pea_soup.unit_value).to eq 0.75
+      expect(pea_soup.variant_unit).to eq 'volume'
+      expect(pea_soup.variant_unit_scale).to eq 0.001
+      expect(pea_soup.on_demand).to_not eq true
+      expect(pea_soup.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       salad = Spree::Product.find_by_name('Salad')
-      salad.supplier.should == enterprise
-      salad.on_hand.should == 7
-      salad.price.should == 4.50
-      salad.unit_value.should == 1
-      salad.variant_unit.should == 'items'
-      salad.variant_unit_scale.should == nil
-      salad.on_demand.should_not == true
-      salad.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(salad.supplier).to eq enterprise
+      expect(salad.on_hand).to eq 7
+      expect(salad.price).to eq 4.50
+      expect(salad.unit_value).to eq 1
+      expect(salad.variant_unit).to eq 'items'
+      expect(salad.variant_unit_scale).to eq nil
+      expect(salad.on_demand).to_not eq true
+      expect(salad.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       buns = Spree::Product.find_by_name('Hot Cross Buns')
-      buns.supplier.should == enterprise
-      #buns.on_hand.should == Infinity
-      buns.price.should == 3.50
-      buns.unit_value.should == 1
-      buns.variant_unit.should == 'items'
-      buns.variant_unit_scale.should == nil
-      buns.on_demand.should == true
-      buns.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(buns.supplier).to eq enterprise
+      # buns.on_hand).to eq Infinity
+      expect(buns.price).to eq 3.50
+      expect(buns.unit_value).to eq 1
+      expect(buns.variant_unit).to eq 'items'
+      expect(buns.variant_unit_scale).to eq nil
+      expect(buns.on_demand).to eq true
+      expect(buns.variants.first.import_date).to be_within(1.minute).of Time.zone.now
     end
   end
 
@@ -132,7 +132,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise.id.to_s => {'import_into' => 'product_list'}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
 
@@ -154,12 +154,12 @@ describe ProductImporter do
       expect(@importer.updated_ids.count).to eq 1
 
       carrots = Spree::Product.find_by_name('Good Carrots')
-      carrots.supplier.should == enterprise
-      carrots.on_hand.should == 5
-      carrots.price.should == 3.20
-      carrots.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(carrots.supplier).to eq enterprise
+      expect(carrots.on_hand).to eq 5
+      expect(carrots.price).to eq 3.20
+      expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      Spree::Product.find_by_name('Bad Potatoes').should == nil
+      expect(Spree::Product.find_by_name('Bad Potatoes')).to eq nil
     end
   end
 
@@ -173,7 +173,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise2.id.to_s => {'import_into' => 'product_list'}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
 
@@ -196,18 +196,17 @@ describe ProductImporter do
       expect(@importer.updated_ids.count).to eq 2
 
       added_coffee = Spree::Variant.find_by_display_name('Emergent Coffee')
-      added_coffee.product.name.should == 'Hypothetical Cake'
-      added_coffee.price.should == 3.50
-      added_coffee.on_hand.should == 6
-      added_coffee.import_date.should be_within(1.minute).of DateTime.now
+      expect(added_coffee.product.name).to eq 'Hypothetical Cake'
+      expect(added_coffee.price).to eq 3.50
+      expect(added_coffee.on_hand).to eq 6
+      expect(added_coffee.import_date).to be_within(1.minute).of Time.zone.now
 
       updated_banana = Spree::Variant.find_by_display_name('Preexisting Banana')
-      updated_banana.product.name.should == 'Hypothetical Cake'
-      updated_banana.price.should == 5.50
-      updated_banana.on_hand.should == 5
-      updated_banana.import_date.should be_within(1.minute).of DateTime.now
+      expect(updated_banana.product.name).to eq 'Hypothetical Cake'
+      expect(updated_banana.price).to eq 5.50
+      expect(updated_banana.on_hand).to eq 5
+      expect(updated_banana.import_date).to be_within(1.minute).of Time.zone.now
     end
-
   end
 
   describe "adding new product and sub-variant at the same time" do
@@ -220,7 +219,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise.id.to_s => {'import_into' => 'product_list'}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
 
@@ -241,14 +240,14 @@ describe ProductImporter do
       expect(@importer.updated_ids.count).to eq 2
 
       small_bag = Spree::Variant.find_by_display_name('Small Bag')
-      small_bag.product.name.should == 'Potatoes'
-      small_bag.price.should == 3.50
-      small_bag.on_hand.should == 5
+      expect(small_bag.product.name).to eq 'Potatoes'
+      expect(small_bag.price).to eq 3.50
+      expect(small_bag.on_hand).to eq 5
 
       big_bag = Spree::Variant.find_by_display_name('Big Bag')
-      big_bag.product.name.should == 'Potatoes'
-      big_bag.price.should == 5.50
-      big_bag.on_hand.should == 6
+      expect(big_bag.product.name).to eq 'Potatoes'
+      expect(big_bag.price).to eq 5.50
+      expect(big_bag.on_hand).to eq 6
     end
   end
 
@@ -262,7 +261,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise3.id.to_s => {'import_into' => 'product_list'}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
 
@@ -277,11 +276,6 @@ describe ProductImporter do
     end
 
     it "saves and updates" do
-
-      beetroot = Spree::Product.find_by_name('Beetroot').variants.first
-      pp beetroot
-      pp beetroot.product
-
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 0
@@ -290,15 +284,12 @@ describe ProductImporter do
       expect(@importer.updated_ids.count).to eq 2
 
       beetroot = Spree::Product.find_by_name('Beetroot').variants.first
-      pp beetroot
-      pp beetroot.product
-      beetroot.price.should == 3.50
-      beetroot.on_demand.should_not == true
+      expect(beetroot.price).to eq 3.50
+      expect(beetroot.on_demand).to_not eq true
 
       tomato = Spree::Product.find_by_name('Tomato').variants.first
-      pp tomato
-      tomato.price.should == 5.50
-      tomato.on_demand.should == true
+      expect(tomato.price).to eq 5.50
+      expect(tomato.on_demand).to eq true
     end
   end
 
@@ -313,7 +304,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise2.id.to_s => {'import_into' => 'inventories'}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
 
@@ -339,14 +330,14 @@ describe ProductImporter do
       sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
       cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
 
-      Float(beans_override.price).should == 3.20
-      beans_override.count_on_hand.should == 5
+      expect(Float(beans_override.price)).to eq 3.20
+      expect(beans_override.count_on_hand).to eq 5
 
-      Float(sprouts_override.price).should == 6.50
-      sprouts_override.count_on_hand.should == 6
+      expect(Float(sprouts_override.price)).to eq 6.50
+      expect(sprouts_override.count_on_hand).to eq 6
 
-      Float(cabbage_override.price).should == 1.50
-      cabbage_override.count_on_hand.should == 2001
+      expect(Float(cabbage_override.price)).to eq 1.50
+      expect(cabbage_override.count_on_hand).to eq 2001
     end
   end
 
@@ -361,7 +352,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise.id.to_s => {'import_into' => 'product_list'}, enterprise2.id.to_s => {'import_into' => 'inventories'}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
 
@@ -387,14 +378,14 @@ describe ProductImporter do
       sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
       garbanzos = Spree::Product.where(name: "Garbanzos").first
 
-      Float(beans_override.price).should == 3.20
-      beans_override.count_on_hand.should == 5
+      expect(Float(beans_override.price)).to eq 3.20
+      expect( beans_override.count_on_hand).to eq 5
 
-      Float(sprouts_override.price).should == 6.50
-      sprouts_override.count_on_hand.should == 6
+      expect(Float(sprouts_override.price)).to eq 6.50
+      expect(sprouts_override.count_on_hand).to eq 6
 
-      Float(garbanzos.price).should == 1.50
-      garbanzos.count_on_hand.should == 2001
+      expect(Float(garbanzos.price)).to eq 1.50
+      expect(garbanzos.count_on_hand).to eq 2001
     end
   end
 
@@ -410,7 +401,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise.id.to_s => {'import_into' => 'product_list'}, enterprise2.id.to_s => {'import_into' => 'product_list'}}
-      @importer = ProductImporter.new(file, user, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, user, start: 1, end: 100, settings: settings)
 
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
@@ -425,8 +416,8 @@ describe ProductImporter do
       expect(@importer.updated_ids).to be_a(Array)
       expect(@importer.updated_ids.count).to eq 1
 
-      Spree::Product.find_by_name('My Carrots').should be_a Spree::Product
-      Spree::Product.find_by_name('Your Potatoes').should == nil
+      expect(Spree::Product.find_by_name('My Carrots')).to be_a Spree::Product
+      expect(Spree::Product.find_by_name('Your Potatoes')).to eq nil
     end
 
     it "allows creating inventories for producers that a user's hub has permission for" do
@@ -437,7 +428,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise2.id.to_s => {'import_into' => 'inventories'}}
-      @importer = ProductImporter.new(file, user2, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, user2, start: 1, end: 100, settings: settings)
 
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
@@ -453,7 +444,7 @@ describe ProductImporter do
       expect(@importer.updated_ids.count).to eq 1
 
       beans = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
-      beans.count_on_hand.should == 777
+      expect(beans.count_on_hand).to eq 777
     end
 
     it "does not allow creating inventories for producers that a user's hubs don't have permission for" do
@@ -465,7 +456,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise.id.to_s => {'import_into' => 'inventories'}}
-      @importer = ProductImporter.new(file, user2, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, user2, start: 1, end: 100, settings: settings)
 
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
@@ -494,7 +485,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise.id.to_s => {'import_into' => 'product_list', 'reset_all_absent' => true}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
 
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
@@ -515,11 +506,11 @@ describe ProductImporter do
 
       expect(@importer.products_reset_count).to eq 2
 
-      Spree::Product.find_by_name('Carrots').on_hand.should == 5    # Present in file, added
-      Spree::Product.find_by_name('Beans').on_hand.should == 6      # Present in file, updated
-      Spree::Product.find_by_name('Sprouts').on_hand.should == 0    # In enterprise, not in file
-      Spree::Product.find_by_name('Cabbage').on_hand.should == 0    # In enterprise, not in file
-      Spree::Product.find_by_name('Lettuce').on_hand.should == 100  # In different enterprise; unchanged
+      expect(Spree::Product.find_by_name('Carrots').on_hand).to eq 5    # Present in file, added
+      expect(Spree::Product.find_by_name('Beans').on_hand).to eq 6      # Present in file, updated
+      expect(Spree::Product.find_by_name('Sprouts').on_hand).to eq 0    # In enterprise, not in file
+      expect(Spree::Product.find_by_name('Cabbage').on_hand).to eq 0    # In enterprise, not in file
+      expect(Spree::Product.find_by_name('Lettuce').on_hand).to eq 100  # In different enterprise; unchanged
     end
 
     it "can reset all inventory items for an enterprise that are not present in the uploaded file to zero stock" do
@@ -531,7 +522,7 @@ describe ProductImporter do
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
       settings = {enterprise2.id.to_s => {'import_into' => 'inventories', 'reset_all_absent' => true}}
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
 
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
@@ -548,17 +539,17 @@ describe ProductImporter do
 
       @importer.reset_absent(@importer.updated_ids)
 
-      #expect(@importer.products_reset_count).to eq 1
+      # expect(@importer.products_reset_count).to eq 1
 
       beans = VariantOverride.where(variant_id: product2.variants.first.id, hub_id: enterprise2.id).first
       sprouts = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
       cabbage = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
       lettuce = VariantOverride.where(variant_id: product5.variants.first.id, hub_id: enterprise.id).first
 
-      beans.count_on_hand.should == 6      # Present in file, created
-      sprouts.count_on_hand.should == 7    # Present in file, created
-      cabbage.count_on_hand.should == 0    # In enterprise, not in file (reset)
-      lettuce.count_on_hand.should == 96   # In different enterprise; unchanged
+      expect(beans.count_on_hand).to eq 6      # Present in file, created
+      expect(sprouts.count_on_hand).to eq 7    # Present in file, created
+      expect(cabbage.count_on_hand).to eq 0    # In enterprise, not in file (reset)
+      expect(lettuce.count_on_hand).to eq 96   # In different enterprise; unchanged
     end
 
     it "can overwrite fields with selected defaults when importing to product list" do
@@ -574,29 +565,29 @@ describe ProductImporter do
         'import_into' => 'product_list',
         'defaults' => {
           'on_hand' => {
-              'active' => true,
-              'mode' => 'overwrite_all',
-              'value' => '9000'
+            'active' => true,
+            'mode' => 'overwrite_all',
+            'value' => '9000'
           },
           'tax_category_id' => {
-              'active' => true,
-              'mode' => 'overwrite_empty',
-              'value' => tax_category2.id
+            'active' => true,
+            'mode' => 'overwrite_empty',
+            'value' => tax_category2.id
           },
           'shipping_category_id' => {
-              'active' => true,
-              'mode' => 'overwrite_all',
-              'value' => shipping_category.id
+            'active' => true,
+            'mode' => 'overwrite_all',
+            'value' => shipping_category.id
           },
           'available_on' => {
-              'active' => true,
-              'mode' => 'overwrite_all',
-              'value' => '2020-01-01'
+            'active' => true,
+            'mode' => 'overwrite_all',
+            'value' => '2020-01-01'
           }
         }
       }}
 
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, settings:  settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
 
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
@@ -612,16 +603,16 @@ describe ProductImporter do
       expect(@importer.updated_ids.count).to eq 2
 
       carrots = Spree::Product.find_by_name('Carrots')
-      carrots.on_hand.should == 9000
-      carrots.tax_category_id.should == tax_category.id
-      carrots.shipping_category_id.should == shipping_category.id
-      carrots.available_on.should be_within(1.day).of(Time.zone.local(2020, 1, 1))
+      expect(carrots.on_hand).to eq 9000
+      expect(carrots.tax_category_id).to eq tax_category.id
+      expect(carrots.shipping_category_id).to eq shipping_category.id
+      expect(carrots.available_on).to be_within(1.day).of(Time.zone.local(2020, 1, 1))
 
       potatoes = Spree::Product.find_by_name('Potatoes')
-      potatoes.on_hand.should == 9000
-      potatoes.tax_category_id.should == tax_category2.id
-      potatoes.shipping_category_id.should == shipping_category.id
-      potatoes.available_on.should be_within(1.day).of(Time.zone.local(2020, 1, 1))
+      expect(potatoes.on_hand).to eq 9000
+      expect(potatoes.tax_category_id).to eq tax_category2.id
+      expect(potatoes.shipping_category_id).to eq shipping_category.id
+      expect(potatoes.available_on).to be_within(1.day).of(Time.zone.local(2020, 1, 1))
     end
 
     it "can overwrite fields with selected defaults when importing to inventory" do
@@ -645,7 +636,7 @@ describe ProductImporter do
         }
       }}
 
-      @importer = ProductImporter.new(file, admin, {start: 1, end: 100, import_into: 'inventories', settings: import_settings})
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, import_into: 'inventories', settings: import_settings)
 
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
@@ -666,9 +657,9 @@ describe ProductImporter do
       sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
       cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
 
-      beans_override.count_on_hand.should == 9000
-      sprouts_override.count_on_hand.should == 7
-      cabbage_override.count_on_hand.should == 9000
+      expect(beans_override.count_on_hand).to eq 9000
+      expect(sprouts_override.count_on_hand).to eq 7
+      expect(cabbage_override.count_on_hand).to eq 9000
     end
   end
 end
@@ -677,15 +668,15 @@ private
 
 def filter(type, entries)
   valid_count = 0
-  entries.each do |line_number, entry|
+  entries.each do |_line_number, entry|
     validates_as = entry['validates_as']
 
-    valid_count += 1 if type == 'valid' and (validates_as != '')
-    valid_count += 1 if type == 'invalid' and (validates_as == '')
-    valid_count += 1 if type == 'create_product' and (validates_as == 'new_product' or validates_as == 'new_variant')
-    valid_count += 1 if type == 'update_product' and validates_as == 'existing_variant'
-    valid_count += 1 if type == 'create_inventory' and validates_as == 'new_inventory_item'
-    valid_count += 1 if type == 'update_inventory' and validates_as == 'existing_inventory_item'
+    valid_count += 1 if type == 'valid' && (validates_as != '')
+    valid_count += 1 if type == 'invalid' && (validates_as == '')
+    valid_count += 1 if type == 'create_product' && (validates_as == 'new_product' || validates_as == 'new_variant')
+    valid_count += 1 if type == 'update_product' && validates_as == 'existing_variant'
+    valid_count += 1 if type == 'create_inventory' && validates_as == 'new_inventory_item'
+    valid_count += 1 if type == 'update_inventory' && validates_as == 'existing_inventory_item'
   end
   valid_count
 end

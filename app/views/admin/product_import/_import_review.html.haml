@@ -1,4 +1,4 @@
-%h5 #{t('admin.product_import.import.validation_overview')}
+%h5= t('admin.product_import.import.validation_overview')
 %br
 
 %div{ng: {controller: 'ImportFeedbackCtrl'}}
@@ -11,9 +11,9 @@
         %i.fa.fa-info-circle.info
       %div.header-count
         %strong.item-count
-          {{count((entries | entriesFilterValid:"all"))}}
+          {{ count((entries | entriesFilterValid:"all")) }}
       %div.header-description
-        #{t('admin.product_import.import.entries_found')}
+        = t('admin.product_import.import.entries_found')
     %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"all")) == 0'}}
       = render 'entries_table', entries: 'all'
 
@@ -25,9 +25,9 @@
         %i.fa.fa-warning
       %div.header-count
         %strong.invalid-count
-          {{count((entries | entriesFilterValid:"invalid"))}}
+          {{ count((entries | entriesFilterValid:"invalid")) }}
       %div.header-description
-        #{t('admin.product_import.import.entries_with_errors')}
+        = t('admin.product_import.import.entries_with_errors')
     %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"invalid")) == 0'}}
       = render 'errors_list'
       %br
@@ -41,9 +41,9 @@
         %i.fa.fa-check-circle
       %div.header-count
         %strong.create-count
-          {{count((entries | entriesFilterValid:"create_product"))}}
+          {{ count((entries | entriesFilterValid:"create_product")) }}
       %div.header-description
-        #{t('admin.product_import.import.products_to_create')}
+        = t('admin.product_import.import.products_to_create')
     %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"create_product")) == 0'}}
       = render 'entries_table', entries: 'create_product'
 
@@ -55,9 +55,9 @@
         %i.fa.fa-check-circle
       %div.header-count
         %strong.update-count
-          {{count((entries | entriesFilterValid:"update_product"))}}
+          {{ count((entries | entriesFilterValid:"update_product")) }}
       %div.header-description
-        #{t('admin.product_import.import.products_to_update')}
+        = t('admin.product_import.import.products_to_update')
     %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"update_product")) == 0'}}
       = render 'entries_table', entries: 'update_product'
 
@@ -69,9 +69,9 @@
         %i.fa.fa-check-circle
       %div.header-count
         %strong.inv-create-count
-          {{count((entries | entriesFilterValid:"create_inventory"))}}
+          {{ count((entries | entriesFilterValid:"create_inventory")) }}
       %div.header-description
-        #{t('admin.product_import.import.inventory_to_create')}
+        = t('admin.product_import.import.inventory_to_create')
     %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"create_inventory")) == 0'}}
       = render 'entries_table', entries: 'create_inventory'
 
@@ -83,9 +83,9 @@
         %i.fa.fa-check-circle
       %div.header-count
         %strong.inv-update-count
-          {{count((entries | entriesFilterValid:"update_inventory"))}}
+          {{ count((entries | entriesFilterValid:"update_inventory")) }}
       %div.header-description
-        #{t('admin.product_import.import.inventory_to_update')}
+        = t('admin.product_import.import.inventory_to_update')
     %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"update_inventory")) == 0'}}
       = render 'entries_table', entries: 'update_inventory'
 
@@ -96,12 +96,11 @@
         %i.fa.fa-info-circle
       %div.header-count
         %strong.reset-count
-          {{resetTotal}}
+          {{ resetTotal }}
       %div.header-description
         -if @import_into == 'inventories'
-          #{t('admin.product_import.import.inventory_to_reset')}
+          = t('admin.product_import.import.inventory_to_reset')
         - else
-          #{t('admin.product_import.import.products_to_reset')}
-    -#%div.panel-content{ng: {hide: '!active'}}
+          = t('admin.product_import.import.products_to_reset')
 
   %br.panels.clearfix

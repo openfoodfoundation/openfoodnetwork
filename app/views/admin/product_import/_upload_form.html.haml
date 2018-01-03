@@ -1,6 +1,6 @@
 %div{ng: {app: 'ofn.admin'}}
 
-  %h5 #{t('admin.product_import.index.select_file')}
+  %h5= t('admin.product_import.index.select_file')
   %br
   = form_tag main_app.admin_product_import_path, multipart: true, class: 'product-import' do
     %label #{t('admin.product_import.index.spreadsheet')}

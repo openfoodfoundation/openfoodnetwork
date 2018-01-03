@@ -3,7 +3,7 @@
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-%h5 #{t('admin.product_import.save.final_results')}
+%h5= t('admin.product_import.save.final_results')
 %br
 
 %div.post-save-results{ng: {app: 'ofn.admin'}}
@@ -12,43 +12,43 @@
     %p
       %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_created_count} == 0, 'fa-check-circle': #{@importer.products_created_count} != 0}"}}
       %strong.created-count= @importer.products_created_count
-      #{t('admin.product_import.save.products_created')}
+      = t('admin.product_import.save.products_created')
 
   - if @importer.products_updated_count > 0
     %p
       %i.fa{ng: {class: "{'fa-info-circle': #{@importer.products_updated_count} == 0, 'fa-check-circle': #{@importer.products_updated_count} != 0}"}}
       %strong.updated-count= @importer.products_updated_count
-      #{t('admin.product_import.save.products_updated')}
+      = t('admin.product_import.save.products_updated')
 
   - if @importer.inventory_created_count > 0
     %p
       %i.fa{ng: {class: "{'fa-info-circle': #{@importer.inventory_created_count} == 0, 'fa-check-circle': #{@importer.inventory_created_count} != 0}"}}
       %strong.inv-created-count= @importer.inventory_created_count
-      #{t('admin.product_import.save.inventory_created')}
+      = t('admin.product_import.save.inventory_created')
 
   - if @importer.inventory_updated_count > 0
     %p
       %i.fa{ng: {class: "{'fa-info-circle': #{@importer.inventory_updated_count} == 0, 'fa-check-circle': #{@importer.inventory_updated_count} != 0}"}}
       %strong.inv-updated-count= @importer.inventory_updated_count
-      #{t('admin.product_import.save.inventory_updated')}
+      = t('admin.product_import.save.inventory_updated')
 
   - if @importer.products_reset_count > 0
     %p
       %i.fa.fa-info-circle
       %strong.reset-count= @importer.products_reset_count
       - if @import_into == 'inventories'
-        #{t('admin.product_import.save.inventory_reset')}
+        = t('admin.product_import.save.inventory_reset')
       - else
-        #{t('admin.product_import.save.products_reset')}
+        = t('admin.product_import.save.products_reset')
 
   %br
 
   - if @importer.errors.count == 0
-    %p #{t('admin.product_import.save.all_saved', { num: "#{@importer.total_saved_count}" })}
+    %p= t('admin.product_import.save.all_saved', { num: "#{@importer.total_saved_count}" })
   - else
-    %p #{t('admin.product_import.save.total_saved', { num: "#{@importer.total_saved_count}" })}
+    %p= t('admin.product_import.save.total_saved', { num: "#{@importer.total_saved_count}" })
     %br
-    %h5 #{t('admin.product_import.save.save_errors')}
+    %h5= t('admin.product_import.save.save_errors')
     - @importer.errors.full_messages.each do |error|
       %p.save-error
         &nbsp;-&nbsp; #{error}
@@ -56,8 +56,8 @@
   %br
   - if @importer.total_saved_count > 0
     - if @import_into == 'inventories'
-      %a.button{href: main_app.admin_inventory_path} #{t('admin.product_import.save.view_inventory')}
+      %a.button{href: main_app.admin_inventory_path}= t('admin.product_import.save.view_inventory')
     - else
-      %a.button{href: bulk_edit_admin_products_path + '?latest_import=true'} #{t('admin.product_import.save.view_products')}
+      %a.button{href: bulk_edit_admin_products_path + '?latest_import=true'}= t('admin.product_import.save.view_products')
 
-  %a.button{href: main_app.admin_product_import_path} #{t('admin.back')}
+  %a.button{href: main_app.admin_product_import_path}= t('admin.back')

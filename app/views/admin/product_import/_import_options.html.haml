@@ -1,4 +1,4 @@
-%h5 #{t('admin.product_import.import.options_and_defaults')}
+%h5= t('admin.product_import.import.options_and_defaults')
 %br
 
 - @importer.suppliers_index.each do |name, supplier_id|
@@ -38,7 +38,7 @@
         %div.header-icon.error
           %i.fa.fa-warning
         %div.header-description
-          #{t('admin.product_import.import.no_name')}
+          = t('admin.product_import.import.no_name')
           %span.header-error= " - #{t('admin.product_import.import.blank_supplier')}"
 
 %br.panels.clearfix

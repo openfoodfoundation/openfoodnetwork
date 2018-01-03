@@ -135,7 +135,7 @@ Openfoodnetwork::Application.routes.draw do
 
     get '/product_import', to: 'product_import#index'
     post '/product_import', to: 'product_import#import'
-    post '/product_import/process_data', to: 'product_import#process_data', as: 'product_import_process_async'
+    post '/product_import/validate_data', to: 'product_import#validate_data', as: 'product_import_process_async'
     post '/product_import/save_data', to: 'product_import#save_data', as: 'product_import_save_async'
     post '/product_import/reset_absent', to: 'product_import#reset_absent_products', as: 'product_import_reset_async'
     #post '/product_import/save', to: 'product_import#save', as: 'product_import_save'

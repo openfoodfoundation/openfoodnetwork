@@ -9,7 +9,7 @@
 
   %tr{ng: {show: 'import_into == "inventories"'}}
     %td.description
-      #{t('admin.product_import.import.default_stock')}
+      = t('admin.product_import.import.default_stock')
     %td
       = check_box_tag "settings[#{supplier_id}][defaults][count_on_hand][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['count_on_hand']['active']"
     %td
@@ -19,7 +19,7 @@
 
   %tr{ng: {show: 'import_into == "product_list"'}}
     %td.description
-      #{t('admin.product_import.import.default_stock')}
+      = t('admin.product_import.import.default_stock')
     %td
       = check_box_tag "settings[#{supplier_id}][defaults][on_hand][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['on_hand']['active']"
     %td
@@ -28,7 +28,7 @@
       = number_field_tag "settings[#{supplier_id}][defaults][on_hand][value]", 0, 'ng-model' => "settings[#{supplier_id}]['defaults']['on_hand']['value']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['on_hand']['active']"
   %tr{ng: {show: 'import_into == "product_list"'}}
     %td.description
-      #{t('admin.product_import.import.default_tax_cat')}
+      = t('admin.product_import.import.default_tax_cat')
     %td
       = check_box_tag "settings[#{supplier_id}][defaults][tax_category_id][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['tax_category_id']['active']"
     %td
@@ -37,7 +37,7 @@
       = select_tag "settings[#{supplier_id}][defaults][tax_category_id][value]", options_for_select(@tax_categories.map {|tc| [tc.name, tc.id]}), {prompt: 'None', class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['tax_category_id']['value']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['tax_category_id']['active']"}
   %tr{ng: {show: 'import_into == "product_list"'}}
     %td.description
-      #{t('admin.product_import.import.default_shipping_cat')}
+      = t('admin.product_import.import.default_shipping_cat')
     %td
       = check_box_tag "settings[#{supplier_id}][defaults][shipping_category_id][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['shipping_category_id']['active']"
     %td
@@ -46,7 +46,7 @@
       = select_tag "settings[#{supplier_id}][defaults][shipping_category_id][value]", options_for_select(@shipping_categories.map {|sc| [sc.name, sc.id]}), {prompt: 'None', class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['shipping_category_id']['value']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['shipping_category_id']['active']"}
   %tr{ng: {show: 'import_into == "product_list"'}}
     %td.description
-      #{t('admin.product_import.import.default_available_date')}
+      = t('admin.product_import.import.default_available_date')
     %td
       = check_box_tag "settings[#{supplier_id}][defaults][available_on][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['available_on']['active']"
     %td
@@ -56,7 +56,7 @@
 
   %tr
     %td.description
-      #{t('admin.product_import.import.reset_absent?')}
+      = t('admin.product_import.import.reset_absent?')
     %td
       = check_box_tag "settings[#{supplier_id}][reset_all_absent]", 1, false, :'ng-model' => "settings[#{supplier_id}]['reset_all_absent']", :'ng-change' => "toggleResetAbsent('#{supplier_id}')"
     %td

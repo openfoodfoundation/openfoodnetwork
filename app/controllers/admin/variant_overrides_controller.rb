@@ -60,7 +60,7 @@ module Admin
     end
 
     def inventory_import_dates
-      options = [{id: '0', name: 'All'}]
+      options = [{ id: '0', name: 'All' }]
 
       import_dates = VariantOverride.
         select('variant_overrides.import_date').

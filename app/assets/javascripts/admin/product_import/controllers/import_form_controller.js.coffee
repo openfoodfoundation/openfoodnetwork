@@ -79,7 +79,7 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
       $scope.updateProgress()
     ).error((data, status, headers, config) ->
       $scope.exception = data
-      console.log('Error: '+status)
+      console.error(data)
     )
 
   $scope.importSettings = null
@@ -116,7 +116,7 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
       $scope.updateProgress()
     ).error((data, status, headers, config) ->
       $scope.exception = data
-      console.log('Error: '+status)
+      console.error(data)
     )
 
   $scope.sortResults = (results) ->
@@ -149,7 +149,7 @@ angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter
         $scope.updates.products_reset = data
 
       ).error((data, status, headers, config) ->
-        console.log('Error: '+status)
+        console.error(data)
       )
 
   $scope.updateProgress = () ->

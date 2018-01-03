@@ -65,10 +65,10 @@ feature "Product Import", js: true do
 
       carrots = Spree::Product.find_by_name('Carrots')
       potatoes = Spree::Product.find_by_name('Potatoes')
-      potatoes.supplier.should == enterprise
-      potatoes.on_hand.should == 6
-      potatoes.price.should == 6.50
-      potatoes.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(potatoes.supplier).to eq enterprise
+      expect(potatoes.on_hand).to eq 6
+      expect(potatoes.price).to eq 6.50
+      expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       wait_until { page.find("a.button.view").present? }
 
@@ -107,6 +107,44 @@ feature "Product Import", js: true do
       expect(page).to_not have_selector 'input[type=submit][value="Save"]'
     end
 
+    it "handles validation and saving of named tax and shipping categories" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "Unknown Tax Category", shipping_category.name]
+        csv << ["Peas", "User Enterprise", "Vegetables", "7", "2.50", "1", "kg", tax_category2.name, "Unknown Shipping Category"]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      expect(page).to have_content "Select a spreadsheet to upload"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      expect(page).to have_selector 'a.button.proceed', visible: true
+      click_link 'Proceed'
+
+      import_data
+
+      expect(page).to have_selector '.item-count', text: "3"
+      expect(page).to have_selector '.invalid-count', text: "2"
+      expect(page).to have_selector '.create-count', text: "1"
+      expect(page).to_not have_selector '.update-count'
+
+      expect(page).to have_selector 'a.button.proceed', visible: true
+      click_link 'Proceed'
+
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to_not have_selector '.updated-count'
+
+      carrots = Spree::Product.find_by_name('Carrots')
+      expect(carrots.tax_category).to eq tax_category
+      expect(carrots.shipping_category).to eq shipping_category
+    end
+
     it "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
@@ -132,9 +170,9 @@ feature "Product Import", js: true do
       save_data
 
       carrots = Spree::Product.find_by_name('Carrots')
-      carrots.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
       potatoes = Spree::Product.find_by_name('Potatoes')
-      potatoes.variants.first.import_date.should be_within(1.minute).of DateTime.now
+      expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       click_link 'View Products'
 
@@ -204,14 +242,14 @@ feature "Product Import", js: true do
       sprouts_override = VariantOverride.where(variant_id: product3.variants.first.id, hub_id: enterprise2.id).first
       cabbage_override = VariantOverride.where(variant_id: product4.variants.first.id, hub_id: enterprise2.id).first
 
-      Float(beans_override.price).should == 3.20
-      beans_override.count_on_hand.should == 5
+      expect(Float(beans_override.price)).to eq 3.20
+      expect(beans_override.count_on_hand).to eq 5
 
-      Float(sprouts_override.price).should == 6.50
-      sprouts_override.count_on_hand.should == 6
+      expect(Float(sprouts_override.price)).to eq 6.50
+      expect(sprouts_override.count_on_hand).to eq 6
 
-      Float(cabbage_override.price).should == 1.50
-      cabbage_override.count_on_hand.should == 2001
+      expect(Float(cabbage_override.price)).to eq 1.50
+      expect(cabbage_override.count_on_hand).to eq 2001
 
       click_link 'View Inventory'
       expect(page).to have_content 'Inventory'
@@ -300,8 +338,8 @@ feature "Product Import", js: true do
 
       expect(page).to have_selector '.created-count', text: '1'
 
-      Spree::Product.find_by_name('My Carrots').should be_a Spree::Product
-      Spree::Product.find_by_name('Your Potatoes').should == nil
+      expect(Spree::Product.find_by_name('My Carrots')).to be_a Spree::Product
+      expect(Spree::Product.find_by_name('Your Potatoes')).to be_nil
     end
   end
 
