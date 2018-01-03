@@ -4,6 +4,10 @@ engines:
     channel: rubocop-0-48
   scss-lint:
     enabled: false
+  duplication:
+    enabled: true
+    exclude_patterns:
+    - "db/**"
 ratings:
   paths:
   - app/**
