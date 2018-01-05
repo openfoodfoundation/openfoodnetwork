@@ -11,8 +11,7 @@ module Spree
     let(:attributes) { [:id, :options_text, :price, :on_hand, :unit_value, :unit_description, :on_demand, :display_as, :display_name] }
 
     before do
-      stub_authentication!
-      Spree.user_class.stub :find_by_spree_api_key => current_api_user
+      allow(controller).to receive(:spree_current_user) { current_api_user }
     end
 
     context "as a normal user" do
