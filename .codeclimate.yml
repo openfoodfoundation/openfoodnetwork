@@ -1,18 +1,35 @@
-engines:
+version: "2"
+plugins:
   rubocop:
     enabled: true
-    channel: rubocop-0-48
+    channel: "rubocop-0-48"
   scss-lint:
     enabled: false
   duplication:
     enabled: true
     exclude_patterns:
     - "db/**"
-ratings:
-  paths:
-  - app/**
-  - lib/**
-  - "**.rb"
-exclude_paths:
-- spec/**/*
-- vendor/**/*
+checks:
+  argument-count:
+    enabled: false
+  complex-logic:
+    enabled: true
+  file-lines:
+    enabled: false
+  method-complexity:
+    enabled: false
+  method-count:
+    enabled: false
+  method-lines:
+    enabled: false
+  nested-control-flow:
+    enabled: true
+  return-statements:
+    enabled: true
+  similar-code:
+    enabled: true
+  identical-code:
+    enabled: true
+exclude_patterns:
+- "spec/**/*"
+- "vendor/**/*"
