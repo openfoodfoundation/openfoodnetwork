@@ -53,6 +53,10 @@ Lint/UselessAssignment:
 Rails/DynamicFindBy:
   Enabled: false
 
+# Same as above, #find_by is not available until Rails 4
+Rails/FindBy:
+  Enabled: false
+
 # This should be the programmer's discretion, perhaps we should review all of
 # the uses of it an make specific exceptions though.
 Rails/SkipsModelValidations:
