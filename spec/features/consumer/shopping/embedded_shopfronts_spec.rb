@@ -22,10 +22,10 @@ feature "Using embedded shopfront functionality", js: true do
       add_variant_to_order_cycle(exchange, variant)
 
       Spree::Config[:enable_embedded_shopfronts] = true
-      Spree::Config[:embedded_shopfronts_whitelist] = 'localhost'
+      Spree::Config[:embedded_shopfronts_whitelist] = 'test.com'
 
       page.driver.browser.js_errors = false
-      allow_any_instance_of(ApplicationController).to receive(:embedded_shopfront_referer).and_return('localhost')
+      allow_any_instance_of(ActionDispatch::Request).to receive(:referer).and_return('https://www.test.com')
       Capybara.current_session.driver.visit('spec/support/views/iframe_test.html')
     end
 
