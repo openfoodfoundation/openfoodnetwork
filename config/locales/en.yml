@@ -1535,9 +1535,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   registration_finished_headline: "Finished!"
   registration_finished_thanks: "Thanks for filling out the details for %{enterprise}."
   registration_finished_login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
-  registration_finished_activate: "Activate %{enterprise}."
-  registration_finished_activate_instruction_html: "We've sent a confirmation email to <strong>%{email}</strong> if it hasn't been activated before.<br/>
-Please follow the instructions there to make your enterprise visible on the Open Food Network."
   registration_finished_action: "Open Food Network home"
   registration_contact_name: 'Contact Name'
 
