@@ -55,6 +55,12 @@ Install the project's gem dependencies:
 
     cd openfoodnetwork
     bundle install
+    
+If you run into an issue installing libv8 when you bundle, try running the following commands:
+
+    gem install libv8 -v ‘3.16.14.11’ -- --with-system-v8 
+    or
+    gem install libv8 -v 3.16.14.11 -- --with-system-v8
 
 Configure the site:
 
