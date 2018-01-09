@@ -45,7 +45,7 @@ You can download the source with the command:
 
 ### Get it running
 
-For those new to Rails, the following tutorial will help get you up to speed with configuring a Rails environment: http://guides.rubyonrails.org/getting_started.html .
+For those new to Rails, the following tutorial will help get you up to speed with configuring a Rails environment: http://guides.rubyonrails.org/getting_started.html.  If you run into any issues getting your local environment up and running, please consult the wiki for this repository.
 
 First, check your dependencies: Ensure that you have Ruby 2.1.5 installed:
 
@@ -56,12 +56,6 @@ Install the project's gem dependencies:
     cd openfoodnetwork
     bundle install
     
-If you run into an issue installing libv8 when you bundle, try running the following commands:
-
-    gem install libv8 -v ‘3.16.14.11’ -- --with-system-v8 
-    or
-    gem install libv8 -v 3.16.14.11 -- --with-system-v8
-
 Configure the site:
 
     cp config/application.yml.example config/application.yml
