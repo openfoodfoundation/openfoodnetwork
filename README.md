@@ -45,7 +45,7 @@ You can download the source with the command:
 
 ### Get it running
 
-For those new to Rails, the following tutorial will help get you up to speed with configuring a Rails environment: http://guides.rubyonrails.org/getting_started.html.  If you run into any issues getting your local environment up and running, please consult the (wiki)[https://github.com/openfoodfoundation/openfoodnetwork/wiki].
+For those new to Rails, the following tutorial will help get you up to speed with configuring a Rails environment: http://guides.rubyonrails.org/getting_started.html.  If you run into any issues getting your local environment up and running, please consult the [wiki](https://github.com/openfoodfoundation/openfoodnetwork/wiki).
 
 First, check your dependencies: Ensure that you have Ruby 2.1.5 installed:
 
