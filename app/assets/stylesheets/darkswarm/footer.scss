@@ -88,6 +88,10 @@ footer {
 
     @include panepadding;
 
+    div.row a img {
+      margin-bottom: 20px;
+    }
+
     .row {
       &, p, h1, h2, h3, h4, h5, h6 {
         color: $disabled-med;
