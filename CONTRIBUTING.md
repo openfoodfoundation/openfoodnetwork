@@ -9,28 +9,32 @@ We love pull requests from everyone. Any contribution is valuable, but there are
 
 Set up your local development environment by following the appropriate guide from the `Development environment setup` section in the [developer wiki](https://github.com/openfoodfoundation/openfoodnetwork/wiki).
 
-Fork the repo using the `Fork` button in the top-right corner of this screen. Then add the your fork as a remote on your local machine:
+Add an `upstream` remote that points to the main repo:
 
     cd ~/location-of-your-local-ofn-repo
-    git remote add your-username https://github.com/your-username/openfoodnetwork
+    git remote add upstream https://github.com/openfoodfoundation/openfoodnetwork
 
-Fetch the latest version of `master` from the main repo:
+If you haven't already done so, fork this repo using the `Fork` button in the top-right corner of this screen. Then ensure that your fork is listed as the `origin` remote on your local machine.
 
-    git fetch origin master
+    git remote set-url origin https://github.com/your-username/openfoodnetwork
 
-Create a new branch on your local machine for (based on `origin/master`):
+Fetch the latest version of `master` from `upstream` (ie. the main repo):
 
-    git checkout -b branch-name-here --no-track origin/master
+    git fetch upstream master
+
+Create a new branch on your local machine for (based on `upstream/master`):
+
+    git checkout -b branch-name-here --no-track upstream/master
 
 If you want to run the whole test suite, we recommend using a free CI service to run your tests in parallel. Running the whole suite locally in series is likely to take > 40 minutes. [TravisCI][travis] and [SemaphoreCI][semaphore] both work great in our experience. Either way, make sure the tests pass on your new branch:
 
-    rspec spec
+    bundle exec rspec spec
 
 ## Making a change
 
-Make your changes to the codebase. We recommend using TDD. Make changes and get the test suite back to green.
+Make your changes to the codebase. We recommend using TDD. Add a test, make changes and get the test suite back to green.
 
-    rspec spec
+    bundle exec rspec spec
 
 Once the tests are passing you can commit your changes. See [Making a great commit][great-commit] for more tips.
 
@@ -39,11 +43,11 @@ Once the tests are passing you can commit your changes. See [Making a great comm
 
 Push your changes to a branch on your fork:
 
-    git push your-username branch-name-here
+    git push origin branch-name-here
 
 ## Submitting a Pull Request
 
-Use the GitHub UI to submit a [new pull request][pr] against origin/master. To increase the chances that your pull request is swiftly accepted please have a look at our guide to [[making a great pull request]].
+Use the GitHub UI to submit a [new pull request][pr] against upstream/master. To increase the chances that your pull request is swiftly accepted please have a look at our guide to [[making a great pull request]].
 
 TL;DR:
 * Write tests
