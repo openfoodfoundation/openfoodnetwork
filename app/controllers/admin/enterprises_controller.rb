@@ -11,7 +11,6 @@ module Admin
     before_filter :load_methods_and_fees, :only => [:edit, :update]
     before_filter :load_groups, :only => [:new, :edit, :update, :create]
     before_filter :load_taxons, :only => [:new, :edit, :update, :create]
-    before_filter :load_roles, only: :edit
     before_filter :check_can_change_sells, only: :update
     before_filter :check_can_change_bulk_sells, only: :bulk_update
     before_filter :check_can_change_owner, only: :update
@@ -184,11 +183,6 @@ module Admin
 
     def load_taxons
       @taxons = Spree::Taxon.order(:name)
-    end
-
-    def load_roles
-      @enterprise_roles = EnterpriseRole.find_all_by_enterprise_id(@enterprise.id)
-      @current_contact = @enterprise.contact.id
     end
 
     def update_tag_rules(tag_rules_attributes)

@@ -24,8 +24,8 @@
 
   - if full_permissions
     .eight.columns.omega
-      %select.select2.fullwidth{id: 'receives_notifications_dropdown', name: 'receives_notifications', ng: {model: 'receivesNotifications', init: "receivesNotifications = '#{@current_contact}'"}}
-        %option{ng: {repeat: 'user in Enterprise.users', selected: "user.id == #{@current_contact}", hide: '!user.confirmed'}, value: '{{user.id}}'}
+      %select.select2.fullwidth{id: 'receives_notifications_dropdown', name: 'receives_notifications', ng: {model: 'receivesNotifications', init: "receivesNotifications = '#{@enterprise.contact.id}'"}}
+        %option{ng: {repeat: 'user in Enterprise.users', selected: "user.id == #{@enterprise.contact.id}", hide: '!user.confirmed'}, value: '{{user.id}}'}
           {{user.email}}
 
 .row
