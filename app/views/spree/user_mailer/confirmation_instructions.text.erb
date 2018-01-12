@@ -1,0 +1,9 @@
+<%= t(:email_signup_greeting) %>
+
+<%= t(:email_signup_welcome, sitename: Spree::Config[:site_name]) %>
+
+<%= t(:email_confirmation_activate_account) %>
+
+<%= t(:email_confirmation_click_link) %>
+
+<%= link_to t(:email_confirmation_link_label), spree.spree_user_confirmation_url(confirmation_token: @user.confirmation_token) %>
