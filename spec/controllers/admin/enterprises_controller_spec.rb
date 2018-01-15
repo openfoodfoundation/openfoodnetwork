@@ -108,10 +108,10 @@ module Admin
       let(:enterprise2) { create(:distributor_enterprise) }
       let(:manager) { create(:user, enterprise_limit: 10, enterprises: [enterprise2]) }
       let(:time_zone) { Spree::Zone.create(:name => 'South zone')}
-      let(:shipping_method1) { Spree::ShippingMethod.create(name: 'Pickup', zone_id: time_zone.id, require_ship_address: true, calculator_type: 'OpenFoodNetwork::Calculator::Weight', distributor_ids: [enterprise1.id]) }
-      let(:shipping_method2) { Spree::ShippingMethod.create(name: 'Delivery', zone_id: time_zone.id, require_ship_address: true, calculator_type: 'OpenFoodNetwork::Calculator::Weight', distributor_ids: [enterprise2.id]) }
-      let(:payment_method1) { Spree::PaymentMethod.create(:name => 'Online', distributor_ids: [enterprise1.id]) }
-      let(:payment_method2) { Spree::PaymentMethod.create(:name => 'COD', distributor_ids: [enterprise2.id]) }
+      let(:shipping_method1) { create(:shipping_method, name: 'Pickup', zone_id: time_zone.id, require_ship_address: true, calculator_type: 'OpenFoodNetwork::Calculator::Weight', distributor_ids: [enterprise1.id]) }
+      let(:shipping_method2) { create(:shipping_method, name: 'Delivery', zone_id: time_zone.id, require_ship_address: true, calculator_type: 'OpenFoodNetwork::Calculator::Weight', distributor_ids: [enterprise2.id]) }
+      let(:payment_method1) { create(:payment_method, :name => 'Online', distributor_ids: [enterprise1.id]) }
+      let(:payment_method2) { create(:payment_method, :name => 'COD', distributor_ids: [enterprise2.id]) }
       let(:enterprise_fee1) { create(:enterprise_fee, :enterprise_id => enterprise1.id) }
       let(:enterprise_fee2) { create(:enterprise_fee, :enterprise_id => enterprise2.id) }
 
