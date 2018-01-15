@@ -7,7 +7,6 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
   attributes :require_login, :allow_guest_orders, :allow_order_changes
 
   has_one :owner, serializer: Api::Admin::UserSerializer
-  has_one :contact, serializer: Api::Admin::UserSerializer
   has_many :users, serializer: Api::Admin::UserSerializer
 
   def tag_groups
