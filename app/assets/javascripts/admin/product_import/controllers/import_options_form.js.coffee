@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "ImportOptionsFormCtrl", ($scope, $rootScope, ProductImportService) ->
+angular.module("admin.productImport").controller "ImportOptionsFormCtrl", ($scope, $rootScope, ProductImportService) ->
 
   $scope.initForm = () ->
     $scope.settings = {} if $scope.settings == undefined

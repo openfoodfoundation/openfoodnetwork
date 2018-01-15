@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "ProductImportService", ($rootScope) ->
+angular.module("admin.productImport").factory "ProductImportService", ($rootScope) ->
   new class ProductImportService
     suppliers: {}
     resetTotal: 0

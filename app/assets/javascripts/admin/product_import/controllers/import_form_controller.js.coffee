@@ -1,4 +1,4 @@
-angular.module("ofn.admin").controller "ImportFormCtrl", ($scope, $http, $filter, ProductImportService, $timeout) ->
+angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $http, $filter, ProductImportService, $timeout) ->
 
   $scope.entries = {}
   $scope.update_counts = {}

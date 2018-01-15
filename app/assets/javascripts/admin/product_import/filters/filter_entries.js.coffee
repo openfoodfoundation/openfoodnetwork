@@ -1,4 +1,4 @@
-angular.module("ofn.admin").filter 'entriesFilterValid', ->
+angular.module("admin.productImport").filter 'entriesFilterValid', ->
   (entries, type) ->
     if type == 'all'
       return entries
@@ -18,7 +18,7 @@ angular.module("ofn.admin").filter 'entriesFilterValid', ->
 
     filtered
 
-angular.module("ofn.admin").filter 'entriesFilterSupplier', ->
+angular.module("admin.productImport").filter 'entriesFilterSupplier', ->
   (entries, supplier) ->
     if supplier == 'all'
       return entries
