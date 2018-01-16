@@ -28,7 +28,7 @@ feature "Using embedded shopfront functionality", js: true do
 	  end	  
 	end
 
-	it "displays powered by OFN text at bottom of page" do
+    it "displays powered by OFN text at bottom of page" do
       expect(page).to have_selector 'iframe#group_test_iframe'
  
       within_frame 'group_test_iframe' do
@@ -48,9 +48,9 @@ feature "Using embedded shopfront functionality", js: true do
         within 'div#group-page' do
           expect(page).to have_no_selector 'div.contact-container'
           expect(page).to have_no_content '#{group.address.address1}'
-	  	end
+        end
 	  end
-	end
+    end
 
 	it "does not display the header when embedded" do
 	  expect(page).to have_selector 'iframe#group_test_iframe'
@@ -60,6 +60,19 @@ feature "Using embedded shopfront functionality", js: true do
 	  		expect(page).to have_no_selector 'header'
 	  	    expect(page).to have_no_selector 'img.group-logo'
 	  	    expect(page).to have_no_selector 'h2.group-name'
+	  	end
+	  end
+	end
+
+
+	it 'opens links to shops in a new window' do
+	  expect(page).to have_selector 'iframe#group_test_iframe'
+
+	  within_frame 'group_test_iframe' do
+	  	within 'div#group-page' do
+	  	  enterprise_links = page.all(:xpath, "//*[contains(@href, 'enterprise-5/shop')]", :visible => :false).count
+	  	  enterprise_links_with_target_blank = page.all(:xpath, "//*[contains(@href, 'enterprise-5/shop') and @target = '_blank']", :visible => :false).count
+	  	  expect(enterprise_links).to equal(enterprise_links_with_target_blank)	
 	  	end
 	  end
 	end

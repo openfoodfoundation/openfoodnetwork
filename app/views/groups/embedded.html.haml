@@ -59,8 +59,115 @@
                       id: "{{producer.hash}}"}
 
                         .small-12.columns
-                          = render "producers/skinny"
-                          = render "producers/fat"
+                          .row.active_table_row{"ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
+                            .columns.small-12.medium-8.large-8.skinny-head
+                              %span{"ng-if" => "::producer.is_distributor" }
+                                %a.is_distributor{"ng-href" => "{{::producer.path}}", target: "_blank"}
+                                  .row.vertical-align-middle
+                                    .columns.small-2.medium-2.large-2
+                                      %i{ng: {class: "::producer.producer_icon_font"}}
+                                    .columns.small-10.medium-10.large-10
+                                      %span.margin-top
+                                        %strong{"ng-bind" => "::producer.name"}
+                              %span.producer-name{"ng-if" => "::!producer.is_distributor" }
+                                .row.vertical-align-middle
+                                  .columns.small-2.medium-2.large-2
+                                    %i{ng: {class: "::producer.producer_icon_font"}}
+                                  .columns.small-10.medium-10.large-10
+                                    %span.margin-top
+                                      %strong{"ng-bind" => "::producer.name"}
+                            .columns.small-6.medium-2.large-2
+                              %span.margin-top{"ng-bind" => "::producer.address.city"}
+                            .columns.small-4.medium-1.large-1
+                              %span.margin-top{"ng-bind" => "::producer.address.state_name | uppercase"}
+                            .columns.small-2.medium-1.large-1.text-right
+                              %span.margin-top
+                                %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
+
+                          .row.active_table_row{"ng-if" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
+
+                            .columns.small-12.medium-7.large-7.fat
+                              / Will add in long description available once clean up HTML formatting producer.long_description
+                              %div{"ng-if" => "::producer.description"}
+                                %label
+                                  = t :producers_about
+                                %img.right.show-for-medium-up{"ng-src" => "{{::producer.logo}}" }
+                                %p.text-small{ "ng-bind" => "::producer.description"}
+                              %div.show-for-medium-up{"ng-if" => "::producer.description.length==0"}
+                                %label &nbsp;
+
+                            .columns.small-12.medium-5.large-5.fat
+
+                              %div{"ng-if" => "::producer.supplied_taxons"}
+                                %label
+                                  = t :producers_buy
+                                %p.trans-sentence
+                                  %div
+                                    %span.fat-taxons{"ng-repeat" => "taxon in producer.supplied_taxons"}
+                                      %render-svg{path: "{{taxon.icon}}"}
+                                      %span{"ng-bind" => "::taxon.name"}
+                                  %div
+                                    %span.fat-properties{"ng-repeat" => "property in producer.supplied_properties"}
+                                      %span{"ng-bind" => "property.presentation"}
+
+                              %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
+                                &nbsp;
+
+                              %div{"ng-if" => "::producer.email_address || producer.website || producer.phone"}
+                                %label
+                                  = t :producers_contact
+
+                                %p.word-wrap{"ng-if" => "::producer.phone"}
+                                  = t :producers_contact_phone
+                                  %span{"ng-bind" => "::producer.phone"}
+
+                                %p.word-wrap{"ng-if" => "::producer.email_address"}
+                                  %a{"ng-href" => "{{::producer.email_address | stripUrl}}", target: "_blank", mailto: true}
+                                    %span.email{"ng-bind" => "::producer.email_address | stripUrl"}
+
+                                %p.word-wrap{"ng-if" => "::producer.website"}
+                                  %a{"ng-href" => "http://{{::producer.website | stripUrl}}", target: "_blank" }
+                                    %span{"ng-bind" => "::producer.website | stripUrl"}
+
+                              %div{"ng-if" => "::producer.twitter || producer.facebook || producer.linkedin || producer.instagram"}
+                                %label
+                                  = t :producers_social
+                                .follow-icons
+                                  %span{"ng-if" => "::producer.twitter"}
+                                    %a{"ng-href" => "http://twitter.com/{{::producer.twitter}}", target: "_blank"}
+                                      %i.ofn-i_041-twitter
+
+                                  %span{"ng-if" => "::producer.facebook"}
+                                    %a{"ng-href" => "http://{{::producer.facebook | stripUrl}}", target: "_blank"}
+                                      %i.ofn-i_044-facebook
+
+                                  %span{"ng-if" => "::producer.linkedin"}
+                                    %a{"ng-href" => "http://{{::producer.linkedin | stripUrl}}", target: "_blank"}
+                                      %i.ofn-i_042-linkedin
+
+                                  %span{"ng-if" => "::producer.instagram"}
+                                    %a{"ng-href" => "http://instagram.com/{{::producer.instagram}}", target: "_blank"}
+                                      %i.ofn-i_043-instagram
+
+                          .row.active_table_row.pad-top{"ng-if" => "open() && producer.hubs"}
+                            .columns.small-12
+                              .row
+                                .columns.small-12.fat
+                                  %div{"ng-if" => "::producer.name"}
+                                    %label
+                                      = t :producers_buy_at_html, {enterprise: '<span class="turquoise" ng-bind="::producer.name"></span>'.html_safe}
+                                  %div.show-for-medium-up{"ng-if" => "::!producer.name"}
+                                    &nbsp;
+                              .row.cta-container
+                                .columns.small-12
+                                  %a.cta-hub{"ng-repeat" => "hub in producer.hubs | visible | orderBy:'-active'",
+                                  "ng-href" => "{{::hub.path}}", target: "_blank", "ofn-change-hub" => "hub",
+                                  "ng-class" => "::{primary: hub.active, secondary: !hub.active}"}
+                                    %i.ofn-i_033-open-sign{"ng-if" => "::hub.active"}
+                                    %i.ofn-i_032-closed-sign{"ng-if" => "::!hub.active"}
+                                    .hub-name{"ng-bind" => "::hub.name"}
+                                    .button-address{"ng-bind" => "::[hub.address.city, hub.address.state_name] | printArray"}
+  
 
                       = render 'shared/components/enterprise_no_results'
 
@@ -84,8 +191,103 @@
                       "ng-class" => "{'is_profile' : hub.category == 'hub_profile', 'closed' : !open(), 'open' : open(), 'inactive' : !hub.active, 'current' : current()}",
                       "ng-controller" => "GroupEnterpriseNodeCtrl"}
                         .small-12.columns
-                          = render 'shops/skinny'
-                          = render 'shops/fat'
+                          .row.active_table_row{"ng-if" => "hub.is_distributor", "ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
+                            .columns.small-12.medium-5.large-5.skinny-head
+                              %a.hub{"ng-href" => "{{::hub.path}}", target: "_blank", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub", "data-is-link" => "true"}
+                                %i{ng: {class: "::hub.icon_font"}}
+                                %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
+
+                            .columns.small-4.medium-2.large-2
+                              %span.margin-top{"ng-bind" => "::hub.address.city"}
+                            .columns.small-2.medium-1.large-1
+                              %span.margin-top{"ng-bind" => "::hub.address.state_name | uppercase"}
+                              %span.margin-top{"ng-if" => "hub.distance != null && hub.distance > 0"} ({{ hub.distance / 1000 | number:0 }} km)
+
+                            .columns.small-4.medium-3.large-3.text-right{"ng-if" => "::hub.active"}
+                              %a.hub.open_closed{"ng-href" => "{{::hub.path}}", target: "_blank", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
+                                %i.ofn-i_033-open-sign
+                                %span.margin-top{ ng: { if: "::current()" } }
+                                  %em= t :hubs_shopping_here
+                                %span.margin-top{ ng: { if: "::!current()" } }
+                                  %span{"ng-bind" => "::hub.orders_close_at | sensible_timeframe"}
+
+                            .columns.small-4.medium-3.large-3.text-right{"ng-if" => "::!hub.active"}
+                              %a.hub.open_closed{"ng-href" => "{{::hub.path}}", target: "_blank", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
+                                %i.ofn-i_032-closed-sign
+                                %span.margin-top{ ng: { if: "::current()" } }
+                                  %em= t :hubs_shopping_here
+                                %span.margin-top{ ng: { if: "::!current()" } }
+                                  = t :hubs_orders_closed
+
+                            .columns.small-2.medium-1.large-1.text-right
+                              %span.margin-top
+                                %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
+
+                          .row.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed"}
+                            .columns.small-12.medium-6.large-5.skinny-head
+                              %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}"}
+                                %i{ng: {class: "hub.icon_font"}}
+                                %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
+
+                            .columns.small-4.medium-2.large-2
+                              %span.margin-top{"ng-bind" => "::hub.address.city"}
+                            .columns.small-2.medium-1.large-1
+                              %span.margin-top{"ng-bind" => "::hub.address.state_name | uppercase"}
+
+                            .columns.small-6.medium-3.large-4.text-right
+                              %span.margin-top{ ng: { if: "::!current()" } }
+                                %em= t :hubs_profile_only
+
+                          .row.active_table_row{"ng-show" => "open()", "ng-click" => "toggle($event)", "ng-class" => "{'open' : !ofn-i_032-closed-sign()}"}
+                            .columns.small-12.medium-6.large-5.fat
+                              %div{"ng-if" => "::hub.taxons"}
+                                %label
+                                  = t :hubs_buy
+                                .trans-sentence
+                                  %div
+                                    %span.fat-taxons{"ng-repeat" => "taxon in hub.taxons"}
+                                      %render-svg{path: "{{taxon.icon}}"}
+                                      %span{"ng-bind" => "::taxon.name"}
+                                  %div
+                                    %span.fat-properties{"ng-repeat" => "property in hub.distributed_properties"}
+                                      %span{"ng-bind" => "property.presentation"}
+                              %div.show-for-medium-up{"ng-if" => "::hub.taxons.length==0"}
+                                &nbsp;
+                            .columns.small-12.medium-3.large-2.fat
+                              %div{"ng-if" => "::(hub.pickup || hub.delivery)"}
+                                %label
+                                  = t :hubs_delivery_options
+                                %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-1
+                                  %li.pickup{"ng-if" => "::hub.pickup"}
+                                    %i.ofn-i_038-takeaway
+                                    = t :hubs_pickup
+                                  %li.delivery{"ng-if" => "::hub.delivery"}
+                                    %i.ofn-i_039-delivery
+                                    = t :hubs_delivery
+                            .columns.small-12.medium-3.large-5.fat
+                              %div{"ng-if" => "::hub.producers"}
+                                %label
+                                  = t :hubs_producers
+                                %ul.small-block-grid-2.medium-block-grid-1.large-block-grid-2{"ng-class" => "{'show-more-producers' : toggleMoreProducers}", "class" => "producers-list"}
+                                  %li{"ng-repeat" => "enterprise in hub.producers | limitTo:7"}
+                                    %enterprise-modal
+                                      %i.ofn-i_036-producers
+                                      %span{"ng-bind" => "::enterprise.name"}
+                                  %li{"data-is-link" => "true", "class" => "more-producers-link", "ng-show" => "::hub.producers.length>7"}
+                                    %a{"ng-click" => "toggleMoreProducers=!toggleMoreProducers"}
+                                      .more
+                                        +
+                                        %span{"ng-bind" => "::hub.producers.length-7"}
+                                        = t :label_more
+                                      .less
+                                        = t :label_less
+                                  %li{"ng-repeat" => "enterprise in hub.producers.slice(7,hub.producers.length)", "class" => "additional-producer"}
+                                    %enterprise-modal
+                                      %i.ofn-i_036-producers
+                                      %span{"ng-bind" => "::enterprise.name"}
+                              %div.show-for-medium-up{"ng-if" => "::hub.producers.length==0"}
+                                &nbsp;
+
 
                       = render 'shared/components/enterprise_no_results'
 
