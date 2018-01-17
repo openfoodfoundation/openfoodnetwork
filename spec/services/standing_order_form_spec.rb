@@ -1,6 +1,4 @@
 describe StandingOrderForm do
-  let(:error_t_scope) { 'activemodel.errors.models.standing_order_form.attributes' }
-
   describe "creating a new standing order" do
     let!(:shop) { create(:distributor_enterprise) }
     let!(:customer) { create(:customer, enterprise: shop) }
@@ -225,7 +223,6 @@ describe StandingOrderForm do
               expect(payments.with_state('void').count).to be 0
               expect(payments.with_state('checkout').count).to be 1
               expect(payments.with_state('checkout').first.payment_method).to eq payment_method
-              expect(form.errors[:credit_card]).to include I18n.t("#{error_t_scope}.credit_card.blank")
             end
           end
         end
@@ -241,7 +238,6 @@ describe StandingOrderForm do
             expect(payments.with_state('void').count).to be 0
             expect(payments.with_state('checkout').count).to be 1
             expect(payments.with_state('checkout').first.payment_method).to eq payment_method
-            expect(form.errors[:payment_method]).to include I18n.t("#{error_t_scope}.payment_method.invalid_type")
           end
         end
       end
@@ -257,7 +253,6 @@ describe StandingOrderForm do
           expect(payments.with_state('void').count).to be 0
           expect(payments.with_state('checkout').count).to be 1
           expect(payments.with_state('checkout').first.payment_method).to eq payment_method
-          expect(form.errors[:payment_method]).to include I18n.t("#{error_t_scope}.payment_method.not_available_to_shop", shop: standing_order.shop.name)
         end
       end
     end
@@ -603,7 +598,6 @@ describe StandingOrderForm do
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
         expect(line_items.count).to be 0
         expect(order.reload.total.to_f).to eq 59.97
-        expect(form.json_errors.keys).to eq [:standing_line_items]
       end
     end
   end
@@ -640,7 +634,6 @@ describe StandingOrderForm do
         line_items = Spree::LineItem.where(order_id: standing_order.orders, variant_id: variant.id)
         expect(line_items.count).to be 1
         expect(order.reload.total.to_f).to eq 19.99
-        expect(form.json_errors.keys).to eq [:standing_line_items]
       end
     end
   end

@@ -1,11 +1,7 @@
 require 'open_food_network/proxy_order_syncer'
 
 class StandingOrderForm
-  include ActiveModel::Naming
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
-
-  attr_accessor :standing_order, :params, :fee_calculator, :order_update_issues
+  attr_accessor :standing_order, :params, :fee_calculator, :order_update_issues, :validator
 
   delegate :orders, :order_cycles, :bill_address, :ship_address, :standing_line_items, to: :standing_order
   delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :proxy_orders, to: :standing_order
@@ -14,22 +10,14 @@ class StandingOrderForm
   delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
   delegate :credit_card_id, :credit_card, to: :standing_order
 
-  validates_presence_of :shop, :customer, :schedule, :payment_method, :shipping_method
-  validates_presence_of :bill_address, :ship_address, :begins_at
-  validate :ends_at_after_begins_at?
-  validate :customer_allowed?
-  validate :schedule_allowed?
-  validate :payment_method_allowed?
-  validate :shipping_method_allowed?
-  validate :standing_line_items_present?
-  validate :standing_line_items_available?
-  validate :credit_card_ok?
+  delegate :json_errors, :valid?, to: :validator
 
   def initialize(standing_order, params = {}, fee_calculator = nil)
     @standing_order = standing_order
     @params = params
     @fee_calculator = fee_calculator
     @order_update_issues = {}
+    @validator = StandingOrderValidator.new(standing_order)
   end
 
   def save
@@ -40,12 +28,6 @@ class StandingOrderForm
       proxy_order_syncer.sync!
       update_initialised_orders
       standing_order.save!
-    end
-  end
-
-  def json_errors
-    errors.messages.each_with_object({}) do |(k, v), errors|
-      errors[k] = v.map { |msg| build_msg_from(k, msg) }
     end
   end
 
@@ -189,78 +171,5 @@ class StandingOrderForm
     standing_order.errors.each do |k, msg|
       errors.add(k, msg)
     end
-  end
-
-  def ends_at_after_begins_at?
-    # Does not add error even if ends_at is nil
-    # Note: presence of begins_at validated on the model
-    return if begins_at.blank? || ends_at.blank?
-    return if ends_at > begins_at
-    errors.add(:ends_at, :after_begins_at)
-  end
-
-  def customer_allowed?
-    return unless customer
-    return if customer.enterprise == shop
-    errors.add(:customer, :does_not_belong_to_shop, shop: shop.name)
-  end
-
-  def schedule_allowed?
-    return unless schedule
-    return if schedule.coordinators.include?(shop)
-    errors.add(:schedule, :not_coordinated_by_shop, shop: shop.name)
-  end
-
-  def payment_method_allowed?
-    return unless payment_method
-
-    if payment_method.distributors.exclude?(shop)
-      errors.add(:payment_method, :not_available_to_shop, shop: shop.name)
-    end
-
-    return if StandingOrder::ALLOWED_PAYMENT_METHOD_TYPES.include? payment_method.type
-    errors.add(:payment_method, :invalid_type)
-  end
-
-  def shipping_method_allowed?
-    return unless shipping_method
-    return if shipping_method.distributors.include?(shop)
-    errors.add(:shipping_method, :not_available_to_shop, shop: shop.name)
-  end
-
-  def standing_line_items_present?
-    return if standing_line_items.reject(&:marked_for_destruction?).any?
-    errors.add(:standing_line_items, :at_least_one_product)
-  end
-
-  def standing_line_items_available?
-    available_variant_ids = variant_ids_for_shop_and_schedule
-    standing_line_items.each do |sli|
-      unless available_variant_ids.include? sli.variant_id
-        name = "#{sli.variant.product.name} - #{sli.variant.full_name}"
-        errors.add(:standing_line_items, :not_available, name: name)
-      end
-    end
-  end
-
-  def credit_card_ok?
-    return unless payment_method.andand.type == "Spree::Gateway::StripeConnect"
-    return errors.add(:credit_card, :blank) unless credit_card_id
-    return if customer.andand.user.andand.credit_card_ids.andand.include? credit_card_id
-    errors.add(:credit_card, :not_available)
-  end
-
-  def variant_ids_for_shop_and_schedule
-    Spree::Variant.joins(exchanges: { order_cycle: :schedules})
-      .where(id: standing_line_items.map(&:variant_id))
-      .where(schedules: { id: schedule}, exchanges: { incoming: false, receiver_id: shop })
-      .merge(OrderCycle.not_closed)
-      .select('DISTINCT spree_variants.id')
-      .pluck(:id)
-  end
-
-  def build_msg_from(k, msg)
-    return msg[1..-1] if msg.starts_with?("^")
-    errors.full_message(k, msg)
   end
 end
