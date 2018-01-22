@@ -18,7 +18,7 @@
   .columns.small-6.medium-2.large-2
     %span.margin-top{"ng-bind" => "::producer.address.city"}
   .columns.small-4.medium-1.large-1
-    %span.margin-top{"ng-bind" => "::producer.address.state_name | uppercase"}
+    %span.margin-top{"ng-bind" => "::producer.address.state_text | uppercase"}
   .columns.small-2.medium-1.large-1.text-right
     %span.margin-top
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}

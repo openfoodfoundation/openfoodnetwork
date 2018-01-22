@@ -32,6 +32,15 @@ Spree::Address.class_eval do
     filtered_address.compact.join(', ')
   end
 
+  # Proxy method to display state in UI
+  # Delegates to State.
+  #
+  # @return [String]
+  def state_text
+    return state_name unless state
+    state.display_name
+  end
+
   private
 
   def touch_enterprise

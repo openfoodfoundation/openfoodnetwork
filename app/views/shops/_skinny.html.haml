@@ -7,7 +7,7 @@
   .columns.small-4.medium-2.large-2
     %span.margin-top{"ng-bind" => "::hub.address.city"}
   .columns.small-2.medium-1.large-1
-    %span.margin-top{"ng-bind" => "::hub.address.state_name | uppercase"}
+    %span.margin-top{"ng-bind" => "::hub.address.state_text | uppercase"}
     %span.margin-top{"ng-if" => "hub.distance != null && hub.distance > 0"} ({{ hub.distance / 1000 | number:0 }} km)
 
   .columns.small-4.medium-3.large-3.text-right{"ng-if" => "::hub.active"}
@@ -39,7 +39,7 @@
   .columns.small-4.medium-2.large-2
     %span.margin-top{"ng-bind" => "::hub.address.city"}
   .columns.small-2.medium-1.large-1
-    %span.margin-top{"ng-bind" => "::hub.address.state_name | uppercase"}
+    %span.margin-top{"ng-bind" => "::hub.address.state_text | uppercase"}
 
   .columns.small-6.medium-3.large-4.text-right
     %span.margin-top{ ng: { if: "::!current()" } }

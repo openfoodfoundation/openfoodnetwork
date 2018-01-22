@@ -4,7 +4,7 @@ development:
   database: open_food_network_dev
   pool: 5
   host: localhost
-  username: ofn
+  username: ofn_user
   password: f00d
 
 test:
@@ -13,7 +13,7 @@ test:
   database: open_food_network_test<%= ENV['TEST_ENV_NUMBER'] %>
   pool: 5
   host: localhost
-  username: ofn
+  username: ofn_user
   password: f00d
 
 #not used with heroku

@@ -20,5 +20,5 @@
           %i.ofn-i_033-open-sign{"ng-if" => "::enterprise.active"}
           %i.ofn-i_032-closed-sign{"ng-if" => "::!enterprise.active"}
           .hub-name{"ng-bind" => "::enterprise.name"}
-          .button-address{"ng-bind" => "::[enterprise.address.city, enterprise.address.state_name] | printArray"}
+          .button-address{"ng-bind" => "::[enterprise.address.city, enterprise.address.state_text] | printArray"}
           / %i.ofn-i_007-caret-right

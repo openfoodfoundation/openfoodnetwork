@@ -137,5 +137,9 @@ module Openfoodnetwork
     config.assets.precompile += ['qz/*']
 
     config.active_support.escape_html_entities_in_json = true
+    config.state_text_attribute = ENV.fetch(
+      'STATE_TEXT_ATTRIBUTE',
+      'abbr'
+    )
   end
 end
