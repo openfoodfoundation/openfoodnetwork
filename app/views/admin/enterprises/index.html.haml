@@ -1,12 +1,16 @@
 - content_for :page_title do
   = t('.title')
 
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.enterprises'"
+
 - content_for :page_actions do
   = render 'admin/shared/user_guide_link'
 
-  - if spree_current_user.can_own_more_enterprises?
-    %li#new_product_link
-      = button_link_to t('.new_enterprise'), main_app.new_admin_enterprise_path, icon: 'icon-plus', id: 'admin_new_enterprise_link'
+  %li#new_product_link
+    - button_href = spree_current_user.can_own_more_enterprises? ? main_app.new_admin_enterprise_path : '#'
+    - modal_message = t('js.admin.enterprise_limit_reached', contact_email: ContentConfig.footer_email)
+    = button_link_to t('.new_enterprise'), button_href, icon: 'icon-plus', id: 'admin_new_enterprise_link', 'enterprise-limit' => !spree_current_user.can_own_more_enterprises?, 'modal-message' => modal_message
 
 = admin_inject_monthly_bill_description
 = admin_inject_column_preferences module: 'admin.enterprises', action: "enterprises_index"
