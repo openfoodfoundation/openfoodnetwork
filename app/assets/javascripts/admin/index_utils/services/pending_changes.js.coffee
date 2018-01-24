@@ -6,7 +6,7 @@ angular.module("admin.indexUtils").factory "pendingChanges", ($q, resources, Sta
     add: (id, attr, change) =>
       @pendingChanges["#{id}"] = {} unless @pendingChanges.hasOwnProperty("#{id}")
       @pendingChanges["#{id}"]["#{attr}"] = change
-      StatusMessage.display('notice', "You have made #{@changeCount(@pendingChanges)} unsaved changes")
+      StatusMessage.display('notice', t('admin.unsaved_changes'))
 
     removeAll: =>
       @pendingChanges = {}
