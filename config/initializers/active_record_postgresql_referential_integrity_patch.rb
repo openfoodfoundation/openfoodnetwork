@@ -6,7 +6,6 @@
 # See:
 #  - https://github.com/matthuhiggins/foreigner/issues/61
 #  - https://github.com/garysweaver/rails/commit/9bb27f7ffe3eb732df737e477cd8fc25e007f77b
-
 if Rails::VERSION::MAJOR < 4
   class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
     def disable_referential_integrity #:nodoc:

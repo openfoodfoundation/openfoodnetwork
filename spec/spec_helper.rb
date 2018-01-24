@@ -48,9 +48,6 @@ Capybara.default_max_wait_time = 30
 
 require "paperclip/matchers"
 
-#Fix fixtures with foreign keys, fixed in Rails4
-require_relative "support/active_record_postgresql_referential_integrity_patch"
-
 # Override setting in Spree engine: Spree::Core::MailSettings
 ActionMailer::Base.default_url_options[:host] = 'test.host'
 
