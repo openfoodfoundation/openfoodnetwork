@@ -89,6 +89,7 @@ feature 'Customers' do
           find(:css, "tags-input .tags input").set "awesome\n"
           expect(page).to have_css ".tag_watcher.update-pending"
         end
+        expect(page).to have_content I18n.t('admin.unsaved_changes')
         click_button "Save Changes"
 
         # Every says it updated
