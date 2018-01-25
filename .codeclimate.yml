@@ -9,6 +9,7 @@ plugins:
     enabled: true
     exclude_patterns:
     - "db/**"
+    - "config/initializers/active_record_postgresql_referential_integrity_patch.rb"
 checks:
   argument-count:
     enabled: false
