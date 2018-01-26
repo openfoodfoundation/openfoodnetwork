@@ -369,6 +369,7 @@ en:
       product_distributions: "Product Distributions"
       group_buy_options: "Group Buy Options"
       seo: "SEO"
+      back_to_products_list: "Back to products list"
 
     variant_overrides:
       loading_flash:
