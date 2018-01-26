@@ -2,4 +2,4 @@
 
 - klass = current == 'SEO' ? 'active' : ''
 %li{:class => klass}
-  = link_to_with_icon 'icon-tasks', 'SEO', seo_admin_product_url(@product)
+  = link_to_with_icon 'icon-tasks', t('admin.products.seo'), seo_admin_product_url(@product)
