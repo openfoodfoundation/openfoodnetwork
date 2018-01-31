@@ -7,48 +7,34 @@ class StandingOrderUpdater
   def initialize(standing_order)
     @standing_order = standing_order
     @order_update_issues = OrderUpdateIssues.new
+    @line_item_syncer = LineItemSyncer.new(standing_order, order_update_issues)
   end
 
   def update!
     future_and_undated_orders.all? do |order|
       order.assign_attributes(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
-
-      update_bill_address_for(order) if (bill_address.changes.keys & relevant_address_attrs).any?
-      update_ship_address_for(order) if (ship_address.changes.keys & relevant_address_attrs).any?
-      update_shipment_for(order) if shipping_method_id_changed?
-      update_payment_for(order) if payment_method_id_changed?
-
-      changed_standing_line_items.each do |sli|
-        line_item = order.line_items.find_by_variant_id(sli.variant_id)
-        if line_item.quantity == sli.quantity_was
-          line_item.update_attributes(quantity: sli.quantity, skip_stock_check: true)
-        else
-          unless line_item.quantity == sli.quantity
-            product_name = "#{line_item.product.name} - #{line_item.full_name}"
-            order_update_issues.add(order, product_name)
-          end
-        end
-      end
-
-      new_standing_line_items.each do |sli|
-        order.line_items.create(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: true)
-      end
-
-      order.line_items.where(variant_id: standing_line_items.select(&:marked_for_destruction?).map(&:variant_id)).destroy_all
-
+      update_associations_for(order)
+      line_item_syncer.sync!(order)
       order.save
     end
   end
 
   private
 
-  attr_reader :standing_order
+  attr_reader :standing_order, :line_item_syncer
 
   delegate :orders, :bill_address, :ship_address, :standing_line_items, to: :standing_order
   delegate :shop_id, :customer, :customer_id, to: :standing_order
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
   delegate :shipping_method_id_changed?, :shipping_method_id_was, to: :standing_order
   delegate :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
+
+  def update_associations_for(order)
+    update_bill_address_for(order) if (bill_address.changes.keys & relevant_address_attrs).any?
+    update_ship_address_for(order) if (ship_address.changes.keys & relevant_address_attrs).any?
+    update_shipment_for(order) if shipping_method_id_changed?
+    update_payment_for(order) if payment_method_id_changed?
+  end
 
   def future_and_undated_orders
     return @future_and_undated_orders unless @future_and_undated_orders.nil?
@@ -93,14 +79,6 @@ class StandingOrderUpdater
         order_update_issues.add(order, I18n.t('admin.shipping_method'))
       end
     end
-  end
-
-  def changed_standing_line_items
-    standing_line_items.select{ |sli| sli.changed? && sli.persisted? }
-  end
-
-  def new_standing_line_items
-    standing_line_items.select(&:new_record?)
   end
 
   def relevant_address_attrs
