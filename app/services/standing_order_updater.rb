@@ -6,7 +6,7 @@ class StandingOrderUpdater
 
   def initialize(standing_order)
     @standing_order = standing_order
-    @order_update_issues = {}
+    @order_update_issues = OrderUpdateIssues.new
   end
 
   def update!
@@ -25,7 +25,7 @@ class StandingOrderUpdater
         else
           unless line_item.quantity == sli.quantity
             product_name = "#{line_item.product.name} - #{line_item.full_name}"
-            add_order_update_issue(order, product_name)
+            order_update_issues.add(order, product_name)
           end
         end
       end
@@ -57,7 +57,7 @@ class StandingOrderUpdater
 
   def update_bill_address_for(order)
     unless addresses_match?(order.bill_address, bill_address)
-      return add_order_update_issue(order, I18n.t('bill_address'))
+      return order_update_issues.add(order, I18n.t('bill_address'))
     end
     order.bill_address.update_attributes(bill_address.attributes.slice(*relevant_address_attrs))
   end
@@ -66,7 +66,7 @@ class StandingOrderUpdater
     force_update = force_ship_address_update_for?(order)
     return unless force_update || order.shipping_method.require_ship_address?
     unless force_update || addresses_match?(order.ship_address, ship_address)
-      return add_order_update_issue(order, I18n.t('ship_address'))
+      return order_update_issues.add(order, I18n.t('ship_address'))
     end
     order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
   end
@@ -78,7 +78,7 @@ class StandingOrderUpdater
       order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)
     else
       unless order.payments.with_state('checkout').where(payment_method_id: payment_method_id).any?
-        add_order_update_issue(order, I18n.t('admin.payment_method'))
+        order_update_issues.add(order, I18n.t('admin.payment_method'))
       end
     end
   end
@@ -90,7 +90,7 @@ class StandingOrderUpdater
       order.update_attribute(:shipping_method_id, shipping_method_id)
     else
       unless order.shipments.with_state('pending').where(shipping_method_id: shipping_method_id).any?
-        add_order_update_issue(order, I18n.t('admin.shipping_method'))
+        order_update_issues.add(order, I18n.t('admin.shipping_method'))
       end
     end
   end
@@ -101,11 +101,6 @@ class StandingOrderUpdater
 
   def new_standing_line_items
     standing_line_items.select(&:new_record?)
-  end
-
-  def add_order_update_issue(order, issue)
-    order_update_issues[order.id] ||= []
-    order_update_issues[order.id] << issue
   end
 
   def relevant_address_attrs
