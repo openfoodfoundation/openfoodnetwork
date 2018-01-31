@@ -1,3 +1,6 @@
+# Wrapper for a hash of issues encountered by instances of OrderSyncer and LineItemSyncer
+# Used to report issues to the user when they attempt to update a standing order
+
 class OrderUpdateIssues
   def initialize
     @issues = {}
