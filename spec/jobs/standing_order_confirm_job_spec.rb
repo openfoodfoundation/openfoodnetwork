@@ -101,34 +101,6 @@ describe StandingOrderConfirmJob do
     end
   end
 
-  describe "updating the payment" do
-    let(:order) { create(:order) }
-    let(:payment_updater_mock) { double(:payment_updater) }
-
-    before do
-      job.instance_variable_set(:@order, order)
-      allow(OpenFoodNetwork::StandingOrderPaymentUpdater).to receive(:new) { payment_updater_mock }
-    end
-
-    context "when the updater returns true" do
-      before { expect(payment_updater_mock).to receive(:update!) { true } }
-
-      it "does nothing" do
-        job.send(:update_payment!)
-        expect(order.errors).to be_empty
-      end
-    end
-
-    context "when the updater returns an error code" do
-      before { expect(payment_updater_mock).to receive(:update!) { :no_card } }
-
-      it "adds and error to the order" do
-        expect{ job.send(:update_payment!) }.to change(order.errors, :count).from(0).to(1)
-        expect(order.errors.full_messages).to include I18n.t("activerecord.errors.models.spree/order.no_card")
-      end
-    end
-  end
-
   describe "processing an order" do
     let(:shop) { create(:distributor_enterprise) }
     let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop) }
