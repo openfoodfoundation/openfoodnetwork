@@ -50,14 +50,22 @@ class StandingOrder < ActiveRecord::Base
   end
 
   def state
-    return 'canceled' if canceled?
-    return 'paused' if paused?
-    return nil unless begins_at
-    if begins_at > Time.zone.now
-      'pending'
-    else
-      return 'ended' if ends_at.andand < Time.zone.now
-      'active'
+    # NOTE: the order is important here
+    %w(canceled paused pending ended).each do |state|
+      return state if send("#{state}?")
     end
+    "active"
+  end
+
+  private
+
+  def pending?
+    return true unless begins_at
+    begins_at > Time.zone.now
+  end
+
+  def ended?
+    return false unless ends_at
+    ends_at < Time.zone.now
   end
 end
