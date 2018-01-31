@@ -32,18 +32,22 @@ class StandingOrderForm
   end
 
   def validate_price_estimates
-    item_attributes = params[:standing_line_items_attributes]
-    return if item_attributes.blank?
-    if fee_calculator
-      item_attributes.each do |item_attrs|
-        if variant = Spree::Variant.find_by_id(item_attrs[:variant_id])
-          item_attrs[:price_estimate] = price_estimate_for(variant)
-        else
-          item_attrs.delete(:price_estimate)
-        end
-      end
-    else
-      item_attributes.each { |item_attrs| item_attrs.delete(:price_estimate) }
+    return unless params[:standing_line_items_attributes]
+    return clear_price_estimates unless fee_calculator
+    calculate_prices_from_variant_ids
+  end
+
+  def clear_price_estimates
+    params[:standing_line_items_attributes].each do |item_attrs|
+      item_attrs.delete(:price_estimate)
+    end
+  end
+
+  def calculate_prices_from_variant_ids
+    params[:standing_line_items_attributes].each do |item_attrs|
+      variant = Spree::Variant.find_by_id(item_attrs[:variant_id])
+      next item_attrs.delete(:price_estimate) unless variant
+      item_attrs[:price_estimate] = price_estimate_for(variant)
     end
   end
 
