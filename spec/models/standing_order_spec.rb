@@ -79,8 +79,8 @@ describe StandingOrder, type: :model do
         context "and the standing order has no begins_at date" do
           before { allow(standing_order).to receive(:begins_at) { nil } }
 
-          it "returns nil" do
-            expect(standing_order.state).to be nil
+          it "returns 'pending'" do
+            expect(standing_order.state).to eq 'pending'
           end
         end
 
