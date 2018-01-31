@@ -3,13 +3,6 @@ require 'open_food_network/proxy_order_syncer'
 class StandingOrderForm
   attr_accessor :standing_order, :params, :fee_calculator, :order_update_issues, :validator, :order_updater
 
-  delegate :orders, :order_cycles, :bill_address, :ship_address, :standing_line_items, to: :standing_order
-  delegate :shop, :shop_id, :customer, :customer_id, :begins_at, :ends_at, :proxy_orders, to: :standing_order
-  delegate :schedule, :schedule_id, to: :standing_order
-  delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :standing_order
-  delegate :shipping_method_id_changed?, :shipping_method_id_was, :payment_method_id_changed?, :payment_method_id_was, to: :standing_order
-  delegate :credit_card_id, :credit_card, to: :standing_order
-
   delegate :json_errors, :valid?, to: :validator
   delegate :order_update_issues, to: :order_updater
 
