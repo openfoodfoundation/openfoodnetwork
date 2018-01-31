@@ -75,7 +75,7 @@ en:
   activemodel:
     errors:
       models:
-        standing_order_form:
+        standing_order_validator:
           attributes:
             standing_line_items:
               at_least_one_product: "^Please add at least one product"
