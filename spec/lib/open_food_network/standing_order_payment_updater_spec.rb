@@ -99,9 +99,9 @@ module OpenFoodNetwork
             context "and no credit card is available on the standing order" do
               before { expect(updater).to receive(:ensure_credit_card) { false } }
 
-              it "returns an error code and does not update the payment" do
+              it "adds an error to the order and does not update the payment" do
                 expect(payment).to_not receive(:update_attributes)
-                expect(updater.update!).to eq :no_card
+                expect{ updater.update! }.to change(order.errors[:base], :count).from(0).to(1)
               end
             end
 

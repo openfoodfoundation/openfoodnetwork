@@ -45,11 +45,7 @@ class StandingOrderConfirmJob
   end
 
   def update_payment!
-    result = payment_updater.new(@order).update!
-    case result
-    when :no_card
-      @order.errors.add(:base, :no_card)
-    end
+    OpenFoodNetwork::StandingOrderPaymentUpdater.new(@order).update!
   end
 
   def send_confirm_email
@@ -60,9 +56,5 @@ class StandingOrderConfirmJob
   def send_failed_payment_email
     record_and_log_error(:failed_payment, @order)
     StandingOrderMailer.failed_payment_email(@order).deliver
-  end
-
-  def payment_updater
-    OpenFoodNetwork::StandingOrderPaymentUpdater
   end
 end
