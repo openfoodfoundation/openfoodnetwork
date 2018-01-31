@@ -1,17 +1,17 @@
 require 'open_food_network/proxy_order_syncer'
 
 class StandingOrderForm
-  attr_accessor :standing_order, :params, :fee_calculator, :order_update_issues, :validator, :order_updater
+  attr_accessor :standing_order, :params, :fee_calculator, :order_update_issues, :validator, :order_syncer
 
   delegate :json_errors, :valid?, to: :validator
-  delegate :order_update_issues, to: :order_updater
+  delegate :order_update_issues, to: :order_syncer
 
   def initialize(standing_order, params = {}, fee_calculator = nil)
     @standing_order = standing_order
     @params = params
     @fee_calculator = fee_calculator
     @validator = StandingOrderValidator.new(standing_order)
-    @order_updater = StandingOrderUpdater.new(standing_order)
+    @order_syncer = OrderSyncer.new(standing_order)
   end
 
   def save
@@ -20,7 +20,7 @@ class StandingOrderForm
     return false unless valid?
     standing_order.transaction do
       proxy_order_syncer.sync!
-      order_updater.update!
+      order_syncer.sync!
       standing_order.save!
     end
   end
