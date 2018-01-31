@@ -3,20 +3,16 @@
 # The #bill_address and #ship_address methods automatically return matched addresses
 # according to this order: customer addresses, user addresses, addresses from
 # completed orders with an email that matches the email string provided.
+
 module OpenFoodNetwork
   class AddressFinder
-    attr_accessor :email, :user, :customer
+    attr_reader :email, :user, :customer
 
     def initialize(*args)
       args.each do |arg|
-        case arg
-        when String
-          @email = arg unless @email
-        when Customer
-          @customer = arg unless @customer
-        when Spree::User
-          @user = arg unless @user
-        end
+        type = types[arg.class]
+        next unless type
+        send("#{type}=", arg)
       end
     end
 
@@ -29,6 +25,26 @@ module OpenFoodNetwork
     end
 
     private
+
+    def types
+      {
+        String      => "email",
+        Customer    => "customer",
+        Spree::User => "user"
+      }
+    end
+
+    def email=(arg)
+      @email ||= arg
+    end
+
+    def customer=(arg)
+      @customer ||= arg
+    end
+
+    def user=(arg)
+      @user ||= arg
+    end
 
     def customer_preferred_bill_address
       customer.andand.bill_address
@@ -74,9 +90,11 @@ module OpenFoodNetwork
     # Assumption: front-end users can't ask this library for an address using
     # a customer or user other than themselves...
     def allow_search_by_email?
-      return false unless email.present? && (user.present? || customer.present?)
-      return false unless email == customer.andand.email || email == user.andand.email
-      true
+      email.present? && email_matches_customer_or_user?
+    end
+
+    def email_matches_customer_or_user?
+      email == customer.andand.email || email == user.andand.email
     end
   end
 end
