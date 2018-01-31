@@ -1,7 +1,7 @@
 # Responsible for ensuring that any updates to a Standing Order are propagated to any
 # orders belonging to that Standing Order which have been instantiated
 
-class StandingOrderUpdater
+class OrderSyncer
   attr_reader :order_update_issues
 
   def initialize(standing_order)
@@ -10,7 +10,7 @@ class StandingOrderUpdater
     @line_item_syncer = LineItemSyncer.new(standing_order, order_update_issues)
   end
 
-  def update!
+  def sync!
     future_and_undated_orders.all? do |order|
       order.assign_attributes(customer_id: customer_id, email: customer.andand.email, distributor_id: shop_id)
       update_associations_for(order)
