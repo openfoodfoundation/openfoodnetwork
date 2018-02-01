@@ -1,29 +1,11 @@
+require 'open_food_network/scope_variants_for_search'
+
 Spree::Admin::VariantsController.class_eval do
   helper 'spree/products'
 
   def search
-    search_params = { :product_name_cont => params[:q], :sku_cont => params[:q] }
-
-    @variants = Spree::Variant.where(is_master: false).ransack(search_params.merge(:m => 'or')).result
-
-    if params[:schedule_id].present?
-      schedule = Schedule.find params[:schedule_id]
-      @variants = @variants.in_schedule(schedule)
-    end
-
-    if params[:order_cycle_id].present?
-      order_cycle = OrderCycle.find params[:order_cycle_id]
-      @variants = @variants.in_order_cycle(order_cycle)
-    end
-
-    if params[:distributor_id].present?
-      distributor = Enterprise.find params[:distributor_id]
-      @variants = @variants.in_distributor(distributor)
-      scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
-      # Perform scoping after all filtering is done.
-      # Filtering could be a problem on scoped variants.
-      @variants.each { |v| scoper.scope(v) }
-    end
+    scoper = OpenFoodNetwork::ScopeVariantsForSearch.new(params)
+    @variants = scoper.search
   end
 
   def destroy
