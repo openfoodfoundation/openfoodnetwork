@@ -512,7 +512,8 @@ module Spree
         let!(:p) { create(:simple_product,
                           variant_unit: 'weight',
                           variant_unit_scale: 1,
-                          variant_unit_name: nil) }
+                          variant_unit_name: nil) 
+        }
 
         let!(:ot_volume) { create(:option_type, name: 'unit_volume', presentation: 'Volume') }
 

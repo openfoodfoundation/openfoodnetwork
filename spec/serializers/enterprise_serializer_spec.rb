@@ -10,7 +10,8 @@ describe Api::EnterpriseSerializer do
                               current_distributed_taxons: {enterprise.id => [123]},
                               supplied_taxons: {enterprise.id => [456]},
                               shipping_method_services: {},
-                              relatives: {enterprise.id => {producers: [123], distributors: [456]}}) }
+                              relatives: {enterprise.id => {producers: [123], distributors: [456]}}) 
+  }
 
   it "serializes an enterprise" do
     serializer.to_json.should match enterprise.name

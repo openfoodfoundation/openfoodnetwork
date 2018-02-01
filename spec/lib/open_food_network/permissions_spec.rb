@@ -107,7 +107,8 @@ module OpenFoodNetwork
       let!(:hub) { create(:distributor_enterprise) }
       let!(:producer) { create(:supplier_enterprise) }
       let!(:er) { create(:enterprise_relationship, parent: producer, child: hub,
-                         permissions_list: [:create_variant_overrides]) }
+                         permissions_list: [:create_variant_overrides]) 
+      }
 
       before do
         permissions.stub(:managed_enterprises) { Enterprise.where(id: hub.id) }
@@ -139,7 +140,8 @@ module OpenFoodNetwork
       describe "hubs connected to the user by relationships only" do
         let!(:producer_managed) { create(:supplier_enterprise) }
         let!(:er_oc) { create(:enterprise_relationship, parent: hub, child: producer_managed,
-                              permissions_list: [:add_to_order_cycle, :create_variant_overrides]) }
+                              permissions_list: [:add_to_order_cycle, :create_variant_overrides]) 
+        }
 
         before do
           permissions.stub(:managed_enterprises) { Enterprise.where(id: producer_managed.id) }

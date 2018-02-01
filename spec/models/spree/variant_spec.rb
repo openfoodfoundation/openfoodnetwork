@@ -91,11 +91,14 @@ module Spree
         let(:v_external) { create(:variant, product: p_external) }
 
         let!(:ex_in) { create(:exchange, order_cycle: oc, sender: s, receiver: oc.coordinator,
-                              incoming: true, variants: [v1, v2]) }
+                              incoming: true, variants: [v1, v2]) 
+        }
         let!(:ex_out1) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1,
-                                incoming: false, variants: [v1]) }
+                                incoming: false, variants: [v1]) 
+        }
         let!(:ex_out2) { create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d2,
-                                incoming: false, variants: [v2]) }
+                                incoming: false, variants: [v2]) 
+        }
 
         it "returns variants in the order cycle and distributor" do
           p1.variants.for_distribution(oc, d1).should == [v1]

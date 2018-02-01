@@ -19,9 +19,11 @@ module OpenFoodNetwork
 
           describe "supplier fees" do
             let!(:exchange1) { create(:exchange, order_cycle: order_cycle, sender: supplier1, receiver: coordinator, incoming: true,
-                                     enterprise_fees: [enterprise_fee1], variants: [product1.master]) }
+                                     enterprise_fees: [enterprise_fee1], variants: [product1.master]) 
+            }
             let!(:exchange2) { create(:exchange, order_cycle: order_cycle, sender: supplier2, receiver: coordinator, incoming: true,
-                                     enterprise_fees: [enterprise_fee2], variants: [product2.master]) }
+                                     enterprise_fees: [enterprise_fee2], variants: [product2.master]) 
+            }
 
             it "calculates via regular computation" do
               EnterpriseFeeCalculator.new(distributor, order_cycle).fees_for(product1.master).should == 20
@@ -36,7 +38,8 @@ module OpenFoodNetwork
 
           describe "coordinator fees" do
             let!(:exchange) { create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false,
-                                     enterprise_fees: [], variants: [product1.master]) }
+                                     enterprise_fees: [], variants: [product1.master]) 
+            }
 
             before do
               order_cycle.coordinator_fees = [enterprise_fee1, enterprise_fee2, enterprise_fee3]
@@ -53,7 +56,8 @@ module OpenFoodNetwork
 
           describe "distributor fees" do
             let!(:exchange) { create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false,
-                                     enterprise_fees: [enterprise_fee1, enterprise_fee2, enterprise_fee3], variants: [product1.master]) }
+                                     enterprise_fees: [enterprise_fee1, enterprise_fee2, enterprise_fee3], variants: [product1.master]) 
+            }
 
             it "sums via regular computation" do
               EnterpriseFeeCalculator.new(distributor, order_cycle).fees_for(product1.master).should == 23
@@ -68,7 +72,8 @@ module OpenFoodNetwork
         describe "summing percentage fees for the variant" do
           let!(:enterprise_fee1) { create(:enterprise_fee, amount: 20, fee_type: "admin", calculator: ::Calculator::FlatPercentPerItem.new(preferred_flat_percent: 20)) }
           let!(:exchange) { create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor, incoming: false,
-                                   enterprise_fees: [enterprise_fee1], variants: [product1.master]) }
+                                   enterprise_fees: [enterprise_fee1], variants: [product1.master]) 
+          }
 
           it "sums via regular computation" do
             EnterpriseFeeCalculator.new(distributor, order_cycle).fees_for(product1.master).should == 2.00
@@ -89,7 +94,8 @@ module OpenFoodNetwork
         let!(:exchange) { create(:exchange, order_cycle: order_cycle,
                                  sender: coordinator, receiver: distributor, incoming: false,
                                  enterprise_fees: [ef_admin, ef_sales, ef_packing, ef_transport, ef_fundraising],
-                                 variants: [product1.master]) }
+                                 variants: [product1.master]) 
+        }
 
         describe "regular computation" do
           it "returns a breakdown of fees" do

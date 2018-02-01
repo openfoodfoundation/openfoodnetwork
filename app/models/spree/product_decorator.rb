@@ -97,12 +97,14 @@ Spree::Product.class_eval do
   # Find products that are distributed by the given order cycle
   scope :in_order_cycle, lambda { |order_cycle| with_order_cycles_inner.
     merge(Exchange.outgoing).
-    where('order_cycles.id = ?', order_cycle) }
+    where('order_cycles.id = ?', order_cycle) 
+  }
 
   scope :in_an_active_order_cycle, lambda { with_order_cycles_inner.
     merge(OrderCycle.active).
     merge(Exchange.outgoing).
-    where('order_cycles.id IS NOT NULL') }
+    where('order_cycles.id IS NOT NULL') 
+  }
 
   scope :by_producer, joins(:supplier).order('enterprises.name')
   scope :by_name, order('name')

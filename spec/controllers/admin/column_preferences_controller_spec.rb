@@ -16,7 +16,8 @@ describe Admin::ColumnPreferencesController, type: :controller do
         { id: column_preference.id, user_id: user1.id, action_name: "enterprises_index", column_name: 'name', visible: false },
         { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'producer', visible: true },
         { id: nil, user_id: user1.id, action_name: "enterprises_index", column_name: 'status', visible: true }
-      ] }
+      ] 
+      }
 
       context "where I don't own the preferences submitted" do
         before do

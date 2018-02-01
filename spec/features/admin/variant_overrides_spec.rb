@@ -16,9 +16,11 @@ feature %q{
   let!(:producer_related) { create(:supplier_enterprise) }
   let!(:producer_unrelated) { create(:supplier_enterprise) }
   let!(:er1) { create(:enterprise_relationship, parent: producer, child: hub,
-                      permissions_list: [:create_variant_overrides]) }
+                      permissions_list: [:create_variant_overrides]) 
+  }
   let!(:er2) { create(:enterprise_relationship, parent: producer_related, child: hub,
-                      permissions_list: [:create_variant_overrides]) }
+                      permissions_list: [:create_variant_overrides]) 
+  }
 
   context "as an enterprise user" do
     let(:user) { create_enterprise_user enterprises: [hub, producer_managed] }
@@ -26,7 +28,8 @@ feature %q{
 
     describe "selecting a hub" do
       let!(:er1) { create(:enterprise_relationship, parent: hub2, child: producer_managed,
-                          permissions_list: [:add_to_order_cycle]) } # This er should not confer ability to create VOs for hub2
+                          permissions_list: [:add_to_order_cycle]) 
+      } # This er should not confer ability to create VOs for hub2
 
       it "displays a list of hub choices (ie. only those managed by the user)" do
         visit spree.admin_path

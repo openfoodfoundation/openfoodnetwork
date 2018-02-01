@@ -38,7 +38,8 @@ class OrderCycle < ActiveRecord::Base
     joins(:exchanges).
       merge(Exchange.outgoing).
       merge(Exchange.with_product(product)).
-      select('DISTINCT order_cycles.*') }
+      select('DISTINCT order_cycles.*')
+  }
 
   scope :with_distributor, lambda { |distributor|
     joins(:exchanges).merge(Exchange.outgoing).merge(Exchange.to_enterprise(distributor))
