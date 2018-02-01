@@ -7,7 +7,7 @@
             %h3
               = t(".greeting", name: @shop.contact)
             %h4
-              = t(".intro")
+              = t(".intro", shop: @shop.name)
       %table.column{:align => "left"}
         %tr
           %td{:align => "right"}
