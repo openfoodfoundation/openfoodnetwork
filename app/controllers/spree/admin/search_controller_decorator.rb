@@ -13,7 +13,7 @@ Spree::Admin::SearchController.class_eval do
         }).result.limit(10)
     end
 
-    render :users
+    render json: @users, each_serializer: Api::Admin::UserSerializer
   end
 
   def customers

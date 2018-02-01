@@ -46,6 +46,7 @@ angular.module("admin.enterprises")
         manager =
           id: manager.id
           email: manager.email
+          confirmed: manager.confirmed
         if (user for user in $scope.Enterprise.users when user.id == manager.id).length == 0
           $scope.Enterprise.users.push manager
         else
