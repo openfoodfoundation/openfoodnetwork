@@ -49,11 +49,7 @@ class OrderSyncer
   end
 
   def update_ship_address_for(order)
-    force_update = force_ship_address_update_for?(order)
-    return unless force_update || order.shipping_method.require_ship_address?
-    unless force_update || addresses_match?(order.ship_address, ship_address)
-      return order_update_issues.add(order, I18n.t('ship_address'))
-    end
+    return unless ship_address_updatable?(order)
     order.ship_address.update_attributes(ship_address.attributes.slice(*relevant_address_attrs))
   end
 
@@ -92,7 +88,18 @@ class OrderSyncer
     end
   end
 
-  def force_ship_address_update_for?(order)
+  def ship_address_updatable?(order)
+    return true if force_ship_address_required?(order)
+    return false unless order.shipping_method.require_ship_address?
+    return true if addresses_match?(order.ship_address, ship_address)
+    order_update_issues.add(order, I18n.t('ship_address'))
+    false
+  end
+
+  # This returns true when the shipping method on the standing has changed
+  # to a delivery (ie. a shipping address is required) AND the existing
+  # shipping address on the order matches the shop's address
+  def force_ship_address_required?(order)
     return false unless shipping_method.require_ship_address?
     distributor_address = order.send(:address_from_distributor)
     relevant_address_attrs.all? do |attr|
