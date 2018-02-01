@@ -11,13 +11,11 @@ class ProxyOrder < ActiveRecord::Base
   scope :placed_and_open, -> { joins(:order).not_closed.where(spree_orders: { state: 'complete' }) }
 
   def state
-    return 'canceled' if canceled?
-    if !order || order_cycle.orders_open_at > Time.zone.now
-      standing_order.paused? ? 'paused' : 'pending'
-    else
-      return 'cart' if placed_and_open?
-      order.state
+    # NOTE: the order is important here
+    %w(canceled paused pending cart).each do |state|
+      return state if send("#{state}?")
     end
+    order.state
   end
 
   def canceled?
@@ -65,7 +63,15 @@ class ProxyOrder < ActiveRecord::Base
 
   private
 
-  def placed_and_open?
+  def paused?
+    pending? && standing_order.paused?
+  end
+
+  def pending?
+    !order || order_cycle.orders_open_at > Time.zone.now
+  end
+
+  def cart?
     order.andand.state == 'complete' &&
       order_cycle.orders_close_at > Time.zone.now
   end
