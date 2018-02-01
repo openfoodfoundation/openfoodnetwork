@@ -102,7 +102,7 @@ class StandingOrderValidator
     @available_variant_ids ||=
       Spree::Variant.joins(exchanges: { order_cycle: :schedules })
         .where(id: standing_line_items.map(&:variant_id))
-        .where(schedules: { id: schedule}, exchanges: { incoming: false, receiver_id: shop })
+        .where(schedules: { id: schedule }, exchanges: { incoming: false, receiver_id: shop })
         .merge(OrderCycle.not_closed)
         .select('DISTINCT spree_variants.id')
         .pluck(:id)
