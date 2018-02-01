@@ -4,19 +4,16 @@ require 'open_food_network/order_cycle_permissions'
 module Admin
   class StandingLineItemsController < ResourceController
     before_filter :load_build_context, only: [:build]
+    before_filter :ensure_shop, only: [:build]
+    before_filter :ensure_variant, only: [:build]
 
     respond_to :json
 
     def build
-      return render json: { errors: ['Unauthorised'] }, status: :unauthorized unless @shop
-      if @variant
-        @standing_line_item.assign_attributes(params[:standing_line_item])
-        fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(@shop, @order_cycle) if @order_cycle
-        OpenFoodNetwork::ScopeVariantToHub.new(@shop).scope(@variant)
-        render json: @standing_line_item, serializer: Api::Admin::StandingLineItemSerializer, fee_calculator: fee_calculator
-      else
-        render json: { errors: ["#{@shop.name} is not permitted to sell the selected product"] }, status: :unprocessable_entity
-      end
+      @standing_line_item.assign_attributes(params[:standing_line_item])
+      fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(@shop, @order_cycle) if @order_cycle
+      OpenFoodNetwork::ScopeVariantToHub.new(@shop).scope(@variant)
+      render json: @standing_line_item, serializer: Api::Admin::StandingLineItemSerializer, fee_calculator: fee_calculator
     end
 
     private
@@ -34,6 +31,17 @@ module Admin
 
     def new_actions
       [:new, :create, :build] # Added build
+    end
+
+    def ensure_shop
+      return if @shop
+      render json: { errors: ['Unauthorised'] }, status: :unauthorized
+    end
+
+    def ensure_variant
+      return if @variant
+      error = "#{@shop.name} is not permitted to sell the selected product"
+      render json: { errors: [error] }, status: :unprocessable_entity
     end
   end
 end
