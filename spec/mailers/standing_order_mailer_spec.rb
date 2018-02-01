@@ -121,7 +121,7 @@ describe StandingOrderMailer do
       end
 
       it "sends the email, which notifies the enterprise that all orders were successfully processed" do
-        expect(body).to include I18n.t("#{scope}.placement_summary_email.intro")
+        expect(body).to include I18n.t("#{scope}.placement_summary_email.intro", shop: shop.name)
         expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
         expect(body).to include I18n.t("#{scope}.summary_overview.success_all")
         expect(body).to_not include I18n.t("#{scope}.summary_overview.issues")
@@ -143,7 +143,7 @@ describe StandingOrderMailer do
       context "when no unrecorded issues are present" do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           StandingOrderMailer.placement_summary_email(summary).deliver
-          expect(body).to include I18n.t("#{scope}.placement_summary_email.intro")
+          expect(body).to include I18n.t("#{scope}.placement_summary_email.intro", shop: shop.name)
           expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
           expect(body).to include I18n.t("#{scope}.summary_overview.success_some", count: 35)
           expect(body).to include I18n.t("#{scope}.summary_overview.issues")
@@ -197,7 +197,7 @@ describe StandingOrderMailer do
       end
 
       it "sends the email, which notifies the enterprise that some issues were encountered" do
-        expect(body).to include I18n.t("#{scope}.placement_summary_email.intro")
+        expect(body).to include I18n.t("#{scope}.placement_summary_email.intro", shop: shop.name)
         expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 2)
         expect(body).to include I18n.t("#{scope}.summary_overview.success_zero")
         expect(body).to include I18n.t("#{scope}.summary_overview.issues")
@@ -231,7 +231,7 @@ describe StandingOrderMailer do
       end
 
       it "sends the email, which notifies the enterprise that all orders were successfully processed" do
-        expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro")
+        expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro", shop: shop.name)
         expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
         expect(body).to include I18n.t("#{scope}.summary_overview.success_all")
         expect(body).to_not include I18n.t("#{scope}.summary_overview.issues")
@@ -253,7 +253,7 @@ describe StandingOrderMailer do
       context "when no unrecorded issues are present" do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           StandingOrderMailer.confirmation_summary_email(summary).deliver
-          expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro")
+          expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro", shop: shop.name)
           expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
           expect(body).to include I18n.t("#{scope}.summary_overview.success_some", count: 35)
           expect(body).to include I18n.t("#{scope}.summary_overview.issues")
@@ -307,7 +307,7 @@ describe StandingOrderMailer do
       end
 
       it "sends the email, which notifies the enterprise that some issues were encountered" do
-        expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro")
+        expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro", shop: shop.name)
         expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 2)
         expect(body).to include I18n.t("#{scope}.summary_overview.success_zero")
         expect(body).to include I18n.t("#{scope}.summary_overview.issues")
