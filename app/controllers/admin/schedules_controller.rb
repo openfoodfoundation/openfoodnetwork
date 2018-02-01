@@ -18,7 +18,6 @@ module Admin
       failure: lambda { render json: { errors: @schedule.errors.full_messages }, status: :unprocessable_entity }
     } }
 
-
     def index
       respond_to do |format|
         format.json do

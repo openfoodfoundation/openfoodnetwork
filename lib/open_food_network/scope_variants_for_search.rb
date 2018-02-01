@@ -24,11 +24,11 @@ module OpenFoodNetwork
     attr_reader :params
 
     def search_params
-      { :product_name_cont => params[:q], :sku_cont => params[:q] }
+      { product_name_cont: params[:q], sku_cont: params[:q] }
     end
 
     def query_scope
-      Spree::Variant.where(is_master: false).ransack(search_params.merge(:m => 'or')).result
+      Spree::Variant.where(is_master: false).ransack(search_params.merge(m: 'or')).result
     end
 
     def scope_to_schedule
