@@ -22,10 +22,7 @@ class LineItemSyncer
   def update_item_quantities(order)
     changed_standing_line_items.each do |sli|
       line_item = order.line_items.find_by_variant_id(sli.variant_id)
-
-      next update_quantity(line_item, sli.quantity) if line_item.quantity == sli.quantity_was
-      next if line_item.quantity == sli.quantity
-
+      next if update_quantity(line_item, sli)
       product_name = "#{line_item.product.name} - #{line_item.full_name}"
       order_update_issues.add(order, product_name)
     end
@@ -49,7 +46,10 @@ class LineItemSyncer
     standing_line_items.select(&:new_record?)
   end
 
-  def update_quantity(line_item, quantity)
-    line_item.update_attributes(quantity: quantity, skip_stock_check: true)
+  def update_quantity(line_item, sli)
+    if line_item.quantity == sli.quantity_was
+      return line_item.update_attributes(quantity: sli.quantity, skip_stock_check: true)
+    end
+    line_item.quantity == sli.quantity
   end
 end
