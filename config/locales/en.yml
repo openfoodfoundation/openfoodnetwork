@@ -75,7 +75,7 @@ en:
   activemodel:
     errors:
       models:
-        standing_order_validator:
+        subscription_validator:
           attributes:
             standing_line_items:
               at_least_one_product: "^Please add at least one product"
@@ -121,17 +121,17 @@ en:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
-  standing_order_mailer:
+  subscription_mailer:
     placement_summary_email:
-      subject: A summary of recently placed standing orders
+      subject: A summary of recently placed subscription orders
       greeting: "Hi %{name},"
-      intro: "Below is a summary of the standing orders that have just been placed for %{shop}."
+      intro: "Below is a summary of the subscription orders that have just been placed for %{shop}."
     confirmation_summary_email:
-      subject: A summary of recently confirmed standing orders
+      subject: A summary of recently confirmed subscription orders
       greeting: "Hi %{name},"
-      intro: "Below is a summary of the standing orders that have just been finalised for %{shop}."
+      intro: "Below is a summary of the subscription orders that have just been finalised for %{shop}."
     summary_overview:
-      total: A total of %{count} standing orders were marked for automatic processing.
+      total: A total of %{count} subscriptions were marked for automatic processing.
       success_zero: Of these, none were processed successfully.
       success_some: Of these, %{count} were processed successfully.
       success_all: All were processed successfully.
@@ -606,10 +606,10 @@ en:
           allow_order_changes_tip: "Allow customers to change their order as long the order cycle is open."
           allow_order_changes_false: "Placed orders cannot be changed / cancelled"
           allow_order_changes_true: "Customers can change / cancel orders while order cycle is open"
-          enable_standing_orders: "Standing Orders"
-          enable_standing_orders_tip: "Enable standing/repeating order functionality?"
-          enable_standing_orders_false: "Disabled"
-          enable_standing_orders_true: "Enabled"
+          enable_subscriptions: "Subscriptions"
+          enable_subscriptions_tip: "Enable subscriptions functionality?"
+          enable_subscriptions_false: "Disabled"
+          enable_subscriptions_true: "Enabled"
           shopfront_message: Shopfront Message
           shopfront_message_placeholder: >
             An optional explanation for customers detailing how your shopfront works,
@@ -875,23 +875,23 @@ en:
       packing:
         name: Packing Reports
 
-    standing_orders:
-      standing_orders: Standing Orders
-      new: New Standing Order
-      create: Create Standing Order
+    subscriptions:
+      subscriptions: Subscriptions
+      new: New Subscription
+      create: Create Subscription
       index:
         please_select_a_shop: Please select a shop
-        edit_standing_order: Edit Standing Order
-        pause_standing_order: Pause Standing Order
-        unpause_standing_order: Unpause Standing Order
-        cancel_standing_order: Cancel Standing Order
+        edit_subscription: Edit Subscription
+        pause_subscription: Pause Subscription
+        unpause_subscription: Unpause Subscription
+        cancel_subscription: Cancel Subscription
       setup_explanation:
         just_a_few_more_steps: 'Just a few more steps before you can begin:'
-        enable_standing_orders: "Enable standing orders for at least one of your shops"
-        enable_standing_orders_step_1_html: 1. Go to the %{enterprises_link} page, find your shop, and click "Manage"
-        enable_standing_orders_step_2: 2. Under "Shop Preferences", enable the Standing Orders option
+        enable_subscriptions: "Enable subscriptions for at least one of your shops"
+        enable_subscriptions_step_1_html: 1. Go to the %{enterprises_link} page, find your shop, and click "Manage"
+        enable_subscriptions_step_2: 2. Under "Shop Preferences", enable the Subscriptions option
         set_up_shipping_and_payment_methods_html: Set up %{shipping_link} and %{payment_link} methods
-        set_up_shipping_and_payment_methods_note_html: Note that only Cash and Stripe payment methods may<br />be used with standing orders
+        set_up_shipping_and_payment_methods_note_html: Note that only Cash and Stripe payment methods may<br />be used with subscriptions
         ensure_at_least_one_customer_html: Ensure that at least one %{customer_link} exists
         create_at_least_one_schedule: Create at least one Schedule
         create_at_least_one_schedule_step_1_html: 1. Go to the on the %{order_cycles_link} page
@@ -913,22 +913,22 @@ en:
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
-        confirm_edit: Are you sure you want to edit this order? Doing so may make it more difficult to automatically sync changes to the standing order in the future.
-      confirm_cancel_msg: Are you sure you want to cancel this standing order? This action cannot be undone.
+        confirm_edit: Are you sure you want to edit this order? Doing so may make it more difficult to automatically sync changes to the subscription in the future.
+      confirm_cancel_msg: Are you sure you want to cancel this subscription? This action cannot be undone.
       cancel_failure_msg: 'Sorry, cancellation failed!' 
-      confirm_pause_msg: Are you sure you want to pause this standing order?
+      confirm_pause_msg: Are you sure you want to pause this subscription?
       pause_failure_msg: 'Sorry, pausing failed!'
-      confirm_unpause_msg: Are you sure you want to unpause this standing order?
+      confirm_unpause_msg: Are you sure you want to unpause this subscription?
       unpause_failure_msg: 'Sorry, unpausing failed!'
-      confirm_cancel_open_orders_msg: "Some orders for this standing order are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
+      confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
       yes_cancel_them: Cancel them
       no_keep_them: Keep them
       yes_i_am_sure: Yes, I'm sure
       order_update_issues_msg: Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.
       no_results:
-        no_standing_orders: No standing orders yet...
+        no_subscriptions: No subscriptions yet...
         why_dont_you_add_one: Why don't you add one? :)
-        no_matching_standing_orders: No matching standing orders found
+        no_matching_subscriptions: No matching subscriptions found
 
     stripe_connect_settings:
       edit:
@@ -2507,7 +2507,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       resumed: resumed
       returned: returned
       skrill: skrill
-    standing_order_state:
+    subscription_state:
       active: active
       pending: pending
       ended: ended
