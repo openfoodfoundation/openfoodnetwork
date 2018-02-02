@@ -143,5 +143,24 @@ feature "full-page cart", js: true do
         expect(page).to have_content item2.variant.name
       end
     end
+
+    context "Admin & Handling" do
+      it "hides row if order includes no adjustments" do
+        visit spree.cart_path
+
+        add_product_to_cart order, product_fee, quantity: 2
+
+        expect(page).to_not have_content('Admin & Handling')
+        expect(page).to have_content('$0.00')
+      end
+
+      it "shows row if order include adjustments" do
+        visit spree.cart_path
+
+        #needs and order with adjustments
+
+        expect(page).to have_content('Admin & Handling')
+        expect(page).to have_content()
+    end
   end
 end

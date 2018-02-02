@@ -27,6 +27,7 @@ module CheckoutHelper
     Spree::Money.new adjustments.sum(&:amount) , currency: order.currency
   end
 
+
   def checkout_line_item_adjustments(order)
     order.adjustments.eligible.where(source_type: "Spree::LineItem")
   end
@@ -112,4 +113,5 @@ module CheckoutHelper
       "{{ #{price} | localizeCurrency }}"
     end
   end
+
 end
