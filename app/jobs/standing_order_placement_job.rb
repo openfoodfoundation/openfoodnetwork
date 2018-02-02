@@ -1,15 +1,6 @@
 require 'open_food_network/standing_order_summarizer'
 
 class StandingOrderPlacementJob
-  attr_accessor :summarizer
-
-  delegate :record_order, :record_success, :record_issue, to: :summarizer
-  delegate :record_and_log_error, :send_placement_summary_emails, to: :summarizer
-
-  def initialize
-    @summarizer = OpenFoodNetwork::StandingOrderSummarizer.new
-  end
-
   def perform
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(placed_at: Time.zone.now)
@@ -22,6 +13,13 @@ class StandingOrderPlacementJob
   end
 
   private
+
+  delegate :record_order, :record_success, :record_issue, to: :summarizer
+  delegate :record_and_log_error, :send_placement_summary_emails, to: :summarizer
+
+  def summarizer
+    @summarizer ||= OpenFoodNetwork::StandingOrderSummarizer.new
+  end
 
   def proxy_orders
     # Loads proxy orders for open order cycles that have not been placed yet

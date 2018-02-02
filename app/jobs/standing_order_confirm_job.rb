@@ -2,15 +2,6 @@ require 'open_food_network/standing_order_payment_updater'
 require 'open_food_network/standing_order_summarizer'
 
 class StandingOrderConfirmJob
-  attr_accessor :summarizer
-
-  delegate :record_order, :record_success, :record_issue, to: :summarizer
-  delegate :record_and_log_error, :send_confirmation_summary_emails, to: :summarizer
-
-  def initialize
-    @summarizer = OpenFoodNetwork::StandingOrderSummarizer.new
-  end
-
   def perform
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(confirmed_at: Time.zone.now)
@@ -23,6 +14,13 @@ class StandingOrderConfirmJob
   end
 
   private
+
+  delegate :record_order, :record_success, :record_issue, to: :summarizer
+  delegate :record_and_log_error, :send_confirmation_summary_emails, to: :summarizer
+
+  def summarizer
+    @summarizer ||= OpenFoodNetwork::StandingOrderSummarizer.new
+  end
 
   def proxy_orders
     ProxyOrder.not_canceled.where('confirmed_at IS NULL AND placed_at IS NOT NULL')
