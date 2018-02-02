@@ -138,7 +138,7 @@ FactoryGirl.define do
     order_cycles { [OrderCycle.first || FactoryGirl.create(:simple_order_cycle)] }
   end
 
-  factory :standing_order, :class => StandingOrder do
+  factory :subscription, :class => Subscription do
     shop { create :enterprise }
     schedule { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
     customer { create(:customer, enterprise: shop) }
@@ -153,33 +153,33 @@ FactoryGirl.define do
       with_proxy_orders false
     end
 
-    after(:create) do |standing_order, proxy|
+    after(:create) do |subscription, proxy|
       if proxy.with_items
-        standing_order.standing_line_items = build_list(:standing_line_item, 3, standing_order: standing_order)
-        standing_order.order_cycles.each do |oc|
-          ex = oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(standing_order.shop_id, standing_order.shop_id) ||
-            create(:exchange, :order_cycle => oc, :sender => standing_order.shop, :receiver => standing_order.shop, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
-          standing_order.standing_line_items.each { |sli| ex.variants << sli.variant }
+        subscription.standing_line_items = build_list(:standing_line_item, 3, subscription: subscription)
+        subscription.order_cycles.each do |oc|
+          ex = oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(subscription.shop_id, subscription.shop_id) ||
+            create(:exchange, :order_cycle => oc, :sender => subscription.shop, :receiver => subscription.shop, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
+          subscription.standing_line_items.each { |sli| ex.variants << sli.variant }
         end
       end
 
       if proxy.with_proxy_orders
-        standing_order.order_cycles.each do |oc|
-          standing_order.proxy_orders << create(:proxy_order, standing_order: standing_order, order_cycle: oc)
+        subscription.order_cycles.each do |oc|
+          subscription.proxy_orders << create(:proxy_order, subscription: subscription, order_cycle: oc)
         end
       end
     end
   end
 
   factory :standing_line_item, :class => StandingLineItem do
-    standing_order
+    subscription
     variant
     quantity 1
   end
 
   factory :proxy_order, :class => ProxyOrder do
-    standing_order
-    order_cycle { standing_order.order_cycles.first }
+    subscription
+    order_cycle { subscription.order_cycles.first }
     before(:create) do |proxy_order, proxy|
       if proxy_order.order
         proxy_order.order.update_attribute(:order_cycle_id, proxy_order.order_cycle_id)

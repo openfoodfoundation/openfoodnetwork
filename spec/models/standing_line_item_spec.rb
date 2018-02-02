@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe StandingLineItem, model: true do
   describe "validations" do
-    it "requires a standing_order" do
-      expect(subject).to validate_presence_of :standing_order
+    it "requires a subscription" do
+      expect(subject).to validate_presence_of :subscription
     end
 
     it "requires a variant" do

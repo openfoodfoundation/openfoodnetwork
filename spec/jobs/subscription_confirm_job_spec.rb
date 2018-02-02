@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe StandingOrderConfirmJob do
-  let(:job) { StandingOrderConfirmJob.new }
+describe SubscriptionConfirmJob do
+  let(:job) { SubscriptionConfirmJob.new }
 
   describe "finding proxy_orders that are ready to be confirmed" do
     let(:shop) { create(:distributor_enterprise) }
     let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_close_at: 59.minutes.ago, updated_at: 1.day.ago) }
     let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_close_at: 61.minutes.ago, updated_at: 1.day.ago) }
     let(:schedule) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
-    let(:standing_order) { create(:standing_order, shop: shop, schedule: schedule) }
-    let!(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle1, placed_at: 5.minutes.ago, order: create(:order, completed_at: 1.minute.ago)) }
+    let(:subscription) { create(:subscription, shop: shop, schedule: schedule) }
+    let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle1, placed_at: 5.minutes.ago, order: create(:order, completed_at: 1.minute.ago)) }
     let(:proxy_orders) { job.send(:proxy_orders) }
 
     it "returns proxy orders that meet all of the criteria" do
@@ -21,13 +21,13 @@ describe StandingOrderConfirmJob do
       expect(proxy_orders).to_not include proxy_order
     end
 
-    it "ignores proxy orders for paused standing orders" do
-      standing_order.update_attributes!(paused_at: 1.minute.ago)
+    it "ignores proxy orders for paused subscriptions" do
+      subscription.update_attributes!(paused_at: 1.minute.ago)
       expect(proxy_orders).to_not include proxy_order
     end
 
-    it "ignores proxy orders for cancelled standing orders" do
-      standing_order.update_attributes!(canceled_at: 1.minute.ago)
+    it "ignores proxy orders for cancelled subscriptions" do
+      subscription.update_attributes!(canceled_at: 1.minute.ago)
       expect(proxy_orders).to_not include proxy_order
     end
 
@@ -106,8 +106,8 @@ describe StandingOrderConfirmJob do
     let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop) }
     let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop) }
     let(:schedule1) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
-    let(:standing_order1) { create(:standing_order, shop: shop, schedule: schedule1, with_items: true) }
-    let(:proxy_order) { create(:proxy_order, standing_order: standing_order1) }
+    let(:subscription1) { create(:subscription, shop: shop, schedule: schedule1, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, subscription: subscription1) }
     let(:order) { proxy_order.initialise_order! }
 
     before do
@@ -162,7 +162,7 @@ describe StandingOrderConfirmJob do
             expect(payment).to receive(:completed?) { true }
           end
 
-          it "sends only a standing order confirm email, no regular confirmation emails" do
+          it "sends only a subscription confirm email, no regular confirmation emails" do
             ActionMailer::Base.deliveries.clear
             expect{ job.send(:process!) }.to_not enqueue_job ConfirmOrderJob
             expect(job).to have_received(:send_confirm_email).once
@@ -179,13 +179,13 @@ describe StandingOrderConfirmJob do
 
     before do
       job.instance_variable_set(:@order, order)
-      allow(StandingOrderMailer).to receive(:confirmation_email) { mail_mock }
+      allow(SubscriptionMailer).to receive(:confirmation_email) { mail_mock }
     end
 
     it "records a success and sends the email" do
       expect(job).to receive(:record_success).with(order).once
       job.send(:send_confirm_email)
-      expect(StandingOrderMailer).to have_received(:confirmation_email).with(order)
+      expect(SubscriptionMailer).to have_received(:confirmation_email).with(order)
       expect(mail_mock).to have_received(:deliver)
     end
   end
@@ -196,13 +196,13 @@ describe StandingOrderConfirmJob do
 
     before do
       job.instance_variable_set(:@order, order)
-      allow(StandingOrderMailer).to receive(:failed_payment_email) { mail_mock }
+      allow(SubscriptionMailer).to receive(:failed_payment_email) { mail_mock }
     end
 
     it "records and logs an error and sends the email" do
       expect(job).to receive(:record_and_log_error).with(:failed_payment, order).once
       job.send(:send_failed_payment_email)
-      expect(StandingOrderMailer).to have_received(:failed_payment_email).with(order)
+      expect(SubscriptionMailer).to have_received(:failed_payment_email).with(order)
       expect(mail_mock).to have_received(:deliver)
     end
   end

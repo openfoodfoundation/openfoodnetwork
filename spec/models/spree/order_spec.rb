@@ -573,7 +573,7 @@ describe Spree::Order do
       end.to_not enqueue_job ConfirmOrderJob
     end
 
-    it "does not send confirmation emails when the order belongs to a standing order" do
+    it "does not send confirmation emails when the order belongs to a subscription" do
       create(:proxy_order, order: order)
 
       expect do
@@ -794,13 +794,13 @@ describe Spree::Order do
     let!(:order) { create(:order ) }
     let!(:payment) { create(:payment, order: order, state: 'checkout') }
 
-    context "when the order is not a standing order" do
+    context "when the order is not a subscription" do
       it "returns the payments on the order" do
         expect(order.reload.pending_payments).to eq [payment]
       end
     end
 
-    context "when the order is a standing order" do
+    context "when the order is a subscription" do
       let!(:proxy_order) { create(:proxy_order, order: order) }
       let!(:order_cycle) { proxy_order.order_cycle }
 

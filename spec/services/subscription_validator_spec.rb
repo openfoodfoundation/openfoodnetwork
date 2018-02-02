@@ -1,25 +1,25 @@
-describe StandingOrderValidator do
+describe SubscriptionValidator do
   let(:shop) { instance_double(Enterprise, name: "Shop") }
 
   describe "delegation" do
-    let(:standing_order) { create(:standing_order) }
-    let(:validator) { StandingOrderValidator.new(standing_order) }
+    let(:subscription) { create(:subscription) }
+    let(:validator) { SubscriptionValidator.new(subscription) }
 
-    it "delegates to standing_order" do
-      expect(validator.shop).to eq standing_order.shop
-      expect(validator.customer).to eq standing_order.customer
-      expect(validator.schedule).to eq standing_order.schedule
-      expect(validator.shipping_method).to eq standing_order.shipping_method
-      expect(validator.payment_method).to eq standing_order.payment_method
-      expect(validator.bill_address).to eq standing_order.bill_address
-      expect(validator.ship_address).to eq standing_order.ship_address
-      expect(validator.begins_at).to eq standing_order.begins_at
-      expect(validator.ends_at).to eq standing_order.ends_at
+    it "delegates to subscription" do
+      expect(validator.shop).to eq subscription.shop
+      expect(validator.customer).to eq subscription.customer
+      expect(validator.schedule).to eq subscription.schedule
+      expect(validator.shipping_method).to eq subscription.shipping_method
+      expect(validator.payment_method).to eq subscription.payment_method
+      expect(validator.bill_address).to eq subscription.bill_address
+      expect(validator.ship_address).to eq subscription.ship_address
+      expect(validator.begins_at).to eq subscription.begins_at
+      expect(validator.ends_at).to eq subscription.ends_at
     end
   end
 
   describe "validations" do
-    let(:standing_order_stubs) do
+    let(:subscription_stubs) do
       {
         shop: shop,
         customer: true,
@@ -48,8 +48,8 @@ describe StandingOrderValidator do
       }
     end
 
-    let(:standing_order) { instance_double(StandingOrder, standing_order_stubs) }
-    let(:validator) { StandingOrderValidator.new(standing_order) }
+    let(:subscription) { instance_double(Subscription, subscription_stubs) }
+    let(:validator) { SubscriptionValidator.new(subscription) }
 
     def stub_validations(validator, methods)
       methods.each do |name, value|
@@ -58,11 +58,11 @@ describe StandingOrderValidator do
     end
 
     describe "shipping method validation" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs.except(:shipping_method)) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs.except(:shipping_method)) }
       before { stub_validations(validator, validation_stubs.except(:shipping_method_allowed?)) }
 
       context "when no shipping method is present" do
-        before { expect(standing_order).to receive(:shipping_method).at_least(:once) { nil } }
+        before { expect(subscription).to receive(:shipping_method).at_least(:once) { nil } }
 
         it "adds an error and returns false" do
           expect(validator.valid?).to be false
@@ -72,7 +72,7 @@ describe StandingOrderValidator do
 
       context "when a shipping method is present" do
         let(:shipping_method) { instance_double(Spree::ShippingMethod, distributors: [shop]) }
-        before { expect(standing_order).to receive(:shipping_method).at_least(:once) { shipping_method } }
+        before { expect(subscription).to receive(:shipping_method).at_least(:once) { shipping_method } }
 
         context "and the shipping method is not associated with the shop" do
           before { allow(shipping_method).to receive(:distributors) { [double(:enterprise)] } }
@@ -95,11 +95,11 @@ describe StandingOrderValidator do
     end
 
     describe "payment method validation" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs.except(:payment_method)) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs.except(:payment_method)) }
       before { stub_validations(validator, validation_stubs.except(:payment_method_allowed?)) }
 
       context "when no payment method is present" do
-        before { expect(standing_order).to receive(:payment_method).at_least(:once) { nil } }
+        before { expect(subscription).to receive(:payment_method).at_least(:once) { nil } }
 
         it "adds an error and returns false" do
           expect(validator.valid?).to be false
@@ -109,7 +109,7 @@ describe StandingOrderValidator do
 
       context "when a payment method is present" do
         let(:payment_method) { instance_double(Spree::PaymentMethod, distributors: [shop]) }
-        before { expect(standing_order).to receive(:payment_method).at_least(:once) { payment_method } }
+        before { expect(subscription).to receive(:payment_method).at_least(:once) { payment_method } }
 
         context "and the payment method is not associated with the shop" do
           before { allow(payment_method).to receive(:distributors) { [double(:enterprise)] } }
@@ -132,12 +132,12 @@ describe StandingOrderValidator do
     end
 
     describe "payment method type validation" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs.except(:payment_method)) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs.except(:payment_method)) }
       before { stub_validations(validator, validation_stubs.except(:payment_method_type_allowed?)) }
 
       context "when a payment method is present" do
         let(:payment_method) { instance_double(Spree::PaymentMethod, distributors: [shop]) }
-        before { expect(standing_order).to receive(:payment_method).at_least(:once) { payment_method } }
+        before { expect(subscription).to receive(:payment_method).at_least(:once) { payment_method } }
 
         context "and the payment method type is not in the approved list" do
           before { allow(payment_method).to receive(:type) { "Blah" } }
@@ -149,7 +149,7 @@ describe StandingOrderValidator do
         end
 
         context "and the payment method is in the approved list" do
-          let(:approved_type) { StandingOrder::ALLOWED_PAYMENT_METHOD_TYPES.first }
+          let(:approved_type) { Subscription::ALLOWED_PAYMENT_METHOD_TYPES.first }
           before { allow(payment_method).to receive(:type) { approved_type } }
 
           it "returns true" do
@@ -161,9 +161,9 @@ describe StandingOrderValidator do
     end
 
     describe "dates" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs.except(:begins_at, :ends_at)) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs.except(:begins_at, :ends_at)) }
       before { stub_validations(validator, validation_stubs.except(:ends_at_after_begins_at?)) }
-      before { expect(standing_order).to receive(:begins_at).at_least(:once) { begins_at } }
+      before { expect(subscription).to receive(:begins_at).at_least(:once) { begins_at } }
 
       context "when no begins_at is present" do
         let(:begins_at) { nil }
@@ -176,7 +176,7 @@ describe StandingOrderValidator do
 
       context "when a start date is present" do
         let(:begins_at) { Time.zone.today }
-        before { expect(standing_order).to receive(:ends_at).at_least(:once) { ends_at } }
+        before { expect(subscription).to receive(:ends_at).at_least(:once) { ends_at } }
 
         context "when no ends_at is present" do
           let(:ends_at) { nil }
@@ -215,9 +215,9 @@ describe StandingOrderValidator do
 
     describe "addresses" do
       before { stub_validations(validator, validation_stubs) }
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs.except(:bill_address, :ship_address)) }
-      before { expect(standing_order).to receive(:bill_address).at_least(:once) { bill_address } }
-      before { expect(standing_order).to receive(:ship_address).at_least(:once) { ship_address } }
+      let(:subscription) { instance_double(Subscription, subscription_stubs.except(:bill_address, :ship_address)) }
+      before { expect(subscription).to receive(:bill_address).at_least(:once) { bill_address } }
+      before { expect(subscription).to receive(:ship_address).at_least(:once) { ship_address } }
 
       context "when bill_address and ship_address are not present" do
         let(:bill_address) { nil }
@@ -243,9 +243,9 @@ describe StandingOrderValidator do
     end
 
     describe "customer" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs.except(:customer)) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs.except(:customer)) }
       before { stub_validations(validator, validation_stubs.except(:customer_allowed?)) }
-      before { expect(standing_order).to receive(:customer).at_least(:once) { customer } }
+      before { expect(subscription).to receive(:customer).at_least(:once) { customer } }
 
       context "when no customer is present" do
         let(:customer) { nil }
@@ -280,9 +280,9 @@ describe StandingOrderValidator do
     end
 
     describe "schedule" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs.except(:schedule)) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs.except(:schedule)) }
       before { stub_validations(validator, validation_stubs.except(:schedule_allowed?)) }
-      before { expect(standing_order).to receive(:schedule).at_least(:once) { schedule } }
+      before { expect(subscription).to receive(:schedule).at_least(:once) { schedule } }
 
       context "when no schedule is present" do
         let(:schedule) { nil }
@@ -317,9 +317,9 @@ describe StandingOrderValidator do
     end
 
     describe "credit card" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs.except(:payment_method)) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs.except(:payment_method)) }
       before { stub_validations(validator, validation_stubs.except(:credit_card_ok?)) }
-      before { expect(standing_order).to receive(:payment_method).at_least(:once) { payment_method } }
+      before { expect(subscription).to receive(:payment_method).at_least(:once) { payment_method } }
 
       context "when using a Check payment method" do
         let(:payment_method) { instance_double(Spree::PaymentMethod, type: "Spree::PaymentMethod::Check") }
@@ -332,7 +332,7 @@ describe StandingOrderValidator do
 
       context "when using the StripeConnect payment gateway" do
         let(:payment_method) { instance_double(Spree::PaymentMethod, type: "Spree::Gateway::StripeConnect") }
-        before { expect(standing_order).to receive(:credit_card_id).at_least(:once) { credit_card_id } }
+        before { expect(subscription).to receive(:credit_card_id).at_least(:once) { credit_card_id } }
 
         context "when a credit card is not present" do
           let(:credit_card_id) { nil }
@@ -345,7 +345,7 @@ describe StandingOrderValidator do
 
         context "when a credit card is present" do
           let(:credit_card_id) { 12 }
-          before { expect(standing_order).to receive(:customer).at_least(:once) { customer } }
+          before { expect(subscription).to receive(:customer).at_least(:once) { customer } }
 
           context "and the customer is not associated with a user" do
             let(:customer) { instance_double(Customer, user: nil) }
@@ -382,9 +382,9 @@ describe StandingOrderValidator do
     end
 
     describe "standing line items" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs) }
       before { stub_validations(validator, validation_stubs.except(:standing_line_items_present?)) }
-      before { expect(standing_order).to receive(:standing_line_items).at_least(:once) { standing_line_items } }
+      before { expect(subscription).to receive(:standing_line_items).at_least(:once) { standing_line_items } }
 
       context "when no standing line items are present" do
         let(:standing_line_items) { [] }
@@ -418,9 +418,9 @@ describe StandingOrderValidator do
     end
 
     describe "variant availability" do
-      let(:standing_order) { instance_double(StandingOrder, standing_order_stubs) }
+      let(:subscription) { instance_double(Subscription, subscription_stubs) }
       before { stub_validations(validator, validation_stubs.except(:requested_variants_available?)) }
-      before { expect(standing_order).to receive(:standing_line_items).at_least(:once) { standing_line_items } }
+      before { expect(subscription).to receive(:standing_line_items).at_least(:once) { standing_line_items } }
 
       context "when no standing line items are present" do
         let(:standing_line_items) { [] }

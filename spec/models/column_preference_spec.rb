@@ -65,7 +65,7 @@ describe ColumnPreference, type: :model do
       let(:action_name) { "order_cycles_index" }
 
       context "and the user owns a standing-orders-enabled enterprise" do
-        let!(:enterprise) { create(:distributor_enterprise, enable_standing_orders: true) }
+        let!(:enterprise) { create(:distributor_enterprise, enable_subscriptions: true) }
 
         it "removes the schedules column from the defaults" do
           ColumnPreference.filter(default_preferences, enterprise.owner, action_name)
@@ -74,7 +74,7 @@ describe ColumnPreference, type: :model do
       end
 
       context "and the user does not own a standing-orders-enabled enterprise" do
-        let!(:enterprise) { create(:distributor_enterprise, enable_standing_orders: false) }
+        let!(:enterprise) { create(:distributor_enterprise, enable_subscriptions: false) }
 
         it "removes the schedules column from the defaults" do
           ColumnPreference.filter(default_preferences, enterprise.owner, action_name)

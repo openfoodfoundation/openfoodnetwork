@@ -3,10 +3,10 @@ require 'spec_helper'
 describe ProxyOrder, type: :model do
   describe "cancel" do
     let(:order_cycle) { create(:simple_order_cycle) }
-    let(:standing_order) { create(:standing_order) }
+    let(:subscription) { create(:subscription) }
 
     context "when the order cycle is not yet closed" do
-      let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order: order, order_cycle: order_cycle) }
+      let(:proxy_order) { create(:proxy_order, subscription: subscription, order: order, order_cycle: order_cycle) }
       before { order_cycle.update_attributes(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
 
       context "and an order has not been initialised" do
@@ -44,7 +44,7 @@ describe ProxyOrder, type: :model do
     end
 
     context "when the order cycle is already closed" do
-      let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order: order, order_cycle: order_cycle) }
+      let(:proxy_order) { create(:proxy_order, subscription: subscription, order: order, order_cycle: order_cycle) }
       before { order_cycle.update_attributes(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
 
       context "and an order has not been initialised" do
@@ -159,28 +159,28 @@ describe ProxyOrder, type: :model do
 
   describe "initialise_order!" do
     context "when the order has not already been initialised" do
-      let(:standing_order) { create(:standing_order, with_items: true) }
-      let!(:proxy_order) { create(:proxy_order, standing_order: standing_order) }
+      let(:subscription) { create(:subscription, with_items: true) }
+      let!(:proxy_order) { create(:proxy_order, subscription: subscription) }
 
-      it "builds a new order based the standing order" do
+      it "builds a new order based the subscription" do
         expect{ proxy_order.initialise_order! }.to change{ Spree::Order.count }.by(1)
         expect(proxy_order.reload.order).to be_a Spree::Order
         order = proxy_order.order
-        expect(order.line_items.count).to eq standing_order.standing_line_items.count
-        expect(order.customer).to eq standing_order.customer
-        expect(order.user).to eq standing_order.customer.user
-        expect(order.distributor).to eq standing_order.shop
+        expect(order.line_items.count).to eq subscription.standing_line_items.count
+        expect(order.customer).to eq subscription.customer
+        expect(order.user).to eq subscription.customer.user
+        expect(order.distributor).to eq subscription.shop
         expect(order.order_cycle).to eq proxy_order.order_cycle
-        expect(order.shipping_method).to eq standing_order.shipping_method
-        expect(order.shipments.first.shipping_method).to eq standing_order.shipping_method
-        expect(order.payments.first.payment_method).to eq standing_order.payment_method
-        expect(order.bill_address).to eq standing_order.bill_address
-        expect(order.ship_address).to eq standing_order.ship_address
+        expect(order.shipping_method).to eq subscription.shipping_method
+        expect(order.shipments.first.shipping_method).to eq subscription.shipping_method
+        expect(order.payments.first.payment_method).to eq subscription.payment_method
+        expect(order.bill_address).to eq subscription.bill_address
+        expect(order.ship_address).to eq subscription.ship_address
         expect(order.complete?).to be false
       end
 
       context "when a requested quantity is greater than available stock" do
-        let(:sli) { standing_order.standing_line_items.first }
+        let(:sli) { subscription.standing_line_items.first }
         let(:variant) { sli.variant }
 
         before do
@@ -198,7 +198,7 @@ describe ProxyOrder, type: :model do
 
       context "when the customer does not have a user associated with it" do
         before do
-          standing_order.customer.update_attribute(:user_id, nil)
+          subscription.customer.update_attribute(:user_id, nil)
         end
 
         it "initialises the order without a user_id" do

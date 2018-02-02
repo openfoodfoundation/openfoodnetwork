@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Admin::StandingOrdersController, type: :controller do
+describe Admin::SubscriptionsController, type: :controller do
   include AuthenticationWorkflow
 
   describe 'index' do
     let!(:user) { create(:user, enterprise_limit: 10) }
-    let!(:shop) { create(:distributor_enterprise, enable_standing_orders: true) }
+    let!(:shop) { create(:distributor_enterprise, enable_subscriptions: true) }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
@@ -25,8 +25,8 @@ describe Admin::StandingOrdersController, type: :controller do
         before { shop.update_attributes(owner: user) }
         let!(:not_enabled_shop) { create(:distributor_enterprise, owner: user) }
 
-        context "where I manage a shop that is set up for standing orders" do
-          let!(:standing_order) { create(:standing_order, shop: shop) }
+        context "where I manage a shop that is set up for subscriptions" do
+          let!(:subscription) { create(:subscription, shop: shop) }
 
           it 'renders the index page with appropriate data' do
             spree_get :index, params
@@ -36,7 +36,7 @@ describe Admin::StandingOrdersController, type: :controller do
           end
         end
 
-        context "where I don't manage a shop that is set up for standing orders" do
+        context "where I don't manage a shop that is set up for subscriptions" do
           it 'renders the setup_explanation page' do
             spree_get :index, params
             expect(response).to render_template 'setup_explanation'
@@ -49,7 +49,7 @@ describe Admin::StandingOrdersController, type: :controller do
 
     context 'json' do
       let(:params) { { format: :json } }
-      let!(:standing_order) { create(:standing_order, shop: shop) }
+      let!(:subscription) { create(:subscription, shop: shop) }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
@@ -61,25 +61,25 @@ describe Admin::StandingOrdersController, type: :controller do
       context 'as an enterprise user' do
         before { shop.update_attributes(owner: user) }
         let!(:shop2) { create(:distributor_enterprise, owner: user) }
-        let!(:standing_order2) { create(:standing_order, shop: shop2) }
+        let!(:subscription2) { create(:subscription, shop: shop2) }
 
         it 'renders the collection as json' do
           spree_get :index, params
           json_response = JSON.parse(response.body)
           expect(json_response.count).to be 2
-          expect(json_response.map{ |so| so['id'] }).to include standing_order.id, standing_order2.id
+          expect(json_response.map{ |so| so['id'] }).to include subscription.id, subscription2.id
         end
 
         context "when ransack predicates are submitted" do
           before { params.merge!(q: { shop_id_eq: shop2.id }) }
 
-          it "restricts the list of standing orders" do
+          it "restricts the list of subscriptions" do
             spree_get :index, params
             json_response = JSON.parse(response.body)
             expect(json_response.count).to be 1
             ids = json_response.map{ |so| so['id'] }
-            expect(ids).to include standing_order2.id
-            expect(ids).to_not include standing_order.id
+            expect(ids).to include subscription2.id
+            expect(ids).to_not include subscription.id
           end
         end
       end
@@ -96,9 +96,9 @@ describe Admin::StandingOrdersController, type: :controller do
 
     it 'loads the preloads the necessary data' do
       expect(controller).to receive(:load_form_data)
-      spree_get :new, standing_order: { shop_id: shop.id }
-      expect(assigns(:standing_order)).to be_a_new StandingOrder
-      expect(assigns(:standing_order).shop).to eq shop
+      spree_get :new, subscription: { shop_id: shop.id }
+      expect(assigns(:subscription)).to be_a_new Subscription
+      expect(assigns(:subscription).shop).to eq shop
     end
   end
 
@@ -110,7 +110,7 @@ describe Admin::StandingOrdersController, type: :controller do
     let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
-    let(:params) { { format: :json, standing_order: { shop_id: shop.id } } }
+    let(:params) { { format: :json, subscription: { shop_id: shop.id } } }
 
     context 'as an non-manager of the specified shop' do
       before do
@@ -130,14 +130,14 @@ describe Admin::StandingOrdersController, type: :controller do
 
       context 'when I submit insufficient params' do
         it 'returns errors' do
-          expect{ spree_post :create, params }.to_not change{ StandingOrder.count }
+          expect{ spree_post :create, params }.to_not change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method', 'shipping_method', 'begins_at'
         end
       end
 
       context 'when I submit params containing ids of inaccessible objects' do
-        # As 'user' I shouldnt be able to associate a standing_order with any of these.
+        # As 'user' I shouldnt be able to associate a subscription with any of these.
         let(:unmanaged_enterprise) { create(:enterprise) }
         let(:unmanaged_schedule) { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: unmanaged_enterprise)]) }
         let(:unmanaged_customer) { create(:customer, enterprise: unmanaged_enterprise) }
@@ -145,7 +145,7 @@ describe Admin::StandingOrdersController, type: :controller do
         let(:unmanaged_shipping_method) { create(:shipping_method, distributors: [unmanaged_enterprise]) }
 
         before do
-          params[:standing_order].merge!(
+          params[:subscription].merge!(
             schedule_id: unmanaged_schedule.id,
             customer_id: unmanaged_customer.id,
             payment_method_id: unmanaged_payment_method.id,
@@ -156,7 +156,7 @@ describe Admin::StandingOrdersController, type: :controller do
         end
 
         it 'returns errors' do
-          expect{ spree_post :create, params }.to_not change{ StandingOrder.count }
+          expect{ spree_post :create, params }.to_not change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method', 'shipping_method', 'ends_at'
         end
@@ -167,7 +167,7 @@ describe Admin::StandingOrdersController, type: :controller do
         let(:variant) { create(:variant) }
 
         before do
-          params[:standing_order].merge!(
+          params[:subscription].merge!(
             schedule_id: schedule.id,
             customer_id: customer.id,
             payment_method_id: payment_method.id,
@@ -184,7 +184,7 @@ describe Admin::StandingOrdersController, type: :controller do
 
         context 'where the specified variants are not available from the shop' do
           it 'returns an error' do
-            expect{ spree_post :create, params }.to_not change{ StandingOrder.count }
+            expect{ spree_post :create, params }.to_not change{ Subscription.count }
             json_response = JSON.parse(response.body)
             expect(json_response['errors']['standing_line_items']).to eq ["#{variant.product.name} - #{variant.full_name} is not available from the selected schedule"]
           end
@@ -193,17 +193,17 @@ describe Admin::StandingOrdersController, type: :controller do
         context 'where the specified variants are available from the shop' do
           let!(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant]) }
 
-          it 'creates standing line items for the standing order' do
-            expect{ spree_post :create, params }.to change{ StandingOrder.count }.by(1)
-            standing_order = StandingOrder.last
-            expect(standing_order.schedule).to eq schedule
-            expect(standing_order.customer).to eq customer
-            expect(standing_order.payment_method).to eq payment_method
-            expect(standing_order.shipping_method).to eq shipping_method
-            expect(standing_order.bill_address.firstname).to eq address.firstname
-            expect(standing_order.ship_address.firstname).to eq address.firstname
-            expect(standing_order.standing_line_items.count).to be 1
-            standing_line_item = standing_order.standing_line_items.first
+          it 'creates standing line items for the subscription' do
+            expect{ spree_post :create, params }.to change{ Subscription.count }.by(1)
+            subscription = Subscription.last
+            expect(subscription.schedule).to eq schedule
+            expect(subscription.customer).to eq customer
+            expect(subscription.payment_method).to eq payment_method
+            expect(subscription.shipping_method).to eq shipping_method
+            expect(subscription.bill_address.firstname).to eq address.firstname
+            expect(subscription.ship_address.firstname).to eq address.firstname
+            expect(subscription.standing_line_items.count).to be 1
+            standing_line_item = subscription.standing_line_items.first
             expect(standing_line_item.quantity).to be 2
             expect(standing_line_item.variant).to eq variant
           end
@@ -220,8 +220,8 @@ describe Admin::StandingOrdersController, type: :controller do
     let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
-    let!(:standing_order) {
-      create(:standing_order,
+    let!(:subscription) {
+      create(:subscription,
              shop: shop,
              customer: customer1,
              schedule: schedule,
@@ -235,8 +235,8 @@ describe Admin::StandingOrdersController, type: :controller do
 
     it 'loads the preloads the necessary data' do
       expect(controller).to receive(:load_form_data)
-      spree_get :edit, id: standing_order.id
-      expect(assigns(:standing_order)).to eq standing_order
+      spree_get :edit, id: subscription.id
+      expect(assigns(:subscription)).to eq subscription
     end
   end
 
@@ -252,8 +252,8 @@ describe Admin::StandingOrdersController, type: :controller do
     let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
-    let!(:standing_order) {
-      create(:standing_order,
+    let!(:subscription) {
+      create(:subscription,
              shop: shop,
              customer: customer,
              schedule: schedule,
@@ -261,10 +261,10 @@ describe Admin::StandingOrdersController, type: :controller do
              shipping_method: shipping_method,
              standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)])
     }
-    let(:standing_line_item1) { standing_order.standing_line_items.first }
-    let(:params) { { format: :json, id: standing_order.id, standing_order: {} } }
+    let(:standing_line_item1) { subscription.standing_line_items.first }
+    let(:params) { { format: :json, id: subscription.id, subscription: {} } }
 
-    context 'as an non-manager of the standing order shop' do
+    context 'as an non-manager of the subscription shop' do
       before do
         allow(controller).to receive(:spree_current_user) { create(:user, enterprises: [create(:enterprise)]) }
       end
@@ -275,7 +275,7 @@ describe Admin::StandingOrdersController, type: :controller do
       end
     end
 
-    context 'as a manager of the standing_order shop' do
+    context 'as a manager of the subscription shop' do
       before do
         allow(controller).to receive(:spree_current_user) { user }
       end
@@ -285,37 +285,37 @@ describe Admin::StandingOrdersController, type: :controller do
         let!(:new_schedule) { create(:schedule, order_cycles: [order_cycle]) }
 
         before do
-          params[:standing_order].merge!(schedule_id: new_schedule.id, customer_id: new_customer.id)
+          params[:subscription].merge!(schedule_id: new_schedule.id, customer_id: new_customer.id)
         end
 
         it 'does not alter customer_id or schedule_id' do
           spree_post :update, params
-          standing_order.reload
-          expect(standing_order.customer).to eq customer
-          expect(standing_order.schedule).to eq schedule
+          subscription.reload
+          expect(subscription.customer).to eq customer
+          expect(subscription.schedule).to eq schedule
         end
       end
 
       context 'when I submit params containing ids of inaccessible objects' do
-        # As 'user' I shouldnt be able to associate a standing_order with any of these.
+        # As 'user' I shouldnt be able to associate a subscription with any of these.
         let(:unmanaged_enterprise) { create(:enterprise) }
         let(:unmanaged_payment_method) { create(:payment_method, distributors: [unmanaged_enterprise]) }
         let(:unmanaged_shipping_method) { create(:shipping_method, distributors: [unmanaged_enterprise]) }
 
         before do
-          params[:standing_order].merge!(
+          params[:subscription].merge!(
             payment_method_id: unmanaged_payment_method.id,
             shipping_method_id: unmanaged_shipping_method.id
           )
         end
 
         it 'returns errors' do
-          expect{ spree_post :update, params }.to_not change{ StandingOrder.count }
+          expect{ spree_post :update, params }.to_not change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'payment_method', 'shipping_method'
-          standing_order.reload
-          expect(standing_order.payment_method).to eq payment_method
-          expect(standing_order.shipping_method).to eq shipping_method
+          subscription.reload
+          expect(subscription.payment_method).to eq payment_method
+          expect(subscription.shipping_method).to eq shipping_method
         end
       end
 
@@ -324,19 +324,19 @@ describe Admin::StandingOrdersController, type: :controller do
         let!(:new_shipping_method) { create(:shipping_method, distributors: [shop]) }
 
         before do
-          params[:standing_order].merge!(
+          params[:subscription].merge!(
             payment_method_id: new_payment_method.id,
             shipping_method_id: new_shipping_method.id
           )
         end
 
-        it 'updates the standing order' do
+        it 'updates the subscription' do
           spree_post :update, params
-          standing_order.reload
-          expect(standing_order.schedule).to eq schedule
-          expect(standing_order.customer).to eq customer
-          expect(standing_order.payment_method).to eq new_payment_method
-          expect(standing_order.shipping_method).to eq new_shipping_method
+          subscription.reload
+          expect(subscription.schedule).to eq schedule
+          expect(subscription.customer).to eq customer
+          expect(subscription.payment_method).to eq new_payment_method
+          expect(subscription.shipping_method).to eq new_shipping_method
         end
 
         context 'with standing_line_items params' do
@@ -349,7 +349,7 @@ describe Admin::StandingOrdersController, type: :controller do
 
           context 'where the specified variants are not available from the shop' do
             it 'returns an error' do
-              expect{ spree_post :update, params }.to_not change{ standing_order.standing_line_items.count }
+              expect{ spree_post :update, params }.to_not change{ subscription.standing_line_items.count }
               json_response = JSON.parse(response.body)
               expect(json_response['errors']['standing_line_items']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
             end
@@ -358,11 +358,11 @@ describe Admin::StandingOrdersController, type: :controller do
           context 'where the specified variants are available from the shop' do
             before { outgoing_exchange.update_attributes(variants: [variant1, variant2]) }
 
-            it 'creates standing line items for the standing order' do
-              expect{ spree_post :update, params }.to change{ standing_order.standing_line_items.count }.by(1)
-              standing_order.reload
-              expect(standing_order.standing_line_items.count).to be 2
-              standing_line_item = standing_order.standing_line_items.last
+            it 'creates standing line items for the subscription' do
+              expect{ spree_post :update, params }.to change{ subscription.standing_line_items.count }.by(1)
+              subscription.reload
+              expect(subscription.standing_line_items.count).to be 2
+              standing_line_item = subscription.standing_line_items.last
               expect(standing_line_item.quantity).to be 2
               expect(standing_line_item.variant).to eq variant2
             end
@@ -376,15 +376,15 @@ describe Admin::StandingOrdersController, type: :controller do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
-    let!(:standing_order) { create(:standing_order, shop: shop, with_items: true) }
-    let!(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
+    let!(:subscription) { create(:subscription, shop: shop, with_items: true) }
+    let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
     end
 
     context 'json' do
-      let(:params) { { format: :json, id: standing_order.id } }
+      let(:params) { { format: :json, id: subscription.id } }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
@@ -408,8 +408,8 @@ describe Admin::StandingOrdersController, type: :controller do
           before { shop.update_attributes(owner: user) }
 
           context "when at least one associated order is still 'open'" do
-            let(:order_cycle) { standing_order.order_cycles.first }
-            let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
+            let(:order_cycle) { subscription.order_cycles.first }
+            let(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
             let!(:order) { proxy_order.initialise_order! }
 
             before { while !order.completed? do break unless order.next! end }
@@ -419,19 +419,19 @@ describe Admin::StandingOrdersController, type: :controller do
                 spree_put :cancel, params
                 expect(response.status).to be 409
                 json_response = JSON.parse(response.body)
-                expect(json_response['errors']['open_orders']).to eq I18n.t('admin.standing_orders.confirm_cancel_open_orders_msg')
+                expect(json_response['errors']['open_orders']).to eq I18n.t('admin.subscriptions.confirm_cancel_open_orders_msg')
               end
             end
 
             context "when 'keep' has been provided as the 'open_orders' directive" do
               before { params.merge!(open_orders: 'keep') }
 
-              it 'renders the cancelled standing_order as json, and does not cancel the open order' do
+              it 'renders the cancelled subscription as json, and does not cancel the open order' do
                 spree_put :cancel, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['canceled_at']).to_not be nil
-                expect(json_response['id']).to eq standing_order.id
-                expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+                expect(json_response['id']).to eq subscription.id
+                expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'complete'
                 expect(proxy_order.reload.canceled_at).to be nil
               end
@@ -446,12 +446,12 @@ describe Admin::StandingOrdersController, type: :controller do
                 allow(mail_mock).to receive(:deliver)
               end
 
-              it 'renders the cancelled standing_order as json, and cancels the open order' do
+              it 'renders the cancelled subscription as json, and cancels the open order' do
                 spree_put :cancel, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['canceled_at']).to_not be nil
-                expect(json_response['id']).to eq standing_order.id
-                expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+                expect(json_response['id']).to eq subscription.id
+                expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'canceled'
                 expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(mail_mock).to have_received(:deliver)
@@ -460,12 +460,12 @@ describe Admin::StandingOrdersController, type: :controller do
           end
 
           context "when no associated orders are still 'open'" do
-            it 'renders the cancelled standing_order as json' do
+            it 'renders the cancelled subscription as json' do
               spree_put :cancel, params
               json_response = JSON.parse(response.body)
               expect(json_response['canceled_at']).to_not be nil
-              expect(json_response['id']).to eq standing_order.id
-              expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+              expect(json_response['id']).to eq subscription.id
+              expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
             end
           end
         end
@@ -476,14 +476,14 @@ describe Admin::StandingOrdersController, type: :controller do
   describe 'pause' do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
-    let!(:standing_order) { create(:standing_order, shop: shop, with_items: true) }
+    let!(:subscription) { create(:subscription, shop: shop, with_items: true) }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
     end
 
     context 'json' do
-      let(:params) { { format: :json, id: standing_order.id } }
+      let(:params) { { format: :json, id: subscription.id } }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
@@ -507,8 +507,8 @@ describe Admin::StandingOrdersController, type: :controller do
           before { shop.update_attributes(owner: user) }
 
           context "when at least one associated order is still 'open'" do
-            let(:order_cycle) { standing_order.order_cycles.first }
-            let(:proxy_order) { create(:proxy_order, standing_order: standing_order, order_cycle: order_cycle) }
+            let(:order_cycle) { subscription.order_cycles.first }
+            let(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
             let!(:order) { proxy_order.initialise_order! }
 
             before { while !order.completed? do break unless order.next! end }
@@ -518,19 +518,19 @@ describe Admin::StandingOrdersController, type: :controller do
                 spree_put :pause, params
                 expect(response.status).to be 409
                 json_response = JSON.parse(response.body)
-                expect(json_response['errors']['open_orders']).to eq I18n.t('admin.standing_orders.confirm_cancel_open_orders_msg')
+                expect(json_response['errors']['open_orders']).to eq I18n.t('admin.subscriptions.confirm_cancel_open_orders_msg')
               end
             end
 
             context "when 'keep' has been provided as the 'open_orders' directive" do
               before { params.merge!(open_orders: 'keep') }
 
-              it 'renders the paused standing_order as json, and does not cancel the open order' do
+              it 'renders the paused subscription as json, and does not cancel the open order' do
                 spree_put :pause, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['paused_at']).to_not be nil
-                expect(json_response['id']).to eq standing_order.id
-                expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.zone.now
+                expect(json_response['id']).to eq subscription.id
+                expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'complete'
                 expect(proxy_order.reload.canceled_at).to be nil
               end
@@ -545,12 +545,12 @@ describe Admin::StandingOrdersController, type: :controller do
                 allow(mail_mock).to receive(:deliver)
               end
 
-              it 'renders the paused standing_order as json, and cancels the open order' do
+              it 'renders the paused subscription as json, and cancels the open order' do
                 spree_put :pause, params
                 json_response = JSON.parse(response.body)
                 expect(json_response['paused_at']).to_not be nil
-                expect(json_response['id']).to eq standing_order.id
-                expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.zone.now
+                expect(json_response['id']).to eq subscription.id
+                expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'canceled'
                 expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(mail_mock).to have_received(:deliver)
@@ -559,12 +559,12 @@ describe Admin::StandingOrdersController, type: :controller do
           end
 
           context "when no associated orders are still 'open'" do
-            it 'renders the paused standing_order as json' do
+            it 'renders the paused subscription as json' do
               spree_put :pause, params
               json_response = JSON.parse(response.body)
               expect(json_response['paused_at']).to_not be nil
-              expect(json_response['id']).to eq standing_order.id
-              expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.zone.now
+              expect(json_response['id']).to eq subscription.id
+              expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
             end
           end
         end
@@ -575,14 +575,14 @@ describe Admin::StandingOrdersController, type: :controller do
   describe 'unpause' do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
-    let!(:standing_order) { create(:standing_order, shop: shop, paused_at: Time.zone.now, with_items: true) }
+    let!(:subscription) { create(:subscription, shop: shop, paused_at: Time.zone.now, with_items: true) }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
     end
 
     context 'json' do
-      let(:params) { { format: :json, id: standing_order.id } }
+      let(:params) { { format: :json, id: subscription.id } }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
@@ -605,12 +605,12 @@ describe Admin::StandingOrdersController, type: :controller do
         context "with authorisation" do
           before { shop.update_attributes(owner: user) }
 
-          it 'renders the paused standing_order as json' do
+          it 'renders the paused subscription as json' do
             spree_put :unpause, params
             json_response = JSON.parse(response.body)
             expect(json_response['paused_at']).to be nil
-            expect(json_response['id']).to eq standing_order.id
-            expect(standing_order.reload.paused_at).to be nil
+            expect(json_response['id']).to eq subscription.id
+            expect(subscription.reload.paused_at).to be nil
           end
         end
       end
@@ -629,7 +629,7 @@ describe Admin::StandingOrdersController, type: :controller do
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
-      controller.instance_variable_set(:@standing_order, StandingOrder.new(shop: shop))
+      controller.instance_variable_set(:@subscription, Subscription.new(shop: shop))
     end
 
     it "assigns data to instance variables" do

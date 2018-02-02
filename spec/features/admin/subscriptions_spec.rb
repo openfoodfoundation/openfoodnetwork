@@ -6,16 +6,16 @@ feature 'Standing Orders' do
 
   context "as an enterprise user", js: true do
     let!(:user) { create_enterprise_user(enterprise_limit: 10) }
-    let!(:shop) { create(:distributor_enterprise, owner: user, enable_standing_orders: true) }
-    let!(:shop2) { create(:distributor_enterprise, owner: user, enable_standing_orders: true) }
-    let!(:shop_unmanaged) { create(:distributor_enterprise, enable_standing_orders: true) }
+    let!(:shop) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
+    let!(:shop2) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
+    let!(:shop_unmanaged) { create(:distributor_enterprise, enable_subscriptions: true) }
 
     before { quick_login_as user }
 
-    context 'listing standing orders' do
-      let!(:standing_order) { create(:standing_order, shop: shop, with_items: true, with_proxy_orders: true) }
-      let!(:standing_order2) { create(:standing_order, shop: shop2, with_items: true, with_proxy_orders: true) }
-      let!(:standing_order_unmanaged) { create(:standing_order, shop: shop_unmanaged, with_items: true, with_proxy_orders: true) }
+    context 'listing subscriptions' do
+      let!(:subscription) { create(:subscription, shop: shop, with_items: true, with_proxy_orders: true) }
+      let!(:subscription2) { create(:subscription, shop: shop2, with_items: true, with_proxy_orders: true) }
+      let!(:subscription_unmanaged) { create(:subscription, shop: shop_unmanaged, with_items: true, with_proxy_orders: true) }
 
       it "passes the smoke test" do
         visit spree.admin_path
@@ -26,42 +26,42 @@ feature 'Standing Orders' do
 
         select2_select shop2.name, from: "shop_id"
 
-        # Loads the right standing orders
-        expect(page).to have_selector "tr#so_#{standing_order2.id}"
-        expect(page).to have_no_selector "tr#so_#{standing_order.id}"
-        expect(page).to have_no_selector "tr#so_#{standing_order_unmanaged.id}"
-        within "tr#so_#{standing_order2.id}" do
-          expect(page).to have_selector "td.customer", text: standing_order2.customer.email
+        # Loads the right subscriptions
+        expect(page).to have_selector "tr#so_#{subscription2.id}"
+        expect(page).to have_no_selector "tr#so_#{subscription.id}"
+        expect(page).to have_no_selector "tr#so_#{subscription_unmanaged.id}"
+        within "tr#so_#{subscription2.id}" do
+          expect(page).to have_selector "td.customer", text: subscription2.customer.email
         end
 
         # Changing Shops
         select2_select shop.name, from: "shop_id"
 
-        # Loads the right standing orders
-        expect(page).to have_selector "tr#so_#{standing_order.id}"
-        expect(page).to have_no_selector "tr#so_#{standing_order2.id}"
-        expect(page).to have_no_selector "tr#so_#{standing_order_unmanaged.id}"
-        within "tr#so_#{standing_order.id}" do
-          expect(page).to have_selector "td.customer", text: standing_order.customer.email
+        # Loads the right subscriptions
+        expect(page).to have_selector "tr#so_#{subscription.id}"
+        expect(page).to have_no_selector "tr#so_#{subscription2.id}"
+        expect(page).to have_no_selector "tr#so_#{subscription_unmanaged.id}"
+        within "tr#so_#{subscription.id}" do
+          expect(page).to have_selector "td.customer", text: subscription.customer.email
         end
 
         # Using the Quick Search
-        expect(page).to have_selector "tr#so_#{standing_order.id}"
+        expect(page).to have_selector "tr#so_#{subscription.id}"
         fill_in 'query', with: 'blah blah blah'
-        expect(page).to have_no_selector "tr#so_#{standing_order.id}"
+        expect(page).to have_no_selector "tr#so_#{subscription.id}"
         fill_in 'query', with: ''
-        expect(page).to have_selector "tr#so_#{standing_order.id}"
+        expect(page).to have_selector "tr#so_#{subscription.id}"
 
         # Toggling columns
         expect(page).to have_selector "th.customer"
-        expect(page).to have_content standing_order.customer.email
+        expect(page).to have_content subscription.customer.email
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Customer").click
         expect(page).to_not have_selector "th.customer"
-        expect(page).to_not have_content standing_order.customer.email
+        expect(page).to_not have_content subscription.customer.email
 
         # Viewing Orders
-        within "tr#so_#{standing_order.id}" do
+        within "tr#so_#{subscription.id}" do
           expect(page).to have_selector "td.orders.panel-toggle", text: 1
           page.find("td.orders.panel-toggle").trigger('click')
         end
@@ -69,7 +69,7 @@ feature 'Standing Orders' do
         within ".standing-order-orders" do
           expect(page).to have_selector "tr.proxy_order", count: 1
 
-          proxy_order = standing_order.proxy_orders.first
+          proxy_order = subscription.proxy_orders.first
           within "tr#po_#{proxy_order.id}" do
             expect(page).to_not have_content 'CANCELLED'
             accept_alert 'Are you sure?' do
@@ -88,39 +88,39 @@ feature 'Standing Orders' do
           end
         end
 
-        # Pausing a standing order
-        within "tr#so_#{standing_order.id}" do
+        # Pausing a subscription
+        within "tr#so_#{subscription.id}" do
           find("a.pause-standing-order").click
         end
         click_button "Yes, I'm sure"
-        within "tr#so_#{standing_order.id}" do
+        within "tr#so_#{subscription.id}" do
           expect(page).to have_selector ".state.paused", text: "PAUSED"
-          expect(standing_order.reload.paused_at).to be_within(5.seconds).of Time.zone.now
+          expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
         end
 
-        # Unpausing a standing order
-        within "tr#so_#{standing_order.id}" do
+        # Unpausing a subscription
+        within "tr#so_#{subscription.id}" do
           find("a.unpause-standing-order").click
         end
         click_button "Yes, I'm sure"
-        within "tr#so_#{standing_order.id}" do
+        within "tr#so_#{subscription.id}" do
           expect(page).to have_selector ".state.active", text: "ACTIVE"
-          expect(standing_order.reload.paused_at).to be nil
+          expect(subscription.reload.paused_at).to be nil
         end
 
-        # Cancelling a standing order
-        within "tr#so_#{standing_order.id}" do
+        # Cancelling a subscription
+        within "tr#so_#{subscription.id}" do
           find("a.cancel-standing-order").click
         end
         click_button "Yes, I'm sure"
-        within "tr#so_#{standing_order.id}" do
+        within "tr#so_#{subscription.id}" do
           expect(page).to have_selector ".state.canceled", text: "CANCELLED"
-          expect(standing_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
         end
       end
     end
 
-    context 'creating a new standing order' do
+    context 'creating a new subscription' do
       let(:address) { create(:address) }
       let!(:customer_user) { create(:user) }
       let!(:credit_card1) { create(:credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10, year: 2030) }
@@ -139,9 +139,9 @@ feature 'Standing Orders' do
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
 
       it "passes the smoke test" do
-        visit admin_standing_orders_path
+        visit admin_subscriptions_path
         click_link 'New Standing Order'
-        select2_select shop.name, from: 'new_standing_order_shop_id'
+        select2_select shop.name, from: 'new_subscription_shop_id'
         click_button 'Continue'
 
         select2_select customer.email, from: 'customer_id'
@@ -222,7 +222,7 @@ feature 'Standing Orders' do
         expect{
           click_button('Create Standing Order')
           expect(page).to have_content 'Please add at least one product'
-        }.to_not change(StandingOrder, :count)
+        }.to_not change(Subscription, :count)
 
         # Adding a new product
         targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
@@ -238,7 +238,7 @@ feature 'Standing Orders' do
         expect{
           click_button('Create Standing Order')
           expect(page).to have_content 'Saved'
-        }.to change(StandingOrder, :count).by(1)
+        }.to change(Subscription, :count).by(1)
 
         # Prices are shown
         within 'table#standing-line-items tr.item', match: :first do
@@ -248,24 +248,24 @@ feature 'Standing Orders' do
           expect(page).to have_selector 'td.total', text: "$23.25"
         end
 
-        # Basic properties of standing order are set
-        standing_order = StandingOrder.last
-        expect(standing_order.customer).to eq customer
-        expect(standing_order.schedule).to eq schedule
-        expect(standing_order.payment_method).to eq payment_method
-        expect(standing_order.shipping_method).to eq shipping_method
-        expect(standing_order.bill_address.firstname).to eq 'Freda'
-        expect(standing_order.ship_address.firstname).to eq 'Freda'
-        expect(standing_order.credit_card_id).to eq credit_card2.id
+        # Basic properties of subscription are set
+        subscription = Subscription.last
+        expect(subscription.customer).to eq customer
+        expect(subscription.schedule).to eq schedule
+        expect(subscription.payment_method).to eq payment_method
+        expect(subscription.shipping_method).to eq shipping_method
+        expect(subscription.bill_address.firstname).to eq 'Freda'
+        expect(subscription.ship_address.firstname).to eq 'Freda'
+        expect(subscription.credit_card_id).to eq credit_card2.id
 
         # Standing Line Items are created
-        expect(standing_order.standing_line_items.count).to eq 1
-        standing_line_item = standing_order.standing_line_items.first
+        expect(subscription.standing_line_items.count).to eq 1
+        standing_line_item = subscription.standing_line_items.first
         expect(standing_line_item.variant).to eq variant2
         expect(standing_line_item.quantity).to eq 3
       end
 
-      context 'editing an existing standing order' do
+      context 'editing an existing subscription' do
         let!(:customer) { create(:customer, enterprise: shop) }
         let!(:product1) { create(:product, supplier: shop) }
         let!(:product2) { create(:product, supplier: shop) }
@@ -281,8 +281,8 @@ feature 'Standing Orders' do
         let!(:variant3_ex) { variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3]) }
         let!(:payment_method) { create(:payment_method, distributors: [shop]) }
         let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
-        let!(:standing_order) {
-          create(:standing_order,
+        let!(:subscription) {
+          create(:subscription,
                  shop: shop,
                  customer: customer,
                  schedule: schedule,
@@ -293,7 +293,7 @@ feature 'Standing Orders' do
         }
 
         it "passes the smoke test" do
-          visit edit_admin_standing_order_path(standing_order)
+          visit edit_admin_subscription_path(subscription)
 
           # Customer and Schedule cannot be edited
           expect(page).to have_selector '#s2id_customer_id.select2-container-disabled'
@@ -306,7 +306,7 @@ feature 'Standing Orders' do
             expect(page).to have_input 'quantity', with: "2"
             expect(page).to have_selector 'td.total', text: "$27.50"
 
-            # Remove variant1 from the standing order
+            # Remove variant1 from the subscription
             find("a.delete-item").click
           end
 
@@ -314,7 +314,7 @@ feature 'Standing Orders' do
           click_button 'Save Changes'
           expect(page).to have_content 'Please add at least one product'
 
-          # Add variant2 to the standing order
+          # Add variant2 to the subscription
           targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
@@ -328,7 +328,7 @@ feature 'Standing Orders' do
           # Total should be $7.75
           expect(page).to have_selector '#order_form_total', text: "$7.75"
 
-          # Add variant3 to the standing order (even though it is not available)
+          # Add variant3 to the subscription (even though it is not available)
           targetted_select2_search product3.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
@@ -345,7 +345,7 @@ feature 'Standing Orders' do
           click_button 'Save Changes'
           expect(page).to have_content "#{product3.name} - #{variant3.full_name} is not available from the selected schedule"
 
-          # Remove variant3 from the standing order
+          # Remove variant3 from the subscription
           within '#sli_1' do
             find("a.delete-item").click
           end
@@ -356,19 +356,19 @@ feature 'Standing Orders' do
           # Total should be $7.75
           expect(page).to have_selector '#order_form_total', text: "$7.75"
           expect(page).to have_selector 'tr.item', count: 1
-          expect(standing_order.reload.standing_line_items.length).to eq 1
-          expect(standing_order.standing_line_items.first.variant).to eq variant2
+          expect(subscription.reload.standing_line_items.length).to eq 1
+          expect(subscription.standing_line_items.first.variant).to eq variant2
         end
 
         context "with initialised order that has been changed" do
-          let(:proxy_order) { standing_order.proxy_orders.first }
+          let(:proxy_order) { subscription.proxy_orders.first }
           let(:order) { proxy_order.initialise_order! }
           let(:line_item) { order.line_items.first }
 
           before { line_item.update_attributes(quantity: 3) }
 
           it "reports issues encountered during the update" do
-            visit edit_admin_standing_order_path(standing_order)
+            visit edit_admin_subscription_path(subscription)
 
             within "#sli_0" do
               fill_in 'quantity', with: "1"
@@ -377,7 +377,7 @@ feature 'Standing Orders' do
             click_button 'Save Changes'
             expect(page).to have_content 'Saved'
 
-            expect(page).to have_selector "#order_update_issues_dialog .message", text: I18n.t("admin.standing_orders.order_update_issues_msg")
+            expect(page).to have_selector "#order_update_issues_dialog .message", text: I18n.t("admin.subscriptions.order_update_issues_msg")
           end
         end
       end

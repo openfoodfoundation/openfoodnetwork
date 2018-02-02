@@ -1,9 +1,9 @@
-require 'open_food_network/standing_order_summarizer'
+require 'open_food_network/subscription_summarizer'
 
 module OpenFoodNetwork
-  describe StandingOrderSummarizer do
+  describe SubscriptionSummarizer do
     let(:order) { create(:order) }
-    let(:summarizer) { OpenFoodNetwork::StandingOrderSummarizer.new }
+    let(:summarizer) { OpenFoodNetwork::SubscriptionSummarizer.new }
 
     describe "#summary_for" do
       let(:order) { double(:order, distributor_id: 123) }
@@ -100,7 +100,7 @@ module OpenFoodNetwork
       end
 
       it "sends a placement summary email for each summary" do
-        expect(StandingOrderMailer).to receive(:placement_summary_email).twice { mail_mock }
+        expect(SubscriptionMailer).to receive(:placement_summary_email).twice { mail_mock }
         summarizer.send_placement_summary_emails
       end
     end
@@ -116,7 +116,7 @@ module OpenFoodNetwork
       end
 
       it "sends a placement summary email for each summary" do
-        expect(StandingOrderMailer).to receive(:confirmation_summary_email).twice { mail_mock }
+        expect(SubscriptionMailer).to receive(:confirmation_summary_email).twice { mail_mock }
         summarizer.send_confirmation_summary_emails
       end
     end

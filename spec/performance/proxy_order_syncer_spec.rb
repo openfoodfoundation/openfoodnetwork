@@ -11,19 +11,19 @@ module OpenFoodNetwork
       end
     end
 
-    let!(:standing_orders) do
+    let!(:subscriptions) do
       Array.new(150) do |_i|
-        create(:standing_order, schedule: schedule, begins_at: start, ends_at: start + 10.days)
+        create(:subscription, schedule: schedule, begins_at: start, ends_at: start + 10.days)
       end
-      StandingOrder.where(schedule_id: schedule)
+      Subscription.where(schedule_id: schedule)
     end
 
     context "measuring performance for initialisation" do
-      it "reports the average run time for adding 10 OCs to 150 standing orders" do
+      it "reports the average run time for adding 10 OCs to 150 subscriptions" do
         expect(ProxyOrder.count).to be 0
         times = []
         10.times do
-          syncer = ProxyOrderSyncer.new(standing_orders.reload)
+          syncer = ProxyOrderSyncer.new(subscriptions.reload)
 
           t1 = Time.zone.now
           syncer.sync!
@@ -40,14 +40,14 @@ module OpenFoodNetwork
     end
 
     context "measuring performance for removal" do
-      it "reports the average run time for removing 8 OCs from 150 standing orders" do
+      it "reports the average run time for removing 8 OCs from 150 subscriptions" do
         times = []
         10.times do
-          syncer = ProxyOrderSyncer.new(standing_orders.reload)
+          syncer = ProxyOrderSyncer.new(subscriptions.reload)
           syncer.sync!
           expect(ProxyOrder.count).to be 1500
-          standing_orders.update_all(begins_at: start + 8.days + 1.minute)
-          syncer = ProxyOrderSyncer.new(standing_orders.reload)
+          subscriptions.update_all(begins_at: start + 8.days + 1.minute)
+          syncer = ProxyOrderSyncer.new(subscriptions.reload)
 
           t1 = Time.zone.now
           syncer.sync!
@@ -57,7 +57,7 @@ module OpenFoodNetwork
           puts diff.round(2)
 
           expect(ProxyOrder.count).to be 300
-          standing_orders.update_all(begins_at: start)
+          subscriptions.update_all(begins_at: start)
         end
         puts "AVG: #{(times.sum / times.count).round(2)}"
       end

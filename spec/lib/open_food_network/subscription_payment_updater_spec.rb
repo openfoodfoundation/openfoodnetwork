@@ -1,9 +1,9 @@
-require 'open_food_network/standing_order_payment_updater'
+require 'open_food_network/subscription_payment_updater'
 
 module OpenFoodNetwork
-  describe StandingOrderPaymentUpdater do
+  describe SubscriptionPaymentUpdater do
     let(:order) { create(:order) }
-    let(:updater) { OpenFoodNetwork::StandingOrderPaymentUpdater.new(order) }
+    let(:updater) { OpenFoodNetwork::SubscriptionPaymentUpdater.new(order) }
 
     describe "#payment" do
       context "when only one payment exists on the order" do
@@ -48,12 +48,12 @@ module OpenFoodNetwork
 
       context "when no pending payments are present" do
         let(:payment_method) { create(:payment_method) }
-        let(:standing_order) { double(:standing_order, payment_method_id: payment_method.id) }
+        let(:subscription) { double(:subscription, payment_method_id: payment_method.id) }
 
         before do
           allow(order).to receive(:pending_payments).once { [] }
           allow(order).to receive(:outstanding_balance) { 5 }
-          allow(order).to receive(:standing_order) { standing_order }
+          allow(order).to receive(:subscription) { subscription }
         end
 
         it "creates a new payment on the order" do
@@ -96,7 +96,7 @@ module OpenFoodNetwork
           context "and the payment source is not a credit card" do
             before { expect(updater).to receive(:card_set?) { false } }
 
-            context "and no credit card is available on the standing order" do
+            context "and no credit card is available on the subscription" do
               before { expect(updater).to receive(:ensure_credit_card) { false } }
 
               it "adds an error to the order and does not update the payment" do
@@ -105,7 +105,7 @@ module OpenFoodNetwork
               end
             end
 
-            context "but a credit card is available on the standing order" do
+            context "but a credit card is available on the subscription" do
               before { expect(updater).to receive(:ensure_credit_card) { true } }
 
               context "when the payment total doesn't match the outstanding balance on the order" do
@@ -151,7 +151,7 @@ module OpenFoodNetwork
       let!(:payment) { create(:payment, source: nil) }
       before { allow(updater).to receive(:payment) { payment } }
 
-      context "when no credit card is specified by the standing order" do
+      context "when no credit card is specified by the subscription" do
         before { allow(updater).to receive(:saved_credit_card) { nil } }
 
         it "returns false and down not update the payment source" do
@@ -161,7 +161,7 @@ module OpenFoodNetwork
         end
       end
 
-      context "when a credit card is specified by the standing order" do
+      context "when a credit card is specified by the subscription" do
         let(:credit_card) { create(:credit_card) }
         before { allow(updater).to receive(:saved_credit_card) { credit_card } }
 

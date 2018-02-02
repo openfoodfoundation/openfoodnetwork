@@ -1,8 +1,8 @@
-require 'open_food_network/standing_order_summary'
+require 'open_food_network/subscription_summary'
 
 module OpenFoodNetwork
-  describe StandingOrderSummary do
-    let(:summary) { OpenFoodNetwork::StandingOrderSummary.new(123) }
+  describe SubscriptionSummary do
+    let(:summary) { OpenFoodNetwork::SubscriptionSummary.new(123) }
 
     describe "#initialize" do
       it "initializes instance variables: shop_id, order_count, success_count and issues" do
