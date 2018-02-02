@@ -1,4 +1,4 @@
-class StandingOrderMailer < Spree::BaseMailer
+class SubscriptionMailer < Spree::BaseMailer
   helper CheckoutHelper
 
   def confirmation_email(order)
@@ -31,7 +31,7 @@ class StandingOrderMailer < Spree::BaseMailer
     @summary = summary
     mail(to: @shop.email,
          from: from_address,
-         subject: "#{Spree::Config[:site_name]} #{t('standing_order_mailer.placement_summary_email.subject')}")
+         subject: "#{Spree::Config[:site_name]} #{t('subscription_mailer.placement_summary_email.subject')}")
   end
 
   def confirmation_summary_email(summary)
@@ -39,7 +39,7 @@ class StandingOrderMailer < Spree::BaseMailer
     @summary = summary
     mail(to: @shop.email,
          from: from_address,
-         subject: "#{Spree::Config[:site_name]} #{t('standing_order_mailer.confirmation_summary_email.subject')}")
+         subject: "#{Spree::Config[:site_name]} #{t('subscription_mailer.confirmation_summary_email.subject')}")
   end
 
   private

@@ -1,4 +1,4 @@
-class StandingOrder < ActiveRecord::Base
+class Subscription < ActiveRecord::Base
   ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check", "Spree::Gateway::StripeConnect"].freeze
 
   belongs_to :shop, class_name: 'Enterprise'
@@ -9,7 +9,7 @@ class StandingOrder < ActiveRecord::Base
   belongs_to :bill_address, foreign_key: :bill_address_id, class_name: Spree::Address
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: Spree::Address
   belongs_to :credit_card, foreign_key: :credit_card_id, class_name: 'Spree::CreditCard'
-  has_many :standing_line_items, inverse_of: :standing_order
+  has_many :standing_line_items, inverse_of: :subscription
   has_many :order_cycles, through: :schedule
   has_many :proxy_orders
   has_many :orders, through: :proxy_orders
@@ -20,10 +20,10 @@ class StandingOrder < ActiveRecord::Base
   accepts_nested_attributes_for :standing_line_items, allow_destroy: true
   accepts_nested_attributes_for :bill_address, :ship_address
 
-  scope :not_ended, -> { where('standing_orders.ends_at > (?) OR standing_orders.ends_at IS NULL', Time.zone.now) }
-  scope :not_canceled, -> { where('standing_orders.canceled_at IS NULL') }
-  scope :not_paused, -> { where('standing_orders.paused_at IS NULL') }
-  scope :active, -> { not_canceled.not_ended.not_paused.where('standing_orders.begins_at <= (?)', Time.zone.now) }
+  scope :not_ended, -> { where('subscriptions.ends_at > (?) OR subscriptions.ends_at IS NULL', Time.zone.now) }
+  scope :not_canceled, -> { where('subscriptions.canceled_at IS NULL') }
+  scope :not_paused, -> { where('subscriptions.paused_at IS NULL') }
+  scope :active, -> { not_canceled.not_ended.not_paused.where('subscriptions.begins_at <= (?)', Time.zone.now) }
 
   def closed_proxy_orders
     proxy_orders.closed

@@ -12,8 +12,8 @@ module Admin
     before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
     before_filter :check_editable_schedule_ids, only: [:create, :update]
     around_filter :protect_invalid_destroy, only: :destroy
-    create.after :sync_standing_orders
-    update.after :sync_standing_orders
+    create.after :sync_subscriptions
+    update.after :sync_subscriptions
 
     def index
       respond_to do |format|
@@ -204,14 +204,14 @@ module Admin
       params[:order_cycle][:schedule_ids] = result
     end
 
-    def sync_standing_orders
+    def sync_subscriptions
       return unless params[:order_cycle][:schedule_ids]
       removed_ids = @existing_schedule_ids - @order_cycle.schedule_ids
       new_ids = @order_cycle.schedule_ids - @existing_schedule_ids
       if removed_ids.any? || new_ids.any?
         schedules = Schedule.where(id: removed_ids + new_ids)
-        standing_orders = StandingOrder.where(schedule_id: schedules)
-        syncer = OpenFoodNetwork::ProxyOrderSyncer.new(standing_orders)
+        subscriptions = Subscription.where(schedule_id: schedules)
+        syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
         syncer.sync!
       end
     end

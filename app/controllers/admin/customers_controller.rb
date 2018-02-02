@@ -56,7 +56,7 @@ module Admin
     end
 
     # GET /admin/customers/:id/addresses
-    # Used by standing orders form to load details for selected customer
+    # Used by subscriptions form to load details for selected customer
     def addresses
       finder = OpenFoodNetwork::AddressFinder.new(@customer, @customer.email)
       bill_address = Api::AddressSerializer.new(finder.bill_address).serializable_hash
@@ -65,7 +65,7 @@ module Admin
     end
 
     # GET /admin/customers/:id/cards
-    # Used by standing orders form to load details for selected customer
+    # Used by subscriptions form to load details for selected customer
     def cards
       cards = Spree::CreditCard.where(user_id: @customer.user_id)
       render json: ActiveModel::ArraySerializer.new(cards, each_serializer: Api::CreditCardSerializer)

@@ -1,9 +1,9 @@
-# Responsible for keeping line items on initialised orders for a standing order in sync with
-# the standing line items on that standing order.
+# Responsible for keeping line items on initialised orders for a subscription in sync with
+# the standing line items on that subscription.
 
 class LineItemSyncer
-  def initialize(standing_order, order_update_issues)
-    @standing_order = standing_order
+  def initialize(subscription, order_update_issues)
+    @subscription = subscription
     @order_update_issues = order_update_issues
   end
 
@@ -15,9 +15,9 @@ class LineItemSyncer
 
   private
 
-  delegate :standing_line_items, to: :standing_order
+  delegate :standing_line_items, to: :subscription
 
-  attr_reader :standing_order, :order_update_issues
+  attr_reader :subscription, :order_update_issues
 
   def update_item_quantities(order)
     changed_standing_line_items.each do |sli|

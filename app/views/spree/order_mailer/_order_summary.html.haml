@@ -22,7 +22,7 @@
           - if @changes && @changes[item.id].present?
             %del.quantity_was= @changes[item.id]
           = item.quantity
-          -# Report changes made to standing orders
+          -# Report changes made to subscriptions
 
         %td{:align => "right"}
           = item.display_amount_with_adjustments

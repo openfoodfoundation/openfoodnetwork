@@ -4,8 +4,8 @@ require 'open_food_network/proxy_order_syncer'
 module Admin
   class SchedulesController < ResourceController
     before_filter :check_editable_order_cycle_ids, only: [:create, :update]
-    create.after :sync_standing_orders
-    update.after :sync_standing_orders
+    create.after :sync_subscriptions
+    update.after :sync_subscriptions
 
     respond_to :json
 
@@ -54,13 +54,13 @@ module Admin
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
     end
 
-    def sync_standing_orders
+    def sync_subscriptions
       return unless params[:schedule][:order_cycle_ids]
       removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
       new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
       return unless removed_ids.any? || new_ids.any?
-      standing_orders = StandingOrder.where(schedule_id: @schedule)
-      syncer = OpenFoodNetwork::ProxyOrderSyncer.new(standing_orders)
+      subscriptions = Subscription.where(schedule_id: @schedule)
+      syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
       syncer.sync!
     end
   end

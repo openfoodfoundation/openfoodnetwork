@@ -1,34 +1,34 @@
 require 'open_food_network/proxy_order_syncer'
 
-class StandingOrderForm
-  attr_accessor :standing_order, :params, :fee_calculator, :order_update_issues, :validator, :order_syncer
+class SubscriptionForm
+  attr_accessor :subscription, :params, :fee_calculator, :order_update_issues, :validator, :order_syncer
 
   delegate :json_errors, :valid?, to: :validator
   delegate :order_update_issues, to: :order_syncer
 
-  def initialize(standing_order, params = {}, fee_calculator = nil)
-    @standing_order = standing_order
+  def initialize(subscription, params = {}, fee_calculator = nil)
+    @subscription = subscription
     @params = params
     @fee_calculator = fee_calculator
-    @validator = StandingOrderValidator.new(standing_order)
-    @order_syncer = OrderSyncer.new(standing_order)
+    @validator = SubscriptionValidator.new(subscription)
+    @order_syncer = OrderSyncer.new(subscription)
   end
 
   def save
     validate_price_estimates
-    standing_order.assign_attributes(params)
+    subscription.assign_attributes(params)
     return false unless valid?
-    standing_order.transaction do
+    subscription.transaction do
       proxy_order_syncer.sync!
       order_syncer.sync!
-      standing_order.save!
+      subscription.save!
     end
   end
 
   private
 
   def proxy_order_syncer
-    OpenFoodNetwork::ProxyOrderSyncer.new(standing_order)
+    OpenFoodNetwork::ProxyOrderSyncer.new(subscription)
   end
 
   def validate_price_estimates

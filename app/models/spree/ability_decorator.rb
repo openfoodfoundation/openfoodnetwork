@@ -252,16 +252,16 @@ class AbilityDecorator
 
     can [:create], Customer
     can [:admin, :index, :update, :destroy, :addresses, :cards], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
-    can [:admin, :new, :index], StandingOrder
-    can [:create, :edit, :update, :cancel, :pause, :unpause], StandingOrder do |standing_order|
-      user.enterprises.include?(standing_order.shop)
+    can [:admin, :new, :index], Subscription
+    can [:create, :edit, :update, :cancel, :pause, :unpause], Subscription do |subscription|
+      user.enterprises.include?(subscription.shop)
     end
     can [:admin, :build], StandingLineItem
     can [:destroy], StandingLineItem do |standing_line_item|
-      user.enterprises.include?(standing_line_item.standing_order.shop)
+      user.enterprises.include?(standing_line_item.subscription.shop)
     end
     can [:admin, :edit, :cancel, :resume], ProxyOrder do |proxy_order|
-      user.enterprises.include?(proxy_order.standing_order.shop)
+      user.enterprises.include?(proxy_order.subscription.shop)
     end
   end
 

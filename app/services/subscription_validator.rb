@@ -1,13 +1,13 @@
-# Encapsulation of all of the validation logic required for standing orders
+# Encapsulation of all of the validation logic required for subscriptions
 # Public interface consists of #valid? method provided by ActiveModel::Validations
 # and #json_errors which compiles a serializable hash of errors
 
-class StandingOrderValidator
+class SubscriptionValidator
   include ActiveModel::Naming
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_reader :standing_order
+  attr_reader :subscription
 
   validates_presence_of :shop, :customer, :schedule, :shipping_method, :payment_method
   validates_presence_of :bill_address, :ship_address, :begins_at
@@ -21,13 +21,13 @@ class StandingOrderValidator
   validate :standing_line_items_present?
   validate :requested_variants_available?
 
-  delegate :shop, :customer, :schedule, :shipping_method, :payment_method, to: :standing_order
-  delegate :bill_address, :ship_address, :begins_at, :ends_at, to: :standing_order
-  delegate :credit_card, :credit_card_id, to: :standing_order
-  delegate :standing_line_items, to: :standing_order
+  delegate :shop, :customer, :schedule, :shipping_method, :payment_method, to: :subscription
+  delegate :bill_address, :ship_address, :begins_at, :ends_at, to: :subscription
+  delegate :credit_card, :credit_card_id, to: :subscription
+  delegate :standing_line_items, to: :subscription
 
-  def initialize(standing_order)
-    @standing_order = standing_order
+  def initialize(subscription)
+    @subscription = subscription
   end
 
   def json_errors
@@ -52,7 +52,7 @@ class StandingOrderValidator
 
   def payment_method_type_allowed?
     return unless payment_method
-    return if StandingOrder::ALLOWED_PAYMENT_METHOD_TYPES.include? payment_method.type
+    return if Subscription::ALLOWED_PAYMENT_METHOD_TYPES.include? payment_method.type
     errors.add(:payment_method, :invalid_type)
   end
 

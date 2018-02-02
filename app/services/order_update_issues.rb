@@ -1,5 +1,5 @@
 # Wrapper for a hash of issues encountered by instances of OrderSyncer and LineItemSyncer
-# Used to report issues to the user when they attempt to update a standing order
+# Used to report issues to the user when they attempt to update a subscription
 
 class OrderUpdateIssues
   def initialize

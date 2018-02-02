@@ -1,6 +1,6 @@
 module Api
   module Admin
-    class StandingOrderSerializer < ActiveModel::Serializer
+    class SubscriptionSerializer < ActiveModel::Serializer
       attributes :id, :shop_id, :customer_id, :schedule_id, :payment_method_id, :shipping_method_id, :begins_at, :ends_at
       attributes :customer_email, :schedule_name, :edit_path, :canceled_at, :paused_at, :state, :credit_card_id
 
@@ -36,7 +36,7 @@ module Api
 
       def edit_path
         return '' unless object.id
-        edit_admin_standing_order_path(object)
+        edit_admin_subscription_path(object)
       end
     end
   end

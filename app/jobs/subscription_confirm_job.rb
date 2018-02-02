@@ -1,7 +1,7 @@
-require 'open_food_network/standing_order_payment_updater'
-require 'open_food_network/standing_order_summarizer'
+require 'open_food_network/subscription_payment_updater'
+require 'open_food_network/subscription_summarizer'
 
-class StandingOrderConfirmJob
+class SubscriptionConfirmJob
   def perform
     ids = proxy_orders.pluck(:id)
     proxy_orders.update_all(confirmed_at: Time.zone.now)
@@ -19,13 +19,13 @@ class StandingOrderConfirmJob
   delegate :record_and_log_error, :send_confirmation_summary_emails, to: :summarizer
 
   def summarizer
-    @summarizer ||= OpenFoodNetwork::StandingOrderSummarizer.new
+    @summarizer ||= OpenFoodNetwork::SubscriptionSummarizer.new
   end
 
   def proxy_orders
     ProxyOrder.not_canceled.where('confirmed_at IS NULL AND placed_at IS NOT NULL')
       .joins(:order_cycle).merge(recently_closed_order_cycles)
-      .joins(:standing_order).merge(StandingOrder.not_canceled.not_paused)
+      .joins(:subscription).merge(Subscription.not_canceled.not_paused)
       .joins(:order).merge(Spree::Order.complete)
   end
 
@@ -43,16 +43,16 @@ class StandingOrderConfirmJob
   end
 
   def update_payment!
-    OpenFoodNetwork::StandingOrderPaymentUpdater.new(@order).update!
+    OpenFoodNetwork::SubscriptionPaymentUpdater.new(@order).update!
   end
 
   def send_confirm_email
     record_success(@order)
-    StandingOrderMailer.confirmation_email(@order).deliver
+    SubscriptionMailer.confirmation_email(@order).deliver
   end
 
   def send_failed_payment_email
     record_and_log_error(:failed_payment, @order)
-    StandingOrderMailer.failed_payment_email(@order).deliver
+    SubscriptionMailer.failed_payment_email(@order).deliver
   end
 end

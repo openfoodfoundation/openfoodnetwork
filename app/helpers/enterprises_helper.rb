@@ -102,7 +102,7 @@ module EnterprisesHelper
     order_changes_allowed? && current_order.finalised_line_items.present?
   end
 
-  def standing_orders_enabled?
-    spree_current_user.admin? || spree_current_user.enterprises.where(enable_standing_orders: true).any?
+  def subscriptions_enabled?
+    spree_current_user.admin? || spree_current_user.enterprises.where(enable_subscriptions: true).any?
   end
 end

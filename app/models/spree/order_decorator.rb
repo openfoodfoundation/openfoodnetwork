@@ -13,7 +13,7 @@ Spree::Order.class_eval do
   belongs_to :cart
   belongs_to :customer
   has_one :proxy_order
-  has_one :standing_order, through: :proxy_order
+  has_one :subscription, through: :proxy_order
 
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
@@ -293,7 +293,7 @@ Spree::Order.class_eval do
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   # And separately, to skip sending confirmation email completely for user invoice orders
   def deliver_order_confirmation_email
-    unless account_invoice? || standing_order.present?
+    unless account_invoice? || subscription.present?
       Delayed::Job.enqueue ConfirmOrderJob.new(id)
     end
   end
@@ -320,10 +320,10 @@ Spree::Order.class_eval do
     errors.add(:base, e.message) and return result
   end
 
-  # Override or Spree method. Used to prevent payments on standing orders from being processed in the normal way.
+  # Override or Spree method. Used to prevent payments on subscriptions from being processed in the normal way.
   # ie. they are 'hidden' from processing logic until after the order cycle has closed.
   def pending_payments
-    return [] if standing_order.present? && order_cycle.orders_close_at.andand > Time.zone.now
+    return [] if subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
     payments.select {|p| p.state == "checkout"} # Original definition
   end
 
