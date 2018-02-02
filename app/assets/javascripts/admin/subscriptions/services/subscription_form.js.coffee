@@ -1,26 +1,26 @@
-angular.module("admin.standingOrders").factory 'StandingOrderForm', ($window, StatusMessage) ->
-  class StandingOrderForm
+angular.module("admin.subscriptions").factory 'SubscriptionForm', ($window, StatusMessage) ->
+  class SubscriptionForm
     form: null
-    standingOrder: null
+    subscription: null
     errors: {}
 
-    constructor: (form, standingOrder) ->
+    constructor: (form, subscription) ->
       @form = form
-      @standingOrder = standingOrder
+      @subscription = subscription
 
     save: =>
       return @formInvalid() unless @form.$valid
       delete @errors[k] for k, v of @errors
       @form.$setPristine()
       StatusMessage.display 'progress', 'Saving...'
-      if @standingOrder.id?
-        @standingOrder.update().then @successCallback, @errorCallback
+      if @subscription.id?
+        @subscription.update().then @successCallback, @errorCallback
       else
-        @standingOrder.create().then @successCallback, @errorCallback
+        @subscription.create().then @successCallback, @errorCallback
 
     successCallback: (response) =>
       StatusMessage.display 'success', 'Saved. Redirecting...'
-      $window.location.href = "/admin/standing_orders"
+      $window.location.href = "/admin/subscriptions"
 
     errorCallback: (response) =>
       if response.data?.errors?
@@ -32,4 +32,4 @@ angular.module("admin.standingOrders").factory 'StandingOrderForm', ($window, St
         # We save the SO, but open a dialog, so want to stay on the page
         StatusMessage.display 'success', 'Saved'
 
-    formInvalid: -> StatusMessage.display 'failure', t('admin.standing_orders.details.invalid_error')
+    formInvalid: -> StatusMessage.display 'failure', t('admin.subscriptions.details.invalid_error')

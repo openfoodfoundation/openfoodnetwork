@@ -1,27 +1,27 @@
-angular.module("admin.standingOrders").controller "StandingOrderController", ($scope, StandingOrder, StandingOrderForm, customers, schedules, paymentMethods, shippingMethods) ->
-  $scope.standingOrder = new StandingOrder()
+angular.module("admin.subscriptions").controller "SubscriptionController", ($scope, Subscription, SubscriptionForm, customers, schedules, paymentMethods, shippingMethods) ->
+  $scope.subscription = new Subscription()
   $scope.errors = null
   $scope.save = null
   $scope.customers = customers
   $scope.schedules = schedules
   $scope.paymentMethods = paymentMethods
   $scope.shippingMethods = shippingMethods
-  $scope.distributor_id = $scope.standingOrder.shop_id # variant selector requires distributor_id
-  $scope.view = if $scope.standingOrder.id? then 'review' else 'details'
+  $scope.distributor_id = $scope.subscription.shop_id # variant selector requires distributor_id
+  $scope.view = if $scope.subscription.id? then 'review' else 'details'
   $scope.nextCallbacks = {}
   $scope.backCallbacks = {}
   $scope.creditCards = []
   $scope.setView = (view) -> $scope.view = view
-  $scope.stepTitleFor = (step) -> t("admin.standing_orders.steps.#{step}")
+  $scope.stepTitleFor = (step) -> t("admin.subscriptions.steps.#{step}")
   $scope.registerNextCallback = (view, callback) => $scope.nextCallbacks[view] = callback
   $scope.registerBackCallback = (view, callback) => $scope.backCallbacks[view] = callback
   $scope.next = -> $scope.nextCallbacks[$scope.view]()
   $scope.back = -> $scope.backCallbacks[$scope.view]()
 
   $scope.shipAddressFromBilling = =>
-    angular.extend($scope.standingOrder.ship_address, $scope.standingOrder.bill_address)
+    angular.extend($scope.subscription.ship_address, $scope.subscription.bill_address)
 
-  $scope.$watch 'standing_order_form', ->
-    form = new StandingOrderForm($scope.standing_order_form, $scope.standingOrder)
+  $scope.$watch 'subscription_form', ->
+    form = new SubscriptionForm($scope.subscription_form, $scope.subscription)
     $scope.errors = form.errors
     $scope.save = form.save

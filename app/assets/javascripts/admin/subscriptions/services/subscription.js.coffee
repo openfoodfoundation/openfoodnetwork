@@ -1,6 +1,6 @@
-angular.module("admin.standingOrders").factory "StandingOrder", ($injector, StandingOrderResource) ->
-  class StandingOrder extends StandingOrderResource
+angular.module("admin.subscriptions").factory "Subscription", ($injector, SubscriptionResource) ->
+  class Subscription extends SubscriptionResource
 
     constructor: ->
-      if $injector.has('standingOrder')
-        angular.extend(@, $injector.get('standingOrder'))
+      if $injector.has('subscription')
+        angular.extend(@, $injector.get('subscription'))

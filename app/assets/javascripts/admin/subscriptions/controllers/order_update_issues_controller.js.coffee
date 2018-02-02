@@ -1,4 +1,4 @@
-angular.module("admin.standingOrders").controller "OrderUpdateIssuesController", ($scope, OrderCycles) ->
+angular.module("admin.subscriptions").controller "OrderUpdateIssuesController", ($scope, OrderCycles) ->
   $scope.proxyOrders = $scope.options.proxyOrders
 
   $scope.orderCycleName = (id) ->

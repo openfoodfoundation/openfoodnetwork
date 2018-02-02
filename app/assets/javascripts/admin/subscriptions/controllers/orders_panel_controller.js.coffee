@@ -1,13 +1,13 @@
-angular.module("admin.standingOrders").controller "OrdersPanelController", ($scope, OrderCycles) ->
-  $scope.standingOrder = $scope.object
+angular.module("admin.subscriptions").controller "OrdersPanelController", ($scope, OrderCycles) ->
+  $scope.subscription = $scope.object
 
   $scope.cancelOrder = (order) ->
     if confirm(t('are_you_sure'))
-      $scope.standingOrder.cancelOrder(order)
+      $scope.subscription.cancelOrder(order)
 
   $scope.resumeOrder = (order) ->
     if confirm(t('are_you_sure'))
-      $scope.standingOrder.resumeOrder(order)
+      $scope.subscription.resumeOrder(order)
 
   $scope.orderCycleName = (id) ->
     OrderCycles.byID[id].name

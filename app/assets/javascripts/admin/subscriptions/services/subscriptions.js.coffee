@@ -1,17 +1,17 @@
-angular.module("admin.standingOrders").factory 'StandingOrders', ($q, StandingOrderResource, StandingOrder, RequestMonitor) ->
-  new class StandingOrders
+angular.module("admin.subscriptions").factory 'Subscriptions', ($q, SubscriptionResource, Subscription, RequestMonitor) ->
+  new class Subscriptions
     byID: {}
     pristineByID: {}
 
     index: (params={}, callback=null) ->
-      request = StandingOrderResource.index params, (data) => @load(data)
+      request = SubscriptionResource.index params, (data) => @load(data)
       RequestMonitor.load(request.$promise)
       request
 
-    load: (standingOrders) ->
-      for standingOrder in standingOrders
-        @byID[standingOrder.id] = standingOrder
-        @pristineByID[standingOrder.id] = angular.copy(standingOrder)
+    load: (subscriptions) ->
+      for subscription in subscriptions
+        @byID[subscription.id] = subscription
+        @pristineByID[subscription.id] = angular.copy(subscription)
 
     afterCreate: (id) ->
       return unless @byID[id]?

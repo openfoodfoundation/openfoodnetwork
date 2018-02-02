@@ -1,8 +1,8 @@
-angular.module("admin.standingOrders").controller "ProductsController", ($scope, StatusMessage) ->
+angular.module("admin.subscriptions").controller "ProductsController", ($scope, StatusMessage) ->
   $scope.registerNextCallback 'products', ->
-    $scope.standing_order_form.$submitted = true
-    if $scope.standingOrder.standing_line_items.length > 0
-      $scope.standing_order_form.$setPristine()
+    $scope.subscription_form.$submitted = true
+    if $scope.subscription.standing_line_items.length > 0
+      $scope.subscription_form.$setPristine()
       StatusMessage.clear()
       $scope.setView('review')
     else
