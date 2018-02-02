@@ -1,5 +1,5 @@
 module OpenFoodNetwork
-  class StandingOrderPaymentUpdater
+  class SubscriptionPaymentUpdater
     def initialize(order)
       @order = order
     end
@@ -23,7 +23,7 @@ module OpenFoodNetwork
     def create_payment
       return if payment.present?
       @payment = order.payments.create(
-        payment_method_id: order.standing_order.payment_method_id,
+        payment_method_id: order.subscription.payment_method_id,
         amount: order.outstanding_balance
       )
     end
@@ -47,7 +47,7 @@ module OpenFoodNetwork
     end
 
     def saved_credit_card
-      order.standing_order.credit_card
+      order.subscription.credit_card
     end
 
     def errors_present?

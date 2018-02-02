@@ -1,23 +1,23 @@
 module OpenFoodNetwork
   class ProxyOrderSyncer
-    attr_reader :standing_order
+    attr_reader :subscription
 
-    delegate :order_cycles, :proxy_orders, :begins_at, :ends_at, to: :standing_order
+    delegate :order_cycles, :proxy_orders, :begins_at, :ends_at, to: :subscription
 
-    def initialize(standing_orders)
-      case standing_orders
-      when StandingOrder
-        @standing_order = standing_orders
+    def initialize(subscriptions)
+      case subscriptions
+      when Subscription
+        @subscription = subscriptions
       when ActiveRecord::Relation
-        @standing_orders = standing_orders.not_ended.not_canceled
+        @subscriptions = subscriptions.not_ended.not_canceled
       else
-        raise "ProxyOrderSyncer must be initialized with an instance of StandingOrder or ActiveRecord::Relation"
+        raise "ProxyOrderSyncer must be initialized with an instance of Subscription or ActiveRecord::Relation"
       end
     end
 
     def sync!
-      return sync_all! if @standing_orders
-      return initialise_proxy_orders! unless @standing_order.id
+      return sync_all! if @subscriptions
+      return initialise_proxy_orders! unless @subscription.id
       create_proxy_orders!
       remove_obsolete_proxy_orders!
     end
@@ -25,8 +25,8 @@ module OpenFoodNetwork
     private
 
     def sync_all!
-      @standing_orders.each do |standing_order|
-        @standing_order = standing_order
+      @subscriptions.each do |subscription|
+        @subscription = subscription
         create_proxy_orders!
         remove_obsolete_proxy_orders!
       end
@@ -34,13 +34,13 @@ module OpenFoodNetwork
 
     def initialise_proxy_orders!
       uninitialised_order_cycle_ids.each do |order_cycle_id|
-        proxy_orders << ProxyOrder.new(standing_order: standing_order, order_cycle_id: order_cycle_id)
+        proxy_orders << ProxyOrder.new(subscription: subscription, order_cycle_id: order_cycle_id)
       end
     end
 
     def create_proxy_orders!
       return unless not_closed_in_range_order_cycles.any?
-      query = "INSERT INTO proxy_orders (standing_order_id, order_cycle_id, updated_at, created_at)"
+      query = "INSERT INTO proxy_orders (subscription_id, order_cycle_id, updated_at, created_at)"
       query << " VALUES #{insert_values}"
       query << " ON CONFLICT DO NOTHING"
 
@@ -64,7 +64,7 @@ module OpenFoodNetwork
     def insert_values
       now = Time.now.utc.iso8601
       not_closed_in_range_order_cycles
-        .map{ |oc| "(#{standing_order.id},#{oc.id},'#{now}','#{now}')" }
+        .map{ |oc| "(#{subscription.id},#{oc.id},'#{now}','#{now}')" }
         .join(",")
     end
 

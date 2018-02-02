@@ -135,12 +135,12 @@ module OpenFoodNetwork
       Schedule.joins(:order_cycles).where(order_cycles: { id: OrderCycle.accessible_by(@user).pluck(:id) }).select("DISTINCT schedules.*")
     end
 
-    def editable_standing_orders
-      StandingOrder.where('standing_orders.shop_id IN (?)', managed_enterprises)
+    def editable_subscriptions
+      Subscription.where('subscriptions.shop_id IN (?)', managed_enterprises)
     end
 
-    def visible_standing_orders
-      editable_standing_orders
+    def visible_subscriptions
+      editable_subscriptions
     end
 
     private

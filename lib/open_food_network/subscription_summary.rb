@@ -1,5 +1,5 @@
 module OpenFoodNetwork
-  class StandingOrderSummary
+  class SubscriptionSummary
     attr_reader :shop_id, :order_count, :success_count, :issues
 
     def initialize(shop_id)
