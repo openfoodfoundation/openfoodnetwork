@@ -34,7 +34,7 @@ class StandingOrderConfirmJob
   end
 
   def process!
-    log_order(@order)
+    record_order(@order)
     update_payment! if @order.payment_required?
     return send_failed_payment_email if @order.errors.present?
     @order.process_payments! if @order.payment_required?

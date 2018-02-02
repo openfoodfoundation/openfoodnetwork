@@ -118,7 +118,7 @@ describe StandingOrderConfirmJob do
         environment: Rails.env,
         preferred_mails_from: 'spree@example.com'
       )
-      expect(job).to receive(:log_order).with(order)
+      expect(job).to receive(:record_order).with(order)
     end
 
     context "when payments need to be processed" do
