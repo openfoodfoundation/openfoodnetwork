@@ -1,17 +1,17 @@
 describe "StandingLineItemsCtrl", ->
   scope = null
   http = null
-  standingOrder = { id: 1 }
+  subscription = { id: 1 }
   standingLineItem = { id: 2, variant_id: 44 }
 
   beforeEach ->
-    module('admin.standingOrders')
+    module('admin.subscriptions')
 
     inject ($controller, $rootScope, $httpBackend) ->
       scope = $rootScope
       http = $httpBackend
-      scope.standingOrder = standingOrder
-      standingOrder.standing_line_items = [standingLineItem]
+      scope.subscription = subscription
+      subscription.standing_line_items = [standingLineItem]
       $controller 'StandingLineItemsController', {$scope: scope}
 
   describe "match", ->
@@ -31,8 +31,8 @@ describe "StandingLineItemsCtrl", ->
 
   describe "addStandingLineItem", ->
     beforeEach ->
-      scope.standing_order_form = jasmine.createSpyObj('standing_order_form', ['$setDirty'])
-      standingOrder.buildItem = jasmine.createSpy('buildItem')
+      scope.subscription_form = jasmine.createSpyObj('subscription_form', ['$setDirty'])
+      subscription.buildItem = jasmine.createSpy('buildItem')
 
     describe "when an item with a matching variant_id is found", ->
       match = null
@@ -65,7 +65,7 @@ describe "StandingLineItemsCtrl", ->
       beforeEach ->
         spyOn(scope, "match").and.returnValue(null)
 
-      it "sets the form to $dirty and called buildItem on scope.standingOrder", ->
+      it "sets the form to $dirty and called buildItem on scope.subscription", ->
         scope.addStandingLineItem()
-        expect(scope.standing_order_form.$setDirty).toHaveBeenCalled()
-        expect(standingOrder.buildItem).toHaveBeenCalledWith(scope.newItem)
+        expect(scope.subscription_form.$setDirty).toHaveBeenCalled()
+        expect(subscription.buildItem).toHaveBeenCalledWith(scope.newItem)
