@@ -7,7 +7,7 @@
     %label{ :for => 'involving_filter' }=t('.involving')
     %br
     %input.ofn-select2.fullwidth{ :id => 'involving_filter', type: 'number', blank: "{id: 0, name: 'Any Enterprise'}", data: 'enterprises', ng: { model: 'involvingFilter' } }
-  - if standing_orders_enabled?
+  - if subscriptions_enabled?
     .filter_select.four.columns
       %label{ :for => 'schedule_filter' }=t('admin.order_cycles.index.schedule')
       %br

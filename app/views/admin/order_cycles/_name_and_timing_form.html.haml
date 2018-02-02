@@ -28,7 +28,7 @@
       {{ order_cycle.orders_close_at }}
 
 
-- if standing_orders_enabled?
+- if subscriptions_enabled?
   .row
     .two.columns.alpha
       = f.label :schedule_ids, t('admin.order_cycles.schedules')

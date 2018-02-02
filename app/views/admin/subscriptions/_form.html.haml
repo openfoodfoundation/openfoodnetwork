@@ -1,20 +1,20 @@
-%form.margin-bottom-50{ name: 'standing_order_form', novalidate: true, ng: { submit: 'save()' } }
+%form.margin-bottom-50{ name: 'subscription_form', novalidate: true, ng: { submit: 'save()' } }
   %save-bar{ persist: 'true' }
-    %a.button{ href: main_app.admin_standing_orders_path, ng: { show: "['details','review'].indexOf(view) >= 0", bind: "standingOrder.id? '#{t(:close)}' : '#{t(:cancel)}'" } }
+    %a.button{ href: main_app.admin_subscriptions_path, ng: { show: "['details','review'].indexOf(view) >= 0", bind: "subscription.id? '#{t(:close)}' : '#{t(:cancel)}'" } }
     %input{ type: "button", value: t(:back), ng: { click: 'back()', show: '!!backCallbacks[view]'} }
     %input.red{ type: "button", value: t(:next), ng: { click: 'next()', show: '!!nextCallbacks[view]' } }
-    %input.red{ type: "submit", value: t('admin.standing_orders.create'), ng: { show: "view=='review' && !standingOrder.id" } }
-    %input.red{ type: "submit", value: t(:save_changes), ng: { show: "view=='review' && standingOrder.id", disabled: 'standing_order_form.$pristine' } }
+    %input.red{ type: "submit", value: t('admin.subscriptions.create'), ng: { show: "view=='review' && !subscription.id" } }
+    %input.red{ type: "submit", value: t(:save_changes), ng: { show: "view=='review' && subscription.id", disabled: 'subscription_form.$pristine' } }
 
   .details{ ng: { show: "['details','review'].indexOf(view) >= 0" } }
-    %ng-form{ name: 'standing_order_details_form', ng: { controller: 'DetailsController' } }
+    %ng-form{ name: 'subscription_details_form', ng: { controller: 'DetailsController' } }
       = render 'details'
 
   .address{ ng: { show: "['address','review'].indexOf(view) >= 0" } }
-    %ng-form{ name: 'standing_order_address_form', ng: { controller: 'AddressController' } }
+    %ng-form{ name: 'subscription_address_form', ng: { controller: 'AddressController' } }
       = render 'address'
 
   .products{ ng: { show: "['products','review'].indexOf(view) >= 0" } }
-    %ng-form{ name: 'standing_order_products_form', ng: { controller: 'ProductsController' } }
+    %ng-form{ name: 'subscription_products_form', ng: { controller: 'ProductsController' } }
     = render :partial => "spree/admin/variants/autocomplete", :formats => :js
     = render 'products'

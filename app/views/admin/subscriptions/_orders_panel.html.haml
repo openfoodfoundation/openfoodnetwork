@@ -1,5 +1,5 @@
 %script{ type: "text/ng-template", id: "admin/panels/proxy_orders.html" }
-  %form.margin-top-30{ name: 'standing_order_form', ng: { controller: 'OrdersPanelController' } }
+  %form.margin-top-30{ name: 'subscription_form', ng: { controller: 'OrdersPanelController' } }
     .row.standing-order-orders
       .fourteen.columns.offset-by-one
         %table
@@ -13,7 +13,7 @@
             %th= t('total')
             %th.actions
           %tbody
-            %tr.proxy_order{ :id => "po_{{proxyOrder.id}}", ng: { repeat: 'proxyOrder in standingOrder.not_closed_proxy_orders' } }
+            %tr.proxy_order{ :id => "po_{{proxyOrder.id}}", ng: { repeat: 'proxyOrder in subscription.not_closed_proxy_orders' } }
               %td
                 %div{ ng: { bind: "::orderCycleName(proxyOrder.order_cycle_id)" } }
                 %div{ ng: { bind: "::orderCycleCloses(proxyOrder.order_cycle_id)" } }

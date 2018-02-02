@@ -1,4 +1,4 @@
-%h1.text-center.margin-bottom-30= t('admin.standing_order.standing_orders')
+%h1.text-center.margin-bottom-30= t('admin.subscription.subscriptions')
 
 .row
   .four.columns.alpha &nbsp;
@@ -10,12 +10,12 @@
         %i.text-big.icon-check-empty
       .nine.columns.omega
         .title.text-normal
-          %strong= t('.enable_standing_orders')
+          %strong= t('.enable_subscriptions')
         .steps
           %div
-            = t('.enable_standing_orders_step_1_html',
+            = t('.enable_subscriptions_step_1_html',
               enterprises_link: link_to(t('admin.enterprises.title'), main_app.admin_enterprises_path, target: '_blank'))
-          %div= t('.enable_standing_orders_step_2')
+          %div= t('.enable_subscriptions_step_2')
 
     .row.margin-bottom-20.todo{ class: shipping_and_payment_methods_ok?(@shop) ? 'done' : '' }
       .one.columns.alpha
@@ -51,4 +51,4 @@
           %div= t('.create_at_least_one_schedule_step_3')
     .text-normal
       = t('.once_you_are_done_you_can_html',
-        reload_this_page_link: link_to(t('.reload_this_page'), main_app.admin_standing_orders_path))
+        reload_this_page_link: link_to(t('.reload_this_page'), main_app.admin_subscriptions_path))

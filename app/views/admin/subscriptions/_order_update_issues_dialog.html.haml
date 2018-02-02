@@ -1,16 +1,16 @@
 %script{ type: "text/ng-template", id: "admin/order_update_issues_dialog.html" }
   #order_update_issues_dialog
     .message.clearfix.margin-bottom-30
-      .text=t("admin.standing_orders.order_update_issues_msg")
+      .text=t("admin.subscriptions.order_update_issues_msg")
     %div{ ng: { controller: 'OrderUpdateIssuesController' } }
       %table
         %col{ style: 'width: 30%' }
         %col{ style: 'width: 30%' }
         %col{ style: 'width: 40%' }
         %thead
-          %th= t('admin.standing_orders.number')
+          %th= t('admin.subscriptions.number')
           %th= t('admin.order_cycle')
-          %th= t('admin.standing_orders.issue')
+          %th= t('admin.subscriptions.issue')
         %tbody
           %tr.proxy_order{ :id => "ppo_{{proxyOrder.id}}", ng: { repeat: 'proxyOrder in options.proxyOrders' } }
             %td

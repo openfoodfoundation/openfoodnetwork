@@ -1,7 +1,7 @@
 = render 'products_panel'
 = render 'orders_panel'
 
-%table.index#standing_orders{ ng: { cloak: true, show: 'shop_id && !RequestMonitor.loading && filteredStandingOrders.length > 0' } }
+%table.index#subscriptions{ ng: { cloak: true, show: 'shop_id && !RequestMonitor.loading && filteredSubscriptions.length > 0' } }
   %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }
   %col.schedule{ width: "20%", 'ng-show' => 'columns.schedule.visible' }
   %col.items{ width: "10%", 'ng-show' => 'columns.items.visible' }
@@ -36,24 +36,24 @@
         = t('admin.shipping_method')
       %th.actions
         &nbsp;
-  %tbody.panel-ctrl{ object: 'standingOrder', ng: { repeat: "standingOrder in standingOrders | filter:query as filteredStandingOrders track by standingOrder.id" } }
-    %tr.standing_order{ :id => "so_{{standingOrder.id}}", ng: { class: { even: "'even'", odd: "'odd'" } } }
-      %td.customer.text-center{ ng: { show: 'columns.customer.visible', bind: '::standingOrder.customer_email' } }
-      %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::standingOrder.schedule_name' } }
+  %tbody.panel-ctrl{ object: 'subscription', ng: { repeat: "subscription in subscriptions | filter:query as filteredSubscriptions track by subscription.id" } }
+    %tr.subscription{ :id => "so_{{subscription.id}}", ng: { class: { even: "'even'", odd: "'odd'" } } }
+      %td.customer.text-center{ ng: { show: 'columns.customer.visible', bind: '::subscription.customer_email' } }
+      %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::subscription.schedule_name' } }
       %td.items.panel-toggle.text-center{ name: 'products', ng: { show: 'columns.items.visible' } }
-        %h5{ ng: { bind: 'itemCount(standingOrder)' } }
+        %h5{ ng: { bind: 'itemCount(subscription)' } }
       %td.orders.panel-toggle.text-center{ name: 'orders', ng: { show: 'columns.orders.visible' } }
-        %h5{ ng: { bind: 'standingOrder.not_closed_proxy_orders.length + standingOrder.closed_proxy_orders.length' } }
+        %h5{ ng: { bind: 'subscription.not_closed_proxy_orders.length + subscription.closed_proxy_orders.length' } }
       %td.status.text-center{ ng: { show: 'columns.state.visible' } }
-        %span.state{ ng: { class: "standingOrder.state", bind: "'spree.standing_order_state.' + standingOrder.state | t" } }
-      %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::standingOrder.begins_at' } }
-      %td.ends_on.text-center{ ng: { show: 'columns.ends_on.visible', bind: '::standingOrder.ends_at' } }
-      %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[standingOrder.payment_method_id].name' } }
-      %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[standingOrder.shipping_method_id].name' } }
+        %span.state{ ng: { class: "subscription.state", bind: "'spree.subscription_state.' + subscription.state | t" } }
+      %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::subscription.begins_at' } }
+      %td.ends_on.text-center{ ng: { show: 'columns.ends_on.visible', bind: '::subscription.ends_at' } }
+      %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[subscription.payment_method_id].name' } }
+      %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[subscription.shipping_method_id].name' } }
       %td.actions
-        %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{standingOrder.edit_path}}'}, 'ofn-with-tip' => t('.edit_standing_order') }
-        %a.pause-standing-order.icon-pause.no-text{ ng: { click: 'standingOrder.pause()', hide: '!!standingOrder.paused_at' }, 'ofn-with-tip' => t('.pause_standing_order') , href: 'javascript:void(0)' }
-        %a.unpause-standing-order.icon-play.no-text{ ng: { click: 'standingOrder.unpause()', show: '!!standingOrder.paused_at' }, 'ofn-with-tip' => t('.unpause_standing_order') , href: 'javascript:void(0)' }
-        %a.cancel-standing-order.icon-remove.no-text{ ng: { click: 'standingOrder.cancel()', hide: '!!standingOrder.canceled_at'}, 'ofn-with-tip' => t('.cancel_standing_order') , href: 'javascript:void(0)' }
+        %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{subscription.edit_path}}'}, 'ofn-with-tip' => t('.edit_subscription') }
+        %a.pause-standing-order.icon-pause.no-text{ ng: { click: 'subscription.pause()', hide: '!!subscription.paused_at' }, 'ofn-with-tip' => t('.pause_subscription') , href: 'javascript:void(0)' }
+        %a.unpause-standing-order.icon-play.no-text{ ng: { click: 'subscription.unpause()', show: '!!subscription.paused_at' }, 'ofn-with-tip' => t('.unpause_subscription') , href: 'javascript:void(0)' }
+        %a.cancel-standing-order.icon-remove.no-text{ ng: { click: 'subscription.cancel()', hide: '!!subscription.canceled_at'}, 'ofn-with-tip' => t('.cancel_subscription') , href: 'javascript:void(0)' }
 
-    %tr.panel-row{ object: "standingOrder", panels: "{products: 'standing_order_products', orders: 'proxy_orders'}" }
+    %tr.panel-row{ object: "subscription", panels: "{products: 'subscription_products', orders: 'proxy_orders'}" }
