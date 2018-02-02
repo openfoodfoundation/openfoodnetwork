@@ -51,9 +51,9 @@
       %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[subscription.payment_method_id].name' } }
       %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[subscription.shipping_method_id].name' } }
       %td.actions
-        %a.edit-standing-order.icon-edit.no-text{ ng: { href: '{{subscription.edit_path}}'}, 'ofn-with-tip' => t('.edit_subscription') }
-        %a.pause-standing-order.icon-pause.no-text{ ng: { click: 'subscription.pause()', hide: '!!subscription.paused_at' }, 'ofn-with-tip' => t('.pause_subscription') , href: 'javascript:void(0)' }
-        %a.unpause-standing-order.icon-play.no-text{ ng: { click: 'subscription.unpause()', show: '!!subscription.paused_at' }, 'ofn-with-tip' => t('.unpause_subscription') , href: 'javascript:void(0)' }
-        %a.cancel-standing-order.icon-remove.no-text{ ng: { click: 'subscription.cancel()', hide: '!!subscription.canceled_at'}, 'ofn-with-tip' => t('.cancel_subscription') , href: 'javascript:void(0)' }
+        %a.edit-subscription.icon-edit.no-text{ ng: { href: '{{subscription.edit_path}}'}, 'ofn-with-tip' => t('.edit_subscription') }
+        %a.pause-subscription.icon-pause.no-text{ ng: { click: 'subscription.pause()', hide: '!!subscription.paused_at' }, 'ofn-with-tip' => t('.pause_subscription') , href: 'javascript:void(0)' }
+        %a.unpause-subscription.icon-play.no-text{ ng: { click: 'subscription.unpause()', show: '!!subscription.paused_at' }, 'ofn-with-tip' => t('.unpause_subscription') , href: 'javascript:void(0)' }
+        %a.cancel-subscription.icon-remove.no-text{ ng: { click: 'subscription.cancel()', hide: '!!subscription.canceled_at'}, 'ofn-with-tip' => t('.cancel_subscription') , href: 'javascript:void(0)' }
 
     %tr.panel-row{ object: "subscription", panels: "{products: 'subscription_products', orders: 'proxy_orders'}" }

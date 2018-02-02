@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Standing Orders' do
+feature 'Subscriptions' do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -20,7 +20,7 @@ feature 'Standing Orders' do
       it "passes the smoke test" do
         visit spree.admin_path
         click_link 'Orders'
-        click_link 'Standing Orders'
+        click_link 'Subscriptions'
 
         expect(page).to have_select2 "shop_id", with_options: [shop.name, shop2.name], without_options: [shop_unmanaged.name]
 
@@ -66,7 +66,7 @@ feature 'Standing Orders' do
           page.find("td.orders.panel-toggle").trigger('click')
         end
 
-        within ".standing-order-orders" do
+        within ".subscription-orders" do
           expect(page).to have_selector "tr.proxy_order", count: 1
 
           proxy_order = subscription.proxy_orders.first
@@ -90,7 +90,7 @@ feature 'Standing Orders' do
 
         # Pausing a subscription
         within "tr#so_#{subscription.id}" do
-          find("a.pause-standing-order").click
+          find("a.pause-subscription").click
         end
         click_button "Yes, I'm sure"
         within "tr#so_#{subscription.id}" do
@@ -100,7 +100,7 @@ feature 'Standing Orders' do
 
         # Unpausing a subscription
         within "tr#so_#{subscription.id}" do
-          find("a.unpause-standing-order").click
+          find("a.unpause-subscription").click
         end
         click_button "Yes, I'm sure"
         within "tr#so_#{subscription.id}" do
@@ -110,7 +110,7 @@ feature 'Standing Orders' do
 
         # Cancelling a subscription
         within "tr#so_#{subscription.id}" do
-          find("a.cancel-standing-order").click
+          find("a.cancel-subscription").click
         end
         click_button "Yes, I'm sure"
         within "tr#so_#{subscription.id}" do
@@ -140,7 +140,7 @@ feature 'Standing Orders' do
 
       it "passes the smoke test" do
         visit admin_subscriptions_path
-        click_link 'New Standing Order'
+        click_link 'New Subscription'
         select2_select shop.name, from: 'new_subscription_shop_id'
         click_button 'Continue'
 
@@ -220,7 +220,7 @@ feature 'Standing Orders' do
 
         # Attempting to submit without a product
         expect{
-          click_button('Create Standing Order')
+          click_button('Create Subscription')
           expect(page).to have_content 'Please add at least one product'
         }.to_not change(Subscription, :count)
 
@@ -236,7 +236,7 @@ feature 'Standing Orders' do
         end
 
         expect{
-          click_button('Create Standing Order')
+          click_button('Create Subscription')
           expect(page).to have_content 'Saved'
         }.to change(Subscription, :count).by(1)
 

@@ -1,5 +1,5 @@
-# Responsible for ensuring that any updates to a Standing Order are propagated to any
-# orders belonging to that Standing Order which have been instantiated
+# Responsible for ensuring that any updates to a Subscription are propagated to any
+# orders belonging to that Subscription which have been instantiated
 
 class OrderSyncer
   attr_reader :order_update_issues
