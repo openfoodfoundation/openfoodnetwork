@@ -134,6 +134,7 @@ Openfoodnetwork::Application.routes.draw do
     get '/inventory', to: 'variant_overrides#index'
 
     get '/product_import', to: 'product_import#index'
+    get '/product_import/guide', to: 'product_import#guide', as: 'product_import_guide'
     post '/product_import', to: 'product_import#import'
     post '/product_import/validate_data', to: 'product_import#validate_data', as: 'product_import_process_async'
     post '/product_import/save_data', to: 'product_import#save_data', as: 'product_import_save_async'

@@ -26,11 +26,14 @@ angular.module("admin.productImport").controller "ImportOptionsFormCtrl", ($scop
   , true
 
   $scope.toggleResetAbsent = (id) ->
-    resetAbsent = $scope.settings[id]['reset_all_absent']
+    checked = $scope.settings[id]['reset_all_absent']
     confirmed = confirm t('js.product_import.confirmation') if resetAbsent
 
-    if confirmed or !resetAbsent
+    if confirmed or !checked
       ProductImportService.updateResetAbsent($scope.supplierId, $scope.reset_counts[$scope.supplierId], resetAbsent)
+
+    if !confirmed and checked
+      $scope.settings[id]['reset_all_absent'] = false
 
   $scope.resetTotal = ProductImportService.resetTotal
 

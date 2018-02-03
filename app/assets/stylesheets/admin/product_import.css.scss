@@ -1,3 +1,38 @@
+.product-import-introduction {
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 1.5em 0 1em;
+  }
+
+  h6 {
+    font-size: 1em;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  span.category {
+    display: inline-block;
+    background-color: #f3f3f3;
+    padding: 0.4em 0.8em;
+    margin: 0 0.4em 0.5em 0;
+  }
+
+  table {
+
+    &.product-import-columns tr:hover td {
+      background-color: transparent;
+    }
+
+    thead th {
+      text-transform: none;
+      font-size: 100%;
+      text-align: left;
+    }
+  }
+}
+
 div.panel-section {
 
   .neutral {

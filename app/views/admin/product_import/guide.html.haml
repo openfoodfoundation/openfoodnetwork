@@ -1,0 +1,69 @@
+- content_for :page_title do
+  Product Import Guide
+
+- content_for :page_actions do
+  %div.toolbar{ 'data-hook' => "toolbar" }
+    %ul.actions.header-action-links.inline-menu
+      %li
+        = button_link_to 'Back to Import', main_app.admin_product_import_path
+
+= render partial: 'spree/admin/shared/product_sub_menu'
+
+.product-import-introduction
+
+  %h5 Spreadsheet Columns
+
+  = render 'admin/product_import/guide/columns'
+
+  %h5 Weight, volume, or single items
+
+  %p
+    When creating a product you can specify a number of options. If the product is measured
+    by weight, unit_value should be set to a number and unit_type should be set to either
+    g for grams, Kg for kilograms, or T for tonnes.
+
+  %p
+    For items such as liquids, the unit_type can be ml for millilitres, L for litres or
+    Kl for kilolitres.
+
+  %p
+    For other items that are sold in different units such as "a bunch of carrots", you can
+    enter 1 for units, leave unit_type blank, and enter a name in the variant_unit_name
+    column such as "loaf" or "bunch".
+
+  %h6 Example spreadsheet data:
+
+  = render 'admin/product_import/guide/units'
+
+
+  %h5 Product Variants
+
+  %p
+    Variants are distinguished by the units and display_name fields and grouped by product name.
+    The example below shows a salad that comes in 500g and 750g variants, and a cake that comes in
+    multiple flavours.
+
+  %h6 Example spreadsheet data:
+
+  = render 'admin/product_import/guide/variants'
+
+
+  %h5 Category Values
+
+  %p
+    Listed below are the available Product categories, as well as Tax and Shipping categories.
+
+  %h6 Product Categories
+
+  - @product_categories.each do |pc|
+    %span.category= pc
+
+  %h6 Tax Categories
+
+  - @tax_categories.each do |tc|
+    %span.category= tc
+
+  %h6 Shipping Categories
+
+  - @shipping_categories.each do |sc|
+    %span.category= sc

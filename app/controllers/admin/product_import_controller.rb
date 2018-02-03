@@ -2,7 +2,13 @@ require 'roo'
 
 module Admin
   class ProductImportController < Spree::Admin::BaseController
-    before_filter :validate_upload_presence, except: %i[index validate_data]
+    before_filter :validate_upload_presence, except: %i[index guide validate_data]
+
+    def guide
+      @product_categories = Spree::Taxon.order('name ASC').pluck(:name)
+      @tax_categories = Spree::TaxCategory.order('name ASC').pluck(:name)
+      @shipping_categories = Spree::ShippingCategory.order('name ASC').pluck(:name)
+    end
 
     def import
       # Save uploaded file to tmp directory
