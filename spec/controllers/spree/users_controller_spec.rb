@@ -27,7 +27,8 @@ describe Spree::UsersController, type: :controller do
     it "returns orders placed by the user at normal shops" do
       spree_get :show
 
-      expect(orders).to eq [d1o1, d1o2]
+      expect(orders).to include d1o1, d1o2
+      expect(orders).to_not include d1_order_for_u2, d1o3, d2o1
       expect(shops).to include distributor1
 
       # Doesn't return orders belonging to the accounts distributor" do
