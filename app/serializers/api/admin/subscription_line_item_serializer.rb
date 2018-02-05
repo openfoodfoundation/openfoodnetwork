@@ -1,6 +1,6 @@
 module Api
   module Admin
-    class StandingLineItemSerializer < ActiveModel::Serializer
+    class SubscriptionLineItemSerializer < ActiveModel::Serializer
       attributes :id, :variant_id, :quantity, :description, :price_estimate
 
       def description

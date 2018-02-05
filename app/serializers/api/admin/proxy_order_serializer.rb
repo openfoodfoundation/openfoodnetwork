@@ -8,7 +8,7 @@ module Api
         if object.total.present?
           object.total.to_money.to_s
         else
-          object.subscription.standing_line_items.sum(&:total_estimate)
+          object.subscription.subscription_line_items.sum(&:total_estimate)
         end
       end
 

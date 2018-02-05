@@ -34,7 +34,7 @@ describe SubscriptionForm do
         shipping_method_id: shipping_method.id,
         begins_at: 4.days.ago,
         ends_at: 14.days.from_now,
-        standing_line_items_attributes: [
+        subscription_line_items_attributes: [
           {variant_id: variant1.id, quantity: 1},
           {variant_id: variant2.id, quantity: 2},
           {variant_id: variant3.id, quantity: 3}
@@ -89,7 +89,7 @@ describe SubscriptionForm do
     end
   end
 
-  describe "validating price_estimates on standing line items" do
+  describe "validating price_estimates on subscription line items" do
     let(:params) { { } }
     let(:form) { SubscriptionForm.new(nil, params) }
 
@@ -98,21 +98,21 @@ describe SubscriptionForm do
 
       it "does nothing" do
         form.send(:validate_price_estimates)
-        expect(form.params[:standing_line_items_attributes]).to be nil
+        expect(form.params[:subscription_line_items_attributes]).to be nil
       end
     end
 
     context "when line_item params are present" do
       before do
-        params[:standing_line_items_attributes] = [{ id: 1, price_estimate: 2.50 }, { id: 2, price_estimate: 3.50 }]
+        params[:subscription_line_items_attributes] = [{ id: 1, price_estimate: 2.50 }, { id: 2, price_estimate: 3.50 }]
       end
 
       context "when no fee calculator is present" do
         before { allow(form).to receive(:price_estimate_for) }
 
-        it "clears price estimates on all standing line item attributes" do
+        it "clears price estimates on all subscription line item attributes" do
           form.send(:validate_price_estimates)
-          attrs = form.params[:standing_line_items_attributes]
+          attrs = form.params[:subscription_line_items_attributes]
           expect(attrs.first.keys).to_not include :price_estimate
           expect(attrs.last.keys).to_not include :price_estimate
           expect(form).to_not have_received(:price_estimate_for)
@@ -126,12 +126,12 @@ describe SubscriptionForm do
         before do
           allow(form).to receive(:fee_calculator) { fee_calculator }
           allow(form).to receive(:price_estimate_for) { 5.30 }
-          params[:standing_line_items_attributes].first[:variant_id] = variant.id
+          params[:subscription_line_items_attributes].first[:variant_id] = variant.id
         end
 
-        it "clears price estimates on standing line item attributes without variant ids" do
+        it "clears price estimates on subscription line item attributes without variant ids" do
           form.send(:validate_price_estimates)
-          attrs = form.params[:standing_line_items_attributes]
+          attrs = form.params[:subscription_line_items_attributes]
           expect(attrs.first.keys).to include :price_estimate
           expect(attrs.last.keys).to_not include :price_estimate
           expect(attrs.first[:price_estimate]).to eq 5.30

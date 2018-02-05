@@ -16,5 +16,5 @@
             %input#add_quantity.fullwidth{ type: 'number', min: 1, ng: { model: 'newItem.quantity' } }
         %td{ style: "vertical-align:top" }
           .actions
-            %a.icon-plus.button.fullwidth{ href: 'javascript:void(0)', method: :post, ng: { click: 'addStandingLineItem()' } }
+            %a.icon-plus.button.fullwidth{ href: 'javascript:void(0)', method: :post, ng: { click: 'addSubscriptionLineItem()' } }
               = t(:add)

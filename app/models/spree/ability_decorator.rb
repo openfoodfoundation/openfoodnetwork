@@ -256,9 +256,9 @@ class AbilityDecorator
     can [:create, :edit, :update, :cancel, :pause, :unpause], Subscription do |subscription|
       user.enterprises.include?(subscription.shop)
     end
-    can [:admin, :build], StandingLineItem
-    can [:destroy], StandingLineItem do |standing_line_item|
-      user.enterprises.include?(standing_line_item.subscription.shop)
+    can [:admin, :build], SubscriptionLineItem
+    can [:destroy], SubscriptionLineItem do |subscription_line_item|
+      user.enterprises.include?(subscription_line_item.subscription.shop)
     end
     can [:admin, :edit, :cancel, :resume], ProxyOrder do |proxy_order|
       user.enterprises.include?(proxy_order.subscription.shop)

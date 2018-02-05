@@ -43,7 +43,7 @@ describe SubscriptionValidator do
         customer_allowed?: true,
         schedule_allowed?: true,
         credit_card_ok?: true,
-        standing_line_items_present?: true,
+        subscription_line_items_present?: true,
         requested_variants_available?: true
       }
     end
@@ -326,7 +326,7 @@ describe SubscriptionValidator do
 
         it "returns true" do
           expect(validator.valid?).to be true
-          expect(validator.errors[:standing_line_items]).to be_empty
+          expect(validator.errors[:subscription_line_items]).to be_empty
         end
       end
 
@@ -381,38 +381,38 @@ describe SubscriptionValidator do
       end
     end
 
-    describe "standing line items" do
+    describe "subscription line items" do
       let(:subscription) { instance_double(Subscription, subscription_stubs) }
-      before { stub_validations(validator, validation_stubs.except(:standing_line_items_present?)) }
-      before { expect(subscription).to receive(:standing_line_items).at_least(:once) { standing_line_items } }
+      before { stub_validations(validator, validation_stubs.except(:subscription_line_items_present?)) }
+      before { expect(subscription).to receive(:subscription_line_items).at_least(:once) { subscription_line_items } }
 
-      context "when no standing line items are present" do
-        let(:standing_line_items) { [] }
-
-        it "adds an error and returns false" do
-          expect(validator.valid?).to be false
-          expect(validator.errors[:standing_line_items]).to_not be_empty
-        end
-      end
-
-      context "when standing line items are present but they are all marked for destruction" do
-        let(:standing_line_item1) { instance_double(StandingLineItem, marked_for_destruction?: true) }
-        let(:standing_line_items) { [standing_line_item1] }
+      context "when no subscription line items are present" do
+        let(:subscription_line_items) { [] }
 
         it "adds an error and returns false" do
           expect(validator.valid?).to be false
-          expect(validator.errors[:standing_line_items]).to_not be_empty
+          expect(validator.errors[:subscription_line_items]).to_not be_empty
         end
       end
 
-      context "when standing line items are present and some and not marked for destruction" do
-        let(:standing_line_item1) { instance_double(StandingLineItem, marked_for_destruction?: true) }
-        let(:standing_line_item2) { instance_double(StandingLineItem, marked_for_destruction?: false) }
-        let(:standing_line_items) { [standing_line_item1, standing_line_item2] }
+      context "when subscription line items are present but they are all marked for destruction" do
+        let(:subscription_line_item1) { instance_double(SubscriptionLineItem, marked_for_destruction?: true) }
+        let(:subscription_line_items) { [subscription_line_item1] }
+
+        it "adds an error and returns false" do
+          expect(validator.valid?).to be false
+          expect(validator.errors[:subscription_line_items]).to_not be_empty
+        end
+      end
+
+      context "when subscription line items are present and some and not marked for destruction" do
+        let(:subscription_line_item1) { instance_double(SubscriptionLineItem, marked_for_destruction?: true) }
+        let(:subscription_line_item2) { instance_double(SubscriptionLineItem, marked_for_destruction?: false) }
+        let(:subscription_line_items) { [subscription_line_item1, subscription_line_item2] }
 
         it "returns true" do
           expect(validator.valid?).to be true
-          expect(validator.errors[:standing_line_items]).to be_empty
+          expect(validator.errors[:subscription_line_items]).to be_empty
         end
       end
     end
@@ -420,23 +420,23 @@ describe SubscriptionValidator do
     describe "variant availability" do
       let(:subscription) { instance_double(Subscription, subscription_stubs) }
       before { stub_validations(validator, validation_stubs.except(:requested_variants_available?)) }
-      before { expect(subscription).to receive(:standing_line_items).at_least(:once) { standing_line_items } }
+      before { expect(subscription).to receive(:subscription_line_items).at_least(:once) { subscription_line_items } }
 
-      context "when no standing line items are present" do
-        let(:standing_line_items) { [] }
+      context "when no subscription line items are present" do
+        let(:subscription_line_items) { [] }
 
         it "returns true" do
           expect(validator.valid?).to be true
-          expect(validator.errors[:standing_line_items]).to be_empty
+          expect(validator.errors[:subscription_line_items]).to be_empty
         end
       end
 
-      context "when standing line items are present" do
+      context "when subscription line items are present" do
         let(:variant1) { instance_double(Spree::Variant, id: 1) }
         let(:variant2) { instance_double(Spree::Variant, id: 2) }
-        let(:standing_line_item1) { instance_double(StandingLineItem, variant: variant1) }
-        let(:standing_line_item2) { instance_double(StandingLineItem, variant: variant2) }
-        let(:standing_line_items) { [standing_line_item1] }
+        let(:subscription_line_item1) { instance_double(SubscriptionLineItem, variant: variant1) }
+        let(:subscription_line_item2) { instance_double(SubscriptionLineItem, variant: variant2) }
+        let(:subscription_line_items) { [subscription_line_item1] }
 
         context "but some variants are unavailable" do
           let(:product) { instance_double(Spree::Product, name: "some_name") }
@@ -448,7 +448,7 @@ describe SubscriptionValidator do
 
           it "adds an error and returns false" do
             expect(validator.valid?).to be false
-            expect(validator.errors[:standing_line_items]).to_not be_empty
+            expect(validator.errors[:subscription_line_items]).to_not be_empty
           end
         end
 
@@ -457,7 +457,7 @@ describe SubscriptionValidator do
 
           it "returns true" do
             expect(validator.valid?).to be true
-            expect(validator.errors[:standing_line_items]).to be_empty
+            expect(validator.errors[:subscription_line_items]).to be_empty
           end
         end
       end

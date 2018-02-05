@@ -50,7 +50,7 @@ class ProxyOrder < ActiveRecord::Base
       shipping_method_id: subscription.shipping_method_id
     )
     order.update_attribute(:user, subscription.customer.user)
-    subscription.standing_line_items.each do |sli|
+    subscription.subscription_line_items.each do |sli|
       order.line_items.build(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: true)
     end
     order.update_attributes(bill_address: subscription.bill_address.dup, ship_address: subscription.ship_address.dup)

@@ -1,5 +1,5 @@
-class StandingLineItem < ActiveRecord::Base
-  belongs_to :subscription, inverse_of: :standing_line_items
+class SubscriptionLineItem < ActiveRecord::Base
+  belongs_to :subscription, inverse_of: :subscription_line_items
   belongs_to :variant, class_name: 'Spree::Variant'
 
   validates :subscription, presence: true

@@ -204,7 +204,7 @@ feature 'Subscriptions' do
         targetted_select2_search product1.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 2
         click_link 'Add'
-        within 'table#standing-line-items tr.item', match: :first do
+        within 'table#subscription-line-items tr.item', match: :first do
           expect(page).to have_selector 'td.description', text: "#{product1.name} - #{variant1.full_name}"
           expect(page).to have_selector 'td.price', text: "$13.75"
           expect(page).to have_input 'quantity', with: "2"
@@ -214,7 +214,7 @@ feature 'Subscriptions' do
         click_button('Next')
 
         # Deleting the existing product
-        within 'table#standing-line-items tr.item', match: :first do
+        within 'table#subscription-line-items tr.item', match: :first do
           find("a.delete-item").click
         end
 
@@ -228,7 +228,7 @@ feature 'Subscriptions' do
         targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 3
         click_link 'Add'
-        within 'table#standing-line-items tr.item', match: :first do
+        within 'table#subscription-line-items tr.item', match: :first do
           expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
           expect(page).to have_input 'quantity', with: "3"
@@ -241,7 +241,7 @@ feature 'Subscriptions' do
         }.to change(Subscription, :count).by(1)
 
         # Prices are shown
-        within 'table#standing-line-items tr.item', match: :first do
+        within 'table#subscription-line-items tr.item', match: :first do
           expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
           expect(page).to have_input 'quantity', with: "3"
@@ -259,10 +259,10 @@ feature 'Subscriptions' do
         expect(subscription.credit_card_id).to eq credit_card2.id
 
         # Standing Line Items are created
-        expect(subscription.standing_line_items.count).to eq 1
-        standing_line_item = subscription.standing_line_items.first
-        expect(standing_line_item.variant).to eq variant2
-        expect(standing_line_item.quantity).to eq 3
+        expect(subscription.subscription_line_items.count).to eq 1
+        subscription_line_item = subscription.subscription_line_items.first
+        expect(subscription_line_item.variant).to eq variant2
+        expect(subscription_line_item.quantity).to eq 3
       end
 
       context 'editing an existing subscription' do
@@ -288,7 +288,7 @@ feature 'Subscriptions' do
                  schedule: schedule,
                  payment_method: payment_method,
                  shipping_method: shipping_method,
-                 standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)],
+                 subscription_line_items: [create(:subscription_line_item, variant: variant1, quantity: 2)],
                  with_proxy_orders: true)
         }
 
@@ -356,8 +356,8 @@ feature 'Subscriptions' do
           # Total should be $7.75
           expect(page).to have_selector '#order_form_total', text: "$7.75"
           expect(page).to have_selector 'tr.item', count: 1
-          expect(subscription.reload.standing_line_items.length).to eq 1
-          expect(subscription.standing_line_items.first.variant).to eq variant2
+          expect(subscription.reload.subscription_line_items.length).to eq 1
+          expect(subscription.subscription_line_items.first.variant).to eq variant2
         end
 
         context "with initialised order that has been changed" do

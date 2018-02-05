@@ -9,7 +9,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :bill_address, foreign_key: :bill_address_id, class_name: Spree::Address
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: Spree::Address
   belongs_to :credit_card, foreign_key: :credit_card_id, class_name: 'Spree::CreditCard'
-  has_many :standing_line_items, inverse_of: :subscription
+  has_many :subscription_line_items, inverse_of: :subscription
   has_many :order_cycles, through: :schedule
   has_many :proxy_orders
   has_many :orders, through: :proxy_orders
@@ -17,7 +17,7 @@ class Subscription < ActiveRecord::Base
   alias_attribute :billing_address, :bill_address
   alias_attribute :shipping_address, :ship_address
 
-  accepts_nested_attributes_for :standing_line_items, allow_destroy: true
+  accepts_nested_attributes_for :subscription_line_items, allow_destroy: true
   accepts_nested_attributes_for :bill_address, :ship_address
 
   scope :not_ended, -> { where('subscriptions.ends_at > (?) OR subscriptions.ends_at IS NULL', Time.zone.now) }

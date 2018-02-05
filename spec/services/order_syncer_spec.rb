@@ -287,13 +287,13 @@ describe OrderSyncer do
   describe "changing the quantity of a line item" do
     let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let(:order) { subscription.proxy_orders.first.initialise_order! }
-    let(:sli) { subscription.standing_line_items.first }
+    let(:sli) { subscription.subscription_line_items.first }
     let(:variant) { sli.variant }
 
     before { variant.update_attribute(:count_on_hand, 2) }
 
     context "when quantity is within available stock" do
-      let(:params) { { standing_line_items_attributes: [{ id: sli.id, quantity: 2}] } }
+      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 2}] } }
       let(:syncer) { OrderSyncer.new(subscription) }
 
       it "updates the line_item quantities and totals on all orders" do
@@ -307,7 +307,7 @@ describe OrderSyncer do
     end
 
     context "when quantity is greater than available stock" do
-      let(:params) { { standing_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
+      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
       let(:syncer) { OrderSyncer.new(subscription) }
 
       it "updates the line_item quantities and totals on all orders" do
@@ -321,13 +321,13 @@ describe OrderSyncer do
     end
 
     context "where the quantity of the item on an initialised order has already been changed" do
-      let(:params) { { standing_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
+      let(:params) { { subscription_line_items_attributes: [{ id: sli.id, quantity: 3}] } }
       let(:syncer) { OrderSyncer.new(subscription) }
       let(:changed_line_item) { order.line_items.find_by_variant_id(sli.variant_id) }
 
       before { variant.update_attribute(:count_on_hand, 3) }
 
-      context "when the changed line_item quantity matches the new quantity on the standing line item" do
+      context "when the changed line_item quantity matches the new quantity on the subscription line item" do
         before { changed_line_item.update_attributes(quantity: 3) }
 
         it "does not change the quantity, and doesn't add the order to order_update_issues" do
@@ -340,7 +340,7 @@ describe OrderSyncer do
         end
       end
 
-      context "when the changed line_item quantity doesn't match the new quantity on the standing line item" do
+      context "when the changed line_item quantity doesn't match the new quantity on the subscription line item" do
         before { changed_line_item.update_attributes(quantity: 2) }
 
         it "does not change the quantity, and adds the order to order_update_issues" do
@@ -359,7 +359,7 @@ describe OrderSyncer do
     let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let(:order) { subscription.proxy_orders.first.initialise_order! }
     let(:variant) { create(:variant) }
-    let(:params) { { standing_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1}] } }
+    let(:params) { { subscription_line_items_attributes: [{ id: nil, variant_id: variant.id, quantity: 1}] } }
     let(:syncer) { OrderSyncer.new(subscription) }
 
     it "adds the line item and updates the total on all orders" do
@@ -375,9 +375,9 @@ describe OrderSyncer do
   describe "removing an existing line item" do
     let(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let(:order) { subscription.proxy_orders.first.initialise_order! }
-    let(:sli) { subscription.standing_line_items.first }
+    let(:sli) { subscription.subscription_line_items.first }
     let(:variant) { sli.variant }
-    let(:params) { { standing_line_items_attributes: [{ id: sli.id, _destroy: true }] } }
+    let(:params) { { subscription_line_items_attributes: [{ id: sli.id, _destroy: true }] } }
     let(:syncer) { OrderSyncer.new(subscription) }
 
     it "removes the line item and updates totals on all orders" do

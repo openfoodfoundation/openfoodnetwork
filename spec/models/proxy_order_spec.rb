@@ -166,7 +166,7 @@ describe ProxyOrder, type: :model do
         expect{ proxy_order.initialise_order! }.to change{ Spree::Order.count }.by(1)
         expect(proxy_order.reload.order).to be_a Spree::Order
         order = proxy_order.order
-        expect(order.line_items.count).to eq subscription.standing_line_items.count
+        expect(order.line_items.count).to eq subscription.subscription_line_items.count
         expect(order.customer).to eq subscription.customer
         expect(order.user).to eq subscription.customer.user
         expect(order.distributor).to eq subscription.shop
@@ -180,7 +180,7 @@ describe ProxyOrder, type: :model do
       end
 
       context "when a requested quantity is greater than available stock" do
-        let(:sli) { subscription.standing_line_items.first }
+        let(:sli) { subscription.subscription_line_items.first }
         let(:variant) { sli.variant }
 
         before do

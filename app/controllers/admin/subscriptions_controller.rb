@@ -80,7 +80,7 @@ module Admin
     def collection
       if request.format.json?
         permissions.editable_subscriptions.ransack(params[:q]).result
-          .preload([:shop, :customer, :schedule, :standing_line_items, :ship_address, :bill_address, proxy_orders: { order: :order_cycle }])
+          .preload([:shop, :customer, :schedule, :subscription_line_items, :ship_address, :bill_address, proxy_orders: { order: :order_cycle }])
       else
         Subscription.where("1=0")
       end
@@ -105,13 +105,13 @@ module Admin
       OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc)
     end
 
-    # Wrap :standing_line_items_attributes in :subscription root
+    # Wrap :subscription_line_items_attributes in :subscription root
     def wrap_nested_attrs
-      if params[:standing_line_items].is_a? Array
-        attributes = params[:standing_line_items].map do |sli|
-          sli.slice(*StandingLineItem.attribute_names + ["_destroy"])
+      if params[:subscription_line_items].is_a? Array
+        attributes = params[:subscription_line_items].map do |sli|
+          sli.slice(*SubscriptionLineItem.attribute_names + ["_destroy"])
         end
-        params[:subscription][:standing_line_items_attributes] = attributes
+        params[:subscription][:subscription_line_items_attributes] = attributes
       end
       wrap_bill_address_attrs if params[:bill_address]
       wrap_ship_address_attrs if params[:ship_address]

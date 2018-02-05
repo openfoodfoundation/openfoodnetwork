@@ -1,7 +1,7 @@
-angular.module("admin.subscriptions").controller "StandingLineItemsController", ($scope, InfoDialog) ->
+angular.module("admin.subscriptions").controller "SubscriptionLineItemsController", ($scope, InfoDialog) ->
   $scope.newItem = { variant_id: 0, quantity: 1 }
 
-  $scope.addStandingLineItem = ->
+  $scope.addSubscriptionLineItem = ->
     match = $scope.match()
     if match
       if match._destroy
@@ -13,18 +13,18 @@ angular.module("admin.subscriptions").controller "StandingLineItemsController", 
       $scope.subscription_form.$setDirty()
       $scope.subscription.buildItem($scope.newItem)
 
-  $scope.removeStandingLineItem = (item) ->
+  $scope.removeSubscriptionLineItem = (item) ->
     $scope.subscription_form.$setDirty()
     $scope.subscription.removeItem(item)
 
   $scope.match = ->
-    matching = $scope.subscription.standing_line_items.filter (sli) ->
+    matching = $scope.subscription.subscription_line_items.filter (sli) ->
       sli.variant_id == $scope.newItem.variant_id
     return matching[0] if matching.length > 0
     null
 
   $scope.estimatedSubtotal = ->
-    $scope.subscription.standing_line_items.reduce (subtotal, item) ->
+    $scope.subscription.subscription_line_items.reduce (subtotal, item) ->
       return subtotal if item._destroy
       subtotal += item.price_estimate * item.quantity
     , 0

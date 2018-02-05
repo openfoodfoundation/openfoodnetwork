@@ -155,11 +155,11 @@ FactoryGirl.define do
 
     after(:create) do |subscription, proxy|
       if proxy.with_items
-        subscription.standing_line_items = build_list(:standing_line_item, 3, subscription: subscription)
+        subscription.subscription_line_items = build_list(:subscription_line_item, 3, subscription: subscription)
         subscription.order_cycles.each do |oc|
           ex = oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(subscription.shop_id, subscription.shop_id) ||
             create(:exchange, :order_cycle => oc, :sender => subscription.shop, :receiver => subscription.shop, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
-          subscription.standing_line_items.each { |sli| ex.variants << sli.variant }
+          subscription.subscription_line_items.each { |sli| ex.variants << sli.variant }
         end
       end
 
@@ -171,7 +171,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :standing_line_item, :class => StandingLineItem do
+  factory :subscription_line_item, :class => SubscriptionLineItem do
     subscription
     variant
     quantity 1

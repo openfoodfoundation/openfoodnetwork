@@ -4,8 +4,8 @@ angular.module("admin.subscriptions").controller "ProductsPanelController", ($sc
   $scope.saving = false
 
   $scope.saved = ->
-    pristine = Subscriptions.pristineByID[$scope.subscription.id].standing_line_items
-    return false unless angular.equals($scope.subscription.standing_line_items, pristine)
+    pristine = Subscriptions.pristineByID[$scope.subscription.id].subscription_line_items
+    return false unless angular.equals($scope.subscription.subscription_line_items, pristine)
     true
 
   $scope.save = ->

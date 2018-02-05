@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::StandingLineItemsController, type: :controller do
+describe Admin::SubscriptionLineItemsController, type: :controller do
   include AuthenticationWorkflow
 
 
@@ -17,7 +17,7 @@ describe Admin::StandingLineItemsController, type: :controller do
     let(:unmanaged_schedule) { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: unmanaged_shop)]) }
 
     context "json" do
-      let(:params) { { format: :json, standing_line_item: { quantity: 2, variant_id: variant.id } } }
+      let(:params) { { format: :json, subscription_line_item: { quantity: 2, variant_id: variant.id } } }
 
       context 'as an enterprise user' do
         before { allow(controller).to receive(:spree_current_user) { user } }
@@ -55,7 +55,7 @@ describe Admin::StandingLineItemsController, type: :controller do
             end
 
             context "but no schedule_id is provided" do
-              it "returns a serialized standing line item without a price estimate" do
+              it "returns a serialized subscription line item without a price estimate" do
                 spree_post :build, params
 
                 json_response = JSON.parse(response.body)
@@ -68,7 +68,7 @@ describe Admin::StandingLineItemsController, type: :controller do
             context "but an unmanaged schedule_id is provided" do
               before { params.merge!(schedule_id: unmanaged_schedule.id) }
 
-              it "returns a serialized standing line item without a price estimate" do
+              it "returns a serialized subscription line item without a price estimate" do
                 spree_post :build, params
 
                 json_response = JSON.parse(response.body)
@@ -81,7 +81,7 @@ describe Admin::StandingLineItemsController, type: :controller do
             context "and a managed schedule_id is provided" do
               before { params.merge!(schedule_id: schedule.id) }
 
-              it "returns a serialized standing line item with a price estimate" do
+              it "returns a serialized subscription line item with a price estimate" do
                 spree_post :build, params
 
                 json_response = JSON.parse(response.body)

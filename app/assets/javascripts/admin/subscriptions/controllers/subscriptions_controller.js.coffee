@@ -12,7 +12,7 @@ angular.module("admin.subscriptions").controller "SubscriptionsController", ($sc
       $scope.subscriptions = Subscriptions.index("q[shop_id_eq]": $scope.shop_id, "q[canceled_at_null]": true)
 
   $scope.itemCount = (subscription) ->
-    subscription.standing_line_items.reduce (sum, sli) ->
+    subscription.subscription_line_items.reduce (sum, sli) ->
       return sum + sli.quantity
     , 0
 

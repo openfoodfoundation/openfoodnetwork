@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe StandingLineItem, model: true do
+describe SubscriptionLineItem, model: true do
   describe "validations" do
     it "requires a subscription" do
       expect(subject).to validate_presence_of :subscription

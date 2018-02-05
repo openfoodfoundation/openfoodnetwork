@@ -23,7 +23,7 @@ class OrderSyncer
 
   attr_reader :subscription, :line_item_syncer
 
-  delegate :orders, :bill_address, :ship_address, :standing_line_items, to: :subscription
+  delegate :orders, :bill_address, :ship_address, :subscription_line_items, to: :subscription
   delegate :shop_id, :customer, :customer_id, to: :subscription
   delegate :shipping_method, :shipping_method_id, :payment_method, :payment_method_id, to: :subscription
   delegate :shipping_method_id_changed?, :shipping_method_id_was, to: :subscription

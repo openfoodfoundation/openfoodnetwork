@@ -2,7 +2,7 @@ require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_permissions'
 
 module Admin
-  class StandingLineItemsController < ResourceController
+  class SubscriptionLineItemsController < ResourceController
     before_filter :load_build_context, only: [:build]
     before_filter :ensure_shop, only: [:build]
     before_filter :ensure_variant, only: [:build]
@@ -10,10 +10,10 @@ module Admin
     respond_to :json
 
     def build
-      @standing_line_item.assign_attributes(params[:standing_line_item])
+      @subscription_line_item.assign_attributes(params[:subscription_line_item])
       fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(@shop, @order_cycle) if @order_cycle
       OpenFoodNetwork::ScopeVariantToHub.new(@shop).scope(@variant)
-      render json: @standing_line_item, serializer: Api::Admin::StandingLineItemSerializer, fee_calculator: fee_calculator
+      render json: @subscription_line_item, serializer: Api::Admin::SubscriptionLineItemSerializer, fee_calculator: fee_calculator
     end
 
     private
@@ -26,7 +26,7 @@ module Admin
       @shop = Enterprise.managed_by(spree_current_user).find_by_id(params[:shop_id])
       @schedule = permissions.editable_schedules.find_by_id(params[:schedule_id])
       @order_cycle = @schedule.andand.current_or_next_order_cycle
-      @variant = Spree::Variant.stockable_by(@shop).find_by_id(params[:standing_line_item][:variant_id])
+      @variant = Spree::Variant.stockable_by(@shop).find_by_id(params[:subscription_line_item][:variant_id])
     end
 
     def new_actions

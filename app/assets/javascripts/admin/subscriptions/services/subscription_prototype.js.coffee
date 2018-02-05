@@ -3,8 +3,8 @@ angular.module("admin.subscriptions").factory 'SubscriptionPrototype', ($http, $
     return false unless item.variant_id > 0
     return false unless item.quantity > 0
     data = angular.extend({}, item, { shop_id: @shop_id, schedule_id: @schedule_id })
-    $http.post("/admin/standing_line_items/build", data).then (response) =>
-      @standing_line_items.push response.data
+    $http.post("/admin/subscription_line_items/build", data).then (response) =>
+      @subscription_line_items.push response.data
     , (response) =>
       InfoDialog.open 'error', response.data.errors[0]
 

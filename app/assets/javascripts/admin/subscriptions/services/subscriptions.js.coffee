@@ -23,5 +23,5 @@ angular.module("admin.subscriptions").factory 'Subscriptions', ($q, Subscription
 
     afterRemoveItem: (id, deletedItemID) ->
       return unless @pristineByID[id]?
-      for item, i in @pristineByID[id].standing_line_items when item.id == deletedItemID
-        @pristineByID[id].standing_line_items.splice(i, 1)
+      for item, i in @pristineByID[id].subscription_line_items when item.id == deletedItemID
+        @pristineByID[id].subscription_line_items.splice(i, 1)

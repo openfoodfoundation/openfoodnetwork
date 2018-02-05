@@ -178,7 +178,7 @@ describe Admin::SubscriptionsController, type: :controller do
           params.merge!(
             bill_address: address.attributes.except('id'),
             ship_address: address.attributes.except('id'),
-            standing_line_items: [{ quantity: 2, variant_id: variant.id}]
+            subscription_line_items: [{ quantity: 2, variant_id: variant.id}]
           )
         end
 
@@ -186,14 +186,14 @@ describe Admin::SubscriptionsController, type: :controller do
           it 'returns an error' do
             expect{ spree_post :create, params }.to_not change{ Subscription.count }
             json_response = JSON.parse(response.body)
-            expect(json_response['errors']['standing_line_items']).to eq ["#{variant.product.name} - #{variant.full_name} is not available from the selected schedule"]
+            expect(json_response['errors']['subscription_line_items']).to eq ["#{variant.product.name} - #{variant.full_name} is not available from the selected schedule"]
           end
         end
 
         context 'where the specified variants are available from the shop' do
           let!(:exchange) { create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop, variants: [variant]) }
 
-          it 'creates standing line items for the subscription' do
+          it 'creates subscription line items for the subscription' do
             expect{ spree_post :create, params }.to change{ Subscription.count }.by(1)
             subscription = Subscription.last
             expect(subscription.schedule).to eq schedule
@@ -202,10 +202,10 @@ describe Admin::SubscriptionsController, type: :controller do
             expect(subscription.shipping_method).to eq shipping_method
             expect(subscription.bill_address.firstname).to eq address.firstname
             expect(subscription.ship_address.firstname).to eq address.firstname
-            expect(subscription.standing_line_items.count).to be 1
-            standing_line_item = subscription.standing_line_items.first
-            expect(standing_line_item.quantity).to be 2
-            expect(standing_line_item.variant).to eq variant
+            expect(subscription.subscription_line_items.count).to be 1
+            subscription_line_item = subscription.subscription_line_items.first
+            expect(subscription_line_item.quantity).to be 2
+            expect(subscription_line_item.variant).to eq variant
           end
         end
       end
@@ -259,9 +259,9 @@ describe Admin::SubscriptionsController, type: :controller do
              schedule: schedule,
              payment_method: payment_method,
              shipping_method: shipping_method,
-             standing_line_items: [create(:standing_line_item, variant: variant1, quantity: 2)])
+             subscription_line_items: [create(:subscription_line_item, variant: variant1, quantity: 2)])
     }
-    let(:standing_line_item1) { subscription.standing_line_items.first }
+    let(:subscription_line_item1) { subscription.subscription_line_items.first }
     let(:params) { { format: :json, id: subscription.id, subscription: {} } }
 
     context 'as an non-manager of the subscription shop' do
@@ -339,32 +339,32 @@ describe Admin::SubscriptionsController, type: :controller do
           expect(subscription.shipping_method).to eq new_shipping_method
         end
 
-        context 'with standing_line_items params' do
+        context 'with subscription_line_items params' do
           let!(:product2) { create(:product, supplier: shop) }
           let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
 
           before do
-            params[:standing_line_items] = [{id: standing_line_item1.id, quantity: 1, variant_id: variant1.id}, { quantity: 2, variant_id: variant2.id}]
+            params[:subscription_line_items] = [{id: subscription_line_item1.id, quantity: 1, variant_id: variant1.id}, { quantity: 2, variant_id: variant2.id}]
           end
 
           context 'where the specified variants are not available from the shop' do
             it 'returns an error' do
-              expect{ spree_post :update, params }.to_not change{ subscription.standing_line_items.count }
+              expect{ spree_post :update, params }.to_not change{ subscription.subscription_line_items.count }
               json_response = JSON.parse(response.body)
-              expect(json_response['errors']['standing_line_items']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
+              expect(json_response['errors']['subscription_line_items']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
             end
           end
 
           context 'where the specified variants are available from the shop' do
             before { outgoing_exchange.update_attributes(variants: [variant1, variant2]) }
 
-            it 'creates standing line items for the subscription' do
-              expect{ spree_post :update, params }.to change{ subscription.standing_line_items.count }.by(1)
+            it 'creates subscription line items for the subscription' do
+              expect{ spree_post :update, params }.to change{ subscription.subscription_line_items.count }.by(1)
               subscription.reload
-              expect(subscription.standing_line_items.count).to be 2
-              standing_line_item = subscription.standing_line_items.last
-              expect(standing_line_item.quantity).to be 2
-              expect(standing_line_item.variant).to eq variant2
+              expect(subscription.subscription_line_items.count).to be 2
+              subscription_line_item = subscription.subscription_line_items.last
+              expect(subscription_line_item.quantity).to be 2
+              expect(subscription_line_item.variant).to eq variant2
             end
           end
         end

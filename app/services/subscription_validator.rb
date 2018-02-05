@@ -18,13 +18,13 @@ class SubscriptionValidator
   validate :customer_allowed?
   validate :schedule_allowed?
   validate :credit_card_ok?
-  validate :standing_line_items_present?
+  validate :subscription_line_items_present?
   validate :requested_variants_available?
 
   delegate :shop, :customer, :schedule, :shipping_method, :payment_method, to: :subscription
   delegate :bill_address, :ship_address, :begins_at, :ends_at, to: :subscription
   delegate :credit_card, :credit_card_id, to: :subscription
-  delegate :standing_line_items, to: :subscription
+  delegate :subscription_line_items, to: :subscription
 
   def initialize(subscription)
     @subscription = subscription
@@ -82,26 +82,26 @@ class SubscriptionValidator
     errors.add(:credit_card, :not_available)
   end
 
-  def standing_line_items_present?
-    return if standing_line_items.reject(&:marked_for_destruction?).any?
-    errors.add(:standing_line_items, :at_least_one_product)
+  def subscription_line_items_present?
+    return if subscription_line_items.reject(&:marked_for_destruction?).any?
+    errors.add(:subscription_line_items, :at_least_one_product)
   end
 
   def requested_variants_available?
-    standing_line_items.each { |sli| verify_availability_of(sli.variant) }
+    subscription_line_items.each { |sli| verify_availability_of(sli.variant) }
   end
 
   def verify_availability_of(variant)
     return if available_variant_ids.include? variant.id
     name = "#{variant.product.name} - #{variant.full_name}"
-    errors.add(:standing_line_items, :not_available, name: name)
+    errors.add(:subscription_line_items, :not_available, name: name)
   end
 
   # TODO: Extract this into a separate class
   def available_variant_ids
     @available_variant_ids ||=
       Spree::Variant.joins(exchanges: { order_cycle: :schedules })
-        .where(id: standing_line_items.map(&:variant_id))
+        .where(id: subscription_line_items.map(&:variant_id))
         .where(schedules: { id: schedule }, exchanges: { incoming: false, receiver_id: shop })
         .merge(OrderCycle.not_closed)
         .select('DISTINCT spree_variants.id')

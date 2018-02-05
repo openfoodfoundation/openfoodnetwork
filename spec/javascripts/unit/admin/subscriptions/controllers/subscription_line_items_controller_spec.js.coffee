@@ -1,8 +1,8 @@
-describe "StandingLineItemsCtrl", ->
+describe "SubscriptionLineItemsCtrl", ->
   scope = null
   http = null
   subscription = { id: 1 }
-  standingLineItem = { id: 2, variant_id: 44 }
+  subscriptionLineItem = { id: 2, variant_id: 44 }
 
   beforeEach ->
     module('admin.subscriptions')
@@ -11,8 +11,8 @@ describe "StandingLineItemsCtrl", ->
       scope = $rootScope
       http = $httpBackend
       scope.subscription = subscription
-      subscription.standing_line_items = [standingLineItem]
-      $controller 'StandingLineItemsController', {$scope: scope}
+      subscription.subscription_line_items = [subscriptionLineItem]
+      $controller 'SubscriptionLineItemsController', {$scope: scope}
 
   describe "match", ->
     describe "when newItem.variant_id matches an existing sli", ->
@@ -20,7 +20,7 @@ describe "StandingLineItemsCtrl", ->
         scope.newItem.variant_id = 44
 
       it "returns the matching sli ", ->
-        expect(scope.match()).toEqual standingLineItem
+        expect(scope.match()).toEqual subscriptionLineItem
 
     describe "when newItem.variant_id dosn't match an existing sli", ->
       beforeEach ->
@@ -29,7 +29,7 @@ describe "StandingLineItemsCtrl", ->
       it "returns null", ->
         expect(scope.match()).toEqual null
 
-  describe "addStandingLineItem", ->
+  describe "addSubscriptionLineItem", ->
     beforeEach ->
       scope.subscription_form = jasmine.createSpyObj('subscription_form', ['$setDirty'])
       subscription.buildItem = jasmine.createSpy('buildItem')
@@ -50,14 +50,14 @@ describe "StandingLineItemsCtrl", ->
           spyOn(InfoDialog, "open")
 
         it "shows a message to the user", ->
-          scope.addStandingLineItem()
+          scope.addSubscriptionLineItem()
           expect(InfoDialog.open).toHaveBeenCalled()
 
       describe "when the matching item is marked for destruction", ->
         beforeEach -> match._destroy = true
 
         it "remove the delete flag from the match and merges properties from scope.newItem", ->
-          scope.addStandingLineItem()
+          scope.addSubscriptionLineItem()
           expect(match._destroy).toBeUndefined()
           expect(match.someProperty).toEqual "lalala"
 
@@ -66,6 +66,6 @@ describe "StandingLineItemsCtrl", ->
         spyOn(scope, "match").and.returnValue(null)
 
       it "sets the form to $dirty and called buildItem on scope.subscription", ->
-        scope.addStandingLineItem()
+        scope.addSubscriptionLineItem()
         expect(scope.subscription_form.$setDirty).toHaveBeenCalled()
         expect(subscription.buildItem).toHaveBeenCalledWith(scope.newItem)

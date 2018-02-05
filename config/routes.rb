@@ -186,7 +186,7 @@ Openfoodnetwork::Application.routes.draw do
       put :unpause, on: :member
     end
 
-    resources :standing_line_items, only: [], format: :json do
+    resources :subscription_line_items, only: [], format: :json do
       post :build, on: :collection
     end
 
