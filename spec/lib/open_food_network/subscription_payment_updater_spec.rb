@@ -24,7 +24,7 @@ module OpenFoodNetwork
         let!(:payment2) { create(:payment, order: order) }
 
         context "where more than one payment is in the 'checkout' state" do
-          it { expect(updater.send(:payment)).to eq payment1 }
+          it { expect([payment1, payment2]).to include updater.send(:payment) }
         end
 
         context "where only one payment is in the 'checkout' state" do
