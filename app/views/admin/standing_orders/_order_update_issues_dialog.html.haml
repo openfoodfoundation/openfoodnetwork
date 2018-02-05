@@ -1,0 +1,25 @@
+%script{ type: "text/ng-template", id: "admin/order_update_issues_dialog.html" }
+  #order_update_issues_dialog
+    .message.clearfix.margin-bottom-30
+      .text=t("admin.standing_orders.order_update_issues_msg")
+    %div{ ng: { controller: 'OrderUpdateIssuesController' } }
+      %table
+        %col{ style: 'width: 30%' }
+        %col{ style: 'width: 30%' }
+        %col{ style: 'width: 40%' }
+        %thead
+          %th= t('admin.standing_orders.number')
+          %th= t('admin.order_cycle')
+          %th= t('admin.standing_orders.issue')
+        %tbody
+          %tr.proxy_order{ :id => "ppo_{{proxyOrder.id}}", ng: { repeat: 'proxyOrder in options.proxyOrders' } }
+            %td
+              %a{ href: '{{::proxyOrder.edit_path}}', target: '_blank', ng: { bind: '::proxyOrder.number' } }
+            %td
+              %div{ ng: { bind: "::orderCycleName(proxyOrder.order_cycle_id)" } }
+              %div{ ng: { bind: "::orderCycleCloses(proxyOrder.order_cycle_id)" } }
+            %td.text-center{ ng: { bind: "proxyOrder.update_issues.join(', ')" } }
+
+    .action-buttons.text-center
+      %button{ ng: { click: "close()" } }
+        OK

@@ -4,8 +4,15 @@ Spree::LineItem.class_eval do
   include OpenFoodNetwork::VariantAndLineItemNaming
   has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items', class_name: 'Spree::OptionValue'
 
+  # Redefining here to add the inverse_of option
+  belongs_to :order, :class_name => "Spree::Order", inverse_of: :line_items
+
+  # Allows manual skipping of stock_availability check
+  attr_accessor :skip_stock_check
+
   attr_accessible :max_quantity, :final_weight_volume, :price
   attr_accessible :final_weight_volume, :price, :as => :api
+  attr_accessible :skip_stock_check
 
   before_save :calculate_final_weight_volume, if: :quantity_changed?, unless: :final_weight_volume_changed?
   after_save :update_units
@@ -44,6 +51,7 @@ Spree::LineItem.class_eval do
 
 
   def cap_quantity_at_stock!
+    scoper.scope(variant)
     update_attributes!(quantity: variant.on_hand) if quantity > variant.on_hand
   end
 
@@ -89,8 +97,8 @@ Spree::LineItem.class_eval do
   end
 
   def unit_value
-    return 0 if quantity == 0
-    (final_weight_volume || 0) / quantity
+    return variant.unit_value if quantity == 0 || !final_weight_volume
+    final_weight_volume / quantity
   end
 
   # MONKEYPATCH of Spree method
@@ -121,12 +129,31 @@ Spree::LineItem.class_eval do
     Spree::InventoryUnit.decrease(order, variant, quantity)
   end
 
+  # MONKEYPATCH of Spree method
+  # Enables scoping of variant to hub/shop, so we check stock against relevant overrides if they exist
+  def sufficient_stock?
+    scoper.scope(variant) # This line added
+    return true if Spree::Config[:allow_backorders]
+    if new_record? || !order.completed?
+      variant.on_hand >= quantity
+    else
+      variant.on_hand >= (quantity - self.changed_attributes['quantity'].to_i)
+    end
+  end
+
   private
+
+  # Override of Spree validation method
+  # Added check for in-memory :skip_stock_check attribute
+  def stock_availability
+    return if skip_stock_check || sufficient_stock?
+    errors.add(:quantity, I18n.t('validation.exceeds_available_stock'))
+  end
 
   def scoper
 	  return @scoper unless @scoper.nil?
 	  @scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
-	end
+  end
 
   def calculate_final_weight_volume
     if final_weight_volume.present? && quantity_was > 0

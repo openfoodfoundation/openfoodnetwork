@@ -28,6 +28,8 @@ Spree::PaymentMethod.class_eval do
       where('enterprises.id = ?', distributor)
   }
 
+  scope :for_standing_orders, where(type: StandingOrder::ALLOWED_PAYMENT_METHOD_TYPES)
+
   scope :by_name, order('spree_payment_methods.name ASC')
 
   # Rewrite Spree's ruby-land class method as a scope

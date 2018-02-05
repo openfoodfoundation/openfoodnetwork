@@ -572,18 +572,22 @@ module Admin
       end
     end
 
-    describe "for_line_items" do
-      let!(:user) { create(:user) }
-      let!(:enterprise) { create(:enterprise, sells: 'any', owner: user) }
+    describe "visible" do
+      let!(:user) { create(:user, enterprise_limit: 10) }
+      let!(:visible_enterprise) { create(:enterprise, sells: 'any', owner: user) }
+      let!(:not_visible_enterprise) { create(:enterprise, sells: 'any') }
 
       before do
         # As a user with permission
         controller.stub spree_current_user: user
+
+        # :create_variant_overrides does not affect visiblity (at time of writing)
+        create(:enterprise_relationship, parent: not_visible_enterprise, child: visible_enterprise, permissions_list: [:create_variant_overrides])
       end
 
-      it "initializes permissions with the existing OrderCycle" do
-        # expect(controller).to receive(:render_as_json).with([enterprise], {ams_prefix: 'basic', spree_current_user: user})
-        spree_get :for_line_items, format: :json
+      it "uses permissions to determine which enterprises are visible and should be rendered" do
+        expect(controller).to receive(:render_as_json).with([visible_enterprise], {ams_prefix: 'basic', spree_current_user: user}).and_call_original
+        spree_get :visible, format: :json
       end
     end
 

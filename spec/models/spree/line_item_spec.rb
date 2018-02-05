@@ -75,6 +75,24 @@ module Spree
         li.quantity.should == 10
         li.max_quantity.should == 10
       end
+
+      context "when a variant override is in place" do
+        let!(:hub) { create(:distributor_enterprise) }
+        let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 2) }
+
+        before do
+          li.order.update_attributes(distributor_id: hub.id)
+
+          # li#scoper is memoised, and this makes it difficult to update test conditions
+          # so we reset it after the line_item is created for each spec
+          li.remove_instance_variable(:@scoper)
+        end
+
+        it "caps quantity to override stock level" do
+          li.cap_quantity_at_stock!
+          li.quantity.should == 2
+        end
+      end
     end
 
     describe "tracking stock when quantity is changed" do
@@ -122,6 +140,47 @@ module Spree
         context "when a variant override does not apply" do
           it "restores stock to the variant" do
             expect{line_item.destroy}.to change{Spree::Variant.find(variant.id).on_hand}.by(1)
+          end
+        end
+      end
+    end
+
+    describe "determining if sufficient stock is present" do
+      let!(:hub) { create(:distributor_enterprise) }
+      let!(:o) { create(:order, distributor: hub) }
+      let!(:v) { create(:variant, on_demand: false, on_hand: 10) }
+      let!(:li) { create(:line_item, variant: v, order: o, quantity: 5, max_quantity: 5) }
+
+      before do
+        Spree::Config.set allow_backorders: false
+
+        # li#scoper is memoised, and this makes it difficult to update test conditions
+        # so we reset it after the line_item is created for each spec
+        li.remove_instance_variable(:@scoper)
+      end
+
+      context "when stock on the variant is sufficient" do
+        it { expect(li.sufficient_stock?).to be true }
+      end
+
+      context "when the stock on the variant is not sufficient" do
+        before { v.update_attributes(on_hand: 4) }
+
+        context "when no variant override is in place" do
+          it { expect(li.sufficient_stock?).to be false }
+        end
+
+        context "when a variant override is in place" do
+          let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 5) }
+
+          context "and stock on the variant override is sufficient" do
+            it { expect(li.sufficient_stock?).to be true }
+          end
+
+          context "and stock on the variant override is not sufficient" do
+            before { vo.update_attributes(count_on_hand: 4) }
+
+            it { expect(li.sufficient_stock?).to be false }
           end
         end
       end
@@ -436,6 +495,42 @@ module Spree
           li.option_values.should     include ov_new
         end
       end
+
+      describe "calculating unit_value" do
+        let(:v) { create(:variant, unit_value: 10) }
+        let(:li) { create(:line_item, variant: v, quantity: 5) }
+
+        context "when the quantity is greater than zero" do
+          context "and final_weight_volume has not been changed" do
+            it "returns the unit_value of the variant" do
+              # Though note that this has been calculated
+              # backwards from the final_weight_volume
+              expect(li.unit_value).to eq 10
+            end
+          end
+
+          context "and final_weight_volume has been changed" do
+            before { li.update_attribute(:final_weight_volume, 35) }
+            it "returns the unit_value of the variant" do
+              expect(li.unit_value).to eq 7
+            end
+          end
+
+          context "and final_weight_volume is nil" do
+            before { li.update_attribute(:final_weight_volume, nil) }
+            it "returns the unit_value of the variant" do
+              expect(li.unit_value).to eq 10
+            end
+          end
+        end
+
+        context "when the quantity is zero" do
+          before { li.update_attribute(:quantity, 0) }
+          it "returns the unit_value of the variant" do
+            expect(li.unit_value).to eq 10
+          end
+        end
+      end
     end
 
     describe "deleting unit option values" do
@@ -453,6 +548,25 @@ module Spree
         expect {
           li.delete_unit_option_values
         }.to change(Spree::OptionValue, :count).by(0)
+      end
+    end
+
+    describe "checking stock availability" do
+      let(:line_item) { LineItem.new }
+
+      context "when skip_stock_check is not set" do
+        it "checks stock" do
+          expect(line_item).to receive(:sufficient_stock?) { true }
+          line_item.send(:stock_availability)
+        end
+      end
+
+      context "when skip_stock_check is set to true" do
+        before { line_item.skip_stock_check = true }
+        it "does not check stock" do
+          expect(line_item).to_not receive(:sufficient_stock?)
+          line_item.send(:stock_availability)
+        end
       end
     end
   end

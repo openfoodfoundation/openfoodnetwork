@@ -572,6 +572,14 @@ describe Spree::Order do
         order.deliver_order_confirmation_email
       end.to_not enqueue_job ConfirmOrderJob
     end
+
+    it "does not send confirmation emails when the order belongs to a standing order" do
+      create(:proxy_order, order: order)
+
+      expect do
+        order.deliver_order_confirmation_email
+      end.to_not enqueue_job ConfirmOrderJob
+    end
   end
 
   describe "associating a customer" do
@@ -779,6 +787,46 @@ describe Spree::Order do
 
     it "does not include the :confirm step" do
       expect(order.checkout_steps).to_not include "confirm"
+    end
+  end
+
+  describe "finding pending_payments" do
+    let!(:order) { create(:order ) }
+    let!(:payment) { create(:payment, order: order, state: 'checkout') }
+
+    context "when the order is not a standing order" do
+      it "returns the payments on the order" do
+        expect(order.reload.pending_payments).to eq [payment]
+      end
+    end
+
+    context "when the order is a standing order" do
+      let!(:proxy_order) { create(:proxy_order, order: order) }
+      let!(:order_cycle) { proxy_order.order_cycle }
+
+      context "and order_cycle has no order_close_at set" do
+        before { order.order_cycle.update_attributes(orders_close_at: nil) }
+
+        it "returns the payments on the order" do
+          expect(order.reload.pending_payments).to eq [payment]
+        end
+      end
+
+      context "and the order_cycle has closed" do
+        before { order.order_cycle.update_attributes(orders_close_at: 5.minutes.ago) }
+
+        it "returns the payments on the order" do
+          expect(order.reload.pending_payments).to eq [payment]
+        end
+      end
+
+      context "and the order_cycle has not yet closed" do
+        before { order.order_cycle.update_attributes(orders_close_at: 5.minutes.from_now) }
+
+        it "returns an empty array" do
+          expect(order.reload.pending_payments).to eq []
+        end
+      end
     end
   end
 end

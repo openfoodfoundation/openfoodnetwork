@@ -127,6 +127,21 @@ module OpenFoodNetwork
       @user.enterprises.length == 1
     end
 
+    def editable_schedules
+      Schedule.joins(:order_cycles).where(order_cycles: { id: OrderCycle.managed_by(@user).pluck(:id) }).select("DISTINCT schedules.*")
+    end
+
+    def visible_schedules
+      Schedule.joins(:order_cycles).where(order_cycles: { id: OrderCycle.accessible_by(@user).pluck(:id) }).select("DISTINCT schedules.*")
+    end
+
+    def editable_standing_orders
+      StandingOrder.where('standing_orders.shop_id IN (?)', managed_enterprises)
+    end
+
+    def visible_standing_orders
+      editable_standing_orders
+    end
 
     private
 

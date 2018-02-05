@@ -1,0 +1,8 @@
+#confirm-dialog{ ng: { class: "dialog_class" } }
+  .message.clearfix.margin-bottom-30
+    .icon.text-center
+      %i.icon-question-sign
+    .text{ ng: { bind: "::message" } }
+  .action-buttons.text-center
+    %button.cancel{ ng: { click: "close()", bind: "::cancelText" } }
+    %button.confirm.red{ ng: { click: "confirm()", bind: "::confirmText" } }

@@ -1,0 +1,7 @@
+%div.margin-top-30.text-center{ ng: { show: 'shop_id && !RequestMonitor.loading && filteredStandingOrders.length == 0' } }
+  .no-results{ ng: { show: '!filtersApplied()' } }
+    %h1.margin-bottom-20=t('.no_standing_orders')
+    %span.text-big=t('.why_dont_you_add_one')
+
+  .no-results{ ng: { show: 'filtersApplied()' } }
+    %h1=t('.no_matching_standing_orders')

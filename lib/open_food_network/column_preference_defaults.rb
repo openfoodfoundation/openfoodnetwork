@@ -82,5 +82,34 @@ module OpenFoodNetwork
         manage:   { name: I18n.t("#{node}.manage"),     visible: true }
       }
     end
+
+    def order_cycles_index_columns
+      node = "admin.order_cycles.index"
+      {
+        name:         { name: I18n.t("admin.name"),         visible: true },
+        schedules:    { name: I18n.t("#{node}.schedules"),  visible: true },
+        open:         { name: I18n.t("open"),               visible: true },
+        close:        { name: I18n.t("close"),              visible: true },
+        producers:    { name: I18n.t("label_producers"),    visible: false },
+        coordinator:  { name: I18n.t("coordinator"),        visible: true },
+        shops:        { name: I18n.t("label_shops"),        visible: false },
+        products:     { name: I18n.t("products"),           visible: true }
+      }
+    end
+
+    def standing_orders_index_columns
+      _node = "admin.standing_orders.index"
+      {
+        customer:         { name: I18n.t("admin.customer"),         visible: true },
+        schedule:         { name: I18n.t("admin.schedule"),         visible: true },
+        items:            { name: I18n.t("items"),                  visible: true },
+        orders:           { name: I18n.t("orders"),                 visible: true },
+        state:            { name: I18n.t("admin.status_state"),     visible: true },
+        begins_on:        { name: I18n.t("admin.begins_on"),        visible: false },
+        ends_on:          { name: I18n.t("admin.ends_on"),          visible: false },
+        payment_method:   { name: I18n.t("admin.payment_method"),   visible: false },
+        shipping_method:  { name: I18n.t("admin.shipping_method"),  visible: false }
+      }
+    end
   end
 end

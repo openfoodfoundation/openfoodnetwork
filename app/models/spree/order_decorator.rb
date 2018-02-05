@@ -12,10 +12,12 @@ Spree::Order.class_eval do
   belongs_to :distributor, class_name: 'Enterprise'
   belongs_to :cart
   belongs_to :customer
+  has_one :proxy_order
+  has_one :standing_order, through: :proxy_order
 
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
-  attr_accessible :order_cycle_id, :distributor_id
+  attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
   before_validation :shipping_address_from_distributor
   before_validation :associate_customer, unless: :customer_id?
@@ -291,7 +293,9 @@ Spree::Order.class_eval do
   # Overrride of Spree method, that allows us to send separate confirmation emails to user and shop owners
   # And separately, to skip sending confirmation email completely for user invoice orders
   def deliver_order_confirmation_email
-    Delayed::Job.enqueue ConfirmOrderJob.new(id) unless account_invoice?
+    unless account_invoice? || standing_order.present?
+      Delayed::Job.enqueue ConfirmOrderJob.new(id)
+    end
   end
 
   def changes_allowed?
@@ -316,6 +320,13 @@ Spree::Order.class_eval do
     errors.add(:base, e.message) and return result
   end
 
+  # Override or Spree method. Used to prevent payments on standing orders from being processed in the normal way.
+  # ie. they are 'hidden' from processing logic until after the order cycle has closed.
+  def pending_payments
+    return [] if standing_order.present? && order_cycle.orders_close_at.andand > Time.zone.now
+    payments.select {|p| p.state == "checkout"} # Original definition
+  end
+
   private
 
   def shipping_address_from_distributor
@@ -325,15 +336,19 @@ Spree::Order.class_eval do
       # We can refactor this when we drop the multi-step checkout option
       #
       if shipping_method.andand.require_ship_address == false
-        self.ship_address = distributor.address.clone
-
-        if bill_address
-          ship_address.firstname = bill_address.firstname
-          ship_address.lastname = bill_address.lastname
-          ship_address.phone = bill_address.phone
-        end
+        self.ship_address = address_from_distributor
       end
     end
+  end
+
+  def address_from_distributor
+    address = distributor.address.clone
+    if bill_address
+      address.firstname = bill_address.firstname
+      address.lastname = bill_address.lastname
+      address.phone = bill_address.phone
+    end
+    address
   end
 
   def provided_by_order_cycle?(line_item)

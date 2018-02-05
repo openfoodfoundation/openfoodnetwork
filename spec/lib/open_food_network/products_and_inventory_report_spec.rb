@@ -51,7 +51,7 @@ module OpenFoodNetwork
           21,
           "",
           "sku"
-          ]]
+        ]]
       end
 
       it "fetches variants for some params" do

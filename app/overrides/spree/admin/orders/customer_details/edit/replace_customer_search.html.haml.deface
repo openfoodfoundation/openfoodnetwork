@@ -3,6 +3,4 @@
 - content_for :app_wrapper_attrs do
   = 'ng-app=admin.orders'
 
-= hidden_field_tag :customer_search_override,  nil, :class => 'fullwidth title customer-search-override'
-
-= hidden_field_tag :distributor_id,  @order.distributor_id
+= hidden_field_tag :customer_search_override,  nil, distributor_id: @order.distributor_id, :class => 'fullwidth title customer-search-override'

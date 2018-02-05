@@ -38,9 +38,10 @@ span.error, div.error:not(.flash) {
   margin-bottom: 0;
 }
 
-input.red {
+input.red, a.button.red, button.red {
 	background-color: #DA5354;
   margin-right: 5px;
+  color: #ffffff;
 }
 
 a.button.red {
@@ -62,10 +63,9 @@ input.search {
   float: right;
 }
 
-.ng .ng-invalid.ng-dirty {
-  background-color: #fa787e;
+a {
+ cursor:pointer;
 }
-
 
 form.order_cycle {
   h2 {
@@ -198,6 +198,10 @@ table#listing_enterprise_groups {
 .no-results {
   font-weight:bold;
   color: #DA5354;
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #DA5354;
+  }
 }
 
 #loading {

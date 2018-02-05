@@ -185,6 +185,10 @@ class AbilityDecorator
     can [:admin, :index, :read, :edit, :update], OrderCycle do |order_cycle|
       OrderCycle.accessible_by(user).include? order_cycle
     end
+    can [:admin, :index, :create], Schedule
+    can [:admin, :update, :destroy], Schedule do |schedule|
+      OpenFoodNetwork::Permissions.new(user).editable_schedules.include? schedule
+    end
     can [:bulk_update, :clone, :destroy, :notify_producers], OrderCycle do |order_cycle|
       user.enterprises.include? order_cycle.coordinator
     end
@@ -201,7 +205,7 @@ class AbilityDecorator
       order.distributor.nil? || user.enterprises.include?(order.distributor) || order.order_cycle.andand.coordinated_by?(user)
     end
     can [:admin, :bulk_management, :managed], Spree::Order if user.admin? || user.enterprises.any?(&:is_distributor)
-    can [:admin , :for_line_items], Enterprise
+    can [:admin, :visible], Enterprise
     can [:admin, :index, :create, :update, :destroy], :line_item
     can [:admin, :index, :create], Spree::LineItem
     can [:destroy, :update], Spree::LineItem do |item|
@@ -247,7 +251,18 @@ class AbilityDecorator
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
 
     can [:create], Customer
-    can [:admin, :index, :update, :destroy], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    can [:admin, :index, :update, :destroy, :addresses, :cards], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    can [:admin, :new, :index], StandingOrder
+    can [:create, :edit, :update, :cancel, :pause, :unpause], StandingOrder do |standing_order|
+      user.enterprises.include?(standing_order.shop)
+    end
+    can [:admin, :build], StandingLineItem
+    can [:destroy], StandingLineItem do |standing_line_item|
+      user.enterprises.include?(standing_line_item.standing_order.shop)
+    end
+    can [:admin, :edit, :cancel, :resume], ProxyOrder do |proxy_order|
+      user.enterprises.include?(proxy_order.standing_order.shop)
+    end
   end
 
   def add_relationship_management_abilities(user)

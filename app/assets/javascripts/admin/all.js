@@ -19,6 +19,7 @@
 //= require admin/spree_paypal_express
 //= require ../shared/ng-infinite-scroll.min.js
 //= require ../shared/ng-tags-input.min.js
+//= require moment
 //= require angular-rails-templates
 //= require_tree ../templates/admin
 //= require ./admin_ofn
@@ -39,6 +40,7 @@
 //= require ./resources/resources
 //= require ./shipping_methods/shipping_methods
 //= require ./side_menu/side_menu
+//= require ./standing_orders/standing_orders
 //= require ./tag_rules/tag_rules
 //= require ./taxons/taxons
 //= require ./utils/utils

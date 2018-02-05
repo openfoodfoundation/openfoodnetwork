@@ -1,0 +1,31 @@
+tbody.panel-ctrl {
+  tr.panel-row {
+    > td {
+      a.update {
+        cursor: pointer;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+        background-color: #DA5354;
+        &:hover {
+          background-color: #CD4E4F;
+        }
+        &.disabled {
+          background-color: #C1C1C1;
+        }
+        &.saving {
+          background-color: #FF9848;
+          i.icon-refresh {
+            -webkit-animation: spin 2s infinite linear;
+            animation: spin 2s infinite linear;
+          }
+        }
+        span{
+          i{
+            font-size: 1.5rem;
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+}

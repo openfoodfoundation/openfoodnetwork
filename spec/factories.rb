@@ -133,6 +133,60 @@ FactoryGirl.define do
     receiver    { incoming ? order_cycle.coordinator : FactoryGirl.create(:enterprise) }
   end
 
+  factory :schedule, class: Schedule do
+    sequence(:name) { |n| "Schedule #{n}" }
+    order_cycles { [OrderCycle.first || FactoryGirl.create(:simple_order_cycle)] }
+  end
+
+  factory :standing_order, :class => StandingOrder do
+    shop { create :enterprise }
+    schedule { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
+    customer { create(:customer, enterprise: shop) }
+    bill_address { create(:address) }
+    ship_address { create(:address) }
+    payment_method { create(:payment_method, distributors: [shop]) }
+    shipping_method { create(:shipping_method, distributors: [shop]) }
+    begins_at { 1.month.ago }
+
+    ignore do
+      with_items false
+      with_proxy_orders false
+    end
+
+    after(:create) do |standing_order, proxy|
+      if proxy.with_items
+        standing_order.standing_line_items = build_list(:standing_line_item, 3, standing_order: standing_order)
+        standing_order.order_cycles.each do |oc|
+          ex = oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(standing_order.shop_id, standing_order.shop_id) ||
+            create(:exchange, :order_cycle => oc, :sender => standing_order.shop, :receiver => standing_order.shop, :incoming => false, :pickup_time => 'time', :pickup_instructions => 'instructions')
+          standing_order.standing_line_items.each { |sli| ex.variants << sli.variant }
+        end
+      end
+
+      if proxy.with_proxy_orders
+        standing_order.order_cycles.each do |oc|
+          standing_order.proxy_orders << create(:proxy_order, standing_order: standing_order, order_cycle: oc)
+        end
+      end
+    end
+  end
+
+  factory :standing_line_item, :class => StandingLineItem do
+    standing_order
+    variant
+    quantity 1
+  end
+
+  factory :proxy_order, :class => ProxyOrder do
+    standing_order
+    order_cycle { standing_order.order_cycles.first }
+    before(:create) do |proxy_order, proxy|
+      if proxy_order.order
+        proxy_order.order.update_attribute(:order_cycle_id, proxy_order.order_cycle_id)
+      end
+    end
+  end
+
   factory :variant_override, :class => VariantOverride do
     price         77.77
     count_on_hand 11111

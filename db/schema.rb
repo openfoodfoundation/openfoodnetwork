@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170921065259) do
+ActiveRecord::Schema.define(:version => 20171027005930) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.text     "invoice_text"
     t.boolean  "display_invoice_logo",     :default => false
     t.boolean  "allow_order_changes",      :default => false,  :null => false
+    t.boolean  "enable_standing_orders",   :default => false,  :null => false
   end
 
   add_index "enterprises", ["address_id"], :name => "index_enterprises_on_address_id"
@@ -310,13 +311,23 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
 
   add_index "inventory_items", ["enterprise_id", "variant_id"], :name => "index_inventory_items_on_enterprise_id_and_variant_id", :unique => true
 
+  create_table "order_cycle_schedules", :force => true do |t|
+    t.integer "order_cycle_id", :null => false
+    t.integer "schedule_id",    :null => false
+  end
+
+  add_index "order_cycle_schedules", ["order_cycle_id"], :name => "index_order_cycle_schedules_on_order_cycle_id"
+  add_index "order_cycle_schedules", ["schedule_id"], :name => "index_order_cycle_schedules_on_schedule_id"
+
   create_table "order_cycles", :force => true do |t|
     t.string   "name"
     t.datetime "orders_open_at"
     t.datetime "orders_close_at"
     t.integer  "coordinator_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.datetime "standing_orders_placed_at"
+    t.datetime "standing_orders_confirmed_at"
   end
 
   create_table "producer_properties", :force => true do |t|
@@ -343,6 +354,27 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
   add_index "product_distributions", ["distributor_id"], :name => "index_product_distributions_on_distributor_id"
   add_index "product_distributions", ["enterprise_fee_id"], :name => "index_product_distributions_on_enterprise_fee_id"
   add_index "product_distributions", ["product_id"], :name => "index_product_distributions_on_product_id"
+
+  create_table "proxy_orders", :force => true do |t|
+    t.integer  "standing_order_id", :null => false
+    t.integer  "order_id"
+    t.datetime "canceled_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "order_cycle_id",    :null => false
+    t.datetime "placed_at"
+    t.datetime "confirmed_at"
+  end
+
+  add_index "proxy_orders", ["order_cycle_id", "standing_order_id"], :name => "index_proxy_orders_on_order_cycle_id_and_standing_order_id", :unique => true
+  add_index "proxy_orders", ["order_id"], :name => "index_proxy_orders_on_order_id", :unique => true
+  add_index "proxy_orders", ["standing_order_id"], :name => "index_proxy_orders_on_standing_order_id"
+
+  create_table "schedules", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -1049,6 +1081,44 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
     t.integer  "zone_members_count", :default => 0
   end
 
+  create_table "standing_line_items", :force => true do |t|
+    t.integer  "standing_order_id",                               :null => false
+    t.integer  "variant_id",                                      :null => false
+    t.integer  "quantity",                                        :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
+    t.decimal  "price_estimate",    :precision => 8, :scale => 2
+  end
+
+  add_index "standing_line_items", ["standing_order_id"], :name => "index_standing_line_items_on_standing_order_id"
+  add_index "standing_line_items", ["variant_id"], :name => "index_standing_line_items_on_variant_id"
+
+  create_table "standing_orders", :force => true do |t|
+    t.integer  "shop_id",            :null => false
+    t.integer  "customer_id",        :null => false
+    t.integer  "schedule_id",        :null => false
+    t.integer  "payment_method_id",  :null => false
+    t.integer  "shipping_method_id", :null => false
+    t.datetime "begins_at"
+    t.datetime "ends_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "bill_address_id",    :null => false
+    t.integer  "ship_address_id",    :null => false
+    t.datetime "canceled_at"
+    t.datetime "paused_at"
+    t.integer  "credit_card_id"
+  end
+
+  add_index "standing_orders", ["bill_address_id"], :name => "index_standing_orders_on_bill_address_id"
+  add_index "standing_orders", ["credit_card_id"], :name => "index_standing_orders_on_credit_card_id"
+  add_index "standing_orders", ["customer_id"], :name => "index_standing_orders_on_customer_id"
+  add_index "standing_orders", ["payment_method_id"], :name => "index_standing_orders_on_payment_method_id"
+  add_index "standing_orders", ["schedule_id"], :name => "index_standing_orders_on_schedule_id"
+  add_index "standing_orders", ["ship_address_id"], :name => "index_standing_orders_on_ship_address_id"
+  add_index "standing_orders", ["shipping_method_id"], :name => "index_standing_orders_on_shipping_method_id"
+  add_index "standing_orders", ["shop_id"], :name => "index_standing_orders_on_shop_id"
+
   create_table "stripe_accounts", :force => true do |t|
     t.string   "stripe_user_id"
     t.string   "stripe_publishable_key"
@@ -1178,6 +1248,9 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
   add_foreign_key "exchanges", "enterprises", name: "exchanges_sender_id_fk", column: "sender_id"
   add_foreign_key "exchanges", "order_cycles", name: "exchanges_order_cycle_id_fk"
 
+  add_foreign_key "order_cycle_schedules", "order_cycles", name: "oc_schedules_order_cycle_id_fk"
+  add_foreign_key "order_cycle_schedules", "schedules", name: "oc_schedules_schedule_id_fk"
+
   add_foreign_key "order_cycles", "enterprises", name: "order_cycles_coordinator_id_fk", column: "coordinator_id"
 
   add_foreign_key "producer_properties", "enterprises", name: "producer_properties_producer_id_fk", column: "producer_id"
@@ -1186,6 +1259,10 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
   add_foreign_key "product_distributions", "enterprise_fees", name: "product_distributions_enterprise_fee_id_fk"
   add_foreign_key "product_distributions", "enterprises", name: "product_distributions_distributor_id_fk", column: "distributor_id"
   add_foreign_key "product_distributions", "spree_products", name: "product_distributions_product_id_fk", column: "product_id"
+
+  add_foreign_key "proxy_orders", "order_cycles", name: "proxy_orders_order_cycle_id_fk"
+  add_foreign_key "proxy_orders", "spree_orders", name: "order_id_fk", column: "order_id"
+  add_foreign_key "proxy_orders", "standing_orders", name: "standing_order_id_fk"
 
   add_foreign_key "spree_addresses", "spree_countries", name: "spree_addresses_country_id_fk", column: "country_id"
   add_foreign_key "spree_addresses", "spree_states", name: "spree_addresses_state_id_fk", column: "state_id"
@@ -1273,6 +1350,18 @@ ActiveRecord::Schema.define(:version => 20170921065259) do
   add_foreign_key "spree_variants", "spree_products", name: "spree_variants_product_id_fk", column: "product_id"
 
   add_foreign_key "spree_zone_members", "spree_zones", name: "spree_zone_members_zone_id_fk", column: "zone_id"
+
+  add_foreign_key "standing_line_items", "spree_variants", name: "oc_standing_line_items_variant_id_fk", column: "variant_id"
+  add_foreign_key "standing_line_items", "standing_orders", name: "oc_standing_line_items_standing_order_id_fk"
+
+  add_foreign_key "standing_orders", "customers", name: "oc_standing_orders_customer_id_fk"
+  add_foreign_key "standing_orders", "enterprises", name: "oc_standing_orders_shop_id_fk", column: "shop_id"
+  add_foreign_key "standing_orders", "schedules", name: "oc_standing_orders_schedule_id_fk"
+  add_foreign_key "standing_orders", "spree_addresses", name: "standing_orders_bill_address_id_fk", column: "bill_address_id"
+  add_foreign_key "standing_orders", "spree_addresses", name: "standing_orders_ship_address_id_fk", column: "ship_address_id"
+  add_foreign_key "standing_orders", "spree_credit_cards", name: "standing_orders_credit_card_id_fk", column: "credit_card_id"
+  add_foreign_key "standing_orders", "spree_payment_methods", name: "oc_standing_orders_payment_method_id_fk", column: "payment_method_id"
+  add_foreign_key "standing_orders", "spree_shipping_methods", name: "oc_standing_orders_shipping_method_id_fk", column: "shipping_method_id"
 
   add_foreign_key "suburbs", "spree_states", name: "suburbs_state_id_fk", column: "state_id"
 

@@ -1,5 +1,6 @@
-require 'open_food_network/order_cycle_permissions'
+require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_form_applicator'
+require 'open_food_network/proxy_order_syncer'
 
 module Admin
   class OrderCyclesController < ResourceController
@@ -9,7 +10,10 @@ module Admin
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
     before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
+    before_filter :check_editable_schedule_ids, only: [:create, :update]
     around_filter :protect_invalid_destroy, only: :destroy
+    create.after :sync_standing_orders
+    update.after :sync_standing_orders
 
     def index
       respond_to do |format|
@@ -44,7 +48,7 @@ module Admin
       respond_to do |format|
         if @order_cycle.save
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-
+          invoke_callbacks(:create, :after)
           flash[:notice] = I18n.t(:order_cycles_create_notice)
           format.html { redirect_to admin_order_cycles_path }
           format.json { render :json => {:success => true} }
@@ -64,6 +68,7 @@ module Admin
             # Only update apply exchange information if it is actually submmitted
             OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
           end
+          invoke_callbacks(:update, :after)
           flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
           format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
           format.json { render :json => {:success => true}  }
@@ -76,9 +81,14 @@ module Admin
     def bulk_update
       @order_cycle_set = params[:order_cycle_set] && OrderCycleSet.new(params[:order_cycle_set])
       if @order_cycle_set.andand.save
-        redirect_to main_app.admin_order_cycles_path, notice: I18n.t(:order_cycles_bulk_update_notice)
+        respond_to do |format|
+          order_cycles = OrderCycle.where(id: params[:order_cycle_set][:collection_attributes].map{ |k,v| v[:id] })
+          format.json { render_as_json order_cycles, ams_prefix: 'index', current_user: spree_current_user }
+        end
       else
-        render :index
+        respond_to do |format|
+          format.json { render :json => {:success => false} }
+        end
       end
     end
 
@@ -98,14 +108,15 @@ module Admin
 
     protected
     def collection
+      return Enterprise.where("1=0") unless json_request?
       ocs = if params[:as] == "distributor"
-        OrderCycle.ransack(params[:q]).result.
+        OrderCycle.preload(:schedules).ransack(params[:q]).result.
           involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
       elsif params[:as] == "producer"
-        OrderCycle.ransack(params[:q]).result.
+        OrderCycle.preload(:schedules).ransack(params[:q]).result.
           involving_managed_producers_of(spree_current_user).order('updated_at DESC')
       else
-        OrderCycle.ransack(params[:q]).result.accessible_by(spree_current_user)
+        OrderCycle.preload(:schedules).ransack(params[:q]).result.accessible_by(spree_current_user)
       end
 
       ocs.undated +
@@ -120,14 +131,14 @@ module Admin
 
     private
     def load_data_for_index
-      @show_more = !!params[:show_more]
-      unless @show_more || params[:q].andand[:orders_close_at_gt].present?
+      if json_request?
         # Split ransack params into all those that currently exist and new ones to limit returned ocs to recent or undated
+        orders_close_at_gt = params[:q].andand.delete(:orders_close_at_gt) || 31.days.ago
         params[:q] = {
-          g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: 31.days.ago, orders_close_at_null: true } ]
+          g: [ params.delete(:q) || {}, { m: 'or', orders_close_at_gt: orders_close_at_gt, orders_close_at_null: true } ]
         }
+        @collection = collection
       end
-      @order_cycle_set = OrderCycleSet.new :collection => (@collection = collection)
     end
 
     def require_coordinator
@@ -149,11 +160,17 @@ module Admin
     end
 
     def protect_invalid_destroy
-      begin
-        yield
-      rescue ActiveRecord::InvalidForeignKey
+      # Can't delete if OC is linked to any orders or schedules
+      if @order_cycle.schedules.any?
         redirect_to main_app.admin_order_cycles_url
-        flash[:error] = I18n.t(:order_cycles_no_permission_to_delete_error)
+        flash[:error] = I18n.t('admin.order_cycles.destroy_errors.schedule_present')
+      else
+        begin
+          yield
+        rescue ActiveRecord::InvalidForeignKey
+          redirect_to main_app.admin_order_cycles_url
+          flash[:error] = I18n.t('admin.order_cycles.destroy_errors.orders_present')
+        end
       end
     end
 
@@ -176,8 +193,31 @@ module Admin
       end
     end
 
+    def check_editable_schedule_ids
+      return unless params[:order_cycle][:schedule_ids]
+      requested = params[:order_cycle][:schedule_ids].map(&:to_i)
+      @existing_schedule_ids = @order_cycle.persisted? ? @order_cycle.schedule_ids : []
+      permitted = Schedule.where(id: requested | @existing_schedule_ids).merge(OpenFoodNetwork::Permissions.new(spree_current_user).editable_schedules).pluck(:id)
+      result = @existing_schedule_ids
+      result |= (requested & permitted) # add any requested & permitted ids
+      result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
+      params[:order_cycle][:schedule_ids] = result
+    end
+
+    def sync_standing_orders
+      return unless params[:order_cycle][:schedule_ids]
+      removed_ids = @existing_schedule_ids - @order_cycle.schedule_ids
+      new_ids = @order_cycle.schedule_ids - @existing_schedule_ids
+      if removed_ids.any? || new_ids.any?
+        schedules = Schedule.where(id: removed_ids + new_ids)
+        standing_orders = StandingOrder.where(schedule_id: schedules)
+        syncer = OpenFoodNetwork::ProxyOrderSyncer.new(standing_orders)
+        syncer.sync!
+      end
+    end
+
     def ams_prefix_whitelist
-      [:basic]
+      [:basic, :index]
     end
   end
 end

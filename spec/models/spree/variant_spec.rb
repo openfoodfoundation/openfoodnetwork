@@ -162,6 +162,26 @@ module Spree
           end
         end
       end
+
+      describe 'stockable_by' do
+        let(:shop) { create(:distributor_enterprise) }
+        let(:add_to_oc_producer) { create(:supplier_enterprise) }
+        let(:other_producer) { create(:supplier_enterprise) }
+        let!(:v1) { create(:variant, product: create(:simple_product, supplier: shop ) ) }
+        let!(:v2) { create(:variant, product: create(:simple_product, supplier: add_to_oc_producer ) ) }
+        let!(:v3) { create(:variant, product: create(:simple_product, supplier: other_producer ) ) }
+
+        before do
+          create(:enterprise_relationship, parent: add_to_oc_producer, child: shop, permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: other_producer, child: shop, permissions_list: [:manage_products])
+        end
+
+        it 'shows variants produced by the enterprise and any producers granting P-OC' do
+          stockable_variants = Spree::Variant.stockable_by(shop)
+          expect(stockable_variants).to include v1, v2
+          expect(stockable_variants).to_not include v3
+        end
+      end
     end
 
     describe "callbacks" do

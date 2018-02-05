@@ -1,10 +1,11 @@
-angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", ($scope, $location, $window, OrderCycle, Enterprise, EnterpriseFee, StatusMessage) ->
+angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", ($scope, $location, $window, OrderCycle, Enterprise, EnterpriseFee, Schedules, RequestMonitor, StatusMessage) ->
   $scope.orderCycleId = ->
     $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
 
   $scope.StatusMessage = StatusMessage
   $scope.enterprises = Enterprise.index(order_cycle_id: $scope.orderCycleId())
   $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: $scope.orderCycleId())
+  $scope.schedules = Schedules.index()
   $scope.OrderCycle = OrderCycle
   $scope.order_cycle = OrderCycle.load $scope.orderCycleId(), (order_cycle) =>
     $scope.init()
@@ -16,7 +17,7 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
     StatusMessage.setValidation(isValid)
 
   $scope.loaded = ->
-    Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded
+    Enterprise.loaded && EnterpriseFee.loaded && OrderCycle.loaded && !RequestMonitor.loading
 
   $scope.init = ->
     $scope.outgoing_exchange = OrderCycle.order_cycle.outgoing_exchanges[0]

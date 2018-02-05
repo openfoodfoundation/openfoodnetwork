@@ -464,10 +464,10 @@ GEM
     knapsack (1.5.1)
       rake
       timecop (>= 0.1.0)
-    launchy (2.1.2)
+    launchy (2.4.3)
       addressable (~> 2.3)
-    letter_opener (1.0.0)
-      launchy (>= 2.0.4)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
     libv8 (3.16.14.11)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -754,7 +754,7 @@ DEPENDENCIES
   json_spec (~> 1.1.4)
   jwt (~> 1.5)
   knapsack
-  letter_opener
+  letter_opener (>= 1.4.1)
   listen (= 3.0.8)
   momentjs-rails
   newrelic_rpm

@@ -1,54 +1,34 @@
 = content_for :page_title do
   = t :admin_order_cycles
 
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.orderCycles'"
+
 = content_for :page_actions do
+  - if standing_orders_enabled?
+    %li
+      %a.button.icon-plus#new-schedule{ "schedule-dialog" => true }
+        = t('admin.order_cycles.index.new_schedule')
   %li#new_order_cycle_link
     = button_link_to t(:new_order_cycle), main_app.new_admin_order_cycle_path, icon: 'icon-plus', id: 'admin_new_order_cycle_link'
-  - if @show_more
-    %li
-      = button_link_to t(:label_less), main_app.admin_order_cycles_path
-  - else
-    %li
-      = button_link_to t(:label_more), main_app.admin_order_cycles_path(params: { show_more: true })
 
-= form_for @order_cycle_set, url: main_app.bulk_update_admin_order_cycles_path, html: {"ng-app" => "admin.orderCycles"} do |f|
-  %table.index#listing_order_cycles
-    %colgroup
-      %col
-      %col{'style' => 'width: 20%;'}
-      %col{'style' => 'width: 20%;'}
-      - unless order_cycles_simple_index
-        %col
-        %col
-        %col
-      %col
-      %col
-      %col
-      %col
+= admin_inject_column_preferences module: 'admin.orderCycles'
 
-    %thead
-      %tr
-        %th
-          =t :name
-        %th
-          =t :open
-        %th
-          =t :close
-        - unless order_cycles_simple_index
-          %th
-            =t :supplier
-          %th
-            =t :coordinator
-          %th
-            =t :distributors
-        %th
-          =t :products
-        %th.actions
-        %th.actions
-        %th.actions
+%div{ ng: { controller: 'OrderCyclesCtrl' } }
+  = render 'admin/order_cycles/filters'
 
-    %tbody
-      = f.fields_for :collection do |order_cycle_form|
-        = render 'admin/order_cycles/row', order_cycle_form: order_cycle_form
+  %hr.divider
 
-  = f.submit t :update
+  .row.controls{ ng: { show: "orderCycles.length > 0" } }
+    .thirteen.columns.alpha &nbsp;
+    %columns-dropdown{ action: "#{controller_name}_#{action_name}" }
+
+  %form{ name: 'order_cycles_form' }
+    %save-bar{ dirty: "order_cycles_form.$dirty", persist: "false" }
+      %input.red{ type: "button", value: t(:save_changes), ng: { click: "saveAll()", disabled: "!order_cycles_form.$dirty" } }
+    %table.index#listing_order_cycles{ ng: { show: 'orderCycles.length > 0' } }
+      = render 'admin/order_cycles/header' #, simple_index: simple_index
+      %tbody
+        = render 'admin/order_cycles/row' #, simple_index: simple_index
+    = render 'admin/order_cycles/loading_flash'
+    = render 'admin/order_cycles/show_more'

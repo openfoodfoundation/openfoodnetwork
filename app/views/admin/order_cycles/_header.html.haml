@@ -1,0 +1,36 @@
+%colgroup
+  %col{ ng: { show: 'columns.name.visible' } }
+  %col{ ng: { show: 'columns.schedules.visible' } }
+  %col{ ng: { show: 'columns.open.visible' }, style: 'width: 20%;' }
+  %col{ ng: { show: 'columns.close.visible' }, style: 'width: 20%;' }
+  - unless simple_index
+    %col{ ng: { show: 'columns.producers.visible' } }
+    %col{ ng: { show: 'columns.coordinator.visible' } }
+    %col{ ng: { show: 'columns.shops.visible' } }
+  %col{ ng: { show: 'columns.products.visible' } }
+  %col{ style: 'width: 5%;' }
+  %col{ style: 'width: 5%;' }
+  %col{ style: 'width: 5%;' }
+
+%thead
+  %tr
+    %th{ ng: { show: 'columns.name.visible' } }
+      =t :name
+    %th{ ng: { show: 'columns.schedules.visible' } }
+      =t('admin.order_cycles.index.schedules')
+    %th{ ng: { show: 'columns.open.visible' } }
+      =t :open
+    %th{ ng: { show: 'columns.close.visible' } }
+      =t :close
+    - unless simple_index
+      %th{ ng: { show: 'columns.producers.visible' } }
+        =t :label_producers
+      %th{ ng: { show: 'columns.coordinator.visible' } }
+        =t :coordinator
+      %th{ ng: { show: 'columns.shops.visible' } }
+        =t :label_shops
+    %th{ ng: { show: 'columns.products.visible' } }
+      =t :products
+    %th.actions
+    %th.actions
+    %th.actions
