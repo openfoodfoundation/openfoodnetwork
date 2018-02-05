@@ -96,9 +96,9 @@ class OrderSyncer
     false
   end
 
-  # This returns true when the shipping method on the standing has changed
-  # to a delivery (ie. a shipping address is required) AND the existing
-  # shipping address on the order matches the shop's address
+  # This returns true when the shipping method on the subscription has changed
+  # to a delivery (ie. a shipping address is required) AND the existing shipping
+  # address on the order matches the shop's address
   def force_ship_address_required?(order)
     return false unless shipping_method.require_ship_address?
     distributor_address = order.send(:address_from_distributor)
