@@ -35,11 +35,13 @@ describe EnterprisesHelper, type: :helper do
       let!(:tag_rule) { create(:filter_shipping_methods_tag_rule,
         enterprise: distributor,
         preferred_customer_tags: "local",
-        preferred_shipping_method_tags: "local-delivery") }
+        preferred_shipping_method_tags: "local-delivery") 
+      }
       let!(:default_tag_rule) { create(:filter_shipping_methods_tag_rule,
         enterprise: distributor,
         is_default: true,
-        preferred_shipping_method_tags: "local-delivery") }
+        preferred_shipping_method_tags: "local-delivery") 
+      }
       let!(:tagged_sm) { sm1 }
       let!(:untagged_sm) { sm2 }
 
@@ -142,11 +144,13 @@ describe EnterprisesHelper, type: :helper do
       let!(:tag_rule) { create(:filter_payment_methods_tag_rule,
         enterprise: distributor,
         preferred_customer_tags: "trusted",
-        preferred_payment_method_tags: "trusted") }
+        preferred_payment_method_tags: "trusted") 
+      }
       let!(:default_tag_rule) { create(:filter_payment_methods_tag_rule,
         enterprise: distributor,
         is_default: true,
-        preferred_payment_method_tags: "trusted") }
+        preferred_payment_method_tags: "trusted") 
+      }
       let(:tagged_pm) { pm1 }
       let(:untagged_pm) { pm2 }
 

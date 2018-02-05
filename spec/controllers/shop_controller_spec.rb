@@ -143,11 +143,13 @@ describe ShopController, type: :controller do
         let!(:tag_rule) { create(:filter_products_tag_rule,
           enterprise: distributor,
           preferred_customer_tags: "member",
-          preferred_variant_tags: "members-only") }
+          preferred_variant_tags: "members-only") 
+        }
         let!(:default_tag_rule) { create(:filter_products_tag_rule,
           enterprise: distributor,
           is_default: true,
-          preferred_variant_tags: "members-only") }
+          preferred_variant_tags: "members-only") 
+        }
         let(:product1) { { "id" => 1, "name" => 'product 1', "variants" => [{ "id" => 4, "tag_list" => ["members-only"] }] } }
         let(:product2) { { "id" => 2, "name" => 'product 2', "variants" => [{ "id" => 5, "tag_list" => ["members-only"] }, {"id" => 9, "tag_list" => ["something"]}] } }
         let(:product3) { { "id" => 3, "name" => 'product 3', "variants" => [{ "id" => 6, "tag_list" => ["something-else"] }] } }

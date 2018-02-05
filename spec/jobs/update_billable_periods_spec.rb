@@ -413,7 +413,8 @@ describe UpdateBillablePeriods do
           double(:order, total: 10),
           double(:order, total: 20),
           double(:order, total: 30)
-        ]}
+        ]
+        }
       end
 
       context "when the account invoice is already_complete" do
