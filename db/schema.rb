@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180202024104) do
+ActiveRecord::Schema.define(:version => 20180204235108) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -1081,18 +1081,6 @@ ActiveRecord::Schema.define(:version => 20180202024104) do
     t.integer  "zone_members_count", :default => 0
   end
 
-  create_table "standing_line_items", :force => true do |t|
-    t.integer  "subscription_id",                               :null => false
-    t.integer  "variant_id",                                    :null => false
-    t.integer  "quantity",                                      :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
-    t.decimal  "price_estimate",  :precision => 8, :scale => 2
-  end
-
-  add_index "standing_line_items", ["subscription_id"], :name => "index_standing_line_items_on_subscription_id"
-  add_index "standing_line_items", ["variant_id"], :name => "index_standing_line_items_on_variant_id"
-
   create_table "stripe_accounts", :force => true do |t|
     t.string   "stripe_user_id"
     t.string   "stripe_publishable_key"
@@ -1102,6 +1090,18 @@ ActiveRecord::Schema.define(:version => 20180202024104) do
   end
 
   add_index "stripe_accounts", ["enterprise_id"], :name => "index_stripe_accounts_on_enterprise_id", :unique => true
+
+  create_table "subscription_line_items", :force => true do |t|
+    t.integer  "subscription_id",                               :null => false
+    t.integer  "variant_id",                                    :null => false
+    t.integer  "quantity",                                      :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.decimal  "price_estimate",  :precision => 8, :scale => 2
+  end
+
+  add_index "subscription_line_items", ["subscription_id"], :name => "index_subscription_line_items_on_subscription_id"
+  add_index "subscription_line_items", ["variant_id"], :name => "index_subscription_line_items_on_variant_id"
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "shop_id",            :null => false
@@ -1351,8 +1351,8 @@ ActiveRecord::Schema.define(:version => 20180202024104) do
 
   add_foreign_key "spree_zone_members", "spree_zones", name: "spree_zone_members_zone_id_fk", column: "zone_id"
 
-  add_foreign_key "standing_line_items", "spree_variants", name: "oc_standing_line_items_variant_id_fk", column: "variant_id"
-  add_foreign_key "standing_line_items", "subscriptions", name: "standing_line_items_subscription_id_fk"
+  add_foreign_key "subscription_line_items", "spree_variants", name: "subscription_line_items_variant_id_fk", column: "variant_id"
+  add_foreign_key "subscription_line_items", "subscriptions", name: "subscription_line_items_subscription_id_fk"
 
   add_foreign_key "subscriptions", "customers", name: "subscriptions_customer_id_fk"
   add_foreign_key "subscriptions", "enterprises", name: "subscriptions_shop_id_fk", column: "shop_id"
