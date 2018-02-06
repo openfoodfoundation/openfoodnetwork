@@ -15,7 +15,6 @@
         .small-12.columns
           .alert-box.info{ "ofn-inline-alert" => true, ng: { show: "visible" } }
             %h6{ "ng-bind" => "'enterprise_success' | t:{enterprise: enterprise.name}" }
-            %span {{'enterprise_registration_exit_message' | t}}
             %a.close{ ng: { click: "close()" } } &times;
 
         .small-12.large-8.columns
