@@ -36,20 +36,13 @@ class RemoveEmailFromEnterprises < ActiveRecord::Migration
   end
 
   def update_enterprise_contact(enterprise)
-    contact_user = Spree::User.find_by_email(enterprise.email) || create_contact_user(enterprise)
+    contact_user = contact_or_owner(enterprise)
 
-    unless contact_user.persisted?
-      contact_user = Spree::User.find enterprise.owner_id
-    end
-
-    manager = EnterpriseRole.find_or_initialize_by_user_id_and_enterprise_id(contact_user.id, enterprise.id)
-    manager.update_attribute :receives_notifications, true
+    role = EnterpriseRole.find_or_initialize_by_user_id_and_enterprise_id(contact_user.id, enterprise.id)
+    role.update_attribute :receives_notifications, true
   end
 
-  def create_contact_user(enterprise)
-    password = Devise.friendly_token.first(8)
-    contact_user = Spree::User.create(email: enterprise.email, password: password, password_confirmation: password)
-    contact_user.send_reset_password_instructions if contact_user.persisted?
-    contact_user
+  def contact_or_owner(enterprise)
+    Spree::User.find_by_email(enterprise.email) || Spree::User.find(enterprise.owner_id)
   end
 end
