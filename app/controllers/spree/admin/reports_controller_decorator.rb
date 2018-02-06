@@ -338,10 +338,9 @@ Spree::Admin::ReportsController.class_eval do
 
     # Avoids duplicates
     OrderCycle.active_or_complete.involving_managed_producers_of(spree_current_user).each do |order_cycle|
-        @order_cycles << order_cycle unless @order_cycles.include?(order_cycle)
+      @order_cycles << order_cycle unless @order_cycles.include?(order_cycle)
     end
 
-    @order_cycles.sort_by! {|order_cycle| order_cycle.orders_close_at}
-    return @order_cycles
+    @order_cycles.sort_by!(&:orders_close_at)
   end
 end
