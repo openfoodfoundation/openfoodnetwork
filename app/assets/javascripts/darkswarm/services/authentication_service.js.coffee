@@ -2,6 +2,7 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
 
   new class AuthenticationService
     selectedPath: "/login"
+    modalMessage: null
 
     constructor: ->
       if $location.path() in ["/login", "/signup", "/forgot"] || location.pathname is '/register/auth'
@@ -32,6 +33,8 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
         'registration_authentication.html'
       else
         'authentication.html'
+    pushMessage: (message) ->
+      @modalMessage = String(message)
 
     select: (path)=>
       @selectedPath = path

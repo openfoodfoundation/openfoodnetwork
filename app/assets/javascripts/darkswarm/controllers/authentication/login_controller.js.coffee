@@ -1,6 +1,13 @@
 Darkswarm.controller "LoginCtrl", ($scope, $timeout, $location, $http, $window, AuthenticationService, Redirections, Loading) ->
   $scope.path = "/login"
 
+  $scope.modalMessage = null
+
+  $scope.$watch (->
+    AuthenticationService.modalMessage
+  ), (newValue) ->
+    $scope.errors = newValue
+
   $scope.submit = ->
     Loading.message = t 'logging_in'
     $http.post("/user/spree_user/sign_in", {spree_user: $scope.spree_user}).success (data)->

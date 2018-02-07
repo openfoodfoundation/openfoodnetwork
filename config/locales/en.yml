@@ -117,6 +117,7 @@ en:
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
       unconfirmed: "You have to confirm your account before continuing."
+      already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
