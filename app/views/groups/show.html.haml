@@ -15,6 +15,7 @@
 
 #group-page.row.pad-top.footer-pad{"ng-controller" => "GroupPageCtrl"}
   .small-12.columns.pad-top
+  - unless @hide_header  
     %header
       .row
         .small-12.columns
