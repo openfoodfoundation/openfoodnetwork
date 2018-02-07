@@ -27,6 +27,9 @@ CURRENCY: AUD
 # see: https://developers.google.com/maps/documentation/javascript/get-api-key
 # GOOGLE_MAPS_API_KEY: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+# optional, see: https://www.skylight.io/oss
+# SKYLIGHT_AUTHENTICATION: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 # Stripe Connect details for instance account
 # Find these under 'API keys' and 'Connect' in your Stripe account dashboard -> Account Settings
 # Under 'Connect', the Redirect URI should be set to https://YOUR_SERVER_URL/stripe/callbacks (e.g. https://openfoodnetwork.org.uk/stripe/callbacks)
