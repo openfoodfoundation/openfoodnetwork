@@ -500,6 +500,7 @@ en:
         max_fulfilled_units: "Max Fulfilled Units"
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
+      select_variant: "Select a variant"
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
@@ -1597,6 +1598,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   reset_password: "Reset password"
   registration_greeting: "Greetings!"
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
+  update_and_recalculate_fees: "Update And Recalculate Fees"
   enterprise:
     registration:
       modal:
@@ -2135,6 +2137,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   social: "Social"
   business_details: "Business Details"
   properties: "Properties"
+  shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
   payment_method_fee: "Transaction fee"
