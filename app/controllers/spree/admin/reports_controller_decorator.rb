@@ -208,7 +208,7 @@ Spree::Admin::ReportsController.class_eval do
     # My suppliers and any suppliers supplying products I distribute
     @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
-    @order_cycles = load_order_cycles
+    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
 
     @report_types = report_types[:orders_and_fulfillment]
     @report_type = params[:report_type]
@@ -330,17 +330,5 @@ Spree::Admin::ReportsController.class_eval do
 
   def timestamp
     Time.zone.now.strftime("%Y%m%d")
-  end
-
-  # Loads all order cycles concerned by current user, may he be producer, distributor or coordinator
-  def load_order_cycles
-    @order_cycles = OrderCycle.active_or_complete.involving_managed_distributors_of(spree_current_user)
-
-    # Avoids duplicates
-    OrderCycle.active_or_complete.involving_managed_producers_of(spree_current_user).each do |order_cycle|
-      @order_cycles << order_cycle unless @order_cycles.include?(order_cycle)
-    end
-
-    @order_cycles.sort_by!(&:orders_close_at)
   end
 end
