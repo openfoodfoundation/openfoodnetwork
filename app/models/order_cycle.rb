@@ -76,7 +76,7 @@ class OrderCycle < ActiveRecord::Base
     enterprises = Enterprise.managed_by(user)
 
     # Order cycles where I managed an enterprise at either end of an outgoing exchange
-    # ie. coordinator or distibutor
+    # ie. coordinator or distributor
     joins(:exchanges).merge(Exchange.outgoing).
       where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
       select('DISTINCT order_cycles.*')

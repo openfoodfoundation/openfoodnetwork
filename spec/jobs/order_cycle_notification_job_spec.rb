@@ -2,11 +2,14 @@ require 'spec_helper'
 
 describe OrderCycleNotificationJob do
   let(:order_cycle) { create(:order_cycle) }
+  let(:mail) { double(:mail, deliver: true) }
 
-  it "sends a mail to each supplier" do
-    mail = double(:mail)
-    allow(mail).to receive(:deliver)
-    expect(ProducerMailer).to receive(:order_cycle_report).twice.and_return(mail)
+  before do
+    allow(ProducerMailer).to receive(:order_cycle_report).twice.and_return(mail)
+  end
+
+  it 'sends a mail to each supplier' do
     run_job OrderCycleNotificationJob.new(order_cycle.id)
+    expect(ProducerMailer).to have_received(:order_cycle_report).twice
   end
 end
