@@ -29,7 +29,7 @@ class SubscriptionMailer < Spree::BaseMailer
   def placement_summary_email(summary)
     @shop = Enterprise.find(summary.shop_id)
     @summary = summary
-    mail(to: @shop.email,
+    mail(to: @shop.contact.email,
          from: from_address,
          subject: "#{Spree::Config[:site_name]} #{t('subscription_mailer.placement_summary_email.subject')}")
   end
@@ -37,7 +37,7 @@ class SubscriptionMailer < Spree::BaseMailer
   def confirmation_summary_email(summary)
     @shop = Enterprise.find(summary.shop_id)
     @summary = summary
-    mail(to: @shop.email,
+    mail(to: @shop.contact.email,
          from: from_address,
          subject: "#{Spree::Config[:site_name]} #{t('subscription_mailer.confirmation_summary_email.subject')}")
   end
@@ -49,6 +49,6 @@ class SubscriptionMailer < Spree::BaseMailer
     mail(to: order.email,
          from: from_address,
          subject: subject,
-         reply_to: order.distributor.email)
+         reply_to: order.distributor.contact.email)
   end
 end

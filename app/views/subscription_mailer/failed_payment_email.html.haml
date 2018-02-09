@@ -5,7 +5,7 @@
   = t("email_so_edit_false_html",
     orders_close_at: l(@order.order_cycle.orders_close_at, format: "%a %b %d @ %l:%M%p"),
     order_url: spree.order_url(@order))
-  = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.email)
+  = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
 
 - if @order.errors.any?
   %p &nbsp;

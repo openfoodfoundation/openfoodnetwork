@@ -3,7 +3,7 @@
 
 %p.callout
   = t("email_so_empty_explainer_html")
-  = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.email)
+  = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
 
 %p &nbsp;
 %h4
