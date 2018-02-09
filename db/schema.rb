@@ -212,6 +212,7 @@ ActiveRecord::Schema.define(:version => 20180204235108) do
     t.string   "description"
     t.text     "long_description"
     t.boolean  "is_primary_producer"
+    t.string   "contact_name"
     t.string   "phone"
     t.string   "website"
     t.string   "twitter"
@@ -247,7 +248,6 @@ ActiveRecord::Schema.define(:version => 20180204235108) do
     t.text     "invoice_text"
     t.boolean  "display_invoice_logo",     :default => false
     t.boolean  "allow_order_changes",      :default => false,  :null => false
-    t.string   "contact_name"
     t.boolean  "enable_subscriptions",     :default => false,  :null => false
   end
 
