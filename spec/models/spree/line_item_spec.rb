@@ -14,13 +14,13 @@ module Spree
       let(:li1) { create(:line_item, order: o, product: p1) }
       let(:li2) { create(:line_item, order: o, product: p2) }
 
-      
+
       let(:p3) {create(:product, name: 'Clear Honey') }
       let(:p4) {create(:product, name: 'Apricots') }
       let(:v1) {create(:variant, product: p3, unit_value: 500) }
       let(:v2) {create(:variant, product: p3, unit_value: 250) }
-      let(:v3) {create(:variant, product: p4, unit_value: 500) }
-      let(:v4) {create(:variant, product: p4, unit_value: 1000) }
+      let(:v3) {create(:variant, product: p4, unit_value: 500, display_name: "ZZ") }
+      let(:v4) {create(:variant, product: p4, unit_value: 500, display_name: "aa") }
       let(:li3) { create(:line_item, order: o, product: p3, variant: v1) }
       let(:li4) { create(:line_item, order: o, product: p3, variant: v2) }
       let(:li5) { create(:line_item, order: o, product: p4, variant: v3) }
@@ -54,7 +54,7 @@ module Spree
       end
 
       it "finds line items sorted by name and unit_value" do
-        expect(o.line_items.sorted_by_name_and_unit_value).to eq([li5,li6,li4,li3])
+        expect(o.line_items.sorted_by_name_and_unit_value).to eq([li6,li5,li4,li3])
       end
     end
 

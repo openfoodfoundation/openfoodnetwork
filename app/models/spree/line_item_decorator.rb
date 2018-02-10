@@ -34,7 +34,7 @@ Spree::LineItem.class_eval do
 
   # Find line items that are from order sorted by variant name and unit value
   scope :sorted_by_name_and_unit_value, joins(variant: :product).
-    reorder('spree_products.name asc, spree_variants.unit_value asc').
+    reorder('lower(spree_products.name) asc, lower(spree_variants.display_name) asc, spree_variants.unit_value asc').
     select('spree_line_items.*')
 
   scope :supplied_by, lambda { |enterprise|
