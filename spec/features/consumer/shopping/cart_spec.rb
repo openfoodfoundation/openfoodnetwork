@@ -143,5 +143,26 @@ feature "full-page cart", js: true do
         expect(page).to have_content item2.variant.name
       end
     end
+
+    context "Admin & Handling" do
+      it "hides row if order includes no adjustments" do
+        add_product_to_cart order, product_fee, quantity: 1
+        visit spree.cart_path
+
+        expect(page).to have_selector('#cart-detail')
+        expect(page).to_not have_content('Admin & Handling')
+      end
+
+      it "shows row if order includes adjustments" do
+        coordinator_fee = create(:enterprise_fee, enterprise: order_cycle.coordinator, fee_type: 'admin', calculator: Spree::Calculator::FlatRate.new(preferred_amount: 1))
+        order_cycle.coordinator_fees << coordinator_fee
+
+        add_product_to_cart order, product_fee, quantity: 1
+        visit spree.cart_path
+
+        expect(page).to have_selector('#cart-detail')
+        expect(page).to have_content('Admin & Handling')
+      end
+    end
   end
 end
