@@ -1,7 +1,7 @@
 .row.active_table_row{"ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
   .columns.small-12.medium-8.large-8.skinny-head
     %span{"ng-if" => "::producer.is_distributor" }
-      %a.is_distributor{"ng-href" => "{{::producer.path}}"}
+      %a.is_distributor{"ng-href" => "{{::producer.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}"}
         .row.vertical-align-middle
           .columns.small-2.medium-2.large-2
             %i{ng: {class: "::producer.producer_icon_font"}}
