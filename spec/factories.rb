@@ -425,6 +425,13 @@ FactoryGirl.define do
     stripe_user_id "abc123"
     stripe_publishable_key "xyz456"
   end
+
+  factory :product_with_image, parent: :product do
+    after(:create) do |product|
+      image = File.open(Rails.root.join('app', 'assets', 'images', 'logo-white.png'))
+      Spree::Image.create(attachment: image, viewable_id: product.master.id, viewable_type: 'Spree::Variant')
+    end
+  end
 end
 
 
