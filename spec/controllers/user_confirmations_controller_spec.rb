@@ -20,21 +20,25 @@ describe UserConfirmationsController, type: :controller do
       end
 
       it "redirects the user to login" do
-        expect(response).to redirect_to login_path
-        expect(flash[:error]).to eq I18n.t('devise.user_confirmations.spree_user.not_confirmed')
+        expect(response).to redirect_to login_path(confirmation: 'not_confirmed')
       end
     end
 
     context "that has not been confirmed" do
       it "redirects the user to login" do
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
-        expect(response).to redirect_to login_path
-        expect(flash[:success]).to eq I18n.t('devise.user_confirmations.spree_user.confirmed')
+        expect(response).to redirect_to login_path(confirmation: 'confirmed')
       end
 
       it "confirms the user" do
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(unconfirmed_user.reload.confirmed_at).not_to eq(nil)
+      end
+
+      it "redirects to previous url" do
+        session[:confirmation_return_url] = producers_path + '#/login'
+        spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
+        expect(response).to redirect_to producers_path + '#/login?confirmation=confirmed'
       end
     end
   end

@@ -78,10 +78,12 @@ feature "Authentication", js: true, retry: 3 do
             fill_in "Email", with: "test@foo.com"
             fill_in "Choose a password", with: "test12345"
             fill_in "Confirm password", with: "test12345"
+
             expect do
               click_signup_button
-              page.should have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
+              expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
             end.to enqueue_job Delayed::PerformableMethod
+
             expect(Delayed::Job.last.payload_object.method_name).to eq(:send_on_create_confirmation_instructions_without_delay)
           end
         end
@@ -117,6 +119,14 @@ feature "Authentication", js: true, retry: 3 do
           open_login_modal
           page.should have_login_modal
         end
+      end
+    end
+
+    describe "after following email confirmation link" do
+      scenario "shows confirmed message in modal" do
+        visit '/#/login?confirmation=confirmed'
+        expect(page).to have_login_modal
+        expect(page).to have_content I18n.t('devise.confirmations.confirmed')
       end
     end
 
