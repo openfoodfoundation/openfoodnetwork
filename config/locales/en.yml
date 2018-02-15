@@ -99,6 +99,8 @@ en:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       failed_to_send: "An error occurred whilst sending your confirmation email."
       resend_confirmation_email: "Resend confirmation email."
+      confirmed: "Thanks for confirming your email! You can now sign in."
+      not_confirmed: "Your email address could not be confirmed. Perhaps you have already completed this step?"
     user_registrations:
       spree_user:
        signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
@@ -107,12 +109,6 @@ en:
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
       unconfirmed: "You have to confirm your account before continuing."
-    enterprise_confirmations:
-      enterprise:
-        confirmed: Thank you, your email address has been confirmed.
-        not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
-        confirmation_sent: "Confirmation email sent!"
-        confirmation_not_sent: "Could not send a confirmation email."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
