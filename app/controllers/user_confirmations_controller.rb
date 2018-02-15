@@ -33,6 +33,12 @@ class UserConfirmationsController < DeviseController
       end
     end
 
-    respond_with_navigational(resource){ redirect_to login_path }
+    respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource) }
+  end
+
+  protected
+
+  def after_confirmation_path_for(resource)
+    session[:confirmation_return_url] || login_path
   end
 end
