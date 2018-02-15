@@ -24,6 +24,13 @@ module Openfoodnetwork
       end
     end
 
+    # Activate the Skylight agent in staging. You need to provision the
+    # SKYLIGHT_AUTHENTICATION env var in your OFN instance for this to work.
+    #
+    # Check https://github.com/openfoodfoundation/openfoodnetwork/pull/2070 for
+    # details
+    config.skylight.environments += ["staging"]
+
     # Settings dependent on locale
     #
     # We need to set this config before the promo environment gets loaded and
