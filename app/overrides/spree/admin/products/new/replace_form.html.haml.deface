@@ -21,20 +21,20 @@
         = f.field_container :units do
           = f.label :variant_unit_with_scale, t(:units)
           %select.select2.fullwidth{ id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
-            %option{'value' => '', 'ng-hide' => "hasUnit(product)"}
-          %input{ type: 'hidden', 'ng-value' => 'product.variant_unit', name: 'product[variant_unit]' }
-          %input{ type: 'hidden', 'ng-value' => 'product.variant_unit_scale', name: 'product[variant_unit_scale]' }
+            %option{'value' => '', 'ng-hide' => "!hasUnit(product)"}
+          = f.hidden_field :variant_unit, { 'ng-value' => 'product.variant_unit' }
+          = f.hidden_field :variant_unit_scale, { 'ng-value' => 'product.variant_unit_scale' }
       .three.columns
         = f.field_container :unit_value do
           = f.label :product_unit_value_with_description, t(:value), 'ng-disabled' => "!hasUnit(product)"
           %input.fullwidth{ id: 'product_unit_value_with_description', 'ng-model' => 'product.master.unit_value_with_description', :type => 'text', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
-          %input{ type: 'hidden', 'ng-value' => 'product.master.unit_value', name: 'product[unit_value]' }
-          %input{ type: 'hidden', 'ng-value' => 'product.master.unit_description', name: 'product[unit_description]' }
+          = f.hidden_field :unit_value, { 'ng-value' => 'product.master.unit_value'}
+          = f.hidden_field :unit_description, { 'ng-value' => 'product.master.unit_description'}
       = render 'display_as', f: f
       .three.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
         = f.field_container :unit_name do
           = f.label :product_variant_unit_name, t(:unit_name)
-          %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => t('admin.products.unit_name_placeholder'), :type => 'text' }
+          = f.text_field :variant_unit_name, { class: 'fullwidth', 'ng-model' => 'product.variant_unit_name', placeholder: t('admin.products.unit_name_placeholder') }
     .twelve.columns.alpha
       .six.columns.alpha
         = render 'spree/admin/products/primary_taxon_form', f: f
@@ -73,6 +73,7 @@
         = f.label :product_description, t(:product_description)
         %br/
         %text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', 'textangular-strip' => true, 'ta-paste' => "stripFormatting($html)", 'ta-toolbar' => "[['bold','italics','clear']]"}
+          = sanitize(@product.description)
         = f.error_message_on :description
 .four.columns.omega{ style: "text-align: center" }
   %fieldset.no-border-bottom{ id: "image" }

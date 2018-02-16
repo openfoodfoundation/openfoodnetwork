@@ -16,7 +16,7 @@ Spree::Product.class_eval do
 
   accepts_nested_attributes_for :product_distributions, :allow_destroy => true
   delegate_belongs_to :master, :unit_value, :unit_description
-  delegate :images_attributes=, :display_as=, to: :master
+  delegate :display_as, :images_attributes=, :display_as=, to: :master
 
   attr_accessible :supplier_id, :primary_taxon_id, :distributor_ids, :product_distributions_attributes
   attr_accessible :group_buy, :group_buy_unit_size, :unit_description, :notes, :images_attributes, :display_as

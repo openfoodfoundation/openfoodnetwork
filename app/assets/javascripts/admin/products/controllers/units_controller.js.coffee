@@ -21,16 +21,28 @@ angular.module("admin.products")
           $scope.product.variant_unit = $scope.product.variant_unit_with_scale
           $scope.product.variant_unit_scale = null
       else
-        $scope.product.variant_unit = $scope.product.variant_unit_scale = null
+        $scope.product.variant_unit = $scope.product.variant_unit || angular.element(document.querySelector('#product_variant_unit')).val() || null
+        $scope.product.variant_unit_scale = $scope.product.variant_unit_scale || parseFloat(angular.element(document.querySelector('#product_variant_unit_scale')).val()) || null
+        $scope.product.variant_unit_scale = null if isNaN($scope.product.variant_unit_scale)
+        $scope.product.variant_unit_with_scale = $scope.product.variant_unit + '_' + $scope.product.variant_unit_scale if !!$scope.product.variant_unit
+        setTimeout(->
+          $('#product_variant_unit_with_scale').trigger('change')
+        , 1000)
 
     $scope.processUnitValueWithDescription = ->
-      if $scope.product.master.hasOwnProperty("unit_value_with_description")
+      if $scope.product.master.hasOwnProperty("unit_value_with_description") && !!$scope.product.master.unit_value_with_description
         match = $scope.product.master.unit_value_with_description.match(/^([\d\.]+(?= *|$)|)( *)(.*)$/)
         if match
           $scope.product.master.unit_value  = parseFloat(match[1])
           $scope.product.master.unit_value  = null if isNaN($scope.product.master.unit_value)
           $scope.product.master.unit_value *= $scope.product.variant_unit_scale if $scope.product.master.unit_value && $scope.product.variant_unit_scale
           $scope.product.master.unit_description = match[3]
+      else
+        $scope.product.master.unit_value = parseFloat(angular.element('#product_unit_value').val())
+        $scope.product.master.unit_value  = null if isNaN($scope.product.master.unit_value)
+        $scope.product.master.unit_value_with_description = '' + $scope.product.master.unit_value / $scope.product.variant_unit_scale
+        $scope.product.master.unit_value_with_description = null if isNaN($scope.product.master.unit_value_with_description)
+        $scope.product.master.unit_description = angular.element('#product_unit_description').val() if $scope.product.master.unit_value
 
     $scope.hasVariants = (product) ->
       Object.keys(product.variants).length > 0

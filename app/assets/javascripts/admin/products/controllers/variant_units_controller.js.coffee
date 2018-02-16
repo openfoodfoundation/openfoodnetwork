@@ -3,6 +3,7 @@ angular.module("admin.products").controller "variantUnitsCtrl", ($scope, Variant
   $scope.unitName = (scale, type) ->
     VariantUnitManager.getUnitName(scale, type)
 
+  $scope.type = angular.element('#product_variant_unit').val()
   $scope.scale = angular.element('#product_variant_unit_scale').val()
 
   $scope.updateValue = ->
