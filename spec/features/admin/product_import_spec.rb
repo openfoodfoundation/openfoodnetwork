@@ -343,6 +343,14 @@ feature "Product Import", js: true do
     end
   end
 
+  describe "viewing the user guide" do
+    it "displays the guide" do
+      quick_login_as_admin
+      visit main_app.admin_product_import_guide_path
+      expect(page).to have_content "See below for a list of available categories"
+    end
+  end
+
   private
 
   def import_data
