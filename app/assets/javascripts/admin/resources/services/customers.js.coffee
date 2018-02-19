@@ -1,8 +1,12 @@
-angular.module("admin.resources").factory "Customers", ($q, InfoDialog, RequestMonitor, CustomerResource) ->
+angular.module("admin.resources").factory "Customers", ($q, $injector, InfoDialog, RequestMonitor, CustomerResource) ->
   new class Customers
     all: []
     byID: {}
     pristineByID: {}
+
+    constructor: ->
+      if $injector.has('customers')
+        @load($injector.get('customers'))
 
     add: (params) ->
       CustomerResource.create params, (customer) =>
