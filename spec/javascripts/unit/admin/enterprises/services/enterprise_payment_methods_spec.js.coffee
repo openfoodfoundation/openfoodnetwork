@@ -7,7 +7,7 @@ describe "EnterprisePaymentMethods service", ->
     enterprise =
       payment_method_ids: [ 1, 3 ]
     PaymentMethods =
-        paymentMethods: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
+        all: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
 
     module 'admin.enterprises'
     module ($provide) ->
@@ -20,10 +20,10 @@ describe "EnterprisePaymentMethods service", ->
 
   describe "selecting payment methods", ->
     it "sets the selected property of each payment method", ->
-      expect(PaymentMethods.paymentMethods[0].selected).toBe true
-      expect(PaymentMethods.paymentMethods[1].selected).toBe false
-      expect(PaymentMethods.paymentMethods[2].selected).toBe true
-      expect(PaymentMethods.paymentMethods[3].selected).toBe false
+      expect(PaymentMethods.all[0].selected).toBe true
+      expect(PaymentMethods.all[1].selected).toBe false
+      expect(PaymentMethods.all[2].selected).toBe true
+      expect(PaymentMethods.all[3].selected).toBe false
 
   describe "determining payment method colour", ->
     it "returns 'blue' when at least one payment method is selected", ->
