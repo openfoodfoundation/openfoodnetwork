@@ -3,8 +3,20 @@
 .todolist{
   .todo {
     &.done {
-      .title, .steps {
-        text-decoration: line-through;
+      .title {
+        color: #aaaaaa;
+
+        a {
+          color: #aaaaaa;
+        }
+      }
+
+      i {
+        color: #aaaaaa;
+      }
+
+      .steps {
+        display: none;
       }
 
       i {
