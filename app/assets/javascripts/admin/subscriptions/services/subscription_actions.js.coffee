@@ -1,4 +1,7 @@
-angular.module("admin.subscriptions").factory 'SubscriptionPrototype', ($http, $injector, $q, InfoDialog, ConfirmDialog) ->
+# Wrapper for actions provided by ngResource
+# Used to extend the prototype of the subscription resource created by SubscriptionResource
+
+angular.module("admin.subscriptions").factory 'SubscriptionActions', ($http, $injector, $q, InfoDialog, ConfirmDialog) ->
   buildItem: (item) ->
     return false unless item.variant_id > 0
     return false unless item.quantity > 0
