@@ -29,7 +29,7 @@
           = t(:subtotal)
           \:
       %td.total.align-center
-        %span {{ estimatedSubtotal() | currency }}
+        %span {{ subscription.estimatedSubtotal() | currency }}
       %td.actions
   %tbody#order-total.grand-total.no-border-top{"data-hook" => "admin_order_form_total"}
     %tr
@@ -38,5 +38,5 @@
           = t(:order_total_price)
           \:
       %td.total.align-center
-        %span#order_form_total {{ estimatedTotal() | currency }}
+        %span#order_form_total {{ subscription.estimatedTotal() | currency }}
       %td.actions
