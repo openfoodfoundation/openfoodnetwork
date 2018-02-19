@@ -1,4 +1,4 @@
-angular.module("admin.subscriptions").factory 'SubscriptionResource', ($resource, SubscriptionActions) ->
+angular.module("admin.subscriptions").factory 'SubscriptionResource', ($resource, SubscriptionActions, SubscriptionFunctions) ->
   resource = $resource('/admin/subscriptions/:id/:action.json', {}, {
     'index':
       method: 'GET'
@@ -27,5 +27,6 @@ angular.module("admin.subscriptions").factory 'SubscriptionResource', ($resource
   })
 
   angular.extend(resource.prototype, SubscriptionActions)
+  angular.extend(resource.prototype, SubscriptionFunctions)
 
   resource
