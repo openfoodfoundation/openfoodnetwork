@@ -1,6 +1,6 @@
 angular.module("admin.resources").factory "Schedules", ($q, $injector, RequestMonitor, ScheduleResource, OrderCycles, Dereferencer, StatusMessage) ->
   new class Schedules
-    # all: []
+    all: []
     byID: {}
 
     constructor: ->
@@ -9,7 +9,7 @@ angular.module("admin.resources").factory "Schedules", ($q, $injector, RequestMo
 
     load: (schedules) ->
       for schedule in schedules
-        # @all.push schedule
+        @all.push schedule
         @byID[schedule.id] = schedule
 
     add: (params) =>
