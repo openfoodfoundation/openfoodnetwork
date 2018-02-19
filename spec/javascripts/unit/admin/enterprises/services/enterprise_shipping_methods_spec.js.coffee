@@ -7,7 +7,7 @@ describe "EnterpriseShippingMethods service", ->
     enterprise =
       shipping_method_ids: [ 1, 3 ]
     ShippingMethods =
-        shippingMethods: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
+        all: [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 } ]
 
     module 'admin.enterprises'
     module ($provide) ->
@@ -20,10 +20,10 @@ describe "EnterpriseShippingMethods service", ->
 
   describe "selecting shipping methods", ->
     it "sets the selected property of each shipping method", ->
-      expect(ShippingMethods.shippingMethods[0].selected).toBe true
-      expect(ShippingMethods.shippingMethods[1].selected).toBe false
-      expect(ShippingMethods.shippingMethods[2].selected).toBe true
-      expect(ShippingMethods.shippingMethods[3].selected).toBe false
+      expect(ShippingMethods.all[0].selected).toBe true
+      expect(ShippingMethods.all[1].selected).toBe false
+      expect(ShippingMethods.all[2].selected).toBe true
+      expect(ShippingMethods.all[3].selected).toBe false
 
   describe "determining shipping method colour", ->
     it "returns 'blue' when at least one shipping method is selected", ->

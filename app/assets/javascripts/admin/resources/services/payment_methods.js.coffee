@@ -1,7 +1,7 @@
 angular.module("admin.resources")
   .factory "PaymentMethods", ($injector) ->
     new class PaymentMethods
-      paymentMethods: []
+      all: []
       byID: {}
       pristineByID: {}
 
@@ -11,6 +11,6 @@ angular.module("admin.resources")
 
       load: (paymentMethods) ->
         for paymentMethod in paymentMethods
-          @paymentMethods.push paymentMethod
+          @all.push paymentMethod
           @byID[paymentMethod.id] = paymentMethod
           @pristineByID[paymentMethod.id] = angular.copy(paymentMethod)
