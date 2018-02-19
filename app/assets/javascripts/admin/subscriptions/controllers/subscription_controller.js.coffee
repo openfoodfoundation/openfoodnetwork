@@ -1,11 +1,11 @@
-angular.module("admin.subscriptions").controller "SubscriptionController", ($scope, Subscription, SubscriptionForm, customers, schedules, paymentMethods, shippingMethods) ->
+angular.module("admin.subscriptions").controller "SubscriptionController", ($scope, Subscription, SubscriptionForm, Customers, Schedules, PaymentMethods, ShippingMethods) ->
   $scope.subscription = new Subscription()
   $scope.errors = null
   $scope.save = null
-  $scope.customers = customers
-  $scope.schedules = schedules
-  $scope.paymentMethods = paymentMethods
-  $scope.shippingMethods = shippingMethods
+  $scope.customers = Customers.all
+  $scope.schedules = Schedules.all
+  $scope.paymentMethods = PaymentMethods.all
+  $scope.shippingMethods = ShippingMethods.all
   $scope.distributor_id = $scope.subscription.shop_id # variant selector requires distributor_id
   $scope.view = if $scope.subscription.id? then 'review' else 'details'
   $scope.nextCallbacks = {}
