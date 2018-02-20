@@ -43,7 +43,7 @@
       %td.items.panel-toggle.text-center{ name: 'products', ng: { show: 'columns.items.visible' } }
         %h5{ ng: { bind: 'itemCount(subscription)' } }
       %td.orders.panel-toggle.text-center{ name: 'orders', ng: { show: 'columns.orders.visible' } }
-        %h5{ ng: { bind: 'subscription.not_closed_proxy_orders.length + subscription.closed_proxy_orders.length' } }
+        %h5{ ng: { bind: 'subscription.not_closed_proxy_orders.length' } }
       %td.status.text-center{ ng: { show: 'columns.state.visible' } }
         %span.state{ ng: { class: "subscription.state", bind: "'spree.subscription_state.' + subscription.state | t" } }
       %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::subscription.begins_at' } }
