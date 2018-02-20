@@ -211,18 +211,20 @@ feature 'Subscriptions' do
           expect(page).to have_selector 'td.total', text: "$27.50"
         end
 
-        click_button('Next')
-
         # Deleting the existing product
         within 'table#subscription-line-items tr.item', match: :first do
           find("a.delete-item").click
         end
+
+        click_button('Next')
 
         # Attempting to submit without a product
         expect{
           click_button('Create Subscription')
           expect(page).to have_content 'Please add at least one product'
         }.to_not change(Subscription, :count)
+
+        click_button('edit-products')
 
         # Adding a new product
         select2_search product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
@@ -235,6 +237,8 @@ feature 'Subscriptions' do
           expect(page).to have_selector 'td.total', text: "$23.25"
         end
 
+        click_button('Next')
+
         expect{
           click_button('Create Subscription')
           expect(page).to have_content 'Saved'
@@ -244,7 +248,7 @@ feature 'Subscriptions' do
         within 'table#subscription-line-items tr.item', match: :first do
           expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
-          expect(page).to have_input 'quantity', with: "3"
+          expect(page).to have_selector 'td.quantity', text: "3"
           expect(page).to have_selector 'td.total', text: "$23.25"
         end
 
@@ -296,10 +300,13 @@ feature 'Subscriptions' do
           visit edit_admin_subscription_path(subscription)
 
           # Customer and Schedule cannot be edited
+          click_button 'edit-details'
           expect(page).to have_selector '#s2id_customer_id.select2-container-disabled'
           expect(page).to have_selector '#s2id_schedule_id.select2-container-disabled'
+          click_button 'Review'
 
           # Existing products should be visible
+          click_button 'edit-products'
           within "#sli_0" do
             expect(page).to have_selector 'td.description', text: "#{product1.name} - #{variant1.full_name}"
             expect(page).to have_selector 'td.price', text: "$13.75"
@@ -369,6 +376,7 @@ feature 'Subscriptions' do
 
           it "reports issues encountered during the update" do
             visit edit_admin_subscription_path(subscription)
+            click_button 'edit-products'
 
             within "#sli_0" do
               fill_in 'quantity', with: "1"
