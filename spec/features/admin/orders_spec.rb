@@ -1,4 +1,5 @@
 require "spec_helper"
+include ActionView::Helpers::NumberHelper
 
 feature %q{
     As an administrator
@@ -214,9 +215,52 @@ feature %q{
         Spree::Config[:enable_receipt_printing?] = true
 
         distributor1.update_attribute(:abn, '12345678')
-        @order = create(:completed_order_with_totals, distributor: distributor1)
+        @order = create(:order_with_taxes, distributor: distributor1)
+        Spree::TaxRate.adjust(@order)
 
         visit spree.admin_order_path(@order)
+      end
+
+      scenario "shows a list of line_items" do
+        within('table.index tbody', match: :first) do
+          @order.line_items.each do |item|
+            expect(page).to have_selector "td", match: :first, text: item.full_name
+            expect(page).to have_selector "td.price", text: item.single_display_amount
+            expect(page).to have_selector "td.qty", text: item.quantity
+            expect(page).to have_selector "td.total", text: item.display_amount
+          end
+        end
+      end
+
+      scenario "shows the order subtotal" do
+        within('table.index tbody#subtotal') do
+          expect(page).to have_selector "td.total", text: @order.display_item_total
+        end
+      end
+
+      scenario "shows the order charges (non-tax adjustments)" do
+        within('table.index tbody#order-charges') do
+          @order.adjustments.eligible.each do |adjustment|
+            next if (adjustment.originator_type == 'Spree::TaxRate') && (adjustment.amount == 0)
+            expect(page).to have_selector "td", match: :first, text: adjustment.label
+            expect(page).to have_selector "td.total", text: adjustment.display_amount
+          end
+        end
+      end
+
+      scenario "shows the order total" do
+        within('table.index tbody#order-total') do
+          expect(page).to have_selector "td.total", text: @order.display_total
+        end
+      end
+
+      scenario "shows the order taxes" do
+        within('table.index tbody#price-adjustments') do
+          @order.price_adjustment_totals.each do |label, total|
+            expect(page).to have_selector "td", match: :first, text: label
+            expect(page).to have_selector "td.total", text: total
+          end
+        end
       end
 
       scenario "shows the dropdown menu" do

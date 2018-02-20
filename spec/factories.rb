@@ -295,6 +295,15 @@ FactoryGirl.define do
     distributor { create(:distributor_enterprise) }
   end
 
+  factory :order_with_taxes, parent: :completed_order_with_totals do
+    after(:create) do |order|
+      order.distributor.update_attribute(:charges_sales_tax, true)
+
+      Spree::Zone.global.update_attribute(:default_tax, true)
+      order.line_items.first.product = FactoryGirl.create(:taxed_product, zone: Spree::Zone.global, price: 110.0, tax_rate_amount: 0.1)
+    end
+  end
+
   factory :order_with_credit_payment, parent: :completed_order_with_totals do
     distributor { create(:distributor_enterprise)}
     order_cycle { create(:simple_order_cycle) }

@@ -308,15 +308,15 @@ describe Spree::Order do
     end
 
     it "contains tax on line_item" do
-      expect(order.tax_adjustment_totals[tax_rate10.amount]).to eq(4.0)
+      expect(order.tax_adjustment_totals[tax_rate10]).to eq(4.0)
     end
 
     it "contains tax on shipping_fee" do
-      expect(order.tax_adjustment_totals[tax_rate15.amount]).to eq(6.0)
+      expect(order.tax_adjustment_totals[tax_rate15]).to eq(6.0)
     end
 
     it "contains tax on enterprise_fee" do
-      expect(order.tax_adjustment_totals[tax_rate20.amount]).to eq(8.0)
+      expect(order.tax_adjustment_totals[tax_rate20]).to eq(8.0)
     end
   end
 
