@@ -201,7 +201,7 @@ feature 'Subscriptions' do
         expect(page).to have_content 'Please add at least one product'
 
         # Adding a product and getting a price estimate
-        targetted_select2_search product1.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+        select2_search product1.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 2
         click_link 'Add'
         within 'table#subscription-line-items tr.item', match: :first do
@@ -225,7 +225,7 @@ feature 'Subscriptions' do
         }.to_not change(Subscription, :count)
 
         # Adding a new product
-        targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+        select2_search product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 3
         click_link 'Add'
         within 'table#subscription-line-items tr.item', match: :first do
@@ -315,7 +315,7 @@ feature 'Subscriptions' do
           expect(page).to have_content 'Please add at least one product'
 
           # Add variant2 to the subscription
-          targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+          select2_search product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
           within "#sli_0" do
@@ -329,7 +329,7 @@ feature 'Subscriptions' do
           expect(page).to have_selector '#order_form_total', text: "$7.75"
 
           # Add variant3 to the subscription (even though it is not available)
-          targetted_select2_search product3.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+          select2_search product3.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
           within "#sli_1" do
