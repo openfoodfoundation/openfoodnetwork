@@ -283,16 +283,19 @@ describe Spree::Order do
     let(:tax_rate10)      { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, amount: 0.1, zone: zone) }
     let(:tax_rate15)      { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, amount: 0.15, zone: zone) }
     let(:tax_rate20)      { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, amount: 0.2, zone: zone) }
+    let(:tax_rate25)      { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, amount: 0.25, zone: zone) }
     let(:tax_category10)  { create(:tax_category, tax_rates: [tax_rate10]) }
     let(:tax_category15)  { create(:tax_category, tax_rates: [tax_rate15]) }
     let(:tax_category20)  { create(:tax_category, tax_rates: [tax_rate20]) }
+    let(:tax_category25)  { create(:tax_category, tax_rates: [tax_rate25]) }
 
     let(:variant)         { create(:variant, product: create(:product, tax_category: tax_category10)) }
     let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 46.0)) }
     let(:enterprise_fee)  { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category20, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 48.0)) }
+    let(:additional_adjustment) { create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0)) }
 
     let(:order_cycle)     { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
-    let!(:order)          { create(:order, shipping_method: shipping_method, bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator) }
+    let!(:order)          { create(:order, shipping_method: shipping_method, bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator, adjustments: [additional_adjustment]) }
     let!(:line_item)      { create(:line_item, order: order, variant: variant, price: 44.0) }
 
     before do
@@ -304,7 +307,7 @@ describe Spree::Order do
     end
 
     it "returns a hash with all 3 taxes" do
-      expect(order.tax_adjustment_totals.size).to eq(3)
+      expect(order.tax_adjustment_totals.size).to eq(4)
     end
 
     it "contains tax on line_item" do
@@ -317,6 +320,10 @@ describe Spree::Order do
 
     it "contains tax on enterprise_fee" do
       expect(order.tax_adjustment_totals[tax_rate20]).to eq(8.0)
+    end
+
+    it "contains tax on order adjustment" do
+      order.tax_adjustment_totals[tax_rate25].should == 10.0
     end
   end
 
