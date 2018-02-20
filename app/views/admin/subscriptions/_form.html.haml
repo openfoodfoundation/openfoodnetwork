@@ -1,20 +1,27 @@
 %form.margin-bottom-50{ name: 'subscription_form', novalidate: true, ng: { submit: 'save()' } }
   %save-bar{ persist: 'true' }
-    %a.button{ href: main_app.admin_subscriptions_path, ng: { show: "['details','review'].indexOf(view) >= 0", bind: "subscription.id? '#{t(:close)}' : '#{t(:cancel)}'" } }
-    %input{ type: "button", value: t(:back), ng: { click: 'back()', show: '!!backCallbacks[view]'} }
-    %input.red{ type: "button", value: t(:next), ng: { click: 'next()', show: '!!nextCallbacks[view]' } }
-    %input.red{ type: "submit", value: t('admin.subscriptions.create'), ng: { show: "view=='review' && !subscription.id" } }
-    %input.red{ type: "submit", value: t(:save_changes), ng: { show: "view=='review' && subscription.id", disabled: 'subscription_form.$pristine' } }
+    %div{ ng: { hide: 'subscription.id' } }
+      %a.button{ href: main_app.admin_subscriptions_path, ng: { show: "['details','review'].indexOf(view) >= 0" } }= t(:cancel)
+      %input{ type: "button", value: t(:back), ng: { click: 'back()', show: '!!backCallbacks[view]'} }
+      %input.red{ type: "button", value: t(:next), ng: { click: 'next()', show: '!!nextCallbacks[view]' } }
+      %input.red{ type: "submit", value: t('admin.subscriptions.create'), ng: { show: "view == 'review'" } }
+    %div{ ng: { show: 'subscription.id' } }
+      %a.button{ href: main_app.admin_subscriptions_path }= t(:close)
+      %input.red{ type: "button", value: t(:review), ng: { click: "setView('review')", show: "view != 'review'" } }
+      %input.red{ type: "submit", value: t(:save_changes), ng: { disabled: 'subscription_form.$pristine' } }
 
-  .details{ ng: { show: "['details','review'].indexOf(view) >= 0" } }
+  .details{ ng: { show: "view == 'details'" } }
     %ng-form{ name: 'subscription_details_form', ng: { controller: 'DetailsController' } }
       = render 'details'
 
-  .address{ ng: { show: "['address','review'].indexOf(view) >= 0" } }
+  .address{ ng: { show: "view == 'address'" } }
     %ng-form{ name: 'subscription_address_form', ng: { controller: 'AddressController' } }
       = render 'address'
 
-  .products{ ng: { show: "['products','review'].indexOf(view) >= 0" } }
+  .products{ ng: { show: "view == 'products'" } }
     %ng-form{ name: 'subscription_products_form', ng: { controller: 'ProductsController' } }
     = render :partial => "spree/admin/variants/autocomplete", :formats => :js
     = render 'products'
+
+  .review{ ng: { show: "view == 'review'", controller: 'ReviewController' } }
+    = render 'review'
