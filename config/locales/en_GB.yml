@@ -351,8 +351,6 @@ en_GB:
         contact:
           name: Name
           name_placeholder: eg. Amanda Plum
-          email_address: Email Address
-          email_address_placeholder: eg. amanda@truffles.co.uk
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
           website: Website
@@ -470,6 +468,7 @@ en_GB:
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
+          contact: "Contact"
           owner_tip: The primary user responsible for this enterprise.
           notifications: Notifications
           notifications_tip: Notifications about orders will be send to this email address.
@@ -931,7 +930,6 @@ en_GB:
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
   email_confirmation_link_label: "Confirm this email address »"
   email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise. See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
-  email_confirmation_userguide: "User Guide"
   email_social: "Connect with Us:"
   email_contact: "Email us:"
   email_signoff: "Cheers,"
@@ -963,9 +961,6 @@ en_GB:
   email_special_instructions: "Your notes:"
   email_signup_greeting: Hello!
   email_signup_welcome: "Welcome to %{sitename}!"
-  email_signup_login: Your login
-  email_signup_email: Your login email is
-  email_signup_shop_html: "You can start shopping online now at %{link}."
   email_signup_text: "Thanks for joining the network. If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food! If you are a producer or food enterprise, we are excited to have you as a part of the network."
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
   producer_mail_greeting: "Dear"
@@ -987,6 +982,8 @@ en_GB:
   enterprises_next_closing: "Next order closing"
   enterprises_ready_for: "Ready for"
   enterprises_choose: "Choose when you want your order:"
+  maps_open: "Open"
+  maps_closed: "Closed"
   hubs_buy: "Shop for:"
   hubs_shopping_here: "Shopping here"
   hubs_orders_closed: "Orders closed"
@@ -1310,7 +1307,6 @@ en_GB:
   enterprise_about_headline: "Nice one!"
   enterprise_about_message: "Now let's flesh out the details about"
   enterprise_success: "Success! %{enterprise} added to the Open Food Network "
-  enterprise_registration_exit_message: "If you exit this wizard at any stage, you need to click the confirmation link in the email you have received. This will take you to your admin interface where you can continue setting up your profile."
   enterprise_description: "Short Description"
   enterprise_description_placeholder: "A short sentence describing your enterprise"
   enterprise_long_desc: "Long Description"
@@ -1351,8 +1347,6 @@ en_GB:
   registration_finished_headline: "Finished!"
   registration_finished_thanks: "Thanks for filling out the details for %{enterprise}."
   registration_finished_login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
-  registration_finished_activate: "Activate %{enterprise}."
-  registration_finished_activate_instruction_html: "We've sent a confirmation email to <strong>%{email}</strong> if it hasn't been activated before.<br/> Please follow the instructions there to make your enterprise visible on the Open Food Network."
   registration_finished_action: "Open Food Network home"
   registration_contact_name: 'Contact Name'
   registration_type_headline: "Last step to add %{enterprise}!"
@@ -1802,7 +1796,6 @@ en_GB:
   order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
-  order_cycles_no_permission_to_delete_error: "That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead."
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
@@ -2099,7 +2092,6 @@ en_GB:
       address: address
       adjustments: adjustments
       awaiting_return: awaiting return
-      canceled: canceled
       cart: cart
       complete: complete
       confirm: confirm
