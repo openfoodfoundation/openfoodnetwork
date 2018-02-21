@@ -54,26 +54,51 @@ describe OrderFactory do
     end
 
     context "when requested quantity is greater than available stock" do
-      before do
-        variant1.update_attribute(:count_on_hand, 2)
-        attrs[:line_items].first[:quantity] = 5
-      end
+      context "when no override is present" do
+        before do
+          variant1.update_attribute(:count_on_hand, 2)
+          attrs[:line_items].first[:quantity] = 5
+        end
 
-      context "when skip_stock_check is not requested" do
-        it "initialised the order but limits stock to the available amount" do
-          expect{ order }.to change{ Spree::Order.count }.by(1)
-          expect(order).to be_a Spree::Order
-          expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 2
+        context "when skip_stock_check is not requested" do
+          it "initialised the order but limits stock to the available amount" do
+            expect{ order }.to change{ Spree::Order.count }.by(1)
+            expect(order).to be_a Spree::Order
+            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 2
+          end
+        end
+
+        context "when skip_stock_check is requested" do
+          let(:opts) { { skip_stock_check: true } }
+
+          it "initialises the order with the requested quantity regardless" do
+            expect{ order }.to change{ Spree::Order.count }.by(1)
+            expect(order).to be_a Spree::Order
+            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 5
+          end
         end
       end
 
-      context "when skip_stock_check is requested" do
-        let(:opts) { { skip_stock_check: true } }
+      context "when an override is present" do
+        let!(:override) { create(:variant_override, hub_id: shop.id, variant_id: variant1.id, count_on_hand: 3) }
+        before { attrs[:line_items].first[:quantity] = 6 }
 
-        it "initialises the order with the requested quantity regardless" do
-          expect{ order }.to change{ Spree::Order.count }.by(1)
-          expect(order).to be_a Spree::Order
-          expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 5
+        context "when skip_stock_check is not requested" do
+          it "initialised the order but limits stock to the available amount" do
+            expect{ order }.to change{ Spree::Order.count }.by(1)
+            expect(order).to be_a Spree::Order
+            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 3
+          end
+        end
+
+        context "when skip_stock_check is requested" do
+          let(:opts) { { skip_stock_check: true } }
+
+          it "initialises the order with the requested quantity regardless" do
+            expect{ order }.to change{ Spree::Order.count }.by(1)
+            expect(order).to be_a Spree::Order
+            expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 6
+          end
         end
       end
     end

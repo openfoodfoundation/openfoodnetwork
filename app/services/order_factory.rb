@@ -25,6 +25,10 @@ class OrderFactory
     @customer ||= Customer.find(attrs[:customer_id])
   end
 
+  def shop
+    @shop ||= Enterprise.find(attrs[:distributor_id])
+  end
+
   def create_order
     @order = Spree::Order.create!(create_attrs)
   end
@@ -38,7 +42,8 @@ class OrderFactory
   def build_line_items
     attrs[:line_items].each do |li|
       next unless variant = Spree::Variant.find_by_id(li[:variant_id])
-      li[:quantity] = stock_limited_quantity(variant.on_hand, li[:quantity])
+      scoper.scope(variant)
+      li[:quantity] = stock_limited_quantity(variant.count_on_hand, li[:quantity])
       build_item_from(li)
     end
   end
@@ -67,5 +72,9 @@ class OrderFactory
   def stock_limited_quantity(stock, requested)
     return requested if opts[:skip_stock_check]
     [stock, requested].min
+  end
+
+  def scoper
+    @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(shop)
   end
 end
