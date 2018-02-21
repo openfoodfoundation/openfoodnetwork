@@ -605,12 +605,67 @@ describe Admin::SubscriptionsController, type: :controller do
         context "with authorisation" do
           before { shop.update_attributes(owner: user) }
 
-          it 'renders the paused subscription as json' do
-            spree_put :unpause, params
-            json_response = JSON.parse(response.body)
-            expect(json_response['paused_at']).to be nil
-            expect(json_response['id']).to eq subscription.id
-            expect(subscription.reload.paused_at).to be nil
+          context "when at least one order in an open order cycle is 'complete'" do
+            let(:order_cycle) { subscription.order_cycles.first }
+            let(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle) }
+            let!(:order) { proxy_order.initialise_order! }
+
+            before { while !order.completed? do break unless order.next! end }
+
+            context "when no associated orders are 'canceled'" do
+              it 'renders the unpaused subscription as json, leaves the order untouched' do
+                spree_put :unpause, params
+                json_response = JSON.parse(response.body)
+                expect(json_response['paused_at']).to be nil
+                expect(json_response['id']).to eq subscription.id
+                expect(subscription.reload.paused_at).to be nil
+                expect(order.reload.state).to eq 'complete'
+                expect(proxy_order.reload.canceled_at).to be nil
+              end
+            end
+
+            context "when at least one associate orders is 'canceled'" do
+              before do
+                Spree::MailMethod.create!(
+                  environment: Rails.env,
+                  preferred_mails_from: 'spree@example.com'
+                )
+                proxy_order.cancel
+              end
+
+              context "when no 'canceled_orders' directive has been provided" do
+                it "renders a message, informing the user that canceled order can be resumed" do
+                  spree_put :unpause, params
+                  expect(response.status).to be 409
+                  json_response = JSON.parse(response.body)
+                  expect(json_response['errors']['canceled_orders']).to eq I18n.t('admin.subscriptions.resume_canceled_orders_msg')
+                end
+              end
+
+              context "when 'notified' has been provided as the 'canceled_orders' directive" do
+                before { params.merge!(canceled_orders: 'notified') }
+
+                it 'renders the unpaused subscription as json, leaves the order untouched' do
+                  spree_put :unpause, params
+                  json_response = JSON.parse(response.body)
+                  expect(json_response['paused_at']).to be nil
+                  expect(json_response['id']).to eq subscription.id
+                  expect(subscription.reload.paused_at).to be nil
+                  expect(order.reload.state).to eq 'canceled'
+                  expect(proxy_order.reload.canceled_at).to_not be nil
+                end
+              end
+            end
+          end
+
+          context "when no associated orders are 'complete'" do
+            it 'renders the unpaused subscription as json' do
+              spree_put :unpause, params
+              json_response = JSON.parse(response.body)
+              expect(json_response['paused_at']).to be nil
+              expect(json_response['id']).to eq subscription.id
+              expect(subscription.reload.paused_at).to be nil
+            end
           end
         end
       end
