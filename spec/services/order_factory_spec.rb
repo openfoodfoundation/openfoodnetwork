@@ -1,11 +1,11 @@
 describe OrderFactory do
-  let(:variant1) { create(:variant) }
-  let(:variant2) { create(:variant) }
+  let(:variant1) { create(:variant, price: 5.0) }
+  let(:variant2) { create(:variant, price: 7.0) }
   let(:user) { create(:user) }
   let(:customer) { create(:customer, user: user) }
   let(:shop) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }
-  let(:shipping_method) { create(:shipping_method) }
+  let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 5.0)) }
   let(:payment_method) { create(:payment_method) }
   let(:ship_address) { create(:address) }
   let(:bill_address) { create(:address) }
@@ -40,6 +40,7 @@ describe OrderFactory do
       expect(order.payments.first.payment_method).to eq payment_method
       expect(order.bill_address).to eq bill_address
       expect(order.ship_address).to eq ship_address
+      expect(order.total).to eq 43.0
       expect(order.complete?).to be false
     end
 
@@ -99,6 +100,26 @@ describe OrderFactory do
             expect(order).to be_a Spree::Order
             expect(order.line_items.find_by_variant_id(variant1.id).quantity).to eq 6
           end
+        end
+      end
+    end
+
+    describe "determining the price for line items" do
+      context "when no override is present" do
+        it "uses the price from the variant" do
+          expect{ order }.to change{ Spree::Order.count }.by(1)
+          expect(order.line_items.find_by_variant_id(variant1.id).price).to eq 5.0
+          expect(order.total).to eq 43.0
+        end
+      end
+
+      context "when an override is present" do
+        let!(:override) { create(:variant_override, hub_id: shop.id, variant_id: variant1.id, price: 3.0) }
+
+        it "uses the price from the override" do
+          expect{ order }.to change{ Spree::Order.count }.by(1)
+          expect(order.line_items.find_by_variant_id(variant1.id).price).to eq 3.0
+          expect(order.total).to eq 39.0
         end
       end
     end

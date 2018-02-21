@@ -44,15 +44,14 @@ class OrderFactory
       next unless variant = Spree::Variant.find_by_id(li[:variant_id])
       scoper.scope(variant)
       li[:quantity] = stock_limited_quantity(variant.count_on_hand, li[:quantity])
+      li[:price] = variant.price
       build_item_from(li)
     end
   end
 
   def build_item_from(attrs)
     @order.line_items.build(
-      variant_id: attrs[:variant_id],
-      quantity: attrs[:quantity],
-      skip_stock_check: opts[:skip_stock_check]
+      attrs.merge(skip_stock_check: opts[:skip_stock_check])
     )
   end
 
