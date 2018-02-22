@@ -958,6 +958,10 @@ en:
         why_dont_you_add_one: Why don't you add one? :)
         no_matching_subscriptions: No matching subscriptions found
 
+    schedules:
+      destroy:
+        associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"

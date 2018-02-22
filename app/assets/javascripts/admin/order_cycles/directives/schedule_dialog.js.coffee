@@ -31,6 +31,13 @@ angular.module("admin.orderCycles").directive 'scheduleDialog', ($window, $compi
       if confirm(t('are_you_sure'))
         Schedules.remove(scope.schedule).$promise.then (data) ->
           scope.close()
+        , (response) ->
+          errors = response.data.errors
+          if errors?
+            scope.errors.push errors[0]
+          else
+            scope.errors.push "Could not delete schedule: #{scope.schedule.name}"
+
 
     scope.loadMore = ->
       scope.showMore().then ->

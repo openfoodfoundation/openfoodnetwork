@@ -4,6 +4,7 @@ require 'open_food_network/proxy_order_syncer'
 module Admin
   class SchedulesController < ResourceController
     before_filter :check_editable_order_cycle_ids, only: [:create, :update]
+    before_filter :check_dependent_subscriptions, only: [:destroy]
     create.after :sync_subscriptions
     update.after :sync_subscriptions
 
@@ -47,6 +48,11 @@ module Admin
       result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
       params[:schedule][:order_cycle_ids] = result
       @object.order_cycle_ids = result
+    end
+
+    def check_dependent_subscriptions
+      return if Subscription.where(schedule_id: @schedule).empty?
+      render json: { errors: [t('admin.schedules.destroy.associated_subscriptions_error')] }, status: :conflict
     end
 
     def permissions

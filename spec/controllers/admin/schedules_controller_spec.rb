@@ -200,8 +200,20 @@ describe Admin::SchedulesController, type: :controller do
         context "where I manage at least one of the schedule's coordinators" do
           before { params.merge!(id: coordinated_schedule.id) }
 
-          it "allows me to destroy the schedule" do
-            expect { spree_delete :destroy, params }.to change(Schedule, :count).by(-1)
+          context "when no dependent subscriptions are present" do
+            it "allows me to destroy the schedule" do
+              expect { spree_delete :destroy, params }.to change(Schedule, :count).by(-1)
+            end
+          end
+
+          context "when a dependent subscription is present" do
+            let!(:subscription) { create(:subscription, schedule: coordinated_schedule) }
+
+            it "returns an error message and prevents me from deleting the schedule" do
+              expect { spree_delete :destroy, params }.to_not change(Schedule, :count)
+              json_response = JSON.parse(response.body)
+              expect(json_response["errors"]).to include I18n.t('admin.schedules.destroy.associated_subscriptions_error')
+            end
           end
         end
 

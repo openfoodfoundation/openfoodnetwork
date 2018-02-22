@@ -39,12 +39,6 @@ angular.module("admin.resources").factory "Schedules", ($q, $injector, RequestMo
             orderCycle.schedules.splice(i, 1) for s, i in orderCycle.schedules by -1 when s.id == schedule.id
         delete @byID[schedule.id]
         StatusMessage.display 'success', "#{t('admin.order_cycles.index.deleted_schedule')}: '#{schedule.name}'"
-      , (response) =>
-        errors = response.data.errors
-        if errors?
-          InfoDialog.open 'error', errors[0]
-        else
-          InfoDialog.open 'error', "Could not delete schedule: #{schedule.name}"
 
     index: ->
       request = ScheduleResource.index (data) => @load(data)
