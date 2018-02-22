@@ -14,7 +14,7 @@ class ProxyOrder < ActiveRecord::Base
   scope :not_closed, -> { joins(:order_cycle).merge(OrderCycle.not_closed) }
   scope :canceled, -> { where('proxy_orders.canceled_at IS NOT NULL') }
   scope :not_canceled, -> { where('proxy_orders.canceled_at IS NULL') }
-  scope :placed_and_open, -> { joins(:order).not_closed.where(spree_orders: { state: 'complete' }) }
+  scope :placed_and_open, -> { joins(:order).not_closed.where(spree_orders: { state: ['complete', 'resumed'] }) }
 
   def state
     # NOTE: the order is important here
