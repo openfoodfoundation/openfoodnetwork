@@ -1,3 +1,7 @@
+# Each Subscription has many ProxyOrders, one for each OrderCycle to which the Subscription applies
+# Proxy pattern allows for deferral of initialization until absolutely required
+# This reduces the need to keep Orders in sync with their parent Subscriptions
+
 class ProxyOrder < ActiveRecord::Base
   belongs_to :order, class_name: 'Spree::Order', dependent: :destroy
   belongs_to :subscription
