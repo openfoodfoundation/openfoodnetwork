@@ -523,10 +523,10 @@ en:
         reset_absent?: Reset absent products?
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
-        default_stock: Set default stock level
-        default_tax_cat: Set default tax category
-        default_shipping_cat: Set default shipping category
-        default_available_date: Set default available date
+        default_stock: Set stock level
+        default_tax_cat: Set tax category
+        default_shipping_cat: Set shipping category
+        default_available_date: Set available date
         validation_overview: Import validation overview
         entries_found: Entries found in imported file
         entries_with_errors: Items contain errors and will not be imported
