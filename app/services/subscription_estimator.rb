@@ -15,12 +15,13 @@ class SubscriptionEstimator
 
   def assign_price_estimates
     subscription_line_items.each do |item|
-      item.price_estimate = price_estimate_for(item.variant)
+      item.price_estimate =
+        price_estimate_for(item.variant, item.price_estimate_was)
     end
   end
 
-  def price_estimate_for(variant)
-    return 0.0 unless fee_calculator && variant
+  def price_estimate_for(variant, fallback)
+    return fallback unless fee_calculator && variant
     fees = fee_calculator.indexed_fees_for(variant)
     (variant.price + fees).to_d
   end

@@ -13,22 +13,29 @@ describe SubscriptionEstimator do
       sli1.variant.update_attributes(price: 1.0)
       sli2.variant.update_attributes(price: 2.0)
       sli3.variant.update_attributes(price: 3.0)
+
+      # Simulating assignment of attrs from params
+      sli1.assign_attributes(price_estimate: 7.0)
+      sli2.assign_attributes(price_estimate: 8.0)
+      sli3.assign_attributes(price_estimate: 9.0)
     end
 
-    context "when a fee calculator cannot be found" do
+    context "when a insufficient information exists to calculate price estimates" do
       before do
+        # This might be because a shop has not been assigned yet, or no
+        # current or future order cycles exist for the schedule
         allow(estimator).to receive(:fee_calculator) { nil }
       end
 
-      it "removes price estimates from all items" do
+      it "resets the price estimates for all items" do
         estimator.estimate!
-        subscription.subscription_line_items.each do |item|
-          expect(item.price_estimate).to eq 0
-        end
+        expect(sli1.price_estimate).to eq 4.0
+        expect(sli2.price_estimate).to eq 5.0
+        expect(sli3.price_estimate).to eq 6.0
       end
     end
 
-    context "when a fee calculator is present" do
+    context "when sufficient information to calculate price estimates exists" do
       let(:fee_calculator) { instance_double(OpenFoodNetwork::EnterpriseFeeCalculator) }
 
       before do
