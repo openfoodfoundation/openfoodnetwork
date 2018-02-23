@@ -21,6 +21,7 @@ describe SubscriptionForm do
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
     let!(:address) { create(:address) }
+    let!(:fee_calculator) { OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, order_cycle2) }
     let(:subscription) { Subscription.new }
 
     let!(:params) {
@@ -35,19 +36,23 @@ describe SubscriptionForm do
         begins_at: 4.days.ago,
         ends_at: 14.days.from_now,
         subscription_line_items_attributes: [
-          {variant_id: variant1.id, quantity: 1},
-          {variant_id: variant2.id, quantity: 2},
-          {variant_id: variant3.id, quantity: 3}
+          {variant_id: variant1.id, quantity: 1, price_estimate: 7.0},
+          {variant_id: variant2.id, quantity: 2, price_estimate: 8.0},
+          {variant_id: variant3.id, quantity: 3, price_estimate: 9.0}
         ]
       } }
 
-    let(:form) { SubscriptionForm.new(subscription, params) }
+    let(:form) { SubscriptionForm.new(subscription, params, fee_calculator) }
 
     it "creates orders for each order cycle in the schedule" do
       Spree::Config.set allow_backorders: false
       expect(form.save).to be true
 
       expect(subscription.proxy_orders.count).to be 2
+      expect(subscription.subscription_line_items.count).to be 3
+      expect(subscription.subscription_line_items[0].price_estimate).to eq 13.75
+      expect(subscription.subscription_line_items[1].price_estimate).to eq 7.75
+      expect(subscription.subscription_line_items[2].price_estimate).to eq 4.25
 
       # This order cycle has already closed, so no order is initialized
       proxy_order1 = subscription.proxy_orders.find_by_order_cycle_id(order_cycle1.id)
@@ -86,58 +91,6 @@ describe SubscriptionForm do
       # Future order cycle closing after ends_at
       proxy_order4 = subscription.proxy_orders.find_by_order_cycle_id(order_cycle4.id)
       expect(proxy_order4).to be nil
-    end
-  end
-
-  describe "validating price_estimates on subscription line items" do
-    let(:params) { { } }
-    let(:form) { SubscriptionForm.new(nil, params) }
-
-    context "when line_item params are present" do
-      before { allow(form).to receive(:price_estimate_for) }
-
-      it "does nothing" do
-        form.send(:validate_price_estimates)
-        expect(form.params[:subscription_line_items_attributes]).to be nil
-      end
-    end
-
-    context "when line_item params are present" do
-      before do
-        params[:subscription_line_items_attributes] = [{ id: 1, price_estimate: 2.50 }, { id: 2, price_estimate: 3.50 }]
-      end
-
-      context "when no fee calculator is present" do
-        before { allow(form).to receive(:price_estimate_for) }
-
-        it "clears price estimates on all subscription line item attributes" do
-          form.send(:validate_price_estimates)
-          attrs = form.params[:subscription_line_items_attributes]
-          expect(attrs.first.keys).to_not include :price_estimate
-          expect(attrs.last.keys).to_not include :price_estimate
-          expect(form).to_not have_received(:price_estimate_for)
-        end
-      end
-
-      context "when a fee calculator is present" do
-        let(:variant) { create(:variant) }
-        let(:fee_calculator) { double(:fee_calculator) }
-
-        before do
-          allow(form).to receive(:fee_calculator) { fee_calculator }
-          allow(form).to receive(:price_estimate_for) { 5.30 }
-          params[:subscription_line_items_attributes].first[:variant_id] = variant.id
-        end
-
-        it "clears price estimates on subscription line item attributes without variant ids" do
-          form.send(:validate_price_estimates)
-          attrs = form.params[:subscription_line_items_attributes]
-          expect(attrs.first.keys).to include :price_estimate
-          expect(attrs.last.keys).to_not include :price_estimate
-          expect(attrs.first[:price_estimate]).to eq 5.30
-          expect(form).to have_received(:price_estimate_for).with(variant)
-        end
-      end
     end
   end
 end
