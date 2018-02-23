@@ -4,8 +4,7 @@ describe SubscriptionEstimator do
     let!(:sli1) { subscription.subscription_line_items.first }
     let!(:sli2) { subscription.subscription_line_items.second }
     let!(:sli3) { subscription.subscription_line_items.third }
-    let(:fee_calculator) { nil }
-    let(:estimator) { SubscriptionEstimator.new(subscription, fee_calculator) }
+    let(:estimator) { SubscriptionEstimator.new(subscription) }
 
     before do
       sli1.update_attributes(price_estimate: 4.0)
@@ -16,7 +15,11 @@ describe SubscriptionEstimator do
       sli3.variant.update_attributes(price: 3.0)
     end
 
-    context "when a fee calculator is not present" do
+    context "when a fee calculator cannot be found" do
+      before do
+        allow(estimator).to receive(:fee_calculator) { nil }
+      end
+
       it "removes price estimates from all items" do
         estimator.estimate!
         subscription.subscription_line_items.each do |item|
@@ -29,6 +32,7 @@ describe SubscriptionEstimator do
       let(:fee_calculator) { instance_double(OpenFoodNetwork::EnterpriseFeeCalculator) }
 
       before do
+        allow(estimator).to receive(:fee_calculator) { fee_calculator }
         allow(fee_calculator).to receive(:indexed_fees_for).with(sli1.variant) { 1.0 }
         allow(fee_calculator).to receive(:indexed_fees_for).with(sli2.variant) { 0.0 }
         allow(fee_calculator).to receive(:indexed_fees_for).with(sli3.variant) { 3.0 }

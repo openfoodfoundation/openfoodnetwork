@@ -1,7 +1,6 @@
 class SubscriptionEstimator
-  def initialize(subscription, fee_calculator)
+  def initialize(subscription)
     @subscription = subscription
-    @fee_calculator = fee_calculator
   end
 
   def estimate!
@@ -10,7 +9,7 @@ class SubscriptionEstimator
 
   private
 
-  attr_accessor :subscription, :fee_calculator
+  attr_accessor :subscription
 
   delegate :subscription_line_items, to: :subscription
 
@@ -24,5 +23,12 @@ class SubscriptionEstimator
     return 0.0 unless fee_calculator && variant
     fees = fee_calculator.indexed_fees_for(variant)
     (variant.price + fees).to_d
+  end
+
+  def fee_calculator
+    return @fee_calculator unless @fee_calculator.nil?
+    shop, next_oc = subscription.shop, subscription.schedule.andand.current_or_next_order_cycle
+    return nil unless shop && next_oc
+    @fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc)
   end
 end

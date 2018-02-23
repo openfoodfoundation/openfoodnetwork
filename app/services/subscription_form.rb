@@ -6,10 +6,10 @@ class SubscriptionForm
   delegate :json_errors, :valid?, to: :validator
   delegate :order_update_issues, to: :order_syncer
 
-  def initialize(subscription, params = {}, fee_calculator = nil)
+  def initialize(subscription, params = {})
     @subscription = subscription
     @params = params
-    @estimator = SubscriptionEstimator.new(subscription, fee_calculator)
+    @estimator = SubscriptionEstimator.new(subscription)
     @validator = SubscriptionValidator.new(subscription)
     @order_syncer = OrderSyncer.new(subscription)
   end

@@ -21,7 +21,6 @@ describe SubscriptionForm do
     let!(:payment_method) { create(:payment_method, distributors: [shop]) }
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
     let!(:address) { create(:address) }
-    let!(:fee_calculator) { OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, order_cycle2) }
     let(:subscription) { Subscription.new }
 
     let!(:params) {
@@ -42,7 +41,7 @@ describe SubscriptionForm do
         ]
       } }
 
-    let(:form) { SubscriptionForm.new(subscription, params, fee_calculator) }
+    let(:form) { SubscriptionForm.new(subscription, params) }
 
     it "creates orders for each order cycle in the schedule" do
       Spree::Config.set allow_backorders: false
