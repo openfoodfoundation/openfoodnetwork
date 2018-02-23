@@ -11,7 +11,7 @@ class SubscriptionEstimator
 
   attr_accessor :subscription
 
-  delegate :subscription_line_items, to: :subscription
+  delegate :subscription_line_items, :shop, to: :subscription
 
   def assign_price_estimates
     subscription_line_items.each do |item|
@@ -29,12 +29,12 @@ class SubscriptionEstimator
 
   def fee_calculator
     return @fee_calculator unless @fee_calculator.nil?
-    shop, next_oc = subscription.shop, subscription.schedule.andand.current_or_next_order_cycle
+    next_oc = subscription.schedule.andand.current_or_next_order_cycle
     return nil unless shop && next_oc
     @fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc)
   end
 
   def scoper
-    OpenFoodNetwork::ScopeVariantToHub.new(subscription.shop)
+    OpenFoodNetwork::ScopeVariantToHub.new(shop)
   end
 end
