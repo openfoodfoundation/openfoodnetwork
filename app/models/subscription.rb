@@ -57,6 +57,11 @@ class Subscription < ActiveRecord::Base
     "active"
   end
 
+  # Used to calculators to estimate fees
+  def line_items
+    subscription_line_items
+  end
+
   private
 
   def pending?

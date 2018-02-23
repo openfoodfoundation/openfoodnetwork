@@ -10,5 +10,13 @@ class SubscriptionLineItem < ActiveRecord::Base
     (price_estimate || 0) * (quantity || 0)
   end
 
+  # Used to calculators to estimate fees
+  alias_method :amount, :total_estimate
+
+  # Used to calculators to estimate fees
+  def price
+    price_estimate
+  end
+
   default_scope order('id ASC')
 end
