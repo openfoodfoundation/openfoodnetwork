@@ -8,8 +8,11 @@ angular.module("admin.subscriptions").factory 'SubscriptionFunctions', ($injecto
       subtotal += item.price_estimate * item.quantity
     , 0
 
+  estimatedFees: ->
+    @shipping_fee_estimate + @payment_fee_estimate
+
   estimatedTotal: ->
-    @estimatedSubtotal()
+    @estimatedSubtotal() + @estimatedFees()
 
   customer: ->
     return unless @customer_id
