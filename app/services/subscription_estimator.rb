@@ -1,3 +1,7 @@
+# Responsible for estimating prices and fees for subscriptions
+# Used by SubscriptionForm as part of the create/update process
+# The values calculated here are intended to be persisted in the db
+
 class SubscriptionEstimator
   def initialize(subscription)
     @subscription = subscription
