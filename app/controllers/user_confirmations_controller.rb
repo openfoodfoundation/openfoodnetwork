@@ -30,7 +30,7 @@ class UserConfirmationsController < DeviseController
 
   protected
 
-  def after_confirmation_path_for(_resource)
+  def after_confirmation_path_for(resource)
     result =
       if resource.errors.empty?
         'confirmed'
