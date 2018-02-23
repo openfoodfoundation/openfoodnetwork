@@ -22,6 +22,7 @@ class SubscriptionEstimator
 
   def price_estimate_for(variant, fallback)
     return fallback unless fee_calculator && variant
+    scoper.scope(variant)
     fees = fee_calculator.indexed_fees_for(variant)
     (variant.price + fees).to_d
   end
@@ -31,5 +32,9 @@ class SubscriptionEstimator
     shop, next_oc = subscription.shop, subscription.schedule.andand.current_or_next_order_cycle
     return nil unless shop && next_oc
     @fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc)
+  end
+
+  def scoper
+    OpenFoodNetwork::ScopeVariantToHub.new(subscription.shop)
   end
 end

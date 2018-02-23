@@ -45,11 +45,25 @@ describe SubscriptionEstimator do
         allow(fee_calculator).to receive(:indexed_fees_for).with(sli3.variant) { 3.0 }
       end
 
-      it "recalculates price_estimates based on variant prices and associated fees" do
-        estimator.estimate!
-        expect(sli1.price_estimate).to eq 2.0
-        expect(sli2.price_estimate).to eq 2.0
-        expect(sli3.price_estimate).to eq 6.0
+      context "when no variant overrides apply" do
+        it "recalculates price_estimates based on variant prices and associated fees" do
+          estimator.estimate!
+          expect(sli1.price_estimate).to eq 2.0
+          expect(sli2.price_estimate).to eq 2.0
+          expect(sli3.price_estimate).to eq 6.0
+        end
+      end
+
+      context "when variant overrides apply" do
+        let!(:override1) { create(:variant_override, hub: subscription.shop, variant: sli1.variant, price: 1.2) }
+        let!(:override2) { create(:variant_override, hub: subscription.shop, variant: sli2.variant, price: 2.3) }
+
+        it "recalculates price_estimates based on override prices and associated fees" do
+          estimator.estimate!
+          expect(sli1.price_estimate).to eq 2.2
+          expect(sli2.price_estimate).to eq 2.3
+          expect(sli3.price_estimate).to eq 6.0
+        end
       end
     end
   end
