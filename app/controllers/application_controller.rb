@@ -67,7 +67,8 @@ class ApplicationController < ActionController::Base
 
   def embedded_shopfront_referer
     return if request.referer.blank?
-    URI(request.referer).host.sub!(/^www./, '')
+    domain = URI(request.referer).host.downcase
+    domain.start_with?('www.') ? domain[4..-1] : domain
   end
 
   def embeddable?
