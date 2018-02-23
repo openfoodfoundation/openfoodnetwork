@@ -7,6 +7,9 @@ module Api
         "#{object.variant.product.name} - #{object.variant.full_name}"
       end
 
+      # Returns price estimate based on either the estimated price 
+      # for that item or the expected fees for that item.
+      # Otherwise returns "?"
       def price_estimate
         if object.price_estimate
           object.price_estimate
