@@ -5,7 +5,7 @@
 
 .modal-centered {
   text-align: center;
-
+  
   p {
     margin-bottom: 0;
   }
@@ -95,6 +95,9 @@
 // CONTACT Enterprise
 
 .contact-container {
+  a {
+    word-wrap: break-word;
+  }
   a:hover {
     text-decoration: underline;
   }
