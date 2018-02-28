@@ -430,6 +430,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
       let(:product) { create(:simple_product) }
       let(:variant) { create(:variant, product: product) }
+      let(:unregistered_customer) { create(:customer, user: nil, enterprise: distributor) }
 
       before do
         add_variant_to_order_cycle(exchange, variant)
@@ -468,9 +469,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           let!(:customer) { create(:customer, user: user, enterprise: distributor) }
 
           it "shows just products" do
-            visit shop_path
-            expect(page).to have_no_content "This shop is for customers only."
-            expect(page).to have_content product.name
+            shows_products_without_customer_warning
           end
         end
 
@@ -478,9 +477,7 @@ feature "As a consumer I want to shop with a distributor", js: true do
           let!(:role) { create(:enterprise_role, user: user, enterprise: distributor) }
 
           it "shows just products" do
-            visit shop_path
-            expect(page).to have_no_content "This shop is for customers only."
-            expect(page).to have_content product.name
+            shows_products_without_customer_warning
           end
         end
 
@@ -491,12 +488,28 @@ feature "As a consumer I want to shop with a distributor", js: true do
           end
 
           it "shows just products" do
-            visit shop_path
-            expect(page).to have_no_content "This shop is for customers only."
-            expect(page).to have_content product.name
+            shows_products_without_customer_warning
           end
         end
       end
+
+      context "when previously unregistered customer registers" do
+        let!(:returning_user) { create(:user, email: unregistered_customer.email) }
+
+        before do
+          quick_login_as returning_user
+        end
+
+        it "shows the products without customer only message" do
+          shows_products_without_customer_warning
+        end
+      end
     end
+  end
+
+  def shows_products_without_customer_warning
+    visit shop_path
+    expect(page).to have_no_content "This shop is for customers only."
+    expect(page).to have_content product.name
   end
 end
