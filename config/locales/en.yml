@@ -2211,6 +2211,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     closes: closes
     closed: closed
     admin:
+      enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
         got_it: Got it
         tag_rule_help:
