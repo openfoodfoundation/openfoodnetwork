@@ -14,6 +14,7 @@ class OrderCycle < ActiveRecord::Base
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
   validates_presence_of :name, :coordinator_id
+  validate :orders_close_at_after_orders_open_at?
 
   after_save :refresh_products_cache
 
@@ -271,5 +272,11 @@ class OrderCycle < ActiveRecord::Base
     product.has_variants? &&
       distributed_variants.include?(product.master) &&
       (product.variants & distributed_variants).empty?
+  end
+
+  def orders_close_at_after_orders_open_at?
+    return if orders_open_at.blank? || orders_close_at.blank?
+    return if orders_close_at > orders_open_at
+    errors.add(:orders_close_at, :after_orders_open_at)
   end
 end

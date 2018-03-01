@@ -45,7 +45,10 @@ angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCy
           form.$setPristine() if form?
           StatusMessage.display('success', "Order cycles have been updated.")
         , (response) =>
-          StatusMessage.display('failure', "Oh no! I was unable to save your changes.")
+          if response.data.errors?
+            StatusMessage.display('failure', response.data.errors[0])
+          else
+            StatusMessage.display('failure', "Oh no! I was unable to save your changes.")
 
     saved: (order_cycle) ->
       @diff(order_cycle).length == 0

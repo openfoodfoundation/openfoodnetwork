@@ -66,6 +66,8 @@ en:
         email: Customer E-Mail
       spree/payment:
         amount: Amount
+      order_cycle:
+        orders_close_at: Close date
     errors:
       models:
         spree/user:
@@ -74,6 +76,10 @@ en:
               taken: "There's already an account for this email. Please login or reset your password."
         spree/order:
           no_card: There are no valid credit cards available
+        order_cycle:
+          attributes:
+            orders_close_at:
+              after_orders_open_at: must be after open date
   activemodel:
     errors:
       models:

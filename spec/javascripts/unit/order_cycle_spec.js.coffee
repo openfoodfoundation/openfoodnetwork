@@ -812,7 +812,7 @@ describe 'OrderCycle services', ->
         spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
         $httpBackend.expectPOST('/admin/order_cycles.json', {
           order_cycle: 'this is the submit data'
-          }).respond {success: false}
+        }).respond 400, { errors: [] }
 
         OrderCycle.create('/destination/page')
         $httpBackend.flush()
@@ -840,7 +840,7 @@ describe 'OrderCycle services', ->
         spyOn(OrderCycle, 'dataForSubmit').and.returnValue('this is the submit data')
         $httpBackend.expectPUT('/admin/order_cycles.json?reloading=1', {
           order_cycle: 'this is the submit data'
-          }).respond {success: false}
+        }).respond 400, { errors: [] }
 
         OrderCycle.update('/destination/page')
         $httpBackend.flush()

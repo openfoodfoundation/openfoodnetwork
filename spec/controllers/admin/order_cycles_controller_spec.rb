@@ -13,10 +13,10 @@ module Admin
     describe "#index" do
       describe "when the user manages a coordinator" do
         let!(:coordinator) { create(:distributor_enterprise, owner: distributor_owner) }
-        let!(:oc1) { create(:simple_order_cycle, orders_close_at: 60.days.ago ) }
-        let!(:oc2) { create(:simple_order_cycle, orders_close_at: 40.days.ago ) }
-        let!(:oc3) { create(:simple_order_cycle, orders_close_at: 20.days.ago ) }
-        let!(:oc4) { create(:simple_order_cycle, orders_close_at: nil ) }
+        let!(:oc1) { create(:simple_order_cycle, orders_open_at: 70.days.ago, orders_close_at: 60.days.ago ) }
+        let!(:oc2) { create(:simple_order_cycle, orders_open_at: 70.days.ago, orders_close_at: 40.days.ago ) }
+        let!(:oc3) { create(:simple_order_cycle, orders_open_at: 70.days.ago, orders_close_at: 20.days.ago ) }
+        let!(:oc4) { create(:simple_order_cycle, orders_open_at: 70.days.ago, orders_close_at: nil ) }
 
         context "html" do
           it "doesn't load any data" do
@@ -125,18 +125,34 @@ module Admin
             allow(form_applicator_mock).to receive(:go!) { nil }
           end
 
-           it "does not run the OrderCycleFormApplicator" do
-             expect(order_cycle.exchanges.incoming).to eq [incoming_exchange]
-             expect(order_cycle.exchanges.outgoing).to eq [outgoing_exchange]
-             expect(order_cycle.prefers_product_selection_from_coordinator_inventory_only?).to be false
-             spree_put :update, id: order_cycle.id, order_cycle: { name: 'Some new name', preferred_product_selection_from_coordinator_inventory_only: true }
-             expect(form_applicator_mock).to_not have_received(:go!)
-             order_cycle.reload
-             expect(order_cycle.exchanges.incoming).to eq [incoming_exchange]
-             expect(order_cycle.exchanges.outgoing).to eq [outgoing_exchange]
-             expect(order_cycle.name).to eq 'Some new name'
-             expect(order_cycle.prefers_product_selection_from_coordinator_inventory_only?).to be true
-           end
+          it "does not run the OrderCycleFormApplicator" do
+            expect(order_cycle.exchanges.incoming).to eq [incoming_exchange]
+            expect(order_cycle.exchanges.outgoing).to eq [outgoing_exchange]
+            expect(order_cycle.prefers_product_selection_from_coordinator_inventory_only?).to be false
+            spree_put :update, id: order_cycle.id, order_cycle: { name: 'Some new name', preferred_product_selection_from_coordinator_inventory_only: true }
+            expect(form_applicator_mock).to_not have_received(:go!)
+            order_cycle.reload
+            expect(order_cycle.exchanges.incoming).to eq [incoming_exchange]
+            expect(order_cycle.exchanges.outgoing).to eq [outgoing_exchange]
+            expect(order_cycle.name).to eq 'Some new name'
+            expect(order_cycle.prefers_product_selection_from_coordinator_inventory_only?).to be true
+          end
+        end
+
+        context "when a validation error occurs" do
+          let(:params) {
+            {
+              format: :json,
+              id: order_cycle.id,
+              order_cycle: { orders_open_at: order_cycle.orders_close_at + 1.day }
+            }
+          }
+
+          it "returns an error message" do
+            spree_put :update, params
+            json_response = JSON.parse(response.body)
+            expect(json_response['errors']).to be_present
+          end
         end
       end
 
@@ -206,15 +222,18 @@ module Admin
       let!(:coordinator) { oc.coordinator }
 
       context "when I manage the coordinator of an order cycle" do
-        before { create(:enterprise_role, user: distributor_owner, enterprise: coordinator) }
-
-        it "updates order cycle properties" do
-          spree_put :bulk_update, format: :json, order_cycle_set: { collection_attributes: { '0' => {
+        let(:params) do
+          { format: :json, order_cycle_set: { collection_attributes: { '0' => {
             id: oc.id,
             orders_open_at: Date.current - 21.days,
             orders_close_at: Date.current + 21.days,
-          } } }
+          } } } }
+        end
 
+        before { create(:enterprise_role, user: distributor_owner, enterprise: coordinator) }
+
+        it "updates order cycle properties" do
+          spree_put :bulk_update, params
           oc.reload
           expect(oc.orders_open_at.to_date).to eq Date.current - 21.days
           expect(oc.orders_close_at.to_date).to eq Date.current + 21.days
@@ -226,6 +245,18 @@ module Admin
           end.to change(oc, :orders_open_at).by(0)
           json_response = JSON.parse(response.body)
           expect(json_response['errors']).to eq I18n.t('admin.order_cycles.bulk_update.no_data')
+        end
+
+        context "when a validation error occurs" do
+          before do
+            params[:order_cycle_set][:collection_attributes]['0'][:orders_open_at] = Date.current + 25.days
+          end
+
+          it "returns an error message" do
+            spree_put :bulk_update, params
+            json_response = JSON.parse(response.body)
+            expect(json_response['errors']).to be_present
+          end
         end
       end
 

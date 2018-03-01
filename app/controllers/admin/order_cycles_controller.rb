@@ -51,10 +51,10 @@ module Admin
           invoke_callbacks(:create, :after)
           flash[:notice] = I18n.t(:order_cycles_create_notice)
           format.html { redirect_to admin_order_cycles_path }
-          format.json { render :json => {:success => true} }
+          format.json { render :json => { success: true } }
         else
           format.html
-          format.json { render :json => {:success => false} }
+          format.json { render :json => { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity }
         end
       end
     end
@@ -71,9 +71,9 @@ module Admin
           invoke_callbacks(:update, :after)
           flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
           format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
-          format.json { render :json => {:success => true}  }
+          format.json { render :json => { :success => true } }
         else
-          format.json { render :json => {:success => false} }
+          format.json { render :json => { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity }
         end
       end
     end
@@ -85,7 +85,8 @@ module Admin
         end
       else
         respond_to do |format|
-          format.json { render :json => {:success => false} }
+          order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
+          format.json { render :json => { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity }
         end
       end
     end
@@ -219,7 +220,7 @@ module Admin
     end
 
     def order_cycle_set
-      OrderCycleSet.new(@order_cycles, params[:order_cycle_set])
+      @order_cycle_set ||= OrderCycleSet.new(@order_cycles, params[:order_cycle_set])
     end
 
     def require_order_cycle_set_params
