@@ -822,6 +822,12 @@ de_DE:
         allowed_payment_method_types_tip: Zurzeit können nur Cash- und Stripe-Zahlungsmethoden verwendet werden
         credit_card: Kreditkarte
         no_cards_available: Keine Karten verfügbar
+      loading_flash:
+        loading: LADEN VON ABONNEMENTS
+      review:
+        details: Einzelheiten
+        address: Adresse
+        products: Produkte
       product_already_in_order: Dieses Produkt wurde bereits zur Bestellung hinzugefügt. Bitte bearbeiten Sie die Menge direkt.
       orders:
         number: Nummer
@@ -2018,6 +2024,7 @@ de_DE:
     choose: Wählen
     resolve_errors: Bitte beheben Sie die folgenden Fehler
     more_items: "+ %{count} Mehr"
+    closes: schließt
     admin:
       modals:
         got_it: Ich habs
@@ -2361,15 +2368,26 @@ de_DE:
         unconfirmed_email: "Ausstehende E-Mail-Bestätigung für: %{unconfirmed_email}. Ihre E-Mail-Adresse wird aktualisiert, sobald die neue E-Mail bestätigt wurde."
       orders:
         open_orders: Offene Bestellungen
+        past_orders: Frühere Bestellungen
+      transactions:
+        transaction_history: Verlauf der Transaktionen
       open_orders:
         order: Bestellung
         shop: Geschäft
+        changes_allowed_until: Änderungen erlaubt bis
         items: Artikel
+        total: Gesamt
         edit: Bearbeite
         cancel: Abrechen
         closed: Geschlossen
+        until: Bis
       past_orders:
+        order: Auftrag
         shop: Geschäft
         completed_at: Erfolgt am
         items: Artikel
+        total: Gesamt
         paid?: Bezahlt?
+        view: Aussicht
+    localized_number:
+      invalid_format: hat ein ungültiges Format. Bitte gebe eine Nummer ein.
