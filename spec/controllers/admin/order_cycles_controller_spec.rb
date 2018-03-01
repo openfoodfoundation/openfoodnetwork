@@ -222,8 +222,10 @@ module Admin
 
         it "does nothing when no data is supplied" do
           expect do
-            spree_put :bulk_update
+            spree_put :bulk_update, format: :json
           end.to change(oc, :orders_open_at).by(0)
+          json_response = JSON.parse(response.body)
+          expect(json_response['errors']).to eq I18n.t('admin.order_cycles.bulk_update.no_data')
         end
       end
 

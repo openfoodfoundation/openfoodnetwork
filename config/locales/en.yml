@@ -811,6 +811,8 @@ en:
       destroy_errors:
         orders_present: That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.
         schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
+      bulk_update:
+        no_data: Hm, something went wrong. No order cycle data found.
     producer_properties:
       index:
         title: Producer Properties

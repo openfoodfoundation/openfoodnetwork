@@ -10,6 +10,7 @@ module Admin
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
     before_filter :check_editable_schedule_ids, only: [:create, :update]
+    before_filter :require_order_cycle_set_params, only: [:bulk_update]
     around_filter :protect_invalid_destroy, only: :destroy
     create.after :sync_subscriptions
     update.after :sync_subscriptions
@@ -218,8 +219,12 @@ module Admin
     end
 
     def order_cycle_set
-      return unless params[:order_cycle_set]
       OrderCycleSet.new(@order_cycles, params[:order_cycle_set])
+    end
+
+    def require_order_cycle_set_params
+      return if params[:order_cycle_set]
+      render json: { errors: t('admin.order_cycles.bulk_update.no_data') }, status: :unprocessable_entity
     end
 
     def ams_prefix_whitelist
