@@ -147,8 +147,9 @@ describe SubscriptionPlacementJob do
           allow(job).to receive(:unavailable_stock_lines_for) { order.line_items }
         end
 
-        it "does not place the order, sends an empty_order email" do
+        it "does not place the order, clears, all adjustments, and sends an empty_order email" do
           expect{ job.send(:process, order) }.to_not change{ order.reload.completed_at }.from(nil)
+          expect(order.reload.adjustments).to be_empty
           expect(job).to_not have_received(:send_placement_email)
           expect(job).to have_received(:send_empty_email)
         end
