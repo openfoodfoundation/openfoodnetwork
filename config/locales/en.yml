@@ -2208,8 +2208,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     choose: Choose
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
-    closes: closes
-    closed: closed
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
@@ -2371,6 +2369,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     customers:
       select_shop: 'Please select a shop first'
       could_not_create: Sorry! Could not create
+    subscriptions:
+      closes: closes
+      closed: closed
+      close_date_not_set: Close date not set
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
