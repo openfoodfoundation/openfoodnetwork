@@ -1,4 +1,4 @@
-= admin_inject_json_ams "admin.subscriptions", "subscription", @subscription, Api::Admin::SubscriptionSerializer, fee_calculator: @fee_calculator if @subscription
+= admin_inject_json_ams "admin.subscriptions", "subscription", @subscription, Api::Admin::SubscriptionSerializer if @subscription
 = admin_inject_json_ams_array "admin.subscriptions", "shops", @shops, Api::Admin::IdNameSerializer if @shops
 = admin_inject_json_ams_array "admin.subscriptions", "customers", @customers, Api::Admin::IdEmailSerializer if @customers
 = admin_inject_json_ams_array "admin.subscriptions", "schedules", @schedules, Api::Admin::IdNameSerializer if @schedules

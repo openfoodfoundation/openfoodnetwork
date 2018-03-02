@@ -11,10 +11,8 @@ module Admin
 
     def build
       @subscription_line_item.assign_attributes(params[:subscription_line_item])
-      fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(@shop, @order_cycle) if @order_cycle
-      OpenFoodNetwork::ScopeVariantToHub.new(@shop).scope(@variant)
-      @subscription_line_item.variant = @variant # Ensures override price is used
-      render json: @subscription_line_item, serializer: Api::Admin::SubscriptionLineItemSerializer, fee_calculator: fee_calculator
+      @subscription_line_item.price_estimate = price_estimate
+      render json: @subscription_line_item, serializer: Api::Admin::SubscriptionLineItemSerializer
     end
 
     private
@@ -43,6 +41,13 @@ module Admin
       return if @variant
       error = "#{@shop.name} is not permitted to sell the selected product"
       render json: { errors: [error] }, status: :unprocessable_entity
+    end
+
+    def price_estimate
+      return unless @order_cycle
+      fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(@shop, @order_cycle)
+      OpenFoodNetwork::ScopeVariantToHub.new(@shop).scope(@variant)
+      @variant.price + fee_calculator.indexed_fees_for(@variant)
     end
   end
 end
