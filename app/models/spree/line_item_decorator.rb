@@ -131,7 +131,9 @@ Spree::LineItem.class_eval do
 
   # MONKEYPATCH of Spree method
   # Enables scoping of variant to hub/shop, so we check stock against relevant overrides if they exist
+  # Also skips stock check if requested quantity is zero
   def sufficient_stock?
+    return true if quantity == 0 # This line added
     scoper.scope(variant) # This line added
     return true if Spree::Config[:allow_backorders]
     if new_record? || !order.completed?

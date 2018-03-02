@@ -52,28 +52,34 @@ module Spree
 
       it "caps quantity" do
         li.cap_quantity_at_stock!
-        li.reload.quantity.should == 5
+        expect(li.reload.quantity).to eq 5
       end
 
       it "does not cap max_quantity" do
         li.cap_quantity_at_stock!
-        li.reload.max_quantity.should == 10
+        expect(li.reload.max_quantity).to eq 10
       end
 
       it "works for products without max_quantity" do
         li.update_column :max_quantity, nil
         li.cap_quantity_at_stock!
         li.reload
-        li.quantity.should == 5
-        li.max_quantity.should be_nil
+        expect(li.quantity).to eq 5
+        expect(li.max_quantity).to be nil
       end
 
       it "does nothing for on_demand items" do
         v.update_attributes! on_demand: true
         li.cap_quantity_at_stock!
         li.reload
-        li.quantity.should == 10
-        li.max_quantity.should == 10
+        expect(li.quantity).to eq 10
+        expect(li.max_quantity).to eq 10
+      end
+
+      it "caps at zero when stock is negative" do
+        v.update_attributes(on_hand: -2)
+        li.cap_quantity_at_stock!
+        expect(li.reload.quantity).to eq 0
       end
 
       context "when a variant override is in place" do
@@ -90,7 +96,17 @@ module Spree
 
         it "caps quantity to override stock level" do
           li.cap_quantity_at_stock!
-          li.quantity.should == 2
+          expect(li.quantity).to eq 2
+        end
+
+        context "when count on hand is negative" do
+          before { vo.update_attributes(count_on_hand: -3) }
+
+          it "caps at zero" do
+            v.update_attributes(on_hand: -2)
+            li.cap_quantity_at_stock!
+            expect(li.reload.quantity).to eq 0
+          end
         end
       end
     end
