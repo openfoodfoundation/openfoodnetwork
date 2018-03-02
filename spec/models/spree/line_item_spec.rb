@@ -76,6 +76,12 @@ module Spree
         expect(li.max_quantity).to eq 10
       end
 
+      it "caps at zero when stock is negative" do
+        v.update_attributes(on_hand: -2)
+        li.cap_quantity_at_stock!
+        expect(li.reload.quantity).to eq 0
+      end
+
       context "when a variant override is in place" do
         let!(:hub) { create(:distributor_enterprise) }
         let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 2) }
@@ -91,6 +97,16 @@ module Spree
         it "caps quantity to override stock level" do
           li.cap_quantity_at_stock!
           expect(li.quantity).to eq 2
+        end
+
+        context "when count on hand is negative" do
+          before { vo.update_attributes(count_on_hand: -3) }
+
+          it "caps at zero" do
+            v.update_attributes(on_hand: -2)
+            li.cap_quantity_at_stock!
+            expect(li.reload.quantity).to eq 0
+          end
         end
       end
     end
