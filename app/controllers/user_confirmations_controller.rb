@@ -38,7 +38,8 @@ class UserConfirmationsController < DeviseController
         'not_confirmed'
       end
 
-    url = session[:confirmation_return_url] || login_path
-    url + "?confirmation=#{result}"
+    path = (session[:confirmation_return_url] || login_path).to_s
+    path += path.include?('?') ? '&' : '?'
+    path + "validation=#{result}"
   end
 end

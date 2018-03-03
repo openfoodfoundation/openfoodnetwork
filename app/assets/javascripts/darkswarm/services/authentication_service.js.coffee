@@ -7,7 +7,10 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
       if $location.path() in ["/login", "/signup", "/forgot"] && location.pathname isnt '/register/auth'
         @open $location.path()
       else if location.pathname is '/register/auth'
-        @open '/signup', 'registration_authentication.html'
+        if angular.isDefined($location.search()['validation'])
+          @open '/login', 'registration_authentication.html'
+        else
+          @open '/signup', 'registration_authentication.html'
 
     open: (path = false, template = 'authentication.html') =>
       @modalInstance = $modal.open

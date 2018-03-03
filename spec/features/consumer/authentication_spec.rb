@@ -124,7 +124,7 @@ feature "Authentication", js: true, retry: 3 do
 
     describe "after following email confirmation link" do
       scenario "shows confirmed message in modal" do
-        visit '/#/login?confirmation=confirmed'
+        visit '/#/login?validation=confirmed'
         expect(page).to have_login_modal
         expect(page).to have_content I18n.t('devise.confirmations.confirmed')
       end

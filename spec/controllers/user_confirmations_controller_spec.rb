@@ -20,14 +20,14 @@ describe UserConfirmationsController, type: :controller do
       end
 
       it "redirects the user to login" do
-        expect(response).to redirect_to login_path(confirmation: 'not_confirmed')
+        expect(response).to redirect_to login_path(validation: 'not_confirmed')
       end
     end
 
     context "that has not been confirmed" do
       it "redirects the user to login" do
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
-        expect(response).to redirect_to login_path(confirmation: 'confirmed')
+        expect(response).to redirect_to login_path(validation: 'confirmed')
       end
 
       it "confirms the user" do
@@ -38,7 +38,13 @@ describe UserConfirmationsController, type: :controller do
       it "redirects to previous url" do
         session[:confirmation_return_url] = producers_path + '#/login'
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
-        expect(response).to redirect_to producers_path + '#/login?confirmation=confirmed'
+        expect(response).to redirect_to producers_path + '#/login?validation=confirmed'
+      end
+
+      it "redirects to previous url on /register path" do
+        session[:confirmation_return_url] = registration_path + '#/signup?after_login=%2Fregister'
+        spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
+        expect(response).to redirect_to registration_path + '#/signup?after_login=%2Fregister&validation=confirmed'
       end
     end
   end

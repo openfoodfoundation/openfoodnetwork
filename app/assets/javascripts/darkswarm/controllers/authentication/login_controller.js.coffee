@@ -20,8 +20,8 @@ Darkswarm.controller "LoginCtrl", ($scope, $timeout, $location, $http, $window, 
       $scope.errors = t('devise.confirmations.failed_to_send')
 
   $timeout ->
-    if angular.isDefined($location.search()['confirmation'])
-      if $location.search()['confirmation'] == 'confirmed'
+    if angular.isDefined($location.search()['validation'])
+      if $location.search()['validation'] == 'confirmed'
         $scope.messages = t('devise.confirmations.confirmed')
-      if $location.search()['confirmation'] == 'not_confirmed'
+      if $location.search()['validation'] == 'not_confirmed'
         $scope.errors = t('devise.confirmations.not_confirmed')
