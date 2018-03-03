@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180222231639) do
+ActiveRecord::Schema.define(:version => 20180303102146) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -115,18 +115,24 @@ ActiveRecord::Schema.define(:version => 20180222231639) do
   create_table "distributors_payment_methods", :id => false, :force => true do |t|
     t.integer "distributor_id"
     t.integer "payment_method_id"
+    t.integer "creator_id"
+    t.boolean "enabled",           :default => true
   end
 
+  add_index "distributors_payment_methods", ["creator_id"], :name => "index_users_on_distributor_payments"
   add_index "distributors_payment_methods", ["distributor_id"], :name => "index_distributors_payment_methods_on_distributor_id"
   add_index "distributors_payment_methods", ["payment_method_id"], :name => "index_distributors_payment_methods_on_payment_method_id"
 
   create_table "distributors_shipping_methods", :force => true do |t|
     t.integer  "distributor_id"
     t.integer  "shipping_method_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.integer  "creator_id"
+    t.boolean  "enabled",            :default => true
   end
 
+  add_index "distributors_shipping_methods", ["creator_id"], :name => "index_users_on_distributor_shipping"
   add_index "distributors_shipping_methods", ["distributor_id"], :name => "index_distributors_shipping_methods_on_distributor_id"
   add_index "distributors_shipping_methods", ["shipping_method_id"], :name => "index_distributors_shipping_methods_on_shipping_method_id"
 
