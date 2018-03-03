@@ -99,7 +99,7 @@ en:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       failed_to_send: "An error occurred whilst sending your confirmation email."
       resend_confirmation_email: "Resend confirmation email."
-      confirmed: "Thanks for confirming your email! You can now sign in."
+      confirmed: "Thanks for confirming your email! You can now log in."
       not_confirmed: "Your email address could not be confirmed. Perhaps you have already completed this step?"
     user_registrations:
       spree_user:
