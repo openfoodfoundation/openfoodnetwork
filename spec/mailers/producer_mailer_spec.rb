@@ -19,7 +19,7 @@ describe ProducerMailer do
   let(:p1) { create(:product, name: "Zebra", price: 12.34, supplier: s1, tax_category: tax_category) }
   let(:p2) { create(:product, name: "Aardvark", price: 23.45, supplier: s2) }
   let(:p3) { create(:product, name: "Banana", price: 34.56, supplier: s1) }
-  let(:p4) { create(:product, name: "Coffee", price: 45.67, supplier: s1) }
+  let(:p4) { create(:product, name: "coffee", price: 45.67, supplier: s1) }
   let(:p5) { create(:product, name: "Daffodil", price: 56.78, supplier: s1) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:incoming_exchange) { order_cycle.exchanges.create! sender: s1, receiver: d1, incoming: true, receival_instructions: 'Outside shed.' }
@@ -72,7 +72,7 @@ describe ProducerMailer do
   end
 
   it "contains an aggregated list of produce in alphabetical order" do
-    mail.body.encoded.should match(/Coffee.+\n.+Zebra/)
+    expect(mail.body.encoded).to match(/coffee.+\n.+Zebra/)
     body_lines_including(mail, p1.name).each do |line|
       line.should include 'QTY: 3'
       line.should include '@ $10.00 = $30.00'

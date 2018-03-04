@@ -26,6 +26,8 @@ module Spree
       let(:li5) { create(:line_item, order: o, product: p4, variant: v3) }
       let(:li6) { create(:line_item, order: o, product: p4, variant: v4) }
 
+      let(:oc_order) { create :order_with_totals_and_distribution }
+
       it "finds line items for products supplied by a particular enterprise" do
         LineItem.supplied_by(s1).should == [li1]
         LineItem.supplied_by(s2).should == [li2]
@@ -55,6 +57,10 @@ module Spree
 
       it "finds line items sorted by name and unit_value" do
         expect(o.line_items.sorted_by_name_and_unit_value).to eq([li6,li5,li4,li3])
+      end
+
+      it "finds line items from a given order cycle" do
+        expect(LineItem.from_order_cycle(oc_order.order_cycle).first.id).to eq oc_order.line_items.first.id
       end
     end
 
