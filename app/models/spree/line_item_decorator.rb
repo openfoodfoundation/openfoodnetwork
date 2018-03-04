@@ -36,9 +36,9 @@ Spree::LineItem.class_eval do
   scope :sorted_by_name_and_unit_value, joins(variant: :product).
     reorder('lower(spree_products.name) asc, lower(spree_variants.display_name) asc, spree_variants.unit_value asc')
 
-  scope :from_order_cycle, lambda {|order_cycle|
+  scope :from_order_cycle, lambda { |order_cycle|
     joins(order: :order_cycle).
-    where('order_cycles.id = ?', order_cycle)
+      where('order_cycles.id = ?', order_cycle)
   }
 
   scope :supplied_by, lambda { |enterprise|
