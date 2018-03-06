@@ -7,17 +7,19 @@
   .small-12.columns
     .row.filter-box
       .small-12.columns
-        %h5.tdhead
-          .light
-            = t :producers_filter
-          = t :producers_filter_type
-        %filter-selector.small-block-grid-2.medium-block-grid-4.large-block-grid-6{"selector-set" => "filterSelectors", objects: "producers_to_filter | searchEnterprises:query | taxonsOf", "active-selectors" => "activeTaxons"}
+        %span.filter-block
+          %h5.tdhead
+            .light
+              = t :producers_filter
+            = t :producers_filter_type
+          %filter-selector.small-block-grid-2.medium-block-grid-4.large-block-grid-6{"selector-set" => "filterSelectors", objects: "producers_to_filter | searchEnterprises:query | taxonsOf", "active-selectors" => "activeTaxons"}
 
-        %h5.tdhead
-          .light
-            = t :producers_filter
-          = t :producers_filter_property
-        .filter-shopfront.property-selectors
-          %filter-selector{ "selector-set" => "filterSelectors", objects: "producers_to_filter | searchEnterprises:query | taxons:activeTaxons | propertiesOf:'supplied_properties'", "active-selectors" => "activeProperties"}
+        %span.filter-block
+          %h5.tdhead
+            .light
+              = t :producers_filter
+            = t :producers_filter_property
+          .filter-shopfront.property-selectors
+            %filter-selector{ "selector-set" => "filterSelectors", objects: "producers_to_filter | searchEnterprises:query | taxons:activeTaxons | propertiesOf:'supplied_properties'", "active-selectors" => "activeProperties"}
 
     = render partial: 'shared/components/filter_box'
