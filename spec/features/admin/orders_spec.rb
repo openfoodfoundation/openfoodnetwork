@@ -215,7 +215,11 @@ feature %q{
         Spree::Config[:enable_receipt_printing?] = true
 
         distributor1.update_attribute(:abn, '12345678')
-        @order = create(:order_with_taxes, distributor: distributor1)
+        @order = create(:order_with_taxes,
+                        distributor: distributor1,
+                        product_price: 110,
+                        tax_rate_amount: 0.1,
+                        tax_rate_name: "Tax 1")
         Spree::TaxRate.adjust(@order)
 
         visit spree.admin_order_path(@order)
@@ -256,10 +260,8 @@ feature %q{
 
       scenario "shows the order taxes" do
         within('table.index tbody#price-adjustments') do
-          @order.price_adjustment_totals.each do |label, total|
-            expect(page).to have_selector "td", match: :first, text: label
-            expect(page).to have_selector "td.total", text: total
-          end
+          expect(page).to have_selector "td", match: :first, text: "Tax 1"
+          expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
       end
 

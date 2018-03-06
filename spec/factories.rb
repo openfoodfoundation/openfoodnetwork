@@ -296,11 +296,22 @@ FactoryGirl.define do
   end
 
   factory :order_with_taxes, parent: :completed_order_with_totals do
-    after(:create) do |order|
-      order.distributor.update_attribute(:charges_sales_tax, true)
+    ignore do
+      product_price 0
+      tax_rate_amount 0
+      tax_rate_name ""
+    end
 
+    distributor { create(:distributor_enterprise) }
+    order_cycle { create(:simple_order_cycle) }
+
+    after(:create) do |order, proxy|
+      order.distributor.update_attribute(:charges_sales_tax, true)
       Spree::Zone.global.update_attribute(:default_tax, true)
-      order.line_items.first.product = FactoryGirl.create(:taxed_product, zone: Spree::Zone.global, price: 110.0, tax_rate_amount: 0.1)
+
+      p = FactoryGirl.create(:taxed_product, zone: Spree::Zone.global, price: proxy.product_price, tax_rate_amount: proxy.tax_rate_amount, tax_rate_name: proxy.tax_rate_name, distributors: [order.distributor])
+      FactoryGirl.create(:line_item, order: order, product: p, price: p.price)
+      order.reload
     end
   end
 
@@ -356,6 +367,7 @@ FactoryGirl.define do
   factory :taxed_product, :parent => :product do
     ignore do
       tax_rate_amount 0
+      tax_rate_name ""
       zone nil
     end
 
@@ -363,7 +375,7 @@ FactoryGirl.define do
 
     after(:create) do |product, proxy|
       raise "taxed_product factory requires a zone" unless proxy.zone
-      create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone)
+      create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone, name: proxy.tax_rate_name)
     end
   end
 
