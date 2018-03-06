@@ -323,7 +323,7 @@ describe Spree::Order do
     end
 
     it "contains tax on order adjustment" do
-      order.tax_adjustment_totals[tax_rate25].should == 10.0
+      expect(order.tax_adjustment_totals[tax_rate25]).to eq(10.0)
     end
   end
 
