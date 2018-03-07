@@ -9,7 +9,6 @@ module Admin
     prepend_before_filter :load_data_for_index, :only => :index
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
-    before_filter :remove_unauthorized_bulk_attrs, only: [:bulk_update]
     before_filter :check_editable_schedule_ids, only: [:create, :update]
     around_filter :protect_invalid_destroy, only: :destroy
     create.after :sync_subscriptions
@@ -79,11 +78,9 @@ module Admin
     end
 
     def bulk_update
-      @order_cycle_set = params[:order_cycle_set] && OrderCycleSet.new(params[:order_cycle_set])
-      if @order_cycle_set.andand.save
+      if order_cycle_set.andand.save
         respond_to do |format|
-          order_cycles = OrderCycle.where(id: params[:order_cycle_set][:collection_attributes].map{ |k,v| v[:id] })
-          format.json { render_as_json order_cycles, ams_prefix: 'index', current_user: spree_current_user }
+          format.json { render_as_json @order_cycles, ams_prefix: 'index', current_user: spree_current_user }
         end
       else
         respond_to do |format|
@@ -109,6 +106,7 @@ module Admin
     protected
     def collection
       return Enterprise.where("1=0") unless json_request?
+      return order_cycles_from_set if params[:order_cycle_set]
       ocs = if params[:as] == "distributor"
         OrderCycle.preload(:schedules).ransack(params[:q]).result.
           involving_managed_distributors_of(spree_current_user).order('updated_at DESC')
@@ -183,12 +181,10 @@ module Admin
     end
 
     def remove_unauthorized_bulk_attrs
-      if params.key? :order_cycle_set
-        params[:order_cycle_set][:collection_attributes].each do |i, hash|
-          order_cycle = OrderCycle.find(hash[:id])
-          unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
-            params[:order_cycle_set][:collection_attributes].delete i
-          end
+      params[:order_cycle_set][:collection_attributes].each do |i, hash|
+        order_cycle = OrderCycle.find(hash[:id])
+        unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
+          params[:order_cycle_set][:collection_attributes].delete i
         end
       end
     end
@@ -214,6 +210,16 @@ module Admin
         syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
         syncer.sync!
       end
+    end
+
+    def order_cycles_from_set
+      remove_unauthorized_bulk_attrs
+      OrderCycle.where(id: params[:order_cycle_set][:collection_attributes].map{ |k,v| v[:id] })
+    end
+
+    def order_cycle_set
+      return unless params[:order_cycle_set]
+      OrderCycleSet.new(@order_cycles, params[:order_cycle_set])
     end
 
     def ams_prefix_whitelist

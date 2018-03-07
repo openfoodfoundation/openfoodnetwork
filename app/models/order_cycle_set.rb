@@ -1,5 +1,5 @@
 class OrderCycleSet < ModelSet
-  def initialize(attributes={})
-    super(OrderCycle, OrderCycle.all, attributes)
+  def initialize(collection, attributes={})
+    super(OrderCycle, collection, attributes)
   end
 end
