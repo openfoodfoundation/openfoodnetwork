@@ -318,7 +318,7 @@ describe Enterprise do
         s = create(:supplier_enterprise)
         d = create(:distributor_enterprise)
         p = create(:product)
-        create(:simple_order_cycle, :orders_open_at => 10.days.from_now, suppliers: [s], distributors: [d], variants: [p.master])
+        create(:simple_order_cycle, :orders_open_at => 10.days.from_now, orders_close_at: 17.days.from_now, suppliers: [s], distributors: [d], variants: [p.master])
         Enterprise.distributors_with_active_order_cycles.should_not include d
       end
     end

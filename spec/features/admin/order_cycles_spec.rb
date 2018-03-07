@@ -516,7 +516,11 @@ feature %q{
     # Given three order cycles
     oc1 = create(:simple_order_cycle)
     oc2 = create(:simple_order_cycle)
-    oc3 = create(:simple_order_cycle, orders_open_at: Time.zone.local(2040, 12, 12, 12, 12, 12))
+    oc3 = create(:simple_order_cycle,
+      orders_open_at: Time.zone.local(2040, 12, 12, 12, 12, 12),
+      orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 12)
+    )
+
 
     # When I go to the order cycles page
     login_to_admin_section

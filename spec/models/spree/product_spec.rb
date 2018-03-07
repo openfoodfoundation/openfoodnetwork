@@ -339,7 +339,7 @@ module Spree
           p1 = create(:product)
           p2 = create(:product)
           p3 = create(:product)
-          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master], orders_close_at: 1.day.ago)
+          oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master], orders_open_at: 8.days.ago, orders_close_at: 1.day.ago)
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3], variants: [p3.master], orders_close_at: Date.tomorrow)
           Product.in_an_active_order_cycle.should == [p3]
         end
@@ -532,7 +532,7 @@ module Spree
         let!(:p) { create(:simple_product,
                           variant_unit: 'weight',
                           variant_unit_scale: 1,
-                          variant_unit_name: nil) 
+                          variant_unit_name: nil)
         }
 
         let!(:ot_volume) { create(:option_type, name: 'unit_volume', presentation: 'Volume') }

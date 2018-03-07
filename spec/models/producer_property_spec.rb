@@ -49,7 +49,7 @@ describe ProducerProperty do
 
     describe "with a producer property for a product in a closed order cycle" do
       before do
-        oc.update_attributes! orders_close_at: 1.week.ago
+        oc.update_attributes! orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago
       end
 
       it "doesn't return the producer property for .currently_sold_by" do
