@@ -10,6 +10,7 @@ light: #ccc
   -moz-box-shadow: 3px 3px 4px #797979;
   -webkit-box-shadow: 3px 3px 4px #797979;
   box-shadow: 3px 3px 4px #797979;
+  position: fixed;
 
   /* For IE 8 */
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#545454')";

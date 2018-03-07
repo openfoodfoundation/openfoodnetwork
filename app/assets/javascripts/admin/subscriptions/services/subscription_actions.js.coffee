@@ -55,8 +55,12 @@ angular.module("admin.subscriptions").factory 'SubscriptionActions', ($http, $in
   unpause: ->
     ConfirmDialog.open('error', t('admin.subscriptions.confirm_unpause_msg'), {confirm: t('admin.subscriptions.yes_i_am_sure')})
     .then =>
-      @$unpause().then angular.noop, ->
-        InfoDialog.open 'error', t('admin.subscriptions.unpause_failure_msg')
+      @$unpause().then angular.noop, (response) =>
+        if response.data?.errors?.canceled_orders?
+          InfoDialog.open('info', response.data.errors.canceled_orders)
+            .then (=> @$unpause(canceled_orders: 'notified'))
+        else
+          InfoDialog.open 'error', t('admin.subscriptions.unpause_failure_msg')
 
   cancelOrder: (order) ->
     if order.id?

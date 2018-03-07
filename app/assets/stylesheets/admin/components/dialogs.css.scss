@@ -14,7 +14,7 @@
 
     .icon {
       width: 20%;
-      font-size: 2rem;
+      font-size: 4rem;
     }
   }
 
@@ -22,6 +22,14 @@
     .message {
       .icon {
         color: #da5354;
+      }
+    }
+  }
+
+  &.info {
+    .message {
+      .icon {
+        color: #5498da;
       }
     }
   }

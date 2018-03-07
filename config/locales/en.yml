@@ -927,6 +927,7 @@ en:
       confirm_unpause_msg: Are you sure you want to unpause this subscription?
       unpause_failure_msg: 'Sorry, unpausing failed!'
       confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
+      resume_canceled_orders_msg: "Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown."
       yes_cancel_them: Cancel them
       no_keep_them: Keep them
       yes_i_am_sure: Yes, I'm sure
