@@ -8,8 +8,7 @@ Spree::BaseMailer.class_eval do
   protected
 
   def from_address
-    Spree::MailMethod.current.andand.preferred_mails_from ||
-      'test@example.com'
+    Spree::Config[:mails_from] || 'test@example.com'
   end
 
   def roadie_options
