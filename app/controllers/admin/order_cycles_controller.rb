@@ -119,9 +119,9 @@ module Admin
         OrderCycle.preload(:schedules).ransack(params[:q]).result.accessible_by(spree_current_user)
       end
 
-      ocs.undated +
-        ocs.soonest_closing +
-        ocs.soonest_opening +
+      ocs.undated |
+        ocs.soonest_closing |
+        ocs.soonest_opening |
         ocs.closed
     end
 
