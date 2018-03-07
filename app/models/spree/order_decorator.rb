@@ -17,7 +17,7 @@ Spree::Order.class_eval do
 
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
-  validate :disallow_guest_order, if: lambda { using_guest_checkout? && registered_email? }
+  validate :disallow_guest_order
   attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
   before_validation :shipping_address_from_distributor
@@ -92,7 +92,9 @@ Spree::Order.class_eval do
   end
 
   def disallow_guest_order
-    errors.add(:base, I18n.t('devise.failure.already_registered'))
+    if using_guest_checkout? && registered_email?
+      errors.add(:base, I18n.t('devise.failure.already_registered'))
+    end
   end
 
   def empty_with_clear_shipping_and_payments!
