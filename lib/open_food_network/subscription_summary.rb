@@ -18,7 +18,7 @@ module OpenFoodNetwork
     end
 
     def record_issue(type, order, message)
-      issues[type] ||= []
+      issues[type] ||= {}
       issues[type][order.id] = message
     end
 
