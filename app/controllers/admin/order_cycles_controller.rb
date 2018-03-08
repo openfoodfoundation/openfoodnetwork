@@ -45,49 +45,38 @@ module Admin
     def create
       @order_cycle = OrderCycle.new(params[:order_cycle])
 
-      respond_to do |format|
-        if @order_cycle.save
-          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-          invoke_callbacks(:create, :after)
-          flash[:notice] = I18n.t(:order_cycles_create_notice)
-          format.html { redirect_to admin_order_cycles_path }
-          format.json { render :json => { success: true } }
-        else
-          format.html
-          format.json { render :json => { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity }
-        end
+      if @order_cycle.save
+        OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
+        invoke_callbacks(:create, :after)
+        flash[:notice] = I18n.t(:order_cycles_create_notice)
+        render json: { success: true }
+      else
+        render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
     def update
       @order_cycle = OrderCycle.find params[:id]
 
-      respond_to do |format|
-        if @order_cycle.update_attributes(params[:order_cycle])
-          unless params[:order_cycle][:incoming_exchanges].nil? && params[:order_cycle][:outgoing_exchanges].nil?
-            # Only update apply exchange information if it is actually submmitted
-            OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-          end
-          invoke_callbacks(:update, :after)
-          flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
-          format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
-          format.json { render :json => { :success => true } }
-        else
-          format.json { render :json => { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity }
+      if @order_cycle.update_attributes(params[:order_cycle])
+        unless params[:order_cycle][:incoming_exchanges].nil? && params[:order_cycle][:outgoing_exchanges].nil?
+          # Only update apply exchange information if it is actually submmitted
+          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
         end
+        invoke_callbacks(:update, :after)
+        flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
+        render json: { :success => true }
+      else
+        render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
     def bulk_update
       if order_cycle_set.andand.save
-        respond_to do |format|
-          format.json { render_as_json @order_cycles, ams_prefix: 'index', current_user: spree_current_user, subscriptions_count: SubscriptionsCount.new(@collection) }
-        end
+        render_as_json @order_cycles, ams_prefix: 'index', current_user: spree_current_user, subscriptions_count: SubscriptionsCount.new(@collection)
       else
-        respond_to do |format|
-          order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
-          format.json { render :json => { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity }
-        end
+        order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
+        render json: { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
