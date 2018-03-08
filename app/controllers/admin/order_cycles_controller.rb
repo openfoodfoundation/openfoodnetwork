@@ -1,6 +1,4 @@
-require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_form_applicator'
-require 'open_food_network/proxy_order_syncer'
 
 module Admin
   class OrderCyclesController < ResourceController
@@ -9,11 +7,8 @@ module Admin
     prepend_before_filter :load_data_for_index, :only => :index
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
-    before_filter :check_editable_schedule_ids, only: [:create, :update]
     before_filter :require_order_cycle_set_params, only: [:bulk_update]
     around_filter :protect_invalid_destroy, only: :destroy
-    create.after :sync_subscriptions
-    update.after :sync_subscriptions
 
     def index
       respond_to do |format|
@@ -43,11 +38,10 @@ module Admin
     end
 
     def create
-      @order_cycle_form = OrderCycleForm.new(@order_cycle, params)
+      @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
 
       if @order_cycle_form.save
         OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-        invoke_callbacks(:create, :after)
         flash[:notice] = I18n.t(:order_cycles_create_notice)
         render json: { success: true }
       else
@@ -56,14 +50,13 @@ module Admin
     end
 
     def update
-      @order_cycle_form = OrderCycleForm.new(@order_cycle, params)
+      @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
 
       if @order_cycle_form.save
         unless params[:order_cycle][:incoming_exchanges].nil? && params[:order_cycle][:outgoing_exchanges].nil?
           # Only update apply exchange information if it is actually submmitted
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
         end
-        invoke_callbacks(:update, :after)
         flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
         render json: { :success => true }
       else
@@ -179,29 +172,6 @@ module Admin
         unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
           params[:order_cycle_set][:collection_attributes].delete i
         end
-      end
-    end
-
-    def check_editable_schedule_ids
-      return unless params[:order_cycle][:schedule_ids]
-      requested = params[:order_cycle][:schedule_ids].map(&:to_i)
-      @existing_schedule_ids = @order_cycle.persisted? ? @order_cycle.schedule_ids : []
-      permitted = Schedule.where(id: requested | @existing_schedule_ids).merge(OpenFoodNetwork::Permissions.new(spree_current_user).editable_schedules).pluck(:id)
-      result = @existing_schedule_ids
-      result |= (requested & permitted) # add any requested & permitted ids
-      result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
-      params[:order_cycle][:schedule_ids] = result
-    end
-
-    def sync_subscriptions
-      return unless params[:order_cycle][:schedule_ids]
-      removed_ids = @existing_schedule_ids - @order_cycle.schedule_ids
-      new_ids = @order_cycle.schedule_ids - @existing_schedule_ids
-      if removed_ids.any? || new_ids.any?
-        schedules = Schedule.where(id: removed_ids + new_ids)
-        subscriptions = Subscription.where(schedule_id: schedules)
-        syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
-        syncer.sync!
       end
     end
 

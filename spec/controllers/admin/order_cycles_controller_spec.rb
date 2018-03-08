@@ -211,46 +211,6 @@ module Admin
       end
     end
 
-    describe "updating schedules" do
-      let(:user) { create(:user, enterprise_limit: 10) }
-      let!(:managed_coordinator) { create(:enterprise, owner: user) }
-      let!(:managed_enterprise) { create(:enterprise, owner: user) }
-      let!(:coordinated_order_cycle) { create(:simple_order_cycle, coordinator: managed_coordinator ) }
-      let!(:coordinated_order_cycle2) { create(:simple_order_cycle, coordinator: managed_enterprise ) }
-      let!(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise) ) }
-      let!(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle] ) }
-      let!(:coordinated_schedule2) { create(:schedule, order_cycles: [coordinated_order_cycle2] ) }
-      let!(:uncoordinated_schedule) { create(:schedule, order_cycles: [uncoordinated_order_cycle] ) }
-
-      context "where I manage the order_cycle's coordinator" do
-        render_views
-
-        before do
-          controller.stub spree_current_user: user
-        end
-
-        it "allows me to assign only schedules that already I coordinate to the order cycle" do
-          schedule_ids = [coordinated_schedule2.id, uncoordinated_schedule.id]
-          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: schedule_ids }
-          expect(assigns(:order_cycle)).to eq coordinated_order_cycle
-          # coordinated_order_cycle2 is added
-          expect(coordinated_order_cycle.reload.schedules).to include coordinated_schedule2
-          # coordinated_order_cycle is removed, uncoordinated_order_cycle is NOT added
-          expect(coordinated_order_cycle.reload.schedules).to_not include coordinated_schedule, uncoordinated_schedule
-        end
-
-        it "syncs proxy orders when schedule_ids change" do
-          syncer_mock = double(:syncer)
-          allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer_mock }
-          expect(syncer_mock).to receive(:sync!).exactly(2).times
-
-          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id, coordinated_schedule2.id] }
-          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
-          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
-        end
-      end
-    end
-
     describe "bulk_update" do
       let(:oc) { create(:simple_order_cycle) }
       let!(:coordinator) { oc.coordinator }
