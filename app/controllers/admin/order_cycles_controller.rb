@@ -43,9 +43,9 @@ module Admin
     end
 
     def create
-      @order_cycle = OrderCycle.new(params[:order_cycle])
+      @order_cycle_form = OrderCycleForm.new(@order_cycle, params)
 
-      if @order_cycle.save
+      if @order_cycle_form.save
         OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
         invoke_callbacks(:create, :after)
         flash[:notice] = I18n.t(:order_cycles_create_notice)
@@ -56,9 +56,9 @@ module Admin
     end
 
     def update
-      @order_cycle = OrderCycle.find params[:id]
+      @order_cycle_form = OrderCycleForm.new(@order_cycle, params)
 
-      if @order_cycle.update_attributes(params[:order_cycle])
+      if @order_cycle_form.save
         unless params[:order_cycle][:incoming_exchanges].nil? && params[:order_cycle][:outgoing_exchanges].nil?
           # Only update apply exchange information if it is actually submmitted
           OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
