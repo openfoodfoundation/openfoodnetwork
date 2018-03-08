@@ -9,7 +9,7 @@ class OrderCycleForm
   end
 
   def save
-    check_editable_schedule_ids
+    build_schedule_ids
     order_cycle.assign_attributes(params[:order_cycle])
     return false unless order_cycle.valid?
     order_cycle.transaction do
@@ -25,26 +25,50 @@ class OrderCycleForm
 
   attr_accessor :order_cycle, :params, :permissions
 
-  def check_editable_schedule_ids
-    return unless params[:order_cycle][:schedule_ids]
-    requested = params[:order_cycle][:schedule_ids].map(&:to_i)
-    @existing_schedule_ids = @order_cycle.persisted? ? @order_cycle.schedule_ids : []
-    permitted = Schedule.where(id: requested | @existing_schedule_ids).merge(permissions.editable_schedules).pluck(:id)
-    result = @existing_schedule_ids
-    result |= (requested & permitted) # add any requested & permitted ids
-    result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
+  def schedule_ids?
+    params[:order_cycle][:schedule_ids].present?
+  end
+
+  def build_schedule_ids
+    return unless schedule_ids?
+    result = existing_schedule_ids
+    result |= (requested_schedule_ids & permitted_schedule_ids) # Add permitted and requested
+    result -= ((result & permitted_schedule_ids) - requested_schedule_ids) # Remove permitted but not requested
     params[:order_cycle][:schedule_ids] = result
   end
 
   def sync_subscriptions
-    return unless params[:order_cycle][:schedule_ids]
-    removed_ids = @existing_schedule_ids - @order_cycle.schedule_ids
-    new_ids = @order_cycle.schedule_ids - @existing_schedule_ids
-    if removed_ids.any? || new_ids.any?
-      schedules = Schedule.where(id: removed_ids + new_ids)
-      subscriptions = Subscription.where(schedule_id: schedules)
-      syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
-      syncer.sync!
-    end
+    return unless schedule_ids?
+    return unless schedule_sync_required?
+    OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions_to_sync).sync!
+  end
+
+  def schedule_sync_required?
+    removed_schedule_ids.any? || new_schedule_ids.any?
+  end
+
+  def subscriptions_to_sync
+    Subscription.where(schedule_id: removed_schedule_ids + new_schedule_ids)
+  end
+
+  def requested_schedule_ids
+    params[:order_cycle][:schedule_ids].map(&:to_i)
+  end
+
+  def permitted_schedule_ids
+    Schedule.where(id: requested_schedule_ids | existing_schedule_ids)
+      .merge(permissions.editable_schedules).pluck(:id)
+  end
+
+  def existing_schedule_ids
+    @existing_schedule_ids ||= order_cycle.persisted? ? order_cycle.schedule_ids : []
+  end
+
+  def removed_schedule_ids
+    existing_schedule_ids - order_cycle.schedule_ids
+  end
+
+  def new_schedule_ids
+    @order_cycle.schedule_ids - existing_schedule_ids
   end
 end
