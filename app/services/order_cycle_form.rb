@@ -1,10 +1,12 @@
 require 'open_food_network/permissions'
 require 'open_food_network/proxy_order_syncer'
+require 'open_food_network/order_cycle_form_applicator'
 
 class OrderCycleForm
   def initialize(order_cycle, params, user)
     @order_cycle = order_cycle
     @params = params
+    @user = user
     @permissions = OpenFoodNetwork::Permissions.new(user)
   end
 
@@ -14,6 +16,7 @@ class OrderCycleForm
     return false unless order_cycle.valid?
     order_cycle.transaction do
       order_cycle.save!
+      apply_exchange_changes
       sync_subscriptions
       true
     end
@@ -23,7 +26,18 @@ class OrderCycleForm
 
   private
 
-  attr_accessor :order_cycle, :params, :permissions
+  attr_accessor :order_cycle, :params, :user, :permissions
+
+  def apply_exchange_changes
+    return if exchanges_unchanged?
+    OpenFoodNetwork::OrderCycleFormApplicator.new(order_cycle, user).go!
+  end
+
+  def exchanges_unchanged?
+    [:incoming_exchanges, :outgoing_exchanges].all? do |direction|
+      params[:order_cycle][direction].nil?
+    end
+  end
 
   def schedule_ids?
     params[:order_cycle][:schedule_ids].present?

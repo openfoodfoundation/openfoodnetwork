@@ -105,4 +105,36 @@ describe OrderCycleForm do
       end
     end
   end
+
+  describe "updating exchanges" do
+    let(:user) { instance_double(Spree::User) }
+    let(:order_cycle) { create(:simple_order_cycle) }
+    let(:form_applicator_mock) { instance_double(OpenFoodNetwork::OrderCycleFormApplicator) }
+    let(:form) { OrderCycleForm.new(order_cycle, params, user) }
+    let(:params) { { order_cycle: { name: 'Some new name' } } }
+
+    before do
+      allow(OpenFoodNetwork::OrderCycleFormApplicator).to receive(:new) { form_applicator_mock }
+      allow(form_applicator_mock).to receive(:go!)
+    end
+
+    context "when exchange params are provided" do
+      let(:exchange_params) { { incoming_exchanges: [], outgoing_exchanges: [] } }
+      before { params[:order_cycle].merge!(exchange_params) }
+
+      it "runs the OrderCycleFormApplicator, and saves other changes" do
+        expect(form.save).to be true
+        expect(form_applicator_mock).to have_received(:go!)
+        expect(order_cycle.name).to eq 'Some new name'
+      end
+    end
+
+    context "when no exchange params are provided" do
+      it "does not run the OrderCycleFormApplicator, but saves other changes" do
+        expect(form.save).to be true
+        expect(form_applicator_mock).to_not have_received(:go!)
+        expect(order_cycle.name).to eq 'Some new name'
+      end
+    end
+  end
 end

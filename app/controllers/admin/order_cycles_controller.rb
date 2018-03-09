@@ -1,5 +1,3 @@
-require 'open_food_network/order_cycle_form_applicator'
-
 module Admin
   class OrderCyclesController < ResourceController
     include OrderCyclesHelper
@@ -41,7 +39,6 @@ module Admin
       @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
 
       if @order_cycle_form.save
-        OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
         flash[:notice] = I18n.t(:order_cycles_create_notice)
         render json: { success: true }
       else
@@ -53,10 +50,6 @@ module Admin
       @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
 
       if @order_cycle_form.save
-        unless params[:order_cycle][:incoming_exchanges].nil? && params[:order_cycle][:outgoing_exchanges].nil?
-          # Only update apply exchange information if it is actually submmitted
-          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-        end
         flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
         render json: { :success => true }
       else
