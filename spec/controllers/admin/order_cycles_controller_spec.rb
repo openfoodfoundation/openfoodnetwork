@@ -96,6 +96,40 @@ module Admin
       end
     end
 
+    describe "create" do
+      let(:shop) { create(:distributor_enterprise) }
+
+      context "as a manager of a shop" do
+        let(:form_mock) { instance_double(OrderCycleForm) }
+        let(:params) { { format: :json, order_cycle: {} } }
+
+        before do
+          login_as_enterprise_user([shop])
+          allow(OrderCycleForm).to receive(:new) { form_mock }
+        end
+
+        context "when creation is successful" do
+          before { allow(form_mock).to receive(:save) { true } }
+
+          it "returns success: true" do
+            spree_post :create, params
+            json_response = JSON.parse(response.body)
+            expect(json_response['success']).to be true
+          end
+        end
+
+        context "when an error occurs" do
+          before { allow(form_mock).to receive(:save) { false } }
+
+          it "returns an errors hash" do
+            spree_post :create, params
+            json_response = JSON.parse(response.body)
+            expect(json_response['errors']).to be
+          end
+        end
+      end
+    end
+
     describe "update" do
       let(:order_cycle) { create(:simple_order_cycle) }
       let(:producer) { create(:supplier_enterprise) }
