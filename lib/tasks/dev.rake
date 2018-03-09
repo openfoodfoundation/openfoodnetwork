@@ -9,9 +9,11 @@ namespace :openfoodnetwork do
       require_relative '../../spec/support/spree/init'
       task_name = "openfoodnetwork:dev:load_sample_data"
 
+      spree_user = Spree::User.find_by_email('spree@example.com')
+
       Spree::MailMethod.create!(
         environment: Rails.env,
-        preferred_mails_from: 'spree@example.com'
+        preferred_mails_from: spree_user.email
       )
 
       # -- Shipping / payment information
@@ -193,6 +195,8 @@ namespace :openfoodnetwork do
       CreateOrderCycle.new(enterprise2, variants).call
 
       EnterpriseRole.create!(user: Spree::User.first, enterprise: enterprise2)
+
+      spree_user.confirm!
     end
 
   end
