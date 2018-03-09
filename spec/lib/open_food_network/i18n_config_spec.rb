@@ -77,17 +77,15 @@ module OpenFoodNetwork
     context "with human syntax" do
       before do
         allow(ENV).to receive(:[]).with("LOCALE").and_return("es")
-        allow(ENV).to receive(:[]).with("AVAILABLE_LOCALES").and_return("es, fr")
+        allow(ENV).to receive(:[]).with("AVAILABLE_LOCALES").and_return("es, fr ,, ,de")
       end
 
-      xit "provides the default selectable locales" do
-        # current: expect(I18nConfig.selectable_locales).to eq ["es", "", "fr"]
-        expect(I18nConfig.selectable_locales).to eq ["es", "fr"]
+      it "provides the default selectable locales" do
+        expect(I18nConfig.selectable_locales).to eq ["es", "fr", "de"]
       end
 
-      xit "provides the default available locales" do
-        # current: expect(I18nConfig.available_locales).to eq ["es", "", "fr", "en"]
-        expect(I18nConfig.available_locales).to eq ["es", "fr", "en"]
+      it "provides the default available locales" do
+        expect(I18nConfig.available_locales).to eq ["es", "fr", "de", "en"]
       end
     end
   end

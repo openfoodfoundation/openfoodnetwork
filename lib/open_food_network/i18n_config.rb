@@ -4,7 +4,7 @@ module OpenFoodNetwork
   # See: config/application.yml
   class I18nConfig
     def self.selectable_locales
-      ENV["AVAILABLE_LOCALES"].andand.split(/[\s,]/).andand.map(&:strip) || []
+      ENV["AVAILABLE_LOCALES"].andand.split(/[\s,]+/) || []
     end
 
     def self.available_locales
