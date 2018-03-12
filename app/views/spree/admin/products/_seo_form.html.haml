@@ -1,11 +1,11 @@
 .row{"data-hook" => "admin_product_meta_form"}
   .alpha.eleven.columns
     = f.field_container :meta_description do
-      = f.label :meta_keywords, t(:meta_keywords)
+      = f.label :meta_keywords, t(:product_search_keywords)
       %br/
       = f.text_field :meta_keywords, :class => 'fullwidth', :rows => 6
     = f.field_container :meta_description do
-      = f.label :meta_description, t(:meta_description)
+      = f.label :meta_description, t(:SEO_keywords)
       %br/
       = f.text_field :meta_description, :class => 'fullwidth', :rows => 6
   .alpha.eleven.columns

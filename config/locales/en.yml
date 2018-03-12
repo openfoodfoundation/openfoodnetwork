@@ -440,6 +440,8 @@ en:
 
     products:
       unit_name_placeholder: 'eg. bunches'
+      product_search_keywords: Product Search Keywords
+      SEO_keywords: SEO Keywords
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
