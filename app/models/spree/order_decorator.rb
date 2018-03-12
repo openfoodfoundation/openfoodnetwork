@@ -88,7 +88,7 @@ Spree::Order.class_eval do
   end
 
   def registered_email?
-    Spree.user_class.find_by_email(email).present?
+    Spree.user_class.exists?(email: email)
   end
 
   def disallow_guest_order
