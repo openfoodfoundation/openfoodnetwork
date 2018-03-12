@@ -11,6 +11,7 @@ namespace :openfoodnetwork do
 
       spree_user = Spree::User.find_by_email('spree@example.com')
       country = Spree::Country.find_by_iso(ENV.fetch('DEFAULT_COUNTRY_CODE'))
+      state = country.states.first
 
       Spree::MailMethod.create!(
         environment: Rails.env,
@@ -20,10 +21,20 @@ namespace :openfoodnetwork do
       # -- Shipping / payment information
       unless Spree::Zone.find_by_name 'Australia'
         puts "[#{task_name}] Seeding shipping / payment information"
+
         zone = FactoryGirl.create(:zone, name: 'Australia', zone_members: [])
-        country = Spree::Country.find_by_name('Australia')
         Spree::ZoneMember.create(zone: zone, zoneable: country)
-        FactoryGirl.create(:shipping_method, zone: zone)
+        address = FactoryGirl.create(
+          :address,
+          address1: "15/1 Ballantyne Street",
+          zipcode: "3153",
+          city: "Thornbury",
+          country: country,
+          state: state
+        )
+        enterprise = FactoryGirl.create(:enterprise, address: address)
+
+        FactoryGirl.create(:shipping_method, zone: zone, distributors: [enterprise])
       end
 
       # -- Taxonomies
@@ -41,19 +52,19 @@ namespace :openfoodnetwork do
       unless Spree::Address.find_by_zipcode "3160"
         puts "[#{task_name}] Seeding addresses"
 
-        FactoryGirl.create(:address, address1: "25 Myrtle Street", zipcode: "3153", city: "Bayswater", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "6 Rollings Road", zipcode: "3156", city: "Upper Ferntree Gully", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "72 Lake Road", zipcode: "3130", city: "Blackburn", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "7 Verbena Street", zipcode: "3195", city: "Mordialloc", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "20 Galvin Street", zipcode: "3018", city: "Altona", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "59 Websters Road", zipcode: "3106", city: "Templestowe", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "17 Torresdale Drive", zipcode: "3155", city: "Boronia", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "21 Robina CRT", zipcode: "3764", city: "Kilmore", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "25 Kendall Street", zipcode: "3134", city: "Ringwood", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "2 Mines Road", zipcode: "3135", city: "Ringwood East", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "183 Millers Road", zipcode: "3025", city: "Altona North", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "310 Pascoe Vale Road", zipcode: "3040", city: "Essendon", country: country, state: country.states.first)
-        FactoryGirl.create(:address, address1: "6 Martin Street", zipcode: "3160", city: "Belgrave", country: country, state: country.states.first)
+        FactoryGirl.create(:address, address1: "25 Myrtle Street", zipcode: "3153", city: "Bayswater", country: country, state: state)
+        FactoryGirl.create(:address, address1: "6 Rollings Road", zipcode: "3156", city: "Upper Ferntree Gully", country: country, state: state)
+        FactoryGirl.create(:address, address1: "72 Lake Road", zipcode: "3130", city: "Blackburn", country: country, state: state)
+        FactoryGirl.create(:address, address1: "7 Verbena Street", zipcode: "3195", city: "Mordialloc", country: country, state: state)
+        FactoryGirl.create(:address, address1: "20 Galvin Street", zipcode: "3018", city: "Altona", country: country, state: state)
+        FactoryGirl.create(:address, address1: "59 Websters Road", zipcode: "3106", city: "Templestowe", country: country, state: state)
+        FactoryGirl.create(:address, address1: "17 Torresdale Drive", zipcode: "3155", city: "Boronia", country: country, state: state)
+        FactoryGirl.create(:address, address1: "21 Robina CRT", zipcode: "3764", city: "Kilmore", country: country, state: state)
+        FactoryGirl.create(:address, address1: "25 Kendall Street", zipcode: "3134", city: "Ringwood", country: country, state: state)
+        FactoryGirl.create(:address, address1: "2 Mines Road", zipcode: "3135", city: "Ringwood East", country: country, state: state)
+        FactoryGirl.create(:address, address1: "183 Millers Road", zipcode: "3025", city: "Altona North", country: country, state: state)
+        FactoryGirl.create(:address, address1: "310 Pascoe Vale Road", zipcode: "3040", city: "Essendon", country: country, state: state)
+        FactoryGirl.create(:address, address1: "6 Martin Street", zipcode: "3160", city: "Belgrave", country: country, state: state)
       end
 
       # -- Enterprises
