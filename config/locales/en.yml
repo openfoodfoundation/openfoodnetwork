@@ -449,7 +449,6 @@ en:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       product_distributions: "Product Distributions"
       group_buy_options: "Group Buy Options"
-      seo: "SEO"
       back_to_products_list: "Back to products list"
 
     variant_overrides:

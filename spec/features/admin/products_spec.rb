@@ -184,19 +184,17 @@ feature %q{
       product.distributors.should == [@distributors[0]]
     end
 
-    scenario "editing product SEO" do
+    scenario "editing product Search" do
       product = product = create(:simple_product, supplier: @supplier2)
       visit spree.edit_admin_product_path product
-      within('#sidebar') { click_link 'SEO' }
-      fill_in "product_meta_keywords", :with => 'Meta Keywords'
-      fill_in 'Meta Description', :with => 'Meta Description'
+      within('#sidebar') { click_link 'Search' }
+      fill_in 'Product Search Keywords', :with => 'Product Search Keywords'
       fill_in 'Notes', :with => 'Just testing Notes'
       click_button 'Update'
       flash_message.should == "Product \"#{product.name}\" has been successfully updated!"
       product.reload
       product.notes.should == 'Just testing Notes'
-      product.meta_keywords.should == 'Meta Keywords'
-      product.meta_description.should == 'Meta Description'
+      product.meta_keywords.should == 'Product Search Keywords'
     end
 
     scenario "deleting product properties", js: true do
