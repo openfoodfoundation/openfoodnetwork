@@ -1,4 +1,5 @@
 pt:
+  language_name: "Português"
   activerecord:
     attributes:
       spree/order:
@@ -6,18 +7,50 @@ pt:
         shipment_state: Estado do envio
         completed_at: Completado em
         number: Número
-        email: E-mail do cliente
+        email: Email do cliente
     errors:
       models:
         spree/user:
           attributes:
             email:
-              taken: "Já existe uma conta associada a este e-mail. Por favor faça login ou defina uma nova senha."
+              taken: "Já existe uma conta associada a este email. Por favor faça login ou defina uma nova senha."
+        spree/order:
+          no_card: Não estão disponíveis cartões de crédito válidos
+  activemodel:
+    errors:
+      models:
+        subscription_validator:
+          attributes:
+            subscription_line_items:
+              at_least_one_product: "^Por favor adicione pelo menos um produto"
+              not_available: "^%{name} não está disponível no calendário selecionado"
+            ends_at:
+              after_begins_at: "tem de ser depois de começar às"
+            customer:
+              does_not_belong_to_shop: "não pertence à %{shop}"
+            schedule:
+              not_coordinated_by_shop: "não é coordenado por %{shop}"
+            payment_method:
+              not_available_to_shop: "não está disponível para a %{shop}"
+              invalid_type: "tem de ser em dinheiro ou método Stripe"
+            shipping_method:
+              not_available_to_shop: "não está disponível para a %{shop}"
+            credit_card:
+              not_available: "não está disponível"
+              blank: "é obrigatório"
   devise:
+    confirmations:
+      send_instructions: "Receberá um email com instruções sobre como confirmar a sua conta em alguns minutos."
+      failed_to_send: "Ocorreu um erro no envio do email de confirmação"
+      resend_confirmation_email: "Reenviar email de confirmação."
+    user_registrations:
+      spree_user:
+        signed_up_but_unconfirmed: "Foi enviada para o seu endereço de email uma mensagem com um link de confirmação. Por favor clique nesse link para activar a sua conta."
     failure:
       invalid: |
         Email ou senha incorrecto.
         Entrou como visitante da última vez?  Talvez precise de criar uma conta ou de redefinir a sua senha.
+      unconfirmed: "Tem de confirmar a sua conta antes de continuar."
     enterprise_confirmations:
       enterprise:
         confirmed: Obrigada! O seu endereço de email está confirmado.
@@ -26,29 +59,64 @@ pt:
         confirmation_not_sent: "Não foi possível enviar o email de confirmação."
   enterprise_mailer:
     confirmation_instructions:
-      subject: "Por favor confirme o endereço de email para %{enterprise}"
+      subject: "Por favor confirme o endereço de email da %{enterprise}"
     welcome:
       subject: "%{enterprise} está agora em %{sitename}"
   producer_mailer:
     order_cycle:
       subject: "Relatório de ciclo de encomendas de %{producer}"
+  subscription_mailer:
+    placement_summary_email:
+      subject: Um resumo das encomendas de subscrição recentes
+      greeting: "Olá %{name},"
+      intro: "Abaixo está um resumo das encomendas de subscrição que acabam de ser feitas na  %{shop}."
+    confirmation_summary_email:
+      subject: Um resumo das encomendas de subscrição confirmadas recentemente
+      greeting: "Olá %{name},"
+      intro: "Abaixo está um resumo das encomendas de subscrição que acabam de ser finalizadas na %{shop}."
+    summary_overview:
+      total: 'Um total de %{count} subscrições foram marcadas para processamento automático. '
+      success_zero: Destas, nenhuma foi processada com sucesso.
+      success_some: 'Destas, %{count} foram processadas com sucesso. '
+      success_all: Todas foram processadas com sucesso.
+      issues: Detalhes dos problemas encontrados estão listados abaixo.
+    summary_detail:
+      no_message_provided: Não foi fornecida nenhuma mensagem de erro
+      changes:
+        title: Stock insuficiente (%{count} encomendas)
+        explainer: Estas encomendas foram processadas mas não existe stock suficiente para alguns dos itens requisitados
+      empty:
+        title: Sem Stock (%{count} encomendas)
+        explainer: Não foi possível processar estas encomendas porque não existe stock disponível de nenhum dos produtos requisitados
+      complete:
+        title: Já foi processada (%{count} encomendas)
+        explainer: Estas encomendas já foram marcadas como completas, e portanto foram deixadas como estão
+      processing:
+        title: Encontrado Erro (%{count} encomendas)
+        explainer: O processamento automático destas encomendas falhou devido a um erro. O erro foi listado quando possível.
+      failed_payment:
+        title: Pagamento Falhou (%{count} encomendas)
+        explainer: O processamento automático do pagamento destas encomendas falhou devido a um erro. O erro foi listado quando possível.
+      other:
+        title: Outra Falha (%{count} encomendas)
+        explainer: 'O processamento automático destas encomendas falhou devido a razão desconhecida. Isto não deveria estar a acontecer, por favor contacte-nos se estiver a ver esta mensagem. '
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Bem vindo a'
-  site_meta_description: "Começamos a partir do chão. Com agricultores e produtores prontos a contarem as suas histórias com orgulho e verdade. Com distribuidores prontos a estabelecerem ligações entre pessoas e produtos de forma justa e honesta. Com consumidores que acreditam que melhores decisões no momento de comprar..."
+  site_meta_description: "Partimos da terra. Com agricultores e produtores prontos a contarem as suas histórias verdadeiras com um brilho nos olhos. Com distribuidores prontos a estabelecerem ligações entre pessoas e produtos de forma justa e honesta. Com consumidores que acreditam que podem tomar melhores decisões no momento da compra..."
   search_by_name: Procurar por nome ou localidade
-  producers_join: Produtores nacionais estão convidados a juntarem-se à Open Food Network.
+  producers_join: Produtores e produtoras nacionais, estão convidados a juntarem-se à Open Food Network!
   charges_sales_tax: Cobra GST?
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir bilhetes"
-  select_ticket_printer: "Seleccione a impressora para bilhetes"
-  send_invoice: "Enviar fatura"
-  resend_confirmation: "Enviar confirmação de novo"
+  select_ticket_printer: "Seleccionar impressora"
+  send_invoice: "Enviar factura"
+  resend_confirmation: "Reenviar confirmação"
   view_order: "Ver encomenda"
   edit_order: "Editar encomenda"
   ship_order: "Enviar encomenda"
   cancel_order: "Cancelar encomenda"
-  confirm_send_invoice: "Uma factura deste pedido será enviada ao cliente. Tem a certeza que deseja continuar?"
+  confirm_send_invoice: "Vai ser enviada ao cliente uma factura desta encomenda. Tem a certeza que deseja continuar?"
   confirm_resend_order_confirmation: "Tem a certeza que deseja enviar novamente o email de confirmação de encomenda? "
   must_have_valid_business_number: "%{enterprise_name}tem de ter um ABN válido antes de se poder enviar facturas."
   invoice: "Factura"
@@ -56,12 +124,15 @@ pt:
   capped_at_cap: "limitado em %{cap}"
   per_month: "por mês"
   free: "grátis"
-  free_trial: "faça um teste grátis"
+  free_trial: "faça um teste gratuitamente"
   plus_tax: "mais taxas"
   min_bill_turnover_desc: "assim que o volume de negócios exceder %{mbt_amount}"
   say_no: "Não"
   say_yes: "Sim"
   then: então
+  ongoing: A decorrer
+  bill_address: Endereço de Facturação
+  ship_address: Endereço de Envio
   sort_order_cycles_on_shopfront_by: "Ordenar Ciclos de Encomendas no Mercado Por"
   required_fields: Os campos obrigatórios são indicados com um asterisco
   select_continue: Seleccionar e continuar
@@ -112,23 +183,35 @@ pt:
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Levantamento
+  copy: Cópia
   actions:
     create_and_add_another: "Criar e acrescentar outro"
   admin:
+    begins_at: Começa às
+    begins_on: Começa em
+    customer: Cliente
     date: Data
     email: Email
+    ends_at: 'Termina às '
+    ends_on: 'Termina em '
     name: Nome
     on_hand: Disponível
     on_demand: Sob Encomenda
     on_demand?: Sob Encomenda?
     order_cycle: Ciclo de encomendas
+    payment: Pagamento
+    payment_method: Método de Pagamento
     phone: Telefone
     price: Preço
     producer: Produtor
     product: Produto
     quantity: Quantidade
+    schedule: Horário
+    shipping: Envio
+    shipping_method: Método de Envio
     shop: Loja
     sku: SKU
+    status_state: Estado
     tags: Etiquetas
     variant: Variante
     weight: Peso
@@ -143,6 +226,10 @@ pt:
     form_invalid: "O formulário contém campos incompletos ou inválidos"
     clear_filters: Limpar filtros
     clear: Limpar
+    show_more: Mostrar mais
+    show_n_more: Mostrar mais %{num}
+    choose: "Escolher..."
+    please_select: Por favor selecione...
     columns: Colunas
     actions: Acções
     viewing: "Visualizando: %{current_view_name}"
@@ -155,8 +242,8 @@ pt:
     unsaved_changes: "Algumas alterações não foram guardadas"
     accounts_and_billing_settings:
       method_settings:
-        default_accounts_payment_method: "Método de pagamento padrão da conta "
-        default_accounts_shipping_method: "Método de envio padrão da conta"
+        default_accounts_payment_method: "Método de pagamento da conta por defeito"
+        default_accounts_shipping_method: "Método de envio da conta por defeito"
       edit:
         accounts_and_billing: "Contas e facturação"
         accounts_administration_distributor: "Administração de contas de distribuidor"
@@ -166,14 +253,14 @@ pt:
         finalise_invoice: "Finalizar facturas"
         auto_finalise_invoices: "Fecho automático de facturas todos os meses no dia 2 às 1:30"
         manually_run_task: "Executar tarefa manualmente"
-        update_user_invoice_explained: "Use este botão para actualizar as facturas do mês, até este dia, imediatamente para cada utilizador empresa no sistema. Esta tarefa pode ser configurada para ser realizada automaticamente todas as noites."
+        update_user_invoice_explained: "Use este botão para actualizar imediatamente as facturas do mês, até ao dia de hoje, para cada organização no sistema. Esta tarefa pode ser configurada para ser realizada automaticamente todas as noites."
         finalise_user_invoices: "Lançar Facturas de Utilizador"
         finalise_user_invoice_explained: "Use este botão para lançar no sistema todas as facturas relativas ao mês anterior. Esta tarefa pode ser configurada para ser realizada automaticamente uma vez por mês."
         update_user_invoices: "Atualizar Facturas de Utilizador"
       errors:
-        accounts_distributor: deve estar definido se desejar criar facturas para utilizadores empresa
-        default_payment_method: deve estar definido se desejar criar facturas para utilizadores empresa
-        default_shipping_method: deve estar definido se desejar criar facturas para utilizadores empresa
+        accounts_distributor: deve estar definido, se desejar criar facturas para organizações
+        default_payment_method: deve estar definido se desejar criar facturas para organizações
+        default_shipping_method: deve estar definido se desejar criar facturas para organizações registadas
     shopfront_settings:
       embedded_shopfront_settings: "Incorporar definições de loja"
       enable_embedded_shopfronts: "Permitir lojas incorporadas"
@@ -186,23 +273,23 @@ pt:
         business_model_configuration: "Modelo de negócio"
         business_model_configuration_tip: "Configure a taxa de quais lojas serão cobradas mensalmente por usar o Open Food Network"
         bill_calculation_settings: "Configurações de cálculo de conta"
-        bill_calculation_settings_tip: "Configure a quantia que as empresas serão cobradas mensalmente pelo uso do OFN"
+        bill_calculation_settings_tip: "Configure a quantia que será cobrada mensalmente às organizações pela utilização da OFN"
         shop_trial_length: "Duração da Loja Experimental (Dias)"
-        shop_trial_length_tip: "Duração do tempo (em número de dias) que as empresas definidas como lojas podem funcionar no período de experiência."
+        shop_trial_length_tip: "Duração (em número de dias) do período experimental para as organizações definidas como lojas."
         fixed_monthly_charge: "Taxa mensal fixa"
-        fixed_monthly_charge_tip: "Uma taxa mensal fixa para todas as empresas que estão definidas como loja e que tenham excedido o volume de negócios mínimo facturável (se definido)."
+        fixed_monthly_charge_tip: "Uma taxa mensal fixa para todas as organizações definidas como loja e que tenham excedido o volume de negócios mínimo facturável (se definido)."
         percentage_of_turnover: "Percentagem do volume de negócios"
         percentage_of_turnover_tip: "Quando maior que zero, esta taxa (0,0 - 1,0) será aplicada ao volume de negócios total de cada loja e somada a  qualquer taxa fixa (à esquerda) para calcular a conta mensal."
         monthly_cap_excl_tax: "tecto mensal (excluindo GST)"
         monthly_cap_excl_tax_tip: "Quando maior do que zero, este valor será usado como o limite na quantia cobrada às lojas em cada mês."
         tax_rate: "Taxa de Impostos"
-        tax_rate_tip: "Taxa de impostos que se aplica à conta mensal que é cobrada às empresas por usarem o sistema."
+        tax_rate_tip: "Taxa de impostos que se aplica à conta mensal que é cobrada às organizações por usarem o sistema."
         minimum_monthly_billable_turnover: "Volume de Negócios Mínimo Facturável"
-        minimum_monthly_billable_turnover_tip: "Volume de negócios mensal mínimo até ao qual não será cobrada a utilização da OFN. Às empresas com volumes inferiores a este valor num mês, não será cobrada nem percentagem nem taxa fixa."
+        minimum_monthly_billable_turnover_tip: "Volume de negócios mensal mínimo até ao qual não será cobrada a utilização da OFN. Às organizações com volumes inferiores a este valor num mês, não será cobrada nem percentagem nem taxa fixa."
         example_bill_calculator: "Exemplo de Calculador de Conta"
         example_bill_calculator_legend: "Alterar o exemplo de volume de negócios para visualizar o efeito nas definições à esquerda."
         example_monthly_turnover: "Exemplo de Volume de Negócios Mensal"
-        example_monthly_turnover_tip: "Um exemplo de volume de negócios mensal de uma empresa que será usado para gerar o cálculo do exemplo de uma conta mensal abaixo."
+        example_monthly_turnover_tip: "Exemplo de volume de negócios mensal de uma organização que será usado para calcular a conta mensal dada como exemplo abaixo."
         cap_reached?: "Atingido o limite?"
         cap_reached?_tip: "Se o \"tecto\" (limite definido à esquerda) foi atingido, dadas as definições e o volume de negócios indicado."
         included_tax: "Taxa inclusa"
@@ -253,8 +340,8 @@ pt:
         your_content: O seu conteúdo
     enterprise_fees:
       index:
-        title: Taxas de empresa
-        enterprise: Empreendimentos
+        title: Taxas de Organização
+        enterprise: Organização
         fee_type: Tipo de taxa
         name: Nome
         tax_category: Categoria de taxa
@@ -262,7 +349,7 @@ pt:
         calculator_values: Valores da calculadora
     enterprise_groups:
       index:
-        new_button: Novo grupo de empreendimento
+        new_button: Novo grupo de organizações
     enterprise_roles:
       form:
         manages: gere
@@ -275,12 +362,16 @@ pt:
         inherited_property: Propriedade herdada
       variants:
         to_order_tip: "Os itens feitos por encomenda não têm um nível de estoque definido, como pão fresco, por exemplo."
+      product_distributions: "Distribuições de Produto"
+      group_buy_options: "Opções de Compra Colectiva"
+      seo: "SEO"
+      back_to_products_list: "Voltar à lista de produtos"
     variant_overrides:
       loading_flash:
         loading_inventory: CARREGANDO INVENTÁRIO
       index:
         title: Inventário
-        description: Utilize esta página para gerir os inventários dos seus empreendimentos. Qualquer detalhe de produto que seja introduzido aqui, irá substituir o que foi especificado na página de 'Produtos'
+        description: Utilize esta página para gerir os inventários das suas organizações. Qualquer detalhe de produto que seja introduzido aqui, irá substituir o que foi especificado na página de 'Produtos'
         enable_reset?: Activar Reposição do Stock?
         inherit?: Herdar?
         add: Adicionar
@@ -329,8 +420,8 @@ pt:
       select_outgoing_oc_products_from: 'Selecione a saída do ciclo de pedidos  '
     enterprises:
       index:
-        title: Empreendimentos
-        new_enterprise: Novo empreendimento
+        title: Organizações
+        new_enterprise: Nova Organização
         producer?: "Produtor?"
         package: Embalagem
         status: Status
@@ -338,7 +429,7 @@ pt:
       form:
         about_us:
           desc_short: Descrição curta
-          desc_short_placeholder: Conte-nos sobre o seu empreendimento em uma ou duas frases
+          desc_short_placeholder: Conte-nos sobre a sua organização em uma ou duas frases
           desc_long: Sobre nós
           desc_long_placeholder: Conte aos consumidores sobre você. Esta informação aparece no seu perfil público.
         business_details:
@@ -351,8 +442,9 @@ pt:
         contact:
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
-          email_address: Email
-          email_address_placeholder: 'ex: gustavo@trufas.com.br '
+          email_address: Endereço de Email Público
+          email_address_placeholder: ex. encomendas@produtos-bio.com
+          email_address_tip: "Este endereço de email será apresentado no seu perfil público"
           phone: Telefone
           phone_placeholder: 'ex: 987654321'
           website: Site
@@ -360,15 +452,15 @@ pt:
         enterprise_fees:
           name: Nome
           fee_type: Tipo de taxa
-          manage_fees: Gerenciar taxas da iniciativa
-          no_fees_yet: Você ainda não possui nenhuma taxa de empreendimento.
+          manage_fees: Gerir taxas da organização
+          no_fees_yet: Ainda não tem nenhuma taxa de organização definida.
           create_button: Criar uma agora
         images:
           logo: Logo
           promo_image_placeholder: 'Essa imagem aparece em "Sobre nós"'
           promo_image_note1: 'POR FAVOR OBSERVE:'
           promo_image_note2: Qualquer imagem promocional carregada aqui será cortada para 1200 x 260.
-          promo_image_note3: A imagem promocional é exibida no topo da página do perfil dos empreendimento e em pop-ups.
+          promo_image_note3: A imagem promocional é exibida no topo da página de perfil da organização e em janelas pop-up.
         inventory_settings:
           text1: Você pode optar por gerenciar o seu nível de estoque e preços através de seu
           inventory: inventório
@@ -391,7 +483,7 @@ pt:
           name: 'Nome '
           name_placeholder: 'ex: Trufas Biodinâmicas do Pereira'
           groups: Grupos
-          groups_tip: Selecione grupos e regiões nas quais você é membro. Isso ajudará os consumidores a encontrar o seu empreendimento.
+          groups_tip: Seleccione grupos e regiões das quais é membro. Isso ajudará os consumidores a encontrar a sua organização.
           groups_placeholder: Comece a digitar para pesquisar grupos disponíveis...
           primary_producer: Produtor primário?
           primary_producer_tip: Selecione 'produtor' se você é primeiramente um produtor de alimentos
@@ -400,9 +492,9 @@ pt:
           none: Nenhum
           own: Próprio
           sells: Vende
-          sells_tip: "Nenhum - empreendimento não vende diretamente para clientes. <br /> Próprio - Empreendimento vende produtos próprios para consumidores. <br /> Qualquer - Empreendimento vende produtos próprios ou de outros empreendimentos. <br />"
+          sells_tip: "Nenhum - a organização não vende directamente aos consumidores. <br /> Próprio - a organização vende os seus próprios produtos aos consumidores. <br /> Qualquer - a organização vende os seus próprios produtos ou produtos de outras organizações. <br />"
           visible_in_search: Visível na busca?
-          visible_in_search_tip: Determine se este empreendimento estará visível para clientes quando pesquisarem no site.
+          visible_in_search_tip: Determina se esta organização vai estar visível para os consumidores quando estes pesquisarem no website.
           visible: Visível
           not_visible: Invisível
           permalink: Permalink (sem espaços)
@@ -430,6 +522,10 @@ pt:
           allow_order_changes_tip: "Permitir que os consumidores mudem seus pedidos enquanto a compra estiver aberta."
           allow_order_changes_false: "Pedidos enviados não podem ser mudados ou cancelados."
           allow_order_changes_true: "Consumidor pode mudar ou cancelar pedidos enquanto a compra estiver aberta."
+          enable_subscriptions: "Subscrições"
+          enable_subscriptions_tip: "Activar funcionalidade das subscrições?"
+          enable_subscriptions_false: "Desactivado"
+          enable_subscriptions_true: "Activado"
           shopfront_message: Mensagem da vitrine da loja
           shopfront_message_placeholder: >
               Uma breve e opcional explicação para os consumidores detalhando como
@@ -462,7 +558,7 @@ pt:
             by_default: Por defeito
             no_rules_yet: Ainda não existe nenhuma regra por defeito
             add_new_button: '+ Adicionar nova regra'
-          no_tags_yet: Nenhuma etiqueta foi aplicada a esta iniciativa
+          no_tags_yet: Nenhuma etiqueta foi atribuída a esta organização
           no_rules_yet: Nenhuma regra foi aplicada a esta etiqueta
           for_customers_tagged: 'Para consumidores marcados:'
           add_new_rule: '+ Adicionar nova regra'
@@ -471,22 +567,26 @@ pt:
           email_confirmation_notice_html: "Confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
           resend: Reenviar
           owner: 'Proprietário'
-          owner_tip: O usuário principal é responsável por esta iniciativa.
+          contact: "Contacto"
+          contact_tip: "O coordenador que vai receber emails da organização, como encomendas e notificações. Tem de ter um endereço de email confirmado."
+          owner_tip: O utilizador principal responsável por esta organização.
           notifications: Notificações
           notifications_tip: Notificações sobre pedidos serão enviadas para este endereço de e-mail.
           notifications_placeholder: 'ex: gustavo@trufas.com.br'
           notifications_note: 'Nota: um novo endereço de e-mail pode precisar ser confirmado antes do uso'
           managers: Administradores
-          managers_tip: Os outros usuários com permissão para gerenciar esta iniciativa.
+          managers_tip: Os outros utilizadores com permissão para gerir esta organização.
+          email_confirmed: "Email confirmado"
+          email_not_confirmed: "Email não confirmado"
       actions:
         edit_profile: Editar perfil
         properties: Propriedades
         payment_methods: Formas de pagamento
-        payment_methods_tip: Essa iniciativa não tem formas de pagamento
+        payment_methods_tip: Esta organização não tem formas de pagamento definidas
         shipping_methods: Formas de entrega
-        shipping_methods_tip: Essa iniciativa não tem formas de entrega
-        enterprise_fees: Taxas da iniciativa
-        enterprise_fees_tip: Essa iniciativa não tem taxas
+        shipping_methods_tip: Esta organização tem formas de entrega definidas
+        enterprise_fees: Taxas da organização
+        enterprise_fees_tip: Esta organização não cobra taxas
       admin_index:
         name: Nome
         role: Cargo
@@ -505,31 +605,31 @@ pt:
         producer_shop_description_text2: Uma Loja de Produtor/a é somente para os seus produtos, se quiser vender produtos de outro local, selecione Hub de Produtores.
         producer_hub: Hub de produtor
         producer_hub_text: Venda seus próprios produtos e de outros produtores
-        producer_hub_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você pode comercializar seus próprios bens, assim como produtos agregados de outras iniciativas e produtores, através da sua loja no Open Food Network.
+        producer_hub_description_text: A sua organização é a espinha dorsal do seu sistema de produção e consumo local. Através dela, pode comercializar os seus próprios produtos, assim como produtos agregados de outras iniciativas e produtores, através da sua loja na Open Food Network.
         profile: Somente perfil
         get_listing: Obter uma listagem
-        profile_description_text: As pessoas podem te encontrar e te contactar no Open Food Network. Sua iniciativa estará visível no mapa e poderá ser encontrada em buscas.
+        profile_description_text: As pessoas podem encontrá-lo e contactá-lo na Open Food Network. A sua organização ficará visível no mapa e poderá ser encontrada através do motor de pesquisa.
         hub_shop: Loja do hub
         hub_shop_text: Comercialize produtos de outros
-        hub_shop_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você agrega produtos de outras iniciativas e produtores, e comercializa através da sua loja no Open Food Network.
+        hub_shop_description_text: A sua organização é a espinha dorsal do seu sistema de produção e consumo local. Através dela, pode agregar produtos de outras organizações e produtores, e comercializá-los na sua loja na Open Food Network.
         choose_option: Por favor escolha uma das opções acima.
         change_now: Mudar agora
       enterprise_user_index:
-        loading_enterprises: CARREGANDO INICIATIVAS
-        no_enterprises_found: Nenhuma iniciativa encontrada.
+        loading_enterprises: CARREGANDO ORGANIZAÇÕES
+        no_enterprises_found: Nenhuma organização encontrada.
         search_placeholder: Busca por nome
         manage: Administrar
       new_form:
         owner: Proprietário
-        owner_tip: O usuário principal é responsável por esta iniciativa.
+        owner_tip: O utilizador principal responsável por esta organização.
         i_am_producer: Sou um produtor
         contact_name: Nome para contato
       edit:
         editing: 'Edição:'
-        back_link: Voltar à lista de iniciativas
+        back_link: Voltar à lista de organizações
       new:
-        title: Novo empreendimento
-        back_link: Voltar à lista de iniciativas
+        title: Nova Organização
+        back_link: Voltar à lista de organizações
       welcome:
         welcome_title: Bem-vindo ao Open Food Network!
         welcome_text: Você criou com sucesso uma
@@ -571,6 +671,22 @@ pt:
         add_a_tag: Acrescentar uma etiqueta
         delivery_details: Detalhes de entrega/retirada
         debug_info: Informação de depuração
+      index:
+        involving: Envolvendo
+        schedule: Horário
+        schedules: Horários
+        adding_a_new_schedule: Adicionar um novo horário
+        updating_a_schedule: Actualizar um horário
+        new_schedule: Novo horário
+        create_schedule: Criar horário
+        update_schedule: Actualizar horário
+        delete_schedule: Apagar horário
+        created_schedule: Horário criado
+        updated_schedule: Horário actualizado
+        deleted_schedule: Horário apagado
+        schedule_name_placeholder: Nome do horário
+        name_required_error: Por favor atribua um nome a este horário
+        no_order_cycles_error: Por favor selecione pelo menos um ciclo de encomendas (arrastar e largar)
       name_and_timing_form:
         name: Nome
         orders_open: Pedidos abrem às
@@ -587,9 +703,17 @@ pt:
         customer_instructions_placeholder: Notas de entrega ou retirada
         products: Produtos
         fees: Taxas
+      destroy_errors:
+        orders_present: Esse ciclo de encomendas foi selecionado por um/a consumidor/a e não pode ser apagado. Para evitar que os clientes acedam, por favor feche-o.
+        schedule_present: Esse ciclo de encomendas está ligado a um horário e não pode ser apagado. Por favor elimine a ligação ou apague primeiro o horário.
     producer_properties:
       index:
         title: Propriedades do produtor
+    proxy_orders:
+      cancel:
+        could_not_cancel_the_order: Não foi possível cancelar a encomenda
+      resume:
+        could_not_resume_the_order: Não foi possível prosseguir com a encomenda
     shared:
       user_guide_link:
         user_guide: Guia do usuário
@@ -600,11 +724,11 @@ pt:
         enable_receipt_printing?: Mostrar opções para imprimir recibos usando impressoras térmicas em pedidos suspensos?
     overview:
       enterprises_header:
-        ofn_with_tip: Empresas são Produtores e/ou Hubs e são a unidade básica de organização dentro da Open Food Network.
+        ofn_with_tip: As Organizações são Produtores e/ou Hubs e representam a unidade básica de organização dentro da Open Food Network.
       enterprises_hubs_tabs:
         has_no_payment_methods: "%{enterprise} não tem métodos de pagamento"
         has_no_shipping_methods: "%{enterprise}não tem métodos de envio"
-        has_no_enterprise_fees: "%{enterprise} não tem taxas de empresa"
+        has_no_enterprise_fees: "%{enterprise} não tem taxas de organização"
     enterprise_issues:
       create_new: Criar Novo
       resend_email: Reenviar Email
@@ -651,8 +775,8 @@ pt:
         name: Total de Vendas
         description: Total de Vendas para Todas as Encomendas
       users_and_enterprises:
-        name: Utilizadores & Empresas
-        description: 'Propriedade & Status da Empresa '
+        name: Utilizadores & Organizações
+        description: Estado & Propriedade da Organização
       order_cycle_management:
         name: Gestão de Ciclo de Encomendas
       sales_tax:
@@ -662,12 +786,72 @@ pt:
         description: Facturas a importar no Xero
       packing:
         name: Relatórios de embalamento
+    subscriptions:
+      subscriptions: Subscrições
+      new: Nova subscrição
+      create: Criar subscrição
+      index:
+        please_select_a_shop: Por favor selecione uma loja
+        edit_subscription: Editar Subscrição
+        pause_subscription: Pausar Subscrição
+        unpause_subscription: Parar pausa da Subscrição
+        cancel_subscription: Cancelar Subscrição
+      setup_explanation:
+        just_a_few_more_steps: 'Só mais uns passos para poder começar:'
+        enable_subscriptions: "Activar subscrições para pelo menos uma das suas lojas"
+        enable_subscriptions_step_1_html: 1. Vá à página %{enterprises_link}, encontre a sua loja, e clique em "Gerir"
+        enable_subscriptions_step_2: 2. Em "Preferências da Loja", active a opção de Subscrições
+        set_up_shipping_and_payment_methods_html: 'Definir métodos de %{shipping_link} e %{payment_link} '
+        set_up_shipping_and_payment_methods_note_html: Repare que somente pagamentos em Dinheiro ou usando o método Stripe é que podem<br /> ser usados com as subscrições
+        ensure_at_least_one_customer_html: Garanta que existe pelo menos um %{customer_link}
+        create_at_least_one_schedule: Crie pelo menos um horário
+        create_at_least_one_schedule_step_1_html: 1. Vá à página %{order_cycles_link}
+        create_at_least_one_schedule_step_2: 2. Crie um ciclo de encomendas se ainda não o fez
+        create_at_least_one_schedule_step_3: 3. Clique em '+ Novo Horário', e preencha o formulário
+        once_you_are_done_you_can_html: Assim que estiver feito, pode %{reload_this_page_link}
+        reload_this_page: carregar de novo esta página
+      steps:
+        details: 1. Detalhes Básicos
+        address: 2. Morada
+        products: 3. Adicionar Produtos
+        review: 4. Rever & Guardar
+      details:
+        details: Detalhes
+        invalid_error: Ooops! Por favor preencha todos os campos obrigatórios...
+        allowed_payment_method_types_tip: De momento, só podem ser usados métodos de pagamento em Dinheiro ou Stripe
+        credit_card: Cartão de Crédito
+        no_cards_available: Não existem cartões disponíveis
+      loading_flash:
+        loading: A CARREGAR SUBSCRIÇÕES
+      review:
+        details: Detalhes
+        address: Morada
+        products: Produtos
+      product_already_in_order: Este produto já foi adicionado à encomenda. Por favor edite a quantidade directamente.
+      orders:
+        number: Número
+        confirm_edit: Tem a certeza que quer editar esta encomenda? Ao fazê-lo pode tornar-se mais difícil sincronizar alterações automaticamente à subscrição no futuro.
+      confirm_cancel_msg: Tem a certeza que pretende cancelar esta subscrição? Esta acção não pode ser desfeita.
+      cancel_failure_msg: 'Desculpe, o cancelamento falhou!'
+      confirm_pause_msg: Tem a certeza que deseja pausar esta subscrição?
+      pause_failure_msg: 'Desculpe, a pausa falhou!'
+      confirm_unpause_msg: Tem a certeza que pretende parar a pausa desta subscrição?
+      unpause_failure_msg: 'Desculpe, não foi possível parar a pausa!'
+      confirm_cancel_open_orders_msg: "Algumas encomendas para esta subscrição estão actualmente abertas. O/a consumidor/a foi notificado que a encomenda será processada. Quer cancelar esta(s) encomenda(s) ou mantê-las?"
+      yes_cancel_them: Cancelá-las
+      no_keep_them: Mantê-las
+      yes_i_am_sure: Sim, tenho a certeza
+      order_update_issues_msg: Não foi possível actualizar automaticamente algumas das encomendas, provavelmente porque foram editadas manualmente. Por favor reveja os problemas listados abaixo e faça os ajustes necessários às encomendas individuais.
+      no_results:
+        no_subscriptions: Ainda não existem subscrições....
+        why_dont_you_add_one: Porque não acrescentar uma? :)
+        no_matching_subscriptions: Não foram encontradas subscrições a condizer
     stripe_connect_settings:
       edit:
         title: "Ligar ao Stripe"
         settings: "Definições"
         stripe_connect_enabled: Permitir às lojas que aceitem pagamentos usando a ligação ao Stripe?
-        no_api_key_msg: Não existem contas Stripe associadas a esta empresa.
+        no_api_key_msg: Não existem contas Stripe associadas a esta organização.
         configuration_explanation_html: Para instruções detalhadas sobre como configurar a integração com Stripe Connect, por favor <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consulte este guia</a>.
         status: Estado
         ok: Ok
@@ -709,7 +893,7 @@ pt:
       contact: "contato"
       require_customer_login: "Essa loja é somente para clientes."
       require_login_html: "Fazer o %{login} se você já possui uma conta. Caso contrário, %{register} para se tornar cliente. "
-      require_customer_html: "Favor %{contact} %{enterprise} para se tornar um cliente. "
+      require_customer_html: "Por favor %{contact} a %{enterprise} para se tornar consumidor/a. "
   card_could_not_be_saved: o cartão não pode ser guardado
   spree_gateway_error_flash_for_checkout: "Houve um problema com a sua informação de pagamento: %{error}"
   invoice_billing_address: "Endereço de cobrança:"
@@ -776,8 +960,11 @@ pt:
   no_payment: sem métodos de pagamento
   no_shipping_or_payment: sem métodos de envio nem pagamento
   unconfirmed: não confirmado
+  days: dias
+  label_shop: "Loja"
   label_shops: "Lojas"
   label_map: "Mapa"
+  label_producer: "Produtor/a"
   label_producers: "Produtores"
   label_groups: "Grupos"
   label_about: "Sobre"
@@ -842,7 +1029,7 @@ pt:
   footer_legal_call: "Leia o nosso"
   footer_legal_tos: "Termos e condições"
   footer_legal_visit: "Encontre-nos em "
-  footer_legal_text_html: "A Open Food Network é uma plataforma grátis e open-source. Nosso conteúdo está sob licensa %{content_license} e nosso código %{code_license}."
+  footer_legal_text_html: "A Open Food Network é uma plataforma livre e open-source. O nosso conteúdo é disponibilizado sob uma licença %{content_license} e o nosso código %{code_license}."
   home_shop: Compre Agora
   brandstory_headline: "Alimentos, com liberdade"
   brandstory_intro: "Às vezes, a melhor maneira de consertar o sistema é construir um novo..."
@@ -882,7 +1069,7 @@ pt:
   checkout_default_bill_address: "Salvar como endereço de faturamento padrão"
   checkout_shipping: Informações para envio
   checkout_default_ship_address: "Salvar como endereço para entrega padrão"
-  checkout_method_free: Grátis
+  checkout_method_free: Não custa nada
   checkout_address_same: O endereço de entrega é o mesmo endereço da fatura?
   checkout_ready_for: "Pronto para"
   checkout_instructions: "Algum comentário ou instruções especiais?"
@@ -924,15 +1111,15 @@ pt:
   email_registered: "é agora parte de"
   email_userguide_html: "O Guia de Usuário com suporte detalhado para gerenciar sua loja está aqui:"
   email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
-  email_community_html: "Também temos um fórum online para discussão sobre a plataforma e as dificuldades únicas de se negociar alimentos. Você está convidade a participar. Estamos evoluindo constantemente e suas idéias vão nos ajudar a melhorar.\n%{link}"
+  email_community_html: "Também temos um fórum online para discussão sobre a plataforma e os desafios de se manter uma iniciativa de produção e consumo local. Está convidado/a a participar! Estamos constantemente a evoluir e as suas ideias vão ajudar-nos a melhorar.\n%{link}"
   join_community: "Faça parte da comunidade"
   email_help: "Se tiver quaisquer dificuldades, leia nosso FAQs, navegue no fórum ou crie um post no tópico 'Support' e alguém irá te ajudar!"
+  email_confirmation_activate_account: "Antes de podermos activar a sua conta, precisamos de confirmar o seu endereço de email."
   email_confirmation_greeting: "Olá, %{contact}!"
   email_confirmation_profile_created: "Um perfil para %{name} foi criado com sucesso!\nPara ativar seu Perfil precisamos que você confirme seu endereço de email."
   email_confirmation_click_link: "Clique no link abaixo para confirma seu email e continuar criando seu perfil."
   email_confirmation_link_label: "Confirme esse endereço de email »"
-  email_confirmation_help_html: "Depois de confirmar seu email você pode acessar a conta de administração desse empreendimento. Veja o %{link} para descobrir mais sobre %{sitename} e para começar a utilizar seu perfil ou loja online."
-  email_confirmation_userguide: "Guia do Usuário"
+  email_confirmation_help_html: "Depois de confirmar o seu email, pode aceder à conta de administração desta organização. Veja o %{link} para saber mais sobre a %{sitename} e para começar a utilizar o seu perfil ou loja online."
   email_social: "Conecte-se com a gente:"
   email_contact: "Envie-nos um email:"
   email_signoff: "Olá,"
@@ -955,6 +1142,23 @@ pt:
   email_payment_not_paid: NÃO PAGO
   email_payment_summary: Resumo do pagamento
   email_payment_method: "Pagando com:"
+  email_so_placement_intro_html: "Tem uma nova encomenda com <strong>%{distributor}</strong>"
+  email_so_placement_details_html: "Aqui estão os detalhes da sua encomenda com <strong>%{distributor}</strong>:"
+  email_so_placement_changes: "Infelizmente, nem todos os produtos que requisitou estão disponíveis. As quantidades originais que requisitou aparecem abaixo."
+  email_so_payment_success_intro_html: "Um pagamento automático foi processado para a sua encomenda com <strong>%{distributor}</strong>."
+  email_so_placement_explainer_html: "Esta encomenda foi criada automaticamente para si."
+  email_so_edit_true_html: "Pode <a href='%{order_url}'>fazer alterações</a> até ao fecho das encomendas a %{orders_close_at}."
+  email_so_edit_false_html: "Pode <a href='%{order_url}'>ver detalhes desta encomenda</a> em qualquer momento. "
+  email_so_contact_distributor_html: "Se tiver alguma questão pode contactar <strong>%{distributor}</strong>através de %{email}."
+  email_so_confirmation_intro_html: "A sua encomenda com <strong>%{distributor}</strong> está agora confirmada"
+  email_so_confirmation_explainer_html: "Esta encomenda foi feita automaticamente para si, e já está finalizada."
+  email_so_confirmation_details_html: "Aqui está tudo o que precisa de saber sobre a sua encomenda com <strong>%{distributor}</strong>:"
+  email_so_empty_intro_html: "Tentámos fazer uma nova encomenda com <strong>%{distributor}</strong>, mas tivemos alguns problemas..."
+  email_so_empty_explainer_html: "Infelizmente, nenhum dos produtos que requisitou estava disponível, portanto a encomenda não prosseguiu. As quantidades originais que requisitou aparecem abaixo. "
+  email_so_empty_details_html: "Aqui estão os detalhes da encomenda que não prosseguiu com <strong>%{distributor}</strong>:"
+  email_so_failed_payment_intro_html: "Tentámos processar um pagamento, mas tivemos alguns problemas..."
+  email_so_failed_payment_explainer_html: "O pagamento para a sua subscrição com <strong>%{distributor}</strong> falhou devido a um problema no seu cartão de crédito. <strong>%{distributor}</strong> foi notificado desta falha no pagamento. "
+  email_so_failed_payment_details_html: "Aqui estão os detalhes da falha fornecidos pelo portal de pagamento:"
   email_shipping_delivery_details: Detalhes da entrega
   email_shipping_delivery_time: "Entrega "
   email_shipping_delivery_address: "Endereço de entrega:"
@@ -964,10 +1168,9 @@ pt:
   email_special_instructions: "Suas anotações"
   email_signup_greeting: Olá!
   email_signup_welcome: "Bem vindo a %{sitename}!"
-  email_signup_login: Seu login
-  email_signup_email: 'O seu email de login é '
-  email_signup_shop_html: "Você pode começar a comprar agora em %{link}."
-  email_signup_text: "Obrigado por se juntar à rede. Se você é um cliente, esperamos te apresentar a vários produtores fantásticos, incríveis distribuidores e comidas deliciosas! Se você é um produtor ou empreendedor, estamos felizes em ter você como parte de nossa rede"
+  email_signup_confirmed_email: "Obrigada por confirmar o seu email."
+  email_signup_shop_html: "Já pode fazer log in em %{link}."
+  email_signup_text: "Obrigada por se juntar à rede. Se é consumidor/a, vai ficar a conhecer vários produtores fantásticos, pontos de venda incríveis e comidas deliciosas! Se é produtor/a ou uma organização de consumo local, estamos felizes por tê-lo na nossa rede"
   email_signup_help_html: "Dúvidas e comentários são sempre benvindos; você pode usar o botão  <em>Enviar Comentário</em> no site, ou enviar um e-mail para %{email}"
   producer_mail_greeting: "Querido"
   producer_mail_text_before: "Agora temos todos os pedidos do cliente para a próxima entrega."
@@ -988,6 +1191,8 @@ pt:
   enterprises_next_closing: "Próximo fechamento de pedido"
   enterprises_ready_for: "Pronto para"
   enterprises_choose: "Escolha para quando você quer seu pedido:"
+  maps_open: "Aberto"
+  maps_closed: "Fechado"
   hubs_buy: "Compre por:"
   hubs_shopping_here: "Comprando aqui"
   hubs_orders_closed: "Fechado para pedidos"
@@ -1091,7 +1296,7 @@ pt:
   producers_signup_headline: Mais liberdade para quem produz comida.
   producers_signup_motivation: Comercialize seus produtos e conte sua história para um mercado novo e diferenciado. Economize tempo e dinheiro em comunicação e logística.
   producers_signup_send: Cadastre-se agora
-  producers_signup_enterprise: Contas de Empreendimentos
+  producers_signup_enterprise: Contas da Organização
   producers_signup_studies: Histórias de nossos produtores
   producers_signup_cta_headline: Cadastre-se agora!
   producers_signup_cta_action: Cadastre-se agora
@@ -1111,10 +1316,10 @@ pt:
   sell_hubs: "Centrais"
   sell_groups: "Grupos"
   sell_producers_detail: "Crie um perfil para seu negócio em apenas alguns minutos. A qualquer momento você poderá fazer se tornar um mercado online e vender seus produtos diretamente ao consumidor."
-  sell_hubs_detail: "Crie um perfil para seu negócio ou organização na OFN. A qualquer momento você poderá fazer um upgrade para um mercado de multi-produtores. "
-  sell_groups_detail: "Organize um lista personalizada de negócios (cultivos, cooperativas, comércios, etc.) para sua região ou organização. "
+  sell_hubs_detail: "Crie um perfil para a sua organização na OFN. A qualquer momento poderá actualizar o seu perfil para passar a incluir vários outros produtores. "
+  sell_groups_detail: "Configure uma lista personalizada de organizações (produtores, cooperativas, lojas, etc.) para a sua região ou organização. "
   sell_user_guide: "Saiba mais acessando nosso guia. "
-  sell_listing_price: "Criar um perfil na OFN é grátis. Abrir e gerenciar um mercado na OFN é grátis. Organizar um grupo de empresas na OFN é grátis."
+  sell_listing_price: "Criar um perfil na OFN não custa nada. Abrir e gerir um ponto de vendas na OFN também não. Organizar um grupo de consumo na OFN é gratuito."
   sell_embed: "Você também pode embutir um mercado da OFN no seu próprio site, ou construir um site específico para a sua região. "
   sell_ask_services: "Pergunte-nos sobre nossos serviços."
   shops_title: Lojas
@@ -1124,11 +1329,12 @@ pt:
   shops_signup_headline: 'Um mercado de alimentos sem tamanho. '
   shops_signup_motivation: 'Seja qual for seu perfil, nos oferecemos suporte. Somos sem fins lucrativos, independentes, e open source. '
   shops_signup_action: Cadastre-se agora
-  shops_signup_pricing: Contas de Empreendimentos
+  shops_signup_pricing: Contas da Organização
   shops_signup_stories: Histórias de nossas centrais.
   shops_signup_help: Estamos prontos para ajudar
   shops_signup_help_text: Você precisa de mais retorno, novos compradores e parceiros de logística. Você precisa contar a sua história.
   shops_signup_detail: Aqui está o detalhe.
+  orders: Encomendas
   orders_fees: Taxas...
   orders_edit_title: Carrinho de compras
   orders_edit_headline: seu carrinho de compras
@@ -1182,10 +1388,10 @@ pt:
   going_back_to_home_page: "Voltando à pagina inicial"
   creating: Criando
   updating: Atualizando
-  failed_to_create_enterprise: "Falha ao criar seu empreendimento"
-  failed_to_create_enterprise_unknown: "Falha ao criar seu empreendimento. \nFavor verificar se todos os campos foram preenchidos corretamente."
-  failed_to_update_enterprise_unknown: "Falha ao atualizar seu empreendimento. \nFavor verificar se todos os campos foram preenchidos corretamente."
-  enterprise_confirm_delete_message: "Isto também vai apagar o %{product} que esta empresa fornece. Tem a certeza que deseja continuar?"
+  failed_to_create_enterprise: "Falha ao criar a sua organização"
+  failed_to_create_enterprise_unknown: "Falha ao criar a sua organização. \nPor favor verifique se todos os campos foram preenchidos correctamente."
+  failed_to_update_enterprise_unknown: "Falha ao actualizar a sua organização. \nPor favor verifique se todos os campos foram preenchidos correctamente."
+  enterprise_confirm_delete_message: "Isto também vai apagar o %{product} que esta organização fornece. Tem a certeza que deseja continuar?"
   order_not_saved_yet: "Seu pedido ainda não foi salvo. Aguarde um momento. "
   filter_by: "Filtrar por"
   hide_filters: "Esconder filtros"
@@ -1199,7 +1405,7 @@ pt:
   error_number: "Precisa ser um número"
   error_email: "Precisa ser um endereço de email"
   error_not_found_in_database: "%{name} não foi encontrado na base de dados."
-  error_no_permission_for_enterprise: "\"%{name}\": não tem permissão para gerir produtos desta empresa"
+  error_no_permission_for_enterprise: "\"%{name}\": não tem permissão para gerir produtos desta organização"
   item_handling_fees: "Taxas de Manejo do Produto (incluídas no total do produto)"
   january: "Janeiro"
   february: "Fevereiro"
@@ -1227,7 +1433,7 @@ pt:
   forgot_password: "Esqueceu sua senha?"
   password_reset_sent: "Um email foi enviado com instruções para resetar sua senha!"
   reset_password: "Resetar password"
-  who_is_managing_enterprise: "Quem é responsável por gerenciar %{enterprise}? "
+  who_is_managing_enterprise: "Quem é responsável por gerir %{enterprise}? "
   enterprise:
     registration:
       modal:
@@ -1235,19 +1441,19 @@ pt:
           details:
             title: 'Detalhes'
             headline: "Vamos lá começar"
-            enterprise: "Primeiro precisamos de saber um pouco sobre a sua empresa:"
+            enterprise: "Primeiro precisamos de saber um pouco sobre a sua organização:"
             producer: "Primeiro precisamos de saber um pouco sobre a sua quinta:"
-            enterprise_name_field: "Nome da empresa:"
+            enterprise_name_field: "Nome da organização:"
             producer_name_field: "Nome da quinta:"
             producer_name_field_placeholder: "ex: Quinta da Liliana Espectacular"
-            producer_name_field_error: "Por favor escolha um nome único para a sua empresa"
+            producer_name_field_error: "Por favor escolha um nome único para a sua organização"
             address1_field: "Endereço (primeira linha):"
             address1_field_placeholder: "ex: Rua das Framboesas 123"
             address1_field_error: "Por favor indique um endereço"
             address2_field: "Endereço (segunda linha):"
-            suburb_field: "Bairro:"
+            suburb_field: "Localidade:"
             suburb_field_placeholder: "ex: Lagarteiro"
-            suburb_field_error: "Por favor indique um bairro"
+            suburb_field_error: "Por favor indique uma localidade"
             postcode_field: "Código postal:"
             postcode_field_placeholder: "ex: 3070"
             postcode_field_error: "Código postal obrigatório"
@@ -1290,7 +1496,7 @@ pt:
   continue: "Continuar"
   limit_reached_headline: "Oh não!"
   limit_reached_message: "Você chegou ao limite!"
-  limit_reached_text: "Você chegou ao limite para o número de empreendimentos permitidos"
+  limit_reached_text: "Chegou ao número limite de organizações que pode ter na "
   limit_reached_action: "Voltar à página principal"
   select_promo_image: "Passo 3. Selecionar Imagem Promocional"
   promo_image_tip: "Tamanho preferencial: 1200x260px"
@@ -1311,20 +1517,19 @@ pt:
   enterprise_about_headline: "Boa!"
   enterprise_about_message: "Vamos inserir mais detalhes sobre"
   enterprise_success: "Sucesso! %{enterprise} foi adicionada a Open Food Network"
-  enterprise_registration_exit_message: "Se você fechar esse guia a qualquer momento, você precisa clicar no link de confirmação que você recebeu no email. Isso te levará até sua interface de administração onde você pode continuar construindo seu perfil."
   enterprise_description: "Descrição Curta"
-  enterprise_description_placeholder: "Uma pequena frase descrevendo sua empresa"
+  enterprise_description_placeholder: "Uma frase curta que descreva a sua organização "
   enterprise_long_desc: "Descrição completa"
-  enterprise_long_desc_placeholder: "Essa é a oportunidade de contar a história da sua empresa. Sugerimos um parágrafo, no máximo, 600 caracteres ou 150 palavras. "
+  enterprise_long_desc_placeholder: "Esta é a oportunidade para contar a história da sua organização - o quê que a torna diferente e maravilhosa? Sugerimos um parágrafo com 600 caracteres ou 150 palavras, no máximo. "
   enterprise_long_desc_length: "%{num} caracteres / recomendamos até 600"
-  enterprise_limit: Limite da Empresa
+  enterprise_limit: Limite da Organização
   enterprise_abn: "ABN"
   enterprise_abn_placeholder: "ex: 99 123 456 789"
   enterprise_acn: "ACN"
   enterprise_acn_placeholder: "ex: 123 456 789"
   enterprise_tax_required: "Você precisa fazer uma seleção."
   enterprise_final_step: "Último passo!"
-  enterprise_social_text: "Como as pessoas podem encontrar o/a %{enterprise} online?"
+  enterprise_social_text: "Como é que as pessoas podem encontrar a %{enterprise} online?"
   website: "Website"
   website_placeholder: "eg. openfoodnetwork.com.br"
   facebook: "Facebook"
@@ -1340,20 +1545,18 @@ pt:
   registration_action: "Vamos começar!"
   registration_checklist: "Você vai precisar"
   registration_time: "5-10 minutos"
-  registration_enterprise_address: "Endereço do empreendimento"
+  registration_enterprise_address: "Morada da organização"
   registration_contact_details: "Informações para contato"
   registration_logo: "Sua imagem de perfil"
   registration_promo_image: "Imagem horizontal para seu perfil"
   registration_about_us: "'Sobre Nós'"
   registration_outcome_headline: "O que eu ganho?"
   registration_outcome1_html: "Seu perfil ajuda as pessoas a te <strong>encontrarem</strong> e entrarem em <strong>contato</strong> com você na Open Food Network"
-  registration_outcome2: "Use este espaço para contar a história da sua empresa, e ajudar a criar conexões entre sua presença física e virtual."
+  registration_outcome2: "Use este espaço para contar a história da sua organização, de forma a gerar ligações à sua presença social e online. "
   registration_outcome3: "Esse é também o primeiro passo para começar a comercializar na Open Food Network, ou abrir uma loja online"
   registration_finished_headline: "Pronto!"
-  registration_finished_thanks: "Obrigado por preencher os detalhes para %{enterprise}."
-  registration_finished_login: "Você pode alterar ou atualizar suas informações a qualquer momento fazendo o login na Open Food Network e entrando na seção 'Admin'."
-  registration_finished_activate: "Ativar %{enterprise}."
-  registration_finished_activate_instruction_html: "Enviamos um email de confirmação para  <strong>%{email}</strong>. Favor seguir as instruções do email para que seu negócio seja visível na Open Food Network. "
+  registration_finished_thanks: "Obrigado por preencher os detalhes de %{enterprise}."
+  registration_finished_login: "Pode alterar ou actualizar as informações da sua organização a qualquer momento fazendo login na Open Food Network e entrando na secção Admin."
   registration_finished_action: "Página principal"
   registration_contact_name: 'Nome do contacto'
   registration_type_headline: "Último passo para adicionar %{enterprise}!"
@@ -1367,19 +1570,19 @@ pt:
   registration_images_headline: "Obrigado!"
   registration_images_description: "Vamos adicionar umas belas imagens para seu perfil ficar lindão!"
   registration_detail_headline: "Vamos Começar"
-  registration_detail_enterprise: "Primeiro precisamos saber mais sobre sua empresa:"
+  registration_detail_enterprise: "Primeiro precisamos saber mais sobre a sua organização:"
   registration_detail_producer: "Primeiro precisamos saber mais sobre sua produção:"
-  registration_detail_name_enterprise: "Nome da Atividade:"
+  registration_detail_name_enterprise: "Nome da Organização:"
   registration_detail_name_producer: "Nome da Produção"
   registration_detail_name_placeholder: "ex. Fazenda da Nina"
-  registration_detail_name_error: "Escolha um nome para sua empresa"
+  registration_detail_name_error: "Escolha um nome único para a sua organização"
   registration_detail_address1: "Linha de endereço 1:"
   registration_detail_address1_placeholder: "ex. Rua Mármore, 123"
   registration_detail_address1_error: "Favor inserir um endereço"
   registration_detail_address2: "Linha de endereço 2:"
-  registration_detail_suburb: "Município"
+  registration_detail_suburb: "Localidade"
   registration_detail_suburb_placeholder: "ex. Contagem"
-  registration_detail_suburb_error: "Favor inserir um município"
+  registration_detail_suburb_error: "Favor inserir uma localidade"
   registration_detail_postcode: "Código postal"
   registration_detail_postcode_placeholder: "ex. 3070"
   registration_detail_postcode_error: "Código postal requisitado"
@@ -1422,23 +1625,23 @@ pt:
   you_have_no_orders_yet: "Você ainda não tem pedidos"
   running_balance: "Balanço corrente"
   outstanding_balance: "Saldo devedor"
-  admin_entreprise_relationships: "Relações da empresa"
+  admin_entreprise_relationships: "Relações da Organização"
   admin_entreprise_relationships_everything: "Tudo"
   admin_entreprise_relationships_permits: "permite"
   admin_entreprise_relationships_seach_placeholder: "Busca"
   admin_entreprise_relationships_button_create: "Criar"
-  admin_entreprise_groups: "Grupos de empresas"
+  admin_entreprise_groups: "Grupos da Organização"
   admin_entreprise_groups_name: "Nome"
   admin_entreprise_groups_owner: "Dono"
   admin_entreprise_groups_on_front_page: "Na página inicial?"
-  admin_entreprise_groups_entreprise: "Empreendimentos"
+  admin_entreprise_groups_entreprise: "Organizações"
   admin_entreprise_groups_data_powertip: "Usuário responsável pelo grupo"
   admin_entreprise_groups_data_powertip_logo: "Esse é o logo do grupo"
   admin_entreprise_groups_data_powertip_promo_image: "Essa é a imagem que aparecerá no topo do perfil do Grupo"
   admin_entreprise_groups_contact: "Contato"
   admin_entreprise_groups_contact_phone_placeholder: "ex: 987654321"
   admin_entreprise_groups_contact_address1_placeholder: "ex: Rua Alta, 123"
-  admin_entreprise_groups_contact_city: "Município"
+  admin_entreprise_groups_contact_city: "Localidade"
   admin_entreprise_groups_contact_city_placeholder: "ex. Contagem"
   admin_entreprise_groups_contact_zipcode: "Código Postal "
   admin_entreprise_groups_contact_zipcode_placeholder: "ex. 3078"
@@ -1458,7 +1661,7 @@ pt:
   units: "Tamanho unitário"
   coordinator: "Coordenador"
   distributor: "Distribuidor"
-  enterprise_fees: "Taxas da Empresa"
+  enterprise_fees: "Taxas da Organização"
   process_my_order: "Processar a Minha Encomenda"
   delivery_instructions: Instruções de Entrega
   delivery_method: Método de Entrega
@@ -1493,14 +1696,14 @@ pt:
   save_changes: "Salvar Modificações"
   order_saved: "Pedido salvo"
   no_products: Sem Produtos
-  spree_admin_overview_enterprises_header: "Minhas Empresas"
-  spree_admin_overview_enterprises_footer: "GERENCIAR MINHAS EMPRESAS"
+  spree_admin_overview_enterprises_header: "As minhas Organizações"
+  spree_admin_overview_enterprises_footer: "GERIR AS MINHAS ORGANIZAÇÕES"
   spree_admin_enterprises_hubs_name: "Nome"
   spree_admin_enterprises_create_new: "CRIAR NOVA"
   spree_admin_enterprises_shipping_methods: "Métodos de Entrega"
-  spree_admin_enterprises_fees: "Taxas da Empresa"
-  spree_admin_enterprises_none_create_a_new_enterprise: "CRIAR NOVA EMPRESA"
-  spree_admin_enterprises_none_text: "Você ainda não possui nenhuma empresa"
+  spree_admin_enterprises_fees: "Taxas da Organização"
+  spree_admin_enterprises_none_create_a_new_enterprise: "CRIAR UMA NOVA ORGANIZAÇÃO"
+  spree_admin_enterprises_none_text: "Ainda não tem nenhuma organização"
   spree_admin_enterprises_producers_name: "Nome"
   spree_admin_enterprises_producers_total_products: "Total de Produtos"
   spree_admin_enterprises_producers_active_products: "Produtos Ativos"
@@ -1530,7 +1733,7 @@ pt:
   spree_order_populator_error: "Esse distribuidor ou ciclo de encomendas não pode fornecer todos os produtos do seu carrinho. Por favor escolha outro."
   spree_order_populator_availability_error: "Esse produto não está disponível no distribuidor ou ciclo de encomendas selecionado."
   spree_distributors_error: "Tem de selecionar pelo menos um Hub."
-  spree_user_enterprise_limit_error: "^%{email} não tem autorização para ter mais empresas (o limite é %{enterprise_limit})."
+  spree_user_enterprise_limit_error: "^%{email} não tem autorização para ter mais organizações (o limite é %{enterprise_limit})."
   spree_variant_product_error: tem de ter pelo menos uma variante
   your_profil_live: "Seu perfil online"
   on_ofn_map: "O mapa da Open Food Network"
@@ -1547,13 +1750,13 @@ pt:
   edit_profile_details_etc: "Modificar a descrição dos seu perfil, imagem, etc."
   order_cycle: "Ciclo de Pedidos"
   order_cycles: "Ciclos de pedidos"
-  enterprises: "Iniciativas"
-  enterprise_relationships: "Relações com empresas"
+  enterprises: "Organizações"
+  enterprise_relationships: "Relações da Organização"
   remove_tax: "Remover taxa"
-  enterprise_terms_of_service: "Termos de Serviço de Empresa"
-  enterprises_require_tos: "As Empresas têm de aceitar os Termos de Serviço"
-  enterprise_tos_link: "Ligação para Termos de Serviço de Empresa"
-  enterprise_tos_message: "Queremos trabalhar com pessoas que partilham os nossos objectivos e valores. Por isso pedimos às empresas novas que concordem com os nossos"
+  enterprise_terms_of_service: "Termos de Serviço da Organização"
+  enterprises_require_tos: "As organizações têm de aceitar os Termos de Serviço"
+  enterprise_tos_link: "Ligação para Termos de Serviço da Organização"
+  enterprise_tos_message: "Queremos trabalhar com pessoas que partilham os nossos objectivos e valores. Por isso pedimos às organizações novas que concordem com os nossos"
   enterprise_tos_link_text: "Termos de Serviço."
   enterprise_tos_agree: "Concordo com os Termos e Serviço acima"
   tax_settings: "Configurações de Taxas"
@@ -1586,7 +1789,7 @@ pt:
   report_payment_totals: 'Totais dos Pagamanetos'
   report_all: 'todos'
   report_order_cycle: "Ciclo de Pedidos:"
-  report_entreprises: "Empresas:"
+  report_entreprises: "Organizações:"
   report_users: "Usuários:"
   report_tax_rates: Taxas de imposto
   report_tax_types: Tipos e imposto
@@ -1598,7 +1801,7 @@ pt:
   report_header_first_name: Primeiro Nome
   report_header_last_name: Último Nome
   report_header_phone: Telefone
-  report_header_suburb: Bairro
+  report_header_suburb: Localidade
   report_header_address: Morada
   report_header_billing_address: Morada de facturação
   report_header_relationship: Relação
@@ -1638,7 +1841,7 @@ pt:
   report_header_tax_on_delivery: "Taxa sobre a entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Taxa sobre tarifas (%{currency_symbol})"
   report_header_total_tax: "Taxa total (%{currency_symbol})"
-  report_header_enterprise: Empresa
+  report_header_enterprise: Organização
   report_header_customer: Cliente
   report_header_customer_code: Código de Cliente
   report_header_product: Produto
@@ -1654,7 +1857,7 @@ pt:
   report_header_taxons: Taxons
   report_header_supplier: Fornecedor
   report_header_producer: Produtor
-  report_header_producer_suburb: Bairro do Produtor
+  report_header_producer_suburb: Localidade do Produtor
   report_header_unit: Unidade
   report_header_group_buy_unit_quantity: Quantidade unitária da Compra em Grupo
   report_header_cost: Custo
@@ -1715,7 +1918,7 @@ pt:
   report_header_is_producer: Produtor/a?
   report_header_not_confirmed: Não confirmado
   report_header_gst_on_income: GST sobre rendimentos
-  report_header_gst_free_income: GST Rendimentos Livres
+  report_header_gst_free_income: Rendimentos Livres de GST
   report_header_total_untaxable_produce: Total de produtos não taxáveis (sem impostos)
   report_header_total_taxable_produce: Total de produtos taxáveis (inclui impostos)
   report_header_total_untaxable_fees: Total de taxas não taxáveis (sem impostos)
@@ -1769,8 +1972,8 @@ pt:
   content_configuration_pricing_table: "(AFAZER: Tabela de preços)"
   content_configuration_case_studies: "(AFAZER: Casos de estudo)"
   content_configuration_detail: "(AFAZER: Detalhe)"
-  enterprise_name_error: "já está a ser usado. Se essa for a sua empresa e quiser reclamar propriedade, por favor contacte o actual gestor de perfil em %{email}."
-  enterprise_owner_error: "^%{email} não tem autorização para ter mais empresas (o limite é %{enterprise_limit})."
+  enterprise_name_error: "já está a ser usado. Se essa for a sua organização e quiser reclamar propriedade, por favor contacte o actual gestor de perfil em %{email}."
+  enterprise_owner_error: "^%{email} não tem autorização para ter mais organizações (o limite é %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Essa função já está presente."
   inventory_item_visibility_error: tem de ser verdadeiro ou falso
   product_importer_file_error: "erro: nenhum ficheiro foi carregado"
@@ -1789,21 +1992,20 @@ pt:
       Os hubs %{distributor_names} estão listados num ciclo de encomendas activo,
       mas não tem métodos de envio e pagamento válidos. Enquanto isto não for definido,
       os clientes não conseguirão fazer compras nestes hubs.
-  enterprise_fees_update_notice: As suas taxas de empresa foram actualizadas.
-  enterprise_fees_destroy_error: "Essa taxa de empresa não pode ser apagada porque está referenciada numa distribuição de produto: %{id} - %{name}."
+  enterprise_fees_update_notice: As suas taxas de organização foram actualizadas.
+  enterprise_fees_destroy_error: "Essa taxa de organização não pode ser apagada porque está referenciada numa distribuição de produto: %{id} - %{name}."
   enterprise_register_package_error: "Por favor selecione um pacote"
   enterprise_register_error: "Não foi possível finalizar o registo de %{enterprise}"
   enterprise_register_success_notice: "Parabéns! O registo de %{enterprise} está finalizado!"
-  enterprise_bulk_update_success_notice: "Empresas actualizadas com sucesso"
+  enterprise_bulk_update_success_notice: "Organizações actualizadas com sucesso"
   enterprise_bulk_update_error: 'A actualização falhou'
   order_cycles_create_notice: 'O seu ciclo de encomendas foi criado.'
   order_cycles_update_notice: 'O seu ciclo de encomendas foi actualizado.'
   order_cycles_bulk_update_notice: 'Os ciclos de encomendas foram actualizados.'
   order_cycles_clone_notice: "O seu ciclo de encomendas %{name} foi clonado."
   order_cycles_email_to_producers_notice: 'Os email a enviar aos produtores foram postos na fila de espera para envio.'
-  order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas empresas tem permissão para coordenar um ciclo de encomendas."
-  order_cycles_no_permission_to_create_error: "Não tem permissão para criar um ciclo de encomendas coordenado por essa empresa."
-  order_cycles_no_permission_to_delete_error: "Esse ciclo de encomendas foi selecionado por um cliente e não pode ser apagado. Para evitar que clientes acedam, por favor feche-o."
+  order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas organizações tem permissão para coordenar um ciclo de encomendas."
+  order_cycles_no_permission_to_create_error: "Não tem permissão para criar um ciclo de encomendas coordenado por essa organização."
   js:
     saving: 'A guardar....'
     changes_saved: 'Alterações guardadas.'
@@ -1821,6 +2023,8 @@ pt:
     choose: Escolha
     resolve_errors: Por favor resolva os seguintes erros
     more_items: "+ %{count} Mais"
+    closes: fecha
+    closed: fechado
     admin:
       modals:
         got_it: Percebi
@@ -1849,22 +2053,26 @@ pt:
           hub_profile: Perfil de Hub
           hub_profile_cost: "CUSTO: SEMPRE GRATUITO"
           hub_profile_text1: >
-              As pessoas podem encontrá-lo e contactá-lo na Open Food Network. A sua
-              empresa ficará visível no mapa e será pesquisável em listagens.
+              As pessoas podem encontrá-lo e contactá-lo através da Open Food Network.
+              A sua organização ficará visível no mapa e será pesquisável em listagens.
           hub_profile_text2: >
-              Ter um perfil e estabelecer ligações com o sistema alimentar local através
-              da Open Food Network vai ser sempre gratuito.
+              Ter um perfil e estabelecer ligações com o seu sistema alimentar local
+              através da Open Food Network não custa nada.
           hub_shop: Loja do hub
+          hub_shop_text1: >
+              A sua organização é a espinha dorsal do seu sistema de produção e consumo
+              local. Pode agregar produtos de outras organizações e vendê-los através
+              da sua loja na Open Food Network.
           hub_shop_text2: >
               Os Hubs podem ter muitos formatos, como cooperativas de consumo, grupos
               de compras, esquemas de cabazes, ou mercearias.
           hub_shop_text3: >
               Se também quiser vender os seus próprios produtos, terá de mudar esta
-              empresa para produtor.
+              organização para produtora.
           choose_package: Por favor selecione um pacote
           choose_package_text1: >
-              A sua empresa não estará activa a 100% enquanto não selecionar um pacote
-              nas opções à esquerda.
+              A sua organização não estará 100% activa enquanto não seleccionar um
+              pacote nas opções à esquerda.
           choose_package_text2: >
               Clique numa opção para ver informação mais detalhada sobre cada pacote,
               e carregue no botão vermelho GUARDAR quando estiver pronto!
@@ -1873,6 +2081,13 @@ pt:
           profile_only_text1: >
               Um perfil torna-o visível e contactável por outros e é uma forma de
               partilhar a sua história.
+          profile_only_text2: >
+              Se prefere focar-se na produção de alimentos, e quer deixar o trabalho
+              das vendas para outras pessoas, não precisa de uma loja na Open Food
+              Network.
+          profile_only_text3: >
+              Adicione os seus produtos na Open Food Network, permitindo assim que
+              os hubs os associem aos seus pontos de venda.
           producer_shop: Loja do produtor
           producer_shop_text1: >
               Venda os seus produtos diretamente aos consumidores através da sua própria
@@ -1883,9 +2098,17 @@ pt:
               por favor selecione hub de produtor.
           producer_hub: Hub de produtor
           producer_hub_text1: >
-              A sua iniciativa é a espinha dorsal do seu sistema de produção e consumo
-              local. Através da sua loja no Open Food Network você pode vender os
-              seus próprios produtos, assim como produtos agregados de outras iniciativas.
+              A sua organização é a espinha dorsal do seu sistema de produção e consumo
+              local. Através da sua loja no Open Food Network, poderá vender os seus
+              próprios produtos, assim como produtos agregados de outras organizações.
+          producer_hub_text2: >
+              Os Hubs de Produtores podem ter muitos formatos, desde as AMAPs, aos
+              esquemas de cabazes, ou a uma cooperativa de consumo com uma horta no
+              telhado.
+          producer_hub_text3: >
+              A Open Food Network pretende apoiar tantos modelos de hubs quanto possível,
+              portanto não importa a sua situação, queremos disponibilizar as ferramentas
+              que precisa para pôr a sua organização ou pequeno negócio local a funcionar.
           get_listing: Obter uma listagem
           always_free: SEMPRE GRATUITO
           sell_produce_others: Comercialize produtos de outros
@@ -1893,10 +2116,24 @@ pt:
           sell_both: Venda seus próprios produtos e de outros produtores
         enterprise_producer:
           producer: Produtor
+          producer_text1: >
+              Produtores/as são quem faz coisas deliciosas para comer e/ou beber.
+              És produtor/a se plantas, crias, fermentas, amassas, munges ou moldas.
+          producer_text2: >
+              Os Produtores também podem ter outras funções, como agregar alimentos
+              de outras organizações e vendê-los através de uma loja na Open Food
+              Network.
           non_producer: Não produtor
+          non_producer_text1: >
+              Os Não-Produtores não produzem alimentos, o que quer dizer que não podem
+              criar os seus próprios produtos para venda através da Open Food Network.
+          non_producer_text2: >
+              Por outro lado, os não-produtores são especializados em estabelecer
+              ligações entre produtores e "comedores" finais, através da agregação,
+              empacotamento, venda ou distribuição de alimentos.
           producer_desc: Produtores/as de alimentos
           producer_example: 'ex: AGRICULTORES, PADEIRAS, ALQUIMISTAS, FAZEDORES'
-          non_producer_desc: Todas as outras empresas de alimentos
+          non_producer_desc: Todas as outras organizações de produção e consumo local de alimentos
           non_producer_example: 'ex: Mercearias, cooperativas de consumo, grupos de compras'
         enterprise_status:
           status_title: "%{name} está configurado e pronto para a acção!"
@@ -1945,7 +2182,7 @@ pt:
       could_not_delete_customer: 'Não foi possível eliminar o cliente'
     product_import:
       confirmation: |
-        Isto colocará a zero o stock de todos os produtos desta empresa que não estejam presentes no ficheiro carregado.
+        Isto colocará a zero o stock de todos os produtos desta organização que não estejam presentes no ficheiro carregado.
     order_cycles:
       update_success: 'O seu ciclo de encomendas foi actualizado.'
       no_distributors: Não existem distribuidores neste ciclo. Este ciclo de encomendas só ficará visível para os clientes quando um distribuidor for adicionado. Gostaria de continuar a guardar este ciclo de encomendas?
@@ -1990,7 +2227,7 @@ pt:
           loading_account_information_msg: A carregar informação de conta do Stripe, por favor aguarde...
           stripe_disabled_msg: Os pagamentos por Stripe foram desactivados pelo administrador de sistema.
           request_failed_msg: Pedimos desculpa. Algo correu mal quando tentámos verificar os detalhes de conta com o Stripe...
-          account_missing_msg: Não existem contas Stripe associadas a esta empresa.ão existe conta de Stripe para esta empresa.
+          account_missing_msg: 'Não existem contas Stripe associadas a esta organização. '
           connect_one: Ligar Uma
           access_revoked_msg: O acesso a esta conta Stripe foi revogado, por favor volte a ligar a sua conta.
           status: EstadoEstado
@@ -2068,7 +2305,6 @@ pt:
       address: endereço
       adjustments: ajustes
       awaiting_return: aguardando retorno
-      canceled: cancelado
       cart: carrinho
       complete: completo
       confirm: confirmado
