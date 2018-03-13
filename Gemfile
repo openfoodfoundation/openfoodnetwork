@@ -103,7 +103,6 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f5
 
 group :test, :development do
   # Pretty printed test output
-  gem 'turn', '~> 0.8.3', require: false
   gem 'fuubar', '~> 2.2.0'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'

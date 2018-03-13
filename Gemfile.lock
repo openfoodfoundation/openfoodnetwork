@@ -183,7 +183,6 @@ GEM
       tilt
     angularjs-file-upload-rails (1.1.6)
     angularjs-rails (1.5.5)
-    ansi (1.4.2)
     arel (3.0.3)
     ast (2.3.0)
     atomic (1.1.99)
@@ -668,8 +667,6 @@ GEM
     turbo-sprockets-rails3 (0.3.6)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
-    turn (0.8.3)
-      ansi
     tzinfo (0.3.53)
     uglifier (2.7.1)
       execjs (>= 0.3.0)
@@ -798,7 +795,6 @@ DEPENDENCIES
   timecop
   truncate_html
   turbo-sprockets-rails3
-  turn (~> 0.8.3)
   uglifier (>= 1.0.3)
   unicorn
   unicorn-rails
