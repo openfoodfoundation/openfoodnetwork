@@ -638,7 +638,7 @@ GEM
     select2-rails (3.5.10)
       thor (~> 0.14)
     shellany (0.0.1)
-    shoulda-matchers (1.1.0)
+    shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
     skylight (1.5.0)
       activesupport (>= 3.0.0)
