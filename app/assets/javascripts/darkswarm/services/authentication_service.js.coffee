@@ -15,6 +15,9 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
       @selectedPath = path || @selectedPath
       Navigation.navigate @selectedPath
 
+    # Opens the /login tab if returning from email confirmation,
+    # the /signup tab if opened from the enterprise registration page,
+    # otherwise opens whichever tab is selected in the URL params ('/login', '/signup', or '/forgot')
     initialTab: ->
       if angular.isDefined($location.search()['validation'])
         '/login'
@@ -23,6 +26,7 @@ Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redir
       else
         $location.path()
 
+    # Loads the registration page modal when needed, otherwise the default modal
     initialTemplate: ->
       if location.pathname is '/register/auth'
         'registration_authentication.html'
