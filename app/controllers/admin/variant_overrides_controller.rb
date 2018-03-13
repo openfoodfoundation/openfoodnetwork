@@ -63,11 +63,12 @@ module Admin
       options = [{ id: '0', name: 'All' }]
 
       import_dates = VariantOverride.
-        select('variant_overrides.import_date').
+        select(:import_date).
         where('variant_overrides.hub_id IN (?)
-        AND variant_overrides.import_date IS NOT NULL', editable_enterprises.collect(&:id))
+        AND variant_overrides.import_date IS NOT NULL', editable_enterprises.collect(&:id)).
+        order('import_date DESC')
 
-      import_dates.uniq.collect(&:import_date).sort.reverse.map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
+      import_dates.collect(&:import_date).uniq.map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
 
       options
     end
