@@ -660,7 +660,7 @@ GEM
       ref
     thor (0.20.0)
     tilt (1.4.1)
-    timecop (0.8.1)
+    timecop (0.9.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
