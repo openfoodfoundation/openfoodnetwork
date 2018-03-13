@@ -85,8 +85,6 @@ Openfoodnetwork::Application.routes.draw do
   get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
 
   namespace :admin do
-    post '/enterprises/invite_manager', to: 'enterprises#invite_manager'
-
     resources :order_cycles do
       post :bulk_update, on: :collection, as: :bulk_update
 
@@ -101,6 +99,7 @@ Openfoodnetwork::Application.routes.draw do
         get :for_order_cycle
         get :visible
         post :bulk_update, as: :bulk_update
+        post :invite_manager
       end
 
       member do
