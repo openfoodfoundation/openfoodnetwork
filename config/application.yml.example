@@ -16,6 +16,12 @@ CHECKOUT_ZONE: Australia
 # Find currency codes at http://en.wikipedia.org/wiki/ISO_4217.
 CURRENCY: AUD
 
+# The whenever gem can set the `MAILTO` variable for our cron jobs.
+# You can define an email address to notify if any job outputs something.
+# But you need a working mail server setup so that the message is delivered.
+# See: config/schedule.rb
+#SCHEDULE_NOTIFICATIONS: admin@example.com
+
 # SingleSignOn login for Discourse
 #
 # DISCOURSE_SSO_SECRET should be a random string. It must be the same as provided to your Discourse instance.
