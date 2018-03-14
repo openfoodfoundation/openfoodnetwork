@@ -33,7 +33,7 @@ module OpenFoodNetwork
 
         it "performs both create and remove actions to rectify proxy orders" do
           expect(syncer).to receive(:create_proxy_orders!).and_call_original
-          expect(syncer).to receive(:remove_obsolete_proxy_orders!).and_call_original
+          expect(syncer).to receive(:remove_orphaned_proxy_orders!).and_call_original
           syncer.sync!
           subscription.reload
           expect(subscription.proxy_orders).to include po2
@@ -61,7 +61,7 @@ module OpenFoodNetwork
         end
       end
 
-      describe "#remove_obsolete_proxy_orders!" do
+      describe "#remove_orphaned_proxy_orders!" do
         let!(:po1) { create(:proxy_order, subscription: subscription, order_cycle: oc1) }
         let!(:po2) { create(:proxy_order, subscription: subscription, order_cycle: oc2) }
         let!(:po3) { create(:proxy_order, subscription: subscription, order_cycle: oc3) }
@@ -70,7 +70,7 @@ module OpenFoodNetwork
 
         it "destroys proxy orders that are closed or out of range" do
           allow(syncer).to receive(:subscription) { subscription }
-          expect{ syncer.send(:remove_obsolete_proxy_orders!) }.to change(ProxyOrder, :count).from(5).to(2)
+          expect{ syncer.send(:remove_orphaned_proxy_orders!) }.to change(ProxyOrder, :count).from(5).to(2)
           expect(subscription.proxy_orders.map(&:order_cycle)).to include oc3, oc4
         end
       end
