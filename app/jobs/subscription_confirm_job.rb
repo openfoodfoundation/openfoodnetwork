@@ -25,7 +25,6 @@ class SubscriptionConfirmJob
   def proxy_orders
     ProxyOrder.not_canceled.where('confirmed_at IS NULL AND placed_at IS NOT NULL')
       .joins(:order_cycle).merge(recently_closed_order_cycles)
-      .joins(:subscription).merge(Subscription.not_canceled.not_paused)
       .joins(:order).merge(Spree::Order.complete)
   end
 

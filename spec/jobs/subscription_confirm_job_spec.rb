@@ -16,18 +16,18 @@ describe SubscriptionConfirmJob do
       expect(proxy_orders).to include proxy_order
     end
 
+    it "returns proxy orders for paused subscriptions" do
+      subscription.update_attributes!(paused_at: 1.minute.ago)
+      expect(proxy_orders).to include proxy_order
+    end
+
+    it "returns proxy orders for cancelled subscriptions" do
+      subscription.update_attributes!(canceled_at: 1.minute.ago)
+      expect(proxy_orders).to include proxy_order
+    end
+
     it "ignores proxy orders where the OC closed more than 1 hour ago" do
       proxy_order.update_attributes!(order_cycle_id: order_cycle2.id)
-      expect(proxy_orders).to_not include proxy_order
-    end
-
-    it "ignores proxy orders for paused subscriptions" do
-      subscription.update_attributes!(paused_at: 1.minute.ago)
-      expect(proxy_orders).to_not include proxy_order
-    end
-
-    it "ignores proxy orders for cancelled subscriptions" do
-      subscription.update_attributes!(canceled_at: 1.minute.ago)
       expect(proxy_orders).to_not include proxy_order
     end
 
