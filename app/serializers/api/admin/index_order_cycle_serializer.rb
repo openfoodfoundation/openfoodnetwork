@@ -7,7 +7,7 @@ module Api
 
       attributes :id, :name, :orders_open_at, :orders_close_at, :status, :variant_count, :deletable
       attributes :coordinator, :producers, :shops, :viewing_as_coordinator
-      attributes :edit_path, :clone_path, :delete_path
+      attributes :edit_path, :clone_path, :delete_path, :subscriptions_count
 
       has_many :schedules, serializer: Api::Admin::IdNameSerializer
 
@@ -59,6 +59,10 @@ module Api
 
       def delete_path
         admin_order_cycle_path(object)
+      end
+
+      def subscriptions_count
+        ProxyOrder.not_canceled.where(order_cycle_id: object.id).count
       end
 
       private

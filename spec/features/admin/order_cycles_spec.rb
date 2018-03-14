@@ -24,6 +24,7 @@ feature %q{
     oc7 = create(:simple_order_cycle, name: 'oc7',
                 orders_open_at: 2.months.ago, orders_close_at: 5.weeks.ago)
     schedule1 = create(:schedule, name: 'Schedule1', order_cycles: [oc1, oc3])
+    create(:proxy_order, subscription: create(:subscription, schedule: schedule1), order_cycle: oc1)
 
     # When I go to the admin order cycles page
     login_to_admin_section
@@ -111,6 +112,10 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
+
+    # Attempting to edit dates of an open order cycle with active subscriptions
+    find("#oc#{oc1.id}_orders_open_at").click
+    expect(page).to have_selector "#confirm-dialog .message", text: I18n.t('admin.order_cycles.date_warning.msg', n: 1)
   end
 
   describe 'listing order cycles with other locales' do
