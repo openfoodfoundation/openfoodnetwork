@@ -3,7 +3,6 @@
 -# So we use onchange and have to get the scope to access the ng controller
 = form_for [main_app, :admin, @enterprise], html: { name: "enterprise_form",
   "ng-controller" => 'enterpriseCtrl',
-  'onchange' => 'angular.element(enterprise_form).scope().setFormDirty()',
   "ng-cloak" => true } do |f|
 
   %save-bar{ dirty: "enterprise_form.$dirty", persist: "true" }
