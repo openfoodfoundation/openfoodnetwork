@@ -60,15 +60,14 @@ module Admin
     end
 
     def inventory_import_dates
-      options = [{ id: '0', name: 'All' }]
-
       import_dates = VariantOverride.
-        select(:import_date).
+        select('DISTINCT variant_overrides.import_date').
         where('variant_overrides.hub_id IN (?)
         AND variant_overrides.import_date IS NOT NULL', editable_enterprises.collect(&:id)).
         order('import_date DESC')
 
-      import_dates.collect(&:import_date).uniq.map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
+      options = [{ id: '0', name: 'All' }]
+      import_dates.collect(&:import_date).map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
 
       options
     end

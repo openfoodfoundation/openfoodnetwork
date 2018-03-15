@@ -100,14 +100,12 @@ Spree::Admin::ProductsController.class_eval do
   def load_form_data
     @producers = OpenFoodNetwork::Permissions.new(spree_current_user).managed_product_enterprises.is_primary_producer.by_name
     @taxons = Spree::Taxon.order(:name)
-    import_dates = [{id: '0', name: ''}]
-    product_import_dates.map { |i| import_dates.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
-    @import_dates = import_dates.uniq.to_json
+    @import_dates = product_import_dates.uniq.to_json
   end
 
   def product_import_dates
     import_dates = Spree::Variant.
-      select('spree_variants.import_date').
+      select('DISTINCT spree_variants.import_date').
       joins(:product).
       where('spree_products.supplier_id IN (?)', editable_enterprises.collect(&:id)).
       where('spree_variants.import_date IS NOT NULL').
@@ -115,7 +113,10 @@ Spree::Admin::ProductsController.class_eval do
       where(spree_variants: {deleted_at: nil}).
       order('spree_variants.import_date DESC')
 
-    import_dates.collect(&:import_date).uniq
+    options = [{id: '0', name: ''}]
+    import_dates.collect(&:import_date).map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
+
+    options
   end
 
   def strip_new_properties
