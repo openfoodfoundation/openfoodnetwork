@@ -52,7 +52,7 @@ angular.module("admin.enterprises")
         else
           alert ("#{manager.email}" + " " + t("is_already_manager"))
 
-    $scope.inviteUser = ->
+    $scope.inviteManager = ->
       $scope.invite_errors = $scope.invite_success = null
       email = $scope.newUser
 

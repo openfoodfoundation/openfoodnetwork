@@ -13,7 +13,7 @@
   %input#invite_email.fullwidth.margin-bottom-20{ng: {model: 'newUser'}}
 
   .margin-bottom-20.text-center
-    %button.text-center.margin-top-10{ng: {show: '!invite_success', click: 'inviteUser()'}}
+    %button.text-center.margin-top-10{ng: {show: '!invite_success', click: 'inviteManager()'}}
       = t('js.admin.modals.invite')
     %button.text-center.margin-top-10{ng: {show: 'invite_success', click: 'resetModal(); close()'}}
       = t('js.admin.modals.close')
