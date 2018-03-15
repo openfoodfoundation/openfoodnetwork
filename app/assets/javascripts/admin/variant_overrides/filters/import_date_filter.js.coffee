@@ -4,8 +4,8 @@ angular.module("admin.variantOverrides").filter "importDate", ($filter, variantO
     return $filter('filter')(products, (product) ->
       return true if date == 0 or date == undefined or date == '0' or date == ''
 
-      for variant in product.variants
-        for vo in variantOverrides
+      angular.forEach product.variants (variant) ->
+        angular.forEach variantOverrides (vo) ->
           if vo.variant_id == variant.id and vo.import_date == date
             return true
       false

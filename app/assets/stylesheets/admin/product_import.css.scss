@@ -50,9 +50,7 @@ div.panel-section {
 
   div.panel-header {
     width: 100%;
-    //font-size: 1.5em;
     clear: both;
-    //border: 1px solid #ccc;
     float: left;
     padding: 0.5em;
 
@@ -103,7 +101,6 @@ div.panel-section {
   div.panel-content {
     width: 100%;
     clear: both;
-    //border: 1px solid #ccc;
     margin-bottom: 0.5em;
     background-color: #f9f9f9;
     padding: 1.5em;
@@ -122,8 +119,6 @@ div.panel-section {
         white-space: nowrap;
       }
       tr.error {
-        //background-color: #ffe6e4;
-        //color: #ee4728;
         color: #c84C4c;
       }
       tr:hover td.invalid {
@@ -154,9 +149,7 @@ div.panel-section {
         margin-bottom: 0.2em;
       }
     }
-
   }
-
 }
 
 br.panels.clearfix {
@@ -167,12 +160,6 @@ table.import-settings {
   background-color: transparent !important;
   width: auto;
 
-  //select {
-  //  width: 100%;
-  //}
-  tr {
-
-  }
   tbody tr:hover td {
     background-color: #f3f3f3;
   }
@@ -194,11 +181,9 @@ table.import-settings {
     padding-right: 2.5em;
   }
   tr:first-child td {
-    //border-top: 1px solid #eee;
     border-top: 0;
   }
   tr:last-child td {
-    //border-top: 1px solid #eee;
     border-bottom: 0;
   }
   div.select2-container {
@@ -215,7 +200,6 @@ table.import-settings {
     border-color: transparent;
     color: white !important;
   }
-
 }
 
 .panel-section.import-settings {
@@ -237,8 +221,6 @@ table.import-settings {
     margin: 0;
   }
 }
-
-
 
 .post-save-results {
   p {
@@ -295,10 +277,6 @@ div.import-wrapper {
   div.progress-interface {
     text-align: center;
     transition: all linear 0.25s;
-
-    button {
-
-    }
 
     button:disabled {
       background: #ccc !important;
