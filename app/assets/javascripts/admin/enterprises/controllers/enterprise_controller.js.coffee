@@ -56,7 +56,7 @@ angular.module("admin.enterprises")
       $scope.invite_errors = $scope.invite_success = null
       email = $scope.newUser
 
-      $http.post('/admin/enterprises/invite_manager', {email: email, enterprise: $scope.Enterprise.id}).success (data)->
+      $http.post("/admin/manager_invitations", {email: email, enterprise_id: $scope.Enterprise.id}).success (data)->
           $scope.addManager({id: data.user, email: email})
           $scope.invite_success = t('user_invited', email: email)
         .error (data) ->

@@ -99,7 +99,6 @@ Openfoodnetwork::Application.routes.draw do
         get :for_order_cycle
         get :visible
         post :bulk_update, as: :bulk_update
-        post :invite_manager
       end
 
       member do
@@ -113,6 +112,8 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :tag_rules, only: [:destroy]
     end
+
+    resources :manager_invitations, only: [:create]
 
     resources :enterprise_relationships
     resources :enterprise_roles

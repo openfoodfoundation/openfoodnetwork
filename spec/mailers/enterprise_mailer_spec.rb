@@ -11,7 +11,7 @@ describe EnterpriseMailer do
   describe "#welcome" do
     it "should send a welcome email when given an enterprise" do
       EnterpriseMailer.welcome(enterprise).deliver
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq 1
       mail = ActionMailer::Base.deliveries.first
       expect(mail.subject).to eq "#{enterprise.name} is now on #{Spree::Config[:site_name]}"
     end

@@ -348,10 +348,6 @@ class Enterprise < ActiveRecord::Base
     abn.present?
   end
 
-  def send_manager_invitation(user)
-    Delayed::Job.enqueue ManagerInvitationJob.new(self.id, user.id)
-  end
-
   protected
 
   def devise_mailer

@@ -83,6 +83,7 @@ feature %q{
       let!(:user1) { create(:user, email: 'user1@example.com') }
       let!(:user2) { create(:user, email: 'user2@example.com') }
       let!(:user3) { create(:user, email: 'user3@example.com', confirmed_at: nil) }
+      let(:new_email) { 'new@manager.com' }
 
       let!(:enterprise) { create(:enterprise, name: 'Test Enterprise', owner: user1) }
       let!(:enterprise_role) { create(:enterprise_role, user_id: user2.id, enterprise_id: enterprise.id) }
@@ -137,8 +138,6 @@ feature %q{
       end
 
       it "can invite unregistered users to be managers" do
-        new_email = 'new@manager.com'
-
         find('a.button.help-modal').click
         expect(page).to have_css '#invite-manager-modal'
 

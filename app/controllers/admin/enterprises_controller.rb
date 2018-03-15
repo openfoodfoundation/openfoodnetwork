@@ -114,35 +114,7 @@ module Admin
       end
     end
 
-    def invite_manager
-      existing_user = Spree::User.where("email = :email OR unconfirmed_email = :email", email: params[:email]).first
-
-      if existing_user
-        render json: { errors: t('admin.enterprises.invite_manager.user_already_exists') }, status: :unprocessable_entity
-        return
-      end
-
-      new_user = create_new_manager(params[:email], params[:enterprise])
-
-      if new_user
-        render json: { user: new_user.id }, status: :ok
-      else
-        render json: { errors: t('admin.enterprises.invite_manager.error') }, status: 500
-      end
-    end
-
     protected
-
-    def create_new_manager(email, enterprise_id)
-      enterprise = Enterprise.find(enterprise_id)
-      password = Devise.friendly_token.first(8)
-      new_user = Spree::User.create(email: email, unconfirmed_email: email, password: password, password_confirmation: password)
-
-      enterprise.send_manager_invitation(new_user)
-      enterprise.users << new_user
-
-      new_user
-    end
 
     def build_resource_with_address
       enterprise = build_resource_without_address
