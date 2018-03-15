@@ -25,8 +25,10 @@ module Admin
     private
 
     def create_new_manager
-      password = Devise.friendly_token.first(8)
+      password = Devise.friendly_token
       new_user = Spree::User.create(email: @email, unconfirmed_email: @email, password: password)
+      new_user.reset_password_token = Devise.friendly_token
+      new_user.save!
 
       @enterprise.users << new_user
       Delayed::Job.enqueue ManagerInvitationJob.new(@enterprise.id, new_user.id)

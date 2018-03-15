@@ -38,6 +38,10 @@ class UserConfirmationsController < DeviseController
         'not_confirmed'
       end
 
+    if resource.reset_password_token.present?
+      return spree.edit_spree_user_password_path(reset_password_token: resource.reset_password_token)
+    end
+
     path = (session[:confirmation_return_url] || login_path).to_s
     path += path.include?('?') ? '&' : '?'
     path + "validation=#{result}"
