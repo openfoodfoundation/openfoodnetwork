@@ -215,13 +215,13 @@ namespace :openfoodnetwork do
         environment: Rails.env,
         preferred_enable_mail_delivery: true,
         preferred_mail_host: ENV['MAIL_HOST'],
-        preferred_mail_domain: ENV['DOMAIN'],
+        preferred_mail_domain: ENV['MAIL_DOMAIN'],
         preferred_mail_port: ENV['MAIL_PORT'],
         preferred_mail_auth_type: "login",
         preferred_smtp_username: ENV['SMTP_USERNAME'],
         preferred_smtp_password: ENV['SMTP_PASSWORD'],
         preferred_secure_connection_type: "None",
-        preferred_mails_from: "no-reply@#{ENV['DOMAIN']}",
+        preferred_mails_from: "no-reply@#{ENV['MAIL_DOMAIN']}",
         preferred_mail_bcc: "",
         preferred_intercept_email: ""
       ).call
