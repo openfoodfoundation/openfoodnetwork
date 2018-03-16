@@ -13,8 +13,6 @@ namespace :openfoodnetwork do
       country = Spree::Country.find_by_iso(ENV.fetch('DEFAULT_COUNTRY_CODE'))
       state = country.states.first
 
-      create_mail_method
-
       # -- Shipping / payment information
       unless Spree::Zone.find_by_name 'Australia'
         puts "[#{task_name}] Seeding shipping / payment information"
@@ -206,25 +204,6 @@ namespace :openfoodnetwork do
       EnterpriseRole.create!(user: Spree::User.first, enterprise: enterprise2)
 
       spree_user.confirm!
-    end
-
-    def create_mail_method
-      Spree::MailMethod.destroy_all
-
-      CreateMailMethod.new(
-        environment: Rails.env,
-        preferred_enable_mail_delivery: true,
-        preferred_mail_host: ENV['MAIL_HOST'],
-        preferred_mail_domain: ENV['MAIL_DOMAIN'],
-        preferred_mail_port: ENV['MAIL_PORT'],
-        preferred_mail_auth_type: "login",
-        preferred_smtp_username: ENV['SMTP_USERNAME'],
-        preferred_smtp_password: ENV['SMTP_PASSWORD'],
-        preferred_secure_connection_type: "None",
-        preferred_mails_from: "no-reply@#{ENV['MAIL_DOMAIN']}",
-        preferred_mail_bcc: "",
-        preferred_intercept_email: ""
-      ).call
     end
   end
 end
