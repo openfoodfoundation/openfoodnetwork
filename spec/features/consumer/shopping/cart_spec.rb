@@ -28,7 +28,7 @@ feature "full-page cart", js: true do
       end
     end
 
-    describe "fees" do
+    describe "percentage fees" do
       let(:percentage_fee) { create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 20)) }
 
       before do
@@ -44,6 +44,42 @@ feature "full-page cart", js: true do
         expect(page).to have_selector '.cart-item-total',         text: with_currency(8.24)
         expect(page).to have_selector '.order-total.item-total',  text: with_currency(8.24)
         expect(page).to have_selector '.order-total.grand-total', text: with_currency(8.24)
+      end
+    end
+
+    describe "admin and handling flat fees" do
+      context 'when there are fees' do
+        let(:handling_fee) { create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 1),
+          enterprise: order_cycle.coordinator, fee_type: 'admin') }
+
+        before do
+          add_enterprise_fee handling_fee
+          add_product_to_cart order, product_fee, quantity: 3
+          visit spree.cart_path
+        end
+
+        it 'shows admin and handlings row' do
+          expect(page).to have_selector('#cart-detail')
+          expect(page).to have_content('Admin & Handling')
+          expect(page).to have_selector '.cart-item-price',                 text: with_currency(0.86)
+          expect(page).to have_selector '.order-total.item-total',          text: with_currency(2.58)
+          expect(page).to have_selector '.order-total.distribution-total',  text: with_currency(1.00)
+          expect(page).to have_selector '.order-total.grand-total',         text: with_currency(3.58) # price * 3 + 1
+        end
+      end
+
+      context 'when there are no admin and handling fees' do
+        before do
+          add_product_to_cart order, product_fee, quantity: 2
+          visit spree.cart_path
+        end
+
+        it 'hides admin and handlings row' do
+          expect(page).to have_selector('#cart-detail')
+          expect(page).to_not have_content('Admin & Handling')
+          expect(page).to have_selector '.cart-item-price',         text: with_currency(0.86)
+          expect(page).to have_selector '.order-total.grand-total', text: with_currency(1.72) # price * 3
+        end
       end
     end
 
@@ -141,27 +177,6 @@ feature "full-page cart", js: true do
         find("td.toggle-bought").click
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_content item2.variant.name
-      end
-    end
-
-    context "Admin & Handling" do
-      it "hides row if order includes no adjustments" do
-        add_product_to_cart order, product_fee, quantity: 1
-        visit spree.cart_path
-
-        expect(page).to have_selector('#cart-detail')
-        expect(page).to_not have_content('Admin & Handling')
-      end
-
-      it "shows row if order includes adjustments" do
-        coordinator_fee = create(:enterprise_fee, enterprise: order_cycle.coordinator, fee_type: 'admin', calculator: Spree::Calculator::FlatRate.new(preferred_amount: 1))
-        order_cycle.coordinator_fees << coordinator_fee
-
-        add_product_to_cart order, product_fee, quantity: 1
-        visit spree.cart_path
-
-        expect(page).to have_selector('#cart-detail')
-        expect(page).to have_content('Admin & Handling')
       end
     end
   end
