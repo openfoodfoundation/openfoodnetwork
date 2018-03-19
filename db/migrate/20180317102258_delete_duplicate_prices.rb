@@ -26,8 +26,18 @@ class DeleteDuplicatePrices < ActiveRecord::Migration
     self.table_name = 'spree_prices'
   end
 
+  OldPrice = Struct.new(:row) do
+    def method_missing(name)
+      value = row[name.to_s]
+      return nil if value.nil?
+      return value.to_i if name =~ /id/
+      return value.to_f if name =~ /amount/
+      super
+    end
+  end
+
   DUPLICATES_FILE = "duplicate_prices_removed_by_migration.json"
-  CONFLICTS_FILE = "conflicting_lower_prices_removed_by_migration.json"
+  CONFLICTS_FILE = "conflicting_prices_removed_by_migration.json"
 
   def up
     remove_duplicate_prices
@@ -48,6 +58,8 @@ class DeleteDuplicatePrices < ActiveRecord::Migration
     duplicate_half_of_prices = "SELECT min(id) id, variant_id, amount, currency FROM spree_prices GROUP BY variant_id, amount, currency HAVING COUNT(variant_id) > 1"
     File.write(DUPLICATES_FILE, select_all(duplicate_half_of_prices).to_json)
     duplicate_half_of_price_ids = "SELECT min(id) FROM spree_prices GROUP BY variant_id, amount, currency HAVING COUNT(variant_id) > 1"
+    duplicate_count = select_value("SELECT count(*) FROM spree_prices WHERE id IN (#{duplicate_half_of_price_ids})")
+    puts "Deleting #{duplicate_count} duplicate prices"
     delete("DELETE FROM spree_prices WHERE id IN (#{duplicate_half_of_price_ids})")
   end
 
@@ -68,29 +80,62 @@ class DeleteDuplicatePrices < ActiveRecord::Migration
   # Equal prices should have been deleted in the previous step `remove_duplicate_prices`.
   def remove_conflicting_prices
     # find all conflicting price pairs
-    price_pairs = select_all("SELECT variant_id, MIN(price.id) price_id1, MAX(price.id) price_id2, currency FROM spree_prices price GROUP BY variant_id, currency HAVING COUNT(variant_id) > 1")
+    price1_subquery = "SELECT MIN(id) FROM spree_prices GROUP BY variant_id, currency HAVING COUNT(variant_id) > 1"
+    price2_subquery = "SELECT MAX(id) FROM spree_prices GROUP BY variant_id, currency HAVING COUNT(variant_id) > 1"
+    price_pairs_query = "SELECT price1s.variant_id variant_id, price1s.id price1_id, price1s.amount price1_amount, price2s.id price2_id, price2s.amount price2_amount FROM "
+    price_pairs_query += "(SELECT id, variant_id, amount FROM spree_prices WHERE id IN (#{price1_subquery})) price1s JOIN "
+    price_pairs_query += "(SELECT id, variant_id, amount FROM spree_prices WHERE id IN (#{price2_subquery})) price2s "
+    price_pairs_query += " ON price1s.variant_id = price2s.variant_id"
+    price_pairs = select_all(price_pairs_query)
+    old_prices = load_old_prices
+
+    price1_ids_to_destroy = []
+    price2_ids_to_destroy = []
+    price2_changed_variant_ids = []
+    mismatched_variant_ids = []
 
     # starting a recovery file
     File.open(CONFLICTS_FILE, 'w') do |log|
       # iterate one by one to simplify logic
       price_pairs.each do |pair|
-        price1 = Price.find pair['price_id1']
-        price2 = Price.find pair['price_id2']
-        if price1.amount > price2.amount
-          log.write(price2.to_json)
-          price2.destroy
-        end
-        if price2.amount > price1.amount
-          log.write(price1.to_json)
-          price1.destroy
-        end
-        if price1.amount == price2.amount
-          puts "WARNING! Prices are equal. This should have been caught in the previous step. Deleting the first one anyway."
-          log.write(price1.to_json)
-          price1.destroy
+        old_pair = old_prices[pair['variant_id']]
+        new_price1 = Price.find pair['price1_id']
+        new_price2 = Price.find pair['price2_id']
+        old_price1_amount = old_pair.price1_amount
+        old_price2_amount = old_pair.price2_amount
+
+        if old_pair.price1_id != new_price1.id || old_pair.price2_id != new_price2.id
+          puts "WARNING! Mismatched LOWER and HIGHER price ids between databases"
+          mismatched_variant_ids << pair['variant_id']
+        elsif old_price2_amount != new_price2.amount.to_f
+          puts "WARNING! A price with a HIGHER id seems to have changed on the new server. According to our theory, this should not be possible."
+          puts "DETAILS"
+          puts "Variant ID: #{pair['variant_id']}, Old Price2: #{old_price2_amount}, New Price2: #{new_price2.amount.to_f}"
+          price2_changed_variant_ids << new_price2.to_json
+        elsif old_price1_amount != new_price1.amount.to_f
+          # Destroy the price with the HIGHER id where the price with the LOWER id has changed between dbs
+          log.write(new_price2.to_json)
+          price2_ids_to_destroy << new_price2.id
+        else
+          # Destroy the price with the LOWER id where neither price has been changed between dbs
+          log.write(new_price1.to_json)
+          price1_ids_to_destroy << new_price1.id
         end
         log.write("\n")
       end
+
+      if mismatched_variant_ids.any?
+        puts "FOUND #{mismatched_variant_ids.count} variant IDs where a price LOWER and HIGHER price ids did not match"
+        puts mismatched_variant_ids.join(',')
+      end
+      if price2_changed_variant_ids.any?
+        puts "FOUND #{price2_changed_variant_ids.count} variant IDs where a price with a HIGHER id was changed:"
+        puts price2_changed_variant_ids.join(',')
+      end
+      puts "Deleting #{price1_ids_to_destroy.count} prices with LOWER ids"
+      delete("DELETE FROM spree_prices WHERE id IN (#{price1_ids_to_destroy.join(',')})")
+      puts "Deleting #{price2_ids_to_destroy.count} prices with HIGHER ids"
+      delete("DELETE FROM spree_prices WHERE id IN (#{price2_ids_to_destroy.join(',')})")
     end
   end
 
@@ -106,6 +151,12 @@ class DeleteDuplicatePrices < ActiveRecord::Migration
       object = JSON.parse json
       price = object['price']
       Price.create({id: price['id'], variant_id: price['variant_id'], amount: price['amount'], currency: price['currency']}, without_protection: true)
+    end
+  end
+
+  def load_old_prices
+    CSV.foreach('old_prices.csv', headers: true).each_with_object({}) do |row, prices|
+      prices[row['variant_id']] = OldPrice.new(row)
     end
   end
 end
