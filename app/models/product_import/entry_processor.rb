@@ -42,10 +42,10 @@ module ProductImport
             VariantOverride.where('variant_overrides.hub_id IN (?)', supplier_id).count
           else
             Spree::Variant.
+              not_deleted.
+              not_master.
               joins(:product).
-              where('spree_products.supplier_id IN (?)
-              AND spree_variants.is_master = false
-              AND spree_variants.deleted_at IS NULL', supplier_id).
+              where('spree_products.supplier_id IN (?)', supplier_id).
               count
           end
 
