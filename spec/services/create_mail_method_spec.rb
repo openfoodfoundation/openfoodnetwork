@@ -14,28 +14,36 @@ describe CreateMailMethod do
       allow(Spree::Core::MailSettings).to receive(:init) { mail_settings }
     end
 
-    it 'creates a new MailMethod' do
-      described_class.new(attributes).call
+    context 'unit' do
+      before do
+        allow(mail_method).to receive(:update_attributes).with(attributes)
+      end
 
-      expect(Spree::MailMethod)
-        .to have_received(:create).with(environment: 'test') { mail_method }
+      it 'creates a new MailMethod' do
+        described_class.new(attributes).call
+
+        expect(Spree::MailMethod)
+          .to have_received(:create).with(environment: 'test') { mail_method }
+      end
+
+      it 'updates the MailMethod' do
+        described_class.new(attributes).call
+
+        expect(mail_method)
+          .to have_received(:update_attributes).with(attributes) { mail_method }
+      end
+
+      it 'initializes the mail settings' do
+        described_class.new(attributes).call
+        expect(Spree::Core::MailSettings).to have_received(:init)
+      end
     end
 
-    it 'updates the MailMethod' do
-      expect(mail_method)
-        .to(receive(:update_attributes)).with(attributes) { mail_method }
-
-      described_class.new(attributes).call
-    end
-
-    it 'updates the mail method attributes' do
-      described_class.new(attributes).call
-      expect(mail_method.preferred_smtp_username).to eq('smtp_username')
-    end
-
-    it 'initializes the mail settings' do
-      described_class.new(attributes).call
-      expect(Spree::Core::MailSettings).to have_received(:init)
+    context 'integration' do
+      it 'updates the mail method attributes' do
+        described_class.new(attributes).call
+        expect(mail_method.preferred_smtp_username).to eq('smtp_username')
+      end
     end
   end
 end
