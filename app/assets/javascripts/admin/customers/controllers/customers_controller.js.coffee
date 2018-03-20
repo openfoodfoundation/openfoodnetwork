@@ -12,7 +12,7 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
 
   $scope.$watch "shop_id", ->
     if $scope.shop_id?
-      CurrentShop.shop = $filter('filter')($scope.shops, {id: $scope.shop_id})[0]
+      CurrentShop.shop = $filter('filter')($scope.shops, {id: parseInt($scope.shop_id)}, true)[0]
       Customers.index({enterprise_id: $scope.shop_id}).then (data) ->
         pendingChanges.removeAll()
         $scope.customers_form.$setPristine()
