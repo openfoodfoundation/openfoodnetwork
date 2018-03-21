@@ -29,3 +29,24 @@ states.each do |state|
     )
   end
 end
+
+def create_mail_method
+  Spree::MailMethod.destroy_all
+
+  CreateMailMethod.new(
+    environment: Rails.env,
+    preferred_enable_mail_delivery: true,
+    preferred_mail_host: ENV.fetch('MAIL_HOST'),
+    preferred_mail_domain: ENV.fetch('MAIL_DOMAIN'),
+    preferred_mail_port: ENV.fetch('MAIL_PORT'),
+    preferred_mail_auth_type: 'login',
+    preferred_smtp_username: ENV.fetch('SMTP_USERNAME'),
+    preferred_smtp_password: ENV.fetch('SMTP_PASSWORD'),
+    preferred_secure_connection_type: 'None',
+    preferred_mails_from: "no-reply@#{ENV.fetch('MAIL_DOMAIN')}",
+    preferred_mail_bcc: '',
+    preferred_intercept_email: ''
+  ).call
+end
+
+create_mail_method
