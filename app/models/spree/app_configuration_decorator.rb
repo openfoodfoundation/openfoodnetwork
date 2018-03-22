@@ -4,8 +4,6 @@ Spree::AppConfiguration.class_eval do
   # we can allow to be modified in the UI by adding appropriate form
   # elements to existing or new configuration pages.
 
-  preference :mails_from, :string, default: 'no-reply@example.com'
-
   # Embedded Shopfronts
   preference :enable_embedded_shopfronts, :boolean, default: false
   preference :embedded_shopfronts_whitelist, :text, default: nil
