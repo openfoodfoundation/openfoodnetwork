@@ -12,6 +12,8 @@ Spree.user_class.class_eval do
   has_one :cart
   has_many :customers
   has_many :credit_cards
+  has_many :created_shipping_methods, class_name: 'DistributorShippingMethod', foreign_key: :creator_id
+  has_many :created_payment_methods, class_name: 'DistributorPaymentMethod', foreign_key: :creator_id
 
   accepts_nested_attributes_for :enterprise_roles, :allow_destroy => true
 

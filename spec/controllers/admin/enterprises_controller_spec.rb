@@ -102,6 +102,52 @@ module Admin
       end
     end
 
+    describe "edit" do
+      let(:admin_user) { create(:admin_user) }      
+      let(:enterprise1) { create(:distributor_enterprise) }
+      let(:enterprise2) { create(:distributor_enterprise) }
+      let(:manager) { create(:user, enterprise_limit: 10, enterprises: [enterprise2]) }
+      let(:time_zone) { Spree::Zone.create(name: 'South zone')}
+      let(:shipping_method1) { create(:shipping_method, name: 'Pickup', zone_id: time_zone.id, require_ship_address: true, calculator_type: 'OpenFoodNetwork::Calculator::Weight', distributor_ids: [enterprise1.id]) }
+      let(:shipping_method2) { create(:shipping_method, name: 'Delivery', zone_id: time_zone.id, require_ship_address: true, calculator_type: 'OpenFoodNetwork::Calculator::Weight', distributor_ids: [enterprise2.id]) }
+      let(:payment_method1) { create(:payment_method, name: 'Online', distributor_ids: [enterprise1.id]) }
+      let(:payment_method2) { create(:payment_method, name: 'COD', distributor_ids: [enterprise2.id]) }
+      let(:enterprise_fee1) { create(:enterprise_fee, enterprise_id: enterprise1.id) }
+      let(:enterprise_fee2) { create(:enterprise_fee, enterprise_id: enterprise2.id) }
+
+      context "as admin" do
+        it "sets required variables" do          
+          allow(controller).to receive(:spree_current_user).and_return(admin_user)            
+
+          payment_methods = [payment_method1, payment_method2]
+          shipping_methods = [shipping_method1, shipping_method2]
+          enterprise_fees = [enterprise_fee1]
+
+          spree_get :edit, {id: enterprise1.permalink} 
+
+          expect(assigns(:shipping_methods)).to eq shipping_methods   
+          expect(assigns(:payment_methods)).to eq payment_methods   
+          expect(assigns(:enterprise_fees)).to eq enterprise_fees             
+        end        
+      end
+
+      context "as manager" do
+        it "sets required variables" do                         
+          allow(controller).to receive(:spree_current_user).and_return(manager)        
+
+          payment_methods = [payment_method2, payment_method1]
+          shipping_methods = [shipping_method2, shipping_method1]
+          enterprise_fees = [enterprise_fee2]          
+
+          spree_get :edit, {id: enterprise2.permalink} 
+
+          expect(assigns(:shipping_methods)).to eq shipping_methods
+          expect(assigns(:payment_methods)).to eq payment_methods
+          expect(assigns(:enterprise_fees)).to eq enterprise_fees
+        end        
+      end
+    end
+
     describe "updating an enterprise" do
       let(:profile_enterprise) { create(:enterprise, sells: 'none') }
 

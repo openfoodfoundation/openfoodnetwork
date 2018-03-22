@@ -77,6 +77,9 @@ feature 'shipping methods' do
     end
 
     it "creating a shipping method" do
+      # Deleting all the shipping methods so that 'create one now' link is visible
+      DistributorShippingMethod.delete_all
+      Spree::ShippingMethod.delete_all
       click_link 'Enterprises'
       within("#e_#{distributor1.id}") { click_link 'Manage' }
       within(".side_menu") do
