@@ -9,6 +9,8 @@
         %th= t('.applies')
         %th
     %tbody
+      %tr 
+        = f.hidden_field :payment_method_ids, value: nil, multiple: true
       - @payment_methods.each do |payment_method|
         %tr{ ng: { controller: 'paymentMethodsCtrl', init: "findPaymentMethodByID(#{payment_method.id})" } }
           %td= payment_method.name

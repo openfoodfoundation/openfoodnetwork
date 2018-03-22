@@ -6,6 +6,8 @@
         %th= t('.applies')
         %th
     %tbody
+      %tr 
+        = f.hidden_field :shipping_method_ids, value: nil, multiple: true
       - @shipping_methods.each do |shipping_method|
         %tr{ ng: { controller: 'shippingMethodsCtrl', init: "findShippingMethodByID(#{shipping_method.id})" } }
           %td= shipping_method.name
