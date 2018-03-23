@@ -60,12 +60,12 @@
           = t 'powered_by'
           %a{href: '/'}
             = t 'title'
-      - if I18n.available_locales.count > 1
+      - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
         %li.language-switcher.has-dropdown
           %a{href: '#'}
             %i.ofn-i_071-globe
           %ul.dropdown
-            - I18n.available_locales.each do |l|
+            - OpenFoodNetwork::I18nConfig.selectable_locales.each do |l|
               %li
                 %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)
       - if spree_current_user.nil?
