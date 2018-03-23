@@ -265,6 +265,7 @@ en:
     phone: Phone
     price: Price
     producer: Producer
+    image: Image
     product: Product
     quantity: Quantity
     schedule: Schedule
@@ -436,6 +437,15 @@ en:
 
     products:
       unit_name_placeholder: 'eg. bunches'
+      bulk_edit:
+        unit: Unit
+        display_as: Display As
+        category: Category
+        tax_category: Tax Category
+        inherits_properties?: Inherits Properties?
+        available_on: Available On
+        av_on: "Av. On"
+        upload_an_image: Upload an image
       properties:
         property_name: Property Name
         inherited_property: Inherited Property

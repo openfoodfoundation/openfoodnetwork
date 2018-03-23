@@ -210,6 +210,8 @@ Openfoodnetwork::Application.routes.draw do
     resource :status do
       get :job_queue
     end
+
+    post '/product_images/:product_id', to: 'product_images#update_product_image'
   end
 
   namespace :open_food_network do
@@ -285,7 +287,6 @@ Spree::Core::Engine.routes.prepend do
     resources :orders do
       get :managed, on: :collection
     end
-
   end
 
   namespace :admin do
