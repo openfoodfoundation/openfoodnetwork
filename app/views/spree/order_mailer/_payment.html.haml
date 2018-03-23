@@ -1,15 +1,14 @@
-- if @order.payments.first.andand.payment_method.andand.type == "Spree::PaymentMethod::Check" and @order.payments.first.andand.payment_method.andand.description
-  %p.callout
-    %span{:style => "float:right;"}
-      - if @order.paid?
-        = t :email_payment_paid
-      - else
-        = t :email_payment_not_paid
-    %strong
-      = t :email_payment_summary
-  %h4
-    = t :email_payment_method
-    %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe
-  %p
-    %em= @order.payments.first.andand.payment_method.andand.description.andand.html_safe
-  %p &nbsp;
+%p.callout
+  %span{:style => "float:right;"}
+    - if @order.paid?
+      = t :email_payment_paid
+    - else
+      = t :email_payment_not_paid
+  %strong
+    = t :email_payment_summary
+%h4
+  = t :email_payment_method
+  %strong=  @order.payments.first.andand.payment_method.andand.name.andand.html_safe
+%p
+  %em= @order.payments.first.andand.payment_method.andand.description.andand.html_safe
+%p &nbsp;
