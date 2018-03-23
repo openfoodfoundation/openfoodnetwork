@@ -1,5 +1,5 @@
 de_DE:
-  language_name: "Englisch"
+  language_name: "Deutsch"
   activerecord:
     attributes:
       spree/order:
@@ -48,15 +48,9 @@ de_DE:
         signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte öffnen Sie den Link, um Ihr Konto zu aktivieren."
     failure:
       invalid: |
-        Ungültige E-Mail-Adresse oder Passwort.
-        Hast du als Gast bestellt? Vielleicht brauchst du ein neues Konto oder musst dein Passwort zurücksetzen.
+          Ungültige E-Mail-Adresse oder Passwort.
+          Hast du als Gast bestellt? Vielleicht brauchst du ein neues Konto oder musst dein Passwort zurücksetzen.
       unconfirmed: "Sie müssen Ihr Konto bestätigen, bevor Sie fortfahren."
-    enterprise_confirmations:
-      enterprise:
-        confirmed: Danke, deine E-Mail-Adresse wurde bestätigt.
-        not_confirmed: Ihre E-Mail-Adresse konnte nicht bestätigt werden. Haben Sie dies vielleicht schon getan?
-        confirmation_sent: "Eine Bestätigungs-E-Mail wurde versandt."
-        confirmation_not_sent: "Die Bestätigungs-E-Mail konnte nicht geschickt werden."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Bitte bestätige die E-Mail-Adresse für %{enterprise}"
@@ -839,6 +833,7 @@ de_DE:
       confirm_unpause_msg: Möchten Sie dieses Abonnement wirklich wieder aktivieren?
       unpause_failure_msg: 'Entschuldigung, fehlgeschlagen!'
       confirm_cancel_open_orders_msg: "Einige Bestellungen für dieses Abonnement sind derzeit geöffnet. Der Kunde wurde bereits darüber informiert, dass die Bestellung aufgegeben wird. Möchten Sie diese Bestellung (en) stornieren oder behalten?"
+      resume_canceled_orders_msg: "Einige Bestellungen für dieses Abonnement können jetzt fortgesetzt werden. Sie können sie aus dem Dropdown-Menü für Bestellungen wiederherstellen."
       yes_cancel_them: Annulliere sie
       no_keep_them: Behalte sie
       yes_i_am_sure: Ja, ich bin mir sicher
@@ -1361,8 +1356,8 @@ de_DE:
   orders_could_not_cancel: "Entschuldigung, die Bestellung konnte nicht storniert werden"
   orders_cannot_remove_the_final_item: "Der letzte Artikel aus einer Bestellung kann nicht entfernt werden. Bitte stornieren Sie stattdessen die Bestellung."
   orders_bought_items_notice:
-    one: Für diesen Bestellzyklus ist bereits eine zusätzliche Position bestätigt
-    other: '%{count} zusätzliche Artikel, die bereits für diesen Bestellzyklus bestätigt wurden'
+    one: "Für diesen Bestellzyklus ist bereits eine zusätzliche Position bestätigt"
+    other: "%{count} zusätzliche Artikel, die bereits für diesen Bestellzyklus bestätigt wurden"
   orders_bought_edit_button: Bestätigte Artikel bearbeiten
   orders_bought_already_confirmed: "* schon bestätigt"
   orders_confirm_cancel: Sind Sie sicher, dass Sie diese Bestellung stornieren möchten?
@@ -2024,8 +2019,8 @@ de_DE:
     choose: Wählen
     resolve_errors: Bitte beheben Sie die folgenden Fehler
     more_items: "+ %{count} Mehr"
-    closes: schließt
     admin:
+      enterprise_limit_reached: "Sie haben die Standardgrenze für Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie es erhöhen müssen."
       modals:
         got_it: Ich habs
         tag_rule_help:
@@ -2186,8 +2181,8 @@ de_DE:
       could_not_delete_customer: 'Der Kunde konnte nicht gelöscht werden'
     product_import:
       confirmation: |
-        Dadurch wird der Lagerbestand für alle Produkte auf Null gesetzt
-        Unternehmen, die in der hochgeladenen Datei nicht vorhanden sind.
+          Dadurch wird der Lagerbestand für alle Produkte auf Null gesetzt
+          Unternehmen, die in der hochgeladenen Datei nicht vorhanden sind.
     order_cycles:
       update_success: 'Ihr Bestellzyklus wurde aktualisiert.'
       no_distributors: In diesem Bestellzyklus gibt es keine Distributoren. Dieser Bestellzyklus ist für Kunden erst sichtbar, wenn Sie einen hinzufügen. Möchten Sie diesen Bestellzyklus weiterhin speichern?
@@ -2197,6 +2192,10 @@ de_DE:
     customers:
       select_shop: 'Bitte wählen Sie zuerst ein Geschäft aus'
       could_not_create: Es tut uns leid! Konnte nicht ... Erstellen
+    subscriptions:
+      closes: schließt
+      closed: geschlossen
+      close_date_not_set: Abschlussdatum nicht eingestellt
   producers:
     signup:
       start_free_profile: "Beginnen Sie mit einem kostenlosen Profil und erweitern Sie es, wenn Sie fertig sind!"
@@ -2347,11 +2346,11 @@ de_DE:
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-          Es wurde angefragt, das Passwort zurückzusetzen. Falls dies nicht der Fall ist, bitten wir dieses Email zu ignorieren.
+            Es wurde angefragt, das Passwort zurückzusetzen. Falls dies nicht der Fall ist, bitten wir dieses Email zu ignorieren.
         link_text: >
             Möchtest Du das Passwort zurücksetzen? Bitte den Link unten auszuwählen.
         issue_text: |
-          Falls die URL unten nicht funktionieren sollte, versuche die Adresse mit Hilfe von "copy and paste" in dein Browserfenster zu übertragen.
+            Falls die URL unten nicht funktionieren sollte, versuche die Adresse mit Hilfe von "copy and paste" in dein Browserfenster zu übertragen.
       confirmation_instructions:
         subject: Bitte bestätigen Sie Ihren OFN-Account
     weight: Gewicht (pro kg)

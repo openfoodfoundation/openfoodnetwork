@@ -2195,6 +2195,7 @@ es:
     subscriptions:
       closes: cierra
       closed: cerrado
+      close_date_not_set: Fecha de cierre no establecida
   producers:
     signup:
       start_free_profile: "Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"
@@ -2308,14 +2309,23 @@ es:
       address: dirección
       adjustments: ajustes
       awaiting_return: Esperando retorno
+      canceled: cancelado
       cart: carrito
       complete: completar
       confirm: Confirmar
       delivery: Entrega
+      paused: pausado
       payment: pago
+      pending: pendiente
       resumed: resumido
       returned: devuelto
       skrill: skrill
+    subscription_state:
+      active: activo
+      pending: pendiente
+      ended: terminado
+      paused: pausado
+      canceled: cancelado
     payment_states:
       balance_due: saldo debido
       completed: completado
@@ -2356,6 +2366,7 @@ es:
           cards: Tarjetas de crédito
           transactions: Transacciones
           settings: Configuración de la cuenta
+        unconfirmed_email: "Correo electrónico pendiente de confirmación para: %{unconfirmed_email}. Su dirección de correo electrónico se actualizará una vez que se confirme el nuevo correo electrónico."
       orders:
         open_orders: Pedidos Abiertos
         past_orders: Pedidos anteriores

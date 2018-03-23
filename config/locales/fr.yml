@@ -43,20 +43,16 @@ fr:
       send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
       failed_to_send: "Une erreur est survenue lors de l'envoi de l'email de confirmation."
       resend_confirmation_email: "Renvoyer l'email de confirmation."
+      confirmed: "Merci d'avoir confirmé votre adresse email. Vous pouvez maintenant vous connecter."
+      not_confirmed: "Votre adresse email n'a pas pu être confirmée. Peut-être avez-vous déjà confirmé cette adresse email?"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
     failure:
       invalid: |
-        Email / mot de passe incorrect.
-        Créez votre compte ou réinitialisez votre mot de passe.
+          Email / mot de passe incorrect.
+          Créez votre compte ou réinitialisez votre mot de passe.
       unconfirmed: "Veuillez valider le lien envoyé par email pour pouvoir continuer."
-    enterprise_confirmations:
-      enterprise:
-        confirmed: Merci, votre adresse email a bien été confirmée!
-        not_confirmed: Votre adresse email n'a pas pu être confirmée. Peut-être l'aviez-vous déjà confirmée?
-        confirmation_sent: "Un mail de confirmation a été envoyé!"
-        confirmation_not_sent: "Impossible d'envoyer le mail de confirmation."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -821,6 +817,12 @@ fr:
         allowed_payment_method_types_tip: Seules des méthodes de paiement de type "cash" ou "Stripe" peuvent être utilisées pour le moment
         credit_card: Carte de crédit
         no_cards_available: Pas de carte disponible
+      loading_flash:
+        loading: Abonnements en cours de chargement
+      review:
+        details: Informations
+        address: Adresse
+        products: Produits
       product_already_in_order: Ce produit a déjà été ajouté à la commande. Veuillez directement modifier la quantité.
       orders:
         number: Nombre
@@ -832,6 +834,7 @@ fr:
       confirm_unpause_msg: Voulez-vous vraiment annuler la mise en pause de cet abonnement?
       unpause_failure_msg: 'Désolé, l''annulation de la mise en pause a échoué!'
       confirm_cancel_open_orders_msg: "Cet abonnement a des commandes ouvertes. Les acheteurs ont été notifiés que leur commande allait être passée. Voulez-vous annulez ces commandes ou les conserver?"
+      resume_canceled_orders_msg: "Certaines commandes pour cet abonnement peuvent être réouvertes dès maintenant. Vous pouvez les réouvrir depuis la liste des commandes."
       yes_cancel_them: Les annuler
       no_keep_them: Les conserver
       yes_i_am_sure: Oui, je confirme
@@ -1084,7 +1087,7 @@ fr:
   order_delivery_address: Adresse de livraison
   order_delivery_time: Créneau de livraison/retrait
   order_special_instructions: "Vos commentaires:"
-  order_pickup_time: Prêt à être retirer
+  order_pickup_time: Prêt à être retiré
   order_pickup_instructions: Instructions de retrait
   order_produce: Produit
   order_total_price: Total
@@ -1333,8 +1336,8 @@ fr:
   orders_edit_title: Panier
   orders_edit_headline: Votre panier
   orders_edit_time: Commande prête pour
-  orders_edit_continue: Poursuivre mes achats
-  orders_edit_checkout: Poursuivre ma commande
+  orders_edit_continue: Retour à la boutique
+  orders_edit_checkout: Etape suivante (coordonnées)
   orders_form_empty_cart: "Vider le panier"
   orders_form_subtotal: Sous-total
   orders_form_admin: Admin & traitements
@@ -1354,8 +1357,8 @@ fr:
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: Un produit ajouté a bien été confirmé pour ce cycle de vente
-    other: '%{count} produits ajoutés ont été confirmés pour ce cycle de vente.'
+    one: "Un produit ajouté a bien été confirmé pour ce cycle de vente"
+    other: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
   orders_bought_edit_button: Modifier les produits confirmés
   orders_bought_already_confirmed: "* déjà confirmé"
   orders_confirm_cancel: Voulez-vous vraiment annuler cette commande ?
@@ -1966,7 +1969,7 @@ fr:
   content_configuration_pricing_table: "(A FAIRE : Tableau des tarifs)"
   content_configuration_case_studies: "(A FAIRE : Etudes de Cas)"
   content_configuration_detail: "(A FAIRE : Détails)"
-  enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, merci de contacter le manager actuel du profil à %{email}."
+  enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, ou bien si vous souhaitez distribuer les produits de cette entreprise, merci de contacter le manager actuel du profil à %{email}."
   enterprise_owner_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
   enterprise_role_uniqueness_error: "^Ce rôle existe déjà."
   inventory_item_visibility_error: doit être vrai ou faux
@@ -2015,11 +2018,12 @@ fr:
     unavailable: Non disponible
     profile: Profil
     hub: Hub
-    shop: Faire mes courses
+    shop: Boutique
     choose: Choisir
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     admin:
+      enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
         got_it: J'ai compris
         tag_rule_help:
@@ -2183,8 +2187,8 @@ fr:
       could_not_delete_customer: 'L''acheteur n''a pas pu être supprimé'
     product_import:
       confirmation: |
-        Cette action remettra tous les niveaux de stock à zero pour cette
-        entreprises pour les produits non présents dans ce fichier.
+          Cette action remettra tous les niveaux de stock à zero pour cette
+          entreprises pour les produits non présents dans ce fichier.
     order_cycles:
       update_success: 'Votre cycle de vente a été mis à jour.'
       no_distributors: Il n'y a pas de distributeur pour ce cycle de vente. Il ne sera pas visible aux acheteurs tant qu'il n'y aura pas de distributeur. Voulez-vous tout de même sauvegarder ce cycle de vente ?
@@ -2194,6 +2198,10 @@ fr:
     customers:
       select_shop: 'Veuillez d''abord choisir une boutique'
       could_not_create: Oups ! Création impossible...
+    subscriptions:
+      closes: ferme
+      closed: fermé
+      close_date_not_set: Date de fin non renseignée
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
@@ -2344,14 +2352,14 @@ fr:
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-          Votre demande de nouveau mot de passe a bien été prise en compte.
-          Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
+            Votre demande de nouveau mot de passe a bien été prise en compte.
+            Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
         link_text: >
             Si vous êtes bien à l'origine de cette demande, veuillez cliquer sur le
             lien ci-dessous :
         issue_text: |
-          Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
-          Si le problème persiste, n'hésitez pas à nous contacter.
+            Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
+            Si le problème persiste, n'hésitez pas à nous contacter.
       confirmation_instructions:
         subject: Veuillez confirmer votre compte
     weight: Poids (au kg)
