@@ -14,6 +14,20 @@ module Spree
       let(:li1) { create(:line_item, order: o, product: p1) }
       let(:li2) { create(:line_item, order: o, product: p2) }
 
+
+      let(:p3) {create(:product, name: 'Clear Honey') }
+      let(:p4) {create(:product, name: 'Apricots') }
+      let(:v1) {create(:variant, product: p3, unit_value: 500) }
+      let(:v2) {create(:variant, product: p3, unit_value: 250) }
+      let(:v3) {create(:variant, product: p4, unit_value: 500, display_name: "ZZ") }
+      let(:v4) {create(:variant, product: p4, unit_value: 500, display_name: "aa") }
+      let(:li3) { create(:line_item, order: o, product: p3, variant: v1) }
+      let(:li4) { create(:line_item, order: o, product: p3, variant: v2) }
+      let(:li5) { create(:line_item, order: o, product: p4, variant: v3) }
+      let(:li6) { create(:line_item, order: o, product: p4, variant: v4) }
+
+      let(:oc_order) { create :order_with_totals_and_distribution }
+
       it "finds line items for products supplied by a particular enterprise" do
         LineItem.supplied_by(s1).should == [li1]
         LineItem.supplied_by(s2).should == [li2]
@@ -39,6 +53,14 @@ module Spree
         it "finds line items without tax" do
           LineItem.without_tax.should == [li2]
         end
+      end
+
+      it "finds line items sorted by name and unit_value" do
+        expect(o.line_items.sorted_by_name_and_unit_value).to eq([li6,li5,li4,li3])
+      end
+
+      it "finds line items from a given order cycle" do
+        expect(LineItem.from_order_cycle(oc_order.order_cycle).first.id).to eq oc_order.line_items.first.id
       end
     end
 
