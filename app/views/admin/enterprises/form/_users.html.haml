@@ -42,7 +42,7 @@
         %tr
           %td
             - # Ignore this input in the submit
-            = hidden_field_tag :ignored, :new_manager, class: "select2 fullwidth", 'user-select' => 'newManager', 'ng-model' => 'newManager'
+            = hidden_field_tag :ignored, nil, class: "select2 fullwidth", 'user-select' => 'newManager', 'ng-model' => 'newManager'
           %td.actions
             %a{ 'ng-click' => 'addManager(newManager)', :class => "icon-plus no-text" }
         %tr.animate-repeat{ id: "manager-{{manager.id}}", ng: { repeat: 'manager in Enterprise.users' }}

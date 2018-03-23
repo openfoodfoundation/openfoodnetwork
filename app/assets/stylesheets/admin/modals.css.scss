@@ -1,0 +1,198 @@
+.reveal-modal-bg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: black;
+  z-index: 1004;
+  display: none;
+  left: 0;
+}
+
+.reveal-modal, dialog {
+  visibility: hidden;
+  display: none;
+  position: absolute;
+  z-index: 1005;
+  width: 100vw;
+  top: 0;
+  border-radius: 0.4em;
+  border: 0px none;
+  left: 0;
+  background-color: white;
+  padding: 1.25rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  padding: 1.875rem;
+}
+
+.reveal-modal .column, dialog .column, .reveal-modal .columns, dialog .columns {
+  min-width: 0;
+}
+
+.reveal-modal > :first-child, dialog > :first-child {
+  margin-top: 0;
+}
+
+.reveal-modal > :last-child, dialog > :last-child {
+  margin-bottom: 0;
+}
+
+@media only screen and (min-width: 40.063em) {
+  .reveal-modal, dialog {
+    width: 80%;
+    max-width: 62.5rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}
+
+.reveal-modal.radius, dialog.radius {
+  border-radius: 3px;
+}
+
+.reveal-modal.round, dialog.round {
+  border-radius: 1000px;
+}
+
+.reveal-modal.collapse, dialog.collapse {
+  padding: 0;
+}
+
+.reveal-modal.full, dialog.full {
+  top: 0;
+  left: 0;
+  height: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  max-width: none !important;
+  margin-left: 0 !important;
+}
+
+.reveal-modal .close-reveal-modal, dialog .close-reveal-modal {
+  font-size: 2.5rem;
+  line-height: 1;
+  position: absolute;
+  top: 0.625rem;
+  right: 1.375rem;
+  color: #aaaaaa;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+dialog::backdrop, dialog + .backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: black;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: auto;
+  display: none;
+  left: 0;
+}
+
+dialog[open] {
+  display: block;
+}
+
+@media print {
+  dialog, .reveal-modal, dialog {
+    display: none;
+    background: white !important;
+  }
+}
+
+// ANIMATION CLASSES
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+
+.fade.in {
+  opacity: 1;
+}
+
+.reveal-modal.fade {
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  -moz-transition: -moz-transform 0.2s ease-out;
+  -o-transition: -o-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  -webkit-transform: translate(0, -25%);
+  -ms-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+}
+
+.reveal-modal.in {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.reveal-modal-bg.fade {
+  filter: alpha(opacity = 0);
+  opacity: 0;
+}
+
+.reveal-modal-bg.in {
+  filter: alpha(opacity = 50);
+  opacity: 0.5;
+}
+
+@media only screen and (max-width: 40em) {
+  .reveal-modal, dialog {
+    min-height: 100vh;
+  }
+}
+
+@media only screen and (min-width: 40.063em) {
+  .reveal-modal, dialog {
+    top: 6.25rem;
+  }
+  .reveal-modal.tiny, dialog.tiny {
+    width: 30%;
+    max-width: 62.5rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .reveal-modal.small, dialog.small {
+    width: 40%;
+    max-width: 62.5rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .reveal-modal.medium, dialog.medium {
+    width: 60%;
+    max-width: 62.5rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .reveal-modal.large, dialog.large {
+    width: 70%;
+    max-width: 62.5rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .reveal-modal.xlarge, dialog.xlarge {
+    width: 95%;
+    max-width: 62.5rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .reveal-modal.full, dialog.full {
+    width: 100vw;
+    max-width: 62.5rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}

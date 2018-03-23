@@ -5,7 +5,7 @@ angular.module("admin.enterprises")
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
     $scope.navClear = NavigationCheck.clear
     $scope.menu = SideMenu
-    $scope.newManager = { id: '', email: (t('add_manager')) }
+    $scope.newManager = { id: null, email: (t('add_manager')) }
     $scope.StatusMessage = StatusMessage
 
     $scope.$watch 'enterprise_form.$dirty', (newValue) ->
@@ -38,17 +38,17 @@ angular.module("admin.enterprises")
           return
         for i, user of $scope.Enterprise.users when user.id == manager.id
           $scope.Enterprise.users.splice i, 1
-        if $scope.enterprise_form?
-          $scope.enterprise_form.$setDirty()
+          $scope.enterprise_form?.$setDirty()
 
     $scope.addManager = (manager) ->
-      if manager.id? and manager.email?
+      if manager.id? and angular.isNumber(manager.id) and manager.email?
         manager =
           id: manager.id
           email: manager.email
           confirmed: manager.confirmed
         if (user for user in $scope.Enterprise.users when user.id == manager.id).length == 0
           $scope.Enterprise.users.push manager
+          $scope.enterprise_form?.$setDirty()
         else
           alert ("#{manager.email}" + " " + t("is_already_manager"))
 

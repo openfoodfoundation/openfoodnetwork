@@ -13,11 +13,6 @@ namespace :openfoodnetwork do
       country = Spree::Country.find_by_iso(ENV.fetch('DEFAULT_COUNTRY_CODE'))
       state = country.states.first
 
-      Spree::MailMethod.create!(
-        environment: Rails.env,
-        preferred_mails_from: spree_user.email
-      )
-
       # -- Shipping / payment information
       unless Spree::Zone.find_by_name 'Australia'
         puts "[#{task_name}] Seeding shipping / payment information"
@@ -210,6 +205,5 @@ namespace :openfoodnetwork do
 
       spree_user.confirm!
     end
-
   end
 end
