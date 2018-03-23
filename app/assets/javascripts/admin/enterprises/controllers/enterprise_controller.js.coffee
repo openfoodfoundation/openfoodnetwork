@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, $window, NavigationCheck, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
+  .controller "enterpriseCtrl", ($scope, $http, $window, NavigationCheck, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
     $scope.Enterprise = enterprise
     $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
@@ -26,7 +26,7 @@ angular.module("admin.enterprises")
     # from a directive "nav-check" in the page - if we pass it here it will be called in the test suite,
     # and on all new uses of this contoller, and we might not want that.
     enterpriseNavCallback = ->
-      if $scope.enterprise_form.$dirty
+      if $scope.enterprise_form != undefined && $scope.enterprise_form.$dirty
         t('admin.unsaved_confirm_leave')
 
     # Register the NavigationCheck callback
@@ -51,3 +51,16 @@ angular.module("admin.enterprises")
           $scope.enterprise_form?.$setDirty()
         else
           alert ("#{manager.email}" + " " + t("is_already_manager"))
+
+    $scope.inviteManager = ->
+      $scope.invite_errors = $scope.invite_success = null
+      email = $scope.newUser
+
+      $http.post("/admin/manager_invitations", {email: email, enterprise_id: $scope.Enterprise.id}).success (data)->
+          $scope.addManager({id: data.user, email: email})
+          $scope.invite_success = t('user_invited', email: email)
+        .error (data) ->
+          $scope.invite_errors = data.errors
+
+    $scope.resetModal = ->
+      $scope.newUser = $scope.invite_errors = $scope.invite_success = null

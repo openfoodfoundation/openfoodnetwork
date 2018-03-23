@@ -114,6 +114,8 @@ en:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
       subject: "%{enterprise} is now on %{sitename}"
+    invite_manager:
+      subject: "%{enterprise} has invited you to be a manager"
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
@@ -665,6 +667,9 @@ en:
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
           managers: Managers
           managers_tip: The other users with permission to manage this enterprise.
+          invite_manager: "Invite Manager"
+          invite_manager_tip: "Invite an unregistered user to sign up and become a manager of this enterprise."
+          add_unregistered_user: "Add an unregistered user"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
       actions:
@@ -724,6 +729,9 @@ en:
         welcome_text: You have successfully created a
         next_step: Next step
         choose_starting_point: 'Choose your starting point:'
+      invite_manager:
+        user_already_exists: "User already exists"
+        error: "Something went wrong"
     order_cycles:
       edit:
         advanced_settings: Advanced Settings
@@ -1318,6 +1326,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   If you are a customer, we look forward to introducing you to many fantastic farmers, wonderful food hubs and delicious food!
   If you are a producer or food enterprise, we are excited to have you as a part of the network."
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
+
+  invite_email:
+    greeting: "Hello!"
+    invited_to_manage: "You have been invited to manage %{enterprise} on %{instance}."
+    confirm_your_email: "You will receive an email shortly to confirm your registration."
+    set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
+    mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information, or you can contact %{instance} at %{instance_email}."
 
   producer_mail_greeting: "Dear"
   producer_mail_text_before: "We now have all the consumer orders for the next food drop."
@@ -2133,10 +2148,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   unsaved_changes_confirmation: "Unsaved changes will be lost. Continue anyway?"
   one_product_unsaved: "Changes to one product remain unsaved."
   products_unsaved: "Changes to %{n} products remain unsaved."
-  add_manager: "Add a manager"
   is_already_manager: "is already a manager!"
   no_change_to_save: " No change to save"
-  add_manager: "Add a manager"
+  user_invited: "%{email} has been invited to manage this enterprise"
+  add_manager: "Add an existing user"
   users:  "Users"
   about: "About"
   images: "Images"
@@ -2219,6 +2234,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
         got_it: Got it
+        close: "Close"
+        invite: "Invite"
+        invite_title: "Invite an unregistered user"
         tag_rule_help:
           title: Tag Rules
           overview: Overview
