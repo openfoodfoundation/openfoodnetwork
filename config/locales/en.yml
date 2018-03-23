@@ -64,6 +64,8 @@ en:
         completed_at: Completed At
         number: Number
         email: Customer E-Mail
+      spree/payment:
+        amount: Amount
     errors:
       models:
         spree/user:
@@ -508,6 +510,7 @@ en:
         max_fulfilled_units: "Max Fulfilled Units"
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
+      select_variant: "Select a variant"
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
@@ -1625,6 +1628,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   reset_password: "Reset password"
   registration_greeting: "Greetings!"
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
+  update_and_recalculate_fees: "Update And Recalculate Fees"
   enterprise:
     registration:
       modal:
@@ -2163,6 +2167,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   social: "Social"
   business_details: "Business Details"
   properties: "Properties"
+  shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
   payment_method_fee: "Transaction fee"
@@ -2213,6 +2218,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
+  back_to_orders_list: "Back to order list"
+  order_information: "Order Information"
+  date_completed: "Date Completed"
+  amount: "Amount"
+  state_names:
+    ready: Ready
+    pending: Pending
+    shipped: Shipped
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
@@ -2408,6 +2421,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     # TODO: remove 'account_updated' key once we get to Spree 2.0
     account_updated: "Account updated!"
     my_account: "My account"
+    date: "Date"
+    time: "Time"
     admin:
       orders:
         invoice:
