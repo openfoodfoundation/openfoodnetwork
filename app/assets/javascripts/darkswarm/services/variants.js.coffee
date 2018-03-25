@@ -17,11 +17,11 @@ Darkswarm.factory 'Variants', ->
 
     extendedVariantName: (variant) =>
       if variant.product_name == variant.name_to_display
-        variant.product_name
+        name = variant.product_name
       else
         name =  "#{variant.product_name} - #{variant.name_to_display}"
-        name += " (#{variant.options_text})" if variant.options_text
-        name
+      name += " (#{variant.options_text})" if variant.options_text
+      name
 
     lineItemFor: (variant) ->
       variant: variant
