@@ -8,6 +8,8 @@ de_DE:
         completed_at: Erfolgt am
         number: Nummer
         email: E-Mail des Kunden
+      spree/payment:
+        amount: Menge
     errors:
       models:
         spree/user:
@@ -43,6 +45,8 @@ de_DE:
       send_instructions: "Sie erhalten in einigen Minuten eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
       failed_to_send: "Beim Senden der Bestätigungs-E-Mail ist ein Fehler aufgetreten."
       resend_confirmation_email: "Bestätigungsmail erneut senden."
+      confirmed: "Danke für die Bestätigung Ihrer E-Mail! Sie können sich jetzt einloggen."
+      not_confirmed: "Ihre E-Mail-Adresse konnte nicht bestätigt werden. Vielleicht haben Sie diesen Schritt bereits abgeschlossen?"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte öffnen Sie den Link, um Ihr Konto zu aktivieren."
@@ -56,6 +60,8 @@ de_DE:
       subject: "Bitte bestätige die E-Mail-Adresse für %{enterprise}"
     welcome:
       subject: "%{enterprise} ist jetzt auf %{sitename}"
+    invite_manager:
+      subject: "%{enterprise} hat Sie eingeladen, ein Manager zu sein"
   producer_mailer:
     order_cycle:
       subject: "Bestellungszyklusreport für %{producer}"
@@ -198,6 +204,7 @@ de_DE:
     phone: Telefonnummer
     price: Preis
     producer: Produzent
+    image: Bild
     product: Produkt
     quantity: Menge
     schedule: Zeitplan
@@ -351,6 +358,15 @@ de_DE:
         manages: verwaltet
     products:
       unit_name_placeholder: 'z.B. Trauben'
+      bulk_edit:
+        unit: Einheit
+        display_as: Darstellen als
+        category: Kategorie
+        tax_category: Steuerkategorie
+        inherits_properties?: Vererbt Eigenschaften?
+        available_on: Verfügbar auf
+        av_on: "Ein V. Auf"
+        upload_an_image: Lade ein Bild hoch
       properties:
         property_name: Name des Anwesens
         inherited_property: Vererbte Eigenschaft
@@ -410,6 +426,7 @@ de_DE:
         max_fulfilled_units: "Max erfüllte Einheiten"
         order_error: "Einige Fehler müssen behoben werden, bevor Sie Aufträge aktualisieren können.\nFelder mit roten Rahmen enthalten Fehler."
         variants_without_unit_value: "WARNUNG: Einige Varianten haben keinen Einheitswert"
+      select_variant: "Wählen Sie eine Variante"
     enterprise:
       select_outgoing_oc_products_from: Wählen Sie ausgehende OC-Produkte aus
     enterprises:
@@ -571,6 +588,9 @@ de_DE:
           notifications_note: 'Hinweis: Eine neue E-Mail-Adresse muss möglicherweise vor der Verwendung bestätigt werden'
           managers: Manager
           managers_tip: Die anderen Benutzer mit der Berechtigung, dieses Unternehmen zu verwalten.
+          invite_manager: "Einladungsmanager"
+          invite_manager_tip: "Laden Sie einen nicht registrierten Benutzer ein, sich anzumelden und ein Manager dieses Unternehmens zu werden."
+          add_unregistered_user: "Fügen Sie einen nicht registrierten Benutzer hinzu"
           email_confirmed: "E-Mail bestätigt"
           email_not_confirmed: "E-Mail nicht bestätigt"
       actions:
@@ -630,6 +650,9 @@ de_DE:
         welcome_text: Sie haben erfolgreich eine erstellt
         next_step: Nächster Schritt
         choose_starting_point: 'Wählen Sie Ihren Ausgangspunkt:'
+      invite_manager:
+        user_already_exists: "Benutzer existiert bereits"
+        error: "Etwas ist schief gelaufen"
     order_cycles:
       edit:
         advanced_settings: Erweiterte Einstellungen
@@ -1168,6 +1191,12 @@ de_DE:
   email_signup_shop_html: "Sie können sich jetzt unter %{link} anmelden."
   email_signup_text: "Danke, dass Sie dem Netzwerk beigetreten sind. Wenn Sie ein Kunde sind, freuen wir uns, Ihnen viele fantastische Bauern, wunderbare Essenszentren und leckeres Essen vorzustellen! Wenn Sie ein Produzent oder ein Lebensmittelunternehmen sind, freuen wir uns, Sie als Teil des Netzwerks zu haben."
   email_signup_help_html: "Wir begrüßen alle Ihre Fragen und Rückmeldungen; Sie können die Schaltfläche <em> Feedback senden </ em> auf der Website verwenden oder uns eine E-Mail an %{email} senden"
+  invite_email:
+    greeting: "Hallo!"
+    invited_to_manage: "Sie wurden eingeladen, %{enterprise} auf %{instance} zu verwalten."
+    confirm_your_email: "Sie werden in Kürze eine E-Mail erhalten, um Ihre Registrierung zu bestätigen."
+    set_a_password: "Sie werden dann aufgefordert, ein Kennwort festzulegen, bevor Sie das Unternehmen verwalten können."
+    mistakenly_sent: "Nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte kontaktieren Sie %{owner_email} für weitere Informationen, oder kontaktieren Sie %{instance} unter %{instance_email}."
   producer_mail_greeting: "Liebe/r"
   producer_mail_text_before: "Wir haben jetzt alle Verbraucherbestellungen für den nächsten Essenstropfen."
   producer_mail_order_text: "Hier finden Sie eine Zusammenfassung der Bestellungen für Ihre Produkte:"
@@ -1430,6 +1459,7 @@ de_DE:
   password_reset_sent: "Eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts wurde gesendet!"
   reset_password: "Passwort zurücksetzen"
   who_is_managing_enterprise: "Wer ist verantwortlich für die Verwaltung von %{enterprise}?"
+  update_and_recalculate_fees: "Aktualisieren und Gebühren neu berechnen"
   enterprise:
     registration:
       modal:
@@ -1941,7 +1971,8 @@ de_DE:
   products_unsaved: "Änderungen an %{n} Produkten bleiben ungesichert."
   is_already_manager: "ist schon ein Manager!"
   no_change_to_save: " Keine Änderung zum Speichern"
-  add_manager: "Fügen Sie einen Manager hinzu"
+  user_invited: "%{email} wurde eingeladen, dieses Unternehmen zu verwalten"
+  add_manager: "Fügen Sie einen vorhandenen Benutzer hinzu"
   users: "Benutzer"
   about: "Über"
   images: "Bilder"
@@ -1952,6 +1983,7 @@ de_DE:
   social: "Sozial"
   business_details: "Geschäftsdetails"
   properties: "Eigenschaften"
+  shipping: "Versand"
   shipping_methods: "Lieferoptionen"
   payment_methods: "Zahlungsarten"
   payment_method_fee: "Transaktionsgebühr"
@@ -2002,6 +2034,8 @@ de_DE:
   order_cycles_email_to_producers_notice: 'E-Mails, die an die Produzenten gesendet werden sollen, wurden zum Senden in die Warteschlange gestellt.'
   order_cycles_no_permission_to_coordinate_error: "Keines Ihrer Unternehmen ist berechtigt, einen Bestellzyklus zu koordinieren"
   order_cycles_no_permission_to_create_error: "Sie sind nicht berechtigt, einen von diesem Unternehmen koordinierten Bestellzyklus zu erstellen"
+  back_to_orders_list: "Zurück zur Bestellliste"
+  amount: "Menge"
   js:
     saving: 'Speichern ...'
     changes_saved: 'Änderungen gespeichert'
