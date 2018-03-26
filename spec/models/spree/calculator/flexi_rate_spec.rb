@@ -1,18 +1,18 @@
 require 'spec_helper'
 
 describe Spree::Calculator::FlexiRate do
-  let(:calculator) { Spree::Calculator::FlexiRate.new(preferred_first_item: 2, preferred_additional_item: 1) }
+  let(:calculator_first) { Spree::Calculator::FlexiRate.new(preferred_first_item: 2, preferred_additional_item: 1, preferred_max_items: 3.0) }
+  let(:calculator_second) { Spree::Calculator::FlexiRate.new(preferred_first_item: 2, preferred_additional_item: 1, preferred_max_items: 5.0) }
+
   let(:line_item) { instance_double(Spree::LineItem, amount: 10, quantity: 4) }
 
   describe "computing for a single line item" do
-    it "returns the first item rate when above max" do
-      calculator.stub preferred_max_items: 3.0
-      expect(calculator.compute(line_item).round(2)).to eq(4.0)
+    it "returns the first item rate when quantity is above max" do
+      expect(calculator_first.compute(line_item).round(2)).to eq(4.0)
     end
 
-    it "returns the first item rate when below max" do
-      calculator.stub preferred_max_items: 5.0
-      expect(calculator.compute(line_item).round(2)).to eq(5.0)
+    it "returns the first item rate when quantity is below max" do
+      expect(calculator_second.compute(line_item).round(2)).to eq(5.0)
     end
   end
 
