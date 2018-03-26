@@ -7,12 +7,12 @@ describe Spree::Calculator::FlexiRate do
   describe "computing for a single line item" do
     it "returns the first item rate when above max" do
       calculator.stub preferred_max_items: 3.0
-      calculator.compute(line_item).round(2).should == 4.0
+      expect(calculator.compute(line_item).round(2)).to eq(4.0)
     end
 
     it "returns the first item rate when below max" do
       calculator.stub preferred_max_items: 5.0
-      calculator.compute(line_item).round(2).should == 5.0
+      expect(calculator.compute(line_item).round(2)).to eq(5.0)
     end
   end
 
