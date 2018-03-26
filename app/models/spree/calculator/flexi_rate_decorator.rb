@@ -7,6 +7,10 @@ module Spree
     localize_number :preferred_first_item,
                     :preferred_additional_item
 
+    def self.description
+      I18n.t(:flexible_rate)
+    end
+
     def compute(object)
       sum = 0
       max = self.preferred_max_items.to_i

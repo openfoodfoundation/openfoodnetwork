@@ -6,6 +6,10 @@ module Spree
 
     localize_number :preferred_amount
 
+    def self.description
+      I18n.t(:flat_rate_per_item)
+    end
+
     def compute(object=nil)
       return 0 if object.nil?
       self.preferred_amount * line_items_for(object).reduce(0) do |sum, value|
