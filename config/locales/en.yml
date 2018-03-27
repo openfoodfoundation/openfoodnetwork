@@ -450,6 +450,11 @@ en:
         available_on: Available On
         av_on: "Av. On"
         upload_an_image: Upload an image
+      product_search_keywords: Product Search Keywords
+      product_search_tip: Type words to help search your products in the shops. Use space to separate each keyword.
+      SEO_keywords: SEO Keywords
+      seo_tip: Type words to help search your products in the web. Use space to separate each keyword.
+      Search: Search
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
@@ -457,7 +462,6 @@ en:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       product_distributions: "Product Distributions"
       group_buy_options: "Group Buy Options"
-      seo: "SEO"
       back_to_products_list: "Back to products list"
 
     variant_overrides:
