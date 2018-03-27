@@ -8,6 +8,8 @@ es:
         completed_at: Completado en
         number: Número
         email: E-mail del consumidor
+      spree/payment:
+        amount: Cantidad
     errors:
       models:
         spree/user:
@@ -58,6 +60,8 @@ es:
       subject: "Confirma la dirección de correo electrónico de %{enterprise}"
     welcome:
       subject: "%{enterprise} está ahora en %{sitename}"
+    invite_manager:
+      subject: "%{enterprise} te ha invitado a ser administrador"
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
@@ -200,6 +204,7 @@ es:
     phone: Teléfono
     price: Precio
     producer: Productora
+    image: Imagen
     product: Producto
     quantity: Cantidad
     schedule: Programación
@@ -353,6 +358,14 @@ es:
         manages: Gestionan
     products:
       unit_name_placeholder: 'ej. manojos'
+      bulk_edit:
+        unit: Unidad
+        display_as: Mostrar como
+        category: Categoría
+        tax_category: Categoría de impuestos
+        inherits_properties?: ¿Hereda propiedades?
+        available_on: Disponible en
+        upload_an_image: Subir una imagen
       properties:
         property_name: Nombre de la Propiedad
         inherited_property: Propiedad Heredada
@@ -412,6 +425,7 @@ es:
         max_fulfilled_units: "Max Unidades Completadas"
         order_error: "Algunos errores deberán ser resueltos antes de que puedas actualizar los pedidos.\nTodos los campos con borde rojo contienen errores."
         variants_without_unit_value: "CUIDADO: Algunas variedades no tienen un valor unitario "
+      select_variant: "Seleccione una variante"
     enterprise:
       select_outgoing_oc_products_from: Selecciona los productos OC que salgan de
     enterprises:
@@ -573,6 +587,9 @@ es:
           notifications_note: 'Nota: Una nueva dirección de correo debe ser confirmada. '
           managers: Gestoras
           managers_tip: Otras usuarias con permiso para gestionar esta organización.
+          invite_manager: "Invitar administrador"
+          invite_manager_tip: "Invite a un usuario no registrado a registrarse y convertirse en administrador de esta organización."
+          add_unregistered_user: "Agregar un usuario no registrado"
           email_confirmed: "Correo electrónico confirmado"
           email_not_confirmed: "Correo electrónico no confirmado"
       actions:
@@ -632,6 +649,9 @@ es:
         welcome_text: Has creado correctamente un
         next_step: Siguiente paso
         choose_starting_point: 'Elige tu punto de partida:'
+      invite_manager:
+        user_already_exists: "El usuario ya existe"
+        error: "Algo salió mal"
     order_cycles:
       edit:
         advanced_settings: Configuración Avanzada
@@ -1170,6 +1190,12 @@ es:
   email_signup_shop_html: "Ahora puedes iniciar sesión en %{link}."
   email_signup_text: "Gracias por unirte a la red. Si eres un comprador, ¡esperamos presentarte a muchos agricultores, grupos de consumo y deliciosa comida! Si eres una productora o formas parte de una organización de alimentos, estamos emocionados de que formes parte de la red."
   email_signup_help_html: "Agradecemos todas tus preguntas y feedback; puedes usar el botón de <em>Enviar Feedback</em> en el sitio o escribir un email a %{email}"
+  invite_email:
+    greeting: "¡Hola!"
+    invited_to_manage: "Ha sido invitado a administrar %{enterprise} en %{instance}."
+    confirm_your_email: "En breve recibirá un correo electrónico para confirmar su registro."
+    set_a_password: "Luego se le pedirá que establezca una contraseña antes de poder administrar la organización."
+    mistakenly_sent: "¿No está seguro de por qué ha recibido este correo electrónico? Por favor, póngase en contacto con %{owner_email} para obtener más información, o puede ponerse en contacto con %{instance} en %{instance_email}."
   producer_mail_greeting: "Estimada"
   producer_mail_text_before: "Ahora tenemos todas los pedidos de las consumidoras para la siguiente ronda."
   producer_mail_order_text: "Se muestra un resumen de los pedidos de tus productos:"
@@ -1432,6 +1458,7 @@ es:
   password_reset_sent: "¡Le enviamos un correo electrónico con instrucciones para restaurar la contraseña!"
   reset_password: "Restaurar contraseña"
   who_is_managing_enterprise: "¿Quién es responsable de administrar %{enterprise}?"
+  update_and_recalculate_fees: "Actualizar y recalcular tarifas"
   enterprise:
     registration:
       modal:
@@ -1625,7 +1652,7 @@ es:
   outstanding_balance: "Saldo extraordinario"
   admin_entreprise_relationships: "Relaciones de la Organización"
   admin_entreprise_relationships_everything: "Marcar todos"
-  admin_entreprise_relationships_permits: "Permisos"
+  admin_entreprise_relationships_permits: "Permite"
   admin_entreprise_relationships_seach_placeholder: "Buscar"
   admin_entreprise_relationships_button_create: "Crear"
   admin_entreprise_groups: "Redes de organizaciones"
@@ -1943,7 +1970,8 @@ es:
   products_unsaved: "Los cambios de %{n} productos aún no se han guardado."
   is_already_manager: "¡Ya eres un administrador!"
   no_change_to_save: "No hay cambios para guardar"
-  add_manager: "Añadir a un administrador"
+  user_invited: "%{email} ha sido invitado a administrar esta organización"
+  add_manager: "Agrega un usuario existente"
   users: "Usuarias"
   about: "Acerca de"
   images: "Imagenes"
@@ -1954,6 +1982,7 @@ es:
   social: "Social"
   business_details: "Detalles de la Organización"
   properties: "Propiedades"
+  shipping: "Envío"
   shipping_methods: "Métodos de envío"
   payment_methods: "Métodos de Pago"
   payment_method_fee: "Tarifa de Transacción"
@@ -2004,6 +2033,9 @@ es:
   order_cycles_email_to_producers_notice: 'Los correos electrónicos que se enviarán a las productoras se han puesto en cola para enviarlos.'
   order_cycles_no_permission_to_coordinate_error: "Ninguna de tus organizaciones tiene permiso para coordinar un ciclo de pedido"
   order_cycles_no_permission_to_create_error: "No tienes permiso para crear un ciclo de pedido coordinado por esta empresa."
+  back_to_orders_list: "Volver a la lista de pedidos"
+  order_information: "información del pedido"
+  amount: "Cantidad"
   js:
     saving: 'Guardando...'
     changes_saved: 'Cambios guardados.'
