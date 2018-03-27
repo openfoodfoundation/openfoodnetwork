@@ -16,7 +16,7 @@ describe Spree::Admin::LineItemsController, type: :controller do
     it "takes variant overrides into account for price" do
       spree_post :create, params
 
-      order.line_items(:reload).last.price.should == 11.11
+      expect(order.line_items(:reload).last.price).to eq(11.11)
     end
   end
 
@@ -33,7 +33,7 @@ describe Spree::Admin::LineItemsController, type: :controller do
     context "as an enterprise user" do
       context "producer enterprise" do
         before do
-          controller.stub spree_current_user: supplier.owner
+          allow(controller).to receive_messages spree_current_user: supplier.owner
           spree_put :update, params
         end
 
@@ -46,7 +46,7 @@ describe Spree::Admin::LineItemsController, type: :controller do
         render_views
 
         before do
-          controller.stub spree_current_user: coordinator.owner
+          allow(controller).to receive_messages spree_current_user: coordinator.owner
         end
 
         # Used in admin/orders/edit
@@ -97,7 +97,7 @@ describe Spree::Admin::LineItemsController, type: :controller do
 
       context "hub enterprise" do
         before do
-          controller.stub spree_current_user: distributor1.owner
+          allow(controller).to receive_messages spree_current_user: distributor1.owner
           xhr :put, :update, params
         end
 

@@ -57,7 +57,7 @@ feature 'Enterprises Index' do
             select d_manager.email, from: 'enterprise_set_collection_attributes_0_owner_id'
           end
           click_button "Update"
-          flash_message.should == 'Enterprises updated successfully'
+          expect(flash_message).to eq('Enterprises updated successfully')
           distributor = Enterprise.find(d.id)
           expect(distributor.visible).to eq false
           expect(distributor.sells).to eq 'any'
@@ -84,7 +84,7 @@ feature 'Enterprises Index' do
             select d_manager.email, from: 'enterprise_set_collection_attributes_1_owner_id'
           end
           click_button "Update"
-          flash_message.should == 'Update failed'
+          expect(flash_message).to eq('Update failed')
           expect(page).to have_content "#{d_manager.email} is not permitted to own any more enterprises (limit is 1)."
           second_distributor.reload
           expect(second_distributor.owner).to_not eq d_manager

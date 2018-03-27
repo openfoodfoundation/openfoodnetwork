@@ -25,7 +25,7 @@ module OpenFoodNetwork
       }
 
       it "finds the correct balance for this email and enterprise" do
-        UserBalanceCalculator.new(o1.email, hub1).balance.should == -3
+        expect(UserBalanceCalculator.new(o1.email, hub1).balance).to eq(-3)
       end
 
       context "with another hub" do
@@ -39,7 +39,7 @@ module OpenFoodNetwork
         }
 
         it "does not find the balance for other enterprises" do
-          UserBalanceCalculator.new(o3.email, hub2).balance.should == 5
+          expect(UserBalanceCalculator.new(o3.email, hub2).balance).to eq(5)
         end
       end
 
@@ -54,7 +54,7 @@ module OpenFoodNetwork
         }
 
         it "does not find the balance for other users" do
-          UserBalanceCalculator.new(o4.email, hub1).balance.should == 10
+          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(10)
         end
       end
 
@@ -68,7 +68,7 @@ module OpenFoodNetwork
         }
 
         it "does not include canceled orders in the balance" do
-          UserBalanceCalculator.new(o4.email, hub1).balance.should == -3
+          expect(UserBalanceCalculator.new(o4.email, hub1).balance).to eq(-3)
         end
       end
     end

@@ -9,7 +9,7 @@ module Admin
     describe "#create" do
       context "when given email matches an existing user" do
         before do
-          controller.stub spree_current_user: admin
+          allow(controller).to receive_messages spree_current_user: admin
         end
 
         it "returns an error" do
@@ -22,7 +22,7 @@ module Admin
 
       context "signing up a new user" do
         before do
-          controller.stub spree_current_user: admin
+          allow(controller).to receive_messages spree_current_user: admin
         end
 
         it "creates a new user, sends an invitation email, and returns the user id" do

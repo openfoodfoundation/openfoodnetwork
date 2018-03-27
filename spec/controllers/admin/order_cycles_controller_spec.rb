@@ -7,7 +7,7 @@ module Admin
     let!(:distributor_owner) { create_enterprise_user enterprise_limit: 2 }
 
     before do
-      controller.stub spree_current_user: distributor_owner
+      allow(controller).to receive_messages spree_current_user: distributor_owner
     end
 
     describe "#index" do
@@ -110,11 +110,11 @@ module Admin
 
         it "sets flash message when page is reloading" do
           spree_put :update, id: order_cycle.id, reloading: '1', order_cycle: {}
-          flash[:notice].should == 'Your order cycle has been updated.'
+          expect(flash[:notice]).to eq('Your order cycle has been updated.')
         end
 
         it "does not set flash message otherwise" do
-          flash[:notice].should be_nil
+          expect(flash[:notice]).to be_nil
         end
 
         context "when updating without explicitly submitting exchanges" do
@@ -155,7 +155,7 @@ module Admin
 
           it "removes the variant from outgoing also" do
             spree_put :update, {id: order_cycle.id}.merge(params)
-            Exchange.where(order_cycle_id: order_cycle).with_variant(v).should be_empty
+            expect(Exchange.where(order_cycle_id: order_cycle).with_variant(v)).to be_empty
           end
         end
       end
@@ -176,7 +176,7 @@ module Admin
         render_views
 
         before do
-          controller.stub spree_current_user: user
+          allow(controller).to receive_messages spree_current_user: user
         end
 
         it "allows me to assign only schedules that already I coordinate to the order cycle" do
@@ -256,7 +256,7 @@ module Admin
       let(:order_cycle) { create(:simple_order_cycle) }
 
       before do
-        controller.stub spree_current_user: admin_user
+        allow(controller).to receive_messages spree_current_user: admin_user
       end
 
       it "enqueues a job" do
@@ -268,7 +268,7 @@ module Admin
       it "redirects back to the order cycles path with a success message" do
         spree_post :notify_producers, {id: order_cycle.id}
         expect(response).to redirect_to admin_order_cycles_path
-        flash[:notice].should == 'Emails to be sent to producers have been queued for sending.'
+        expect(flash[:notice]).to eq('Emails to be sent to producers have been queued for sending.')
       end
     end
 

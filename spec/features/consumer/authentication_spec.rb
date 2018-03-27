@@ -17,7 +17,7 @@ feature "Authentication", js: true, retry: 3 do
         fill_in "Email", with: user.email
         fill_in "Password", with: user.password
         click_login_button
-        page.should have_content "Find local producers"
+        expect(page).to have_content "Find local producers"
         expect(page).to have_current_path producers_path
       end
     end
@@ -32,20 +32,20 @@ feature "Authentication", js: true, retry: 3 do
           open_login_modal
         end
         scenario "showing login" do
-          page.should have_login_modal
+          expect(page).to have_login_modal
         end
 
         scenario "failing to login" do
           fill_in "Email", with: user.email
           click_login_button
-          page.should have_content "Invalid email or password"
+          expect(page).to have_content "Invalid email or password"
         end
 
         scenario "logging in successfully" do
           fill_in "Email", with: user.email
           fill_in "Password", with: user.password
           click_login_button
-          page.should be_logged_in_as user
+          expect(page).to be_logged_in_as user
         end
 
         describe "signing up" do
@@ -57,7 +57,7 @@ feature "Authentication", js: true, retry: 3 do
             fill_in "Email", with: "test@foo.com"
             fill_in "Choose a password", with: "short"
             click_signup_button
-            page.should have_content "too short"
+            expect(page).to have_content "too short"
           end
 
           scenario "Failing to sign up because email is already registered" do
@@ -97,16 +97,16 @@ feature "Authentication", js: true, retry: 3 do
           scenario "failing to reset password" do
             fill_in "Your email", with: "notanemail@myemail.com"
             click_reset_password_button
-            page.should have_content "Email address not found"
+            expect(page).to have_content "Email address not found"
           end
 
           scenario "resetting password" do
             fill_in "Your email", with: user.email
             expect do
               click_reset_password_button
-              page.should have_reset_password
+              expect(page).to have_reset_password
             end.to enqueue_job Delayed::PerformableMethod
-            Delayed::Job.last.payload_object.method_name.should == :send_reset_password_instructions_without_delay
+            expect(Delayed::Job.last.payload_object.method_name).to eq(:send_reset_password_instructions_without_delay)
           end
         end
       end
@@ -117,7 +117,7 @@ feature "Authentication", js: true, retry: 3 do
         scenario "showing login" do
           open_off_canvas
           open_login_modal
-          page.should have_login_modal
+          expect(page).to have_login_modal
         end
       end
     end
@@ -133,7 +133,7 @@ feature "Authentication", js: true, retry: 3 do
     scenario "Loggin by typing login/ redirects to /#/login" do
       visit "/login"
       uri = URI.parse(current_url)
-      (uri.path + "#" + uri.fragment).should == '/#/login'
+      expect(uri.path + "#" + uri.fragment).to eq('/#/login')
     end
   end
 end

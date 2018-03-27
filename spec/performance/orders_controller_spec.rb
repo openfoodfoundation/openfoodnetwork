@@ -9,7 +9,7 @@ describe Spree::OrdersController, type: :controller, performance: true do
 
   before do
     order.set_distribution! distributor, order_cycle
-    controller.stub(:current_order) { order }
+    allow(controller).to receive(:current_order) { order }
 
     Spree::Config.currency = 'AUD'
   end

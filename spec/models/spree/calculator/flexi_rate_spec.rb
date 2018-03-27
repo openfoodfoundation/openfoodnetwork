@@ -6,8 +6,8 @@ describe Spree::Calculator::FlexiRate do
 
   describe "computing for a single line item" do
     it "returns the first item rate" do
-      calculator.stub preferred_first_item: 1.0
-      calculator.compute(line_item).round(2).should == 1.0
+      allow(calculator).to receive_messages preferred_first_item: 1.0
+      expect(calculator.compute(line_item).round(2)).to eq(1.0)
     end
   end
 

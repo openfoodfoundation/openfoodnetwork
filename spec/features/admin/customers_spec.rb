@@ -78,7 +78,7 @@ feature 'Customers' do
         select2_select managed_distributor1.name, from: "shop_id"
 
         within "tr#c_#{customer1.id}" do
-          find_field('name').value.should eq 'John Doe'
+          expect(find_field('name').value).to eq 'John Doe'
 
           fill_in "code", with: "new-customer-code"
           expect(page).to have_css "input[name=code].update-pending"

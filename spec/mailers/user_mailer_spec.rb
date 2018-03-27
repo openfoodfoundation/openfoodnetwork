@@ -17,7 +17,7 @@ describe Spree::UserMailer do
 
   it "sends an email when given a user" do
     Spree::UserMailer.signup_confirmation(user).deliver
-    ActionMailer::Base.deliveries.count.should == 1
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
 
   # adapted from https://github.com/spree/spree_auth_devise/blob/70737af/spec/mailers/user_mailer_spec.rb

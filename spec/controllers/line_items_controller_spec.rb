@@ -13,9 +13,9 @@ describe LineItemsController, type: :controller do
     end
 
     before do
-      controller.stub spree_current_user: user
-      controller.stub current_order_cycle: order_cycle
-      controller.stub current_distributor: distributor
+      allow(controller).to receive_messages spree_current_user: user
+      allow(controller).to receive_messages current_order_cycle: order_cycle
+      allow(controller).to receive_messages current_distributor: distributor
     end
 
     it "lists items bought by the user from the same shop in the same order_cycle" do
@@ -38,7 +38,7 @@ describe LineItemsController, type: :controller do
     let(:order) { item.order }
     let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [order.line_item_variants]) }
 
-    before { controller.stub spree_current_user: item.order.user }
+    before { allow(controller).to receive_messages spree_current_user: item.order.user }
 
     context "without a line item id" do
       it "fails and raises an error" do
@@ -110,7 +110,7 @@ describe LineItemsController, type: :controller do
 
         # Delete the item
         item = order.line_items.first
-        controller.stub spree_current_user: order.user
+        allow(controller).to receive_messages spree_current_user: order.user
         request = { format: :json, id: item }
         delete :destroy, request
         expect(response.status).to eq 204
@@ -144,7 +144,7 @@ describe LineItemsController, type: :controller do
       it "updates the fees" do
         expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount
 
-        controller.stub spree_current_user: user
+        allow(controller).to receive_messages spree_current_user: user
         delete :destroy, params
         expect(response.status).to eq 204
 

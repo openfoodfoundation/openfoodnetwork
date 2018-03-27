@@ -17,8 +17,8 @@ RSpec::Matchers.define :delegate do |method|
     rescue NoMethodError
       raise "#{@delegator} does not respond to #{@to}!"
     end
-    @delegator.stub(@to).and_return double('receiver')
-    @delegator.send(@to).stub(method).and_return :called
+    allow(@delegator).to receive(@to).and_return double('receiver')
+    allow(@delegator.send(@to)).to receive(method).and_return :called
     @delegator.send(@method) == :called
   end
 

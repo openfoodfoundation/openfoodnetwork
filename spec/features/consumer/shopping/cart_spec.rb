@@ -91,7 +91,7 @@ feature "full-page cart", js: true do
       end
 
       it "shows the total tax for the order, including product tax and tax on fees" do
-        page.should have_selector '.tax-total', text: '11.00' # 10 + 1
+        expect(page).to have_selector '.tax-total', text: '11.00' # 10 + 1
       end
     end
 

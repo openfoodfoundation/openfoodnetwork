@@ -13,7 +13,7 @@ describe Admin::SchedulesController, type: :controller do
     context "html" do
       context "where I manage an order cycle coordinator" do
         before do
-          controller.stub spree_current_user: managed_coordinator.owner
+          allow(controller).to receive_messages spree_current_user: managed_coordinator.owner
         end
 
         it "returns an empty @collection" do
@@ -26,7 +26,7 @@ describe Admin::SchedulesController, type: :controller do
     context "json" do
       context "where I manage an order cycle coordinator" do
         before do
-          controller.stub spree_current_user: managed_coordinator.owner
+          allow(controller).to receive_messages spree_current_user: managed_coordinator.owner
         end
 
         let(:params) { { format: :json } }
@@ -68,7 +68,7 @@ describe Admin::SchedulesController, type: :controller do
         render_views
 
         before do
-          controller.stub spree_current_user: user
+          allow(controller).to receive_messages spree_current_user: user
         end
 
         it "allows me to update basic information" do
@@ -102,7 +102,7 @@ describe Admin::SchedulesController, type: :controller do
 
       context "where I don't manage any of the schedule's coordinators" do
         before do
-          controller.stub spree_current_user: uncoordinated_order_cycle2.coordinator.owner
+          allow(controller).to receive_messages spree_current_user: uncoordinated_order_cycle2.coordinator.owner
         end
 
         it "prevents me from updating the schedule" do

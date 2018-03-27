@@ -49,7 +49,7 @@ module UIComponentHelper
 
   def modal_should_be_open_for(object)
     within ".reveal-modal" do
-      page.should have_content object.name
+      expect(page).to have_content object.name
     end
   end
 

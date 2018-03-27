@@ -7,9 +7,9 @@ describe Api::Admin::VariantOverrideSerializer do
 
   it "serializes a variant override" do
     serializer = Api::Admin::VariantOverrideSerializer.new variant_override
-    serializer.to_json.should match variant.id.to_s
-    serializer.to_json.should match hub.id.to_s
-    serializer.to_json.should match price.to_s
-    serializer.to_json.should match count_on_hand.to_s
+    expect(serializer.to_json).to match variant.id.to_s
+    expect(serializer.to_json).to match hub.id.to_s
+    expect(serializer.to_json).to match price.to_s
+    expect(serializer.to_json).to match count_on_hand.to_s
   end
 end

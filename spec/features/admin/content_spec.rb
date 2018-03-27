@@ -18,23 +18,23 @@ feature %q{
     fill_in 'footer_twitter_url', with: 'http://twitter.com/me'
     fill_in 'footer_links_md', with: '[markdown link](/)'
     click_button 'Update'
-    page.should have_content 'Your content has been successfully updated!'
+    expect(page).to have_content 'Your content has been successfully updated!'
 
     visit root_path
 
     # Then social media icons are only shown if they have a value
-    page.should_not have_selector 'i.ofn-i_044-facebook'
-    page.should     have_selector 'i.ofn-i_041-twitter'
+    expect(page).not_to have_selector 'i.ofn-i_044-facebook'
+    expect(page).to     have_selector 'i.ofn-i_041-twitter'
 
     # And markdown is rendered
-    page.should have_link 'markdown link'
+    expect(page).to have_link 'markdown link'
   end
 
   scenario "uploading logos" do
     attach_file 'logo', "#{Rails.root}/app/assets/images/logo-white.png"
     click_button 'Update'
-    page.should have_content 'Your content has been successfully updated!'
+    expect(page).to have_content 'Your content has been successfully updated!'
 
-    ContentConfig.logo.to_s.should include "logo-white"
+    expect(ContentConfig.logo.to_s).to include "logo-white"
   end
 end

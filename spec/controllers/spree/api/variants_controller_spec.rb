@@ -20,7 +20,7 @@ module Spree
       it "retrieves a list of variants with appropriate attributes" do
         spree_get :index, { :template => 'bulk_index', :format => :json }
         keys = json_response.first.keys.map{ |key| key.to_sym }
-        attributes.all?{ |attr| keys.include? attr }.should == true
+        expect(attributes.all?{ |attr| keys.include? attr }).to eq(true)
       end
 
       it "is denied access when trying to delete a variant" do
@@ -29,8 +29,8 @@ module Spree
 
         spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
         assert_unauthorized!
-        lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should be_nil
+        expect { variant.reload }.not_to raise_error
+        expect(variant.deleted_at).to be_nil
       end
     end
 
@@ -44,16 +44,16 @@ module Spree
 
       it "soft deletes a variant" do
         spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
-        response.status.should == 204
-        lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should be_present
+        expect(response.status).to eq(204)
+        expect { variant.reload }.not_to raise_error
+        expect(variant.deleted_at).to be_present
       end
 
       it "is denied access to soft deleting another enterprises' variant" do
         spree_delete :soft_delete, {variant_id: variant_other.to_param, product_id: product_other.to_param, format: :json}
         assert_unauthorized!
-        lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should be_nil
+        expect { variant.reload }.not_to raise_error
+        expect(variant.deleted_at).to be_nil
       end
     end
 
@@ -65,9 +65,9 @@ module Spree
         variant = product.master
 
         spree_delete :soft_delete, {variant_id: variant.to_param, product_id: product.to_param, format: :json}
-        response.status.should == 204
-        lambda { variant.reload }.should_not raise_error
-        variant.deleted_at.should_not be_nil
+        expect(response.status).to eq(204)
+        expect { variant.reload }.not_to raise_error
+        expect(variant.deleted_at).not_to be_nil
       end
     end
   end

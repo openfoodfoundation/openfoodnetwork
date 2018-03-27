@@ -89,11 +89,12 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see a breakdown of my delivery fees:
-    checkout_fees_table.should ==
+    expect(checkout_fees_table).to eq(
       [['Fuji apples - sales fee by coordinator Edible garden', '$1.00', ''],
        ['Garlic - sales fee by coordinator Edible garden', '$1.00', '']]
+    )
 
-    page.should have_selector 'span.distribution-total', :text => '$2.00'
+    expect(page).to have_selector 'span.distribution-total', :text => '$2.00'
   end
 
   scenario "viewing delivery fees for order cycle distribution", :js => true do
@@ -115,7 +116,7 @@ feature %q{
 
     # Then I should see a breakdown of my delivery fees:
 
-    checkout_fees_table.should ==
+    expect(checkout_fees_table).to eq(
       [["Bananas - packing fee by supplier Supplier 1", "$3.00", ""],
        ["Bananas - transport fee by supplier Supplier 1", "$4.00", ""],
        ["Bananas - packing fee by distributor FruitAndVeg", "$7.00", ""],
@@ -126,8 +127,9 @@ feature %q{
        ["Zucchini - transport fee by distributor FruitAndVeg", "$8.00", ""],
        ["Whole order - admin fee by coordinator My coordinator", "$1.00", ""],
        ["Whole order - sales fee by coordinator My coordinator", "$2.00", ""]]
+    )
 
-    page.should have_selector 'span.distribution-total', :text => '$51.00'
+    expect(page).to have_selector 'span.distribution-total', :text => '$51.00'
   end
 
   scenario "attempting to purchase products that mix product and order cycle distribution", future: true do
@@ -153,7 +155,7 @@ feature %q{
     click_link 'Feijoas'
 
     # Then I should see an error about changing order cycle
-    page.should have_content 'Please complete your order from your current order cycle before shopping in a different order cycle.'
+    expect(page).to have_content 'Please complete your order from your current order cycle before shopping in a different order cycle.'
   end
 
   scenario "removing a product from cart removes its fees", js: true, to_figure_out: true do
@@ -176,11 +178,12 @@ feature %q{
     page.find("a#delete_line_item_#{line_item.id}").click
 
     # Then I should see fees for only the garlic
-    checkout_fees_table.should ==
+    expect(checkout_fees_table).to eq(
 
       [['Garlic - transport fee by coordinator Edible garden', '$3.00', '']]
+    )
 
-    page.should have_selector 'span.distribution-total', :text => '$3.00'
+    expect(page).to have_selector 'span.distribution-total', :text => '$3.00'
   end
 
   scenario "adding products with differing quantities produces correct fees", js: true, :to_figure_out => true do
@@ -199,22 +202,24 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should have some delivery fees
-    checkout_fees_table.should ==
+    expect(checkout_fees_table).to eq(
       [['Fuji apples - packing fee by coordinator Edible garden', '$4.00', ''],
        ['Sundowner apples - packing fee by coordinator Edible garden', '$4.00', '']]
+    )
 
-    page.should have_selector 'span.distribution-total', :text => '$8.00'
+    expect(page).to have_selector 'span.distribution-total', :text => '$8.00'
 
     # And I update the quantity of one of them
     fill_in 'order_line_items_attributes_0_quantity', with: 2
     click_button 'Update'
 
     # Then I should see updated delivery fees
-    checkout_fees_table.should ==
+    expect(checkout_fees_table).to eq(
       [['Fuji apples - packing fee by coordinator Edible garden', '$8.00', ''],
        ['Sundowner apples - packing fee by coordinator Edible garden', '$4.00', '']]
+    )
 
-    page.should have_selector 'span.distribution-total', :text => '$12.00'
+    expect(page).to have_selector 'span.distribution-total', :text => '$12.00'
   end
 
   scenario "changing distributor updates delivery fees", :future => true do
@@ -243,7 +248,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see shipping costs for the first distributor
-    page.should have_selector 'span.distribution-total', text: '$1.23'
+    expect(page).to have_selector 'span.distribution-total', text: '$1.23'
 
     # When add the second with the second distributor
     click_link 'Continue shopping'
@@ -251,7 +256,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see shipping costs for the second distributor
-    page.should have_selector 'span.distribution-total', text: '$4.68'
+    expect(page).to have_selector 'span.distribution-total', text: '$4.68'
   end
 
   scenario "adding a product to cart after emptying cart shows correct delivery fees", js: true, :to_figure_out => true do
@@ -265,7 +270,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see the correct delivery fee
-    page.should have_selector 'span.grand-total', text: '$24.99'
+    expect(page).to have_selector 'span.grand-total', text: '$24.99'
 
     # When I empty my cart and add the product again
     click_button 'Empty Cart'
@@ -274,7 +279,7 @@ feature %q{
     click_button 'Add To Cart'
 
     # Then I should see the correct delivery fee
-    page.should have_selector 'span.grand-total', text: '$24.99'
+    expect(page).to have_selector 'span.grand-total', text: '$24.99'
   end
 
   scenario "buying a product", :js => true, :to_figure_out => true do
@@ -309,7 +314,7 @@ feature %q{
        @distributor.next_collection_at
       ].each do |value|
 
-        page.should have_content value
+        expect(page).to have_content value
       end
     end
 
@@ -320,26 +325,26 @@ feature %q{
 
     # -- Checkout: Delivery
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
-    order_charges.should == [["Shipping:", "$0.00"],
-                             ["Distribution:", "$12.00"]]
+    expect(order_charges).to eq([["Shipping:", "$0.00"],
+                             ["Distribution:", "$12.00"]])
     click_checkout_continue_button
 
     # -- Checkout: Payment
     # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
-    page.should have_selector     'label', :text => @payment_method_distributor.name
-    page.should_not have_selector 'label', :text => @payment_method_alternative.name
+    expect(page).to have_selector     'label', :text => @payment_method_distributor.name
+    expect(page).not_to have_selector 'label', :text => @payment_method_alternative.name
     click_checkout_continue_button
 
     # -- Checkout: Order complete
-    page.should have_content 'Your order has been processed successfully'
-    page.should have_content @payment_method_distributor.description
+    expect(page).to have_content 'Your order has been processed successfully'
+    expect(page).to have_content @payment_method_distributor.description
 
-    page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
-    page.should have_selector 'tfoot#order-charges tr.total td', text: '12.00'
+    expect(page).to have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
+    expect(page).to have_selector 'tfoot#order-charges tr.total td', text: '12.00'
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
-    email.body.should =~ /Distribution[\s+]\$12.00/
+    expect(email.body).to match(/Distribution[\s+]\$12.00/)
   end
 
   scenario "buying a product from an order cycle", :js => true do
@@ -378,7 +383,7 @@ feature %q{
        @distributor_oc.next_collection_at
       ].each do |value|
 
-        page.should have_content value
+        expect(page).to have_content value
       end
     end
 
@@ -387,32 +392,32 @@ feature %q{
     click_checkout_continue_button
 
     # -- Checkout: Delivery
-    page.should have_content "DELIVERY METHOD"
+    expect(page).to have_content "DELIVERY METHOD"
     order_charges = page.all("tbody#summary-order-charges tr").map {|row| row.all('td').map(&:text)}.take(2)
-    order_charges.should == [["Distribution:", "$51.00"]]
+    expect(order_charges).to eq([["Distribution:", "$51.00"]])
 
     click_checkout_continue_button
 
     # -- Checkout: Payment
     # Given the distributor I have selected for my order, I should only see payment methods valid for that distributor
-    page.should have_content "PAYMENT INFORMATION"
-    page.should have_selector     'label', :text => @payment_method_distributor_oc.name
-    page.should_not have_selector 'label', :text => @payment_method_alternative.name
+    expect(page).to have_content "PAYMENT INFORMATION"
+    expect(page).to have_selector     'label', :text => @payment_method_distributor_oc.name
+    expect(page).not_to have_selector 'label', :text => @payment_method_alternative.name
     click_checkout_continue_button
 
     # -- Checkout: Order complete
-    page.should have_content 'Your order has been processed successfully'
-    page.should have_content @payment_method_distributor_oc.description
-    page.should have_content @distributor_oc.name
+    expect(page).to have_content 'Your order has been processed successfully'
+    expect(page).to have_content @payment_method_distributor_oc.description
+    expect(page).to have_content @distributor_oc.name
 
-    page.should have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
-    page.should have_selector 'tfoot#order-charges tr.total td', text: '51.00'
+    expect(page).to have_selector 'tfoot#order-charges tr.total td', text: 'Distribution'
+    expect(page).to have_selector 'tfoot#order-charges tr.total td', text: '51.00'
 
 
     # -- Checkout: Email
     email = ActionMailer::Base.deliveries.last
-    email.reply_to.include?(@distributor_oc.email).should == true
-    email.body.should =~ /Distribution[\s+]\$51.00/
+    expect(email.reply_to.include?(@distributor_oc.email)).to eq(true)
+    expect(email.body).to match(/Distribution[\s+]\$51.00/)
   end
 
   scenario "when I have past orders, it fills in my address", :js => true do
@@ -452,14 +457,14 @@ feature %q{
     visit "/checkout" # Force to old checkout
 
     # -- Checkout: Address
-    page.should have_field 'order_bill_address_attributes_firstname', with: 'Joe'
-    page.should have_field 'order_bill_address_attributes_lastname', with: 'Luck'
-    page.should have_field 'order_bill_address_attributes_address1', with: '19 Sycamore Lane'
-    page.should have_field 'order_bill_address_attributes_city', with: 'Horse Hill'
-    page.should have_field 'order_bill_address_attributes_zipcode', with: '3213'
-    page.should have_field 'order_bill_address_attributes_phone', with: '12999911111'
-    page.should have_select 'order_bill_address_attributes_state_id', selected: 'Victoria'
-    page.should have_select 'order_bill_address_attributes_country_id', selected: 'Australia'
+    expect(page).to have_field 'order_bill_address_attributes_firstname', with: 'Joe'
+    expect(page).to have_field 'order_bill_address_attributes_lastname', with: 'Luck'
+    expect(page).to have_field 'order_bill_address_attributes_address1', with: '19 Sycamore Lane'
+    expect(page).to have_field 'order_bill_address_attributes_city', with: 'Horse Hill'
+    expect(page).to have_field 'order_bill_address_attributes_zipcode', with: '3213'
+    expect(page).to have_field 'order_bill_address_attributes_phone', with: '12999911111'
+    expect(page).to have_select 'order_bill_address_attributes_state_id', selected: 'Victoria'
+    expect(page).to have_select 'order_bill_address_attributes_country_id', selected: 'Australia'
   end
 
 

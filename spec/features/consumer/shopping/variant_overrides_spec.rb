@@ -40,28 +40,28 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
 
   describe "viewing products" do
     it "shows the overridden price" do
-      page.should_not have_price with_currency(12.22) # $11.11 + 10% fee
-      page.should have_price with_currency(61.11)
+      expect(page).not_to have_price with_currency(12.22) # $11.11 + 10% fee
+      expect(page).to have_price with_currency(61.11)
     end
 
     it "looks up stock from the override" do
       # Product should appear but one of the variants is out of stock
-      page.should_not have_content v2.options_text
+      expect(page).not_to have_content v2.options_text
 
       # Entire product should not appear - no stock
-      page.should_not have_content p2.name
-      page.should_not have_content v3.options_text
+      expect(page).not_to have_content p2.name
+      expect(page).not_to have_content v3.options_text
 
       # On-demand product with VO of no stock should NOT appear
-      page.should_not have_content v5.options_text
+      expect(page).not_to have_content v5.options_text
     end
 
     it "calculates fees correctly" do
       page.find("#variant-#{v1.id} .graph-button").click
       page.find(".price_breakdown a").click
-      page.should have_selector 'li.cost div', text: with_currency(55.55)
-      page.should have_selector 'li.packing-fee div', text: with_currency(5.56)
-      page.should have_selector 'li.total div', text: "= #{with_currency(61.11)}"
+      expect(page).to have_selector 'li.cost div', text: with_currency(55.55)
+      expect(page).to have_selector 'li.packing-fee div', text: with_currency(5.56)
+      expect(page).to have_selector 'li.total div', text: "= #{with_currency(61.11)}"
     end
 
     it "shows the correct prices when products are in the cart" do
@@ -69,7 +69,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       show_cart
       wait_until_enabled 'li.cart a.button'
       visit shop_path
-      page.should_not have_price with_currency(12.22)
+      expect(page).not_to have_price with_currency(12.22)
     end
 
     # The two specs below reveal an unrelated issue with fee calculation. See:
@@ -78,30 +78,30 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
     it "shows the overridden price with fees in the quick cart" do
       fill_in "variants[#{v1.id}]", with: "2"
       show_cart
-      page.should have_selector "#cart-variant-#{v1.id} .quantity", text: '2'
-      page.should have_selector "#cart-variant-#{v1.id} .price", text: with_currency(61.11)
-      page.should have_selector "#cart-variant-#{v1.id} .total-price", text: with_currency(122.22)
+      expect(page).to have_selector "#cart-variant-#{v1.id} .quantity", text: '2'
+      expect(page).to have_selector "#cart-variant-#{v1.id} .price", text: with_currency(61.11)
+      expect(page).to have_selector "#cart-variant-#{v1.id} .total-price", text: with_currency(122.22)
     end
 
     it "shows the correct prices in the shopping cart" do
       fill_in "variants[#{v1.id}]", with: "2"
       add_to_cart
 
-      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-price", text: with_currency(61.11)
-      page.should have_field "order[line_items_attributes][0][quantity]", with: '2'
-      page.should have_selector "tr.line-item.variant-#{v1.id} .cart-item-total", text: with_currency(122.22)
+      expect(page).to have_selector "tr.line-item.variant-#{v1.id} .cart-item-price", text: with_currency(61.11)
+      expect(page).to have_field "order[line_items_attributes][0][quantity]", with: '2'
+      expect(page).to have_selector "tr.line-item.variant-#{v1.id} .cart-item-total", text: with_currency(122.22)
 
-      page.should have_selector "#edit-cart .item-total", text: with_currency(122.22)
-      page.should have_selector "#edit-cart .grand-total", text: with_currency(122.22)
+      expect(page).to have_selector "#edit-cart .item-total", text: with_currency(122.22)
+      expect(page).to have_selector "#edit-cart .grand-total", text: with_currency(122.22)
     end
 
     it "shows the correct prices in the checkout" do
       fill_in "variants[#{v1.id}]", with: "2"
       click_checkout
 
-      page.should have_selector 'form.edit_order .cart-total', text: with_currency(122.22)
-      page.should have_selector 'form.edit_order .shipping', text: with_currency(0.00)
-      page.should have_selector 'form.edit_order .total', text: with_currency(122.22)
+      expect(page).to have_selector 'form.edit_order .cart-total', text: with_currency(122.22)
+      expect(page).to have_selector 'form.edit_order .shipping', text: with_currency(0.00)
+      expect(page).to have_selector 'form.edit_order .total', text: with_currency(122.22)
     end
   end
 
@@ -114,8 +114,8 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       complete_checkout
 
       o = Spree::Order.complete.last
-      o.line_items.first.price.should == 55.55
-      o.total.should == 122.22
+      expect(o.line_items.first.price).to eq(55.55)
+      expect(o.total).to eq(122.22)
     end
 
     it "subtracts stock from the override" do
@@ -146,7 +146,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
       expect do
         complete_checkout
       end.to change { v1.reload.count_on_hand }.by(-2)
-      vo1.reload.count_on_hand.should be_nil
+      expect(vo1.reload.count_on_hand).to be_nil
     end
 
     it "does not show out of stock flags on order confirmation page" do
@@ -156,7 +156,7 @@ feature "shopping with variant overrides defined", js: true, retry: 3 do
 
       complete_checkout
 
-      page.should_not have_content "Out of Stock"
+      expect(page).not_to have_content "Out of Stock"
     end
   end
 

@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Spree::Gateway::StripeConnect, type: :model do
   let(:provider) do
     double('provider').tap do |p|
-      p.stub(:purchase)
-      p.stub(:authorize)
-      p.stub(:capture)
+      allow(p).to receive(:purchase)
+      allow(p).to receive(:authorize)
+      allow(p).to receive(:capture)
     end
   end
 
@@ -14,8 +14,8 @@ describe Spree::Gateway::StripeConnect, type: :model do
   before do
     allow(Stripe).to receive(:api_key) { "sk_test_123456" }
     allow(subject).to receive(:stripe_account_id) { stripe_account_id }
-    subject.stub(:options_for_purchase_or_auth).and_return(['money', 'cc', 'opts'])
-    subject.stub(:provider).and_return provider
+    allow(subject).to receive(:options_for_purchase_or_auth).and_return(['money', 'cc', 'opts'])
+    allow(subject).to receive(:provider).and_return provider
   end
 
   describe "#token_from_card_profile_ids" do

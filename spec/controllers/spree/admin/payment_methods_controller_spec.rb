@@ -67,7 +67,7 @@ describe Spree::Admin::PaymentMethodsController, type: :controller do
     end
 
     before do
-      controller.stub spree_current_user: user
+      allow(controller).to receive_messages spree_current_user: user
     end
 
     context "on an existing payment method" do

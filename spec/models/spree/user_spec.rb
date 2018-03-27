@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spree.user_class do
   describe "associations" do
-    it { should have_many(:owned_enterprises) }
+    it { is_expected.to have_many(:owned_enterprises) }
 
     describe "addresses" do
       let(:user) { create(:user, bill_address: create(:address)) }
@@ -66,7 +66,7 @@ describe Spree.user_class do
       e = create(:enterprise)
       c = create(:customer, user: u, enterprise: e)
 
-      u.customer_of(e).should == c
+      expect(u.customer_of(e)).to eq(c)
     end
   end
 

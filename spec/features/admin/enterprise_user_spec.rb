@@ -46,8 +46,8 @@ feature %q{
         visit spree.admin_products_path
 
         within '#listing_products' do
-          page.should have_content 'Green eggs'
-          page.should_not have_content 'Ham'
+          expect(page).to have_content 'Green eggs'
+          expect(page).not_to have_content 'Ham'
         end
       end
     end
@@ -75,28 +75,28 @@ feature %q{
     describe "dashboard" do
       it "shows me enterprise management controls" do
         within('#enterprises') do
-          page.should have_selector 'h3', text: 'My Enterprises'
-          page.should have_link 'CREATE NEW'
-          page.should have_link supplier_profile.name
-          page.should have_link 'MANAGE MY ENTERPRISES'
+          expect(page).to have_selector 'h3', text: 'My Enterprises'
+          expect(page).to have_link 'CREATE NEW'
+          expect(page).to have_link supplier_profile.name
+          expect(page).to have_link 'MANAGE MY ENTERPRISES'
         end
       end
 
       it "shows me product management controls, but not order_cycle controls" do
-        page.should have_selector '#products'
-        page.should_not have_selector '#order_cycles'
+        expect(page).to have_selector '#products'
+        expect(page).not_to have_selector '#order_cycles'
       end
 
       it "shows me enterprise product info but not payment methods, shipping methods or enterprise fees" do
         # Producer product info
-        page.should have_selector '.producers_tab span', text: 'Total Products'
-        page.should have_selector '.producers_tab span', text: 'Active Products'
-        page.should_not have_selector '.producers_tab span', text: 'Products in OCs'
+        expect(page).to have_selector '.producers_tab span', text: 'Total Products'
+        expect(page).to have_selector '.producers_tab span', text: 'Active Products'
+        expect(page).not_to have_selector '.producers_tab span', text: 'Products in OCs'
 
         # Payment methods, shipping methods, enterprise fees
-        page.should_not have_selector '.hubs_tab span', text: 'Payment Methods'
-        page.should_not have_selector '.hubs_tab span', text: 'Shipping Methods'
-        page.should_not have_selector '.hubs_tab span', text: 'Enterprise Fees'
+        expect(page).not_to have_selector '.hubs_tab span', text: 'Payment Methods'
+        expect(page).not_to have_selector '.hubs_tab span', text: 'Shipping Methods'
+        expect(page).not_to have_selector '.hubs_tab span', text: 'Enterprise Fees'
       end
     end
 
@@ -131,12 +131,12 @@ feature %q{
 
     scenario "should not be able to see system configuration" do
       visit spree.edit_admin_general_settings_path
-      page.should have_content 'Unauthorized'
+      expect(page).to have_content 'Unauthorized'
     end
 
     scenario "should not be able to see user management" do
       visit spree.admin_users_path
-      page.should have_content 'Unauthorized'
+      expect(page).to have_content 'Unauthorized'
     end
   end
 end

@@ -36,7 +36,7 @@ feature %q{
         click_link 'Products'
         click_link 'Inventory'
 
-        page.should have_select2 'hub_id', options: [hub.name] # Selects the hub automatically when only one is available
+        expect(page).to have_select2 'hub_id', options: [hub.name] # Selects the hub automatically when only one is available
       end
     end
 
@@ -69,20 +69,20 @@ feature %q{
 
         context "with no overrides" do
           it "displays the list of products with variants" do
-            page.should have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND', 'ON DEMAND?']
-            page.should have_table_row [producer.name, product.name, '', '', '']
-            page.should have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
-            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", placeholder: '12'
+            expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND', 'ON DEMAND?']
+            expect(page).to have_table_row [producer.name, product.name, '', '', '']
+            expect(page).to have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", placeholder: '12'
 
-            page.should have_table_row [producer_related.name, product_related.name, '', '', '']
-            page.should have_input "variant-overrides-#{variant_related.id}-price", placeholder: '2.34'
-            page.should have_input "variant-overrides-#{variant_related.id}-count_on_hand", placeholder: '23'
+            expect(page).to have_table_row [producer_related.name, product_related.name, '', '', '']
+            expect(page).to have_input "variant-overrides-#{variant_related.id}-price", placeholder: '2.34'
+            expect(page).to have_input "variant-overrides-#{variant_related.id}-count_on_hand", placeholder: '23'
 
             # filters the products to those the hub can override
-            page.should_not have_content producer_managed.name
-            page.should_not have_content product_managed.name
-            page.should_not have_content producer_unrelated.name
-            page.should_not have_content product_unrelated.name
+            expect(page).not_to have_content producer_managed.name
+            expect(page).not_to have_content product_managed.name
+            expect(page).not_to have_content producer_unrelated.name
+            expect(page).not_to have_content product_unrelated.name
 
             # Filters based on the producer select filter
             expect(page).to have_selector "#v_#{variant.id}"
@@ -142,20 +142,20 @@ feature %q{
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
             check "variant-overrides-#{variant.id}-on_demand"
-            page.should have_content "Changes to one override remain unsaved."
+            expect(page).to have_content "Changes to one override remain unsaved."
 
             expect do
               click_button 'Save Changes'
-              page.should have_content "Changes saved."
+              expect(page).to have_content "Changes saved."
             end.to change(VariantOverride, :count).by(1)
 
             vo = VariantOverride.last
-            vo.variant_id.should == variant.id
-            vo.hub_id.should == hub.id
-            vo.sku.should == "NEWSKU"
-            vo.price.should == 777.77
-            vo.count_on_hand.should == 123
-            vo.on_demand.should == true
+            expect(vo.variant_id).to eq(variant.id)
+            expect(vo.hub_id).to eq(hub.id)
+            expect(vo.sku).to eq("NEWSKU")
+            expect(vo.price).to eq(777.77)
+            expect(vo.count_on_hand).to eq(123)
+            expect(vo.on_demand).to eq(true)
           end
 
           describe "creating and then updating the new override" do
@@ -163,56 +163,56 @@ feature %q{
               # When I create a new override
               fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
-              page.should have_content "Changes to one override remain unsaved."
+              expect(page).to have_content "Changes to one override remain unsaved."
 
               expect do
                 click_button 'Save Changes'
-                page.should have_content "Changes saved."
+                expect(page).to have_content "Changes saved."
               end.to change(VariantOverride, :count).by(1)
 
               # And I update its settings without reloading the page
               fill_in "variant-overrides-#{variant.id}-price", with: '111.11'
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '111'
-              page.should have_content "Changes to one override remain unsaved."
+              expect(page).to have_content "Changes to one override remain unsaved."
 
               # Then I shouldn't see a new override
               expect do
                 click_button 'Save Changes'
-                page.should have_content "Changes saved."
+                expect(page).to have_content "Changes saved."
               end.to change(VariantOverride, :count).by(0)
 
               # And the override should be updated
               vo = VariantOverride.last
-              vo.variant_id.should == variant.id
-              vo.hub_id.should == hub.id
-              vo.price.should == 111.11
-              vo.count_on_hand.should == 111
+              expect(vo.variant_id).to eq(variant.id)
+              expect(vo.hub_id).to eq(hub.id)
+              expect(vo.price).to eq(111.11)
+              expect(vo.count_on_hand).to eq(111)
             end
           end
 
           it "displays an error when unauthorised to access the page" do
             fill_in "variant-overrides-#{variant.id}-price", with: '777.77'
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '123'
-            page.should have_content "Changes to one override remain unsaved."
+            expect(page).to have_content "Changes to one override remain unsaved."
 
             user.enterprises.clear
 
             expect do
               click_button 'Save Changes'
-              page.should have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
+              expect(page).to have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
             end.to change(VariantOverride, :count).by(0)
           end
 
           it "displays an error when unauthorised to update a particular override" do
             fill_in "variant-overrides-#{variant_related.id}-price", with: '777.77'
             fill_in "variant-overrides-#{variant_related.id}-count_on_hand", with: '123'
-            page.should have_content "Changes to one override remain unsaved."
+            expect(page).to have_content "Changes to one override remain unsaved."
 
             er2.destroy
 
             expect do
               click_button 'Save Changes'
-              page.should have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
+              expect(page).to have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
             end.to change(VariantOverride, :count).by(0)
           end
         end
@@ -234,25 +234,25 @@ feature %q{
           end
 
           it "product values are affected by overrides" do
-            page.should have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
-            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '11111', placeholder: '12'
+            expect(page).to have_input "variant-overrides-#{variant.id}-price", with: '77.77', placeholder: '1.23'
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: '11111', placeholder: '12'
           end
 
           it "updates existing overrides" do
             fill_in "variant-overrides-#{variant.id}-price", with: '22.22'
             fill_in "variant-overrides-#{variant.id}-count_on_hand", with: '8888'
-            page.should have_content "Changes to one override remain unsaved."
+            expect(page).to have_content "Changes to one override remain unsaved."
 
             expect do
               click_button 'Save Changes'
-              page.should have_content "Changes saved."
+              expect(page).to have_content "Changes saved."
             end.to change(VariantOverride, :count).by(0)
 
             vo.reload
-            vo.variant_id.should == variant.id
-            vo.hub_id.should == hub.id
-            vo.price.should == 22.22
-            vo.count_on_hand.should == 8888
+            expect(vo.variant_id).to eq(variant.id)
+            expect(vo.hub_id).to eq(hub.id)
+            expect(vo.price).to eq(22.22)
+            expect(vo.count_on_hand).to eq(8888)
           end
 
           # Any new fields added to the VO model need to be added to this test
@@ -281,39 +281,39 @@ feature %q{
               end
             end
             page.uncheck "variant-overrides-#{variant.id}-resettable"
-            page.should have_content "Changes to 2 overrides remain unsaved."
+            expect(page).to have_content "Changes to 2 overrides remain unsaved."
 
             expect do
               click_button 'Save Changes'
-              page.should have_content "Changes saved."
+              expect(page).to have_content "Changes saved."
             end.to change(VariantOverride, :count).by(-2)
 
-            VariantOverride.where(id: vo.id).should be_empty
-            VariantOverride.where(id: vo3.id).should be_empty
+            expect(VariantOverride.where(id: vo.id)).to be_empty
+            expect(VariantOverride.where(id: vo3.id)).to be_empty
           end
 
           it "resets stock to defaults" do
             first("div#bulk-actions-dropdown").click
             first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
-            page.should have_content 'Stocks reset to defaults.'
+            expect(page).to have_content 'Stocks reset to defaults.'
             vo.reload
-            page.should have_input "variant-overrides-#{variant.id}-count_on_hand", with: '1000', placeholder: '12'
-            vo.count_on_hand.should == 1000
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: '1000', placeholder: '12'
+            expect(vo.count_on_hand).to eq(1000)
           end
 
           it "doesn't reset stock levels if the behaviour is disabled" do
             first("div#bulk-actions-dropdown").click
             first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
             vo_no_reset.reload
-            page.should have_input "variant-overrides-#{variant2.id}-count_on_hand", with: '40', placeholder: '12'
-            vo_no_reset.count_on_hand.should == 40
+            expect(page).to have_input "variant-overrides-#{variant2.id}-count_on_hand", with: '40', placeholder: '12'
+            expect(vo_no_reset.count_on_hand).to eq(40)
           end
 
           it "prompts to save changes before reset if any are pending" do
             fill_in "variant-overrides-#{variant.id}-price", with: '200'
             first("div#bulk-actions-dropdown").click
             first("div#bulk-actions-dropdown div.menu div.menu_item", text: "Reset Stock Levels To Defaults").click
-            page.should have_content "Save changes first"
+            expect(page).to have_content "Save changes first"
           end
         end
       end

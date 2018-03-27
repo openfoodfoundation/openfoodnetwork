@@ -5,7 +5,7 @@ describe OrderCyclesHelper, type: :helper do
 
   describe "finding producer enterprise options" do
     before do
-      helper.stub(:permitted_producer_enterprises_for) { "enterprise list" }
+      allow(helper).to receive(:permitted_producer_enterprises_for) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
@@ -16,7 +16,7 @@ describe OrderCyclesHelper, type: :helper do
 
   describe "finding coodinator enterprise options" do
     before do
-      helper.stub(:permitted_coordinating_enterprises_for) { "enterprise list" }
+      allow(helper).to receive(:permitted_coordinating_enterprises_for) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
@@ -27,7 +27,7 @@ describe OrderCyclesHelper, type: :helper do
 
   describe "finding hub enterprise options" do
     before do
-      helper.stub(:permitted_hub_enterprises_for) { "enterprise list" }
+      allow(helper).to receive(:permitted_hub_enterprises_for) { "enterprise list" }
     end
 
     it "asks for a validation option list" do
@@ -71,9 +71,9 @@ describe OrderCyclesHelper, type: :helper do
       exchange = Exchange.find(oc1.exchanges.to_enterprises(d).outgoing.first.id)
       exchange.update_attribute :pickup_time, "turtles"
 
-      helper.stub(:current_order_cycle).and_return oc1
-      helper.stub(:current_distributor).and_return d
-      helper.pickup_time.should == "turtles"
+      allow(helper).to receive(:current_order_cycle).and_return oc1
+      allow(helper).to receive(:current_distributor).and_return d
+      expect(helper.pickup_time).to eq("turtles")
     end
 
     it "gives me the pickup time for any order cycle" do
@@ -84,9 +84,9 @@ describe OrderCyclesHelper, type: :helper do
       exchange = Exchange.find(oc2.exchanges.to_enterprises(d).outgoing.first.id)
       exchange.update_attribute :pickup_time, "turtles"
 
-      helper.stub(:current_order_cycle).and_return oc1
-      helper.stub(:current_distributor).and_return d
-      helper.pickup_time(oc2).should == "turtles"
+      allow(helper).to receive(:current_order_cycle).and_return oc1
+      allow(helper).to receive(:current_distributor).and_return d
+      expect(helper.pickup_time(oc2)).to eq("turtles")
     end
   end
 end

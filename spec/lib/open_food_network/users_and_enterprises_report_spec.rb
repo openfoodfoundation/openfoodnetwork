@@ -10,8 +10,8 @@ module OpenFoodNetwork
       let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new {} }
 
       before do
-        subject.stub(:owners_and_enterprises) { owners_and_enterprises }
-        subject.stub(:managers_and_enterprises) { managers_and_enterprises }
+        allow(subject).to receive(:owners_and_enterprises) { owners_and_enterprises }
+        allow(subject).to receive(:managers_and_enterprises) { managers_and_enterprises }
       end
 
       it "should concatenate owner and manager queries" do

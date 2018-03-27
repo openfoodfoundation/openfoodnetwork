@@ -6,7 +6,7 @@ describe RefreshProductsCacheJob do
   let(:order_cycle) { create(:simple_order_cycle) }
 
   it "renders products and writes them to cache" do
-    RefreshProductsCacheJob.any_instance.stub(:products_json) { 'products' }
+    allow_any_instance_of(RefreshProductsCacheJob).to receive(:products_json) { 'products' }
 
     run_job RefreshProductsCacheJob.new distributor.id, order_cycle.id
 

@@ -94,7 +94,7 @@ describe ProductDistribution do
     describe "creating an adjustment for a line item" do
       it "creates the adjustment via the enterprise fee" do
         pd = create(:product_distribution)
-        pd.stub(:adjustment_label_for) { 'label' }
+        allow(pd).to receive(:adjustment_label_for) { 'label' }
         line_item = create(:line_item)
 
         expect { pd.send(:create_adjustment_for, line_item) }.to change(Spree::Adjustment, :count).by(1)

@@ -12,12 +12,12 @@ module OpenFoodNetwork
       it "returns the overridden price when one is present" do
         vo
         scoper.scope v
-        v.price.should == 22.22
+        expect(v.price).to eq(22.22)
       end
 
       it "returns the variant's price otherwise" do
         scoper.scope v
-        v.price.should == 11.11
+        expect(v.price).to eq(11.11)
       end
     end
 
@@ -25,12 +25,12 @@ module OpenFoodNetwork
       it "returns the overridden price when one is present" do
         vo
         scoper.scope v
-        v.price_in('AUD').amount.should == 22.22
+        expect(v.price_in('AUD').amount).to eq(22.22)
       end
 
       it "returns the variant's price otherwise" do
         scoper.scope v
-        v.price_in('AUD').amount.should == 11.11
+        expect(v.price_in('AUD').amount).to eq(11.11)
       end
     end
 
@@ -38,12 +38,12 @@ module OpenFoodNetwork
       it "returns the overridden stock level when one is present" do
         vo
         scoper.scope v
-        v.count_on_hand.should == 2
+        expect(v.count_on_hand).to eq(2)
       end
 
       it "returns the variant's stock level otherwise" do
         scoper.scope v
-        v.count_on_hand.should == 1
+        expect(v.count_on_hand).to eq(1)
       end
 
       describe "overriding stock on an on_demand variant" do
@@ -52,18 +52,18 @@ module OpenFoodNetwork
         it "clears on_demand when the stock is overridden" do
           vo
           scoper.scope v
-          v.on_demand.should be false
+          expect(v.on_demand).to be false
         end
 
         it "does not clear on_demand when only the price is overridden" do
           vo_price_only
           scoper.scope v
-          v.on_demand.should be true
+          expect(v.on_demand).to be true
         end
 
         it "does not clear on_demand when there is no override" do
           scoper.scope v
-          v.on_demand.should be true
+          expect(v.on_demand).to be true
         end
       end
 

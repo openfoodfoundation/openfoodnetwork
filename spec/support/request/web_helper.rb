@@ -21,7 +21,7 @@ module WebHelper
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
 
     element = page.all(selector).first
-    element.value.should == opts[:with] if element && opts.key?(:with)
+    expect(element.value).to eq(opts[:with]) if element && opts.key?(:with)
 
     have_selector selector
   end
@@ -47,14 +47,14 @@ module WebHelper
   end
 
   def should_have_failed
-    page.status_code.should == 200
-    errors.count.should > 0
+    expect(page.status_code).to eq(200)
+    expect(errors.count).to be > 0
   end
 
   def successful?
-    page.status_code.should == 200
-    errors.count.should == 0
-    flash_message.should include 'successful'
+    expect(page.status_code).to eq(200)
+    expect(errors.count).to eq(0)
+    expect(flash_message).to include 'successful'
   end
 
   def updated_field(field, value)

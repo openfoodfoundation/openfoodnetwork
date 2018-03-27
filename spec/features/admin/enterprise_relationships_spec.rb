@@ -24,9 +24,9 @@ feature %q{
 
       # Then I should see the relationships
       within('table#enterprise-relationships') do
-        page.should have_relationship e1, e2, ['to add to order cycle']
-        page.should have_relationship e2, e3, ['to manage products']
-        page.should have_relationship e3, e4,
+        expect(page).to have_relationship e1, e2, ['to add to order cycle']
+        expect(page).to have_relationship e2, e3, ['to manage products']
+        expect(page).to have_relationship e3, e4,
           ['to add to order cycle', 'to manage products']
       end
     end
@@ -47,10 +47,10 @@ feature %q{
       select2_select 'Two', from: 'enterprise_relationship_child_id'
       click_button 'Create'
 
-      page.should have_relationship e1, e2, ['to add to order cycle', 'to add products to inventory', 'to edit profile']
+      expect(page).to have_relationship e1, e2, ['to add to order cycle', 'to add products to inventory', 'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
-      er.should be_present
-      er.permissions.map(&:name).should match_array ['add_to_order_cycle', 'edit_profile', 'create_variant_overrides']
+      expect(er).to be_present
+      expect(er.permissions.map(&:name)).to match_array ['add_to_order_cycle', 'edit_profile', 'create_variant_overrides']
     end
 
 
@@ -67,7 +67,7 @@ feature %q{
         click_button 'Create'
 
         # Then I should see an error message
-        page.should have_content "That relationship is already established."
+        expect(page).to have_content "That relationship is already established."
       end.to change(EnterpriseRelationship, :count).by(0)
     end
 
@@ -77,12 +77,12 @@ feature %q{
       er = create(:enterprise_relationship, parent: e1, child: e2, permissions_list: [:add_to_order_cycle])
 
       visit admin_enterprise_relationships_path
-      page.should have_relationship e1, e2, ['to add to order cycle']
+      expect(page).to have_relationship e1, e2, ['to add to order cycle']
 
       first("a.delete-enterprise-relationship").click
 
-      page.should_not have_relationship e1, e2
-      EnterpriseRelationship.where(id: er.id).should be_empty
+      expect(page).not_to have_relationship e1, e2
+      expect(EnterpriseRelationship.where(id: er.id)).to be_empty
     end
   end
 
@@ -102,16 +102,16 @@ feature %q{
     scenario "enterprise user can only see relationships involving their enterprises" do
       visit admin_enterprise_relationships_path
 
-      page.should     have_relationship d1, d2
-      page.should     have_relationship d2, d1
-      page.should_not have_relationship d2, d3
+      expect(page).to     have_relationship d1, d2
+      expect(page).to     have_relationship d2, d1
+      expect(page).not_to have_relationship d2, d3
     end
 
 
     scenario "enterprise user can only add their own enterprises as parent" do
       visit admin_enterprise_relationships_path
-      page.should have_select2 'enterprise_relationship_parent_id', options: ['', d1.name]
-      page.should have_select2 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
+      expect(page).to have_select2 'enterprise_relationship_parent_id', options: ['', d1.name]
+      expect(page).to have_select2 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
     end
   end
 

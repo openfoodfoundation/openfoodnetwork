@@ -10,7 +10,7 @@ describe ProductsCacheIntegrityCheckerJob do
 
     before do
       Rails.cache.write(cache_key, "[1, 2, 3]\n")
-      OpenFoodNetwork::ProductsRenderer.stub(:new) { double(:pr, products_json: "[1, 3]\n") }
+      allow(OpenFoodNetwork::ProductsRenderer).to receive(:new) { double(:pr, products_json: "[1, 3]\n") }
     end
 
     it "reports errors" do

@@ -9,7 +9,7 @@ describe Admin::CustomersController, type: :controller do
 
     context "html" do
       before do
-        controller.stub spree_current_user: enterprise.owner
+        allow(controller).to receive_messages spree_current_user: enterprise.owner
       end
 
       it "returns an empty @collection" do
@@ -23,7 +23,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "where I manage the enterprise" do
         before do
-          controller.stub spree_current_user: enterprise.owner
+          allow(controller).to receive_messages spree_current_user: enterprise.owner
         end
 
         context "and enterprise_id is given in params" do
@@ -50,7 +50,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "and I do not manage the enterprise" do
         before do
-          controller.stub spree_current_user: another_enterprise.owner
+          allow(controller).to receive_messages spree_current_user: another_enterprise.owner
         end
 
         it "returns an empty collection" do
@@ -72,7 +72,7 @@ describe Admin::CustomersController, type: :controller do
         render_views
 
         before do
-          controller.stub spree_current_user: enterprise.owner
+          allow(controller).to receive_messages spree_current_user: enterprise.owner
         end
 
         it "allows me to update the customer" do
@@ -85,7 +85,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "where I don't manage the customer's enterprise" do
         before do
-          controller.stub spree_current_user: another_enterprise.owner
+          allow(controller).to receive_messages spree_current_user: another_enterprise.owner
         end
 
         it "prevents me from updating the customer" do
@@ -109,7 +109,7 @@ describe Admin::CustomersController, type: :controller do
     context "json" do
       context "where I manage the customer's enterprise" do
         before do
-          controller.stub spree_current_user: enterprise.owner
+          allow(controller).to receive_messages spree_current_user: enterprise.owner
         end
 
         it "allows me to create the customer" do
@@ -119,7 +119,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "where I don't manage the customer's enterprise" do
         before do
-          controller.stub spree_current_user: another_enterprise.owner
+          allow(controller).to receive_messages spree_current_user: another_enterprise.owner
         end
 
         it "prevents me from creating the customer" do
@@ -129,7 +129,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "where I am the admin user" do
         before do
-          controller.stub spree_current_user: create(:admin_user)
+          allow(controller).to receive_messages spree_current_user: create(:admin_user)
         end
 
         it "allows admins to create the customer" do

@@ -18,13 +18,13 @@ describe VariantOverride do
     end
 
     it "finds variant overrides for a set of hubs" do
-      VariantOverride.for_hubs([hub1, hub2]).should match_array [vo1, vo2]
+      expect(VariantOverride.for_hubs([hub1, hub2])).to match_array [vo1, vo2]
     end
 
     describe "fetching variant overrides indexed by variant" do
       it "gets indexed variant overrides for one hub" do
-        VariantOverride.indexed(hub1).should == {v => vo1}
-        VariantOverride.indexed(hub2).should == {v => vo2}
+        expect(VariantOverride.indexed(hub1)).to eq({v => vo1})
+        expect(VariantOverride.indexed(hub2)).to eq({v => vo2})
       end
     end
   end
@@ -49,38 +49,38 @@ describe VariantOverride do
   describe "looking up prices" do
     it "returns the numeric price when present" do
       VariantOverride.create!(variant: variant, hub: hub, price: 12.34)
-      VariantOverride.price_for(hub, variant).should == 12.34
+      expect(VariantOverride.price_for(hub, variant)).to eq(12.34)
     end
 
     it "returns nil otherwise" do
-      VariantOverride.price_for(hub, variant).should be_nil
+      expect(VariantOverride.price_for(hub, variant)).to be_nil
     end
   end
 
   describe "looking up count on hand" do
     it "returns the numeric stock level when present" do
       VariantOverride.create!(variant: variant, hub: hub, count_on_hand: 12)
-      VariantOverride.count_on_hand_for(hub, variant).should == 12
+      expect(VariantOverride.count_on_hand_for(hub, variant)).to eq(12)
     end
 
     it "returns nil otherwise" do
-      VariantOverride.count_on_hand_for(hub, variant).should be_nil
+      expect(VariantOverride.count_on_hand_for(hub, variant)).to be_nil
     end
   end
 
   describe "checking if stock levels have been overriden" do
     it "returns true when stock level has been overridden" do
       create(:variant_override, variant: variant, hub: hub, count_on_hand: 12)
-      VariantOverride.stock_overridden?(hub, variant).should be true
+      expect(VariantOverride.stock_overridden?(hub, variant)).to be true
     end
 
     it "returns false when the override has no stock level" do
       create(:variant_override, variant: variant, hub: hub, count_on_hand: nil)
-      VariantOverride.stock_overridden?(hub, variant).should be false
+      expect(VariantOverride.stock_overridden?(hub, variant)).to be false
     end
 
     it "returns false when there is no override for the hub/variant" do
-      VariantOverride.stock_overridden?(hub, variant).should be false
+      expect(VariantOverride.stock_overridden?(hub, variant)).to be false
     end
   end
 
@@ -88,11 +88,11 @@ describe VariantOverride do
     it "decrements stock" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12)
       VariantOverride.decrement_stock! hub, variant, 2
-      vo.reload.count_on_hand.should == 10
+      expect(vo.reload.count_on_hand).to eq(10)
     end
 
     it "silently logs an error if the variant override does not exist" do
-      Bugsnag.should_receive(:notify)
+      expect(Bugsnag).to receive(:notify)
       VariantOverride.decrement_stock! hub, variant, 2
     end
   end
@@ -103,7 +103,7 @@ describe VariantOverride do
     context "when the vo overrides stock" do
       it "increments stock" do
         vo.increment_stock! 2
-        vo.reload.count_on_hand.should == 10
+        expect(vo.reload.count_on_hand).to eq(10)
       end
     end
 
@@ -111,7 +111,7 @@ describe VariantOverride do
       before { vo.update_attributes(count_on_hand: nil) }
 
       it "silently logs an error" do
-        Bugsnag.should_receive(:notify)
+        expect(Bugsnag).to receive(:notify)
         vo.increment_stock! 2
       end
     end
@@ -120,12 +120,12 @@ describe VariantOverride do
   describe "checking default stock value is present" do
     it "returns true when a default stock level has been set"  do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20)
-      vo.default_stock?.should be true
+      expect(vo.default_stock?).to be true
     end
 
     it "returns false when the override has no default stock level" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock:nil)
-      vo.default_stock?.should be false
+      expect(vo.default_stock?).to be false
     end
   end
 
@@ -133,18 +133,18 @@ describe VariantOverride do
     it "resets the on hand level to the value in the default_stock field" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 20, resettable: true)
       vo.reset_stock!
-      vo.reload.count_on_hand.should == 20
+      expect(vo.reload.count_on_hand).to eq(20)
     end
     it "silently logs an error if the variant override doesn't have a default stock level" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock:nil, resettable: true)
-      Bugsnag.should_receive(:notify)
+      expect(Bugsnag).to receive(:notify)
       vo.reset_stock!
-      vo.reload.count_on_hand.should == 12
+      expect(vo.reload.count_on_hand).to eq(12)
     end
     it "doesn't reset the level if the behaviour is disabled" do
       vo = create(:variant_override, variant: variant, hub: hub, count_on_hand: 12, default_stock: 10, resettable: false)
       vo.reset_stock!
-      vo.reload.count_on_hand.should == 12
+      expect(vo.reload.count_on_hand).to eq(12)
     end
   end
 

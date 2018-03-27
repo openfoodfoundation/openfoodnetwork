@@ -24,10 +24,10 @@ feature %q{
       check "payment_method_distributor_ids_#{@distributors[0].id}"
       click_button 'Create'
 
-      flash_message.should == 'Payment Method has been successfully created!'
+      expect(flash_message).to eq('Payment Method has been successfully created!')
 
       payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
-      payment_method.distributors.should == [@distributors[0]]
+      expect(payment_method.distributors).to eq([@distributors[0]])
     end
 
     context "using stripe connect" do
@@ -148,12 +148,12 @@ feature %q{
       find(:css, "tags-input .tags input").set "local\n"
       click_button 'Create'
 
-      flash_message.should == 'Payment Method has been successfully created!'
+      expect(flash_message).to eq('Payment Method has been successfully created!')
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
       payment_method = Spree::PaymentMethod.find_by_name('Cheque payment method')
-      payment_method.distributors.should == [distributor1]
-      payment_method.tag_list.should == ["local"]
+      expect(payment_method.distributors).to eq([distributor1])
+      expect(payment_method.tag_list).to eq(["local"])
     end
 
     it "shows me only payment methods I have access to" do
@@ -163,9 +163,9 @@ feature %q{
 
       visit spree.admin_payment_methods_path
 
-      page.should     have_content pm1.name
-      page.should     have_content pm2.name
-      page.should_not have_content pm3.name
+      expect(page).to     have_content pm1.name
+      expect(page).to     have_content pm2.name
+      expect(page).not_to have_content pm3.name
     end
 
     it "does not show duplicates of payment methods" do
@@ -173,7 +173,7 @@ feature %q{
       pm2
 
       visit spree.admin_payment_methods_path
-      page.should have_selector 'td', text: 'Two', count: 1
+      expect(page).to have_selector 'td', text: 'Two', count: 1
     end
 
 
@@ -187,8 +187,8 @@ feature %q{
         click_link "Payment Methods"
       end
 
-      page.should     have_content pm1.name
-      page.should     have_content pm2.name
+      expect(page).to     have_content pm1.name
+      expect(page).to     have_content pm2.name
 
       click_link 'Enterprises'
       within("#e_#{distributor2.id}") { click_link 'Manage' }
@@ -196,8 +196,8 @@ feature %q{
         click_link "Payment Methods"
       end
 
-      page.should_not have_content pm1.name
-      page.should     have_content pm2.name
+      expect(page).not_to have_content pm1.name
+      expect(page).to     have_content pm2.name
     end
   end
 end

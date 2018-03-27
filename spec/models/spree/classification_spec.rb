@@ -8,8 +8,8 @@ module Spree
 
     it "won't destroy if classification is the primary taxon" do
       product.primary_taxon = taxon
-      classification.destroy.should be false
-      classification.errors.messages[:base].should == ["Taxon #{taxon.name} is the primary taxon of #{product.name} and cannot be deleted"]
+      expect(classification.destroy).to be false
+      expect(classification.errors.messages[:base]).to eq(["Taxon #{taxon.name} is the primary taxon of #{product.name} and cannot be deleted"])
     end
 
     describe "callbacks" do

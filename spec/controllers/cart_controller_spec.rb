@@ -25,8 +25,8 @@ module OpenFoodNetwork
           get :show, {id: cart, :format => :json }
           json_response = JSON.parse(response.body)
 
-          json_response['id'].should == cart.id
-          json_response['orders'].size.should == 0
+          expect(json_response['id']).to eq(cart.id)
+          expect(json_response['orders'].size).to eq(0)
         end
 
         context 'with an empty order' do
@@ -41,9 +41,9 @@ module OpenFoodNetwork
             get :show, {id: cart, :format => :json }
             json_response = JSON.parse(response.body)
 
-            json_response['orders'].size.should == 1
-            json_response['orders'].first['distributor'].should == order.distributor.name
-            json_response['orders'].first['line_items'].size.should == 0
+            expect(json_response['orders'].size).to eq(1)
+            expect(json_response['orders'].first['distributor']).to eq(order.distributor.name)
+            expect(json_response['orders'].first['line_items'].size).to eq(0)
           end
         end
 
@@ -63,10 +63,10 @@ module OpenFoodNetwork
             get :show, {id: cart, :format => :json }
             json_response = JSON.parse(response.body)
 
-            json_response['orders'].size.should == 1
-            json_response['orders'].first['distributor'].should == order.distributor.name
-            json_response['orders'].first['line_items'].first["name"].should == product.name
-            json_response['orders'].first['line_items'].first["quantity"].should == line_item.quantity
+            expect(json_response['orders'].size).to eq(1)
+            expect(json_response['orders'].first['distributor']).to eq(order.distributor.name)
+            expect(json_response['orders'].first['line_items'].first["name"]).to eq(product.name)
+            expect(json_response['orders'].first['line_items'].first["quantity"]).to eq(line_item.quantity)
           end
         end
 
@@ -79,9 +79,9 @@ module OpenFoodNetwork
 
             put :add_variant, { cart_id: cart, variant_id: variant.id, quantity: (variant.on_hand-1), distributor_id: distributor, order_cycle_id: nil, max_quantity: nil }
 
-            cart.orders.size.should == 1
-            cart.orders.first.line_items.size.should == 1
-            cart.orders.first.line_items.first.product.should == product1
+            expect(cart.orders.size).to eq(1)
+            expect(cart.orders.first.line_items.size).to eq(1)
+            expect(cart.orders.first.line_items.first.product).to eq(product1)
           end
         end
       end

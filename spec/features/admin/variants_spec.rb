@@ -21,7 +21,7 @@ feature %q{
     click_button 'Create'
 
     # Then the variant should have been created
-    page.should have_content "Variant \"#{p.name}\" has been successfully created!"
+    expect(page).to have_content "Variant \"#{p.name}\" has been successfully created!"
   end
 
 
@@ -43,19 +43,19 @@ feature %q{
     expect(page).to_not have_selector "div[data-hook='presentation'] input"
 
     # And I should see unit value and description fields for the unit-related option value
-    page.should have_field "unit_value_human", with: "1"
-    page.should have_field "variant_unit_description", with: "foo"
+    expect(page).to have_field "unit_value_human", with: "1"
+    expect(page).to have_field "variant_unit_description", with: "foo"
 
     # When I update the fields and save the variant
     fill_in "unit_value_human", with: "123"
     fill_in "variant_unit_description", with: "bar"
     click_button 'Update'
-    page.should have_content %Q(Variant "#{p.name}" has been successfully updated!)
+    expect(page).to have_content %Q(Variant "#{p.name}" has been successfully updated!)
 
     # Then the unit value and description should have been saved
     v.reload
-    v.unit_value.should == 123
-    v.unit_description.should == 'bar'
+    expect(v.unit_value).to eq(123)
+    expect(v.unit_description).to eq('bar')
   end
 
   it "soft-deletes variants", js: true do
@@ -69,10 +69,10 @@ feature %q{
       page.find('a.delete-resource').click
     end
 
-    page.should_not have_selector "tr#spree_variant_#{v.id}"
+    expect(page).not_to have_selector "tr#spree_variant_#{v.id}"
 
 
     v.reload
-    v.deleted_at.should_not be_nil
+    expect(v.deleted_at).not_to be_nil
   end
 end

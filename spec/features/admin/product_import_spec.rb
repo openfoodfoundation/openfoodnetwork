@@ -50,9 +50,9 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.updated-count', text: '0'
 
       potatoes = Spree::Product.find_by_name('Potatoes')
-      potatoes.supplier.should == enterprise
-      potatoes.on_hand.should == 6
-      potatoes.price.should == 6.50
+      expect(potatoes.supplier).to eq(enterprise)
+      expect(potatoes.on_hand).to eq(6)
+      expect(potatoes.price).to eq(6.50)
     end
 
     it "displays info about invalid entries but still allows saving of valid entries" do
@@ -80,11 +80,11 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.created-count', text: '1'
       expect(page).to have_selector '.updated-count', text: '0'
 
-      Spree::Product.find_by_name('Bad Potatoes').should == nil
+      expect(Spree::Product.find_by_name('Bad Potatoes')).to eq(nil)
       carrots = Spree::Product.find_by_name('Good Carrots')
-      carrots.supplier.should == enterprise
-      carrots.on_hand.should == 5
-      carrots.price.should == 3.20
+      expect(carrots.supplier).to eq(enterprise)
+      expect(carrots.on_hand).to eq(5)
+      expect(carrots.price).to eq(3.20)
     end
 
     it "displays info about invalid entries but no save button if all items are invalid" do
@@ -132,14 +132,14 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.updated-count', text: '1'
 
       added_coffee = Spree::Variant.find_by_display_name('Emergent Coffee')
-      added_coffee.product.name.should == 'Hypothetical Cake'
-      added_coffee.price.should == 3.50
-      added_coffee.on_hand.should == 6
+      expect(added_coffee.product.name).to eq('Hypothetical Cake')
+      expect(added_coffee.price).to eq(3.50)
+      expect(added_coffee.on_hand).to eq(6)
 
       updated_banana = Spree::Variant.find_by_display_name('Preexisting Banana')
-      updated_banana.product.name.should == 'Hypothetical Cake'
-      updated_banana.price.should == 5.50
-      updated_banana.on_hand.should == 5
+      expect(updated_banana.product.name).to eq('Hypothetical Cake')
+      expect(updated_banana.price).to eq(5.50)
+      expect(updated_banana.on_hand).to eq(5)
     end
 
     it "can add a new product and sub-variants of that product at the same time" do
@@ -164,14 +164,14 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.updated-count', text: '0'
 
       small_bag = Spree::Variant.find_by_display_name('Small Bag')
-      small_bag.product.name.should == 'Potatoes'
-      small_bag.price.should == 3.50
-      small_bag.on_hand.should == 5
+      expect(small_bag.product.name).to eq('Potatoes')
+      expect(small_bag.price).to eq(3.50)
+      expect(small_bag.on_hand).to eq(5)
 
       big_bag = Spree::Variant.find_by_display_name('Big Bag')
-      big_bag.product.name.should == 'Potatoes'
-      big_bag.price.should == 5.50
-      big_bag.on_hand.should == 6
+      expect(big_bag.product.name).to eq('Potatoes')
+      expect(big_bag.price).to eq(5.50)
+      expect(big_bag.on_hand).to eq(6)
     end
   end
 
@@ -241,8 +241,8 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.created-count', text: '1'
       expect(page).to have_selector '.updated-count', text: '0'
 
-      Spree::Product.find_by_name('My Carrots').should be_a Spree::Product
-      Spree::Product.find_by_name('Your Potatoes').should == nil
+      expect(Spree::Product.find_by_name('My Carrots')).to be_a Spree::Product
+      expect(Spree::Product.find_by_name('Your Potatoes')).to eq(nil)
     end
   end
 
@@ -282,11 +282,11 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.updated-count', text: '1'
       expect(page).to have_selector '.reset-count', text: '2'
 
-      Spree::Product.find_by_name('Carrots').on_hand.should == 5    # Present in file, added
-      Spree::Product.find_by_name('Beans').on_hand.should == 6      # Present in file, updated
-      Spree::Product.find_by_name('Sprouts').on_hand.should == 0    # In enterprise, not in file
-      Spree::Product.find_by_name('Cabbage').on_hand.should == 0    # In enterprise, not in file
-      Spree::Product.find_by_name('Lettuce').on_hand.should == 100  # In different enterprise; unchanged
+      expect(Spree::Product.find_by_name('Carrots').on_hand).to eq(5)    # Present in file, added
+      expect(Spree::Product.find_by_name('Beans').on_hand).to eq(6)      # Present in file, updated
+      expect(Spree::Product.find_by_name('Sprouts').on_hand).to eq(0)    # In enterprise, not in file
+      expect(Spree::Product.find_by_name('Cabbage').on_hand).to eq(0)    # In enterprise, not in file
+      expect(Spree::Product.find_by_name('Lettuce').on_hand).to eq(100)  # In different enterprise; unchanged
     end
 
     it "overwrites fields with selected defaults" do
@@ -329,16 +329,16 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.updated-count', text: '0'
 
       carrots = Spree::Product.find_by_name('Carrots')
-      carrots.on_hand.should == 9000
-      carrots.tax_category_id.should == tax_category.id
-      carrots.shipping_category_id.should == shipping_category.id
-      carrots.available_on.should be_within(1.day).of(Time.zone.local(2020, 1, 1))
+      expect(carrots.on_hand).to eq(9000)
+      expect(carrots.tax_category_id).to eq(tax_category.id)
+      expect(carrots.shipping_category_id).to eq(shipping_category.id)
+      expect(carrots.available_on).to be_within(1.day).of(Time.zone.local(2020, 1, 1))
 
       potatoes = Spree::Product.find_by_name('Potatoes')
-      potatoes.on_hand.should == 9000
-      potatoes.tax_category_id.should == tax_category2.id
-      potatoes.shipping_category_id.should == shipping_category.id
-      potatoes.available_on.should be_within(1.day).of(Time.zone.local(2020, 1, 1))
+      expect(potatoes.on_hand).to eq(9000)
+      expect(potatoes.tax_category_id).to eq(tax_category2.id)
+      expect(potatoes.shipping_category_id).to eq(shipping_category.id)
+      expect(potatoes.available_on).to be_within(1.day).of(Time.zone.local(2020, 1, 1))
     end
   end
 end

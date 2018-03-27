@@ -11,16 +11,16 @@ describe UserRegistrationsController, type: :controller do
     render_views
     it "returns errors when registration fails" do
       xhr :post, :create, spree_user: {}, :use_route => :spree
-      response.status.should == 401
+      expect(response.status).to eq(401)
       json = JSON.parse(response.body)
-      json.should == {"email" => ["can't be blank"], "password" => ["can't be blank"]}
+      expect(json).to eq({"email" => ["can't be blank"], "password" => ["can't be blank"]})
     end
 
     it "returns 200 when registration succeeds" do
       xhr :post, :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
-      response.status.should == 200
+      expect(response.status).to eq(200)
       json = JSON.parse(response.body)
-      json.should == {"email" => "test@test.com"}
+      expect(json).to eq({"email" => "test@test.com"})
       expect(controller.spree_current_user).to be_nil
     end
   end
@@ -28,8 +28,8 @@ describe UserRegistrationsController, type: :controller do
   context "when registration fails" do
     it "renders new" do
       spree_post :create, spree_user: {}
-      response.status.should == 200
-      response.should render_template "spree/user_registrations/new"
+      expect(response.status).to eq(200)
+      expect(response).to render_template "spree/user_registrations/new"
     end
   end
 
@@ -37,8 +37,8 @@ describe UserRegistrationsController, type: :controller do
     context "when referer is not '/checkout'" do
       it "redirects to root" do
         spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
-        response.should redirect_to root_path
-        assigns[:user].email.should == "test@test.com"
+        expect(response).to redirect_to root_path
+        expect(assigns[:user].email).to eq("test@test.com")
       end
     end
 
@@ -47,8 +47,8 @@ describe UserRegistrationsController, type: :controller do
 
       it "redirects to checkout" do
         spree_post :create, spree_user: {email: "test@test.com", password: "testy123", password_confirmation: "testy123"}, :use_route => :spree
-        response.should redirect_to checkout_path
-        assigns[:user].email.should == "test@test.com"
+        expect(response).to redirect_to checkout_path
+        expect(assigns[:user].email).to eq("test@test.com")
       end
     end
   end

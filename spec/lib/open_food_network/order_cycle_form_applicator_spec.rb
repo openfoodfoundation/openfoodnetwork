@@ -17,10 +17,10 @@ module OpenFoodNetwork
 
         applicator = OrderCycleFormApplicator.new(oc, user)
 
-        applicator.should_receive(:incoming_exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
-        applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id, true).and_return(false)
-        applicator.should_receive(:add_exchange).with(supplier_id, coordinator_id, true, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :receival_instructions => 'receival instructions'})
-        applicator.should_receive(:destroy_untouched_exchanges)
+        expect(applicator).to receive(:incoming_exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
+        expect(applicator).to receive(:exchange_exists?).with(supplier_id, coordinator_id, true).and_return(false)
+        expect(applicator).to receive(:add_exchange).with(supplier_id, coordinator_id, true, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :receival_instructions => 'receival instructions'})
+        expect(applicator).to receive(:destroy_untouched_exchanges)
 
         applicator.go!
       end
@@ -35,10 +35,10 @@ module OpenFoodNetwork
 
         applicator = OrderCycleFormApplicator.new(oc, user)
 
-        applicator.should_receive(:outgoing_exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
-        applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id, false).and_return(false)
-        applicator.should_receive(:add_exchange).with(coordinator_id, distributor_id, false, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions', tag_list: 'wholesale'})
-        applicator.should_receive(:destroy_untouched_exchanges)
+        expect(applicator).to receive(:outgoing_exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
+        expect(applicator).to receive(:exchange_exists?).with(coordinator_id, distributor_id, false).and_return(false)
+        expect(applicator).to receive(:add_exchange).with(coordinator_id, distributor_id, false, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions', tag_list: 'wholesale'})
+        expect(applicator).to receive(:destroy_untouched_exchanges)
 
         applicator.go!
       end
@@ -57,10 +57,10 @@ module OpenFoodNetwork
 
         applicator = OrderCycleFormApplicator.new(oc, user)
 
-        applicator.should_receive(:incoming_exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
-        applicator.should_receive(:exchange_exists?).with(supplier_id, coordinator_id, true).and_return(true)
-        applicator.should_receive(:update_exchange).with(supplier_id, coordinator_id, true, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :receival_instructions => 'receival instructions'})
-        applicator.should_receive(:destroy_untouched_exchanges)
+        expect(applicator).to receive(:incoming_exchange_variant_ids).with(incoming_exchange).and_return([1, 3])
+        expect(applicator).to receive(:exchange_exists?).with(supplier_id, coordinator_id, true).and_return(true)
+        expect(applicator).to receive(:update_exchange).with(supplier_id, coordinator_id, true, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :receival_instructions => 'receival instructions'})
+        expect(applicator).to receive(:destroy_untouched_exchanges)
 
         applicator.go!
       end
@@ -79,10 +79,10 @@ module OpenFoodNetwork
 
         applicator = OrderCycleFormApplicator.new(oc, user)
 
-        applicator.should_receive(:outgoing_exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
-        applicator.should_receive(:exchange_exists?).with(coordinator_id, distributor_id, false).and_return(true)
-        applicator.should_receive(:update_exchange).with(coordinator_id, distributor_id, false, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions', tag_list: 'wholesale'})
-        applicator.should_receive(:destroy_untouched_exchanges)
+        expect(applicator).to receive(:outgoing_exchange_variant_ids).with(outgoing_exchange).and_return([1, 3])
+        expect(applicator).to receive(:exchange_exists?).with(coordinator_id, distributor_id, false).and_return(true)
+        expect(applicator).to receive(:update_exchange).with(coordinator_id, distributor_id, false, {:variant_ids => [1, 3], :enterprise_fee_ids => [1, 2], :pickup_time => 'pickup time', :pickup_instructions => 'pickup instructions', tag_list: 'wholesale'})
+        expect(applicator).to receive(:destroy_untouched_exchanges)
 
         applicator.go!
       end
@@ -101,10 +101,10 @@ module OpenFoodNetwork
 
           applicator = OrderCycleFormApplicator.new(oc, user)
 
-          applicator.should_receive(:destroy_untouched_exchanges)
+          expect(applicator).to receive(:destroy_untouched_exchanges)
 
           applicator.go!
-          applicator.send(:untouched_exchanges).should == [exchange]
+          expect(applicator.send(:untouched_exchanges)).to eq([exchange])
         end
 
         it "compares exchanges by id only" do
@@ -117,12 +117,12 @@ module OpenFoodNetwork
             @touched_exchanges = [e2]
           end
 
-          applicator.send(:untouched_exchanges).should == []
+          expect(applicator.send(:untouched_exchanges)).to eq([])
         end
 
         context "as a manager of the coordinator" do
           let(:applicator) { OrderCycleFormApplicator.new(nil, user) }
-          before { applicator.stub(:manages_coordinator?) { true } }
+          before { allow(applicator).to receive(:manages_coordinator?) { true } }
 
           it "destroys exchanges" do
             exchanges = [double(:exchange), double(:exchange)]
@@ -135,7 +135,7 @@ module OpenFoodNetwork
 
         context "as a non-manager of the coordinator" do
           let(:applicator) { OrderCycleFormApplicator.new(nil, user) }
-          before { applicator.stub(:manages_coordinator?) { false } }
+          before { allow(applicator).to receive(:manages_coordinator?) { false } }
 
           it "does not destroy any exchanges" do
             expect(applicator).to_not receive(:with_permission)
@@ -270,9 +270,9 @@ module OpenFoodNetwork
             ex = double(:exchange, participant: e)
 
             applicator = OrderCycleFormApplicator.new(nil, user)
-            applicator.stub(:permitted_enterprises) { [e] }
+            allow(applicator).to receive(:permitted_enterprises) { [e] }
 
-            applicator.send(:permission_for, ex).should be true
+            expect(applicator.send(:permission_for, ex)).to be true
           end
 
           it "returns false otherwise" do
@@ -280,9 +280,9 @@ module OpenFoodNetwork
             ex = double(:exchange, participant: e)
 
             applicator = OrderCycleFormApplicator.new(nil, user)
-            applicator.stub(:permitted_enterprises) { [] }
+            allow(applicator).to receive(:permitted_enterprises) { [] }
 
-            applicator.send(:permission_for, ex).should be false
+            expect(applicator.send(:permission_for, ex)).to be false
           end
         end
       end
@@ -298,12 +298,12 @@ module OpenFoodNetwork
         exchange = FactoryGirl.create(:exchange, order_cycle: oc)
         applicator = OrderCycleFormApplicator.new(oc, user)
 
-        applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, exchange.incoming).should be true
-        applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, !exchange.incoming).should be false
-        applicator.send(:exchange_exists?, exchange.receiver_id, exchange.sender_id, exchange.incoming).should be false
-        applicator.send(:exchange_exists?, exchange.sender_id, 999999, exchange.incoming).should be false
-        applicator.send(:exchange_exists?, 999999, exchange.receiver_id, exchange.incoming).should be false
-        applicator.send(:exchange_exists?, 999999, 888888, exchange.incoming).should be false
+        expect(applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, exchange.incoming)).to be true
+        expect(applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, !exchange.incoming)).to be false
+        expect(applicator.send(:exchange_exists?, exchange.receiver_id, exchange.sender_id, exchange.incoming)).to be false
+        expect(applicator.send(:exchange_exists?, exchange.sender_id, 999999, exchange.incoming)).to be false
+        expect(applicator.send(:exchange_exists?, 999999, exchange.receiver_id, exchange.incoming)).to be false
+        expect(applicator.send(:exchange_exists?, 999999, 888888, exchange.incoming)).to be false
       end
 
       describe "adding exchanges" do
@@ -332,7 +332,7 @@ module OpenFoodNetwork
             expect(exchange.variants).to match_array [variant1, variant2]
             expect(exchange.enterprise_fees).to match_array [enterprise_fee1, enterprise_fee2]
 
-            applicator.send(:touched_exchanges).should == [exchange]
+            expect(applicator.send(:touched_exchanges)).to eq([exchange])
           end
         end
 
@@ -449,7 +449,7 @@ module OpenFoodNetwork
         applicator.send(:touched_exchanges=, [])
         applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id]})
 
-        exchange.variants.should_not == [variant1]
+        expect(exchange.variants).not_to eq([variant1])
       end
     end
   end

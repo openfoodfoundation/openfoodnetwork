@@ -12,11 +12,11 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
 
     it "denies access" do
-      response.should redirect_to spree.unauthorized_url
+      expect(response).to redirect_to spree.unauthorized_url
     end
 
     it "does not update any product" do
-      p.reload.name.should_not == "Pine nuts"
+      expect(p.reload.name).not_to eq("Pine nuts")
     end
   end
 
@@ -40,7 +40,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         },
         button: 'create'
       }
-      response.should redirect_to "/admin/products/bulk_edit"
+      expect(response).to redirect_to "/admin/products/bulk_edit"
     end
 
     it "redirects to new when the user hits 'add_another'" do
@@ -60,7 +60,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         },
         button: 'add_another'
       }
-      response.should redirect_to "/admin/products/new"
+      expect(response).to redirect_to "/admin/products/new"
     end
   end
 

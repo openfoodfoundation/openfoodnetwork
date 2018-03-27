@@ -13,7 +13,7 @@ describe OpenFoodNetwork::Calculator::Weight do
     order = double(:order, :line_items => [line_item_1, line_item_2, line_item_3])
 
     subject.set_preference(:per_kg, 10)
-    subject.compute(order).should == (10*1 + 20*3) * 10
+    expect(subject.compute(order)).to eq((10*1 + 20*3) * 10)
   end
 
   it "computes shipping cost for a line item" do
@@ -22,6 +22,6 @@ describe OpenFoodNetwork::Calculator::Weight do
     line_item = double(:line_item, :variant => variant, :quantity => 2)
 
     subject.set_preference(:per_kg, 10)
-    subject.compute(line_item).should == 10*2 * 10
+    expect(subject.compute(line_item)).to eq(10*2 * 10)
   end
 end

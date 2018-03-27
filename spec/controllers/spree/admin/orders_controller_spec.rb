@@ -11,7 +11,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     it "updates distribution charges" do
       order.line_items << line_item
       order.save
-      Spree::Order.any_instance.should_receive(:update_distribution_charge!)
+      expect_any_instance_of(Spree::Order).to receive(:update_distribution_charge!)
       spree_put :update, {
         id: order,
         order: {
@@ -47,7 +47,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     end
 
     context "as a normal user" do
-      before { controller.stub spree_current_user: create_enterprise_user }
+      before { allow(controller).to receive_messages spree_current_user: create_enterprise_user }
 
       make_simple_data!
 
@@ -61,31 +61,31 @@ describe Spree::Admin::OrdersController, type: :controller do
       make_simple_data!
 
       before do
-        controller.stub spree_current_user: quick_login_as_admin
+        allow(controller).to receive_messages spree_current_user: quick_login_as_admin
         spree_get :index, :format => :json
       end
 
       it "retrieves a list of orders with appropriate attributes, including line items with appropriate attributes" do
         keys = json_response.first.keys.map{ |key| key.to_sym }
-        order_attributes.all?{ |attr| keys.include? attr }.should == true
+        expect(order_attributes.all?{ |attr| keys.include? attr }).to eq(true)
       end
 
       it "sorts orders in ascending id order" do
         ids = json_response.map{ |order| order['id'] }
-        ids[0].should < ids[1]
-        ids[1].should < ids[2]
+        expect(ids[0]).to be < ids[1]
+        expect(ids[1]).to be < ids[2]
       end
 
       it "formats completed_at to 'yyyy-mm-dd hh:mm'" do
-        json_response.map{ |order| order['completed_at'] }.all?{ |a| a.match("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$") }.should == true
+        expect(json_response.map{ |order| order['completed_at'] }.all?{ |a| a.match("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$") }).to eq(true)
       end
 
       it "returns distributor object with id key" do
-        json_response.map{ |order| order['distributor'] }.all?{ |d| d.has_key?('id') }.should == true
+        expect(json_response.map{ |order| order['distributor'] }.all?{ |d| d.has_key?('id') }).to eq(true)
       end
 
       it "retrieves the order number" do
-        json_response.map{ |order| order['number'] }.all?{ |number| number.match("^R\\d{5,10}$") }.should == true
+        expect(json_response.map{ |order| order['number'] }.all?{ |number| number.match("^R\\d{5,10}$") }).to eq(true)
       end
     end
 
@@ -104,7 +104,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       context "producer enterprise" do
 
         before do
-          controller.stub spree_current_user: supplier.owner
+          allow(controller).to receive_messages spree_current_user: supplier.owner
           spree_get :index, :format => :json
         end
 
@@ -115,25 +115,25 @@ describe Spree::Admin::OrdersController, type: :controller do
 
       context "coordinator enterprise" do
         before do
-          controller.stub spree_current_user: coordinator.owner
+          allow(controller).to receive_messages spree_current_user: coordinator.owner
           spree_get :index, :format => :json
         end
 
         it "retrieves a list of orders" do
           keys = json_response.first.keys.map{ |key| key.to_sym }
-          order_attributes.all?{ |attr| keys.include? attr }.should == true
+          expect(order_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
       end
 
       context "hub enterprise" do
         before do
-          controller.stub spree_current_user: distributor1.owner
+          allow(controller).to receive_messages spree_current_user: distributor1.owner
           spree_get :index, :format => :json
         end
 
         it "retrieves a list of orders" do
           keys = json_response.first.keys.map{ |key| key.to_sym }
-          order_attributes.all?{ |attr| keys.include? attr }.should == true
+          expect(order_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
       end
     end
@@ -147,7 +147,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     let(:params) { { id: order.number } }
 
     context "as a normal user" do
-      before { controller.stub spree_current_user: user }
+      before { allow(controller).to receive_messages spree_current_user: user }
 
       it "should prevent me from sending order invoices" do
         spree_get :invoice, params
@@ -157,7 +157,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context "as an enterprise user" do
       context "which is not a manager of the distributor for an order" do
-        before { controller.stub spree_current_user: user }
+        before { allow(controller).to receive_messages spree_current_user: user }
         it "should prevent me from sending order invoices" do
           spree_get :invoice, params
           expect(response).to redirect_to spree.unauthorized_path
@@ -165,7 +165,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context "which is a manager of the distributor for an order" do
-        before { controller.stub spree_current_user: distributor.owner }
+        before { allow(controller).to receive_messages spree_current_user: distributor.owner }
         context "when the distributor's ABN has not been set" do
           before { distributor.update_attribute(:abn, "") }
           it "should allow me to send order invoices" do
@@ -204,7 +204,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     let(:params) { { id: order.number } }
 
     context "as a normal user" do
-      before { controller.stub spree_current_user: user }
+      before { allow(controller).to receive_messages spree_current_user: user }
 
       it "should prevent me from sending order invoices" do
         spree_get :print, params
@@ -214,7 +214,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context "as an enterprise user" do
       context "which is not a manager of the distributor for an order" do
-        before { controller.stub spree_current_user: user }
+        before { allow(controller).to receive_messages spree_current_user: user }
         it "should prevent me from sending order invoices" do
           spree_get :print, params
           expect(response).to redirect_to spree.unauthorized_path
@@ -222,7 +222,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context "which is a manager of the distributor for an order" do
-        before { controller.stub spree_current_user: distributor.owner }
+        before { allow(controller).to receive_messages spree_current_user: distributor.owner }
         it "should allow me to send order invoices" do
           spree_get :print, params
           expect(response).to render_template :invoice

@@ -6,14 +6,14 @@ describe Api::CurrentOrderSerializer do
   let(:serializer) { Api::CurrentOrderSerializer.new(order, current_distributor: distributor, current_order_cycle: oc ).to_json }
 
   it "serializers the current order" do
-    serializer.should match order.id.to_s
+    expect(serializer).to match order.id.to_s
   end
 
   it "includes line items" do
-    serializer.should match li.id.to_s
+    expect(serializer).to match li.id.to_s
   end
 
   it "includes variants of line items" do
-    serializer.should match li.variant.name
+    expect(serializer).to match li.variant.name
   end
 end

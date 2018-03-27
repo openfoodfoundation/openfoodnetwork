@@ -12,33 +12,33 @@ module OpenFoodNetwork
 
       describe "mailing list report" do
         before do
-          subject.stub(:params).and_return(report_type: "mailing_list")
+          allow(subject).to receive(:params).and_return(report_type: "mailing_list")
         end
 
         it "returns headers for mailing_list" do
-          subject.header.should == ["Email", "First Name", "Last Name", "Suburb"]
+          expect(subject.header).to eq(["Email", "First Name", "Last Name", "Suburb"])
         end
 
         it "builds a table from a list of variants" do
           order = double(:order, email: "test@test.com")
           address = double(:billing_address, firstname: "Firsty",
                            lastname: "Lasty", city: "Suburbia")
-          order.stub(:billing_address).and_return address
-          subject.stub(:orders).and_return [order]
+          allow(order).to receive(:billing_address).and_return address
+          allow(subject).to receive(:orders).and_return [order]
 
-          subject.table.should == [[
+          expect(subject.table).to eq([[
             "test@test.com", "Firsty", "Lasty", "Suburbia"
-          ]]
+          ]])
         end
       end
 
       describe "addresses report" do
         before do
-          subject.stub(:params).and_return(report_type: "addresses")
+          allow(subject).to receive(:params).and_return(report_type: "addresses")
         end
 
         it "returns headers for addresses" do
-          subject.header.should == ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address", "Shipping Method"]
+          expect(subject.header).to eq(["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address", "Shipping Method"])
         end
 
         it "builds a table from a list of variants" do
@@ -47,14 +47,14 @@ module OpenFoodNetwork
           o = create(:order, distributor: d, bill_address: a)
           o.shipping_method = create(:shipping_method)
 
-          subject.stub(:orders).and_return [o]
-          subject.table.should == [[
+          allow(subject).to receive(:orders).and_return [o]
+          expect(subject.table).to eq([[
             a.firstname, a.lastname,
             [a.address1, a.address2, a.city].join(" "),
             o.email, a.phone, d.name,
             [d.address.address1, d.address.address2, d.address.city].join(" "),
             o.shipping_method.name
-          ]]
+          ]])
         end
       end
 
@@ -62,13 +62,13 @@ module OpenFoodNetwork
         it "fetches completed orders" do
           o1 = create(:order)
           o2 = create(:order, completed_at: 1.day.ago)
-          subject.orders.should == [o2]
+          expect(subject.orders).to eq([o2])
         end
 
         it "does not show cancelled orders" do
           o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
           o2 = create(:order, completed_at: 1.day.ago)
-          subject.orders.should == [o2]
+          expect(subject.orders).to eq([o2])
         end
       end
     end
@@ -97,8 +97,8 @@ module OpenFoodNetwork
           o1 = create(:order, distributor: d1, completed_at: 1.day.ago)
           o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
 
-          subject.should_receive(:filter).with([o1]).and_return([o1])
-          subject.orders.should == [o1]
+          expect(subject).to receive(:filter).with([o1]).and_return([o1])
+          expect(subject.orders).to eq([o1])
         end
 
         it "does not show orders through a hub that the current user does not manage" do
@@ -107,8 +107,8 @@ module OpenFoodNetwork
           order.line_items << create(:line_item, product: product)
 
           # When I fetch orders, I should see no orders
-          subject.should_receive(:filter).with([]).and_return([])
-          subject.orders.should == []
+          expect(subject).to receive(:filter).with([]).and_return([])
+          expect(subject.orders).to eq([])
         end
       end
 
@@ -117,7 +117,7 @@ module OpenFoodNetwork
         let(:supplier) { create(:supplier_enterprise) }
 
         it "returns all orders sans-params" do
-          subject.filter(orders).should == orders
+          expect(subject.filter(orders)).to eq(orders)
         end
 
         it "returns orders with a specific supplier" do
@@ -130,8 +130,8 @@ module OpenFoodNetwork
           order1.line_items << create(:line_item, product: product1)
           order2.line_items << create(:line_item, product: product2)
 
-          subject.stub(:params).and_return(supplier_id: supplier.id)
-          subject.filter(orders).should == [order1]
+          allow(subject).to receive(:params).and_return(supplier_id: supplier.id)
+          expect(subject.filter(orders)).to eq([order1])
         end
 
         it "filters to a specific distributor" do
@@ -140,8 +140,8 @@ module OpenFoodNetwork
           order1 = create(:order, distributor: d1)
           order2 = create(:order, distributor: d2)
 
-          subject.stub(:params).and_return(distributor_id: d1.id)
-          subject.filter(orders).should == [order1]
+          allow(subject).to receive(:params).and_return(distributor_id: d1.id)
+          expect(subject.filter(orders)).to eq([order1])
         end
 
         it "filters to a specific cycle" do
@@ -150,8 +150,8 @@ module OpenFoodNetwork
           order1 = create(:order, order_cycle: oc1)
           order2 = create(:order, order_cycle: oc2)
 
-          subject.stub(:params).and_return(order_cycle_id: oc1.id)
-          subject.filter(orders).should == [order1]
+          allow(subject).to receive(:params).and_return(order_cycle_id: oc1.id)
+          expect(subject.filter(orders)).to eq([order1])
         end
       end
     end

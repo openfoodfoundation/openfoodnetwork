@@ -36,10 +36,10 @@ describe Spree::CreditCardsController, type: :controller do
         expect{ post :new_from_token, params }.to change(Spree::CreditCard, :count).by(1)
 
         card = Spree::CreditCard.last
-        card.gateway_payment_profile_id.should eq "card_1AEEb"
-        card.gateway_customer_profile_id.should eq "cus_AZNMJ"
-        card.user_id.should eq user.id
-        card.last_digits.should eq "4242"
+        expect(card.gateway_payment_profile_id).to eq "card_1AEEb"
+        expect(card.gateway_customer_profile_id).to eq "cus_AZNMJ"
+        expect(card.user_id).to eq user.id
+        expect(card.last_digits).to eq "4242"
       end
 
       context "when saving the card locally fails" do

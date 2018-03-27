@@ -14,26 +14,26 @@ feature 'External services' do
       end
 
       it "is not included in dev" do
-        Rails.env.stub(:development?) { true }
+        allow(Rails.env).to receive(:development?) { true }
         visit root_path
         expect(script_content(with: 'bugherd')).to be_nil
       end
 
       it "is included in staging" do
-        Rails.env.stub(:staging?) { true }
+        allow(Rails.env).to receive(:staging?) { true }
         visit root_path
         expect(script_content(with: 'bugherd')).not_to be_nil
       end
 
       it "is included in production" do
-        Rails.env.stub(:production?) { true }
+        allow(Rails.env).to receive(:production?) { true }
         visit root_path
         expect(script_content(with: 'bugherd')).not_to be_nil
       end
     end
 
     context "in an environment where BugHerd is displayed" do
-      before { Rails.env.stub(:staging?) { true } }
+      before { allow(Rails.env).to receive(:staging?) { true } }
 
       context "when there is no API key set" do
         before { Spree::Config.bugherd_api_key = nil }

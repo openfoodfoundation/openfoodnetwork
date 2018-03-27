@@ -17,18 +17,18 @@ describe EnterprisesController, type: :controller do
     it "sets the shop as the distributor on the order when shopping for the distributor" do
       spree_get :shop, {id: distributor}
 
-      controller.current_order.distributor.should == distributor
-      controller.current_order.order_cycle.should be_nil
+      expect(controller.current_order.distributor).to eq(distributor)
+      expect(controller.current_order.order_cycle).to be_nil
     end
 
     it "sorts order cycles by the distributor's preferred ordering attr" do
       distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_close_at')
       spree_get :shop, {id: distributor}
-      assigns(:order_cycles).should == [order_cycle1, order_cycle2].sort_by(&:orders_close_at)
+      expect(assigns(:order_cycles)).to eq([order_cycle1, order_cycle2].sort_by(&:orders_close_at))
 
       distributor.update_attribute(:preferred_shopfront_order_cycle_order, 'orders_open_at')
       spree_get :shop, {id: distributor}
-      assigns(:order_cycles).should == [order_cycle1, order_cycle2].sort_by(&:orders_open_at)
+      expect(assigns(:order_cycles)).to eq([order_cycle1, order_cycle2].sort_by(&:orders_open_at))
     end
 
     context "using FilterOrderCycles tag rules" do
@@ -76,9 +76,9 @@ describe EnterprisesController, type: :controller do
 
       spree_get :shop, {id: distributor}
 
-      controller.current_order.distributor.should == distributor
-      controller.current_order.order_cycle.should be_nil
-      controller.current_order.line_items.size.should == 0
+      expect(controller.current_order.distributor).to eq(distributor)
+      expect(controller.current_order.order_cycle).to be_nil
+      expect(controller.current_order.line_items.size).to eq(0)
     end
 
     it "should not empty an order if returning to the same distributor" do
@@ -89,9 +89,9 @@ describe EnterprisesController, type: :controller do
 
       spree_get :shop, {id: current_distributor}
 
-      controller.current_order.distributor.should == current_distributor
-      controller.current_order.order_cycle.should be_nil
-      controller.current_order.line_items.size.should == 1
+      expect(controller.current_order.distributor).to eq(current_distributor)
+      expect(controller.current_order.order_cycle).to be_nil
+      expect(controller.current_order.line_items.size).to eq(1)
     end
 
     describe "when an out of stock item is in the cart" do
@@ -110,7 +110,7 @@ describe EnterprisesController, type: :controller do
       it "redirects to the cart" do
         spree_get :shop, {id: current_distributor}
 
-        response.should redirect_to spree.cart_path
+        expect(response).to redirect_to spree.cart_path
       end
     end
 
@@ -119,8 +119,8 @@ describe EnterprisesController, type: :controller do
 
       spree_get :shop, {id: distributor}
 
-      controller.current_order.distributor.should == distributor
-      controller.current_order.order_cycle.should == order_cycle1
+      expect(controller.current_order.distributor).to eq(distributor)
+      expect(controller.current_order.order_cycle).to eq(order_cycle1)
     end
   end
 
