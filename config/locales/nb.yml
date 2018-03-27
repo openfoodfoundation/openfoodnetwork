@@ -43,20 +43,16 @@ nb:
       send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
       failed_to_send: "Det oppsto en feil under sending av bekreftelses-eposten din."
       resend_confirmation_email: "Send bekreftelses-epost på nytt."
+      confirmed: "Takk for at du bekreftet din epost! Du kan nå logge inn."
+      not_confirmed: "Din epostadresse kunne ikke bekreftes. Kanskje har du allerede fullført dette trinnet?"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "En melding med en bekreftelseslink er sendt til epostadressen din. Vennligst åpne lenken for å aktivere kontoen din."
     failure:
       invalid: |
-        Ugyldig epost eller passord.
-        Var du gjest forrige gang? Kanskje du må opprette en konto eller nullstille passordet.
+          Ugyldig epost eller passord.
+          Var du gjest forrige gang? Kanskje du må opprette en konto eller nullstille passordet.
       unconfirmed: "Du må bekrefte kontoen din før du fortsetter."
-    enterprise_confirmations:
-      enterprise:
-        confirmed: Takk, epostadressen din er bekreftet.
-        not_confirmed: Din epostadresse kan ikke bekreftes. Kanskje du allerede har fullført dette steget?
-        confirmation_sent: "Bekreftelsesepost er sendt!"
-        confirmation_not_sent: "Kunne ikke sende bekreftelsesepost."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
@@ -820,6 +816,12 @@ nb:
         allowed_payment_method_types_tip: Bare Kontant og Stripe betalingsmetoder kan brukes for øyeblikket
         credit_card: Kredittkort
         no_cards_available: Ingen kort tilgjengelig
+      loading_flash:
+        loading: LASTER ABONNEMENT
+      review:
+        details: Detaljer
+        address: Adresse
+        products: Produkter
       product_already_in_order: Dette produktet er allerede lagt til i bestillingen. Vennligst rediger mengden direkte.
       orders:
         number: Antall
@@ -831,6 +833,7 @@ nb:
       confirm_unpause_msg: Er du sikker på at du vil fortsette dette abonnementet?
       unpause_failure_msg: 'Beklager, fortsettelse mislyktes!'
       confirm_cancel_open_orders_msg: "Noen bestillinger for dette abonnementet er for øyeblikket åpne. Kunden har allerede blitt varslet om at bestillingen vil bli lagt inn. Vil du avbryte disse bestillingene eller beholde dem?"
+      resume_canceled_orders_msg: "Noen bestillinger for dette abonnementet kan gjenopptas akkurat nå. Du kan gjenoppta dem fra nedtrekksmenyen for bestillinger."
       yes_cancel_them: Avbryt dem
       no_keep_them: Behold dem
       yes_i_am_sure: Ja jeg er sikker
@@ -1353,8 +1356,8 @@ nb:
   orders_could_not_cancel: "Beklager, bestillingen kunne ikke avbrytes"
   orders_cannot_remove_the_final_item: "Kan ikke fjerne den siste varen fra en bestilling, vennligst avbryt bestillingen i stedet."
   orders_bought_items_notice:
-    one: Et ekstra element er allerede bekreftet for denne bestillingsperioden
-    other: Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden
+    one: "Et ekstra element er allerede bekreftet for denne bestillingsperioden"
+    other: "Ytterligere%{count} varer er allerede bekreftet for denne bestillingsrunden"
   orders_bought_edit_button: Rediger bekreftede varer
   orders_bought_already_confirmed: "* allerede bekreftet"
   orders_confirm_cancel: Er du sikker på at du vil avbryte denne bestillingen?
@@ -2017,6 +2020,7 @@ nb:
     resolve_errors: Vennligst løse følgende feil
     more_items: "+ %{count} Flere"
     admin:
+      enterprise_limit_reached: "Du har nådd standardgrensen for bedrifter per konto. Skriv til %{contact_email} hvis du trenger å øke den."
       modals:
         got_it: Jeg forstår
         tag_rule_help:
@@ -2171,7 +2175,7 @@ nb:
       could_not_delete_customer: 'Kunne ikke slette kunde'
     product_import:
       confirmation: |
-        Dette vil sette varebeholdning til null på alle produkter for denne virksomheten som ikke er til stede i den nedlastede filen.
+          Dette vil sette varebeholdning til null på alle produkter for denne virksomheten som ikke er til stede i den nedlastede filen.
     order_cycles:
       update_success: 'Din bestillingsrunde har blitt oppdatert.'
       no_distributors: Det er ingen distributører i denne bestillingsrunden. Denne bestillingsrunden vil ikke være synlig for kundene før du legger til en. Vil du fortsette å lagre denne bestillingsrunden? '
@@ -2181,6 +2185,10 @@ nb:
     customers:
       select_shop: 'Vennligst velg en butikk først'
       could_not_create: Beklager! Kunne ikke opprette
+    subscriptions:
+      closes: stenger
+      closed: stengt
+      close_date_not_set: Stengedato ikke angitt
   producers:
     signup:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"
@@ -2331,13 +2339,13 @@ nb:
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-          En forespørsel om å nullstille ditt passord er utført.
-          Hvis det ikke var du som forespurte dette kan du se bort i fra denne eposten.
+            En forespørsel om å nullstille ditt passord er utført.
+            Hvis det ikke var du som forespurte dette kan du se bort i fra denne eposten.
         link_text: >
             Hvis det var du som forespurte dette kan du klikke nedenfor:
         issue_text: |
-          Hvis URL'en ovenfor ikke fungerer prøv å kopier og lim den inn i din nettleser.
-          Hvis du fortsatt har problemer vennligst ta kontakt.
+            Hvis URL'en ovenfor ikke fungerer prøv å kopier og lim den inn i din nettleser.
+            Hvis du fortsatt har problemer vennligst ta kontakt.
       confirmation_instructions:
         subject: Vennligst bekreft OFN-kontoen din
     weight: Vekt (per kg)

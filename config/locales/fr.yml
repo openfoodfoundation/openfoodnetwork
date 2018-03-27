@@ -8,6 +8,8 @@ fr:
         completed_at: 'Passée à '
         number: N° commande
         email: Email acheteur
+      spree/payment:
+        amount: Montant
     errors:
       models:
         spree/user:
@@ -43,25 +45,23 @@ fr:
       send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
       failed_to_send: "Une erreur est survenue lors de l'envoi de l'email de confirmation."
       resend_confirmation_email: "Renvoyer l'email de confirmation."
+      confirmed: "Merci d'avoir confirmé votre adresse email. Vous pouvez maintenant vous connecter."
+      not_confirmed: "Votre adresse email n'a pas pu être confirmée. Peut-être avez-vous déjà confirmé cette adresse email?"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
     failure:
       invalid: |
-        Email / mot de passe incorrect.
-        Créez votre compte ou réinitialisez votre mot de passe.
+          Email / mot de passe incorrect.
+          Créez votre compte ou réinitialisez votre mot de passe.
       unconfirmed: "Veuillez valider le lien envoyé par email pour pouvoir continuer."
-    enterprise_confirmations:
-      enterprise:
-        confirmed: Merci, votre adresse email a bien été confirmée!
-        not_confirmed: Votre adresse email n'a pas pu être confirmée. Peut-être l'aviez-vous déjà confirmée?
-        confirmation_sent: "Un mail de confirmation a été envoyé!"
-        confirmation_not_sent: "Impossible d'envoyer le mail de confirmation."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
     welcome:
       subject: "%{enterprise} est maintenant sur %{sitename}"
+    invite_manager:
+      subject: "%{enterprise} vous a invité comme manager"
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
@@ -204,6 +204,7 @@ fr:
     phone: N° tel
     price: Prix
     producer: Producteur
+    image: Image
     product: Produit
     quantity: Quantité
     schedule: Rythme d'abonnement
@@ -357,6 +358,15 @@ fr:
         manages: gère
     products:
       unit_name_placeholder: 'ex: botte'
+      bulk_edit:
+        unit: Unité
+        display_as: Unité affichéé
+        category: Catégorie
+        tax_category: TVA applicable
+        inherits_properties?: Hériter des propriétés?
+        available_on: Disponible via
+        av_on: "Disp. via"
+        upload_an_image: Importer une image
       properties:
         property_name: Nom du label
         inherited_property: Label producteur appliqué par défaut
@@ -416,6 +426,7 @@ fr:
         max_fulfilled_units: "Nombre max d'unités commandées"
         order_error: "Des erreurs doivent être résolues avant de pouvoir mettre à jour les commandes.\nLes champs entourés en rouge contiennent des erreurs."
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
+      select_variant: "Choisir une variante"
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -576,6 +587,9 @@ fr:
           notifications_note: 'A noter: si vous saisissez une nouvelle adresse, un email de confirmation sera envoyé à cette adresse avec un lien de validation à cliquer.'
           managers: Managers
           managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur Open Food France pour être sélectionnés.
+          invite_manager: "Inviter un manager"
+          invite_manager_tip: "Inviter un nouvel utilisateur à créer son compte et le nommer comme manager de cette entreprise."
+          add_unregistered_user: "Ajouter un nouvel utilisateur"
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
       actions:
@@ -635,6 +649,9 @@ fr:
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
         choose_starting_point: 'Choisissez par où commencer:'
+      invite_manager:
+        user_already_exists: "Le compte existe déjà"
+        error: "Un problème est survenu"
     order_cycles:
       edit:
         advanced_settings: Paramétrages avancés
@@ -821,6 +838,12 @@ fr:
         allowed_payment_method_types_tip: Seules des méthodes de paiement de type "cash" ou "Stripe" peuvent être utilisées pour le moment
         credit_card: Carte de crédit
         no_cards_available: Pas de carte disponible
+      loading_flash:
+        loading: Abonnements en cours de chargement
+      review:
+        details: Informations
+        address: Adresse
+        products: Produits
       product_already_in_order: Ce produit a déjà été ajouté à la commande. Veuillez directement modifier la quantité.
       orders:
         number: Nombre
@@ -832,6 +855,7 @@ fr:
       confirm_unpause_msg: Voulez-vous vraiment annuler la mise en pause de cet abonnement?
       unpause_failure_msg: 'Désolé, l''annulation de la mise en pause a échoué!'
       confirm_cancel_open_orders_msg: "Cet abonnement a des commandes ouvertes. Les acheteurs ont été notifiés que leur commande allait être passée. Voulez-vous annulez ces commandes ou les conserver?"
+      resume_canceled_orders_msg: "Certaines commandes pour cet abonnement peuvent être réouvertes dès maintenant. Vous pouvez les réouvrir depuis la liste des commandes."
       yes_cancel_them: Les annuler
       no_keep_them: Les conserver
       yes_i_am_sure: Oui, je confirme
@@ -1084,7 +1108,7 @@ fr:
   order_delivery_address: Adresse de livraison
   order_delivery_time: Créneau de livraison/retrait
   order_special_instructions: "Vos commentaires:"
-  order_pickup_time: Prêt à être retirer
+  order_pickup_time: Prêt à être retiré
   order_pickup_instructions: Instructions de retrait
   order_produce: Produit
   order_total_price: Total
@@ -1166,6 +1190,12 @@ fr:
   email_signup_shop_html: "Vous pouvez maintenant vous connecter sur %{link}."
   email_signup_text: "Merci d'avoir rejoint le réseau. Si vous êtes un client, nous sommes impatients de vous faire découvrir de nombreux agriculteurs fantastiques, de merveilleux hubs de distribution et des plats délicieux! Si vous êtes un producteur ou autre entreprise alimentaire, nous sommes ravis de vous compter parmi les membres du réseau."
   email_signup_help_html: "Vos questions et feedbacks sont les bienvenus! Cliquez sur le bouton <em>Envoyer un commentaire</em> sur le site ou envoyez-nous un email à %{email}"
+  invite_email:
+    greeting: "Bonjour!"
+    invited_to_manage: "Vous avez été invité(e) à gérer %{enterprise} sur %{instance}."
+    confirm_your_email: "Vous avez reçu ou allez recevoir un email avec un lien de confirmation. Vous ne pourrez pas accéder au profil de l'entreprise avant d'avoir confirmé votre email."
+    set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
+    mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email? Veuillez contacter %{owner_email} pour toute question."
   producer_mail_greeting: "Cher(ère)"
   producer_mail_text_before: "Nous avons reçu toutes les commandes pour la prochaine livraison."
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
@@ -1333,8 +1363,8 @@ fr:
   orders_edit_title: Panier
   orders_edit_headline: Votre panier
   orders_edit_time: Commande prête pour
-  orders_edit_continue: Poursuivre mes achats
-  orders_edit_checkout: Poursuivre ma commande
+  orders_edit_continue: Retour à la boutique
+  orders_edit_checkout: Etape suivante (coordonnées)
   orders_form_empty_cart: "Vider le panier"
   orders_form_subtotal: Sous-total
   orders_form_admin: Admin & traitements
@@ -1354,8 +1384,8 @@ fr:
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
-    one: Un produit ajouté a bien été confirmé pour ce cycle de vente
-    other: '%{count} produits ajoutés ont été confirmés pour ce cycle de vente.'
+    one: "Un produit ajouté a bien été confirmé pour ce cycle de vente"
+    other: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
   orders_bought_edit_button: Modifier les produits confirmés
   orders_bought_already_confirmed: "* déjà confirmé"
   orders_confirm_cancel: Voulez-vous vraiment annuler cette commande ?
@@ -1428,6 +1458,7 @@ fr:
   password_reset_sent: "Un email contenant les instructions pour changer votre mot de passe a été envoyé!"
   reset_password: "Changer de mot de passe"
   who_is_managing_enterprise: "Qui gère %{enterprise}?"
+  update_and_recalculate_fees: "Mettre à jour et recalculer les frais"
   enterprise:
     registration:
       modal:
@@ -1939,7 +1970,8 @@ fr:
   products_unsaved: "Des changements sur %{n} produits n'ont pas été sauvegardés."
   is_already_manager: "est déjà manager!"
   no_change_to_save: "Pas de changement à sauvegarder"
-  add_manager: "Ajouter un manager"
+  user_invited: "%{email}a été invité à gérer cette entreprise"
+  add_manager: "Ajouter un utilisateur existant"
   users: "Managers"
   about: "A propos"
   images: "Images"
@@ -1950,6 +1982,7 @@ fr:
   social: "Réseaux sociaux"
   business_details: "Juridique"
   properties: "Propriétés / labels"
+  shipping: "Expédition"
   shipping_methods: "Méthodes de livraison"
   payment_methods: "Méthodes de paiement"
   payment_method_fee: "Frais de transaction"
@@ -1966,7 +1999,7 @@ fr:
   content_configuration_pricing_table: "(A FAIRE : Tableau des tarifs)"
   content_configuration_case_studies: "(A FAIRE : Etudes de Cas)"
   content_configuration_detail: "(A FAIRE : Détails)"
-  enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, merci de contacter le manager actuel du profil à %{email}."
+  enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, ou bien si vous souhaitez distribuer les produits de cette entreprise, merci de contacter le manager actuel du profil à %{email}."
   enterprise_owner_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
   enterprise_role_uniqueness_error: "^Ce rôle existe déjà."
   inventory_item_visibility_error: doit être vrai ou faux
@@ -2002,6 +2035,8 @@ fr:
   order_cycles_email_to_producers_notice: 'Les emails à destination des producteurs ont été mis en file d''attente.'
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
+  back_to_orders_list: "Retour à la liste des commandes"
+  amount: "Montant"
   js:
     saving: 'Enregistrement en cours...'
     changes_saved: 'Modifications sauvegardées.'
@@ -2015,11 +2050,12 @@ fr:
     unavailable: Non disponible
     profile: Profil
     hub: Hub
-    shop: Faire mes courses
+    shop: Boutique
     choose: Choisir
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     admin:
+      enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
         got_it: J'ai compris
         tag_rule_help:
@@ -2183,8 +2219,8 @@ fr:
       could_not_delete_customer: 'L''acheteur n''a pas pu être supprimé'
     product_import:
       confirmation: |
-        Cette action remettra tous les niveaux de stock à zero pour cette
-        entreprises pour les produits non présents dans ce fichier.
+          Cette action remettra tous les niveaux de stock à zero pour cette
+          entreprises pour les produits non présents dans ce fichier.
     order_cycles:
       update_success: 'Votre cycle de vente a été mis à jour.'
       no_distributors: Il n'y a pas de distributeur pour ce cycle de vente. Il ne sera pas visible aux acheteurs tant qu'il n'y aura pas de distributeur. Voulez-vous tout de même sauvegarder ce cycle de vente ?
@@ -2194,6 +2230,10 @@ fr:
     customers:
       select_shop: 'Veuillez d''abord choisir une boutique'
       could_not_create: Oups ! Création impossible...
+    subscriptions:
+      closes: ferme
+      closed: fermé
+      close_date_not_set: Date de fin non renseignée
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et changez de formule quand vous êtes prêt !"
@@ -2344,14 +2384,14 @@ fr:
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-          Votre demande de nouveau mot de passe a bien été prise en compte.
-          Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
+            Votre demande de nouveau mot de passe a bien été prise en compte.
+            Si vous n'avez pas demandé de nouveau mot de passe, veuillez ignorer cet e-mail.
         link_text: >
             Si vous êtes bien à l'origine de cette demande, veuillez cliquer sur le
             lien ci-dessous :
         issue_text: |
-          Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
-          Si le problème persiste, n'hésitez pas à nous contacter.
+            Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
+            Si le problème persiste, n'hésitez pas à nous contacter.
       confirmation_instructions:
         subject: Veuillez confirmer votre compte
     weight: Poids (au kg)

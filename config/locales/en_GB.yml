@@ -16,14 +16,8 @@ en_GB:
   devise:
     failure:
       invalid: |
-        Invalid email or password.
-        Were you a guest last time?  Perhaps you need to create an account or reset your password.
-    enterprise_confirmations:
-      enterprise:
-        confirmed: Thank you, your email address has been confirmed.
-        not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
-        confirmation_sent: "Confirmation email sent!"
-        confirmation_not_sent: "Could not send a confirmation email."
+          Invalid email or password.
+          Were you a guest last time?  Perhaps you need to create an account or reset your password.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -660,6 +654,11 @@ en_GB:
         description: Invoices for import into Xero
       packing:
         name: Packing Reports
+    subscriptions:
+      review:
+        details: Details
+        address: Address
+        products: Products
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1150,8 +1149,8 @@ en_GB:
   orders_could_not_cancel: "Sorry, the order could not be cancelled"
   orders_cannot_remove_the_final_item: "Cannot remove the final item from an order, please cancel the order instead."
   orders_bought_items_notice:
-    one: An additional item is already confirmed for this order cycle
-    other: '%{count} additional items already confirmed for this order cycle'
+    one: "An additional item is already confirmed for this order cycle"
+    other: "%{count} additional items already confirmed for this order cycle"
   orders_bought_edit_button: Edit confirmed items
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: Are you sure you want to cancel this order?
@@ -1968,8 +1967,8 @@ en_GB:
       could_not_delete_customer: 'Could not delete customer'
     product_import:
       confirmation: |
-        This will set stock level to zero on all products for this
-        enterprise that are not present in the uploaded file.
+          This will set stock level to zero on all products for this
+          enterprise that are not present in the uploaded file.
     order_cycles:
       update_success: 'Your order cycle has been updated.'
       no_distributors: There are no distributors in this order cycle. This order cycle will not be visible to customers until you add one. Would you like to continue saving this order cycle?'
@@ -2120,13 +2119,13 @@ en_GB:
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-          A request to reset your password has been made.
-          If you did not make this request, simply ignore this email.
+            A request to reset your password has been made.
+            If you did not make this request, simply ignore this email.
         link_text: >
             If you did make this request just click the link below:
         issue_text: |
-          If the above URL does not work try copying and pasting it into your browser.
-          If you continue to have problems please feel free to contact us.
+            If the above URL does not work try copying and pasting it into your browser.
+            If you continue to have problems please feel free to contact us.
     weight: Weight (per kg)
     zipcode: Postcode
     users:

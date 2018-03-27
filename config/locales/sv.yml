@@ -3,7 +3,7 @@ sv:
     attributes:
       spree/order:
         payment_state: Betalningstatus
-        shipment_state: Leveranstatus
+        shipment_state: Leveransstatus
     errors:
       models:
         spree/user:
@@ -13,14 +13,8 @@ sv:
   devise:
     failure:
       invalid: |
-        Ogiltig e-post eller lösenord.
-        Var du gäst senast? Du behöver kanske skapa ett konto eller återställa ditt lösenord.
-    enterprise_confirmations:
-      enterprise:
-        confirmed: Tack, din e-postadress har blivit bekräftad.
-        not_confirmed: Din e-postadress kunde inte bekräftas. Du kanske redan har genomfört det här steget?
-        confirmation_sent: "Bekräftelsemail skickat!"
-        confirmation_not_sent: "Kunde ej skicka bekräftelsemail."
+          Ogiltig e-post eller lösenord.
+          Var du gäst senast? Du behöver kanske skapa ett konto eller återställa ditt lösenord.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vänligen bekräfta e-postadressen för %{enterprise}"
@@ -32,45 +26,45 @@ sv:
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Välkommen till'
-  site_meta_description: "dölja"
+  site_meta_description: "Vi börjar från grunden. Med bönder och odlare redo att berätta sina berättelser stolt och verkligt. Med distributörer redo att ansluta människor med produkter rättvist och ärligt. Med köpare som tror att bättre veckovisa köpbeslut kan ..."
   search_by_name: Sök på ortnamn eller förort...
   producers_join: Svenska producenter kan nu gå med i Open Food Network. Välkomna!
   charges_sales_tax: Debiterar Moms?
   print_invoice: "Skriv ut faktura"
   print_ticket: "Skriv ut kvitto"
-  select_ticket_printer: "Välj skrivare för bijetterna"
+  select_ticket_printer: "Välj skrivare för kvitton"
   send_invoice: "Skicka faktura"
-  resend_confirmation: "Skicka bekräftelse igen"
-  view_order: "Se beställning"
+  resend_confirmation: "Skicka om bekräftelse"
+  view_order: "Granska beställning"
   edit_order: "Ändra beställning"
   ship_order: "Skicka beställning"
   cancel_order: "Ångra beställning"
   confirm_send_invoice: "En faktura på denna beställning kommer att skickas till kunden. Är du säker på att du vill fortsätta? "
-  confirm_resend_order_confirmation: "Är du säker på att du vill skicka orderbekräftelsen en gång till? "
+  confirm_resend_order_confirmation: "Är du säker på att du vill skicka beställningsbekräftelsen en gång till? "
   must_have_valid_business_number: "%{enterprise_name} måste ha ett giltigt organisationsnummer innan fakturor kan skickas."
   invoice: "Faktura"
   percentage_of_sales: "%{percentage} av försäljning"
   capped_at_cap: "begränsat till %{cap}"
   per_month: "per månad"
   free: "gratis"
-  free_trial: "prova gratis"
-  plus_tax: "plus Moms"
+  free_trial: "gratis pröva-på period"
+  plus_tax: "plus moms"
   min_bill_turnover_desc: "när omsättning överskrider %{mbt_amount}"
   say_no: "Nej"
   say_yes: "Ja"
   then: då
-  sort_order_cycles_on_shopfront_by: "Sortera Cykler Av Ordrar På Skyltfönster Efter"
-  required_fields: Fält som måste fyllas i är märkta med en asterisk
-  select_continue: Välj och fortsätt
+  sort_order_cycles_on_shopfront_by: "Sortera butikens beställningsomgångar efter"
+  required_fields: Obligatoriska fält är märkta med en asterisk
+  select_continue: Markera och fortsätt
   remove: Ta bort
   or: eller
   collapse_all: Minimera alla
   expand_all: Expandera alla
-  loading: Laddning...
+  loading: Laddar...
   show_more: Visa mer
   show_all: Visa alla
-  show_all_with_more: "Visa alla (%{num} More)"
-  cancel: Makulera
+  show_all_with_more: "Visa alla (ytterligare %{num})"
+  cancel: Avbryt
   edit: Redigera
   distributors: Distributörer
   distribution: Distribution
@@ -107,22 +101,22 @@ sv:
     on_hand: På lager
     on_demand: På begäran
     on_demand?: På begäran?
-    order_cycle: Ordercykel
+    order_cycle: Beställningsomgång
     phone: Telefon
     price: Pris
     producer: Producent
     product: Produkt
     quantity: Kvantitet
     shop: Butik
-    sku: Orderrad
+    sku: SKU
     tags: Taggar
     variant: Variant
     weight: Vikt
     volume: Volym
     items: Artiklar
-    select_all: Välj alla
+    select_all: Markera alla
     obsolete_master: Föråldrad mästare
-    quick_search: Snabb sökning
+    quick_search: Snabbsökning
     clear_all: Rensa allt
     start_date: "Startdatum"
     end_date: "Slutdatum"
@@ -170,27 +164,27 @@ sv:
         business_model_configuration_tip: "Beräkna det belopp som varje affär skall betala varje månad för användningen av OFN. "
         bill_calculation_settings: "Inställningar för beräkning av fakturor"
         bill_calculation_settings_tip: "Justera det belopp företag skall faktureras varje månad för användning av OFN."
-        shop_trial_length: "Försöksperiod (Dagar)"
+        shop_trial_length: "Pröva-på period (dagar)"
         shop_trial_length_tip: "Antal dagar som företag som definierats som affärer kan ha som försöksperiod."
         fixed_monthly_charge: "Bestämd månadsavgift"
-        fixed_monthly_charge_tip: "En bestämd månadsavgift för alla företag som är definierade som affärer och som överskridit minsta fakturerade omsättningen (om sådan bestämts)."
+        fixed_monthly_charge_tip: "En bestämd månadsavgift för alla företag som är definierade som butiker och som överskridit minsta tillåtna omsättning (om sådan bestämts)."
         percentage_of_turnover: "Procent av omsättning"
-        percentage_of_turnover_tip: "När den är större än noll, denna taxa (0,0 - 1,0) kommer att läggas till den totala omsättningen för varje affär och adderas till varje bestämd avgift (till vänster) vid beräkning av månadsavgiften."
-        monthly_cap_excl_tax: "månadstak (exkl. GST)"
-        monthly_cap_excl_tax_tip: "När det är större än noll, kommer detta värde att användas som tak för det belopp som affärer skall faktureras varje månad."
+        percentage_of_turnover_tip: "När den är större än noll, kommer denna taxa (0,0 - 1,0)  att läggas till den totala omsättningen för varje affär och adderas till varje bestämd avgift (till vänster) vid beräkning av månadsavgiften."
+        monthly_cap_excl_tax: "månadstak (exkl. moms)"
+        monthly_cap_excl_tax_tip: "När det är större än noll, kommer detta värde att användas som tak för det belopp som butiker skall faktureras varje månad."
         tax_rate: "Skattesats"
         tax_rate_tip: "Skattesats som används på månadsfakturan som företag skall betala för att använda systemet."
-        minimum_monthly_billable_turnover: "Minsta månatliga fakturerbara omsättning"
-        minimum_monthly_billable_turnover_tip: "Minsta månadsomsättning i en en butiks skyltfönster får betala för att använda OFN. Företag vars omsättning understiger detta belopp under en månad behöver ej betala vare sig procentuellt eller med en fast taxa."
+        minimum_monthly_billable_turnover: "Minsta månatliga omsättning"
+        minimum_monthly_billable_turnover_tip: "Minsta månadsomsättning som en butik får betala för att använda OFN. Företag vars omsättning understiger detta belopp under en månad behöver ej betala vare sig procentuellt eller en fast taxa."
         example_bill_calculator: "Exempel på beräkning av en faktura"
-        example_bill_calculator_legend: "Ändra omsättningen i exemplet för att åskådliggöra effekten av ändrade inställningar till vänster."
-        example_monthly_turnover: "Exempel på månatlig omsättning"
-        example_monthly_turnover_tip: "Ett exempel på månatlig omsättning för företaget som används för att beräkna en månatlig faktura i exemplet nedan."
+        example_bill_calculator_legend: "Ändra omsättning i exemplet för att åskådliggöra effekten av ändrade inställningar."
+        example_monthly_turnover: "Exempel på månadsomsättning"
+        example_monthly_turnover_tip: "Ett exempel på månadsomsättning som används för att beräkna en månatlig faktura i exemplet nedan."
         cap_reached?: "Är taket nått?"
         cap_reached?_tip: "Visar om taket (specificerat till vänster) har nåtts. med de givna inställningarna och omsättningen."
         included_tax: "Skatten är inkluderad"
         included_tax_tip: "All skatt är inkluderad i exemplets månadsfaktura enligt de inställningar och den omsättning som var angiven."
-        total_monthly_bill_incl_tax: "Total månadsfaktura (inkl skatt)"
+        total_monthly_bill_incl_tax: "Totalt månadsfaktura (inkl moms)"
         total_monthly_bill_incl_tax_tip: "Exemplets totala månadsfaktura med skatt inkluderad enligt de inställningar och den omsättning som var angiven."
     customers:
       index:
@@ -207,11 +201,11 @@ sv:
         update_address_error: 'Oj! Du måste fylla i alla obligatoriska fält'
         edit_bill_address: 'Ändra fakturaadress'
         edit_ship_address: 'Ändra leveransadress'
-        required_fileds: 'Obligatoriska fält är markerade med en stjärna'
+        required_fileds: 'Obligatoriska fält är markerade med en asterisk'
         select_country: 'Välj land'
         select_state: 'Välj län'
         edit: 'Ändra'
-        update_address: 'Uppdatera Adress'
+        update_address: 'Uppdatera adress'
         confirm_delete: 'Vill du verkligen radera?'
         search_by_email: "Sök via e-post/kod..."
       destroy:
@@ -220,7 +214,7 @@ sv:
       show:
         title: Inkomst
         distributor: Distributör
-        order_cycle: Ordercykel
+        order_cycle: Beställningsomgång
         status: Status
         diff: Differens
         error: Fel
@@ -253,14 +247,6 @@ sv:
         manages: hanterar
     products:
       unit_name_placeholder: 't.ex. klasar'
-      bulk_edit:
-        unit: Enhet
-        display_as: Visa som
-        category: Kategori
-        tax_category: Taxområde
-        inherits_properties?: Ärva egenskaper?
-        available_on: 'Tillgänglig '
-        av_on: "Md. På"
       properties:
         property_name: Egendomens Namn
         inherited_property: Ärvd Egendom
@@ -340,8 +326,6 @@ sv:
         contact:
           name: Namn
           name_placeholder: ex. Gustav Persson
-          email_address: E-postadress
-          email_address_placeholder: ex gustav@telia.com
           phone: Telefon
           phone_placeholder: ex 123 456 789
           website: Hemsida
@@ -448,6 +432,7 @@ sv:
           email_confirmation_notice_html: "E-post bekräftelse har inte kommit. Vi har sänt en bekräftande e-post till %{email}."
           resend: Återsänd
           owner: 'Ägare'
+          contact: "Kontakt"
           owner_tip: Den primära användaren är ansvarig för detta företag.
           notifications: Meddelanden
           notifications_tip: Meddelanden om order kommer att sändas till denna e-postadress,
@@ -517,8 +502,6 @@ sv:
         advanced_settings: Avancerade inställningar
         update_and_close: Uppdatera och Stäng
         choose_products_from: 'Välj produkter från:'
-        pickup_time_tip: När beställningar från denna Beställningsomgång kommer att vara redo för kunden
-        pickup_instructions_tip: Dessa instruktioner visas för kunderna efter att de har slutfört en beställning
       exchange_form:
         pickup_instructions_placeholder: "Instruktioner för upphämtning"
         pickup_time_placeholder: "Klar för (dvs. Datum/Tid)"
@@ -633,6 +616,10 @@ sv:
         description: Fakturor för import till Xero
       packing:
         name: Förpackningsrapporter
+    subscriptions:
+      review:
+        address: Adress
+        products: Produkter
   checkout:
     already_ordered:
       cart: "vagn"
@@ -739,7 +726,6 @@ sv:
   label_more: "Visa mer"
   label_less: "Visa mindre"
   label_notices: "Anmälan"
-  items: "artiklar"
   cart_headline: "Din varukorg"
   total: "Summa "
   cart_updating: "Uppdatera din varukorg"
@@ -765,7 +751,7 @@ sv:
   footer_sites_userguide: "Användarguide"
   footer_secure: "Säkert och anförtrott."
   footer_secure_text: "Open Food Network använder SSL-kryptering (2048 bitars RSA) överallt för att hålla din beställnings- och betalningsinformation privat. Våra servrar lagrar inte dina kreditkortsdetaljer och betalningar processeras av PCI-beskedliga tjänster."
-  footer_contact_headline: "Hålla kontakten"
+  footer_contact_headline: "Håll kontakten"
   footer_contact_email: "Mejla oss"
   footer_nav_headline: "Navigera"
   footer_join_headline: "Gå med oss"
@@ -863,7 +849,6 @@ sv:
   email_confirmation_click_link: "Var vänlig att klicka på länken nedan för att bekräfta din e-postadress och fortsätt att skapa din profil."
   email_confirmation_link_label: "Bekräfta din e-postadress »"
   email_confirmation_help_html: "Sedan du bekräftat din e-postadress har du tillgång till ditt konto för denna firma. Se %{link} för att ta reda på mer om %{sitename} artiklar och börja använda din profil eller online butik."
-  email_confirmation_userguide: "Användarguide"
   email_social: "Koppla ihop med Oss:"
   email_contact: "Mejla oss:"
   email_signoff: "Hälsningar,"
@@ -894,9 +879,6 @@ sv:
   email_special_instructions: "Dina anteckningar:"
   email_signup_greeting: Hallå!
   email_signup_welcome: "Välkommen till %{sitename}!"
-  email_signup_login: Din inloggning
-  email_signup_email: Din e-postadress för inloggning är
-  email_signup_shop_html: "Du kan starta ditt onlineköp nu på %{link}."
   email_signup_text: "Tack för att du anslutit dig till vårt nätverk. Om du är kund, vi vill introducera dig för många utmärkta odlare och ett stort urval av god mat. Om du är producent eller matföretag är vi glada att ha dig som en del av vårt nätverk.\n."
   email_signup_help_html: "Vi uppskattar alla frågor och synpunkter; du kan använda  <em>Send Feedback</em> knappen på sidan eller skicka e-post till %{email}"
   producer_mail_greeting: "Kära"
@@ -918,6 +900,8 @@ sv:
   enterprises_next_closing: "Nästa order stängs"
   enterprises_ready_for: "Klar för"
   enterprises_choose: "Välj när du vill ha din beställning:"
+  maps_open: "Öppen"
+  maps_closed: "Stängd"
   hubs_buy: "Handla:"
   hubs_shopping_here: "Att handla här"
   hubs_orders_closed: "Beställningar avslutade"
@@ -1084,8 +1068,8 @@ sv:
   orders_could_not_cancel: "Tyvärr kan denna beställning inte avbrytas"
   orders_cannot_remove_the_final_item: "Det går inte att ta bort det sista varan från en beställning, var god och avbryt beställningen istället."
   orders_bought_items_notice:
-    one: Ett ytterligare objekt är redan bekräftat för denna ordercykel
-    other: '%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång'
+    one: "Ett ytterligare objekt är redan bekräftat för denna ordercykel"
+    other: "%{count} ytterligare artiklar är redan bekräftade för denna beställningsomgång"
   orders_bought_edit_button: Redigera bekräftade varor
   orders_bought_already_confirmed: "* redan bekräftad"
   orders_confirm_cancel: Är du säker på att du vill avbryta denna beställning?
@@ -1103,7 +1087,7 @@ sv:
   products_distributor_info: När du väljer distributör för din order kommer leveranstider att visas här
   products_distribution_adjustment_label: "Distribution för %{distributor} av %{product}"
   shop_trial_expires_in: "Din försökstid för skyltfönster gå ut om"
-  shop_trial_expired_notice: "Goda nyheter! Vi har beslutat utöka skyltfönstrets försökstid tills vidare. "
+  shop_trial_expired_notice: "Goda nyheter! Vi har beslutat utöka butikens pröva-på period tills vidare. "
   password: Lösenord
   remember_me: Kom ihåg mig
   are_you_sure: "Är du säker?"
@@ -1187,7 +1171,6 @@ sv:
   enterprise_about_headline: "Snygg sak"
   enterprise_about_message: "Låt oss nu bli lite mer detaljerade om"
   enterprise_success: "Succé! %{enterprise} ingår nu i Open Food Network "
-  enterprise_registration_exit_message: "Om du vid något tillfälle lämnar denna guide ska du klicka på \"confirmation\" länken på den e-post du erhållit. Detta gör att du kommer till administrationsstatus där du kan fortsätta att bygga din profil."
   enterprise_description: "Kort beslrivning"
   enterprise_description_placeholder: "En kort mening som beskriver ditt företag"
   enterprise_long_desc: "Lång beskrivning"
@@ -1228,8 +1211,6 @@ sv:
   registration_finished_headline: "Klar!"
   registration_finished_thanks: "Tack för att du fyllt i alla uppgifter för %{enterprise}."
   registration_finished_login: "Du kan ändra eller uppdatera dina uppgifter när som helst genom att logga in på Open Food Network och klicka på Admin."
-  registration_finished_activate: "Aktivera %{enterprise}."
-  registration_finished_activate_instruction_html: "Vi har sänt bekräftelse via e-post till <strong>%{email}</strong> om den inte varit aktiverad tidigare. <br/> Var vänlig följ instruktionerna där så att ditt företag visas på Open Food Network."
   registration_finished_action: "Open Food Network hem"
   registration_type_headline: "Sista steget för att lägga till %{enterprise}!"
   registration_type_question: "Är du en producent?"
@@ -1670,7 +1651,6 @@ sv:
   order_cycles_email_to_producers_notice: 'E-postmeddelanden till producenter har blivit placerade i kön för att skickas.'
   order_cycles_no_permission_to_coordinate_error: "Ingen av dina företag har tillstånd att samordna en beställningsomgång"
   order_cycles_no_permission_to_create_error: "Du har inte behörighet att skapa en beställningsomgång som samordnas av företaget"
-  order_cycles_no_permission_to_delete_error: "Denna beställningsomgång har valts av en kund och kan inte raderas. För att förhindra att kunder får tillgång till det, stäng det istället."
   js:
     saving: 'Sparar...'
     changes_saved: 'Ändringar sparade.'
@@ -1839,7 +1819,7 @@ sv:
       could_not_delete_customer: 'Kunde inte radera kund'
     product_import:
       confirmation: |
-        Detta kommer att ställa lagersaldot till noll på alla produkter för detta företag, som inte är närvarande i den uppladdade filen.
+          Detta kommer att ställa lagersaldot till noll på alla produkter för detta företag, som inte är närvarande i den uppladdade filen.
     order_cycles:
       update_success: 'Din beställningsomgång har uppdaterats.'
       no_distributors: Det finns inga distributörer i denna beställningsomgång. Den kommer inte att vara synlig för kunderna tills du lägger till en distributör. Vill du fortsätta och spara denna beställningsomgång? '
@@ -1907,7 +1887,6 @@ sv:
       address: adress
       adjustments: justeringar
       awaiting_return: väntar återsändning
-      canceled: makulerad
       cart: kundvagn
       complete: komplett
       confirm: bekräfta
@@ -1936,19 +1915,16 @@ sv:
     user_mailer:
       reset_password_instructions:
         request_sent_text: |
-          En begäran om att återställa ditt lösenord har gjorts.
-          Om du inte gjorde denna förfrågan ignorerar du bara det här e-postmeddelandet.
+            En begäran om att återställa ditt lösenord har gjorts.
+            Om du inte gjorde denna förfrågan ignorerar du bara det här e-postmeddelandet.
         link_text: >
             Om du gjorde denna förfrågan klickar du bara på länken nedan:
         issue_text: |
-          Om den ovan nämnda webbadressen inte fungerar kan du försöka kopiera och klistra in den i webbläsaren.
-          Om du får problem, var god kontakta oss.
+            Om den ovan nämnda webbadressen inte fungerar kan du försöka kopiera och klistra in den i webbläsaren.
+            Om du får problem, var god kontakta oss.
     weight: Vikt (kg)
     zipcode: Postkod
     users:
-      show:
-        open_orders: Öppna beställningar
-        transaction_history: Transaktionshistorik
       open_orders:
         order: Beställningar
         shop: 'Butik '
