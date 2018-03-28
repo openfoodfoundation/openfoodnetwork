@@ -10,9 +10,10 @@ describe "CustomersCtrl", ->
       null
 
     shops = [
-      { name: "Shop 1", id: 1 }
-      { name: "Shop 2", id: 2 }
-      { name: "Shop 3", id: 3 }
+      { name: "Shop 1", id: 1 },
+      { name: "Shop 2", id: 12 },
+      { name: "Shop 3", id: 2 },
+      { name: "Shop 4", id: 3 }
     ]
 
     availableCountries = [
@@ -39,9 +40,9 @@ describe "CustomersCtrl", ->
     beforeEach inject (pendingChanges) ->
       spyOn(pendingChanges, "removeAll")
       scope.customers_form = jasmine.createSpyObj('customers_form', ['$setPristine'])
-      http.expectGET('/admin/customers.json?enterprise_id=3').respond 200, customers
+      http.expectGET('/admin/customers.json?enterprise_id=2').respond 200, customers
       scope.$apply ->
-        scope.shop_id = 3
+        scope.shop_id = "2"
       http.flush()
 
     it "sets the CurrentShop", inject (CurrentShop) ->
@@ -81,7 +82,7 @@ describe "CustomersCtrl", ->
         { text: 'three' }
       ]
       beforeEach ->
-        http.expectGET('/admin/tag_rules/map_by_tag.json?enterprise_id=3').respond 200, tags
+        http.expectGET('/admin/tag_rules/map_by_tag.json?enterprise_id=2').respond 200, tags
 
       it "retrieves the tag list", ->
         promise = scope.findTags('')

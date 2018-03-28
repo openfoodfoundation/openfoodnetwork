@@ -99,11 +99,10 @@ gem 'jquery-rails'
 gem 'jquery-migrate-rails'
 gem 'css_splitter'
 
-gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz'
+gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
 
 group :test, :development do
   # Pretty printed test output
-  gem 'turn', '~> 0.8.3', require: false
   gem 'fuubar', '~> 2.2.0'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'

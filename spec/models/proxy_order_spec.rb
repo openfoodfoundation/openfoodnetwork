@@ -158,66 +158,29 @@ describe ProxyOrder, type: :model do
   end
 
   describe "initialise_order!" do
+    let(:order) { create(:order) }
+    let(:factory) { instance_double(OrderFactory) }
+    let!(:proxy_order) { create(:proxy_order) }
+
     context "when the order has not already been initialised" do
-      let(:subscription) { create(:subscription, with_items: true) }
-      let!(:proxy_order) { create(:proxy_order, subscription: subscription) }
-
-      it "builds a new order based the subscription" do
-        expect{ proxy_order.initialise_order! }.to change{ Spree::Order.count }.by(1)
-        expect(proxy_order.reload.order).to be_a Spree::Order
-        order = proxy_order.order
-        expect(order.line_items.count).to eq subscription.subscription_line_items.count
-        expect(order.customer).to eq subscription.customer
-        expect(order.user).to eq subscription.customer.user
-        expect(order.distributor).to eq subscription.shop
-        expect(order.order_cycle).to eq proxy_order.order_cycle
-        expect(order.shipping_method).to eq subscription.shipping_method
-        expect(order.shipments.first.shipping_method).to eq subscription.shipping_method
-        expect(order.payments.first.payment_method).to eq subscription.payment_method
-        expect(order.bill_address).to eq subscription.bill_address
-        expect(order.ship_address).to eq subscription.ship_address
-        expect(order.complete?).to be false
-      end
-
-      context "when a requested quantity is greater than available stock" do
-        let(:sli) { subscription.subscription_line_items.first }
-        let(:variant) { sli.variant }
-
-        before do
-          variant.update_attribute(:count_on_hand, 2)
-          sli.update_attribute(:quantity, 5)
-        end
-
-        it "initialises the order with the requested quantity regardless" do
-          expect{ proxy_order.initialise_order! }.to change{ Spree::Order.count }.by(1)
-          expect(proxy_order.reload.order).to be_a Spree::Order
-          order = proxy_order.order
-          expect(order.line_items.find_by_variant_id(variant.id).quantity).to eq 5
-        end
-      end
-
-      context "when the customer does not have a user associated with it" do
-        before do
-          subscription.customer.update_attribute(:user_id, nil)
-        end
-
-        it "initialises the order without a user_id" do
-          expect{ proxy_order.initialise_order! }.to change{ Spree::Order.count }.by(1)
-          expect(proxy_order.reload.order).to be_a Spree::Order
-          order = proxy_order.order
-          expect(order.user).to be nil
-        end
+      it "creates a new order using the OrderFactory, and returns it" do
+        expect(OrderFactory).to receive(:new) { factory }
+        expect(factory).to receive(:create) { order }
+        expect(proxy_order.initialise_order!).to eq order
       end
     end
 
     context "when the order has already been initialised" do
       let(:existing_order) { create(:order) }
-      let!(:proxy_order) { create(:proxy_order, order: existing_order) }
+
+      before do
+        proxy_order.update_attributes(order: existing_order)
+      end
 
       it "returns the existing order" do
-        expect do
-          expect(proxy_order.initialise_order!).to eq existing_order
-        end.to_not change{ Spree::Order.count }
+        expect(OrderFactory).to_not receive(:new)
+        expect(proxy_order).to_not receive(:save!)
+        expect(proxy_order.initialise_order!).to eq existing_order
       end
     end
   end

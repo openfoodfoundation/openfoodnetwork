@@ -7,6 +7,7 @@ module Admin
     before_filter :strip_banned_attrs, only: [:update]
     before_filter :wrap_nested_attrs, only: [:create, :update]
     before_filter :check_for_open_orders, only: [:cancel, :pause]
+    before_filter :check_for_canceled_orders, only: [:unpause]
     respond_to :json
 
     def index
@@ -31,18 +32,18 @@ module Admin
     end
 
     def create
-      form = SubscriptionForm.new(@subscription, params[:subscription], fee_calculator)
+      form = SubscriptionForm.new(@subscription, params[:subscription])
       if form.save
-        render_as_json @subscription, fee_calculator: fee_calculator
+        render_as_json @subscription
       else
         render json: { errors: form.json_errors }, status: :unprocessable_entity
       end
     end
 
     def update
-      form = SubscriptionForm.new(@subscription, params[:subscription], fee_calculator)
+      form = SubscriptionForm.new(@subscription, params[:subscription])
       if form.save
-        render_as_json @subscription, fee_calculator: fee_calculator, order_update_issues: form.order_update_issues
+        render_as_json @subscription, order_update_issues: form.order_update_issues
       else
         render json: { errors: form.json_errors }, status: :unprocessable_entity
       end
@@ -52,7 +53,7 @@ module Admin
       @subscription.cancel(@open_orders_to_keep || [])
 
       respond_with(@subscription) do |format|
-        format.json { render_as_json @subscription, fee_calculator: fee_calculator }
+        format.json { render_as_json @subscription }
       end
     end
 
@@ -62,12 +63,12 @@ module Admin
       end
 
       @subscription.update_attributes(paused_at: Time.zone.now)
-      render_as_json @subscription, fee_calculator: fee_calculator
+      render_as_json @subscription
     end
 
     def unpause
       @subscription.update_attributes(paused_at: nil)
-      render_as_json @subscription, fee_calculator: fee_calculator
+      render_as_json @subscription
     end
 
     private
@@ -96,13 +97,6 @@ module Admin
       @payment_methods = Spree::PaymentMethod.for_distributor(@subscription.shop).for_subscriptions
       @shipping_methods = Spree::ShippingMethod.for_distributor(@subscription.shop)
       @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
-      @fee_calculator = fee_calculator
-    end
-
-    def fee_calculator
-      shop, next_oc = @subscription.shop, @subscription.schedule.andand.current_or_next_order_cycle
-      return nil unless shop && next_oc
-      OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, next_oc)
     end
 
     # Wrap :subscription_line_items_attributes in :subscription root
@@ -130,6 +124,12 @@ module Admin
       @open_orders_to_keep = @subscription.proxy_orders.placed_and_open.pluck(:id)
       return if @open_orders_to_keep.empty? || params[:open_orders] == 'keep'
       render json: { errors: { open_orders: t('admin.subscriptions.confirm_cancel_open_orders_msg') } }, status: :conflict
+    end
+
+    def check_for_canceled_orders
+      return if params[:canceled_orders] == 'notified'
+      return if @subscription.proxy_orders.active.canceled.empty?
+      render json: { errors: { canceled_orders: t('admin.subscriptions.resume_canceled_orders_msg') } }, status: :conflict
     end
 
     def strip_banned_attrs

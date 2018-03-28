@@ -1,7 +1,7 @@
 angular.module("admin.enterprises")
   .factory "EnterpriseShippingMethods", (enterprise, ShippingMethods) ->
     new class EnterpriseShippingMethods
-      shippingMethods: ShippingMethods.shippingMethods
+      shippingMethods: ShippingMethods.all
 
       constructor: ->
         for shipping_method in @shippingMethods

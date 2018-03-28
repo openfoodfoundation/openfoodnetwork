@@ -2,8 +2,9 @@ require 'whenever'
 
 # Learn more: http://github.com/javan/whenever
 
-env "MAILTO", "rohan@rohanmitchell.com"
+app_config = YAML.load_file(File.join(__dir__, 'application.yml'))
 
+env "MAILTO", app_config["SCHEDULE_NOTIFICATIONS"] if app_config["SCHEDULE_NOTIFICATIONS"]
 
 # If we use -e with a file containing specs, rspec interprets it and filters out our examples
 job_type :run_file, "cd :path; :environment_variable=:environment bundle exec script/rails runner :task :output"

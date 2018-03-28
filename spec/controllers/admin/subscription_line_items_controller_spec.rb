@@ -81,13 +81,28 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
             context "and a managed schedule_id is provided" do
               before { params.merge!(schedule_id: schedule.id) }
 
-              it "returns a serialized subscription line item with a price estimate" do
-                spree_post :build, params
+              context "where no relevant variant override exists" do
+                it "returns a serialized subscription line item with a price estimate, based on the variant" do
+                  spree_post :build, params
 
-                json_response = JSON.parse(response.body)
-                expect(json_response['price_estimate']).to eq 18.5
-                expect(json_response['quantity']).to eq 2
-                expect(json_response['description']).to eq "#{variant.product.name} - 100g"
+                  json_response = JSON.parse(response.body)
+                  expect(json_response['price_estimate']).to eq 18.5
+                  expect(json_response['quantity']).to eq 2
+                  expect(json_response['description']).to eq "#{variant.product.name} - 100g"
+                end
+              end
+
+              context "where a relevant variant override exists" do
+                let!(:override) { create(:variant_override, hub_id: shop.id, variant_id: variant.id, price: 12.00) }
+
+                it "returns a serialized subscription line item with a price estimate, based on the override" do
+                  spree_post :build, params
+
+                  json_response = JSON.parse(response.body)
+                  expect(json_response['price_estimate']).to eq 15.5
+                  expect(json_response['quantity']).to eq 2
+                  expect(json_response['description']).to eq "#{variant.product.name} - 100g"
+                end
               end
             end
           end

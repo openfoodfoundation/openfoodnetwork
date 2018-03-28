@@ -19,10 +19,7 @@ dialog, .reveal-modal {
 
   // Small - when modal IS full screen
   @media only screen and (max-width: 640px) {
-    max-height: initial;
-
-    // This is needed to make the height not the height of whole content page
-    min-height: 100%;
+    height: 500px;
     position: absolute !important;
     top: 0;
     left: 0;
@@ -31,7 +28,7 @@ dialog, .reveal-modal {
   // Medium and up - when modal IS NOT full screen
   @media only screen and (min-width: 641px) {
     top: 10%;
-    max-height: 80%;
+    max-height: 120%;
   }
 }
 

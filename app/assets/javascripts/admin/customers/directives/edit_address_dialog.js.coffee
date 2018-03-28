@@ -34,4 +34,4 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
 
     scope.filter_states = (countryID) ->
       return [] unless countryID
-      $filter('filter')(scope.availableCountries, {id: countryID})[0].states
+      $filter('filter')(scope.availableCountries, {id: parseInt(countryID)}, true)[0].states

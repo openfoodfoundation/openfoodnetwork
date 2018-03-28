@@ -304,19 +304,19 @@ describe Spree::Order do
     end
 
     it "returns a hash with all 3 taxes" do
-      order.tax_adjustment_totals.size.should == 3
+      expect(order.tax_adjustment_totals.size).to eq(3)
     end
 
     it "contains tax on line_item" do
-      order.tax_adjustment_totals[tax_rate10.amount].should == 4.0
+      expect(order.tax_adjustment_totals[tax_rate10.amount]).to eq(4.0)
     end
 
     it "contains tax on shipping_fee" do
-      order.tax_adjustment_totals[tax_rate15.amount].should == 6.0
+      expect(order.tax_adjustment_totals[tax_rate15.amount]).to eq(6.0)
     end
 
     it "contains tax on enterprise_fee" do
-      order.tax_adjustment_totals[tax_rate20.amount].should == 8.0
+      expect(order.tax_adjustment_totals[tax_rate20.amount]).to eq(8.0)
     end
   end
 

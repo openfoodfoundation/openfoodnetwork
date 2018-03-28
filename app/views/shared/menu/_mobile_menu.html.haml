@@ -40,13 +40,13 @@
         %span.nav-primary
           %i.ofn-i_036-producers
           = t 'label_producers'
-    - if I18n.available_locales.count > 1
+    - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
       %li.language-switcher.li-menu
         %a
           %i.ofn-i_071-globe
           = t('language_name')
         %ul
-          - I18n.available_locales.each do |l|
+          - OpenFoodNetwork::I18nConfig.selectable_locales.each do |l|
             - if I18n.locale != l
               %li
                 %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)

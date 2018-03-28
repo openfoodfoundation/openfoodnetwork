@@ -31,6 +31,19 @@ feature %q{
     click_button 'Next'
   end
 
+  scenario "order cycles appear in descending order by close date on orders page" do
+    create(:simple_order_cycle, name: 'Two', orders_close_at: 2.weeks.from_now)
+    create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
+    create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now)
+
+    login_to_admin_section
+    visit 'admin/orders'
+
+    open_select2('#s2id_q_order_cycle_id_in')
+
+    expect(find('#q_order_cycle_id_in', visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*One/m)
+  end
+
   scenario "creating an order with distributor and order cycle" do
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
@@ -42,32 +55,32 @@ feature %q{
 
     # Distributors without an order cycle should be shown as disabled
     open_select2('#s2id_order_distributor_id')
-    page.should have_selector "ul.select2-results li.select2-result.select2-disabled", text: distributor_disabled.name
+    expect(page).to have_selector "ul.select2-results li.select2-result.select2-disabled", text: distributor_disabled.name
     close_select2('#s2id_order_distributor_id')
 
     # Order cycle selector should be disabled
-    page.should have_selector "#s2id_order_order_cycle_id.select2-container-disabled"
+    expect(page).to have_selector "#s2id_order_order_cycle_id.select2-container-disabled"
 
     # When we select a distributor, it should limit order cycle selection to those for that distributor
     select2_select @distributor.name, from: 'order_distributor_id'
-    page.should have_select2 'order_order_cycle_id', options: ['One (open)']
+    expect(page).to have_select2 'order_order_cycle_id', options: ['One (open)']
     select2_select @order_cycle.name, from: 'order_order_cycle_id'
     click_button 'Next'
 
     # it suppresses validation errors when setting distribution
-    page.should_not have_selector '#errorExplanation'
-    page.should have_content 'ADD PRODUCT'
+    expect(page).not_to have_selector '#errorExplanation'
+    expect(page).to have_content 'ADD PRODUCT'
     targetted_select2_search @product.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
     click_link 'Add'
     page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr"  # Wait for JS
-    page.should have_selector 'td', text: @product.name
+    expect(page).to have_selector 'td', text: @product.name
 
     click_button 'Update'
 
-    page.should have_selector 'h1', text: 'Customer Details'
+    expect(page).to have_selector 'h1', text: 'Customer Details'
     o = Spree::Order.last
-    o.distributor.should == @distributor
-    o.order_cycle.should == @order_cycle
+    expect(o.distributor).to eq(@distributor)
+    expect(o.order_cycle).to eq(@order_cycle)
   end
 
   scenario "can add a product to an existing order", retry: 3 do
@@ -80,8 +93,8 @@ feature %q{
 
     click_link 'Add'
 
-    page.should have_selector 'td', text: @product.name
-    @order.line_items(true).map(&:product).should include @product
+    expect(page).to have_selector 'td', text: @product.name
+    expect(@order.line_items(true).map(&:product)).to include @product
   end
 
   scenario "displays error when incorrect distribution for products is chosen" do
@@ -103,7 +116,7 @@ feature %q{
     select2_select oc.name, from: 'order_order_cycle_id'
 
     click_button 'Update And Recalculate Fees'
-    page.should have_content "Distributor or order cycle cannot supply the products in your cart"
+    expect(page).to have_content "Distributor or order cycle cannot supply the products in your cart"
   end
 
 
@@ -114,7 +127,7 @@ feature %q{
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
 
-    page.should_not have_select2_option product.name, from: ".variant_autocomplete", dropdown_css: ".select2-search"
+    expect(page).not_to have_select2_option product.name, from: ".variant_autocomplete", dropdown_css: ".select2-search"
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
@@ -124,11 +137,11 @@ feature %q{
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
 
-    page.should_not have_select2 'order_distributor_id'
-    page.should_not have_select2 'order_order_cycle_id'
+    expect(page).not_to have_select2 'order_distributor_id'
+    expect(page).not_to have_select2 'order_order_cycle_id'
 
-    page.should have_selector 'p', text: "Distributor: #{@order.distributor.name}"
-    page.should have_selector 'p', text: "Order cycle: None"
+    expect(page).to have_selector 'p', text: "Distributor: #{@order.distributor.name}"
+    expect(page).to have_selector 'p', text: "Order cycle: None"
   end
 
   scenario "filling customer details" do

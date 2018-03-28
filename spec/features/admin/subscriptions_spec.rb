@@ -201,7 +201,7 @@ feature 'Subscriptions' do
         expect(page).to have_content 'Please add at least one product'
 
         # Adding a product and getting a price estimate
-        targetted_select2_search product1.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+        select2_search product1.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 2
         click_link 'Add'
         within 'table#subscription-line-items tr.item', match: :first do
@@ -211,12 +211,12 @@ feature 'Subscriptions' do
           expect(page).to have_selector 'td.total', text: "$27.50"
         end
 
-        click_button('Next')
-
         # Deleting the existing product
         within 'table#subscription-line-items tr.item', match: :first do
           find("a.delete-item").click
         end
+
+        click_button('Next')
 
         # Attempting to submit without a product
         expect{
@@ -224,8 +224,10 @@ feature 'Subscriptions' do
           expect(page).to have_content 'Please add at least one product'
         }.to_not change(Subscription, :count)
 
+        click_button('edit-products')
+
         # Adding a new product
-        targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+        select2_search product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
         fill_in 'add_quantity', with: 3
         click_link 'Add'
         within 'table#subscription-line-items tr.item', match: :first do
@@ -234,6 +236,8 @@ feature 'Subscriptions' do
           expect(page).to have_input 'quantity', with: "3"
           expect(page).to have_selector 'td.total', text: "$23.25"
         end
+
+        click_button('Next')
 
         expect{
           click_button('Create Subscription')
@@ -244,7 +248,7 @@ feature 'Subscriptions' do
         within 'table#subscription-line-items tr.item', match: :first do
           expect(page).to have_selector 'td.description', text: "#{product2.name} - #{variant2.full_name}"
           expect(page).to have_selector 'td.price', text: "$7.75"
-          expect(page).to have_input 'quantity', with: "3"
+          expect(page).to have_selector 'td.quantity', text: "3"
           expect(page).to have_selector 'td.total', text: "$23.25"
         end
 
@@ -288,7 +292,7 @@ feature 'Subscriptions' do
                  schedule: schedule,
                  payment_method: payment_method,
                  shipping_method: shipping_method,
-                 subscription_line_items: [create(:subscription_line_item, variant: variant1, quantity: 2)],
+                 subscription_line_items: [create(:subscription_line_item, variant: variant1, quantity: 2, price_estimate: 13.75)],
                  with_proxy_orders: true)
         }
 
@@ -296,10 +300,13 @@ feature 'Subscriptions' do
           visit edit_admin_subscription_path(subscription)
 
           # Customer and Schedule cannot be edited
+          click_button 'edit-details'
           expect(page).to have_selector '#s2id_customer_id.select2-container-disabled'
           expect(page).to have_selector '#s2id_schedule_id.select2-container-disabled'
+          click_button 'Review'
 
           # Existing products should be visible
+          click_button 'edit-products'
           within "#sli_0" do
             expect(page).to have_selector 'td.description', text: "#{product1.name} - #{variant1.full_name}"
             expect(page).to have_selector 'td.price', text: "$13.75"
@@ -315,7 +322,7 @@ feature 'Subscriptions' do
           expect(page).to have_content 'Please add at least one product'
 
           # Add variant2 to the subscription
-          targetted_select2_search product2.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+          select2_search product2.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
           within "#sli_0" do
@@ -329,7 +336,7 @@ feature 'Subscriptions' do
           expect(page).to have_selector '#order_form_total', text: "$7.75"
 
           # Add variant3 to the subscription (even though it is not available)
-          targetted_select2_search product3.name, from: '#add_variant_id', dropdown_css: '.select2-drop'
+          select2_search product3.name, from: I18n.t(:name_or_sku), dropdown_css: '.select2-drop'
           fill_in 'add_quantity', with: 1
           click_link 'Add'
           within "#sli_1" do
@@ -369,6 +376,7 @@ feature 'Subscriptions' do
 
           it "reports issues encountered during the update" do
             visit edit_admin_subscription_path(subscription)
+            click_button 'edit-products'
 
             within "#sli_0" do
               fill_in 'quantity', with: "1"

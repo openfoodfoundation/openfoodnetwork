@@ -32,6 +32,15 @@ Spree::LineItem.class_eval do
     end
   }
 
+  # Find line items that are from order sorted by variant name and unit value
+  scope :sorted_by_name_and_unit_value, joins(variant: :product).
+    reorder('lower(spree_products.name) asc, lower(spree_variants.display_name) asc, spree_variants.unit_value asc')
+
+  scope :from_order_cycle, lambda { |order_cycle|
+    joins(order: :order_cycle).
+      where('order_cycles.id = ?', order_cycle)
+  }
+
   scope :supplied_by, lambda { |enterprise|
     joins(:product).
       where('spree_products.supplier_id = ?', enterprise)
@@ -131,7 +140,9 @@ Spree::LineItem.class_eval do
 
   # MONKEYPATCH of Spree method
   # Enables scoping of variant to hub/shop, so we check stock against relevant overrides if they exist
+  # Also skips stock check if requested quantity is zero
   def sufficient_stock?
+    return true if quantity == 0 # This line added
     scoper.scope(variant) # This line added
     return true if Spree::Config[:allow_backorders]
     if new_record? || !order.completed?

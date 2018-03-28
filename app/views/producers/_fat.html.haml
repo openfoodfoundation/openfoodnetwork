@@ -9,6 +9,7 @@
       %p.text-small{ "ng-bind" => "::producer.description"}
     %div.show-for-medium-up{"ng-if" => "::producer.description.length==0"}
       %label &nbsp;
+      %img.right.show-for-medium-up{"ng-src" => "{{::producer.logo}}" }
 
   .columns.small-12.medium-5.large-5.fat
 

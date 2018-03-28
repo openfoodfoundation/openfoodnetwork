@@ -34,7 +34,7 @@
 
   .row{'ng-init' => "tos_required=#{Spree::Config.enterprises_require_tos}" }
     %hr
-    .small-12.columns{'ng-hide' => '!tos_required' }
+    .small-12.medium-6.columns{'ng-hide' => '!tos_required' }
       %p.tos-message
         #{t(:enterprise_tos_message)}
         %a{href: ContentConfig.footer_tos_url, target: "_blank" } #{t(:enterprise_tos_link_text)}
@@ -42,5 +42,5 @@
         %input{ type: 'checkbox', name: 'accept_terms', id: 'accept_terms', ng: { model: "tos_accepted" } }
           %label{for: "accept_terms"} #{t(:enterprise_tos_agree)}
 
-    .small-12.columns
+    .small-12.medium-6.columns
       %input.button.primary.left{ type: "button", value: "{{'registration_action' | t}}", ng: { click: "select('details')", disabled: "tos_required && !tos_accepted", model: "tos_accepted"} }

@@ -11,42 +11,42 @@
     %table.no-borders
       %tr
         %td{style: 'width: 30%'}
-          {{ 'spree.firstname' | t }}
+          {{ 'first_name' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'firstname', required: true, ng: { model: 'address.firstname'} }
       %tr
         %td
-          {{ 'spree.lastname' | t }}
+          {{ 'last_name' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'lastname', required: true, ng: { model: 'address.lastname'} }
       %tr
         %td
-          {{ 'spree.street_address' | t }}
+          {{ 'address' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'address1', required: true, ng: { model: 'address.address1'} }
       %tr
         %td
-          {{ 'spree.street_address_1' | t }}
+          {{ 'address2' | t }}
         %td
           %input{ type: 'text', name: 'address2', ng: { model: 'address.address2'} }
       %tr
         %td
-          {{ 'spree.city' | t }}
+          {{ 'city' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'city', required: true, ng: { model: 'address.city'} }
       %tr
         %td
-          {{ 'spree.zipcode' | t }}
+          {{ 'postcode' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'zipcode', required: true, ng: { model: 'address.zipcode'} }
       %tr
         %td
-          {{ 'spree.country' | t }}
+          {{ 'country' | t }}
           %span.required *
         %td
           %input.ofn-select2.fullwidth#country_id{ type: 'number',
@@ -55,7 +55,7 @@
           data: 'availableCountries', ng: { model: 'address.country_id' } }
       %tr
         %td
-          {{ 'spree.state' | t }}
+          {{ 'state' | t }}
           %span.required *
         %td
           %input.ofn-select2.fullwidth#state_id{ type: 'number',
@@ -65,7 +65,7 @@
 
       %tr
         %td
-          {{ 'spree.phone' | t }}
+          {{ 'phone' | t }}
           %span.required *
         %td
           %input{ type: 'text', name: 'phone', required: true, ng: { model: 'address.phone'} }

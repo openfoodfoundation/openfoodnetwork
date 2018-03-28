@@ -64,6 +64,8 @@ en:
         completed_at: Completed At
         number: Number
         email: Customer E-Mail
+      spree/payment:
+        amount: Amount
     errors:
       models:
         spree/user:
@@ -99,6 +101,8 @@ en:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       failed_to_send: "An error occurred whilst sending your confirmation email."
       resend_confirmation_email: "Resend confirmation email."
+      confirmed: "Thanks for confirming your email! You can now log in."
+      not_confirmed: "Your email address could not be confirmed. Perhaps you have already completed this step?"
     user_registrations:
       spree_user:
        signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
@@ -107,17 +111,13 @@ en:
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
       unconfirmed: "You have to confirm your account before continuing."
-    enterprise_confirmations:
-      enterprise:
-        confirmed: Thank you, your email address has been confirmed.
-        not_confirmed: Your email address could not be confirmed. Perhaps you have already completed this step?
-        confirmation_sent: "Confirmation email sent!"
-        confirmation_not_sent: "Could not send a confirmation email."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
       subject: "%{enterprise} is now on %{sitename}"
+    invite_manager:
+      subject: "%{enterprise} has invited you to be a manager"
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
@@ -269,6 +269,7 @@ en:
     phone: Phone
     price: Price
     producer: Producer
+    image: Image
     product: Product
     quantity: Quantity
     schedule: Schedule
@@ -440,6 +441,20 @@ en:
 
     products:
       unit_name_placeholder: 'eg. bunches'
+      bulk_edit:
+        unit: Unit
+        display_as: Display As
+        category: Category
+        tax_category: Tax Category
+        inherits_properties?: Inherits Properties?
+        available_on: Available On
+        av_on: "Av. On"
+        upload_an_image: Upload an image
+      product_search_keywords: Product Search Keywords
+      product_search_tip: Type words to help search your products in the shops. Use space to separate each keyword.
+      SEO_keywords: SEO Keywords
+      seo_tip: Type words to help search your products in the web. Use space to separate each keyword.
+      Search: Search
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
@@ -447,7 +462,6 @@ en:
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
       product_distributions: "Product Distributions"
       group_buy_options: "Group Buy Options"
-      seo: "SEO"
       back_to_products_list: "Back to products list"
 
     variant_overrides:
@@ -500,6 +514,7 @@ en:
         max_fulfilled_units: "Max Fulfilled Units"
         order_error: "Some errors must be resolved before you can update orders.\nAny fields with red borders contain errors."
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
+      select_variant: "Select a variant"
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
@@ -659,6 +674,9 @@ en:
           notifications_note: 'Note: A new email address may need to be confirmed prior to use'
           managers: Managers
           managers_tip: The other users with permission to manage this enterprise.
+          invite_manager: "Invite Manager"
+          invite_manager_tip: "Invite an unregistered user to sign up and become a manager of this enterprise."
+          add_unregistered_user: "Add an unregistered user"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
       actions:
@@ -718,6 +736,9 @@ en:
         welcome_text: You have successfully created a
         next_step: Next step
         choose_starting_point: 'Choose your starting point:'
+      invite_manager:
+        user_already_exists: "User already exists"
+        error: "Something went wrong"
     order_cycles:
       edit:
         advanced_settings: Advanced Settings
@@ -910,6 +931,12 @@ en:
         allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
         credit_card: Credit Card
         no_cards_available: No cards available
+      loading_flash:
+        loading: LOADING SUBSCRIPTIONS
+      review:
+        details: Details
+        address: Address
+        products: Products
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
@@ -921,6 +948,7 @@ en:
       confirm_unpause_msg: Are you sure you want to unpause this subscription?
       unpause_failure_msg: 'Sorry, unpausing failed!'
       confirm_cancel_open_orders_msg: "Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?"
+      resume_canceled_orders_msg: "Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown."
       yes_cancel_them: Cancel them
       no_keep_them: Keep them
       yes_i_am_sure: Yes, I'm sure
@@ -1306,6 +1334,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   If you are a producer or food enterprise, we are excited to have you as a part of the network."
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
 
+  invite_email:
+    greeting: "Hello!"
+    invited_to_manage: "You have been invited to manage %{enterprise} on %{instance}."
+    confirm_your_email: "You will receive an email shortly to confirm your registration."
+    set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
+    mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information, or you can contact %{instance} at %{instance_email}."
+
   producer_mail_greeting: "Dear"
   producer_mail_text_before: "We now have all the consumer orders for the next food drop."
   producer_mail_order_text: "Here is a summary of the orders for your products:"
@@ -1597,6 +1632,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   reset_password: "Reset password"
   registration_greeting: "Greetings!"
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
+  update_and_recalculate_fees: "Update And Recalculate Fees"
   enterprise:
     registration:
       modal:
@@ -2120,10 +2156,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   unsaved_changes_confirmation: "Unsaved changes will be lost. Continue anyway?"
   one_product_unsaved: "Changes to one product remain unsaved."
   products_unsaved: "Changes to %{n} products remain unsaved."
-  add_manager: "Add a manager"
   is_already_manager: "is already a manager!"
   no_change_to_save: " No change to save"
-  add_manager: "Add a manager"
+  user_invited: "%{email} has been invited to manage this enterprise"
+  add_manager: "Add an existing user"
   users:  "Users"
   about: "About"
   images: "Images"
@@ -2135,6 +2171,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   social: "Social"
   business_details: "Business Details"
   properties: "Properties"
+  shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
   payment_method_fee: "Transaction fee"
@@ -2185,6 +2222,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
+  back_to_orders_list: "Back to order list"
+  order_information: "Order Information"
+  date_completed: "Date Completed"
+  amount: "Amount"
+  state_names:
+    ready: Ready
+    pending: Pending
+    shipped: Shipped
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'
@@ -2203,8 +2248,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
     admin:
+      enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
         got_it: Got it
+        close: "Close"
+        invite: "Invite"
+        invite_title: "Invite an unregistered user"
         tag_rule_help:
           title: Tag Rules
           overview: Overview
@@ -2362,6 +2411,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     customers:
       select_shop: 'Please select a shop first'
       could_not_create: Sorry! Could not create
+    subscriptions:
+      closes: closes
+      closed: closed
+      close_date_not_set: Close date not set
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
@@ -2372,6 +2425,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     # TODO: remove 'account_updated' key once we get to Spree 2.0
     account_updated: "Account updated!"
     my_account: "My account"
+    date: "Date"
+    time: "Time"
     admin:
       orders:
         invoice:

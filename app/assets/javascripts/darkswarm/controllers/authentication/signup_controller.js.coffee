@@ -8,7 +8,7 @@ Darkswarm.controller "SignupCtrl", ($scope, $http, $window, $location, Redirecti
     password: null
 
   $scope.submit = ->
-    $http.post("/user/spree_user", {spree_user: $scope.spree_user}).success (data)->
+    $http.post("/user/spree_user", {spree_user: $scope.spree_user, return_url: $location.absUrl()}).success (data)->
       $scope.errors = {email: null, password: null}
       $scope.messages = t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
     .error (data) ->

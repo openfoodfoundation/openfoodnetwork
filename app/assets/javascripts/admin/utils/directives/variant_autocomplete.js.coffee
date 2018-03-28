@@ -12,7 +12,7 @@ angular.module("admin.utils").directive "variantAutocomplete", ($timeout) ->
       if Spree.routes
         element.parent().children(".options_placeholder").attr "id", element.parent().data("index")
         element.select2
-          placeholder: "Select a variant"
+          placeholder: t('admin.orders.select_variant')
           minimumInputLength: 3
           quietMillis: 300
           ajax:

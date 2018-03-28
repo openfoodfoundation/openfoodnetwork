@@ -301,7 +301,7 @@ feature %q{
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let(:distributor3) { create(:distributor_enterprise, name: 'Yet Another Distributor') }
-    let(:enterprise_user) { create_enterprise_user }
+    let(:enterprise_user) { create_enterprise_user(enterprise_limit: 1) }
     let!(:er) { create(:enterprise_relationship, parent: distributor3, child: distributor1, permissions_list: [:edit_profile]) }
 
     before(:each) do
@@ -312,7 +312,7 @@ feature %q{
     end
 
     context "when I have reached my enterprise ownership limit" do
-      it "does not display the link to create a new enterprise" do
+      it "shows a 'limit reached' modal message when trying to create a new enterprise" do
         supplier1.reload
         enterprise_user.owned_enterprises.push [supplier1]
 
@@ -320,7 +320,13 @@ feature %q{
 
         page.should have_content supplier1.name
         page.should have_content distributor1.name
-        expect(find("#content-header")).to_not have_link "New Enterprise"
+
+        within 'li#new_product_link' do
+          expect(page).to have_link 'New Enterprise', href: '#'
+          click_link 'New Enterprise'
+        end
+
+        expect(page).to have_content I18n.t('js.admin.enterprise_limit_reached', contact_email: ContentConfig.footer_email)
       end
     end
 

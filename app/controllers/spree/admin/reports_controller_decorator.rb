@@ -208,8 +208,7 @@ Spree::Admin::ReportsController.class_eval do
     # My suppliers and any suppliers supplying products I distribute
     @suppliers = permissions.visible_enterprises_for_order_reports.is_primary_producer
 
-    @order_cycles = OrderCycle.active_or_complete.
-      involving_managed_distributors_of(spree_current_user).order('orders_close_at DESC')
+    @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
 
     @report_types = report_types[:orders_and_fulfillment]
     @report_type = params[:report_type]

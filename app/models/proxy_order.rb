@@ -1,3 +1,7 @@
+# Each Subscription has many ProxyOrders, one for each OrderCycle to which the Subscription applies
+# Proxy pattern allows for deferral of initialization until absolutely required
+# This reduces the need to keep Orders in sync with their parent Subscriptions
+
 class ProxyOrder < ActiveRecord::Base
   belongs_to :order, class_name: 'Spree::Order', dependent: :destroy
   belongs_to :subscription
@@ -5,10 +9,12 @@ class ProxyOrder < ActiveRecord::Base
 
   delegate :number, :completed_at, :total, to: :order, allow_nil: true
 
+  scope :active, -> { joins(:order_cycle).merge(OrderCycle.active) }
   scope :closed, -> { joins(:order_cycle).merge(OrderCycle.closed) }
   scope :not_closed, -> { joins(:order_cycle).merge(OrderCycle.not_closed) }
+  scope :canceled, -> { where('proxy_orders.canceled_at IS NOT NULL') }
   scope :not_canceled, -> { where('proxy_orders.canceled_at IS NULL') }
-  scope :placed_and_open, -> { joins(:order).not_closed.where(spree_orders: { state: 'complete' }) }
+  scope :placed_and_open, -> { joins(:order).not_closed.where(spree_orders: { state: ['complete', 'resumed'] }) }
 
   def state
     # NOTE: the order is important here
@@ -42,21 +48,8 @@ class ProxyOrder < ActiveRecord::Base
 
   def initialise_order!
     return order if order.present?
-    create_order!(
-      customer_id: subscription.customer_id,
-      email: subscription.customer.email,
-      order_cycle_id: order_cycle_id,
-      distributor_id: subscription.shop_id,
-      shipping_method_id: subscription.shipping_method_id
-    )
-    order.update_attribute(:user, subscription.customer.user)
-    subscription.subscription_line_items.each do |sli|
-      order.line_items.build(variant_id: sli.variant_id, quantity: sli.quantity, skip_stock_check: true)
-    end
-    order.update_attributes(bill_address: subscription.bill_address.dup, ship_address: subscription.ship_address.dup)
-    order.update_distribution_charge!
-    order.payments.create(payment_method_id: subscription.payment_method_id, amount: order.reload.total)
-
+    factory = OrderFactory.new(order_attrs, skip_stock_check: true)
+    self.order = factory.create
     save!
     order
   end
@@ -74,5 +67,17 @@ class ProxyOrder < ActiveRecord::Base
   def cart?
     order.andand.state == 'complete' &&
       order_cycle.orders_close_at > Time.zone.now
+  end
+
+  def order_attrs
+    attrs = subscription.attributes.slice("customer_id", "payment_method_id", "shipping_method_id")
+    attrs[:distributor_id] = subscription.shop_id
+    attrs[:order_cycle_id] = order_cycle_id
+    attrs[:bill_address_attributes] = subscription.bill_address.attributes.except("id")
+    attrs[:ship_address_attributes] = subscription.ship_address.attributes.except("id")
+    attrs[:line_items] = subscription.subscription_line_items.map do |sli|
+      { variant_id: sli.variant_id, quantity: sli.quantity }
+    end
+    attrs
   end
 end

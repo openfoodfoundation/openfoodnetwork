@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require_relative "../lib/open_food_network/i18n_config"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -23,6 +24,13 @@ module Openfoodnetwork
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
     end
+
+    # Activate the Skylight agent in staging. You need to provision the
+    # SKYLIGHT_AUTHENTICATION env var in your OFN instance for this to work.
+    #
+    # Check https://github.com/openfoodfoundation/openfoodnetwork/pull/2070 for
+    # details
+    config.skylight.environments += ["staging"]
 
     # Settings dependent on locale
     #
@@ -97,9 +105,8 @@ module Openfoodnetwork
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = ENV["LOCALE"] || ENV["I18N_LOCALE"] || "en"
-    config.i18n.available_locales = ENV["AVAILABLE_LOCALES"].andand.split(/[\s,]/).andand.map(&:strip) || []
-    config.i18n.available_locales = (config.i18n.available_locales + [config.i18n.default_locale, 'en']).uniq
+    config.i18n.default_locale = OpenFoodNetwork::I18nConfig.default_locale
+    config.i18n.available_locales = OpenFoodNetwork::I18nConfig.available_locales
     I18n.locale = config.i18n.locale = config.i18n.default_locale
 
     # Setting this to true causes a performance regression in Rails 3.2.17

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180204235108) do
+ActiveRecord::Schema.define(:version => 20180316034336) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -319,10 +319,8 @@ ActiveRecord::Schema.define(:version => 20180204235108) do
     t.datetime "orders_open_at"
     t.datetime "orders_close_at"
     t.integer  "coordinator_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.datetime "standing_orders_placed_at"
-    t.datetime "standing_orders_confirmed_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "producer_properties", :force => true do |t|
@@ -1029,7 +1027,7 @@ ActiveRecord::Schema.define(:version => 20180204235108) do
     t.string   "spree_api_key",          :limit => 48
     t.datetime "reset_password_sent_at"
     t.string   "api_key",                :limit => 40
-    t.integer  "enterprise_limit",                     :default => 1, :null => false
+    t.integer  "enterprise_limit",                     :default => 5, :null => false
     t.string   "locale",                 :limit => 5
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
@@ -1104,20 +1102,22 @@ ActiveRecord::Schema.define(:version => 20180204235108) do
   add_index "subscription_line_items", ["variant_id"], :name => "index_subscription_line_items_on_variant_id"
 
   create_table "subscriptions", :force => true do |t|
-    t.integer  "shop_id",            :null => false
-    t.integer  "customer_id",        :null => false
-    t.integer  "schedule_id",        :null => false
-    t.integer  "payment_method_id",  :null => false
-    t.integer  "shipping_method_id", :null => false
+    t.integer  "shop_id",                                             :null => false
+    t.integer  "customer_id",                                         :null => false
+    t.integer  "schedule_id",                                         :null => false
+    t.integer  "payment_method_id",                                   :null => false
+    t.integer  "shipping_method_id",                                  :null => false
     t.datetime "begins_at"
     t.datetime "ends_at"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.integer  "bill_address_id",    :null => false
-    t.integer  "ship_address_id",    :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
+    t.integer  "bill_address_id",                                     :null => false
+    t.integer  "ship_address_id",                                     :null => false
     t.datetime "canceled_at"
     t.datetime "paused_at"
     t.integer  "credit_card_id"
+    t.decimal  "shipping_fee_estimate", :precision => 8, :scale => 2
+    t.decimal  "payment_fee_estimate",  :precision => 8, :scale => 2
   end
 
   add_index "subscriptions", ["bill_address_id"], :name => "index_subscriptions_on_bill_address_id"

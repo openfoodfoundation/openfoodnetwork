@@ -12,12 +12,14 @@ class ProducerMailer < Spree::BaseMailer
 
     subject = "[#{Spree::Config.site_name}] #{I18n.t('producer_mailer.order_cycle.subject', producer: producer.name)}"
 
-    if has_orders? order_cycle, producer
-      mail(to: @producer.contact.email,
-           from: from_address,
-           subject: subject,
-           reply_to: @coordinator.contact.email,
-           cc: @coordinator.contact.email)
+    if has_orders?(order_cycle, producer)
+      mail(
+        to: @producer.contact.email,
+        from: from_address,
+        subject: subject,
+        reply_to: @coordinator.contact.email,
+        cc: @coordinator.contact.email
+      )
     end
   end
 
@@ -30,8 +32,8 @@ class ProducerMailer < Spree::BaseMailer
 
   def line_items_from(order_cycle, producer)
     Spree::LineItem.
-      joins(:order => :order_cycle, :variant => :product).
-      where('order_cycles.id = ?', order_cycle).
+      from_order_cycle(order_cycle).
+      sorted_by_name_and_unit_value.
       merge(Spree::Product.in_supplier(producer)).
       merge(Spree::Order.by_state('complete'))
   end

@@ -11,7 +11,7 @@
       %th.text-right.total
         %span= t(:total)
   %tbody{"data-hook" => ""}
-    - order.line_items.each do |item|
+    - order.line_items.sorted_by_name_and_unit_value.each do |item|
       %tr.line_item{"data-hook" => "order_details_line_item_row", class: "variant-#{item.variant.id}" }
         %td(data-hook = "order_item_description")
 

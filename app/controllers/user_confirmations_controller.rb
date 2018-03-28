@@ -25,14 +25,25 @@ class UserConfirmationsController < DeviseController
   def show
     self.resource = resource_class.confirm_by_token(params[:confirmation_token])
 
-    if is_navigational_format?
+    respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource) }
+  end
+
+  protected
+
+  def after_confirmation_path_for(resource)
+    result =
       if resource.errors.empty?
-        set_flash_message(:success, :confirmed)
+        'confirmed'
       else
-        set_flash_message(:error, :not_confirmed)
+        'not_confirmed'
       end
+
+    if resource.reset_password_token.present?
+      return spree.edit_spree_user_password_path(reset_password_token: resource.reset_password_token)
     end
 
-    respond_with_navigational(resource){ redirect_to login_path }
+    path = (session[:confirmation_return_url] || login_path).to_s
+    path += path.include?('?') ? '&' : '?'
+    path + "validation=#{result}"
   end
 end

@@ -6,6 +6,7 @@ class UserRegistrationsController < Spree::UserRegistrationsController
     @user = build_resource(params[:spree_user])
     if resource.save
       session[:spree_user_signup] = true
+      session[:confirmation_return_url] = params[:return_url]
       associate_user
 
       respond_to do |format|

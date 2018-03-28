@@ -1,4 +1,4 @@
-Darkswarm.controller "LoginCtrl", ($scope, $http, $window, AuthenticationService, Redirections, Loading) ->
+Darkswarm.controller "LoginCtrl", ($scope, $timeout, $location, $http, $window, AuthenticationService, Redirections, Loading) ->
   $scope.path = "/login"
 
   $scope.submit = ->
@@ -18,3 +18,10 @@ Darkswarm.controller "LoginCtrl", ($scope, $http, $window, AuthenticationService
       $scope.messages = t('devise.confirmations.send_instructions')
     .error (data) ->
       $scope.errors = t('devise.confirmations.failed_to_send')
+
+  $timeout ->
+    if angular.isDefined($location.search()['validation'])
+      if $location.search()['validation'] == 'confirmed'
+        $scope.messages = t('devise.confirmations.confirmed')
+      if $location.search()['validation'] == 'not_confirmed'
+        $scope.errors = t('devise.confirmations.not_confirmed')

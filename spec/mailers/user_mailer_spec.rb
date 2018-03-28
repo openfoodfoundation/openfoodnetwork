@@ -11,6 +11,8 @@ describe Spree::UserMailer do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
+
+    Spree::MailMethod.create!(environment: 'test')
   end
 
   it "sends an email when given a user" do
