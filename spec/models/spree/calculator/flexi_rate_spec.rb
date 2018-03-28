@@ -1,19 +1,29 @@
 require 'spec_helper'
 
 describe Spree::Calculator::FlexiRate do
-  let(:calculator_first) { Spree::Calculator::FlexiRate.new(preferred_first_item: 2, preferred_additional_item: 1, preferred_max_items: 3.0) }
-  let(:calculator_second) { Spree::Calculator::FlexiRate.new(preferred_first_item: 2, preferred_additional_item: 1, preferred_max_items: 5.0) }
+  let(:line_item) { instance_double(Spree::LineItem, amount: 10, quantity: quantity) }
+  let(:calculator) do
+    Spree::Calculator::FlexiRate.new(
+      preferred_first_item: 2,
+      preferred_additional_item: 1,
+      preferred_max_items: 3
+    )
+  end
 
-  let(:line_item) { instance_double(Spree::LineItem, amount: 10, quantity: 4) }
+  context 'when nb of items ordered is above preferred max' do
+   let(:quantity) { 4.0 }
 
-  describe "computing for a single line item" do
-    it "returns the first item rate when quantity is above max" do
-      expect(calculator_first.compute(line_item).round(2)).to eq(4.0)
-    end
+   it "returns the first item rate" do
+     expect(calculator.compute(line_item).round(2)).to eq(4.0)
+   end
+  end
 
-    it "returns the first item rate when quantity is below max" do
-      expect(calculator_second.compute(line_item).round(2)).to eq(5.0)
-    end
+  context 'when nb of items ordered is below preferred max' do
+   let(:quantity) { 2.0 }
+
+   it "returns the first item rate" do
+     expect(calculator.compute(line_item).round(2)).to eq(3.0)
+   end
   end
 
   it "allows creation of new object with all the attributes" do
