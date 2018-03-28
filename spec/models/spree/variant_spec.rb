@@ -21,23 +21,6 @@ module Spree
         Spree::Variant.not_deleted.should_not include v_deleted
       end
 
-      describe "finding variants in stock" do
-        before do
-          p = create(:product, on_hand: 0)
-          @v_in_stock = create(:variant, product: p)
-          @v_on_demand = create(:variant, product: p, on_demand: true)
-          @v_no_stock = create(:variant, product: p)
-
-          @v_in_stock.update_attribute(:count_on_hand, 1)
-          @v_on_demand.update_attribute(:count_on_hand, 0)
-          @v_no_stock.update_attribute(:count_on_hand, 0)
-        end
-
-        it "returns variants in stock or on demand, but not those that are neither" do
-          Variant.where(is_master: false).in_stock.should match_array [@v_in_stock, @v_on_demand]
-        end
-      end
-
       describe "finding variants in a distributor" do
         let!(:d1) { create(:distributor_enterprise) }
         let!(:d2) { create(:distributor_enterprise) }

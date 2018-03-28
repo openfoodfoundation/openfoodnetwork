@@ -34,7 +34,6 @@ Spree::Variant.class_eval do
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
 
   scope :not_deleted, where(deleted_at: nil)
-  scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
   scope :in_order_cycle, lambda { |order_cycle|
     with_order_cycles_inner.
       merge(Exchange.outgoing).
