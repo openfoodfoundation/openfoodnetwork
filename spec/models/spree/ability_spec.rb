@@ -445,8 +445,8 @@ module Spree
           user
         end
 
-        let(:oc1) { create(:simple_order_cycle, {coordinator: d1}) }
-        let(:oc2) { create(:simple_order_cycle) }
+        let(:oc1) { create(:simple_order_cycle, coordinator: d1) }
+        let(:oc2) { create(:simple_order_cycle, coordinator: FactoryGirl.create(:distributor_enterprise)) }
 
         it "should be able to read/write OrderCycles they are the co-ordinator of" do
           is_expected.to have_ability([:admin, :index, :read, :edit, :update, :bulk_update, :clone, :destroy], for: oc1)
