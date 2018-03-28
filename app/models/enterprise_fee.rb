@@ -19,7 +19,7 @@ class EnterpriseFee < ActiveRecord::Base
   attr_accessible :enterprise_id, :fee_type, :name, :tax_category_id, :calculator_type, :inherits_tax_category
 
   FEE_TYPES = %w(packing transport admin sales fundraising)
-  PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate']
+  PER_ORDER_CALCULATORS = ['Spree::Calculator::FlatRate', 'Spree::Calculator::FlexiRate', 'Spree::Calculator::PriceSack']
 
 
   validates_inclusion_of :fee_type, :in => FEE_TYPES

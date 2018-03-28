@@ -9,10 +9,20 @@ describe Spree::Calculator::PriceSack do
     calculator
   end
 
-  let(:line_item) { build(:line_item, price: 1, quantity: 2) }
+  let(:line_item) { build(:line_item, price: price, quantity: 2) }
 
-  it "computes with a line item object" do
-    calculator.compute(line_item)
+  context 'when the order amount is below preferred minimal' do
+    let(:price) { 2 }
+    it "computes with a line item object" do
+      expect(calculator.compute(line_item)).to eq(10)
+    end
+  end
+
+  context 'when the order amount is above preferred minimal' do
+    let(:price) { 6 }
+    it "computes with a line item object" do
+      expect(calculator.compute(line_item)).to eq(1)
+    end
   end
 
   context "extends LocalizedNumber" do
