@@ -13,13 +13,13 @@ module Spree
     end
 
     def compute(object)
-      min = self.preferred_minimal_amount.to_i
+      min = preferred_minimal_amount.to_i
       order_amount = line_items_for(object).map { |x| x.price * x.quantity }.sum
 
       if order_amount < min
-        cost = preferred_normal_amount
+        cost = preferred_normal_amount.to_i
       elsif order_amount >= min
-        cost = preferred_discount_amount
+        cost = preferred_discount_amount.to_i
       end
 
       cost
