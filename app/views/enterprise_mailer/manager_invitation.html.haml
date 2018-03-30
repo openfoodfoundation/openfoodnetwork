@@ -4,9 +4,9 @@
   = t('invite_email.invited_to_manage', enterprise: @enterprise.name, instance: @instance)
 
 %p
-  = t('invite_email.confirm_your_email')
+  = t('invite_email.confirm_your_email', enterprise: @enterprise.name)
 %p
-  = t('invite_email.mistakenly_sent', owner_email: @enterprise.owner.email, instance: @instance, instance_email: @instance_email)
+  = t('invite_email.mistakenly_sent', owner_email: @enterprise.owner.email)
 
 %p
   = t :email_help

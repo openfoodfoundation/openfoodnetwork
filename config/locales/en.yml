@@ -1341,9 +1341,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   invite_email:
     greeting: "Hello!"
     invited_to_manage: "You have been invited to manage %{enterprise} on %{instance}."
-    confirm_your_email: "You will receive an email shortly to confirm your registration."
+    confirm_your_email: "You should have received or will soon receive an email with a confirmation link. You won’t be able to access %{enterprise}'s profile until you have confirmed your email."
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
-    mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information, or you can contact %{instance} at %{instance_email}."
+    mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
 
   producer_mail_greeting: "Dear"
   producer_mail_text_before: "We now have all the consumer orders for the next food drop."
