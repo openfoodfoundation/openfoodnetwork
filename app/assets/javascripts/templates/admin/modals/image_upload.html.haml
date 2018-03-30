@@ -6,5 +6,5 @@
     %img.spinner{ src: "/assets/spinning-circles.svg", ng: { hide: "!imageUploader.isUploading" }}
     %img.preview{ng: {src: "{{imagePreview}}", class: "{'faded': imageUploader.isUploading}"}}
 
-  %label{for: 'image-upload', class: 'button'} #{t('admin.products.bulk_edit.upload_an_image')}
+  %label{for: 'image-upload', class: 'button'} {{ 'admin.products.bulk_edit.upload_an_image' | t }}
   %input#image-upload{hidden: true, type: 'file', 'nv-file-select' => true, uploader: "imageUploader"}
