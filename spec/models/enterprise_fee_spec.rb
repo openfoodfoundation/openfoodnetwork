@@ -66,7 +66,7 @@ describe EnterpriseFee do
 
   describe "scopes" do
     describe "finding per-item enterprise fees" do
-      it "does not return fees with FlatRate and FlexiRate calculators" do
+      it "does not return fees with FlatRate, FlexiRate and PriceSack calculators" do
         create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
         create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
         create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
@@ -84,7 +84,7 @@ describe EnterpriseFee do
     end
 
     describe "finding per-order enterprise fees" do
-      it "returns fees with FlatRate and FlexiRate calculators" do
+      it "returns fees with FlatRate, FlexiRate and PriceSack calculators" do
         ef1 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
         ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
         ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)

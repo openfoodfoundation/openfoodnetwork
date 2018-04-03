@@ -13,14 +13,14 @@ describe Spree::Calculator::PriceSack do
 
   context 'when the order amount is below preferred minimal' do
     let(:price) { 2 }
-    it "computes with a line item object" do
+    it "uses the preferred normal amount" do
       expect(calculator.compute(line_item)).to eq(10)
     end
   end
 
   context 'when the order amount is above preferred minimal' do
     let(:price) { 6 }
-    it "computes with a line item object" do
+    it "uses the preferred discount amount" do
       expect(calculator.compute(line_item)).to eq(1)
     end
   end
