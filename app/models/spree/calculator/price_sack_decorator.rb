@@ -7,5 +7,9 @@ module Spree
     localize_number :preferred_minimal_amount,
                     :preferred_normal_amount,
                     :preferred_discount_amount
+
+    def self.description
+      I18n.t(:price_sack)
+    end
   end
 end
