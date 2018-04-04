@@ -8,6 +8,8 @@ pt:
         completed_at: Completado em
         number: Número
         email: Email do/a consumidor/a
+      spree/payment:
+        amount: Quantia
     errors:
       models:
         spree/user:
@@ -58,6 +60,8 @@ pt:
       subject: "Por favor confirme o endereço de email da %{enterprise}"
     welcome:
       subject: "%{enterprise} está agora em %{sitename}"
+    invite_manager:
+      subject: "%{enterprise} enviou-lhe um convite para ser gestora/a"
   producer_mailer:
     order_cycle:
       subject: "Relatório de ciclo de encomendas de %{producer}"
@@ -200,6 +204,7 @@ pt:
     phone: Telefone
     price: Preço
     producer: Produtor
+    image: Imagem
     product: Produto
     quantity: Quantidade
     schedule: Horário
@@ -353,6 +358,20 @@ pt:
         manages: gere
     products:
       unit_name_placeholder: 'ex: molho, ramo, etc.'
+      bulk_edit:
+        unit: Unidade
+        display_as: Mostrar como
+        category: Categoria
+        tax_category: Categoria de imposto
+        inherits_properties?: Herda Propriedades?
+        available_on: Disponível em
+        av_on: "Disp. em"
+        upload_an_image: Carregar uma imagem
+      product_search_keywords: Palavras-chave de Pesquisa de Produto
+      product_search_tip: Insira palavras que ajudem a encontrar os seus produtos nas lojas. Use um espaço para separar cada palavra-chave
+      SEO_keywords: Palavras-chave SEO
+      seo_tip: Insira palavras que ajudem a encontrar os seus produtos na web. Use um espaço para separar cada palavra-chave
+      Search: Procurar
       properties:
         property_name: Nome da propriedade
         inherited_property: Propriedade herdada
@@ -360,7 +379,6 @@ pt:
         to_order_tip: "Os itens feitos por encomenda não têm um nível de stock definido, como pão fresco, por exemplo."
       product_distributions: "Distribuições de Produto"
       group_buy_options: "Opções de Compra Colectiva"
-      seo: "SEO"
       back_to_products_list: "Voltar à lista de produtos"
     variant_overrides:
       loading_flash:
@@ -412,6 +430,7 @@ pt:
         max_fulfilled_units: "Máximo de Unidades Completas "
         order_error: "Alguns erros devem ser corrigidos antes de actualizar os pedidos.\nOs campos com bordas vermelhas contêm erros."
         variants_without_unit_value: "AVISO: Algumas variantes não possuem unidade de valor"
+      select_variant: "Selecionar uma variante"
     enterprise:
       select_outgoing_oc_products_from: 'Selecione a saída do ciclo de pedidos  '
     enterprises:
@@ -571,6 +590,9 @@ pt:
           notifications_note: 'Nota: um novo endereço de e-mail pode precisar ser confirmado antes do uso'
           managers: Administradores
           managers_tip: Os outros utilizadores com permissão para gerir esta organização.
+          invite_manager: "Convidar Gestor/a"
+          invite_manager_tip: "Convidar um utilizador não-registado a inscrever-se e tornar-se gestor desta organização."
+          add_unregistered_user: "Adicionar um utilizador não-registado"
           email_confirmed: "Email confirmado"
           email_not_confirmed: "Email não confirmado"
       actions:
@@ -630,6 +652,9 @@ pt:
         welcome_text: Você criou com sucesso uma
         next_step: Próximo passo
         choose_starting_point: 'Escolha o seu ponto de partida:'
+      invite_manager:
+        user_already_exists: "O utilizador já existe"
+        error: "Algo correu mal"
     order_cycles:
       edit:
         advanced_settings: Configurações avançadas
@@ -842,6 +867,9 @@ pt:
         no_subscriptions: Ainda não existem subscrições....
         why_dont_you_add_one: Porque não acrescentar uma? :)
         no_matching_subscriptions: Não foram encontradas subscrições a condizer
+    schedules:
+      destroy:
+        associated_subscriptions_error: Este horário não pode ser eliminado porque tem subscrições associadas
     stripe_connect_settings:
       edit:
         title: "Ligar ao Stripe"
@@ -1109,7 +1137,6 @@ pt:
   email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
   email_community_html: "Também temos um fórum online para discussão sobre a plataforma e os desafios de se manter uma iniciativa de produção e consumo local. Está convidado/a a participar! Estamos constantemente a evoluir e as suas ideias vão ajudar-nos a melhorar.\n%{link}"
   join_community: "Faça parte da comunidade"
-  email_help: "Se tiver quaisquer dificuldades, leia nosso FAQs, navegue no fórum ou crie um post no tópico 'Support' e alguém irá te ajudar!"
   email_confirmation_activate_account: "Antes de podermos activar a sua conta, precisamos de confirmar o seu endereço de email."
   email_confirmation_greeting: "Olá, %{contact}!"
   email_confirmation_profile_created: "Um perfil para %{name} foi criado com sucesso!\nPara ativar seu Perfil precisamos que você confirme seu endereço de email."
@@ -1168,6 +1195,12 @@ pt:
   email_signup_shop_html: "Já pode fazer log in em %{link}."
   email_signup_text: "Obrigada por juntar-se à rede. Se é consumidor/a, vai ficar a conhecer vários produtores fantásticos, pontos de venda incríveis e comidas deliciosas! Se é produtor/a ou uma organização de consumo local, estamos felizes por tê-lo na nossa rede"
   email_signup_help_html: "Dúvidas e comentários são sempre benvindos; você pode usar o botão  <em>Enviar Comentário</em> no site, ou enviar um e-mail para %{email}"
+  invite_email:
+    greeting: "Olá!"
+    invited_to_manage: "Foste convidado/a para gerir %{enterprise} em %{instance}."
+    confirm_your_email: "Deves ter recebido, ou receberás em breve, um email com um link de confirmação. Não vais conseguir aceder ao perfil de %{enterprise} enquanto não tiveres confirmado o teu email. "
+    set_a_password: "Depois ser-te-á pedido que definas uma palavra-passe antes de poderes administrar a organização."
+    mistakenly_sent: "Não tens a certeza porque é que recebeste este email?  Por favor contacta %{owner_email}para mais informação. "
   producer_mail_greeting: "Querido"
   producer_mail_text_before: "Agora temos todos os pedidos do cliente para a próxima entrega."
   producer_mail_order_text: "Aqui está um resumo de pedidos para seus produtos:"
@@ -1430,6 +1463,7 @@ pt:
   password_reset_sent: "Um email foi enviado com instruções para resetar sua senha!"
   reset_password: "Resetar password"
   who_is_managing_enterprise: "Quem é responsável por gerir %{enterprise}? "
+  update_and_recalculate_fees: "Actualizar e Recalcular Taxas"
   enterprise:
     registration:
       modal:
@@ -1941,7 +1975,6 @@ pt:
   products_unsaved: "Modificações para %{n} produtos permanecem não salvas."
   is_already_manager: "já é um gestor!"
   no_change_to_save: "Nenhuma modificação a ser salva"
-  add_manager: "Adicionar um gestor"
   users: "Usuários"
   about: "Sobre"
   images: "Imagens"
@@ -1952,6 +1985,7 @@ pt:
   social: "Social"
   business_details: "Detalhes do negócio"
   properties: "Propriedades"
+  shipping: "Envio"
   shipping_methods: "Métodos de Entrega"
   payment_methods: "Métodos de Pagamento"
   payment_method_fee: "Taxa de transação"
@@ -2002,6 +2036,13 @@ pt:
   order_cycles_email_to_producers_notice: 'Os email a enviar aos produtores foram postos na fila de espera para envio.'
   order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas organizações tem permissão para coordenar um ciclo de encomendas."
   order_cycles_no_permission_to_create_error: "Não tem permissão para criar um ciclo de encomendas coordenado por essa organização."
+  back_to_orders_list: "Voltar à lista de encomendas"
+  order_information: "Informação da Encomenda"
+  date_completed: "Data Conclusão"
+  amount: "Quantia"
+  state_names:
+    ready: Pronto
+    pending: Pendente
   js:
     saving: 'A guardar....'
     changes_saved: 'Alterações guardadas.'
@@ -2198,6 +2239,8 @@ pt:
     email: Email
     account_updated: "Conta actualizada!"
     my_account: "A minha conta"
+    date: "Data"
+    time: "Hora"
     admin:
       orders:
         invoice:
