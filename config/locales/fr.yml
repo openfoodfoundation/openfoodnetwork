@@ -367,6 +367,8 @@ fr:
         available_on: Disponible via
         av_on: "Disp. via"
         upload_an_image: Importer une image
+      product_search_keywords: Mots-clés de recherche produits
+      Search: Rechercher
       properties:
         property_name: Nom du label
         inherited_property: Label producteur appliqué par défaut
@@ -374,7 +376,6 @@ fr:
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
       product_distributions: "Lieux de distribution"
       group_buy_options: "Options d'achat par lot"
-      seo: "Référencement"
       back_to_products_list: "Retour à la liste produits"
     variant_overrides:
       loading_flash:
@@ -1131,7 +1132,6 @@ fr:
   email_admin_html: "Vous pouvez gérer votre compte en vous connectant ici %{link} ou en cliquant sur la roue en haut à droite de la page d'accueil et en sélectionnant Administration."
   email_community_html: "Nous avons aussi un forum de discussion en ligne (en anglais) pour échanger avec la communauté sur des questions liées au logiciel OFN et aux défis de la gestion d'un food hub.  Nous vous invitons à y participer. Nous sommes en constante évolution et vos contributions à ce forum vont façonner les prochaines étapes. %{link}"
   join_community: "Rejoindre la communauté"
-  email_help: "En cas de difficulté, consultez notre FAQ, parcourez le forum (en anglais) ou postez un message dans la section 'Support' et quelqu'un viendra vous aider!"
   email_confirmation_activate_account: "Avant de pouvoir activer votre compte, nous devons nous assurer de la validité de votre adresse email."
   email_confirmation_greeting: "Bonjour %{contact}!"
   email_confirmation_profile_created: "Le profil pour %{name} a été créé avec succès! Pour activer votre Profil nous devons vérifier cette adresse email."
@@ -1193,9 +1193,7 @@ fr:
   invite_email:
     greeting: "Bonjour!"
     invited_to_manage: "Vous avez été invité(e) à gérer %{enterprise} sur %{instance}."
-    confirm_your_email: "Vous avez reçu ou allez recevoir un email avec un lien de confirmation. Vous ne pourrez pas accéder au profil de l'entreprise avant d'avoir confirmé votre email."
     set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
-    mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email? Veuillez contacter %{owner_email} pour toute question."
   producer_mail_greeting: "Cher(ère)"
   producer_mail_text_before: "Nous avons reçu toutes les commandes pour la prochaine livraison."
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
@@ -2036,7 +2034,13 @@ fr:
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
   back_to_orders_list: "Retour à la liste des commandes"
+  order_information: "Info commande"
+  date_completed: "Date d'opération"
   amount: "Montant"
+  state_names:
+    ready: Prêt
+    pending: En attente
+    shipped: Expédié
   js:
     saving: 'Enregistrement en cours...'
     changes_saved: 'Modifications sauvegardées.'
@@ -2058,6 +2062,9 @@ fr:
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
         got_it: J'ai compris
+        close: "Fermer"
+        invite: "Inviter"
+        invite_title: "Inviter un nouvel utilisateur"
         tag_rule_help:
           title: Règles de tag
           overview: Aperçu
@@ -2241,6 +2248,8 @@ fr:
     email: Email
     account_updated: "Compte mis à jour!"
     my_account: "Mon compte"
+    date: "Date"
+    time: "Heure"
     admin:
       orders:
         invoice:
