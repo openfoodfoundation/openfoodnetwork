@@ -1,7 +1,6 @@
 require 'open_food_network/order_cycle_permissions'
 
 module OpenFoodNetwork
-
   # There are two translator classes on the boundary between Angular and Rails: On the Angular side,
   # there is the OrderCycle#dataForSubmit method, and on the Rails side is this class. I think data
   # translation is more a responsibility of Angular, so I'd be inclined to refactor this class to move

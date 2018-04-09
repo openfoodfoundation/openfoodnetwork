@@ -6,7 +6,6 @@ require 'open_food_network/option_value_namer'
 
 module OpenFoodNetwork
   module VariantAndLineItemNaming
-
     # Copied and modified from Spree::Variant
     def options_text
       values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
