@@ -84,15 +84,6 @@ Layout/AlignParameters:
     - 'spec/lib/open_food_network/user_balance_calculator_spec.rb'
     - 'spec/support/request/authentication_workflow.rb'
 
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Layout/CaseIndentation:
-  Exclude:
-    - 'app/models/enterprise.rb'
-    - 'app/models/product_importer.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Layout/ClosingParenthesisIndentation:

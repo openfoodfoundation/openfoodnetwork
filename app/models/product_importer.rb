@@ -364,9 +364,9 @@ class ProductImporter
   def assign_defaults(object, entry)
     @import_settings[entry['supplier_id'].to_s]['defaults'].each do |attribute, setting|
       case setting['mode']
-        when 'overwrite_all'
+      when 'overwrite_all'
           object.assign_attributes(attribute => setting['value'])
-        when 'overwrite_empty'
+      when 'overwrite_empty'
           if object.send(attribute).blank? or (attribute == 'on_hand' and entry['on_hand_nil'])
             object.assign_attributes(attribute => setting['value'])
           end
