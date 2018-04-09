@@ -276,10 +276,17 @@ Spree::Order.class_eval do
       tax_rates = adjustment.tax_rates
       tax_rates_hash = Hash[tax_rates.collect do |tax_rate|
         tax_amount = tax_rates.one? ? adjustment.included_tax : tax_rate.compute_tax(adjustment.amount)
-        [tax_rate.amount, tax_amount]
+        [tax_rate, tax_amount]
       end]
       hash.update(tax_rates_hash) { |_tax_rate, amount1, amount2| amount1 + amount2 }
     end
+  end
+
+  def price_adjustment_totals
+    Hash[tax_adjustment_totals.map do |tax_rate, tax_amount|
+      [tax_rate.name,
+       Spree::Money.new(tax_amount, currency: currency)]
+    end]
   end
 
   def has_taxes_included

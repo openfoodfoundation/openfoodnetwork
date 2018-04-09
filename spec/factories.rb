@@ -87,7 +87,7 @@ FactoryGirl.define do
 
     coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
 
-    ignore do
+    transient do
       suppliers []
       distributors []
       variants []
@@ -148,7 +148,7 @@ FactoryGirl.define do
     shipping_method { create(:shipping_method, distributors: [shop]) }
     begins_at { 1.month.ago }
 
-    ignore do
+    transient do
       with_items false
       with_proxy_orders false
     end
@@ -218,7 +218,7 @@ FactoryGirl.define do
     is_primary_producer false
     sells "any"
 
-    ignore do
+    transient do
       with_payment_and_shipping false
     end
 
@@ -250,7 +250,7 @@ FactoryGirl.define do
   end
 
   factory :enterprise_fee, :class => EnterpriseFee do
-    ignore { amount nil }
+    transient { amount nil }
 
     sequence(:name) { |n| "Enterprise fee #{n}" }
     sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
@@ -295,6 +295,26 @@ FactoryGirl.define do
     distributor { create(:distributor_enterprise) }
   end
 
+  factory :order_with_taxes, parent: :completed_order_with_totals do
+    ignore do
+      product_price 0
+      tax_rate_amount 0
+      tax_rate_name ""
+    end
+
+    distributor { create(:distributor_enterprise) }
+    order_cycle { create(:simple_order_cycle) }
+
+    after(:create) do |order, proxy|
+      order.distributor.update_attribute(:charges_sales_tax, true)
+      Spree::Zone.global.update_attribute(:default_tax, true)
+
+      p = FactoryGirl.create(:taxed_product, zone: Spree::Zone.global, price: proxy.product_price, tax_rate_amount: proxy.tax_rate_amount, tax_rate_name: proxy.tax_rate_name, distributors: [order.distributor])
+      FactoryGirl.create(:line_item, order: order, product: p, price: p.price)
+      order.reload
+    end
+  end
+
   factory :order_with_credit_payment, parent: :completed_order_with_totals do
     distributor { create(:distributor_enterprise)}
     order_cycle { create(:simple_order_cycle) }
@@ -316,7 +336,7 @@ FactoryGirl.define do
   end
 
   factory :completed_order_with_fees, parent: :order_with_totals_and_distribution do
-    ignore do
+    transient do
       shipping_fee 3
       payment_fee 5
     end
@@ -345,8 +365,9 @@ FactoryGirl.define do
   end
 
   factory :taxed_product, :parent => :product do
-    ignore do
+    transient do
       tax_rate_amount 0
+      tax_rate_name ""
       zone nil
     end
 
@@ -354,7 +375,7 @@ FactoryGirl.define do
 
     after(:create) do |product, proxy|
       raise "taxed_product factory requires a zone" unless proxy.zone
-      create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone)
+      create(:tax_rate, amount: proxy.tax_rate_amount, tax_category: product.tax_category, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: proxy.zone, name: proxy.tax_rate_name)
     end
   end
 
@@ -473,7 +494,7 @@ FactoryGirl.modify do
   end
 
   factory :payment do
-    ignore do
+    transient do
       distributor { order.distributor || Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
     end
     payment_method { FactoryGirl.create(:payment_method, distributors: [distributor]) }

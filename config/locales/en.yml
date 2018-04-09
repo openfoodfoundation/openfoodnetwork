@@ -958,6 +958,10 @@ en:
         why_dont_you_add_one: Why don't you add one? :)
         no_matching_subscriptions: No matching subscriptions found
 
+    schedules:
+      destroy:
+        associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1268,7 +1272,6 @@ en:
   email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next.
 %{link}"
   join_community: "Join the community"
-  email_help: "If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!"
   email_confirmation_activate_account: "Before we can activate your new account, we need to confirm your email address."
   email_confirmation_greeting: "Hi, %{contact}!"
   email_confirmation_profile_created: "A profile for %{name} has been successfully created!
@@ -1337,9 +1340,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   invite_email:
     greeting: "Hello!"
     invited_to_manage: "You have been invited to manage %{enterprise} on %{instance}."
-    confirm_your_email: "You will receive an email shortly to confirm your registration."
+    confirm_your_email: "You should have received or will soon receive an email with a confirmation link. You won’t be able to access %{enterprise}'s profile until you have confirmed your email."
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
-    mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information, or you can contact %{instance} at %{instance_email}."
+    mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
 
   producer_mail_greeting: "Dear"
   producer_mail_text_before: "We now have all the consumer orders for the next food drop."
@@ -1885,6 +1888,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   calculator: "Calculator"
   calculator_values: "Calculator values"
   flat_percent_per_item: "Flat Percent (per item)"
+  flat_rate_per_item: "Flat Rate (per item)"
+  flat_rate_per_order: "Flat Rate (per order)"
+  flexible_rate: "Flexible Rate"
+  price_sack: "Price Sack"
   new_order_cycles: "New Order Cycles"
   new_order_cycle: "New Order Cycle"
   select_a_coordinator_for_your_order_cycle: "Select a coordinator for your order cycle"

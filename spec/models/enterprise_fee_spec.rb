@@ -22,7 +22,7 @@ describe EnterpriseFee do
       oc = create(:simple_order_cycle, coordinator_fees: [ef])
 
       ef.destroy
-      oc.reload.coordinator_fee_ids.should be_empty
+      expect(oc.reload.coordinator_fee_ids).to be_empty
     end
 
     it "removes itself from order cycle exchange fees when destroyed" do
@@ -30,7 +30,7 @@ describe EnterpriseFee do
       ex = create(:exchange, order_cycle: oc, enterprise_fees: [ef])
 
       ef.destroy
-      ex.reload.exchange_fee_ids.should be_empty
+      expect(ex.reload.exchange_fee_ids).to be_empty
     end
 
     describe "for tax_category" do
@@ -66,38 +66,38 @@ describe EnterpriseFee do
 
   describe "scopes" do
     describe "finding per-item enterprise fees" do
-      it "does not return fees with FlatRate and FlexiRate calculators" do
+      it "does not return fees with FlatRate, FlexiRate and PriceSack calculators" do
         create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
         create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
+        create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
 
-        EnterpriseFee.per_item.should be_empty
+        expect(EnterpriseFee.per_item).to be_empty
       end
 
       it "returns fees with any other calculator" do
         ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
         ef2 = create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new)
         ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
-        ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
 
-        EnterpriseFee.per_item.should match_array [ef1, ef2, ef3, ef4]
+        expect(EnterpriseFee.per_item).to match_array [ef1, ef2, ef3]
       end
     end
 
     describe "finding per-order enterprise fees" do
-      it "returns fees with FlatRate and FlexiRate calculators" do
+      it "returns fees with FlatRate, FlexiRate and PriceSack calculators" do
         ef1 = create(:enterprise_fee, calculator: Spree::Calculator::FlatRate.new)
         ef2 = create(:enterprise_fee, calculator: Spree::Calculator::FlexiRate.new)
+        ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
 
-        EnterpriseFee.per_order.should match_array [ef1, ef2]
+        expect(EnterpriseFee.per_order).to match_array [ef1, ef2, ef3]
       end
 
       it "does not return fees with any other calculator" do
         ef1 = create(:enterprise_fee, calculator: Spree::Calculator::DefaultTax.new)
         ef2 = create(:enterprise_fee, calculator: Calculator::FlatPercentPerItem.new)
         ef3 = create(:enterprise_fee, calculator: Spree::Calculator::PerItem.new)
-        ef4 = create(:enterprise_fee, calculator: Spree::Calculator::PriceSack.new)
 
-        EnterpriseFee.per_order.should be_empty
+        expect(EnterpriseFee.per_order).to be_empty
       end
     end
   end

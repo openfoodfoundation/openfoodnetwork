@@ -5,5 +5,9 @@ module Spree
     extend Spree::LocalizedNumber
 
     localize_number :preferred_amount
+
+    def self.description
+      I18n.t(:flat_rate_per_order)
+    end
   end
 end

@@ -77,6 +77,21 @@ describe Spree.user_class do
       end.to enqueue_job Delayed::PerformableMethod
       expect(Delayed::Job.last.payload_object.method_name).to eq(:send_on_create_confirmation_instructions_without_delay)
     end
+
+    context "with the the same email as existing customers" do
+      let(:email) { Faker::Internet.email }
+      let(:enterprise1) { create(:enterprise) }
+      let(:enterprise2) { create(:enterprise) }
+      let!(:customer1) { create(:customer, user: nil, email: email, enterprise: enterprise1) }
+      let!(:customer2) { create(:customer, user: nil, email: email, enterprise: enterprise2) }
+      let!(:user) { create(:user, email: email) }
+
+      it "should associate these customers with the created user" do
+        expect(user.customers.reload).to include customer1, customer2
+        expect(user.customer_of(enterprise1)).to be_truthy
+        expect(user.customer_of(enterprise2)).to be_truthy
+      end
+    end
   end
 
   context "confirming email" do
