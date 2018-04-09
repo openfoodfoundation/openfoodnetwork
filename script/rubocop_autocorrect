@@ -1,0 +1,7 @@
+#!/bin/sh
+
+$COP=$1
+
+bundle exec rubocop -a --only "$COP"
+git add -A
+git commit -m "Auto correct Rubocop's ${COP} cop"

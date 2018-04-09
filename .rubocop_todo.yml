@@ -245,16 +245,6 @@ Layout/EmptyLines:
     - 'spec/support/delayed_job_helper.rb'
     - 'spec/support/matchers/table_matchers.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundAccessModifier:
-  Exclude:
-    - 'app/controllers/admin/order_cycles_controller.rb'
-    - 'app/controllers/spree/admin/shipping_methods_controller_decorator.rb'
-    - 'app/helpers/angular_form_builder.rb'
-    - 'spec/helpers/products_helper_spec.rb'
-    - 'spec/support/request/web_helper.rb'
-
 # Offense count: 66
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
