@@ -478,19 +478,6 @@ Layout/LeadingCommentSpace:
     - 'spec/support/matchers/select2_matchers.rb'
     - 'spec/support/request/authentication_workflow.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineArrayBraceLayout:
-  Exclude:
-    - 'lib/open_food_network/customers_report.rb'
-    - 'lib/open_food_network/order_cycle_management_report.rb'
-    - 'lib/open_food_network/orders_and_fulfillments_report.rb'
-    - 'lib/open_food_network/packing_report.rb'
-    - 'lib/open_food_network/xero_invoices_report.rb'
-    - 'spec/archive/features/consumer/checkout_spec.rb'
-
 # Offense count: 44
 # Cop supports --auto-correct.
 Layout/MultilineBlockLayout:

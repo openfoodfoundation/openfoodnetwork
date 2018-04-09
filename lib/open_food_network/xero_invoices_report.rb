@@ -152,8 +152,7 @@ module OpenFoodNetwork
        '',
        Spree::Config.currency,
        '',
-       order.paid? ? I18n.t(:y) : I18n.t(:n)
-      ]
+       order.paid? ? I18n.t(:y) : I18n.t(:n)]
     end
 
     def adjustments(order)

@@ -306,8 +306,7 @@ feature %q{
     within('fieldset#shipping') do
       [@distributor.name,
        @distributor.distributor_info,
-       @distributor.next_collection_at
-      ].each do |value|
+       @distributor.next_collection_at].each do |value|
 
         page.should have_content value
       end
@@ -375,8 +374,7 @@ feature %q{
     within('fieldset#shipping') do
       [@distributor_oc.name,
        @distributor_oc.distributor_info,
-       @distributor_oc.next_collection_at
-      ].each do |value|
+       @distributor_oc.next_collection_at].each do |value|
 
         page.should have_content value
       end

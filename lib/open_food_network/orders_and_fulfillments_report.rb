@@ -36,8 +36,7 @@ module OpenFoodNetwork
           I18n.t(:report_header_ship_street), I18n.t(:report_header_ship_street_2), I18n.t(:report_header_ship_city), I18n.t(:report_header_ship_postcode), I18n.t(:report_header_ship_state),
           I18n.t(:report_header_comments), I18n.t(:report_header_sku),
           I18n.t(:report_header_order_cycle), I18n.t(:report_header_payment_method), I18n.t(:report_header_customer_code), I18n.t(:report_header_tags),
-          I18n.t(:report_header_billing_street), I18n.t(:report_header_billing_street_2), I18n.t(:report_header_billing_city), I18n.t(:report_header_billing_postcode), I18n.t(:report_header_billing_state),
-         ]
+          I18n.t(:report_header_billing_street), I18n.t(:report_header_billing_street_2), I18n.t(:report_header_billing_city), I18n.t(:report_header_billing_postcode), I18n.t(:report_header_billing_state),]
       else
         [I18n.t(:report_header_producer), I18n.t(:report_header_product), I18n.t(:report_header_variant),
           I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
@@ -246,7 +245,8 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.bill_address.andand.address2 },
           proc { |line_items| line_items.first.order.bill_address.andand.city },
           proc { |line_items| line_items.first.order.bill_address.andand.zipcode },
-          proc { |line_items| line_items.first.order.bill_address.andand.state } ]
+          proc { |line_items| line_items.first.order.bill_address.andand.state } 
+]
       else
         [ proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },
