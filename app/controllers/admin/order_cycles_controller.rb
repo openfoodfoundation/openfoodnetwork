@@ -107,6 +107,7 @@ module Admin
 
 
     protected
+
     def collection
       return Enterprise.where("1=0") unless json_request?
       ocs = if params[:as] == "distributor"
@@ -130,6 +131,7 @@ module Admin
     end
 
     private
+
     def load_data_for_index
       if json_request?
         # Split ransack params into all those that currently exist and new ones to limit returned ocs to recent or undated

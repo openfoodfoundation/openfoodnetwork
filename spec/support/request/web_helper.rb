@@ -199,6 +199,7 @@ module WebHelper
   end
 
   private
+
   def wait_for_ajax
     wait_until { page.evaluate_script("$.active") == 0 }
   end

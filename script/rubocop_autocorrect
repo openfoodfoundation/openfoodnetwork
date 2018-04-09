@@ -1,6 +1,8 @@
 #!/bin/sh
 
-$COP=$1
+set -e
+
+COP="$1"
 
 bundle exec rubocop -a --only "$COP"
 git add -A
