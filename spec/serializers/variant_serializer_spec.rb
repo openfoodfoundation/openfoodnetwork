@@ -21,6 +21,6 @@ describe Api::VariantSerializer do
         :price_with_fees,
         :product_name,
         :tag_list # Used to apply tag rules
-      )
+    )
   end
 end

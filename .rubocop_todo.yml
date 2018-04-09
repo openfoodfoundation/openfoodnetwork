@@ -84,13 +84,6 @@ Layout/AlignParameters:
     - 'spec/lib/open_food_network/user_balance_calculator_spec.rb'
     - 'spec/support/request/authentication_workflow.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Layout/ClosingParenthesisIndentation:
-  Exclude:
-    - 'app/overrides/add_capture_order_shortcut.rb'
-    - 'spec/serializers/variant_serializer_spec.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 Layout/CommentIndentation:
