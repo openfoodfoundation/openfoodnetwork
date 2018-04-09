@@ -50,7 +50,7 @@ Darkswarm.controller "ProductsCtrl", ($scope, $filter, $rootScope, Products, Ord
   $scope.appliedPropertiesList = ->
     $scope.activeProperties.map( (property_id) ->
       Properties.properties_by_id[property_id].name
-    ).join(" & ") if $scope.activeProperties?
+    ).join(" " + t('shop.products.filter_properties_or' ) + " ") if $scope.activeProperties?
 
   $scope.clearAll = ->
     $scope.query = ""
