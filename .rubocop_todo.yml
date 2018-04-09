@@ -379,15 +379,6 @@ Layout/ExtraSpacing:
     - 'spec/spec_helper.rb'
     - 'spec/support/request/web_helper.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: consistent, special_for_inner_method_call, special_for_inner_method_call_in_parentheses
-Layout/FirstParameterIndentation:
-  Exclude:
-    - 'lib/open_food_network/permissions.rb'
-    - 'spec/serializers/variant_serializer_spec.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles, IndentationWidth.

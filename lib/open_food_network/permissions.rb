@@ -69,7 +69,7 @@ module OpenFoodNetwork
       granted_distributors = related_enterprises_granted(:add_to_order_cycle, by: managed_enterprises.is_primary_producer)
       produced = Spree::Order.with_line_items_variants_and_products_outer.
         where(
-      "spree_orders.distributor_id IN (?) AND spree_products.supplier_id IN (?)",
+          "spree_orders.distributor_id IN (?) AND spree_products.supplier_id IN (?)",
       granted_distributors,
       related_enterprises_granting(:add_to_order_cycle, to: granted_distributors).merge(managed_enterprises.is_primary_producer)
         ).pluck(:id)

@@ -7,7 +7,7 @@ describe Api::VariantSerializer do
   it "includes the expected attributes" do
     expect(subject.attributes.keys).
     to include(
-        :id,
+      :id,
         :name_to_display,
         :is_master,
         :count_on_hand,
