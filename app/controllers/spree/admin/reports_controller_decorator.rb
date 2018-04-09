@@ -319,9 +319,9 @@ Spree::Admin::ReportsController.class_eval do
     reports[:order_cycle_management][:description] =
       render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: report_types[:order_cycle_management]}).html_safe
     reports[:packing][:description] =
-        render_to_string(partial: 'packing_description', layout: false, locals: {report_types: report_types[:packing]}).html_safe
+      render_to_string(partial: 'packing_description', layout: false, locals: {report_types: report_types[:packing]}).html_safe
     reports[:sales_tax][:description] =
-        render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: report_types[:sales_tax]}).html_safe
+      render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: report_types[:sales_tax]}).html_safe
 
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }

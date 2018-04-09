@@ -386,13 +386,6 @@ Layout/ExtraSpacing:
 Layout/IndentArray:
   EnforcedStyle: consistent
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth.
-Layout/IndentAssignment:
-  Exclude:
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
-
 # Offense count: 52
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
