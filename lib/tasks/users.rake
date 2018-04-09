@@ -75,7 +75,6 @@ namespace :openfoodnetwork do
       ba_country = Spree::Country.find_by_name row[43]
       ba = Spree::Address.create!({firstname: row[35], lastname: row[36], address1: row[37], address2: row[38], city: row[39], zipcode: row[40], phone: row[41], state: ba_state, country: ba_country, created_at: row[44], updated_at: row[45], company: row[46]}, without_protection: true)
       user.update_column :bill_address_id, ba.id
-
     rescue ActiveRecord::RecordInvalid => e
       puts "#{row[2]} - #{e.message}"
     end

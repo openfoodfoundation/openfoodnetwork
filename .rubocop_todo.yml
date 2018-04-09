@@ -336,18 +336,6 @@ Layout/EmptyLinesAroundClassBody:
     - 'lib/open_food_network/rack_request_blocker.rb'
     - 'lib/open_food_network/reports/bulk_coop_report.rb'
 
-# Offense count: 7
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundExceptionHandlingKeywords:
-  Exclude:
-    - 'app/controllers/checkout_controller.rb'
-    - 'app/controllers/enterprises_controller.rb'
-    - 'app/controllers/shop_controller.rb'
-    - 'app/models/spree/adjustment_decorator.rb'
-    - 'app/models/spree/tax_rate_decorator.rb'
-    - 'lib/tasks/users.rake'
-    - 'spec/features/admin/overview_spec.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Layout/EmptyLinesAroundMethodBody:

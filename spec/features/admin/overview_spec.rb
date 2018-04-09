@@ -132,7 +132,6 @@ feature %q{
     expect(Spree::Dash::Config.configured?).to be true
 
     block.call
-
   ensure
     Spree::Dash::Config.preferred_app_id = nil
     Spree::Dash::Config.preferred_site_id = nil

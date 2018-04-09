@@ -18,7 +18,6 @@ class ShopController < BaseController
       products_json = filter(renderer.products_json)
 
       render json: products_json
-
     rescue OpenFoodNetwork::CachedProductsRenderer::NoProducts
       render status: 404, json: ''
     end
