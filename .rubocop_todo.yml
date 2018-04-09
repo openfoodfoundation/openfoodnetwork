@@ -409,14 +409,6 @@ Layout/IndentHash:
     - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
     - 'spec/support/request/authentication_workflow.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: auto_detection, squiggly, active_support, powerpack, unindent
-Layout/IndentHeredoc:
-  Exclude:
-    - 'app/models/content_configuration.rb'
-
 # Offense count: 21
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
