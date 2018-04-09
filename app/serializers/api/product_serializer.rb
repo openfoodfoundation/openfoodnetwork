@@ -27,7 +27,6 @@ class Api::UncachedProductSerializer < ActiveModel::Serializer
     else
       object.master.price_with_fees(options[:current_distributor], options[:current_order_cycle])
     end
-
   end
 end
 

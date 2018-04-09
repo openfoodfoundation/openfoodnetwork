@@ -336,15 +336,6 @@ Layout/EmptyLinesAroundClassBody:
     - 'lib/open_food_network/rack_request_blocker.rb'
     - 'lib/open_food_network/reports/bulk_coop_report.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundMethodBody:
-  Exclude:
-    - 'app/controllers/checkout_controller.rb'
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
-    - 'app/serializers/api/product_serializer.rb'
-    - 'lib/open_food_network/orders_and_fulfillments_report.rb'
-
 # Offense count: 11
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

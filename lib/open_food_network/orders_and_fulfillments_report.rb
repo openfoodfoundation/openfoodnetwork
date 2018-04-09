@@ -43,7 +43,6 @@ module OpenFoodNetwork
           I18n.t(:report_header_amount), I18n.t(:report_header_curr_cost_per_unit), I18n.t(:report_header_total_cost),
           I18n.t(:report_header_status), I18n.t(:report_header_incoming_transport)]
       end
-
     end
 
     def search

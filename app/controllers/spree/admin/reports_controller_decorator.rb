@@ -222,7 +222,6 @@ Spree::Admin::ReportsController.class_eval do
     csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
 
     render_report(@report.header, @table, params[:csv], csv_file_name)
-
   end
 
   def products_and_inventory
