@@ -79,15 +79,16 @@ ActiveRecord::Schema.define(:version => 20180418025217) do
   add_index "coordinator_fees", ["order_cycle_id"], :name => "index_coordinator_fees_on_order_cycle_id"
 
   create_table "customers", :force => true do |t|
-    t.string   "email",           :null => false
-    t.integer  "enterprise_id",   :null => false
+    t.string   "email",                              :null => false
+    t.integer  "enterprise_id",                      :null => false
     t.string   "code"
     t.integer  "user_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "bill_address_id"
     t.integer  "ship_address_id"
     t.string   "name"
+    t.boolean  "allow_charges",   :default => false, :null => false
   end
 
   add_index "customers", ["bill_address_id"], :name => "index_customers_on_bill_address_id"
