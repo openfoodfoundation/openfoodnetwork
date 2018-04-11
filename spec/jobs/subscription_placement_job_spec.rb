@@ -149,7 +149,8 @@ describe SubscriptionPlacementJob do
 
         it "does not place the order, clears, all adjustments, and sends an empty_order email" do
           expect{ job.send(:process, order) }.to_not change{ order.reload.completed_at }.from(nil)
-          expect(order.reload.adjustments).to be_empty
+          expect(order.adjustments).to be_empty
+          expect(order.total).to eq 0
           expect(job).to_not have_received(:send_placement_email)
           expect(job).to have_received(:send_empty_email)
         end

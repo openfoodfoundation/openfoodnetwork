@@ -34,7 +34,7 @@ class SubscriptionPlacementJob
 
     changes = cap_quantity_and_store_changes(order)
     if order.line_items.where('quantity > 0').empty?
-      order.adjustments.destroy_all
+      order.reload.adjustments.destroy_all
       return send_empty_email(order, changes)
     end
 
