@@ -13,15 +13,6 @@ GIT
     custom_error_message (1.1.1)
 
 GIT
-  remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 8d95f4544c682634812becaf50999fba0cd04df0
-  branch: spree-upgrade-intermediate
-  specs:
-    spree_paypal_express (2.0.3)
-      paypal-sdk-merchant (= 1.106.1)
-      spree_core (~> 1.3.99)
-
-GIT
   remote: https://github.com/openfoodfoundation/ofn-qz.git
   revision: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
   ref: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
@@ -30,88 +21,25 @@ GIT
       railties (~> 3.1)
 
 GIT
-  remote: https://github.com/openfoodfoundation/spree.git
-  revision: 86bf87f1b1e1b299edc8cd10a2486e44ba0a3987
-  ref: 86bf87f1b1e1b299edc8cd10a2486e44ba0a3987
-  branch: step-6a
+  remote: https://github.com/spree-contrib/better_spree_paypal_express.git
+  revision: 1206925d1c85bdc4b68b728d6676150ab0785486
+  branch: 2-0-stable
   specs:
-    spree (1.3.99)
-      spree_api (= 1.3.99)
-      spree_backend (= 1.3.99)
-      spree_cmd (= 1.3.99)
-      spree_core (= 1.3.99)
-      spree_dash (= 1.3.99)
-      spree_frontend (= 1.3.99)
-      spree_sample (= 1.3.99)
-    spree_api (1.3.99)
-      rabl (= 0.7.2)
-      spree_core (= 1.3.99)
-      versioncake (= 0.4.0)
-    spree_backend (1.3.99)
-      deface (>= 0.9.0)
-      jquery-rails (~> 2.0)
-      rails (~> 3.2.8)
-      select2-rails (~> 3.2)
-      spree_api (= 1.3.99)
-      spree_core (= 1.3.99)
-      stringex (~> 1.3.2)
-    spree_cmd (1.3.99)
-      thor (>= 0.14.6)
-    spree_core (1.3.99)
-      activemerchant (~> 1.50)
-      acts_as_list (= 0.1.9)
-      awesome_nested_set (= 2.1.5)
-      aws-sdk (~> 1.11.1)
-      cancan (= 1.6.8)
-      deface (>= 0.9.0)
-      ffaker (~> 1.15.0)
-      highline (= 1.6.15)
-      httparty (= 0.9.0)
-      json (>= 1.5.5)
-      kaminari (= 0.13.0)
-      money (= 5.1.0)
-      paperclip (~> 3.0)
-      rails (~> 3.2.13)
-      ransack (= 0.7.2)
-      state_machine (= 1.2.0)
-      stringex (~> 1.3.2)
-      truncate_html (= 0.9.2)
-    spree_dash (1.3.99)
-      httparty (~> 0.9.0)
-      spree_backend (= 1.3.99)
-      spree_frontend (= 1.3.99)
-    spree_frontend (1.3.99)
-      deface (>= 0.9.0)
-      jquery-rails (~> 2.2.1)
-      rails (~> 3.2.8)
-      select2-rails (~> 3.2)
-      spree_api (= 1.3.99)
-      spree_core (= 1.3.99)
-      stringex (~> 1.3.2)
-    spree_sample (1.3.99)
-      spree_core (= 1.3.99)
+    spree_paypal_express (2.0.3)
+      paypal-sdk-merchant (= 1.106.1)
+      spree_core (~> 2.0.3)
 
 GIT
-  remote: https://github.com/openfoodfoundation/spree_auth_devise.git
-  revision: da9eecefc6fe13dedf4c6f3febec79caad839ec3
-  branch: spree-upgrade-intermediate
+  remote: https://github.com/spree/spree_auth_devise.git
+  revision: 0181835fb6ac77a05191d26f6f32a0f4a548d851
+  branch: 2-0-stable
   specs:
     spree_auth_devise (2.0.0)
       devise (~> 2.2.5)
       devise-encryptable (= 0.1.2)
-      spree_backend (~> 1.3.6)
-      spree_core (~> 1.3.6)
-      spree_frontend (~> 1.3.6)
-
-GIT
-  remote: https://github.com/spree/deface.git
-  revision: 1110a1336252109bce7f98f9182042e0bc2930ae
-  ref: 1110a13
-  specs:
-    deface (1.0.0.rc3)
-      colorize (>= 0.5.8)
-      nokogiri (~> 1.6.0)
-      rails (>= 3.1)
+      spree_backend (~> 2.0.0)
+      spree_core (~> 2.0.0)
+      spree_frontend (~> 2.0.0)
 
 GIT
   remote: https://github.com/spree/spree_i18n.git
@@ -152,10 +80,16 @@ GEM
       sprockets (~> 2.2.1)
     active_model_serializers (0.8.3)
       activemodel (>= 3.0)
-    activemerchant (1.71.0)
-      activesupport (>= 3.2.14, < 6.x)
+    active_utils (2.2.3)
+      activesupport (>= 2.3.11)
+      i18n
+    activemerchant (1.43.3)
+      active_utils (~> 2.0, >= 2.0.1)
+      activesupport (>= 2.3.14, < 5.0.0)
       builder (>= 2.1.2, < 4.0.0)
-      i18n (>= 0.6.9)
+      i18n (~> 0.5)
+      json (~> 1.7)
+      money (< 7.0.0)
       nokogiri (~> 1.4)
     activemodel (3.2.21)
       activesupport (= 3.2.21)
@@ -173,7 +107,8 @@ GEM
       multi_json (~> 1.0)
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
-    acts_as_list (0.1.9)
+    acts_as_list (0.3.0)
+      activerecord (>= 3.0)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     andand (1.3.3)
@@ -186,10 +121,10 @@ GEM
     arel (3.0.3)
     ast (2.3.0)
     atomic (1.1.99)
-    awesome_nested_set (2.1.5)
+    awesome_nested_set (2.1.6)
       activerecord (>= 3.0.0)
     awesome_print (1.0.2)
-    aws-sdk (1.11.1)
+    aws-sdk (1.31.3)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
@@ -200,7 +135,9 @@ GEM
     bugsnag (4.1.0)
     builder (3.0.4)
     byebug (9.0.6)
-    cancan (1.6.8)
+    cancan (1.6.10)
+    canonical-rails (0.1.0)
+      rails (>= 3.1, < 5.1)
     capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -210,7 +147,7 @@ GEM
       xpath (>= 2.0, < 4.0)
     chronic (0.10.2)
     chunky_png (1.3.4)
-    climate_control (0.1.0)
+    climate_control (0.2.0)
     cliver (0.3.2)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -253,6 +190,10 @@ GEM
       fog (~> 1.0)
       rails (~> 3.0)
     debugger-linecache (1.2.0)
+    deface (1.0.0)
+      colorize (>= 0.5.8)
+      nokogiri (~> 1.6.0)
+      rails (>= 3.1)
     delayed_job (4.1.4)
       activesupport (>= 3.0, < 5.2)
     delayed_job_active_record (4.1.2)
@@ -281,7 +222,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    ffaker (1.15.0)
+    ffaker (1.22.1)
     ffi (1.9.18)
     figaro (0.7.0)
       bundler (~> 1.0)
@@ -432,12 +373,11 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     haml (4.0.4)
       tilt
-    highline (1.6.15)
+    highline (1.6.21)
     hike (1.2.3)
     http_parser.rb (0.6.0)
-    httparty (0.9.0)
-      multi_json (~> 1.0)
-      multi_xml
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
     i18n (0.6.11)
     i18n-js (3.0.0)
       i18n (~> 0.6, >= 0.6.6)
@@ -448,18 +388,19 @@ GEM
     ipaddress (0.8.0)
     journey (1.0.4)
     jquery-migrate-rails (1.2.1)
-    jquery-rails (2.2.2)
+    jquery-rails (3.0.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.5)
+      railties (>= 3.1.0)
     json (1.8.6)
     json_spec (1.1.5)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
     jwt (1.5.4)
-    kaminari (0.13.0)
+    kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-      railties (>= 3.0.0)
     kgio (2.9.3)
     knapsack (1.16.0)
       rake
@@ -481,8 +422,10 @@ GEM
     mini_portile2 (2.1.0)
     momentjs-rails (2.5.1)
       railties (>= 3.1)
-    money (5.1.0)
-      i18n (~> 0.6.0)
+    monetize (1.7.0)
+      money (~> 6.9)
+    money (6.11.0)
+      i18n (>= 0.6.4, < 1.1)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -504,14 +447,17 @@ GEM
     paper_trail (3.0.8)
       activerecord (>= 3.0, < 5.0)
       activesupport (>= 3.0, < 5.0)
-    paperclip (3.5.4)
+    paperclip (3.4.2)
       activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-      cocaine (~> 0.5.3)
+      cocaine (~> 0.5.0)
       mime-types
     parallel (1.11.2)
     parallel_tests (2.14.1)
       parallel
+    paranoia (1.3.4)
+      activerecord (~> 3.1)
     parser (2.4.0.0)
       ast (~> 2.2)
     paypal-sdk-core (0.2.10)
@@ -524,8 +470,8 @@ GEM
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
-    polyamorous (0.5.0)
-      activerecord (~> 3.0)
+    polyamorous (0.6.4)
+      activerecord (>= 3.0)
     polyglot (0.3.5)
     powerpack (0.1.1)
     pry (0.11.2)
@@ -535,9 +481,8 @@ GEM
       byebug (>= 9.0, < 9.1)
       pry (~> 0.10)
     public_suffix (3.0.0)
-    rabl (0.7.2)
+    rabl (0.9.3)
       activesupport (>= 2.3.14)
-      multi_json (~> 1.0)
     rack (1.4.7)
     rack-cache (1.7.0)
       rack (>= 0.4)
@@ -569,10 +514,10 @@ GEM
       rake
     raindrops (0.13.0)
     rake (10.5.0)
-    ransack (0.7.2)
-      actionpack (~> 3.0)
-      activerecord (~> 3.0)
-      polyamorous (~> 0.5.0)
+    ransack (1.1.0)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      polyamorous (~> 0.6.0)
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
@@ -635,7 +580,8 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    select2-rails (3.5.10)
+    select2-rails (3.4.9)
+      sass-rails
       thor (~> 0.14)
     shellany (0.0.1)
     shoulda-matchers (2.8.0)
@@ -644,13 +590,62 @@ GEM
       activesupport (>= 3.0.0)
     spinjs-rails (1.3)
       rails (>= 3.1)
+    spree (2.0.13)
+      spree_api (= 2.0.13)
+      spree_backend (= 2.0.13)
+      spree_cmd (= 2.0.13)
+      spree_core (= 2.0.13)
+      spree_frontend (= 2.0.13)
+      spree_sample (= 2.0.13)
+    spree_api (2.0.13)
+      rabl (= 0.9.3)
+      spree_core (= 2.0.13)
+      versioncake (~> 1.2.0)
+    spree_backend (2.0.13)
+      jquery-rails (~> 3.0.0)
+      jquery-ui-rails (~> 4.0.0)
+      select2-rails (~> 3.4.7)
+      spree_api (= 2.0.13)
+      spree_core (= 2.0.13)
+    spree_cmd (2.0.13)
+      thor (~> 0.14)
+    spree_core (2.0.13)
+      activemerchant (~> 1.43.1)
+      acts_as_list (= 0.3.0)
+      awesome_nested_set (= 2.1.6)
+      aws-sdk (= 1.31.3)
+      cancan (~> 1.6.10)
+      deface (= 1.0.0)
+      ffaker (~> 1.22.0)
+      highline (~> 1.6.18)
+      httparty (~> 0.11)
+      json (~> 1.7)
+      kaminari (~> 0.15.0)
+      monetize
+      paperclip (~> 3.4.1)
+      paranoia (~> 1.3)
+      rails (~> 3.2.21)
+      ransack (~> 1.1.0)
+      state_machine (= 1.2.0)
+      stringex (~> 1.5.1)
+      truncate_html (= 0.9.2)
+    spree_frontend (2.0.13)
+      canonical-rails
+      deface (>= 0.9.0)
+      jquery-rails (~> 3.0.0)
+      rails (~> 3.2.13)
+      spree_api (= 2.0.13)
+      spree_core (= 2.0.13)
+      stringex (~> 1.5.1)
+    spree_sample (2.0.13)
+      spree_core (= 2.0.13)
     sprockets (2.2.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     state_machine (1.2.0)
-    stringex (1.3.3)
+    stringex (1.5.1)
     stripe (3.3.1)
       faraday (~> 0.9)
     therubyracer (0.12.0)
@@ -679,10 +674,11 @@ GEM
       rack
       unicorn
     uuidtools (2.1.5)
-    versioncake (0.4.0)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
+    versioncake (1.2.0)
+      actionpack (>= 3.2)
+      activesupport (>= 3.2)
+      railties (>= 3.2)
+      tzinfo
     warden (1.2.7)
       rack (>= 1.0)
     webmock (1.8.11)
@@ -705,7 +701,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  activemerchant (~> 1.71.0)
+  activemerchant
   acts-as-taggable-on (~> 3.4)
   andand
   angular-rails-templates (~> 0.2.0)
@@ -727,7 +723,7 @@ DEPENDENCIES
   database_cleaner (= 0.7.1)
   db2fog
   debugger-linecache
-  deface!
+  deface (= 1.0.0)
   delayed_job_active_record
   diffy
   eventmachine (>= 1.2.3)
@@ -749,7 +745,7 @@ DEPENDENCIES
   i18n-js (~> 3.0.0)
   immigrant
   jquery-migrate-rails
-  jquery-rails
+  jquery-rails (= 3.0.0)
   json_spec (~> 1.1.4)
   jwt (~> 1.5)
   knapsack
@@ -762,7 +758,7 @@ DEPENDENCIES
   ofn-qz!
   oj
   paper_trail (~> 3.0.8)
-  paperclip
+  paperclip (~> 3.4.1)
   parallel_tests
   pg
   poltergeist (>= 1.16.0)
@@ -785,7 +781,7 @@ DEPENDENCIES
   simple_form!
   skylight (< 2.0)
   spinjs-rails
-  spree!
+  spree (= 2.0.13)
   spree_auth_devise!
   spree_i18n!
   spree_paypal_express!
