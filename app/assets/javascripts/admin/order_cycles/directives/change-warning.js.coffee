@@ -4,16 +4,16 @@ angular.module("admin.orderCycles").directive "changeWarning", (ConfirmDialog) -
     orderCycle: '=changeWarning'
   link: (scope, element, attrs) ->
     acknowledged = false
-    count = scope.orderCycle.subscriptions_count
     cancel = 'admin.order_cycles.date_warning.cancel'
     proceed = 'admin.order_cycles.date_warning.proceed'
-    msg = t('admin.order_cycles.date_warning.msg', n: count)
+    msg = 'admin.order_cycles.date_warning.msg'
     options = { cancel: t(cancel), confirm: t(proceed) }
 
     element.focus ->
+      count = scope.orderCycle.subscriptions_count
       return if acknowledged
       return if moment(scope.orderCycle.orders_close_at).isBefore()
       return if count < 1
-      ConfirmDialog.open('info', msg, options).then ->
+      ConfirmDialog.open('info', t(msg, n: count), options).then ->
         acknowledged = true
         element.siblings('img').trigger('click')
