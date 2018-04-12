@@ -2,7 +2,7 @@
   %legend
     = t :products_distributor
   .distributor-details
-    - order = current_order(false)
+    - order = current_order({ create_order_if_necessary: false })
     - if order.andand.distributor.present?
       = render 'enterprises/distributor_details', :distributor => order.distributor
     - else

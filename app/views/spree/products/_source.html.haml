@@ -10,7 +10,7 @@
     %h6.product-section-title= t(:distributors)
     %table#product-source.table-display{:width => "100%"}
       %tbody
-        - order = current_order(false)
+        - order = current_order({ create_order_if_necessary: false })
         - validator = DistributionChangeValidator.new(order)
         - Enterprise.distributing_products(@product).each do |distributor|
           - if !order.nil? && distributor == order.distributor
