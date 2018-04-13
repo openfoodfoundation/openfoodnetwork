@@ -18,7 +18,7 @@ Spree::OrdersController.class_eval do
 
   # Patching to redirect to shop if order is empty
   def edit
-    @order = current_order({ create_order_if_necessary: true })
+    @order = current_order( create_order_if_necessary: true )
     @insufficient_stock_lines = @order.insufficient_stock_lines
 
     if @order.line_items.empty?
@@ -78,7 +78,7 @@ Spree::OrdersController.class_eval do
     # callbacks on Spree::Adjustment and then manually invoke Spree::Order#update! on success.
 
     Spree::Adjustment.without_callbacks do
-      populator = Spree::OrderPopulator.new(current_order({ create_order_if_necessary: true }), current_currency)
+      populator = Spree::OrderPopulator.new(current_order( create_order_if_necessary: true ), current_currency)
 
       if populator.populate(params.slice(:products, :variants, :quantity), true)
         fire_event('spree.cart.add')
@@ -127,7 +127,7 @@ Spree::OrdersController.class_eval do
   end
 
   def update_distribution
-    @order = current_order({ create_order_if_necessary: true })
+    @order = current_order( create_order_if_necessary: true )
 
     if params[:commit] == 'Choose Hub'
       distributor = Enterprise.is_distributor.find params[:order][:distributor_id]
@@ -159,7 +159,7 @@ Spree::OrdersController.class_eval do
   end
 
   def clear
-    @order = current_order({ create_order_if_necessary: true })
+    @order = current_order( create_order_if_necessary: true )
     @order.empty!
     @order.set_order_cycle! nil
     redirect_to main_app.enterprise_path(@order.distributor.id)
