@@ -1,5 +1,5 @@
 .add-to-cart
-  - order = current_order( create_order_if_necessary: false )
+  - order = current_order(create_order_if_necessary: false)
 
   - if product_out_of_stock
     = content_tag('strong', t(:out_of_stock))

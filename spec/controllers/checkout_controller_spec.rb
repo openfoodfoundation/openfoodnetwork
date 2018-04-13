@@ -94,7 +94,7 @@ describe CheckoutController, type: :controller do
       end
 
       it "sets the new order's token to the same as the old order" do
-        order = controller.current_order( create_order_if_necessary: true )
+        order = controller.current_order(create_order_if_necessary: true)
         spree_post :update, order: {}
         expect(controller.current_order.token).to eq order.token
       end
