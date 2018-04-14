@@ -1,5 +1,7 @@
 module Admin
   class ManagerInvitationsController < Spree::Admin::BaseController
+    authorize_resource class: false
+
     def create
       @email = params[:email]
       @enterprise = Enterprise.find(params[:enterprise_id])

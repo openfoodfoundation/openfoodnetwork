@@ -127,6 +127,8 @@ class AbilityDecorator
     can [:admin, :connect, :status, :destroy], StripeAccount do |stripe_account|
       user.enterprises.include? stripe_account.enterprise
     end
+
+    can [:admin, :create], :manager_invitation
   end
 
   def add_product_management_abilities(user)
