@@ -758,7 +758,6 @@ feature %q{
 
         # Shows default image when no image set
         expect(page).to have_css "img[src='/assets/noimage/mini.png']"
-        @old_thumb_src = page.find("a.image-modal img")['src']
 
         # Click image
         page.find("a.image-modal").trigger('click')
@@ -770,7 +769,6 @@ feature %q{
       within "div.reveal-modal.product-image-upload" do
         # Shows preview of current image
         expect(page).to have_css "img.preview"
-        old_image_src = page.find("img.preview")['src']
 
         # Upload a new image file
         attach_file 'image-upload', Rails.root.join("public/500.jpg"), visible: false
@@ -778,14 +776,6 @@ feature %q{
         # Shows spinner whilst loading
         expect(page).to have_css "img.spinner", visible: true
         expect(page).to_not have_css "img.spinner", visible: true
-
-        # Shows new image when finished
-        expect(page).to have_css "img.preview"
-        @new_image_src = page.find("img.preview")['src']
-        expect(old_image_src) != @new_image_src
-
-        # Close modal
-        page.find("a.close-reveal-modal").click
       end
 
       expect(page).to_not have_selector "div.reveal-modal.product-image-upload"
@@ -799,24 +789,6 @@ feature %q{
       end
 
       expect(page).to have_selector "div.reveal-modal.product-image-upload"
-
-      within "div.reveal-modal.product-image-upload" do
-        # Upload another image file
-        attach_file 'image-upload', Rails.root.join("public/422.jpg"), visible: false
-
-        # Overwrites existing image
-        expect(page).to have_css "img.preview"
-        newer_image_src = page.find("img.preview")['src']
-        expect(@new_image_src) != newer_image_src
-
-        page.find("a.close-reveal-modal").click
-      end
-
-      within "table#listing_products tr#p_#{product.id}" do
-        # Newer thumbnail is shown in image column
-        newer_thumb_src = page.find("a.image-modal img")['src']
-        expect(@new_thumb_src) != newer_thumb_src
-      end
     end
   end
 end
