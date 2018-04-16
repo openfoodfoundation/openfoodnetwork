@@ -1,5 +1,4 @@
 module OpenFoodNetwork
-
   class OrderGrouper
     def initialize(rules, column_constructors)
       @rules = rules

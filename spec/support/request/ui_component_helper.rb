@@ -1,5 +1,4 @@
 module UIComponentHelper
-
   def browse_as_medium
     page.driver.resize(1024, 768)
   end

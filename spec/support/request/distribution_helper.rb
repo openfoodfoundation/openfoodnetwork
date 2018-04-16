@@ -1,6 +1,5 @@
 module OpenFoodNetwork
   module DistributionHelper
-
     def select_distribution(distributor, order_cycle=nil)
       create_enterprise_group_for distributor
       visit root_path

@@ -3,7 +3,6 @@ require "cancan/matchers"
 require 'support/cancan_helper'
 
 module Spree
-
   describe User do
 
     describe "broad permissions" do

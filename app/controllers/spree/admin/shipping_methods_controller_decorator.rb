@@ -44,6 +44,7 @@ module Spree
       end
 
       private
+
       def load_hubs
         @hubs = Enterprise.managed_by(spree_current_user).is_distributor.sort_by!{ |d| [(@shipping_method.has_distributor? d) ? 0 : 1, d.name] }
       end
