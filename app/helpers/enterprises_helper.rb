@@ -2,7 +2,7 @@ require 'open_food_network/available_payment_method_filter'
 
 module EnterprisesHelper
   def current_distributor
-    @current_distributor ||= current_order(false).andand.distributor
+    @current_distributor ||= current_order(create_order_if_necessary: false).andand.distributor
   end
 
   def current_customer

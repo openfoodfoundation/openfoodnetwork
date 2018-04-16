@@ -11,17 +11,17 @@ gem 'i18n-js', '~> 3.0.0'
 gem 'nokogiri', '>= 1.6.7.1'
 
 gem 'pg'
-gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: '86bf87f1b1e1b299edc8cd10a2486e44ba0a3987'
+gem 'spree', '2.0.13'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
-gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch: 'spree-upgrade-intermediate'
+gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
-gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "spree-upgrade-intermediate"
-#gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "1-3-stable"
+# gem 'spree_paypal_express'
+gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "2-0-stable"
 gem 'stripe', '~> 3.3.1'
-gem 'activemerchant', '~> 1.71.0'
+gem 'activemerchant'
 
 gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
 gem 'jwt', '~> 1.5'
@@ -49,8 +49,8 @@ gem 'representative_view'
 gem 'rabl'
 gem "active_model_serializers"
 gem 'oj'
-gem 'deface', github: 'spree/deface', ref: '1110a13'
-gem 'paperclip'
+gem 'deface', '1.0.0'
+gem 'paperclip', '~> 3.4.1'
 gem 'dalli'
 gem 'geocoder'
 gem 'gmaps4rails'
@@ -95,7 +95,7 @@ end
 gem "foundation-rails"
 gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper', branch: "rails3"
 
-gem 'jquery-rails'
+gem 'jquery-rails', '3.0.0'
 gem 'jquery-migrate-rails'
 gem 'css_splitter'
 

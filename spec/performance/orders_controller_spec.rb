@@ -4,7 +4,7 @@ describe Spree::OrdersController, type: :controller, performance: true do
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: products.map { |p| p.variants.first }) }
   let(:products) { (0...num_products).map { create(:product) } }
-  let(:order) { subject.current_order(true) }
+  let(:order) { subject.current_order(create_order_if_necessary: true) }
   let(:num_products) { 20 }
 
   before do
