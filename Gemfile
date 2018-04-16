@@ -18,7 +18,6 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 # Our branch contains two changes
 # - Pass customer email and phone number to PayPal (merged to upstream master)
 # - Change type of password from string to password to hide it in the form
-# gem 'spree_paypal_express'
 gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "2-0-stable"
 gem 'stripe', '~> 3.3.1'
 gem 'activemerchant'
