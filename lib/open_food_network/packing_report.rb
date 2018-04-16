@@ -81,8 +81,8 @@ module OpenFoodNetwork
           { group_by: proc { |line_item| line_item.product },
           sort_by: proc { |product| product.name } },
           { group_by: proc { |line_item| line_item.full_name },
-            sort_by: proc { |full_name| full_name } } 
-]
+            sort_by: proc { |full_name| full_name } }
+        ]
       else
 #        supplier_rows orders
 #        table_items = supplier_rows orders

@@ -245,8 +245,8 @@ module OpenFoodNetwork
           proc { |line_items| line_items.first.order.bill_address.andand.address2 },
           proc { |line_items| line_items.first.order.bill_address.andand.city },
           proc { |line_items| line_items.first.order.bill_address.andand.zipcode },
-          proc { |line_items| line_items.first.order.bill_address.andand.state } 
-]
+          proc { |line_items| line_items.first.order.bill_address.andand.state }
+        ]
       else
         [ proc { |line_items| line_items.first.product.supplier.name },
           proc { |line_items| line_items.first.product.name },

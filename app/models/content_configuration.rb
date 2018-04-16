@@ -46,9 +46,9 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   preference :community_forum_url, :string, default: "http://community.openfoodnetwork.org"
   preference :footer_links_md, :text, default: <<-EOS.strip_heredoc
     [Newsletter sign-up](/)
-    
+
     [News](/)
-    
+
     [Calendar](/)
 EOS
 

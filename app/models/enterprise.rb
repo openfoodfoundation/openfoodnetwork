@@ -290,17 +290,17 @@ class Enterprise < ActiveRecord::Base
     # Map backend cases to front end cases.
     case cat
     when "producer_sells_any"
-        :producer_hub # Producer hub who sells own and others produce and supplies other hubs.
+      :producer_hub # Producer hub who sells own and others produce and supplies other hubs.
     when "producer_sells_own"
-        :producer_shop # Producer with shopfront and supplies other hubs.
+      :producer_shop # Producer with shopfront and supplies other hubs.
     when "producer_sells_none"
-        :producer # Producer only supplies through others.
+      :producer # Producer only supplies through others.
     when "non_producer_sells_any"
-        :hub # Hub selling others products in order cycles.
+      :hub # Hub selling others products in order cycles.
     when "non_producer_sells_own"
-        :hub # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
+      :hub # Wholesaler selling through own shopfront? Does this need a separate name? Should it exist?
     when "non_producer_sells_none"
-        :hub_profile # Hub selling outside the system.
+      :hub_profile # Hub selling outside the system.
     end
   end
 
