@@ -2,5 +2,7 @@ angular.module("ofn.admin").controller "ProductImageCtrl", ($scope, ProductImage
   $scope.imageUploader = ProductImageService.imageUploader
   $scope.imagePreview = ProductImageService.imagePreview
 
-  $scope.$watch 'product.image_url', (newValue) ->
-    $scope.imagePreview = newValue if newValue
+  $scope.$watch 'product.image_url', (newValue, oldValue) ->
+    if newValue != oldValue
+      $scope.imagePreview = newValue
+      $scope.uploadModal.close()
