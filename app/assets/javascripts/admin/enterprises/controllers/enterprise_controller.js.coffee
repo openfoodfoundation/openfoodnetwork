@@ -11,6 +11,9 @@ angular.module("admin.enterprises")
     $scope.$watch 'enterprise_form.$dirty', (newValue) ->
       StatusMessage.display 'notice', t('admin.unsaved_changes') if newValue
 
+    $scope.$watch 'newManager', (newValue) ->
+      $scope.addManager($scope.newManager) if newValue
+
     $scope.setFormDirty = ->
       $scope.$apply ->
         $scope.enterprise_form.$setDirty()
@@ -47,7 +50,7 @@ angular.module("admin.enterprises")
           email: manager.email
           confirmed: manager.confirmed
         if (user for user in $scope.Enterprise.users when user.id == manager.id).length == 0
-          $scope.Enterprise.users.push manager
+          $scope.Enterprise.users.splice(0, 0, manager)
           $scope.enterprise_form?.$setDirty()
         else
           alert ("#{manager.email}" + " " + t("is_already_manager"))
