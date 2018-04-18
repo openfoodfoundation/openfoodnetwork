@@ -14,7 +14,7 @@ Darkswarm.controller "LoginCtrl", ($scope, $timeout, $location, $http, $window, 
       $scope.user_unconfirmed = (data.error == t('devise.failure.unconfirmed'))
 
   $scope.resend_confirmation = ->
-    $http.post("/user/spree_user/confirmation", {spree_user: $scope.spree_user}).success (data)->
+    $http.post("/user/spree_user/confirmation", {spree_user: $scope.spree_user, return_url: $location.absUrl()}).success (data)->
       $scope.messages = t('devise.confirmations.send_instructions')
     .error (data) ->
       $scope.errors = t('devise.confirmations.failed_to_send')

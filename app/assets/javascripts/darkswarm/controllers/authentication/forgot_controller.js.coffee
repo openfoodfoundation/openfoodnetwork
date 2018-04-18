@@ -13,7 +13,7 @@ Darkswarm.controller "ForgotCtrl", ($scope, $http, $location, AuthenticationServ
       $scope.errors = t 'email_required'
 
   $scope.resend_confirmation = ->
-    $http.post("/user/spree_user/confirmation", {spree_user: $scope.spree_user}).success (data)->
+    $http.post("/user/spree_user/confirmation", {spree_user: $scope.spree_user, return_url: $location.absUrl()}).success (data)->
       $scope.messages = t('devise.confirmations.send_instructions')
     .error (data) ->
       $scope.errors = t('devise.confirmations.failed_to_send')

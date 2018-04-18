@@ -8,6 +8,7 @@ class UserConfirmationsController < DeviseController
 
   # POST /resource/confirmation
   def create
+    set_return_url if params.key? :return_url
     self.resource = resource_class.send_confirmation_instructions(resource_params)
 
     if is_navigational_format?
@@ -29,6 +30,10 @@ class UserConfirmationsController < DeviseController
   end
 
   protected
+
+  def set_return_url
+    session[:confirmation_return_url] = params[:return_url]
+  end
 
   def after_confirmation_path_for(resource)
     result =
