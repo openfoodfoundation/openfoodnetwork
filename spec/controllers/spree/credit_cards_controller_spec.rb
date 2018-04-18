@@ -69,6 +69,53 @@ describe Spree::CreditCardsController, type: :controller do
     end
   end
 
+  describe "#update" do
+    let(:params) { { format: :json, credit_card: { is_default: true } } }
+    context "when the specified credit card is not found" do
+      before { params[:id] = 123 }
+
+      it "renders a flash error" do
+        put :update, params
+        json_response = JSON.parse(response.body)
+        expect(json_response['flash']['error']).to eq I18n.t(:card_could_not_be_updated)
+      end
+    end
+
+    context "when the specified credit card is found" do
+      let!(:card) { create(:credit_card, gateway_customer_profile_id: 'cus_AZNMJ') }
+      before { params[:id] = card.id }
+
+      context "but the card is not owned by the user" do
+        it "redirects to unauthorized" do
+          put :update, params
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+
+      context "and the card is owned by the user" do
+        before { card.update_attribute(:user_id, user.id) }
+
+        context "when the update completes successfully" do
+          it "renders a serialized copy of the updated card" do
+            expect{ put :update, params }.to change { card.reload.is_default }.to(true)
+            json_response = JSON.parse(response.body)
+            expect(json_response['id']).to eq card.id
+            expect(json_response['is_default']).to eq true
+          end
+        end
+
+        context "when the update fails" do
+          before { params[:credit_card][:month] = 'some illegal month' }
+          it "renders an error" do
+            put :update, params
+            json_response = JSON.parse(response.body)
+            expect(json_response['flash']['error']).to eq I18n.t(:card_could_not_be_updated)
+          end
+        end
+      end
+    end
+  end
+
   describe "#destroy" do
     context "when the specified credit card is not found" do
       let(:params) { { id: 123 } }

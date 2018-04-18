@@ -61,7 +61,7 @@ class AbilityDecorator
       order.user == user
     end
 
-    can [:destroy], Spree::CreditCard do |credit_card|
+    can [:update, :destroy], Spree::CreditCard do |credit_card|
       credit_card.user == user
     end
   end

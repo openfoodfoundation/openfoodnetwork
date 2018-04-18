@@ -1,6 +1,6 @@
 module Api
   class CreditCardSerializer < ActiveModel::Serializer
-    attributes :id, :brand, :number, :expiry, :formatted, :delete_link
+    attributes :id, :brand, :number, :expiry, :formatted, :delete_link, :is_default
 
     def brand
       object.cc_type.capitalize
