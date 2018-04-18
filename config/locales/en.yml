@@ -1628,6 +1628,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   november: "November"
   december: "December"
   email_not_found: "Email address not found"
+  email_unconfirmed: "You must confirm your email address before you can reset your password."
   email_required: "You must provide an email address"
   logging_in: "Hold on a moment, we're logging you in"
   signup_email: "Your email"

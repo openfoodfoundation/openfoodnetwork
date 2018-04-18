@@ -4,6 +4,8 @@ class UserPasswordsController < Spree::UserPasswordsController
   before_filter :set_admin_redirect, only: :edit
 
   def create
+    return if user_unconfirmed?
+
     self.resource = resource_class.send_reset_password_instructions(params[resource_name])
 
     if resource.errors.empty?
@@ -15,7 +17,7 @@ class UserPasswordsController < Spree::UserPasswordsController
           respond_with_navigational(resource) { render :new }
         end
         format.js do
-          render json: resource.errors, status: :unauthorized
+          render json: { error: t('email_not_found') }, status: :not_found
         end
       end
     end
@@ -25,5 +27,14 @@ class UserPasswordsController < Spree::UserPasswordsController
 
   def set_admin_redirect
     session["spree_user_return_to"] = params[:return_to] if params[:return_to]
+  end
+
+  def user_unconfirmed?
+    user = Spree::User.find_by_email(params[:spree_user][:email])
+    if user && !user.confirmed?
+      render json: { error: t('email_unconfirmed') }, status: :unauthorized
+    end
+
+    user && !user.confirmed?
   end
 end
