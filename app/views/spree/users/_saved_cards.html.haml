@@ -3,11 +3,14 @@
     %th= t(:card_type)
     %th= t(:card_number)
     %th= t(:card_expiry_date)
+    %th= t(:default?)
     %th= t(:delete?)
   %tr.card{ id: "card{{ card.id }}", ng: { repeat: "card in savedCreditCards" } }
     %td.brand{ ng: { bind: '::card.brand' } }
     %td.number{ ng: { bind: '::card.number' } }
     %td.expiry{ ng: { bind: '::card.expiry' } }
+    %td.is-default
+      %input{ type: 'radio', name: 'default_card', ng: { model: 'card.is_default', change: 'setDefault(card)', value: "true"} }
     %td.actions
       %a{"rel" => "nofollow", "data-method" => "delete", "ng-href" => "{{card.delete_link}}" }
         = t(:delete)
