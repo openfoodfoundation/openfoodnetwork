@@ -25,7 +25,7 @@ Darkswarm.controller "CheckoutCtrl", ($scope, localStorageService, Checkout, Cur
     if CurrentUser.id
       $scope.validateForm(form)
     else
-      $scope.confirmGuest(true)
+      $scope.ensureUserIsGuest()
 
   $scope.validateForm = (form) ->
     if form.$valid
@@ -33,7 +33,7 @@ Darkswarm.controller "CheckoutCtrl", ($scope, localStorageService, Checkout, Cur
     else
       $scope.$broadcast 'purchaseFormInvalid', form
 
-  $scope.confirmGuest = ->
+  $scope.ensureUserIsGuest = ->
     $http.post("/user/registered_email", {email: $scope.order.email}).success (data)->
       if data.registered == true
         $scope.promptLogin()
