@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# Usage
+#
+# 1. Clean any git unstagged or untracked changes. Consider creating a new branch
+# 2. Remove a cop's exclusion paragraph from the .rubocop_todo.yml
+# 3. Run:
+#
+#   $ ./script/rubocop_autocorrect <removed_cop_name>
+#
+# This will commit all the changes.
+
 set -e
 
 COP="$1"

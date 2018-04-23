@@ -86,13 +86,6 @@ Layout/AlignParameters:
 
 # Offense count: 8
 # Cop supports --auto-correct.
-Layout/CommentIndentation:
-  Exclude:
-    - 'Guardfile'
-    - 'lib/open_food_network/packing_report.rb'
-
-# Offense count: 8
-# Cop supports --auto-correct.
 Layout/ElseAlignment:
   Exclude:
     - 'app/controllers/admin/order_cycles_controller.rb'

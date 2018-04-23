@@ -59,9 +59,6 @@ module OpenFoodNetwork
 
     def rules
       if is_by_customer?
-#        customer_rows orders
-#        table_items = @line_items
-
         [
           { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name } },
@@ -84,9 +81,6 @@ module OpenFoodNetwork
             sort_by: proc { |full_name| full_name } }
         ]
       else
-#        supplier_rows orders
-#        table_items = supplier_rows orders
-#
         [ { group_by: proc { |line_item| line_item.order.distributor },
           sort_by: proc { |distributor| distributor.name } },
           { group_by: proc { |line_item| line_item.product.supplier },
