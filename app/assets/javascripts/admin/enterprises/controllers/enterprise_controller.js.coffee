@@ -50,7 +50,7 @@ angular.module("admin.enterprises")
           email: manager.email
           confirmed: manager.confirmed
         if (user for user in $scope.Enterprise.users when user.id == manager.id).length == 0
-          $scope.Enterprise.users.splice(0, 0, manager)
+          $scope.Enterprise.users.unshift(manager)
           $scope.enterprise_form?.$setDirty()
         else
           alert ("#{manager.email}" + " " + t("is_already_manager"))
