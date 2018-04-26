@@ -311,26 +311,21 @@ Spree::Admin::ReportsController.class_eval do
     ]
     reports = all_reports.map { |report| [report, describe_report(report)] }.to_h
 
-    reports[:orders_and_fulfillment][:description] =
-      render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: report_types[:orders_and_fulfillment]}).html_safe
-    reports[:products_and_inventory][:description] =
-      render_to_string(partial: 'products_and_inventory_description', layout: false, locals: {report_types: report_types[:products_and_inventory]}).html_safe
-    reports[:customers][:description] =
-      render_to_string(partial: 'customers_description', layout: false, locals: {report_types: report_types[:customers]}).html_safe
-    reports[:order_cycle_management][:description] =
-      render_to_string(partial: 'order_cycle_management_description', layout: false, locals: {report_types: report_types[:order_cycle_management]}).html_safe
-    reports[:packing][:description] =
-      render_to_string(partial: 'packing_description', layout: false, locals: {report_types: report_types[:packing]}).html_safe
-    reports[:sales_tax][:description] =
-      render_to_string(partial: 'sales_tax_description', layout: false, locals: {report_types: report_types[:sales_tax]}).html_safe
-
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
   end
 
   def describe_report(report)
     name = I18n.t(:name, scope: [:admin, :reports, report])
-    description = I18n.t(:description, scope: [:admin, :reports, report])
+    description = begin
+      I18n.t!(:description, scope: [:admin, :reports, report])
+    rescue I18n::MissingTranslationData
+      render_to_string(
+        partial: "#{report}_description",
+        layout: false,
+        locals: { report_types: report_types[report] }
+      ).html_safe
+    end
     { name: name, description: description }
   end
 
