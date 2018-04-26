@@ -309,10 +309,8 @@ Spree::Admin::ReportsController.class_eval do
       :xero_invoices,
       :packing
     ]
-    reports = all_reports.map { |report| [report, describe_report(report)] }.to_h
-
-    # Return only reports the user is authorized to view.
-    reports.select { |action| can? action, :report }
+    reports = all_reports.select { |action| can? action, :report }
+    reports.map { |report| [report, describe_report(report)] }.to_h
   end
 
   def describe_report(report)
