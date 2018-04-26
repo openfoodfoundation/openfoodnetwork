@@ -295,20 +295,21 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def authorized_reports
-    reports = {
-      :orders_and_distributors => {:name => I18n.t('admin.reports.orders_and_distributors.name'), :description => I18n.t('admin.reports.orders_and_distributors.description')},
-      :bulk_coop => {:name => I18n.t('admin.reports.bulk_coop.name'), :description => I18n.t('admin.reports.bulk_coop.description')},
-      :payments => {:name => I18n.t('admin.reports.payments.name'), :description => I18n.t('admin.reports.payments.description')},
-      :orders_and_fulfillment => {:name => I18n.t('admin.reports.orders_and_fulfillment.name'), :description => ''},
-      :customers => {:name => I18n.t('admin.reports.customers.name'), :description => ''},
-      :products_and_inventory => {:name => I18n.t('admin.reports.products_and_inventory.name'), :description => ''},
-      :sales_total => {:name => I18n.t('admin.reports.sales_total.name'), :description => I18n.t('admin.reports.sales_total.description')},
-      :users_and_enterprises => {:name => I18n.t('admin.reports.users_and_enterprises.name'), :description => I18n.t('admin.reports.users_and_enterprises.description')},
-      :order_cycle_management => {:name => I18n.t('admin.reports.order_cycle_management.name'), :description => ''},
-      :sales_tax => {:name => I18n.t('admin.reports.sales_tax.name'), :description => ''},
-      :xero_invoices => {:name => I18n.t('admin.reports.xero_invoices.name'), :description => I18n.t('admin.reports.xero_invoices.description')},
-      :packing => {:name => I18n.t('admin.reports.packing.name'), :description => ''}
-    }
+    all_reports = [
+      :orders_and_distributors,
+      :bulk_coop,
+      :payments,
+      :orders_and_fulfillment,
+      :customers,
+      :products_and_inventory,
+      :sales_total,
+      :users_and_enterprises,
+      :order_cycle_management,
+      :sales_tax,
+      :xero_invoices,
+      :packing
+    ]
+    reports = all_reports.map { |report| [report, describe_report(report)] }.to_h
 
     reports[:orders_and_fulfillment][:description] =
       render_to_string(partial: 'orders_and_fulfillment_description', layout: false, locals: {report_types: report_types[:orders_and_fulfillment]}).html_safe
@@ -325,6 +326,12 @@ Spree::Admin::ReportsController.class_eval do
 
     # Return only reports the user is authorized to view.
     reports.select { |action| can? action, :report }
+  end
+
+  def describe_report(report)
+    name = I18n.t(:name, scope: [:admin, :reports, report])
+    description = I18n.t(:description, scope: [:admin, :reports, report])
+    { name: name, description: description }
   end
 
   def timestamp
