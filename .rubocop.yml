@@ -143,7 +143,11 @@ Style/TrailingCommaInArguments:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#styletrailingcommainarguments
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styletrailingcommainliteral
+
+Style/TrailingCommaInHashLiteral:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#styletrailingcommainliteral
 
