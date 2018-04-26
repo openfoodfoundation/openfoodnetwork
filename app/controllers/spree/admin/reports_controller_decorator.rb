@@ -53,13 +53,13 @@ Spree::Admin::ReportsController.class_eval do
     }
   end
 
-  # Overide spree reports list.
+  # Override spree reports list.
   def index
     @reports = authorized_reports
     respond_with(@reports)
   end
 
-  # This action is short because we refactored it like bosses
+  # This action is short because we re-factored it like bosses
   def customers
     @report_types = report_types[:customers]
     @report_type = params[:report_type]
@@ -289,8 +289,8 @@ Spree::Admin::ReportsController.class_eval do
     distributors_of_my_products = Enterprise.with_distributed_products_outer.merge(Spree::Product.in_any_supplier(my_suppliers))
     @distributors = my_distributors | distributors_of_my_products
     # Load suppliers either owned by the user or supplying products their enterprises distribute.
-    suppliers_of_products_I_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
-    @suppliers = my_suppliers | suppliers_of_products_I_distribute
+    suppliers_of_products_i_distribute = my_distributors.map { |d| Spree::Product.in_distributor(d) }.flatten.map(&:supplier).uniq
+    @suppliers = my_suppliers | suppliers_of_products_i_distribute
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
   end
 
