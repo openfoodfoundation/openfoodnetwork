@@ -70,8 +70,8 @@ describe Spree::Admin::ReportsController, type: :controller do
       it "shows all orders in order cycles I coordinate" do
         spree_get :orders_and_fulfillment
 
-        resulting_orders.should     include orderA1, orderA2
-        resulting_orders.should_not include orderB1, orderB2
+        expect(resulting_orders).to     include orderA1, orderA2
+        expect(resulting_orders).not_to include orderB1, orderB2
       end
     end
   end
@@ -84,9 +84,9 @@ describe Spree::Admin::ReportsController, type: :controller do
       it "only shows orders that I have access to" do
         spree_get :orders_and_distributors
 
-        assigns(:search).result.should include(orderA1, orderB1)
-        assigns(:search).result.should_not include(orderA2)
-        assigns(:search).result.should_not include(orderB2)
+        expect(assigns(:search).result).to include(orderA1, orderB1)
+        expect(assigns(:search).result).not_to include(orderA2)
+        expect(assigns(:search).result).not_to include(orderB2)
       end
     end
 
@@ -94,9 +94,9 @@ describe Spree::Admin::ReportsController, type: :controller do
       it "only shows orders that I have access to" do
         spree_get :bulk_coop
 
-        resulting_orders.should     include(orderA1, orderB1)
-        resulting_orders.should_not include(orderA2)
-        resulting_orders.should_not include(orderB2)
+        expect(resulting_orders).to     include(orderA1, orderB1)
+        expect(resulting_orders).not_to include(orderA2)
+        expect(resulting_orders).not_to include(orderB2)
       end
     end
 
@@ -104,9 +104,9 @@ describe Spree::Admin::ReportsController, type: :controller do
       it "only shows orders that I have access to" do
         spree_get :payments
 
-        resulting_orders_prelim.should     include(orderA1, orderB1)
-        resulting_orders_prelim.should_not include(orderA2)
-        resulting_orders_prelim.should_not include(orderB2)
+        expect(resulting_orders_prelim).to     include(orderA1, orderB1)
+        expect(resulting_orders_prelim).not_to include(orderA2)
+        expect(resulting_orders_prelim).not_to include(orderB2)
       end
     end
 
@@ -114,15 +114,15 @@ describe Spree::Admin::ReportsController, type: :controller do
       it "only shows orders that I distribute" do
         spree_get :orders_and_fulfillment
 
-        resulting_orders.should     include orderA1, orderB1
-        resulting_orders.should_not include orderA2, orderB2
+        expect(resulting_orders).to     include orderA1, orderB1
+        expect(resulting_orders).not_to include orderA2, orderB2
       end
 
       it "only shows the selected order cycle" do
         spree_get :orders_and_fulfillment, q: {order_cycle_id_in: [ocA.id.to_s]}
 
-        resulting_orders.should     include(orderA1)
-        resulting_orders.should_not include(orderB1)
+        expect(resulting_orders).to     include(orderA1)
+        expect(resulting_orders).not_to include(orderB1)
       end
     end
   end
@@ -150,8 +150,8 @@ describe Spree::Admin::ReportsController, type: :controller do
         it "only shows product line items that I am supplying" do
           spree_get :bulk_coop
 
-          resulting_products.should     include p1
-          resulting_products.should_not include p2, p3
+          expect(resulting_products).to     include p1
+          expect(resulting_products).not_to include p2, p3
         end
       end
 
@@ -159,7 +159,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         it "shows product line items that I am supplying" do
           spree_get :bulk_coop
 
-          resulting_products.should_not include p1, p2, p3
+          expect(resulting_products).not_to include p1, p2, p3
         end
       end
     end
@@ -173,15 +173,15 @@ describe Spree::Admin::ReportsController, type: :controller do
         it "only shows product line items that I am supplying" do
           spree_get :orders_and_fulfillment
 
-          resulting_products.should     include p1
-          resulting_products.should_not include p2, p3
+          expect(resulting_products).to     include p1
+          expect(resulting_products).not_to include p2, p3
         end
 
         it "only shows the selected order cycle" do
           spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
 
-          resulting_orders_prelim.should     include(orderA1)
-          resulting_orders_prelim.should_not include(orderB1)
+          expect(resulting_orders_prelim).to     include(orderA1)
+          expect(resulting_orders_prelim).not_to include(orderB1)
         end
       end
 
@@ -189,7 +189,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         it "does not show me line_items I supply" do
           spree_get :orders_and_fulfillment
 
-          resulting_products.should_not include p1, p2, p3
+          expect(resulting_products).not_to include p1, p2, p3
         end
       end
     end
@@ -200,32 +200,32 @@ describe Spree::Admin::ReportsController, type: :controller do
 
     it "should build distributors for the current user" do
       spree_get :products_and_inventory
-      assigns(:distributors).should match_array [c1, c2, d1, d2, d3]
+      expect(assigns(:distributors)).to match_array [c1, c2, d1, d2, d3]
     end
 
     it "builds suppliers for the current user" do
       spree_get :products_and_inventory
-      assigns(:suppliers).should match_array [s1, s2, s3]
+      expect(assigns(:suppliers)).to match_array [s1, s2, s3]
     end
 
     it "builds order cycles for the current user" do
       spree_get :products_and_inventory
-      assigns(:order_cycles).should match_array [ocB, ocA]
+      expect(assigns(:order_cycles)).to match_array [ocB, ocA]
     end
 
     it "assigns report types" do
       spree_get :products_and_inventory
-      assigns(:report_types).should == subject.report_types[:products_and_inventory]
+      expect(assigns(:report_types)).to eq(subject.report_types[:products_and_inventory])
     end
 
     it "creates a ProductAndInventoryReport" do
-      OpenFoodNetwork::ProductsAndInventoryReport.should_receive(:new)
+      expect(OpenFoodNetwork::ProductsAndInventoryReport).to receive(:new)
         .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "products_and_inventory"})
         .and_return(report = double(:report))
-      report.stub(:header).and_return []
-      report.stub(:table).and_return []
+      allow(report).to receive(:header).and_return []
+      allow(report).to receive(:table).and_return []
       spree_get :products_and_inventory, test: "foo"
-      assigns(:report).should == report
+      expect(assigns(:report)).to eq(report)
     end
   end
 
@@ -233,40 +233,40 @@ describe Spree::Admin::ReportsController, type: :controller do
     before { login_as_admin }
 
     it "should have report types for customers" do
-      subject.report_types[:customers].should == [
+      expect(subject.report_types[:customers]).to eq([
         ["Mailing List", :mailing_list],
         ["Addresses", :addresses]
-      ]
+      ])
     end
 
     it "should build distributors for the current user" do
       spree_get :customers
-      assigns(:distributors).should match_array [c1, c2, d1, d2, d3]
+      expect(assigns(:distributors)).to match_array [c1, c2, d1, d2, d3]
     end
 
     it "builds suppliers for the current user" do
       spree_get :customers
-      assigns(:suppliers).should match_array [s1, s2, s3]
+      expect(assigns(:suppliers)).to match_array [s1, s2, s3]
     end
 
     it "builds order cycles for the current user" do
       spree_get :customers
-      assigns(:order_cycles).should match_array [ocB, ocA]
+      expect(assigns(:order_cycles)).to match_array [ocB, ocA]
     end
 
     it "assigns report types" do
       spree_get :customers
-      assigns(:report_types).should == subject.report_types[:customers]
+      expect(assigns(:report_types)).to eq(subject.report_types[:customers])
     end
 
     it "creates a CustomersReport" do
-      OpenFoodNetwork::CustomersReport.should_receive(:new)
+      expect(OpenFoodNetwork::CustomersReport).to receive(:new)
         .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "customers"})
         .and_return(report = double(:report))
-      report.stub(:header).and_return []
-      report.stub(:table).and_return []
+      allow(report).to receive(:header).and_return []
+      allow(report).to receive(:table).and_return []
       spree_get :customers, test: "foo"
-      assigns(:report).should == report
+      expect(assigns(:report)).to eq(report)
     end
   end
 end
