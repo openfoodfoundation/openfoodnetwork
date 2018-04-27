@@ -134,33 +134,16 @@ Spree::Admin::ReportsController.class_eval do
     end
 
     @report = OpenFoodNetwork::OrderAndDistributorReport.new orders
-    unless params[:csv]
-      render :html => @report
-    else
-      csv_string = CSV.generate do |csv|
-        csv << @report.header
-        @report.table.each { |row| csv << row }
-      end
-      send_data csv_string, :filename => "orders_and_distributors_#{timestamp}.csv"
-    end
+    csv_file_name = "orders_and_distributors_#{timestamp}.csv"
+    render_report(@report.header, @report.table, params[:csv], csv_file_name)
   end
 
   def sales_tax
     prepare_date_params params
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @report_type = params[:report_type]
-
     @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, params
-
-    unless params[:csv]
-      render :html => @report
-    else
-      csv_string = CSV.generate do |csv|
-        csv << @report.header
-        @report.table.each { |row| csv << row }
-      end
-      send_data csv_string, :filename => "sales_tax.csv"
-    end
+    render_report(@report.header, @report.table, params[:csv], "sales_tax.csv")
   end
 
   def bulk_coop
