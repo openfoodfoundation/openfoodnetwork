@@ -2740,5 +2740,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       saved_cards:
         default?: Default?
         delete?: Delete?
+      cards:
+        authorised_shops: Authorised Shops
+        authorised_shops_popover: This is a list of shops which are permitted to charge your default credit card for OFN services (eg. subscriptions). Your card details will be kept secure and will not be shared with shop owners.
     localized_number:
       invalid_format: has an invalid format. Please enter a number.

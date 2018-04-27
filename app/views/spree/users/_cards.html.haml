@@ -10,6 +10,13 @@
         %button.button.primary{ ng: { click: 'showForm()', hide: 'CreditCard.visible' } }
           = t(:add_a_card)
 
-      .small-12.medium-6.columns.new_card{ ng: { show: 'CreditCard.visible', class: '{visible: CreditCard.visible}' } }
-        %h3= t(:add_a_new_card)
-        = render 'new_card_form'
+      .small-12.medium-6.columns
+        .new_card{ ng: { show: 'CreditCard.visible', class: '{visible: CreditCard.visible}' } }
+          %h3= t(:add_a_new_card)
+          = render 'new_card_form'
+        .authorised_shops{ ng: { controller: 'AuthorisedShopsCtrl', hide: 'CreditCard.visible' } }
+          %h3
+            = t('.authorised_shops')
+            %button.button.secondary.tiny.help-btn.ng-scope{ :popover => t('.authorised_shops_popover'), "popover-placement" => 'right' }
+              %i.ofn-i_013-help
+          = render 'authorised_shops'
