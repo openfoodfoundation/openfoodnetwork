@@ -1,5 +1,5 @@
 module Api
-  class StatusesController < BaseController
+  class StatusesController < ::BaseController
     respond_to :json
 
     def job_queue

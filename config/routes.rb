@@ -217,7 +217,7 @@ Openfoodnetwork::Application.routes.draw do
       get :job_queue
     end
 
-    resources :customers, only: [:update]
+    resources :customers, only: [:index, :update]
 
     post '/product_images/:product_id', to: 'product_images#update_product_image'
   end
