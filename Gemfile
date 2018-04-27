@@ -11,7 +11,12 @@ gem 'i18n-js', '~> 3.0.0'
 gem 'nokogiri', '>= 1.6.7.1'
 
 gem 'pg'
-gem 'spree', '2.0.4'
+
+# OFN-maintained and patched version of Spree v2.0.4. See
+# https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-2.0-upgrade
+# for details.
+gem 'spree', github: 'coopdevs/spree', branch: '2-0-4-stable'
+
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
 gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 
