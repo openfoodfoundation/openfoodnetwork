@@ -460,7 +460,8 @@ FactoryGirl.modify do
   factory :product do
     primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
   end
-  factory :simple_product do
+
+  factory :base_product do
     # Fix product factory name sequence with Kernel.rand so it is not interpreted as a Spree::Product method
     # Pull request: https://github.com/spree/spree/pull/1964
     # When this fix has been merged into a version of Spree that we're using, this line can be removed.
@@ -468,7 +469,6 @@ FactoryGirl.modify do
 
     supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
     primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
-    on_hand 3
 
     unit_value 1
     unit_description ''
