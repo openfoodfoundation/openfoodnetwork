@@ -42,12 +42,6 @@ Spree::ShippingMethod.class_eval do
     ]
   end
 
-  def available_to_order_with_distributor_check?(order)
-    available_to_order_without_distributor_check?(order) &&
-      self.distributors.include?(order.distributor)
-  end
-  alias_method_chain :available_to_order?, :distributor_check
-
   def within_zone?(order)
     if order.ship_address
       zone && zone.include?(order.ship_address)
