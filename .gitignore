@@ -32,7 +32,6 @@ public/stylesheets
 public/images
 public/spree
 config/abr.yml
-config/heroku_env.rb
 config/newrelic.yml
 config/initializers/feature_toggle.rb
 config/initializers/db2fog.rb

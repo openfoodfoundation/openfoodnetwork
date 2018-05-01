@@ -35,8 +35,3 @@ Openfoodnetwork::Application.configure do
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.default_url_options = { host: "0.0.0.0:3000" }
 end
-
-
-# Load heroku vars from local file
-heroku_env = File.join(Rails.root, 'config', 'heroku_env.rb')
-load(heroku_env) if File.exists?(heroku_env)
