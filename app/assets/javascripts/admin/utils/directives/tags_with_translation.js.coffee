@@ -25,7 +25,8 @@ angular.module("admin.utils").directive "tagsWithTranslation", ($timeout) ->
       scope.object[scope.tagsAttr] ||= []
       compileTagList()
 
-      scope.tagAdded = ->
+      scope.tagAdded = (tag)->
+        tag.text = tag.text.toLowerCase()
         scope.onTagAdded()
         compileTagList()
 
