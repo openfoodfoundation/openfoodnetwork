@@ -346,6 +346,8 @@ feature %q{
     end
 
     it "shows users and enterprises report" do
+      click_button "Search"
+
       rows = find("table#users_and_enterprises").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 

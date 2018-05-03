@@ -269,4 +269,20 @@ describe Spree::Admin::ReportsController, type: :controller do
       expect(assigns(:report)).to eq(report)
     end
   end
+
+  context "Admin" do
+    before { login_as_admin }
+
+    describe "users_and_enterprises" do
+      it "shows report search forms" do
+        spree_get :users_and_enterprises
+        expect(assigns(:report).table).to eq []
+      end
+
+      it "shows report data" do
+        spree_post :users_and_enterprises
+        expect(assigns(:report).table.empty?).to be false
+      end
+    end
+  end
 end
