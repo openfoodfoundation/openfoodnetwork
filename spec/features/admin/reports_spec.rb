@@ -423,6 +423,7 @@ feature %q{
     end
 
     it "shows Xero invoices report" do
+      click_button "Search"
       expect(xero_invoice_table).to match_table [
         xero_invoice_header,
         xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income'),

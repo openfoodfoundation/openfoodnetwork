@@ -1,6 +1,6 @@
 module OpenFoodNetwork
   class XeroInvoicesReport
-    def initialize(user, opts={})
+    def initialize(user, opts = {}, compile_table = false)
       @user = user
 
       @opts = opts.
@@ -9,6 +9,7 @@ module OpenFoodNetwork
                        invoice_date: Time.zone.today,
                        due_date: Time.zone.today + 1.month,
                        account_code: 'food sales'})
+      @compile_table = compile_table
     end
 
     def header
@@ -26,6 +27,7 @@ module OpenFoodNetwork
     end
 
     def table
+      return [] unless @compile_table
       rows = []
 
       orders.each_with_index do |order, i|

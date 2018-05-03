@@ -232,7 +232,7 @@ Spree::Admin::ReportsController.class_eval do
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
 
-    @report = OpenFoodNetwork::XeroInvoicesReport.new spree_current_user, params
+    @report = OpenFoodNetwork::XeroInvoicesReport.new spree_current_user, params, render_content?
     render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
   end
 
