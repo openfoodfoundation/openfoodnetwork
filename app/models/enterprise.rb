@@ -199,14 +199,6 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
-  def supplied_and_active_products_on_hand
-    self.supplied_products.where('spree_products.count_on_hand > 0').active
-  end
-
-  def active_products_in_order_cycles
-    self.supplied_and_active_products_on_hand.in_an_active_order_cycle
-  end
-
   def to_param
     permalink
   end
