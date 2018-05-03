@@ -198,7 +198,7 @@ Spree::Admin::ReportsController.class_eval do
     @include_blank = I18n.t(:all)
 
     # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params
+    @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user, params, render_content?
     order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
     @table = order_grouper.table(@report.table_items)
     csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"

@@ -3,9 +3,10 @@ include Spree::ReportsHelper
 module OpenFoodNetwork
   class OrdersAndFulfillmentsReport
     attr_reader :params
-    def initialize(user, params = {})
+    def initialize(user, params = {}, render_table = false)
       @params = params
       @user = user
+      @render_table = render_table
     end
 
     def header
@@ -49,6 +50,7 @@ module OpenFoodNetwork
     end
 
     def table_items
+      return [] unless @render_table
       orders = search.result
 
       line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))

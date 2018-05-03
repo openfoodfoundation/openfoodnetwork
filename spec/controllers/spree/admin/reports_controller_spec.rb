@@ -71,7 +71,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         # create test objects
         [orderA1, orderA2, orderB1, orderB2]
 
-        spree_get :orders_and_fulfillment
+        spree_post :orders_and_fulfillment
 
         expect(resulting_orders).to     include orderA1, orderA2
         expect(resulting_orders).not_to include orderB1, orderB2
@@ -119,7 +119,7 @@ describe Spree::Admin::ReportsController, type: :controller do
     describe 'Orders & Fulfillment' do
       it "only shows orders that I distribute" do
         [orderA1, orderA2, orderB1, orderB2]
-        spree_get :orders_and_fulfillment
+        spree_post :orders_and_fulfillment
 
         expect(resulting_orders).to     include orderA1, orderB1
         expect(resulting_orders).not_to include orderA2, orderB2
@@ -127,7 +127,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
       it "only shows the selected order cycle" do
         [orderA1, orderB1]
-        spree_get :orders_and_fulfillment, q: {order_cycle_id_in: [ocA.id.to_s]}
+        spree_post :orders_and_fulfillment, q: {order_cycle_id_in: [ocA.id.to_s]}
 
         expect(resulting_orders).to     include(orderA1)
         expect(resulting_orders).not_to include(orderB1)
@@ -181,7 +181,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
         it "only shows product line items that I am supplying" do
           [orderA1, orderA2]
-          spree_get :orders_and_fulfillment
+          spree_post :orders_and_fulfillment
 
           expect(resulting_products).to     include p1
           expect(resulting_products).not_to include p2, p3
@@ -189,7 +189,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
         it "only shows the selected order cycle" do
           [orderA1, orderB1]
-          spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
+          spree_post :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
 
           expect(resulting_orders_prelim).to     include(orderA1)
           expect(resulting_orders_prelim).not_to include(orderB1)
@@ -199,7 +199,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       context "where I have not granted P-OC to the distributor" do
         it "does not show me line_items I supply" do
           [orderA1, orderA2]
-          spree_get :orders_and_fulfillment
+          spree_post :orders_and_fulfillment
 
           expect(resulting_products).not_to include p1, p2, p3
         end
