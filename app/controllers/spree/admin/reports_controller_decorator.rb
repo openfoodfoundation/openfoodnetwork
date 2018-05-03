@@ -237,19 +237,19 @@ Spree::Admin::ReportsController.class_eval do
     render_report(@report.header, @report.table, params[:csv], "xero_invoices_#{timestamp}.csv")
   end
 
+  private
+
   def render_report(header, table, create_csv, csv_file_name)
-    unless create_csv
-      render :html => table
-    else
-      csv_string = CSV.generate do |csv|
-        csv << header
-       table.each { |row| csv << row }
-      end
-      send_data csv_string, :filename => csv_file_name
-    end
+    send_data csv_report(header, table), filename: csv_file_name if create_csv
+    # Rendering HTML is the default.
   end
 
-  private
+  def csv_report(header, table)
+    CSV.generate do |csv|
+      csv << header
+      table.each { |row| csv << row }
+    end
+  end
 
   def prepare_date_params(params)
     # -- Prepare parameters
