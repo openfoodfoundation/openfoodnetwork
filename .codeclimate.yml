@@ -34,3 +34,4 @@ checks:
 exclude_patterns:
 - "spec/**/*"
 - "vendor/**/*"
+- "app/assets/javascripts/shared/*"
