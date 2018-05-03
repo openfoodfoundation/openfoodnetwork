@@ -3,55 +3,55 @@ require 'spec_helper'
 describe Spree::Admin::ReportsController, type: :controller do
 
   # Given two distributors and two suppliers
-  let(:ba) { create(:address) }
-  let(:sa) { create(:address) }
-  let(:si) { "pick up on thursday please" }
-  let(:c1) { create(:distributor_enterprise) }
-  let(:c2) { create(:distributor_enterprise) }
-  let(:s1) { create(:supplier_enterprise) }
-  let(:s2) { create(:supplier_enterprise) }
-  let(:s3) { create(:supplier_enterprise) }
-  let(:d1) { create(:distributor_enterprise) }
-  let(:d2) { create(:distributor_enterprise) }
-  let(:d3) { create(:distributor_enterprise) }
-  let(:p1) { create(:product, price: 12.34, distributors: [d1], supplier: s1) }
-  let(:p2) { create(:product, price: 23.45, distributors: [d2], supplier: s2) }
-  let(:p3) { create(:product, price: 34.56, distributors: [d3], supplier: s3) }
+  let(:bill_address) { create(:address) }
+  let(:ship_address) { create(:address) }
+  let(:instructions) { "pick up on thursday please" }
+  let(:coordinator1) { create(:distributor_enterprise) }
+  let(:coordinator2) { create(:distributor_enterprise) }
+  let(:supplier1) { create(:supplier_enterprise) }
+  let(:supplier2) { create(:supplier_enterprise) }
+  let(:supplier3) { create(:supplier_enterprise) }
+  let(:distributor1) { create(:distributor_enterprise) }
+  let(:distributor2) { create(:distributor_enterprise) }
+  let(:distributor3) { create(:distributor_enterprise) }
+  let(:product1) { create(:product, price: 12.34, distributors: [distributor1], supplier: supplier1) }
+  let(:product2) { create(:product, price: 23.45, distributors: [distributor2], supplier: supplier2) }
+  let(:product3) { create(:product, price: 34.56, distributors: [distributor3], supplier: supplier3) }
 
   # Given two order cycles with both distributors
-  let(:ocA) { create(:simple_order_cycle, coordinator: c1, distributors: [d1, d2], suppliers: [s1, s2, s3], variants: [p1.master, p3.master]) }
-  let(:ocB) { create(:simple_order_cycle, coordinator: c2, distributors: [d1, d2], suppliers: [s1, s2, s3], variants: [p2.master]) }
+  let(:ocA) { create(:simple_order_cycle, coordinator: coordinator1, distributors: [distributor1, distributor2], suppliers: [supplier1, supplier2, supplier3], variants: [product1.master, product3.master]) }
+  let(:ocB) { create(:simple_order_cycle, coordinator: coordinator2, distributors: [distributor1, distributor2], suppliers: [supplier1, supplier2, supplier3], variants: [product2.master]) }
 
-  # orderA1 can only be accessed by s1, s3 and d1
+  # orderA1 can only be accessed by supplier1, supplier3 and distributor1
   let(:orderA1) do
-    order = create(:order, distributor: d1, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocA)
-    order.line_items << create(:line_item, variant: p1.master)
-    order.line_items << create(:line_item, variant: p3.master)
+    order = create(:order, distributor: distributor1, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocA)
+    order.line_items << create(:line_item, variant: product1.master)
+    order.line_items << create(:line_item, variant: product3.master)
     order.finalize!
     order.save
     order
   end
-  # orderA2 can only be accessed by s2 and d2
+  # orderA2 can only be accessed by supplier2 and distributor2
   let(:orderA2) do
-    order = create(:order, distributor: d2, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocA)
-    order.line_items << create(:line_item, variant: p2.master)
+    order = create(:order, distributor: distributor2, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocA)
+    order.line_items << create(:line_item, variant: product2.master)
     order.finalize!
     order.save
     order
   end
-  # orderB1 can only be accessed by s1, s3 and d1
+  # orderB1 can only be accessed by supplier1, supplier3 and distributor1
   let(:orderB1) do
-    order = create(:order, distributor: d1, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocB)
-    order.line_items << create(:line_item, variant: p1.master)
-    order.line_items << create(:line_item, variant: p3.master)
+    order = create(:order, distributor: distributor1, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocB)
+    order.line_items << create(:line_item, variant: product1.master)
+    order.line_items << create(:line_item, variant: product3.master)
     order.finalize!
     order.save
     order
   end
-  # orderB2 can only be accessed by s2 and d2
+  # orderB2 can only be accessed by supplier2 and distributor2
   let(:orderB2) do
-    order = create(:order, distributor: d2, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocB)
-    order.line_items << create(:line_item, variant: p2.master)
+    order = create(:order, distributor: distributor2, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocB)
+    order.line_items << create(:line_item, variant: product2.master)
     order.finalize!
     order.save
     order
@@ -62,9 +62,9 @@ describe Spree::Admin::ReportsController, type: :controller do
   let(:resulting_orders) { assigns(:report).table_items.map(&:order) }
   let(:resulting_products) { assigns(:report).table_items.map(&:product) }
 
-  # As manager of a coordinator (c1)
+  # As manager of a coordinator (coordinator1)
   context "Coordinator Enterprise User" do
-    before { login_as_enterprise_user [c1] }
+    before { login_as_enterprise_user [coordinator1] }
 
     describe 'Orders & Fulfillment' do
       it "shows all orders in order cycles I coordinate" do
@@ -79,9 +79,9 @@ describe Spree::Admin::ReportsController, type: :controller do
     end
   end
 
-  # As a Distributor Enterprise user for d1
+  # As a Distributor Enterprise user for distributor1
   context "Distributor Enterprise User" do
-    before { login_as_enterprise_user [d1] }
+    before { login_as_enterprise_user [distributor1] }
 
     describe 'Orders and Distributors' do
       it "only shows orders that I have access to" do
@@ -135,9 +135,9 @@ describe Spree::Admin::ReportsController, type: :controller do
     end
   end
 
-  # As a Supplier Enterprise user for s1
+  # As a Supplier Enterprise user for supplier1
   context "Supplier" do
-    before { login_as_enterprise_user [s1] }
+    before { login_as_enterprise_user [supplier1] }
 
     describe 'index' do
       it "loads reports relevant to producers" do
@@ -153,14 +153,14 @@ describe Spree::Admin::ReportsController, type: :controller do
       context "where I have granted P-OC to the distributor" do
         before do
           [orderA1, orderA2]
-          create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: supplier1, child: distributor1, permissions_list: [:add_to_order_cycle])
         end
 
         it "only shows product line items that I am supplying" do
           spree_post :bulk_coop
 
-          expect(resulting_products).to     include p1
-          expect(resulting_products).not_to include p2, p3
+          expect(resulting_products).to     include product1
+          expect(resulting_products).not_to include product2, product3
         end
       end
 
@@ -168,7 +168,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         it "shows product line items that I am supplying" do
           spree_post :bulk_coop
 
-          expect(resulting_products).not_to include p1, p2, p3
+          expect(resulting_products).not_to include product1, product2, product3
         end
       end
     end
@@ -176,15 +176,15 @@ describe Spree::Admin::ReportsController, type: :controller do
     describe 'Orders & Fulfillment' do
       context "where I have granted P-OC to the distributor" do
         before do
-          create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: supplier1, child: distributor1, permissions_list: [:add_to_order_cycle])
         end
 
         it "only shows product line items that I am supplying" do
           [orderA1, orderA2]
           spree_post :orders_and_fulfillment
 
-          expect(resulting_products).to     include p1
-          expect(resulting_products).not_to include p2, p3
+          expect(resulting_products).to     include product1
+          expect(resulting_products).not_to include product2, product3
         end
 
         it "only shows the selected order cycle" do
@@ -201,7 +201,7 @@ describe Spree::Admin::ReportsController, type: :controller do
           [orderA1, orderA2]
           spree_post :orders_and_fulfillment
 
-          expect(resulting_products).not_to include p1, p2, p3
+          expect(resulting_products).not_to include product1, product2, product3
         end
       end
     end
@@ -211,15 +211,15 @@ describe Spree::Admin::ReportsController, type: :controller do
     before { login_as_admin }
 
     it "should build distributors for the current user" do
-      [c1, c2, s1, d1, d2, d3]
+      [coordinator1, coordinator2, supplier1, distributor1, distributor2, distributor3]
       spree_get :products_and_inventory
-      expect(assigns(:distributors)).to match_array [c1, c2, d1, d2, d3]
+      expect(assigns(:distributors)).to match_array [coordinator1, coordinator2, distributor1, distributor2, distributor3]
     end
 
     it "builds suppliers for the current user" do
-      [s1, s2, s3, d1]
+      [supplier1, supplier2, supplier3, distributor1]
       spree_get :products_and_inventory
-      expect(assigns(:suppliers)).to match_array [s1, s2, s3]
+      expect(assigns(:suppliers)).to match_array [supplier1, supplier2, supplier3]
     end
 
     it "builds order cycles for the current user" do
@@ -255,15 +255,15 @@ describe Spree::Admin::ReportsController, type: :controller do
     end
 
     it "should build distributors for the current user" do
-      [c1, c2, s1, d1, d2, d3]
+      [coordinator1, coordinator2, supplier1, distributor1, distributor2, distributor3]
       spree_get :customers
-      expect(assigns(:distributors)).to match_array [c1, c2, d1, d2, d3]
+      expect(assigns(:distributors)).to match_array [coordinator1, coordinator2, distributor1, distributor2, distributor3]
     end
 
     it "builds suppliers for the current user" do
-      [s1, s2, s3, d1]
+      [supplier1, supplier2, supplier3, distributor1]
       spree_get :customers
-      expect(assigns(:suppliers)).to match_array [s1, s2, s3]
+      expect(assigns(:suppliers)).to match_array [supplier1, supplier2, supplier3]
     end
 
     it "builds order cycles for the current user" do
@@ -298,7 +298,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       end
 
       it "shows report data" do
-      	[c1]
+      	[coordinator1]
         spree_post :users_and_enterprises
         expect(assigns(:report).table.empty?).to be false
       end
