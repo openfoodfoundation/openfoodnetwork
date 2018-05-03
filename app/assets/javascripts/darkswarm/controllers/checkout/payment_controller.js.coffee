@@ -9,6 +9,10 @@ Darkswarm.controller "PaymentCtrl", ($scope, $timeout, savedCreditCards, Dates) 
   $scope.secrets.card_month = "1"
   $scope.secrets.card_year = moment().year()
 
+  for card in (savedCreditCards || []) when card.is_default
+    $scope.secrets.selected_card = card.id
+    break
+
   $scope.summary = ->
     [$scope.Checkout.paymentMethod()?.name]
 
