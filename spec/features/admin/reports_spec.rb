@@ -416,7 +416,7 @@ feature %q{
 
     around do |example|
       Timecop.travel(Time.zone.local(2015, 4, 26, 14, 0, 0)) do
-        example.yield
+        example.run
       end
     end
 
