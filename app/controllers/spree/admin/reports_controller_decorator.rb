@@ -147,7 +147,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def bulk_coop
-    # -- Prepare date parameters
     prepare_date_params params
 
     # -- Prepare form options
@@ -155,7 +154,7 @@ Spree::Admin::ReportsController.class_eval do
     @report_type = params[:report_type]
 
     # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params
+    @report = OpenFoodNetwork::BulkCoopReport.new spree_current_user, params, render_content?
     order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
     @table = order_grouper.table(@report.table_items)
     csv_file_name = "bulk_coop_#{params[:report_type]}_#{timestamp}.csv"

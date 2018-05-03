@@ -4,9 +4,10 @@ require 'open_food_network/reports/bulk_coop_allocation_report'
 module OpenFoodNetwork
   class BulkCoopReport
     attr_reader :params
-    def initialize(user, params = {})
+    def initialize(user, params = {}, render_table = false)
       @params = params
       @user = user
+      @render_table = render_table
 
       @supplier_report = OpenFoodNetwork::Reports::BulkCoopSupplierReport.new
       @allocation_report = OpenFoodNetwork::Reports::BulkCoopAllocationReport.new
@@ -48,6 +49,7 @@ module OpenFoodNetwork
     end
 
     def table_items
+      return [] unless @render_table
       orders = search.result
 
       line_items = permissions.visible_line_items.merge(Spree::LineItem.where(order_id: orders))

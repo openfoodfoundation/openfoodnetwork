@@ -97,7 +97,7 @@ describe Spree::Admin::ReportsController, type: :controller do
     describe 'Bulk Coop' do
       it "only shows orders that I have access to" do
         [orderA1, orderA2, orderB1, orderB2]
-        spree_get :bulk_coop
+        spree_post :bulk_coop
 
         expect(resulting_orders).to     include(orderA1, orderB1)
         expect(resulting_orders).not_to include(orderA2)
@@ -157,7 +157,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         end
 
         it "only shows product line items that I am supplying" do
-          spree_get :bulk_coop
+          spree_post :bulk_coop
 
           expect(resulting_products).to     include p1
           expect(resulting_products).not_to include p2, p3
@@ -166,7 +166,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
       context "where I have not granted P-OC to the distributor" do
         it "shows product line items that I am supplying" do
-          spree_get :bulk_coop
+          spree_post :bulk_coop
 
           expect(resulting_products).not_to include p1, p2, p3
         end
