@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180316034336) do
+ActiveRecord::Schema.define(:version => 20180405114604) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -756,7 +756,6 @@ ActiveRecord::Schema.define(:version => 20180316034336) do
     t.integer  "shipping_category_id"
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
-    t.integer  "count_on_hand",        :default => 0
     t.integer  "supplier_id"
     t.boolean  "group_buy"
     t.float    "group_buy_unit_size"

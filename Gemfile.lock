@@ -7,33 +7,9 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: https://github.com/jeremydurham/custom-err-msg.git
-  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
-  specs:
-    custom_error_message (1.1.1)
-
-GIT
-  remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
-  revision: 8d95f4544c682634812becaf50999fba0cd04df0
-  branch: spree-upgrade-intermediate
-  specs:
-    spree_paypal_express (2.0.3)
-      paypal-sdk-merchant (= 1.106.1)
-      spree_core (~> 1.3.99)
-
-GIT
-  remote: https://github.com/openfoodfoundation/ofn-qz.git
-  revision: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
-  ref: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
-  specs:
-    ofn-qz (0.1.0)
-      railties (~> 3.1)
-
-GIT
-  remote: https://github.com/openfoodfoundation/spree.git
-  revision: 86bf87f1b1e1b299edc8cd10a2486e44ba0a3987
-  ref: 86bf87f1b1e1b299edc8cd10a2486e44ba0a3987
-  branch: step-6a
+  remote: https://github.com/coopdevs/spree.git
+  revision: 2a72acfe20dfd6ae1c9740d655c743d8968d80d4
+  branch: remove-products-count-on-hand
   specs:
     spree (1.3.99)
       spree_api (= 1.3.99)
@@ -90,6 +66,29 @@ GIT
       stringex (~> 1.3.2)
     spree_sample (1.3.99)
       spree_core (= 1.3.99)
+
+GIT
+  remote: https://github.com/jeremydurham/custom-err-msg.git
+  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
+  specs:
+    custom_error_message (1.1.1)
+
+GIT
+  remote: https://github.com/openfoodfoundation/better_spree_paypal_express.git
+  revision: 8d95f4544c682634812becaf50999fba0cd04df0
+  branch: spree-upgrade-intermediate
+  specs:
+    spree_paypal_express (2.0.3)
+      paypal-sdk-merchant (= 1.106.1)
+      spree_core (~> 1.3.99)
+
+GIT
+  remote: https://github.com/openfoodfoundation/ofn-qz.git
+  revision: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
+  ref: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
+  specs:
+    ofn-qz (0.1.0)
+      railties (~> 3.1)
 
 GIT
   remote: https://github.com/openfoodfoundation/spree_auth_devise.git
