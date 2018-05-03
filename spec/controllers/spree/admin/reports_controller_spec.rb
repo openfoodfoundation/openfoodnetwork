@@ -108,7 +108,7 @@ describe Spree::Admin::ReportsController, type: :controller do
     describe 'Payments' do
       it "only shows orders that I have access to" do
         [orderA1, orderA2, orderB1, orderB2]
-        spree_get :payments
+        spree_post :payments
 
         expect(resulting_orders_prelim).to     include(orderA1, orderB1)
         expect(resulting_orders_prelim).not_to include(orderA2)
