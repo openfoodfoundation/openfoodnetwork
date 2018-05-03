@@ -210,9 +210,9 @@ Spree::Admin::ReportsController.class_eval do
   def products_and_inventory
     @report_types = report_types[:products_and_inventory]
     if params[:report_type] != 'lettuce_share'
-      @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params
+      @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params, render_content?
     else
-      @report = OpenFoodNetwork::LettuceShareReport.new spree_current_user, params
+      @report = OpenFoodNetwork::LettuceShareReport.new spree_current_user, params, render_content?
     end
     render_report(@report.header, @report.table, params[:csv], "products_and_inventory_#{timestamp}.csv")
   end

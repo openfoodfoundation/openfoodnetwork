@@ -314,6 +314,7 @@ feature %q{
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
       click_link 'Products & Inventory'
+      click_button "Search"
       expect(page).to have_content "Supplier"
       expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product", "Product Properties", "Taxons", "Variant Value", "Price", "Group Buy Unit Quantity", "Amount", "SKU"].map(&:upcase)
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
@@ -325,6 +326,7 @@ feature %q{
       login_to_admin_section
       click_link 'Reports'
       click_link 'LettuceShare'
+      click_button "Search"
 
       expect(page).to have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit', 'Unit Price', 'Total', 'GST incl.', 'Grower and growing method', 'Taxon'].map(&:upcase)
       expect(page).to have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0', 'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']

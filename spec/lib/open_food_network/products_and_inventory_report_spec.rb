@@ -9,7 +9,7 @@ module OpenFoodNetwork
         user
       end
       subject do
-        ProductsAndInventoryReport.new user
+        ProductsAndInventoryReport.new user, {}, true
       end
 
       it "Should return headers" do
@@ -72,7 +72,7 @@ module OpenFoodNetwork
       end
 
       subject do
-        ProductsAndInventoryReport.new enterprise_user
+        ProductsAndInventoryReport.new enterprise_user, {}, true
       end
 
       describe "fetching child variants" do
