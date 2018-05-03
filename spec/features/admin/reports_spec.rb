@@ -17,16 +17,16 @@ feature %q{
       it "does not show super admin only reports" do
         login_to_admin_as user
         click_link "Reports"
-        page.should_not have_content "Sales Total"
-        page.should_not have_content "Users & Enterprises"
+        expect(page).not_to have_content "Sales Total"
+        expect(page).not_to have_content "Users & Enterprises"
       end
     end
     context "As an admin user" do
       it "shows the super admin only reports" do
         login_to_admin_section
         click_link "Reports"
-        page.should have_content "Sales Total"
-        page.should have_content "Users & Enterprises"
+        expect(page).to have_content "Sales Total"
+        expect(page).to have_content "Users & Enterprises"
       end
     end
   end
@@ -42,9 +42,9 @@ feature %q{
 
       rows = find("table#listing_customers").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      table.sort.should == [
+      expect(table.sort).to eq([
         ["Email", "First Name", "Last Name", "Suburb"]
-      ].sort
+      ].sort)
     end
 
     scenario "customers report" do
@@ -53,9 +53,9 @@ feature %q{
 
       rows = find("table#listing_customers").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      table.sort.should == [
+      expect(table.sort).to eq([
         ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address", "Shipping Method"]
-      ].sort
+      ].sort)
     end
   end
 
@@ -69,18 +69,18 @@ feature %q{
       click_link "Payment Methods Report"
       rows = find("table#listing_ocm_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      table.sort.should == [
+      expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance"]
-      ].sort
+      ].sort)
     end
 
     scenario "delivery report" do
       click_link "Delivery Report"
       rows = find("table#listing_ocm_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      table.sort.should == [
+      expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode", "Phone", "Shipping Method", "Payment Method", "Amount", "Balance", "Temp Controlled Items?", "Special Instructions"]
-      ].sort
+      ].sort)
     end
   end
 
@@ -121,10 +121,10 @@ feature %q{
 
       rows = find("table#listing_orders.index").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      table.sort.should == [
+      expect(table.sort).to eq([
         ["Hub", "Code", "First Name", "Last Name", "Supplier", "Product", "Variant", "Quantity", "TempControlled?"]
-      ].sort
-      page.should have_selector 'table#listing_orders tbody tr', count: 5 # Totals row per order
+      ].sort)
+      expect(page).to have_selector 'table#listing_orders tbody tr', count: 5 # Totals row per order
     end
 
     scenario "Pack By Supplier" do
@@ -136,10 +136,10 @@ feature %q{
 
       rows = find("table#listing_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      table.sort.should == [
+      expect(table.sort).to eq([
         ["Hub", "Supplier", "Code", "First Name", "Last Name", "Product", "Variant", "Quantity", "TempControlled?"]
-      ].sort
-      all('table#listing_orders tbody tr').count.should == 4 # Totals row per supplier
+      ].sort)
+      expect(all('table#listing_orders tbody tr').count).to eq(4) # Totals row per supplier
     end
   end
 
@@ -149,7 +149,7 @@ feature %q{
     click_link 'Reports'
     click_link 'Orders And Distributors'
 
-    page.should have_content 'Order date'
+    expect(page).to have_content 'Order date'
   end
 
   scenario "bulk co-op report" do
@@ -157,7 +157,7 @@ feature %q{
     click_link 'Reports'
     click_link 'Bulk Co-Op'
 
-    page.should have_content 'Supplier'
+    expect(page).to have_content 'Supplier'
   end
 
   scenario "payments reports" do
@@ -165,7 +165,7 @@ feature %q{
     click_link 'Reports'
     click_link 'Payment Reports'
 
-    page.should have_content 'Payment State'
+    expect(page).to have_content 'Payment State'
   end
 
   describe "sales tax report" do
@@ -204,28 +204,28 @@ feature %q{
 
     it "reports" do
       # Then it should give me access only to managed enterprises
-      page.should     have_select 'q_distributor_id_eq', with_options: [user1.enterprises.first.name]
-      page.should_not have_select 'q_distributor_id_eq', with_options: [user2.enterprises.first.name]
+      expect(page).to     have_select 'q_distributor_id_eq', with_options: [user1.enterprises.first.name]
+      expect(page).not_to have_select 'q_distributor_id_eq', with_options: [user2.enterprises.first.name]
 
       # When I filter to just one distributor
       select user1.enterprises.first.name, from: 'q_distributor_id_eq'
       click_button 'Search'
 
       # Then I should see the relevant order
-      page.should have_content "#{order1.number}"
+      expect(page).to have_content "#{order1.number}"
 
       # And the totals and sales tax should be correct
-      page.should     have_content "1512.99" # items total
-      page.should     have_content "1500.45" # taxable items total
-      page.should     have_content "250.08" # sales tax
-      page.should     have_content "20.0" # enterprise fee tax
+      expect(page).to     have_content "1512.99" # items total
+      expect(page).to     have_content "1500.45" # taxable items total
+      expect(page).to     have_content "250.08" # sales tax
+      expect(page).to     have_content "20.0" # enterprise fee tax
 
       # And the shipping cost and tax should be correct
-      page.should have_content "100.55" # shipping cost
-      page.should have_content "16.76" # shipping tax
+      expect(page).to have_content "100.55" # shipping cost
+      expect(page).to have_content "16.76" # shipping tax
 
       # And the total tax should be correct
-      page.should have_content "286.84" # total tax
+      expect(page).to have_content "286.84" # total tax
     end
   end
 
@@ -235,7 +235,7 @@ feature %q{
       click_link 'Reports'
       click_link 'Orders & Fulfillment Reports'
 
-      page.should have_content 'Supplier'
+      expect(page).to have_content 'Supplier'
     end
 
     context "with two orders on the same day at different times" do
@@ -267,7 +267,7 @@ feature %q{
         click_button 'Search'
 
         # Then I should see the rows for the first order but not the second
-        all('table#listing_orders tbody tr').count.should == 2 # Two rows per order
+        expect(all('table#listing_orders tbody tr').count).to eq(2) # Two rows per order
       end
     end
 
@@ -279,7 +279,7 @@ feature %q{
       login_to_admin_section
       visit spree.orders_and_fulfillment_admin_reports_path
 
-      page.should have_content "My Order Cycle"
+      expect(page).to have_content "My Order Cycle"
     end
   end
 
@@ -311,14 +311,14 @@ feature %q{
       login_to_admin_section
       click_link 'Reports'
 
-      page.should have_content "All products"
-      page.should have_content "Inventory (on hand)"
+      expect(page).to have_content "All products"
+      expect(page).to have_content "Inventory (on hand)"
       click_link 'Products & Inventory'
-      page.should have_content "Supplier"
-      page.should have_table_row ["Supplier", "Producer Suburb", "Product", "Product Properties", "Taxons", "Variant Value", "Price", "Group Buy Unit Quantity", "Amount", "SKU"].map(&:upcase)
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
-      page.should have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Something",      "80.0",   product1.group_buy_unit_size.to_s, "",       "sku2"]
-      page.should have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,  "100g",           "99.0",   product1.group_buy_unit_size.to_s, "",       "product_sku"]
+      expect(page).to have_content "Supplier"
+      expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product", "Product Properties", "Taxons", "Variant Value", "Price", "Group Buy Unit Quantity", "Amount", "SKU"].map(&:upcase)
+      expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Test",           "100.0",  product1.group_buy_unit_size.to_s, "",       "sku1"]
+      expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city, "Product Name", product1.properties.map(&:presentation).join(", "), product1.primary_taxon.name,  "Something",      "80.0",   product1.group_buy_unit_size.to_s, "",       "sku2"]
+      expect(page).to have_table_row [product2.supplier.name, product1.supplier.address.city, "Product 2",    product1.properties.map(&:presentation).join(", "), product2.primary_taxon.name,  "100g",           "99.0",   product1.group_buy_unit_size.to_s, "",       "product_sku"]
     end
 
     it "shows the LettuceShare report" do
@@ -326,8 +326,8 @@ feature %q{
       click_link 'Reports'
       click_link 'LettuceShare'
 
-      page.should have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit', 'Unit Price', 'Total', 'GST incl.', 'Grower and growing method', 'Taxon'].map(&:upcase)
-      page.should have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0', 'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
+      expect(page).to have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit', 'Unit Price', 'Total', 'GST incl.', 'Grower and growing method', 'Taxon'].map(&:upcase)
+      expect(page).to have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0', 'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
     end
   end
 
@@ -349,7 +349,7 @@ feature %q{
       rows = find("table#users_and_enterprises").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
-      table.sort.should == [
+      expect(table.sort).to eq([
         [ "User", "Relationship", "Enterprise" ],
         [ enterprise1.owner.email, "owns", enterprise1.name ],
         [ enterprise1.owner.email, "manages", enterprise1.name ],
@@ -358,7 +358,7 @@ feature %q{
         [ enterprise3.owner.email, "owns", enterprise3.name ],
         [ enterprise3.owner.email, "manages", enterprise3.name ],
         [ enterprise1.owner.email, "manages", enterprise3.name ]
-      ].sort
+      ].sort)
     end
 
     it "filters the list" do
@@ -370,10 +370,10 @@ feature %q{
       rows = find("table#users_and_enterprises").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
-      table.sort.should == [
+      expect(table.sort).to eq([
         [ "User", "Relationship", "Enterprise" ],
         [ enterprise1.owner.email, "manages", enterprise3.name ]
-      ].sort
+      ].sort)
     end
   end
 
@@ -421,7 +421,7 @@ feature %q{
     end
 
     it "shows Xero invoices report" do
-      xero_invoice_table.should match_table [
+      expect(xero_invoice_table).to match_table [
         xero_invoice_header,
         xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54, 'GST Free Income'),
         xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income'),
@@ -442,7 +442,7 @@ feature %q{
 
       opts = {invoice_number: '5', invoice_date: '2015-02-12', due_date: '2015-03-12', account_code: 'abc123'}
 
-      xero_invoice_table.should match_table [
+      expect(xero_invoice_table).to match_table [
         xero_invoice_header,
         xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,   'GST Free Income', opts),
         xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45, 'GST on Income',   opts),
@@ -460,7 +460,7 @@ feature %q{
 
       opts = {}
 
-      xero_invoice_table.should match_table [
+      expect(xero_invoice_table).to match_table [
         xero_invoice_header,
         xero_invoice_li_row(line_item1),
         xero_invoice_li_row(line_item2),
@@ -495,7 +495,7 @@ feature %q{
 
         opts = {}
 
-        xero_invoice_table.should match_table [
+        expect(xero_invoice_table).to match_table [
           xero_invoice_header,
           xero_invoice_account_invoice_row(adjustment)
         ]
