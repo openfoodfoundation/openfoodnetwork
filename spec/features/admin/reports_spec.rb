@@ -215,10 +215,10 @@ feature %q{
       expect(page).to have_content "#{order1.number}"
 
       # And the totals and sales tax should be correct
-      expect(page).to     have_content "1512.99" # items total
-      expect(page).to     have_content "1500.45" # taxable items total
-      expect(page).to     have_content "250.08" # sales tax
-      expect(page).to     have_content "20.0" # enterprise fee tax
+      expect(page).to have_content "1512.99" # items total
+      expect(page).to have_content "1500.45" # taxable items total
+      expect(page).to have_content "250.08" # sales tax
+      expect(page).to have_content "20.0" # enterprise fee tax
 
       # And the shipping cost and tax should be correct
       expect(page).to have_content "100.55" # shipping cost
