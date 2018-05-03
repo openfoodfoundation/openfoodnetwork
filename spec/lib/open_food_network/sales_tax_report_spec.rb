@@ -3,7 +3,7 @@ require 'open_food_network/sales_tax_report'
 module OpenFoodNetwork
   describe SalesTaxReport do
     let(:user) { create(:user) }
-    let(:report) { SalesTaxReport.new(user, {}) }
+    let(:report) { SalesTaxReport.new(user, {}, true) }
 
     describe "calculating totals for line items" do
       let(:li1) { double(:line_item, quantity: 1, amount: 12) }

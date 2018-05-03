@@ -303,5 +303,12 @@ describe Spree::Admin::ReportsController, type: :controller do
         expect(assigns(:report).table.empty?).to be false
       end
     end
+
+    describe "sales_tax" do
+      it "shows report search forms" do
+        spree_get :sales_tax
+        expect(assigns(:report).table).to eq []
+      end
+    end
   end
 end
