@@ -261,7 +261,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
     it "creates a CustomersReport" do
       expect(OpenFoodNetwork::CustomersReport).to receive(:new)
-        .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "customers"})
+        .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "customers"}, false)
         .and_return(report = double(:report))
       allow(report).to receive(:header).and_return []
       allow(report).to receive(:table).and_return []

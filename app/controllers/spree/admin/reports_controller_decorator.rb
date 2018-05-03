@@ -63,7 +63,7 @@ Spree::Admin::ReportsController.class_eval do
   def customers
     @report_types = report_types[:customers]
     @report_type = params[:report_type]
-    @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params
+    @report = OpenFoodNetwork::CustomersReport.new spree_current_user, params, render_content?
     render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
   end
 
