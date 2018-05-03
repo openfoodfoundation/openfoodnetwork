@@ -10,7 +10,7 @@ module OpenFoodNetwork
         user.spree_roles << Spree::Role.find_or_create_by_name!("admin")
         user
       end
-      subject { OrderCycleManagementReport.new user }
+      subject { OrderCycleManagementReport.new user, {}, true }
 
       describe "fetching orders" do
         it "fetches completed orders" do
@@ -30,7 +30,7 @@ module OpenFoodNetwork
     context "as an enterprise user" do
       let!(:user) { create_enterprise_user }
 
-      subject { OrderCycleManagementReport.new user }
+      subject { OrderCycleManagementReport.new user, {}, true }
 
       describe "fetching orders" do
         let(:supplier) { create(:supplier_enterprise) }

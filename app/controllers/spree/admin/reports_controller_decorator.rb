@@ -84,7 +84,7 @@ Spree::Admin::ReportsController.class_eval do
     @report_type = params[:report_type]
 
     # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user, params
+    @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user, params, render_content?
     @table = @report.table_items
 
     render_report(@report.header, @table, params[:csv], "order_cycle_management_#{timestamp}.csv")
