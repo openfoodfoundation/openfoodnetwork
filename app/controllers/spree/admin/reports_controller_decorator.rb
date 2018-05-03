@@ -239,6 +239,12 @@ Spree::Admin::ReportsController.class_eval do
 
   private
 
+  # We don't want to render data unless search params are supplied.
+  # Compiling data can take a long time.
+  def render_content?
+    request.post?
+  end
+
   def render_report(header, table, create_csv, csv_file_name)
     send_data csv_report(header, table), filename: csv_file_name if create_csv
     # Rendering HTML is the default.
