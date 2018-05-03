@@ -59,7 +59,6 @@ Spree::Admin::ReportsController.class_eval do
     respond_with(@reports)
   end
 
-  # This action is short because we re-factored it like bosses
   def customers
     @report_types = report_types[:customers]
     @report_type = params[:report_type]
