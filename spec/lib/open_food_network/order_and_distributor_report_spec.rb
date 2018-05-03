@@ -23,7 +23,7 @@ module OpenFoodNetwork
       end
 
       it "should return a header row describing the report" do
-        subject = OrderAndDistributorReport.new [@order]
+        subject = OrderAndDistributorReport.new nil
 
         header = subject.header
         header.should == ["Order date", "Order Id",
@@ -34,9 +34,9 @@ module OpenFoodNetwork
       end
 
       it "should denormalise order and distributor details for display as csv" do
-        subject = OrderAndDistributorReport.new [@order]
+        subject = OrderAndDistributorReport.new create(:admin_user), {}, true
 
-        table = subject.table
+        table = subject.send(:line_item_details, [@order])
 
         table[0].should == [@order.created_at, @order.id,
           @bill_address.full_name, @order.email, @bill_address.phone, @bill_address.city,

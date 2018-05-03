@@ -116,24 +116,8 @@ Spree::Admin::ReportsController.class_eval do
 
   def orders_and_distributors
     prepare_date_params params
-
-    permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-    @search = permissions.visible_orders.complete.not_state(:canceled).search(params[:q])
-    orders = @search.result
-
-    # If empty array is passed in, the where clause will return all line_items, which is bad
-    orders_with_hidden_details =
-      permissions.editable_orders.empty? ? orders : orders.where('id NOT IN (?)', permissions.editable_orders)
-
-    orders.select{ |order| orders_with_hidden_details.include? order }.each do |order|
-      # TODO We should really be hiding customer code here too, but until we
-      # have an actual association between order and customer, it's a bit tricky
-      order.bill_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-      order.ship_address.andand.assign_attributes(firstname: I18n.t('admin.reports.hidden'), lastname: "", phone: "", address1: "", address2: "", city: "", zipcode: "", state: nil)
-      order.assign_attributes(email: I18n.t('admin.reports.hidden'))
-    end
-
-    @report = OpenFoodNetwork::OrderAndDistributorReport.new orders
+    @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params, render_content?
+    @search = @report.search
     csv_file_name = "orders_and_distributors_#{timestamp}.csv"
     render_report(@report.header, @report.table, params[:csv], csv_file_name)
   end
