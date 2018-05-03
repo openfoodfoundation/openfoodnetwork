@@ -107,7 +107,7 @@ Spree::Admin::ReportsController.class_eval do
     @report_type = params[:report_type]
 
     # -- Build Report with Order Grouper
-    @report = OpenFoodNetwork::PackingReport.new spree_current_user, params
+    @report = OpenFoodNetwork::PackingReport.new spree_current_user, params, render_content?
     order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns
     @table = order_grouper.table(@report.table_items)
 
