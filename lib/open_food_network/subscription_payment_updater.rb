@@ -47,7 +47,7 @@ module OpenFoodNetwork
     end
 
     def saved_credit_card
-      order.subscription.credit_card
+      order.user.default_card
     end
 
     def errors_present?

@@ -151,7 +151,7 @@ module OpenFoodNetwork
       let!(:payment) { create(:payment, source: nil) }
       before { allow(updater).to receive(:payment) { payment } }
 
-      context "when no credit card is specified by the subscription" do
+      context "when no saved credit card is found" do
         before { allow(updater).to receive(:saved_credit_card) { nil } }
 
         it "returns false and down not update the payment source" do
@@ -161,7 +161,7 @@ module OpenFoodNetwork
         end
       end
 
-      context "when a credit card is specified by the subscription" do
+      context "when a saved credit card is found" do
         let(:credit_card) { create(:credit_card) }
         before { allow(updater).to receive(:saved_credit_card) { credit_card } }
 
