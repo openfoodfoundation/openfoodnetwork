@@ -73,6 +73,10 @@ Spree.user_class.class_eval do
     owned_enterprises(:reload).size < enterprise_limit
   end
 
+  def default_card
+    credit_cards.where(is_default: true).first
+  end
+
   private
 
   def limit_owned_enterprises
