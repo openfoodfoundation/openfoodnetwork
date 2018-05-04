@@ -13,8 +13,8 @@ feature %q{
     end
 
     it "displays a list of products" do
-      p1 = FactoryGirl.create(:product)
-      p2 = FactoryGirl.create(:product)
+      p1 = FactoryBot.create(:product)
+      p2 = FactoryBot.create(:product)
 
       visit '/admin/products/bulk_edit'
 
@@ -29,11 +29,11 @@ feature %q{
     end
 
     it "displays a select box for suppliers, with the appropriate supplier selected" do
-      s1 = FactoryGirl.create(:supplier_enterprise)
-      s2 = FactoryGirl.create(:supplier_enterprise)
-      s3 = FactoryGirl.create(:supplier_enterprise)
-      p1 = FactoryGirl.create(:product, supplier: s2)
-      p2 = FactoryGirl.create(:product, supplier: s3)
+      s1 = FactoryBot.create(:supplier_enterprise)
+      s2 = FactoryBot.create(:supplier_enterprise)
+      s3 = FactoryBot.create(:supplier_enterprise)
+      p1 = FactoryBot.create(:product, supplier: s2)
+      p2 = FactoryBot.create(:product, supplier: s3)
 
       visit '/admin/products/bulk_edit'
 
@@ -42,8 +42,8 @@ feature %q{
     end
 
     it "displays a date input for available_on for each product, formatted to yyyy-mm-dd hh:mm:ss" do
-      p1 = FactoryGirl.create(:product, available_on: Date.current)
-      p2 = FactoryGirl.create(:product, available_on: Date.current-1)
+      p1 = FactoryBot.create(:product, available_on: Date.current)
+      p2 = FactoryBot.create(:product, available_on: Date.current-1)
 
       visit '/admin/products/bulk_edit'
       find("div#columns-dropdown", :text => "COLUMNS").click
@@ -55,7 +55,7 @@ feature %q{
     end
 
     it "displays an on hand count in a span for each product" do
-      p1 = FactoryGirl.create(:product, on_hand: 15)
+      p1 = FactoryBot.create(:product, on_hand: 15)
       v1 = p1.variants.first
       v1.on_hand = 4
       v1.save!
@@ -69,9 +69,9 @@ feature %q{
     end
 
     it "displays 'on demand' for any variant that is available on demand" do
-      p1 = FactoryGirl.create(:product)
-      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 4)
-      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 0, on_demand: true)
+      p1 = FactoryBot.create(:product)
+      v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 4)
+      v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 0, on_demand: true)
 
       visit '/admin/products/bulk_edit'
       expect(page).to have_selector "a.view-variants", count: 1
@@ -84,7 +84,7 @@ feature %q{
     end
 
     it "displays a select box for the unit of measure for the product's variants" do
-      p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1, variant_unit_name: '')
+      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1, variant_unit_name: '')
 
       visit '/admin/products/bulk_edit'
 
@@ -92,7 +92,7 @@ feature %q{
     end
 
     it "displays a text field for the item name when unit is set to 'Items'" do
-      p = FactoryGirl.create(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'packet')
+      p = FactoryBot.create(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'packet')
 
       visit '/admin/products/bulk_edit'
 
@@ -107,8 +107,8 @@ feature %q{
     end
 
     it "displays a list of variants for each product" do
-      v1 = FactoryGirl.create(:variant, display_name: "something1" )
-      v2 = FactoryGirl.create(:variant, display_name: "something2" )
+      v1 = FactoryBot.create(:variant, display_name: "something1" )
+      v2 = FactoryBot.create(:variant, display_name: "something2" )
 
       visit '/admin/products/bulk_edit'
       expect(page).to have_selector "a.view-variants", count: 2
@@ -121,9 +121,9 @@ feature %q{
     end
 
     it "displays an on_hand input (for each variant) for each product" do
-      p1 = FactoryGirl.create(:product)
-      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 15)
-      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, on_hand: 6)
+      p1 = FactoryBot.create(:product)
+      v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 15)
+      v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 6)
 
       visit '/admin/products/bulk_edit'
       expect(page).to have_selector "a.view-variants", count: 1
@@ -136,9 +136,9 @@ feature %q{
 
 
     it "displays a price input (for each variant) for each product" do
-      p1 = FactoryGirl.create(:product, price: 2.0)
-      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75)
-      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50)
+      p1 = FactoryBot.create(:product, price: 2.0)
+      v1 = FactoryBot.create(:variant, product: p1, is_master: false, price: 12.75)
+      v2 = FactoryBot.create(:variant, product: p1, is_master: false, price: 2.50)
 
       visit '/admin/products/bulk_edit'
       expect(page).to have_selector "a.view-variants", count: 1
@@ -150,9 +150,9 @@ feature %q{
     end
 
     it "displays a unit value field (for each variant) for each product" do
-      p1 = FactoryGirl.create(:product, price: 2.0, variant_unit: "weight", variant_unit_scale: "1000")
-      v1 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1200, unit_description: "(small bag)", display_as: "bag")
-      v2 = FactoryGirl.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)", display_as: "bin")
+      p1 = FactoryBot.create(:product, price: 2.0, variant_unit: "weight", variant_unit_scale: "1000")
+      v1 = FactoryBot.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1200, unit_description: "(small bag)", display_as: "bag")
+      v2 = FactoryBot.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)", display_as: "bin")
 
       visit '/admin/products/bulk_edit'
       expect(page).to have_selector "a.view-variants", count: 1
@@ -167,8 +167,8 @@ feature %q{
 
 
   scenario "creating a new product" do
-    s = FactoryGirl.create(:supplier_enterprise)
-    d = FactoryGirl.create(:distributor_enterprise)
+    s = FactoryBot.create(:supplier_enterprise)
+    d = FactoryBot.create(:distributor_enterprise)
     taxon = create(:taxon)
 
     login_to_admin_section
@@ -194,7 +194,7 @@ feature %q{
 
   scenario "creating new variants" do
     # Given a product without variants or a unit
-    p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
+    p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
     login_to_admin_section
     visit '/admin/products/bulk_edit'
 
@@ -238,11 +238,11 @@ feature %q{
   end
 
   scenario "updating product attributes" do
-    s1 = FactoryGirl.create(:supplier_enterprise)
-    s2 = FactoryGirl.create(:supplier_enterprise)
-    t1 = FactoryGirl.create(:taxon)
-    t2 = FactoryGirl.create(:taxon)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
+    s1 = FactoryBot.create(:supplier_enterprise)
+    s2 = FactoryBot.create(:supplier_enterprise)
+    t1 = FactoryBot.create(:taxon)
+    t2 = FactoryBot.create(:taxon)
+    p = FactoryBot.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
 
     login_to_admin_section
 
@@ -288,7 +288,7 @@ feature %q{
   end
 
   scenario "updating a product with a variant unit of 'items'" do
-    p = FactoryGirl.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
+    p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
 
     login_to_admin_section
 
@@ -309,9 +309,9 @@ feature %q{
   end
 
   scenario "updating a product with variants" do
-    s1 = FactoryGirl.create(:supplier_enterprise)
-    s2 = FactoryGirl.create(:supplier_enterprise)
-    p = FactoryGirl.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
+    s1 = FactoryBot.create(:supplier_enterprise)
+    s2 = FactoryBot.create(:supplier_enterprise)
+    p = FactoryBot.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
       price: 3.0, on_hand: 9, unit_value: 0.25, unit_description: '(bottle)' )
     v = p.variants.first
     v.update_column(:sku, "VARIANTSKU")
@@ -352,8 +352,8 @@ feature %q{
   end
 
   scenario "updating delegated attributes of variants in isolation" do
-    p = FactoryGirl.create(:product)
-    v = FactoryGirl.create(:variant, product: p, price: 3.0)
+    p = FactoryBot.create(:product)
+    v = FactoryBot.create(:variant, product: p, price: 3.0)
 
     login_to_admin_section
 
@@ -378,7 +378,7 @@ feature %q{
   end
 
   scenario "updating a product mutiple times without refresh" do
-    p = FactoryGirl.create(:product, name: 'original name')
+    p = FactoryBot.create(:product, name: 'original name')
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
@@ -411,7 +411,7 @@ feature %q{
   end
 
   scenario "updating a product after cloning a product" do
-    p = FactoryGirl.create(:product, :name => "product 1")
+    p = FactoryBot.create(:product, :name => "product 1")
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
@@ -433,8 +433,8 @@ feature %q{
   scenario "updating when a filter has been applied" do
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
-    p1 = FactoryGirl.create(:simple_product, :name => "product1", supplier: s1)
-    p2 = FactoryGirl.create(:simple_product, :name => "product2", supplier: s2)
+    p1 = FactoryBot.create(:simple_product, :name => "product1", supplier: s1)
+    p2 = FactoryBot.create(:simple_product, :name => "product2", supplier: s2)
     login_to_admin_section
 
     visit '/admin/products/bulk_edit'
@@ -455,11 +455,11 @@ feature %q{
 
   describe "using action buttons" do
     describe "using delete buttons" do
-      let!(:p1) { FactoryGirl.create(:product) }
-      let!(:p2) { FactoryGirl.create(:product) }
+      let!(:p1) { FactoryBot.create(:product) }
+      let!(:p2) { FactoryBot.create(:product) }
       let!(:v1) { p1.variants.first }
       let!(:v2) { p2.variants.first }
-      let!(:v3) { FactoryGirl.create(:variant, product: p2 ) }
+      let!(:v3) { FactoryBot.create(:variant, product: p2 ) }
 
 
       before do
@@ -502,8 +502,8 @@ feature %q{
     end
 
     describe "using edit buttons" do
-      let!(:p1) { FactoryGirl.create(:product) }
-      let!(:p2) { FactoryGirl.create(:product) }
+      let!(:p1) { FactoryBot.create(:product) }
+      let!(:p2) { FactoryBot.create(:product) }
       let!(:v1) { p1.variants.first }
       let!(:v2) { p2.variants.first }
 
@@ -538,9 +538,9 @@ feature %q{
 
     describe "using clone buttons" do
       it "shows a clone button for products, which duplicates the product and adds it to the page when clicked" do
-        p1 = FactoryGirl.create(:product, :name => "P1")
-        p2 = FactoryGirl.create(:product, :name => "P2")
-        p3 = FactoryGirl.create(:product, :name => "P3")
+        p1 = FactoryBot.create(:product, :name => "P1")
+        p2 = FactoryBot.create(:product, :name => "P2")
+        p3 = FactoryBot.create(:product, :name => "P3")
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
@@ -566,7 +566,7 @@ feature %q{
   describe "using the page" do
     describe "using column display dropdown" do
       it "shows a column display dropdown, which shows a list of columns when clicked" do
-        FactoryGirl.create(:simple_product)
+        FactoryBot.create(:simple_product)
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'
@@ -597,8 +597,8 @@ feature %q{
       it "displays basic filtering controls which filter the product list" do
         s1 = create(:supplier_enterprise)
         s2 = create(:supplier_enterprise)
-        p1 = FactoryGirl.create(:simple_product, :name => "product1", supplier: s1)
-        p2 = FactoryGirl.create(:simple_product, :name => "product2", supplier: s2)
+        p1 = FactoryBot.create(:simple_product, :name => "product1", supplier: s1)
+        p2 = FactoryBot.create(:simple_product, :name => "product2", supplier: s2)
         login_to_admin_section
 
         visit '/admin/products/bulk_edit'

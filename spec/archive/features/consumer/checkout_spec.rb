@@ -487,9 +487,9 @@ feature %q{
     ExchangeFee.create!(exchange: ex2, enterprise_fee: supplier_fee4)
 
     # Distributors
-    distributor1 = FactoryGirl.create(:distributor_enterprise, name: "FruitAndVeg")
+    distributor1 = FactoryBot.create(:distributor_enterprise, name: "FruitAndVeg")
     @distributor1 = distributor1
-    distributor2 = FactoryGirl.create(:distributor_enterprise, name: "MoreFreshStuff")
+    distributor2 = FactoryBot.create(:distributor_enterprise, name: "MoreFreshStuff")
     create_enterprise_group_for distributor1
     distributor_fee1 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'packing', amount: 7)
     distributor_fee2 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'transport', amount: 8)

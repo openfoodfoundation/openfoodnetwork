@@ -294,8 +294,8 @@ module OpenFoodNetwork
       end
 
       it "checks whether exchanges exist" do
-        oc = FactoryGirl.create(:simple_order_cycle)
-        exchange = FactoryGirl.create(:exchange, order_cycle: oc)
+        oc = FactoryBot.create(:simple_order_cycle)
+        exchange = FactoryBot.create(:exchange, order_cycle: oc)
         applicator = OrderCycleFormApplicator.new(oc, user)
 
         applicator.send(:exchange_exists?, exchange.sender_id, exchange.receiver_id, exchange.incoming).should be true
@@ -425,9 +425,9 @@ module OpenFoodNetwork
       end
 
       it "does not add exchanges it is not permitted to touch" do
-        sender = FactoryGirl.create(:enterprise)
-        receiver = FactoryGirl.create(:enterprise)
-        oc = FactoryGirl.create(:simple_order_cycle)
+        sender = FactoryBot.create(:enterprise)
+        receiver = FactoryBot.create(:enterprise)
+        oc = FactoryBot.create(:simple_order_cycle)
         applicator = OrderCycleFormApplicator.new(oc, user)
         incoming = true
 
@@ -438,13 +438,13 @@ module OpenFoodNetwork
       end
 
       it "does not update exchanges it is not permitted to touch" do
-        sender = FactoryGirl.create(:enterprise)
-        receiver = FactoryGirl.create(:enterprise)
-        oc = FactoryGirl.create(:simple_order_cycle)
+        sender = FactoryBot.create(:enterprise)
+        receiver = FactoryBot.create(:enterprise)
+        oc = FactoryBot.create(:simple_order_cycle)
         applicator = OrderCycleFormApplicator.new(oc, user)
         incoming = true
-        exchange = FactoryGirl.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, incoming: incoming)
-        variant1 = FactoryGirl.create(:variant)
+        exchange = FactoryBot.create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, incoming: incoming)
+        variant1 = FactoryBot.create(:variant)
 
         applicator.send(:touched_exchanges=, [])
         applicator.send(:update_exchange, sender.id, receiver.id, incoming, {:variant_ids => [variant1.id]})
