@@ -147,7 +147,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :inventory_items, only: [:create, :update]
 
-    resources :customers, only: [:index, :create, :update, :destroy] do
+    resources :customers, only: [:index, :create, :update, :destroy, :show] do
       get :addresses, on: :member
       get :cards, on: :member
     end

@@ -23,6 +23,10 @@ module Admin
       end
     end
 
+    def show
+      render_as_json @customer
+    end
+
     def create
       @customer = Customer.new(params[:customer])
       if user_can_create_customer?

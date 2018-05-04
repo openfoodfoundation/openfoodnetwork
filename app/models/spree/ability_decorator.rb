@@ -257,7 +257,7 @@ class AbilityDecorator
     can [:admin, :index, :customers, :group_buys, :bulk_coop, :sales_tax, :payments, :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], :report
 
     can [:create], Customer
-    can [:admin, :index, :update, :destroy, :addresses, :cards], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
+    can [:admin, :index, :update, :destroy, :addresses, :cards, :show], Customer, enterprise_id: Enterprise.managed_by(user).pluck(:id)
     can [:admin, :new, :index], Subscription
     can [:create, :edit, :update, :cancel, :pause, :unpause], Subscription do |subscription|
       user.enterprises.include?(subscription.shop)

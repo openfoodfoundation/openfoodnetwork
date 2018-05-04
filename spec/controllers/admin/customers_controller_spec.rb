@@ -235,4 +235,37 @@ describe Admin::CustomersController, type: :controller do
       end
     end
   end
+
+  describe "show" do
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:another_enterprise) { create(:distributor_enterprise) }
+
+    context "json" do
+      let!(:customer) { create(:customer, enterprise: enterprise) }
+
+      context "where I manage the customer's enterprise" do
+        render_views
+
+        before do
+          controller.stub spree_current_user: enterprise.owner
+        end
+
+        it "renders the customer as json" do
+          spree_get :show, format: :json, id: customer.id
+          expect(JSON.parse(response.body)["id"]).to eq customer.id
+        end
+      end
+
+      context "where I don't manage the customer's enterprise" do
+        before do
+          controller.stub spree_current_user: another_enterprise.owner
+        end
+
+        it "prevents me from updating the customer" do
+          spree_get :show, format: :json, id: customer.id
+          expect(response).to redirect_to spree.unauthorized_path
+        end
+      end
+    end
+  end
 end
