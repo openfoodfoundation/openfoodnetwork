@@ -70,7 +70,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
     describe 'Orders & Fulfillment' do
       it "shows all orders in order cycles I coordinate" do
-        spree_post :orders_and_fulfillment
+        spree_post :orders_and_fulfillment, {q: {}}
 
         expect(resulting_orders).to     include orderA1, orderA2
         expect(resulting_orders).not_to include orderB1, orderB2
@@ -98,7 +98,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
       it "only shows orders that I have access to" do
-        spree_post :bulk_coop
+        spree_post :bulk_coop, {q: {}}
 
         expect(resulting_orders).to     include(orderA1, orderB1)
         expect(resulting_orders).not_to include(orderA2)
@@ -123,7 +123,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
         it "only shows orders that I distribute" do
-          spree_post :orders_and_fulfillment
+          spree_post :orders_and_fulfillment, {q: {}}
 
           expect(resulting_orders).to     include orderA1, orderB1
           expect(resulting_orders).not_to include orderA2, orderB2
@@ -166,7 +166,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         end
 
         it "only shows product line items that I am supplying" do
-          spree_post :bulk_coop
+          spree_post :bulk_coop, {q: {}}
 
           expect(resulting_products).to     include product1
           expect(resulting_products).not_to include product2, product3
@@ -191,7 +191,7 @@ describe Spree::Admin::ReportsController, type: :controller do
         end
 
         it "only shows product line items that I am supplying" do
-          spree_post :orders_and_fulfillment
+          spree_post :orders_and_fulfillment, {q: {}}
 
           expect(resulting_products).to     include product1
           expect(resulting_products).not_to include product2, product3
@@ -322,7 +322,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       end
 
       it "shows report data" do
-        spree_post :users_and_enterprises
+        spree_post :users_and_enterprises, {q: {}}
         expect(assigns(:report).table.empty?).to be false
       end
     end
