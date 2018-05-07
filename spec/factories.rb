@@ -1,7 +1,7 @@
 require 'ffaker'
 require 'spree/testing_support/factories'
 
-# http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
+# http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
 #
 # The spree_core gem defines factories in several files. For example:
 #
@@ -15,7 +15,7 @@ require 'spree/testing_support/factories'
 #   * order_with_inventory_unit_shipped
 #   * completed_order_with_totals
 #
-FactoryGirl.define do
+FactoryBot.define do
   factory :classification, class: Spree::Classification do
   end
 
@@ -85,7 +85,7 @@ FactoryGirl.define do
     orders_open_at  { 1.day.ago }
     orders_close_at { 1.week.from_now }
 
-    coordinator { Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
+    coordinator { Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
 
     transient do
       suppliers []
@@ -128,14 +128,14 @@ FactoryGirl.define do
 
   factory :exchange, :class => Exchange do
     incoming    false
-    order_cycle { OrderCycle.first || FactoryGirl.create(:simple_order_cycle) }
-    sender      { incoming ? FactoryGirl.create(:enterprise) : order_cycle.coordinator }
-    receiver    { incoming ? order_cycle.coordinator : FactoryGirl.create(:enterprise) }
+    order_cycle { OrderCycle.first || FactoryBot.create(:simple_order_cycle) }
+    sender      { incoming ? FactoryBot.create(:enterprise) : order_cycle.coordinator }
+    receiver    { incoming ? order_cycle.coordinator : FactoryBot.create(:enterprise) }
   end
 
   factory :schedule, class: Schedule do
     sequence(:name) { |n| "Schedule #{n}" }
-    order_cycles { [OrderCycle.first || FactoryGirl.create(:simple_order_cycle)] }
+    order_cycles { [OrderCycle.first || FactoryBot.create(:simple_order_cycle)] }
   end
 
   factory :subscription, :class => Subscription do
@@ -201,12 +201,12 @@ FactoryGirl.define do
   end
 
   factory :enterprise, :class => Enterprise do
-    owner { FactoryGirl.create :user }
+    owner { FactoryBot.create :user }
     sequence(:name) { |n| "Enterprise #{n}" }
     sells 'any'
     description 'enterprise'
     long_description '<p>Hello, world!</p><p>This is a paragraph.</p>'
-    address { FactoryGirl.create(:address) }
+    address { FactoryBot.create(:address) }
   end
 
   factory :supplier_enterprise, :parent => :enterprise do
@@ -241,7 +241,7 @@ FactoryGirl.define do
     sequence(:permalink) { |n| "group#{n}" }
     description 'this is a group'
     on_front_page false
-    address { FactoryGirl.build(:address) }
+    address { FactoryBot.build(:address) }
   end
 
   sequence(:calculator_amount)
@@ -255,21 +255,21 @@ FactoryGirl.define do
     sequence(:name) { |n| "Enterprise fee #{n}" }
     sequence(:fee_type) { |n| EnterpriseFee::FEE_TYPES[n % EnterpriseFee::FEE_TYPES.count] }
 
-    enterprise { Enterprise.first || FactoryGirl.create(:supplier_enterprise) }
+    enterprise { Enterprise.first || FactoryBot.create(:supplier_enterprise) }
     calculator { build(:calculator_per_item, preferred_amount: amount) }
 
     after(:create) { |ef| ef.calculator.save! }
   end
 
   factory :product_distribution, :class => ProductDistribution do
-    product         { |pd| Spree::Product.first || FactoryGirl.create(:product) }
-    distributor     { |pd| Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
-    enterprise_fee  { |pd| FactoryGirl.create(:enterprise_fee, enterprise: pd.distributor) }
+    product         { |pd| Spree::Product.first || FactoryBot.create(:product) }
+    distributor     { |pd| Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
+    enterprise_fee  { |pd| FactoryBot.create(:enterprise_fee, enterprise: pd.distributor) }
   end
 
   factory :adjustment_metadata, :class => AdjustmentMetadata do
-    adjustment { FactoryGirl.create(:adjustment) }
-    enterprise { FactoryGirl.create(:distributor_enterprise) }
+    adjustment { FactoryBot.create(:adjustment) }
+    enterprise { FactoryBot.create(:distributor_enterprise) }
     fee_name 'fee'
     fee_type 'packing'
     enterprise_role 'distributor'
@@ -286,7 +286,7 @@ FactoryGirl.define do
 
     after(:create) do |order|
       p = create(:simple_product, :distributors => [order.distributor])
-      FactoryGirl.create(:line_item, :order => order, :product => p)
+      FactoryBot.create(:line_item, :order => order, :product => p)
       order.reload
     end
   end
@@ -309,8 +309,8 @@ FactoryGirl.define do
       order.distributor.update_attribute(:charges_sales_tax, true)
       Spree::Zone.global.update_attribute(:default_tax, true)
 
-      p = FactoryGirl.create(:taxed_product, zone: Spree::Zone.global, price: proxy.product_price, tax_rate_amount: proxy.tax_rate_amount, tax_rate_name: proxy.tax_rate_name, distributors: [order.distributor])
-      FactoryGirl.create(:line_item, order: order, product: p, price: p.price)
+      p = FactoryBot.create(:taxed_product, zone: Spree::Zone.global, price: proxy.product_price, tax_rate_amount: proxy.tax_rate_amount, tax_rate_name: proxy.tax_rate_name, distributors: [order.distributor])
+      FactoryBot.create(:line_item, order: order, product: p, price: p.price)
       order.reload
     end
   end
@@ -403,34 +403,34 @@ FactoryGirl.define do
     turnover { rand(100000).to_f/100 }
     account_invoice do
       AccountInvoice.where(user_id: owner_id, year: begins_at.year, month: begins_at.month).first ||
-      FactoryGirl.create(:account_invoice, user: owner, year: begins_at.year, month: begins_at.month)
+      FactoryBot.create(:account_invoice, user: owner, year: begins_at.year, month: begins_at.month)
     end
   end
 
   factory :account_invoice do
-    user { FactoryGirl.create :user }
+    user { FactoryBot.create :user }
     year { 2000 + rand(100) }
     month { 1 + rand(12) }
   end
 
   factory :filter_order_cycles_tag_rule, class: TagRule::FilterOrderCycles do
-    enterprise { FactoryGirl.create :distributor_enterprise }
+    enterprise { FactoryBot.create :distributor_enterprise }
   end
 
   factory :filter_shipping_methods_tag_rule, class: TagRule::FilterShippingMethods do
-    enterprise { FactoryGirl.create :distributor_enterprise }
+    enterprise { FactoryBot.create :distributor_enterprise }
   end
 
   factory :filter_products_tag_rule, class: TagRule::FilterProducts do
-    enterprise { FactoryGirl.create :distributor_enterprise }
+    enterprise { FactoryBot.create :distributor_enterprise }
   end
 
   factory :filter_payment_methods_tag_rule, class: TagRule::FilterPaymentMethods do
-    enterprise { FactoryGirl.create :distributor_enterprise }
+    enterprise { FactoryBot.create :distributor_enterprise }
   end
 
   factory :tag_rule, class: TagRule::DiscountOrder do
-    enterprise { FactoryGirl.create :distributor_enterprise }
+    enterprise { FactoryBot.create :distributor_enterprise }
     before(:create) do |tr|
       tr.calculator = Spree::Calculator::FlatPercentItemTotal.new(calculable: tr)
     end
@@ -442,7 +442,7 @@ FactoryGirl.define do
   end
 
   factory :stripe_account do
-    enterprise { FactoryGirl.create :distributor_enterprise }
+    enterprise { FactoryBot.create :distributor_enterprise }
     stripe_user_id "abc123"
     stripe_publishable_key "xyz456"
   end
@@ -456,9 +456,9 @@ FactoryGirl.define do
 end
 
 
-FactoryGirl.modify do
+FactoryBot.modify do
   factory :product do
-    primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
+    primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
   end
   factory :simple_product do
     # Fix product factory name sequence with Kernel.rand so it is not interpreted as a Spree::Product method
@@ -466,8 +466,8 @@ FactoryGirl.modify do
     # When this fix has been merged into a version of Spree that we're using, this line can be removed.
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
-    supplier { Enterprise.is_primary_producer.first || FactoryGirl.create(:supplier_enterprise) }
-    primary_taxon { Spree::Taxon.first || FactoryGirl.create(:taxon) }
+    supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
+    primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
     on_hand 3
 
     unit_value 1
@@ -484,7 +484,7 @@ FactoryGirl.modify do
   end
 
   factory :shipping_method do
-    distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] }
+    distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
     display_on ''
   end
 
@@ -495,13 +495,13 @@ FactoryGirl.modify do
 
   factory :payment do
     transient do
-      distributor { order.distributor || Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise) }
+      distributor { order.distributor || Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
     end
-    payment_method { FactoryGirl.create(:payment_method, distributors: [distributor]) }
+    payment_method { FactoryBot.create(:payment_method, distributors: [distributor]) }
   end
 
   factory :payment_method do
-    distributors { [Enterprise.is_distributor.first || FactoryGirl.create(:distributor_enterprise)] }
+    distributors { [Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise)] }
   end
 
   factory :option_type do

@@ -106,7 +106,7 @@ group :test, :development do
   gem 'fuubar', '~> 2.2.0'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails', require: false
+  gem "factory_bot_rails", require: false
   gem 'capybara', '>= 2.15.4'
   gem 'database_cleaner', '0.7.1', require: false
   gem 'awesome_print'

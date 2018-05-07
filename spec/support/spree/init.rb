@@ -5,6 +5,6 @@ ProductDistribution.class_eval do
   before_validation :init_enterprise_fee
 
   def init_enterprise_fee
-    self.enterprise_fee ||= EnterpriseFee.where(enterprise_id: distributor).first || FactoryGirl.create(:enterprise_fee, enterprise_id: distributor)
+    self.enterprise_fee ||= EnterpriseFee.where(enterprise_id: distributor).first || FactoryBot.create(:enterprise_fee, enterprise_id: distributor)
   end
 end

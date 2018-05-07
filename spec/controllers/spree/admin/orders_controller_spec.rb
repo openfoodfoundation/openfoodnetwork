@@ -35,14 +35,14 @@ describe Spree::Admin::OrdersController, type: :controller do
     let(:order_attributes) { [:id, :full_name, :email, :phone, :completed_at, :distributor, :order_cycle, :number] }
 
     def self.make_simple_data!
-      let!(:dist1) { FactoryGirl.create(:distributor_enterprise) }
-      let!(:order1) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
-      let!(:order2) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
-      let!(:order3) { FactoryGirl.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryGirl.create(:address) ) }
-      let!(:line_item1) { FactoryGirl.create(:line_item, order: order1) }
-      let!(:line_item2) { FactoryGirl.create(:line_item, order: order2) }
-      let!(:line_item3) { FactoryGirl.create(:line_item, order: order2) }
-      let!(:line_item4) { FactoryGirl.create(:line_item, order: order3) }
+      let!(:dist1) { FactoryBot.create(:distributor_enterprise) }
+      let!(:order1) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
+      let!(:order2) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
+      let!(:order3) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
+      let!(:line_item1) { FactoryBot.create(:line_item, order: order1) }
+      let!(:line_item2) { FactoryBot.create(:line_item, order: order2) }
+      let!(:line_item3) { FactoryBot.create(:line_item, order: order2) }
+      let!(:line_item4) { FactoryBot.create(:line_item, order: order3) }
       let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :units_product, :units_variant] }
     end
 
@@ -95,11 +95,11 @@ describe Spree::Admin::OrdersController, type: :controller do
       let(:distributor2) { create(:distributor_enterprise) }
       let(:coordinator) { create(:distributor_enterprise) }
       let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
-      let!(:order1) { FactoryGirl.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryGirl.create(:address) ) }
-      let!(:line_item1) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: supplier)) }
-      let!(:line_item2) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: supplier)) }
-      let!(:order2) { FactoryGirl.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor2, billing_address: FactoryGirl.create(:address) ) }
-      let!(:line_item3) { FactoryGirl.create(:line_item, order: order2, product: FactoryGirl.create(:product, supplier: supplier)) }
+      let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
+      let!(:line_item1) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
+      let!(:line_item2) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
+      let!(:order2) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor2, billing_address: FactoryBot.create(:address) ) }
+      let!(:line_item3) { FactoryBot.create(:line_item, order: order2, product: FactoryBot.create(:product, supplier: supplier)) }
 
       context "producer enterprise" do
 

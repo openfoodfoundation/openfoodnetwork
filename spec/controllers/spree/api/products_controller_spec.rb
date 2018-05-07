@@ -75,8 +75,8 @@ module Spree
       end
 
       it "sorts products in ascending id order" do
-        FactoryGirl.create(:product, supplier: supplier)
-        FactoryGirl.create(:product, supplier: supplier)
+        FactoryBot.create(:product, supplier: supplier)
+        FactoryBot.create(:product, supplier: supplier)
 
         spree_get :index, { :template => 'bulk_index', :format => :json }
 
@@ -99,7 +99,7 @@ module Spree
         spree_get :index, { :template => 'bulk_index', :format => :json }
         json_response.size.should == 1
 
-        product5 = FactoryGirl.create(:product)
+        product5 = FactoryBot.create(:product)
         product5.available_on = nil
         product5.save!
 

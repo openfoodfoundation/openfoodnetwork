@@ -10,7 +10,7 @@ describe Spree::Address do
   end
 
   describe "geocode address" do
-    let(:address) { FactoryGirl.build(:address) }
+    let(:address) { FactoryBot.build(:address) }
 
     it "should include address1, address2, zipcode, city, state and country" do
       address.geocode_address.should include(address.address1)
@@ -30,7 +30,7 @@ describe Spree::Address do
   end
 
   describe "full address" do
-    let(:address) { FactoryGirl.build(:address) }
+    let(:address) { FactoryBot.build(:address) }
 
     it "should include address1, address2, zipcode, city and state" do
       address.full_address.should include(address.address1)

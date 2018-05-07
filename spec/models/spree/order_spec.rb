@@ -459,32 +459,32 @@ describe Spree::Order do
   context "validating distributor changes" do
     it "checks that a distributor is available when changing" do
       set_feature_toggle :order_cycles, false
-      order_enterprise = FactoryGirl.create(:enterprise, id: 1, :name => "Order Enterprise")
+      order_enterprise = FactoryBot.create(:enterprise, id: 1, :name => "Order Enterprise")
       subject.distributor = order_enterprise
-      product1 = FactoryGirl.create(:product)
-      product2 = FactoryGirl.create(:product)
-      product3 = FactoryGirl.create(:product)
-      variant11 = FactoryGirl.create(:variant, product: product1)
-      variant12 = FactoryGirl.create(:variant, product: product1)
-      variant21 = FactoryGirl.create(:variant, product: product2)
-      variant31 = FactoryGirl.create(:variant, product: product3)
-      variant32 = FactoryGirl.create(:variant, product: product3)
+      product1 = FactoryBot.create(:product)
+      product2 = FactoryBot.create(:product)
+      product3 = FactoryBot.create(:product)
+      variant11 = FactoryBot.create(:variant, product: product1)
+      variant12 = FactoryBot.create(:variant, product: product1)
+      variant21 = FactoryBot.create(:variant, product: product2)
+      variant31 = FactoryBot.create(:variant, product: product3)
+      variant32 = FactoryBot.create(:variant, product: product3)
 
       # Product Distributions
       # Order Enterprise sells product 1 and product 3
-      FactoryGirl.create(:product_distribution, product: product1, distributor: order_enterprise)
-      FactoryGirl.create(:product_distribution, product: product3, distributor: order_enterprise)
+      FactoryBot.create(:product_distribution, product: product1, distributor: order_enterprise)
+      FactoryBot.create(:product_distribution, product: product3, distributor: order_enterprise)
 
       # Build the current order
-      line_item1 = FactoryGirl.create(:line_item, order: subject, variant: variant11)
-      line_item2 = FactoryGirl.create(:line_item, order: subject, variant: variant12)
-      line_item3 = FactoryGirl.create(:line_item, order: subject, variant: variant31)
+      line_item1 = FactoryBot.create(:line_item, order: subject, variant: variant11)
+      line_item2 = FactoryBot.create(:line_item, order: subject, variant: variant12)
+      line_item3 = FactoryBot.create(:line_item, order: subject, variant: variant31)
       subject.reload
       subject.line_items = [line_item1,line_item2,line_item3]
 
-      test_enterprise = FactoryGirl.create(:enterprise, id: 2, :name => "Test Enterprise")
+      test_enterprise = FactoryBot.create(:enterprise, id: 2, :name => "Test Enterprise")
       # Test Enterprise sells only product 1
-      FactoryGirl.create(:product_distribution, product: product1, distributor: test_enterprise)
+      FactoryBot.create(:product_distribution, product: product1, distributor: test_enterprise)
 
       subject.distributor = test_enterprise
       subject.should_not be_valid
@@ -502,7 +502,7 @@ describe Spree::Order do
       end
 
       it "finds only orders not in specified state" do
-        o = FactoryGirl.create(:completed_order_with_totals)
+        o = FactoryBot.create(:completed_order_with_totals)
         o.cancel!
         Spree::Order.not_state(:canceled).should_not include o
       end

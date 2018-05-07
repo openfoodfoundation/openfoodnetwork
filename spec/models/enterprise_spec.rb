@@ -112,7 +112,7 @@ describe Enterprise do
   end
 
   describe "validations" do
-    subject { FactoryGirl.create(:distributor_enterprise) }
+    subject { FactoryBot.create(:distributor_enterprise) }
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:permalink) }
     it { should ensure_length_of(:description).is_at_most(255) }
@@ -188,7 +188,7 @@ describe Enterprise do
   end
 
   describe "delegations" do
-    #subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
+    #subject { FactoryBot.create(:distributor_enterprise, :address => FactoryBot.create(:address)) }
 
     it { should delegate(:latitude).to(:address) }
     it { should delegate(:longitude).to(:address) }

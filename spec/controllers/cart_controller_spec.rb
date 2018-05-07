@@ -5,14 +5,14 @@ module OpenFoodNetwork
   describe CartController, type: :controller do
     render_views
 
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:product1) do
-      p1 = FactoryGirl.create(:product)
+      p1 = FactoryBot.create(:product)
       p1.update_column(:count_on_hand, 10)
       p1
     end
     let(:cart) { Cart.create(user: user) }
-    let(:distributor) { FactoryGirl.create(:distributor_enterprise) }
+    let(:distributor) { FactoryBot.create(:distributor_enterprise) }
 
     before do
     end
@@ -30,7 +30,7 @@ module OpenFoodNetwork
         end
 
         context 'with an empty order' do
-          let(:order) { FactoryGirl.create(:order, distributor: distributor) }
+          let(:order) { FactoryBot.create(:order, distributor: distributor) }
 
           before(:each) do
             cart.orders << order
@@ -48,9 +48,9 @@ module OpenFoodNetwork
         end
 
         context 'an order with line items' do
-          let(:product) { FactoryGirl.create(:product, distributors: [ distributor ]) }
-          let(:order) { FactoryGirl.create(:order, { distributor: distributor } ) }
-          let(:line_item) { FactoryGirl.create(:line_item, { variant: product.master }) }
+          let(:product) { FactoryBot.create(:product, distributors: [ distributor ]) }
+          let(:order) { FactoryBot.create(:order, { distributor: distributor } ) }
+          let(:line_item) { FactoryBot.create(:line_item, { variant: product.master }) }
 
           before(:each) do
             order.line_items << line_item

@@ -141,9 +141,9 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::DelayedJobHelper
   config.include OpenFoodNetwork::PerformanceHelper
 
-  # FactoryGirl
-  require 'factory_girl_rails'
-  config.include FactoryGirl::Syntax::Methods
+  # FactoryBot
+  require 'factory_bot_rails'
+  config.include FactoryBot::Syntax::Methods
 
   config.include Paperclip::Shoulda::Matchers
 
