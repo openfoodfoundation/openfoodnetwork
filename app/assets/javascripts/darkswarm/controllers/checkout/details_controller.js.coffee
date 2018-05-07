@@ -6,7 +6,7 @@ Darkswarm.controller "DetailsCtrl", ($scope, $timeout, $http, CurrentUser, Authe
   $scope.login_or_next = (event) ->
     event.preventDefault()
     unless CurrentUser.id
-      $scope.ensureUserIsGuest()
+      $scope.ensureUserIsGuest($scope.next)
       return
 
     $scope.next()
