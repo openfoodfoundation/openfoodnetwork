@@ -10,8 +10,8 @@ module OpenFoodNetwork
       @user = user
       @render_table = render_table
 
-      @supplier_report = OpenFoodNetwork::Reports::BulkCoopSupplierReport.new
-      @allocation_report = OpenFoodNetwork::Reports::BulkCoopAllocationReport.new
+      @supplier_report = Reports::BulkCoopSupplierReport.new
+      @allocation_report = Reports::BulkCoopAllocationReport.new
     end
 
     def header
@@ -46,12 +46,12 @@ module OpenFoodNetwork
     end
 
     def search
-      OpenFoodNetwork::Reports::LineItems.search_orders(permissions, params)
+      Reports::LineItems.search_orders(permissions, params)
     end
 
     def table_items
       return [] unless @render_table
-      OpenFoodNetwork::Reports::LineItems.list(permissions, params)
+      Reports::LineItems.list(permissions, params)
     end
 
     def rules

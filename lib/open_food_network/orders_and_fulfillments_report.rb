@@ -48,12 +48,12 @@ module OpenFoodNetwork
     end
 
     def search
-      OpenFoodNetwork::Reports::LineItems.search_orders(permissions, params)
+      Reports::LineItems.search_orders(permissions, params)
     end
 
     def table_items
       return [] unless @render_table
-      OpenFoodNetwork::Reports::LineItems.list(permissions, params)
+      Reports::LineItems.list(permissions, params)
     end
 
     def rules
