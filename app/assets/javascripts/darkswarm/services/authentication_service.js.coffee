@@ -1,3 +1,8 @@
+# This class deals with displaying things in the login modal. It chooses
+# the modal tab templates and deals with switching tabs and passing data
+# between the tabs. It has direct access to the instance of the login modal,
+# and provides that access to other controllers as a service.
+
 Darkswarm.factory "AuthenticationService", (Navigation, $modal, $location, Redirections, Loading)->
 
   new class AuthenticationService
