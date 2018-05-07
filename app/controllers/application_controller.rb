@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   prepend_before_filter :restrict_iframes
+  before_filter :set_cache_headers # Issue #1213, prevent cart emptying via cache when using back button
 
   include EnterprisesHelper
   helper CssSplitter::ApplicationHelper
@@ -150,6 +151,12 @@ class ApplicationController < ActionController::Base
     block.call
     self.formats = old_formats
     nil
+  end
+
+  def set_cache_headers # https://jacopretorius.net/2014/01/force-page-to-reload-on-browser-back-in-rails.html
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
 end
