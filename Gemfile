@@ -21,7 +21,9 @@ gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch:
 gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "spree-upgrade-intermediate"
 #gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "1-3-stable"
 gem 'stripe', '~> 3.3.1'
-gem 'activemerchant', '~> 1.71.0'
+# We need at least this version to have Digicert's root certificate
+# which is needed for Pin Payments (and possibly others).
+gem 'activemerchant', '~> 1.78'
 
 gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
 gem 'jwt', '~> 1.5'
