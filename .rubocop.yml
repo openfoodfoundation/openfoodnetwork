@@ -14,6 +14,8 @@ AllCops:
     - 'vendor/**/*'
     - 'node_modules/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
+    # The parser gem fails to parse this file with out current Ruby version.
+    - 'spec/factories.rb'
 
 # OFN SETTINGS
 # Cop settings that have been agreed upon by the OFN community
