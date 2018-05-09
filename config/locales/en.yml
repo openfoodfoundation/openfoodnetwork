@@ -100,8 +100,8 @@ en:
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
             credit_card:
-              not_available: "is not available"
-              blank: "is required"
+              charges_not_allowed: "charges are not allowed by this customer"
+              no_default_card: "not available for this customer"
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -1025,7 +1025,9 @@ en:
         invalid_error: Oops! Please fill in all of the required fields...
         allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
         credit_card: Credit Card
-        no_cards_available: No cards available
+        charges_not_allowed: Charges are not allowed by this customer
+        no_default_card: Customer has no cards available to charge
+        card_ok: Customer has a card available to charge
       loading_flash:
         loading: LOADING SUBSCRIPTIONS
       review:
