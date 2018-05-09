@@ -849,10 +849,13 @@ en_US:
         allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
         credit_card: Credit Card
         no_cards_available: No cards available
+      loading_flash:
+        loading: LOADING SUBSCRIPTIONS
       review:
         details: Details
         address: Address
         products: Products
+      product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number
         confirm_edit: Are you sure you want to edit this order? Doing so may make it more difficult to automatically sync changes to the subscription in the future.
@@ -2369,6 +2372,7 @@ en_US:
     subscription_state:
       active: active
       pending: pending
+      ended: ended
       paused: paused
       canceled: cancelled
     payment_states:

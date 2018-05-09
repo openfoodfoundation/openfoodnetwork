@@ -10,6 +10,8 @@ es:
         email: E-mail del consumidor
       spree/payment:
         amount: Cantidad
+      order_cycle:
+        orders_close_at: Fecha de cierre
     errors:
       models:
         spree/user:
@@ -18,6 +20,10 @@ es:
               taken: "Ya existe una cuenta con este email. Inicie sesión o restablezca tu contraseña."
         spree/order:
           no_card: No hay tarjetas de crédito válidas disponibles
+        order_cycle:
+          attributes:
+            orders_close_at:
+              after_orders_open_at: debe ser después de la fecha de apertura
   activemodel:
     errors:
       models:
@@ -728,6 +734,8 @@ es:
       destroy_errors:
         orders_present: Ese ciclo de pedido ha sido seleccionado por un cliente y no puede ser eliminado. Para evitar que los clientes accedan a él, ciérrelo.
         schedule_present: Ese ciclo de pedido está vinculado a un horario y no puede ser eliminado. Desvincula o elimina el calendario primero.
+      bulk_update:
+        no_data: Hm, algo salió mal. No se encontraron datos de ciclo de pedido.
     producer_properties:
       index:
         title: Propiedades de la Productora
@@ -869,6 +877,9 @@ es:
         no_subscriptions: Aún no hay suscripciones ...
         why_dont_you_add_one: ¿Por qué no agregas una? :)
         no_matching_subscriptions: No se encontraron suscripciones coincidentes
+    schedules:
+      destroy:
+        associated_subscriptions_error: Este horario no se puede eliminar porque tiene suscripciones asociadas
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1197,6 +1208,7 @@ es:
   invite_email:
     greeting: "¡Hola!"
     invited_to_manage: "Ha sido invitado a administrar %{enterprise} en %{instance}."
+    confirm_your_email: "Debería haber recibido o recibirá pronto un correo electrónico con un enlace de confirmación. No podrá acceder al perfil de %{enterprise} hasta que haya confirmado su correo electrónico."
     set_a_password: "Luego se le pedirá que establezca una contraseña antes de poder administrar la organización."
     mistakenly_sent: "¿No está seguro de por qué ha recibido este correo electrónico? Por favor, póngase en contacto con %{owner_email} para más información."
   producer_mail_greeting: "Estimada"
@@ -1447,6 +1459,7 @@ es:
   november: "Noviembre"
   december: "Diciembre"
   email_not_found: "Dirección de correo electrónico no encontrada"
+  email_unconfirmed: "Debe confirmar su dirección de correo electrónico antes de poder restablecer su contraseña."
   email_required: "Debe brindar una dirección de correo electrónico"
   logging_in: "Espere un momento, le vamos a iniciar una sesión"
   signup_email: "Tu correo electrónico"
@@ -1698,6 +1711,10 @@ es:
   calculator: "Calculadora"
   calculator_values: "Calculadora de valores"
   flat_percent_per_item: "Porcentaje fijo (por artículo)"
+  flat_rate_per_item: "Tarifa plana (por artículo)"
+  flat_rate_per_order: "Tarifa plana (por pedido)"
+  flexible_rate: "Tarifa flexible"
+  price_sack: "Precio saco"
   new_order_cycles: "Nuevos Ciclos de Pedidos"
   new_order_cycle: "Nuevo Ciclo de Pedido"
   select_a_coordinator_for_your_order_cycle: "Selecciona un coordinador para vuestro ciclo de pedido"

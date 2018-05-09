@@ -10,6 +10,8 @@ pt:
         email: Email do/a consumidor/a
       spree/payment:
         amount: Quantia
+      order_cycle:
+        orders_close_at: Data de fecho
     errors:
       models:
         spree/user:
@@ -17,7 +19,11 @@ pt:
             email:
               taken: "Já existe uma conta associada a este email. Por favor faça login ou defina uma nova senha."
         spree/order:
-          no_card: Não estão disponíveis cartões de crédito válidos
+          no_card: Não há cartões de crédito válidos disponíveis
+        order_cycle:
+          attributes:
+            orders_close_at:
+              after_orders_open_at: tem de ser após data de abertura
   activemodel:
     errors:
       models:
@@ -25,7 +31,7 @@ pt:
           attributes:
             subscription_line_items:
               at_least_one_product: "^Por favor adicione pelo menos um produto"
-              not_available: "^%{name} não está disponível no calendário selecionado"
+              not_available: "^%{name} não está disponível no horário selecionado"
             ends_at:
               after_begins_at: "tem de ser depois de começar às"
             customer:
@@ -33,20 +39,20 @@ pt:
             schedule:
               not_coordinated_by_shop: "não é coordenado por %{shop}"
             payment_method:
-              not_available_to_shop: "não está disponível para a %{shop}"
+              not_available_to_shop: "não está disponível para %{shop}"
               invalid_type: "tem de ser em dinheiro ou método Stripe"
             shipping_method:
-              not_available_to_shop: "não está disponível para a %{shop}"
+              not_available_to_shop: "não está disponível para %{shop}"
             credit_card:
               not_available: "não está disponível"
               blank: "é obrigatório"
   devise:
     confirmations:
-      send_instructions: "Receberá um email com instruções sobre como confirmar a sua conta em alguns minutos."
-      failed_to_send: "Ocorreu um erro no envio do email de confirmação"
+      send_instructions: "Daqui a uns minutos irá receber um email com instruções sobre como confirmar a sua conta."
+      failed_to_send: "Ocorreu um erro enquanto enviávamos o seu email de confirmação"
       resend_confirmation_email: "Reenviar email de confirmação."
       confirmed: "Obrigada por confirmar o seu email! Agora já pode fazer login."
-      not_confirmed: "O seu email não pôde ser confirmado. Talvez já tenha completado este passo?"
+      not_confirmed: "O seu email não pôde ser confirmado. Talvez já tenha concluído este passo?"
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Foi enviada uma mensagem para o seu endereço de email com um link de confirmação. Por favor clique nesse link para activar a sua conta."
@@ -57,29 +63,29 @@ pt:
       unconfirmed: "Tem de confirmar a sua conta antes de continuar."
   enterprise_mailer:
     confirmation_instructions:
-      subject: "Por favor confirme o endereço de email da %{enterprise}"
+      subject: "Por favor confirme o endereço de email de %{enterprise}"
     welcome:
       subject: "%{enterprise} está agora em %{sitename}"
     invite_manager:
-      subject: "%{enterprise} enviou-lhe um convite para ser gestora/a"
+      subject: "%{enterprise} convidou-o/a para gestor/a"
   producer_mailer:
     order_cycle:
       subject: "Relatório de ciclo de encomendas de %{producer}"
   subscription_mailer:
     placement_summary_email:
-      subject: Um resumo das encomendas de subscrição recentes
+      subject: Um resumo das encomendas de subscrição feitas recentemente
       greeting: "Olá %{name},"
-      intro: "Abaixo está um resumo das encomendas de subscrição que acabam de ser feitas na  %{shop}."
+      intro: "Abaixo está um resumo das encomendas de subscrição que acabam de ser feitas em %{shop}."
     confirmation_summary_email:
       subject: Um resumo das encomendas de subscrição confirmadas recentemente
       greeting: "Olá %{name},"
-      intro: "Abaixo está um resumo das encomendas de subscrição que acabam de ser finalizadas na %{shop}."
+      intro: "Abaixo está um resumo das encomendas de subscrição que acabam de ser finalizadas em %{shop}."
     summary_overview:
       total: 'Um total de %{count} subscrições foram marcadas para processamento automático. '
       success_zero: Destas, nenhuma foi processada com sucesso.
       success_some: 'Destas, %{count} foram processadas com sucesso. '
       success_all: Todas foram processadas com sucesso.
-      issues: Detalhes dos problemas encontrados estão listados abaixo.
+      issues: Abaixo estão listados os detalhes dos problemas encontrados.
     summary_detail:
       no_message_provided: Não foi fornecida nenhuma mensagem de erro
       changes:
@@ -87,10 +93,10 @@ pt:
         explainer: Estas encomendas foram processadas mas não existe stock suficiente para alguns dos itens requisitados
       empty:
         title: Sem Stock (%{count} encomendas)
-        explainer: Não foi possível processar estas encomendas porque não existe stock disponível de nenhum dos produtos requisitados
+        explainer: Não foi possível processar estas encomendas porque não existe stock disponível para nenhum dos produtos requisitados
       complete:
-        title: Já foi processada (%{count} encomendas)
-        explainer: Estas encomendas já foram marcadas como completas, e portanto foram deixadas como estão
+        title: Já foram processadas (%{count} encomendas)
+        explainer: Estas encomendas já foram marcadas como concluídas, e portanto deixámo-las como estão
       processing:
         title: Encontrado Erro (%{count} encomendas)
         explainer: O processamento automático destas encomendas falhou devido a um erro. O erro foi listado quando possível.
@@ -99,13 +105,13 @@ pt:
         explainer: O processamento automático do pagamento destas encomendas falhou devido a um erro. O erro foi listado quando possível.
       other:
         title: Outra Falha (%{count} encomendas)
-        explainer: 'O processamento automático destas encomendas falhou devido a razão desconhecida. Isto não deveria estar a acontecer, por favor contacte-nos se estiver a ver esta mensagem. '
+        explainer: 'O processamento automático destas encomendas falhou devido a uma razão desconhecida. Isto não deveria estar a acontecer, por favor contacte-nos se estiver a ver esta mensagem. '
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Bem vindo a'
   site_meta_description: "Começamos a partir da terra. Com agricultores e produtores prontos a contarem as suas histórias com um brilho nos olhos. Com distribuidores prontos a estabelecerem ligações entre pessoas e produtos de forma justa e honesta. Com consumidores que acreditam que melhores decisões no momento da compra..."
-  search_by_name: Procurar por nome ou localidade
-  producers_join: Produtores e produtoras nacionais, estão convidados a juntarem-se à Open Food Network!
+  search_by_name: Procurar por nome ou localidade...
+  producers_join: Produtores e produtoras de proximidade, estão convidados a juntarem-se à Open Food Network!
   charges_sales_tax: Cobra GST?
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir bilhetes"
@@ -116,15 +122,15 @@ pt:
   edit_order: "Editar encomenda"
   ship_order: "Enviar encomenda"
   cancel_order: "Cancelar encomenda"
-  confirm_send_invoice: "Vai ser enviada ao cliente uma factura desta encomenda. Tem a certeza que deseja continuar?"
+  confirm_send_invoice: "Vai ser enviada uma factura desta encomenda ao cliente. Tem a certeza que deseja continuar?"
   confirm_resend_order_confirmation: "Tem a certeza que deseja enviar novamente o email de confirmação de encomenda? "
   must_have_valid_business_number: "%{enterprise_name}tem de ter um ABN válido antes de se poder enviar facturas."
   invoice: "Factura"
   percentage_of_sales: "%{percentage} de vendas"
   capped_at_cap: "limitado em %{cap}"
   per_month: "por mês"
-  free: "grátis"
-  free_trial: "faça um teste gratuitamente"
+  free: "gratuito"
+  free_trial: "experimentar sem pagar"
   plus_tax: "mais taxas"
   min_bill_turnover_desc: "assim que o volume de negócios exceder %{mbt_amount}"
   say_no: "Não"
@@ -134,7 +140,7 @@ pt:
   bill_address: Endereço de Facturação
   ship_address: Endereço de Envio
   sort_order_cycles_on_shopfront_by: "Ordenar Ciclos de Encomendas no Mercado Por"
-  required_fields: Os campos obrigatórios são indicados com um asterisco
+  required_fields: Os campos obrigatórios estão indicados com um asterisco
   select_continue: Seleccionar e continuar
   remove: Remover
   or: ou
@@ -143,7 +149,7 @@ pt:
   loading: A carregar...
   show_more: Mostrar mais
   show_all: Mostrar tudo
-  show_all_with_more: "Mostrar tudo (%{num} Mais)"
+  show_all_with_more: "Mostrar tudo (Mais %{num})"
   cancel: Cancelar
   edit: Editar
   clone: Clonar
@@ -173,7 +179,7 @@ pt:
   'no': "Não"
   y: 'S'
   n: 'N'
-  powered_by: Distribuído por
+  powered_by: Impulsionado por
   blocked_cookies_alert: "O seu browser pode estar a bloquear cookies necessárias para o correcto funcionamento deste mercado. Clique abaixo para autorizar cookies e recarregue a página."
   allow_cookies: "Autorizar cookies"
   notes: Notas
@@ -183,13 +189,13 @@ pt:
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Levantamento
-  copy: Cópia
+  copy: Copiar
   actions:
     create_and_add_another: "Criar e acrescentar outro"
   admin:
     begins_at: Começa às
     begins_on: Começa em
-    customer: Cliente
+    customer: Consumidor/a
     date: Data
     email: Email
     ends_at: 'Termina às '
@@ -203,7 +209,7 @@ pt:
     payment_method: Método de Pagamento
     phone: Telefone
     price: Preço
-    producer: Produtor
+    producer: Produtor/a
     image: Imagem
     product: Produto
     quantity: Quantidade
@@ -216,37 +222,37 @@ pt:
     tags: Etiquetas
     variant: Variante
     weight: Peso
-    volume: Tamanho
+    volume: Volume
     items: Itens
-    select_all: Selecionar tudo
+    select_all: Seleccionar tudo
     obsolete_master: Mestre obsoleto
     quick_search: Pesquisa Rápida
     clear_all: Limpar Tudo
     start_date: "Data de Início"
-    end_date: "Data de Término"
+    end_date: "Data de Fim"
     form_invalid: "O formulário contém campos incompletos ou inválidos"
     clear_filters: Limpar filtros
     clear: Limpar
     show_more: Mostrar mais
     show_n_more: Mostrar mais %{num}
     choose: "Escolher..."
-    please_select: Por favor selecione...
+    please_select: Por favor seleccione...
     columns: Colunas
     actions: Acções
     viewing: "Visualizando: %{current_view_name}"
     description: Descrição
     whats_this: O que é isto?
     tag_has_rules: "Regras existentes para esta etiqueta: %{num}"
-    has_one_rule: "possui uma regra"
+    has_one_rule: "tem uma regra"
     has_n_rules: "tem %{num} regras"
     unsaved_confirm_leave: "Existem alterações por guardar nesta página. Continuar sem guardar? "
-    unsaved_changes: "Algumas alterações não foram guardadas"
+    unsaved_changes: "Tem alterações por guardar"
     accounts_and_billing_settings:
       method_settings:
         default_accounts_payment_method: "Método de pagamento da conta por defeito"
         default_accounts_shipping_method: "Método de envio da conta por defeito"
       edit:
-        accounts_and_billing: "Contas e facturação"
+        accounts_and_billing: "Contabilidade & Facturação"
         accounts_administration_distributor: "Administração de contas de distribuidor"
         admin_settings: "Configurações"
         update_invoice: "Actualizar facturas"
@@ -299,33 +305,33 @@ pt:
         total_monthly_bill_incl_tax_tip: "O exemplo de conta mensal total incluindo taxas, dadas as definições e o volume de negócios indicado."
     customers:
       index:
-        add_customer: "Adicionar Cliente"
-        new_customer: "Novo Cliente"
-        customer_placeholder: "cliente@exemplo.org"
+        add_customer: "Adicionar Consumidor/a"
+        new_customer: "Novo/a Consumidor/a"
+        customer_placeholder: "consumidora@exemplo.org"
         valid_email_error: Por favor usar um endereço de email válido
-        add_a_new_customer_for: Adicionar novo cliente para %{shop_name}
+        add_a_new_customer_for: Adicionar novo/a consumidor/a a %{shop_name}
         code: Código
         duplicate_code: "Este código já está a ser usado."
-        bill_address: "Endereço de Factura"
+        bill_address: "Endereço de Facturação"
         ship_address: "Endereço de Entrega"
         update_address_success: 'Endereço actualizado com sucesso'
-        update_address_error: 'Por favor preencher todos os campos obrigatórios'
-        edit_bill_address: 'Editar Endereço de Factura'
+        update_address_error: 'Perdão! Por favor preencha todos os campos obrigatórios!'
+        edit_bill_address: 'Editar Endereço de Facturação'
         edit_ship_address: 'Editar Endereço de Entrega'
         required_fileds: 'Os campos obrigatórios estão marcados com um asterisco'
-        select_country: 'Selecionar País'
-        select_state: 'Selecionar Estado'
+        select_country: 'Seleccionar País'
+        select_state: 'Seleccionar Região'
         edit: 'Editar'
         update_address: 'Actualizar Endereço'
         confirm_delete: 'De certeza que é para apagar? '
         search_by_email: "Pesquisar por e-mail/código"
       destroy:
-        has_associated_orders: 'Não foi possível apagar: o cliente tem encomendas associadas a esta loja.'
+        has_associated_orders: 'Não foi possível apagar: o/a consumidor/a tem encomendas associadas a esta loja.'
     cache_settings:
       show:
         title: A carregar
         distributor: Distribuidor
-        order_cycle: Ciclo de Pedidos
+        order_cycle: Ciclo de Encomendas
         status: Status
         diff: Diff
         error: Erro
@@ -367,9 +373,9 @@ pt:
         available_on: Disponível em
         av_on: "Disp. em"
         upload_an_image: Carregar uma imagem
-      product_search_keywords: Palavras-chave de Pesquisa de Produto
+      product_search_keywords: Palavras-chave para Pesquisa de Produto
       product_search_tip: Insira palavras que ajudem a encontrar os seus produtos nas lojas. Use um espaço para separar cada palavra-chave
-      SEO_keywords: Palavras-chave SEO
+      SEO_keywords: Palavras-chave para fins de SEO
       seo_tip: Insira palavras que ajudem a encontrar os seus produtos na web. Use um espaço para separar cada palavra-chave
       Search: Procurar
       properties:
@@ -382,7 +388,7 @@ pt:
       back_to_products_list: "Voltar à lista de produtos"
     variant_overrides:
       loading_flash:
-        loading_inventory: CARREGANDO INVENTÁRIO
+        loading_inventory: A CARREGAR INVENTÁRIO...
       index:
         title: Inventário
         description: Utilize esta página para gerir os inventários das suas organizações. Qualquer detalhe de produto que seja introduzido aqui, irá substituir o que foi especificado na página de 'Produtos'
@@ -390,16 +396,16 @@ pt:
         inherit?: Herdar?
         add: Adicionar
         hide: Esconder
-        select_a_shop: Selecionar Uma Loja
-        review_now: Avaliar Agora
-        new_products_alert_message: Há %{new_product_count} novos produtos disponíveis para serem adicionados ao seu inventário.
-        currently_empty: Actualmente, o seu inventário está vazio
-        no_matching_products: Nenhum produto correspondente encontrado no seu inventário
-        no_hidden_products: Nenhum produto foi ocultado neste inventário
+        select_a_shop: Seleccionar Uma Loja
+        review_now: Rever Agora
+        new_products_alert_message: Há %{new_product_count} novos produtos disponíveis para adicionar ao seu inventário.
+        currently_empty: Actualmente o seu inventário está vazio
+        no_matching_products: Não foi encontrado nenhum produto correspondente no seu inventário
+        no_hidden_products: Não foi ocultado nenhum produto deste inventário
         no_matching_hidden_products: Nenhum produto oculto corresponde à sua pesquisa
         no_new_products: Nenhum novo produto está disponível para ser adicionado a este inventário
-        no_matching_new_products: Nenhum novo produto corresponde à sua busca
-        inventory_powertip: Este é o seu inventário de produtos. Para adicionar produtos ao seu inventário, selecione 'Novos Produtos' no menu Visualizar
+        no_matching_new_products: Nenhum produto novo corresponde à sua pesquisa
+        inventory_powertip: Este é o seu inventário de produtos. Para adicionar produtos ao seu inventário, seleccione 'Novos Produtos' no menu Visualizar
         hidden_powertip: Estes produtos foram escondidos no seu inventário e não estarão disponíveis para serem adicionados à sua loja. Pode clicar em 'Adicionar' para adicionar um produto ao seu inventário.
         new_powertip: 'Estes produtos estão disponíveis para serem adicionados ao seu inventário. Clique em ''Adicionar'' para adicionar um produto em seu inventário, ou ''Ocultar'' para escondê-lo. Pode voltar atrás quando quiser! '
       controls:
@@ -591,8 +597,8 @@ pt:
           managers: Administradores
           managers_tip: Os outros utilizadores com permissão para gerir esta organização.
           invite_manager: "Convidar Gestor/a"
-          invite_manager_tip: "Convidar um utilizador não-registado a inscrever-se e tornar-se gestor desta organização."
-          add_unregistered_user: "Adicionar um utilizador não-registado"
+          invite_manager_tip: "Convidar um/a utilizador/a não-registado/a a inscrever-se e tornar-se gestor/a desta organização."
+          add_unregistered_user: "Adicionar um/a utilizador/a não-registado/a"
           email_confirmed: "Email confirmado"
           email_not_confirmed: "Email não confirmado"
       actions:
@@ -653,7 +659,7 @@ pt:
         next_step: Próximo passo
         choose_starting_point: 'Escolha o seu ponto de partida:'
       invite_manager:
-        user_already_exists: "O utilizador já existe"
+        user_already_exists: "O/A utilizador/a já existe"
         error: "Algo correu mal"
     order_cycles:
       edit:
@@ -726,6 +732,8 @@ pt:
       destroy_errors:
         orders_present: Esse ciclo de encomendas foi selecionado por um/a consumidor/a e não pode ser apagado. Para evitar que os clientes acedam, por favor feche-o.
         schedule_present: Esse ciclo de encomendas está ligado a um horário e não pode ser apagado. Por favor elimine a ligação ou apague primeiro o horário.
+      bulk_update:
+        no_data: Hmmm, algo correu mal. Não foram encontrados dados do ciclo de encomendas.
     producer_properties:
       index:
         title: Propriedades do produtor
@@ -908,13 +916,13 @@ pt:
         checkout: "Finalizar compra agora"
         already_ordered_products: "Já encomendado neste ciclo de pedidos"
     register_call:
-      selling_on_ofn: "Interessado em participar da Open Food Network?"
-      register: "Registre-se aqui"
+      selling_on_ofn: "Tens interesse em participar na Open Food Network?"
+      register: "Regista-te aqui"
   shop:
     messages:
       login: "Entrar"
-      register: "registro"
-      contact: "contato"
+      register: "registo"
+      contact: "contacto"
       require_customer_login: "Essa loja é somente para clientes."
       require_login_html: "Fazer o %{login} se você já possui uma conta. Caso contrário, %{register} para se tornar cliente. "
       require_customer_html: "Por favor %{contact} a %{enterprise} para se tornar consumidor/a. "
@@ -924,10 +932,10 @@ pt:
   invoice_column_tax: "GST"
   invoice_column_price: "Preço"
   invoice_column_item: "Item"
-  invoice_column_qty: "Quantidade"
-  invoice_column_unit_price_with_taxes: "Preço unitário (com taxa)"
+  invoice_column_qty: "Qtd"
+  invoice_column_unit_price_with_taxes: "Preço unitário (incl. taxa)"
   invoice_column_unit_price_without_taxes: "Preço unitário (sem taxa)"
-  invoice_column_price_with_taxes: "Preço total (com taxas)"
+  invoice_column_price_with_taxes: "Preço total (incl. taxas)"
   invoice_column_price_without_taxes: "Preço total (sem taxas)"
   invoice_column_tax_rate: "Taxa de imposto"
   invoice_tax_total: "Total GST:"
@@ -966,14 +974,14 @@ pt:
   email: Email
   phone: Telefone
   next: Próximo
-  address: Endereço
+  address: Morada
   address_placeholder: 'ex: Rua Alta, 123'
   address2: Complemento
   city: Cidade
   city_placeholder: 'ex: Porto'
   postcode: Código postal
-  postcode_placeholder: 'ex:  3070'
-  state: Estado
+  postcode_placeholder: 'ex:  4000-125'
+  state: Região
   country: País
   unauthorized: Não autorizado
   terms_of_service: "Termos de Serviço"
@@ -1029,58 +1037,58 @@ pt:
   card_could_not_be_removed: Pedimos desculpa, o cartão não pôde ser removido.
   ie_warning_headline: "O seu navegador está desactualizado :-("
   ie_warning_text: "Para ter uma melhor experiência com a Open Food Network, recomendamos vivamente que actualize o seu navegador:"
-  ie_warning_chrome: Baixar Chrome
-  ie_warning_firefox: Baixar Firefox
+  ie_warning_chrome: Descarregar Chrome
+  ie_warning_firefox: Descarregar Firefox
   ie_warning_ie: Actualizar Internet Explorer
   ie_warning_other: "Não consegue actualizar o navegador? Tente aceder à OFN pelo smartphone :-)"
   footer_global_headline: "OFN Global"
   footer_global_home: "Início"
-  footer_global_news: "Novidades"
+  footer_global_news: "Notícias"
   footer_global_about: "Sobre"
   footer_global_contact: "Contacto"
   footer_sites_headline: "Páginas OFN"
   footer_sites_developer: "Desenvolvimento"
   footer_sites_community: "Comunidade"
   footer_sites_userguide: "Manual de Utilizador"
-  footer_secure: "Seguro e confiável."
+  footer_secure: "Seguro e de confiança."
   footer_secure_text: "A Open Food Network utiliza a criptografia SSL (2048 bit RSA) para manter as suas informações em segurança. Os nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
-  footer_contact_headline: "Mantenha-se em contacto"
+  footer_contact_headline: "Ficamos em contacto"
   footer_contact_email: "Envie-nos um email"
   footer_nav_headline: "Navegar"
   footer_join_headline: "Junte-se a nós"
-  footer_join_body: "Criar uma lista de ofertas, loja ou cooperativa na Open Food Network"
+  footer_join_body: "Criar uma lista de ofertas, uma loja ou um grupo de consumo na Open Food Network"
   footer_join_cta: "Quero saber mais!"
-  footer_legal_call: "Leia o nosso"
+  footer_legal_call: "Leia os nossos"
   footer_legal_tos: "Termos e condições"
-  footer_legal_visit: "Encontre-nos em "
-  footer_legal_text_html: "A Open Food Network é uma plataforma livre e open-source. O nosso conteúdo é disponibilizado sob uma licença %{content_license} e o nosso código %{code_license}."
-  home_shop: Compre Agora
-  brandstory_headline: "Alimentos, com liberdade"
-  brandstory_intro: "Às vezes, a melhor maneira de consertar o sistema é construir um novo..."
+  footer_legal_visit: "Encontre-nos no"
+  footer_legal_text_html: "A Open Food Network é uma plataforma livre e de código aberto. O nosso conteúdo tem uma licença %{content_license} e o nosso código %{code_license}."
+  home_shop: Ir às compras
+  brandstory_headline: "Para quem consome com princípios"
+  brandstory_intro: "Às vezes a melhor forma de consertar o sistema é construir um novo..."
   brandstory_part1: "Começamos a partir da terra. Com agricultores e produtores prontos a contarem as suas histórias com um brilho nos olhos. Com distribuidores prontos a estabelecerem ligações entre pessoas e produtos de forma justa e honesta. Com consumidores que acreditam que melhores decisões no momento da compra podem mudar o mundo. "
-  brandstory_part2: "Precisamos de uma ferramenta para empoderar a todos que produzem, vendem e compram comida. Uma maneira de contar histórias, e controlar toda a logística. "
-  brandstory_part3: "Por isso construímos um mercado online, transparente, capaz de criar conexões verdadeiras. O código é aberto, e pode ser modificado para melhor se adaptar as particularidades de cada canto do planeta. "
-  brandstory_part4: "Queremos de volta o controle sobre os alimentos que consumimos."
-  brandstory_part5_strong: "Bem vindos à Open Food Network"
-  brandstory_part6: "Todos amamos comida. Agora a gente também pode amar nosso sistema alimentar. "
-  learn_body: "Conheça novos modelos, histórias e fornecedores para dar suporte à sua iniciativa, mercado ou organização. Encontre oportunidades para aprender com quem faz parte do seu setor. "
+  brandstory_part2: "Depois precisamos de uma forma de torná-lo real. Uma forma de dar poder a todos e todas que cultivam, produzem, vendem e compram alimentos. Uma forma de contar todas as histórias, e de lidar com toda a logística. Una forma de transformar transacção em transformação todos os dias. "
+  brandstory_part3: "Por isso construímos um mercado online para quem quer jogar noutro campeonato. É transparente, e portanto promove relações verdadeiras. É de código aberto, e portanto somos todos donos e donas, podendo modificá-lo para melhor se adaptar às particularidades de cada lugar. "
+  brandstory_part4: "Funciona em todo o lado e muda tudo. "
+  brandstory_part5_strong: "Chamamos-lhe Open Food Network"
+  brandstory_part6: "Todos nós adoramos comer bem. Agora também podemos amar o nosso sistema alimentar. "
+  learn_body: "Explore novos modelos, histórias e recursos para apoiar a sua iniciativa agroalimentar. Encontre acções de formação, eventos e outras oportunidades para aprender com os seus pares. "
   learn_cta: "Inspire-se"
-  connect_body: "Procure em nossa lista por produtores, distribuidores e cooperativas para encontrar um comércio justo, perto de você. Registre seu negócio na OFN para que os consumidores possam te encontrar. Junte-se à comunidade para trocar experiências e resolver problemas, juntos. "
+  connect_body: "Procure no nosso directório de produtores, centrais de abastecimento e grupos de consumo para encontrar um comércio justo perto de si. Registe o seu negócio ou organização na OFN para que os consumidores possam encontrá-lo. Junte-se à comunidade para trocar experiências e resolver problemas em conjunto."
   connect_cta: "Explore"
-  system_headline: "A feira funciona assim:"
-  system_step1: "1. Busca"
-  system_step1_text: "Escolha entre diversos mercados independentes por alimentos locais, da estação. Procure por região, tipo de alimentos, ou se você prefere retirar ou receber em casa. "
-  system_step2: "2. Compra"
-  system_step2_text: "Transforme seu comércio com fornecedores de alimentos locais. Conheça as histórias por trás do seu produto, e daqueles que o fazem!"
-  system_step3: "3. Coleta / Entrega"
-  system_step3_text: "Espere que sua compre chegue até você, ou retire nos pontos de entrega determinados pelo seu fornecedor. Simples assim!"
-  cta_headline: "A feira que incentiva a economia local."
-  cta_label: "Estou pronto"
-  stats_headline: "Estamos criando um novo sistema alimentar"
-  stats_producers: "produtores"
+  system_headline: "As Compras — eis como funcionam:"
+  system_step1: "1. Procurar"
+  system_step1_text: "Escolha produtos sazonais de proximidade entre diversos pontos de venda independentes. Procure por região, tipo de alimento, e participe num grupo de consumo. "
+  system_step2: "2. Comprar"
+  system_step2_text: "Transforme o seu consumo, adquirindo produtos locais acessíveis de diversos produtores e produtoras. Conheça as histórias por trás da sua comida e quem a produz!"
+  system_step3: "3. Levantar"
+  system_step3_text: "Há a possibilidade de entrega ao domicílio ou de levantamento no ponto de distribuição definido por cada fornecedor. Visite o seu Grupo de Consumo para um vínculo mais directo com os produtores e com a vizinhança. "
+  cta_headline: "Incentivar a economia local, fazer do mundo um lugar melhor. "
+  cta_label: "Eu voto com o meu garfo"
+  stats_headline: "Estamos a criar um novo sistema alimentar"
+  stats_producers: "produtores/as"
   stats_shops: "lojas"
-  stats_shoppers: "compradores"
-  stats_orders: "pedidos"
+  stats_shoppers: "consumidores/as"
+  stats_orders: "encomendas"
   checkout_title: Fechar pedido
   checkout_now: Fechar pedido agora
   checkout_order_ready: Pedido pronto para
@@ -1449,6 +1457,7 @@ pt:
   november: "Novembro"
   december: "Dezembro"
   email_not_found: "Endereço de email não encontrado"
+  email_unconfirmed: "Tem de confirmar o seu endereço de email antes de poder redefinir a sua password."
   email_required: "Você precisa providenciar um endereço de email"
   logging_in: "Fazendo o login, aguarde um momento"
   signup_email: "Seu email"
@@ -1700,6 +1709,10 @@ pt:
   calculator: "Calculadora"
   calculator_values: "Valores da calculadora"
   flat_percent_per_item: "Percentual (por unidade)"
+  flat_rate_per_item: "Taxa Fixa (por item)"
+  flat_rate_per_order: "Taxa fixa (por encomenda)"
+  flexible_rate: "Taxa flexível"
+  price_sack: "Saco de Preços"
   new_order_cycles: "Novos Ciclo de Encomendas"
   new_order_cycle: "Novo ciclo de encomendas"
   select_a_coordinator_for_your_order_cycle: "Escolher um coordenador para o seu ciclo de encomendas"
@@ -1975,6 +1988,8 @@ pt:
   products_unsaved: "Modificações para %{n} produtos permanecem não salvas."
   is_already_manager: "já é um gestor!"
   no_change_to_save: "Nenhuma modificação a ser salva"
+  user_invited: "%{email} foi convidado/a para gerir esta organização"
+  add_manager: "Adicionar um/a utilizador/a existente"
   users: "Usuários"
   about: "Sobre"
   images: "Imagens"
@@ -2038,11 +2053,12 @@ pt:
   order_cycles_no_permission_to_create_error: "Não tem permissão para criar um ciclo de encomendas coordenado por essa organização."
   back_to_orders_list: "Voltar à lista de encomendas"
   order_information: "Informação da Encomenda"
-  date_completed: "Data Conclusão"
+  date_completed: "Data Concluído"
   amount: "Quantia"
   state_names:
-    ready: Pronto
+    ready: Pronta
     pending: Pendente
+    shipped: Enviada
   js:
     saving: 'A guardar....'
     changes_saved: 'Alterações guardadas.'
@@ -2064,6 +2080,9 @@ pt:
       enterprise_limit_reached: "Atingiu o número limite de organizações por conta. Escreva para %{contact_email} se precisar de aumentá-lo."
       modals:
         got_it: Percebi
+        close: "Fechar"
+        invite: "Convidar"
+        invite_title: "Convidar um/a utilizador/a não-registado/a"
         tag_rule_help:
           title: Regras de Etiquetas
           overview: Visão geral

@@ -353,6 +353,7 @@ nb:
         manages: administrerer
     products:
       unit_name_placeholder: 'f.eks. bunter'
+      Search: Søk
       properties:
         property_name: Navn på egenskap
         inherited_property: Arvet egenskap
@@ -360,7 +361,6 @@ nb:
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
       product_distributions: "Produktdistribusjoner"
       group_buy_options: "Gruppekjøpsalternativer"
-      seo: "SEO"
       back_to_products_list: "Tilbake til produktlisten"
     variant_overrides:
       loading_flash:
@@ -1109,7 +1109,6 @@ nb:
   email_admin_html: "Du kan administrere din konto ved å logge inn på %{link} eller ved klikke på tannhjulet øverst til høyre på hjemmesiden og velge Administrasjon."
   email_community_html: "Vi har også et online forum for diskusjon relatert til OFN programvaren og de forskjellige utfordringene med å drive et matfirma. Vi oppfordrer deg til å bli med. Vi utvikler oss hele tiden og dine innspill til dette forumet vil forme det som skjer videre. %{link}"
   join_community: "Bli med"
-  email_help: "Hvis du har problemer, sjekk vår FAQ, utforsk forumet eller skriv et 'Support'-emne og noen vil hjelpe deg!"
   email_confirmation_activate_account: "Før vi kan aktivere den nye kontoen din, må vi bekrefte epostadressen din."
   email_confirmation_greeting: "Hei, %{contact}!"
   email_confirmation_profile_created: "En profil for %{name} har blitt opprettet! For å aktivere din profil må du bekrefte denne epostadressen."
@@ -1941,7 +1940,6 @@ nb:
   products_unsaved: "Endringer i %{n} produkter er fortsatt ulagret."
   is_already_manager: "er allerede administrator!"
   no_change_to_save: "Ingen endring å lagre"
-  add_manager: "Legg til administrator"
   users: "Brukere"
   about: "Om"
   images: "Bilder"

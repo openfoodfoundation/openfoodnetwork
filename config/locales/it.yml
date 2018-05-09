@@ -125,6 +125,8 @@ it:
     cache_settings:
       show:
         error: Eorrore
+    products:
+      Search: Cerca
     variant_overrides:
       index:
         title: Inventario
@@ -363,7 +365,6 @@ it:
   email_admin_html: "Puoi gestire il tuo profilo facendo il log in al link %{link} o cliccando sull'ingranaggio in alto a destra della homepage, e selezionando Amministrazione"
   email_community_html: "Abbiamo anche un forum on-line per le discussioni della comunità sul software OFN e le sfide uniche legate all'avere un'impresa del cibo. Sei invitato ad unirti. Ci evolviamo in continuo e il tuo contributo in questo forum plasmerà ciò che sarà. %{link}"
   join_community: "Unisciti alla community"
-  email_help: "Se hai difficoltà, controlla le nostre FAQ, naviga nel forum o crea una discussione di 'Supporto' e qualcuno ti aiuterà!"
   email_confirmation_greeting: "Ciao, %{contact}!"
   email_confirmation_profile_created: "Un profilo per %{name} è stato creato con successo! Per attivare il tuo Profilo abbiamo bisogno di confermare questo indirizzo email."
   email_confirmation_click_link: "Per favore clicca il link di seguito per confermare la tua email e continuare l'impostazione del tuo profilo"
@@ -914,7 +915,6 @@ it:
   products_unsaved: "Modifiche a %{n} prodotti rimangono non salvate."
   is_already_manager: "è già un gestore!"
   no_change_to_save: "Nessuna modifica da salvare"
-  add_manager: "Aggiungi un gestore"
   users: "Utenti"
   about: "About"
   images: "Immagini"
