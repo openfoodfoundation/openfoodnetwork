@@ -365,7 +365,13 @@ es:
         tax_category: Categoría de impuestos
         inherits_properties?: ¿Hereda propiedades?
         available_on: Disponible en
+        av_on: "Av. En"
         upload_an_image: Subir una imagen
+      product_search_keywords: Palabras clave de búsqueda de productos
+      product_search_tip: Escriba palabras para ayudar a buscar sus productos en las tiendas. Use espacio para separar cada palabra clave.
+      SEO_keywords: Palabras clave de SEO
+      seo_tip: Escriba palabras para ayudar a buscar sus productos en la web. Use espacio para separar cada palabra clave.
+      Search: Buscar
       properties:
         property_name: Nombre de la Propiedad
         inherited_property: Propiedad Heredada
@@ -373,7 +379,6 @@ es:
         to_order_tip: "Los artículos hechos según demanda no tienen un nivel de stock, como por ejemplo panes hechos según demanda."
       product_distributions: "Distribuciones de productos"
       group_buy_options: "Opciones de compra grupales"
-      seo: "SEO"
       back_to_products_list: "Volver a la lista de productos"
     variant_overrides:
       loading_flash:
@@ -1131,7 +1136,6 @@ es:
   email_admin_html: "Puede administrar su cuenta iniciando sesión en %{link} o haciendo clic en el engrane arriba a la derecha de la página de inicio, y seleccionando Administración."
   email_community_html: "También tenemos un foro en líea para la discusión comunal relacionada con el programa OFN y los retos únicos del funcionamiento de una organización de alimentación. Lo invitamos a unirse. Estamos evolucionando de forma constante y su aporte en este formo le dará forma a lo que pase luego. %{link}"
   join_community: "Unirse a la comunidad"
-  email_help: "Si tiene dificultades, revise nuestras preguntas frecuentes, navegue el foro o haga una entrada de con tema de 'Soporte' y ¡alguien le ayudará!"
   email_confirmation_activate_account: "Antes de que podamos activar su nueva cuenta, necesitamos confirmar su dirección de correo electrónico."
   email_confirmation_greeting: "Hola, %{contact}!"
   email_confirmation_profile_created: "¡Se creó un un perfil para %{name} con éxito! Para activar su Perfil necesitamos que confirme esta dirección de correos."
@@ -1193,9 +1197,8 @@ es:
   invite_email:
     greeting: "¡Hola!"
     invited_to_manage: "Ha sido invitado a administrar %{enterprise} en %{instance}."
-    confirm_your_email: "En breve recibirá un correo electrónico para confirmar su registro."
     set_a_password: "Luego se le pedirá que establezca una contraseña antes de poder administrar la organización."
-    mistakenly_sent: "¿No está seguro de por qué ha recibido este correo electrónico? Por favor, póngase en contacto con %{owner_email} para obtener más información, o puede ponerse en contacto con %{instance} en %{instance_email}."
+    mistakenly_sent: "¿No está seguro de por qué ha recibido este correo electrónico? Por favor, póngase en contacto con %{owner_email} para más información."
   producer_mail_greeting: "Estimada"
   producer_mail_text_before: "Ahora tenemos todas los pedidos de las consumidoras para la siguiente ronda."
   producer_mail_order_text: "Se muestra un resumen de los pedidos de tus productos:"
@@ -2035,7 +2038,12 @@ es:
   order_cycles_no_permission_to_create_error: "No tienes permiso para crear un ciclo de pedido coordinado por esta empresa."
   back_to_orders_list: "Volver a la lista de pedidos"
   order_information: "información del pedido"
+  date_completed: "Fecha de finalización"
   amount: "Cantidad"
+  state_names:
+    ready: Listo
+    pending: Pendiente
+    shipped: Enviado
   js:
     saving: 'Guardando...'
     changes_saved: 'Cambios guardados.'
@@ -2057,6 +2065,9 @@ es:
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
         got_it: Lo entiendo
+        close: "Cerrar"
+        invite: "Invitar"
+        invite_title: "Invitar a un usuario no registrado"
         tag_rule_help:
           title: Reglas de las Etiquetas
           overview: Visión general
@@ -2235,6 +2246,8 @@ es:
     email: Email
     account_updated: "Cuenta actualizada!"
     my_account: "Mi cuenta"
+    date: "Fecha"
+    time: "Hora"
     admin:
       orders:
         invoice:
