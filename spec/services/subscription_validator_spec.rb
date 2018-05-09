@@ -332,10 +332,10 @@ describe SubscriptionValidator do
 
       context "when using the StripeConnect payment gateway" do
         let(:payment_method) { instance_double(Spree::PaymentMethod, type: "Spree::Gateway::StripeConnect") }
-        before { expect(subscription).to receive(:credit_card_id).at_least(:once) { credit_card_id } }
+        before { expect(subscription).to receive(:customer).at_least(:once) { customer } }
 
-        context "when a credit card is not present" do
-          let(:credit_card_id) { nil }
+        context "when the customer does not allow charges" do
+          let(:customer) { instance_double(Customer, allow_charges: false) }
 
           it "adds an error and returns false" do
             expect(validator.valid?).to be false
@@ -343,12 +343,11 @@ describe SubscriptionValidator do
           end
         end
 
-        context "when a credit card is present" do
-          let(:credit_card_id) { 12 }
-          before { expect(subscription).to receive(:customer).at_least(:once) { customer } }
+        context "when the customer allows charges" do
+          let(:customer) { instance_double(Customer, allow_charges: true) }
 
           context "and the customer is not associated with a user" do
-            let(:customer) { instance_double(Customer, user: nil) }
+            before { allow(customer).to receive(:user) { nil } }
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
@@ -357,10 +356,10 @@ describe SubscriptionValidator do
           end
 
           context "and the customer is associated with a user" do
-            let(:customer) { instance_double(Customer, user: user) }
+            before { expect(customer).to receive(:user).once { user } }
 
-            context "and the user has no credit cards which match that specified" do
-              let(:user) { instance_double(Spree::User, credit_card_ids: [1, 2, 3, 4]) }
+            context "and the user has no default card set" do
+              let(:user) { instance_double(Spree::User, default_card: nil) }
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
@@ -368,8 +367,8 @@ describe SubscriptionValidator do
               end
             end
 
-            context "and the user has a credit card which matches that specified" do
-              let(:user) { instance_double(Spree::User, credit_card_ids: [1, 2, 3, 12]) }
+            context "and the user has a default card set" do
+              let(:user) { instance_double(Spree::User, default_card: 'some card') }
 
               it "returns true" do
                 expect(validator.valid?).to be true
