@@ -26,11 +26,11 @@ module OpenFoodNetwork
         subject = OrderAndDistributorReport.new nil
 
         header = subject.header
-        header.should == ["Order date", "Order Id",
+        expect(header).to eq(["Order date", "Order Id",
           "Customer Name","Customer Email", "Customer Phone", "Customer City",
           "SKU", "Item name", "Variant", "Quantity", "Max Quantity", "Cost", "Shipping Cost",
           "Payment Method",
-          "Distributor", "Distributor address", "Distributor city", "Distributor postcode", "Shipping instructions"]
+          "Distributor", "Distributor address", "Distributor city", "Distributor postcode", "Shipping instructions"])
       end
 
       it "should denormalise order and distributor details for display as csv" do
@@ -38,11 +38,11 @@ module OpenFoodNetwork
 
         table = subject.send(:line_item_details, [@order])
 
-        table[0].should == [@order.created_at, @order.id,
+        expect(table[0]).to eq([@order.created_at, @order.id,
           @bill_address.full_name, @order.email, @bill_address.phone, @bill_address.city,
           @line_item.product.sku, @line_item.product.name, @line_item.options_text, @line_item.quantity, @line_item.max_quantity, @line_item.price * @line_item.quantity, @line_item.distribution_fee,
           @payment_method.name,
-          @distributor.name, @distributor.address.address1, @distributor.address.city, @distributor.address.zipcode, @shipping_instructions ]
+          @distributor.name, @distributor.address.address1, @distributor.address.city, @distributor.address.zipcode, @shipping_instructions ])
       end
     end
   end
