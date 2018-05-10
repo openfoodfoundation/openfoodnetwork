@@ -24,7 +24,7 @@ module Admin
     end
 
     def show
-      render_as_json @customer
+      render_as_json @customer, ams_prefix: params[:ams_prefix]
     end
 
     def create
@@ -90,6 +90,10 @@ module Admin
     def user_can_create_customer?
       spree_current_user.admin? ||
         spree_current_user.enterprises.include?(@customer.enterprise)
+    end
+
+    def ams_prefix_whitelist
+      [:subscription]
     end
   end
 end

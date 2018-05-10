@@ -21,6 +21,7 @@ angular.module("admin.subscriptions").controller "DetailsController", ($scope, $
 
   $scope.loadCustomer = ->
     params = { id: $scope.subscription.customer_id }
+    params.ams_prefix = 'subscription' unless $scope.subscription.id
     $scope.customer = CustomerResource.get params, (response) ->
       for address in ['bill_address','ship_address']
         return unless response[address]
