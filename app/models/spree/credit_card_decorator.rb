@@ -32,7 +32,7 @@ Spree::CreditCard.class_eval do
   private
 
   def default_missing?
-    user.credit_cards.where(is_default: true).none?
+    !user.credit_cards.exists?(is_default: true)
   end
 
   def ensure_default
