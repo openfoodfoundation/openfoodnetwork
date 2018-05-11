@@ -17,6 +17,7 @@ Spree::Order.class_eval do
 
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
+  validate :disallow_guest_order
   attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
   before_validation :shipping_address_from_distributor
@@ -80,6 +81,20 @@ Spree::Order.class_eval do
   def products_available_from_new_distribution
     # Check that the line_items in the current order are available from a newly selected distribution
     errors.add(:base, I18n.t(:spree_order_availability_error)) unless DistributionChangeValidator.new(self).can_change_to_distribution?(distributor, order_cycle)
+  end
+
+  def using_guest_checkout?
+    require_email && !user.andand.id
+  end
+
+  def registered_email?
+    Spree.user_class.exists?(email: email)
+  end
+
+  def disallow_guest_order
+    if using_guest_checkout? && registered_email?
+      errors.add(:base, I18n.t('devise.failure.already_registered'))
+    end
   end
 
   def empty_with_clear_shipping_and_payments!

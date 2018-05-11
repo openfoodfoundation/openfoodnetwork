@@ -673,6 +673,28 @@ describe Spree::Order do
     end
   end
 
+  describe "when a guest order is placed with a registered email" do
+    let(:order) { create(:order_with_totals_and_distribution, user: nil) }
+    let(:payment_method) { create(:payment_method, distributors: [order.distributor]) }
+    let(:shipping_method) { create(:shipping_method, distributors: [order.distributor]) }
+    let(:user) { create(:user, email: 'registered@email.com') }
+
+    before do
+      order.bill_address = create(:address)
+      order.ship_address = create(:address)
+      order.shipping_method = shipping_method
+      order.email = user.email
+      order.user = nil
+      order.state = 'cart'
+    end
+
+    it "returns a validation error" do
+      expect{order.next}.to change(order.errors, :count).from(0).to(1)
+      expect(order.errors.messages[:base]).to eq [ I18n.t('devise.failure.already_registered') ]
+      expect(order.state).to eq 'cart'
+    end
+  end
+
   describe "a completed order with shipping and transaction fees" do
     let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
     let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
