@@ -35,34 +35,6 @@ module Spree
       ShippingMethod.by_name.should == [sm2, sm3, sm1]
     end
 
-
-    describe "availability" do
-      let(:sm) { create(:shipping_method) }
-      let(:currency) { 'AUD' }
-
-      before do
-        sm.calculator.preferred_currency = currency
-      end
-
-      it "is available to orders that match its distributor" do
-        o = create(:order, ship_address: create(:address),
-                  distributor: sm.distributors.first, currency: currency)
-        sm.should be_available_to_order o
-      end
-
-      it "is not available to orders that do not match its distributor" do
-        o = create(:order, ship_address: create(:address),
-                  distributor: create(:distributor_enterprise), currency: currency)
-        sm.should_not be_available_to_order o
-      end
-
-      it "is available to orders with no shipping address" do
-        o = create(:order, ship_address: nil,
-                  distributor: sm.distributors.first, currency: currency)
-        sm.should be_available_to_order o
-      end
-    end
-
     describe "finding services offered by all distributors" do
       let!(:d1) { create(:distributor_enterprise) }
       let!(:d2) { create(:distributor_enterprise) }
