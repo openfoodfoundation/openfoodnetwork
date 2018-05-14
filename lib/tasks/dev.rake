@@ -9,7 +9,6 @@ namespace :openfoodnetwork do
       require_relative '../../spec/support/spree/init'
       task_name = "openfoodnetwork:dev:load_sample_data"
 
-      spree_user = Spree::User.find_by_email('spree@example.com')
       country = Spree::Country.find_by_iso(ENV.fetch('DEFAULT_COUNTRY_CODE'))
       state = country.states.first
 
@@ -202,8 +201,6 @@ namespace :openfoodnetwork do
       CreateOrderCycle.new(enterprise2, variants).call
 
       EnterpriseRole.create!(user: Spree::User.first, enterprise: enterprise2)
-
-      spree_user.confirm!
     end
   end
 end
