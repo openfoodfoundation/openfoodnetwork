@@ -114,7 +114,6 @@ RSpec.configure do |config|
       spree_config.currency = currency
       spree_config.shipping_instructions = true
       spree_config.auto_capture = true
-      spree_config.allow_backorders = false
     end
 
     Spree::Api::Config[:requires_authentication] = true
