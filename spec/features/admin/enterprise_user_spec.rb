@@ -88,11 +88,6 @@ feature %q{
       end
 
       it "shows me enterprise product info but not payment methods, shipping methods or enterprise fees" do
-        # Producer product info
-        page.should have_selector '.producers_tab span', text: 'Total Products'
-        page.should have_selector '.producers_tab span', text: 'Active Products'
-        page.should_not have_selector '.producers_tab span', text: 'Products in OCs'
-
         # Payment methods, shipping methods, enterprise fees
         page.should_not have_selector '.hubs_tab span', text: 'Payment Methods'
         page.should_not have_selector '.hubs_tab span', text: 'Shipping Methods'
