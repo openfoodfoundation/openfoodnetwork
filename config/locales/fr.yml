@@ -10,6 +10,8 @@ fr:
         email: Email acheteur
       spree/payment:
         amount: Montant
+      order_cycle:
+        orders_close_at: Date de fermeture
     errors:
       models:
         spree/user:
@@ -18,6 +20,10 @@ fr:
               taken: "Un compte existe déjà pour cet e-mail. Connectez-vous ou demandez un nouveau mot de passe."
         spree/order:
           no_card: Aucune carte de crédit valide trouvée
+        order_cycle:
+          attributes:
+            orders_close_at:
+              after_orders_open_at: doit être postérieure à Date d'ouverture
   activemodel:
     errors:
       models:
@@ -101,7 +107,7 @@ fr:
         title: Autre échec (%{count} commandes)
         explainer: Le traitement automatique de ces commandes a échoué pour une raison inconnue. Cela n'aurait pas dû arriver, veuillez nous contacter si vous constatez quelque chose d'anormal.
   home: "OFF"
-  title: Open Food Network France
+  title: Open Food France
   welcome_to: 'Bienvenue sur '
   site_meta_description: "Tout commence dans le sol. Avec ces paysans, agriculteurs, producteurs, engagés pour une agriculture durable et régénératrice, et désireux de partager leur histoire et leur passion avec fierté. Avec ces distributeurs souhaitant reconnecter les individus à leurs aliments et aux gens qui les produisent, soutenir les prises de conscience, dans une démarche de transparence, d'honnêteté, en assurant une juste rémunération des producteurs.  Avec ces acheteurs qui croient que de meilleures décisions d'achats peuvent ..."
   search_by_name: Recherche par nom ou département...
@@ -368,6 +374,9 @@ fr:
         av_on: "Disp. via"
         upload_an_image: Importer une image
       product_search_keywords: Mots-clés de recherche produits
+      product_search_tip: Saisissez des mots qui peuvent simplifier la recherche de vo produits dans les boutiques. Laissez un espace entre chaque mot-clé.
+      SEO_keywords: Mot-clés de référencement web
+      seo_tip: Saisissez des mots qui peuvent simplifier la recherche de vos produits sur le web. Laissez un espace entre chaque mot-clé.
       Search: Rechercher
       properties:
         property_name: Nom du label
@@ -724,6 +733,8 @@ fr:
       destroy_errors:
         orders_present: Ce cycle de vente a déjà été utilisé par un acheteur et ne peut être supprimé. Pour empêcher aux acheteurs d'y accéder, veuillez plutôt le fermer.
         schedule_present: Ce cycle de vente est lié à un rythme d'abonnement et ne peut pas être supprimé. Veuillez d'abord supprimer ce lien ou supprimer le rythme d'abonnement.
+      bulk_update:
+        no_data: Une erreur s'est produite. Aucune donnée trouvée.
     producer_properties:
       index:
         title: Propriétés / labels du producteur
@@ -816,12 +827,12 @@ fr:
         cancel_subscription: Annuler Abonnement
       setup_explanation:
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
-        enable_subscriptions: "Activer la fonction abonnements pour au moins une de vos boutiques"
+        enable_subscriptions: "Activez la fonction abonnements pour au moins une de vos boutiques"
         enable_subscriptions_step_1_html: 1. Allez à %{enterprises_link}, trouvez votre boutique, et cliquez sur "Gérer"
         enable_subscriptions_step_2: 2. Sous "Préférences boutiques", activez la fonction Abonnements
-        set_up_shipping_and_payment_methods_html: Paramétrez des méthodes de %{shipping_link} et %{payment_link}
+        set_up_shipping_and_payment_methods_html: Paramétrez au moins une méthode d'%{shipping_link} et une méthode de %{payment_link}
         set_up_shipping_and_payment_methods_note_html: Notez bien que seules des méthodes de paiement de type "cash" ou "Stripe" pourront<br /> être utilisées pour les Abonnements
-        ensure_at_least_one_customer_html: Assurez-vous qu'au moins une %{customer_link} existe
+        ensure_at_least_one_customer_html: Assurez-vous qu'au moins un %{customer_link} est enregistré dans votre liste d'acheteurs.
         create_at_least_one_schedule: Créez au moins un rythme d'abonnement
         create_at_least_one_schedule_step_1_html: 1. Allez à la page %{order_cycles_link}
         create_at_least_one_schedule_step_2: 2. Créez un cycle de vente si ce n'est pas encore fait
@@ -865,6 +876,9 @@ fr:
         no_subscriptions: Pas encore d'abonnements...
         why_dont_you_add_one: Pourquoi ne pas en créer un? :)
         no_matching_subscriptions: Aucun abonnement correspondant trouvé
+    schedules:
+      destroy:
+        associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1193,7 +1207,9 @@ fr:
   invite_email:
     greeting: "Bonjour!"
     invited_to_manage: "Vous avez été invité(e) à gérer %{enterprise} sur %{instance}."
+    confirm_your_email: "Vous avez reçu ou allez recevoir prochainement un email avec un lien de validation. Vous n'aurez pas accès au profil de l'entreprise %{enterprise} avant d'avoir cliqué sur ce lien."
     set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
+    mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
   producer_mail_text_before: "Nous avons reçu toutes les commandes pour la prochaine livraison."
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
@@ -1693,6 +1709,10 @@ fr:
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   flat_percent_per_item: "Pourcentage net"
+  flat_rate_per_item: "Montant fixe par article (hors articles au poids/volume)"
+  flat_rate_per_order: "Montant fixe par commande"
+  flexible_rate: "Montant variable selon nb articles"
+  price_sack: "Montant variable selon total commande"
   new_order_cycles: "Nouveau cycle de vente"
   new_order_cycle: "Nouveau Cycle de Vente"
   select_a_coordinator_for_your_order_cycle: "Choisissez un coordinateur pour votre cycle de vente"

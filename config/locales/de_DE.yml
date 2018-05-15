@@ -367,6 +367,11 @@ de_DE:
         available_on: Verfügbar auf
         av_on: "Ein V. Auf"
         upload_an_image: Lade ein Bild hoch
+      product_search_keywords: Keywords für die Produktsuche
+      product_search_tip: Geben Sie Wörter ein, um Ihre Produkte in den Geschäften zu durchsuchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen.
+      SEO_keywords: SEO Schlüsselwörter
+      seo_tip: Geben Sie Wörter ein, um Ihre Produkte im Internet zu durchsuchen. Verwenden Sie Leerzeichen, um jedes Keyword zu trennen.
+      Search: Suche
       properties:
         property_name: Name des Anwesens
         inherited_property: Vererbte Eigenschaft
@@ -374,7 +379,6 @@ de_DE:
         to_order_tip: "Artikel, die auf Bestellung hergestellt werden, haben keinen festgelegten Lagerbestand, wie zum Beispiel frisch gebackene Brote."
       product_distributions: "Produktverteilungen"
       group_buy_options: "Gruppenkaufoptionen"
-      seo: "SEO"
       back_to_products_list: "Zurück zur Produktliste"
     variant_overrides:
       loading_flash:
@@ -1132,7 +1136,6 @@ de_DE:
   email_admin_html: "Sie können Ihr Konto verwalten, indem Sie sich bei %{link} anmelden oder indem Sie oben rechts auf der Startseite auf das Zahnrad klicken und Administration auswählen."
   email_community_html: "Wir haben auch ein Online-Forum für Community-Diskussionen in Bezug auf OFN-Software und die einzigartigen Herausforderungen eines Lebensmittelunternehmens. Sie werden ermutigt mitzumachen. Wir entwickeln uns ständig weiter und Ihr Beitrag in diesem Forum wird prägen, was als nächstes passiert. %{link}"
   join_community: "Trete der Community bei"
-  email_help: "Wenn Sie irgendwelche Schwierigkeiten haben, lesen Sie unsere FAQs, durchsuchen Sie das Forum oder posten Sie ein \"Support\" -Thema und jemand wird Ihnen helfen!"
   email_confirmation_activate_account: "Bevor wir Ihr neues Konto aktivieren können, müssen wir Ihre E-Mail-Adresse bestätigen."
   email_confirmation_greeting: "Hallo, %{contact}!"
   email_confirmation_profile_created: "Ein Profil für %{name} wurde erfolgreich erstellt! Um Ihr Profil zu aktivieren, müssen wir diese E-Mail-Adresse bestätigen."
@@ -1194,9 +1197,7 @@ de_DE:
   invite_email:
     greeting: "Hallo!"
     invited_to_manage: "Sie wurden eingeladen, %{enterprise} auf %{instance} zu verwalten."
-    confirm_your_email: "Sie werden in Kürze eine E-Mail erhalten, um Ihre Registrierung zu bestätigen."
     set_a_password: "Sie werden dann aufgefordert, ein Kennwort festzulegen, bevor Sie das Unternehmen verwalten können."
-    mistakenly_sent: "Nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte kontaktieren Sie %{owner_email} für weitere Informationen, oder kontaktieren Sie %{instance} unter %{instance_email}."
   producer_mail_greeting: "Liebe/r"
   producer_mail_text_before: "Wir haben jetzt alle Verbraucherbestellungen für den nächsten Essenstropfen."
   producer_mail_order_text: "Hier finden Sie eine Zusammenfassung der Bestellungen für Ihre Produkte:"
@@ -2035,7 +2036,13 @@ de_DE:
   order_cycles_no_permission_to_coordinate_error: "Keines Ihrer Unternehmen ist berechtigt, einen Bestellzyklus zu koordinieren"
   order_cycles_no_permission_to_create_error: "Sie sind nicht berechtigt, einen von diesem Unternehmen koordinierten Bestellzyklus zu erstellen"
   back_to_orders_list: "Zurück zur Bestellliste"
+  order_information: "Bestellinformationen"
+  date_completed: "Datum abgeschlossen"
   amount: "Menge"
+  state_names:
+    ready: Bereit
+    pending: steht aus
+    shipped: Wird versendet
   js:
     saving: 'Speichern ...'
     changes_saved: 'Änderungen gespeichert'
@@ -2057,6 +2064,9 @@ de_DE:
       enterprise_limit_reached: "Sie haben die Standardgrenze für Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie es erhöhen müssen."
       modals:
         got_it: Ich habs
+        close: "Schließen"
+        invite: "Einladen"
+        invite_title: "Laden Sie einen nicht registrierten Benutzer ein"
         tag_rule_help:
           title: Tag-Regeln
           overview: Überblick
@@ -2237,6 +2247,8 @@ de_DE:
     email: Email
     account_updated: "Konto aktualisiert!"
     my_account: "Mein Konto"
+    date: "Datum"
+    time: "Zeit"
     admin:
       orders:
         invoice:
