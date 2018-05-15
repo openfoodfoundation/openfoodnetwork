@@ -2,7 +2,7 @@ version: "2"
 plugins:
   rubocop:
     enabled: true
-    channel: "rubocop-0-48"
+    channel: "rubocop-0-55"
   scss-lint:
     enabled: false
   duplication:
