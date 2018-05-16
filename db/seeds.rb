@@ -50,3 +50,6 @@ def create_mail_method
 end
 
 create_mail_method
+
+spree_user = Spree::User.first
+spree_user && spree_user.confirm!
