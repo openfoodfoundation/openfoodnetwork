@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    build: .
+    volumes:
+      - ${PWD}:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+  db:
+    image: postgres:9.5
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ofn
+      POSTGRES_PASSWORD: f00d
+volumes:
+  data:
