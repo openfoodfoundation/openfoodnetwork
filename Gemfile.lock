@@ -7,8 +7,22 @@ GIT
       activemodel (~> 3.0)
 
 GIT
-  remote: https://github.com/coopdevs/spree.git
-  revision: 6c3d8841018de80f41c9400611de2e8a51923711
+  remote: https://github.com/jeremydurham/custom-err-msg.git
+  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
+  specs:
+    custom_error_message (1.1.1)
+
+GIT
+  remote: https://github.com/openfoodfoundation/ofn-qz.git
+  revision: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
+  ref: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
+  specs:
+    ofn-qz (0.1.0)
+      railties (~> 3.1)
+
+GIT
+  remote: https://github.com/openfoodfoundation/spree.git
+  revision: 1c3dfc7fb48cde32f7dc49a59c1daf65a3ee6974
   branch: 2-0-4-stable
   specs:
     spree (2.0.4)
@@ -62,20 +76,6 @@ GIT
       stringex (~> 1.5.1)
     spree_sample (2.0.4)
       spree_core (= 2.0.4)
-
-GIT
-  remote: https://github.com/jeremydurham/custom-err-msg.git
-  revision: 3a8ec9dddc7a5b0aab7c69a6060596de300c68f4
-  specs:
-    custom_error_message (1.1.1)
-
-GIT
-  remote: https://github.com/openfoodfoundation/ofn-qz.git
-  revision: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
-  ref: 60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c
-  specs:
-    ofn-qz (0.1.0)
-      railties (~> 3.1)
 
 GIT
   remote: https://github.com/spree-contrib/better_spree_paypal_express.git
@@ -137,16 +137,10 @@ GEM
       sprockets (~> 2.2.1)
     active_model_serializers (0.8.3)
       activemodel (>= 3.0)
-    active_utils (2.2.3)
-      activesupport (>= 2.3.11)
-      i18n
-    activemerchant (1.43.3)
-      active_utils (~> 2.0, >= 2.0.1)
-      activesupport (>= 2.3.14, < 5.0.0)
+    activemerchant (1.78.0)
+      activesupport (>= 3.2.14, < 6.x)
       builder (>= 2.1.2, < 4.0.0)
-      i18n (~> 0.5)
-      json (~> 1.7)
-      money (< 7.0.0)
+      i18n (>= 0.6.9)
       nokogiri (~> 1.4)
     activemodel (3.2.21)
       activesupport (= 3.2.21)
