@@ -167,6 +167,7 @@ feature %q{
     page.first("input[name='enterprise\[preferred_shopfront_message\]']", visible: false).set('This is my shopfront message.')
     page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
     choose "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
+    choose "enterprise_enable_subscriptions_true"
 
     click_button 'Update'
 
@@ -195,6 +196,7 @@ feature %q{
     page.should have_content 'This is my shopfront message.'
     page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
     expect(page).to have_checked_field "enterprise_require_login_true"
+    expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
   end
 
   describe "producer properties" do
