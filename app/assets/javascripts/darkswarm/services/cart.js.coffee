@@ -40,6 +40,11 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
 
     update: =>
       @update_running = true
+      # This suppresses updating the cart if the back button was pressed.
+      # Items don't get deleted, but it still needs to be refreshed from the server
+      # as currentOrder in the page will be out of date
+      if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD)
+        return # Need to refresh data from the server here, just reloading page doesn't work as this then triggers populate method below.
 
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
