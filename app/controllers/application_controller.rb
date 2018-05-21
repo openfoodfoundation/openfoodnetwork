@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     return if embedding_without_https?
 
     response.headers.delete 'X-Frame-Options'
-    response.headers['Content-Security-Policy'] = "frame-ancestors #{embedded_shopfront_referer}"
+    response.headers['Content-Security-Policy'] = "frame-ancestors #{URI(request.referer).host.downcase}"
 
     check_embedded_request
     set_embedded_layout
