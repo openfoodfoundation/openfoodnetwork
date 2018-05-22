@@ -1,0 +1,33 @@
+%a.sixteen.columns.alpha.list-item{ class: "#{cycle('odd','even')}", href: "#{main_app.edit_admin_enterprise_path(enterprise)}" }
+  %span.five.columns.alpha
+    = enterprise.name
+  %span.symbol.three.columns.centered
+    - if can?(:admin, Spree::PaymentMethod) && enterprise.is_distributor
+      - payment_method_count = enterprise.payment_methods.count
+      - if payment_method_count > 0
+        %span.icon-ok-sign{ 'ofn-with-tip' => "#{pluralize payment_method_count, 'payment method'}" }
+      - else
+        %span.icon-remove-sign{ 'ofn-with-tip' => t('.has_no_payment_methods', enterprise: enterprise.name) }
+    - else
+      &nbsp;
+  %span.symbol.three.columns.centered
+    - if can?(:admin, Spree::ShippingMethod) && enterprise.is_distributor
+      - shipping_method_count = enterprise.shipping_methods.count
+      - if shipping_method_count > 0
+        %span.icon-ok-sign{ 'ofn-with-tip' => "#{pluralize shipping_method_count, 'shipping method'}" }
+      - else
+        %span.icon-remove-sign{ 'ofn-with-tip' => t('.has_no_shipping_methods', enterprise: enterprise.name) }
+    - else
+      &nbsp;
+  %span.symbol.three.columns.centered
+    - if can?(:admin, EnterpriseFee) && enterprise.is_distributor
+      - fee_count = enterprise.enterprise_fees.count
+      - if fee_count > 0
+        %span.icon-ok-sign{ 'ofn-with-tip' => "#{pluralize fee_count, 'fee'}" }
+      - else
+        %span.icon-warning-sign{ 'ofn-with-tip' => t('.has_no_enterprise_fees', enterprise: enterprise.name) }
+    - else
+      &nbsp;
+  %span.two.columns.omega.right
+    %span.icon-arrow-right
+
