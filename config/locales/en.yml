@@ -806,7 +806,7 @@ en:
         name: Name
         orders_open: Orders open at
         coordinator: Coordinator
-        order_closes: Orders close
+        orders_close: Orders close
       row:
         suppliers: suppliers
         distributors: distributors
