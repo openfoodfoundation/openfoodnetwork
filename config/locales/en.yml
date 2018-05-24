@@ -1187,6 +1187,8 @@ en:
   footer_legal_visit: "Find us on"
   footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
 
+  footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
+
   home_shop: Shop Now
 
   brandstory_headline: "Food, unincorporated."

@@ -142,3 +142,13 @@
 
       .medium-2.columns.text-center
         / Placeholder
+    -if ENV['SKYLIGHT_PUBLIC_DASHBOARD_URL'].present?
+      .row
+        .small-12.medium-8.medium-offset-2.columns.text-center
+          %hr.hr-light
+          %br
+
+      .row
+        .small-12.medium-8.medium-offset-2.columns.text-center
+          .text.small
+            = t :footer_skylight_dashboard_html, {dashboard: link_to('Skylight', ENV['SKYLIGHT_PUBLIC_DASHBOARD_URL'], target: "_blank")}
