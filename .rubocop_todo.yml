@@ -2149,7 +2149,6 @@ Style/IfInsideElse:
   Exclude:
     - 'app/controllers/admin/column_preferences_controller.rb'
     - 'app/controllers/admin/variant_overrides_controller.rb'
-    - 'app/controllers/spree/admin/overview_controller_decorator.rb'
     - 'app/controllers/spree/admin/products_controller_decorator.rb'
 
 # Offense count: 1
@@ -2435,7 +2434,6 @@ Style/RedundantSelf:
 Style/RegexpLiteral:
   Exclude:
     - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/spree/admin/overview_controller_decorator.rb'
     - 'app/helpers/groups_helper.rb'
     - 'app/helpers/html_helper.rb'
     - 'app/models/enterprise.rb'
