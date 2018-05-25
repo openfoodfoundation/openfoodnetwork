@@ -2,7 +2,7 @@
 @import "mixins";
 @import "branding";
 
-.tabset-ctrl {
+.tabset-ctrl:not(#shop-tabs) {
   .tab-view {
     padding-top: 30px;
   }
