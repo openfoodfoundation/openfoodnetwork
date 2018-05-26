@@ -13,7 +13,7 @@ Darkswarm.factory 'Checkout', ($injector, CurrentOrder, ShippingMethods, StripeE
     submit: =>
       Loading.message = t 'submitting_order'
       $http.put('/checkout.json', {order: @preprocess()}).success (data, status)=>
-        Navigation.go data.path
+        Navigation.goWithoutHashFragments data.path
       .error (response, status)=>
         if response.path
           Navigation.go response.path
