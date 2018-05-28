@@ -25,8 +25,8 @@ describe Spree::Admin::LineItemsController, type: :controller do
     let(:distributor1) { create(:distributor_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
-    let!(:order1) { FactoryGirl.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryGirl.create(:address) ) }
-    let!(:line_item1) { FactoryGirl.create(:line_item, order: order1, product: FactoryGirl.create(:product, supplier: supplier)) }
+    let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
+    let!(:line_item1) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
     let(:line_item_params) { { quantity: 3, final_weight_volume: 3000, price: 3.00 } }
     let(:params) { { id: line_item1.id, order_id: order1.number, line_item: line_item_params } }
 

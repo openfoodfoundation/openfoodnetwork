@@ -1,6 +1,5 @@
 module OpenFoodNetwork
   module ColumnPreferenceDefaults
-
     private
 
     # NOTE: These methods define valid column names (via hash keys)

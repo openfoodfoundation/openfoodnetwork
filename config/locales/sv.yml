@@ -247,6 +247,7 @@ sv:
         manages: hanterar
     products:
       unit_name_placeholder: 't.ex. klasar'
+      Search: Sök
       properties:
         property_name: Egendomens Namn
         inherited_property: Ärvd Egendom
@@ -843,7 +844,6 @@ sv:
   email_admin_html: "Du kan sköta ditt konto genom att logga in %{link} eller att klicka på kuggen i det övre högra hörnet på hemsidan och välja Administration."
   email_community_html: "Vi har också ett internetforum för gemensamma diskussioner som är relaterade till OFN programvara och den unika utmaningen att använda ett matföretag. Vi utvecklas ständigt och dina inlägg till detta forum påverkar vad som händer i fortsättningen. %{link}"
   join_community: "Gå med i gemenskapen"
-  email_help: "Om du hamnar i svårigheter, titta i vårt FAQ, sök igenom vårt forum eller skicka en fråga till Support och du kommer att få hjälp."
   email_confirmation_greeting: "Hej, %{contact}!"
   email_confirmation_profile_created: "En profil för %{name} har skapats! För att aktivera din profil behöver vi få en bekräftelse på din e-postadress."
   email_confirmation_click_link: "Var vänlig att klicka på länken nedan för att bekräfta din e-postadress och fortsätt att skapa din profil."
@@ -1590,7 +1590,6 @@ sv:
   products_unsaved: "Ändringar till %{n} produkter är fortfarande osparade."
   is_already_manager: "är allaredan chef!"
   no_change_to_save: "Ingen ändring att spara"
-  add_manager: "Utse en chef"
   users: "Användare"
   about: "Om oss"
   images: "Bilder"

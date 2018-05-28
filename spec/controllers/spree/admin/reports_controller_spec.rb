@@ -3,55 +3,55 @@ require 'spec_helper'
 describe Spree::Admin::ReportsController, type: :controller do
 
   # Given two distributors and two suppliers
-  let(:ba) { create(:address) }
-  let(:sa) { create(:address) }
-  let(:si) { "pick up on thursday please" }
-  let(:c1) { create(:distributor_enterprise) }
-  let(:c2) { create(:distributor_enterprise) }
-  let(:s1) { create(:supplier_enterprise) }
-  let(:s2) { create(:supplier_enterprise) }
-  let(:s3) { create(:supplier_enterprise) }
-  let(:d1) { create(:distributor_enterprise) }
-  let(:d2) { create(:distributor_enterprise) }
-  let(:d3) { create(:distributor_enterprise) }
-  let(:p1) { create(:product, price: 12.34, distributors: [d1], supplier: s1) }
-  let(:p2) { create(:product, price: 23.45, distributors: [d2], supplier: s2) }
-  let(:p3) { create(:product, price: 34.56, distributors: [d3], supplier: s3) }
+  let(:bill_address) { create(:address) }
+  let(:ship_address) { create(:address) }
+  let(:instructions) { "pick up on thursday please" }
+  let(:coordinator1) { create(:distributor_enterprise) }
+  let(:coordinator2) { create(:distributor_enterprise) }
+  let(:supplier1) { create(:supplier_enterprise) }
+  let(:supplier2) { create(:supplier_enterprise) }
+  let(:supplier3) { create(:supplier_enterprise) }
+  let(:distributor1) { create(:distributor_enterprise) }
+  let(:distributor2) { create(:distributor_enterprise) }
+  let(:distributor3) { create(:distributor_enterprise) }
+  let(:product1) { create(:product, price: 12.34, distributors: [distributor1], supplier: supplier1) }
+  let(:product2) { create(:product, price: 23.45, distributors: [distributor2], supplier: supplier2) }
+  let(:product3) { create(:product, price: 34.56, distributors: [distributor3], supplier: supplier3) }
 
   # Given two order cycles with both distributors
-  let(:ocA) { create(:simple_order_cycle, coordinator: c1, distributors: [d1, d2], suppliers: [s1, s2, s3], variants: [p1.master, p3.master]) }
-  let(:ocB) { create(:simple_order_cycle, coordinator: c2, distributors: [d1, d2], suppliers: [s1, s2, s3], variants: [p2.master]) }
+  let(:ocA) { create(:simple_order_cycle, coordinator: coordinator1, distributors: [distributor1, distributor2], suppliers: [supplier1, supplier2, supplier3], variants: [product1.master, product3.master]) }
+  let(:ocB) { create(:simple_order_cycle, coordinator: coordinator2, distributors: [distributor1, distributor2], suppliers: [supplier1, supplier2, supplier3], variants: [product2.master]) }
 
-  # orderA1 can only be accessed by s1, s3 and d1
-  let!(:orderA1) do
-    order = create(:order, distributor: d1, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocA)
-    order.line_items << create(:line_item, variant: p1.master)
-    order.line_items << create(:line_item, variant: p3.master)
+  # orderA1 can only be accessed by supplier1, supplier3 and distributor1
+  let(:orderA1) do
+    order = create(:order, distributor: distributor1, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocA)
+    order.line_items << create(:line_item, variant: product1.master)
+    order.line_items << create(:line_item, variant: product3.master)
     order.finalize!
     order.save
     order
   end
-  # orderA2 can only be accessed by s2 and d2
-  let!(:orderA2) do
-    order = create(:order, distributor: d2, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocA)
-    order.line_items << create(:line_item, variant: p2.master)
+  # orderA2 can only be accessed by supplier2 and distributor2
+  let(:orderA2) do
+    order = create(:order, distributor: distributor2, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocA)
+    order.line_items << create(:line_item, variant: product2.master)
     order.finalize!
     order.save
     order
   end
-  # orderB1 can only be accessed by s1, s3 and d1
-  let!(:orderB1) do
-    order = create(:order, distributor: d1, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocB)
-    order.line_items << create(:line_item, variant: p1.master)
-    order.line_items << create(:line_item, variant: p3.master)
+  # orderB1 can only be accessed by supplier1, supplier3 and distributor1
+  let(:orderB1) do
+    order = create(:order, distributor: distributor1, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocB)
+    order.line_items << create(:line_item, variant: product1.master)
+    order.line_items << create(:line_item, variant: product3.master)
     order.finalize!
     order.save
     order
   end
-  # orderB2 can only be accessed by s2 and d2
-  let!(:orderB2) do
-    order = create(:order, distributor: d2, bill_address: ba, ship_address: sa, special_instructions: si, order_cycle: ocB)
-    order.line_items << create(:line_item, variant: p2.master)
+  # orderB2 can only be accessed by supplier2 and distributor2
+  let(:orderB2) do
+    order = create(:order, distributor: distributor2, bill_address: bill_address, ship_address: ship_address, special_instructions: instructions, order_cycle: ocB)
+    order.line_items << create(:line_item, variant: product2.master)
     order.finalize!
     order.save
     order
@@ -62,74 +62,90 @@ describe Spree::Admin::ReportsController, type: :controller do
   let(:resulting_orders) { assigns(:report).table_items.map(&:order) }
   let(:resulting_products) { assigns(:report).table_items.map(&:product) }
 
-  # As manager of a coordinator (c1)
+  # As manager of a coordinator (coordinator1)
   context "Coordinator Enterprise User" do
-    before { login_as_enterprise_user [c1] }
+    let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
+
+    before { login_as_enterprise_user [coordinator1] }
 
     describe 'Orders & Fulfillment' do
       it "shows all orders in order cycles I coordinate" do
-        spree_get :orders_and_fulfillment
+        spree_post :orders_and_fulfillment, {q: {}}
 
-        resulting_orders.should     include orderA1, orderA2
-        resulting_orders.should_not include orderB1, orderB2
+        expect(resulting_orders).to     include orderA1, orderA2
+        expect(resulting_orders).not_to include orderB1, orderB2
       end
     end
   end
 
-  # As a Distributor Enterprise user for d1
+  # As a Distributor Enterprise user for distributor1
   context "Distributor Enterprise User" do
-    before { login_as_enterprise_user [d1] }
+    before { login_as_enterprise_user [distributor1] }
 
     describe 'Orders and Distributors' do
-      it "only shows orders that I have access to" do
-        spree_get :orders_and_distributors
+      let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
-        assigns(:search).result.should include(orderA1, orderB1)
-        assigns(:search).result.should_not include(orderA2)
-        assigns(:search).result.should_not include(orderB2)
+      it "only shows orders that I have access to" do
+        spree_post :orders_and_distributors
+
+        expect(assigns(:search).result).to include(orderA1, orderB1)
+        expect(assigns(:search).result).not_to include(orderA2)
+        expect(assigns(:search).result).not_to include(orderB2)
       end
     end
 
     describe 'Bulk Coop' do
-      it "only shows orders that I have access to" do
-        spree_get :bulk_coop
+      let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
-        resulting_orders.should     include(orderA1, orderB1)
-        resulting_orders.should_not include(orderA2)
-        resulting_orders.should_not include(orderB2)
+      it "only shows orders that I have access to" do
+        spree_post :bulk_coop, {q: {}}
+
+        expect(resulting_orders).to     include(orderA1, orderB1)
+        expect(resulting_orders).not_to include(orderA2)
+        expect(resulting_orders).not_to include(orderB2)
       end
     end
 
     describe 'Payments' do
-      it "only shows orders that I have access to" do
-        spree_get :payments
+      let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
-        resulting_orders_prelim.should     include(orderA1, orderB1)
-        resulting_orders_prelim.should_not include(orderA2)
-        resulting_orders_prelim.should_not include(orderB2)
+      it "only shows orders that I have access to" do
+        spree_post :payments
+
+        expect(resulting_orders_prelim).to     include(orderA1, orderB1)
+        expect(resulting_orders_prelim).not_to include(orderA2)
+        expect(resulting_orders_prelim).not_to include(orderB2)
       end
     end
 
     describe 'Orders & Fulfillment' do
-      it "only shows orders that I distribute" do
-        spree_get :orders_and_fulfillment
+      context "with four orders" do
+        let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
 
-        resulting_orders.should     include orderA1, orderB1
-        resulting_orders.should_not include orderA2, orderB2
+        it "only shows orders that I distribute" do
+          spree_post :orders_and_fulfillment, {q: {}}
+
+          expect(resulting_orders).to     include orderA1, orderB1
+          expect(resulting_orders).not_to include orderA2, orderB2
+        end
       end
 
-      it "only shows the selected order cycle" do
-        spree_get :orders_and_fulfillment, q: {order_cycle_id_in: [ocA.id.to_s]}
+      context "with two orders" do
+        let!(:present_objects) { [orderA1, orderB1] }
 
-        resulting_orders.should     include(orderA1)
-        resulting_orders.should_not include(orderB1)
+        it "only shows the selected order cycle" do
+          spree_post :orders_and_fulfillment, q: {order_cycle_id_in: [ocA.id.to_s]}
+
+          expect(resulting_orders).to     include(orderA1)
+          expect(resulting_orders).not_to include(orderB1)
+        end
       end
     end
   end
 
-  # As a Supplier Enterprise user for s1
+  # As a Supplier Enterprise user for supplier1
   context "Supplier" do
-    before { login_as_enterprise_user [s1] }
+    before { login_as_enterprise_user [supplier1] }
 
     describe 'index' do
       it "loads reports relevant to producers" do
@@ -143,53 +159,57 @@ describe Spree::Admin::ReportsController, type: :controller do
 
     describe 'Bulk Coop' do
       context "where I have granted P-OC to the distributor" do
+        let!(:present_objects) { [orderA1, orderA2] }
+
         before do
-          create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: supplier1, child: distributor1, permissions_list: [:add_to_order_cycle])
         end
 
         it "only shows product line items that I am supplying" do
-          spree_get :bulk_coop
+          spree_post :bulk_coop, {q: {}}
 
-          resulting_products.should     include p1
-          resulting_products.should_not include p2, p3
+          expect(resulting_products).to     include product1
+          expect(resulting_products).not_to include product2, product3
         end
       end
 
       context "where I have not granted P-OC to the distributor" do
         it "shows product line items that I am supplying" do
-          spree_get :bulk_coop
+          spree_post :bulk_coop
 
-          resulting_products.should_not include p1, p2, p3
+          expect(resulting_products).not_to include product1, product2, product3
         end
       end
     end
 
     describe 'Orders & Fulfillment' do
+      let!(:present_objects) { [orderA1, orderA2] }
+
       context "where I have granted P-OC to the distributor" do
         before do
-          create(:enterprise_relationship, parent: s1, child: d1, permissions_list: [:add_to_order_cycle])
+          create(:enterprise_relationship, parent: supplier1, child: distributor1, permissions_list: [:add_to_order_cycle])
         end
 
         it "only shows product line items that I am supplying" do
-          spree_get :orders_and_fulfillment
+          spree_post :orders_and_fulfillment, {q: {}}
 
-          resulting_products.should     include p1
-          resulting_products.should_not include p2, p3
+          expect(resulting_products).to     include product1
+          expect(resulting_products).not_to include product2, product3
         end
 
         it "only shows the selected order cycle" do
-          spree_get :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
+          spree_post :orders_and_fulfillment, q: {order_cycle_id_eq: ocA.id}
 
-          resulting_orders_prelim.should     include(orderA1)
-          resulting_orders_prelim.should_not include(orderB1)
+          expect(resulting_orders_prelim).to     include(orderA1)
+          expect(resulting_orders_prelim).not_to include(orderB1)
         end
       end
 
       context "where I have not granted P-OC to the distributor" do
         it "does not show me line_items I supply" do
-          spree_get :orders_and_fulfillment
+          spree_post :orders_and_fulfillment
 
-          resulting_products.should_not include p1, p2, p3
+          expect(resulting_products).not_to include product1, product2, product3
         end
       end
     end
@@ -198,34 +218,44 @@ describe Spree::Admin::ReportsController, type: :controller do
   context "Products & Inventory" do
     before { login_as_admin }
 
-    it "should build distributors for the current user" do
-      spree_get :products_and_inventory
-      assigns(:distributors).should match_array [c1, c2, d1, d2, d3]
+    context "with distributors and suppliers" do
+      let(:distributors) { [coordinator1, distributor1, distributor2] }
+      let(:suppliers) { [supplier1, supplier2] }
+      let!(:present_objects) { [distributors, suppliers] }
+
+      it "should build distributors for the current user" do
+        spree_get :products_and_inventory
+        expect(assigns(:distributors)).to match_array distributors
+      end
+
+      it "builds suppliers for the current user" do
+        spree_get :products_and_inventory
+        expect(assigns(:suppliers)).to match_array suppliers
+      end
     end
 
-    it "builds suppliers for the current user" do
-      spree_get :products_and_inventory
-      assigns(:suppliers).should match_array [s1, s2, s3]
-    end
+    context "with order cycles" do
+      let!(:order_cycles) { [ocA, ocB] }
 
-    it "builds order cycles for the current user" do
-      spree_get :products_and_inventory
-      assigns(:order_cycles).should match_array [ocB, ocA]
+      it "builds order cycles for the current user" do
+        spree_get :products_and_inventory
+        expect(assigns(:order_cycles)).to match_array order_cycles
+      end
     end
 
     it "assigns report types" do
       spree_get :products_and_inventory
-      assigns(:report_types).should == subject.report_types[:products_and_inventory]
+      expect(assigns(:report_types)).to eq(subject.report_types[:products_and_inventory])
     end
 
     it "creates a ProductAndInventoryReport" do
-      OpenFoodNetwork::ProductsAndInventoryReport.should_receive(:new)
-        .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "products_and_inventory"})
+      expect(OpenFoodNetwork::ProductsAndInventoryReport).to receive(:new)
+        .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "products_and_inventory"}, false)
         .and_return(report = double(:report))
-      report.stub(:header).and_return []
-      report.stub(:table).and_return []
+      allow(report).to receive(:header).and_return []
+      allow(report).to receive(:table).and_return []
       spree_get :products_and_inventory, test: "foo"
-      assigns(:report).should == report
+      expect(assigns(:report)).to eq(report)
     end
   end
 
@@ -233,40 +263,75 @@ describe Spree::Admin::ReportsController, type: :controller do
     before { login_as_admin }
 
     it "should have report types for customers" do
-      subject.report_types[:customers].should == [
+      expect(subject.report_types[:customers]).to eq([
         ["Mailing List", :mailing_list],
         ["Addresses", :addresses]
-      ]
+      ])
     end
 
-    it "should build distributors for the current user" do
-      spree_get :customers
-      assigns(:distributors).should match_array [c1, c2, d1, d2, d3]
+    context "with distributors and suppliers" do
+      let(:distributors) { [coordinator1, distributor1, distributor2] }
+      let(:suppliers) { [supplier1, supplier2] }
+      let!(:present_objects) { [distributors, suppliers] }
+
+      it "should build distributors for the current user" do
+        spree_get :customers
+        expect(assigns(:distributors)).to match_array distributors
+      end
+
+      it "builds suppliers for the current user" do
+        spree_get :customers
+        expect(assigns(:suppliers)).to match_array suppliers
+      end
     end
 
-    it "builds suppliers for the current user" do
-      spree_get :customers
-      assigns(:suppliers).should match_array [s1, s2, s3]
-    end
+    context "with order cycles" do
+      let!(:order_cycles) { [ocA, ocB] }
 
-    it "builds order cycles for the current user" do
-      spree_get :customers
-      assigns(:order_cycles).should match_array [ocB, ocA]
+      it "builds order cycles for the current user" do
+        spree_get :customers
+        expect(assigns(:order_cycles)).to match_array order_cycles
+      end
     end
 
     it "assigns report types" do
       spree_get :customers
-      assigns(:report_types).should == subject.report_types[:customers]
+      expect(assigns(:report_types)).to eq(subject.report_types[:customers])
     end
 
     it "creates a CustomersReport" do
-      OpenFoodNetwork::CustomersReport.should_receive(:new)
-        .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "customers"})
+      expect(OpenFoodNetwork::CustomersReport).to receive(:new)
+        .with(@admin_user, {"test" => "foo", "controller" => "spree/admin/reports", "action" => "customers"}, false)
         .and_return(report = double(:report))
-      report.stub(:header).and_return []
-      report.stub(:table).and_return []
+      allow(report).to receive(:header).and_return []
+      allow(report).to receive(:table).and_return []
       spree_get :customers, test: "foo"
-      assigns(:report).should == report
+      expect(assigns(:report)).to eq(report)
+    end
+  end
+
+  context "Admin" do
+    before { login_as_admin }
+
+    describe "users_and_enterprises" do
+      let!(:present_objects) { [coordinator1] }
+
+      it "shows report search forms" do
+        spree_get :users_and_enterprises
+        expect(assigns(:report).table).to eq []
+      end
+
+      it "shows report data" do
+        spree_post :users_and_enterprises, {q: {}}
+        expect(assigns(:report).table.empty?).to be false
+      end
+    end
+
+    describe "sales_tax" do
+      it "shows report search forms" do
+        spree_get :sales_tax
+        expect(assigns(:report).table).to eq []
+      end
     end
   end
 end

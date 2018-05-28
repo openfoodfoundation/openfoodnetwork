@@ -36,6 +36,7 @@ class AngularFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   private
+
   def angular_name(method)
     "#{@object_name}[#{@fields_for_record_name}_attributes][{{ $index }}][#{method}]"
   end

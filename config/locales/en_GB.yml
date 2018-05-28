@@ -264,6 +264,7 @@ en_GB:
         manages: manages
     products:
       unit_name_placeholder: 'eg. bunches'
+      Search: Search
       properties:
         property_name: Property Name
         inherited_property: Inherited Property
@@ -923,7 +924,6 @@ en_GB:
   email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
   email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
   join_community: "Join the community"
-  email_help: "If you have any difficulties, check out our FAQs, browse the forum or post a 'Support' topic and someone will help you out!"
   email_confirmation_greeting: "Hi, %{contact}!"
   email_confirmation_profile_created: "A profile for %{name} has been successfully created! To activate your Profile we need to confirm this email address."
   email_confirmation_click_link: "Please click the link below to confirm your email and to continue setting up your profile."
@@ -1734,7 +1734,6 @@ en_GB:
   products_unsaved: "Changes to %{n} products remain unsaved."
   is_already_manager: "is already a manager!"
   no_change_to_save: "No change to save"
-  add_manager: "Add a manager"
   users: "Users"
   about: "About"
   images: "Images"

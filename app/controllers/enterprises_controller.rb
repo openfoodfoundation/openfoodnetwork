@@ -33,7 +33,6 @@ class EnterprisesController < BaseController
     begin
       Rails.application.routes.recognize_path( "/#{ params[:permalink].to_s }" )
       render text: params[:permalink], status: 409
-
     rescue ActionController::RoutingError
       render text: params[:permalink], status: 200
     end

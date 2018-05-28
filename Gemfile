@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.1.5"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-gem 'rails', '3.2.21'
+gem 'rails', '~> 3.2.22'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'i18n', '~> 0.6.11'
 gem 'i18n-js', '~> 3.0.0'
@@ -21,7 +21,9 @@ gem 'spree_auth_devise', github: 'openfoodfoundation/spree_auth_devise', branch:
 gem 'spree_paypal_express', github: "openfoodfoundation/better_spree_paypal_express", branch: "spree-upgrade-intermediate"
 #gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "1-3-stable"
 gem 'stripe', '~> 3.3.1'
-gem 'activemerchant', '~> 1.71.0'
+# We need at least this version to have Digicert's root certificate
+# which is needed for Pin Payments (and possibly others).
+gem 'activemerchant', '~> 1.78'
 
 gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
 gem 'jwt', '~> 1.5'
@@ -106,7 +108,7 @@ group :test, :development do
   gem 'fuubar', '~> 2.2.0'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails', require: false
+  gem "factory_bot_rails", require: false
   gem 'capybara', '>= 2.15.4'
   gem 'database_cleaner', '0.7.1', require: false
   gem 'awesome_print'

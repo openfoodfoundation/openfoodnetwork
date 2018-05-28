@@ -14,7 +14,7 @@ module OpenFoodNetwork
 
       context "as a site admin" do
         let(:user) { create(:admin_user) }
-        subject { PackingReport.new user }
+        subject { PackingReport.new user, {}, true }
 
         it "fetches completed orders" do
           o2 = create(:order)
@@ -31,7 +31,7 @@ module OpenFoodNetwork
 
       context "as a manager of a supplier" do
         let!(:user) { create(:user) }
-        subject { PackingReport.new user }
+        subject { PackingReport.new user, {}, true }
 
         let(:s1) { create(:supplier_enterprise) }
 
@@ -70,7 +70,7 @@ module OpenFoodNetwork
 
       context "as a manager of a distributor" do
         let!(:user) { create(:user) }
-        subject { PackingReport.new user }
+        subject { PackingReport.new user, {}, true }
 
         before do
           d1.enterprise_roles.create!(user: user)

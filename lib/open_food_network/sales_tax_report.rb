@@ -3,9 +3,10 @@ module OpenFoodNetwork
     include Spree::ReportsHelper
     attr_accessor :user, :params
 
-    def initialize(user, params)
+    def initialize(user, params, render_table)
       @user = user
       @params = params
+      @render_table = render_table
     end
 
     def header
@@ -42,6 +43,7 @@ module OpenFoodNetwork
     end
 
     def table
+      return [] unless @render_table
       case params[:report_type]
       when "tax_rates"
         orders.map do |order|

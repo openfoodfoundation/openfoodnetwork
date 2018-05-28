@@ -1,9 +1,10 @@
 module OpenFoodNetwork
   class PaymentsReport
     attr_reader :params
-    def initialize(user, params = {})
+    def initialize(user, params = {}, render_table = false)
       @params = params
       @user = user
+      @render_table = render_table
     end
 
     def header
@@ -37,6 +38,7 @@ module OpenFoodNetwork
     end
 
     def table_items
+      return [] unless @render_table
       orders = search.result
       payments = orders.map { |o| o.payments.select { |payment| payment.completed? } }.flatten # Only select completed payments
       case params[:report_type]

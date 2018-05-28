@@ -306,8 +306,7 @@ feature %q{
     within('fieldset#shipping') do
       [@distributor.name,
        @distributor.distributor_info,
-       @distributor.next_collection_at
-      ].each do |value|
+       @distributor.next_collection_at].each do |value|
 
         page.should have_content value
       end
@@ -375,8 +374,7 @@ feature %q{
     within('fieldset#shipping') do
       [@distributor_oc.name,
        @distributor_oc.distributor_info,
-       @distributor_oc.next_collection_at
-      ].each do |value|
+       @distributor_oc.next_collection_at].each do |value|
 
         page.should have_content value
       end
@@ -489,9 +487,9 @@ feature %q{
     ExchangeFee.create!(exchange: ex2, enterprise_fee: supplier_fee4)
 
     # Distributors
-    distributor1 = FactoryGirl.create(:distributor_enterprise, name: "FruitAndVeg")
+    distributor1 = FactoryBot.create(:distributor_enterprise, name: "FruitAndVeg")
     @distributor1 = distributor1
-    distributor2 = FactoryGirl.create(:distributor_enterprise, name: "MoreFreshStuff")
+    distributor2 = FactoryBot.create(:distributor_enterprise, name: "MoreFreshStuff")
     create_enterprise_group_for distributor1
     distributor_fee1 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'packing', amount: 7)
     distributor_fee2 = create(:enterprise_fee, enterprise: distributor1, fee_type: 'transport', amount: 8)

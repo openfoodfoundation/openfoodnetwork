@@ -16,7 +16,6 @@ test:
   username: ofn
   password: f00d
 
-#not used with heroku
 production:
   adapter: postgresql
   encoding: unicode

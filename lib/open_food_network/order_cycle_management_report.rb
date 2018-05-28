@@ -3,9 +3,10 @@ require 'open_food_network/user_balance_calculator'
 module OpenFoodNetwork
   class OrderCycleManagementReport
     attr_reader :params
-    def initialize(user, params = {})
+    def initialize(user, params = {}, render_table = false)
       @params = params
       @user = user
+      @render_table = render_table
     end
 
     def header
@@ -50,6 +51,8 @@ module OpenFoodNetwork
     end
 
     def table_items
+      return [] unless @render_table
+
       if is_payment_methods?
         orders.map { |o| payment_method_row o }
       else
@@ -74,8 +77,7 @@ module OpenFoodNetwork
        order.shipping_method.andand.name,
        order.payments.first.andand.payment_method.andand.name,
        order.payments.first.amount,
-       OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance
-      ]
+       OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance]
     end
 
     def delivery_row(order)
@@ -92,8 +94,7 @@ module OpenFoodNetwork
        order.payments.first.amount,
        OpenFoodNetwork::UserBalanceCalculator.new(order.email, order.distributor).balance,
        has_temperature_controlled_items?(order),
-       order.special_instructions
-      ]
+       order.special_instructions]
     end
 
     def filter_to_payment_method(orders)

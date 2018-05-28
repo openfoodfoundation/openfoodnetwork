@@ -1,5 +1,4 @@
 module OpenFoodNetwork
-
   GroupBuyVariantRow = Struct.new(:variant, :sum_quantities, :sum_max_quantities) do
     def to_row
       [variant.product.supplier.name, variant.product.name, I18n.t('admin.reports.unitsize'), variant.options_text, variant.weight, sum_quantities, sum_max_quantities]

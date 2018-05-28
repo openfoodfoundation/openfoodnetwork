@@ -1,11 +1,33 @@
-%div.dashboard_item.sixteen.columns.alpha#enterprises{ 'ng-controller' => "enterprisesDashboardCtrl" }
+%div.dashboard_item.sixteen.columns.alpha#enterprises
   = render 'enterprises_header'
 
   - if @enterprises.empty?
-    = render 'enterprises_none'
+    %div.sixteen.columns.alpha.list-item.red
+      %span.text.fifteen.columns.alpha
+        = t "spree_admin_enterprises_none_text"
+      %span.one.columns.omega
+        %span.icon-remove-sign
+    %a.sixteen.columns.alpha.button.bottom.red{ href: "#{main_app.new_admin_enterprise_path}" }
+      = t "spree_admin_enterprises_none_create_a_new_enterprise"
+      %span.icon-arrow-right
 
   - else
-    = render 'enterprises_tabs'
-    = render 'enterprises_hubs_tab'
-    = render 'enterprises_producers_tab'
-    = render 'enterprises_footer'
+    %div.sixteen.columns.alpha.list-title
+      %span.five.columns.alpha
+        = t "spree_admin_enterprises_hubs_name"
+      - if can? :admin, Spree::PaymentMethod
+        %span.centered.three.columns
+          = t(:payment_methods)
+      - if can? :admin, Spree::ShippingMethod
+        %span.centered.three.columns
+          = t "spree_admin_enterprises_shipping_methods"
+      - if can? :admin, EnterpriseFee
+        %span.centered.three.columns
+          = t "spree_admin_enterprises_fees"
+    %div.sixteen.columns.alpha.list
+      - @enterprises.each do |enterprise|
+        = render 'enterprise_row', { enterprise: enterprise }
+
+    %a.sixteen.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_enterprises_path}" }
+      = t "spree_admin_overview_enterprises_footer"
+      %span.icon-arrow-right

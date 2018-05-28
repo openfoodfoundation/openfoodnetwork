@@ -71,6 +71,7 @@ feature 'Schedules', js: true do
           find('a', text: "Weekly").click
         end
 
+        expect(page).to have_selector "#schedule-dialog"
         within "#schedule-dialog" do
           find("#selected-order-cycles .order-cycle", text: oc3.name).click
           find("#add-remove-buttons a.remove").click

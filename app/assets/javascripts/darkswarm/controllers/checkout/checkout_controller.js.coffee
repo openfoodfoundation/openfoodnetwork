@@ -1,4 +1,4 @@
-Darkswarm.controller "CheckoutCtrl", ($scope, localStorageService, Checkout, CurrentUser, CurrentHub) ->
+Darkswarm.controller "CheckoutCtrl", ($scope, localStorageService, Checkout, CurrentUser, CurrentHub, AuthenticationService, SpreeUser, $http) ->
   $scope.Checkout = Checkout
   $scope.submitted = false
 
@@ -20,8 +20,29 @@ Darkswarm.controller "CheckoutCtrl", ($scope, localStorageService, Checkout, Cur
 
   $scope.purchase = (event, form) ->
     event.preventDefault()
+    $scope.formdata = form
     $scope.submitted = true
-    if form.$valid
+
+    if CurrentUser.id
+      $scope.validateForm(form)
+    else
+      $scope.ensureUserIsGuest()
+
+  $scope.validateForm = ->
+    if $scope.formdata.$valid
       $scope.Checkout.purchase()
     else
-      $scope.$broadcast 'purchaseFormInvalid', form
+      $scope.$broadcast 'purchaseFormInvalid', $scope.formdata
+
+  $scope.ensureUserIsGuest = (callback = null) ->
+    $http.post("/user/registered_email", {email: $scope.order.email}).success (data)->
+      if data.registered == true
+        $scope.promptLogin()
+      else
+        $scope.validateForm() if $scope.submitted
+        callback() if callback
+
+  $scope.promptLogin = ->
+    SpreeUser.spree_user.email = $scope.order.email
+    AuthenticationService.pushMessage t('devise.failure.already_registered')
+    AuthenticationService.open '/login'

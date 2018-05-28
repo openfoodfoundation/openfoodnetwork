@@ -72,7 +72,6 @@ module Spree
       skip_callback :destroy, :after, :update_adjustable
 
       result = yield
-
     ensure
       set_callback :save, :after, :update_adjustable
       set_callback :destroy, :after, :update_adjustable

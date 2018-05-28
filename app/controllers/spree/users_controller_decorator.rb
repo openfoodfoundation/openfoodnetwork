@@ -15,4 +15,10 @@ Spree::UsersController.class_eval do
 
     @orders = @orders.where('distributor_id != ?', Spree::Config.accounts_distributor_id)
   end
+
+  # Endpoint for queries to check if a user is already registered
+  def registered_email
+    user = Spree.user_class.find_by_email params[:email]
+    render json: { registered: user.present? }
+  end
 end

@@ -8,8 +8,8 @@ module Api
     render_views
 
     describe "managed" do
-      let!(:oc1) { FactoryGirl.create(:simple_order_cycle) }
-      let!(:oc2) { FactoryGirl.create(:simple_order_cycle) }
+      let!(:oc1) { FactoryBot.create(:simple_order_cycle) }
+      let!(:oc2) { FactoryBot.create(:simple_order_cycle) }
       let(:coordinator) { oc1.coordinator }
       let(:attributes) { [:id, :name, :suppliers, :distributors] }
 

@@ -2,24 +2,28 @@
   %form{ ng: { controller: "ForgotCtrl", submit: "submit()" } }
     .row
       .large-12.columns
-        .alert-box.success.radius{"ng-show" => "sent"}
-          {{'password_reset_sent' | t}}
+        .alert-box.success{"ng-show" => "sent"}
+          {{ 'password_reset_sent' | t }}
 
-    %div{"ng-show" => "!sent"}
-      .alert-box.alert{"ng-show" => "errors != null"}
-        {{ errors }}
+        .alert-box.success{"ng-show" => "messages != null"}
+          {{ messages }}
 
-      .row
-        .large-12.columns
-          %label{for: "email"} {{'signup_email' | t}}
-          %input.title.input-text{name: "email",
-            type: "email",
-            id: "email",
-            tabindex: 1,
-            "ng-model" => "spree_user.email"}
-      .row
-        .large-12.columns
-          %input.button.primary{name: "commit",
-            tabindex: "3",
-            type: "submit",
-            value: "{{'reset_password' | t}}"}
+        .alert-box.alert{"ng-show" => "errors != null"}
+          {{ errors }}
+          %a{ng: {show: 'user_unconfirmed', click: 'resend_confirmation()'}}
+            = t('devise.confirmations.resend_confirmation_email')
+
+    .row
+      .large-12.columns
+        %label{for: "email"} {{'signup_email' | t}}
+        %input.title.input-text{name: "email",
+          type: "email",
+          id: "email",
+          tabindex: 1,
+          "ng-model" => "spree_user.email"}
+    .row
+      .large-12.columns
+        %input.button.primary{name: "commit",
+          tabindex: "3",
+          type: "submit",
+          value: "{{'reset_password' | t}}"}

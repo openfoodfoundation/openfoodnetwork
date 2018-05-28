@@ -2,7 +2,7 @@ require 'open_food_network/xero_invoices_report'
 
 module OpenFoodNetwork
   describe XeroInvoicesReport do
-    subject { XeroInvoicesReport.new user }
+    subject { XeroInvoicesReport.new user, {}, true }
 
     let(:user) { create(:user) }
 

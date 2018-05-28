@@ -84,7 +84,6 @@ class CheckoutController < Spree::CheckoutController
       customer_bill_address_id = @order.customer.bill_address.andand.id
       @order.customer.update_attributes(bill_address_attributes: new_bill_address.merge('id' => customer_bill_address_id))
     end
-
   end
 
   def set_default_ship_address
@@ -133,7 +132,6 @@ class CheckoutController < Spree::CheckoutController
   def advance_order_state(order)
     tries ||= 3
     order.next
-
   rescue ActiveRecord::StaleObjectError
     retry unless (tries -= 1).zero?
     false
