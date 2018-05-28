@@ -8,6 +8,9 @@ Spree::UserMailer.class_eval do
   def confirmation_instructions(user, token)
     @user = user
     @token = token
+    @instance = Spree::Config[:site_name]
+    @contact = ContentConfig.footer_email
+
     subject = t('spree.user_mailer.confirmation_instructions.subject')
     mail(to: user.email,
          from: from_address,
