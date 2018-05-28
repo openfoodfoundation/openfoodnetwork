@@ -76,10 +76,6 @@ module CheckoutHelper
     [[]] + address.country.states.map { |c| [c.name, c.id] }
   end
 
-  def checkout_country_options
-    available_countries.map { |c| [c.name, c.id] }
-  end
-
   def validated_input(name, path, args = {})
     attributes = {
       required: true,
