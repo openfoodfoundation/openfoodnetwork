@@ -31,7 +31,7 @@
 - if subscriptions_enabled?
   .row
     .two.columns.alpha
-      = f.label :schedule_ids, t('admin.order_cycles.schedules')
+      = f.label :schedule_ids, t('admin.order_cycles.index.schedules')
     .twelve.columns
       - if viewing_as_coordinator_of?(@order_cycle)
         %input.fullwidth.ofn-select2#schedule_ids{ name: 'order_cycle[schedule_ids]',
