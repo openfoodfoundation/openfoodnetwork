@@ -8,20 +8,20 @@ module OpenFoodNetwork
     let(:user) { create(:user) }
 
     describe "option defaults" do
-      let(:report) { XeroInvoicesReport.new user, {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
+      let(:report) { XeroInvoicesReport.new user, initial_invoice_number: '', invoice_date: '', due_date: '', account_code: '' }
 
       around { |example| Timecop.travel(Time.zone.local(2015, 5, 5, 14, 0, 0)) { example.run } }
 
       it "uses defaults when blank params are passed" do
-        expect(report.instance_variable_get(:@opts)).to eq({invoice_date: Date.civil(2015, 5, 5),
-                                                        due_date: Date.civil(2015, 6, 5),
-                                                        account_code: 'food sales',
-                                                        report_type: 'summary'})
+        expect(report.instance_variable_get(:@opts)).to eq( invoice_date: Date.civil(2015, 5, 5),
+                                                            due_date: Date.civil(2015, 6, 5),
+                                                            account_code: 'food sales',
+                                                            report_type: 'summary' )
       end
     end
 
     describe "summary rows" do
-      let(:report) { XeroInvoicesReport.new user, {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
+      let(:report) { XeroInvoicesReport.new user, initial_invoice_number: '', invoice_date: '', due_date: '', account_code: '' }
       let(:order) { double(:order) }
       let(:summary_rows) { report.send(:summary_rows_for_order, order, 1, {}) }
 
@@ -31,7 +31,7 @@ module OpenFoodNetwork
         allow(report).to receive(:shipping_summary_rows) { ['shipping'] }
         allow(report).to receive(:payment_summary_rows)  { ['payment'] }
         allow(report).to receive(:admin_adjustment_summary_rows) { ['admin'] }
-        allow(order).to receive(:account_invoice?)       { false }
+        allow(order).to receive(:account_invoice?) { false }
       end
 
       it "displays produce summary rows when summary report" do
@@ -77,7 +77,7 @@ module OpenFoodNetwork
     end
 
     describe "finding account invoice adjustments" do
-      let(:report) { XeroInvoicesReport.new user, {initial_invoice_number: '', invoice_date: '', due_date: '', account_code: ''} }
+      let(:report) { XeroInvoicesReport.new user, initial_invoice_number: '', invoice_date: '', due_date: '', account_code: '' }
       let!(:order) { create(:order) }
       let(:billable_period) { create(:billable_period) }
       let(:shipping_method) { create(:shipping_method) }
@@ -104,7 +104,7 @@ module OpenFoodNetwork
       end
 
       describe "when an initial invoice number is given" do
-        subject { XeroInvoicesReport.new user, {initial_invoice_number: '123'} }
+        subject { XeroInvoicesReport.new user, initial_invoice_number: '123' }
 
         it "increments the number by the index" do
           expect(subject.send(:invoice_number_for, order, 456)).to eq(579)
