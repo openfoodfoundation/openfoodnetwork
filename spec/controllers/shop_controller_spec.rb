@@ -56,6 +56,20 @@ describe ShopController, type: :controller do
           spree_get :order_cycle
           response.body.should have_content oc1.id
         end
+
+        context "when the order cycle has already been set" do
+          let(:oc1) { create(:simple_order_cycle, distributors: [distributor]) }
+          let(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
+          let(:order) { create(:order, order_cycle: oc1) }
+
+          before { allow(controller).to receive(:current_order) { order } }
+
+          it "returns the new order cycle details" do
+            spree_post :order_cycle, order_cycle_id: oc2.id
+            expect(response).to be_success
+            expect(response.body).to have_content oc2.id
+          end
+        end
       end
 
       it "should not allow the user to select an invalid order cycle" do
@@ -143,12 +157,12 @@ describe ShopController, type: :controller do
         let!(:tag_rule) { create(:filter_products_tag_rule,
           enterprise: distributor,
           preferred_customer_tags: "member",
-          preferred_variant_tags: "members-only") 
+          preferred_variant_tags: "members-only")
         }
         let!(:default_tag_rule) { create(:filter_products_tag_rule,
           enterprise: distributor,
           is_default: true,
-          preferred_variant_tags: "members-only") 
+          preferred_variant_tags: "members-only")
         }
         let(:product1) { { "id" => 1, "name" => 'product 1', "variants" => [{ "id" => 4, "tag_list" => ["members-only"] }] } }
         let(:product2) { { "id" => 2, "name" => 'product 2', "variants" => [{ "id" => 5, "tag_list" => ["members-only"] }, {"id" => 9, "tag_list" => ["something"]}] } }
