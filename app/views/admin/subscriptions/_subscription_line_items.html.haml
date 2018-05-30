@@ -29,7 +29,16 @@
           = t(:subtotal)
           \:
       %td.total.align-center
-        %span {{ subscription.estimatedSubtotal() | currency }}
+        %span#order_subtotal {{ subscription.estimatedSubtotal() | currency }}
+      %td.actions
+  %tbody#fees.no-border-top{ ng: { show: "subscription.estimatedFees() > 0" } }
+    %tr#fees-row
+      %td{:colspan => "3"}
+        %b
+          = t(:fees)
+          \:
+      %td.total.align-center
+        %span#order_fees {{ subscription.estimatedFees() | currency }}
       %td.actions
   %tbody#order-total.grand-total.no-border-top{"data-hook" => "admin_order_form_total"}
     %tr
