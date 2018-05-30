@@ -33,7 +33,7 @@
 
             .small-6.columns
               %label{ for: 'order.bill_address.state_id' } {{ "state" | t }}
-              %select.chunky{ id: 'order.bill_address.state_id', ng: { model: 'order.bill_address.state_id', options: 's.id as s.abbr for s in countriesById[order.bill_address.country_id].states' } }
+              %select.chunky{ id: 'order.bill_address.state_id', ng: { model: 'order.bill_address.state_id', options: 's.id as s.name for s in countriesById[order.bill_address.country_id].states' } }
 
           .row
             .small-6.columns

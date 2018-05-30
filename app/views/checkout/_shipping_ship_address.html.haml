@@ -18,7 +18,7 @@
             = validated_input t(:city), "order.ship_address.city"
           .small-6.columns
             %label{ for: 'order.ship_address.state_id' } {{ "state" | t }}
-            %select.chunky{ id: 'order.ship_address.state_id', ng: { model: 'order.ship_address.state_id', options: 's.id as s.abbr for s in countriesById[order.ship_address.country_id].states' } }
+            %select.chunky{ id: 'order.ship_address.state_id', ng: { model: 'order.ship_address.state_id', options: 's.id as s.name for s in countriesById[order.ship_address.country_id].states' } }
 
         .row
           .small-6.columns
