@@ -5,11 +5,8 @@ module Api
       attributes :update_issues
 
       def total
-        if object.total.present?
-          object.total.to_money.to_s
-        else
-          object.subscription.subscription_line_items.sum(&:total_estimate)
-        end
+        return unless object.total.present?
+        object.total.to_money.to_s
       end
 
       def update_issues

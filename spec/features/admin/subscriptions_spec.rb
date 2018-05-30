@@ -87,6 +87,7 @@ feature 'Subscriptions' do
 
         within ".subscription-orders" do
           expect(page).to have_selector "tr.proxy_order", count: 1
+          expect(page).to have_content "$18.50" # 3 x $5 items + $3.5 shipping
 
           proxy_order = subscription.proxy_orders.first
           within "tr#po_#{proxy_order.id}" do
