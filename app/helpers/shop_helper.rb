@@ -22,10 +22,10 @@ module ShopHelper
 
   def shop_tabs
     [
-      { name: 'about', title: t(:shopping_tabs_about, distributor: current_distributor.name) },
-      { name: 'producers', title: t(:label_producers) },
-      { name: 'contact', title: t(:shopping_tabs_contact) },
-      { name: 'groups', title: t(:label_groups) },
+      { name: 'about', title: t(:shopping_tabs_about, distributor: current_distributor.name), cols: 6 },
+      { name: 'producers', title: t(:label_producers), cols: 2 },
+      { name: 'contact', title: t(:shopping_tabs_contact), cols: 2 },
+      { name: 'groups', title: t(:label_groups), cols: 2 },
     ]
   end
 end
