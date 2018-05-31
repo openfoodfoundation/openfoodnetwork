@@ -17,16 +17,12 @@
           .small-6.columns
             = validated_input t(:city), "order.ship_address.city"
           .small-6.columns
-            %label{ for: 'order.ship_address.state_id' } {{ "state" | t }}
-            %select.chunky{ id: 'order.ship_address.state_id', ng: { model: 'order.ship_address.state_id', options: 's.id as s.name for s in countriesById[order.ship_address.country_id].states' } }
-
+            = validated_select t(:state), "order.ship_address.state_id", {}, {"ng-options" => "s.id as s.name for s in countriesById[order.ship_address.country_id].states"}
         .row
           .small-6.columns
             = validated_input t(:postcode), "order.ship_address.zipcode"
           .small-6.columns.right
-            %label{ for: 'order.ship_address.country_id' } {{ "country" | t }}
-            %select.chunky{ id: 'order.ship_address.country_id', required: false, ng: { init: "order.ship_address.country_id = #{Spree::Config[:default_country_id]}", model: 'order.ship_address.country_id', options: 'c.id as c.name for c in countries' } }
-
+            = validated_select t(:country), "order.ship_address.country_id", {}, {"ng-init" => "order.ship_address.country_id = order.ship_address.country_id || #{Spree::Config[:default_country_id]}", "ng-options" => "c.id as c.name for c in countries"}
         .row
           .small-6.columns
             = validated_input t(:phone), "order.ship_address.phone"
