@@ -75,7 +75,9 @@ feature 'Customers' do
         create(:order, customer: customer1)
         expect{
           within "tr#c_#{customer1.id}" do
-            find("a.delete-customer").trigger('click')
+            accept_alert do
+              find("a.delete-customer").click
+            end
           end
           expect(page).to have_selector "#info-dialog .text", text: I18n.t('admin.customers.destroy.has_associated_orders')
           click_button "OK"
@@ -83,7 +85,9 @@ feature 'Customers' do
 
         expect{
           within "tr#c_#{customer2.id}" do
-            find("a.delete-customer").click
+            accept_alert do
+              find("a.delete-customer").click
+            end
           end
           expect(page).to have_no_selector "tr#c_#{customer2.id}"
         }.to change{Customer.count}.by(-1)
@@ -125,7 +129,7 @@ feature 'Customers' do
           fill_in "name", with: ""
           expect(page).to have_css "input[name=name].update-pending"
 
-          find("tags-input li.tag-item a.remove-button").trigger('click')
+          find("tags-input li.tag-item a.remove-button").click
           expect(page).to have_css ".tag_watcher.update-pending"
         end
         click_button "Save Changes"
