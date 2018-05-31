@@ -45,7 +45,7 @@ module UIComponentHelper
   end
 
   def open_enterprise_modal(enterprise)
-    page.find("a", text: enterprise.name).trigger "click"
+    page.find("a", text: enterprise.name).click
   end
 
   def modal_should_be_open_for(object)
