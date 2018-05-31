@@ -4,6 +4,7 @@ feature 'Multilingual', js: true do
   include AuthenticationWorkflow
   include WebHelper
   include ShopWorkflow
+  include CookieHelper
 
   it 'has two locales available' do
     expect(Rails.application.config.i18n[:default_locale]).to eq 'en'
@@ -22,7 +23,7 @@ feature 'Multilingual', js: true do
       visit root_path
       expect(get_i18n_locale).to eq 'en'
       expect(get_i18n_translation('label_shops')).to eq 'Shops'
-      expect(page.driver.browser.cookies['locale']).to be_nil
+      expect(cookie_named('locale')).to be_nil
       expect(page).to have_content 'Interested in getting on the Open Food Network?'
       expect(page).to have_content 'SHOPS'
 
@@ -136,6 +137,6 @@ feature 'Multilingual', js: true do
 end
 
 def expect_menu_and_cookie_in_es
-  expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+  expect(cookie_named('locale')[:value]).to eq 'es'
   expect(page).to have_content 'TIENDAS'
 end
