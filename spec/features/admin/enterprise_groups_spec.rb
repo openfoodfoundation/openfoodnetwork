@@ -97,7 +97,9 @@ feature %q{
     eg = create(:enterprise_group, name: 'EGEGEG')
 
     click_link 'Groups'
-    first("a.delete-resource").click
+    accept_alert do
+      first("a.delete-resource").click
+    end
 
     page.should have_no_content 'EGEGEG'
 
