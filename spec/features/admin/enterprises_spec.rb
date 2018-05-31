@@ -61,9 +61,6 @@ feature %q{
   end
 
   scenario "editing an existing enterprise", js: true do
-    # Make the page long enough to avoid the save bar overlaying the form
-    page.driver.resize(1280, 1000)
-
     @enterprise = create(:enterprise)
     e2 = create(:enterprise)
     eg1 = create(:enterprise_group, name: 'eg1')
@@ -443,7 +440,9 @@ feature %q{
         click_link "Properties"
       end
 
-      within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+      accept_alert do
+        within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+      end
 
       click_button 'Update'
 
