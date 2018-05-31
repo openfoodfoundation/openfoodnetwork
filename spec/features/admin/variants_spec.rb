@@ -66,7 +66,9 @@ feature %q{
     visit spree.admin_product_variants_path p
 
     within "tr#spree_variant_#{v.id}" do
-      page.find('a.delete-resource').click
+      accept_alert do
+        page.find('a.delete-resource').click
+      end
     end
 
     page.should_not have_selector "tr#spree_variant_#{v.id}"
