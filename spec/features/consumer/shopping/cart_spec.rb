@@ -127,7 +127,9 @@ feature "full-page cart", js: true do
         visit spree.cart_path
         variant.update_attributes! on_hand: 2
 
-        fill_in "order_line_items_attributes_0_quantity", with: '4'
+        accept_alert do
+          fill_in "order_line_items_attributes_0_quantity", with: '4'
+        end
         click_button 'Update'
 
         expect(page).to have_content "Insufficient stock available, only 2 remaining"
