@@ -629,7 +629,9 @@ feature %q{
 
         it "removes a line item when the relevant delete button is clicked" do
           expect(page).to have_selector "a.delete-line-item", :count => 2
-          find("tr#li_#{li1.id} a.delete-line-item").click
+          accept_alert do
+            find("tr#li_#{li1.id} a.delete-line-item").click
+          end
           expect(page).to have_no_selector "a.delete-line-item", :count => 2
           expect(page).to have_selector "a.delete-line-item", :count => 1
           visit '/admin/orders/bulk_management'
