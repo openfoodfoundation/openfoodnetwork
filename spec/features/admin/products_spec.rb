@@ -35,7 +35,7 @@ feature %q{
       fill_in 'product_on_hand', with: 5
       select 'Test Tax Category', from: 'product_tax_category_id'
       select 'Test Shipping Category', from: 'product_shipping_category_id'
-      page.find("input[name='product\[description\]']", visible: false).set('A description...')
+      page.find("div[id^='taTextElement']").native.send_keys('A description...')
 
       click_button 'Create'
 
@@ -53,7 +53,7 @@ feature %q{
       product.on_hand.should == 5
       product.tax_category_id.should == tax_category.id
       product.shipping_category.should == shipping_category
-      product.description.should == "A description..."
+      product.description.should == "<p>A description...</p>"
       product.group_buy.should be_falsey
       product.master.option_values.map(&:name).should == ['5kg']
       product.master.options_text.should == "5kg"
@@ -75,8 +75,7 @@ feature %q{
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
       select 'Test Shipping Category', from: 'product_shipping_category_id'
-      #fill_in 'product_description', with: "In demand, and on_demand! The hottest cakes in town."
-      page.first("input[name='product\[description\]']", visible: false).set('In demand, and on_demand! The hottest cakes in town.')
+      page.find("div[id^='taTextElement']").native.send_keys('In demand, and on_demand! The hottest cakes in town.')
 
       click_button 'Create'
 
@@ -225,12 +224,14 @@ feature %q{
 
       visit spree.admin_product_images_path(product)
       page.should have_selector "table[data-hook='images_table'] td img"
-      product.reload.images.count.should == 1
+      expect(product.reload.images.count).to eq 1
 
-      page.find('a.delete-resource').click
-      wait_until { product.reload.images.count == 0 }
+      accept_alert do
+        page.find('a.delete-resource').click
+      end
 
-      page.should_not have_selector "table[data-hook='images_table'] td img"
+      expect(page).to_not have_selector "table[data-hook='images_table'] td img"
+      expect(product.reload.images.count).to eq 0
     end
   end
 end
