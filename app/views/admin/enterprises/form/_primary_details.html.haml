@@ -59,7 +59,7 @@
     .six.columns
       = f.text_field :permalink, { 'ng-model' => "Enterprise.permalink", placeholder: "eg. your-shop-name", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }" }
     .two.columns.omega
-      %img.spinner{ src: "/assets/loading.gif", width: "30px", ng: { show: "checking" } }
+      %img.spinner{ src: "/assets/spinning-circles.svg", width: "30px", ng: { show: "checking" } }
       %span{ ng: { class: 'availability.toLowerCase()', hide: "checking" } }
         {{ availability }}
         %i{ ng: { class: "{'icon-ok-sign': availability == 'Available', 'icon-remove-sign': availability == 'Unavailable'}" } }
