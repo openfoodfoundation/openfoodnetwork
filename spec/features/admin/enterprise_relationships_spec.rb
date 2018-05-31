@@ -80,7 +80,9 @@ feature %q{
       visit admin_enterprise_relationships_path
       page.should have_relationship e1, e2, ['to add to order cycle']
 
-      first("a.delete-enterprise-relationship").click
+      accept_alert do
+        first("a.delete-enterprise-relationship").click
+      end
 
       page.should_not have_relationship e1, e2
       EnterpriseRelationship.where(id: er.id).should be_empty
