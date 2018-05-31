@@ -103,7 +103,9 @@ feature "As a consumer I want to shop with a distributor", js: true do
             within("li.cart") { page.should have_content with_currency(1020.99) }
 
             # -- Changing order cycle
-            select "frogs", from: "order_cycle_id"
+            accept_alert do
+              select "frogs", from: "order_cycle_id"
+            end
             page.should have_content with_currency(19.99)
 
             # -- Cart should be cleared
