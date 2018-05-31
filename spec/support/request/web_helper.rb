@@ -118,6 +118,26 @@ module WebHelper
     page.execute_script "jQuery('#{selector}').select2('close');"
   end
 
+  def select2_search_async(value, options)
+    id = find_label_by_text(options[:from])
+    options[:from] = "#s2id_#{id}"
+    targetted_select2_search_async(value, options)
+  end
+
+  def targetted_select2_search_async(value, options)
+    page.execute_script %Q{$('#{options[:from]}').select2('open')}
+    page.execute_script "$('#{options[:dropdown_css]} input.select2-input').val('#{value}').trigger('keyup-change');"
+    select_select2_result_async(value)
+  end
+
+  def select_select2_result_async(value)
+    while (page.has_selector? "div.select2-searching") do
+      return if page.has_selector? "div.select2-no-results"
+      sleep 0.2
+    end
+    page.execute_script(%Q{$("div.select2-result-label:contains('#{value}')").mouseup()})
+  end
+
   def perform_and_ensure(action, *args, assertion)
     # Buttons/Links/Checkboxes can be unresponsive for a while
     # so keep clicking them until assertion is satified
