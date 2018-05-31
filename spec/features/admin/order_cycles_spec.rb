@@ -156,8 +156,6 @@ feature %q{
     let(:order_cycle_closing_time) { Time.zone.local(2040, 11, 13, 17, 00, 00).strftime("%F %T %z") }
 
     scenario "creating an order cycle", js: true do
-      page.driver.resize(1280, 2000)
-
       # Given coordinating, supplying and distributing enterprises with some products with variants
       coordinator = create(:distributor_enterprise, name: 'My coordinator')
       supplier = create(:supplier_enterprise, name: 'My supplier')
@@ -618,7 +616,7 @@ feature %q{
     quick_login_as_admin
     visit edit_admin_order_cycle_path(oc)
     within("table.exchanges tbody tr.supplier") { page.find('td.products').click }
-    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).trigger('click') # uncheck
+    page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}").click # uncheck
     click_button "Update"
 
     # Then the master variant should have been removed from all exchanges
@@ -719,9 +717,6 @@ feature %q{
 
       scenario "creating a new order cycle" do
         distributor_managed.update_attribute(:enable_subscriptions, true)
-        # Make the page long enough to avoid the save bar overlaying the form
-        page.driver.resize(1280, 2000)
-
         visit admin_order_cycles_path
         click_link 'New Order Cycle'
 
@@ -1008,9 +1003,6 @@ feature %q{
     end
 
     it "creates order cycles", js: true do
-      # Make the page long enough to avoid the save bar overlaying the form
-      page.driver.resize(1280, 2000)
-
       # When I go to the new order cycle page
       visit admin_order_cycles_path
       click_link 'New Order Cycle'
@@ -1161,7 +1153,9 @@ feature %q{
     quick_login_as_admin
     visit admin_order_cycles_path
     expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"
-    first('a.delete-order-cycle').click
+    accept_alert do
+      first('a.delete-order-cycle').click
+    end
     expect(page).to_not have_selector "tr.order-cycle-#{order_cycle.id}"
   end
 
