@@ -114,6 +114,9 @@ feature "Authentication", js: true, retry: 3 do
         before do
           browse_as_medium
         end
+        after do
+          browse_as_large
+        end
         scenario "showing login" do
           open_off_canvas
           open_login_modal
