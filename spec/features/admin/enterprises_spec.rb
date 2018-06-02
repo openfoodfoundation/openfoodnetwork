@@ -74,7 +74,7 @@ feature %q{
 
     visit '/admin/enterprises'
     within "tr.enterprise-#{@enterprise.id}" do
-      first("a", text: 'Settings').trigger 'click'
+      first("a", text: 'Settings').click
     end
 
     fill_in 'enterprise_name', :with => 'Eaterprises'
@@ -83,30 +83,33 @@ feature %q{
     choose 'Own'
 
     # Require login to view shopfront or for checkout
-    within(".side_menu") { click_link "Shop Preferences" }
+    accept_alert do
+      within(".side_menu") { click_link "Shop Preferences" }
+    end
     expect(page).to have_checked_field "enterprise_require_login_false"
     expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
     choose "Visible to registered customers only"
     expect(page).to have_no_checked_field "enterprise_require_login_false"
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
-    within(".side_menu") { click_link "Users" }
+    accept_alert do
+      within(".side_menu") { click_link "Users" }
+    end
     select2_search user.email, from: 'Owner'
     expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
 
-    click_link "About"
+    accept_alert do
+      click_link "About"
+    end
     fill_in 'enterprise_description', :with => 'Connecting farmers and eaters'
 
-    # TODO: Directly altering the text in the contenteditable div like this started breaking with the upgrade
-    # of Poltergeist from 1.5 to 1.7. Probably requires an upgrade of AngularJS and/or TextAngular
-    # long_description = find :css, "text-angular#enterprise_long_description div.ta-scroll-window div.ta-bind"
-    # long_description.set 'This is an interesting long description'
-    # long_description.native.send_keys(:Enter) # Sets the value
-
-    page.first("input[name='enterprise\[long_description\]']", visible: false).set('This is an interesting long description')
+    description_input = page.find("text-angular#enterprise_long_description div[id^='taTextElement']")
+    description_input.native.send_keys('This is an interesting long description')
 
     # Check Angularjs switching of sidebar elements
-    click_link "Primary Details"
+    accept_alert do
+      click_link "Primary Details"
+    end
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
     page.should_not have_selector "#enterprise_fees"
@@ -128,40 +131,52 @@ feature %q{
 
     select2_search eg1.name, from: 'Groups'
 
-    click_link "Payment Methods"
+    accept_alert do
+      click_link "Payment Methods"
+    end
     page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
     check "enterprise_payment_method_ids_#{payment_method.id}"
 
-    click_link "Shipping Methods"
+    accept_alert do
+      click_link "Shipping Methods"
+    end
     page.should_not have_checked_field "enterprise_shipping_method_ids_#{shipping_method.id}"
     check "enterprise_shipping_method_ids_#{shipping_method.id}"
 
-    click_link "Contact"
+    accept_alert do
+      click_link "Contact"
+    end
     fill_in 'enterprise_contact_name', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
     fill_in 'enterprise_email_address', :with => 'info@eaterprises.com.au'
     fill_in 'enterprise_website', :with => 'http://eaterprises.com.au'
 
-    click_link "Social"
+    accept_alert do
+      click_link "Social"
+    end
     fill_in 'enterprise_twitter', :with => '@eaterprises'
 
-    click_link "Business Details"
+    accept_alert do
+      click_link "Business Details"
+    end
     fill_in 'enterprise_abn', :with => '09812309823'
     fill_in 'enterprise_acn', :with => ''
     choose 'Yes' # enterprise_charges_sales_tax
 
-    click_link "Address"
+    accept_alert do
+      click_link "Address"
+    end
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
     select2_search 'Australia', :from => 'Country'
     select2_search 'Victoria', :from => 'State'
 
-    click_link "Shop Preferences"
-    # TODO: Same as above
-    # shopfront_message = find :css, "text-angular#enterprise_preferred_shopfront_message div.ta-scroll-window div.ta-bind"
-    # shopfront_message.set 'This is my shopfront message.'
-    page.first("input[name='enterprise\[preferred_shopfront_message\]']", visible: false).set('This is my shopfront message.')
+    accept_alert do
+      click_link "Shop Preferences"
+    end
+    shop_message_input = page.find("text-angular#enterprise_preferred_shopfront_message div[id^='taTextElement']")
+    shop_message_input.native.send_keys('This is my shopfront message.')
     page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
     choose "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
     choose "enterprise_enable_subscriptions_true"
