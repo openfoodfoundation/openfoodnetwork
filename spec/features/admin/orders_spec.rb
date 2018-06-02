@@ -277,7 +277,7 @@ feature %q{
         end
       end
 
-      pending "can print an order's ticket" do
+      scenario "can print an order's ticket" do
         find("#links-dropdown .ofn-drop-down").click
 
         ticket_window = window_opened_by do
@@ -287,32 +287,34 @@ feature %q{
         end
 
         within_window ticket_window do
-          print_data = page.evaluate_script('printData');
-          elements_in_print_data =
-            [
-              @order.distributor.name,
-              @order.distributor.address.address_part1,
-              @order.distributor.address.address_part2,
-              @order.distributor.contact.email,
-              @order.number,
-              @order.line_items.map { |line_item|
-                [line_item.quantity.to_s,
-                 line_item.product.name,
-                 line_item.single_display_amount_with_adjustments.format(symbol: false, with_currency: false),
-                 line_item.display_amount_with_adjustments.format(symbol: false, with_currency: false)]
-              },
-              checkout_adjustments_for(@order, exclude: [:line_item]).reject { |a| a.amount == 0 }.map { |adjustment|
-                [raw(adjustment.label),
-                 display_adjustment_amount(adjustment).format(symbol: false, with_currency: false)]
-              },
-              @order.display_total.format(with_currency: false),
-              display_checkout_taxes_hash(@order).map { |tax_rate, tax_value|
-                [tax_rate,
-                 tax_value.format(with_currency: false)]
-              },
-              display_checkout_total_less_tax(@order).format(with_currency: false)
-            ]
-          expect(print_data.join).to include(*elements_in_print_data.flatten)
+          accept_alert do
+            print_data = page.evaluate_script('printData');
+            elements_in_print_data =
+              [
+                @order.distributor.name,
+                @order.distributor.address.address_part1,
+                @order.distributor.address.address_part2,
+                @order.distributor.contact.email,
+                @order.number,
+                @order.line_items.map { |line_item|
+                  [line_item.quantity.to_s,
+                   line_item.product.name,
+                   line_item.single_display_amount_with_adjustments.format(symbol: false, with_currency: false),
+                   line_item.display_amount_with_adjustments.format(symbol: false, with_currency: false)]
+                },
+                checkout_adjustments_for(@order, exclude: [:line_item]).reject { |a| a.amount == 0 }.map { |adjustment|
+                  [raw(adjustment.label),
+                   display_adjustment_amount(adjustment).format(symbol: false, with_currency: false)]
+                },
+                @order.display_total.format(with_currency: false),
+                display_checkout_taxes_hash(@order).map { |tax_rate, tax_value|
+                  [tax_rate,
+                   tax_value.format(with_currency: false)]
+                },
+                display_checkout_total_less_tax(@order).format(with_currency: false)
+              ]
+            expect(print_data.join).to include(*elements_in_print_data.flatten)
+          end
         end
       end
     end
