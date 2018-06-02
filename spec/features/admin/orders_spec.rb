@@ -277,7 +277,7 @@ feature %q{
         end
       end
 
-      scenario "can print an order's ticket" do
+      pending "can print an order's ticket" do
         find("#links-dropdown .ofn-drop-down").click
 
         ticket_window = window_opened_by do
