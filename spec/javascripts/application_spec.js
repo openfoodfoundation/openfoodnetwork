@@ -9,6 +9,10 @@
 //= require angular-flash.min.js
 //= require shared/ng-tags-input.min.js
 //= require shared/mm-foundation-tpls-0.8.0.min.js
+//= require shared/navigation.js
+//= require shared/ofn-loading.js
+//= require shared/rails-flash-loader.js
+//= require shared/ofn-stripe.js
 //= require textAngular-rangy.min.js
 //= require textAngular-sanitize.min.js
 //= require textAngular.min.js
