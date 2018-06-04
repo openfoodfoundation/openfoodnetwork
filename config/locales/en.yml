@@ -305,6 +305,9 @@ en:
     form_invalid: "Form contains missing or invalid fields"
     clear_filters: Clear Filters
     clear: Clear
+    save: Save
+    cancel: Cancel
+    back: Back
     show_more: Show more
     show_n_more: Show %{num} more
     choose: "Choose..."
@@ -459,6 +462,7 @@ en:
         inherits_properties?: Inherits Properties?
         available_on: Available On
         av_on: "Av. On"
+        import_date: Imported
         upload_an_image: Upload an image
       product_search_keywords: Product Search Keywords
       product_search_tip: Type words to help search your products in the shops. Use space to separate each keyword.
@@ -474,6 +478,80 @@ en:
       group_buy_options: "Group Buy Options"
       back_to_products_list: "Back to products list"
 
+    product_import:
+      title: Product Import
+      file_not_found: File not found or could not be opened
+      no_data: No data found in spreadsheet
+      confirm_reset: "This will set stock level to zero on all products for this \n enterprise that are not present in the uploaded file"
+      model:
+        no_file: "error: no file uploaded"
+        could_not_process: "could not process file: invalid filetype"
+        incorrect_value: incorrect value
+        conditional_blank: can't be blank if unit_type is blank
+        no_product: did not match any products in the database
+        not_found: not found in database
+        blank: can't be blank
+        products_no_permission: you do not have permission to manage products for this enterprise
+        inventory_no_permission: you do not have permission to create inventory for this producer
+        none_saved: did not save any products successfully
+        line: Line
+      index:
+        select_file: Select a spreadsheet to upload
+        spreadsheet: Spreadsheet
+        import_into: "Import into:"
+        product_list: Product list
+        inventories: Inventories
+        import: Import
+        upload: Upload
+      import:
+        review: Review
+        proceed: Proceed
+        save: Save
+        results: Results
+        save_imported: Save imported products
+        no_valid_entries: No valid entries found
+        none_to_save: There are no entries that can be saved
+        some_invalid_entries: Imported file contains some invalid entries
+        save_valid?: Save valid entries for now and discard the others?
+        no_errors: No errors detected!
+        save_all_imported?: Save all imported products?
+        options_and_defaults: Import options and defaults
+        no_permission: you do not have permission to manage this enterprise
+        not_found: enterprise could not be found in database
+        no_name: No name
+        blank_supplier: some products have blank supplier name
+        reset_absent?: Reset absent products?
+        overwrite_all: Overwrite all
+        overwrite_empty: Overwrite if empty
+        default_stock: Set stock level
+        default_tax_cat: Set tax category
+        default_shipping_cat: Set shipping category
+        default_available_date: Set available date
+        validation_overview: Import validation overview
+        entries_found: Entries found in imported file
+        entries_with_errors: Items contain errors and will not be imported
+        products_to_create: Products will be created
+        products_to_update: Products will be updated
+        inventory_to_create: Inventory items will be created
+        inventory_to_update: Inventory items will be updated
+        products_to_reset: Existing products will have their stock reset to zero
+        inventory_to_reset: Existing inventory items will have their stock reset to zero
+        line: Line
+        item_line: Item line
+      save:
+        final_results: Import final results
+        products_created: Products created
+        products_updated: Products updated
+        inventory_created: Inventory items created
+        inventory_updated: Inventory items updated
+        products_reset: Products had stock level reset to zero
+        inventory_reset: Inventory items had stock level reset to zero
+        all_saved: "All items saved successfully"
+        some_saved: "items saved successfully"
+        save_errors: Save errors
+        view_products: View Products
+        view_inventory: View Inventory
+
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -484,6 +562,7 @@ en:
         inherit?: Inherit?
         add: Add
         hide: Hide
+        import_date: Imported
         select_a_shop: Select A Shop
         review_now: Review Now
         new_products_alert_message: There are %{new_product_count} new products available to add to your inventory.
@@ -2504,6 +2583,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             inherits_properties?: Inherits Properties?
             available_on: Available On
             av_on: "Av. On"
+            import_date: "Import Date"
           products_variant:
             variant_has_n_overrides: "This variant has %{n} override(s)"
             new_variant: "New variant"

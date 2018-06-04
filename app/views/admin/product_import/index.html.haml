@@ -1,6 +1,12 @@
 - content_for :page_title do
-  Product Import
+  #{t('admin.product_import.title')}
 
-= render :partial => 'spree/admin/shared/product_sub_menu'
+- content_for :page_actions do
+  %div.toolbar{ 'data-hook' => "toolbar" }
+    %ul.actions.header-action-links.inline-menu
+      %li
+        = button_link_to 'View Guide', main_app.admin_product_import_guide_path
+
+= render partial: 'spree/admin/shared/product_sub_menu'
 
 = render 'upload_form'

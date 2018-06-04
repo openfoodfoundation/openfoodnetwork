@@ -1,35 +1,66 @@
-%table.import-settings{ng: {controller: 'ImportOptionsFormCtrl', init: "supplierId = #{supplier_id}; resetCount = #{@importer.products_to_reset[supplier_id][:reset_count]}"}}
-  %tr
+%table.import-settings{ng: {controller: 'ImportOptionsFormCtrl', init: "supplierId = #{supplier_id}; initForm()"}}
+  %tr.import-into
     %td.description
-      Remove absent products?
+      Import Into:
     %td
-      = check_box_tag "settings[#{supplier_id}][reset_all_absent]", 1, false, :'ng-model' => 'resetAbsent', :'ng-change' => 'toggleResetAbsent()'
     %td
-  %tr
+      = select_tag "settings[#{supplier_id}][import_into]", options_for_select({"Product List" => :product_list, "Inventories" => :inventories}), {class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['import_into']", 'ng-change' => "updateImportInto()"}
+    %td
+
+  %tr.stock-level.inventory{ng: {show: 'import_into == "inventories"'}}
     %td.description
-      Set default stock level
+      = t('admin.product_import.import.default_stock')
     %td
-      = select_tag "settings[#{supplier_id}][defaults][on_hand][mode]", options_for_select({"Don't overwrite" => :overwrite_none, "Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth'}
+      = check_box_tag "settings[#{supplier_id}][defaults][count_on_hand][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['count_on_hand']['active']"
     %td
-      = number_field_tag "settings[#{supplier_id}][defaults][on_hand][value]", 0
-  %tr
+      = select_tag "settings[#{supplier_id}][defaults][count_on_hand][mode]", options_for_select({"#{t('admin.product_import.import.overwrite_all')}" => :overwrite_all, "#{t('admin.product_import.import.overwrite_empty')}" => :overwrite_empty}), {class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['count_on_hand']['mode']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['count_on_hand']['active']"}
+    %td
+      = number_field_tag "settings[#{supplier_id}][defaults][count_on_hand][value]", 0, 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['count_on_hand']['active']", 'ng-model' => "settings[#{supplier_id}]['defaults']['count_on_hand']['value']"
+
+  %tr.stock-level.productlist{ng: {show: 'import_into == "product_list"'}}
     %td.description
-      Set default tax category
+      = t('admin.product_import.import.default_stock')
     %td
-      = select_tag "settings[#{supplier_id}][defaults][tax_category_id][mode]", options_for_select({"Don't overwrite" => :overwrite_none, "Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth'}
+      = check_box_tag "settings[#{supplier_id}][defaults][on_hand][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['on_hand']['active']"
     %td
-      = select_tag "settings[#{supplier_id}][defaults][tax_category_id][value]", options_for_select(@tax_categories.map {|tc| [tc.name, tc.id]}), {prompt: 'None', class: 'select2 fullwidth'}
-  %tr
+      = select_tag "settings[#{supplier_id}][defaults][on_hand][mode]", options_for_select({"#{t('admin.product_import.import.overwrite_all')}" => :overwrite_all, "#{t('admin.product_import.import.overwrite_empty')}" => :overwrite_empty}), {class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['on_hand']['mode']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['on_hand']['active']"}
+    %td
+      = number_field_tag "settings[#{supplier_id}][defaults][on_hand][value]", 0, 'ng-model' => "settings[#{supplier_id}]['defaults']['on_hand']['value']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['on_hand']['active']"
+
+  %tr.tax-category{ng: {show: 'import_into == "product_list"'}}
     %td.description
-      Set default shipping category
+      = t('admin.product_import.import.default_tax_cat')
     %td
-      = select_tag "settings[#{supplier_id}][defaults][shipping_category_id][mode]", options_for_select({"Don't overwrite" => :overwrite_none, "Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth'}
+      = check_box_tag "settings[#{supplier_id}][defaults][tax_category_id][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['tax_category_id']['active']"
     %td
-      = select_tag "settings[#{supplier_id}][defaults][shipping_category_id][value]", options_for_select(@shipping_categories.map {|sc| [sc.name, sc.id]}), {prompt: 'None', class: 'select2 fullwidth'}
-  %tr
+      = select_tag "settings[#{supplier_id}][defaults][tax_category_id][mode]", options_for_select({"#{t('admin.product_import.import.overwrite_all')}" => :overwrite_all, "#{t('admin.product_import.import.overwrite_empty')}" => :overwrite_empty}), {class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['tax_category_id']['mode']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['tax_category_id']['active']"}
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][tax_category_id][value]", options_for_select(@tax_categories.map {|tc| [tc.name, tc.id]}), {prompt: 'None', class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['tax_category_id']['value']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['tax_category_id']['active']"}
+
+  %tr.shipping-category{ng: {show: 'import_into == "product_list"'}}
     %td.description
-      Set default available date
+      = t('admin.product_import.import.default_shipping_cat')
     %td
-      = select_tag "settings[#{supplier_id}][defaults][available_on][mode]", options_for_select({"Don't overwrite" => :overwrite_none, "Overwrite all" => :overwrite_all, "Overwrite if empty" => :overwrite_empty}), {class: 'select2 fullwidth'}
+      = check_box_tag "settings[#{supplier_id}][defaults][shipping_category_id][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['shipping_category_id']['active']"
     %td
-      = text_field_tag "settings[#{supplier_id}][defaults][available_on][value]", nil, {class: 'datepicker', placeholder: 'Today'}
+      = select_tag "settings[#{supplier_id}][defaults][shipping_category_id][mode]", options_for_select({"#{t('admin.product_import.import.overwrite_all')}" => :overwrite_all, "#{t('admin.product_import.import.overwrite_empty')}" => :overwrite_empty}), {class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['shipping_category_id']['mode']",  'ng-disabled' => "!settings[#{supplier_id}]['defaults']['shipping_category_id']['active']"}
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][shipping_category_id][value]", options_for_select(@shipping_categories.map {|sc| [sc.name, sc.id]}), {prompt: 'None', class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['shipping_category_id']['value']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['shipping_category_id']['active']"}
+
+  %tr.available-date{ng: {show: 'import_into == "product_list"'}}
+    %td.description
+      = t('admin.product_import.import.default_available_date')
+    %td
+      = check_box_tag "settings[#{supplier_id}][defaults][available_on][active]", 1, false, 'ng-model' => "settings[#{supplier_id}]['defaults']['available_on']['active']"
+    %td
+      = select_tag "settings[#{supplier_id}][defaults][available_on][mode]", options_for_select({"#{t('admin.product_import.import.overwrite_all')}" => :overwrite_all, "#{t('admin.product_import.import.overwrite_empty')}" => :overwrite_empty}), {class: 'select2 fullwidth select2-no-search', 'ng-model' => "settings[#{supplier_id}]['defaults']['available_on']['mode']", 'ng-disabled' => "!settings[#{supplier_id}]['defaults']['available_on']['active']"}
+    %td
+      = text_field_tag "settings[#{supplier_id}][defaults][available_on][value]", nil, {class: 'datepicker', placeholder: 'Today', 'ng-model' => "settings[#{supplier_id}]['defaults']['available_on']['value']",  'ng-disabled' => "!settings[#{supplier_id}]['defaults']['available_on']['active']"}
+
+  %tr.reset-absent
+    %td.description
+      = t('admin.product_import.import.reset_absent?')
+    %td
+      = check_box_tag "settings[#{supplier_id}][reset_all_absent]", 1, false, :'ng-model' => "settings[#{supplier_id}]['reset_all_absent']", :'ng-change' => "toggleResetAbsent('#{supplier_id}')"
+    %td
+    %td

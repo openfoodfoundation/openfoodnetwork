@@ -10,13 +10,12 @@ Spree::Variant.class_eval do
   remove_method :options_text if instance_methods(false).include? :options_text
   include OpenFoodNetwork::VariantAndLineItemNaming
 
-
   has_many :exchange_variants
   has_many :exchanges, through: :exchange_variants
   has_many :variant_overrides
   has_many :inventory_items
 
-  attr_accessible :unit_value, :unit_description, :images_attributes, :display_as, :display_name
+  attr_accessible :unit_value, :unit_description, :images_attributes, :display_as, :display_name, :import_date
   accepts_nested_attributes_for :images
 
   validates_presence_of :unit_value,
@@ -30,10 +29,11 @@ Spree::Variant.class_eval do
   after_save :refresh_products_cache
   around_destroy :destruction
 
-
   scope :with_order_cycles_inner, joins(exchanges: :order_cycle)
 
   scope :not_deleted, where(deleted_at: nil)
+  scope :not_master, where(is_master: false)
+  scope :in_stock, where('spree_variants.count_on_hand > 0 OR spree_variants.on_demand=?', true)
   scope :in_order_cycle, lambda { |order_cycle|
     with_order_cycles_inner.
       merge(Exchange.outgoing).
@@ -116,7 +116,6 @@ Spree::Variant.class_eval do
       OpenFoodNetwork::ProductsCache.variant_changed self
     end
   end
-
 
   private
 

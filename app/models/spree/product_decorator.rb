@@ -174,6 +174,14 @@ Spree::Product.class_eval do
     order_cycle.variants_distributed_by(distributor).where(product_id: self)
   end
 
+  # Get the most recent import_date of a product's variants
+  def import_date
+    variants.map do |variant|
+      next if variant.import_date.blank?
+      variant.import_date
+    end.sort.last
+  end
+
   # Build a product distribution for each distributor
   def build_product_distributions_for_user user
     Enterprise.is_distributor.managed_by(user).each do |distributor|

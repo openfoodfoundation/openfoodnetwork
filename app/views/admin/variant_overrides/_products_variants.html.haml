@@ -23,3 +23,5 @@
   %td.visibility{ ng: { show: 'columns.visibility.visible' } }
     %button.icon-remove.hide.fullwidth{ :type => 'button', ng: { click: "setVisibility(hub_id,variant.id,false)" } }
       = t('admin.variant_overrides.index.hide')
+  %td.import_date{ ng: { show: 'columns.import_date.visible' } }
+    %span {{variantOverrides[hub_id][variant.id].import_date | date:"MMMM dd, yyyy HH:mm"}}

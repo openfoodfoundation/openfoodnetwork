@@ -1,0 +1,93 @@
+%table.product-import-columns
+  %thead
+    %tr
+      %th Column Title
+      %th Required
+      %th Examples
+      %th Description
+      %th Notes
+  %tbody
+    %tr
+      %td
+        %strong name
+      %td Yes
+      %td Potatoes
+      %td The name of the product
+      %td
+    %tr
+      %td
+        %strong supplier
+      %td Yes
+      %td Pennylane Farm
+      %td The name of the product's supplier
+      %td
+    %tr
+      %td
+        %strong category
+      %td Yes
+      %td Vegetables
+      %td The product category
+      %td See below for a list of available categories
+    %tr
+      %td
+        %strong on_hand
+      %td Yes
+      %td 15
+      %td The amount currently in stock
+      %td
+    %tr
+      %td
+        %strong price
+      %td Yes
+      %td 2.50
+      %td The price of the product
+      %td
+    %tr
+      %td
+        %strong units
+      %td Yes
+      %td 750
+      %td The weight or volume value.
+      %td
+    %tr
+      %td
+        %strong unit_type
+      %td Yes
+      %td g
+      %td The unit type, i.e. g for grams, Kg for Kilograms, ml for millilitres. Can be blank (see notes).
+      %td If unit_type is left blank, a variant_unit_name must be given.
+    %tr
+      %td
+        %strong variant_unit_name
+      %td Maybe
+      %td bunch
+      %td If the product is sold as an item such as "bunch", "loaf" or "case", that goes here.
+      %td Used for products that don't use a unit_type for weight or volume.
+    %tr
+      %td
+        %strong display_name
+      %td No
+      %td Orange
+      %td Used to name product variants, if they have a distinct name.
+      %td
+    %tr
+      %td
+        %strong on_demand
+      %td No
+      %td 1
+      %td Flag the product as "made on demand". The product will not use stock levels.
+      %td 1 for active, 0 for disabled, or leave blank to ignore.
+    %tr
+      %td
+        %strong tax_category
+      %td No
+      %td (Various, see notes)
+      %td Sets the product tax category
+      %td See below for a list of available categories
+    %tr
+      %td
+        %strong shipping_category
+      %td No
+      %td (Various, see notes)
+      %td Sets the product shipping category
+      %td See below for a list of available categories

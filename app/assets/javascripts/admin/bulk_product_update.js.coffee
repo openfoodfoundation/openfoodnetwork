@@ -28,6 +28,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons
     $scope.producerFilter = "0"
     $scope.categoryFilter = "0"
+    $scope.importDateFilter = ""
     $scope.products = BulkProducts.products
     $scope.filteredProducts = []
     $scope.currentFilters = []
@@ -43,7 +44,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       .catch (message) ->
         $scope.api_error_msg = message
 
-    $scope.$watchCollection '[query, producerFilter, categoryFilter]', ->
+    $scope.$watchCollection '[query, producerFilter, categoryFilter, importDateFilter]', ->
       $scope.limit = 15 # Reset limit whenever searching
 
     $scope.fetchProducts = ->
@@ -52,6 +53,9 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         $scope.resetProducts()
         $scope.loading = false
 
+    $timeout ->
+      if $scope.showLatestImport
+        $scope.importDateFilter = $scope.importDates[1].id
 
     $scope.resetProducts = ->
       DirtyProducts.clear()
@@ -91,6 +95,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       $scope.query = ""
       $scope.producerFilter = "0"
       $scope.categoryFilter = "0"
+      $scope.importDateFilter = "0"
 
     $scope.editWarn = (product, variant) ->
       if (DirtyProducts.count() > 0 and confirm(t("unsaved_changes_confirmation"))) or (DirtyProducts.count() == 0)
