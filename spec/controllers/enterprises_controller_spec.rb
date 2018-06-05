@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe EnterprisesController, type: :controller do
   describe "shopping for a distributor" do
-    let(:order) { controller.current_order(create_order_if_necessary: true) }
+    let(:order) { controller.current_order( create_order_if_necessary: true ) }
 
 
     let!(:current_distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }

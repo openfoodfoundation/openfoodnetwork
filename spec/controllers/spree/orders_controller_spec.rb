@@ -30,7 +30,7 @@ describe Spree::OrdersController, type: :controller do
   it "redirects home with message if hub is not ready for checkout" do
     VariantOverride.stub(:indexed).and_return({})
 
-    order = subject.current_order(create_order_if_necessary: true)
+    order = subject.current_order( create_order_if_necessary: true )
     distributor.stub(:ready_for_checkout?) { false }
     order.stub(distributor: distributor, order_cycle: order_cycle)
 
@@ -44,7 +44,7 @@ describe Spree::OrdersController, type: :controller do
   end
 
   describe "when an item has insufficient stock" do
-    let(:order) { subject.current_order(create_order_if_necessary: true) }
+    let(:order) { subject.current_order( create_order_if_necessary: true ) }
     let(:oc) { create(:simple_order_cycle, distributors: [d], variants: [variant]) }
     let(:d) { create(:distributor_enterprise, shipping_methods: [create(:shipping_method)], payment_methods: [create(:payment_method)]) }
     let(:variant) { create(:variant, on_demand: false, on_hand: 5) }
@@ -129,7 +129,7 @@ describe Spree::OrdersController, type: :controller do
       distributor_product = create(:distributor_enterprise)
       p = create(:product, :distributors => [distributor_product], :group_buy => true)
 
-      order = subject.current_order(create_order_if_necessary: true)
+      order = subject.current_order( create_order_if_necessary: true )
       order.stub(:distributor) { distributor_product }
       order.should_receive(:set_variant_attributes).with(p.master, {'max_quantity' => '3'})
       controller.stub(:current_order).and_return(order)
@@ -164,7 +164,7 @@ describe Spree::OrdersController, type: :controller do
   describe "removing line items from cart" do
     describe "when I pass params that includes a line item no longer in our cart" do
       it "should silently ignore the missing line item" do
-        order = subject.current_order(create_order_if_necessary: true)
+        order = subject.current_order( create_order_if_necessary: true )
         li = order.add_variant(create(:simple_product, on_hand: 110).variants.first)
         spree_get :update, order: { line_items_attributes: {
           "0" => {quantity: "0", id: "9999"},
@@ -176,7 +176,7 @@ describe Spree::OrdersController, type: :controller do
     end
 
     it "filters line items that are missing from params" do
-      order = subject.current_order(create_order_if_necessary: true)
+      order = subject.current_order( create_order_if_necessary: true )
       li = order.add_variant(create(:simple_product).master)
 
       attrs = {
