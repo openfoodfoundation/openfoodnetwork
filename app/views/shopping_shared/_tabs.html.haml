@@ -4,6 +4,6 @@
 .tabset-ctrl#shop-tabs{ navigate: 'true', prefix: 'shop', ng: { cloak: true } }
   .row
     - shop_tabs.each do |tab|
-      .small-12.medium-6.columns.tab{ id: "tab_#{tab[:name]}", name: tab[:name] }
+      .small-12.columns.tab{ id: "tab_#{tab[:name]}", name: tab[:name], class: "medium-#{tab[:cols]}" }
         %a{ href: 'javascript:void(0)' }=tab[:title]
     .small-12.columns.tab-view
