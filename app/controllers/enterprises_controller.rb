@@ -49,14 +49,14 @@ class EnterprisesController < BaseController
   end
 
   def check_stock_levels
-    if current_order(create_order_if_necessary: true).insufficient_stock_lines.present?
+    if current_order({ create_order_if_necessary: true }).insufficient_stock_lines.present?
       redirect_to spree.cart_path
     end
   end
 
   def reset_order
     distributor = Enterprise.is_distributor.find_by_permalink(params[:id]) || Enterprise.is_distributor.find(params[:id])
-    order = current_order(create_order_if_necessary: true)
+    order = current_order({ create_order_if_necessary: true })
 
     reset_distributor(order, distributor)
 

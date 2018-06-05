@@ -23,7 +23,7 @@ class ResetOrderService
 
   # Builds an order setting the token and distributor of the one specified
   def build_new_order
-    new_order = controller.current_order( create_order_if_necessary: true )
+    new_order = controller.current_order({ create_order_if_necessary: true })
     new_order.set_distributor!(distributor)
     new_order.tokenized_permission.token = token
     new_order.tokenized_permission.save!
