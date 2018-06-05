@@ -1,7 +1,7 @@
 module Spree
   module OrdersHelper
     def cart_is_empty
-      order = current_order({ create_order_if_necessary: false })
+      order = current_order(false)
       order.nil? || order.line_items.empty?
     end
 

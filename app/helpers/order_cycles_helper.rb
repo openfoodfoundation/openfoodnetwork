@@ -1,6 +1,6 @@
 module OrderCyclesHelper
   def current_order_cycle
-    @current_order_cycle ||= current_order({ create_order_if_necessary: false }).andand.order_cycle
+    @current_order_cycle ||= current_order(false).andand.order_cycle
   end
 
   def permitted_enterprises_for(order_cycle)
