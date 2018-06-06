@@ -68,7 +68,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def order_cycle_management
-    prepare_date_params params
+    params[:q] ||= {}
 
     # -- Prepare form options
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
@@ -91,8 +91,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def packing
-    # -- Prepare date parameters
-    prepare_date_params params
+    params[:q] ||= {}
 
     # -- Prepare form options
     my_distributors = Enterprise.is_distributor.managed_by(spree_current_user)
@@ -115,7 +114,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_distributors
-    prepare_date_params params
     @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user, params, render_content?
     @search = @report.search
     csv_file_name = "orders_and_distributors_#{timestamp}.csv"
@@ -123,7 +121,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def sales_tax
-    prepare_date_params params
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @report_type = params[:report_type]
     @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, params, render_content?
@@ -131,8 +128,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def bulk_coop
-    prepare_date_params params
-
     # -- Prepare form options
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @report_type = params[:report_type]
@@ -147,9 +142,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def payments
-    # -- Prepare Date Params
-    prepare_date_params params
-
     # -- Prepare Form Options
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @report_type = params[:report_type]
@@ -164,8 +156,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def orders_and_fulfillment
-    # -- Prepare Date Params
-    prepare_date_params params
+    params[:q] ||= {}
 
     # -- Prepare Form Options
     permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
@@ -206,12 +197,8 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def xero_invoices
-    if request.get?
-      params[:q] ||= {}
-      params[:q][:completed_at_gt] = Time.zone.today.beginning_of_month
-      params[:invoice_date] = Time.zone.today
-      params[:due_date] = Time.zone.today + 1.month
-    end
+    params[:q] ||= {}
+
     @distributors = Enterprise.is_distributor.managed_by(spree_current_user)
     @order_cycles = OrderCycle.active_or_complete.accessible_by(spree_current_user).order('orders_close_at DESC')
 
@@ -261,20 +248,6 @@ Spree::Admin::ReportsController.class_eval do
       csv << header
       table.each { |row| csv << row }
     end
-  end
-
-  def prepare_date_params(params)
-    # -- Prepare parameters
-    params[:q] ||= {}
-    if params[:q][:completed_at_gt].blank?
-      params[:q][:completed_at_gt] = Time.zone.now.beginning_of_month
-    else
-      params[:q][:completed_at_gt] = Time.zone.parse(params[:q][:completed_at_gt]) rescue Time.zone.now.beginning_of_month
-    end
-    if params[:q] && !params[:q][:completed_at_lt].blank?
-      params[:q][:completed_at_lt] = Time.zone.parse(params[:q][:completed_at_lt]) rescue ""
-    end
-    params[:q][:meta_sort] ||= "completed_at.desc"
   end
 
   def load_data
