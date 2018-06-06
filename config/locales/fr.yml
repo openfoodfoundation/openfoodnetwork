@@ -61,6 +61,10 @@ fr:
           Email / mot de passe incorrect.
           Créez votre compte ou réinitialisez votre mot de passe.
       unconfirmed: "Veuillez valider le lien envoyé par email pour pouvoir continuer."
+      already_registered: "Cet email est déjà associé à un utilisateur et a déjà été validé. Veuillez vous connecter pour continuer, ou utiliser un autre email."
+    user_passwords:
+      spree_user:
+        updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -234,7 +238,7 @@ fr:
     clear_filters: Annuler les filtres
     clear: Annuler
     show_more: Afficher plus
-    show_n_more: Montrer %{num} supplémentaires
+    show_n_more: Montrer + %{num}
     choose: "Choisir..."
     please_select: Veuillez choisir...
     columns: Colonnes
@@ -658,7 +662,7 @@ fr:
         welcome_title: Bienvenue sur Open Food France !
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
-        choose_starting_point: 'Choisissez par où commencer:'
+        choose_starting_point: 'Choisir votre type d''entreprise:'
       invite_manager:
         user_already_exists: "Le compte existe déjà"
         error: "Un problème est survenu"
@@ -921,9 +925,9 @@ fr:
       register: "Démarrez ici"
   shop:
     messages:
-      login: "se connecter"
+      login: "Se connecter"
       register: "s'inscrire"
-      contact: "contact"
+      contact: "contacter"
       require_customer_login: "La boutique est réservée aux membres."
       require_login_html: "Déjà inscrit? %{login}. Sinon, %{register} pour pouvoir faire vos achats."
       require_customer_html: "Veuillez %{contact} %{enterprise} pour devenir membre."
@@ -1458,6 +1462,7 @@ fr:
   november: "Novembre"
   december: "Décembre"
   email_not_found: "Adresse email non trouvée"
+  email_unconfirmed: "Vous devez confirmer votre adresse email avant de pouvoir réinitiatliser votre mot de passe."
   email_required: "Vous devez saisir une adresse email"
   logging_in: "Veuillez patienter, connexion en cours"
   signup_email: "Votre email"
@@ -1747,12 +1752,7 @@ fr:
   spree_admin_enterprises_fees: "Marges et commissions"
   spree_admin_enterprises_none_create_a_new_enterprise: "CRÉER UNE NOUVELLE ENTREPRISE"
   spree_admin_enterprises_none_text: "Vous n'avez pas encore d'entreprise"
-  spree_admin_enterprises_producers_name: "Nom"
-  spree_admin_enterprises_producers_total_products: "Total produits "
-  spree_admin_enterprises_producers_active_products: "Produits actifs"
-  spree_admin_enterprises_producers_order_cycles: "Produits dans le cycle de vente"
   spree_admin_enterprises_tabs_hubs: "HUBS"
-  spree_admin_enterprises_tabs_producers: "PRODUCTEURS"
   spree_admin_enterprises_producers_manage_products: "GÉRER LES PRODUITS"
   spree_admin_enterprises_any_active_products_text: "Vous n'avez aucun produit actif."
   spree_admin_enterprises_create_new_product: "CRÉER UN NOUVEAU PRODUIT"
