@@ -1,8 +1,6 @@
 - column_partials ||= {}
 - if render_content?
-  %br
-  %br
-  %table{id: id}
+  %table.report__table{id: id}
     %thead
       %tr
         - @header.each do |heading|
