@@ -1,0 +1,15 @@
+%br
+%br
+%table{id: id}
+  %thead
+    %tr
+      - @header.each do |heading|
+        %th=heading
+  %tbody
+    - @table.each do |row|
+      %tr
+        - row.each do |column|
+          %td= column
+    - if @table.empty?
+      %tr
+        %td{:colspan => "2"}= t(:none)

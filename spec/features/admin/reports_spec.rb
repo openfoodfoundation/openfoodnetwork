@@ -119,7 +119,7 @@ feature %q{
       #select 'Pack By Customer', from: 'report_type'
       click_button 'Search'
 
-      rows = find("table#listing_orders.index").all("thead tr")
+      rows = find("table#listing_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["Hub", "Code", "First Name", "Last Name", "Supplier", "Product", "Variant", "Quantity", "TempControlled?"]

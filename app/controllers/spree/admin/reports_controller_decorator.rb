@@ -240,6 +240,8 @@ Spree::Admin::ReportsController.class_eval do
 
   def render_report(header, table, create_csv, csv_file_name)
     send_data csv_report(header, table), filename: csv_file_name if create_csv
+    @header = header
+    @table = table
     # Rendering HTML is the default.
   end
 
