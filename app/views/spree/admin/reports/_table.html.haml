@@ -1,15 +1,21 @@
+- column_partials ||= {}
 %br
 %br
 %table{id: id}
   %thead
     %tr
       - @header.each do |heading|
-        %th=heading
+        %th= heading
   %tbody
     - @table.each do |row|
       %tr
-        - row.each do |column|
-          %td= column
+        - row.each_with_index do |cell_value, column_index|
+          %td
+            - partial = column_partials[column_index]
+            - if partial
+              = render partial, value: cell_value
+            - else
+              = cell_value
     - if @table.empty?
       %tr
-        %td{:colspan => "2"}= t(:none)
+        %td{colspan: @header.count}= t(:none)
