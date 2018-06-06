@@ -17,6 +17,8 @@ require 'open_food_network/orders_and_fulfillments_report'
 Spree::Admin::ReportsController.class_eval do
   include Spree::ReportsHelper
 
+  helper_method :render_content?
+
   before_filter :cache_search_state
   # Fetches user's distributors, suppliers and order_cycles
   before_filter :load_data, only: [:customers, :products_and_inventory, :order_cycle_management, :packing]

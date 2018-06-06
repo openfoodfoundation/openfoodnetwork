@@ -39,6 +39,8 @@ feature %q{
     scenario "customers report" do
       click_link "Mailing List"
       expect(page).to have_select('report_type', selected: 'Mailing List')
+      expect(page).to have_content "click on SEARCH"
+      click_button "Search"
 
       rows = find("table#listing_customers").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -51,6 +53,7 @@ feature %q{
       click_link "Addresses"
       expect(page).to have_select('report_type', selected: 'Addresses')
 
+      click_button "Search"
       rows = find("table#listing_customers").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
@@ -67,6 +70,7 @@ feature %q{
 
     scenario "payment method report" do
       click_link "Payment Methods Report"
+      click_button "Search"
       rows = find("table#listing_ocm_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
@@ -76,6 +80,7 @@ feature %q{
 
     scenario "delivery report" do
       click_link "Delivery Report"
+      click_button "Search"
       rows = find("table#listing_ocm_orders").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
@@ -148,6 +153,7 @@ feature %q{
     login_to_admin_section
     click_link 'Reports'
     click_link 'Orders And Distributors'
+    click_button 'Search'
 
     expect(page).to have_content 'Order date'
   end
@@ -156,6 +162,7 @@ feature %q{
     login_to_admin_section
     click_link 'Reports'
     click_link 'Bulk Co-Op'
+    click_button 'Search'
 
     expect(page).to have_content 'Supplier'
   end
@@ -164,6 +171,7 @@ feature %q{
     login_to_admin_section
     click_link 'Reports'
     click_link 'Payment Reports'
+    click_button 'Search'
 
     expect(page).to have_content 'Payment State'
   end
