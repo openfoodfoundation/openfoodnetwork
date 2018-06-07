@@ -1,6 +1,6 @@
 module SharedHelper
   def distributor_link_class(distributor)
-    cart = current_order(create_order_if_necessary: true)
+    cart = current_order(true)
     @active_distributors ||= Enterprise.distributors_with_active_order_cycles
 
     klass = "shop-distributor"

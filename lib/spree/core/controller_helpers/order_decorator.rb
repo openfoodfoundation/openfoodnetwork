@@ -1,6 +1,6 @@
 Spree::Core::ControllerHelpers::Order.class_eval do
-  def current_order_with_scoped_variants(options = {})
-    order = current_order_without_scoped_variants(options)
+  def current_order_with_scoped_variants(create_order_if_necessary = false)
+    order = current_order_without_scoped_variants(create_order_if_necessary)
 
     if order
       scoper = OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)

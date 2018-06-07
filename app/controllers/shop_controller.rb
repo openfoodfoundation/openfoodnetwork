@@ -26,7 +26,7 @@ class ShopController < BaseController
   def order_cycle
     if request.post?
       if oc = OrderCycle.with_distributor(@distributor).active.find_by_id(params[:order_cycle_id])
-        current_order(create_order_if_necessary: true).set_order_cycle! oc
+        current_order(true).set_order_cycle! oc
         render partial: "json/order_cycle"
       else
         render status: 404, json: ""

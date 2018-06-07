@@ -37,7 +37,7 @@ class BaseController < ApplicationController
 
     # And default to the only order cycle if there's only the one
     if @order_cycles.count == 1
-      current_order(create_order_if_necessary: true).set_order_cycle! @order_cycles.first
+      current_order(true).set_order_cycle! @order_cycles.first
     end
   end
 end

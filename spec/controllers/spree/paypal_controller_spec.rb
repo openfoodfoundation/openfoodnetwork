@@ -9,7 +9,7 @@ module Spree
     end
 
     context 'when confirming' do
-      let(:previous_order) { controller.current_order(create_order_if_necessary: true) }
+      let(:previous_order) { controller.current_order(true) }
       let(:payment_method) { create(:payment_method) }
 
       before do
