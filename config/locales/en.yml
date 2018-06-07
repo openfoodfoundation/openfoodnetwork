@@ -2585,6 +2585,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       shared:
         configuration_menu:
           stripe_connect: Stripe Connect
+      users:
+        email_confirmation:
+          confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
         autocomplete:
           producer_name: Producer
