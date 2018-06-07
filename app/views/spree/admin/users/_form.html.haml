@@ -1,10 +1,10 @@
-.row{"data-hook" => "admin_user_form_fields"}
+.row
   .alpha.five.columns
     = f.field_container :email do
       = f.label :email, Spree.t(:email)
       = f.email_field :email, class: "fullwidth"
       = error_message_on :user, :email
-    .field{"data-hook" => "admin_user_form_roles"}
+    .field
       = label_tag nil, Spree.t(:roles)
       %ul
         - @roles.each do |role|
