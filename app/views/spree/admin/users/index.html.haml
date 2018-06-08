@@ -25,7 +25,6 @@
         %td.user_email= link_to user.email, edit_object_url(user)
         %td.user_enterprise_limit= user.enterprise_limit
         %td.actions{"data-hook" => "admin_users_index_row_actions"}
-          = link_to_edit user, no_text: true
           = link_to_delete user, no_text: true
 = paginate @users
 - content_for :sidebar_title do
