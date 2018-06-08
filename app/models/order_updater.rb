@@ -31,11 +31,22 @@ class OrderUpdater < SimpleDelegator
     order.payment_state
   end
 
+  def before_save_hook
+    shipping_address_from_distributor
+  end
+
   private
 
   # Taken from order.outstanding_balance in Spree 2.4
   # See: https://github.com/spree/spree/commit/7b264acff7824f5b3dc6651c106631d8f30b147a
   def canceled_and_paid_for?
     order.canceled? && order.payments.present? && !order.payments.completed.empty?
+  end
+
+  def shipping_address_from_distributor
+    shipping_method = order.shipments.first.shipping_methods.first
+    return if shipping_method.require_ship_address
+
+    order.ship_address = order.distributor.address
   end
 end

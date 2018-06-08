@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe OrderUpdater do
-  context "#updating_payment_state" do
-    let(:order) { build(:order) }
-    let(:order_updater) { described_class.new(Spree::OrderUpdater.new(order)) }
+  let(:order) { build(:order) }
+  let(:order_updater) { described_class.new(Spree::OrderUpdater.new(order)) }
 
+  context "#updating_payment_state" do
     it "is failed if no valid payments" do
       allow(order).to receive_message_chain(:payments, :valid, :empty?) { true }
 
@@ -95,6 +95,38 @@ describe OrderUpdater do
             order_updater.update_payment_state
           }.to change { order.payment_state }.to 'void'
         end
+      end
+    end
+  end
+
+  context '#before_save_hook' do
+    let(:distributor) { build(:distributor_enterprise) }
+    let(:shipment) { build(:shipment) }
+    let(:order) { build(:order, distributor: distributor) }
+
+    before do
+      shipment.shipping_methods << shipping_method
+      order.shipments << shipment
+    end
+
+    context 'when the shipping method doesn\'t require a delivery address' do
+      let(:shipping_method) { build(:base_shipping_method, require_ship_address: false) }
+
+      it "populates the shipping address" do
+        order_updater.before_save_hook
+        expect(order.ship_address.firstname).to eq(distributor.address.firstname)
+      end
+    end
+
+    context 'when the shipping method requires a delivery address' do
+      let(:shipping_method) { build(:base_shipping_method, require_ship_address: true) }
+      let(:address) { build(:address, firstname: 'will') }
+
+      before { order.ship_address = address }
+
+      it "does not populate the shipping address" do
+        order_updater.before_save_hook
+        expect(order.ship_address.firstname).to eq("will")
       end
     end
   end
