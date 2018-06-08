@@ -56,9 +56,10 @@ module OpenFoodNetwork
     end
 
     def orphaned_proxy_orders
-      order_cycle_ids = active_or_complete_or_in_range_order_cycle_ids
-      return proxy_orders unless order_cycle_ids.any?
-      proxy_orders.where('order_cycle_id NOT IN (?)', order_cycle_ids)
+      orphaned = proxy_orders.where(placed_at: nil)
+      order_cycle_ids = in_range_order_cycles.pluck(:id)
+      return orphaned unless order_cycle_ids.any?
+      orphaned.where('order_cycle_id NOT IN (?)', order_cycle_ids)
     end
 
     def insert_values
@@ -70,10 +71,6 @@ module OpenFoodNetwork
 
     def not_closed_in_range_order_cycles
       in_range_order_cycles.merge(OrderCycle.not_closed)
-    end
-
-    def active_or_complete_or_in_range_order_cycle_ids
-      in_range_order_cycles.pluck(:id) | order_cycles.active_or_complete.pluck(:id)
     end
 
     def in_range_order_cycles
