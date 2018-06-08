@@ -44,9 +44,11 @@ class OrderUpdater < SimpleDelegator
   end
 
   def shipping_address_from_distributor
-    shipping_method = order.shipments.first.shipping_methods.first
-    return if shipping_method.require_ship_address
+    shipments.each do |shipment|
+      shipping_method = shipment.shipping_method
+      next if shipping_method.require_ship_address
 
-    order.ship_address = order.distributor.address
+      order.ship_address = order.distributor.address
+    end
   end
 end

@@ -101,16 +101,35 @@ describe OrderUpdater do
 
   context '#before_save_hook' do
     let(:distributor) { build(:distributor_enterprise) }
-    let(:shipment) { build(:shipment) }
     let(:order) { build(:order, distributor: distributor) }
+    let(:shipment) { build(:shipment) }
+    let(:shipping_rate) do
+      Spree::ShippingRate.new(
+        shipping_method: shipping_method,
+        selected: true
+      )
+    end
 
     before do
-      shipment.shipping_methods << shipping_method
+      shipment.shipping_rates << shipping_rate
       order.shipments << shipment
     end
 
-    context 'when the shipping method doesn\'t require a delivery address' do
+    context 'when any of the shipping methods doesn\'t require a delivery address' do
       let(:shipping_method) { build(:base_shipping_method, require_ship_address: false) }
+
+      let(:delivery_shipment) { build(:shipment) }
+      let(:delivery_shipping_rate) do
+        Spree::ShippingRate.new(
+          shipping_method: build(:base_shipping_method, require_ship_address: true),
+          selected: true
+        )
+      end
+
+      before do
+        delivery_shipment.shipping_rates << delivery_shipping_rate
+        order.shipments << delivery_shipment
+      end
 
       it "populates the shipping address" do
         order_updater.before_save_hook
@@ -118,7 +137,7 @@ describe OrderUpdater do
       end
     end
 
-    context 'when the shipping method requires a delivery address' do
+    context 'when any of the shipping methods requires a delivery address' do
       let(:shipping_method) { build(:base_shipping_method, require_ship_address: true) }
       let(:address) { build(:address, firstname: 'will') }
 
