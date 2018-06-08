@@ -1232,7 +1232,6 @@ en:
   saving_credit_card: Saving credit card...
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
-  default?: Default?
 
   ie_warning_headline: "Your browser is out of date :-("
   ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
@@ -2732,5 +2731,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         total: Total
         paid?: Paid?
         view: View
+      saved_cards:
+        default?: Default?
+        delete?: Delete?
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
