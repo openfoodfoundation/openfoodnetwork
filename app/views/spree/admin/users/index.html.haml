@@ -1,0 +1,35 @@
+- content_for :page_title do
+  = Spree.t(:listing_users)
+- content_for :page_actions do
+  %li
+    = button_link_to Spree.t(:new_user), new_object_url, icon: "icon-plus", id: "admin_new_user_link"
+%table#listing_users.index{"data-hook" => ""}
+  %colgroup
+    %col{style: "width: 85%"}
+    %col{style: "width: 15%"}
+  %thead
+    %tr{"data-hook" => "admin_users_index_headers"}
+      %th= sort_link @search,:email, Spree.t(:user), {}, {title: "users_email_title"}
+      %th.actions{"data-hook" => "admin_users_index_header_actions"}
+  %tbody
+    - @users.each do |user|
+      - # HAML seems to have a bug that it can't parse `class cycle('odd', 'even')` on the element.
+      - # So we assign it first:
+      - row_class = cycle("odd", "even")
+      %tr{id: spree_dom_id(user), "data-hook" => "admin_users_index_rows", class: row_class}
+        %td.user_email= link_to user.email, object_url(user)
+        %td.actions{"data-hook" => "admin_users_index_row_actions"}
+          = link_to_edit user, no_text: true
+          = link_to_delete user, no_text: true
+= paginate @users
+- content_for :sidebar_title do
+  = Spree.t(:search)
+- content_for :sidebar do
+  .box.align-center{"data-hook" => "admin_users_index_search"}
+    = search_form_for [:admin, @search] do |f|
+      .field
+        = f.label Spree.t(:email)
+        %br
+        = f.text_field :email_cont, class: "fullwidth"
+      %div{"data-hook" => "admin_users_index_search_buttons"}
+        = button Spree.t(:search), "icon-search"
