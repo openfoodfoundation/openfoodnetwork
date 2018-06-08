@@ -371,7 +371,7 @@ pt:
         manages: gere
     products:
       unit_name_placeholder: 'ex: molho, ramo, etc.'
-      bulk_edit:
+      index:
         unit: Unidade
         display_as: Mostrar como
         category: Categoria
@@ -2378,7 +2378,7 @@ pt:
         new:
           title: 'Novo Produto'
         unit_name_placeholder: 'ex: ramos'
-        bulk_edit:
+        index:
           header:
             title: Editar Produtos por Atacado
           indicators:

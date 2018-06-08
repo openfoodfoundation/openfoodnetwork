@@ -141,7 +141,7 @@ pt-BR:
         update_address: 'Atualizar Endereço'
         confirm_delete: 'Certeza que quer excluir?'
     products:
-      bulk_edit:
+      index:
         unit: Unidade
         display_as: Mostrar Como
         category: Categoria

@@ -58,6 +58,6 @@
     - if @import_into == 'inventories'
       %a.button{href: main_app.admin_inventory_path}= t('admin.product_import.save.view_inventory')
     - else
-      %a.button{href: bulk_edit_admin_products_path + '?latest_import=true'}= t('admin.product_import.save.view_products')
+      %a.button{href: admin_products_path + '?latest_import=true'}= t('admin.product_import.save.view_products')
 
   %a.button{href: main_app.admin_product_import_path}= t('admin.back')

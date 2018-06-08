@@ -16,14 +16,14 @@ feature %q{
       p1 = FactoryBot.create(:product)
       p2 = FactoryBot.create(:product)
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       expect(page).to have_field "product_name", with: p1.name, :visible => true
       expect(page).to have_field "product_name", with: p2.name, :visible => true
     end
 
     it "displays a message when number of products is zero" do
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       expect(page).to have_text "No products yet. Why don't you add some?"
     end
@@ -35,7 +35,7 @@ feature %q{
       p1 = FactoryBot.create(:product, supplier: s2)
       p2 = FactoryBot.create(:product, supplier: s3)
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       expect(page).to have_select "producer_id", with_options: [s1.name,s2.name,s3.name], selected: s2.name
       expect(page).to have_select "producer_id", with_options: [s1.name,s2.name,s3.name], selected: s3.name
@@ -45,7 +45,7 @@ feature %q{
       p1 = FactoryBot.create(:product, available_on: Date.current)
       p2 = FactoryBot.create(:product, available_on: Date.current-1)
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
       find("div#columns-dropdown", :text => "COLUMNS").click
       find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
       find("div#columns-dropdown", :text => "COLUMNS").click
@@ -60,7 +60,7 @@ feature %q{
       v1.on_hand = 4
       v1.save!
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       within "#p_#{p1.id}" do
         expect(page).to have_no_field "on_hand", with: "15"
@@ -73,7 +73,7 @@ feature %q{
       v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 4)
       v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 0, on_demand: true)
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
       find("a.view-variants").trigger('click')
 
@@ -86,7 +86,7 @@ feature %q{
     it "displays a select box for the unit of measure for the product's variants" do
       p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1, variant_unit_name: '')
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       expect(page).to have_select "variant_unit_with_scale", selected: "Weight (g)"
     end
@@ -94,7 +94,7 @@ feature %q{
     it "displays a text field for the item name when unit is set to 'Items'" do
       p = FactoryBot.create(:product, variant_unit: 'items', variant_unit_scale: nil, variant_unit_name: 'packet')
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       expect(page).to have_select "variant_unit_with_scale", selected: "Items"
       expect(page).to have_field "variant_unit_name", with: "packet"
@@ -110,7 +110,7 @@ feature %q{
       v1 = FactoryBot.create(:variant, display_name: "something1" )
       v2 = FactoryBot.create(:variant, display_name: "something2" )
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 2
       all("a.view-variants").each { |e| e.trigger('click') }
 
@@ -125,7 +125,7 @@ feature %q{
       v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 15)
       v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 6)
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
       all("a.view-variants").each { |e| e.trigger('click') }
 
@@ -140,7 +140,7 @@ feature %q{
       v1 = FactoryBot.create(:variant, product: p1, is_master: false, price: 12.75)
       v2 = FactoryBot.create(:variant, product: p1, is_master: false, price: 2.50)
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
       all("a.view-variants").each { |e| e.trigger('click') }
 
@@ -154,7 +154,7 @@ feature %q{
       v1 = FactoryBot.create(:variant, product: p1, is_master: false, price: 12.75, unit_value: 1200, unit_description: "(small bag)", display_as: "bag")
       v2 = FactoryBot.create(:variant, product: p1, is_master: false, price: 2.50, unit_value: 4800, unit_description: "(large bag)", display_as: "bin")
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
       all("a.view-variants").each { |e| e.trigger('click') }
 
@@ -173,7 +173,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
 
     find("a", text: "NEW PRODUCT").click
     expect(page).to have_content 'NEW PRODUCT'
@@ -186,7 +186,7 @@ feature %q{
     select taxon.name, from: 'product_primary_taxon_id'
     click_button 'Create'
 
-    expect(URI.parse(current_url).path).to eq '/admin/products/bulk_edit'
+    expect(URI.parse(current_url).path).to eq spree.admin_products_path
     expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
     expect(page).to have_field "product_name", with: 'Big Bag Of Apples'
   end
@@ -196,7 +196,7 @@ feature %q{
     # Given a product without variants or a unit
     p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
     login_to_admin_section
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
 
     # I should see an add variant button
     page.find('a.view-variants').trigger('click')
@@ -246,7 +246,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
 
     find("div#columns-dropdown", :text => "COLUMNS").click
     find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
@@ -292,7 +292,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
 
     expect(page).to have_select "variant_unit_with_scale", selected: "Weight (kg)"
 
@@ -318,7 +318,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
     expect(page).to have_selector "a.view-variants", count: 1
     find("a.view-variants").trigger('click')
 
@@ -357,7 +357,7 @@ feature %q{
 
     login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
     expect(page).to have_selector "a.view-variants", count: 1
     find("a.view-variants").trigger('click')
 
@@ -381,7 +381,7 @@ feature %q{
     p = FactoryBot.create(:product, name: 'original name')
     login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
 
     expect(page).to have_field "product_name", with: "original name"
 
@@ -414,7 +414,7 @@ feature %q{
     p = FactoryBot.create(:product, :name => "product 1")
     login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
 
     expect(page).to have_selector "a.clone-product", count: 1
     find("a.clone-product").click
@@ -437,7 +437,7 @@ feature %q{
     p2 = FactoryBot.create(:simple_product, :name => "product2", supplier: s2)
     login_to_admin_section
 
-    visit '/admin/products/bulk_edit'
+    visit spree.admin_products_path
 
     select2_select s1.name, from: "producer_filter"
 
@@ -464,7 +464,7 @@ feature %q{
 
       before do
         quick_login_as_admin
-        visit '/admin/products/bulk_edit'
+        visit spree.admin_products_path
       end
 
       it "shows a delete button for products, which deletes the appropriate product when clicked" do
@@ -476,7 +476,7 @@ feature %q{
 
         expect(page).to have_selector "a.delete-product", :count => 1
 
-        visit '/admin/products/bulk_edit'
+        visit spree.admin_products_path
 
         expect(page).to have_selector "a.delete-product", :count => 1
       end
@@ -493,7 +493,7 @@ feature %q{
 
         expect(page).to have_selector "a.delete-variant", :count => 2
 
-        visit '/admin/products/bulk_edit'
+        visit spree.admin_products_path
         expect(page).to have_selector "a.view-variants"
         all("a.view-variants").select { |e| e.visible? }.each { |e| e.trigger('click') }
 
@@ -509,7 +509,7 @@ feature %q{
 
       before do
         quick_login_as_admin
-        visit '/admin/products/bulk_edit'
+        visit spree.admin_products_path
       end
 
       it "shows an edit button for products, which takes the user to the standard edit page for that product" do
@@ -543,7 +543,7 @@ feature %q{
         p3 = FactoryBot.create(:product, :name => "P3")
         login_to_admin_section
 
-        visit '/admin/products/bulk_edit'
+        visit spree.admin_products_path
 
         expect(page).to have_selector "a.clone-product", :count => 3
 
@@ -554,7 +554,7 @@ feature %q{
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
         expect(page).to have_select "producer_id", selected: "#{p1.supplier.name}"
 
-        visit '/admin/products/bulk_edit'
+        visit spree.admin_products_path
 
         expect(page).to have_selector "a.clone-product", :count => 4
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
@@ -569,7 +569,7 @@ feature %q{
         FactoryBot.create(:simple_product)
         login_to_admin_section
 
-        visit '/admin/products/bulk_edit'
+        visit spree.admin_products_path
 
         find("div#columns-dropdown", :text => "COLUMNS").click
         find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
@@ -601,7 +601,7 @@ feature %q{
         p2 = FactoryBot.create(:simple_product, :name => "product2", supplier: s2)
         login_to_admin_section
 
-        visit '/admin/products/bulk_edit'
+        visit spree.admin_products_path
 
         # Page shows the filter controls
         expect(page).to have_select "producer_filter", visible: false
@@ -655,7 +655,7 @@ feature %q{
     end
 
     it "shows only products that I supply" do
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       expect(page).to have_field 'product_name', with: product_supplied.name
       expect(page).to have_field 'product_name', with: product_supplied_permitted.name
@@ -663,7 +663,7 @@ feature %q{
     end
 
     it "shows only suppliers that I manage or have permission to" do
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       expect(page).to have_select 'producer_id', with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name], selected: supplier_managed1.name
       expect(page).to have_no_select 'producer_id', with_options: [supplier_unmanaged.name]
@@ -672,7 +672,7 @@ feature %q{
     it "shows inactive products that I supply" do
       product_supplied_inactive
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       expect(page).to have_field 'product_name', with: product_supplied_inactive.name
     end
@@ -680,7 +680,7 @@ feature %q{
     it "allows me to create a product" do
       taxon = create(:taxon, name: 'Fruit')
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       find("a", text: "NEW PRODUCT").click
       expect(page).to have_content 'NEW PRODUCT'
@@ -696,7 +696,7 @@ feature %q{
       end
       click_button 'Create'
 
-      expect(URI.parse(current_url).path).to eq '/admin/products/bulk_edit'
+      expect(URI.parse(current_url).path).to eq spree.admin_products_path
       expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
       expect(page).to have_field "product_name", with: 'Big Bag Of Apples'
     end
@@ -705,7 +705,7 @@ feature %q{
       p = product_supplied_permitted
       v = p.variants.first
 
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
       find("div#columns-dropdown", :text => "COLUMNS").click
       find("div#columns-dropdown div.menu div.menu_item", text: "Available On").click
       find("div#columns-dropdown", :text => "COLUMNS").click
@@ -750,7 +750,7 @@ feature %q{
 
     it "displays product images and image upload modal" do
       quick_login_as_admin
-      visit '/admin/products/bulk_edit'
+      visit spree.admin_products_path
 
       within "table#listing_products tr#p_#{product.id}" do
         # Displays product images

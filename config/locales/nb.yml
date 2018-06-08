@@ -371,7 +371,7 @@ nb:
         manages: administrerer
     products:
       unit_name_placeholder: 'f.eks. bunter'
-      bulk_edit:
+      index:
         unit: Enhet
         display_as: Vis som
         category: Kategori
@@ -2376,7 +2376,7 @@ nb:
         new:
           title: 'Nytt produkt'
         unit_name_placeholder: 'f.eks. bunter'
-        bulk_edit:
+        index:
           header:
             title: Endre produkter i bulk
           indicators:
