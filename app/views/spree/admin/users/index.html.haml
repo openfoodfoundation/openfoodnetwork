@@ -3,6 +3,9 @@
 - content_for :page_actions do
   %li
     = button_link_to Spree.t(:new_user), new_object_url, icon: "icon-plus", id: "admin_new_user_link"
+
+= render "admin/shared/users_sub_menu"
+
 %table#listing_users.index{"data-hook" => ""}
   %colgroup
     %col{ style: "width: 65%" }
