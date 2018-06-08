@@ -22,7 +22,7 @@
       - # So we assign it first:
       - row_class = cycle("odd", "even")
       %tr{id: spree_dom_id(user), "data-hook" => "admin_users_index_rows", class: row_class}
-        %td.user_email= link_to user.email, object_url(user)
+        %td.user_email= link_to user.email, edit_object_url(user)
         %td.user_enterprise_limit= user.enterprise_limit
         %td.actions{"data-hook" => "admin_users_index_row_actions"}
           = link_to_edit user, no_text: true
