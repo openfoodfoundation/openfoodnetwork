@@ -62,7 +62,7 @@ module Api
       end
 
       def subscriptions_count
-        ProxyOrder.not_canceled.where(order_cycle_id: object.id).count
+        options[:subscriptions_counts][object.id]
       end
 
       private

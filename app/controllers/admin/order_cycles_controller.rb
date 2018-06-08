@@ -19,7 +19,7 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          render_as_json @collection, ams_prefix: params[:ams_prefix], current_user: spree_current_user
+          render_as_json @collection, ams_prefix: params[:ams_prefix], current_user: spree_current_user, subscriptions_counts: subscriptions_counts
         end
       end
     end
@@ -81,7 +81,7 @@ module Admin
     def bulk_update
       if order_cycle_set.andand.save
         respond_to do |format|
-          format.json { render_as_json @order_cycles, ams_prefix: 'index', current_user: spree_current_user }
+          format.json { render_as_json @order_cycles, ams_prefix: 'index', current_user: spree_current_user, subscriptions_counts: subscriptions_counts }
         end
       else
         respond_to do |format|
@@ -228,6 +228,11 @@ module Admin
     def require_order_cycle_set_params
       return if params[:order_cycle_set]
       render json: { errors: t('admin.order_cycles.bulk_update.no_data') }, status: :unprocessable_entity
+    end
+
+    def subscriptions_counts
+      return [] if @collection.blank?
+      ProxyOrder.not_canceled.group(:order_cycle_id).where(order_cycle_id: @collection).count
     end
 
     def ams_prefix_whitelist
