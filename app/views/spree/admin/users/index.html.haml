@@ -5,11 +5,13 @@
     = button_link_to Spree.t(:new_user), new_object_url, icon: "icon-plus", id: "admin_new_user_link"
 %table#listing_users.index{"data-hook" => ""}
   %colgroup
-    %col{style: "width: 85%"}
-    %col{style: "width: 15%"}
+    %col{ style: "width: 65%" }
+    %col{ style: "width: 20%" }
+    %col{ style: "width: 15%" }
   %thead
     %tr{"data-hook" => "admin_users_index_headers"}
       %th= sort_link @search,:email, Spree.t(:user), {}, {title: "users_email_title"}
+      %th= sort_link @search,:enterprise_limit, t(:enterprise_limit)
       %th.actions{"data-hook" => "admin_users_index_header_actions"}
   %tbody
     - @users.each do |user|
@@ -18,6 +20,7 @@
       - row_class = cycle("odd", "even")
       %tr{id: spree_dom_id(user), "data-hook" => "admin_users_index_rows", class: row_class}
         %td.user_email= link_to user.email, object_url(user)
+        %td.user_enterprise_limit= user.enterprise_limit
         %td.actions{"data-hook" => "admin_users_index_row_actions"}
           = link_to_edit user, no_text: true
           = link_to_delete user, no_text: true

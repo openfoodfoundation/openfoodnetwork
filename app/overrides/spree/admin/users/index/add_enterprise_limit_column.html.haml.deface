@@ -1,3 +1,0 @@
-/ insert_before "td[data-hook='admin_users_index_row_actions']"
-
-%td.user_enterprise_limit= user.enterprise_limit
