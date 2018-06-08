@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Spree::OrderUpdater do
+describe OrderUpdater do
   context "#updating_payment_state" do
     let(:order) { build(:order) }
-    let(:order_updater) { described_class.new(order) }
+    let(:order_updater) { described_class.new(Spree::OrderUpdater.new(order)) }
 
     it "is failed if no valid payments" do
       allow(order).to receive_message_chain(:payments, :valid, :empty?) { true }
