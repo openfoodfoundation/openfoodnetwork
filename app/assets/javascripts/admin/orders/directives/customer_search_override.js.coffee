@@ -56,7 +56,4 @@ angular.module("admin.orders").directive 'customerSearchOverride', ->
           return
         $('#order_email').val customer.email
         $('#user_id').val customer.user_id  # modified
-        $('#guest_checkout_true').prop 'checked', false
-        $('#guest_checkout_false').prop 'checked', true
-        $('#guest_checkout_false').prop 'disabled', false
         customer.email
