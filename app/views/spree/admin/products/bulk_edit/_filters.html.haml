@@ -12,12 +12,13 @@
     %label{ for: 'category_filter' }= t 'category'
     %br
     %select.fullwidth{ id: 'category_filter', 'ofn-select2-min-search' => 5, ng: {model: 'categoryFilter', options: 'taxon.id as taxon.name for taxon in filterTaxons'} }
-  .filter_select.three.columns
-    %label{ for: 'import_filter' } Import Date
-    %br
-    %select.fullwidth{ id: 'import_date_filter', 'ofn-select2-min-search' => 5, ng: {model: 'importDateFilter', init: "importDates = #{@import_dates}; showLatestImport = #{@show_latest_import}"}}
-      %option{value: "{{date.id}}", ng: {repeat: "date in importDates track by date.id" }}
-        {{date.name}}
+  - if FeatureFlags.new(@current_user).product_import_enabled?
+    .filter_select.three.columns
+      %label{ for: 'import_filter' } Import Date
+      %br
+      %select.fullwidth{ id: 'import_date_filter', 'ofn-select2-min-search' => 5, ng: {model: 'importDateFilter', init: "importDates = #{@import_dates}; showLatestImport = #{@show_latest_import}"}}
+        %option{value: "{{date.id}}", ng: {repeat: "date in importDates track by date.id" }}
+          {{date.name}}
 
   .filter_clear.three.columns.omega
     %label{ for: 'clear_all_filters' }
