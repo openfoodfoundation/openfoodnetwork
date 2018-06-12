@@ -237,6 +237,9 @@ fr:
     form_invalid: "Le formulaire contient des champs manquants ou invalides"
     clear_filters: Annuler les filtres
     clear: Annuler
+    save: Sauvergarder
+    cancel: Annuler
+    back: Retour
     show_more: Afficher plus
     show_n_more: Montrer + %{num}
     choose: "Choisir..."
@@ -376,6 +379,7 @@ fr:
         inherits_properties?: Hériter des propriétés?
         available_on: Disponible via
         av_on: "Disp. via"
+        import_date: Importé
         upload_an_image: Importer une image
       product_search_keywords: Mots-clés de recherche produits
       product_search_tip: Saisissez des mots qui peuvent simplifier la recherche de vo produits dans les boutiques. Laissez un espace entre chaque mot-clé.
@@ -390,6 +394,76 @@ fr:
       product_distributions: "Lieux de distribution"
       group_buy_options: "Options d'achat par lot"
       back_to_products_list: "Retour à la liste produits"
+    product_import:
+      title: Import liste produits
+      file_not_found: Fichier non trouvé ou impossible à ouvrir
+      no_data: Aucune donnée trouvée dans le tableau
+      confirm_reset: "Cette action remettra tous les niveaux de stock à zero pour cette\nentreprise pour les produits non présents dans ce fichier."
+      model:
+        no_file: "erreur : aucun document importé"
+        could_not_process: "impossible de traiter le fichier : type de fichier invalide"
+        incorrect_value: Valeur non conforme
+        conditional_blank: ne peut pas être vide si unit_type est vide
+        no_product: n'a pu être associé à aucun produit existant dans la base de données
+        not_found: non trouvé dans le base de données
+        blank: Champ obligatoire
+        products_no_permission: vous n'avez pas l'autorisation de gérer les produits de cette entreprise
+        inventory_no_permission: vous n'avez pas l'autorisation d'ajouter les produits de ce producteur à votre catalogue boutique
+        none_saved: n'a pu sauvegarder aucun produit :-(
+        line: Ligne
+      index:
+        select_file: Sélectionner le fichier (tableur sous format csv) à importer
+        spreadsheet: Tableur csv
+        import_into: "Importer dans:"
+        product_list: Catalogues produits des producteurs
+        inventories: Catalogues boutiques des hubs distributeurs
+        import: Importer
+        upload: Télécharger
+      import:
+        review: Vérifier
+        proceed: Continuer
+        save: Sauvergarder
+        results: Résultats
+        save_imported: Sauvegarder les produits importés
+        no_valid_entries: Aucune entrée valide trouvée
+        none_to_save: Il n'y a pas aucune information pouvant être sauvegardée
+        some_invalid_entries: 'Le fichier importé contient des données non-conformes '
+        save_valid?: Sauvegarder les informations valides et détruire les autres?
+        no_errors: Aucune erreur détectée!
+        save_all_imported?: Sauvegarder tous les produits importés?
+        options_and_defaults: Options d'import
+        no_permission: vous n'avez pas l'autorisation de gérer cette entreprise
+        not_found: l'entreprise n'a pas été trouvée dans la base de données
+        no_name: Pas de nom
+        blank_supplier: certains produits ne sont associés à aucun fournisseur
+        reset_absent?: Mettre à zéro le produits absents du fichier?
+        overwrite_all: Modifier pour tous
+        overwrite_empty: Modifier si vide
+        default_stock: Indiquer niveau de stock
+        default_tax_cat: Indiquer taux de taxe
+        default_shipping_cat: Indiquer condition de transport
+        default_available_date: Indiquer date de disponibilité
+        validation_overview: Aperçu des entrées produits créées/modifiées
+        entries_found: Informations trouvées dans le fichier importé
+        entries_with_errors: Certaines lignes contiennent des erreurs et les produits correspondant ne seront pas importés
+        products_to_create: Ces produits vont être crées
+        products_to_update: Ces produits vont être mis à jour
+        inventory_to_create: Ces produits vont être ajoutés au catalogue boutique
+        inventory_to_update: Les informations de ces produits dans le catalogue boutique vont être mises à jour
+        products_to_reset: Le stock des produits existants va être remis à zero
+        inventory_to_reset: Dans le catalogue boutique, le stock des produits existants va être remis à zéro
+        line: Ligne
+        item_line: Ligne produit concernée
+      save:
+        final_results: Importer les informations produits confirmées
+        products_created: produits crées
+        products_updated: produits mis à jour
+        inventory_created: produits ajoutés dans le catalogue boutique
+        inventory_updated: produits mis à jour dans le catalogue boutique
+        products_reset: produits ont vu leur niveau de stock remis à zéro
+        inventory_reset: produits ont vu leur niveau de stock remis à zéro dans le catalogue boutique
+        all_saved: "Tous les produits ont été sauvegardés avec succès"
+        some_saved: "produits sauvegardés avec succès"
     variant_overrides:
       loading_flash:
         loading_inventory: Catalogue boutique en cours de chargement...
@@ -400,6 +474,7 @@ fr:
         inherit?: Hériter?
         add: Ajouter
         hide: Masquer
+        import_date: Importé
         select_a_shop: Choisir une boutique
         review_now: Vérifier maintenant
         new_products_alert_message: Il y a %{new_product_count} nouveaux produits disponibles pouvant être ajoutés à votre catalogue.
@@ -722,7 +797,7 @@ fr:
         name: Nom
         orders_open: Commandes à partir de
         coordinator: Coordinateur
-        order_closes: Commandes jusqu'au
+        orders_close: Commandes jusqu'au
       row:
         suppliers: fournisseurs
         distributors: hubs-distributeurs
@@ -2247,7 +2322,7 @@ fr:
     product_import:
       confirmation: |
           Cette action remettra tous les niveaux de stock à zero pour cette
-          entreprises pour les produits non présents dans ce fichier.
+          entreprise pour les produits non présents dans ce fichier.
     order_cycles:
       update_success: 'Votre cycle de vente a été mis à jour.'
       no_distributors: Il n'y a pas de distributeur pour ce cycle de vente. Il ne sera pas visible aux acheteurs tant qu'il n'y aura pas de distributeur. Voulez-vous tout de même sauvegarder ce cycle de vente ?
