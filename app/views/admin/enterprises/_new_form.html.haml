@@ -87,15 +87,17 @@
       = af.text_field :city, { placeholder: t(:city_placeholder)}
     .five.columns.omega
       = af.text_field :zipcode, { placeholder: t(:postcode_placeholder)}
-  .row
-    .three.columns.alpha
-      = af.label :state_id, t(:state)
-      \/
-      = af.label :country_id, t(:country)
-    .four.columns
-      = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
-    .five.columns.omega
-      = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
+  %div{ "ng-controller" => "countryCtrl" }
+    .row
+      .three.columns.alpha
+        = af.label :state_id, t(:state)
+        \/
+        = af.label :country_id, t(:country)
+      .four.columns
+        = af.collection_select :state_id, {}, :id, :name, {}, :class => "select2 fullwidth", "ng-options" => "s as s.name for s in countriesById[enterprise_address_attributes_country.id].states track by s.id", "ng-model" => "enterprise_address_attributes_state"
+      .five.columns.omega
+        = af.collection_select :country_id, {}, :id, :name, {}, :class => "select2 fullwidth", "ng-options" => "c as c.name for c in countries track by c.id", "ng-model" => "enterprise_address_attributes_country", "ng-init" => "enterprise_address_attributes_country = { id: \"#{Spree::Config[:default_country_id]}\" }", "ng-change" => "countryOnChange('s2id_enterprise_address_attributes_state_id')"
+
 .row
   .twelve.columns.alpha
     &nbsp;

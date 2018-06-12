@@ -31,7 +31,8 @@
     \/
     = af.label :country_id, t(:country)
     %span.required *
-  .four.columns
-    = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
-  .four.columns.omega
-    = af.collection_select :country_id, available_countries, :id, :name, {}, :class => "select2 fullwidth"
+  %div{ "ng-controller" => "countryCtrl" }
+    .four.columns
+      = af.collection_select :state_id, {}, :id, :name, {}, :class => "select2 fullwidth", "ng-init" => "enterprise_address_attributes_state.id = Enterprise.address.address.state_id", "ng-options" => "s as s.name for s in countriesById[enterprise_address_attributes_country.id || Enterprise.address.address.country_id].states track by s.id", "ng-model" => "enterprise_address_attributes_state"
+    .four.columns.omega
+      = af.collection_select :country_id, {}, :id, :name, {}, :class => "select2 fullwidth", "ng-init" => "enterprise_address_attributes_country.id = Enterprise.address.address.country_id", "ng-options" => "c as c.name for c in countries track by c.id", "ng-model" => "enterprise_address_attributes_country", "ng-change" => "countryOnChange('s2id_enterprise_address_attributes_state_id')"

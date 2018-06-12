@@ -53,7 +53,7 @@ feature %q{
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select2_search 'Australia', :from => 'Country'
+    # default country (Australia in this test) should be selected by default
     select2_search 'Victoria', :from => 'State'
 
     click_button 'Create'
@@ -342,6 +342,8 @@ feature %q{
         fill_in 'enterprise_address_attributes_address1', with: 'z'
         fill_in 'enterprise_address_attributes_city', with: 'z'
         fill_in 'enterprise_address_attributes_zipcode', with: 'z'
+        select2_select 'Australia', from: 'enterprise_address_attributes_country_id'
+        select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
       end
 
       scenario "without violating rules" do

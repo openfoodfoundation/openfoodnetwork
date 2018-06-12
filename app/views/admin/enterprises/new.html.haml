@@ -6,6 +6,10 @@
 - content_for :page_actions do
   %li= button_link_to t('.back_link'), main_app.admin_enterprises_path, icon: 'icon-arrow-left'
 
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.enterprises'"
+
+= admin_inject_available_countries(module: 'admin.enterprises')
 
 -# Form
 
