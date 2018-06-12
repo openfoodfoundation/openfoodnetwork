@@ -39,26 +39,24 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
         login_as_enterprise_user [order.distributor]
       end
 
-      it "accepts registered users" do
-        spree_post :update, order: { email: user.email, bill_address_attributes: address_params, ship_address_attributes: address_params }, order_id: order.number
+      context "when adding details of a registered user" do
+        it "redirects to shipments on success" do
+          spree_post :update, order: { email: user.email, bill_address_attributes: address_params, ship_address_attributes: address_params }, order_id: order.number
 
-        order.reload
+          order.reload
 
-        expect(response).to redirect_to spree.edit_admin_order_shipment_path(order, order.shipment)
-        expect(order.email).to eq user.email
-        expect(order.user_id).to eq user.id
-        expect(order.ship_address).to_not be_nil
+          expect(response).to redirect_to spree.edit_admin_order_shipment_path(order, order.shipment)
+        end
       end
 
-      it "accepts unregistered users" do
-        spree_post :update, order: { email: 'unregistered@email.com', bill_address_attributes: address_params, ship_address_attributes: address_params }, order_id: order.number
+      context "when adding details of an unregistered user" do
+        it "redirects to shipments on success" do
+          spree_post :update, order: { email: 'unregistered@email.com', bill_address_attributes: address_params, ship_address_attributes: address_params }, order_id: order.number
 
-        order.reload
+          order.reload
 
-        expect(response).to redirect_to spree.edit_admin_order_shipment_path(order, order.shipment)
-        expect(order.email).to eq 'unregistered@email.com'
-        expect(order.user_id).to be_nil
-        expect(order.ship_address).to_not be_nil
+          expect(response).to redirect_to spree.edit_admin_order_shipment_path(order, order.shipment)
+        end
       end
     end
   end
