@@ -50,8 +50,11 @@ module Admin
       @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
 
       if @order_cycle_form.save
-        flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
-        render json: { :success => true }
+        respond_to do |format|
+          flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
+          format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
+          format.json { render json: { :success => true } }
+        end
       else
         render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
