@@ -103,6 +103,9 @@ Do not forget to run `rake tmp:cache:clear` after locales are updated to reload 
 * Lynne Davis (https://github.com/lin-d-hop)
 * Paul Mackay (https://github.com/pmackay)
 * Steve Pettitt (https://github.com/stveep)
+* Matt Yorkley (https://github.com/Matt-Yorkley)
+* Pau Pérez (https://github.com/sauloperez)
+* Enrico Stano (https://github.com/enricostano)
 
 
 ## Licence
