@@ -338,30 +338,5 @@ module Admin
       end
     end
 
-    describe "#subscriptions_counts" do
-      let(:oc1) { create(:simple_order_cycle) }
-      let(:oc2) { create(:simple_order_cycle) }
-      let(:collection) { OrderCycle.where(id: [oc1, oc2]) }
-
-      context "when the collection has not been set" do
-        it "returns and empty array" do
-          expect(controller.send(:subscriptions_counts)).to eq []
-        end
-      end
-
-      context "when the collection has been set" do
-        let!(:po1) { create(:proxy_order, order_cycle: oc1) }
-        let!(:po2) { create(:proxy_order, order_cycle: oc1) }
-        let!(:po3) { create(:proxy_order, order_cycle: oc2) }
-
-        before { controller.instance_variable_set(:@collection, collection) }
-
-        it "returns grouped count of all active proxy orders associated each order cycle in the collection" do
-          result = controller.send(:subscriptions_counts)
-          expect(result[oc1.id]).to eq 2
-          expect(result[oc2.id]).to eq 1
-        end
-      end
-    end
   end
 end

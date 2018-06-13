@@ -62,7 +62,7 @@ module Api
       end
 
       def subscriptions_count
-        options[:subscriptions_counts][object.id]
+        options[:subscriptions_count].for(object.id)
       end
 
       private
