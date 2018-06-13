@@ -237,6 +237,9 @@ pt:
     form_invalid: "O formulário contém campos incompletos ou inválidos"
     clear_filters: Limpar filtros
     clear: Limpar
+    save: Guardar
+    cancel: Cancelar
+    back: Voltar
     show_more: Mostrar mais
     show_n_more: Mostrar mais %{num}
     choose: "Escolher..."
@@ -283,7 +286,7 @@ pt:
       edit:
         business_model_configuration: "Modelo de Negócio"
         business_model_configuration_tip: "Configure a taxa a que as lojas serão cobradas mensalmente por usar o Open Food Network"
-        bill_calculation_settings: "Configurações de cálculo de conta"
+        bill_calculation_settings: "Configurações de Cálculo de Conta"
         bill_calculation_settings_tip: "Configure a quantia que será cobrada mensalmente às organizações pela utilização da OFN"
         shop_trial_length: "Duração da Loja Experimental (Dias)"
         shop_trial_length_tip: "Duração (em número de dias) do período experimental para as organizações definidas como lojas."
@@ -376,6 +379,7 @@ pt:
         inherits_properties?: Herda Propriedades?
         available_on: Disponível em
         av_on: "Disp. em"
+        import_date: Importado
         upload_an_image: Carregar uma imagem
       product_search_keywords: Palavras-chave para Pesquisa de Produto
       product_search_tip: Insira palavras que ajudem a encontrar os seus produtos nas lojas. Use um espaço para separar cada palavra-chave
@@ -390,6 +394,75 @@ pt:
       product_distributions: "Distribuições de Produto"
       group_buy_options: "Opções de Compra Colectiva"
       back_to_products_list: "Voltar à lista de produtos"
+    product_import:
+      title: Importação de Produtos
+      file_not_found: O ficheiro não foi encontrado ou não pôde ser aberto
+      no_data: Não foram encontrados dados na tabela
+      confirm_reset: "Isto colocará o nível de stock a zero em todos os produtos desta \n organização que não estão presentes no ficheiro carregado"
+      model:
+        no_file: "erro: nenhum ficheiro foi carregado"
+        could_not_process: "não foi possível processar o ficheiro: tipo de ficheiro inválido"
+        incorrect_value: valor incorrecto
+        conditional_blank: não pode ser vazio se tipo de unidade é vazio
+        no_product: não foram encontrados produtos
+        not_found: não encontrado
+        blank: não pode ser vazio
+        products_no_permission: não tem permissões para gerir produtos desta organização
+        inventory_no_permission: não tem permissões para criar inventário para este produtor
+        none_saved: não gravou nenhum produto com sucesso
+        line: Linha
+      index:
+        select_file: Selecione uma folha de cálculo para carregar
+        spreadsheet: Folha de cálculo
+        import_into: "Importar para:"
+        product_list: Lista de produtos
+        inventories: Inventários
+        import: Importar
+        upload: Carregar
+      import:
+        review: Rever
+        proceed: Continuar
+        save: Guardar
+        results: Resultados
+        save_imported: Guardar produtos importados
+        no_valid_entries: Não foram encontradas entradas válidas
+        none_to_save: Não foram encontradas entradas que possam ser guardadas
+        some_invalid_entries: Ficheiro importado contém algumas entradas inválidas
+        save_valid?: Guardar entradas válidas e descartar as outras?
+        no_errors: Nenhum erro detectado.
+        save_all_imported?: Guardar todos os produtos importados?
+        options_and_defaults: Importar opções e valores por defeito
+        no_permission: não tem permissões para gerir esta organização
+        not_found: organização não encontrada
+        no_name: Sem nome
+        blank_supplier: alguns produtos têm o nome do fornecedor vazio
+        reset_absent?: Restabelecer produtos ausentes?
+        overwrite_all: Substituir todos
+        overwrite_empty: Substituir se vazio
+        default_stock: Definir nível de stock
+        default_tax_cat: Definir categoria de imposto
+        default_shipping_cat: Definir categoria de envio
+        default_available_date: Definir data de disponibilidade
+        validation_overview: Visão geral da validação da importação
+        entries_found: Entradas encontradas no ficheiro importado
+        entries_with_errors: Entradas contêm erros e não serão importados
+        products_to_create: Produtos serão criados
+        products_to_update: Produtos serão actualizados
+        inventory_to_create: Itens de inventário serão criados
+        inventory_to_update: Itens de inventário serão actualizados
+        products_to_reset: Produtos existentes terão o nível de stock restabelecido a zero
+        inventory_to_reset: Itens de inventário existentes terão o nível de stock restabelecido a zero
+        line: Linha
+        item_line: Linha de item
+      save:
+        final_results: Importar resultados finais
+        products_created: Produtos criados
+        products_updated: Produtos actualizados
+        inventory_created: Itens de inventário criados
+        inventory_updated: Itens de inventário actualizados
+        products_reset: Os produtos tiveram o nível de stock restabelecido a zero
+        inventory_reset: Itens de inventário tiveram o nível de stock restabelecido a zero
+        all_saved: "Todos os itens guardados com sucesso"
     variant_overrides:
       loading_flash:
         loading_inventory: A CARREGAR INVENTÁRIO...
@@ -400,6 +473,7 @@ pt:
         inherit?: Herdar?
         add: Adicionar
         hide: Ocultar
+        import_date: Importado
         select_a_shop: Seleccionar Uma Loja
         review_now: Rever Agora
         new_products_alert_message: Há %{new_product_count} novos produtos disponíveis para adicionar ao seu inventário.
@@ -439,7 +513,7 @@ pt:
         current_fulfilled_units: "Unidades Completas no Momento"
         max_fulfilled_units: "Máximo de Unidades Completas "
         order_error: "Alguns erros devem ser corrigidos antes de actualizar encomendas.\nOs campos com bordas vermelhas contêm erros."
-        variants_without_unit_value: "AVISO: Algumas variantes não possuem unidade de valor"
+        variants_without_unit_value: "AVISO: Algumas variantes não possuem valor unitário"
       select_variant: "Selecionar uma variante"
     enterprise:
       select_outgoing_oc_products_from: Selecione produtos de saída do ciclo de encomendas
@@ -722,7 +796,7 @@ pt:
         name: Nome
         orders_open: Encomendas abrem às
         coordinator: Coordenador
-        order_closes: Encomendas fecham
+        orders_close: Encomendas fecham
       row:
         suppliers: fornecedores
         distributors: distribuidores
@@ -1760,7 +1834,7 @@ pt:
   spree_admin_single_enterprise_alert_mail_sent: "Enviamos um email para"
   spree_admin_overview_action_required: "Ação Requerida"
   spree_admin_overview_check_your_inbox: "Por favor, verifique a sua caixa de correio para mais instruções. Obrigada!"
-  spree_admin_unit_value: Valor unitário
+  spree_admin_unit_value: Valor Unitário
   spree_admin_unit_description: Descrição Unitária
   spree_admin_variant_unit: Unidade variante
   spree_admin_variant_unit_scale: Escala de unidade variante
@@ -2446,5 +2520,7 @@ pt:
         total: Total
         paid?: Pago?
         view: Ver
+      saved_cards:
+        delete?: Apagar?
     localized_number:
       invalid_format: tem um formato inválido. Por favor introduza um número.
