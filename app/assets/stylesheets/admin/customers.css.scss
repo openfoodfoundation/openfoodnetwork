@@ -1,3 +1,14 @@
 .tag-with-rules {
   color: black;
 }
+
+table#customers.index {
+
+  tr.customer {
+
+    .guest-label {
+      color: #999;
+      display: block;
+    }
+  }
+}
