@@ -374,7 +374,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def ensure_owner_is_manager
-    users << owner unless users.include?(owner) || owner.admin?
+    users << owner unless users.include?(owner)
   end
 
   def enforce_ownership_limit
