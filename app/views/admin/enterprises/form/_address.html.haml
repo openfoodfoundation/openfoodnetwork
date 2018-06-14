@@ -33,6 +33,6 @@
     %span.required *
   %div{ "ng-controller" => "countryCtrl" }
     .four.columns
-      = af.collection_select :state_id, {}, :id, :name, {}, :class => "select2 fullwidth", "ng-init" => "enterprise_address_attributes_state.id = Enterprise.address.address.state_id", "ng-options" => "s as s.name for s in countriesById[enterprise_address_attributes_country.id || Enterprise.address.address.country_id].states track by s.id", "ng-model" => "enterprise_address_attributes_state"
+      %input.ofn-select2.fullwidth#enterprise_address_attributes_state_id{ name: 'enterprise[address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.state_id' } }
     .four.columns.omega
-      = af.collection_select :country_id, {}, :id, :name, {}, :class => "select2 fullwidth", "ng-init" => "enterprise_address_attributes_country.id = Enterprise.address.address.country_id", "ng-options" => "c as c.name for c in countries track by c.id", "ng-model" => "enterprise_address_attributes_country", "ng-change" => "countryOnChange('s2id_enterprise_address_attributes_state_id')"
+      %input.ofn-select2.fullwidth#enterprise_address_attributes_country_id{ name: 'enterprise[address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.country_id' } }

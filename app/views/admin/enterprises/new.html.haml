@@ -10,10 +10,11 @@
   = "ng-app='admin.enterprises'"
 
 = admin_inject_available_countries(module: 'admin.enterprises')
+= admin_inject_json "admin.enterprises", "defaultCountryID", Spree::Config[:default_country_id]
 
 -# Form
 
 = form_for [main_app, :admin, @enterprise], html: { "nav-check" => '', "nav-callback" => '' } do |f|
   .row
-    .twelve.columns.fullwidth_inputs{ ng: { app: "admin.users" } }
+    .twelve.columns.fullwidth_inputs{ ng: { controller: "NewEnterpriseController" } }
       = render 'new_form', f: f

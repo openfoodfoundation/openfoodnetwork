@@ -1,5 +1,5 @@
+# Used in enterprise new and edit forms to reset the state when the country is changed
 angular.module("admin.enterprises").controller 'countryCtrl', ($scope, availableCountries) ->
-
   $scope.countries = availableCountries
 
   $scope.countriesById = $scope.countries.reduce (obj, country) ->
@@ -7,19 +7,12 @@ angular.module("admin.enterprises").controller 'countryCtrl', ($scope, available
     obj
   , {}
 
-  $scope.countryOnChange = (stateSelectElemId) ->
+  $scope.$watch 'Enterprise.address.country_id', (newID, oldID) ->
     $scope.clearState() unless $scope.addressStateMatchesCountry()
-    $scope.refreshStateSelector(stateSelectElemId)
 
   $scope.clearState = ->
-    $scope.enterprise_address_attributes_state = {}
+    $scope.Enterprise.address.state_id = null
 
   $scope.addressStateMatchesCountry = ->
-    $scope.countriesById[$scope.enterprise_address_attributes_country.id].states.some (state) -> state.id == $scope.enterprise_address_attributes_state?.id
-
-  $scope.refreshStateSelector = (stateSelectElemId) ->
-  	# workaround select2 (using jQuery and setTimeout) to force a refresh of the selected value
-    setTimeout ->
-      selectedState = jQuery('#' + stateSelectElemId)
-      jQuery('#' + stateSelectElemId).select2("val", selectedState)
-    , 500
+    $scope.countriesById[$scope.Enterprise.address.country_id].states.some (state) ->
+      state.id == $scope.Enterprise.address.state_id
