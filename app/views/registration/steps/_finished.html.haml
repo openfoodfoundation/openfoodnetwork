@@ -3,10 +3,10 @@
     .row
       .small-12.columns.pad-top
         %header
-          %h2 {{'registration_finished_headline' | t}}
+          %h2= t(".headline")
           .panel.callout
-            %p{ "ng-bind" => "'registration_finished_thanks' | t:{enterprise: enterprise.name}" }
-            %p {{'registration_finished_login' | t}}
+            %p{ "ng-bind" => "'registration.steps.finished.thanks' | t:{enterprise: enterprise.name}" }
+            %p= t(".login")
     .row
       .small-12.columns.text-center
-        %a.button.primary{ type: "button", href: "/" } {{'registration_finished_action' | t}} &gt;
+        %a.button.primary{ type: "button", href: "/" }= "#{t(".action")} >"

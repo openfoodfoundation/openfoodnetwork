@@ -1,7 +1,7 @@
 .container
   .row.modal-centered
-    %h2 {{'welcome_to_ofn' | t}}
-    %h5 {{'signup_or_login' | t}}:
+    %h2 {{'js.registration.welcome_to_ofn' | t}}
+    %h5 {{'js.registration.signup_or_login' | t}}:
   %div{"ng-controller" => "AuthenticationCtrl"}
     %tabset
       %ng-include{src: "'signup.html'"}
@@ -9,9 +9,9 @@
       %ng-include{src: "'forgot.html'"}
     %div{ ng: { show: "active('/signup')"} }
       %hr
-      {{'have_an_account' | t}}
+      {{'js.registration.have_an_account' | t}}
       %a{ href: "", ng: { click: "select('/login')"}}
-        {{'action_login' | t}}
+        {{'js.registration.action_login' | t}}
 
 %a.close-reveal-modal{"ng-click" => "$close()"}
   %i.ofn-i_009-close
