@@ -1,29 +1,49 @@
 Darkswarm.directive "stripeElements", ($injector, StripeElements) ->
   restrict: 'E'
-  template: "<label for='card-element'>\
-             <div id='card-element'></div>\
-             <div id='card-errors' class='error'></div>\
+  template: "<div class='card-element'>\
+             <label for='card-number-element'>\
+             <span>Card number</span>\
+             <div id='card-number-element' class='field'></div>\
+             </label>\
+             <label for='card-expiry-element'>\
+             <span>Expiry date</span>\
+             <div id='card-expiry-element' class='field'></div>\
+             </label>\
+             <label for='card-cvc-element'>\
+             <span>CVC</span>\
+             <div id='card-cvc-element' class='field'></div>\
+             <div id='card-errors' class='error'></div>\              
              </label>"
 
   link: (scope, elem, attr)->
     if $injector.has('stripeObject')
       stripe = $injector.get('stripeObject')
 
-      card = stripe.elements().create 'card',
-        hidePostalCode: false
-        style:
-          base:
+      #hidePostalCode: false
+      style = {
+        base:
             fontFamily: "Roboto, Arial, sans-serif"
             fontSize: '16px'
             color: '#5c5c5c'
             '::placeholder':
               color: '#6c6c6c'
-      card.mount('#card-element')
+      }
+      cardNumberElement = stripe.elements().create('cardNumber', { style: style })
+      cardNumberElement.mount('#card-number-element')
+      cardNumberElement.addEventListener 'change', (event) ->
+        changeEventHandler(event)
 
-      # Elements validates user input as it is typed. To help your customers
-      # catch mistakes, you should listen to change events on the card Element
-      # and display any errors:
-      card.addEventListener 'change', (event) ->
+      cardExpiryElement = stripe.elements().create('cardExpiry', { style: style })
+      cardExpiryElement.mount('#card-expiry-element')
+      cardExpiryElement.addEventListener 'change', (event) ->
+        changeEventHandler(event)        
+
+      cardCvcElement = stripe.elements().create('cardCvc', { style: style })
+      cardCvcElement.mount('#card-cvc-element')
+      cardCvcElement.addEventListener 'change', (event) ->
+        changeEventHandler(event)
+
+      changeEventHandler = (event) ->
         displayError = document.getElementById('card-errors')
         if event.error
           displayError.textContent = event.error.message
@@ -32,4 +52,4 @@ Darkswarm.directive "stripeElements", ($injector, StripeElements) ->
         return
 
       StripeElements.stripe = stripe
-      StripeElements.card = card
+      #StripeElements.card = card
