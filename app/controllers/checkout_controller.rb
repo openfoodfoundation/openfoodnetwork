@@ -208,7 +208,7 @@ class CheckoutController < Spree::CheckoutController
     payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
     return unless payment_method.kind_of?(Spree::Gateway::PayPalExpress)
 
-    render json: {path: spree.paypal_express_url(payment_method_id: payment_method.id)}, status: 200
+    render json: {path: spree.paypal_express_path(payment_method_id: payment_method.id)}, status: 200
     true
   end
 
