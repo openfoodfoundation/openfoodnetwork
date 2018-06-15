@@ -95,6 +95,12 @@ describe 'Checkout service', ->
       Checkout.submit()
       $httpBackend.flush()
 
+    it "Redirects to the returned path", ->
+      $httpBackend.expectPUT("/checkout.json", {order: Checkout.preprocess()}).respond 200, {path: "/test"}
+      Checkout.submit()
+      $httpBackend.flush()
+      expect(Navigation.go).toHaveBeenCalledWith '/test'
+
     describe "when there is an error", ->
       it "redirects when a redirect is given", ->
         $httpBackend.expectPUT("/checkout.json").respond 400, {path: 'path'}
