@@ -28,7 +28,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     $scope.filterTaxons = [{id: "0", name: ""}].concat $scope.taxons
     $scope.producerFilter = "0"
     $scope.categoryFilter = "0"
-    $scope.importDateFilter = ""
+    $scope.importDateFilter = "0"
     $scope.products = BulkProducts.products
     $scope.filteredProducts = []
     $scope.currentFilters = []
