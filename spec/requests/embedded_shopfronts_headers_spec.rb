@@ -52,7 +52,7 @@ describe "setting response headers for embedded shopfronts", type: :request do
 
         expect(response.status).to be 200
         expect(response.headers['X-Frame-Options']).to be_nil
-        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors external-site.com"
+        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'self' external-site.com"
 
         get spree.admin_path
 
@@ -73,7 +73,7 @@ describe "setting response headers for embedded shopfronts", type: :request do
 
         expect(response.status).to be 200
         expect(response.headers['X-Frame-Options']).to be_nil
-        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors www.external-site.com"
+        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'self' www.external-site.com"
       end
     end
   end
