@@ -1,4 +1,4 @@
-angular.module("admin.payments").directive "stripeElements", ($injector, StripeElements) ->
+angular.module('admin.payments').directive "stripeElements", ($injector, AdminStripeElements) ->
   restrict: 'E'
   template: "<label for='card-element'>\
              <div id='card-element'></div>\
@@ -31,5 +31,5 @@ angular.module("admin.payments").directive "stripeElements", ($injector, StripeE
           displayError.textContent = ''
         return
 
-      StripeElements.stripe = stripe
-      StripeElements.card = card
+      AdminStripeElements.stripe = stripe
+      AdminStripeElements.card = card

@@ -1,4 +1,4 @@
-angular.module('admin.payments').factory 'Payment', (StripeElements, currentOrderNumber, paymentMethods, PaymentMethods, PaymentResource, Navigation, RailsFlashLoader)->
+angular.module('admin.payments').factory 'Payment', (AdminStripeElements, currentOrderNumber, paymentMethods, PaymentMethods, PaymentResource, StatusMessage)->
   new class Payment
     order: currentOrderNumber
     form_data: {}
@@ -34,14 +34,14 @@ angular.module('admin.payments').factory 'Payment', (StripeElements, currentOrde
 
     purchase: ->
       if @paymentMethodType() == 'stripe'
-        StripeElements.requestToken(@form_data, @submit)
+        AdminStripeElements.requestToken(@form_data, @submit)
       else
         @submit()
 
     submit: =>
       munged = @preprocess()
       PaymentResource.create({order_id: munged.order_id}, munged, (response, headers, status)=>
-        Navigation.go "/admin/orders/" + munged.order_id + "/payments"
+        $window.location.pathname = "/admin/orders/" + munged.order_id + "/payments"
       , (response) ->
-        RailsFlashLoader.loadFlash({error: t("error saving payment")})
+        StatusMessage.display 'error', t("error saving payment")
       )

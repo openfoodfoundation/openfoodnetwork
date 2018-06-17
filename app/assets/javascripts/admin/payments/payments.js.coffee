@@ -1,1 +1,1 @@
-angular.module("admin.payments", ['OfnStripe','Loading','RailsFlashLoader','ngResource','admin.resources', 'ofn.admin','Navigation'])
+angular.module("admin.payments", ['ngResource','admin.resources', 'ofn.admin', "admin.utils"])
