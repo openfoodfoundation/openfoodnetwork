@@ -15,8 +15,9 @@ require 'open_food_network/payments_report'
 require 'open_food_network/orders_and_fulfillments_report'
 
 Spree::Admin::ReportsController.class_eval do
-
   include Spree::ReportsHelper
+
+  helper_method :render_content?
 
   before_filter :cache_search_state
   # Fetches user's distributors, suppliers and order_cycles
@@ -183,11 +184,11 @@ Spree::Admin::ReportsController.class_eval do
 
   def products_and_inventory
     @report_types = report_types[:products_and_inventory]
-    if params[:report_type] != 'lettuce_share'
-      @report = OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params, render_content?
-    else
-      @report = OpenFoodNetwork::LettuceShareReport.new spree_current_user, params, render_content?
-    end
+    @report = if params[:report_type] != 'lettuce_share'
+                OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user, params, render_content?
+              else
+                OpenFoodNetwork::LettuceShareReport.new spree_current_user, params, render_content?
+              end
     render_report(@report.header, @report.table, params[:csv], "products_and_inventory_#{timestamp}.csv")
   end
 
@@ -240,6 +241,8 @@ Spree::Admin::ReportsController.class_eval do
 
   def render_report(header, table, create_csv, csv_file_name)
     send_data csv_report(header, table), filename: csv_file_name if create_csv
+    @header = header
+    @table = table
     # Rendering HTML is the default.
   end
 

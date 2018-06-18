@@ -271,7 +271,6 @@ Layout/EmptyLinesAroundArguments:
 Layout/EmptyLinesAroundBlockBody:
   Exclude:
     - 'app/controllers/spree/admin/orders_controller_decorator.rb'
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'app/controllers/spree/api/orders_controller_decorator.rb'
     - 'app/controllers/spree/api/products_controller_decorator.rb'
     - 'app/controllers/spree/checkout_controller_decorator.rb'
@@ -442,7 +441,6 @@ Layout/IndentHash:
 # SupportedStyles: normal, rails
 Layout/IndentationConsistency:
   Exclude:
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'lib/open_food_network/permissions.rb'
     - 'spec/controllers/admin/tag_rules_controller_spec.rb'
     - 'spec/features/consumer/shopping/checkout_spec.rb'
@@ -824,7 +822,6 @@ Layout/SpaceInsideHashLiteralBraces:
     - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/spree/admin/line_items_controller_decorator.rb'
     - 'app/controllers/spree/admin/products_controller_decorator.rb'
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'app/controllers/spree/admin/search_controller_decorator.rb'
     - 'app/controllers/spree/orders_controller_decorator.rb'
     - 'app/helpers/admin/business_model_configuration_helper.rb'
@@ -1274,7 +1271,6 @@ Naming/UncommunicativeMethodParamName:
 # SupportedStyles: snake_case, camelCase
 Naming/VariableName:
   Exclude:
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'app/helpers/admin/injection_helper.rb'
 
 # Offense count: 16
@@ -1554,7 +1550,6 @@ Rails/Presence:
 Rails/Present:
   Exclude:
     - 'app/controllers/spree/admin/orders_controller_decorator.rb'
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'app/models/producer_property.rb'
     - 'lib/open_food_network/products_and_inventory_report.rb'
 
@@ -1856,7 +1851,6 @@ Style/ConditionalAssignment:
     - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/spree/admin/base_controller_decorator.rb'
     - 'app/controllers/spree/admin/payment_methods_controller_decorator.rb'
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'app/controllers/spree/admin/search_controller_decorator.rb'
     - 'app/helpers/spree/admin/orders_helper_decorator.rb'
     - 'app/models/spree/calculator/per_item_decorator.rb'
@@ -1992,7 +1986,6 @@ Style/HashSyntax:
     - 'app/controllers/spree/admin/line_items_controller_decorator.rb'
     - 'app/controllers/spree/admin/orders_controller_decorator.rb'
     - 'app/controllers/spree/admin/products_controller_decorator.rb'
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'app/controllers/spree/admin/search_controller_decorator.rb'
     - 'app/controllers/spree/admin/shipping_methods_controller_decorator.rb'
     - 'app/controllers/spree/api/products_controller_decorator.rb'
@@ -2437,7 +2430,6 @@ Style/RescueModifier:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/spree/admin/orders_controller_decorator.rb'
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'lib/tasks/data.rake'
 
 # Offense count: 5
@@ -2528,7 +2520,6 @@ Style/TrivialAccessors:
 # Cop supports --auto-correct.
 Style/UnlessElse:
   Exclude:
-    - 'app/controllers/spree/admin/reports_controller_decorator.rb'
     - 'app/models/enterprise.rb'
     - 'lib/open_food_network/order_grouper.rb'
 

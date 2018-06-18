@@ -6,18 +6,4 @@
   %br
   = button t(:search)
 
-%br
-%br
-%table#listing_orders.index
-  %thead
-    %tr{'data-hook' => 'orders_header'}
-      - @report.header.each do |heading|
-        %th=heading
-  %tbody
-    - @report.table.each do |row|
-      %tr
-        - row.each do |column|
-          %td= column
-    - if @report.table.empty?
-      %tr
-        %td{:colspan => "2"}= t(:none)
+= render "table", id: "listing_orders"

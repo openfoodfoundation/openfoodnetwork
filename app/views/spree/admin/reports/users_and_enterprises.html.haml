@@ -17,18 +17,5 @@
     = label_tag :csv, t(:report_customers_csv)
   .row
     = button t(:search)
-%br
-%br
-%table#users_and_enterprises
-  %thead
-    %tr
-      - @report.header.each do |heading|
-        %th=heading
-  %tbody
-    - @report.table.each do |row|
-      %tr
-        - row.each do |column|
-          %td= column
-    - if @report.table.empty?
-      %tr
-        %td{:colspan => "2"}= t(:none)
+
+= render "table", id: "users_and_enterprises"
