@@ -10,7 +10,7 @@ Darkswarm.directive "stripeElements", ($injector, StripeElements) ->
       stripe = $injector.get('stripeObject')
 
       card = stripe.elements().create 'card',
-        hidePostalCode: false
+        hidePostalCode: true
         style:
           base:
             fontFamily: "Roboto, Arial, sans-serif"
