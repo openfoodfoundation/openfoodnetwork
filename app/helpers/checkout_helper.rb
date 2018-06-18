@@ -66,20 +66,6 @@ module CheckoutHelper
     Spree::Money.new order.total - order.total_tax, currency: order.currency
   end
 
-  def checkout_state_options(source_address)
-    if source_address == :billing
-      address = @order.billing_address
-    elsif source_address == :shipping
-      address = @order.shipping_address
-    end
-
-    [[]] + address.country.states.map { |c| [c.name, c.id] }
-  end
-
-  def checkout_country_options
-    available_countries.map { |c| [c.name, c.id] }
-  end
-
   def validated_input(name, path, args = {})
     attributes = {
       required: true,
