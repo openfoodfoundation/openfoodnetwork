@@ -11,8 +11,10 @@ Darkswarm.directive "shippingTypeSelector", ->
     scope.selectors =
       delivery: scope.filterSelectors.new
         icon: "ofn-i_039-delivery"
+        translation_key: "hubs_delivery"
       pickup: scope.filterSelectors.new
         icon: "ofn-i_038-takeaway"
+        translation_key: "hubs_pickup"
       
     scope.emit = ->
       scope.shippingTypes =
