@@ -371,7 +371,7 @@ fr:
         manages: gère
     products:
       unit_name_placeholder: 'ex: botte'
-      bulk_edit:
+      index:
         unit: Unité
         display_as: Unité affichéé
         category: Catégorie
@@ -2389,7 +2389,7 @@ fr:
         new:
           title: 'Nouveau Produit'
         unit_name_placeholder: 'ex: botte'
-        bulk_edit:
+        index:
           header:
             title: Gestion du catalogue produits
           indicators:

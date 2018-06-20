@@ -23,7 +23,7 @@ describe Spree::Admin::ProductsController, type: :controller do
   context "creating a new product" do
     before { login_as_admin }
 
-    it "redirects to bulk_edit when the user hits 'create'" do
+    it "redirects to products when the user hits 'create'" do
       s = create(:supplier_enterprise)
       t = create(:taxon)
       spree_post :create, {
@@ -40,7 +40,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         },
         button: 'create'
       }
-      response.should redirect_to "/admin/products/bulk_edit"
+      response.should redirect_to spree.admin_products_path
     end
 
     it "redirects to new when the user hits 'add_another'" do

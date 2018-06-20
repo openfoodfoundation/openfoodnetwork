@@ -1855,7 +1855,7 @@ sv:
             other: "Du har %{count} aktiva beställningsomgångar."
           manage_order_cycles: "HANTERA BESTÄLLNINGSOMGÅNGAR"
       products:
-        bulk_edit:
+        index:
           header:
             title: 'Redigera Omfång av Produkter '
           indicators:

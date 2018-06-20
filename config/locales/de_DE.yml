@@ -371,7 +371,7 @@ de_DE:
         manages: verwaltet
     products:
       unit_name_placeholder: 'z.B. Bündel'
-      bulk_edit:
+      index:
         unit: Einheit
         display_as: Angezeigt als
         category: Kategorie
@@ -2387,7 +2387,7 @@ de_DE:
         new:
           title: 'Neues Produkt'
         unit_name_placeholder: 'z.B. Trauben'
-        bulk_edit:
+        index:
           header:
             title: Massenbearbeitung von Produkten
           indicators:

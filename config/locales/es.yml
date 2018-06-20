@@ -364,7 +364,7 @@ es:
         manages: Gestionan
     products:
       unit_name_placeholder: 'ej. manojos'
-      bulk_edit:
+      index:
         unit: Unidad
         display_as: Mostrar como
         category: Categoría
@@ -2309,7 +2309,7 @@ es:
         new:
           title: 'Nuevo producto'
         unit_name_placeholder: 'ej. manojos'
-        bulk_edit:
+        index:
           header:
             title: Editar varios Productos
           indicators:

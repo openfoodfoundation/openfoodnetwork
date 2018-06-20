@@ -55,8 +55,8 @@ module OpenFoodNetwork
       }
     end
 
-    def products_bulk_edit_columns
-      node = "spree.admin.products.bulk_edit.products_head"
+    def products_index_columns
+      node = "spree.admin.products.index.products_head"
       {
         image:                { name: I18n.t("admin.image"),                   visible: true },
         producer:             { name: I18n.t("admin.producer"),                visible: true },

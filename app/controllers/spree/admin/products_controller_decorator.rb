@@ -6,8 +6,9 @@ Spree::Admin::ProductsController.class_eval do
   include OrderCyclesHelper
   include EnterprisesHelper
 
-  before_filter :load_form_data, :only => [:bulk_edit, :new, :create, :edit, :update]
-  before_filter :load_spree_api_key, :only => [:bulk_edit, :variant_overrides]
+  before_filter :load_data
+  before_filter :load_form_data, :only => [:index, :new, :create, :edit, :update]
+  before_filter :load_spree_api_key, :only => [:index, :variant_overrides]
   before_filter :strip_new_properties, only: [:create, :update]
 
   respond_override create: { html: {
@@ -15,7 +16,7 @@ Spree::Admin::ProductsController.class_eval do
       if params[:button] == "add_another"
         redirect_to new_admin_product_path
       else
-        redirect_to '/admin/products/bulk_edit'
+        redirect_to admin_products_path
       end
     },
     failure: lambda {
@@ -25,7 +26,7 @@ Spree::Admin::ProductsController.class_eval do
   def product_distributions
   end
 
-  def bulk_edit
+  def index
     @current_user = spree_current_user
     @show_latest_import = params[:latest_import] || false
   end
@@ -56,17 +57,6 @@ Spree::Admin::ProductsController.class_eval do
 
   protected
 
-  def location_after_save_with_bulk_edit
-    referer_path = OpenFoodNetwork::RefererParser::path(request.referer)
-
-    if referer_path == '/admin/products/bulk_edit'
-      bulk_edit_admin_products_url
-    else
-      location_after_save_without_bulk_edit
-    end
-  end
-  alias_method_chain :location_after_save, :bulk_edit
-
   def collection
     # This method is copied directly from the spree product controller, except where we narrow the search below with the managed_by search to support
     # enterprise users.
@@ -93,7 +83,7 @@ Spree::Admin::ProductsController.class_eval do
   end
 
   def collection_actions
-    [:index, :bulk_edit, :bulk_update]
+    [:index, :bulk_update]
   end
 
 
