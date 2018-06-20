@@ -2436,9 +2436,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       new_tag_rule_dialog:
         select_rule_type: "Select a rule type:"
       resend_user_email_confirmation:
-        sending: "..."
-        done: "done ✓"
-        failed: "failed ✗"
+        resend: "Resend"
+        sending: "Resend..."
+        done: "Resend done ✓"
+        failed: "Resend failed ✗"
     out_of_stock:
       reduced_stock_available: Reduced stock available
       out_of_stock_text: >
@@ -2592,7 +2593,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       users:
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
-          resend: "Resend"
       variants:
         autocomplete:
           producer_name: Producer
