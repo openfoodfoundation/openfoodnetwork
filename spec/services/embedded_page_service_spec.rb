@@ -15,7 +15,7 @@ describe EmbeddedPageService do
     )
   end
 
-  describe "#embed!" do
+  describe "processing embedded page requests" do
     context "when the request's referer is in the whitelist" do
       before { service.embed! }
 
@@ -28,6 +28,10 @@ describe EmbeddedPageService do
         expect(session[:embedded_shopfront]).to eq true
         expect(session[:embedding_domain]).to eq 'embedding-enterprise.com'
         expect(session[:shopfront_redirect]).to eq '/' + enterprise_slug + '/shop?embedded_shopfront=true'
+      end
+
+      it "publicly reports that embedded layout should be used" do
+        expect(service.use_embedded_layout?).to be true
       end
     end
 
