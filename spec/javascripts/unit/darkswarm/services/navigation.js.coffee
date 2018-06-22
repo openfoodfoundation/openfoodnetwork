@@ -3,7 +3,6 @@ describe 'Navigation service', ->
   window =
     location:
       href: null
-      pathname: null
 
   beforeEach ->
     module 'Darkswarm', ($provide) ->
@@ -24,5 +23,4 @@ describe 'Navigation service', ->
 
     it "redirects to paths", ->
       Navigation.go "/woo/yeah"
-      expect(window.location.pathname).toEqual "/woo/yeah"
-    
+      expect(window.location.href).toEqual "/woo/yeah"
