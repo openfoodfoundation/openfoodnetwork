@@ -1,7 +1,7 @@
 module Api
   class CustomersController < BaseController
     def index
-      @customers = current_api_user.customers
+      @customers = current_api_user.customers.of_regular_shops
       render json: @customers, each_serializer: CustomerSerializer
     end
 
