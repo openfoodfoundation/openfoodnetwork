@@ -17,6 +17,6 @@
         .authorised_shops{ ng: { controller: 'AuthorisedShopsCtrl', hide: 'CreditCard.visible' } }
           %h3
             = t('.authorised_shops')
-            %button.button.secondary.tiny.help-btn.ng-scope{ :popover => t('.authorised_shops_popover'), "popover-placement" => 'right' }
+            %button.button.secondary.tiny.help-btn.ng-scope{ "help-modal" => t('.authorised_shops_popover') }
               %i.ofn-i_013-help
           = render 'authorised_shops'
