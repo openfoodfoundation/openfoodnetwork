@@ -9,6 +9,8 @@ context for others to understand it]
 
 [List which features should be tested and how]
 
+[Should we test on mobile?]
+
 #### Release notes
 
 [In case this should be present in the release notes, please write them or

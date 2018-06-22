@@ -1,15 +1,9 @@
-#tabs{"ng-controller" => "ShoppingTabsCtrl", "ng-cloak" => true}
+- shop_tabs.each do |tab|
+  = render "shopping_shared/#{tab[:name]}"
+
+.tabset-ctrl#shop-tabs{ navigate: 'true', prefix: 'shop', ng: { cloak: true } }
   .row
-    %tabset{ 'open-on-load' => 'false' }
-      -# Build all tabs.
-      - for name, heading_cols in { about: [t(:shopping_tabs_about, distributor: current_distributor.name), 6],
-        producers: [t(:label_producers),2],
-        contact: [t(:shopping_tabs_contact),2],
-        groups: [t(:label_groups),2]}
-        - heading, cols = heading_cols
-        %tab.columns{heading: heading,
-        id: "tab_#{name}",
-        active: "tabs.#{name}.active",
-        select: "select(\'#{name}\')",
-        class: "small-12 medium-#{cols}" }
-          = render "shopping_shared/#{name}"
+    - shop_tabs.each do |tab|
+      .small-12.columns.tab{ id: "tab_#{tab[:name]}", name: tab[:name], class: "medium-#{tab[:cols]}" }
+        %a{ href: 'javascript:void(0)' }=tab[:title]
+    .small-12.columns.tab-view

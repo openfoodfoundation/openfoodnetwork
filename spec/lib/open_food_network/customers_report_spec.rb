@@ -8,7 +8,7 @@ module OpenFoodNetwork
         user.spree_roles << Spree::Role.find_or_create_by_name!("admin")
         user
       end
-      subject { CustomersReport.new user }
+      subject { CustomersReport.new user, {}, true }
 
       describe "mailing list report" do
         before do
@@ -81,7 +81,7 @@ module OpenFoodNetwork
         user
       end
 
-      subject { CustomersReport.new user }
+      subject { CustomersReport.new user, {}, true }
 
       describe "fetching orders" do
         let(:supplier) { create(:supplier_enterprise) }

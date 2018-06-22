@@ -1,8 +1,9 @@
 module OpenFoodNetwork
   class UsersAndEnterprisesReport
     attr_reader :params
-    def initialize(params = {})
+    def initialize(params = {}, compile_table = false)
       @params = params
+      @compile_table = compile_table
 
       # Convert arrays of ids to comma delimited strings
       @params[:enterprise_id_in] = @params[:enterprise_id_in].join(',') if @params[:enterprise_id_in].kind_of? Array
@@ -22,6 +23,7 @@ module OpenFoodNetwork
     end
 
     def table
+      return [] unless @compile_table
       users_and_enterprises.map do |uae|
         [
           uae["user_email"],

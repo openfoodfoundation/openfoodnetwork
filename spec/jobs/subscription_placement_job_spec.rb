@@ -120,7 +120,12 @@ describe SubscriptionPlacementJob do
 
   describe "processing a subscription order" do
     let(:subscription) { create(:subscription, with_items: true) }
+    let(:shop) { subscription.shop }
     let(:proxy_order) { create(:proxy_order, subscription: subscription) }
+    let(:oc) { proxy_order.order_cycle }
+    let(:ex) { oc.exchanges.outgoing.find_by_sender_id_and_receiver_id(shop.id, shop.id) }
+    let(:fee) { create(:enterprise_fee, enterprise: shop, fee_type: 'sales', amount: 10) }
+    let!(:exchange_fee) { ExchangeFee.create!(exchange: ex, enterprise_fee: fee) }
     let!(:order) { proxy_order.initialise_order! }
 
     before do
@@ -147,8 +152,11 @@ describe SubscriptionPlacementJob do
           allow(job).to receive(:unavailable_stock_lines_for) { order.line_items }
         end
 
-        it "does not place the order, sends an empty_order email" do
+        it "does not place the order, clears, all adjustments, and sends an empty_order email" do
           expect{ job.send(:process, order) }.to_not change{ order.reload.completed_at }.from(nil)
+          expect(order.adjustments).to be_empty
+          expect(order.total).to eq 0
+          expect(order.adjustment_total).to eq 0
           expect(job).to_not have_received(:send_placement_email)
           expect(job).to have_received(:send_empty_email)
         end

@@ -3,6 +3,7 @@ Darkswarm.factory "EnterpriseModal", ($modal, $rootScope)->
   new class EnterpriseModal
     open: (enterprise)->
       scope = $rootScope.$new(true) # Spawn an isolate to contain the enterprise
+      scope.embedded_layout = window.location.search.indexOf("embedded_shopfront=true") != -1
 
       scope.enterprise = enterprise
       $modal.open(templateUrl: "enterprise_modal.html", scope: scope)

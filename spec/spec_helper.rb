@@ -36,7 +36,7 @@ require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
 Capybara.register_driver :poltergeist do |app|
-  options = {phantomjs_options: ['--load-images=no'], window_size: [1280, 3600], timeout: 2.minutes}
+  options = {phantomjs_options: ['--load-images=no', '--ssl-protocol=any'], window_size: [1280, 3600], timeout: 2.minutes}
   # Extend poltergeist's timeout to allow ample time to use pry in browser thread
   #options.merge! {timeout: 5.minutes}
   # Enable the remote inspector: Use page.driver.debug to open a remote debugger in chrome
@@ -140,9 +140,9 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::DelayedJobHelper
   config.include OpenFoodNetwork::PerformanceHelper
 
-  # FactoryGirl
-  require 'factory_girl_rails'
-  config.include FactoryGirl::Syntax::Methods
+  # FactoryBot
+  require 'factory_bot_rails'
+  config.include FactoryBot::Syntax::Methods
 
   config.include Paperclip::Shoulda::Matchers
 

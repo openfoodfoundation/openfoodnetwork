@@ -1,1 +1,1 @@
-angular.module("admin.variantOverrides", ["admin.indexUtils", "admin.utils", "admin.dropdown", "admin.inventoryItems", 'ngTagsInput'])
+angular.module("admin.variantOverrides", ["ofn.admin", "admin.indexUtils", "admin.utils", "admin.dropdown", "admin.inventoryItems", 'ngTagsInput'])

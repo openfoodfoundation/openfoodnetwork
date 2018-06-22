@@ -1,9 +1,10 @@
 module OpenFoodNetwork
   class CustomersReport
     attr_reader :params
-    def initialize(user, params = {})
+    def initialize(user, params = {}, compile_table = false)
       @params = params
       @user = user
+      @compile_table = compile_table
     end
 
     def header
@@ -25,6 +26,7 @@ module OpenFoodNetwork
     end
 
     def table
+      return [] unless @compile_table
       orders.map do |order|
         if is_mailing_list?
           [order.email,

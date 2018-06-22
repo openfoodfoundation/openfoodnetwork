@@ -61,7 +61,7 @@ class AbilityDecorator
       order.user == user
     end
 
-    can [:destroy], Spree::CreditCard do |credit_card|
+    can [:update, :destroy], Spree::CreditCard do |credit_card|
       credit_card.user == user
     end
   end
@@ -127,12 +127,14 @@ class AbilityDecorator
     can [:admin, :connect, :status, :destroy], StripeAccount do |stripe_account|
       user.enterprises.include? stripe_account.enterprise
     end
+
+    can [:admin, :create], :manager_invitation
   end
 
   def add_product_management_abilities(user)
     # Enterprise User can only access products that they are a supplier for
     can [:create], Spree::Product
-    can [:admin, :read, :update, :product_distributions, :seo, :group_buy_options, :bulk_edit, :bulk_update, :clone, :delete, :destroy], Spree::Product do |product|
+    can [:admin, :read, :index, :update, :product_distributions, :seo, :group_buy_options, :bulk_update, :clone, :delete, :destroy], Spree::Product do |product|
       OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? product.supplier
     end
 
@@ -175,7 +177,7 @@ class AbilityDecorator
     can [:admin, :index, :read, :search], Spree::Taxon
     can [:admin, :index, :read, :create, :edit], Spree::Classification
 
-    can [:admin, :index, :import, :save], ProductImporter
+    can [:admin, :index, :guide, :import, :save, :save_data, :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
     # Reports page
     can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :bulk_coop, :payments, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing], :report

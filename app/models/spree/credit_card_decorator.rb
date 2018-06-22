@@ -5,7 +5,7 @@ Spree::CreditCard.class_eval do
   attr_accessible :cc_type, :last_digits
 
   # For holding customer preference in memory
-  attr_accessible :save_requested_by_customer
+  attr_accessible :save_requested_by_customer, :is_default
   attr_writer :save_requested_by_customer
 
   # Should be able to remove once we reach Spree v2.2.0
@@ -14,15 +14,31 @@ Spree::CreditCard.class_eval do
 
   belongs_to :user
 
+  after_create :ensure_single_default_card
+  after_save :ensure_single_default_card, if: :is_default_changed?
+
   # Allows us to use a gateway_payment_profile_id to store Stripe Tokens
   # Should be able to remove once we reach Spree v2.2.0
   # Commit: https://github.com/spree/spree/commit/5a4d690ebc64b264bf12904a70187e7a8735ef3f
   # See also: https://github.com/spree/spree_gateway/issues/111
-  def has_payment_profile? # rubocop:disable Style/PredicateName
+  def has_payment_profile? # rubocop:disable Naming/PredicateName
     gateway_customer_profile_id.present? || gateway_payment_profile_id.present?
   end
 
   def save_requested_by_customer?
     !!@save_requested_by_customer
+  end
+
+  private
+
+  def default_missing?
+    !user.credit_cards.exists?(is_default: true)
+  end
+
+  def ensure_single_default_card
+    return unless user
+    return unless is_default? || default_missing?
+    user.credit_cards.update_all(['is_default=(id=?)', id])
+    self.is_default = true
   end
 end

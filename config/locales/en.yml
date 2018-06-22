@@ -117,6 +117,10 @@ en:
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
       unconfirmed: "You have to confirm your account before continuing."
+      already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
+    user_passwords:
+      spree_user:
+        updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -301,6 +305,9 @@ en:
     form_invalid: "Form contains missing or invalid fields"
     clear_filters: Clear Filters
     clear: Clear
+    save: Save
+    cancel: Cancel
+    back: Back
     show_more: Show more
     show_n_more: Show %{num} more
     choose: "Choose..."
@@ -447,7 +454,7 @@ en:
 
     products:
       unit_name_placeholder: 'eg. bunches'
-      bulk_edit:
+      index:
         unit: Unit
         display_as: Display As
         category: Category
@@ -455,6 +462,7 @@ en:
         inherits_properties?: Inherits Properties?
         available_on: Available On
         av_on: "Av. On"
+        import_date: Imported
         upload_an_image: Upload an image
       product_search_keywords: Product Search Keywords
       product_search_tip: Type words to help search your products in the shops. Use space to separate each keyword.
@@ -470,6 +478,80 @@ en:
       group_buy_options: "Group Buy Options"
       back_to_products_list: "Back to products list"
 
+    product_import:
+      title: Product Import
+      file_not_found: File not found or could not be opened
+      no_data: No data found in spreadsheet
+      confirm_reset: "This will set stock level to zero on all products for this \n enterprise that are not present in the uploaded file"
+      model:
+        no_file: "error: no file uploaded"
+        could_not_process: "could not process file: invalid filetype"
+        incorrect_value: incorrect value
+        conditional_blank: can't be blank if unit_type is blank
+        no_product: did not match any products in the database
+        not_found: not found in database
+        blank: can't be blank
+        products_no_permission: you do not have permission to manage products for this enterprise
+        inventory_no_permission: you do not have permission to create inventory for this producer
+        none_saved: did not save any products successfully
+        line: Line
+      index:
+        select_file: Select a spreadsheet to upload
+        spreadsheet: Spreadsheet
+        import_into: "Import into:"
+        product_list: Product list
+        inventories: Inventories
+        import: Import
+        upload: Upload
+      import:
+        review: Review
+        proceed: Proceed
+        save: Save
+        results: Results
+        save_imported: Save imported products
+        no_valid_entries: No valid entries found
+        none_to_save: There are no entries that can be saved
+        some_invalid_entries: Imported file contains some invalid entries
+        save_valid?: Save valid entries for now and discard the others?
+        no_errors: No errors detected!
+        save_all_imported?: Save all imported products?
+        options_and_defaults: Import options and defaults
+        no_permission: you do not have permission to manage this enterprise
+        not_found: enterprise could not be found in database
+        no_name: No name
+        blank_supplier: some products have blank supplier name
+        reset_absent?: Reset absent products?
+        overwrite_all: Overwrite all
+        overwrite_empty: Overwrite if empty
+        default_stock: Set stock level
+        default_tax_cat: Set tax category
+        default_shipping_cat: Set shipping category
+        default_available_date: Set available date
+        validation_overview: Import validation overview
+        entries_found: Entries found in imported file
+        entries_with_errors: Items contain errors and will not be imported
+        products_to_create: Products will be created
+        products_to_update: Products will be updated
+        inventory_to_create: Inventory items will be created
+        inventory_to_update: Inventory items will be updated
+        products_to_reset: Existing products will have their stock reset to zero
+        inventory_to_reset: Existing inventory items will have their stock reset to zero
+        line: Line
+        item_line: Item line
+      save:
+        final_results: Import final results
+        products_created: Products created
+        products_updated: Products updated
+        inventory_created: Inventory items created
+        inventory_updated: Inventory items updated
+        products_reset: Products had stock level reset to zero
+        inventory_reset: Inventory items had stock level reset to zero
+        all_saved: "All items saved successfully"
+        some_saved: "items saved successfully"
+        save_errors: Save errors
+        view_products: View Products
+        view_inventory: View Inventory
+
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -480,6 +562,7 @@ en:
         inherit?: Inherit?
         add: Add
         hide: Hide
+        import_date: Imported
         select_a_shop: Select A Shop
         review_now: Review Now
         new_products_alert_message: There are %{new_product_count} new products available to add to your inventory.
@@ -741,7 +824,7 @@ en:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
         next_step: Next step
-        choose_starting_point: 'Choose your starting point:'
+        choose_starting_point: 'Choose your package:'
       invite_manager:
         user_already_exists: "User already exists"
         error: "Something went wrong"
@@ -802,7 +885,7 @@ en:
         name: Name
         orders_open: Orders open at
         coordinator: Coordinator
-        order_closes: Orders close
+        orders_close: Orders close
       row:
         suppliers: suppliers
         distributors: distributors
@@ -819,6 +902,10 @@ en:
         schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
       bulk_update:
         no_data: Hm, something went wrong. No order cycle data found.
+      date_warning:
+        msg: This order cycle is linked to %{n} open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?
+        cancel: Cancel
+        proceed: Proceed
     producer_properties:
       index:
         title: Producer Properties
@@ -1029,6 +1116,7 @@ en:
 
 
   # Front-end controller translations
+  card_could_not_be_updated: Card could not be updated
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
 
@@ -1182,6 +1270,8 @@ en:
   footer_legal_tos: "Terms and conditions"
   footer_legal_visit: "Find us on"
   footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+
+  footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
 
   home_shop: Shop Now
 
@@ -1628,6 +1718,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   november: "November"
   december: "December"
   email_not_found: "Email address not found"
+  email_unconfirmed: "You must confirm your email address before you can reset your password."
   email_required: "You must provide an email address"
   logging_in: "Hold on a moment, we're logging you in"
   signup_email: "Your email"
@@ -1930,13 +2021,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   spree_admin_enterprises_fees: "Enterprise Fees"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREATE A NEW ENTERPRISE"
   spree_admin_enterprises_none_text: "You don't have any enterprises yet"
-  spree_admin_enterprises_producers_name: "Name"
-  spree_admin_enterprises_producers_total_products: "Total Products"
-  spree_admin_enterprises_producers_active_products: "Active Products"
-  spree_admin_enterprises_producers_order_cycles: "Products in OCs"
-  spree_admin_enterprises_producers_order_cycles_title: ""
   spree_admin_enterprises_tabs_hubs: "HUBS"
-  spree_admin_enterprises_tabs_producers: "PRODUCERS"
   spree_admin_enterprises_producers_manage_products: "MANAGE PRODUCTS"
   spree_admin_enterprises_any_active_products_text: "You don't have any active products."
   spree_admin_enterprises_create_new_product: "CREATE A NEW PRODUCT"
@@ -2203,7 +2288,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   content_configuration_pricing_table: "(TODO: Pricing table)"
   content_configuration_case_studies: "(TODO: Case studies)"
   content_configuration_detail: "(TODO: Detail)"
-  enterprise_name_error: "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at %{email}."
+  enterprise_name_error: "has already been taken. If this is your enterprise and you would like to claim ownership, or if you would like to trade with this enterprise please contact the current manager of this profile at %{email}."
   enterprise_owner_error: "^%{email} is not permitted to own any more enterprises (limit is %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^That role is already present."
   inventory_item_visibility_error: must be true or false
@@ -2238,6 +2323,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   back_to_orders_list: "Back to order list"
+  no_orders_found: "No Orders Found"
   order_information: "Order Information"
   date_completed: "Date Completed"
   amount: "Amount"
@@ -2262,6 +2348,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     choose: Choose
     resolve_errors: Please resolve the following errors
     more_items: "+ %{count} More"
+    default_card_updated: Default Card Updated
     admin:
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
       modals:
@@ -2486,7 +2573,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         new:
           title: 'New Product'
         unit_name_placeholder: 'eg. bunches'
-        bulk_edit:
+        index:
           header:
             title: Bulk Edit Products
           indicators:
@@ -2502,6 +2589,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             inherits_properties?: Inherits Properties?
             available_on: Available On
             av_on: "Av. On"
+            import_date: "Import Date"
           products_variant:
             variant_has_n_overrides: "This variant has %{n} override(s)"
             new_variant: "New variant"
@@ -2514,6 +2602,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         display_as:
           display_as: Display As
       reports:
+        table:
+          select_and_search: "Select filters and click on SEARCH to access your data."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
@@ -2647,5 +2737,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         total: Total
         paid?: Paid?
         view: View
+      saved_cards:
+        default?: Default?
+        delete?: Delete?
     localized_number:
       invalid_format: has an invalid format. Please enter a number.

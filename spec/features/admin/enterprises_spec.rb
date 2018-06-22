@@ -53,7 +53,7 @@ feature %q{
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select2_search 'Australia', :from => 'Country'
+    # default country (Australia in this test) should be selected by default
     select2_search 'Victoria', :from => 'State'
 
     click_button 'Create'
@@ -167,6 +167,7 @@ feature %q{
     page.first("input[name='enterprise\[preferred_shopfront_message\]']", visible: false).set('This is my shopfront message.')
     page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
     choose "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
+    choose "enterprise_enable_subscriptions_true"
 
     click_button 'Update'
 
@@ -195,6 +196,7 @@ feature %q{
     page.should have_content 'This is my shopfront message.'
     page.should have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
     expect(page).to have_checked_field "enterprise_require_login_true"
+    expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
   end
 
   describe "producer properties" do
@@ -340,6 +342,8 @@ feature %q{
         fill_in 'enterprise_address_attributes_address1', with: 'z'
         fill_in 'enterprise_address_attributes_city', with: 'z'
         fill_in 'enterprise_address_attributes_zipcode', with: 'z'
+        select2_select 'Australia', from: 'enterprise_address_attributes_country_id'
+        select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
       end
 
       scenario "without violating rules" do

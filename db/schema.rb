@@ -490,12 +490,13 @@ ActiveRecord::Schema.define(:version => 20180426145669) do
     t.string   "start_year"
     t.string   "issue_number"
     t.integer  "address_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
     t.string   "gateway_customer_profile_id"
     t.string   "gateway_payment_profile_id"
     t.integer  "user_id"
     t.integer  "payment_method_id"
+    t.boolean  "is_default",                  :default => false
   end
 
   add_index "spree_credit_cards", ["payment_method_id"], :name => "index_spree_credit_cards_on_payment_method_id"
@@ -1135,6 +1136,7 @@ ActiveRecord::Schema.define(:version => 20180426145669) do
     t.string   "unit_description",                               :default => ""
     t.string   "display_name"
     t.string   "display_as"
+    t.datetime "import_date"
   end
 
   add_index "spree_variants", ["product_id"], :name => "index_variants_on_product_id"
@@ -1254,6 +1256,7 @@ ActiveRecord::Schema.define(:version => 20180426145669) do
     t.string   "sku"
     t.boolean  "on_demand"
     t.datetime "permission_revoked_at"
+    t.datetime "import_date"
   end
 
   add_index "variant_overrides", ["variant_id", "hub_id"], :name => "index_variant_overrides_on_variant_id_and_hub_id"

@@ -1,0 +1,44 @@
+%tr.product{ :id => "p_{{product.id}}" }
+  %td.left-actions
+    %a{ 'ofn-toggle-variants' => 'true', :class => "view-variants", 'ng-show' => 'hasVariants(product)' }
+    %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "!hasVariants(product) && hasUnit(product)" }
+  %td.image{ 'ng-show' => 'columns.image.visible' }
+    %a{class: 'image-modal'}
+      %img{'ng-src' => '{{ product.thumb_url }}'}
+  %td.producer{ 'ng-show' => 'columns.producer.visible' }
+    %select.select2.fullwidth{ 'ng-model' => 'product.producer_id', :name => 'producer_id', 'ofn-track-product' => 'producer_id', 'ng-options' => 'producer.id as producer.name for producer in producers' }
+  %td.sku{ 'ng-show' => 'columns.sku.visible' }
+    %input{ 'ng-model' => "product.sku", :name => 'product_sku', 'ofn-track-product' => 'sku', :type => 'text' }
+  %td.name{ 'ng-show' => 'columns.name.visible' }
+    %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
+  %td.unit{ 'ng-show' => 'columns.unit.visible' }
+    %select.select2{ 'ng-model' => 'product.variant_unit_with_scale', :name => 'variant_unit_with_scale', 'ofn-track-product' => 'variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
+      %option{'value' => '', 'ng-hide' => "hasVariants(product) && hasUnit(product)"}
+    %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-master' => 'unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)", 'ofn-maintain-unit-scale' => true }
+    %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
+  %td.display_as{ 'ng-show' => 'columns.unit.visible' }
+    %input{ 'ofn-display-as' => 'product.master', name: 'display_as', 'ofn-track-master' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}', ng: { hide: 'hasVariants(product)', model: 'product.master.display_as' } }
+  %td.price{ 'ng-show' => 'columns.price.visible' }
+    %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text', 'ng-hide' => 'hasVariants(product)' }
+  %td.on_hand{ 'ng-show' => 'columns.on_hand.visible' }
+    %span{ 'ng-bind' => 'product.on_hand', :name => 'on_hand', 'ng-if' => '!hasOnDemandVariants(product) && (hasVariants(product) || product.on_demand)' }
+    %input.field{ 'ng-model' => 'product.on_hand', :name => 'on_hand', 'ofn-track-product' => 'on_hand', 'ng-if' => '!(hasVariants(product) || product.on_demand)', :type => 'number' }
+  %td.on_demand{ 'ng-show' => 'columns.on_demand.visible' }
+    %input.field{ 'ng-model' => 'product.on_demand', :name => 'on_demand', 'ofn-track-product' => 'on_demand', :type => 'checkbox', 'ng-hide' => 'hasVariants(product)' }
+  %td.category{ 'ng-if' => 'columns.category.visible' }
+    %input.fullwidth{ :type => 'text', id: "p{{product.id}}_category_id", 'ng-model' => 'product.category_id', 'ofn-taxon-autocomplete' => '', 'ofn-track-product' => 'category_id', 'multiple-selection' => 'false', placeholder: 'Category' }
+  %td.tax_category{ 'ng-if' => 'columns.tax_category.visible' }
+    %select.select2{ name: 'product_tax_category_id', 'ofn-track-product' => 'tax_category_id', ng: {model: 'product.tax_category_id', options: 'tax_category.id as tax_category.name for tax_category in tax_categories'} }
+      %option{value: ''}= t(:none)
+  %td.inherits_properties{ 'ng-show' => 'columns.inherits_properties.visible' }
+    %input{ 'ng-model' => 'product.inherits_properties', :name => 'inherits_properties', 'ofn-track-product' => 'inherits_properties', type: "checkbox" }
+  %td.available_on{ 'ng-show' => 'columns.available_on.visible' }
+    %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
+  %td.import_date{ 'ng-show' => 'columns.import_date.visible' }
+    %span {{(product.import_date | date:"MMMM dd, yyyy HH:mm") || ""}}
+  %td.actions
+    %a{ 'ng-click' => 'editWarn(product)', :class => "edit-product icon-edit no-text", 'ofn-with-tip' => t(:edit) }
+  %td.actions
+    %a{ 'ng-click' => 'cloneProduct(product)', :class => "clone-product icon-copy no-text", 'ofn-with-tip' => t(:clone) }
+  %td.actions
+    %a{ 'ng-click' => 'deleteProduct(product)', :class => "delete-product icon-trash no-text", 'ofn-with-tip' => t(:remove) }

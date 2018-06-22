@@ -112,7 +112,7 @@ describe Enterprise do
   end
 
   describe "validations" do
-    subject { FactoryGirl.create(:distributor_enterprise) }
+    subject { FactoryBot.create(:distributor_enterprise) }
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:permalink) }
     it { should ensure_length_of(:description).is_at_most(255) }
@@ -129,17 +129,15 @@ describe Enterprise do
 
       it "prevents duplicate names for new records" do
         e = Enterprise.new name: enterprise.name
-        e.should_not be_valid
-        e.errors[:name].first.should ==
-          "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."
+        expect(e).to_not be_valid
+        expect(e.errors[:name].first).to include I18n.t('enterprise_name_error', email: owner.email)
       end
 
       it "prevents duplicate names for existing records" do
         e = create(:enterprise, name: 'foo')
         e.name = enterprise.name
-        e.should_not be_valid
-        e.errors[:name].first.should ==
-          "has already been taken. If this is your enterprise and you would like to claim ownership, please contact the current manager of this profile at owner@example.com."
+        expect(e).to_not be_valid
+        expect(e.errors[:name].first).to include I18n.t('enterprise_name_error', email: owner.email)
       end
 
       it "does not prohibit the saving of an enterprise with no name clash" do
@@ -188,7 +186,7 @@ describe Enterprise do
   end
 
   describe "delegations" do
-    #subject { FactoryGirl.create(:distributor_enterprise, :address => FactoryGirl.create(:address)) }
+    #subject { FactoryBot.create(:distributor_enterprise, :address => FactoryBot.create(:address)) }
 
     it { should delegate(:latitude).to(:address) }
     it { should delegate(:longitude).to(:address) }
@@ -550,16 +548,6 @@ describe Enterprise do
     it "returns true when the product is in stock" do
       create(:product, :supplier => @supplier, :on_hand => 1)
       @supplier.should have_supplied_products_on_hand
-    end
-  end
-
-  describe "supplied_and_active_products_on_hand" do
-    it "find only active products which are in stock" do
-      supplier = create(:supplier_enterprise)
-      inactive_product = create(:product, supplier:  supplier, on_hand: 1, available_on: Date.tomorrow)
-      out_of_stock_product = create(:product, supplier:  supplier, on_hand: 0, available_on: Date.yesterday)
-      p1 = create(:product, supplier: supplier, on_hand: 1, available_on: Date.yesterday)
-      supplier.supplied_and_active_products_on_hand.should == [p1]
     end
   end
 

@@ -19,6 +19,7 @@ Openfoodnetwork::Application.routes.draw do
 
   get "/register", to: "registration#index", as: :registration
   get "/register/auth", to: "registration#authenticate", as: :registration_auth
+  post "/user/registered_email", to: "spree/users#registered_email"
 
   # Redirects to global website
   get "/connect", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/connect/")
@@ -133,8 +134,11 @@ Openfoodnetwork::Application.routes.draw do
     get '/inventory', to: 'variant_overrides#index'
 
     get '/product_import', to: 'product_import#index'
+    get '/product_import/guide', to: 'product_import#guide', as: 'product_import_guide'
     post '/product_import', to: 'product_import#import'
-    post '/product_import/save', to: 'product_import#save', as: 'product_import_save'
+    post '/product_import/validate_data', to: 'product_import#validate_data', as: 'product_import_process_async'
+    post '/product_import/save_data', to: 'product_import#save_data', as: 'product_import_save_async'
+    post '/product_import/reset_absent', to: 'product_import#reset_absent_products', as: 'product_import_reset_async'
 
     resources :variant_overrides do
       post :bulk_update, on: :collection
@@ -255,7 +259,6 @@ Spree::Core::Engine.routes.prepend do
   match '/admin/reports/orders_and_fulfillment' => 'admin/reports#orders_and_fulfillment', :as => "orders_and_fulfillment_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/users_and_enterprises' => 'admin/reports#users_and_enterprises', :as => "users_and_enterprises_admin_reports",  :via => [:get, :post]
   match '/admin/reports/sales_tax' => 'admin/reports#sales_tax', :as => "sales_tax_admin_reports",  :via  => [:get, :post]
-  match '/admin/products/bulk_edit' => 'admin/products#bulk_edit', :as => "bulk_edit_admin_products"
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management"
   match '/admin/reports/products_and_inventory' => 'admin/reports#products_and_inventory', :as => "products_and_inventory_admin_reports",  :via  => [:get, :post]
   match '/admin/reports/customers' => 'admin/reports#customers', :as => "customers_admin_reports",  :via  => [:get, :post]

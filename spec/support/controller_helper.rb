@@ -7,7 +7,7 @@ module OpenFoodNetwork
         user
       end
 
-      controller.stub spree_current_user: @admin_user
+      allow(controller).to receive_messages(spree_current_user: @admin_user)
     end
 
     def login_as_enterprise_user(enterprises)
@@ -20,7 +20,7 @@ module OpenFoodNetwork
         user
       end
 
-      controller.stub spree_current_user: @enterprise_user
+      allow(controller).to receive_messages(spree_current_user: @enterprise_user)
     end
   end
 end

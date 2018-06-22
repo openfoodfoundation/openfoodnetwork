@@ -39,7 +39,7 @@ feature %q{
 
       click_button 'Create'
 
-      expect(current_path).to eq spree.bulk_edit_admin_products_path
+      expect(current_path).to eq spree.admin_products_path
       flash_message.should == 'Product "A new product !!!" has been successfully created!'
       product = Spree::Product.find_by_name('A new product !!!')
       product.supplier.should == @supplier
@@ -80,7 +80,7 @@ feature %q{
 
       click_button 'Create'
 
-      expect(current_path).to eq spree.bulk_edit_admin_products_path
+      expect(current_path).to eq spree.admin_products_path
       product = Spree::Product.find_by_name('Hot Cakes')
       product.variants.count.should == 1
       variant = product.variants.first

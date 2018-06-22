@@ -33,26 +33,6 @@ feature %q{
     end
   end
 
-  describe "product management" do
-    describe "managing supplied products" do
-      before do
-        user.enterprise_roles.create!(enterprise: supplier1)
-        product1 = create(:product, name: 'Green eggs', supplier: supplier1)
-        product2 = create(:product, name: 'Ham', supplier: supplier2)
-        login_to_admin_as user
-      end
-
-      it "can manage products that I supply" do
-        visit spree.admin_products_path
-
-        within '#listing_products' do
-          page.should have_content 'Green eggs'
-          page.should_not have_content 'Ham'
-        end
-      end
-    end
-  end
-
   # This case no longer exists as anyone with an enterprise can supply into the system. 
   # Or can they?? There is no producer profile anyway.
   # TODO discuss what parts of this are still necessary in which cases.
@@ -88,11 +68,6 @@ feature %q{
       end
 
       it "shows me enterprise product info but not payment methods, shipping methods or enterprise fees" do
-        # Producer product info
-        page.should have_selector '.producers_tab span', text: 'Total Products'
-        page.should have_selector '.producers_tab span', text: 'Active Products'
-        page.should_not have_selector '.producers_tab span', text: 'Products in OCs'
-
         # Payment methods, shipping methods, enterprise fees
         page.should_not have_selector '.hubs_tab span', text: 'Payment Methods'
         page.should_not have_selector '.hubs_tab span', text: 'Shipping Methods'

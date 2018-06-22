@@ -1,3 +1,5 @@
+@import "typography";
+
 body.embedded {
   nav.top-bar {
     ul.left, ul.center, ul.right li.current_hub {
@@ -28,6 +30,22 @@ body.embedded {
   footer {
     display: none;
   }
+
+  .powered-by-embedded {
+    display: block;
+  }
+
+  .contact {
+    display: none;
+  }
+
+  .embedded-fullwidth {
+    width: 100%;
+  }
+
+  #group-page header {
+    display: none;
+  }
 }
 
 nav.top-bar ul.right li.powered-by {
@@ -50,6 +68,17 @@ nav.top-bar ul.right li.powered-by {
     color: #000;
   }
 }
+
+.powered-by-embedded {
+   opacity: 0.6;
+   @include headingFont;
+   font-size: 1rem;
+   font-weight: 300;
+   color: #555;
+   padding: 0 !important;
+   display: none;
+   margin-top: 6px;
+  }
 
 .blocked-cookies {
   text-align: center;

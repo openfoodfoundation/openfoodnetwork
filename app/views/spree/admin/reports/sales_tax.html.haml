@@ -16,22 +16,4 @@
   %br
   = button t(:search)
 
-%br
-%br
-%table#listing_orders.index
-  %thead
-    %tr{'data-hook' => "orders_header"}
-      - @report.header.each do |heading|
-        %th= heading
-  %tbody
-    - @report.table.each do |row|
-      %tr
-        - row.each_with_index do |column, i|
-          - if i == 0
-            %td
-              %a.edit-order{'href' => "/admin/orders/#{column}"}= column
-          - else
-            %td= column
-    - if @report.table.empty?
-      %tr
-        %td{:colspan => @report.header.count}= t(:none)
+= render "table", id: "listing_orders", column_partials: {0 => "link_order"}

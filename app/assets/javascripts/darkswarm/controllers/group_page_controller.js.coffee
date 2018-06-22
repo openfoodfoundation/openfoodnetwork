@@ -19,3 +19,4 @@ Darkswarm.controller "GroupPageCtrl", ($scope, group_enterprises, Enterprises, M
 
   $scope.map = angular.copy MapConfiguration.options
   $scope.mapMarkers = OfnMap.enterprise_markers visible_enterprises
+  $scope.embedded_layout = window.location.search.indexOf("embedded_shopfront=true") != -1

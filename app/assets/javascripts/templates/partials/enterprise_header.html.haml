@@ -2,7 +2,7 @@
   .highlight-top.row
     .small-12.medium-7.large-8.columns
       %h3{"ng-if" => "::enterprise.is_distributor"}
-        %a{"ng-href" => "{{::enterprise.path}}", "ofn-change-hub" => "enterprise"}
+        %a{"ng-href" => "{{::enterprise.path}}", "ofn-change-hub" => "enterprise", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}"}
           %i{"ng-class" => "::enterprise.icon_font"}
           %span{"ng-bind" => "::enterprise.name"}
       %h3{"ng-if" => "::!enterprise.is_distributor", "ng-class" => "::{'is_producer' : enterprise.is_primary_producer}"}

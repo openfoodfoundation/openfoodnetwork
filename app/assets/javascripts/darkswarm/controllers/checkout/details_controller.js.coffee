@@ -1,7 +1,15 @@
-Darkswarm.controller "DetailsCtrl", ($scope, $timeout) ->
+Darkswarm.controller "DetailsCtrl", ($scope, $timeout, $http, CurrentUser, AuthenticationService, SpreeUser) ->
   angular.extend(this, new FieldsetMixin($scope))
   $scope.name = "details"
   $scope.nextPanel = "billing"
+
+  $scope.login_or_next = (event) ->
+    event.preventDefault()
+    unless CurrentUser.id
+      $scope.ensureUserIsGuest($scope.next)
+      return
+
+    $scope.next()
 
   $scope.summary = ->
     [$scope.fullName(),

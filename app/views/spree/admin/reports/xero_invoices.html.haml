@@ -32,16 +32,4 @@
     .four.columns.alpha= button t(:search)
 
 
-%table#listing_invoices.index
-  %thead
-    %tr
-      - @report.header.each do |header|
-        %th= header
-  %tbody
-    - @report.table.each do |row|
-      %tr
-        - row.each do |column|
-          %td= column
-    - if @report.table.empty?
-      %tr
-        %td{:colspan => "2"}= t(:none)
+= render "table", id: "listing_invoices"

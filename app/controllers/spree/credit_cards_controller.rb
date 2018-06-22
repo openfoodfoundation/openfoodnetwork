@@ -16,6 +16,18 @@ module Spree
       return render json: { flash: { error: I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message) } }, status: 400
     end
 
+    def update
+      @credit_card = Spree::CreditCard.find_by_id(params[:id])
+      return update_failed unless @credit_card
+      authorize! :update, @credit_card
+
+      if @credit_card.update_attributes(params[:credit_card])
+        render json: @credit_card, serializer: ::Api::CreditCardSerializer, status: :ok
+      else
+        update_failed
+      end
+    end
+
     def destroy
       @credit_card = Spree::CreditCard.find_by_id(params[:id])
       if @credit_card
@@ -64,6 +76,10 @@ module Spree
       # Can't mass assign user:
       card.user_id = spree_current_user.id
       card
+    end
+
+    def update_failed
+      render json: { flash: { error: t(:card_could_not_be_updated) } }, status: 400
     end
   end
 end

@@ -31,7 +31,7 @@
 
   .small-12.columns.pad-top
     .row
-      .small-12.medium-12.large-9.columns
+      .small-12.medium-12.large-9.embedded-fullwidth.columns
         %div{"ng-controller" => "GroupTabsCtrl"}
           %tabset
             %tab{heading: t(:label_map),
@@ -48,9 +48,10 @@
             %tab{heading: t(:groups_about),
                 active: "tabs.about.active",
                 select: "select(\'about\')"}
-              %h1
-                = t :groups_about
-              %p!= @group.long_description
+              .about{ "embedded_target_blank" => true }
+                %h1
+                  = t :groups_about
+                %p!= @group.long_description
 
             %tab{heading: t(:groups_producers),
                 active: "tabs.producers.active",
@@ -103,7 +104,7 @@
 
                       = render 'shared/components/enterprise_no_results'
 
-      .small-12.medium-12.large-3.columns
+      .small-12.medium-12.large-3.columns.contact
         = render 'contact'
 
   .small-12.columns.pad-top
@@ -119,7 +120,11 @@
             %i.ofn-i_050-mail-circle
           =link_to_service "http://", @group.website, title: t(:groups_contact_website) do
             %i.ofn-i_049-web
-        %p
-          &nbsp;
+          .powered-by-embedded
+            %img{src: '/favicon.ico'}
+            %span
+              = t 'powered_by'
+            %span
+              = t 'title'
 
 = render "shared/footer"

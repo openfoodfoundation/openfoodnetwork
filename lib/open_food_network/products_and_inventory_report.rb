@@ -18,6 +18,7 @@ module OpenFoodNetwork
     end
 
     def table
+      return [] unless @render_table
       variants.map do |variant|
         [
           variant.product.supplier.name,

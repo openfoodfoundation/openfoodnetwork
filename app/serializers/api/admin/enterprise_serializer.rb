@@ -8,6 +8,7 @@ class Api::Admin::EnterpriseSerializer < ActiveModel::Serializer
 
   has_one :owner, serializer: Api::Admin::UserSerializer
   has_many :users, serializer: Api::Admin::UserSerializer
+  has_one :address, serializer: Api::AddressSerializer
 
   def tag_groups
     object.tag_rules.prioritised.reject(&:is_default).each_with_object([]) do |tag_rule, tag_groups|

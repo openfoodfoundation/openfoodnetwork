@@ -2,9 +2,10 @@ module OpenFoodNetwork
   class ProductsAndInventoryReportBase
     attr_reader :params
 
-    def initialize(user, params = {})
+    def initialize(user, params = {}, render_table = false)
       @user = user
       @params = params
+      @render_table = render_table
     end
 
     def permissions

@@ -199,10 +199,9 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           # shows the saved credit card dropdown
           expect(page).to have_content I18n.t("spree.checkout.payment.stripe.used_saved_card")
 
-          # removes the input fields when a saved card is selected"
-          expect(page).to have_selector "#card-element.StripeElement"
-          select "Visa x-1111 Exp:01/2025", from: "selected_card"
+          # default card is selected, form element is not shown
           expect(page).to_not have_selector "#card-element.StripeElement"
+          expect(page).to have_select 'selected_card', selected: "Visa x-1111 Exp:01/2025"
 
           # allows checkout
           place_order

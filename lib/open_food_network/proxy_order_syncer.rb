@@ -19,7 +19,7 @@ module OpenFoodNetwork
       return sync_all! if @subscriptions
       return initialise_proxy_orders! unless @subscription.id
       create_proxy_orders!
-      remove_obsolete_proxy_orders!
+      remove_orphaned_proxy_orders!
     end
 
     private
@@ -28,7 +28,7 @@ module OpenFoodNetwork
       @subscriptions.each do |subscription|
         @subscription = subscription
         create_proxy_orders!
-        remove_obsolete_proxy_orders!
+        remove_orphaned_proxy_orders!
       end
     end
 
@@ -51,14 +51,15 @@ module OpenFoodNetwork
       not_closed_in_range_order_cycles.pluck(:id) - proxy_orders.map(&:order_cycle_id)
     end
 
-    def remove_obsolete_proxy_orders!
-      obsolete_proxy_orders.scoped.delete_all
+    def remove_orphaned_proxy_orders!
+      orphaned_proxy_orders.scoped.delete_all
     end
 
-    def obsolete_proxy_orders
-      in_range_order_cycle_ids = in_range_order_cycles.pluck(:id)
-      return proxy_orders unless in_range_order_cycle_ids.any?
-      proxy_orders.where('order_cycle_id NOT IN (?)', in_range_order_cycle_ids)
+    def orphaned_proxy_orders
+      orphaned = proxy_orders.where(placed_at: nil)
+      order_cycle_ids = in_range_order_cycles.pluck(:id)
+      return orphaned unless order_cycle_ids.any?
+      orphaned.where('order_cycle_id NOT IN (?)', order_cycle_ids)
     end
 
     def insert_values

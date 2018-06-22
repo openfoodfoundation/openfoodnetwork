@@ -25,6 +25,7 @@ angular.module("admin.variantOverrides").controller "AdminVariantOverridesCtrl",
 
   $scope.resetSelectFilters = ->
     $scope.producerFilter = 0
+    $scope.importDateFilter = '0'
     $scope.query = ''
 
   $scope.resetSelectFilters()

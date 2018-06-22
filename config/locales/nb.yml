@@ -8,6 +8,10 @@ nb:
         completed_at: Fullført på
         number: Nummer
         email: Epost Kunde
+      spree/payment:
+        amount: Beløp
+      order_cycle:
+        orders_close_at: Lukkedato
     errors:
       models:
         spree/user:
@@ -16,6 +20,10 @@ nb:
               taken: "Det finnes allerede en konto for denne eposten. Vennligst logg inn eller tilbakestill passordet ditt."
         spree/order:
           no_card: Det er ingen gyldige kredittkort tilgjengelig
+        order_cycle:
+          attributes:
+            orders_close_at:
+              after_orders_open_at: må være etter åpningsdato
   activemodel:
     errors:
       models:
@@ -53,11 +61,17 @@ nb:
           Ugyldig epost eller passord.
           Var du gjest forrige gang? Kanskje du må opprette en konto eller nullstille passordet.
       unconfirmed: "Du må bekrefte kontoen din før du fortsetter."
+      already_registered: "Denne epostadressen er allerede registrert. Vennligst logg inn for å fortsette, eller gå tilbake og bruk en annen epostadresse."
+    user_passwords:
+      spree_user:
+        updated_not_active: "Ditt passord har blitt tilbakestilt, men epostadressen din er ikke bekreftet enda."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
     welcome:
       subject: "%{enterprise} er nå på %{sitename}"
+    invite_manager:
+      subject: "%{enterprise} har invitert deg til å være en administrator"
   producer_mailer:
     order_cycle:
       subject: "Bestillingsrunderapport for %{producer}"
@@ -200,6 +214,7 @@ nb:
     phone: Telefon
     price: Pris
     producer: Produsent
+    image: Bilde
     product: Produkt
     quantity: Mengde
     schedule: Tidsplan
@@ -222,6 +237,9 @@ nb:
     form_invalid: "Skjemaet inneholder manglende eller ugyldige felt"
     clear_filters: Fjern filtre
     clear: Fjern
+    save: Lagre
+    cancel: Avbryt
+    back: Tilbake
     show_more: Vis mer
     show_n_more: Vis %{num} flere
     choose: "Velg..."
@@ -353,6 +371,21 @@ nb:
         manages: administrerer
     products:
       unit_name_placeholder: 'f.eks. bunter'
+      index:
+        unit: Enhet
+        display_as: Vis som
+        category: Kategori
+        tax_category: Avgiftskategori
+        inherits_properties?: Arver egenskaper?
+        available_on: Tilgjengelig på
+        av_on: "Tilgj. På"
+        import_date: Importert
+        upload_an_image: Last opp et bilde
+      product_search_keywords: Nøkkelord for produktsøk
+      product_search_tip: Skriv ord for å søke etter dine produkter i butikkene. Bruk mellomrom for å skille mellom hvert nøkkelord.
+      SEO_keywords: SEO Nøkkelord
+      seo_tip: Skriv ord for å søke etter produktene dine på nettet. Bruk mellomrom for å skille mellom hvert søkeord.
+      Search: Søk
       properties:
         property_name: Navn på egenskap
         inherited_property: Arvet egenskap
@@ -360,8 +393,80 @@ nb:
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
       product_distributions: "Produktdistribusjoner"
       group_buy_options: "Gruppekjøpsalternativer"
-      seo: "SEO"
       back_to_products_list: "Tilbake til produktlisten"
+    product_import:
+      title: Produktimport
+      file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
+      no_data: Ingen data funnet i regnearket
+      confirm_reset: "Dette vil stille lagernivå til null på alle produkter for denne\n bedriften som ikke er til stede i den opplastede filen"
+      model:
+        no_file: "feil: ingen fil lastet opp"
+        could_not_process: "kunne ikke behandle filen: ugyldig filtype"
+        incorrect_value: feil verdi
+        conditional_blank: kan ikke være tom hvis unit_type er tom
+        no_product: samsvarte ikke med noen produkter i databasen
+        not_found: ikke funnet i databasen
+        blank: kan ikke være tomt
+        products_no_permission: du har ikke tillatelse til å administrere produkter for denne bedriften
+        inventory_no_permission: du har ikke tillatelse til å opprette lager for denne produsenten
+        none_saved: kunne ikke lagre noen produkter
+        line: Linje
+      index:
+        select_file: Velg et regneark for å laste opp
+        spreadsheet: Regneark
+        import_into: "Importer inn i:"
+        product_list: Produktliste
+        inventories: Varelagre
+        import: Import
+        upload: Last opp
+      import:
+        review: Anmeldelse
+        proceed: Fortsett
+        save: Lagre
+        results: Resultater
+        save_imported: Lagre importerte produkter
+        no_valid_entries: Ingen gyldige oppføringer funnet
+        none_to_save: Det er ingen oppføringer som kan lagres
+        some_invalid_entries: Importert fil inneholder noen ugyldige oppføringer
+        save_valid?: Lagre gyldige oppføringer for nå og forkast de andre?
+        no_errors: Ingen feil oppdaget!
+        save_all_imported?: Lagre alle importerte produkter?
+        options_and_defaults: Importalternativer og standardinnstillinger
+        no_permission: du har ikke tillatelse til å administrere denne bedriften
+        not_found: bedriften kunne ikke bli funnet i databasen
+        no_name: Ingen navn
+        blank_supplier: noen produkter har tomt leverandørnavn
+        reset_absent?: Tilbakestill fraværende produkter?
+        overwrite_all: Overskrive alt
+        overwrite_empty: Overskriv hvis tomt
+        default_stock: Sett lagernivå
+        default_tax_cat: Angi avgiftskategori
+        default_shipping_cat: Angi fraktkategori
+        default_available_date: Angi tilgjengelig dato
+        validation_overview: Importvalidering oversikt
+        entries_found: Oppføringer funnet i importert fil
+        entries_with_errors: Elementene inneholder feil og vil ikke bli importert
+        products_to_create: Produkter vil bli opprettet
+        products_to_update: Produktene vil bli oppdatert
+        inventory_to_create: Lagerelementer vil bli opprettet
+        inventory_to_update: Lagerelementer blir oppdatert
+        products_to_reset: Eksisterende produkter vil få lager satt til null
+        inventory_to_reset: Eksisterende vareobjekter vil få lager satt til null
+        line: Linje
+        item_line: Artikkellinje
+      save:
+        final_results: Importer endelige resultater
+        products_created: Produkter opprettet
+        products_updated: Produkter oppdatert
+        inventory_created: Lagerelementer opprettet
+        inventory_updated: Lagerelementer oppdatert
+        products_reset: Produktene hadde lagernivå satt til null
+        inventory_reset: Lagerelementer hadde lagernivå satt til null
+        all_saved: "Alle elementer lagret vellykket"
+        some_saved: "elementer lagret vellykket"
+        save_errors: Lagre feil
+        view_products: Se produkter
+        view_inventory: Se beholdning
     variant_overrides:
       loading_flash:
         loading_inventory: LASTER VARELAGER
@@ -372,6 +477,7 @@ nb:
         inherit?: Arve?
         add: Legg til
         hide: Skjul
+        import_date: Importert
         select_a_shop: Velg en butikk
         review_now: Sjekk nå
         new_products_alert_message: Det er %{new_product_count} nye produkter tilgjengelig for å legge til ditt varelager.
@@ -412,6 +518,7 @@ nb:
         max_fulfilled_units: "Max Oppfylte Enheter"
         order_error: "Noen feil må løses før du kan oppdatere bestillinger.\nAlle felt med røde kanter inneholder feil."
         variants_without_unit_value: "ADVARSEL: Noen varianter mangler enhetsverdi"
+      select_variant: "Velg en variant"
     enterprise:
       select_outgoing_oc_products_from: Velg utgående bestillingsrundeprodukter fra
     enterprises:
@@ -571,6 +678,9 @@ nb:
           notifications_note: 'Merk: En ny epostadresse må kanskje bekreftes før bruk'
           managers: Administratorer
           managers_tip: Andre brukere med tilgang til å administrere denne bedriften.
+          invite_manager: "Inviter Administrator"
+          invite_manager_tip: "Inviter en uregistrert bruker til å registrere seg og bli administrator av denne bedriften."
+          add_unregistered_user: "Legg til en uregistrert bruker"
           email_confirmed: "Epost bekreftet"
           email_not_confirmed: "Epost ikke bekreftet"
       actions:
@@ -629,7 +739,10 @@ nb:
         welcome_title: Velkommen til Open Food Network!
         welcome_text: Du har opprettet en
         next_step: Neste steg
-        choose_starting_point: 'Velg ditt startpunkt:'
+        choose_starting_point: 'Velg din pakke:'
+      invite_manager:
+        user_already_exists: "Brukeren eksisterer allerede"
+        error: "Noe gikk galt"
     order_cycles:
       edit:
         advanced_settings: Avanserte Innstillinger
@@ -686,7 +799,7 @@ nb:
         name: Navn
         orders_open: Bestillinger åpner
         coordinator: Koordinator
-        order_closes: Bestillinger stenger
+        orders_close: Bestillinger stenger
       row:
         suppliers: 'leverandører '
         distributors: distributører
@@ -701,6 +814,8 @@ nb:
       destroy_errors:
         orders_present: Denne bestillingsrunden er valgt av en kunde og kan ikke slettes. For å hindre at kundene får tilgang til det, må du lukke den i stedet.
         schedule_present: Denne bestillingsrunden er knyttet til en tidsplan og kan ikke slettes. Vennligst fjern koblingen eller slett tidsplanen først.
+      bulk_update:
+        no_data: Hm, noe gikk galt. Ingen data for bestillingsrunde funnet.
     producer_properties:
       index:
         title: Produsentegenskaper
@@ -842,6 +957,9 @@ nb:
         no_subscriptions: Ingen abonnement ennå...
         why_dont_you_add_one: Hvorfor legger du ikke til en? :)
         no_matching_subscriptions: Ingen tilsvarende abonnement funnet
+    schedules:
+      destroy:
+        associated_subscriptions_error: Denne tidsplanen kan ikke slettes fordi den har tilknyttede abonnementer
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -890,6 +1008,7 @@ nb:
       require_customer_login: "Denne butikken er kun for kunder."
       require_login_html: "Vennligst %{login} hvis du allerede har en konto. Hvis ikke, %{register} for å bli kunde."
       require_customer_html: "Vennligst %{contact} %{enterprise} for å bli kunde."
+  card_could_not_be_updated: Kortet kunne ikke oppdateres
   card_could_not_be_saved: kort kunne ikke lagres
   spree_gateway_error_flash_for_checkout: "Det oppstod et problem med betalingsinformasjonen din: %{error}"
   invoice_billing_address: "Fakturaadresse:"
@@ -1026,6 +1145,7 @@ nb:
   footer_legal_tos: "Vilkår og betingelser"
   footer_legal_visit: "Finn oss på"
   footer_legal_text_html: "Open Food Network er en plattform med fri og åpen kildekode. Vårt innhold er lisensiert med %{content_license} og vår kode med %{code_license}."
+  footer_skylight_dashboard_html: Ytelsesdata er tilgjengelig på %{dashboard}.
   home_shop: Handle nå
   brandstory_headline: "Food, unincorporated."
   brandstory_intro: "Noen ganger er det best å fikse systemet ved å starte et nytt..."
@@ -1109,7 +1229,6 @@ nb:
   email_admin_html: "Du kan administrere din konto ved å logge inn på %{link} eller ved klikke på tannhjulet øverst til høyre på hjemmesiden og velge Administrasjon."
   email_community_html: "Vi har også et online forum for diskusjon relatert til OFN programvaren og de forskjellige utfordringene med å drive et matfirma. Vi oppfordrer deg til å bli med. Vi utvikler oss hele tiden og dine innspill til dette forumet vil forme det som skjer videre. %{link}"
   join_community: "Bli med"
-  email_help: "Hvis du har problemer, sjekk vår FAQ, utforsk forumet eller skriv et 'Support'-emne og noen vil hjelpe deg!"
   email_confirmation_activate_account: "Før vi kan aktivere den nye kontoen din, må vi bekrefte epostadressen din."
   email_confirmation_greeting: "Hei, %{contact}!"
   email_confirmation_profile_created: "En profil for %{name} har blitt opprettet! For å aktivere din profil må du bekrefte denne epostadressen."
@@ -1168,6 +1287,12 @@ nb:
   email_signup_shop_html: "Du kan nå logge inn på %{link}."
   email_signup_text: "Takk for at du ble med i nettverket. Hvis du er kunde ser vi frem til å vise deg mange fantastiske bønder, flotte mathubs og deilig mat! Hvis du er produsent eller selskap er vi glade for å ha deg som en del av nettverket."
   email_signup_help_html: "Vi tar imot alle dine spørsmål og tilbakemeldinger; du kan bruke <em> Send tilbakemelding </em> på nettside eller email oss på %{email}"
+  invite_email:
+    greeting: "Hallo!"
+    invited_to_manage: "Du har blitt invitert til å administrere %{enterprise} på %{instance}."
+    confirm_your_email: "Du burde ha mottatt eller vil snart motta en epost med en bekreftelseslenke. Du vil ikke kunne få tilgang til %{enterprise}s profil før du har bekreftet din epost."
+    set_a_password: "Du blir da bedt om å angi et passord før du kan administrere bedriften."
+    mistakenly_sent: "Ikke sikker på hvorfor du har mottatt denne e-posten? Kontakt %{owner_email} for mer informasjon."
   producer_mail_greeting: "Kjære"
   producer_mail_text_before: "Alle dine kunderbestillinger er klar."
   producer_mail_order_text: "Her er en oppsummering av bestillingene:"
@@ -1416,6 +1541,7 @@ nb:
   november: "november"
   december: "desember"
   email_not_found: "epostadresse ikke funnet"
+  email_unconfirmed: "Du må bekrefte epostadressen din før du kan tilbakestille passordet ditt."
   email_required: "Du må oppgi en epostadresse"
   logging_in: "Et øyeblikk, vi logger deg inn"
   signup_email: "Din epost"
@@ -1430,6 +1556,7 @@ nb:
   password_reset_sent: "En epost med instruksjoner om å nullstille passordet har blitt sendt!"
   reset_password: "Tilbakestill passord"
   who_is_managing_enterprise: "Hvem er ansvarlig for å administrere %{enterprise}?"
+  update_and_recalculate_fees: "Oppdater og regn avgifter på nytt"
   enterprise:
     registration:
       modal:
@@ -1666,6 +1793,10 @@ nb:
   calculator: "Kalkulator"
   calculator_values: "Kalkulatorverdier"
   flat_percent_per_item: "Flat prosent (per stk)"
+  flat_rate_per_item: "Flat rate (per vare)"
+  flat_rate_per_order: "Flat Rate (per bestilling)"
+  flexible_rate: "Fleksibel Rate"
+  price_sack: "Prissekk"
   new_order_cycles: "Nye Bestillingsrunder"
   new_order_cycle: "Ny bestillingsrunde"
   select_a_coordinator_for_your_order_cycle: "Velg en koordinator for bestillingsrunde"
@@ -1700,12 +1831,7 @@ nb:
   spree_admin_enterprises_fees: "Bedriftsavgift"
   spree_admin_enterprises_none_create_a_new_enterprise: "OPPRETT NY BEDRIFT"
   spree_admin_enterprises_none_text: "Du har ingen bedrifter ennå"
-  spree_admin_enterprises_producers_name: "Navn"
-  spree_admin_enterprises_producers_total_products: "Alle Produkter"
-  spree_admin_enterprises_producers_active_products: "Aktive Produkter"
-  spree_admin_enterprises_producers_order_cycles: "Produkter i Bestillingsrunder"
   spree_admin_enterprises_tabs_hubs: "HUBS"
-  spree_admin_enterprises_tabs_producers: "PRODUSENTER"
   spree_admin_enterprises_producers_manage_products: "ADMINISTRER PRODUKTER"
   spree_admin_enterprises_any_active_products_text: "Du har ingen aktive produkter."
   spree_admin_enterprises_create_new_product: "OPPRETT NYTT PRODUKT"
@@ -1941,7 +2067,8 @@ nb:
   products_unsaved: "Endringer i %{n} produkter er fortsatt ulagret."
   is_already_manager: "er allerede administrator!"
   no_change_to_save: "Ingen endring å lagre"
-  add_manager: "Legg til administrator"
+  user_invited: "%{email} har blitt invitert til å administrere denne bedriften"
+  add_manager: "Legg til en eksisterende bruker"
   users: "Brukere"
   about: "Om"
   images: "Bilder"
@@ -1952,6 +2079,7 @@ nb:
   social: "Sosial"
   business_details: "Forretningsdetaljer"
   properties: "Egenskaper"
+  shipping: "Levering"
   shipping_methods: "Leveringsmetoder"
   payment_methods: "Betalingsmetoder"
   payment_method_fee: "Transaksjongebyr"
@@ -1968,7 +2096,7 @@ nb:
   content_configuration_pricing_table: "(TODO: Pristabell)"
   content_configuration_case_studies: "(TODO: Casestudier)"
   content_configuration_detail: "(TODO: Detalj)"
-  enterprise_name_error: "har allerede blitt tatt. Hvis dette er din bedrift og du ønsker å kreve eierskap, vennligst kontakt gjeldende leder av denne profilen på %{email}."
+  enterprise_name_error: "har allerede blitt tatt. Hvis dette er din bedrift og du ønsker å kreve eierskap, eller hvis du ønsker å handle med denne bedriften, vennligst kontakt gjeldende administrator av denne profilen på %{email}."
   enterprise_owner_error: "^ %{email} kan ikke eie flere bedrifter (grense er %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Den rollen finnes allerede."
   inventory_item_visibility_error: må være true eller false
@@ -2002,6 +2130,14 @@ nb:
   order_cycles_email_to_producers_notice: 'E-poster som skal sendes til produsentene har blitt satt i kø for sending.'
   order_cycles_no_permission_to_coordinate_error: "Ingen av bedriftene dine har tillatelse til å koordinere en bestillingsrunde"
   order_cycles_no_permission_to_create_error: "Du har ikke rettigheter til å opprette en bestillingsrunde som er koordinert av den bedriften"
+  back_to_orders_list: "Tilbake til bestillingslisten"
+  no_orders_found: "Ingen bestillinger funnet"
+  order_information: "Bestillingsinformasjon"
+  date_completed: "Dato Fullført"
+  amount: "Beløp"
+  state_names:
+    ready: Klar
+    pending: I påvente av
   js:
     saving: 'Lagrer...'
     changes_saved: 'Endringene er lagret.'
@@ -2240,7 +2376,7 @@ nb:
         new:
           title: 'Nytt produkt'
         unit_name_placeholder: 'f.eks. bunter'
-        bulk_edit:
+        index:
           header:
             title: Endre produkter i bulk
           indicators:

@@ -3,7 +3,7 @@ require 'open_food_network/lettuce_share_report'
 module OpenFoodNetwork
   describe LettuceShareReport do
     let(:user) { create(:user) }
-    let(:report) { LettuceShareReport.new user }
+    let(:report) { LettuceShareReport.new user, {}, true }
     let(:v) { create(:variant) }
 
     describe "grower and method" do

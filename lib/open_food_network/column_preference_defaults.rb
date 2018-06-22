@@ -19,7 +19,8 @@ module OpenFoodNetwork
         reset:        { name: I18n.t("#{node}.enable_reset?"),  visible: false },
         inheritance:  { name: I18n.t("#{node}.inherit?"),       visible: false },
         tags:         { name: I18n.t("admin.tags"),             visible: false },
-        visibility:   { name: I18n.t("#{node}.hide"),           visible: false }
+        visibility:   { name: I18n.t("#{node}.hide"),           visible: false },
+        import_date:   { name: I18n.t("#{node}.import_date"),   visible: false }
       }
     end
 
@@ -54,8 +55,8 @@ module OpenFoodNetwork
       }
     end
 
-    def products_bulk_edit_columns
-      node = "spree.admin.products.bulk_edit.products_head"
+    def products_index_columns
+      node = "spree.admin.products.index.products_head"
       {
         image:                { name: I18n.t("admin.image"),                   visible: true },
         producer:             { name: I18n.t("admin.producer"),                visible: true },
@@ -68,7 +69,8 @@ module OpenFoodNetwork
         category:             { name: I18n.t("#{node}.category"),              visible: false },
         tax_category:         { name: I18n.t("#{node}.tax_category"),          visible: false },
         inherits_properties:  { name: I18n.t("#{node}.inherits_properties?"),  visible: false },
-        available_on:         { name: I18n.t("#{node}.available_on"),          visible: false }
+        available_on:         { name: I18n.t("#{node}.available_on"),          visible: false },
+        import_date:          { name: I18n.t("#{node}.import_date"),           visible: false }
       }
     end
 

@@ -19,6 +19,7 @@ module OpenFoodNetwork
     end
 
     def table
+      return [] unless @render_table
       variants.select { |v| v.in_stock? }
         .map do |variant|
         [

@@ -1,3 +1,38 @@
+.product-import-introduction {
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 1.5em 0 1em;
+  }
+
+  h6 {
+    font-size: 1em;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  span.category {
+    display: inline-block;
+    background-color: #f3f3f3;
+    padding: 0.4em 0.8em;
+    margin: 0 0.4em 0.5em 0;
+  }
+
+  table {
+
+    &.product-import-columns tr:hover td {
+      background-color: transparent;
+    }
+
+    thead th {
+      text-transform: none;
+      font-size: 100%;
+      text-align: left;
+    }
+  }
+}
+
 div.panel-section {
 
   .neutral {
@@ -15,9 +50,7 @@ div.panel-section {
 
   div.panel-header {
     width: 100%;
-    //font-size: 1.5em;
     clear: both;
-    //border: 1px solid #ccc;
     float: left;
     padding: 0.5em;
 
@@ -68,7 +101,6 @@ div.panel-section {
   div.panel-content {
     width: 100%;
     clear: both;
-    //border: 1px solid #ccc;
     margin-bottom: 0.5em;
     background-color: #f9f9f9;
     padding: 1.5em;
@@ -87,8 +119,6 @@ div.panel-section {
         white-space: nowrap;
       }
       tr.error {
-        //background-color: #ffe6e4;
-        //color: #ee4728;
         color: #c84C4c;
       }
       tr:hover td.invalid {
@@ -119,9 +149,7 @@ div.panel-section {
         margin-bottom: 0.2em;
       }
     }
-
   }
-
 }
 
 br.panels.clearfix {
@@ -132,12 +160,6 @@ table.import-settings {
   background-color: transparent !important;
   width: auto;
 
-  //select {
-  //  width: 100%;
-  //}
-  tr {
-
-  }
   tbody tr:hover td {
     background-color: #f3f3f3;
   }
@@ -159,14 +181,25 @@ table.import-settings {
     padding-right: 2.5em;
   }
   tr:first-child td {
-    //border-top: 1px solid #eee;
     border-top: 0;
   }
   tr:last-child td {
-    //border-top: 1px solid #eee;
     border-bottom: 0;
   }
-
+  div.select2-container {
+    width: 13.5em;
+  }
+  div.select2-container.select2-container-disabled {
+    a.select2-choice, span.select2-arrow {
+      background-color: #d5d5d5;
+    }
+  }
+  input[disabled], input:disabled {
+    background-color: #d5d5d5;
+    opacity: 1;
+    border-color: transparent;
+    color: white !important;
+  }
 }
 
 .panel-section.import-settings {
@@ -188,8 +221,6 @@ table.import-settings {
     margin: 0;
   }
 }
-
-
 
 .post-save-results {
   p {
@@ -221,5 +252,66 @@ table.import-settings {
     color: #ee4728;
     font-size: 1.05em;
     margin-top: 0.4em;
+  }
+}
+
+form.product-import, div.post-save-results, div.import-wrapper {
+  input[type="submit"] {
+    margin-right: 0.5em;
+  }
+  input[type="submit"], button, a.button {
+    min-width: 8em;
+    text-align: center;
+  }
+}
+
+form.product-import, div.save-results {
+  transition: all linear 0.25s;
+}
+
+form.product-import.ng-hide, div.save-results.ng-hide {
+  opacity: 0;
+}
+
+div.import-wrapper {
+  div.progress-interface {
+    text-align: center;
+    transition: all linear 0.25s;
+
+    button:disabled {
+      background: #ccc !important;
+    }
+
+  }
+  div.progress-interface.ng-hide {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+  }
+  .post-save-results {
+    a.button{
+      float: left;
+      margin-right: 0.5em;
+    }
+  }
+}
+
+div.progress-bar {
+  height: 25px;
+  width: 30em;
+  max-width: 90%;
+  margin: 1em auto;
+  background: #f7f7f7;
+  padding: 3px;
+  border-radius: 0.3em;
+  border: 1px solid #eee;
+
+  span.progress-track{
+    display: block;
+    background: #b7ea53;
+    height: 100%;
+    border-radius: 0.3em;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+    transition: width 0.5s ease-in-out;
   }
 }

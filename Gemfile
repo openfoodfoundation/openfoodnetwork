@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.1.5"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-gem 'rails', '3.2.21'
+gem 'rails', '~> 3.2.22'
 gem 'rails-i18n', '~> 3.0.0'
 gem 'i18n', '~> 0.6.11'
 gem 'i18n-js', '~> 3.0.0'
@@ -25,7 +25,9 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-0-stable'
 # - Change type of password from string to password to hide it in the form
 gem 'spree_paypal_express', github: "spree-contrib/better_spree_paypal_express", branch: "2-0-stable"
 gem 'stripe', '~> 3.3.1'
-gem 'activemerchant'
+# We need at least this version to have Digicert's root certificate
+# which is needed for Pin Payments (and possibly others).
+gem 'activemerchant', '~> 1.78'
 
 gem 'oauth2', '~> 1.2.0' # Used for Stripe Connect
 gem 'jwt', '~> 1.5'
@@ -60,6 +62,7 @@ gem 'geocoder'
 gem 'gmaps4rails'
 gem 'spinjs-rails'
 gem 'rack-ssl', require: 'rack/ssl'
+gem 'rack-rewrite'
 gem 'custom_error_message', github: 'jeremydurham/custom-err-msg'
 gem 'angularjs-file-upload-rails', '~> 1.1.6'
 gem 'roadie-rails', '~> 1.0.3'
@@ -76,6 +79,7 @@ gem 'wkhtmltopdf-binary'
 gem 'foreigner'
 gem 'immigrant'
 gem 'roo', '~> 2.7.0'
+gem 'roo-xls', '~> 1.1.0'
 
 gem 'whenever', require: false
 
@@ -110,7 +114,7 @@ group :test, :development do
   gem 'fuubar', '~> 2.2.0'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails', require: false
+  gem "factory_bot_rails", require: false
   gem 'capybara', '>= 2.15.4'
   gem 'database_cleaner', '0.7.1', require: false
   gem 'awesome_print'

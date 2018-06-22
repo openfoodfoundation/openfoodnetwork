@@ -96,7 +96,86 @@ module Admin
       end
     end
 
+    describe "create" do
+      let(:shop) { create(:distributor_enterprise) }
+
+      context "as a manager of a shop" do
+        let(:form_mock) { instance_double(OrderCycleForm) }
+        let(:params) { { format: :json, order_cycle: {} } }
+
+        before do
+          login_as_enterprise_user([shop])
+          allow(OrderCycleForm).to receive(:new) { form_mock }
+        end
+
+        context "when creation is successful" do
+          before { allow(form_mock).to receive(:save) { true } }
+
+          it "returns success: true" do
+            spree_post :create, params
+            json_response = JSON.parse(response.body)
+            expect(json_response['success']).to be true
+          end
+        end
+
+        context "when an error occurs" do
+          before { allow(form_mock).to receive(:save) { false } }
+
+          it "returns an errors hash" do
+            spree_post :create, params
+            json_response = JSON.parse(response.body)
+            expect(json_response['errors']).to be
+          end
+        end
+      end
+    end
+
     describe "update" do
+      let(:order_cycle) { create(:simple_order_cycle) }
+      let(:coordinator) { order_cycle.coordinator }
+      let(:form_mock) { instance_double(OrderCycleForm) }
+
+      before do
+        allow(OrderCycleForm).to receive(:new) { form_mock }
+      end
+
+      context "as a manager of the coordinator" do
+        before { login_as_enterprise_user([coordinator]) }
+        let(:params) { { format: :json, id: order_cycle.id, order_cycle: {} } }
+
+        context "when updating succeeds" do
+          before { allow(form_mock).to receive(:save) { true } }
+
+          context "when the page is reloading" do
+            before { params[:reloading] = '1' }
+
+            it "sets flash message" do
+              spree_put :update, params
+              flash[:notice].should == 'Your order cycle has been updated.'
+            end
+          end
+
+          context "when the page is not reloading" do
+            it "does not set flash message" do
+              spree_put :update, params
+              flash[:notice].should be nil
+            end
+          end
+        end
+
+        context "when a validation error occurs" do
+          before { allow(form_mock).to receive(:save) { false } }
+
+          it "returns an error message" do
+            spree_put :update, params
+            json_response = JSON.parse(response.body)
+            expect(json_response['errors']).to be
+          end
+        end
+      end
+    end
+
+    describe "limiting update scope" do
       let(:order_cycle) { create(:simple_order_cycle) }
       let(:producer) { create(:supplier_enterprise) }
       let(:coordinator) { order_cycle.coordinator }
@@ -105,114 +184,30 @@ module Admin
       let!(:incoming_exchange) { create(:exchange, order_cycle: order_cycle, sender: producer, receiver: coordinator, incoming: true, variants: [v]) }
       let!(:outgoing_exchange) { create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: hub, incoming: false, variants: [v]) }
 
+      let(:allowed) { { incoming_exchanges: [], outgoing_exchanges: [] } }
+      let(:restricted) { { name: 'some name', orders_open_at: 1.day.from_now, orders_close_at: 1.day.ago } }
+      let(:params) { { format: :json, id: order_cycle.id, order_cycle: allowed.merge(restricted) } }
+      let(:form_mock) { instance_double(OrderCycleForm, save: true) }
+
+      before { allow(controller).to receive(:spree_current_user) { user } }
+
       context "as a manager of the coordinator" do
-        before { login_as_enterprise_user([coordinator]) }
+        let(:user) { coordinator.owner }
+        let(:expected) { [order_cycle, hash_including(order_cycle: allowed.merge(restricted)), user] }
 
-        it "sets flash message when page is reloading" do
-          spree_put :update, id: order_cycle.id, reloading: '1', order_cycle: {}
-          flash[:notice].should == 'Your order cycle has been updated.'
-        end
-
-        it "does not set flash message otherwise" do
-          flash[:notice].should be_nil
-        end
-
-        context "when updating without explicitly submitting exchanges" do
-          let(:form_applicator_mock) { double(:form_applicator) }
-
-          before do
-            allow(OpenFoodNetwork::OrderCycleFormApplicator).to receive(:new) { form_applicator_mock }
-            allow(form_applicator_mock).to receive(:go!) { nil }
-          end
-
-          it "does not run the OrderCycleFormApplicator" do
-            expect(order_cycle.exchanges.incoming).to eq [incoming_exchange]
-            expect(order_cycle.exchanges.outgoing).to eq [outgoing_exchange]
-            expect(order_cycle.prefers_product_selection_from_coordinator_inventory_only?).to be false
-            spree_put :update, id: order_cycle.id, order_cycle: { name: 'Some new name', preferred_product_selection_from_coordinator_inventory_only: true }
-            expect(form_applicator_mock).to_not have_received(:go!)
-            order_cycle.reload
-            expect(order_cycle.exchanges.incoming).to eq [incoming_exchange]
-            expect(order_cycle.exchanges.outgoing).to eq [outgoing_exchange]
-            expect(order_cycle.name).to eq 'Some new name'
-            expect(order_cycle.prefers_product_selection_from_coordinator_inventory_only?).to be true
-          end
-        end
-
-        context "when a validation error occurs" do
-          let(:params) {
-            {
-              format: :json,
-              id: order_cycle.id,
-              order_cycle: { orders_open_at: order_cycle.orders_close_at + 1.day }
-            }
-          }
-
-          it "returns an error message" do
-            spree_put :update, params
-            json_response = JSON.parse(response.body)
-            expect(json_response['errors']).to be_present
-          end
+        it "allows me to update exchange information for exchanges, name and dates" do
+          expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
+          spree_put :update, params
         end
       end
 
       context "as a producer supplying to an order cycle" do
-        before do
-          login_as_enterprise_user [producer]
-        end
+        let(:user) { producer.owner }
+        let(:expected) { [order_cycle, hash_including(order_cycle: allowed), user] }
 
-        describe "removing a variant from incoming" do
-          let(:params) do
-            {order_cycle: {
-               incoming_exchanges: [{id: incoming_exchange.id, enterprise_id: producer.id, sender_id: producer.id, variants: {v.id => false}}],
-               outgoing_exchanges: [{id: outgoing_exchange.id, enterprise_id: hub.id,      receiver_id: hub.id,    variants: {v.id => false}}] }
-            }
-          end
-
-          it "removes the variant from outgoing also" do
-            spree_put :update, {id: order_cycle.id}.merge(params)
-            Exchange.where(order_cycle_id: order_cycle).with_variant(v).should be_empty
-          end
-        end
-      end
-    end
-
-    describe "updating schedules" do
-      let(:user) { create(:user, enterprise_limit: 10) }
-      let!(:managed_coordinator) { create(:enterprise, owner: user) }
-      let!(:managed_enterprise) { create(:enterprise, owner: user) }
-      let!(:coordinated_order_cycle) { create(:simple_order_cycle, coordinator: managed_coordinator ) }
-      let!(:coordinated_order_cycle2) { create(:simple_order_cycle, coordinator: managed_enterprise ) }
-      let!(:uncoordinated_order_cycle) { create(:simple_order_cycle, coordinator: create(:enterprise) ) }
-      let!(:coordinated_schedule) { create(:schedule, order_cycles: [coordinated_order_cycle] ) }
-      let!(:coordinated_schedule2) { create(:schedule, order_cycles: [coordinated_order_cycle2] ) }
-      let!(:uncoordinated_schedule) { create(:schedule, order_cycles: [uncoordinated_order_cycle] ) }
-
-      context "where I manage the order_cycle's coordinator" do
-        render_views
-
-        before do
-          controller.stub spree_current_user: user
-        end
-
-        it "allows me to assign only schedules that already I coordinate to the order cycle" do
-          schedule_ids = [coordinated_schedule2.id, uncoordinated_schedule.id]
-          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: schedule_ids }
-          expect(assigns(:order_cycle)).to eq coordinated_order_cycle
-          # coordinated_order_cycle2 is added
-          expect(coordinated_order_cycle.reload.schedules).to include coordinated_schedule2
-          # coordinated_order_cycle is removed, uncoordinated_order_cycle is NOT added
-          expect(coordinated_order_cycle.reload.schedules).to_not include coordinated_schedule, uncoordinated_schedule
-        end
-
-        it "syncs proxy orders when schedule_ids change" do
-          syncer_mock = double(:syncer)
-          allow(OpenFoodNetwork::ProxyOrderSyncer).to receive(:new) { syncer_mock }
-          expect(syncer_mock).to receive(:sync!).exactly(2).times
-
-          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id, coordinated_schedule2.id] }
-          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
-          spree_put :update, format: :json, id: coordinated_order_cycle.id, order_cycle: { schedule_ids: [coordinated_schedule.id] }
+        it "allows me to update exchange information for exchanges, but not name or dates" do
+          expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
+          spree_put :update, params
         end
       end
     end
@@ -337,5 +332,6 @@ module Admin
         end
       end
     end
+
   end
 end

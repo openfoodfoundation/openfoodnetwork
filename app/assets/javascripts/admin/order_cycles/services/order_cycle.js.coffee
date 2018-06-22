@@ -209,6 +209,7 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
       delete order_cycle.editable_variants_for_incoming_exchanges
       delete order_cycle.editable_variants_for_outgoing_exchanges
       delete order_cycle.visible_variants_for_outgoing_exchanges
+      delete order_cycle.subscriptions_count
       order_cycle
 
     removeInactiveExchanges: (order_cycle) ->

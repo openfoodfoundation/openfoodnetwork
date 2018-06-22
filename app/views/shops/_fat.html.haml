@@ -33,17 +33,18 @@
           %enterprise-modal
             %i.ofn-i_036-producers
             %span{"ng-bind" => "::enterprise.name"}
+        %li{"ng-repeat" => "enterprise in hub.producers.slice(7,hub.producers.length)", "class" => "additional-producer"}
+          %enterprise-modal
+            %i.ofn-i_036-producers
+            %span{"ng-bind" => "::enterprise.name"}
         %li{"data-is-link" => "true", "class" => "more-producers-link", "ng-show" => "::hub.producers.length>7"}
-          %a{"ng-click" => "toggleMoreProducers=!toggleMoreProducers"}
+          %a{"ng-click" => "toggleMoreProducers=!toggleMoreProducers; $event.stopPropagation()"}
             .more
               +
               %span{"ng-bind" => "::hub.producers.length-7"}
               = t :label_more
             .less
               = t :label_less
-        %li{"ng-repeat" => "enterprise in hub.producers.slice(7,hub.producers.length)", "class" => "additional-producer"}
-          %enterprise-modal
-            %i.ofn-i_036-producers
-            %span{"ng-bind" => "::enterprise.name"}
+
     %div.show-for-medium-up{"ng-if" => "::hub.producers.length==0"}
       &nbsp;

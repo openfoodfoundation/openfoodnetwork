@@ -17,10 +17,9 @@ Darkswarm.factory 'Navigation', ($location, $window) ->
         @navigate(path)
 
     go: (path)->
-      if path.match /^http/
-        $window.location.href = path
-      else
-        $window.location.pathname = path
+      # The browser treats this like clicking on a link.
+      # It works for absolute paths, relative paths and URLs alike.
+      $window.location.href = path
 
     reload: ->
       $window.location.reload()

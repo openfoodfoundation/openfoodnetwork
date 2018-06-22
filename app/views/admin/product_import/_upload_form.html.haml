@@ -1,9 +1,11 @@
-%h5 Select a spreadsheet to upload
-%br
-= form_tag main_app.admin_product_import_path, multipart: true do
-  = file_field_tag :file
+%div{ng: {app: 'admin.productImport'}}
+
+  %h5= t('admin.product_import.index.select_file')
   %br
-  %br
-  = submit_tag "Import"
-  %br
-  %br
+  = form_tag main_app.admin_product_import_path, multipart: true, class: 'product-import' do
+    %label #{t('admin.product_import.index.spreadsheet')}
+    %br
+    = file_field_tag :file
+    %br
+    %br
+    = submit_tag "#{t('admin.product_import.index.upload')}"

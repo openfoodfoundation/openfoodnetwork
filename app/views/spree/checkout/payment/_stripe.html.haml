@@ -1,4 +1,4 @@
-.row{ "ng-show" => "savedCreditCards != null && savedCreditCards.length > 0" }
+.row{ "ng-show" => "savedCreditCards.length > 0" }
   .small-12.columns
     %h6= t('.used_saved_card')
     %select{ name: "selected_card", required: false, ng: { model: "secrets.selected_card", options: "card.id as card.formatted for card in savedCreditCards" } }
