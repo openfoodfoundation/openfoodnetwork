@@ -4,6 +4,7 @@ angular.module("Darkswarm").factory 'Customers', (Customer) ->
     byID: {}
 
     index: (params={}) ->
+      return @all if @all.length
       Customer.index params, (data) => @load(data)
       @all
 
