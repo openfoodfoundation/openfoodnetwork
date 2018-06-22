@@ -2,7 +2,11 @@
   .credit_cards{"ng-controller" => "CreditCardsCtrl"}
     .row
       .small-12.medium-6.columns
-        %h3= t(:saved_cards)
+        %h3
+          = t(:saved_cards)
+          %button.button.secondary.tiny.help-btn.ng-scope{ "help-modal" => t('.saved_cards_popover') }
+            %i.ofn-i_013-help
+
         .saved_cards{ ng: { show: 'savedCreditCards.length > 0' } }
           = render 'saved_cards'
         .no_cards{ ng: { hide: 'savedCreditCards.length > 0' } }
