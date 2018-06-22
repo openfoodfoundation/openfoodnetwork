@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
 
   def embedded_shopfront_referer
     return if request.referer.blank?
-    domain = URI(request.referer).host.downcase
+    domain = parsed_referer_uri.host.downcase
     domain.start_with?('www.') ? domain[4..-1] : domain
   end
 
@@ -79,7 +79,13 @@ class ApplicationController < ActionController::Base
   end
 
   def embedding_without_https?
-    request.referer && URI(request.referer).scheme != 'https' && !Rails.env.test? && !Rails.env.development?
+    request.referer && parsed_referer_uri.scheme != 'https' && !Rails.env.test? && !Rails.env.development?
+  end
+
+  def parsed_referer_uri
+    return @parsed_referer_uri if @parsed_referer_uri
+    referer_url = request.referer.delete("#")
+    @parsed_referer_uri = URI(referer_url)
   end
 
   def check_embedded_request
