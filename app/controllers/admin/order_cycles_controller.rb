@@ -1,7 +1,3 @@
-require 'open_food_network/permissions'
-require 'open_food_network/order_cycle_form_applicator'
-require 'open_food_network/proxy_order_syncer'
-
 module Admin
   class OrderCyclesController < ResourceController
     include OrderCyclesHelper
@@ -9,11 +5,8 @@ module Admin
     prepend_before_filter :load_data_for_index, :only => :index
     before_filter :require_coordinator, only: :new
     before_filter :remove_protected_attrs, only: [:update]
-    before_filter :check_editable_schedule_ids, only: [:create, :update]
     before_filter :require_order_cycle_set_params, only: [:bulk_update]
     around_filter :protect_invalid_destroy, only: :destroy
-    create.after :sync_subscriptions
-    update.after :sync_subscriptions
 
     def index
       respond_to do |format|
@@ -43,51 +36,36 @@ module Admin
     end
 
     def create
-      @order_cycle = OrderCycle.new(params[:order_cycle])
+      @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
 
-      respond_to do |format|
-        if @order_cycle.save
-          OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-          invoke_callbacks(:create, :after)
-          flash[:notice] = I18n.t(:order_cycles_create_notice)
-          format.html { redirect_to admin_order_cycles_path }
-          format.json { render :json => { success: true } }
-        else
-          format.html
-          format.json { render :json => { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity }
-        end
+      if @order_cycle_form.save
+        flash[:notice] = I18n.t(:order_cycles_create_notice)
+        render json: { success: true }
+      else
+        render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
     def update
-      @order_cycle = OrderCycle.find params[:id]
+      @order_cycle_form = OrderCycleForm.new(@order_cycle, params, spree_current_user)
 
-      respond_to do |format|
-        if @order_cycle.update_attributes(params[:order_cycle])
-          unless params[:order_cycle][:incoming_exchanges].nil? && params[:order_cycle][:outgoing_exchanges].nil?
-            # Only update apply exchange information if it is actually submmitted
-            OpenFoodNetwork::OrderCycleFormApplicator.new(@order_cycle, spree_current_user).go!
-          end
-          invoke_callbacks(:update, :after)
+      if @order_cycle_form.save
+        respond_to do |format|
           flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
           format.html { redirect_to main_app.edit_admin_order_cycle_path(@order_cycle) }
-          format.json { render :json => { :success => true } }
-        else
-          format.json { render :json => { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity }
+          format.json { render json: { :success => true } }
         end
+      else
+        render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
     def bulk_update
       if order_cycle_set.andand.save
-        respond_to do |format|
-          format.json { render_as_json @order_cycles, ams_prefix: 'index', current_user: spree_current_user, subscriptions_count: SubscriptionsCount.new(@collection) }
-        end
+        render_as_json @order_cycles, ams_prefix: 'index', current_user: spree_current_user, subscriptions_count: SubscriptionsCount.new(@collection)
       else
-        respond_to do |format|
-          order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
-          format.json { render :json => { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity }
-        end
+        order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
+        render json: { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
     end
 
@@ -190,29 +168,6 @@ module Admin
         unless Enterprise.managed_by(spree_current_user).include?(order_cycle.andand.coordinator)
           params[:order_cycle_set][:collection_attributes].delete i
         end
-      end
-    end
-
-    def check_editable_schedule_ids
-      return unless params[:order_cycle][:schedule_ids]
-      requested = params[:order_cycle][:schedule_ids].map(&:to_i)
-      @existing_schedule_ids = @order_cycle.persisted? ? @order_cycle.schedule_ids : []
-      permitted = Schedule.where(id: requested | @existing_schedule_ids).merge(OpenFoodNetwork::Permissions.new(spree_current_user).editable_schedules).pluck(:id)
-      result = @existing_schedule_ids
-      result |= (requested & permitted) # add any requested & permitted ids
-      result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
-      params[:order_cycle][:schedule_ids] = result
-    end
-
-    def sync_subscriptions
-      return unless params[:order_cycle][:schedule_ids]
-      removed_ids = @existing_schedule_ids - @order_cycle.schedule_ids
-      new_ids = @order_cycle.schedule_ids - @existing_schedule_ids
-      if removed_ids.any? || new_ids.any?
-        schedules = Schedule.where(id: removed_ids + new_ids)
-        subscriptions = Subscription.where(schedule_id: schedules)
-        syncer = OpenFoodNetwork::ProxyOrderSyncer.new(subscriptions)
-        syncer.sync!
       end
     end
 
