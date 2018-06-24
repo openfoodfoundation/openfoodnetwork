@@ -1,0 +1,89 @@
+%h2
+  {{ 'legal.cookies_policy.header' | t}}
+%p
+  {{ 'legal.cookies_policy.desc_part_1' | t}}
+%p
+  {{ 'legal.cookies_policy.desc_part_2' | t}}
+%p
+  {{ 'legal.cookies_policy.desc_part_3' | t}}
+
+%h2
+  {{ 'legal.cookies_policy.essential_cookies' | t}}
+%p
+  {{ 'legal.cookies_policy.essential_cookies_desc' | t}}
+
+%table{ng: { controller:"CookiesPolicyModalCtrl"}}
+  %tr
+    %th
+      {{ 'legal.cookies_policy.cookie_name' | t}}
+    %th
+      {{ 'legal.cookies_policy.cookie_domain' | t}}
+    %th
+      {{ 'legal.cookies_policy.cookie_desc' | t}}
+  %tr
+    %td
+      _session_id
+    %td
+      {{ instance_hostname }}
+    %td
+      {{ 'legal.cookies_policy.cookie_session_desc' | t}}
+  %tr
+    %td
+      remember_spree_user_token
+    %td
+      {{ instance_hostname }}
+    %td
+      {{ 'legal.cookies_policy.cookie_remember_me_desc' | t}}
+  %tr
+    %td
+      qos_token
+    %td
+      openstreetmap.org
+    %td
+      {{ 'legal.cookies_policy.cookie_openstreemap_desc' | t}}
+  %tr
+    %td
+      m
+    %td
+      m.stripe.com
+    %td{rowspan:"4"}
+      {{ 'legal.cookies_policy.cookie_stripe_desc' | t}}
+  %tr
+    %td
+      nsr
+    %td
+      m.stripe.network
+  %tr
+    %td
+      __stripe_sid
+    %td
+      {{ instance_hostname }}
+  %tr
+    %td
+      __stripe_mid
+    %td
+      {{ instance_hostname }}
+%p
+  {{ 'legal.cookies_policy.essential_cookies_note' | t}}
+%h2
+  {{ 'legal.cookies_policy.disabling_cookies_header' | t}}
+%p
+  {{ 'legal.cookies_policy.disabling_cookies_desc' | t}}
+%ul
+  %li
+    %a{ href: "{{'legal.cookies_policy.disabling_cookies_firefox_link' | t}}", target: "_blank" }
+      Firefox
+  %li
+    %a{ href: "{{ 'legal.cookies_policy.disabling_cookies_chrome_link' | t}}", target: "_blank" }
+      Chrome
+  %li
+    %a{ href: "{{ 'legal.cookies_policy.disabling_cookies_ie_link' | t}}", target: "_blank" }
+      Internet Explorer
+  %li
+    %a{ href: "{{ 'legal.cookies_policy.disabling_cookies_safari_link' | t}}", target: "_blank" }
+      Safari
+%p
+  {{ 'legal.cookies_policy.disabling_cookies_note' | t}}
+
+%a.close-reveal-modal{"ng-click" => "$close()"}
+  %i.ofn-i_009-close
