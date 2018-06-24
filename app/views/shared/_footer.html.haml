@@ -139,6 +139,12 @@
           %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} GitHub
         %p.text-small
           = t :footer_legal_text_html, {content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)')}
+        %p.text-small
+          %div
+            = t :footer_legal_data_text
+            = t :footer_legal_data_call
+            %a{'cookies-policy-modal'=> true}
+              = t :footer_legal_data_cookies_policy
 
       .medium-2.columns.text-center
         / Placeholder
