@@ -24,11 +24,18 @@ module EnterprisesHelper
     return [] unless current_distributor.present?
     payment_methods = current_distributor.payment_methods.available(:front_end).all
 
+    ::Rails.logger.error("ole2 #{payment_methods.size}")
+
+
     filter = OpenFoodNetwork::AvailablePaymentMethodFilter.new
-    filter.filter!(payment_methods)
+    #filter.filter!(payment_methods)
+
+    ::Rails.logger.error("ole1 #{payment_methods.size}")
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor, "FilterPaymentMethods", current_customer.andand.tag_list)
     applicator.filter!(payment_methods)
+
+    
 
     payment_methods
   end
