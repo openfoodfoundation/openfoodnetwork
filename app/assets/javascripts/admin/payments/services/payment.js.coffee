@@ -1,4 +1,4 @@
-angular.module('admin.payments').factory 'Payment', (AdminStripeElements, currentOrderNumber, paymentMethods, PaymentMethods, PaymentResource, StatusMessage)->
+angular.module('admin.payments').factory 'Payment', (AdminStripeElements, currentOrderNumber, paymentMethods, PaymentMethods, PaymentResource, StatusMessage, $window)->
   new class Payment
     order: currentOrderNumber
     form_data: {}

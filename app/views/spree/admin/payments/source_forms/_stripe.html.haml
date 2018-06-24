@@ -5,7 +5,6 @@
     :javascript
       angular.module('admin.payments').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
-  = admin_inject_json "admin.payments", "railsFlash", "flash"
   = admin_inject_json "admin.payments", "currentOrderNumber", @order.number
   = admin_inject_json_ams_array "admin.payments", "paymentMethods", @payment_methods, Api::PaymentMethodSerializer
   .row

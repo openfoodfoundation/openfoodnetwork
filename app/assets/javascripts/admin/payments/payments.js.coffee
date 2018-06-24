@@ -1,1 +1,1 @@
-angular.module("admin.payments", ['ngResource','admin.resources', 'ofn.admin', "admin.utils"])
+angular.module("admin.payments", ['ofn.admin'])
