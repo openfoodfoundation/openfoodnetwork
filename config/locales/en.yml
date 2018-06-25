@@ -97,11 +97,11 @@ en:
             payment_method:
               not_available_to_shop: "is not available to %{shop}"
               invalid_type: "must be a Cash or Stripe method"
+              charges_not_allowed: "^Credit card charges are not allowed by this customer"
+              no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
-            credit_card:
-              charges_not_allowed: "charges are not allowed by this customer"
-              no_default_card: "not available for this customer"
+
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."

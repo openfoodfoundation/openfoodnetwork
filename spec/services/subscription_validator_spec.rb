@@ -30,7 +30,6 @@ describe SubscriptionValidator do
         ship_address: true,
         begins_at: true,
         ends_at: true,
-        credit_card: true
       }
     end
 
@@ -339,7 +338,7 @@ describe SubscriptionValidator do
 
           it "adds an error and returns false" do
             expect(validator.valid?).to be false
-            expect(validator.errors[:credit_card]).to_not be_empty
+            expect(validator.errors[:payment_method]).to_not be_empty
           end
         end
 
@@ -351,7 +350,7 @@ describe SubscriptionValidator do
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
-              expect(validator.errors[:credit_card]).to_not be_empty
+              expect(validator.errors[:payment_method]).to_not be_empty
             end
           end
 
@@ -363,7 +362,7 @@ describe SubscriptionValidator do
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:credit_card]).to_not be_empty
+                expect(validator.errors[:payment_method]).to_not be_empty
               end
             end
 
@@ -372,7 +371,7 @@ describe SubscriptionValidator do
 
               it "returns true" do
                 expect(validator.valid?).to be true
-                expect(validator.errors[:credit_card]).to be_empty
+                expect(validator.errors[:payment_method]).to be_empty
               end
             end
           end
