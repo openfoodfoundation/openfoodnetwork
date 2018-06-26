@@ -48,11 +48,11 @@ describe "setting response headers for embedded shopfronts", type: :request do
       end
 
       it "allows iframes on certain pages when enabled in configuration" do
-        get shops_path
+        get enterprise_shop_path(enterprise) + '?embedded_shopfront=true'
 
         expect(response.status).to be 200
         expect(response.headers['X-Frame-Options']).to be_nil
-        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors external-site.com"
+        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'self' external-site.com"
 
         get spree.admin_path
 
@@ -69,11 +69,11 @@ describe "setting response headers for embedded shopfronts", type: :request do
       end
 
       it "matches the URL structure in the header" do
-        get shops_path
+        get enterprise_shop_path(enterprise) + '?embedded_shopfront=true'
 
         expect(response.status).to be 200
         expect(response.headers['X-Frame-Options']).to be_nil
-        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors www.external-site.com"
+        expect(response.headers['Content-Security-Policy']).to eq "frame-ancestors 'self' www.external-site.com"
       end
     end
   end
