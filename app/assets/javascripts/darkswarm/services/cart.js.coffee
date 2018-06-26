@@ -4,6 +4,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
     dirty: false
     update_running: false
     update_enqueued: false
+    back_was_pressed: window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD
     order: CurrentOrder.order
     line_items: CurrentOrder.order?.line_items || []
     line_items_finalised: CurrentOrder.order?.finalised_line_items || []
@@ -40,6 +41,13 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
 
     update: =>
       @update_running = true
+      # This suppresses updating the cart if the back button was pressed.
+      # Items don't get deleted, but it still needs to be refreshed from the server
+      # otherwise currentOrder in the page will be out of date
+      if @back_was_pressed
+        @update_running = false
+        location.reload()
+        return 
 
       $http.post('/orders/populate', @data()).success (data, status)=>
         @saved()
