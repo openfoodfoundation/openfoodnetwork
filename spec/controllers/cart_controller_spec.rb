@@ -6,11 +6,7 @@ module OpenFoodNetwork
     render_views
 
     let(:user) { FactoryBot.create(:user) }
-    let(:product1) do
-      p1 = FactoryBot.create(:product)
-      p1.update_column(:count_on_hand, 10)
-      p1
-    end
+    let(:product1) { FactoryBot.create(:product) }
     let(:cart) { Cart.create(user: user) }
     let(:distributor) { FactoryBot.create(:distributor_enterprise) }
 
