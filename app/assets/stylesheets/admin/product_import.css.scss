@@ -4,7 +4,7 @@ div.panel-section {
     color: #bfbfbf;
   }
   .warning {
-    color: #da5354;
+    color: $warning-red;
   }
   .success {
     color: #86d83a;
@@ -175,7 +175,7 @@ table.import-settings {
 
   span.header-error {
     font-size: 0.85em;
-    color: #da5354;
+    color: $warning-red;
   }
 
   .select2-search {

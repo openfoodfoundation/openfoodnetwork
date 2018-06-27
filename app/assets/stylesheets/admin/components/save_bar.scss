@@ -6,11 +6,11 @@
   left: 0;
   padding: 8px 8px;
   font-weight: bold;
-  background-color: #eff5fc;
-  color: #5498da;
+  background-color: $spree-light-blue;
+  color: $spree-blue;
 
   h5 {
-    color: #5498da;
+    color: $spree-blue;
   }
 
   input {

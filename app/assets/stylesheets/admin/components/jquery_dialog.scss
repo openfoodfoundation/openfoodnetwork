@@ -63,7 +63,7 @@ light: #ccc
 
   &:hover {
     &:before {
-      color: #da5354;
+      color: $warning-red;
     }
   }
 

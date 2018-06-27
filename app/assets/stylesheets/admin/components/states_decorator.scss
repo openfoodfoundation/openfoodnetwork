@@ -2,7 +2,7 @@
   @extend .state;
 
   &.active {
-    background-color: #9fc820;
+    background-color: $spree-green;
     &, a { color: #ffffff; }
   }
 

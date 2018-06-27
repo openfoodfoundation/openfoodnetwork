@@ -12,5 +12,7 @@
  *= require shared/ng-tags-input.min
 
  *= require_self
- *= require_tree .
 */
+
+@import 'variables';
+@import '*';

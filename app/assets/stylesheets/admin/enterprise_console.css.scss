@@ -6,9 +6,9 @@ span.unavailable, span.available {
 }
 
 span.available {
-  color: #9fc820;
+  color: $spree-green;
 }
 
 span.unavailable {
-  color: #DA5354;
+  color: $warning-red;
 }
