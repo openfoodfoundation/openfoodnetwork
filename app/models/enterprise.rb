@@ -193,10 +193,6 @@ class Enterprise < ActiveRecord::Base
     end
   end
 
-  def has_supplied_products_on_hand?
-    self.supplied_products.where('count_on_hand > 0').present?
-  end
-
   def to_param
     permalink
   end
