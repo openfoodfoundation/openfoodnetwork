@@ -8,7 +8,8 @@ angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher, 
       , ""
 
       url = "/api/products/bulk_products?page=::page::;per_page=20;#{queryString}"
-      PagedFetcher.fetch url, (data) => @addProducts data.products
+      processData = (data) => @addProducts data.products
+      PagedFetcher.fetch url, processData, onComplete
 
     cloneProduct: (product) ->
       $http.post("/api/products/" + product.id + "/clone").success (data) =>
