@@ -95,6 +95,10 @@ Openfoodnetwork::Application.routes.draw do
       get :job_queue
     end
 
+    scope '/cookies' do
+      resource :consent, only: [:show, :create, :destroy], :controller => "cookies_consent"
+    end
+
     resources :customers, only: [:index, :update]
 
     post '/product_images/:product_id', to: 'product_images#update_product_image'
@@ -110,5 +114,4 @@ Openfoodnetwork::Application.routes.draw do
 
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
-
 end

@@ -1291,6 +1291,13 @@ en:
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
       disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Open Food Network, the website won’t work, you will not be able to add anything to your cart neither to checkout for instance."
+    cookies_banner:
+      cookies_usage: "This site uses cookies in order to make your navigation frictionless and secure, and to help us understand how you use it in order to improve the features we offer."
+      cookies_definition: "Cookies are very small text files that are stored on your computer when you visit some websites."
+      cookies_desc: "We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We use cookies mainly to remember who you are if you ‘log in’ to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website."
+      cookies_policy_link_desc: "If you want to learn more, check our"
+      cookies_policy_link: "cookies policy"
+      cookies_accept_button: "Accept Cookies"
 
   home_shop: Shop Now
 

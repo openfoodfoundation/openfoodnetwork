@@ -143,7 +143,7 @@
           %div
             = t :footer_legal_data_text
             = t :footer_legal_data_call
-            %a{'cookies-policy-modal'=> true}
+            %a{'cookies-policy-modal'=> true, 'cookies-banner'=> !CookiesConsent.new(cookies, request.host).exists? }
               = t :footer_legal_data_cookies_policy
 
       .medium-2.columns.text-center

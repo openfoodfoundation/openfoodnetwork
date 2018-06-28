@@ -1,0 +1,28 @@
+.cookies-banner {
+  background: #3b3b3b;
+  position: fixed;
+  bottom: 0;
+  z-index: 100000;
+  top: 20vh !important;
+
+  @media only screen and (min-width: 640px) {
+    top: 20vh !important;
+  }
+
+  @media only screen and (min-width: 800px) and (min-height: 400px) {
+    top: 40vh !important;
+  }
+
+  @media only screen and (min-width: 1024px) and (min-height: 500px) {
+    top: 60vh !important;
+  }
+
+  button {
+    background-color: green;
+  }
+
+  p {
+    color: white;
+    font-size: 0.75rem;
+  }
+}
