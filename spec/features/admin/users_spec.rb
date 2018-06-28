@@ -12,7 +12,7 @@ feature "Managing users" do
         expect(page).to have_no_text "Email confirmation is pending"
       end
 
-      it "works" do
+      it "confirms successful creation" do
         visit spree.new_admin_user_path
         fill_in "Email", with: "user1@example.org"
         fill_in "Password", with: "user1Secret"
