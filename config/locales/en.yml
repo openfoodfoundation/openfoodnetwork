@@ -75,7 +75,7 @@ en:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
         spree/order:
-          no_card: There are no valid credit cards available
+          no_card: There are no authorised credit cards available to charge
         order_cycle:
           attributes:
             orders_close_at:

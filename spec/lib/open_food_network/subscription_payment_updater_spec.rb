@@ -96,8 +96,10 @@ module OpenFoodNetwork
           context "and the payment source is not a credit card" do
             before { expect(updater).to receive(:card_set?) { false } }
 
-            context "and no credit card is available on the subscription" do
-              before { expect(updater).to receive(:ensure_credit_card) { false } }
+            context "and no default credit card has been set by the customer" do
+              before do
+                allow(order).to receive(:user) { instance_double(Spree::User, default_card: nil) }
+              end
 
               it "adds an error to the order and does not update the payment" do
                 expect(payment).to_not receive(:update_attributes)
@@ -105,8 +107,23 @@ module OpenFoodNetwork
               end
             end
 
-            context "but a credit card is available on the subscription" do
-              before { expect(updater).to receive(:ensure_credit_card) { true } }
+            context "and the customer has not authorised the shop to charge to credit cards" do
+              before do
+                allow(order).to receive(:user) { instance_double(Spree::User, default_card: create(:credit_card)) }
+                allow(order).to receive(:customer) { instance_double(Customer, allow_charges?: false) }
+              end
+
+              it "adds an error to the order and does not update the payment" do
+                expect(payment).to_not receive(:update_attributes)
+                expect{ updater.update! }.to change(order.errors[:base], :count).from(0).to(1)
+              end
+            end
+
+            context "and an authorised default credit card is available to charge" do
+              before do
+                allow(order).to receive(:user) { instance_double(Spree::User, default_card: create(:credit_card)) }
+                allow(order).to receive(:customer) { instance_double(Customer, allow_charges?: true) }
+              end
 
               context "when the payment total doesn't match the outstanding balance on the order" do
                 before { allow(order).to receive(:outstanding_balance) { 5 } }
@@ -151,8 +168,10 @@ module OpenFoodNetwork
       let!(:payment) { create(:payment, source: nil) }
       before { allow(updater).to receive(:payment) { payment } }
 
-      context "when no saved credit card is found" do
-        before { allow(updater).to receive(:saved_credit_card) { nil } }
+      context "when no default credit card is found" do
+        before do
+          allow(order).to receive(:user) { instance_double(Spree::User, default_card: nil) }
+        end
 
         it "returns false and down not update the payment source" do
           expect do
@@ -161,14 +180,34 @@ module OpenFoodNetwork
         end
       end
 
-      context "when a saved credit card is found" do
+      context "when a default credit card is found" do
         let(:credit_card) { create(:credit_card) }
-        before { allow(updater).to receive(:saved_credit_card) { credit_card } }
+        before do
+          allow(order).to receive(:user) { instance_double(Spree::User, default_card: credit_card) }
+        end
 
-        it "returns true and stores the credit card as the payment source" do
-          expect do
-            expect(updater.send(:ensure_credit_card)).to be true
-          end.to change(payment, :source_id).from(nil).to(credit_card.id)
+        context "and charge have not been authorised by the customer" do
+          before do
+            allow(order).to receive(:customer) { instance_double(Customer, allow_charges?: false) }
+          end
+
+          it "returns false and does not update the payment source" do
+            expect do
+              expect(updater.send(:ensure_credit_card)).to be false
+            end.to_not change(payment, :source).from(nil)
+          end
+        end
+
+        context "and charges have been authorised by the customer" do
+          before do
+            allow(order).to receive(:customer) { instance_double(Customer, allow_charges?: true) }
+          end
+
+          it "returns true and stores the credit card as the payment source" do
+            expect do
+              expect(updater.send(:ensure_credit_card)).to be true
+            end.to change(payment, :source_id).from(nil).to(credit_card.id)
+          end
         end
       end
     end

@@ -42,8 +42,12 @@ module OpenFoodNetwork
     end
 
     def ensure_credit_card
-      return false if saved_credit_card.blank?
+      return false if saved_credit_card.blank? || !allow_charges?
       payment.update_attributes(source: saved_credit_card)
+    end
+
+    def allow_charges?
+      order.customer.allow_charges?
     end
 
     def saved_credit_card
