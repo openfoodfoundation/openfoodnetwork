@@ -46,11 +46,13 @@ class SubscriptionConfirmJob
   end
 
   def send_confirm_email
+    @order.update!
     record_success(@order)
     SubscriptionMailer.confirmation_email(@order).deliver
   end
 
   def send_failed_payment_email
+    @order.update!
     record_and_log_error(:failed_payment, @order)
     SubscriptionMailer.failed_payment_email(@order).deliver
   end
