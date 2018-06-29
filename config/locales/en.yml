@@ -1099,6 +1099,33 @@ en:
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
+    footer:
+      footer_global_headline: "OFN Global"
+      footer_global_home: "Home"
+      footer_global_news: "News"
+      footer_global_about: "About"
+      footer_global_contact: "Contact"
+      footer_sites_headline: "OFN Sites"
+      footer_sites_developer: "Developer"
+      footer_sites_community: "Community"
+      footer_sites_userguide: "User Guide"
+      footer_secure: "Secure and trusted."
+      footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
+      footer_contact_headline: "Keep in touch"
+      footer_contact_email: "Email us"
+      footer_nav_headline: "Navigate"
+      footer_join_headline: "Join us"
+      footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
+      footer_join_cta: "Tell me more!"
+      footer_legal_call: "Read our"
+      footer_legal_tos: "Terms and conditions"
+      footer_legal_visit: "Find us on"
+      footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+      footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
+      footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
+      footer_data_privacy_policy: "privacy policy"
+      footer_data_cookies_policy: "cookies policy"
+      footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
   shop:
     messages:
       login: "login"
@@ -1238,36 +1265,6 @@ en:
   ie_warning_ie: Upgrade Internet Explorer
   ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
 
-  footer_global_headline: "OFN Global"
-  footer_global_home: "Home"
-  footer_global_news: "News"
-  footer_global_about: "About"
-  footer_global_contact: "Contact"
-
-  footer_sites_headline: "OFN Sites"
-  footer_sites_developer: "Developer"
-  footer_sites_community: "Community"
-  footer_sites_userguide: "User Guide"
-
-  footer_secure: "Secure and trusted."
-  footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
-
-  footer_contact_headline: "Keep in touch"
-  footer_contact_email: "Email us"
-
-  footer_nav_headline: "Navigate"
-  footer_join_headline: "Join us"
-  footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
-  footer_join_cta: "Tell me more!"
-
-  footer_legal_call: "Read our"
-  footer_legal_tos: "Terms and conditions"
-  footer_legal_visit: "Find us on"
-  footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
-  footer_legal_data_text: "We take good care of your data."
-  footer_legal_data_call:  "See our"
-  footer_legal_data_cookies_policy: "cookies policy"
-  footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
   legal:
     cookies_policy:
       header: "How We Use Cookies"
@@ -2095,12 +2092,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycles: "Order Cycles"
   enterprise_relationships: "Enterprise permissions"
   remove_tax: "Remove tax"
-  enterprise_terms_of_service: "Enterprise Terms of Service"
-  enterprises_require_tos: "Enterprises must accept Terms of Service"
+
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."
   enterprise_tos_agree: "I agree to the above Terms of Service"
+
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
   admin_shared_address_1: "Address"
@@ -2650,6 +2647,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       variants:
         autocomplete:
           producer_name: Producer
+      general_settings:
+        edit:
+          legal_settings: "Legal Settings"
+          cookies_consent_banner_toggle: "Display cookies consent banner"
+          privacy_policy_url: "Privacy Policy URL"
+          enterprises_require_tos: "Enterprises must accept Terms of Service"
     checkout:
       payment:
         stripe:

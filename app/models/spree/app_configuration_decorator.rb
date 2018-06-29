@@ -8,8 +8,10 @@ Spree::AppConfiguration.class_eval do
   preference :enable_embedded_shopfronts, :boolean, default: false
   preference :embedded_shopfronts_whitelist, :text, default: nil
 
-  # Terms of Service Preferences
+  # Legal Preferences
   preference :enterprises_require_tos, :boolean, default: false
+  preference :privacy_policy_url, :string, default: nil
+  preference :cookies_consent_banner_toggle, :boolean, default: false
 
   # Tax Preferences
   preference :products_require_tax_category, :boolean, default: false

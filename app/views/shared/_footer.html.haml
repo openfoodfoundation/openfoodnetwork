@@ -11,33 +11,32 @@
     .row
       .small-12.medium-4.medium-offset-2.columns.text-center
         %h6
-          = t :footer_global_headline
+          = t '.footer_global_headline'
         %p
           %a{href: "http://www.openfoodnetwork.org", target: "_blank"}
-            = t :footer_global_home
+            = t '.footer_global_home'
           %span &#124;
           %a{href: "http://www.openfoodnetwork.org/news/", target: "_blank"}
-            = t :footer_global_news
+            = t '.footer_global_news'
           %span &#124;
           %a{href: "http://www.openfoodnetwork.org/about/history-team/", target: "_blank"}
-            = t :footer_global_about
+            = t '.footer_global_about'
           %span &#124;
           %a{href: "http://www.openfoodnetwork.org/contact/", target: "_blank"}
-            = t :footer_global_contact
-
+            = t '.footer_global_contact'
 
       .small-12.medium-4.columns.text-center
         %h6
-          = t :footer_sites_headline
+          = t '.footer_sites_headline'
         %p
           %a{href: "http://dev.openfoodnetwork.org", target: "_blank"}
-            = t :footer_sites_developer
+            = t '.footer_sites_developer'
           %span &#124;
           %a{href: "http://community.openfoodnetwork.org", target: "_blank"}
-            = t :footer_sites_community
+            = t '.footer_sites_community'
           %span &#124;
           %a{href: "http://www.openfoodnetwork.org/platform/user-guide/", target: "_blank"}
-            = t :footer_sites_userguide
+            = t '.footer_sites_userguide'
 
       .medium-2.columns.text-center
         / Placeholder
@@ -49,9 +48,9 @@
           %i.ofn-i_017-locked
       .small-12.medium-6.columns.text-center
         %p.text-big.secure-text
-          = t :footer_secure
+          = t '.footer_secure'
         %p.secure-text
-          = t :footer_secure_text
+          = t '.footer_secure_text'
       .small-12.medium-2.columns
 
     .row
@@ -63,7 +62,7 @@
       .small-6.medium-3.medium-offset-2.columns.text-left
         // This is the instance-managed set of links:
         %h4
-          = t :footer_contact_headline
+          = t '.footer_contact_headline'
         %p.social-icons
           - if ContentConfig.footer_facebook_url.present?
             %a{href: ContentConfig.footer_facebook_url}
@@ -86,13 +85,13 @@
         - if ContentConfig.footer_email.present?
           %p
             %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
-              = t :footer_contact_email
+              = t '.footer_contact_email'
         = render_markdown(ContentConfig.footer_links_md).html_safe
 
 
       .small-6.medium-3.columns.text-left
         %h4
-          = t :footer_nav_headline
+          = t '.footer_nav_headline'
         %p
           %a{href: "/shops"}
             = t :label_shops
@@ -111,11 +110,11 @@
 
       .small-12.medium-2.columns.text-left
         %h4
-          = t :footer_join_headline
+          = t '.footer_join_headline'
         %p
-          = t :footer_join_body
+          = t '.footer_join_body'
           %a{href:  "/sell"}
-            = t :footer_join_cta
+            = t '.footer_join_cta'
 
       .medium-2.columns.text-center
         / Placeholder
@@ -131,21 +130,22 @@
           %img{src: ContentConfig.footer_logo.url, width: "220"}
       .small-12.medium-5.columns.text-left
         %p.text-small
-          = t :footer_legal_call
+          = t '.footer_legal_call'
           %a{href: ContentConfig.footer_tos_url}
-            = t :footer_legal_tos
+            = t '.footer_legal_tos'
           &#124;
-          = t :footer_legal_visit
+          = t '.footer_legal_visit'
           %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} GitHub
         %p.text-small
-          = t :footer_legal_text_html, {content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)')}
+          = t '.footer_legal_text_html', {content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)' )}
         %p.text-small
           %div
-            = t :footer_legal_data_text
-            = t :footer_legal_data_call
-            %a{'cookies-policy-modal'=> true, 'cookies-banner'=> !CookiesConsent.new(cookies, request.host).exists? }
-              = t :footer_legal_data_cookies_policy
-
+            - cookies_policy_link = link_to( t( '.footer_data_cookies_policy' ), '', 'cookies-policy-modal' => true, 'cookies-banner' => !CookiesConsent.new(cookies, request.host).exists? && Spree::Config.cookies_consent_banner_toggle)
+            - privacy_policy_link = link_to( t( '.footer_data_privacy_policy' ), Spree::Config.privacy_policy_url, :target => '_blank' )
+            - if Spree::Config.privacy_policy_url.present?
+              = t '.footer_data_text_with_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe, privacy_policy: privacy_policy_link.html_safe }
+            - else
+              = t '.footer_data_text_without_privacy_policy_html', {cookies_policy: cookies_policy_link.html_safe }
       .medium-2.columns.text-center
         / Placeholder
     -if ENV['SKYLIGHT_PUBLIC_DASHBOARD_URL'].present?
@@ -157,4 +157,4 @@
       .row
         .small-12.medium-8.medium-offset-2.columns.text-center
           .text.small
-            = t :footer_skylight_dashboard_html, {dashboard: link_to('Skylight', ENV['SKYLIGHT_PUBLIC_DASHBOARD_URL'], target: "_blank")}
+            = t '.footer_skylight_dashboard_html', {dashboard: link_to('Skylight', ENV['SKYLIGHT_PUBLIC_DASHBOARD_URL'], target: "_blank")}
