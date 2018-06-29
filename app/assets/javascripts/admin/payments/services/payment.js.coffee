@@ -43,5 +43,5 @@ angular.module('admin.payments').factory 'Payment', (AdminStripeElements, curren
       PaymentResource.create({order_id: munged.order_id}, munged, (response, headers, status)=>
         $window.location.pathname = "/admin/orders/" + munged.order_id + "/payments"
       , (response) ->
-        StatusMessage.display 'error', t("error saving payment")
+        StatusMessage.display 'error', t("spree.admin.payments.source_forms.stripe.error_saving_payment")
       )
