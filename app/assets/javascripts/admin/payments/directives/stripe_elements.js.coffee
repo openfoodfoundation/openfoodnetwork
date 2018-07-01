@@ -10,7 +10,7 @@ angular.module('admin.payments').directive "stripeElements", ($injector, AdminSt
       stripe = $injector.get('stripeObject')
 
       card = stripe.elements().create 'card',
-        hidePostalCode: true
+        hidePostalCode: false
         style:
           base:
             fontFamily: "Roboto, Arial, sans-serif"
