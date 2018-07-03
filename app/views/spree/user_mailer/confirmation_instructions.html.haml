@@ -1,7 +1,7 @@
 %h3
   = t :email_signup_greeting
 %p.lead
-  = t :email_signup_welcome, sitename: Spree::Config[:site_name]
+  = t :email_signup_welcome, sitename: @instance
 %p= t :email_confirmation_activate_account
 
 %p.callout
@@ -13,3 +13,6 @@
 = render 'shared/mailers/signoff'
 
 = render 'shared/mailers/social_and_contact'
+
+%p.notice
+  = t :email_confirmation_notice_unexpected, sitename: @instance, contact: @contact
