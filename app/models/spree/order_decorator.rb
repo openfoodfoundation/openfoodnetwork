@@ -30,20 +30,14 @@ Spree::Order.class_eval do
   checkout_flow do
     go_to_state :address
     go_to_state :delivery
-    go_to_state :payment, :if => lambda { |order|
-      # Fix for #2191
-      if order.shipping_method.andand.delivery?
-        if order.ship_address.andand.valid?
-          order.create_shipment!
-          order.update_totals
-        end
-      end
+    go_to_state :payment, if: ->(order) {
+      order.update_totals
       order.payment_required?
     }
     # NOTE: :confirm step was removed because we were not actually using it
     # go_to_state :confirm, :if => lambda { |order| order.confirmation_required? }
     go_to_state :complete
-    remove_transition :from => :delivery, :to => :confirm
+    remove_transition from: :delivery, to: :confirm
   end
 
   # -- Scopes
