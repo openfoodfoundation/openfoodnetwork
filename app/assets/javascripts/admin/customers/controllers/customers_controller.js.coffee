@@ -6,6 +6,9 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
   $scope.customerLimit = 20
   $scope.customers = Customers.all
   $scope.columns = Columns.columns
+  $scope.sorting =
+    predicate: ""
+    reverse: true
 
   $scope.confirmRefresh = (event) ->
     event.preventDefault() unless pendingChanges.unsavedCount() == 0 || confirm(t("unsaved_changes_warning"))

@@ -48,6 +48,21 @@ feature 'Customers' do
         expect(page).to have_selector "tr#c_#{customer2.id}"
         fill_in "quick_search", with: ""
 
+        # Sorting when the header of a sortable column is clicked
+        customer_emails = [customer1.email, customer2.email].sort
+        within "#customers thead" do
+          click_on "Email"
+        end
+        expect(page).to have_selector("#customers .customer:nth-child(1) .email", text: customer_emails[0])
+        expect(page).to have_selector("#customers .customer:nth-child(2) .email", text: customer_emails[1])
+
+        # Then sorting in reverse when the header is clicked again
+        within "#customers thead" do
+          click_on "Email"
+        end
+        expect(page).to have_selector("#customers .customer:nth-child(1) .email", text: customer_emails[1])
+        expect(page).to have_selector("#customers .customer:nth-child(2) .email", text: customer_emails[0])
+
         # Toggling columns
         expect(page).to have_selector "th.email"
         expect(page).to have_content customer1.email
