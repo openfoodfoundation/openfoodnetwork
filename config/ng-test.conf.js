@@ -43,7 +43,14 @@ module.exports = function(config) {
 
     autoWatch: true,
 
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadlessNoSandbox'],
+
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
 
     junitReporter: {
       outputFile: 'log/testacular-unit.xml',
