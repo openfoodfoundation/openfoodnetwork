@@ -82,6 +82,40 @@ feature %q{
         expect(page).to have_selector "td.max", text: li2.max_quantity.to_s, :visible => true
       end
     end
+
+    describe "sorting of line items" do
+      let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now) }
+      let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now) }
+      let!(:li1) { create(:line_item, order: o1) }
+      let!(:li2) { create(:line_item, order: o2) }
+
+      before do
+        visit spree.admin_bulk_order_management_path
+      end
+
+      it "sorts by customer name when the customer name header is clicked" do
+        customer_names = [o1.name, o2.name].sort
+
+        within "#listing_orders thead" do
+          click_on "Name"
+        end
+
+        expect(page).to have_selector("#listing_orders .line_item:nth-child(1) .full_name", text: customer_names[0])
+        expect(page).to have_selector("#listing_orders .line_item:nth-child(2) .full_name", text: customer_names[1])
+      end
+
+      it "sorts by customer name in reverse when the customer name header is clicked twice" do
+        customer_names = [o1.name, o2.name].sort.reverse
+
+        within "#listing_orders thead" do
+          click_on "Name"
+          click_on "Name"
+        end
+
+        expect(page).to have_selector("#listing_orders .line_item:nth-child(1) .full_name", text: customer_names[1])
+        expect(page).to have_selector("#listing_orders .line_item:nth-child(2) .full_name", text: customer_names[0])
+      end
+    end
   end
 
   context "altering line item properties" do

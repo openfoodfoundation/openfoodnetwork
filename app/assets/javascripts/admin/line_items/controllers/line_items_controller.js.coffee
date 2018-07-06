@@ -10,6 +10,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.selectedUnitsVariant = {}
   $scope.sharedResource = false
   $scope.columns = Columns.columns
+  $scope.sorting =
+    predicate: ""
+    reverse: true
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
