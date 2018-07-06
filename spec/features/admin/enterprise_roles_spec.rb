@@ -43,6 +43,8 @@ feature %q{
       select 'One', from: 'enterprise_role_enterprise_id'
       click_button 'Create'
 
+      # Wait for row to appear since have_relationship doesn't wait
+      page.should have_selector 'tr', count: 3
       page.should have_relationship u, e
       EnterpriseRole.where(user_id: u, enterprise_id: e).should be_present
     end
@@ -78,6 +80,8 @@ feature %q{
         end
       end
 
+      # Wait for row to disappear, otherwise have_relationship waits 30 seconds.
+      page.should_not have_selector "#enterprise_role_#{er.id}"
       page.should_not have_relationship u, e
       EnterpriseRole.where(id: er.id).should be_empty
     end

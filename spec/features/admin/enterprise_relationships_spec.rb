@@ -48,6 +48,8 @@ feature %q{
       select2_select 'Two', from: 'enterprise_relationship_child_id'
       click_button 'Create'
 
+      # Wait for row to appear since have_relationship doesn't wait
+      page.should have_selector 'tr', count: 2
       page.should have_relationship e1, e2, ['to add to order cycle', 'to add products to inventory', 'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
       er.should be_present
