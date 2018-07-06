@@ -35,8 +35,6 @@ before_script:
   - cp config/application.yml.example config/application.yml
   - RAILS_ENV=test bundle exec rake db:create db:schema:load
 
-  # Only install PhantomJS if it is not already present (ie. cached)
-  #- npm list -g phantomjs-prebuilt@~2.1.7 --depth=0 || npm install -g phantomjs-prebuilt@~2.1.7
   - export PATH=`npm bin -g`:$PATH
 
   - >
@@ -53,7 +51,7 @@ script:
     else
       echo "Skipping karma run"
     fi
-  #- "bundle exec rake 'knapsack:rspec[--format progress --tag ~performance]'"
+  - "bundle exec rake 'knapsack:rspec[--format progress --tag ~performance]'"
 
 after_success:
   - >
