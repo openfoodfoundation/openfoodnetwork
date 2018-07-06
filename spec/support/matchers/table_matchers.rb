@@ -2,19 +2,11 @@ RSpec::Matchers.define :have_table_row do |row|
 
   match do |node|
     @row = row
-
-    text_without_blanks = row.select(&:present?).join(" ").strip
-    return false unless node.has_selector? "tr", text: text_without_blanks # Check for appearance
-
     rows_under(node).include? row # Robust check of columns
   end
 
   match_when_negated do |node|
     @row = row
-
-    text_without_blanks = row.select(&:present?).join(" ").strip
-    return false unless node.has_no_selector? "tr", text: text_without_blanks # Check for appearance
-
     !rows_under(node).include? row # Robust check of columns
   end
 
