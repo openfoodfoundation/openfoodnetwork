@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Api::Admin::SubscriptionCustomerSerializer do
   let(:address) { build(:address) }
   let(:customer) { build(:customer) }

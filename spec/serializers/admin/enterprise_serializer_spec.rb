@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Api::Admin::EnterpriseSerializer do
   let(:enterprise) { create(:distributor_enterprise) }
   it "serializes an enterprise" do

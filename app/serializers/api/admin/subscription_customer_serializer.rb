@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 module Api
   module Admin
     # Used by admin subscription form
