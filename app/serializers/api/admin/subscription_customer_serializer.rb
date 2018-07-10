@@ -6,13 +6,8 @@ module Api
     # Searches for a ship and bill addresses for the customer
     # where they are not already explicitly set
     class SubscriptionCustomerSerializer < CustomerSerializer
-      def bill_address
-        finder.bill_address
-      end
-
-      def ship_address
-        finder.ship_address
-      end
+      delegate :bill_address, to: :finder
+      delegate :ship_address, to: :finder
 
       def finder
         @finder ||= OpenFoodNetwork::AddressFinder.new(object, object.email)
