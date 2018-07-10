@@ -75,7 +75,7 @@ en:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
         spree/order:
-          no_card: There are no valid credit cards available
+          no_card: There are no authorised credit cards available to charge
         order_cycle:
           attributes:
             orders_close_at:
@@ -97,11 +97,11 @@ en:
             payment_method:
               not_available_to_shop: "is not available to %{shop}"
               invalid_type: "must be a Cash or Stripe method"
+              charges_not_allowed: "^Credit card charges are not allowed by this customer"
+              no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
-            credit_card:
-              not_available: "is not available"
-              blank: "is required"
+
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -1025,7 +1025,9 @@ en:
         invalid_error: Oops! Please fill in all of the required fields...
         allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
         credit_card: Credit Card
-        no_cards_available: No cards available
+        charges_not_allowed: Charges are not allowed by this customer
+        no_default_card: Customer has no cards available to charge
+        card_ok: Customer has a card available to charge
       loading_flash:
         loading: LOADING SUBSCRIPTIONS
       review:

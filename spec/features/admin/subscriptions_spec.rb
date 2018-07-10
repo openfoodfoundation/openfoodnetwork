@@ -124,9 +124,7 @@ feature 'Subscriptions' do
       let(:address) { create(:address) }
       let!(:customer_user) { create(:user) }
       let!(:credit_card1) { create(:credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10, year: 2030) }
-      let!(:credit_card2) { create(:credit_card, user: customer_user, cc_type: 'master', last_digits: 9999, month: 2, year: 2044) }
-      let!(:credit_card3) { create(:credit_card, cc_type: 'visa', last_digits: 5555, month: 6, year: 2066) }
-      let!(:customer) { create(:customer, enterprise: shop, bill_address: address, user: customer_user) }
+      let!(:customer) { create(:customer, enterprise: shop, bill_address: address, user: customer_user, allow_charges: true) }
       let!(:product1) { create(:product, supplier: shop) }
       let!(:product2) { create(:product, supplier: shop) }
       let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
@@ -149,21 +147,14 @@ feature 'Subscriptions' do
         select2_select payment_method.name, from: 'payment_method_id'
         select2_select shipping_method.name, from: 'shipping_method_id'
 
-        # Credit card
-        card1_option = "Visa x-1111 #{I18n.t(:card_expiry_abbreviation)}:10/2030"
-        card2_option = "Master x-9999 #{I18n.t(:card_expiry_abbreviation)}:02/2044"
-        card3_option = "Visa x-5555 #{I18n.t(:card_expiry_abbreviation)}:06/2066"
-        expect(page).to have_select2 'credit_card_id', with_options: [card1_option, card2_option], without_options: [card3_option]
-
-        # No date or credit card filled out, so error returned
+        # No date, so error returned
         click_button('Next')
-        expect(page).to have_content 'can\'t be blank', count: 2
+        expect(page).to have_content 'can\'t be blank', count: 1
         expect(page).to have_content 'Oops! Please fill in all of the required fields...'
         find_field('begins_at').click
         within(".ui-datepicker-calendar") do
           find('.ui-datepicker-today').click
         end
-        select2_select card2_option, from: 'credit_card_id'
 
         click_button('Next')
         expect(page).to have_content 'BILLING ADDRESS'
@@ -263,7 +254,6 @@ feature 'Subscriptions' do
         expect(subscription.shipping_method).to eq shipping_method
         expect(subscription.bill_address.firstname).to eq 'Freda'
         expect(subscription.ship_address.firstname).to eq 'Freda'
-        expect(subscription.credit_card_id).to eq credit_card2.id
 
         # Standing Line Items are created
         expect(subscription.subscription_line_items.count).to eq 1
@@ -287,6 +277,7 @@ feature 'Subscriptions' do
         let!(:variant3_oc) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.from_now, orders_close_at: 7.days.from_now) }
         let!(:variant3_ex) { variant3_oc.exchanges.create(sender: shop, receiver: shop, variants: [variant3]) }
         let!(:payment_method) { create(:payment_method, distributors: [shop]) }
+        let!(:stripe_payment_method) { create(:stripe_payment_method, name: 'Credit Card', distributors: [shop], preferred_enterprise_id: shop.id) }
         let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
         let!(:subscription) {
           create(:subscription,
@@ -306,6 +297,13 @@ feature 'Subscriptions' do
           click_button 'edit-details'
           expect(page).to have_selector '#s2id_customer_id.select2-container-disabled'
           expect(page).to have_selector '#s2id_schedule_id.select2-container-disabled'
+
+          # Can't use a Stripe payment method because customer does not allow it
+          select2_select stripe_payment_method.name, from: 'payment_method_id'
+          expect(page).to have_content I18n.t('admin.subscriptions.details.charges_not_allowed')
+          click_button 'Save Changes'
+          expect(page).to have_content 'Credit card charges are not allowed by this customer'
+          select2_select payment_method.name, from: 'payment_method_id'
           click_button 'Review'
 
           # Existing products should be visible

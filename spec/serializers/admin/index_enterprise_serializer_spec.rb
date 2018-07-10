@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Api::Admin::IndexEnterpriseSerializer do
   include AuthenticationWorkflow
 
