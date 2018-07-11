@@ -47,7 +47,7 @@ Push your changes to a branch on your fork:
 
 ## Submitting a Pull Request
 
-Use the GitHub UI to submit a [new pull request][pr] against upstream/master. To increase the chances that your pull request is swiftly accepted please have a look at our guide to [[making a great pull request]].
+Use the GitHub UI to submit a [new pull request][pr] against upstream/master. To increase the chances that your pull request is swiftly accepted please have a look at our guide to [making a great pull request][great-pr].
 
 TL;DR:
 * Write tests
