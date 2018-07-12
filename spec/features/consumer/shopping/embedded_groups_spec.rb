@@ -2,8 +2,6 @@ require 'spec_helper'
 
 feature "Using embedded shopfront functionality", js: true do
 
-  Capybara.server_port = 9999
-
   describe 'embedded groups' do
     let(:enterprise) { create(:distributor_enterprise) }
     let!(:group) { create(:enterprise_group, enterprises: [enterprise], permalink: 'group1', on_front_page: true) }
@@ -13,7 +11,7 @@ feature "Using embedded shopfront functionality", js: true do
       Spree::Config[:embedded_shopfronts_whitelist] = 'test.com'
       page.driver.browser.js_errors = false
       allow_any_instance_of(ActionDispatch::Request).to receive(:referer).and_return('https://www.test.com')
-      Capybara.current_session.driver.visit('spec/support/views/group_iframe_test.html')
+      visit "/embedded-group-preview.html?group1"
     end
 
     it "displays in an iframe" do
@@ -69,9 +67,9 @@ feature "Using embedded shopfront functionality", js: true do
   private
   
   def on_embedded_page
-      expect(page).to have_selector 'iframe#group_test_iframe'
+      expect(page).to have_selector "iframe"
 
-      within_frame 'group_test_iframe' do
+      within_frame :frame do
         yield
       end
   end
