@@ -53,12 +53,17 @@ feature "Using embedded shopfront functionality", js: true do
       end
     end
 
-    it 'opens links to shops in a new window' do
+    it "opens links to shops in a new window" do
       on_embedded_page do
         within 'div#group-page' do
-          enterprise_links = page.all(:xpath, "//*[contains(@href, 'enterprise-5/shop')]", :visible => :false).count
-          enterprise_links_with_target_blank = page.all(:xpath, "//*[contains(@href, 'enterprise-5/shop') and @target = '_blank']", :visible => :false).count
-          expect(enterprise_links).to equal(enterprise_links_with_target_blank)
+          shop_links_xpath = "//*[contains(@href, '#{enterprise.permalink}/shop')]"
+
+          expect(page).to have_xpath shop_links_xpath, visible: false
+
+          shop_links = page.all(:xpath, shop_links_xpath, visible: false)
+          shop_links.each do |link|
+            expect(link[:target]).to eq "_blank"
+          end
         end
       end
     end
