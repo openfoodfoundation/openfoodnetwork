@@ -1077,6 +1077,14 @@ en:
       stripe_connect_settings:
         resource: Stripe Connect configuration
 
+# API
+#
+  api:
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "Logo does not exist"
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "Promo image does not exist"
+
 # Frontend views
 #
 # These keys are referenced relatively like `t('.message')` in

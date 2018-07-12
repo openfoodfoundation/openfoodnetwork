@@ -95,7 +95,11 @@ Openfoodnetwork::Application.routes.draw do
       post :update_image, on: :member
       get :managed, on: :collection
       get :accessible, on: :collection
+
+      resource :logo, only: [:destroy]
+      resource :promo_image, only: [:destroy]
     end
+
     resources :order_cycles do
       get :managed, on: :collection
       get :accessible, on: :collection
