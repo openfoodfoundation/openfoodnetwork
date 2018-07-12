@@ -4,14 +4,14 @@ feature "Using embedded shopfront functionality", js: true do
 
   describe 'embedded groups' do
     let(:enterprise) { create(:distributor_enterprise) }
-    let!(:group) { create(:enterprise_group, enterprises: [enterprise], permalink: 'group1', on_front_page: true) }
+    let(:group) { create(:enterprise_group, enterprises: [enterprise]) }
 
     before do
       Spree::Config[:enable_embedded_shopfronts] = true
       Spree::Config[:embedded_shopfronts_whitelist] = 'test.com'
       page.driver.browser.js_errors = false
       allow_any_instance_of(ActionDispatch::Request).to receive(:referer).and_return('https://www.test.com')
-      visit "/embedded-group-preview.html?group1"
+      visit "/embedded-group-preview.html?#{group.permalink}"
     end
 
     it "displays in an iframe" do
