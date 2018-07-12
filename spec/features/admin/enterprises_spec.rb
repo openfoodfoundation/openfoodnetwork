@@ -455,8 +455,11 @@ feature %q{
         click_link "Properties"
       end
 
+      # Bug: https://github.com/openfoodfoundation/openfoodnetwork/issues/2453
       accept_alert do
-        within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+        accept_alert do
+          within("#spree_producer_property_#{pp.id}") { page.find('a.remove_fields').click }
+        end
       end
 
       click_button 'Update'
