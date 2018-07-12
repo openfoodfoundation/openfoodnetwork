@@ -8,7 +8,6 @@ Openfoodnetwork::Application.routes.draw do
   get "/t/products/:id", to: redirect("/")
   get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
-  get "/#/login", to: "home#index", as: :spree_login
   get "/login", to: redirect("/#/login")
 
   get "/discourse/login", to: "discourse_sso#login"
