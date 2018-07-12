@@ -7,8 +7,6 @@ feature "Using embedded shopfront functionality", js: true do
   include CheckoutWorkflow
   include UIComponentHelper
 
-  Capybara.server_port = 9999
-
   describe "using iframes" do
     let(:distributor) { create(:distributor_enterprise, name: 'My Embedded Hub', permalink: 'test_enterprise', with_payment_and_shipping: true) }
     let(:supplier) { create(:supplier_enterprise) }
@@ -24,9 +22,8 @@ feature "Using embedded shopfront functionality", js: true do
       Spree::Config[:enable_embedded_shopfronts] = true
       Spree::Config[:embedded_shopfronts_whitelist] = 'test.com'
 
-      page.driver.browser.js_errors = false
       allow_any_instance_of(ActionDispatch::Request).to receive(:referer).and_return('https://www.test.com')
-      Capybara.current_session.driver.visit('spec/support/views/iframe_test.html')
+      visit "/embedded-shop-preview.html?#{distributor.permalink}"
     end
 
     after do
@@ -34,9 +31,7 @@ feature "Using embedded shopfront functionality", js: true do
     end
 
     it "displays modified shopfront layout" do
-      expect(page).to have_selector 'iframe#test_iframe'
-
-      within_frame 'test_iframe' do
+      on_embedded_page do
         within 'nav.top-bar' do
           expect(page).to have_selector 'ul.left', visible: false
           expect(page).to have_selector 'ul.center', visible: false
@@ -48,7 +43,7 @@ feature "Using embedded shopfront functionality", js: true do
     end
 
     xit "allows shopping and checkout" do
-      within_frame 'test_iframe' do
+      on_embedded_page do
         fill_in "variants[#{variant.id}]", with: 1
         wait_until_enabled 'input.add_to_cart'
 
@@ -97,7 +92,7 @@ feature "Using embedded shopfront functionality", js: true do
     end
 
     it "redirects to embedded hub on logout when embedded" do
-      within_frame 'test_iframe' do
+      on_embedded_page do
 
         find('ul.right li#login-link a').click
         login_with_modal
@@ -108,6 +103,16 @@ feature "Using embedded shopfront functionality", js: true do
         expect(page).to have_text 'My Embedded Hub'
       end
     end
+  end
+
+  private
+  
+  def on_embedded_page
+      expect(page).to have_selector "iframe"
+
+      within_frame :frame do
+        yield
+      end
   end
 
   def login_with_modal
