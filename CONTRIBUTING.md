@@ -30,6 +30,10 @@ If you want to run the whole test suite, we recommend using a free CI service to
 
     bundle exec rspec spec
 
+## Internationalisation (i18n)
+
+The locale `en` is maintained in the source code, but other locales are managed at [Transifex][ofn-transifex]. Read more about [internationalisation][i18n] in the developer wiki.
+
 ## Making a change
 
 Make your changes to the codebase. We recommend using TDD. Add a test, make changes and get the test suite back to green.
@@ -66,3 +70,5 @@ From here, your pull request will progress through the [Review, Test, Merge & De
 [rebase]: https://www.atlassian.com/git/tutorials/merging-vs-rebasing/workflow-walkthrough
 [travis]: https://travis-ci.org/
 [semaphore]: https://semaphoreci.com/
+[ofn-transifex]: https://www.transifex.com/open-food-foundation/open-food-network/
+[i18n]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n
