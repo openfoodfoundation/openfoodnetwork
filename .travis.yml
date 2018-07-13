@@ -42,7 +42,7 @@ before_script:
 
 script:
   - 'if [ "$KARMA" = "true" ]; then bundle exec rake karma:run; else echo "Skipping karma run"; fi'
-  - "bundle exec rake 'knapsack:rspec[--tag ~performance]'"
+  - "bundle exec rake 'knapsack:rspec[--format progress --tag ~performance]'"
 
 after_success:
   - >
