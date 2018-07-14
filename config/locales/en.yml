@@ -516,8 +516,9 @@ en:
         all_saved: "All items saved successfully"
         some_saved: "items saved successfully"
         save_errors: Save errors
-        view_products: View Products
-        view_inventory: View Inventory
+        import_again: Upload Another File
+        view_products: Go To Products Page
+        view_inventory: Go To Inventory Page
 
     variant_overrides:
       loading_flash:

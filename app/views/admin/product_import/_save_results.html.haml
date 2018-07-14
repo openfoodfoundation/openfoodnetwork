@@ -56,8 +56,8 @@
     %a.button.view{href: main_app.admin_inventory_path, ng: {show: 'updates.inventory_created > 0 || updates.inventory_updated > 0'}}
       = t('admin.product_import.save.view_inventory')
 
-    %a.button.view{href: admin_products_path + '?latest_import=true', ng: {show: 'updates.products_created > 0 || updates.products_updated > 0'}}
+    %a.button.view{href: admin_products_path, ng: {show: 'updates.products_created > 0 || updates.products_updated > 0'}}
       = t('admin.product_import.save.view_products')
 
   %a.button{href: main_app.admin_product_import_path}
-    = t('admin.back')
+    = t('admin.product_import.save.import_again')

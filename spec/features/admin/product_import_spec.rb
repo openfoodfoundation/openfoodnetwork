@@ -72,7 +72,7 @@ feature "Product Import", js: true do
 
       wait_until { page.find("a.button.view").present? }
 
-      click_link 'View Products'
+      click_link I18n.t('admin.product_import.save.view_products')
 
       expect(page).to have_content 'Bulk Edit Products'
       wait_until { page.find("#p_#{potatoes.id}").present? }
@@ -174,7 +174,7 @@ feature "Product Import", js: true do
       potatoes = Spree::Product.find_by_name('Potatoes')
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      click_link 'View Products'
+      click_link I18n.t('admin.product_import.save.view_products')
 
       wait_until { page.find("#p_#{carrots.id}").present? }
 
@@ -251,7 +251,7 @@ feature "Product Import", js: true do
       expect(Float(cabbage_override.price)).to eq 1.50
       expect(cabbage_override.count_on_hand).to eq 2001
 
-      click_link 'View Inventory'
+      click_link I18n.t('admin.product_import.save.view_inventory')
       expect(page).to have_content 'Inventory'
 
       select enterprise2.name, from: "hub_id", visible: false
