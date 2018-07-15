@@ -44,7 +44,7 @@ describe ProductImport::ProductImporter do
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
-      settings = {enterprise.id.to_s => {'import_into' => 'product_list'}}
+      settings = {'import_into' => 'product_list'}
       @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
@@ -131,7 +131,7 @@ describe ProductImport::ProductImporter do
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
-      settings = {enterprise.id.to_s => {'import_into' => 'product_list'}}
+      settings = {'import_into' => 'product_list'}
       @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
