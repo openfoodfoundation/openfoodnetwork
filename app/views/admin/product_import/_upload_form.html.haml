@@ -4,7 +4,7 @@
 
     %h6= t('admin.product_import.index.choose_import_type')
     %br
-    = select_tag "import_into", options_for_select({"#{t('admin.product_import.index.product_list')}" => :product_list, "#{t('admin.product_import.index.inventories')}" => :inventories}), {class: 'select2 select2-no-search', 'ng-model' => 'settings.import_into'}
+    = select_tag "settings[import_into]", options_for_select({"#{t('admin.product_import.index.product_list')}" => :product_list, "#{t('admin.product_import.index.inventories')}" => :inventories}), {class: 'select2 select2-no-search', 'ng-model' => 'settings.import_into'}
     %br
     %br
     %br
@@ -18,8 +18,8 @@
 
     %h6= t('admin.product_import.import.reset_absent?')
     %br
-    = hidden_field_tag "settings[reset_all_absent]", 0
-    = check_box_tag "settings[reset_all_absent]", 1, false, 'ng-model' => 'settings.reset_all_absent'
+    = hidden_field_tag "settings[reset_all_absent]", nil
+    = check_box_tag "settings[reset_all_absent]", true, false, 'ng-model' => 'settings.reset_all_absent'
     %span= t('admin.product_import.import.reset_absent_tip')
     %br
     %br

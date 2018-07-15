@@ -6,7 +6,7 @@ module ProductImport
     include ActiveModel::Conversion
     include ActiveModel::Validations
 
-    attr_reader :updated_ids
+    attr_reader :updated_ids, :import_settings
 
     def initialize(file, current_user, import_settings = {})
       unless file.is_a?(File)
