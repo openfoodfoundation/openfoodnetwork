@@ -122,7 +122,8 @@ class OrderCycle < ActiveRecord::Base
   def clone!
     oc = self.dup
     oc.name = "COPY OF #{oc.name}"
-    oc.orders_open_at = oc.orders_close_at = nil
+    oc.orders_open_at = self.orders_open_at
+    oc.orders_close_at = self.orders_close_at
     oc.coordinator_fee_ids = self.coordinator_fee_ids
     oc.preferred_product_selection_from_coordinator_inventory_only = self.preferred_product_selection_from_coordinator_inventory_only
     oc.save!
