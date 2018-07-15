@@ -41,7 +41,7 @@
       %div{ng: {if: 'count((entries | entriesFilterValid:"invalid")) > 0'}}
         %br
         %h5= t('admin.product_import.import.some_invalid_entries')
-        %p= t('admin.product_import.import.save_valid?')
+        %p= t('admin.product_import.import.fix_before_import')
       %div{ng: {show: 'count((entries | entriesFilterValid:"invalid")) == 0'}}
         %br
         %h5= t('admin.product_import.import.no_errors')
@@ -50,7 +50,7 @@
       = hidden_field_tag :filepath, @filepath
       = hidden_field_tag "settings[import_into]", @import_into
 
-      %a.button.proceed{href: '', ng: {click: 'acceptResults()'}}= t('admin.product_import.import.proceed')
+      %a.button.proceed{href: '', ng: {show: 'count((entries | entriesFilterValid:"invalid")) == 0', click: 'acceptResults()'}}= t('admin.product_import.import.proceed')
 
       %a.button{href: main_app.admin_product_import_path}= t('admin.cancel')
 

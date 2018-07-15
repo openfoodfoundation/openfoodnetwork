@@ -107,12 +107,10 @@ feature "Product Import", js: true do
       expect(page).to_not have_selector 'input[type=submit][value="Save"]'
     end
 
-    it "handles validation and saving of named tax and shipping categories" do
+    it "handles saving of named tax and shipping categories" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "Unknown Tax Category", shipping_category.name]
-        csv << ["Peas", "User Enterprise", "Vegetables", "7", "2.50", "1", "kg", tax_category2.name, "Unknown Shipping Category"]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -127,8 +125,7 @@ feature "Product Import", js: true do
 
       import_data
 
-      expect(page).to have_selector '.item-count', text: "3"
-      expect(page).to have_selector '.invalid-count', text: "2"
+      expect(page).to have_selector '.item-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
       expect(page).to_not have_selector '.update-count'
 
@@ -267,8 +264,6 @@ feature "Product Import", js: true do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "Unknown Tax Category", shipping_category.name]
-        csv << ["Peas", "User Enterprise", "Vegetables", "7", "2.50", "1", "kg", tax_category2.name, "Unknown Shipping Category"]
         csv << ["Pumpkin", "User Enterprise", "Vegetables", "3", "3.50", "1", "kg", tax_category.name, ""]
         csv << ["Spinach", "User Enterprise", "Vegetables", "7", "3.60", "1", "kg", "", shipping_category.name]
       end
@@ -307,8 +302,7 @@ feature "Product Import", js: true do
 
       import_data
 
-      expect(page).to have_selector '.item-count', text: "5"
-      expect(page).to have_selector '.invalid-count', text: "2"
+      expect(page).to have_selector '.item-count', text: "3"
       expect(page).to have_selector '.create-count', text: "3"
       expect(page).to_not have_selector '.update-count'
 
@@ -403,16 +397,7 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.create-count', text: "1"
 
       expect(page.body).to have_content 'you do not have permission'
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
-      save_data
-
-      expect(page).to have_selector '.created-count', text: '1'
-
-      expect(Spree::Product.find_by_name('My Carrots')).to be_a Spree::Product
-      expect(Spree::Product.find_by_name('Your Potatoes')).to be_nil
+      expect(page).to_not have_selector 'a.button.proceed', visible: true
     end
   end
 
