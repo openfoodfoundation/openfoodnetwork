@@ -1,0 +1,30 @@
+#upload-sidebar
+  %h5= t('admin.product_import.index.csv_templates')
+
+  %a.download{href: '/product_list_template.csv'}
+    %i.icon-external-link
+    = t('admin.product_import.index.product_list_template')
+
+  %a.download{href: '/inventory_template.csv'}
+    %i.icon-external-link
+    = t('admin.product_import.index.inventory_template')
+
+  %h5= t('admin.product_import.index.category_values')
+
+  %p
+    %strong= t('admin.product_import.index.product_categories')
+
+  - @product_categories.each do |pc|
+    %span.category= pc
+
+  %p
+    %strong= t('admin.product_import.index.tax_categories')
+
+  - @tax_categories.each do |tc|
+    %span.category= tc
+
+  %p
+    %strong= t('admin.product_import.index.shipping_categories')
+
+  - @shipping_categories.each do |sc|
+    %span.category= sc
