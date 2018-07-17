@@ -20,7 +20,7 @@ feature %q{
 
       # When I go to the relationships page
       click_link 'Enterprises'
-      click_link 'Relationships'
+      click_link 'Permissions'
 
       # Then I should see the relationships
       within('table#enterprise-relationships') do
