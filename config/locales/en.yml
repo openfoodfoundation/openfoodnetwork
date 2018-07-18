@@ -470,6 +470,13 @@ en:
         inventories: Inventories
         import: Import
         upload: Upload
+        csv_templates: CSV Templates
+        product_list_template: Download Product List template
+        inventory_template: Download Inventory template
+        category_values: Available Category Values
+        product_categories: Product Categories
+        tax_categories: Tax Categories
+        shipping_categories: Shipping Categories
       import:
         review: Review
         proceed: Proceed

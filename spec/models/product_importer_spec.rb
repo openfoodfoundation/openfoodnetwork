@@ -296,10 +296,10 @@ describe ProductImport::ProductImporter do
   describe "importing items into inventory" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "producer", "category", "on_hand", "price", "units"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "5", "3.20", "500"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50", "500"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "2001", "1.50", "500"]
+        csv << ["name", "supplier", "producer", "on_hand", "price", "units", "unit_type"]
+        csv << ["Beans", "Another Enterprise", "User Enterprise", "5", "3.20", "500", "g"]
+        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "6", "6.50", "500", "g"]
+        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "2001", "1.50", "500", "g"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -422,8 +422,8 @@ describe ProductImport::ProductImporter do
 
     it "allows creating inventories for producers that a user's hub has permission for" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "supplier", "category", "on_hand", "price", "units"]
-        csv << ["Beans", "User Enterprise", "Another Enterprise", "Vegetables", "777", "3.20", "500"]
+        csv << ["name", "producer", "supplier", "on_hand", "price", "units", "unit_type"]
+        csv << ["Beans", "User Enterprise", "Another Enterprise", "777", "3.20", "500", "g"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -449,9 +449,9 @@ describe ProductImport::ProductImporter do
 
     it "does not allow creating inventories for producers that a user's hubs don't have permission for" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units"]
-        csv << ["Beans", "User Enterprise", "Vegetables", "5", "3.20", "500"]
-        csv << ["Sprouts", "User Enterprise", "Vegetables", "6", "6.50", "500"]
+        csv << ["name", "supplier", "on_hand", "price", "units", "unit_type"]
+        csv << ["Beans", "User Enterprise", "5", "3.20", "500", "g"]
+        csv << ["Sprouts", "User Enterprise", "6", "6.50", "500", "g"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -515,9 +515,9 @@ describe ProductImport::ProductImporter do
 
     it "can reset all inventory items for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "producer", "category", "on_hand", "price", "units"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "6", "3.20", "500"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "7", "6.50", "500"]
+        csv << ["name", "supplier", "producer", "on_hand", "price", "units", "unit_type"]
+        csv << ["Beans", "Another Enterprise", "User Enterprise", "6", "3.20", "500", "g"]
+        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "7", "6.50", "500", "g"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
@@ -617,10 +617,10 @@ describe ProductImport::ProductImporter do
 
     it "can overwrite fields with selected defaults when importing to inventory" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "supplier", "category", "on_hand", "price", "units"]
-        csv << ["Beans", "User Enterprise", "Another Enterprise", "Vegetables", "", "3.20", "500"]
-        csv << ["Sprouts", "User Enterprise", "Another Enterprise", "Vegetables", "7", "6.50", "500"]
-        csv << ["Cabbage", "User Enterprise", "Another Enterprise", "Vegetables", "", "1.50", "500"]
+        csv << ["name", "producer", "supplier", "on_hand", "price", "units", "unit_type"]
+        csv << ["Beans", "User Enterprise", "Another Enterprise", "", "3.20", "500", "g"]
+        csv << ["Sprouts", "User Enterprise", "Another Enterprise", "7", "6.50", "500", "g"]
+        csv << ["Cabbage", "User Enterprise", "Another Enterprise", "", "1.50", "500", "g"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
