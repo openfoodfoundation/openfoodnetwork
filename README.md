@@ -6,12 +6,14 @@
 
 The Open Food Network is an online marketplace for local food. It enables a network of independent online food stores that connect farmers and food hubs (including coops, online farmers' markets, independent food businesses etc);  with individuals and local businesses. It gives farmers and food hubs an easier and fairer way to distribute their food.
 
-Supported by the Open Food Foundation, we are proudly open source and not-for-profit - we're trying to seriously disrupt the concentration of power in global agri-food systems, and we need as many smart people working together on this as possible.
+Supported by the Open Food Foundation and a network of global affiliates, we are proudly open source and not-for-profit - we're trying to seriously disrupt the concentration of power in global agri-food systems, and we need as many smart people working together on this as possible.
 
 We're part of global movement - get involved!
 
 * Fill in this short survey to tell us who you are and what you want to do with OFN: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
-* Find out more and join in the conversation - http://openfoodnetwork.org
+* Find out more and join in the conversation:
+  * Join our [Slack channel](https://openfoodnetwork.org/slack-invite). Introductions on #general are welcome!
+  * Join our [discussion forum](https://community.openfoodnetwork.org)
 
 
 ## Getting started
@@ -20,6 +22,7 @@ Below are instructions for setting up a development environment for Open Food Ne
 
 If you're interested in provisioning a server, see [the project's Ansible playbooks](https://github.com/openfoodfoundation/ofn_deployment).
 
+Join the #dev and #deployment Slack channels for help with these processes.
 
 ### Dependencies
 
