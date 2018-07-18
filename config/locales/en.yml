@@ -505,7 +505,7 @@ en:
         inventory_to_reset: Existing inventory items will have their stock reset to zero
         line: Line
         item_line: Item line
-      save:
+      save_results:
         final_results: Import final results
         products_created: Products created
         products_updated: Products updated
