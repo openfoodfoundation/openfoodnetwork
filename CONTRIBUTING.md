@@ -1,28 +1,17 @@
 # Contributing
 We love pull requests from everyone. Any contribution is valuable, but there are two issue streams that we especially love people to work on:
 
-1) Our delivery backlog, is managed via a ZenHub board (ZenHub extensions are available for most major browsers). We use a Kanban-style approach, whereby devs pick issues from the top of the backlog which has been organised according to current priorities. If you have some time and are interested in working on some issues from the backlog, please make yourself known on the [#dev](https://openfoodnetwork.slack.com/messages/C2GQ45KNU) channel on Slack and we can direct you to the most appropriate issue to pick up.
+1) Our delivery backlog, is managed via a ZenHub board (ZenHub extensions are available for most major browsers). We use a Kanban-style approach, whereby devs pick issues from the top of the backlog which has been organised according to current priorities. If you have some time and are interested in working on some issues from the backlog, please make yourself known on the [#dev][slack-dev] channel on Slack and we can direct you to the most appropriate issue to pick up.
 
 2) Our list of bugs and other self-contained issues that we consider to be a good starting point for new contributors, or devs who aren’t able to commit to seeing a whole feature through. These issues are marked with the `# good first issue` label.
 
 ## Set up
 
-Set up your local development environment by following the appropriate guide from the `Development environment setup` section in the [developer wiki](https://github.com/openfoodfoundation/openfoodnetwork/wiki).
+Please follow the [GETTING_STARTED](GETTING_STARTED.md) guide to set up your local dev environment.
 
-Add an `upstream` remote that points to the main repo:
+This guide assumes that the git remote name of the main repo is `upstream` and that your fork is named `origin`.
 
-    cd ~/location-of-your-local-ofn-repo
-    git remote add upstream https://github.com/openfoodfoundation/openfoodnetwork
-
-If you haven't already done so, fork this repo using the `Fork` button in the top-right corner of this screen. Then ensure that your fork is listed as the `origin` remote on your local machine.
-
-    git remote set-url origin https://github.com/your-username/openfoodnetwork
-
-Fetch the latest version of `master` from `upstream` (ie. the main repo):
-
-    git fetch upstream master
-
-Create a new branch on your local machine for (based on `upstream/master`):
+Create a new branch on your local machine to make your changes against (based on `upstream/master`):
 
     git checkout -b branch-name-here --no-track upstream/master
 
@@ -70,5 +59,6 @@ From here, your pull request will progress through the [Review, Test, Merge & De
 [rebase]: https://www.atlassian.com/git/tutorials/merging-vs-rebasing/workflow-walkthrough
 [travis]: https://travis-ci.org/
 [semaphore]: https://semaphoreci.com/
+[slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
 [ofn-transifex]: https://www.transifex.com/open-food-foundation/open-food-network/
 [i18n]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n
