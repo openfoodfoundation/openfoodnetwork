@@ -9,7 +9,6 @@ describe Subscription, type: :model do
     it { expect(subject).to belong_to(:payment_method) }
     it { expect(subject).to belong_to(:ship_address) }
     it { expect(subject).to belong_to(:bill_address) }
-    it { expect(subject).to belong_to(:credit_card) }
     it { expect(subject).to have_many(:subscription_line_items) }
     it { expect(subject).to have_many(:order_cycles) }
     it { expect(subject).to have_many(:proxy_orders) }

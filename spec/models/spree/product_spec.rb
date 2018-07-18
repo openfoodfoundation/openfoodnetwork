@@ -193,6 +193,22 @@ module Spree
           expect { product.delete }.to change { distributor.reload.updated_at }
         end
       end
+
+      it "adds the primary taxon to the product's taxon list" do
+        taxon = create(:taxon)
+        product = create(:product, primary_taxon: taxon)
+
+        expect(product.taxons).to include(taxon)
+      end
+
+      it "removes the previous primary taxon from the taxon list" do
+        original_taxon = create(:taxon)
+        product = create(:product, primary_taxon: original_taxon)
+        product.primary_taxon = create(:taxon)
+        product.save!
+
+        expect(product.taxons).not_to include(original_taxon)
+      end
     end
 
     describe "scopes" do

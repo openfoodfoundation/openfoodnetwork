@@ -66,8 +66,13 @@ angular.module("ofn.admin").factory "BulkProducts", (PagedFetcher, dataFetcher, 
     variantUnitValue: (product, variant) ->
       if variant.unit_value?
         if product.variant_unit_scale
-          variant.unit_value / product.variant_unit_scale
+          @divideAsInteger variant.unit_value, product.variant_unit_scale
         else
           variant.unit_value
       else
         null
+
+    # forces integer division to avoid javascript floating point imprecision
+    # using one billion as the multiplier so that it works for numbers with up to 9 decimal places
+    divideAsInteger: (a, b) ->
+      (a * 1000000000) / (b * 1000000000)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180418025217) do
+ActiveRecord::Schema.define(:version => 20180510083800) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -79,15 +79,16 @@ ActiveRecord::Schema.define(:version => 20180418025217) do
   add_index "coordinator_fees", ["order_cycle_id"], :name => "index_coordinator_fees_on_order_cycle_id"
 
   create_table "customers", :force => true do |t|
-    t.string   "email",           :null => false
-    t.integer  "enterprise_id",   :null => false
+    t.string   "email",                              :null => false
+    t.integer  "enterprise_id",                      :null => false
     t.string   "code"
     t.integer  "user_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "bill_address_id"
     t.integer  "ship_address_id"
     t.string   "name"
+    t.boolean  "allow_charges",   :default => false, :null => false
   end
 
   add_index "customers", ["bill_address_id"], :name => "index_customers_on_bill_address_id"
@@ -1117,13 +1118,11 @@ ActiveRecord::Schema.define(:version => 20180418025217) do
     t.integer  "ship_address_id",                                     :null => false
     t.datetime "canceled_at"
     t.datetime "paused_at"
-    t.integer  "credit_card_id"
     t.decimal  "shipping_fee_estimate", :precision => 8, :scale => 2
     t.decimal  "payment_fee_estimate",  :precision => 8, :scale => 2
   end
 
   add_index "subscriptions", ["bill_address_id"], :name => "index_subscriptions_on_bill_address_id"
-  add_index "subscriptions", ["credit_card_id"], :name => "index_subscriptions_on_credit_card_id"
   add_index "subscriptions", ["customer_id"], :name => "index_subscriptions_on_customer_id"
   add_index "subscriptions", ["payment_method_id"], :name => "index_subscriptions_on_payment_method_id"
   add_index "subscriptions", ["schedule_id"], :name => "index_subscriptions_on_schedule_id"
@@ -1362,7 +1361,6 @@ ActiveRecord::Schema.define(:version => 20180418025217) do
   add_foreign_key "subscriptions", "schedules", name: "subscriptions_schedule_id_fk"
   add_foreign_key "subscriptions", "spree_addresses", name: "subscriptions_bill_address_id_fk", column: "bill_address_id"
   add_foreign_key "subscriptions", "spree_addresses", name: "subscriptions_ship_address_id_fk", column: "ship_address_id"
-  add_foreign_key "subscriptions", "spree_credit_cards", name: "subscriptions_credit_card_id_fk", column: "credit_card_id"
   add_foreign_key "subscriptions", "spree_payment_methods", name: "subscriptions_payment_method_id_fk", column: "payment_method_id"
   add_foreign_key "subscriptions", "spree_shipping_methods", name: "subscriptions_shipping_method_id_fk", column: "shipping_method_id"
 

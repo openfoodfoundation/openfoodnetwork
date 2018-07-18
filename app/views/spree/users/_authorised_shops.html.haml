@@ -1,0 +1,13 @@
+%table
+  %tr
+    %th= t(:shop_title)
+    %th= t(:allow_charges?)
+  %tr.customer{ id: "customer{{ customer.id }}", ng: { repeat: "customer in customers" } }
+    %td.shop{ ng: { bind: 'shopsByID[customer.enterprise_id].name' } }
+    %td.allow_charges
+      %input{ type: 'checkbox',
+        name: 'allow_charges',
+        ng: { model: 'customer.allow_charges',
+          change: 'customer.update()',
+          "true-value" => "true",
+          "false-value" => "false" } }

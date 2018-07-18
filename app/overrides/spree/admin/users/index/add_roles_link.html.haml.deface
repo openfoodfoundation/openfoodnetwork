@@ -1,3 +1,0 @@
-/ insert_before "table#listing_users"
-
-= render 'admin/shared/users_sub_menu'

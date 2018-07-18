@@ -4,6 +4,7 @@ feature "Credit Cards", js: true do
   include AuthenticationWorkflow
   describe "as a logged in user" do
     let(:user) { create(:user) }
+    let!(:customer) { create(:customer, user: user) }
     let!(:default_card) { create(:credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ', is_default: true) }
     let!(:non_default_card) { create(:credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG') }
 
@@ -49,10 +50,10 @@ feature "Credit Cards", js: true do
 
       expect(page).to have_content I18n.t('js.default_card_updated')
 
+      expect(default_card.reload.is_default).to be false
       within(".card#card#{default_card.id}") do
         expect(find_field('default_card')).to_not be_checked
       end
-      expect(default_card.reload.is_default).to be false
       expect(non_default_card.reload.is_default).to be true
 
       # Shows the interface for adding a card
@@ -67,6 +68,14 @@ feature "Credit Cards", js: true do
 
       expect(page).to have_content I18n.t(:card_has_been_removed, number: "x-#{default_card.last_digits}")
       expect(page).to_not have_selector ".card#card#{default_card.id}"
+
+      # Allows authorisation of card use by shops
+      within "tr#customer#{customer.id}" do
+        expect(find_field('allow_charges')).to_not be_checked
+        find_field('allow_charges').click
+      end
+      expect(page).to have_content I18n.t('js.changes_saved')
+      expect(customer.reload.allow_charges).to be true
     end
   end
 end

@@ -9,7 +9,7 @@ describe Admin::CustomersController, type: :controller do
 
     context "html" do
       before do
-        controller.stub spree_current_user: enterprise.owner
+        allow(controller).to receive(:spree_current_user) { enterprise.owner }
       end
 
       it "returns an empty @collection" do
@@ -23,7 +23,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "where I manage the enterprise" do
         before do
-          controller.stub spree_current_user: enterprise.owner
+          allow(controller).to receive(:spree_current_user) { enterprise.owner }
         end
 
         context "and enterprise_id is given in params" do
@@ -50,7 +50,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "and I do not manage the enterprise" do
         before do
-          controller.stub spree_current_user: another_enterprise.owner
+          allow(controller).to receive(:spree_current_user) { another_enterprise.owner }
         end
 
         it "returns an empty collection" do
@@ -72,7 +72,7 @@ describe Admin::CustomersController, type: :controller do
         render_views
 
         before do
-          controller.stub spree_current_user: enterprise.owner
+          allow(controller).to receive(:spree_current_user) { enterprise.owner }
         end
 
         it "allows me to update the customer" do
@@ -85,7 +85,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "where I don't manage the customer's enterprise" do
         before do
-          controller.stub spree_current_user: another_enterprise.owner
+          allow(controller).to receive(:spree_current_user) { another_enterprise.owner }
         end
 
         it "prevents me from updating the customer" do
@@ -109,7 +109,7 @@ describe Admin::CustomersController, type: :controller do
     context "json" do
       context "where I manage the customer's enterprise" do
         before do
-          controller.stub spree_current_user: enterprise.owner
+          allow(controller).to receive(:spree_current_user) { enterprise.owner }
         end
 
         it "allows me to create the customer" do
@@ -119,7 +119,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "where I don't manage the customer's enterprise" do
         before do
-          controller.stub spree_current_user: another_enterprise.owner
+          allow(controller).to receive(:spree_current_user) { another_enterprise.owner }
         end
 
         it "prevents me from creating the customer" do
@@ -129,7 +129,7 @@ describe Admin::CustomersController, type: :controller do
 
       context "where I am the admin user" do
         before do
-          controller.stub spree_current_user: create(:admin_user)
+          allow(controller).to receive(:spree_current_user) { create(:admin_user) }
         end
 
         it "allows admins to create the customer" do
@@ -139,99 +139,35 @@ describe Admin::CustomersController, type: :controller do
     end
   end
 
-  describe "#addresses" do
-    let!(:enterprise) { create(:enterprise) }
-    let(:bill_address) { create(:address, firstname: "Dominic", address1: "123 Lala Street" ) }
-    let(:ship_address) { create(:address, firstname: "Dom", address1: "123 Sesame Street") }
-    let(:managed_customer) { create(:customer, enterprise: enterprise, bill_address: bill_address, ship_address: ship_address) }
-    let(:unmanaged_customer) { create(:customer) }
-    let(:params) { { format: :json } }
+  describe "show" do
+    let(:enterprise) { create(:distributor_enterprise) }
+    let(:another_enterprise) { create(:distributor_enterprise) }
 
-    before { login_as_enterprise_user [enterprise] }
+    context "json" do
+      let!(:customer) { create(:customer, enterprise: enterprise) }
 
-    context "when I manage the customer" do
-      before { params.merge!(id: managed_customer.id) }
+      context "where I manage the customer's enterprise" do
+        render_views
 
-      it "returns with serialized addresses for the customer" do
-        spree_get :addresses, params
-        json_response = JSON.parse(response.body)
-        expect(json_response.keys).to include "bill_address", "ship_address"
-        expect(json_response["bill_address"]["firstname"]).to eq "Dominic"
-        expect(json_response["bill_address"]["address1"]).to eq "123 Lala Street"
-        expect(json_response["ship_address"]["firstname"]).to eq "Dom"
-        expect(json_response["ship_address"]["address1"]).to eq "123 Sesame Street"
-      end
-    end
+        before do
+          allow(controller).to receive(:spree_current_user) { enterprise.owner }
+        end
 
-    context "when I don't manage the customer" do
-      before { params.merge!(customer_id: unmanaged_customer.id) }
-
-      it "redirects to unauthorised" do
-        spree_get :addresses, params
-        expect(response).to redirect_to spree.unauthorized_path
-      end
-    end
-
-    context "when no customer with a matching id exists" do
-      before { params.merge!(customer_id: 1) }
-
-      it "redirects to unauthorised" do
-        spree_get :addresses, params
-        expect(response).to redirect_to spree.unauthorized_path
-      end
-    end
-  end
-
-  describe "#cards" do
-    let(:user) { create(:user) }
-    let!(:enterprise) { create(:enterprise) }
-    let!(:credit_card1) { create(:credit_card, user: user) }
-    let!(:credit_card2) { create(:credit_card) }
-    let(:managed_customer) { create(:customer, enterprise: enterprise) }
-    let(:unmanaged_customer) { create(:customer) }
-    let(:params) { { format: :json } }
-
-    before { login_as_enterprise_user [enterprise] }
-
-    context "when I manage the customer" do
-      before { params.merge!(id: managed_customer.id) }
-
-      context "when the customer is not associated with a user" do
-        it "returns with an empty array" do
-          spree_get :cards, params
-          json_response = JSON.parse(response.body)
-          expect(json_response).to eq []
+        it "renders the customer as json" do
+          spree_get :show, format: :json, id: customer.id
+          expect(JSON.parse(response.body)["id"]).to eq customer.id
         end
       end
 
-      context "when the customer is associated with a user" do
-        before { managed_customer.update_attributes(user_id: user.id) }
-
-        it "returns with serialized cards for the customer" do
-          spree_get :cards, params
-          json_response = JSON.parse(response.body)
-          expect(json_response).to be_an Array
-          expect(json_response.length).to be 1
-          expect(json_response.first["id"]).to eq credit_card1.id
+      context "where I don't manage the customer's enterprise" do
+        before do
+          allow(controller).to receive(:spree_current_user) { another_enterprise.owner }
         end
-      end
-    end
 
-    context "when I don't manage the customer" do
-      before { params.merge!(customer_id: unmanaged_customer.id) }
-
-      it "redirects to unauthorised" do
-        spree_get :cards, params
-        expect(response).to redirect_to spree.unauthorized_path
-      end
-    end
-
-    context "when no customer with a matching id exists" do
-      before { params.merge!(customer_id: 1) }
-
-      it "redirects to unauthorised" do
-        spree_get :cards, params
-        expect(response).to redirect_to spree.unauthorized_path
+        it "prevents me from updating the customer" do
+          spree_get :show, format: :json, id: customer.id
+          expect(response).to redirect_to spree.unauthorized_path
+        end
       end
     end
   end

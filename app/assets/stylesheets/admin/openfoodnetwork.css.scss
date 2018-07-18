@@ -71,6 +71,14 @@ a {
  cursor:pointer;
 }
 
+a.action--disabled {
+  cursor: default;
+
+  &:hover {
+    color: #5498da;
+  }
+}
+
 form.order_cycle {
   h2 {
     margin-top: 2em;

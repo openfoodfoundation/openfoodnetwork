@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe Spree::Gateway::StripeConnect, type: :model do
   let(:provider) do
-    double('provider').tap do |p|
-      p.stub(:purchase)
-      p.stub(:authorize)
-      p.stub(:capture)
+    instance_double(ActiveMerchant::Billing::StripeGateway).tap do |p|
+      allow(p).to receive(:purchase)
+      allow(p).to receive(:authorize)
+      allow(p).to receive(:capture)
+      allow(p).to receive(:refund)
     end
   end
 
@@ -14,8 +15,8 @@ describe Spree::Gateway::StripeConnect, type: :model do
   before do
     allow(Stripe).to receive(:api_key) { "sk_test_123456" }
     allow(subject).to receive(:stripe_account_id) { stripe_account_id }
-    subject.stub(:options_for_purchase_or_auth).and_return(['money', 'cc', 'opts'])
-    subject.stub(:provider).and_return provider
+    allow(subject).to receive(:options_for_purchase_or_auth).and_return(['money', 'cc', 'opts'])
+    allow(subject).to receive(:provider).and_return provider
   end
 
   describe "#token_from_card_profile_ids" do
@@ -68,6 +69,24 @@ describe Spree::Gateway::StripeConnect, type: :model do
 
     it "requests a new token for the customer and card from Stripe, and returns the id of the response" do
       expect(subject.send(:tokenize_instance_customer_card, customer_id, card_id)).to eq token_mock[:id]
+    end
+  end
+
+  describe "#credit" do
+    let(:gateway_options) { { some: 'option' } }
+    let(:money) { double(:money) }
+    let(:response_code) { double(:response_code) }
+
+    before do
+      subject.credit(money, double(:creditcard), response_code, gateway_options)
+    end
+
+    it "delegates to ActiveMerchant::Billing::StripeGateway#refund" do
+      expect(provider).to have_received(:refund)
+    end
+
+    it "adds the stripe_account to the gateway options hash" do
+      expect(provider).to have_received(:refund).with(money, response_code, hash_including(stripe_account: stripe_account_id))
     end
   end
 end

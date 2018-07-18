@@ -6,9 +6,9 @@
     .row
       .small-12.columns
         %header
-          %h2{ "ng-bind" => "'enterprise.registration.modal.steps.type.headline' | t:{enterprise: enterprise.name}" }
+          %h2= t(".headline", enterprise: "{{enterprise.name}}")
           %h4
-            {{'enterprise.registration.modal.steps.type.question' | t}}
+            = t(".question")
 
     %form{ name: 'type', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "create(type)" } }
       .row#enterprise-types{ 'data-equalizer' => true, ng: { if: "::enterprise.type != 'own'" } }
@@ -17,32 +17,32 @@
             .small-12.medium-6.large-6.columns{ 'data-equalizer-watch' => true }
               %a.btnpanel#producer-panel{ href: "#", ng: { click: "enterprise.is_primary_producer = true", class: "{selected: enterprise.is_primary_producer}" } }
                 %i.ofn-i_059-producer
-                %h4 {{'enterprise.registration.modal.steps.type.yes_producer' | t}}
+                %h4= t(".yes_producer")
 
             .small-12.medium-6.large-6.columns{ 'data-equalizer-watch' => true }
               %a.btnpanel#hub-panel{ href: "#", ng: { click: "enterprise.is_primary_producer = false", class: "{selected: enterprise.is_primary_producer == false}" } }
                 %i.ofn-i_063-hub
-                %h4 {{'enterprise.registration.modal.steps.type.no_producer' | t}}
+                %h4= t(".no_producer")
 
           .row
             .small-12.columns
               %input.chunky{ id: 'enterprise_is_primary_producer', name: 'is_primary_producer', hidden: true, required: true, ng: { model: 'enterprise.is_primary_producer' } }
               %span.error{ ng: { show: "type.is_primary_producer.$error.required && submitted" } }
-                {{'enterprise.registration.modal.steps.type.producer_field_error' | t}}
+                = t(".producer_field_error")
           .row
             .small-12.columns
               .panel.callout
                 .left
                   %i.ofn-i_013-help
                   &nbsp;
-                %p {{'enterprise.registration.modal.steps.type.yes_producer_help' | t}}
+                %p= t(".yes_producer_help")
               .panel.callout
                 .left
                   %i.ofn-i_013-help
                   &nbsp;
-                %p {{'enterprise.registration.modal.steps.type.no_producer_help' | t}}
+                %p= t(".no_producer_help")
 
       .row.buttons
         .small-12.columns
           %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('contact')" } }
-          %input.button.primary.right{ ng: { disabled: 'isDisabled' }, type: "submit", value: "{{'create_profile' | t}}" }
+          %input.button.primary.right{ ng: { disabled: 'isDisabled' }, type: "submit", value: t(".create_profile") }

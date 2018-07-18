@@ -321,48 +321,6 @@ describe Enterprise do
       end
     end
 
-    describe "active_distributors" do
-      it "finds active distributors by product distributions" do
-        d = create(:distributor_enterprise)
-        create(:product, :distributors => [d])
-        Enterprise.active_distributors.should == [d]
-      end
-
-      it "doesn't show distributors of deleted products" do
-        d = create(:distributor_enterprise)
-        create(:product, :distributors => [d], :deleted_at => Time.zone.now)
-        Enterprise.active_distributors.should be_empty
-      end
-
-      it "doesn't show distributors of unavailable products" do
-        d = create(:distributor_enterprise)
-        create(:product, :distributors => [d], :available_on => 1.week.from_now)
-        Enterprise.active_distributors.should be_empty
-      end
-
-      it "doesn't show distributors of out of stock products" do
-        d = create(:distributor_enterprise)
-        create(:product, :distributors => [d], :on_hand => 0)
-        Enterprise.active_distributors.should be_empty
-      end
-
-      it "finds active distributors by order cycles" do
-        s = create(:supplier_enterprise)
-        d = create(:distributor_enterprise)
-        p = create(:product)
-        create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
-        Enterprise.active_distributors.should == [d]
-      end
-
-      it "doesn't show distributors from inactive order cycles" do
-        s = create(:supplier_enterprise)
-        d = create(:distributor_enterprise)
-        p = create(:product)
-        create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master], orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
-        Enterprise.active_distributors.should be_empty
-      end
-    end
-
     describe "supplying_variant_in" do
       it "finds producers by supply of master variant" do
         s = create(:supplier_enterprise)
@@ -528,26 +486,6 @@ describe Enterprise do
           er.permissions.map(&:name).should match_array opts[:with].map(&:to_s)
         end
       end
-    end
-  end
-
-  describe "has_supplied_products_on_hand?" do
-    before :each do
-      @supplier = create(:supplier_enterprise)
-    end
-
-    it "returns false when no products" do
-      @supplier.should_not have_supplied_products_on_hand
-    end
-
-    it "returns false when the product is out of stock" do
-      create(:product, :supplier => @supplier, :on_hand => 0)
-      @supplier.should_not have_supplied_products_on_hand
-    end
-
-    it "returns true when the product is in stock" do
-      create(:product, :supplier => @supplier, :on_hand => 1)
-      @supplier.should have_supplied_products_on_hand
     end
   end
 

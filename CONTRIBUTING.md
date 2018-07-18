@@ -19,6 +19,10 @@ If you want to run the whole test suite, we recommend using a free CI service to
 
     bundle exec rspec spec
 
+## Internationalisation (i18n)
+
+The locale `en` is maintained in the source code, but other locales are managed at [Transifex][ofn-transifex]. Read more about [internationalisation][i18n] in the developer wiki.
+
 ## Making a change
 
 Make your changes to the codebase. We recommend using TDD. Add a test, make changes and get the test suite back to green.
@@ -36,7 +40,7 @@ Push your changes to a branch on your fork:
 
 ## Submitting a Pull Request
 
-Use the GitHub UI to submit a [new pull request][pr] against upstream/master. To increase the chances that your pull request is swiftly accepted please have a look at our guide to [[making a great pull request]].
+Use the GitHub UI to submit a [new pull request][pr] against upstream/master. To increase the chances that your pull request is swiftly accepted please have a look at our guide to [making a great pull request][great-pr].
 
 TL;DR:
 * Write tests
@@ -56,3 +60,5 @@ From here, your pull request will progress through the [Review, Test, Merge & De
 [travis]: https://travis-ci.org/
 [semaphore]: https://semaphoreci.com/
 [slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
+[ofn-transifex]: https://www.transifex.com/open-food-foundation/open-food-network/
+[i18n]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n

@@ -2,7 +2,11 @@
   .credit_cards{"ng-controller" => "CreditCardsCtrl"}
     .row
       .small-12.medium-6.columns
-        %h3= t(:saved_cards)
+        %h3
+          = t(:saved_cards)
+          %button.button.secondary.tiny.help-btn.ng-scope{ "help-modal" => t('.saved_cards_popover') }
+            %i.ofn-i_013-help
+
         .saved_cards{ ng: { show: 'savedCreditCards.length > 0' } }
           = render 'saved_cards'
         .no_cards{ ng: { hide: 'savedCreditCards.length > 0' } }
@@ -10,6 +14,13 @@
         %button.button.primary{ ng: { click: 'showForm()', hide: 'CreditCard.visible' } }
           = t(:add_a_card)
 
-      .small-12.medium-6.columns.new_card{ ng: { show: 'CreditCard.visible', class: '{visible: CreditCard.visible}' } }
-        %h3= t(:add_a_new_card)
-        = render 'new_card_form'
+      .small-12.medium-6.columns
+        .new_card{ ng: { show: 'CreditCard.visible', class: '{visible: CreditCard.visible}' } }
+          %h3= t(:add_a_new_card)
+          = render 'new_card_form'
+        .authorised_shops{ ng: { controller: 'AuthorisedShopsCtrl', hide: 'CreditCard.visible' } }
+          %h3
+            = t('.authorised_shops')
+            %button.button.secondary.tiny.help-btn.ng-scope{ "help-modal" => t('.authorised_shops_popover') }
+              %i.ofn-i_013-help
+          = render 'authorised_shops'
