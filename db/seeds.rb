@@ -43,8 +43,8 @@ def create_mail_method
     preferred_smtp_username: ENV.fetch('SMTP_USERNAME'),
     preferred_smtp_password: ENV.fetch('SMTP_PASSWORD'),
     preferred_secure_connection_type: 'None',
-    preferred_mails_from: "no-reply@#{ENV.fetch('MAIL_DOMAIN')}",
-    preferred_mail_bcc: '',
+    preferred_mails_from: ENV.fetch('MAILS_FROM', "no-reply@#{ENV.fetch('MAIL_DOMAIN')}"),
+    preferred_mail_bcc: ENV.fetch('MAIL_BCC', ''),
     preferred_intercept_email: ''
   ).call
 end
