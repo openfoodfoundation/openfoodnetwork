@@ -12,9 +12,8 @@ We're part of global movement - get involved!
 
 * Fill in this short survey to tell us who you are and what you want to do with OFN: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
 * Find out more and join in the conversation:
-  * Join our [Slack channel](https://openfoodnetwork.org/slack-invite). Introductions on #general are welcome! 
-  * Join our discussion forum - https://community.openfoodnetwork.org
-  
+  * Join our [Slack channel](https://openfoodnetwork.org/slack-invite). Introductions on #general are welcome!
+  * Join our [discussion forum](https://community.openfoodnetwork.org)
 
 
 ## Getting started
