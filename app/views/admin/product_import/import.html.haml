@@ -7,16 +7,16 @@
 
   - if @importer.item_count == 0 #and @importer.invalid_count
     %h5
-      = t('admin.product_import.import.no_valid_entries')
+      = t('.no_valid_entries')
     %p
-      = t('admin.product_import.import.none_to_save')
+      = t('.none_to_save')
     %br
   - else
     .settings-section{ng: {show: 'step == "settings"'}}
       = render 'import_options' if @importer.table_headings
       %br
       %a.button.proceed{href: '', ng: {click: 'confirmSettings()'}}
-        = t('admin.product_import.import.proceed')
+        = t('.proceed')
       %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
 
   .progress-interface{ng: {show: 'step == "import"'}}
@@ -27,9 +27,9 @@
     .progress-bar
       %span.progress-track{class: 'ng-binding', style: "width:{{percentage}}"}
     %button.start_import{ng: {click: 'start()', disabled: 'started', init: "item_count = #{@importer.item_count}; import_url = '#{main_app.admin_product_import_process_async_path}'; filepath = '#{@filepath}'; import_into = '#{@import_into}'"}}
-      = t('admin.product_import.index.import')
+      = t('.import')
     %button.review{ng: {click: 'viewResults()', disabled: '!finished'}}
-      = t('admin.product_import.import.review')
+      = t('.review')
     %p.red
       {{ exception }}
 
@@ -44,13 +44,13 @@
         %p= t('admin.product_import.import.fix_before_import')
       %div{ng: {show: 'count((entries | entriesFilterValid:"invalid")) == 0'}}
         %br
-        %h5= t('admin.product_import.import.no_errors')
-        %p= t('admin.product_import.import.save_all_imported?')
+        %h5= t('.no_errors')
+        %p= t('.save_all_imported?')
       %br
       = hidden_field_tag :filepath, @filepath
       = hidden_field_tag "settings[import_into]", @import_into
 
-      %a.button.proceed{href: '', ng: {show: 'count((entries | entriesFilterValid:"invalid")) == 0', click: 'acceptResults()'}}= t('admin.product_import.import.proceed')
+      %a.button.proceed{href: '', ng: {show: 'count((entries | entriesFilterValid:"invalid")) == 0', click: 'acceptResults()'}}= t('.proceed')
 
       %a.button{href: main_app.admin_product_import_path}= t('admin.cancel')
 
@@ -60,13 +60,13 @@
 
   .progress-interface{ng: {show: 'step == "save"'}}
     %span.filename
-      #{t('admin.product_import.import.save_imported')} ({{ percentage }})
+      #{t('.save_imported')} ({{ percentage }})
     .progress-bar{}
       %span.progress-track{ng: {style: "{'width':percentage}"}}
     %button.start_save{ng: {click: 'start()', disabled: 'started', init: "item_count = #{@importer.item_count}; save_url = '#{main_app.admin_product_import_save_async_path}'; reset_url = '#{main_app.admin_product_import_reset_async_path}'; filepath = '#{@filepath}'; import_into = '#{@import_into}'"}}
-      = t('admin.product_import.import.save')
+      = t('.save')
     %button.view_results{ng: {click: 'finalResults()', disabled: '!finished'}}
-      = t('admin.product_import.import.results')
+      = t('.results')
     %p.red
       {{ exception }}
 
