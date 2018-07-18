@@ -1,4 +1,4 @@
-angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filter, Customers, TagRuleResource, CurrentShop, RequestMonitor, Columns, pendingChanges, shops, availableCountries) ->
+angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filter, Customers, TagRuleResource, CurrentShop, RequestMonitor, Columns, SortOptions, pendingChanges, shops, availableCountries) ->
   $scope.shops = shops
   $scope.availableCountries = availableCountries
   $scope.RequestMonitor = RequestMonitor
@@ -6,9 +6,7 @@ angular.module("admin.customers").controller "customersCtrl", ($scope, $q, $filt
   $scope.customerLimit = 20
   $scope.customers = Customers.all
   $scope.columns = Columns.columns
-  $scope.sorting =
-    predicate: ""
-    reverse: true
+  $scope.sorting = SortOptions
 
   $scope.confirmRefresh = (event) ->
     event.preventDefault() unless pendingChanges.unsavedCount() == 0 || confirm(t("unsaved_changes_warning"))
