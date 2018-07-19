@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 feature "Using embedded shopfront functionality", js: true do
+  include OpenFoodNetwork::EmbeddedPagesHelper
   include AuthenticationWorkflow
   include WebHelper
   include ShopWorkflow
@@ -107,14 +108,6 @@ feature "Using embedded shopfront functionality", js: true do
 
   private
   
-  def on_embedded_page
-      expect(page).to have_selector "iframe"
-
-      within_frame :frame do
-        yield
-      end
-  end
-
   def login_with_modal
     expect(page).to have_selector 'div.login-modal', visible: true
 

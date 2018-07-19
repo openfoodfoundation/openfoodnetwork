@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 feature "Using embedded shopfront functionality", js: true do
+  include OpenFoodNetwork::EmbeddedPagesHelper
 
   describe 'embedded groups' do
     let(:enterprise) { create(:distributor_enterprise) }
@@ -67,15 +68,5 @@ feature "Using embedded shopfront functionality", js: true do
         end
       end
     end
-  end
-  
-  private
-  
-  def on_embedded_page
-      expect(page).to have_selector "iframe"
-
-      within_frame :frame do
-        yield
-      end
   end
 end
