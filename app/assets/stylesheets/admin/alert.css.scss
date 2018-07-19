@@ -1,12 +1,14 @@
+@import "variables";
+
 .alert {
-  border: 3px solid #919191;
+  border: 3px solid $medium-grey;
   border-radius: 6px;
   margin-bottom: 20px;
-  color: #919191;
+  color: $medium-grey;
   padding: 5px 10px;
 
   h6 {
-    color: #919191;
+    color: $medium-grey;
   }
 
   .message {
@@ -14,11 +16,11 @@
   }
 
   &:hover {
-    border-color: #DA5354;
-    color: #DA5354;
+    border-color: $warning-red;
+    color: $warning-red;
 
     h6 {
-      color: #DA5354;
+      color: $warning-red;
     }
   }
 }

@@ -1,6 +1,8 @@
+@import "variables";
+
 #advanced_settings {
-  background-color: #eff5fc;
-  border: 1px solid #cee1f4;
+  background-color: $spree-light-blue;
+  border: 1px solid $pale-blue;
   margin-bottom: 20px;
 
   .row{

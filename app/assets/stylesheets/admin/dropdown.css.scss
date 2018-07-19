@@ -1,6 +1,8 @@
+@import "variables";
+
 #content-header .ofn-drop-down {
   border: none;
-  background-color: #5498da;
+  background-color: $spree-blue;
   color: #fff;
   float: none;
   margin-left: 3px;

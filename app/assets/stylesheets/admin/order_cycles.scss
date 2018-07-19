@@ -1,3 +1,5 @@
+@import "variables";
+
 #schedule-dialog {
   table {
     border: none;
@@ -47,7 +49,7 @@
             }
 
             &:hover {
-              background-color: #cee1f4;
+              background-color: $pale-blue;
             }
           }
         }

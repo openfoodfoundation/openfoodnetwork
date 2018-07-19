@@ -1,7 +1,9 @@
+@import "../variables";
+
 .alert-row{
   margin-bottom: 10px;
   font-weight: bold;
-  background-color: #eff5fc;
+  background-color: $spree-light-blue;
 
   .column, .columns {
     padding-top: 8px;

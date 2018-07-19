@@ -1,10 +1,11 @@
 @import "../../darkswarm/mixins";
+@import "../variables";
 
 .alert-box {
   position: relative;
   display: block;
   background-color: #eff5dc;
-  border: 1px solid #9fc820;
+  border: 1px solid $spree-green;
   color: #666;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -22,21 +23,21 @@
   }
 
   &.ok {
-    border: 1px solid #9fc820;
+    border: 1px solid $spree-green;
     background-color: #fbffee;
-    color: #9fc820;
+    color: $spree-green;
     font-weight: bold;
 
     a.button {
       padding: 3px 10px;
       background-color: #a7c44d;
       &:hover {
-        background-color: #9fc820;
+        background-color: $spree-green;
       }
     }
 
     a.close {
-      color: #9fc820;
+      color: $spree-green;
     }
   }
 

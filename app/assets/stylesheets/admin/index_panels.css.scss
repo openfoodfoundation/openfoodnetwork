@@ -1,3 +1,5 @@
+@import "variables";
+
 tbody.panel-ctrl {
   td.panel-toggle{
     -webkit-touch-callout: none;
@@ -26,7 +28,7 @@ tbody.panel-ctrl {
       font-size: 2rem;
       -webkit-font-smoothing: antialiased;
       content: "\f071";
-      color: #da5354;
+      color: $warning-red;
     }
 
     &.status {
@@ -37,7 +39,7 @@ tbody.panel-ctrl {
 
       i.issue::before {
         content: "\f071";
-        color: #da5354;
+        color: $warning-red;
       }
 
       i.warning::before {
@@ -47,7 +49,7 @@ tbody.panel-ctrl {
 
       i.ok::before {
         content: "\f058";
-        color: #9fc820;
+        color: $spree-green;
       }
     }
 

@@ -1,17 +1,18 @@
 @import "../darkswarm/branding";
 @import "../darkswarm/mixins";
+@import "variables";
 
 #change_type {
   section {
     margin: 2em 0 0 0;
 
     &, & * {
-      color: #5498da;
+      color: $spree-blue;
     }
   }
 
   .description {
-    background-color: #eff5fc;
+    background-color: $spree-light-blue;
     margin-top: -2em;
     padding: 4em 2em 2em 1em;
 
@@ -21,7 +22,7 @@
   }
 
   .admin-cta {
-    border: 1px solid #5498da;
+    border: 1px solid $spree-blue;
 
     @include border-radius(3px);
 
@@ -65,14 +66,14 @@
 
     &:after {
       border-color: rgba(136, 183, 213, 0);
-      border-top-color: #5498da;
+      border-top-color: $spree-blue;
       border-width: 12px;
       margin-left: -12px;
     }
 
     &:hover {
       &:after {
-        border-top-color: #9fc820;
+        border-top-color: $spree-green;
       }
     }
 
