@@ -61,11 +61,11 @@
             -# %th.bulk
               -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
             %th.email{ 'ng-show' => 'columns.email.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.toggle('customer.email')" }=t('admin.email')
+              %a{ :href => '', 'ng-click' => "sorting.toggle('email')" }=t('admin.email')
             %th.name{ 'ng-show' => 'columns.name.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.toggle('customer.name')" }=t('admin.name')
+              %a{ :href => '', 'ng-click' => "sorting.toggle('name')" }=t('admin.name')
             %th.code{ 'ng-show' => 'columns.code.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.toggle('customer.code')" }=t('admin.customers.index.code')
+              %a{ :href => '', 'ng-click' => "sorting.toggle('code')" }=t('admin.customers.index.code')
             %th.tags{ 'ng-show' => 'columns.tags.visible' }=t('admin.tags')
             %th.bill_address{ 'ng-show' => 'columns.bill_address.visible' }=t('admin.customers.index.bill_address')
             %th.ship_address{ 'ng-show' => 'columns.ship_address.visible' }=t('admin.customers.index.ship_address')
