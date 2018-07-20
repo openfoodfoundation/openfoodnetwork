@@ -4,7 +4,7 @@ plugins:
     enabled: true
     channel: "rubocop-0-55"
   scss-lint:
-    enabled: false
+    enabled: true
   duplication:
     enabled: true
     exclude_patterns:
@@ -16,9 +16,9 @@ checks:
   complex-logic:
     enabled: true
   file-lines:
-    enabled: false
+    enabled: true
   method-complexity:
-    enabled: false
+    enabled: true
   method-count:
     enabled: false
   method-lines:
@@ -35,3 +35,4 @@ exclude_patterns:
 - "spec/**/*"
 - "vendor/**/*"
 - "app/assets/javascripts/shared/*"
+- "app/assets/javascripts/jquery-migrate-1.0.0.js"
