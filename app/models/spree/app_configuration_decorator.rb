@@ -9,6 +9,7 @@ Spree::AppConfiguration.class_eval do
   preference :embedded_shopfronts_whitelist, :text, default: nil
 
   # Legal Preferences
+  preference :footer_tos_url, :string, default: "/Terms-of-service.pdf"
   preference :enterprises_require_tos, :boolean, default: false
   preference :privacy_policy_url, :string, default: nil
   preference :cookies_consent_banner_toggle, :boolean, default: false

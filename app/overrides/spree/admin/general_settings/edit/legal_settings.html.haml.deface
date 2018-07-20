@@ -3,6 +3,9 @@
 %fieldset.legal.no-border-bottom
   %legend{:align => "center"}= t('.legal_settings')
   .field
+    = label_tag(:footer_tos_url, t(:footer_tos_url)) + tag(:br)
+    = preference_field_tag(:footer_tos_url, Spree::Config[:footer_tos_url], type: Spree::Config.preference_type(:footer_tos_url))
+  .field
     = preference_field_tag(:enterprises_require_tos, Spree::Config[:enterprises_require_tos], :type => Spree::Config.preference_type(:enterprises_require_tos))
     = label_tag(:enterprises_require_tos, t('.enterprises_require_tos')) + tag(:br)
   .field

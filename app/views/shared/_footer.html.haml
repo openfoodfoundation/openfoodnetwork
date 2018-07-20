@@ -131,7 +131,7 @@
       .small-12.medium-5.columns.text-left
         %p.text-small
           = t '.footer_legal_call'
-          %a{href: ContentConfig.footer_tos_url}
+          %a{href: Spree::Config.footer_tos_url, target: "_blank"}
             = t '.footer_legal_tos'
           &#124;
           = t '.footer_legal_visit'

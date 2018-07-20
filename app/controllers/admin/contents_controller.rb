@@ -8,7 +8,7 @@ module Admin
                               {name: I18n.t('admin.contents.edit.group_signup_page'), preferences: [:group_signup_pricing_table_html, :group_signup_case_studies_html, :group_signup_detail_html]},
                               {name: I18n.t('admin.contents.edit.footer_and_external_links'), preferences: [:footer_logo,
                                                              :footer_facebook_url, :footer_twitter_url, :footer_instagram_url, :footer_linkedin_url, :footer_googleplus_url, :footer_pinterest_url,
-                                                             :footer_email, :community_forum_url, :footer_links_md, :footer_about_url, :footer_tos_url]}]
+                                                             :footer_email, :community_forum_url, :footer_links_md, :footer_about_url]}]
     end
 
     def update
