@@ -795,7 +795,7 @@ en:
         i_am_producer: I am a Producer
         contact_name: Contact Name
       edit:
-        editing: 'Editing:'
+        editing: 'Settings:'
         back_link: Back to enterprises list
       new:
         title: New Enterprise
