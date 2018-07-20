@@ -788,6 +788,7 @@ en:
         no_enterprises_found: No enterprises found.
         search_placeholder: Search By Name
         manage: Manage
+        manage_link: Manage
       new_form:
         owner: Owner
         owner_tip: The primary user responsible for this enterprise.

@@ -40,7 +40,7 @@
             %i.icon-status{ ng: { class: "enterprise.status" } }
           %td.manage{ ng: { show: 'columns.manage.visible' } }
             %a.button.fullwidth{ ng: { href: '{{::enterprise.edit_path}}' } }
-              = t('.manage')
+              = t('.manage_link')
               %i.icon-arrow-right
 
         %tr.panel-row{ object: "enterprise", panels: "{producer: 'enterprise_producer', package: 'enterprise_package', status: 'enterprise_status'}" }
