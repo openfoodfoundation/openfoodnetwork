@@ -1247,8 +1247,33 @@ en:
   footer_legal_tos: "Terms and conditions"
   footer_legal_visit: "Find us on"
   footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
-
+  footer_legal_data_text: "We take good care of your data." 
+  footer_legal_data_call:  "See our"
+  footer_legal_data_cookies_policy: "cookies policy"
   footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
+  legal:
+    cookies_policy:
+      header: "How We Use Cookies"
+      desc_part_1: "Cookies are very small text files that are stored on your computer when you visit some websites."
+      desc_part_2: "In OFN we are fully respectful of your privacy. We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We might in the future propose you to share some of your data to build new commons services that could be useful for the ecosystem (like logistics services for short food systems) but we are not yet there, and we won’t do it without your authorization :-)"
+      desc_part_3: "We use cookies mainly to remember who you are if you 'log in' to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website. Here is the list of cookies we use!"
+      essential_cookies: "Essential Cookies"
+      essential_cookies_desc: "The following cookies are strictly necessary for the operation of our website."
+      essential_cookies_note: "Most cookies only contain a unique identifier, but no other data, so your email address and password for instance are never contained in them and never exposed."
+      cookie_name: "Cookie Name"
+      cookie_domain: "Set By"
+      cookie_desc: "Description"
+      cookie_session_desc: "Used to allow the website to remember users between page visits, for exemple remember items in your cart."
+      cookie_remember_me_desc: "Used if the user has requested the website to remember him. This cookie is automatically deleted after 12 days. If as a user you want that cookie to be deleted, you only need to logout. If you don’t want that cookie to be installed on your computer you shouldn’t check the “remember me” checkbox when logging in."
+      cookie_openstreemap_desc: "Used by our friendly open source mapping provider (OpenStreetMap) to ensure that it does not receive too many requests during a given time period, to prevent abuse of their services."
+      cookie_stripe_desc: "Data collected by our payment processor Stripe for fraud detection https://stripe.com/cookies-policy/legal. Not all shops use Stripe as a payment method but it is a good practice to prevent fraud to apply it to all pages. Stripe probably build a picture of which of our pages usually interact with their API and then flag anything unusual. So setting the Stripe cookie has a broader function than simply the provision of a payment method to a user. Removing it could affect the security of the service itself. You can learn more about Stripe and read its privacy policy at https://stripe.com/privacy."
+      disabling_cookies_header: "Warning on disabling cookies"
+      disabling_cookies_desc: "As a user you can always allow, block or delete Open Food Network’s or any other website cookies whenever you want to through your browser’s setting control. Each browser has a different operative. Here are the links:"
+      disabling_cookies_firefox_link: "http://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-que-los-sitios-we"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647?hl=es"
+      disabling_cookies_ie_link: "http://windows.microsoft.com/es-xl/internet-explorer/delete-manage-cookies#ie=ie-10"
+      disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
+      disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Open Food Network, the website won’t work, you will not be able to add anything to your cart neither to checkout for instance."
 
   home_shop: Shop Now
 
