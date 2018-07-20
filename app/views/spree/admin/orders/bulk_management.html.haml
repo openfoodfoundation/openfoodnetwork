@@ -118,31 +118,31 @@
             %th.bulk
               %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
             %th.order_no{ 'ng-show' => 'columns.order_no.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'order.number'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('order.number')" }
                 = t("admin.orders.bulk_management.order_no")
             %th.full_name{ 'ng-show' => 'columns.full_name.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'order.full_name'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('order.full_name')" }
                 = t("admin.name")
             %th.email{ 'ng-show' => 'columns.email.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'order.email'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('order.email')" }
                 = t("admin.email")
             %th.phone{ 'ng-show' => 'columns.phone.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'order.phone'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('order.phone')" }
                 = t("admin.phone")
             %th.date{ 'ng-show' => 'columns.order_date.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'order.completed_at'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('order.completed_at')" }
                 = t("admin.orders.bulk_management.order_date")
             %th.producer{ 'ng-show' => 'columns.producer.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'supplier.name'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('supplier.name')" }
                 = t("admin.producer")
             %th.order_cycle{ 'ng-show' => 'columns.order_cycle.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'order.order_cycle.name'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('order.order_cycle.name')" }
                 = t("admin.order_cycle")
             %th.hub{ 'ng-show' => 'columns.hub.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'order.distributor.name'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('order.distributor.name')" }
                 = t("admin.shop")
             %th.variant{ 'ng-show' => 'columns.variant.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.predicate = 'units_variant.full_name'; sorting.reverse = !sorting.reverse" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('units_variant.full_name')" }
                 = t("admin.orders.bulk_management.product_unit")
             %th.quantity{ 'ng-show' => 'columns.quantity.visible' }
               = t("admin.quantity")
