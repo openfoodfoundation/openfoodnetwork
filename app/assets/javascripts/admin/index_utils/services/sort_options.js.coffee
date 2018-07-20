@@ -4,5 +4,5 @@ angular.module("admin.indexUtils").factory 'SortOptions', ->
     reverse: true
 
     toggle: (predicate) ->
+      @reverse = (@predicate == predicate) && !@reverse
       @predicate = predicate
-      @reverse = !@reverse
