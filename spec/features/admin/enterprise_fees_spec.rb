@@ -145,7 +145,7 @@ feature %q{
       ef2
 
       click_link 'Enterprises'
-      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") { click_link 'Enterprise Fees' }
       click_link "Create One Now"
 
@@ -169,16 +169,16 @@ feature %q{
       ef2
 
       click_link 'Enterprises'
-      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") { click_link 'Enterprise Fees' }
-      click_link "Manage Enterprise Fees"
+      click_link "Settings Enterprise Fees"
       page.should     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
       page.should_not have_field 'enterprise_fee_set_collection_attributes_1_name', with: 'Two'
 
       click_link 'Enterprises'
-      within("#e_#{distributor2.id}") { click_link 'Manage' }
+      within("#e_#{distributor2.id}") { click_link 'Settings' }
       within(".side_menu") { click_link 'Enterprise Fees' }
-      click_link "Manage Enterprise Fees"
+      click_link "Settings Enterprise Fees"
       page.should_not have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
       page.should     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'Two'
     end
@@ -189,7 +189,7 @@ feature %q{
       distributor3
 
       click_link 'Enterprises'
-      within("#e_#{distributor2.id}") { click_link 'Manage' }
+      within("#e_#{distributor2.id}") { click_link 'Settings' }
       within(".side_menu") { click_link 'Enterprise Fees' }
       click_link "Manage Enterprise Fees"
       page.should have_select('enterprise_fee_set_collection_attributes_1_enterprise_id',

@@ -132,7 +132,7 @@ feature %q{
 
     it "I can get to the new enterprise page" do
       visit admin_enterprises_path
-      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") do
         click_link "Payment Methods"
       end
@@ -182,7 +182,7 @@ feature %q{
       pm2
 
       visit admin_enterprises_path
-      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") do
         click_link "Payment Methods"
       end
@@ -191,7 +191,7 @@ feature %q{
       page.should     have_content pm2.name
 
       click_link 'Enterprises'
-      within("#e_#{distributor2.id}") { click_link 'Manage' }
+      within("#e_#{distributor2.id}") { click_link 'Settings' }
       within(".side_menu") do
         click_link "Payment Methods"
       end

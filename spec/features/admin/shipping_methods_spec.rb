@@ -78,7 +78,7 @@ feature 'shipping methods' do
 
     it "creating a shipping method" do
       visit admin_enterprises_path
-      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") do
         click_link "Shipping Methods"
       end
@@ -131,7 +131,7 @@ feature 'shipping methods' do
       sm2
 
       visit admin_enterprises_path
-      within("#e_#{distributor1.id}") { click_link 'Manage' }
+      within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") do
         click_link "Shipping Methods"
       end
@@ -139,7 +139,7 @@ feature 'shipping methods' do
       page.should     have_content sm2.name
 
       click_link 'Enterprises'
-      within("#e_#{distributor2.id}") { click_link 'Manage' }
+      within("#e_#{distributor2.id}") { click_link 'Settings' }
       within(".side_menu") do
         click_link "Shipping Methods"
       end
