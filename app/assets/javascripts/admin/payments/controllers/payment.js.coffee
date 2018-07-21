@@ -4,7 +4,7 @@ angular.module("admin.payments").controller "PaymentCtrl", ($scope, Payment, Sta
   $scope.StatusMessage = StatusMessage
 
   $scope.submitPayment = () ->
-    return false if $scope.submitted == true
+    return false if $scope.submitted
     $scope.submitted = true
     StatusMessage.display 'progress', t("spree.admin.payments.source_forms.stripe.submitting_payment")
     Payment.purchase()

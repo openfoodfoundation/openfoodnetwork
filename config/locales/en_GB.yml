@@ -2380,9 +2380,7 @@ en_GB:
       payments:
         source_forms:
           stripe:
-            error_saving_payment: Error saving payment
-            submitting_payment: Submitting payment...
-
+            no_payment_via_admin_backend: Creating Stripe-based payments from the admin backend is not possible at this time
       products:
         new:
           title: 'New Product'
