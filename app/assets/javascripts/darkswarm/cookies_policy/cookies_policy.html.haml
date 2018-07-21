@@ -29,6 +29,13 @@
       {{ 'legal.cookies_policy.cookie_session_desc' | t}}
   %tr
     %td
+      cookies_consent
+    %td
+      {{ instance_hostname }}
+    %td
+      {{ 'legal.cookies_policy.cookie_consent_desc' | t}}
+  %tr
+    %td
       remember_spree_user_token
     %td
       {{ instance_hostname }}
@@ -65,6 +72,87 @@
       {{ instance_hostname }}
 %p
   {{ 'legal.cookies_policy.essential_cookies_note' | t}}
+
+- if Spree::Config.cookies_policy_matomo_section || Spree::Config.cookies_policy_ga_section
+  %h2
+    {{ 'legal.cookies_policy.statistics_cookies' | t}}
+  %p
+    {{ 'legal.cookies_policy.statistics_cookies_desc' | t}}
+
+  - if Spree::Config.cookies_policy_ga_section
+    %p
+      {{ 'legal.cookies_policy.statistics_cookies_analytics_desc' | t}}
+  - if Spree::Config.cookies_policy_matomo_section
+    %p
+      {{ 'legal.cookies_policy.statistics_cookies_matomo_desc' | t}}
+
+  %table{ng: { controller:"CookiesPolicyModalCtrl"}}
+    %tr
+      %th
+        {{ 'legal.cookies_policy.cookie_name' | t}}
+      %th
+        {{ 'legal.cookies_policy.cookie_domain' | t}}
+      %th
+        {{ 'legal.cookies_policy.cookie_desc' | t}}
+    - if Spree::Config.cookies_policy_ga_section
+      %tr
+        %td
+          __utma
+        %td
+          {{ instance_hostname }}
+        %td
+          {{ 'legal.cookies_policy.cookie_analytics_utma_desc' | t}}
+      %tr
+        %td
+          __utmt
+        %td
+          {{ instance_hostname }}
+        %td
+          {{ 'legal.cookies_policy.cookie_analytics_utmt_desc' | t}}
+      %tr
+        %td
+          __utmb
+        %td
+          {{ instance_hostname }}
+        %td
+          {{ 'legal.cookies_policy.cookie_analytics_utmb_desc' | t}}
+      %tr
+        %td
+          __utmc
+        %td
+          {{ instance_hostname }}
+        %td
+          {{ 'legal.cookies_policy.cookie_analytics_utmc_desc' | t}}
+      %tr
+        %td
+          __utmz
+        %td
+          {{ instance_hostname }}
+        %td
+          {{ 'legal.cookies_policy.cookie_analytics_utmz_desc' | t}}
+    - if Spree::Config.cookies_policy_matomo_section
+      %tr
+        %td
+          _pk_ref, _pk_cvar, _pk_id and _pk_ses
+        %td
+          {{ instance_hostname }}
+        %td
+          {{ 'legal.cookies_policy.cookie_matomo_basics_desc' | t}}
+      %tr
+        %td
+          _pk_hsr
+        %td
+          {{ instance_hostname }}
+        %td
+          {{ 'legal.cookies_policy.cookie_matomo_heatmap_desc' | t}}
+      %tr
+        %td
+          piwik_ignore
+        %td
+          {{ instance_hostname }}
+        %td
+          {{ 'legal.cookies_policy.cookie_matomo_ignore_desc' | t}}
+
 %h2
   {{ 'legal.cookies_policy.disabling_cookies_header' | t}}
 %p

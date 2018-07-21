@@ -3,7 +3,7 @@
 %fieldset.legal.no-border-bottom
   %legend{:align => "center"}= t('.legal_settings')
   .field
-    = label_tag(:footer_tos_url, t(:footer_tos_url)) + tag(:br)
+    = label_tag(:footer_tos_url, t('.footer_tos_url')) + tag(:br)
     = preference_field_tag(:footer_tos_url, Spree::Config[:footer_tos_url], type: Spree::Config.preference_type(:footer_tos_url))
   .field
     = preference_field_tag(:enterprises_require_tos, Spree::Config[:enterprises_require_tos], :type => Spree::Config.preference_type(:enterprises_require_tos))
@@ -11,6 +11,12 @@
   .field
     = preference_field_tag(:cookies_consent_banner_toggle, Spree::Config[:cookies_consent_banner_toggle], :type => Spree::Config.preference_type(:cookies_consent_banner_toggle))
     = label_tag(:cookies_consent_banner_toggle, t('.cookies_consent_banner_toggle')) + tag(:br)
+  .field
+    = preference_field_tag(:cookies_policy_matomo_section, Spree::Config[:cookies_policy_matomo_section], :type => Spree::Config.preference_type(:cookies_policy_matomo_section))
+    = label_tag(:cookies_policy_matomo_section, t('.cookies_policy_matomo_section')) + tag(:br)
+  .field
+    = preference_field_tag(:cookies_policy_ga_section, Spree::Config[:cookies_policy_ga_section], :type => Spree::Config.preference_type(:cookies_policy_ga_section))
+    = label_tag(:cookies_policy_ga_section, t('.cookies_policy_ga_section')) + tag(:br)
   .field
     = label_tag(:privacy_policy_url, t('.privacy_policy_url')) + tag(:br)
     = preference_field_tag(:privacy_policy_url, Spree::Config[:privacy_policy_url], type: Spree::Config.preference_type(:privacy_policy_url))
