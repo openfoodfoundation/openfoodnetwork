@@ -91,6 +91,8 @@ Openfoodnetwork::Application.routes.draw do
 
     resource :stripe_connect_settings, only: [:edit, :update]
 
+    resource :matomo_settings, only: [:edit, :update]
+
     resources :stripe_accounts, only: [:destroy] do
       get :connect, on: :collection
       get :status, on: :collection

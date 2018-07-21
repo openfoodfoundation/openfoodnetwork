@@ -354,6 +354,46 @@ en:
         total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
         total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
 
+    cache_settings:
+      show:
+        title: Caching
+        distributor: Distributor
+        order_cycle: Order Cycle
+        status: Status
+        diff: Diff
+        error: Error
+
+    invoice_settings:
+      edit:
+        title: Invoice Settings
+        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
+        enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
+
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Settings"
+        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
+        no_api_key_msg: No Stripe account exists for this enterprise.
+        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
+        status: Status
+        ok: Ok
+        instance_secret_key: Instance Secret Key
+        account_id: Account ID
+        business_name: Business Name
+        charges_enabled: Charges Enabled
+        charges_enabled_warning: "Warning: Charges are not enabled for your account"
+        auth_fail_error: The API key you provided is invalid
+        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
+
+    matomo_settings:
+      edit:
+        title: "Matomo Settings"
+        matomo_url: "Matomo URL"
+        matomo_site_id: "Matomo Site ID"
+        info_html: "Matomo is a Web and Mobile Analytics. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
+        config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+
     customers:
       index:
         add_customer: "Add Customer"
@@ -379,15 +419,6 @@ en:
         guest_label: 'Guest checkout'
       destroy:
         has_associated_orders: 'Delete failed: customer has associated orders with his shop'
-
-    cache_settings:
-      show:
-        title: Caching
-        distributor: Distributor
-        order_cycle: Order Cycle
-        status: Status
-        diff: Diff
-        error: Error
 
     contents:
       edit:
@@ -899,12 +930,6 @@ en:
     shared:
       user_guide_link:
         user_guide: User Guide
-
-    invoice_settings:
-      edit:
-        title: Invoice Settings
-        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
-        enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
     overview:
       enterprises_header:
         ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
@@ -1042,23 +1067,6 @@ en:
     schedules:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
-
-    stripe_connect_settings:
-      edit:
-        title: "Stripe Connect"
-        settings: "Settings"
-        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
-        no_api_key_msg: No Stripe account exists for this enterprise.
-        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
-        status: Status
-        ok: Ok
-        instance_secret_key: Instance Secret Key
-        account_id: Account ID
-        business_name: Business Name
-        charges_enabled: Charges Enabled
-        charges_enabled_warning: "Warning: Charges are not enabled for your account"
-        auth_fail_error: The API key you provided is invalid
-        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
 
     # Admin controllers
     controllers:
@@ -2604,9 +2612,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
-      shared:
-        configuration_menu:
-          stripe_connect: Stripe Connect
       users:
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
