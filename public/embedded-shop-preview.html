@@ -1,0 +1,20 @@
+<html>
+  <head><title>Embedded Shop</title></head>
+  <body>
+
+    <p>
+    This is a preview page for embedded shops.
+    Choose a shop to display by copying its permalink id into the URL after the question mark.
+    Example: <code>embedded-shop-preview.html?bawbawfoodhub</code>
+    </p>
+
+    <iframe style="width:100%;min-height:35em"></iframe>
+    <script>
+      var unsafeName = window.location.search.substr(1);
+      var shop = unsafeName.replace(/[^a-z0-9_-]/g, '');
+      var iframe = document.querySelector("iframe");
+      iframe.src = "/" + shop + "/shop?embedded_shopfront=true";
+    </script>
+
+  </body>
+</html>
