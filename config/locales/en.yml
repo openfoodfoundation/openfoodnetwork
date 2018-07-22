@@ -486,7 +486,8 @@ en:
         save_imported: Save imported products
         no_valid_entries: No valid entries found
         none_to_save: There are no entries that can be saved
-        some_invalid_entries: Imported file contains some invalid entries
+        some_invalid_entries: Imported file contains invalid entries
+        fix_before_import: Please fix these errors and try importing the file again
         save_valid?: Save valid entries for now and discard the others?
         no_errors: No errors detected!
         save_all_imported?: Save all imported products?
