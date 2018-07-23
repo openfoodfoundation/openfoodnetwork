@@ -487,7 +487,6 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nenv (0.3.0)
-    newrelic_rpm (3.12.0.288)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     notiffany (0.1.1)
@@ -763,7 +762,6 @@ DEPENDENCIES
   letter_opener (>= 1.4.1)
   listen (= 3.0.8)
   momentjs-rails
-  newrelic_rpm
   nokogiri (>= 1.6.7.1)
   oauth2 (~> 1.2.0)
   ofn-qz!
@@ -815,4 +813,4 @@ RUBY VERSION
    ruby 2.1.5p273
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
