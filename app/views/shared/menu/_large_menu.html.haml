@@ -4,6 +4,12 @@
       %li.ofn-logo
         %a{href: root_path}
           %img{src: ContentConfig.logo.url}
+      %li.powered-by
+        %img{src: '/favicon.ico'}
+        %span
+          = t 'powered_by'
+          %a{href: '/'}
+            = t 'title'
     %ul.center
       %li
         %a{href: main_app.shops_path}
@@ -54,12 +60,6 @@
               = t 'label_about'
 
     %ul.right
-      %li.powered-by
-        %img{src: '/favicon.ico'}
-        %span
-          = t 'powered_by'
-          %a{href: '/'}
-            = t 'title'
       - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
         %li.language-switcher.has-dropdown
           %a{href: '#'}
