@@ -10,21 +10,21 @@ Supported by the Open Food Foundation, we are proudly open source and not-for-pr
 
 We're part of global movement - get involved!
 
-* Join the conversation [on Slack](slack). Make sure you introduce yourself in the #general channel
+* Join the conversation [on Slack][slack-invite]. Make sure you introduce yourself in the #general channel
 * Head to [https://openfoodnetwork.org](https://openfoodnetwork.org) for more information about the global OFN project
 * Check out the [User Guide](https://guide.openfoodnetwork.org/) for a list of features and tutorials
 
 ## Contributing
 
-If you are interested in contributing to the OFN in any capacity, please introducing yourself [on Slack](slack), and have a look through our [Contributor Guide](contributor-guide)
+If you are interested in contributing to the OFN in any capacity, please introducing yourself [on Slack][slack-invite], and have a look through our [Contributor Guide][contributor-guide]
 
 Our [GETTING_STARTED](GETTING_STARTED.md) and [CONTRIBUTING](CONTRIBUTING.md) guides are the best place to start for developers looking to set up a development environment and make contributions to the codebase.
 
 ## Provisioning
 
-If you're interested in provisioning a server, see [ofn-install](ofn-install) for the project's Ansible playbooks.
+If you're interested in provisioning a server, see [ofn-install][ofn-install] for the project's Ansible playbooks.
 
-We also have a [Super Admin Guide](super-admin-guide) to help with configuration of new servers.
+We also have a [Super Admin Guide][super-admin-guide] to help with configuration of new servers.
 
 
 ## Credits
@@ -49,7 +49,7 @@ We also have a [Super Admin Guide](super-admin-guide) to help with configuration
 
 Copyright (c) 2012 - 2018 Open Food Foundation, released under the AGPL licence.
 
-[slack]: https://join.slack.com/t/openfoodnetwork/shared_invite/enQtMzU2Mjk5MDc2MjA5LTM4ZTAzZjIwNzIxMmU5ODFiNWY1MTU2ZWUyNzQwNjdjNTY0N2VhY2UwOGU4ZmVjNzYyZDU2NjY3NzZkZmQwYjk
+[slack-invite]: https://openfoodnetwork.org/slack-invite
 [contributor-guide]: https://ofn-user-guide.gitbook.io/ofn-contributor-guide/who-are-we
 [ofn-install]: https://github.com/openfoodfoundation/ofn-install
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide
