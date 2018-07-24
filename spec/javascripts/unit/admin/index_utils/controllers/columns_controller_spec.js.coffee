@@ -13,5 +13,3 @@ describe "ColumnsCtrl", ->
 
   it "initialises data", ->
     expect(scope.columns).toEqual Columns.columns
-    expect(scope.predicate).toEqual ""
-    expect(scope.reverse).toEqual false
