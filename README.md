@@ -11,22 +11,22 @@ Supported by the Open Food Foundation and a network of global affiliates, we are
 We're part of global movement - get involved!
 
 * Fill in this [short survey](survey) to tell us who you are and what you want to do with OFN.
-* Join the conversation [on Slack](slack). Make sure you introduce yourself in the #general channel.
+* Join the conversation [on Slack][slack-invite]. Make sure you introduce yourself in the #general channel
 * Head to [https://openfoodnetwork.org](https://openfoodnetwork.org) for more information about the global OFN project.
 * Check out the [User Guide](https://guide.openfoodnetwork.org/) for a list of features and tutorials.
 * Join our [discussion forum](https://community.openfoodnetwork.org).
 
 ## Contributing
 
-If you are interested in contributing to the OFN in any capacity, please introducing yourself [on Slack](slack), and have a look through our [Contributor Guide](contributor-guide)
+If you are interested in contributing to the OFN in any capacity, please introducing yourself [on Slack][slack-invite], and have a look through our [Contributor Guide][contributor-guide]
 
 Our [GETTING_STARTED](GETTING_STARTED.md) and [CONTRIBUTING](CONTRIBUTING.md) guides are the best place to start for developers looking to set up a development environment and make contributions to the codebase.
 
 ## Provisioning
 
-If you're interested in provisioning a server, see [ofn-install](ofn-install) for the project's Ansible playbooks.
+If you're interested in provisioning a server, see [ofn-install][ofn-install] for the project's Ansible playbooks.
 
-We also have a [Super Admin Guide](super-admin-guide) to help with configuration of new servers.
+We also have a [Super Admin Guide][super-admin-guide] to help with configuration of new servers.
 
 
 ## Credits
@@ -52,7 +52,7 @@ We also have a [Super Admin Guide](super-admin-guide) to help with configuration
 Copyright (c) 2012 - 2018 Open Food Foundation, released under the AGPL licence.
 
 [survey]: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
-[slack]: https://openfoodnetwork.org/slack-invite
+[slack-invite]: https://openfoodnetwork.org/slack-invite
 [contributor-guide]: https://ofn-user-guide.gitbook.io/ofn-contributor-guide/who-are-we
 [ofn-install]: https://github.com/openfoodfoundation/ofn-install
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide

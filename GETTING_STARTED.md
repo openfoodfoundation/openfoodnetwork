@@ -73,9 +73,9 @@ Then the tests can be run with:
 
     bundle exec rspec spec
 
-The project is configured to use [Zeus](zeus) to reduce the pre-test startup time while Rails loads. See the [Zeus GitHub page](zeus) for usage instructions.
+The project is configured to use [Zeus][zeus] to reduce the pre-test startup time while Rails loads. See the [Zeus GitHub page][zeus] for usage instructions.
 
-Once [npm dependencies are installed](karma), AngularJS tests can be run with:
+Once [npm dependencies are installed][karma], AngularJS tests can be run with:
 
     ./script/karma run
 
@@ -87,7 +87,7 @@ If you want karma to automatically rerun the tests on file modification, use:
 Do not forget to run `rake tmp:cache:clear` after locales are updated to reload I18n js translations.
 
 ### Rubocop
-The project is configured to use [rubocop](rubocop) to automatically check for style and syntax errors.
+The project is configured to use [rubocop][rubocop] to automatically check for style and syntax errors.
 
 You can run rubocop against your changes using:
 
