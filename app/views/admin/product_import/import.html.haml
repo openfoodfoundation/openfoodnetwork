@@ -5,6 +5,9 @@
 
 .import-wrapper{ng: {app: 'admin.productImport', controller: 'ImportFormCtrl', init: "supplier_product_counts = #{@importer.supplier_products.to_json}"}}
 
+  = hidden_field_tag "settings[reset_all_absent]", @importer.import_settings['reset_all_absent'], 'ng-model' => "importSettings[reset_all_absent]"
+  = hidden_field_tag "settings[import_into]", @importer.import_settings['import_into'], 'ng-model' => "importSettings[import_into]"
+
   - if @importer.item_count == 0 #and @importer.invalid_count
     %h5
       = t('.no_valid_entries')

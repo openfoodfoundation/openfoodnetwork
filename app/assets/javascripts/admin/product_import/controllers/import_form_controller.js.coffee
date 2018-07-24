@@ -3,6 +3,7 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
   $scope.entries = {}
   $scope.update_counts = {}
   $scope.reset_counts = {}
+  $scope.importSettings = null
 
   $scope.updates = {}
   $scope.updated_total = 0
@@ -72,20 +73,21 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
         'end': end
         'filepath': $scope.filepath
         'settings': $scope.importSettings
-    ).success((data, status, headers, config) ->
+    ).success((data, status) ->
       angular.merge($scope.entries, angular.fromJson(data['entries']))
       $scope.sortUpdates(data['reset_counts'])
 
       $scope.updateProgress()
-    ).error((data, status, headers, config) ->
+    ).error((data, status) ->
       $scope.exception = data
       console.error(data)
     )
 
-  $scope.importSettings = null
-
   $scope.getSettings = () ->
-    $scope.importSettings = ProductImportService.getSettings()
+    $scope.importSettings = {
+      reset_all_absent: document.getElementsByName('settings[reset_all_absent]')[0].value,
+      import_into: document.getElementsByName('settings[import_into]')[0].value
+    }
 
   $scope.sortUpdates = (data) ->
     angular.forEach data, (value, key) ->
@@ -104,7 +106,7 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
         'end': end
         'filepath': $scope.filepath
         'settings': $scope.importSettings
-    ).success((data, status, headers, config) ->
+    ).success((data, status) ->
       $scope.sortResults(data['results'])
 
       angular.forEach data['updated_ids'], (id) ->
@@ -114,7 +116,7 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
         $scope.update_errors.push(error)
 
       $scope.updateProgress()
-    ).error((data, status, headers, config) ->
+    ).error((data, status) ->
       $scope.exception = data
       console.error(data)
     )
@@ -129,10 +131,11 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
       $scope.updated_total += value
 
   $scope.resetAbsent = () ->
+    return unless $scope.importSettings['reset_all_absent']
     enterprises_to_reset = []
-    angular.forEach $scope.importSettings, (settings, enterprise) ->
-      if settings['reset_all_absent']
-        enterprises_to_reset.push(enterprise)
+
+    angular.forEach $scope.reset_counts, (count, enterprise_id) ->
+      enterprises_to_reset.push(enterprise_id)
 
     if enterprises_to_reset.length && $scope.updated_ids.length
       $http(
@@ -144,11 +147,9 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
           'reset_absent': true,
           'updated_ids': $scope.updated_ids,
           'enterprises_to_reset': enterprises_to_reset
-      ).success((data, status, headers, config) ->
-        console.log(data)
+      ).success((data, status) ->
         $scope.updates.products_reset = data
-
-      ).error((data, status, headers, config) ->
+      ).error((data, status) ->
         console.error(data)
       )
 

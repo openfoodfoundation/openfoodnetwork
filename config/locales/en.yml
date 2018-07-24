@@ -466,7 +466,8 @@ en:
       index:
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
-        import_into: "Import into:"
+        choose_import_type: Select import type
+        import_into: Import type
         product_list: Product list
         inventories: Inventories
         import: Import
@@ -496,7 +497,8 @@ en:
         not_found: enterprise could not be found in database
         no_name: No name
         blank_supplier: some products have blank supplier name
-        reset_absent?: Reset absent products?
+        reset_absent?: Reset absent products
+        reset_absent_tip: Set stock to zero for all exiting products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level

@@ -195,6 +195,39 @@ feature "Product Import", js: true do
       expect(page).to_not have_field "product_name", with: product2.name
     end
 
+    it "can reset product stock to zero for products not present in the CSV" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g"]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      attach_file 'file', '/tmp/test.csv'
+
+      check "settings_reset_all_absent"
+
+      click_button 'Upload'
+
+      expect(page).to have_selector 'a.button.proceed', visible: true
+      click_link 'Proceed'
+
+      import_data
+
+      expect(page).to have_selector 'a.button.proceed', visible: true
+      click_link 'Proceed'
+
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_selector '.reset-count', text: '3'
+
+      expect(Spree::Product.find_by_name('Carrots').on_hand).to eq 500
+      expect(Spree::Product.find_by_name('Cabbage').on_hand).to eq 0
+      expect(Spree::Product.find_by_name('Beans').on_hand).to eq 0
+    end
+
     it "can import items into inventory" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "producer", "category", "on_hand", "price", "units"]
@@ -205,13 +238,9 @@ feature "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
+      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
-
-      within 'div.import-settings' do
-        find('div.header-description').click  # Import settings tab
-        select 'Inventories', from: "settings_#{enterprise2.id.to_s}_import_into", visible: false
-      end
 
       expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
@@ -258,76 +287,6 @@ feature "Product Import", js: true do
         expect(page).to have_content 'Sprouts'
         expect(page).to have_content 'Cabbage'
       end
-    end
-
-    it "can override import fields via the import settings tab" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
-        csv << ["Pumpkin", "User Enterprise", "Vegetables", "3", "3.50", "1", "kg", tax_category.name, ""]
-        csv << ["Spinach", "User Enterprise", "Vegetables", "7", "3.60", "1", "kg", "", shipping_category.name]
-      end
-      File.write('/tmp/test.csv', csv_data)
-
-      visit main_app.admin_product_import_path
-
-      expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
-      click_button 'Upload'
-
-      within 'div.import-settings' do
-        find('div.panel-header').click
-
-        within 'tr.stock-level.productlist' do
-          find('input[type="checkbox"]').click
-          select 'Overwrite all', from: "settings_#{enterprise.id}_defaults_on_hand_mode", visible: false
-          fill_in "settings_#{enterprise.id}_defaults_on_hand_value", with: 9000
-        end
-
-        within 'tr.tax-category' do
-          find('input[type="checkbox"]').click
-          select 'Overwrite if empty', from: "settings_#{enterprise.id}_defaults_tax_category_id_mode", visible: false
-          select tax_category2.name, from: "settings_#{enterprise.id}_defaults_tax_category_id_value", visible: false
-        end
-
-        within 'tr.shipping-category' do
-          find('input[type="checkbox"]').click
-          select 'Overwrite all', from: "settings_#{enterprise.id}_defaults_shipping_category_id_mode", visible: false
-          select shipping_category.name, from: "settings_#{enterprise.id}_defaults_shipping_category_id_value", visible: false
-        end
-      end
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
-      import_data
-
-      expect(page).to have_selector '.item-count', text: "3"
-      expect(page).to have_selector '.create-count', text: "3"
-      expect(page).to_not have_selector '.update-count'
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
-      save_data
-
-      expect(page).to have_selector '.created-count', text: '3'
-      expect(page).to_not have_selector '.updated-count'
-
-      carrots = Spree::Product.find_by_name('Carrots')
-      expect(carrots.tax_category).to eq tax_category
-      expect(carrots.shipping_category).to eq shipping_category
-      expect(carrots.count_on_hand).to eq 9000
-
-      pumpkin = Spree::Product.find_by_name('Pumpkin')
-      expect(pumpkin.tax_category).to eq tax_category
-      expect(pumpkin.shipping_category).to eq shipping_category
-      expect(pumpkin.count_on_hand).to eq 9000
-
-      spinach = Spree::Product.find_by_name('Spinach')
-      expect(spinach.tax_category).to eq tax_category2
-      expect(spinach.shipping_category).to eq shipping_category
-      expect(spinach.count_on_hand).to eq 9000
     end
   end
 

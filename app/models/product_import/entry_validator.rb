@@ -221,7 +221,7 @@ module ProductImport
     end
 
     def import_into_inventory?(entry)
-      entry.supplier_id && @import_settings[:settings][entry.supplier_id.to_s]['import_into'] == 'inventories'
+      entry.supplier_id && @import_settings[:settings]['import_into'] == 'inventories'
     end
 
     def validate_inventory_item(entry, variant_override)
