@@ -6,13 +6,15 @@
 
 The Open Food Network is an online marketplace for local food. It enables a network of independent online food stores that connect farmers and food hubs (including coops, online farmers' markets, independent food businesses etc);  with individuals and local businesses. It gives farmers and food hubs an easier and fairer way to distribute their food.
 
-Supported by the Open Food Foundation, we are proudly open source and not-for-profit - we're trying to seriously disrupt the concentration of power in global agri-food systems, and we need as many smart people working together on this as possible.
+Supported by the Open Food Foundation and a network of global affiliates, we are proudly open source and not-for-profit - we're trying to seriously disrupt the concentration of power in global agri-food systems, and we need as many smart people working together on this as possible.
 
 We're part of global movement - get involved!
 
-* Join the conversation [on Slack](slack). Make sure you introduce yourself in the #general channel
-* Head to [https://openfoodnetwork.org](https://openfoodnetwork.org) for more information about the global OFN project
-* Check out the [User Guide](https://guide.openfoodnetwork.org/) for a list of features and tutorials
+* Fill in this [short survey](survey) to tell us who you are and what you want to do with OFN.
+* Join the conversation [on Slack](slack). Make sure you introduce yourself in the #general channel.
+* Head to [https://openfoodnetwork.org](https://openfoodnetwork.org) for more information about the global OFN project.
+* Check out the [User Guide](https://guide.openfoodnetwork.org/) for a list of features and tutorials.
+* Join our [discussion forum](https://community.openfoodnetwork.org).
 
 ## Contributing
 
@@ -49,7 +51,8 @@ We also have a [Super Admin Guide](super-admin-guide) to help with configuration
 
 Copyright (c) 2012 - 2018 Open Food Foundation, released under the AGPL licence.
 
-[slack]: https://join.slack.com/t/openfoodnetwork/shared_invite/enQtMzU2Mjk5MDc2MjA5LTM4ZTAzZjIwNzIxMmU5ODFiNWY1MTU2ZWUyNzQwNjdjNTY0N2VhY2UwOGU4ZmVjNzYyZDU2NjY3NzZkZmQwYjk
+[survey]: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
+[slack]: https://openfoodnetwork.org/slack-invite
 [contributor-guide]: https://ofn-user-guide.gitbook.io/ofn-contributor-guide/who-are-we
 [ofn-install]: https://github.com/openfoodfoundation/ofn-install
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide
