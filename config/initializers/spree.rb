@@ -22,6 +22,7 @@ Spree.config do |config|
   #config.override_actionmailer_config = false
 
   config.package_factory = Stock::Package
+  config.order_updater_decorator = OrderUpdater
 end
 
 # TODO Work out why this is necessary
