@@ -1,27 +1,78 @@
 @import "typography";
 
+$large-menu-height: 4.6875rem;
+$medium-menu-height: 3rem;
+$gutter-width: 0.9375rem;
+
+nav.top-bar ul.left li.powered-by {
+  display: none;
+}
+
 body.embedded {
   nav.top-bar {
-    ul.left, ul.center, ul.right li.current_hub {
+    overflow: visible;
+    padding: 0 $gutter-width;
+
+    ul.left li.ofn-logo, ul.center, ul.right li.current_hub {
       display: none;
+    }
+
+    ul.left {
+      float: left;
+      width: auto;
+
+      li {
+        line-height: $large-menu-height;
+        height: $large-menu-height;
+        vertical-align: top;
+      }
+
+      li.powered-by {
+        display: inline-block;
+        opacity: 0.6;
+
+        img {
+          height: 1.8em;
+          margin: 0px 0.4em 0.4em 0px;
+        }
+
+        span, a {
+          font-family: "Oswald", sans-serif;
+          font-size: 1rem;
+          font-weight: 300;
+          color: #555;
+          padding: 0 !important;
+        }
+
+        a:hover {
+          color: #000;
+        }
+      }
     }
 
     ul.right {
       width: auto !important;
+
       li {
         float: left;
-        line-height: 4.6875rem;
-        height: 4.6875rem;
+        line-height: $large-menu-height;
+        height: $large-menu-height;
         vertical-align: top;
-      }
-      li.powered-by {
-        display: inline-block;
+
+        &.cart {
+
+          div.joyride-tip-guide { // Cart Dropdown
+            top: 75px;
+            overflow: visible;
+          }
+        }
       }
     }
 
     &.show-for-large-up {
       display: inherit !important;
     }
+
     &.show-for-medium-down {
       display: none !important;
     }
@@ -46,28 +97,68 @@ body.embedded {
   #group-page header {
     display: none;
   }
+
+  @media all and (max-width: 640px) {
+    nav.top-bar {
+      height: 3.4rem;
+      padding: 0.2rem $gutter-width;
+      line-height: $medium-menu-height;
+
+      ul.left li, ul.right li {
+        line-height: $medium-menu-height;
+
+        i, span {
+          line-height: $medium-menu-height;
+        }
+      }
+
+      ul.right li.cart div.joyride-tip-guide {
+        width: 95%;
+        top: 51px;
+
+        h5 {
+          margin-bottom: 0.6rem;
+        }
+
+        .joyride-content-wrapper {
+          line-height: 2rem;
+
+          table tr.product-cart {
+            padding: 0;
+
+            td{
+              padding: 0 12px;
+            }
+          }
+        }
+
+        .buttons {
+
+          .button {
+            padding: 0.4rem 0.6rem !important;
+          }
+        }
+      }
+    }
+  }
+
+  @media all and (max-width: 480px) {
+    ul.left li.powered-by span {
+      display: none;
+    }
+
+    ul.right {
+
+      li.cart {
+
+        div.joyride-tip-guide {
+          width: 95%;
+        }
+      }
+    }
+  }
 }
 
-nav.top-bar ul.right li.powered-by {
-  display: none;
-  margin-right: 0.4rem;
-  opacity: 0.6;
-
-  img {
-    height: 1.8em;
-    margin: 0px 0.4em 0.4em 0px;
-  }
-  span, a {
-    font-family: "Oswald", sans-serif;
-    font-size: 1rem;
-    font-weight: 300;
-    color: #555;
-    padding: 0 !important;
-  }
-  a:hover {
-    color: #000;
-  }
-}
 
 .powered-by-embedded {
    opacity: 0.6;
