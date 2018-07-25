@@ -43,6 +43,9 @@ class OrderUpdater < SimpleDelegator
     order.canceled? && order.payments.present? && !order.payments.completed.empty?
   end
 
+  # Sets the distributor's address as shipping address of the order for those
+  # shipments using a shipping method that doesn't require address, such us
+  # a pickup.
   def shipping_address_from_distributor
     shipments.each do |shipment|
       shipping_method = shipment.shipping_method
