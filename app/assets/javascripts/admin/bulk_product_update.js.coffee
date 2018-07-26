@@ -1,5 +1,6 @@
 angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout, $http, $window, BulkProducts, DisplayProperties, dataFetcher, DirtyProducts, VariantUnitManager, StatusMessage, producers, Taxons, SpreeApiAuth, Columns, tax_categories) ->
     $scope.loading = true
+    $scope.loadingAllPages = true
 
     $scope.StatusMessage = StatusMessage
 
@@ -49,7 +50,10 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
     $scope.fetchProducts = ->
       $scope.loading = true
-      BulkProducts.fetch($scope.currentFilters).then ->
+      $scope.loadingAllPages = true
+      BulkProducts.fetch($scope.currentFilters, ->
+        $scope.loadingAllPages = false
+      ).then ->
         $scope.resetProducts()
         $scope.loading = false
 
