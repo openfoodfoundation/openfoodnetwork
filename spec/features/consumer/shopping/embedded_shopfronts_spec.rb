@@ -107,7 +107,7 @@ feature "Using embedded shopfront functionality", js: true do
   end
 
   private
-  
+
   def login_with_modal
     expect(page).to have_selector 'div.login-modal', visible: true
 
