@@ -20,7 +20,6 @@ Spree::Order.class_eval do
   validate :disallow_guest_order
   attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
-  before_validation :shipping_address_from_distributor
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
 
@@ -336,18 +335,6 @@ Spree::Order.class_eval do
   end
 
   private
-
-  def shipping_address_from_distributor
-    if distributor
-      # This method is confusing to conform to the vagaries of the multi-step checkout
-      # We copy over the shipping address when we have no shipping method selected
-      # We can refactor this when we drop the multi-step checkout option
-      #
-      if shipping_method.andand.require_ship_address == false
-        self.ship_address = address_from_distributor
-      end
-    end
-  end
 
   def address_from_distributor
     address = distributor.address.clone
