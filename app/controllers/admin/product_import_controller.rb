@@ -11,7 +11,6 @@ module Admin
     end
 
     def import
-      # Save uploaded file to tmp directory
       @filepath = save_uploaded_file(params[:file])
       @importer = ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user, params[:settings])
       @original_filename = params[:file].try(:original_filename)
@@ -19,8 +18,7 @@ module Admin
       check_file_errors @importer
       check_spreadsheet_has_data @importer
 
-      @tax_categories = Spree::TaxCategory.order('is_default DESC, name ASC')
-      @shipping_categories = Spree::ShippingCategory.order('name ASC')
+      @ams_data = ams_data
     end
 
     def validate_data
@@ -85,6 +83,18 @@ module Admin
         f.write(upload.read)
         f.path
       end
+    end
+
+    def ams_data
+      {
+        filepath: @filepath,
+        item_count: @importer.item_count,
+        supplier_product_counts: @importer.supplier_products,
+        import_url: main_app.admin_product_import_process_async_path,
+        save_url: main_app.admin_product_import_save_async_path,
+        reset_url: main_app.admin_product_import_reset_async_path,
+        importSettings: @importer.import_settings,
+      }
     end
 
     # Define custom model class for Cancan permissions

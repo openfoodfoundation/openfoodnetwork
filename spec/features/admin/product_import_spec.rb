@@ -45,18 +45,12 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
       import_data
 
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to_not have_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "2"
       expect(page).to_not have_selector '.update-count'
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
 
       save_data
 
@@ -94,9 +88,6 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
       import_data
 
       expect(page).to have_selector '.item-count', text: "2"
@@ -120,17 +111,11 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
       import_data
 
       expect(page).to have_selector '.item-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
       expect(page).to_not have_selector '.update-count'
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
 
       save_data
 
@@ -156,13 +141,7 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
       import_data
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
 
       save_data
 
@@ -210,13 +189,7 @@ feature "Product Import", js: true do
 
       click_button 'Upload'
 
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
       import_data
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
 
       save_data
 
@@ -242,9 +215,6 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
       import_data
 
       expect(page).to have_selector '.item-count', text: "3"
@@ -253,9 +223,6 @@ feature "Product Import", js: true do
       expect(page).to_not have_selector '.update-count'
       expect(page).to have_selector '.inv-create-count', text: "2"
       expect(page).to have_selector '.inv-update-count', text: "1"
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
 
       save_data
 
@@ -345,9 +312,6 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
       import_data
 
       expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
@@ -363,24 +327,16 @@ feature "Product Import", js: true do
   private
 
   def import_data
-    expect(page).to have_selector 'button.start_import', visible: true
-    expect(page).to have_selector "button.review[disabled='disabled']"
-
-    find('button.start_import').trigger 'click'
-    wait_until { page.find("button.review:not([disabled='disabled'])").present? }
-
-    find('button.review').trigger 'click'
+    expect(page).to have_selector 'a.button.proceed', visible: true
+    click_link I18n.t('admin.product_import.import.import')
+    expect(page).to have_selector 'form.product-import', visible: true
     expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
   end
 
   def save_data
-    expect(page).to have_selector 'button.start_save', visible: true
-    expect(page).to have_selector "button.view_results[disabled='disabled']"
-
-    find('button.start_save').trigger 'click'
-    wait_until { page.find("button.view_results:not([disabled='disabled'])").present? }
-
-    find('button.view_results').trigger 'click'
+    expect(page).to have_selector 'a.button.proceed', visible: true
+    click_link I18n.t('admin.product_import.import.save')
+    expect(page).to have_selector 'div.save-results', visible: true
     expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
   end
 end

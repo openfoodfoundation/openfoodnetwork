@@ -68,7 +68,7 @@ module ProductImport
     end
 
     def supplier_products
-      @processor.supplier_products
+      @processor.andand.supplier_products
     end
 
     def total_supplier_products

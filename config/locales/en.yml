@@ -481,7 +481,7 @@ en:
         shipping_categories: Shipping Categories
       import:
         review: Review
-        proceed: Proceed
+        import: Import
         save: Save
         results: Results
         save_imported: Save imported products
