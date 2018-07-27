@@ -10,7 +10,7 @@ Supported by the Open Food Foundation and a network of global affiliates, we are
 
 We're part of global movement - get involved!
 
-* Fill in this [short survey](survey) to tell us who you are and what you want to do with OFN.
+* Fill in this [short survey][survey] to tell us who you are and what you want to do with OFN.
 * Join the conversation [on Slack][slack-invite]. Make sure you introduce yourself in the #general channel
 * Head to [https://openfoodnetwork.org](https://openfoodnetwork.org) for more information about the global OFN project.
 * Check out the [User Guide](https://guide.openfoodnetwork.org/) for a list of features and tutorials.
