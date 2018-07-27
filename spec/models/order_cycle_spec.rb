@@ -440,8 +440,8 @@ describe OrderCycle do
 
     occ = OrderCycle.last
     occ.name.should == "COPY OF #{oc.name}"
-    occ.orders_open_at.should be_nil
-    occ.orders_close_at.should be_nil
+    occ.orders_open_at.should == oc.orders_open_at
+    occ.orders_close_at.should == oc.orders_close_at
     occ.coordinator.should_not be_nil
     occ.preferred_product_selection_from_coordinator_inventory_only.should be true
     occ.coordinator.should == oc.coordinator

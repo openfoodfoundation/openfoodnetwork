@@ -591,6 +591,17 @@ feature %q{
     # Then I should have clone of the order cycle
     occ = OrderCycle.last
     expect(occ.name).to eq "COPY OF #{oc.name}"
+    expect(occ.products).to eq oc.products
+    expect(occ.schedules).to eq oc.schedules
+
+    # On the page, expect the clone to have the same values as the original
+    within "tr.order-cycle-#{occ.id}" do
+      page.should have_input "oc#{occ.id}[orders_open_at]", value: oc.orders_open_at
+      page.should have_input "oc#{occ.id}[orders_close_at]", value: oc.orders_close_at
+      page.should have_selector 'td.schedules', text: 'None'
+      page.should have_selector 'td.coordinator', text: "#{oc.coordinator.name}"
+      page.should have_selector 'td.products', text: '0 variants'
+    end
   end
 
 
