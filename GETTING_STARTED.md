@@ -50,7 +50,7 @@ This will create the "ofn" user as superuser and allowing it to create databases
 
 Once done, run `script/setup`. If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
 
-If you run into any other issues getting your local environment up and running please consult [the wiki](wiki).
+If you run into any other issues getting your local environment up and running please consult [the wiki][wiki].
 
 If still you get stuck do not hesitate to open an issue reporting the full output of the script.
 
