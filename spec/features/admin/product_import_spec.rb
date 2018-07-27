@@ -72,7 +72,7 @@ feature "Product Import", js: true do
 
       wait_until { page.find("a.button.view").present? }
 
-      click_link 'View Products'
+      click_link I18n.t('admin.product_import.save_results.view_products')
 
       expect(page).to have_content 'Bulk Edit Products'
       wait_until { page.find("#p_#{potatoes.id}").present? }
@@ -107,12 +107,10 @@ feature "Product Import", js: true do
       expect(page).to_not have_selector 'input[type=submit][value="Save"]'
     end
 
-    it "handles validation and saving of named tax and shipping categories" do
+    it "handles saving of named tax and shipping categories" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "Unknown Tax Category", shipping_category.name]
-        csv << ["Peas", "User Enterprise", "Vegetables", "7", "2.50", "1", "kg", tax_category2.name, "Unknown Shipping Category"]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -127,8 +125,7 @@ feature "Product Import", js: true do
 
       import_data
 
-      expect(page).to have_selector '.item-count', text: "3"
-      expect(page).to have_selector '.invalid-count', text: "2"
+      expect(page).to have_selector '.item-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
       expect(page).to_not have_selector '.update-count'
 
@@ -174,7 +171,7 @@ feature "Product Import", js: true do
       potatoes = Spree::Product.find_by_name('Potatoes')
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      click_link 'View Products'
+      click_link I18n.t('admin.product_import.save_results.view_products')
 
       wait_until { page.find("#p_#{carrots.id}").present? }
 
@@ -198,6 +195,39 @@ feature "Product Import", js: true do
       expect(page).to_not have_field "product_name", with: product2.name
     end
 
+    it "can reset product stock to zero for products not present in the CSV" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g"]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      attach_file 'file', '/tmp/test.csv'
+
+      check "settings_reset_all_absent"
+
+      click_button 'Upload'
+
+      expect(page).to have_selector 'a.button.proceed', visible: true
+      click_link 'Proceed'
+
+      import_data
+
+      expect(page).to have_selector 'a.button.proceed', visible: true
+      click_link 'Proceed'
+
+      save_data
+
+      expect(page).to have_selector '.created-count', text: '1'
+      expect(page).to have_selector '.reset-count', text: '3'
+
+      expect(Spree::Product.find_by_name('Carrots').on_hand).to eq 500
+      expect(Spree::Product.find_by_name('Cabbage').on_hand).to eq 0
+      expect(Spree::Product.find_by_name('Beans').on_hand).to eq 0
+    end
+
     it "can import items into inventory" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "producer", "category", "on_hand", "price", "units"]
@@ -208,13 +238,9 @@ feature "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
+      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
-
-      within 'div.import-settings' do
-        find('div.header-description').click  # Import settings tab
-        select 'Inventories', from: "settings_#{enterprise2.id.to_s}_import_into", visible: false
-      end
 
       expect(page).to have_selector 'a.button.proceed', visible: true
       click_link 'Proceed'
@@ -251,7 +277,7 @@ feature "Product Import", js: true do
       expect(Float(cabbage_override.price)).to eq 1.50
       expect(cabbage_override.count_on_hand).to eq 2001
 
-      click_link 'View Inventory'
+      click_link I18n.t('admin.product_import.save_results.view_inventory')
       expect(page).to have_content 'Inventory'
 
       select enterprise2.name, from: "hub_id", visible: false
@@ -261,79 +287,6 @@ feature "Product Import", js: true do
         expect(page).to have_content 'Sprouts'
         expect(page).to have_content 'Cabbage'
       end
-    end
-
-    it "can override import fields via the import settings tab" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category", "shipping_category"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.name, shipping_category.name]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "Unknown Tax Category", shipping_category.name]
-        csv << ["Peas", "User Enterprise", "Vegetables", "7", "2.50", "1", "kg", tax_category2.name, "Unknown Shipping Category"]
-        csv << ["Pumpkin", "User Enterprise", "Vegetables", "3", "3.50", "1", "kg", tax_category.name, ""]
-        csv << ["Spinach", "User Enterprise", "Vegetables", "7", "3.60", "1", "kg", "", shipping_category.name]
-      end
-      File.write('/tmp/test.csv', csv_data)
-
-      visit main_app.admin_product_import_path
-
-      expect(page).to have_content "Select a spreadsheet to upload"
-      attach_file 'file', '/tmp/test.csv'
-      click_button 'Upload'
-
-      within 'div.import-settings' do
-        find('div.panel-header').click
-
-        within 'tr.stock-level.productlist' do
-          find('input[type="checkbox"]').click
-          select 'Overwrite all', from: "settings_#{enterprise.id}_defaults_on_hand_mode", visible: false
-          fill_in "settings_#{enterprise.id}_defaults_on_hand_value", with: 9000
-        end
-
-        within 'tr.tax-category' do
-          find('input[type="checkbox"]').click
-          select 'Overwrite if empty', from: "settings_#{enterprise.id}_defaults_tax_category_id_mode", visible: false
-          select tax_category2.name, from: "settings_#{enterprise.id}_defaults_tax_category_id_value", visible: false
-        end
-
-        within 'tr.shipping-category' do
-          find('input[type="checkbox"]').click
-          select 'Overwrite all', from: "settings_#{enterprise.id}_defaults_shipping_category_id_mode", visible: false
-          select shipping_category.name, from: "settings_#{enterprise.id}_defaults_shipping_category_id_value", visible: false
-        end
-      end
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
-      import_data
-
-      expect(page).to have_selector '.item-count', text: "5"
-      expect(page).to have_selector '.invalid-count', text: "2"
-      expect(page).to have_selector '.create-count', text: "3"
-      expect(page).to_not have_selector '.update-count'
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
-      save_data
-
-      expect(page).to have_selector '.created-count', text: '3'
-      expect(page).to_not have_selector '.updated-count'
-
-      carrots = Spree::Product.find_by_name('Carrots')
-      expect(carrots.tax_category).to eq tax_category
-      expect(carrots.shipping_category).to eq shipping_category
-      expect(carrots.count_on_hand).to eq 9000
-
-      pumpkin = Spree::Product.find_by_name('Pumpkin')
-      expect(pumpkin.tax_category).to eq tax_category
-      expect(pumpkin.shipping_category).to eq shipping_category
-      expect(pumpkin.count_on_hand).to eq 9000
-
-      spinach = Spree::Product.find_by_name('Spinach')
-      expect(spinach.tax_category).to eq tax_category2
-      expect(spinach.shipping_category).to eq shipping_category
-      expect(spinach.count_on_hand).to eq 9000
     end
   end
 
@@ -403,16 +356,7 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.create-count', text: "1"
 
       expect(page.body).to have_content 'you do not have permission'
-
-      expect(page).to have_selector 'a.button.proceed', visible: true
-      click_link 'Proceed'
-
-      save_data
-
-      expect(page).to have_selector '.created-count', text: '1'
-
-      expect(Spree::Product.find_by_name('My Carrots')).to be_a Spree::Product
-      expect(Spree::Product.find_by_name('Your Potatoes')).to be_nil
+      expect(page).to_not have_selector 'a.button.proceed', visible: true
     end
   end
 
@@ -437,6 +381,6 @@ feature "Product Import", js: true do
     wait_until { page.find("button.view_results:not([disabled='disabled'])").present? }
 
     find('button.view_results').trigger 'click'
-    expect(page).to have_content I18n.t('admin.product_import.save.final_results')
+    expect(page).to have_content I18n.t('admin.product_import.save_results.final_results')
   end
 end

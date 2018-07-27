@@ -1,37 +1,4 @@
-.product-import-introduction {
-
-  h1, h2, h3, h4, h5, h6 {
-    margin: 1.5em 0 1em;
-  }
-
-  h6 {
-    font-size: 1em;
-  }
-
-  p {
-    margin-bottom: 1em;
-  }
-
-  span.category {
-    display: inline-block;
-    background-color: #f3f3f3;
-    padding: 0.4em 0.8em;
-    margin: 0 0.4em 0.5em 0;
-  }
-
-  table {
-
-    &.product-import-columns tr:hover td {
-      background-color: transparent;
-    }
-
-    thead th {
-      text-transform: none;
-      font-size: 100%;
-      text-align: left;
-    }
-  }
-}
+@import "variables";
 
 div.panel-section {
 
@@ -39,7 +6,7 @@ div.panel-section {
     color: #bfbfbf;
   }
   .warning {
-    color: #da5354;
+    color: $warning-red;
   }
   .success {
     color: #86d83a;
@@ -210,7 +177,7 @@ table.import-settings {
 
   span.header-error {
     font-size: 0.85em;
-    color: #da5354;
+    color: $warning-red;
   }
 
   .select2-search {
@@ -313,5 +280,35 @@ div.progress-bar {
     border-radius: 0.3em;
     box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
     transition: width 0.5s ease-in-out;
+  }
+}
+
+#upload-sidebar {
+  float: right;
+  background-color: lighten($spree-light-blue, 2.5%);
+  border: 1px solid lighten($pale-blue, 2.5%);
+  width: 50%;
+  padding: 0 1.5em 1.5em;
+
+  h4, h5, h6, p {
+    margin: 1.25em 0 1em;
+  }
+
+  a.download {
+    display: block;
+    font-size: 1.05em;
+    margin-bottom: 0.5em;
+
+    i {
+      margin-right: 0.25em;
+    }
+  }
+
+  span.category {
+    display: inline-block;
+    background-color: lighten($spree-blue, 10%);
+    color: white;
+    padding: 0.3em 0.6em;
+    margin: 0 0.4em 0.5em 0;
   }
 }

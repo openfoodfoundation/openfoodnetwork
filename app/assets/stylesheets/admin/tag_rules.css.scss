@@ -1,3 +1,5 @@
+@import "variables";
+
 tags-input {
   &.limit-reached {
     input, span.input {
@@ -21,13 +23,13 @@ tags-input {
 
 .customer_tag, .default_rules {
   background-color: #ffffff;
-  border: 1px solid #cee1f4;
+  border: 1px solid $pale-blue;
   margin-bottom: 40px;
 
   .header {
     padding: 8px 10px;
-    background-color: #eff5fc;
-    border-bottom: 1px solid #cee1f4;
+    background-color: $spree-light-blue;
+    border-bottom: 1px solid $pale-blue;
 
     table {
       padding: 0px;

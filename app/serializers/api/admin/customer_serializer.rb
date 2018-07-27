@@ -1,5 +1,6 @@
 class Api::Admin::CustomerSerializer < ActiveModel::Serializer
   attributes :id, :email, :enterprise_id, :user_id, :code, :tags, :tag_list, :name
+  attributes :allow_charges, :default_card_present?
 
   has_one :ship_address, serializer: Api::AddressSerializer
   has_one :bill_address, serializer: Api::AddressSerializer
@@ -17,5 +18,10 @@ class Api::Admin::CustomerSerializer < ActiveModel::Serializer
       tag_rule_map = options[:tag_rule_mapping].andand[tag]
       tag_rule_map || { text: tag, rules: nil }
     end
+  end
+
+  def default_card_present?
+    return unless object.user
+    object.user.default_card.present?
   end
 end

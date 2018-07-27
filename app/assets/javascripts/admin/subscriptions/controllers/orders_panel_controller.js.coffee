@@ -16,7 +16,7 @@ angular.module("admin.subscriptions").controller "OrdersPanelController", ($scop
     oc = OrderCycles.byID[id]
     return t('js.subscriptions.close_date_not_set') unless oc?.orders_close_at?
     closes_at = moment(oc.orders_close_at)
-    text = if closes_at > moment() then t('js.subscriptions.closes') else t('js.subscription.closed')
+    text = if closes_at > moment() then t('js.subscriptions.closes') else t('js.subscriptions.closed')
     "#{text} #{closes_at.fromNow()}"
 
   $scope.stateText = (state) -> t("spree.order_state.#{state}")

@@ -160,6 +160,13 @@ describe "BulkProducts service", ->
         BulkProducts.loadVariantUnitValues product, product.variants[0]
         expect(product.variants[0].unit_value_with_description).toEqual '2.5'
 
+      it "converts values from base value to chosen unit without breaking precision", ->
+        product =
+          variant_unit_scale: 0.001
+          variants: [{id: 1, unit_value: 0.35}]
+        BulkProducts.loadVariantUnitValues product, product.variants[0]
+        expect(product.variants[0].unit_value_with_description).toEqual '350'
+
       it "displays a unit_value of zero", ->
         product =
           variant_unit_scale: 1.0

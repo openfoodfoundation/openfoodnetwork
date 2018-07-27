@@ -174,7 +174,7 @@ describe SubscriptionConfirmJob do
   end
 
   describe "#send_confirm_email" do
-    let(:order) { double(:order) }
+    let(:order) { instance_double(Spree::Order) }
     let(:mail_mock) { double(:mailer_mock, deliver: true) }
 
     before do
@@ -183,6 +183,7 @@ describe SubscriptionConfirmJob do
     end
 
     it "records a success and sends the email" do
+      expect(order).to receive(:update!)
       expect(job).to receive(:record_success).with(order).once
       job.send(:send_confirm_email)
       expect(SubscriptionMailer).to have_received(:confirmation_email).with(order)
@@ -191,7 +192,7 @@ describe SubscriptionConfirmJob do
   end
 
   describe "#send_failed_payment_email" do
-    let(:order) { double(:order) }
+    let(:order) { instance_double(Spree::Order) }
     let(:mail_mock) { double(:mailer_mock, deliver: true) }
 
     before do
@@ -200,6 +201,7 @@ describe SubscriptionConfirmJob do
     end
 
     it "records and logs an error and sends the email" do
+      expect(order).to receive(:update!)
       expect(job).to receive(:record_and_log_error).with(:failed_payment, order).once
       job.send(:send_failed_payment_email)
       expect(SubscriptionMailer).to have_received(:failed_payment_email).with(order)

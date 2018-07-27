@@ -56,48 +56,9 @@ class ApplicationController < ActionController::Base
   end
 
   def enable_embedded_shopfront
-    return unless embeddable?
-    return if embedding_without_https?
-
-    response.headers.delete 'X-Frame-Options'
-    response.headers['Content-Security-Policy'] = "frame-ancestors #{URI(request.referer).host.downcase}"
-
-    check_embedded_request
-    set_embedded_layout
-  end
-
-  def embedded_shopfront_referer
-    return if request.referer.blank?
-    domain = URI(request.referer).host.downcase
-    domain.start_with?('www.') ? domain[4..-1] : domain
-  end
-
-  def embeddable?
-    whitelist = Spree::Config[:embedded_shopfronts_whitelist]
-    domain = embedded_shopfront_referer
-    Spree::Config[:enable_embedded_shopfronts] && whitelist.present? && domain.present? && whitelist.include?(domain)
-  end
-
-  def embedding_without_https?
-    request.referer && URI(request.referer).scheme != 'https' && !Rails.env.test? && !Rails.env.development?
-  end
-
-  def check_embedded_request
-    return unless params[:embedded_shopfront]
-
-    # Show embedded shopfront CSS
-    session[:embedded_shopfront] = true
-
-    # Get shopfront slug and set redirect path
-    if params[:controller] == 'enterprises' && params[:action] == 'shop' && params[:id]
-      slug = params[:id]
-      session[:shopfront_redirect] = '/' + slug + '/shop?embedded_shopfront=true'
-    end
-  end
-
-  def set_embedded_layout
-    return unless session[:embedded_shopfront]
-    @shopfront_layout = 'embedded'
+    embed_service = EmbeddedPageService.new(params, session, request, response)
+    embed_service.embed!
+    @shopfront_layout = 'embedded' if embed_service.use_embedded_layout?
   end
 
   def action

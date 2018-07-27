@@ -29,6 +29,10 @@ MAIL_PORT: 25
 SMTP_USERNAME: 'ofn'
 SMTP_PASSWORD: 'f00d'
 
+# Optional mail settings
+# MAILS_FROM: hello@example.com
+# MAIL_BCC: manager@example.com
+
 # SingleSignOn login for Discourse
 #
 # DISCOURSE_SSO_SECRET should be a random string. It must be the same as provided to your Discourse instance.

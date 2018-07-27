@@ -5,6 +5,11 @@ describe ProxyOrder, type: :model do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:subscription) { create(:subscription) }
 
+    around do |example|
+      # We are testing if database columns have been set to "now".
+      Timecop.freeze(Time.zone.now) { example.run }
+    end
+
     context "when the order cycle is not yet closed" do
       let(:proxy_order) { create(:proxy_order, subscription: subscription, order: order, order_cycle: order_cycle) }
       before { order_cycle.update_attributes(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
@@ -14,7 +19,7 @@ describe ProxyOrder, type: :model do
 
         it "returns true and sets canceled_at to the current time" do
           expect(proxy_order.cancel).to be true
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          expect_cancelled_now proxy_order
           expect(proxy_order.state).to eq 'canceled'
         end
       end
@@ -25,7 +30,7 @@ describe ProxyOrder, type: :model do
         it "returns true and sets canceled_at to the current time, and cancels the order" do
           expect(Spree::OrderMailer).to receive(:cancel_email) { double(:email, deliver: true) }
           expect(proxy_order.cancel).to be true
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          expect_cancelled_now proxy_order
           expect(order.reload.state).to eq 'canceled'
           expect(proxy_order.state).to eq 'canceled'
         end
@@ -36,7 +41,7 @@ describe ProxyOrder, type: :model do
 
         it "returns true and sets canceled_at to the current time" do
           expect(proxy_order.cancel).to be true
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          expect_cancelled_now proxy_order
           expect(order.reload.state).to eq 'cart'
           expect(proxy_order.state).to eq 'canceled'
         end
@@ -124,7 +129,7 @@ describe ProxyOrder, type: :model do
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          expect_cancelled_now proxy_order
           expect(proxy_order.state).to eq 'canceled'
         end
       end
@@ -138,7 +143,7 @@ describe ProxyOrder, type: :model do
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          expect_cancelled_now proxy_order
           expect(order.reload.state).to eq 'canceled'
           expect(proxy_order.state).to eq 'canceled'
         end
@@ -149,7 +154,7 @@ describe ProxyOrder, type: :model do
 
         it "returns false and does nothing" do
           expect(proxy_order.resume).to eq false
-          expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          expect_cancelled_now proxy_order
           expect(order.reload.state).to eq 'complete'
           expect(proxy_order.state).to eq 'canceled'
         end
@@ -183,5 +188,14 @@ describe ProxyOrder, type: :model do
         expect(proxy_order.initialise_order!).to eq existing_order
       end
     end
+  end
+
+  private
+
+  def expect_cancelled_now(subject)
+    # We still need to use be_within, because the Database timestamp is not as
+    # accurate as the Rails timestamp. If we use `eq`, we have differing nano
+    # seconds.
+    expect(subject.reload.canceled_at).to be_within(1.second).of Time.zone.now
   end
 end

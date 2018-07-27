@@ -1,25 +1,22 @@
 require 'spec_helper'
 
 feature "Using embedded shopfront functionality", js: true do
-
-  Capybara.server_port = 9999
+  include OpenFoodNetwork::EmbeddedPagesHelper
 
   describe 'embedded groups' do
     let(:enterprise) { create(:distributor_enterprise) }
-    let!(:group) { create(:enterprise_group, enterprises: [enterprise], permalink: 'group1', on_front_page: true) }
+    let(:group) { create(:enterprise_group, enterprises: [enterprise]) }
 
     before do
       Spree::Config[:enable_embedded_shopfronts] = true
       Spree::Config[:embedded_shopfronts_whitelist] = 'test.com'
       page.driver.browser.js_errors = false
       allow_any_instance_of(ActionDispatch::Request).to receive(:referer).and_return('https://www.test.com')
-      Capybara.current_session.driver.visit('spec/support/views/group_iframe_test.html')
+      visit "/embedded-group-preview.html?#{group.permalink}"
     end
 
     it "displays in an iframe" do
-      expect(page).to have_selector 'iframe#group_test_iframe'
-
-      within_frame 'group_test_iframe' do
+      on_embedded_page do
         within 'div#group-page' do
           expect(page).to have_content 'About Us'
         end
@@ -27,9 +24,7 @@ feature "Using embedded shopfront functionality", js: true do
     end
 
     it "displays powered by OFN text at bottom of page" do
-      expect(page).to have_selector 'iframe#group_test_iframe'
-
-      within_frame 'group_test_iframe' do
+      on_embedded_page do
         within 'div#group-page' do
           expect(page).to have_selector 'div.powered-by-embedded'
           expect(page).to have_css "img[src*='favicon.ico']"
@@ -40,9 +35,7 @@ feature "Using embedded shopfront functionality", js: true do
     end
 
     it "doesn't display contact details when embedded" do
-      expect(page).to have_selector 'iframe#group_test_iframe'
-
-      within_frame 'group_test_iframe' do
+      on_embedded_page do
         within 'div#group-page' do
 
           expect(page).to have_no_selector 'div.contact-container'
@@ -52,9 +45,7 @@ feature "Using embedded shopfront functionality", js: true do
     end
 
     it "does not display the header when embedded" do
-      expect(page).to have_selector 'iframe#group_test_iframe'
-
-      within_frame 'group_test_iframe' do
+      on_embedded_page do
         within 'div#group-page' do
           expect(page).to have_no_selector 'header'
           expect(page).to have_no_selector 'img.group-logo'
@@ -63,14 +54,17 @@ feature "Using embedded shopfront functionality", js: true do
       end
     end
 
-    it 'opens links to shops in a new window' do
-      expect(page).to have_selector 'iframe#group_test_iframe'
-
-      within_frame 'group_test_iframe' do
+    it "opens links to shops in a new window" do
+      on_embedded_page do
         within 'div#group-page' do
-          enterprise_links = page.all(:xpath, "//*[contains(@href, 'enterprise-5/shop')]", :visible => :false).count
-          enterprise_links_with_target_blank = page.all(:xpath, "//*[contains(@href, 'enterprise-5/shop') and @target = '_blank']", :visible => :false).count
-          expect(enterprise_links).to equal(enterprise_links_with_target_blank)
+          shop_links_xpath = "//*[contains(@href, '#{enterprise.permalink}/shop')]"
+
+          expect(page).to have_xpath shop_links_xpath, visible: false
+
+          shop_links = page.all(:xpath, shop_links_xpath, visible: false)
+          shop_links.each do |link|
+            expect(link[:target]).to eq "_blank"
+          end
         end
       end
     end

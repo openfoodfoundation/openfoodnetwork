@@ -38,6 +38,7 @@ Spree::Product.class_eval do
   before_validation :sanitize_permalink
   before_save :add_primary_taxon_to_taxons
   after_touch :touch_distributors
+  after_save :remove_previous_primary_taxon_from_taxons
   after_save :ensure_standard_variant
   after_save :update_units
   after_save :refresh_products_cache
@@ -243,6 +244,11 @@ Spree::Product.class_eval do
 
   def add_primary_taxon_to_taxons
     taxons << primary_taxon unless taxons.include? primary_taxon
+  end
+
+  def remove_previous_primary_taxon_from_taxons
+    return unless primary_taxon_id_changed? && primary_taxon_id_was
+    taxons.destroy(primary_taxon_id_was)
   end
 
   def self.all_variant_unit_option_types

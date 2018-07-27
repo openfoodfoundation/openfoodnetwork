@@ -8,7 +8,6 @@ Openfoodnetwork::Application.routes.draw do
   get "/t/products/:id", to: redirect("/")
   get "/about_us", to: redirect(ContentConfig.footer_about_url)
 
-  get "/#/login", to: "home#index", as: :spree_login
   get "/login", to: redirect("/#/login")
 
   get "/discourse/login", to: "discourse_sso#login"
@@ -134,7 +133,6 @@ Openfoodnetwork::Application.routes.draw do
     get '/inventory', to: 'variant_overrides#index'
 
     get '/product_import', to: 'product_import#index'
-    get '/product_import/guide', to: 'product_import#guide', as: 'product_import_guide'
     post '/product_import', to: 'product_import#import'
     post '/product_import/validate_data', to: 'product_import#validate_data', as: 'product_import_process_async'
     post '/product_import/save_data', to: 'product_import#save_data', as: 'product_import_save_async'
@@ -147,10 +145,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :inventory_items, only: [:create, :update]
 
-    resources :customers, only: [:index, :create, :update, :destroy] do
-      get :addresses, on: :member
-      get :cards, on: :member
-    end
+    resources :customers, only: [:index, :create, :update, :destroy, :show]
 
     resources :tag_rules, only: [], format: :json do
       get :map_by_tag, on: :collection
@@ -216,6 +211,8 @@ Openfoodnetwork::Application.routes.draw do
     resource :status do
       get :job_queue
     end
+
+    resources :customers, only: [:index, :update]
 
     post '/product_images/:product_id', to: 'product_images#update_product_image'
   end

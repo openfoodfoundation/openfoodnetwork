@@ -1,0 +1,9 @@
+.row.help-icon
+  .small-12.text-center
+    %i.ofn-i_013-help
+.row.help-text
+  .small-12.columns.text-center
+    {{ helpText }}
+.row.text-center
+  %button.primary.small{ ng: { click: '$close()' } }
+    = t(:ok)

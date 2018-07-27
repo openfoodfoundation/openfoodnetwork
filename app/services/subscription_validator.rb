@@ -23,7 +23,6 @@ class SubscriptionValidator
 
   delegate :shop, :customer, :schedule, :shipping_method, :payment_method, to: :subscription
   delegate :bill_address, :ship_address, :begins_at, :ends_at, to: :subscription
-  delegate :credit_card, :credit_card_id, to: :subscription
   delegate :subscription_line_items, to: :subscription
 
   def initialize(subscription)
@@ -76,10 +75,11 @@ class SubscriptionValidator
   end
 
   def credit_card_ok?
-    return unless payment_method.andand.type == "Spree::Gateway::StripeConnect"
-    return errors.add(:credit_card, :blank) unless credit_card_id
-    return if customer.andand.user.andand.credit_card_ids.andand.include? credit_card_id
-    errors.add(:credit_card, :not_available)
+    return unless customer && payment_method
+    return unless payment_method.type == "Spree::Gateway::StripeConnect"
+    return errors.add(:payment_method, :charges_not_allowed) unless customer.allow_charges
+    return if customer.user.andand.default_card.present?
+    errors.add(:payment_method, :no_default_card)
   end
 
   def subscription_line_items_present?

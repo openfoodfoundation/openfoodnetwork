@@ -1,3 +1,5 @@
+@import "variables";
+
 div.sidebar_item {
   margin-bottom: 30px;
 
@@ -12,11 +14,11 @@ div.sidebar_item {
     position: relative;
 
     &.blue {
-      background-color: #5498da;
+      background-color: $spree-blue;
     }
 
     &.red {
-      background-color: #DA5354;
+      background-color: $warning-red;
     }
   }
 
@@ -26,10 +28,10 @@ div.sidebar_item {
     overflow-x: hidden;
 
     &.red {
-      color: #DA5354;
+      color: $warning-red;
 
       .list-item {
-        border: solid #DA5354;
+        border: solid $warning-red;
         border-width: 0px 3px 0px 3px;
 
         a.alpha, span.alpha {
@@ -40,13 +42,13 @@ div.sidebar_item {
           background-color: #fcf6ef;
 
           &:hover {
-            background-color: #9fc820;
+            background-color: $spree-green;
           }
         }
       }
 
       a {
-        color: #DA5354;
+        color: $warning-red;
       }
     }
   }
@@ -57,7 +59,7 @@ div.sidebar_item {
       font-size: 20px;
     }
 
-    border: solid #5498da;
+    border: solid $spree-blue;
     border-width: 0px 1px 0px 1px;
 
     a.alpha, span.alpha {
@@ -75,7 +77,7 @@ div.sidebar_item {
     }
 
     .icon-remove-sign {
-      color: #DA5354;
+      color: $warning-red;
       font-size: 18px;
     }
 
@@ -84,13 +86,13 @@ div.sidebar_item {
     }
 
     &.odd {
-      background-color: #eff5fc;
+      background-color: $spree-light-blue;
     }
 
     &.even, &.odd {
       &:hover {
         color: #ffffff;
-        background-color: #9fc820;
+        background-color: $spree-green;
 
         a {
           color: #ffffff;
@@ -107,15 +109,15 @@ div.sidebar_item {
     border-radius: 0px;
 
     &.blue {
-      background-color: #5498da;
+      background-color: $spree-blue;
     }
 
     &.red {
-      background-color: #DA5354;
+      background-color: $warning-red;
     }
 
     &:hover {
-      background-color: #9fc820;
+      background-color: $spree-green;
     }
   }
 }

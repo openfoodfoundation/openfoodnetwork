@@ -16,6 +16,11 @@ context for others to understand it]
 [In case this should be present in the release notes, please write them or
 remove this section otherwise]
 
+[To streamline the release process, please designate your PR with ONE of the following 
+categories, based on the specification from keepachangelog.com (and delete the others):]
+
+Changelog Category: Added | Changed | Deprecated | Removed | Fixed | Security
+
 #### How is this related to the Spree upgrade?
 
 [Any known conflicts with the Spree Upgrade? explain them or remove this section

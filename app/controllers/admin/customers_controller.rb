@@ -23,6 +23,10 @@ module Admin
       end
     end
 
+    def show
+      render_as_json @customer, ams_prefix: params[:ams_prefix]
+    end
+
     def create
       @customer = Customer.new(params[:customer])
       if user_can_create_customer?
@@ -55,22 +59,6 @@ module Admin
       end
     end
 
-    # GET /admin/customers/:id/addresses
-    # Used by subscriptions form to load details for selected customer
-    def addresses
-      finder = OpenFoodNetwork::AddressFinder.new(@customer, @customer.email)
-      bill_address = Api::AddressSerializer.new(finder.bill_address).serializable_hash
-      ship_address = Api::AddressSerializer.new(finder.ship_address).serializable_hash
-      render json: { bill_address: bill_address, ship_address: ship_address }
-    end
-
-    # GET /admin/customers/:id/cards
-    # Used by subscriptions form to load details for selected customer
-    def cards
-      cards = Spree::CreditCard.where(user_id: @customer.user_id)
-      render json: ActiveModel::ArraySerializer.new(cards, each_serializer: Api::CreditCardSerializer)
-    end
-
     private
 
     def collection
@@ -86,6 +74,10 @@ module Admin
     def user_can_create_customer?
       spree_current_user.admin? ||
         spree_current_user.enterprises.include?(@customer.enterprise)
+    end
+
+    def ams_prefix_whitelist
+      [:subscription]
     end
   end
 end

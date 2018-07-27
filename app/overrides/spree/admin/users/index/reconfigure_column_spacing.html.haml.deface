@@ -1,6 +1,0 @@
-/ replace "table#listing_users colgroup"
-
-%colgroup
-  %col{ style: "width: 65%" }
-  %col{ style: "width: 20%" }
-  %col{ style: "width: 15%" }

@@ -1,3 +1,5 @@
+@import "../variables";
+
 #info-dialog, #confirm-dialog {
   .message {
     .text, .icon {
@@ -21,7 +23,7 @@
   &.error {
     .message {
       .icon {
-        color: #da5354;
+        color: $warning-red;
       }
     }
   }
@@ -29,7 +31,7 @@
   &.info {
     .message {
       .icon {
-        color: #5498da;
+        color: $spree-blue;
       }
     }
   }

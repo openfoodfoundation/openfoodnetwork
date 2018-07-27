@@ -4,7 +4,7 @@ module Admin
   class ProductImportController < Spree::Admin::BaseController
     before_filter :validate_upload_presence, except: %i[index guide validate_data]
 
-    def guide
+    def index
       @product_categories = Spree::Taxon.order('name ASC').pluck(:name).uniq
       @tax_categories = Spree::TaxCategory.order('name ASC').pluck(:name)
       @shipping_categories = Spree::ShippingCategory.order('name ASC').pluck(:name)

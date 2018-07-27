@@ -1,11 +1,30 @@
-%div{ng: {app: 'admin.productImport'}}
+%div{ng: {app: 'admin.productImport', controller: 'ImportOptionsFormCtrl', init: "initForm()"}}
 
-  %h5= t('admin.product_import.index.select_file')
-  %br
   = form_tag main_app.admin_product_import_path, multipart: true, class: 'product-import' do
-    %label #{t('admin.product_import.index.spreadsheet')}
+
+    %h6= t('admin.product_import.index.choose_import_type')
+    %br
+    = select_tag "settings[import_into]", options_for_select({"#{t('admin.product_import.index.product_list')}" => :product_list, "#{t('admin.product_import.index.inventories')}" => :inventories}), {class: 'select2 select2-no-search', 'ng-model' => 'settings.import_into'}
+    %br
+    %br
+    %br
+
+    %h6= t('admin.product_import.index.select_file')
     %br
     = file_field_tag :file
     %br
     %br
+    %br
+
+    %h6= t('admin.product_import.import.reset_absent?')
+    %br
+    = hidden_field_tag "settings[reset_all_absent]", nil
+    = check_box_tag "settings[reset_all_absent]", true, false, 'ng-model' => 'settings.reset_all_absent'
+    %span= t('admin.product_import.import.reset_absent_tip')
+    %br
+    %br
+    %br
+
     = submit_tag "#{t('admin.product_import.index.upload')}"
+    %br
+    %br

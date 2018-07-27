@@ -1,3 +1,5 @@
+@import "variables";
+
 div.dashboard_item {
   margin-bottom: 30px;
 
@@ -15,22 +17,22 @@ div.dashboard_item {
     border-radius: 10px;
 
     &.green {
-      background-color: #9fc820;
+      background-color: $spree-green;
     }
 
     &.red {
-      background-color: #DA5354;
+      background-color: $warning-red;
     }
 
     &.orange {
-      background-color: #DA7F52;
+      background-color: $warning-orange;
     }
   }
 
   div.header {
     height: 50px;
     border-radius: 6px 6px 0px 0px;
-    border: 1px solid #5498da;
+    border: 1px solid $spree-blue;
     position: relative;
 
     a[ofn-with-tip] {
@@ -40,20 +42,20 @@ div.dashboard_item {
     }
 
     &.red {
-      border-color: #DA5354;
+      border-color: $warning-red;
       border-width: 3px;
 
       h3 {
-        color: #DA5354;
+        color: $warning-red;
       }
     }
 
     &.orange {
-      border-color: #DA7F52;
+      border-color: $warning-orange;
       border-width: 3px;
 
       h3 {
-        color: #DA7F52;
+        color: $warning-orange;
       }
     }
 
@@ -72,7 +74,7 @@ div.dashboard_item {
 
   .tabs {
     height: 30px;
-    border: solid #5498da;
+    border: solid $spree-blue;
     border-width: 0px 0px 1px 0px;
     margin-top: 3px;
 
@@ -80,19 +82,19 @@ div.dashboard_item {
       cursor: pointer;
       height: 30px;
       color: #fff;
-      background-color: #5498da;
+      background-color: $spree-blue;
       padding: 5px 5px 0px 5px;
       text-align: center;
       font-weight: bold;
-      border: solid #5498da;
+      border: solid $spree-blue;
       border-width: 1px 1px 0px 1px;
 
       &:hover {
-        background-color: #9fc820;
+        background-color: $spree-green;
       }
 
       &.selected {
-        color: #5498da;
+        color: $spree-blue;
         background-color: #fff;
       }
     }
@@ -105,7 +107,7 @@ div.dashboard_item {
   }
 
   .list-title {
-    border: solid #5498da;
+    border: solid $spree-blue;
     border-width: 0px 1px 0px 1px;
 
     span {
@@ -120,7 +122,7 @@ div.dashboard_item {
   }
 
   .list-item {
-    border: solid #5498da;
+    border: solid $spree-blue;
     border-width: 0px 1px 0px 1px;
     height: 38px;
 
@@ -142,28 +144,28 @@ div.dashboard_item {
     }
 
     .icon-warning-sign {
-      color: #DA7F52;
+      color: $warning-orange;
       font-size: 30px;
     }
 
     .icon-remove-sign {
-      color: #DA5354;
+      color: $warning-red;
       font-size: 30px;
     }
 
     .icon-ok-sign {
-      color: #9fc820;
+      color: $spree-green;
       font-size: 30px;
     }
 
     &.orange {
-      color: #DA7F52;
-      border: solid #DA7F52;
+      color: $warning-orange;
+      border: solid $warning-orange;
     }
 
     &.red {
-      color: #DA5354;
-      border: solid #DA5354;
+      color: $warning-red;
+      border: solid $warning-red;
     }
 
     &.orange, &.red {
@@ -175,13 +177,13 @@ div.dashboard_item {
     }
 
     &.odd {
-      background-color: #eff5fc;
+      background-color: $spree-light-blue;
     }
 
     &.even, &.odd {
       &:hover {
         color: #ffffff;
-        background-color: #9fc820;
+        background-color: $spree-green;
 
         .icon-arrow-right {
           color: #fff;
@@ -201,7 +203,7 @@ div.dashboard_item {
 
         .text-icon {
           &.green {
-            color: #9fc820;
+            color: $spree-green;
             background-color: #fff;
           }
         }
@@ -216,19 +218,19 @@ div.dashboard_item {
     text-align: center;
 
     &.orange {
-      background-color: #DA7F52;
+      background-color: $warning-orange;
     }
 
     &.blue {
-      background-color: #5498da;
+      background-color: $spree-blue;
     }
 
     &.red {
-      background-color: #DA5354;
+      background-color: $warning-red;
     }
 
     &:hover {
-      background-color: #9fc820;
+      background-color: $spree-green;
     }
 
     &.bottom {

@@ -1,58 +1,25 @@
 # English language file
 # ---------------------
 #
-# This is the source language file maintained by the Australian OFN team.
+# This is the source language file maintained by the global OFN team and used
+# by the Australian OFN instance.
+#
 # Visit Transifex to translate this file into other languages:
 #
 #   https://www.transifex.com/open-food-foundation/open-food-network/
 #
-# If you translate this file in a text editor, please share your results with us by
+# Read more about it at:
 #
-# - uploading the file to Transifex or
-# - opening a pull request at GitHub.
-#
-#
-# See http://community.openfoodnetwork.org/t/localisation-ofn-in-your-language/397
+#   https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n
 #
 # Changing this file
 # ==================
 #
 # You are welcome to fix typos, add missing translations and remove unused ones.
-# Here are some guidelines to make sure that this file is becoming more beautiful
-# with every change we do.
+# But read our guidelines first:
 #
-# * Change text: No problem. Fix the typo. And please enclose the text in quotes
-#   to avoid any accidents.
+#   https://github.com/openfoodfoundation/openfoodnetwork/wiki/i18n#development
 #
-#   Example 1: "When you're using double quotes, they look like \"this\""
-#   Example 2: "When you’re using double quotes, they look like “this”"
-#
-#   The second example uses unicode to make it look prettier and avoid backslashes.
-#
-# * Add translations: Cool, every bit of text in the application should be here.
-#   If you add a translation for a view or mailer, please make use of the nested
-#   structure. Use the "lazy" lookup. See: http://guides.rubyonrails.org/i18n.html#looking-up-translations
-#
-#   Avoid global keys. There are a lot already. And some are okay, for example
-#   "enterprises" should be the same everywhere on the page. But in doubt,
-#   create a new translation and give it a meaningful scope.
-#
-#   Don't worry about duplication. We may use the same word in different contexts,
-#   but another language could use different words. So don't try to re-use
-#   translations between files.
-#
-#   Don't move big parts around or rename scopes with a lot of entries without
-#   a really good reason. In some cases that causes a lot of translations in
-#   other languages to be lost. That causes more work for translators.
-#
-# * Remove translations: If you are sure that they are not used anywhere,
-#   please remove them. Be aware that some translations are looked up with
-#   variables. For example app/views/admin/contents/_fieldset.html.haml looks
-#   up labels for preferences. Unfortunately, they don't have a scope.
-#
-# * Participate in the community discussions:
-#   - https://community.openfoodnetwork.org/t/workflow-to-structure-translations/932
-
 en:
   # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
   language_name: "English" # Localised name of this language
@@ -75,7 +42,7 @@ en:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
         spree/order:
-          no_card: There are no valid credit cards available
+          no_card: There are no authorised credit cards available to charge
         order_cycle:
           attributes:
             orders_close_at:
@@ -97,11 +64,11 @@ en:
             payment_method:
               not_available_to_shop: "is not available to %{shop}"
               invalid_type: "must be a Cash or Stripe method"
+              charges_not_allowed: "^Credit card charges are not allowed by this customer"
+              no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
-            credit_card:
-              not_available: "is not available"
-              blank: "is required"
+
   devise:
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
@@ -409,6 +376,7 @@ en:
         update_address: 'Update Address'
         confirm_delete: 'Sure to delete?'
         search_by_email: "Search by email/code..."
+        guest_label: 'Guest checkout'
       destroy:
         has_associated_orders: 'Delete failed: customer has associated orders with his shop'
 
@@ -498,11 +466,19 @@ en:
       index:
         select_file: Select a spreadsheet to upload
         spreadsheet: Spreadsheet
-        import_into: "Import into:"
+        choose_import_type: Select import type
+        import_into: Import type
         product_list: Product list
         inventories: Inventories
         import: Import
         upload: Upload
+        csv_templates: CSV Templates
+        product_list_template: Download Product List template
+        inventory_template: Download Inventory template
+        category_values: Available Category Values
+        product_categories: Product Categories
+        tax_categories: Tax Categories
+        shipping_categories: Shipping Categories
       import:
         review: Review
         proceed: Proceed
@@ -511,7 +487,8 @@ en:
         save_imported: Save imported products
         no_valid_entries: No valid entries found
         none_to_save: There are no entries that can be saved
-        some_invalid_entries: Imported file contains some invalid entries
+        some_invalid_entries: Imported file contains invalid entries
+        fix_before_import: Please fix these errors and try importing the file again
         save_valid?: Save valid entries for now and discard the others?
         no_errors: No errors detected!
         save_all_imported?: Save all imported products?
@@ -520,7 +497,8 @@ en:
         not_found: enterprise could not be found in database
         no_name: No name
         blank_supplier: some products have blank supplier name
-        reset_absent?: Reset absent products?
+        reset_absent?: Reset absent products
+        reset_absent_tip: Set stock to zero for all exiting products not present in the file
         overwrite_all: Overwrite all
         overwrite_empty: Overwrite if empty
         default_stock: Set stock level
@@ -538,7 +516,7 @@ en:
         inventory_to_reset: Existing inventory items will have their stock reset to zero
         line: Line
         item_line: Item line
-      save:
+      save_results:
         final_results: Import final results
         products_created: Products created
         products_updated: Products updated
@@ -549,8 +527,9 @@ en:
         all_saved: "All items saved successfully"
         some_saved: "items saved successfully"
         save_errors: Save errors
-        view_products: View Products
-        view_inventory: View Inventory
+        import_again: Upload Another File
+        view_products: Go To Products Page
+        view_inventory: Go To Inventory Page
 
     variant_overrides:
       loading_flash:
@@ -1025,7 +1004,9 @@ en:
         invalid_error: Oops! Please fill in all of the required fields...
         allowed_payment_method_types_tip: Only Cash and Stripe payment methods may be used at the moment
         credit_card: Credit Card
-        no_cards_available: No cards available
+        charges_not_allowed: Charges are not allowed by this customer
+        no_default_card: Customer has no cards available to charge
+        card_ok: Customer has a card available to charge
       loading_flash:
         loading: LOADING SUBSCRIPTIONS
       review:
@@ -1378,6 +1359,7 @@ To activate your Profile we need to confirm this email address."
   email_confirmation_link_label: "Confirm this email address »"
   email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise.
 See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
+  email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}." 
   email_social: "Connect with Us:"
   email_contact: "Email us:"
   email_signoff: "Cheers,"
@@ -1735,6 +1717,17 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   registration_greeting: "Greetings!"
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
   update_and_recalculate_fees: "Update And Recalculate Fees"
+  registration:
+    steps:
+      type:
+        headline: "Last step to add %{enterprise}!"
+        question: "Are you a producer?"
+        yes_producer: "Yes, I'm a producer"
+        no_producer: "No, I'm not a producer"
+        producer_field_error: "Please choose one. Are you are producer?"
+        yes_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
+        no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
+        create_profile: "Create Profile"
   enterprise:
     registration:
       modal:
@@ -1773,14 +1766,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             phone_field_placeholder: 'eg. (03) 1234 5678'
           type:
             title: 'Type'
-            headline: "Last step to add %{enterprise}!"
-            question: "Are you a producer?"
-            yes_producer: "Yes, I'm a producer"
-            no_producer: "No, I'm not a producer"
-            producer_field_error: "Please choose one. Are you are producer?"
-            yes_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
-            no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
-
           about:
             title: 'About'
           images:
@@ -1821,6 +1806,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   enterprise_about_headline: "Nice one!"
   enterprise_about_message: "Now let's flesh out the details about"
   enterprise_success: "Success! %{enterprise} added to the Open Food Network "
+  enterprise_registration_exit_message: "If you exit this wizard at any stage, you can continue to create your profile by going to the admin interface."
   enterprise_description: "Short Description"
   enterprise_description_placeholder: "A short sentence describing your enterprise"
   enterprise_long_desc: "Long Description"
@@ -1873,7 +1859,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   registration_type_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
   registration_type_no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
   # END
-  create_profile: "Create Profile"
+
   registration_images_headline: "Thanks!"
   registration_images_description: "Let's upload some pretty pictures so your profile looks great! :)"
 
@@ -1938,7 +1924,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   you_have_no_orders_yet: "You have no orders yet"
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"
-  admin_entreprise_relationships: "Enterprise Relationships"
+  admin_entreprise_relationships: "Enterprise Permissions"
   admin_entreprise_relationships_everything: "Everything"
   admin_entreprise_relationships_permits: "permits"
   admin_entreprise_relationships_seach_placeholder: "Search"
@@ -2063,7 +2049,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   order_cycle: "Order Cycle"
   order_cycles: "Order Cycles"
   enterprises: "Enterprises"
-  enterprise_relationships: "Enterprise relationships"
+  enterprise_relationships: "Enterprise permissions"
   remove_tax: "Remove tax"
   enterprise_terms_of_service: "Enterprise Terms of Service"
   enterprises_require_tos: "Enterprises must accept Terms of Service"
@@ -2462,6 +2448,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           resolve: Resolve
       new_tag_rule_dialog:
         select_rule_type: "Select a rule type:"
+      resend_user_email_confirmation:
+        resend: "Resend"
+        sending: "Resend..."
+        done: "Resend done ✓"
+        failed: "Resend failed ✗"
     out_of_stock:
       reduced_stock_available: Reduced stock available
       out_of_stock_text: >
@@ -2612,6 +2603,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       shared:
         configuration_menu:
           stripe_connect: Stripe Connect
+      users:
+        email_confirmation:
+          confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
         autocomplete:
           producer_name: Producer
@@ -2740,5 +2734,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       saved_cards:
         default?: Default?
         delete?: Delete?
+      cards:
+        authorised_shops: Authorised Shops
+        authorised_shops_popover: This is the list of shops which are permitted to charge your default credit card for any subscriptions (ie. repeating orders) you may have. Your card details will be kept secure and will not be shared with shop owners. You will always be notified when you are charged.
+        saved_cards_popover: This is the list of cards you have opted to save for later use. Your 'default' will be selected automatically when you checkout an order, and can be charged by any shops you have allowed to do so (see right).
     localized_number:
       invalid_format: has an invalid format. Please enter a number.

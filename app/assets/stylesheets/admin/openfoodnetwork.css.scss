@@ -1,3 +1,5 @@
+@import "variables";
+
 input[type="submit"], input[type="button"], button, .button {
   cursor: pointer;
 }
@@ -20,7 +22,7 @@ table .blank-action {
 }
 
 text-angular .ta-editor {
-  border: 1px solid #cee1f4;
+  border: 1px solid $pale-blue;
   border-radius: 3px;
 }
 
@@ -33,7 +35,7 @@ text-angular .ta-editor {
 }
 
 span.error, div.error:not(.flash) {
-  color: #DA5354;
+  color: $warning-red;
 }
 
 /* Fix conflict between Spree and elRTE's styles */
@@ -43,7 +45,7 @@ span.error, div.error:not(.flash) {
 }
 
 input.red, a.button.red, button.red {
-	background-color: #DA5354;
+	background-color: $warning-red;
   margin-right: 5px;
   color: #ffffff;
 }
@@ -51,7 +53,7 @@ input.red, a.button.red, button.red {
 a.button.red {
   &:not(:hover) {
     color: #fff;
-    background-color: #DA5354;
+    background-color: $warning-red;
   }
 }
 
@@ -69,6 +71,14 @@ input.search {
 
 a {
  cursor:pointer;
+}
+
+a.action--disabled {
+  cursor: default;
+
+  &:hover {
+    color: #5498da;
+  }
 }
 
 form.order_cycle {
@@ -196,15 +206,15 @@ table#listing_enterprise_groups {
 // TODO: remove this, use class below
 #no_results {
   font-weight:bold;
-  color: #DA5354;
+  color: $warning-red;
 }
 
 .no-results {
   font-weight:bold;
-  color: #DA5354;
+  color: $warning-red;
 
   h1, h2, h3, h4, h5, h6 {
-    color: #DA5354;
+    color: $warning-red;
   }
 }
 

@@ -1,3 +1,5 @@
+@import "../variables";
+
 /**
 Main colors:
 dark: #545454
@@ -63,7 +65,7 @@ light: #ccc
 
   &:hover {
     &:before {
-      color: #da5354;
+      color: $warning-red;
     }
   }
 

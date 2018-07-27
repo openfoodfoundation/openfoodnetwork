@@ -3,38 +3,31 @@
 
 - @importer.suppliers_index.each do |name, supplier_id|
   - if name and supplier_id and @importer.permission_by_id?(supplier_id)
-    %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
+    %div.panel-section.import-settings
       %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active}'}}
-        %div.header-caret
-          %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}"}}
-        %div.header-icon.neutral
-          %i.fa.fa-edit
+        %div.header-icon.success
+          %i.fa.fa-check-circle
         %div.header-description
           = name
-      %div.panel-content{ng: {hide: '!active'}}
-        = render 'options_form', supplier_id: supplier_id, name: name
   - elsif name and supplier_id
-    %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
+    %div.panel-section.import-settings
       %div.panel-header
-        %div.header-caret
         %div.header-icon.error
           %i.fa.fa-warning
         %div.header-description
           = name
           %span.header-error= " - #{t('admin.product_import.import.no_permission')}"
   - elsif name
-    %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
+    %div.panel-section.import-settings
       %div.panel-header
-        %div.header-caret
         %div.header-icon.error
           %i.fa.fa-warning
         %div.header-description
           = name
           %span.header-error= " - #{t('admin.product_import.import.not_found')}"
   - else
-    %div.panel-section.import-settings{ng: {controller: 'DropdownPanelsCtrl'}}
+    %div.panel-section.import-settings
       %div.panel-header
-        %div.header-caret
         %div.header-icon.error
           %i.fa.fa-warning
         %div.header-description

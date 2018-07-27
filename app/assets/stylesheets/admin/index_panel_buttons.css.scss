@@ -1,3 +1,5 @@
+@import "variables";
+
 tbody.panel-ctrl {
   tr.panel-row {
     > td {
@@ -5,7 +7,7 @@ tbody.panel-ctrl {
         cursor: pointer;
         margin-bottom: 10px;
         font-size: 1.3rem;
-        background-color: #DA5354;
+        background-color: $warning-red;
         &:hover {
           background-color: #CD4E4F;
         }
