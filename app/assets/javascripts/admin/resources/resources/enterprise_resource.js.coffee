@@ -8,4 +8,14 @@ angular.module("admin.resources").factory 'EnterpriseResource', ($resource) ->
       isArray: true
     'update':
       method: 'PUT'
+    'removeLogo':
+      url: '/admin/enterprises/:id/images/:action.json'
+      method: 'DELETE'
+      params:
+        action: 'remove_logo'
+    'removePromoImage':
+      url: '/admin/enterprises/:id/images/:action.json'
+      method: 'DELETE'
+      params:
+        action: 'remove_promo_image'
   })
