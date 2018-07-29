@@ -1,5 +1,5 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, $http, $window, NavigationCheck, enterprise, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
+  .controller "enterpriseCtrl", ($scope, $http, $window, NavigationCheck, enterprise, Enterprises, EnterprisePaymentMethods, EnterpriseShippingMethods, SideMenu, StatusMessage) ->
     $scope.Enterprise = enterprise
     $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.ShippingMethods = EnterpriseShippingMethods.shippingMethods
@@ -67,3 +67,23 @@ angular.module("admin.enterprises")
 
     $scope.resetModal = ->
       $scope.newUser = $scope.invite_errors = $scope.invite_success = null
+
+    $scope.removeLogo = ->
+      Enterprises.removeLogo($scope.Enterprise).then (data) ->
+        $scope.Enterprise = angular.copy(data)
+        $scope.$emit("enterprise:updated", $scope.Enterprise)
+
+        StatusMessage.display("success", t("admin.enterprises.remove_logo.removed_successfully"))
+      , (response) ->
+        if response.data.error?
+          StatusMessage.display("failure", response.data.error)
+
+    $scope.removePromoImage = ->
+      Enterprises.removePromoImage($scope.Enterprise).then (data) ->
+        $scope.Enterprise = angular.copy(data)
+        $scope.$emit("enterprise:updated", $scope.Enterprise)
+
+        StatusMessage.display("success", t("admin.enterprises.remove_promo_image.removed_successfully"))
+      , (response) ->
+        if response.data.error?
+          StatusMessage.display("failure", response.data.error)

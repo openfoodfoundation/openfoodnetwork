@@ -9,13 +9,9 @@ angular.module("admin.resources").factory 'EnterpriseResource', ($resource) ->
     'update':
       method: 'PUT'
     'removeLogo':
-      url: '/admin/enterprises/:id/images/:action.json'
+      url: '/api/enterprises/:id/logo.json'
       method: 'DELETE'
-      params:
-        action: 'remove_logo'
     'removePromoImage':
-      url: '/admin/enterprises/:id/images/:action.json'
+      url: '/api/enterprises/:id/promo_image.json'
       method: 'DELETE'
-      params:
-        action: 'remove_promo_image'
   })

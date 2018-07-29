@@ -417,18 +417,6 @@ feature %q{
       end
     end
 
-    scenario "editing images for an enterprise" do
-      visit admin_enterprises_path
-      within("tbody#e_#{distributor1.id}") { click_link 'Settings' }
-
-      within(".side_menu") do
-        click_link "Images"
-      end
-
-      page.should have_content "LOGO"
-      page.should have_content "PROMO"
-    end
-
     scenario "managing producer properties" do
       create(:property, name: "Certified Organic")
       visit admin_enterprises_path

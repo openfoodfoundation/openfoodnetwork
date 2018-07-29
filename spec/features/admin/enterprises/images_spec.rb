@@ -28,7 +28,7 @@ feature "Managing enterprise images" do
 
       scenario "editing logo" do
         # Adding image
-        attach_file "enterprise[logo]", File.join(Rails.root, "app/assets/images/logo-white.png")
+        attach_file "enterprise[logo]", Rails.root.join("app", "assets", "images", "logo-white.png")
         click_button "Update"
 
         expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
@@ -40,7 +40,7 @@ feature "Managing enterprise images" do
         end
 
         # Replacing image
-        attach_file "enterprise[logo]", File.join(Rails.root, "app/assets/images/logo-black.png")
+        attach_file "enterprise[logo]", Rails.root.join("app", "assets", "images", "logo-black.png")
         click_button "Update"
 
         expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
@@ -50,11 +50,22 @@ feature "Managing enterprise images" do
           expect(page).to have_selector(".image-field-group__preview-image")
           expect(html).to include("logo-black.png")
         end
+
+        # Removing image
+        within ".page-admin-enterprises-form__logo-field-group" do
+          click_on "Remove Image"
+        end
+
+        expect(page).to have_content("Logo removed successfully")
+
+        within ".page-admin-enterprises-form__logo-field-group" do
+          expect(page).to have_no_selector(".image-field-group__preview-image")
+        end
       end
 
       scenario "editing promo image" do
         # Adding image
-        attach_file "enterprise[promo_image]", File.join(Rails.root, "app/assets/images/logo-white.png")
+        attach_file "enterprise[promo_image]", Rails.root.join("app", "assets", "images", "logo-white.png")
         click_button "Update"
 
         expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
@@ -66,7 +77,7 @@ feature "Managing enterprise images" do
         end
 
         # Replacing image
-        attach_file "enterprise[promo_image]", File.join(Rails.root, "app/assets/images/logo-black.png")
+        attach_file "enterprise[promo_image]", Rails.root.join("app", "assets", "images", "logo-black.png")
         click_button "Update"
 
         expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
@@ -75,6 +86,17 @@ feature "Managing enterprise images" do
         within ".page-admin-enterprises-form__promo-image-field-group" do
           expect(page).to have_selector(".image-field-group__preview-image")
           expect(html).to include("logo-black.jpg")
+        end
+
+        # Removing image
+        within ".page-admin-enterprises-form__promo-image-field-group" do
+          click_on "Remove Image"
+        end
+
+        expect(page).to have_content("Promo image removed successfully")
+
+        within ".page-admin-enterprises-form__promo-image-field-group" do
+          expect(page).to have_no_selector(".image-field-group__preview-image")
         end
       end
     end

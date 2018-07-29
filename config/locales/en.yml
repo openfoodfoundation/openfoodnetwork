@@ -831,6 +831,12 @@ en:
       new:
         title: New Enterprise
         back_link: Back to enterprises list
+      remove_logo:
+        remove: "Remove Image"
+        removed_successfully: "Logo removed successfully"
+      remove_promo_image:
+        remove: "Remove Image"
+        removed_successfully: "Promo image removed successfully"
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
