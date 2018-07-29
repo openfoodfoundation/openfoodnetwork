@@ -2,7 +2,7 @@
   <div class="alpha three columns">
     <div class="field">
       <%= f.label :amount, t(:amount) %>
-      <%= f.text_field :amount, :value => @order.outstanding_balance, :class => 'fullwidth', "watch-value-as" => 'form_data.amount', "ng-init" => "form_data.amount=#{@order.outstanding_balance}" %>
+      <%= f.text_field :amount, :value => @order.outstanding_balance, :class => 'fullwidth', "watch-value-as" => 'form_data.amount' %>
     </div>
   </div>
   <div class="omega nine columns">

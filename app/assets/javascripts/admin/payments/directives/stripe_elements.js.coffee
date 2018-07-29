@@ -29,6 +29,7 @@ angular.module('admin.payments').directive "stripeElements", ($injector, AdminSt
           displayError.textContent = event.error.message
         else
           displayError.textContent = ''
+
         return
 
       AdminStripeElements.stripe = stripe

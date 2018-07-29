@@ -25,19 +25,13 @@ Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
 
     # Maps the brand returned by Stripe to that required by activemerchant
     mapCC: (ccType) ->
-      if ccType == 'MasterCard'
-        return 'master'
-      else if ccType == 'Visa'
-        return 'visa'
-      else if ccType == 'American Express'
-        return 'american_express'
-      else if ccType == 'Discover'
-        return 'discover'
-      else if ccType == 'JCB'
-        return 'jcb'
-      else if ccType == 'Diners Club'
-        return 'diners_club'
-      return
+      switch ccType
+        when 'MasterCard' then return 'master'
+        when 'Visa' then return 'visa'
+        when 'American Express' then return 'american_express'
+        when 'Discover' then return 'discover'
+        when 'JCB' then return 'jcb'
+        when 'Diners Club' then return 'diners_club'
 
     # It doesn't matter if any of these are nil, all are optional.
     makeCardData: (secrets) ->
