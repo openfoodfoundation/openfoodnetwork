@@ -453,6 +453,10 @@ FactoryBot.define do
       Spree::Image.create(attachment: image, viewable_id: product.master.id, viewable_type: 'Spree::Variant')
     end
   end
+
+  factory :simple_product, parent: :base_product do
+    on_hand 5
+  end
 end
 
 
