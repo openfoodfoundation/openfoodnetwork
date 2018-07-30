@@ -530,5 +530,4 @@ FactoryBot.modify do
       user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
     end
   end
-
 end
