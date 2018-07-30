@@ -69,6 +69,8 @@ angular.module("admin.enterprises")
       $scope.newUser = $scope.invite_errors = $scope.invite_success = null
 
     $scope.removeLogo = ->
+      return unless confirm(t("admin.enterprises.remove_logo.immediate_removal_warning"))
+
       Enterprises.removeLogo($scope.Enterprise).then (data) ->
         $scope.Enterprise = angular.copy(data)
         $scope.$emit("enterprise:updated", $scope.Enterprise)
@@ -79,6 +81,8 @@ angular.module("admin.enterprises")
           StatusMessage.display("failure", response.data.error)
 
     $scope.removePromoImage = ->
+      return unless confirm(t("admin.enterprises.remove_promo_image.immediate_removal_warning"))
+
       Enterprises.removePromoImage($scope.Enterprise).then (data) ->
         $scope.Enterprise = angular.copy(data)
         $scope.$emit("enterprise:updated", $scope.Enterprise)

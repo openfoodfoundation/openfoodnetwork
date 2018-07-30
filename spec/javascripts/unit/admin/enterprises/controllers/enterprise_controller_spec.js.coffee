@@ -42,6 +42,7 @@ describe "enterpriseCtrl", ->
     beforeEach inject ($q) ->
       spyOn(scope, "$emit")
       deferred = $q.defer()
+      spyOn(window, "confirm").and.returnValue(true)
       spyOn(Enterprises, "removeLogo").and.returnValue(deferred.promise)
       spyOn(StatusMessage, "display").and.callThrough()
       scope.removeLogo()
@@ -74,6 +75,7 @@ describe "enterpriseCtrl", ->
     beforeEach inject ($q) ->
       spyOn(scope, "$emit")
       deferred = $q.defer()
+      spyOn(window, "confirm").and.returnValue(true)
       spyOn(Enterprises, "removePromoImage").and.returnValue(deferred.promise)
       spyOn(StatusMessage, "display").and.callThrough()
       scope.removePromoImage()
