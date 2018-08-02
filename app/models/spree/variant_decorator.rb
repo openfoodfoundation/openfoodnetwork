@@ -84,6 +84,54 @@ Spree::Variant.class_eval do
     ]
   end
 
+  # Overriding `Spree::Variant.on_hand` in old Spree versions.
+  # It doesn't exist in newer Spree versions.
+  def on_hand
+    if respond_to? :total_on_hand
+      # This is Spree 2.0
+      total_on_hand
+    elsif Spree::Config[:track_inventory_levels] && !on_demand
+      count_on_hand
+    else
+      Float::INFINITY
+    end
+  end
+
+  # Overriding `Spree::Variant.on_hand=` in old Spree versions.
+  # It doesn't exist in newer Spree versions.
+  def on_hand=(new_level)
+    error = 'Cannot set on_hand value when Spree::Config[:track_inventory_levels] is false'
+    raise error unless Spree::Config[:track_inventory_levels]
+
+    self.count_on_hand = new_level unless on_demand
+  end
+
+  # Overriding Spree::Variant.count_on_hand in old Spree versions.
+  # It doesn't exist in newer Spree versions.
+  def count_on_hand
+    if respond_to? :total_on_hand
+      # This is Spree 2.0
+      total_on_hand
+    else
+      # We assume old Spree and call ActiveRecord's method.
+      # We can't call the same method on Variant, because we are overwriting it.
+      super
+    end
+  end
+
+  # Overriding `Spree::Variant.count_on_hand=` in old Spree versions.
+  # It doesn't exist in newer Spree versions.
+  def count_on_hand=(new_level)
+    if respond_to? :total_on_hand
+      # This is Spree 2.0
+      overwrite_stock_levels new_level
+    else
+      # We assume old Spree and call ActiveRecord's method.
+      # We can't call the same method on Variant, because we are overwriting it.
+      super unless on_demand
+    end
+  end
+
   def price_with_fees(distributor, order_cycle)
     price + fees_for(distributor, order_cycle)
   end
@@ -118,6 +166,28 @@ Spree::Variant.class_eval do
   end
 
   private
+
+  # Spree 2 creates this location in:
+  #
+  #   core/db/migrate/20130213191427_create_default_stock.rb
+  #
+  # This is the only location we are using at the moment. So everything stays
+  # the same, each variant has only one stock level (at the default location).
+  def self.default_stock_location
+    Spree::StockLocation.find_by_name("default")
+  end
+
+  # Temporary, backwards compatible setting of stock levels in Spree 2.0.
+  # It would be better to use `Spree::StockItem.adjust_count_on_hand` which
+  # takes a value to add to the current stock level and uses proper locking.
+  def overwrite_stock_levels(new_level)
+    stock_items.first.send :count_on_hand, new_level
+
+    # There shouldn't be any other stock items, because we should have only one
+    # stock location. But in case there are, the total should be new_level,
+    # so all others need to be zero.
+    stock_items[1..-1].send :count_on_hand, 0
+  end
 
   def update_weight_from_unit_value
     self.weight = weight_from_unit_value if self.product.variant_unit == 'weight' && unit_value.present?
