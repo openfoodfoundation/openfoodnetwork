@@ -5,7 +5,7 @@ module Api
       attributes :update_issues
 
       def total
-        return unless object.total.present?
+        return if object.total.blank?
         object.total.to_money.to_s
       end
 
