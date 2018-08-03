@@ -2048,7 +2048,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   edit_profile_details_etc: "Change your profile description, images, etc."
   order_cycle: "Order Cycle"
   order_cycles: "Order Cycles"
-  enterprises: "Enterprises"
   enterprise_relationships: "Enterprise permissions"
   remove_tax: "Remove tax"
   enterprise_terms_of_service: "Enterprise Terms of Service"
