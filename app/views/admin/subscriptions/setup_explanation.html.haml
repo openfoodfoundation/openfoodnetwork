@@ -14,7 +14,7 @@
         .steps
           %div
             = t('.enable_subscriptions_step_1_html',
-              enterprises_link: link_to(t('admin.enterprises.title'), main_app.admin_enterprises_path, target: '_blank'))
+              enterprises_link: link_to(t('admin.enterprises.index.title'), main_app.admin_enterprises_path, target: '_blank'))
           %div= t('.enable_subscriptions_step_2')
 
     .row.margin-bottom-20.todo{ class: shipping_and_payment_methods_ok?(@shop) ? 'done' : '' }
