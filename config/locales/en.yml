@@ -999,6 +999,10 @@ en:
         address: 2. Address
         products: 3. Add Products
         review: 4. Review & Save
+      subscription_line_items:
+        this_is_an_estimate: |
+          The displayed prices are only an estimate and calculated at the time the subscription is changed.
+          If you change prices or fees, orders will be updated, but the subscription will still display the old values.
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
