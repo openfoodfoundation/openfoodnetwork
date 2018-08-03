@@ -5,6 +5,8 @@
   = link_to_delete_enterprise enterprise
   %br/
 
+%hr.admin-enterprises-index-admin-actions-divider
+
 - if enterprise.is_primary_producer
   = link_to_with_icon 'icon-dashboard', t('.properties'), main_app.admin_enterprise_producer_properties_path(enterprise_id: enterprise)
   (#{enterprise.producer_properties.count})

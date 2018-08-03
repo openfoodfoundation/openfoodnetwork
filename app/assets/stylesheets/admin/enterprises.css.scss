@@ -29,3 +29,11 @@ form[name="enterprise_form"] {
     }
   }
 }
+
+.admin-enterprises-index-admin-actions-divider {
+  background-color: $admin-table-border;
+  border-width: 0;
+  height: 1px;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
