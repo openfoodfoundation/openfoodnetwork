@@ -748,7 +748,7 @@ en:
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
       actions:
-        edit_profile: Edit Profile
+        edit_profile: Settings
         properties: Properties
         payment_methods: Payment Methods
         payment_methods_tip: This enterprise has no payment methods

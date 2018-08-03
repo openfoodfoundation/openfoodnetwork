@@ -77,7 +77,7 @@ feature %q{
 
     visit '/admin/enterprises'
     within "tr.enterprise-#{@enterprise.id}" do
-      first("a", text: 'Edit Profile').trigger 'click'
+      first("a", text: 'Settings').trigger 'click'
     end
 
     fill_in 'enterprise_name', :with => 'Eaterprises'

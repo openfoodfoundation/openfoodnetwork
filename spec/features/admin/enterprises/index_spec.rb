@@ -15,7 +15,7 @@ feature 'Enterprises Index' do
       within("tr.enterprise-#{s.id}") do
         expect(page).to have_content s.name
         expect(page).to have_select "enterprise_set_collection_attributes_1_sells"
-        expect(page).to have_content "Edit Profile"
+        expect(page).to have_content "Settings"
         expect(page).to have_content "Delete"
         expect(page).to_not have_content "Payment Methods"
         expect(page).to_not have_content "Shipping Methods"
@@ -25,7 +25,7 @@ feature 'Enterprises Index' do
       within("tr.enterprise-#{d.id}") do
         expect(page).to have_content d.name
         expect(page).to have_select "enterprise_set_collection_attributes_0_sells"
-        expect(page).to have_content "Edit Profile"
+        expect(page).to have_content "Settings"
         expect(page).to have_content "Delete"
         expect(page).to have_content "Payment Methods"
         expect(page).to have_content "Shipping Methods"
