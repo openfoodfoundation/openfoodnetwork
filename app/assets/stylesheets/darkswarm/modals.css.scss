@@ -55,6 +55,17 @@ dialog .close-reveal-modal, .reveal-modal .close-reveal-modal {
   }
 }
 
+.reveal-modal .mobile-close-reveal-modal, dialog .mobile-close-reveal-modal {
+  @extend .close-reveal-modal;
+  position: relative;
+  top: auto;
+  left: 90%;
+
+  @media only screen and (min-width: 40.063em) {
+    display: none;
+  }
+}
+
 // Prevent body from scrolling when a modal is open
 body.modal-open {
   overflow: hidden;
