@@ -112,6 +112,3 @@ Openfoodnetwork::Application.routes.draw do
   mount Spree::Core::Engine, :at => '/'
 
 end
-
-require Rails.root.join("config/routes/admin.rb")
-require Rails.root.join("config/routes/spree.rb")
