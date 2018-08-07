@@ -111,7 +111,7 @@ feature %q{
     scenario "enterprise user can only add their own enterprises as parent" do
       visit admin_enterprise_relationships_path
       page.should have_select2 'enterprise_relationship_parent_id', options: ['', d1.name]
-      page.should have_select2 'enterprise_relationship_child_id', options: ['', d1.name, d2.name, d3.name]
+      page.should have_select2 'enterprise_relationship_child_id', with_options: ['', d1.name, d2.name, d3.name]
     end
   end
 
