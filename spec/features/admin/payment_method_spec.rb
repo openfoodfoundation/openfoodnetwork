@@ -47,7 +47,7 @@ feature %q{
       end
 
       it "communicates the status of the stripe connection to the user" do
-        login_as user
+        quick_login_as user
         visit spree.new_admin_payment_method_path
 
         select2_select "Stripe", from: "payment_method_type"
@@ -71,7 +71,7 @@ feature %q{
 
   scenario "updating a payment method", js: true do
     pm = create(:payment_method, distributors: [@distributors[0]])
-    login_to_admin_section
+    quick_login_as_admin
 
     visit spree.edit_admin_payment_method_path pm
 
@@ -127,11 +127,11 @@ feature %q{
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor2).save
-      login_to_admin_as enterprise_user
+      quick_login_as enterprise_user
     end
 
     it "I can get to the new enterprise page" do
-      click_link 'Enterprises'
+      visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Manage' }
       within(".side_menu") do
         click_link "Payment Methods"
@@ -181,7 +181,7 @@ feature %q{
       pm1
       pm2
 
-      click_link 'Enterprises'
+      visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Manage' }
       within(".side_menu") do
         click_link "Payment Methods"
