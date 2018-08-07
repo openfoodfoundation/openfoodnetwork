@@ -10,7 +10,7 @@ feature 'shipping methods' do
 
   context "as a site admin" do
     before(:each) do
-      login_to_admin_section
+      quick_login_as_admin
     end
 
     scenario "creating a shipping method owned by some distributors" do
@@ -73,11 +73,11 @@ feature 'shipping methods' do
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor2).save
-      login_to_admin_as enterprise_user
+      quick_login_as enterprise_user
     end
 
     it "creating a shipping method" do
-      click_link 'Enterprises'
+      visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Manage' }
       within(".side_menu") do
         click_link "Shipping Methods"
@@ -130,7 +130,7 @@ feature 'shipping methods' do
       sm1
       sm2
 
-      click_link 'Enterprises'
+      visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Manage' }
       within(".side_menu") do
         click_link "Shipping Methods"
