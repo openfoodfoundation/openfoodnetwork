@@ -1094,7 +1094,8 @@ en:
       require_customer_login: "This shop is for customers only."
       require_login_html: "Please %{login} if you have an account already. Otherwise, %{register} to become a customer."
       require_customer_html: "Please %{contact} %{enterprise} to become a customer."
-
+    products:
+      filter_properties_or: 'OR'
 
   # Front-end controller translations
   card_could_not_be_updated: Card could not be updated
