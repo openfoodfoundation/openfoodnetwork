@@ -8,8 +8,8 @@ feature %q{
   include WebHelper
 
   describe "listing products" do
-    before :each do
-      login_to_admin_section
+    before do
+      quick_login_as_admin
     end
 
     it "displays a list of products" do
@@ -102,8 +102,8 @@ feature %q{
   end
 
   describe "listing variants" do
-    before :each do
-      login_to_admin_section
+    before do
+      quick_login_as_admin
     end
 
     it "displays a list of variants for each product" do
@@ -171,8 +171,7 @@ feature %q{
     d = FactoryBot.create(:distributor_enterprise)
     taxon = create(:taxon)
 
-    login_to_admin_section
-
+    quick_login_as_admin
     visit spree.admin_products_path
 
     find("a", text: "NEW PRODUCT").click
@@ -195,7 +194,7 @@ feature %q{
   scenario "creating new variants" do
     # Given a product without variants or a unit
     p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
-    login_to_admin_section
+    quick_login_as_admin
     visit spree.admin_products_path
 
     # I should see an add variant button
@@ -244,8 +243,7 @@ feature %q{
     t2 = FactoryBot.create(:taxon)
     p = FactoryBot.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
 
-    login_to_admin_section
-
+    quick_login_as_admin
     visit spree.admin_products_path
 
     find("div#columns-dropdown", :text => "COLUMNS").click
@@ -290,8 +288,7 @@ feature %q{
   scenario "updating a product with a variant unit of 'items'" do
     p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
 
-    login_to_admin_section
-
+    quick_login_as_admin
     visit spree.admin_products_path
 
     expect(page).to have_select "variant_unit_with_scale", selected: "Weight (kg)"
@@ -316,8 +313,7 @@ feature %q{
     v = p.variants.first
     v.update_column(:sku, "VARIANTSKU")
 
-    login_to_admin_section
-
+    quick_login_as_admin
     visit spree.admin_products_path
     expect(page).to have_selector "a.view-variants", count: 1
     find("a.view-variants").trigger('click')
@@ -355,8 +351,7 @@ feature %q{
     p = FactoryBot.create(:product)
     v = FactoryBot.create(:variant, product: p, price: 3.0)
 
-    login_to_admin_section
-
+    quick_login_as_admin
     visit spree.admin_products_path
     expect(page).to have_selector "a.view-variants", count: 1
     find("a.view-variants").trigger('click')
@@ -379,7 +374,7 @@ feature %q{
 
   scenario "updating a product mutiple times without refresh" do
     p = FactoryBot.create(:product, name: 'original name')
-    login_to_admin_section
+    quick_login_as_admin
 
     visit spree.admin_products_path
 
@@ -412,7 +407,7 @@ feature %q{
 
   scenario "updating a product after cloning a product" do
     p = FactoryBot.create(:product, :name => "product 1")
-    login_to_admin_section
+    quick_login_as_admin
 
     visit spree.admin_products_path
 
@@ -435,7 +430,7 @@ feature %q{
     s2 = create(:supplier_enterprise)
     p1 = FactoryBot.create(:simple_product, :name => "product1", supplier: s1)
     p2 = FactoryBot.create(:simple_product, :name => "product2", supplier: s2)
-    login_to_admin_section
+    quick_login_as_admin
 
     visit spree.admin_products_path
 
@@ -541,7 +536,7 @@ feature %q{
         p1 = FactoryBot.create(:product, :name => "P1")
         p2 = FactoryBot.create(:product, :name => "P2")
         p3 = FactoryBot.create(:product, :name => "P3")
-        login_to_admin_section
+        quick_login_as_admin
 
         visit spree.admin_products_path
 
@@ -567,7 +562,7 @@ feature %q{
     describe "using column display dropdown" do
       it "shows a column display dropdown, which shows a list of columns when clicked" do
         FactoryBot.create(:simple_product)
-        login_to_admin_section
+        quick_login_as_admin
 
         visit spree.admin_products_path
 
@@ -599,7 +594,7 @@ feature %q{
         s2 = create(:supplier_enterprise)
         p1 = FactoryBot.create(:simple_product, :name => "product1", supplier: s1)
         p2 = FactoryBot.create(:simple_product, :name => "product2", supplier: s2)
-        login_to_admin_section
+        quick_login_as_admin
 
         visit spree.admin_products_path
 
