@@ -45,8 +45,8 @@ feature 'Enterprises Index' do
 
       context "without violating rules" do
         before do
-          login_to_admin_section
-          click_link 'Enterprises'
+          quick_login_as_admin
+          visit admin_enterprises_path
         end
 
         it "updates the enterprises" do
@@ -72,8 +72,8 @@ feature 'Enterprises Index' do
           d_manager.enterprise_roles.build(enterprise: second_distributor).save
           expect(d.owner).to_not eq d_manager
 
-          login_to_admin_section
-          click_link 'Enterprises'
+          quick_login_as_admin
+          visit admin_enterprises_path
         end
 
         it "does not update the enterprises and displays errors" do
@@ -106,12 +106,12 @@ feature 'Enterprises Index' do
       enterprise_manager.enterprise_roles.build(enterprise: supplier1).save
       enterprise_manager.enterprise_roles.build(enterprise: distributor1).save
 
-      login_to_admin_as enterprise_manager
+      quick_login_as enterprise_manager
     end
 
     context "listing enterprises", js: true do
       it "displays enterprises I have permission to manage" do
-        click_link "Enterprises"
+        visit admin_enterprises_path
 
         within("tbody#e_#{distributor1.id}") do
           expect(page).to have_content distributor1.name
@@ -139,7 +139,7 @@ feature 'Enterprises Index' do
 
 
       it "does not give me an option to change or update the package and producer properties of enterprises I manage" do
-        click_link "Enterprises"
+        visit admin_enterprises_path
 
         within("tbody#e_#{distributor1.id}") do
           find("td.producer").click
@@ -162,12 +162,12 @@ feature 'Enterprises Index' do
     let!(:owned_distributor) { create(:distributor_enterprise, name: 'Owned Distributor', owner: user) }
 
     before do
-      login_to_admin_as user
+      quick_login_as user
     end
 
     context "listing enterprises", js: true do
       it "allows me to change or update the package and producer properties of enterprises I manage" do
-        click_link "Enterprises"
+        visit admin_enterprises_path
 
         within("tbody#e_#{owned_distributor.id}") do
           # Open the producer panel
