@@ -205,8 +205,8 @@ feature %q{
       s = create(:supplier_enterprise)
 
       # When I go to its properties page
-      login_to_admin_section
-      click_link 'Enterprises'
+      quick_login_as_admin
+      visit admin_enterprises_path
       within(".enterprise-#{s.id}") { click_link 'Properties' }
 
       # And I create a property
@@ -229,7 +229,7 @@ feature %q{
       s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
 
       # When I go to its properties page
-      login_to_admin_section
+      quick_login_as_admin
       visit main_app.admin_enterprise_producer_properties_path(s)
 
       # And I update the property
@@ -252,7 +252,7 @@ feature %q{
       pp = s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
 
       # When I go to its properties page
-      login_to_admin_section
+      quick_login_as_admin
       visit main_app.admin_enterprise_producer_properties_path(s)
 
       # And I remove the property
@@ -310,7 +310,7 @@ feature %q{
       enterprise_user.enterprise_roles.build(enterprise: supplier1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 
-      login_to_admin_as enterprise_user
+      quick_login_as enterprise_user
     end
 
     context "when I have reached my enterprise ownership limit" do
@@ -318,7 +318,7 @@ feature %q{
         supplier1.reload
         enterprise_user.owned_enterprises.push [supplier1]
 
-        click_link "Enterprises"
+        visit admin_enterprises_path
 
         page.should have_content supplier1.name
         page.should have_content distributor1.name
@@ -335,7 +335,7 @@ feature %q{
     context "creating an enterprise" do
       before do
         # When I create an enterprise
-        click_link 'Enterprises'
+        visit admin_enterprises_path
         click_link 'New Enterprise'
         fill_in 'enterprise_name', with: 'zzz'
         fill_in 'enterprise_email_address', with: 'bob@example.com'
@@ -375,7 +375,7 @@ feature %q{
     end
 
     scenario "editing enterprises I manage" do
-      click_link 'Enterprises'
+      visit admin_enterprises_path
       within("tbody#e_#{distributor1.id}") { click_link 'Manage' }
 
       fill_in 'enterprise_name', :with => 'Eaterprises'
@@ -391,7 +391,7 @@ feature %q{
 
     describe "enterprises I have edit permission for, but do not manage" do
       it "allows me to edit them" do
-        click_link 'Enterprises'
+        visit admin_enterprises_path
         within("tbody#e_#{distributor3.id}") { click_link 'Manage' }
 
         fill_in 'enterprise_name', :with => 'Eaterprises'
@@ -406,7 +406,7 @@ feature %q{
       end
 
       it "does not show links to manage shipping methods, payment methods or enterprise fees on the edit page" do
-        click_link 'Enterprises'
+        visit admin_enterprises_path
         within("tbody#e_#{distributor3.id}") { click_link 'Manage' }
 
         within(".side_menu") do
@@ -418,7 +418,7 @@ feature %q{
     end
 
     scenario "editing images for an enterprise" do
-      click_link 'Enterprises'
+      visit admin_enterprises_path
       within("tbody#e_#{distributor1.id}") { click_link 'Manage' }
 
       within(".side_menu") do
@@ -431,7 +431,7 @@ feature %q{
 
     scenario "managing producer properties" do
       create(:property, name: "Certified Organic")
-      click_link 'Enterprises'
+      visit admin_enterprises_path
       within("#e_#{supplier1.id}") { click_link 'Manage' }
       within(".side_menu") do
         click_link "Properties"
