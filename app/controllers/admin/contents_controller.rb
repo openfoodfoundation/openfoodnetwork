@@ -6,6 +6,7 @@ module Admin
                               {name: I18n.t('admin.contents.edit.producer_signup_page'), preferences: [:producer_signup_pricing_table_html, :producer_signup_case_studies_html, :producer_signup_detail_html]},
                               {name: I18n.t('admin.contents.edit.hub_signup_page'), preferences: [:hub_signup_pricing_table_html, :hub_signup_case_studies_html, :hub_signup_detail_html]},
                               {name: I18n.t('admin.contents.edit.group_signup_page'), preferences: [:group_signup_pricing_table_html, :group_signup_case_studies_html, :group_signup_detail_html]},
+                              {name: I18n.t('admin.contents.edit.main_links'), preferences: [:menu_1, :menu_1_icon_name, :menu_2, :menu_2_icon_name, :menu_3, :menu_3_icon_name, :menu_4, :menu_4_icon_name, :menu_5, :menu_5_icon_name, :menu_6, :menu_6_icon_name, :menu_7, :menu_7_icon_name]},
                               {name: I18n.t('admin.contents.edit.footer_and_external_links'), preferences: [:footer_logo,
                                                              :footer_facebook_url, :footer_twitter_url, :footer_instagram_url, :footer_linkedin_url, :footer_googleplus_url, :footer_pinterest_url,
                                                              :footer_email, :community_forum_url, :footer_links_md, :footer_about_url]}]

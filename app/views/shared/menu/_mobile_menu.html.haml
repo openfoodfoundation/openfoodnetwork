@@ -19,27 +19,14 @@
     %li.ofn-logo
       %a{href: root_path}
         %img{src: ContentConfig.logo_mobile.url, srcset: ContentConfig.logo_mobile_svg.url, width: "75", height: "26"}
-    %li.li-menu
-      - if current_page? main_app.shops_path
-        %a{"ofn-scroll-to" => "hubs"}
-          %span.nav-primary
-            %i.ofn-i_019-map-pin
-            = t 'label_shops'
-      - else
-        %a{href: main_app.shops_path}
-          %span.nav-primary
-            %i.ofn-i_019-map-pin
-            = t 'label_shops'
-    %li.li-menu
-      %a{href: main_app.map_path}
-        %span.nav-primary
-          %i.ofn-i_037-map
-          = t 'label_map'
-    %li.li-menu
-      %a{href: main_app.producers_path}
-        %span.nav-primary
-          %i.ofn-i_036-producers
-          = t 'label_producers'
+    - [*1..7].each do |menu_number|
+      - menu_name = "menu_#{menu_number}"
+      - if ContentConfig[menu_name].present?
+        %li.li-menu
+          %a{href: t("#{menu_name}_url") }
+            %span.nav-primary
+              %i{class: ContentConfig["#{menu_name}_icon_name"]}
+                = t "#{menu_name}_title"
     - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
       %li.language-switcher.li-menu
         %a
@@ -50,50 +37,6 @@
             - if I18n.locale != l
               %li
                 %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)
-    - if feature? :connect_learn_homepage
-      %li.li-menu
-        %a{href: "https://openfoodnetwork.org/au/connect/"}
-          %span.nav-primary
-            %i.ofn-i_035-groups
-            = t 'label_connect'
-      %li.li-menu
-        %a{href: "https://openfoodnetwork.org/au/learn/"}
-          %span.nav-primary
-            %i.ofn-i_013-help
-            = t 'label_learn'
-    - elsif feature? :about_blog_homepage
-      %li.li-menu
-        %a{href: "http://about.openfoodnetwork.org.uk/"}
-          %span.nav-primary
-            %i.ofn-i_019-map-pin
-            = t 'label_about'
-      %li.li-menu
-        %a{href: "http://about.openfoodnetwork.org.uk/blog"}
-          %span.nav-primary
-            %i.ofn-i_037-map
-            = t 'label_blog'
-      %li.li-menu
-        %a{href: "http://about.openfoodnetwork.org.uk/support"}
-          %span.nav-primary
-            %i.ofn-i_013-help
-            = t 'label_support'
-      %li.li-menu
-        %a{href: main_app.groups_path}
-          %span.nav-primary
-            %i.ofn-i_035-groups
-            = t 'label_groups'
-    - else
-      %li.li-menu
-        %a{href: main_app.groups_path}
-          %span.nav-primary
-            %i.ofn-i_035-groups
-            = t 'label_groups'
-      %li.li-menu
-        %a{href: ContentConfig.footer_about_url}
-          %span.nav-primary
-            %i.ofn-i_013-help
-            = t 'label_about'
-
     %li
     - if spree_current_user.nil?
       = render 'shared/signed_out'

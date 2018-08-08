@@ -428,6 +428,7 @@ en:
         producer_signup_page: Producer signup page
         hub_signup_page: Hub signup page
         group_signup_page: Group signup page
+        main_links: Main Menu Links
         footer_and_external_links: Footer and External Links
         your_content: Your content
 
@@ -1167,6 +1168,21 @@ en:
   ticket_column_item: "Item"
   ticket_column_unit_price: "Unit Price"
   ticket_column_total_price: "Total Price"
+
+  menu_1_title: "Shops"
+  menu_1_url: "/shops"
+  menu_2_title: "Map"
+  menu_2_url: "/map"
+  menu_3_title: "Producers"
+  menu_3_url: "/producers"
+  menu_4_title: "Connect"
+  menu_4_url: "https://openfoodnetwork.org/au/connect/"
+  menu_5_title: "Learn"
+  menu_5_url: "https://openfoodnetwork.org/au/learn/"
+  menu_6_title: "Blog"
+  menu_6_url: ""
+  menu_7_title: "Groups"
+  menu_7_url: ""
 
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME

@@ -31,6 +31,22 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   preference :group_signup_case_studies_html, :text, default: I18n.t(:content_configuration_case_studies)
   preference :group_signup_detail_html, :text, default: I18n.t(:content_configuration_detail)
 
+  # Main URLs
+  preference :menu_1, :boolean, default: true
+  preference :menu_1_icon_name, :string, default: ""
+  preference :menu_2, :boolean, default: true
+  preference :menu_2_icon_name, :string, default: ""
+  preference :menu_3, :boolean, default: true
+  preference :menu_3_icon_name, :string, default: ""
+  preference :menu_4, :boolean, default: true
+  preference :menu_4_icon_name, :string, default: ""
+  preference :menu_5, :boolean, default: true
+  preference :menu_5_icon_name, :string, default: ""
+  preference :menu_6, :boolean, default: true
+  preference :menu_6_icon_name, :string, default: ""
+  preference :menu_7, :boolean, default: true
+  preference :menu_7_icon_name, :string, default: ""
+
   # Footer
   preference :footer_logo, :file
   has_attached_file :footer_logo, default_url: "/assets/ofn-logo-footer.png"
