@@ -20,16 +20,7 @@ module AuthenticationWorkflow
   end
 
   def login_to_admin_section
-    admin_role = Spree::Role.find_or_create_by_name!('admin')
-    admin_user = create(:user,
-      :password => 'passw0rd',
-      :password_confirmation => 'passw0rd',
-      :remember_me => false,
-      :persistence_token => 'pass',
-      :login => 'admin@ofn.org')
-
-    admin_user.spree_roles << admin_role
-    quick_login_as admin_user
+    quick_login_as_admin
     visit spree.admin_path
   end
 

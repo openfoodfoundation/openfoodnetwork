@@ -30,9 +30,8 @@ feature %q{
     e = create(:supplier_enterprise, name: 'Feedme')
 
     # When I go to the enterprise fees page
-    login_to_admin_section
-    click_link 'Configuration'
-    click_link 'Enterprise Fees'
+    quick_login_as_admin
+    visit admin_enterprise_fees_path
 
     # And I fill in the fields for a new enterprise fee and click update
     select 'Feedme', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
@@ -60,9 +59,8 @@ feature %q{
     enterprise = create(:enterprise, name: 'Foo')
 
     # When I go to the enterprise fees page
-    login_to_admin_section
-    click_link 'Configuration'
-    click_link 'Enterprise Fees'
+    quick_login_as_admin
+    visit admin_enterprise_fees_path
 
     # And I update the fields for the enterprise fee and click update
     select 'Foo', from: 'enterprise_fee_set_collection_attributes_0_enterprise_id'
@@ -95,11 +93,8 @@ feature %q{
     fee = create(:enterprise_fee)
 
     # When I go to the enterprise fees page
-    login_to_admin_section
-    click_link 'Configuration'
-    expect(page).to have_link 'Enterprise Fees'
-    click_link 'Enterprise Fees'
-    expect(page).to have_content 'Enterprise Fees'
+    quick_login_as_admin
+    visit admin_enterprise_fees_path
 
     # And I click delete
     find("a.delete-resource").click
@@ -117,9 +112,8 @@ feature %q{
     create(:product_distribution, product: p, distributor: d, enterprise_fee: fee)
 
     # When I go to the enterprise fees page
-    login_to_admin_section
-    click_link 'Configuration'
-    click_link 'Enterprise Fees'
+    quick_login_as_admin
+    visit admin_enterprise_fees_path
 
     # And I click delete
     find("a.delete-resource").click

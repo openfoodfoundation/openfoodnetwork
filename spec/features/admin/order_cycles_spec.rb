@@ -129,7 +129,7 @@ feature %q{
 
     context 'using datepickers' do
       it "correctly opens the datepicker and changes the date field" do
-        login_to_admin_section
+        quick_login_as_admin
         visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_de.id}") do
@@ -177,8 +177,8 @@ feature %q{
       distributor_fee = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee')
 
       # When I go to the new order cycle page
-      login_to_admin_section
-      click_link 'Order Cycles'
+      quick_login_as_admin
+      visit admin_order_cycles_path
       click_link 'New Order Cycle'
 
       # Select a coordinator since there are two available
@@ -304,8 +304,8 @@ feature %q{
       distributor_fee2 = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee 2')
 
       # When I go to its edit page
-      login_to_admin_section
-      click_link 'Order Cycles'
+      quick_login_as_admin
+      visit admin_order_cycles_path
       click_link oc.name
       wait_until { page.find('#order_cycle_name').value.present? }
 
@@ -429,9 +429,8 @@ feature %q{
     oc.distributors.last.update_attribute :name, 'ZZZZ'
 
     # When I edit it
-    login_to_admin_section
-    click_link 'Order Cycles'
-    click_link oc.name
+    quick_login_as_admin
+    visit edit_admin_order_cycle_path(oc)
     wait_until { page.find('#order_cycle_name').value.present? }
 
     # Then I should see the basic settings
@@ -498,7 +497,6 @@ feature %q{
 
   scenario "editing an order cycle with an exchange between the same enterprise" do
     c = create(:distributor_enterprise, is_primary_producer: true)
-    login_to_admin_section
 
     # Given two order cycles, one with a mono-enterprise incoming exchange...
     oc_incoming = create(:simple_order_cycle, suppliers: [c], coordinator: c)
@@ -507,6 +505,7 @@ feature %q{
     oc_outgoing = create(:simple_order_cycle, coordinator: c, distributors: [c])
 
     # When I edit the first order cycle, the exchange should appear as incoming
+    quick_login_as_admin
     visit edit_admin_order_cycle_path(oc_incoming)
     page.should     have_selector 'table.exchanges tr.supplier'
     page.should_not have_selector 'table.exchanges tr.distributor'
@@ -528,8 +527,8 @@ feature %q{
 
 
     # When I go to the order cycles page
-    login_to_admin_section
-    click_link 'Order Cycles'
+    quick_login_as_admin
+    visit admin_order_cycles_path
 
     # And I fill in some new opening/closing times and save them
     within("tr.order-cycle-#{oc1.id}") do
@@ -581,8 +580,8 @@ feature %q{
     oc = create(:simple_order_cycle)
 
     # When I clone it
-    login_to_admin_section
-    click_link 'Order Cycles'
+    quick_login_as_admin
+    visit admin_order_cycles_path
     within "tr.order-cycle-#{oc.id}" do
       find('a.clone-order-cycle').click
     end
@@ -607,9 +606,8 @@ feature %q{
     ExchangeVariant.where(exchange_id: exchange_ids, variant_id: p.master.id).should_not be_empty
 
     # When I go to the order cycle page and remove the obsolete master
-    login_to_admin_section
-    click_link 'Order Cycles'
-    click_link oc.name
+    quick_login_as_admin
+    visit edit_admin_order_cycle_path(oc)
     within("table.exchanges tbody tr.supplier") { page.find('td.products').click }
     page.find("#order_cycle_incoming_exchange_0_variants_#{p.master.id}", visible: true).trigger('click') # uncheck
     click_button "Update"
@@ -631,7 +629,7 @@ feature %q{
       end
 
       it "displays a warning on the order cycles screen" do
-        login_to_admin_section
+        quick_login_as_admin
         visit admin_order_cycles_path
         page.should have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
       end
@@ -684,13 +682,14 @@ feature %q{
         @new_user.enterprise_roles.build(enterprise: supplier_managed).save
         @new_user.enterprise_roles.build(enterprise: distributor_managed).save
 
-        login_to_admin_as @new_user
+        quick_login_as @new_user
       end
 
       scenario "viewing a list of order cycles I am coordinating" do
         oc_user_coordinating = create(:simple_order_cycle, { suppliers: [supplier_managed, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' } )
         oc_for_other_user = create(:simple_order_cycle, { coordinator: supplier_unmanaged, name: 'Order Cycle 2' } )
 
+        visit spree.admin_path
         click_link "Order Cycles"
 
         # I should see only the order cycle I am coordinating
@@ -715,7 +714,7 @@ feature %q{
         # Make the page long enough to avoid the save bar overlaying the form
         page.driver.resize(1280, 2000)
 
-        click_link "Order Cycles"
+        visit admin_order_cycles_path
         click_link 'New Order Cycle'
 
         fill_in 'order_cycle_name', with: 'My order cycle'
@@ -832,7 +831,7 @@ feature %q{
       scenario "cloning an order cycle" do
         oc = create(:simple_order_cycle, coordinator: distributor_managed)
 
-        click_link "Order Cycles"
+        visit admin_order_cycles_path
         within "tr.order-cycle-#{oc.id}" do
           find('a.clone-order-cycle').click
         end
@@ -1063,8 +1062,8 @@ feature %q{
       ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
-      login_to_admin_section
-      click_link 'Order Cycles'
+      quick_login_as_admin
+      visit admin_order_cycles_path
       click_link oc.name
       wait_until { page.find('#order_cycle_name').value.present? }
 
@@ -1093,7 +1092,7 @@ feature %q{
       ex.update_attributes! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
-      login_to_admin_section
+      quick_login_as_admin
       visit edit_admin_order_cycle_path oc
       wait_until { page.find('#order_cycle_name').value.present? }
 
@@ -1147,8 +1146,8 @@ feature %q{
 
   scenario "deleting an order cycle" do
     create(:simple_order_cycle, name: "Translusent Berries")
-    login_to_admin_section
-    click_link 'Order Cycles'
+    quick_login_as_admin
+    visit admin_order_cycles_path
     page.should have_content("Translusent Berries")
     first('a.delete-order-cycle').click
     page.should_not have_content("Translusent Berries")

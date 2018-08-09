@@ -60,9 +60,9 @@ feature %q{
     end
 
     scenario "creating an on-demand product", js: true do
-      login_to_admin_section
+      quick_login_as_admin
+      visit spree.admin_products_path
 
-      click_link 'Products'
       click_link 'New Product'
 
       fill_in 'product_name', with: 'Hot Cakes'
@@ -100,13 +100,13 @@ feature %q{
       create(:enterprise_relationship, parent: @supplier_permitted, child: @supplier2,
              permissions_list: [:manage_products])
 
-      login_to_admin_as @new_user
+      quick_login_as @new_user
     end
 
     context "products do not require a tax category" do
       scenario "creating a new product", js: true do
         with_products_require_tax_category(false) do
-          click_link 'Products'
+          visit spree.admin_products_path
           click_link 'New Product'
 
           fill_in 'product_name', :with => 'A new product !!!'
