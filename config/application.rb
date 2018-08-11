@@ -141,11 +141,10 @@ module Openfoodnetwork
     # Instead, they must be explicitly included below
     # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
     config.assets.initialize_on_precompile = true
-    config.assets.precompile += ['store/all.css', 'store/all.js', 'store/shop_front.js', 'iehack.js']
+    config.assets.precompile += ['iehack.js']
     config.assets.precompile += ['admin/all.css', 'admin/*.js', 'admin/**/*.js']
     config.assets.precompile += ['darkswarm/all.css', 'darkswarm/all_split2.css', 'darkswarm/all.js']
     config.assets.precompile += ['mail/all.css']
-    config.assets.precompile += ['search/all.css', 'search/*.js']
     config.assets.precompile += ['shared/*']
     config.assets.precompile += ['qz/*']
 
