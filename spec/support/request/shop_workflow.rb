@@ -17,8 +17,8 @@ module ShopWorkflow
   end
 
   def add_product_to_cart(order, product, quantity: 1)
-    populator = Spree::OrderPopulator.new(order, order.currency)
-    populator.populate(variants: {product.variants.first.id => quantity})
+    cart_service = CartService.new(order, order.currency)
+    cart_service.populate(variants: {product.variants.first.id => quantity})
 
     # Recalculate fee totals
     order.update_distribution_charge!

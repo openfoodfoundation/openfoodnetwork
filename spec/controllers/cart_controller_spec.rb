@@ -9,9 +9,9 @@ describe CartController, type: :controller do
     it "returns stock levels as JSON" do
       controller.stub(:variant_ids_in) { [123] }
       controller.stub(:stock_levels) { 'my_stock_levels' }
-      Spree::OrderPopulator.stub(:new).and_return(populator = double())
-      populator.stub(:populate) { true }
-      populator.stub(:variants_h) { {} }
+      CartService.stub(:new).and_return(cart_service = double())
+      cart_service.stub(:populate) { true }
+      cart_service.stub(:variants_h) { {} }
 
       xhr :post, :populate, use_route: :spree, format: :json
 
@@ -56,7 +56,7 @@ describe CartController, type: :controller do
       end
     end
 
-    it "extracts variant ids from the populator" do
+    it "extracts variant ids from the cart service" do
       variants_h = [{:variant_id=>"900", :quantity=>2, :max_quantity=>nil},
        {:variant_id=>"940", :quantity=>3, :max_quantity=>3}]
 
@@ -80,23 +80,23 @@ describe CartController, type: :controller do
     end
 
     it "returns HTTP success when successful" do
-      Spree::OrderPopulator.stub(:new).and_return(populator = double())
-      populator.stub(:populate) { true }
-      populator.stub(:variants_h) { {} }
+      CartService.stub(:new).and_return(cart_service = double())
+      cart_service.stub(:populate) { true }
+      cart_service.stub(:variants_h) { {} }
       xhr :post, :populate, use_route: :spree, format: :json
       response.status.should == 200
     end
 
     it "returns failure when unsuccessful" do
-      Spree::OrderPopulator.stub(:new).and_return(populator = double())
-      populator.stub(:populate).and_return false
+      CartService.stub(:new).and_return(cart_service = double())
+      cart_service.stub(:populate).and_return false
       xhr :post, :populate, use_route: :spree, format: :json
       response.status.should == 412
     end
 
-    it "tells populator to overwrite" do
-      Spree::OrderPopulator.stub(:new).and_return(populator = double())
-      populator.should_receive(:populate).with({}, true)
+    it "tells cart_service to overwrite" do
+      CartService.stub(:new).and_return(cart_service = double())
+      cart_service.should_receive(:populate).with({}, true)
       xhr :post, :populate, use_route: :spree, format: :json
     end
   end

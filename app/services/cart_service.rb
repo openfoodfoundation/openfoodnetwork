@@ -1,7 +1,15 @@
 require 'open_food_network/scope_variant_to_hub'
 
-Spree::OrderPopulator.class_eval do
+class CartService
+  attr_accessor :order, :currency
   attr_reader :variants_h
+  attr_reader :errors
+
+  def initialize(order, currency)
+    @order = order
+    @currency = currency
+    @errors = ActiveModel::Errors.new(self)
+  end
 
   def populate(from_hash, overwrite = false)
     @distributor, @order_cycle = distributor_and_order_cycle
@@ -30,27 +38,6 @@ Spree::OrderPopulator.class_eval do
     end
 
     valid?
-  end
-
-  def read_variants(data)
-    @variants_h = read_products_hash(data) +
-                  read_variants_hash(data)
-  end
-
-  def read_products_hash(data)
-    (data[:products] || []).map do |product_id, variant_id|
-      {variant_id: variant_id, quantity: data[:quantity]}
-    end
-  end
-
-  def read_variants_hash(data)
-    (data[:variants] || []).map do |variant_id, quantity|
-      if quantity.is_a?(Hash)
-        {variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity]}
-      else
-        {variant_id: variant_id, quantity: quantity}
-      end
-    end
   end
 
   def attempt_cart_add(variant_id, quantity, max_quantity = nil)
@@ -82,13 +69,37 @@ Spree::OrderPopulator.class_eval do
     [quantity_to_add, max_quantity_to_add]
   end
 
+  private
+
+  def read_variants(data)
+    @variants_h = read_products_hash(data) +
+                  read_variants_hash(data)
+  end
+
+  def read_products_hash(data)
+    (data[:products] || []).map do |product_id, variant_id|
+      {variant_id: variant_id, quantity: data[:quantity]}
+    end
+  end
+
+  def read_variants_hash(data)
+    (data[:variants] || []).map do |variant_id, quantity|
+      if quantity.is_a?(Hash)
+        {variant_id: variant_id, quantity: quantity[:quantity], max_quantity: quantity[:max_quantity]}
+      else
+        {variant_id: variant_id, quantity: quantity}
+      end
+    end
+  end
+
+  def valid?
+    errors.empty?
+  end
+
   def cart_remove(variant_id)
     variant = Spree::Variant.find(variant_id)
     @order.remove_variant(variant)
   end
-
-
-  private
 
   def distributor_and_order_cycle
     [@order.distributor, @order.order_cycle]
