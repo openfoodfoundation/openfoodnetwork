@@ -62,18 +62,21 @@ class CartController < BaseController
   def populate_variant_attributes
     order = current_order.reload
 
-    if params.key? :variant_attributes
-      params[:variant_attributes].each do |variant_id, attributes|
-        order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
-      end
-    end
+    populate_variant_attributes_from_variant(order) if params.key? :variant_attributes
+    populate_variant_attributes_from_product(order) if params.key? :quantity
+  end
 
-    if params.key? :quantity
-      params[:products].each do |_product_id, variant_id|
-        max_quantity = params[:max_quantity].to_i
-        order.set_variant_attributes(Spree::Variant.find(variant_id),
-                                     max_quantity: max_quantity)
-      end
+  def populate_variant_attributes_from_variant(order)
+    params[:variant_attributes].each do |variant_id, attributes|
+      order.set_variant_attributes(Spree::Variant.find(variant_id), attributes)
+    end
+  end
+
+  def populate_variant_attributes_from_product(order)
+    params[:products].each do |_product_id, variant_id|
+      max_quantity = params[:max_quantity].to_i
+      order.set_variant_attributes(Spree::Variant.find(variant_id),
+                                   max_quantity: max_quantity)
     end
   end
 
