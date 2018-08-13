@@ -7,40 +7,40 @@ describe Spree::OrdersController, type: :controller do
 
   it "redirects home when no distributor is selected" do
     spree_get :edit
-    response.should redirect_to root_path
+    expect(response).to redirect_to root_path
   end
 
   it "redirects to shop when order is empty" do
-    controller.stub(:current_distributor).and_return(distributor)
-    controller.stub(:current_order_cycle).and_return(order_cycle)
-    controller.stub(:current_order).and_return order
-    order.stub_chain(:line_items, :empty?).and_return true
-    order.stub(:insufficient_stock_lines).and_return []
+    allow(controller).to receive(:current_distributor).and_return(distributor)
+    allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
+    allow(controller).to receive(:current_order).and_return order
+    allow(order).to receive_message_chain(:line_items, :empty?).and_return true
+    allow(order).to receive(:insufficient_stock_lines).and_return []
     session[:access_token] = order.token
     spree_get :edit
-    response.should redirect_to shop_path
+    expect(response).to redirect_to shop_path
   end
 
   it "redirects to the shop when no order cycle is selected" do
-    controller.stub(:current_distributor).and_return(distributor)
+    allow(controller).to receive(:current_distributor).and_return(distributor)
     spree_get :edit
-    response.should redirect_to shop_path
+    expect(response).to redirect_to shop_path
   end
 
   it "redirects home with message if hub is not ready for checkout" do
-    VariantOverride.stub(:indexed).and_return({})
+    allow(VariantOverride).to receive(:indexed).and_return({})
 
     order = subject.current_order(true)
-    distributor.stub(:ready_for_checkout?) { false }
-    order.stub(distributor: distributor, order_cycle: order_cycle)
+    allow(distributor).to receive(:ready_for_checkout?) { false }
+    allow(order).to receive_messages(distributor: distributor, order_cycle: order_cycle)
 
-    order.should_receive(:empty!)
-    order.should_receive(:set_distribution!).with(nil, nil)
+    expect(order).to receive(:empty!)
+    expect(order).to receive(:set_distribution!).with(nil, nil)
 
     spree_get :edit
 
-    response.should redirect_to root_url
-    flash[:info].should == "The hub you have selected is temporarily closed for orders. Please try again later."
+    expect(response).to redirect_to root_url
+    expect(flash[:info]).to eq("The hub you have selected is temporarily closed for orders. Please try again later.")
   end
 
   describe "when an item has insufficient stock" do
@@ -59,7 +59,7 @@ describe Spree::OrdersController, type: :controller do
     it "displays a flash message when we view the cart" do
       spree_get :edit
       expect(response.status).to eq 200
-      flash[:error].should == "An item in your cart has become unavailable."
+      expect(flash[:error]).to eq("An item in your cart has become unavailable.")
     end
   end
 
@@ -72,8 +72,8 @@ describe Spree::OrdersController, type: :controller do
           "0" => {quantity: "0", id: "9999"},
           "1" => {quantity: "99", id: li.id}
         }}
-        response.status.should == 302
-        li.reload.quantity.should == 99
+        expect(response.status).to eq(302)
+        expect(li.reload.quantity).to eq(99)
       end
     end
 
@@ -86,9 +86,9 @@ describe Spree::OrdersController, type: :controller do
         "1" => {quantity: "99", id: li.id}
       }
 
-      controller.remove_missing_line_items(attrs).should == {
+      expect(controller.remove_missing_line_items(attrs)).to eq({
         "1" => {quantity: "99", id: li.id}
-      }
+      })
     end
   end
 
@@ -159,7 +159,7 @@ describe Spree::OrdersController, type: :controller do
       it "updates the fees" do
         expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount
 
-        controller.stub spree_current_user: user
+        allow(controller).to receive_messages spree_current_user: user
         spree_post :update, params
 
         expect(order.reload.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2

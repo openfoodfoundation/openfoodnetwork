@@ -7,16 +7,16 @@ describe CartController, type: :controller do
     let(:product) { create(:simple_product) }
 
     it "returns stock levels as JSON" do
-      controller.stub(:variant_ids_in) { [123] }
-      controller.stub(:stock_levels) { 'my_stock_levels' }
-      CartService.stub(:new).and_return(cart_service = double())
-      cart_service.stub(:populate) { true }
-      cart_service.stub(:variants_h) { {} }
+      allow(controller).to receive(:variant_ids_in) { [123] }
+      allow(controller).to receive(:stock_levels) { 'my_stock_levels' }
+      allow(CartService).to receive(:new).and_return(cart_service = double())
+      allow(cart_service).to receive(:populate) { true }
+      allow(cart_service).to receive(:variants_h) { {} }
 
       xhr :post, :populate, use_route: :spree, format: :json
 
       data = JSON.parse(response.body)
-      data['stock_levels'].should == 'my_stock_levels'
+      expect(data['stock_levels']).to eq('my_stock_levels')
     end
 
     describe "generating stock levels" do
@@ -27,31 +27,35 @@ describe CartController, type: :controller do
 
       before do
         order.reload
-        controller.stub(:current_order) { order }
+        allow(controller).to receive(:current_order) { order }
       end
 
       it "returns a hash with variant id, quantity, max_quantity and stock on hand" do
-        controller.stock_levels(order, [v.id]).should ==
+        expect(controller.stock_levels(order, [v.id])).to eq(
           {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
+        )
       end
 
       it "includes all line items, even when the variant_id is not specified" do
-        controller.stock_levels(order, []).should ==
+        expect(controller.stock_levels(order, [])).to eq(
           {v.id => {quantity: 2, max_quantity: 3, on_hand: 4}}
+        )
       end
 
       it "includes an empty quantity entry for variants that aren't in the order" do
-        controller.stock_levels(order, [v.id, v2.id]).should ==
+        expect(controller.stock_levels(order, [v.id, v2.id])).to eq(
           {v.id  => {quantity: 2, max_quantity: 3, on_hand: 4},
            v2.id => {quantity: 0, max_quantity: 0, on_hand: 2}}
+        )
       end
 
       describe "encoding Infinity" do
         let!(:v) { create(:variant, on_demand: true, count_on_hand: 0) }
 
         it "encodes Infinity as a large, finite integer" do
-          controller.stock_levels(order, [v.id]).should ==
+          expect(controller.stock_levels(order, [v.id])).to eq(
             {v.id => {quantity: 2, max_quantity: 3, on_hand: 2147483647}}
+          )
         end
       end
     end
@@ -60,7 +64,7 @@ describe CartController, type: :controller do
       variants_h = [{:variant_id=>"900", :quantity=>2, :max_quantity=>nil},
        {:variant_id=>"940", :quantity=>3, :max_quantity=>3}]
 
-      controller.variant_ids_in(variants_h).should == [900, 940]
+      expect(controller.variant_ids_in(variants_h)).to eq([900, 940])
     end
   end
 
@@ -70,33 +74,33 @@ describe CartController, type: :controller do
       p = create(:product, :distributors => [distributor_product], :group_buy => true)
 
       order = subject.current_order(true)
-      order.stub(:distributor) { distributor_product }
-      order.should_receive(:set_variant_attributes).with(p.master, {'max_quantity' => '3'})
-      controller.stub(:current_order).and_return(order)
+      allow(order).to receive(:distributor) { distributor_product }
+      expect(order).to receive(:set_variant_attributes).with(p.master, {'max_quantity' => '3'})
+      allow(controller).to receive(:current_order).and_return(order)
 
       expect do
-        spree_post :populate, :variants => {p.master.id => 1}, :variant_attributes => {p.master.id => {:max_quantity => 3}}
+        spree_post :populate, variants: { p.master.id => 1 }, variant_attributes: { p.master.id => {max_quantity: 3 } }
       end.to change(Spree::LineItem, :count).by(1)
     end
 
     it "returns HTTP success when successful" do
-      CartService.stub(:new).and_return(cart_service = double())
-      cart_service.stub(:populate) { true }
-      cart_service.stub(:variants_h) { {} }
+      allow(CartService).to receive(:new).and_return(cart_service = double())
+      allow(cart_service).to receive(:populate) { true }
+      allow(cart_service).to receive(:variants_h) { {} }
       xhr :post, :populate, use_route: :spree, format: :json
-      response.status.should == 200
+      expect(response.status).to eq(200)
     end
 
     it "returns failure when unsuccessful" do
-      CartService.stub(:new).and_return(cart_service = double())
-      cart_service.stub(:populate).and_return false
+      allow(CartService).to receive(:new).and_return(cart_service = double())
+      allow(cart_service).to receive(:populate).and_return false
       xhr :post, :populate, use_route: :spree, format: :json
-      response.status.should == 412
+      expect(response.status).to eq(412)
     end
 
     it "tells cart_service to overwrite" do
-      CartService.stub(:new).and_return(cart_service = double())
-      cart_service.should_receive(:populate).with({}, true)
+      allow(CartService).to receive(:new).and_return(cart_service = double())
+      expect(cart_service).to receive(:populate).with({}, true)
       xhr :post, :populate, use_route: :spree, format: :json
     end
   end
