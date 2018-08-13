@@ -1,15 +1,15 @@
 .cookies-policy-modal {
-  background: #efefef;
-  border-bottom-color: #efefef;
-}
+  background: $disabled-light;
+  border-bottom-color: $disabled-light;
 
-.cookies-policy-modal table {
-  display: block;
-  overflow-x: auto;
-}
+  table {
+    display: block;
+    overflow-x: auto;
+  }
 
-.cookies-policy-modal.fade {
-  -webkit-transform: translate(0, 0) !important;
-  -ms-transform: translate(0, 0) !important;
-  transform: translate(0, 0) !important;
+  &.fade {
+    -ms-transform: translate(0, 0) !important;
+    -webkit-transform: translate(0, 0) !important;
+    transform: translate(0, 0) !important;
+  }
 }
