@@ -80,6 +80,8 @@ Openfoodnetwork::Application.routes.draw do
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
   get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
 
+  get "/angular-templates/:id", to: "angular_templates#show", constraints: { name: %r{[\/\w\.]+} }
+
   namespace :api do
     resources :enterprises do
       post :update_image, on: :member

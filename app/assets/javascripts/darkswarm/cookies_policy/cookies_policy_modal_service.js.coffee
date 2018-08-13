@@ -8,7 +8,7 @@ Darkswarm.factory "CookiesPolicyModalService", (Navigation, $modal, $location, C
       if $location.path() is @defaultPath || location.pathname is @defaultPath
         @open ''
 
-    open: (path = false, template = 'darkswarm/cookies_policy/cookies_policy.html') =>
+    open: (path = false, template = 'angular-templates/cookies_policy.html') =>
       @modalInstance = $modal.open
         templateUrl: template
         windowClass: "cookies-policy-modal medium"

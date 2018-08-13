@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Cookies", js: true do
-  describe "banner", js: true do
+  describe "banner" do
     describe "in the homepage" do
       before do
         Spree::Config[:cookies_consent_banner_toggle] = true
@@ -57,8 +57,7 @@ feature "Cookies", js: true do
       scenario "shows Matomo cookies details" do
         Spree::Config[:cookies_policy_matomo_section] = true
         visit '/#/policies/cookies'
-        # before { skip("test not working, settings are not picked up") }
-        # expect(page).to have_content matomo_description_text
+        expect(page).to have_content matomo_description_text
       end
     end
 
