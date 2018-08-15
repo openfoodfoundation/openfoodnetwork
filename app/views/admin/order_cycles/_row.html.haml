@@ -1,7 +1,6 @@
 %tr{ class: "order-cycle-{{orderCycle.id}} {{orderCycle.status}}", ng: { repeat: 'orderCycle in orderCycles | schedule:scheduleFilter | involving:involvingFilter | filter:{name: query} track by orderCycle.id' } }
   %td.name{ ng: { show: 'columns.name.visible' } }
-    %a{ ng: { href: '{{orderCycle.edit_path}}' } }
-      {{ orderCycle.name }}
+    %input{ id: 'oc{{::orderCycle.id}}_name', name: 'oc{{::orderCycle.id}}[name]', type: 'text', ng: { model: 'orderCycle.name', disabled: '!orderCycle.viewing_as_coordinator' } }
   %td.schedules{ ng: { show: 'columns.schedules.visible' } }
     %span{ ng: { repeat: 'schedule in orderCycle.schedules'} }
       %a{ 'schedule-dialog' => true, 'schedule-id' => '{{schedule.id}}' }

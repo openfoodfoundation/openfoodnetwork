@@ -32,8 +32,9 @@ feature %q{
 
     # Then the order cycles should be ordered correctly
     expect(page).to have_selector "#listing_order_cycles tr td:first-child", count: 7
-    page.all('#listing_order_cycles tr td:first-child').map(&:text).should ==
-      ['oc0', 'oc1', 'oc2', 'oc3', 'oc4', 'oc5', 'oc6']
+
+    order_cycle_names = ["oc0", "oc1", "oc2", "oc3", "oc4", "oc5", "oc6"]
+    expect(all("#listing_order_cycles tr td:first-child input").map(&:value)).to eq order_cycle_names
 
     # And the rows should have the correct classes
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}.undated"
@@ -52,11 +53,10 @@ feature %q{
     # And I should see all the details for an order cycle
     within('table#listing_order_cycles tbody tr:nth-child(2)') do
       # Then I should see the basic fields
-      page.should have_selector 'a', text: oc1.name
-
-      page.should have_input "oc#{oc1.id}[orders_open_at]", value: oc1.orders_open_at
-      page.should have_input "oc#{oc1.id}[orders_close_at]", value: oc1.orders_close_at
-      page.should have_content oc1.coordinator.name
+      expect(page).to have_input "oc#{oc1.id}[name]", value: oc1.name
+      expect(page).to have_input "oc#{oc1.id}[orders_open_at]", value: oc1.orders_open_at
+      expect(page).to have_input "oc#{oc1.id}[orders_close_at]", value: oc1.orders_close_at
+      expect(page).to have_content oc1.coordinator.name
 
       # And I should see the suppliers and distributors
       oc1.suppliers.each    { |s| page.should have_content s.name }
@@ -250,10 +250,10 @@ feature %q{
       find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
       find("div#columns-dropdown", :text => "COLUMNS").click
 
-      page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
-      page.should have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time
-      page.should have_content 'My coordinator'
+      expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
+      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
+      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time
+      expect(page).to have_content "My coordinator"
 
       page.should have_selector 'td.producers', text: 'My supplier'
       page.should have_selector 'td.shops', text: 'My distributor'
@@ -306,8 +306,11 @@ feature %q{
       # When I go to its edit page
       quick_login_as_admin
       visit admin_order_cycles_path
-      click_link oc.name
-      wait_until { page.find('#order_cycle_name').value.present? }
+      within "tr.order-cycle-#{oc.id}" do
+        find("a.edit-order-cycle").click
+      end
+
+      wait_for_edit_form_to_load_order_cycle(oc)
 
       # And I update it
       fill_in 'order_cycle_name', with: 'Plums & Avos'
@@ -390,10 +393,10 @@ feature %q{
       find("div#columns-dropdown div.menu div.menu_item", text: "Shops").click
       find("div#columns-dropdown", :text => "COLUMNS").click
 
-      page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
-      page.should have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time
-      page.should have_content coordinator.name
+      expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
+      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: order_cycle_opening_time
+      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: order_cycle_closing_time
+      expect(page).to have_content coordinator.name
 
       page.should have_selector 'td.producers', text: 'My supplier'
       page.should have_selector 'td.shops', text: 'My distributor'
@@ -431,7 +434,8 @@ feature %q{
     # When I edit it
     quick_login_as_admin
     visit edit_admin_order_cycle_path(oc)
-    wait_until { page.find('#order_cycle_name').value.present? }
+
+    wait_for_edit_form_to_load_order_cycle(oc)
 
     # Then I should see the basic settings
     page.find('#order_cycle_name').value.should == oc.name
@@ -532,13 +536,15 @@ feature %q{
 
     # And I fill in some new opening/closing times and save them
     within("tr.order-cycle-#{oc1.id}") do
-      all('input').first.set '2040-12-01 12:00:00'
-      all('input').last.set '2040-12-01 12:00:01'
+      find("input#oc#{oc1.id}_name").set "Updated Order Cycle 1"
+      find("input#oc#{oc1.id}_orders_open_at").set "2040-12-01 12:00:00"
+      find("input#oc#{oc1.id}_orders_close_at").set "2040-12-01 12:00:01"
     end
 
     within("tr.order-cycle-#{oc2.id}") do
-      all('input').first.set '2040-12-01 12:00:02'
-      all('input').last.set '2040-12-01 12:00:03'
+      find("input#oc#{oc2.id}_name").set "Updated Order Cycle 2"
+      find("input#oc#{oc2.id}_orders_open_at").set "2040-12-01 12:00:02"
+      find("input#oc#{oc2.id}_orders_close_at").set "2040-12-01 12:00:03"
     end
 
     # And I fill in a time using the datepicker
@@ -560,19 +566,22 @@ feature %q{
 
     within("tr.order-cycle-#{oc3.id}") do
       # Then that date/time should appear on the form
-      expect(all('input').first.value).to eq '2040-12-01 00:00:00'
+      expect(find("input#oc#{oc3.id}_orders_open_at").value).to eq "2040-12-01 00:00:00"
 
       # Manually fill out time
-      all('input').first.set '2040-12-01 12:00:04'
-      all('input').last.set '2040-12-01 12:00:05'
+      find("input#oc#{oc3.id}_name").set "Updated Order Cycle 3"
+      find("input#oc#{oc3.id}_orders_open_at").set "2040-12-01 12:00:04"
+      find("input#oc#{oc3.id}_orders_close_at").set "2040-12-01 12:00:05"
     end
 
     click_button 'Save Changes'
 
-    # Then my times should have been saved
+    # Then my details should have been saved
     expect(page).to have_selector "#save-bar", text: "Order cycles have been updated."
-    OrderCycle.order('id ASC').map { |oc| oc.orders_open_at.sec }.should == [0, 2, 4]
-    OrderCycle.order('id ASC').map { |oc| oc.orders_close_at.sec }.should == [1, 3, 5]
+    order_cycles = OrderCycle.order("id ASC")
+    expect(order_cycles.map(&:name)).to eq ["Updated Order Cycle 1", "Updated Order Cycle 2", "Updated Order Cycle 3"]
+    expect(order_cycles.map { |oc| oc.orders_open_at.sec }).to eq [0, 2, 4]
+    expect(order_cycles.map { |oc| oc.orders_close_at.sec }).to eq [1, 3, 5]
   end
 
   scenario "cloning an order cycle" do
@@ -693,9 +702,8 @@ feature %q{
         click_link "Order Cycles"
 
         # I should see only the order cycle I am coordinating
-        page.should have_content oc_user_coordinating.name
-        page.should_not have_content oc_for_other_user.name
-
+        expect(page).to have_selector "tr.order-cycle-#{oc_user_coordinating.id}"
+        expect(page).to_not have_selector "tr.order-cycle-#{oc_for_other_user.id}"
 
         find("div#columns-dropdown", :text => "COLUMNS").click
         find("div#columns-dropdown div.menu div.menu_item", text: "Producers").click
@@ -1037,9 +1045,9 @@ feature %q{
 
       oc = OrderCycle.last
 
-      page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 06, 00, 00).strftime("%F %T %z")
-      page.should have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 00, 00).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
+      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 06, 00, 00).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 00, 00).strftime("%F %T %z")
 
       # And it should have some variants selected
       oc.exchanges.incoming.first.variants.count.should == 2
@@ -1064,8 +1072,11 @@ feature %q{
       # When I edit it
       quick_login_as_admin
       visit admin_order_cycles_path
-      click_link oc.name
-      wait_until { page.find('#order_cycle_name').value.present? }
+      within "tr.order-cycle-#{oc.id}" do
+        find("a.edit-order-cycle").click
+      end
+
+      wait_for_edit_form_to_load_order_cycle(oc)
 
       # Then I should see the basic settings
       page.should have_field 'order_cycle_name', with: oc.name
@@ -1094,7 +1105,8 @@ feature %q{
       # When I edit it
       quick_login_as_admin
       visit edit_admin_order_cycle_path oc
-      wait_until { page.find('#order_cycle_name').value.present? }
+
+      wait_for_edit_form_to_load_order_cycle(oc)
 
       # And I fill in the basic fields
       fill_in 'order_cycle_name', with: 'Plums & Avos'
@@ -1126,9 +1138,9 @@ feature %q{
       page.should have_content 'Your order cycle has been updated.'
       oc = OrderCycle.last
 
-      page.should have_selector 'a', text: 'Plums & Avos'
-      page.should have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 06, 00, 00).strftime("%F %T %z")
-      page.should have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 00, 00).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
+      expect(page).to have_input "oc#{oc.id}[orders_open_at]", value: Time.zone.local(2040, 10, 17, 06, 00, 00).strftime("%F %T %z")
+      expect(page).to have_input "oc#{oc.id}[orders_close_at]", value: Time.zone.local(2040, 10, 24, 17, 00, 00).strftime("%F %T %z")
 
       # And it should have a variant selected
       oc.exchanges.incoming.first.variants.should == [v2]
@@ -1145,16 +1157,20 @@ feature %q{
   end
 
   scenario "deleting an order cycle" do
-    create(:simple_order_cycle, name: "Translusent Berries")
+    order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     quick_login_as_admin
     visit admin_order_cycles_path
-    page.should have_content("Translusent Berries")
+    expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"
     first('a.delete-order-cycle').click
-    page.should_not have_content("Translusent Berries")
+    expect(page).to_not have_selector "tr.order-cycle-#{order_cycle.id}"
   end
 
 
   private
+
+  def wait_for_edit_form_to_load_order_cycle(order_cycle)
+    expect(page).to have_field "order_cycle_name", with: order_cycle.name
+  end
 
   def select_incoming_variant(supplier, exchange_no, variant)
     page.find("table.exchanges tr.supplier-#{supplier.id} td.products").click
