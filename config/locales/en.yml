@@ -1175,14 +1175,14 @@ en:
   menu_2_url: "/map"
   menu_3_title: "Producers"
   menu_3_url: "/producers"
-  menu_4_title: "Connect"
-  menu_4_url: "https://openfoodnetwork.org/au/connect/"
-  menu_5_title: "Learn"
-  menu_5_url: "https://openfoodnetwork.org/au/learn/"
-  menu_6_title: "Blog"
-  menu_6_url: ""
-  menu_7_title: "Groups"
-  menu_7_url: ""
+  menu_4_title: "Groups"
+  menu_4_url: "/groups"
+  menu_5_title: "About"
+  menu_5_url: "http://www.openfoodnetwork.org/"
+  menu_6_title: "Connect"
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_7_title: "Learn"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
 
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME
