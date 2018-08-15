@@ -61,7 +61,7 @@
 //= require moment/nb.js
 //= require moment/pt-br.js
 //= require moment/sv.js
-//= require ../shared/mm-foundation-tpls-0.8.0.min.js
+//= require ../shared/mm-foundation-tpls-0.9.0-20180826174721.min.js
 //= require angularjs-file-upload
 
 //= require_tree .
