@@ -63,8 +63,7 @@ module ProductImport
     end
 
     def suppliers_index
-      index = @spreadsheet_data.suppliers_index
-      index.sort_by{ |_k, v| v.to_i }.reverse.to_h
+      @spreadsheet_data.suppliers_index
     end
 
     def supplier_products

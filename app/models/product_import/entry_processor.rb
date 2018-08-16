@@ -34,7 +34,8 @@ module ProductImport
     end
 
     def count_existing_items
-      @spreadsheet_data.suppliers_index.each do |_supplier_name, supplier_id|
+      @spreadsheet_data.suppliers_index.each do |_supplier_name, attrs|
+        supplier_id = attrs[:id]
         next unless supplier_id && permission_by_id?(supplier_id)
 
         products_count =

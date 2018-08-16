@@ -30,8 +30,9 @@ module ProductImport
       @suppliers_index = {}
       @entries.each do |entry|
         supplier_name = entry.supplier
-        supplier_id = @suppliers_index[supplier_name] || Enterprise.find_by_name(supplier_name, select: 'id, name').try(:id)
-        @suppliers_index[supplier_name] = supplier_id
+        next if @suppliers_index.key? supplier_name
+        enterprise = Enterprise.find_by_name(supplier_name, select: 'id, name, is_primary_producer')
+        @suppliers_index[supplier_name] = { id: enterprise.try(:id), is_primary_producer: enterprise.try(:is_primary_producer) }
       end
       @suppliers_index
     end
