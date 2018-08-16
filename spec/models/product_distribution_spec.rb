@@ -36,7 +36,7 @@ describe ProductDistribution do
 
         # When I add the product to the order, an adjustment should be made
         expect do
-          cart_service = CartService.new order, 'AU'
+          cart_service = CartService.new order
           cart_service.populate products: {product.id => product.master.id}, quantity: 1, distributor_id: distributor.id
 
           # Normally the controller would fire this event when the order's contents are changed

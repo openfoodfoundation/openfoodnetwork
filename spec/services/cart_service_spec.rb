@@ -6,13 +6,17 @@ describe CartService do
   let(:params) { {} }
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { double(:order_cycle) }
-  let(:cart_service) { CartService.new(order, currency) }
+  let(:cart_service) { CartService.new(order) }
+
+  before do
+    allow(order).to receive(:currency).and_return( currency )
+  end
 
   context "end-to-end" do
     let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
     let(:distributor) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [v]) }
-    let(:cart_service) { CartService.new(order, nil) }
+    let(:cart_service) { CartService.new(order) }
     let(:v) { create(:variant) }
 
     describe "populate" do

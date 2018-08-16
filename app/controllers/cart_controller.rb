@@ -9,7 +9,7 @@ class CartController < BaseController
     # costly Spree::Order#update!, which only needs to be run once. We avoid this by disabling
     # callbacks on Spree::Adjustment and then manually invoke Spree::Order#update! on success.
     Spree::Adjustment.without_callbacks do
-      cart_service = CartService.new(current_order(true), current_currency)
+      cart_service = CartService.new(current_order(true))
 
       if cart_service.populate(params.slice(:products, :variants, :quantity), true)
         fire_event('spree.cart.add')

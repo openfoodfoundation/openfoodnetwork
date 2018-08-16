@@ -17,7 +17,7 @@ module ShopWorkflow
   end
 
   def add_product_to_cart(order, product, quantity: 1)
-    cart_service = CartService.new(order, order.currency)
+    cart_service = CartService.new(order)
     cart_service.populate(variants: {product.variants.first.id => quantity})
 
     # Recalculate fee totals

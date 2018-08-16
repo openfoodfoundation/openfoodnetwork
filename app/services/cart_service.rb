@@ -5,9 +5,9 @@ class CartService
   attr_reader :variants_h
   attr_reader :errors
 
-  def initialize(order, currency)
+  def initialize(order)
     @order = order
-    @currency = currency
+    @currency = order.currency
     @errors = ActiveModel::Errors.new(self)
   end
 
