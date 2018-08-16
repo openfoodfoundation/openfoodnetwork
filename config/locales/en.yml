@@ -1739,6 +1739,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   error_number: "must be number"
   error_email: "must be email address"
   error_not_found_in_database: "%{name} not found in database"
+  error_not_primary_producer: "%{name} is not enabled as a producer"
   error_no_permission_for_enterprise: "\"%{name}\": you do not have permission to manage products for this enterprise"
   item_handling_fees: "Item Handling Fees (included in item totals)"
   january: "January"

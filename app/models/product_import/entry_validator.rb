@@ -62,6 +62,11 @@ module ProductImport
         return
       end
 
+      unless Enterprise.find_by_name(supplier_name).is_primary_producer?
+        mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_not_primary_producer, name: supplier_name))
+        return
+      end
+
       entry.supplier_id = @spreadsheet_data.suppliers_index[supplier_name]
     end
 
