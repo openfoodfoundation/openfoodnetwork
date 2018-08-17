@@ -138,14 +138,13 @@ feature %q{
     before(:each) do
       enterprise_user.enterprise_roles.build(enterprise: distributor1).save
       enterprise_user.enterprise_roles.build(enterprise: distributor2).save
-      login_to_admin_as enterprise_user
+      quick_login_as enterprise_user
     end
 
     it "creates enterprise fees" do
       ef2
 
-      click_link 'Enterprises'
-      within("#e_#{distributor1.id}") { click_link 'Settings' }
+      visit edit_admin_enterprise_path(distributor1)
       within(".side_menu") { click_link 'Enterprise Fees' }
       click_link "Create One Now"
 
@@ -168,8 +167,7 @@ feature %q{
       ef1
       ef2
 
-      click_link 'Enterprises'
-      within("#e_#{distributor1.id}") { click_link 'Settings' }
+      visit edit_admin_enterprise_path(distributor1)
       within(".side_menu") { click_link 'Enterprise Fees' }
       click_link "Settings Enterprise Fees"
       page.should     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
@@ -188,8 +186,7 @@ feature %q{
       ef2
       distributor3
 
-      click_link 'Enterprises'
-      within("#e_#{distributor2.id}") { click_link 'Settings' }
+      visit edit_admin_enterprise_path(distributor1)
       within(".side_menu") { click_link 'Enterprise Fees' }
       click_link "Manage Enterprise Fees"
       page.should have_select('enterprise_fee_set_collection_attributes_1_enterprise_id',
