@@ -113,6 +113,20 @@ feature %q{
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
 
+    # I can also clear filters using the 'clear all' button
+    select2_select schedule1.name, from: "schedule_filter"
+    select2_select oc1.suppliers.first.name, from: "involving_filter"
+    fill_in "query", with: oc0.name
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    page.should have_no_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
+    click_on "Clear All"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    page.should have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
+
     # Attempting to edit dates of an open order cycle with active subscriptions
     find("#oc#{oc1.id}_orders_open_at").click
     expect(page).to have_selector "#confirm-dialog .message", text: I18n.t('admin.order_cycles.date_warning.msg', n: 1)

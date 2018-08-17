@@ -6,6 +6,13 @@ angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, C
   $scope.involvingFilter = 0
   $scope.scheduleFilter = 0
 
+  $scope.resetSelectFilters = ->
+    $scope.query = ''
+    $scope.involvingFilter = 0
+    $scope.scheduleFilter = 0
+
+  $scope.resetSelectFilters()
+
   compileData = ->
     for schedule in $scope.schedules
       Dereferencer.dereference(schedule.order_cycles, OrderCycles.byID)
