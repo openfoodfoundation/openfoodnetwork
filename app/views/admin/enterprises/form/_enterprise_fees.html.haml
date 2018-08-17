@@ -1,4 +1,4 @@
-- if @enterprise_fees.count > 0
+- if @enterprise_fees.present?
   %table
     %thead
       %tr
@@ -11,7 +11,7 @@
           %td= enterprise_fee.fee_type
   %br
   %div
-    %a.button{ href: "#{main_app.admin_enterprise_fees_path}"}
+    %a.button{href: main_app.admin_enterprise_fees_path(enterprise_id: @enterprise.id)}
       = t('.manage_fees')
       %i.icon-arrow-right
 
@@ -21,6 +21,6 @@
 
   %br
   .text-center
-    %a.button{ href: "#{main_app.admin_enterprise_fees_path}"}
+    %a.button{href: main_app.admin_enterprise_fees_path(enterprise_id: @enterprise.id)}
       = t('.create_button')
       %i.icon-arrow-right

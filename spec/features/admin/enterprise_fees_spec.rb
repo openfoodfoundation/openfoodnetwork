@@ -162,20 +162,19 @@ feature %q{
       expect(enterprise_fee.enterprise).to eq(distributor1)
     end
 
-    pending "shows me only enterprise fees for the enterprise I select" do
+    it "shows me only enterprise fees for the enterprise I select" do
       ef1
       ef2
 
       visit edit_admin_enterprise_path(distributor1)
       within(".side_menu") { click_link 'Enterprise Fees' }
-      click_link "Settings Enterprise Fees"
+      click_link "Manage Enterprise Fees"
       expect(page).to     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
       expect(page).not_to have_field 'enterprise_fee_set_collection_attributes_1_name', with: 'Two'
 
-      click_link 'Enterprises'
-      within("#e_#{distributor2.id}") { click_link 'Settings' }
+      visit edit_admin_enterprise_path(distributor2)
       within(".side_menu") { click_link 'Enterprise Fees' }
-      click_link "Settings Enterprise Fees"
+      click_link "Manage Enterprise Fees"
       expect(page).not_to have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'One'
       expect(page).to     have_field 'enterprise_fee_set_collection_attributes_0_name', with: 'Two'
     end
@@ -185,10 +184,10 @@ feature %q{
       ef2
       distributor3
 
-      visit edit_admin_enterprise_path(distributor1)
+      visit edit_admin_enterprise_path(distributor2)
       within(".side_menu") { click_link 'Enterprise Fees' }
       click_link "Manage Enterprise Fees"
-      expect(page).to have_select('enterprise_fee_set_collection_attributes_1_enterprise_id',
+      expect(page).to have_select('enterprise_fee_set_collection_attributes_0_enterprise_id',
                               selected: 'Second Distributor',
                               options: ['', 'First Distributor', 'Second Distributor'])
     end
