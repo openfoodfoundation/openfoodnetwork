@@ -1,3 +1,7 @@
+# This class handles the saving of new product, variant, and inventory records created during
+# product import. It also collates data regarding this process for user feedback, as the import
+# is processed in small stages sequentially over a number of requests.
+
 module ProductImport
   class EntryProcessor
     attr_reader :inventory_created, :inventory_updated, :products_created, :variants_created, :variants_updated, :products_reset_count, :supplier_products, :total_supplier_products

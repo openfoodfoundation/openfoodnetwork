@@ -1,3 +1,13 @@
+# This class handles conversion of human-readable unit weights for products/variants into
+# the non-human-readable format needed by the database. The table below shows how fields
+# from a spreadsheet (left) become database fields (right):
+#
+# units  unit_type  variant_unit_name   ->    unit_value  variant_unit_scale   variant_unit
+# 250      ml          nil              ->       0.25        0.001               volume
+# 50       g           nil              ->       50          1                   weight
+# 2        kg          nil              ->       2000        1000                weight
+# 1        nil         bunches          ->       1           nil                 items
+
 module ProductImport
   class UnitConverter
     def initialize(attrs)
@@ -12,12 +22,6 @@ module ProductImport
     private
 
     def convert_custom_unit_fields
-      # units unit_type variant_unit_name   ->    unit_value  variant_unit_scale   variant_unit
-      # 250     ml       nil      ....              0.25        0.001               volume
-      # 50      g        nil      ....              50          1                   weight
-      # 2      kg        nil      ....              2000        1000                weight
-      # 1      nil       bunches  ....              1           null                items
-
       init_unit_values
 
       assign_weight_or_volume_attributes if units_and_unit_type_present?

@@ -1,3 +1,7 @@
+# This class handles a number of custom validation processes that take place during product import,
+# as a spreadsheet entry is checked to see if it is a valid product, variant, or inventory item.
+# It also handles error messages and user feedback for the validation process.
+
 module ProductImport
   class EntryValidator
     def initialize(current_user, import_time, spreadsheet_data, editable_enterprises, inventory_permissions, reset_counts, import_settings)

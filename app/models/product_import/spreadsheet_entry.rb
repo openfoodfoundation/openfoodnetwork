@@ -1,3 +1,7 @@
+# Objects of this class represent a line from a spreadsheet that will be processed and used
+# to create either product, variant, or inventory records. These objects are referred to as
+# "entry" or "entries" throughout product import.
+
 module ProductImport
   class SpreadsheetEntry
     extend ActiveModel::Naming
