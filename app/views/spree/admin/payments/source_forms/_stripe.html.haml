@@ -10,4 +10,8 @@
       = label_tag :cardholder_name, t(:cardholder_name)
     .six.columns
       = text_field_tag :cardholder_name, nil, {size: 40, "ng-model" => 'form_data.name'}
-  %stripe-elements
+  .row
+    .three.columns
+      = label_tag :card_details, t(:card_details)
+    .six.columns
+      %stripe-elements
