@@ -1,5 +1,5 @@
 class VariantOverride < ActiveRecord::Base
-  extend Spree::LocalizedNumber
+  extend Spree::LocalizeNumber
 
   acts_as_taggable
 

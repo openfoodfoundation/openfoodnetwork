@@ -1,32 +1,24 @@
 module Spree
-  module LocalizedNumber
-    # This method overwrites the attribute setters of a model
-    # to make them use the LocalizedNumber parsing method.
+  class LocalizedNumber
+    # This class overwrites the attribute setters of a model
+    # to make them use the LocalizedNumber#parse method.
     # It works with ActiveRecord "normal" attributes
     # and Preference attributes.
     # It also adds a validation on the input format.
-    # It accepts as arguments a variable number of attribute as symbols
-    def localize_number(*attributes)
+
+    attr_reader :model_class
+    delegate :validate, :instance_method, :define_method, :table_exists?, :column_names, to: :model_class
+
+    def initialize(model_class, attributes)
+      @model_class = model_class
+      @attributes = attributes
+    end
+
+    def setup
       validate :validate_localizable_number
 
-      attributes.each do |attribute|
-        setter = "#{attribute}="
-        old_setter = instance_method(setter) if table_exists? && !column_names.include?(attribute.to_s)
-
-        define_method(setter) do |number|
-          if Spree::Config.enable_localized_number? && Spree::LocalizedNumber.valid_localizable_number?(number)
-            number = Spree::LocalizedNumber.parse(number)
-          elsif Spree::Config.enable_localized_number?
-            @invalid_localized_number ||= []
-            @invalid_localized_number << attribute
-            number = nil
-          end
-          if has_attribute?(attribute)
-            self[attribute] = number
-          else
-            old_setter.bind(self).call(number)
-          end
-        end
+      @attributes.each do |attribute|
+        override_setter_for(attribute)
       end
 
       define_method(:validate_localizable_number) do
@@ -35,6 +27,31 @@ module Spree
           errors.set(error_attribute, [I18n.t('spree.localized_number.invalid_format')])
         end
       end
+    end
+
+    def override_setter_for(attribute)
+      setter = "#{attribute}="
+      old_setter = instance_method(setter) if table_exists? && !column_names.include?(attribute.to_s)
+
+      define_method(setter) do |number|
+        validated_number = Spree::LocalizedNumber.validated_number(number)
+
+        if validated_number.nil?
+          @invalid_localized_number ||= []
+          @invalid_localized_number << attribute
+        end
+
+        if has_attribute?(attribute)
+          self[attribute] = validated_number
+        else
+          old_setter.bind(self).call(validated_number)
+        end
+      end
+    end
+
+    def self.validated_number(number)
+      return parse(number) if valid_localizable_number?(number)
+      nil
     end
 
     def self.valid_localizable_number?(number)

@@ -1,8 +1,8 @@
-require 'spree/localized_number'
+require 'spree/localize_number'
 
 module Spree
   Adjustment.class_eval do
-    extend Spree::LocalizedNumber
+    extend Spree::LocalizeNumber
 
     # Deletion of metadata is handled in the database.
     # So we don't need the option `dependent: :destroy` as long as

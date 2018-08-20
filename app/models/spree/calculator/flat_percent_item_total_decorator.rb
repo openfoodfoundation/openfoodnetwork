@@ -1,8 +1,8 @@
-require 'spree/localized_number'
+require 'spree/localize_number'
 
 module Spree
   Calculator::FlatPercentItemTotal.class_eval do
-    extend Spree::LocalizedNumber
+    extend Spree::LocalizeNumber
 
     localize_number :preferred_flat_percent
 
