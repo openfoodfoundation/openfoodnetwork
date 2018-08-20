@@ -14,6 +14,7 @@ module Admin
       @filepath = save_uploaded_file(params[:file])
       @importer = ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user, params[:settings])
       @original_filename = params[:file].try(:original_filename)
+      @non_updatable_fields = ProductImport::EntryValidator.non_updatable_fields
 
       check_file_errors @importer
       check_spreadsheet_has_data @importer
