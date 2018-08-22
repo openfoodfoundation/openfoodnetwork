@@ -586,16 +586,16 @@ describe UpdateBillablePeriods do
     let!(:order10) { create(:order, completed_at: start_of_july + 19.days, distributor: enterprise) }
 
     before do
-      order1.line_items = [ create(:line_item, price: 12.56, order: order1) ]
-      order2.line_items = [ create(:line_item, price: 87.44, order: order2) ]
-      order3.line_items = [ create(:line_item, price: 50.00, order: order3) ]
-      order4.line_items = [ create(:line_item, price: 73.37, order: order4) ]
-      order5.line_items = [ create(:line_item, price: 22.46, order: order5) ]
-      order6.line_items = [ create(:line_item, price: 44.85, order: order6) ]
-      order7.line_items = [ create(:line_item, price: 93.45, order: order7) ]
-      order8.line_items = [ create(:line_item, price: 59.38, order: order8) ]
-      order9.line_items = [ create(:line_item, price: 47.23, order: order9) ]
-      order10.line_items = [ create(:line_item, price: 2.35, order: order10) ]
+      order1.line_items = [ create(:line_item_with_shipment, price: 12.56, order: order1) ]
+      order2.line_items = [ create(:line_item_with_shipment, price: 87.44, order: order2) ]
+      order3.line_items = [ create(:line_item_with_shipment, price: 50.00, order: order3) ]
+      order4.line_items = [ create(:line_item_with_shipment, price: 73.37, order: order4) ]
+      order5.line_items = [ create(:line_item_with_shipment, price: 22.46, order: order5) ]
+      order6.line_items = [ create(:line_item_with_shipment, price: 44.85, order: order6) ]
+      order7.line_items = [ create(:line_item_with_shipment, price: 93.45, order: order7) ]
+      order8.line_items = [ create(:line_item_with_shipment, price: 59.38, order: order8) ]
+      order9.line_items = [ create(:line_item_with_shipment, price: 47.23, order: order9) ]
+      order10.line_items = [ create(:line_item_with_shipment, price: 2.35, order: order10) ]
       [order1, order2, order3, order4, order5, order6, order7, order8, order9, order10].each(&:update!)
 
       allow(Enterprise).to receive(:where) { double(:enterprises, select: [enterprise]) }

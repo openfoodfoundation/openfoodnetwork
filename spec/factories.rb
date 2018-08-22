@@ -356,6 +356,10 @@ FactoryBot.define do
     end
   end
 
+  factory :line_item_with_shipment, parent: :line_item do
+    target_shipment { create(:shipment, order: order) }
+  end
+
   factory :zone_with_member, :parent => :zone do
     default_tax true
 
