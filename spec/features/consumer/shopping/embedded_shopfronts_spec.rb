@@ -43,7 +43,7 @@ feature "Using embedded shopfront functionality", js: true do
       end
     end
 
-    xit "allows shopping and checkout" do
+    it "allows shopping and checkout" do
       on_embedded_page do
         fill_in "variants[#{variant.id}]", with: 1
         wait_until_enabled 'input.add_to_cart'
