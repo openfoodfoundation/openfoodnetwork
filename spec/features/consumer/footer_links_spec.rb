@@ -18,7 +18,7 @@ feature "Footer Links", js: true do
     scenario "not showing if it is empty" do
       Spree::Config[:privacy_policy_url] = nil
       visit root_path
-      expect(page).to_not have_link "privacy policy"
+      expect(page).to have_no_link "privacy policy"
     end
 
     scenario "showing configured privacy policy link" do

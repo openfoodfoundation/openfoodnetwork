@@ -64,8 +64,8 @@ feature 'Subscriptions' do
         expect(page).to have_content subscription.customer.email
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Customer").click
-        expect(page).to_not have_selector "th.customer"
-        expect(page).to_not have_content subscription.customer.email
+        expect(page).to have_no_selector "th.customer"
+        expect(page).to have_no_content subscription.customer.email
 
         # Viewing Products
         within "tr#so_#{subscription.id}" do
@@ -91,7 +91,7 @@ feature 'Subscriptions' do
 
           proxy_order = subscription.proxy_orders.first
           within "tr#po_#{proxy_order.id}" do
-            expect(page).to_not have_content 'CANCELLED'
+            expect(page).to have_no_content 'CANCELLED'
             accept_alert 'Are you sure?' do
               find("a.cancel-order").trigger('click')
             end

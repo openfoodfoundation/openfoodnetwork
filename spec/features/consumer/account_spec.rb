@@ -38,7 +38,7 @@ feature %q{
         visit "/account"
 
         # No distributors allow changes to orders
-        expect(page).to_not have_content I18n.t('spree.users.orders.open_orders')
+        expect(page).to have_no_content I18n.t('spree.users.orders.open_orders')
 
         expect(page).to have_content I18n.t('spree.users.orders.past_orders')
 

@@ -31,7 +31,7 @@ feature "Order Management", js: true do
         expect(find("tr.variant-#{item1.variant.id}")).to have_content item1.product.name
         expect(find("tr.variant-#{item2.variant.id}")).to have_content item2.product.name
         expect(find("tr.variant-#{item3.variant.id}")).to have_content item3.product.name
-        expect(page).to_not have_button I18n.t(:save_changes)
+        expect(page).to have_no_button I18n.t(:save_changes)
       end
     end
 
@@ -50,7 +50,7 @@ feature "Order Management", js: true do
         visit spree.order_path(order)
 
         expect(page).to have_button I18n.t(:order_saved), disabled: true
-        expect(page).to_not have_button I18n.t(:save_changes)
+        expect(page).to have_no_button I18n.t(:save_changes)
 
         # Changing the quantity of an item
         within "tr.variant-#{item1.variant.id}" do

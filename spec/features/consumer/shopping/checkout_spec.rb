@@ -121,7 +121,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
         end
 
         it "it doesn't tell about previous orders" do
-          expect(page).to_not have_content("You have an order for this order cycle already.")
+          expect(page).to have_no_content("You have an order for this order cycle already.")
         end
       end
 
@@ -200,7 +200,7 @@ feature "As a consumer I want to check out my cart", js: true, retry: 3 do
           expect(page).to have_content I18n.t("spree.checkout.payment.stripe.used_saved_card")
 
           # default card is selected, form element is not shown
-          expect(page).to_not have_selector "#card-element.StripeElement"
+          expect(page).to have_no_selector "#card-element.StripeElement"
           expect(page).to have_select 'selected_card', selected: "Visa x-1111 Exp:01/2025"
 
           # allows checkout

@@ -368,7 +368,7 @@ feature %q{
           click_button 'Create'
 
           # Then it should show me an error
-          expect(page).to_not have_content 'Enterprise "zzz" has been successfully created!'
+          expect(page).to have_no_content 'Enterprise "zzz" has been successfully created!'
           expect(page).to have_content "#{enterprise_user.email} is not permitted to own any more enterprises (limit is 1)."
         end
       end

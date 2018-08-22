@@ -27,7 +27,7 @@ feature "As a consumer I want to check out my cart", js: true do
       quick_login_as user
       visit checkout_path
       within "section[role='main']" do
-        expect(page).to_not have_content "Login"
+        expect(page).to have_no_content "Login"
         expect(page).to have_checkout_details
       end
     end

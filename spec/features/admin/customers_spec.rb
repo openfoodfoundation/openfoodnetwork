@@ -28,9 +28,9 @@ feature 'Customers' do
         select2_select managed_distributor2.name, from: "shop_id"
 
         # Loads the right customers
-        expect(page).to_not have_selector "tr#c_#{customer1.id}"
-        expect(page).to_not have_selector "tr#c_#{customer2.id}"
-        expect(page).to_not have_selector "tr#c_#{customer3.id}"
+        expect(page).to have_no_selector "tr#c_#{customer1.id}"
+        expect(page).to have_no_selector "tr#c_#{customer2.id}"
+        expect(page).to have_no_selector "tr#c_#{customer3.id}"
         expect(page).to have_selector "tr#c_#{customer4.id}"
 
         # Changing Shops
@@ -39,12 +39,12 @@ feature 'Customers' do
         # Loads the right customers
         expect(page).to have_selector "tr#c_#{customer1.id}"
         expect(page).to have_selector "tr#c_#{customer2.id}"
-        expect(page).to_not have_selector "tr#c_#{customer3.id}"
-        expect(page).to_not have_selector "tr#c_#{customer4.id}"
+        expect(page).to have_no_selector "tr#c_#{customer3.id}"
+        expect(page).to have_no_selector "tr#c_#{customer4.id}"
 
         # Searching
         fill_in "quick_search", with: customer2.email
-        expect(page).to_not have_selector "tr#c_#{customer1.id}"
+        expect(page).to have_no_selector "tr#c_#{customer1.id}"
         expect(page).to have_selector "tr#c_#{customer2.id}"
         fill_in "quick_search", with: ""
 
@@ -68,8 +68,8 @@ feature 'Customers' do
         expect(page).to have_content customer1.email
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Email").click
-        expect(page).to_not have_selector "th.email"
-        expect(page).to_not have_content customer1.email
+        expect(page).to have_no_selector "th.email"
+        expect(page).to have_no_content customer1.email
 
         # Deleting
         create(:order, customer: customer1)
@@ -85,7 +85,7 @@ feature 'Customers' do
           within "tr#c_#{customer2.id}" do
             find("a.delete-customer").click
           end
-          expect(page).to_not have_selector "tr#c_#{customer2.id}"
+          expect(page).to have_no_selector "tr#c_#{customer2.id}"
         }.to change{Customer.count}.by(-1)
       end
 
