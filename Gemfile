@@ -106,7 +106,7 @@ gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f5
 
 group :test, :development do
   # Pretty printed test output
-  gem 'fuubar', '~> 2.2.0'
+  gem 'fuubar', '~> 2.3.2'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'shoulda-matchers'
   gem "factory_bot_rails", require: false
