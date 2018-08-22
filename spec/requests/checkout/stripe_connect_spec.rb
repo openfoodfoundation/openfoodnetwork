@@ -41,8 +41,9 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
     context "and the user doesn't request that the card is saved for later" do
       before do
         # Charges the card
-        stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-          .with(body: /#{token}.*#{order.number}/).to_return(charge_response_mock)
+        stub_request(:post, "https://api.stripe.com/v1/charges")
+          .with(basic_auth: ["sk_test_12345", ""], body: /#{token}.*#{order.number}/)
+          .to_return(charge_response_mock)
       end
 
       context "and the charge request is successful" do
@@ -79,8 +80,8 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         params[:order][:payments_attributes][0][:source_attributes][:save_requested_by_customer] = '1'
 
         # Saves the card against the user
-        stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/customers")
-          .with(:body => { card: token, email: order.email})
+        stub_request(:post, "https://api.stripe.com/v1/customers")
+          .with(basic_auth: ["sk_test_12345", ""], body: { card: token, email: order.email})
           .to_return(store_response_mock)
 
         # Requests a token from the newly saved card
@@ -89,8 +90,8 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
           .to_return(token_response_mock)
 
         # Charges the card
-        stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-          .with(body: /#{token}.*#{order.number}/).to_return(charge_response_mock)
+        stub_request(:post, "https://api.stripe.com/v1/charges")
+          .with(basic_auth: ["sk_test_12345", ""], body: /#{token}.*#{order.number}/).to_return(charge_response_mock)
       end
 
       context "and the store, token and charge requests are successful" do
@@ -176,8 +177,9 @@ describe "checking out an order with a Stripe Connect payment method", type: :re
         .to_return(token_response_mock)
 
       # Charges the card
-      stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges")
-        .with(body: /#{token}.*#{order.number}/).to_return(charge_response_mock)
+      stub_request(:post, "https://api.stripe.com/v1/charges")
+        .with(basic_auth: ["sk_test_12345", ""], body: /#{token}.*#{order.number}/)
+        .to_return(charge_response_mock)
     end
 
     context "and the charge and token requests are accepted" do
