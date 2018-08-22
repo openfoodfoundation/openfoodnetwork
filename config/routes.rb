@@ -106,12 +106,6 @@ Openfoodnetwork::Application.routes.draw do
     post '/product_images/:product_id', to: 'product_images#update_product_image'
   end
 
-  namespace :open_food_network do
-    resources :cart do
-      post :add_variant
-    end
-  end
-
   get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 
   # Mount Spree's routes
