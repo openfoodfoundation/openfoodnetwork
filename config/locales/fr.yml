@@ -310,6 +310,42 @@ fr:
         included_tax_tip: "TVA inclue dans l'exemple en cours, dépend du chiffre d'affaire et des paramétrages à gauche."
         total_monthly_bill_incl_tax: "Facture mensuelle totale (taxes incluses)"
         total_monthly_bill_incl_tax_tip: "Exemple du total TTC facturé pour le mois, selon paramétrages et chiffre d'affaire du mois."
+    cache_settings:
+      show:
+        title: Mise en cache
+        distributor: Hub (distributeur)
+        order_cycle: Cycle de vente
+        status: Statut
+        diff: Diff
+        error: Erreur
+    invoice_settings:
+      edit:
+        title: Paramètres de facturation
+        invoice_style2?: Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)
+        enable_receipt_printing?: Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Paramètres"
+        stripe_connect_enabled: Permettre aux boutiques d'accepter les paiements via Stripe Connect ?
+        no_api_key_msg: Aucun compte Stripe n'existe pour cette entreprise.
+        configuration_explanation_html: Pour des instructions précises sur comment configurer Stripe Connect, veuillez <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consulter ce guide</a>.
+        status: Statut
+        ok: Ok
+        instance_secret_key: Clé Secrète de l'Instance
+        account_id: Identifiant Compte
+        business_name: Nom de l'entreprise
+        charges_enabled: Frais activés
+        charges_enabled_warning: "Attention : les Frais ne sont pas activés pour votre compte"
+        auth_fail_error: La clé de l'API est invalide
+        empty_api_key_error_html: Aucune clé d'API Stripe n'a été fournie. Pour mettre en place votre clé d'API, veuillez suivre <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">ces instructions</a>
+    matomo_settings:
+      edit:
+        title: "Configuration Matomo"
+        matomo_url: "URL de l'instance sur Matomo"
+        matomo_site_id: "ID de l'instance sur Matomo"
+        info_html: "Matomo est un outil d'analyse de trafic web (ordinateur et téléphone). Vous pouvez installer vous-même Matomo ou utiliser une version hébergée. Voir <a href='http://matomo.org' target='_blank'>matomo.org</a> pour plus d'information."
+        config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
     customers:
       index:
         add_customer: "Ajouter un acheteur"
@@ -335,14 +371,6 @@ fr:
         guest_label: 'Commande en mode invité'
       destroy:
         has_associated_orders: 'Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique'
-    cache_settings:
-      show:
-        title: Mise en cache
-        distributor: Hub (distributeur)
-        order_cycle: Cycle de vente
-        status: Statut
-        diff: Diff
-        error: Erreur
     contents:
       edit:
         title: Contenu
@@ -476,6 +504,9 @@ fr:
         all_saved: "Tous les produits ont été sauvegardés avec succès"
         some_saved: "produits sauvegardés avec succès"
         save_errors: Sauvegarder les erreurs
+        import_again: Importer un autre fichier
+        view_products: Aller à la page Produits
+        view_inventory: Aller à la page Catalogues Boutiques
     variant_overrides:
       loading_flash:
         loading_inventory: Catalogue boutique en cours de chargement...
@@ -694,7 +725,7 @@ fr:
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
       actions:
-        edit_profile: Modifier le profil
+        edit_profile: Paramètres
         properties: Labels / propriétés
         payment_methods: Méthodes de paiement
         payment_methods_tip: Cette entreprise n'a pas paramétré de méthode de paiement
@@ -734,13 +765,14 @@ fr:
         no_enterprises_found: Aucune entreprise trouvée.
         search_placeholder: Recherche par nom
         manage: Gérer
+        manage_link: Paramètres
       new_form:
         owner: Manager principal
         owner_tip: Le manager principal est l'individu qui porte la responsabilité principale de l'entreprise dans le contexte de l'utilisation d'Open Food France.
         i_am_producer: Je suis un producteur
         contact_name: Nom du contact principal
       edit:
-        editing: 'En modification:'
+        editing: 'Configuration:'
         back_link: Revenir à la liste des entreprises
       new:
         title: Nouvelle entreprise
@@ -841,11 +873,6 @@ fr:
     shared:
       user_guide_link:
         user_guide: Guide utilisateur
-    invoice_settings:
-      edit:
-        title: Paramètres de facturation
-        invoice_style2?: Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)
-        enable_receipt_printing?: Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?
     overview:
       enterprises_header:
         ofn_with_tip: Les Entreprises sont des Producteurs et/ou Hubs distributeurs, et sont donc les organisations de base qui utilisent Open Food France.
@@ -939,6 +966,10 @@ fr:
         address: 2. Adresse
         products: 3. Ajouter des produits
         review: 4. Vérifier et Enregistrer
+      subscription_line_items:
+        this_is_an_estimate: |
+            Les prix affichés ne sont qu'une estimation calculée au moment de la dernière modification de l'abonnement.
+            Si vous modifiez les prix ou marges et commissions appliquées, les commandes seront mises à jour, mais l'abonnement affichera toujours les anciennes valeurs.
       details:
         details: Informations
         invalid_error: Oups! Veuillez remplir tous les champs obligatoires...
@@ -976,22 +1007,6 @@ fr:
     schedules:
       destroy:
         associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
-    stripe_connect_settings:
-      edit:
-        title: "Stripe Connect"
-        settings: "Paramètres"
-        stripe_connect_enabled: Permettre aux boutiques d'accepter les paiements via Stripe Connect ?
-        no_api_key_msg: Aucun compte Stripe n'existe pour cette entreprise.
-        configuration_explanation_html: Pour des instructions précises sur comment configurer Stripe Connect, veuillez <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consulter ce guide</a>.
-        status: Statut
-        ok: Ok
-        instance_secret_key: Clé Secrète de l'Instance
-        account_id: Identifiant Compte
-        business_name: Nom de l'entreprise
-        charges_enabled: Frais activés
-        charges_enabled_warning: "Attention : les Frais ne sont pas activés pour votre compte"
-        auth_fail_error: La clé de l'API est invalide
-        empty_api_key_error_html: Aucune clé d'API Stripe n'a été fournie. Pour mettre en place votre clé d'API, veuillez suivre <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">ces instructions</a>
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
@@ -1016,6 +1031,33 @@ fr:
     register_call:
       selling_on_ofn: "Vous souhaitez proposer vos produits sur Open Food France?"
       register: "Démarrez ici"
+    footer:
+      footer_global_headline: "OFN Global"
+      footer_global_home: "Accueil"
+      footer_global_news: "News"
+      footer_global_about: "A propos"
+      footer_global_contact: "Contact"
+      footer_sites_headline: "Sites OFN"
+      footer_sites_developer: "Developpeur"
+      footer_sites_community: "Communauté"
+      footer_sites_userguide: "Guide utilisateur"
+      footer_secure: "Fiable et sécurisé."
+      footer_secure_text: "Open Food France utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de votre commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
+      footer_contact_headline: "Restez en contact"
+      footer_contact_email: "Nous écrire"
+      footer_nav_headline: "Naviguer"
+      footer_join_headline: "Nous rejoindre"
+      footer_join_body: "Créer un profil, une boutique ou un groupe sur Open Food France."
+      footer_join_cta: "Je veux en savoir plus!"
+      footer_legal_call: "Lire nos"
+      footer_legal_tos: "Termes et conditions"
+      footer_legal_visit: "Nous trouver sur"
+      footer_legal_text_html: "Open Food Network est une plateforme logicielle open source, libre et gratuite. Nos données sont protégées sous licence %{content_license} et notre code sous %{code_license}."
+      footer_data_text_with_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{privacy_policy} et %{cookies_policy}."
+      footer_data_text_without_privacy_policy_html: "Nous prenons soin de vos données. Voire notre %{cookies_policy}."
+      footer_data_privacy_policy: "politique de confidentialité"
+      footer_data_cookies_policy: "politique de cookies"
+      footer_skylight_dashboard_html: Les informations de performance sont disponibles sur %{dashboard}.
   shop:
     messages:
       login: "Se connecter"
@@ -1066,7 +1108,6 @@ fr:
   footer_email: "Email"
   footer_links_md: "Liens"
   footer_about_url: "A propos URL"
-  footer_tos_url: "Conditions d'utilisation URL"
   name: Nom
   first_name: Prénom
   last_name: Nom de famille
@@ -1140,28 +1181,43 @@ fr:
   ie_warning_firefox: Télécharger Firefox
   ie_warning_ie: Mettre à jour Internet Explorer
   ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez Open Food France sur votre smartphone :-)"
-  footer_global_headline: "OFN Global"
-  footer_global_home: "Accueil"
-  footer_global_news: "News"
-  footer_global_about: "A propos"
-  footer_global_contact: "Contact"
-  footer_sites_headline: "Sites OFN"
-  footer_sites_developer: "Developpeur"
-  footer_sites_community: "Communauté"
-  footer_sites_userguide: "Guide utilisateur"
-  footer_secure: "Fiable et sécurisé."
-  footer_secure_text: "Open Food France utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de votre commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
-  footer_contact_headline: "Restez en contact"
-  footer_contact_email: "Nous écrire"
-  footer_nav_headline: "Naviguer"
-  footer_join_headline: "Nous rejoindre"
-  footer_join_body: "Créer un profil, une boutique ou un groupe sur Open Food France."
-  footer_join_cta: "Je veux en savoir plus!"
-  footer_legal_call: "Lire nos"
-  footer_legal_tos: "Termes et conditions"
-  footer_legal_visit: "Nous trouver sur"
-  footer_legal_text_html: "Open Food Network est une plateforme logicielle open source, libre et gratuite. Nos données sont protégées sous licence %{content_license} et notre code sous %{code_license}."
-  footer_skylight_dashboard_html: Les informations de performance sont disponibles sur %{dashboard}.
+  legal:
+    cookies_policy:
+      header: "Notre usage des Cookies"
+      desc_part_1: "Les cookies sont de tout petits fichiers texte qui sont stockés sur votre ordinateur quand vous naviguez sur certains sites web."
+      desc_part_2: "Chez Open Food France nous sommes particulièrement soucieux de votre vie privée. Nous n'utilisons que les cookies nécessaires pour vous offrir un service d'achat/vente en ligne performant. Nous ne vendons aucunes de vos données. Peut-être nous proposerons-vous dans le futur de jolies projets qui peuvent être utiles pour faire progresser la vente en circuits courts, et pour lesquels vos données pourraient nous permettre de trouver de nouvelles solutions aux problèmes que vous rencontrez, comme par exemple la construction de services logistiques mutualisés. Mais nous n'y sommes pas encore, et nous ne ferons rien sans votre autorisation :-)"
+      desc_part_3: "Nous utilisons des cookies principalement pour vous permettre de rester connecté(e) après votre première connexion si vous le souhaitez (et éviter de saisir votre mot de passe à chaque fois!), ou encore pour mémoriser les produits dans votre panier. Si vous naviguez sur le site sans cliquer sur \"Accepter les cookies\", cela vaut consentement à l'utilisation des cookies nécessaires au bon fonctionnement du site openfoodfrance.org. Voilà la liste détaillée des cookies que nous utilisons!"
+      essential_cookies: "Cookies essentiels"
+      essential_cookies_desc: "Les cookies suivants sont nécessaires au fonctionnement du site openfoodfrance.org."
+      essential_cookies_note: "Les cookies contiennent un identifiant unique, mais pas d'autres données. Vos emails et mots de passe par exemple ne sont jamais exposés dans les cookies!"
+      cookie_name: "Nom du cookie"
+      cookie_domain: "Déposé par"
+      cookie_desc: "Description"
+      cookie_session_desc: "Utilisé pour garder en mémoire l'utilisateur d'une page à l'autre lors de la navigation sur le site, ou pour se souvenir des produits dans le panier."
+      cookie_consent_desc: "Utilisé pour se souvenir du consentement de l'utilisation à l'utilisation de cookies."
+      cookie_remember_me_desc: "Utilisé si l'utilisateur a cliqué sur \"se souvenir de moi\" (pour ne pas avoir à se reconnecter à chaque fois). Ce cookie est automatiquement supprimé après 12 jours. Si l'utilisateur souhaite supprimer ce cookie, il n'a qu'à se déconnecter. Si l'utilisateur ne souhaite pas que ce cookie soit installé sur son terminal, il suffit de ne pas cocher la case \"se souvenir de moi\" au moment de la connexion."
+      cookie_openstreemap_desc: "Utilisé par le logiciel de cartographie open source et ami Open Street Map (qui permet l'affichage de la carte sur Open Food France) pour assurer qu'il ne reçoit pas trop de requêtes sur un laps de temps déterminé, et éviter ainsi les risques d'abus de leurs services."
+      cookie_stripe_desc: "Utilisé par le terminal de payement en ligne Stripe (proposé aux utilisateurs d'Open Food France) https://stripe.com/fr/cookies-policy/legal. Même si toutes les boutiques n'utilisent pas Stripe, c'est une bonne pratique en matière de sécurité d'appliquer ce cookie sur toutes les pages vues. Stripe construit probablement une image des pages qui ont un quelconque lien avec l'API connectant Open Food France à leur système de paiement pour détecter les comportements anormaux pouvant suggérer un risque de fraude. Donc ce cookie a un rôle qui va au-delà de la simple fourniture d'un système de paiement. Le supprimer pourrait affecter la sécurité du service. Pour en savoir plus sur la politique de confidentialité de Stripe: https://stripe.com/fr/privacy."
+      statistics_cookies: "Cookies d'analyse de navigation"
+      statistics_cookies_desc: "Ces cookies ne sont pas obligatoires, mais nous permettent de mieux comprendre votre usage de la plateforme, les endroits où vous bloquez, les fonctionnalités qui semble vous manquer, ou que vous n'utilisez jamais, afin de fournir le service le plus adapté possible aux besoins des utilisateurs."
+      statistics_cookies_analytics_desc: "Nous utilisons Google Analytics, pas vraiment par choix, mais simplement parce que c'était l'outil d'analyse connecté par défaut via Spree, le logiciel e-commerce open source sur lequel nous avons construit. Mais nous espérons pouvoir rapidement migrer vers Matomo (anciennement Piwik), outil d'analyse open source engagé sur le respect de la vie privée des utilisateurs."
+      statistics_cookies_matomo_desc: "Nous utilisons Matomo (anciennement Piwik), outil d'analyse open source engagé sur le respect de la vie privée des utilisateurs."
+      cookie_analytics_utma_desc: "Utilisé pour distinguer les utilisateurs et les sessions. Ce cookie est installé quand la librairie Javascript s'exécute et qu'aucun cookie __utma n'existe déjà. Le cookie est mis à jour à chaque fois que des données sont envoyées à Google Analytics."
+      cookie_analytics_utmt_desc: "Utilisé pour limiter le taux de requêtes."
+      cookie_analytics_utmb_desc: "Utilisé pour distinguer les nouvelles sessions/visites. Ce cookie est installé quand la librairie Javascript s'exécute et qu'aucun cookie __utmb n'existe déjà. Le cookie est mis à jour à chaque fois que des données sont envoyées à Google Analytics. "
+      cookie_analytics_utmc_desc: "Non utilisé dans ga.js. Utilisé pour l'interopérabilité avec urchin.js. Historiquement, ce cookie fonctionnait en conjonction avec le cookie __utmb pour déterminer si l'utilisateur était dans une nouvelle session/visite ou pas."
+      cookie_analytics_utmz_desc: "Ce cookie stocke les sources de trafic qui expliquent comment l'utilisateur est arrivé sur le site (via une campagne, une recherche sur un moteur de recherche, etc.). Ce cookie est installé quand la librairie Javascript s'exécute et mis à jour à chaque fois que des données sont envoyées à Google Analytics. "
+      cookie_matomo_basics_desc: "Cookies déposés par Matomo pour collecter les statistiques de trafic."
+      cookie_matomo_heatmap_desc: "Utilisé par Matomo pour enregistrer les sessions et \"cartes thermiques\" (représentations graphiques des données)"
+      cookie_matomo_ignore_desc: "Cookie utilisé pour se souvenir qu'un utilisateur a souhaité explicitement que sa navigation ne soit pas analysée par Matomo, et exclure cet utilisateur du suivi du site."
+      disabling_cookies_header: "Mises en garde sur la désactivation des cookies"
+      disabling_cookies_desc: "En tant qu'utilisateur, vous pouvez toujours autoriser, bloquer ou supprimer tous les cookies utilisés par Open Food France ou tout autre site web via les paramètres de votre navigateur. Chaque navigateur a un chemin spécifique pour effectuer cette désactivation:"
+      disabling_cookies_firefox_link: "https://support.mozilla.org/fr/kb/activer-desactiver-cookies-preferences"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647?hl=fr"
+      disabling_cookies_ie_link: "https://support.microsoft.com/fr-fr/help/17442/windows-internet-explorer-delete-manage-cookies"
+    cookies_banner:
+      cookies_definition: "Les cookies sont de tout petits fichiers texte qui sont stockés sur votre ordinateur quand vous naviguez sur certains sites web."
+      cookies_policy_link: "politique de cookies"
   home_shop: Faire mes courses
   brandstory_headline: "Des aliments porteurs de sens."
   brandstory_intro: "Parfois, le meilleur moyen de réparer le système, c'est d'en inventer un autre..."
@@ -1251,6 +1307,7 @@ fr:
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
   email_confirmation_help_html: "Après confirmation de votre email, vous pourrez accéder au compte d'administration de cette entreprise. Voir %{link} pour en savoir plus à propos de %{sitename} et commencer à utiliser votre profil et/ou boutique en ligne."
+  email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à %{contact}."
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
   email_signoff: "Cordialement,"
@@ -1768,6 +1825,7 @@ fr:
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
+  admin_entreprise_relationships: "Permissions Inter-entreprises"
   admin_entreprise_relationships_everything: "Tout"
   admin_entreprise_relationships_permits: "autorise"
   admin_entreprise_relationships_seach_placeholder: "Chercher"
@@ -1891,9 +1949,8 @@ fr:
   edit_profile_details_etc: "Modifier la description, les images, etc."
   order_cycle: "Cycle de vente"
   order_cycles: "Cycles de Vente"
+  enterprise_relationships: "Permissions inter-entreprises"
   remove_tax: "Retirer TVA"
-  enterprise_terms_of_service: "Conditions Générales d'Utilisation"
-  enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système alimentaire résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux entreprises s'enregistrant sur Open Food France de valider nos "
   enterprise_tos_link_text: "Conditions d'utilisation"
@@ -2305,6 +2362,9 @@ fr:
         select_rule_type: "Choisir le type de règle:"
       resend_user_email_confirmation:
         resend: "Renvoyer"
+        sending: "Renvoi...."
+        done: "Renvoi effectué ✓"
+        failed: "Renvoi échoué ✗"
     out_of_stock:
       reduced_stock_available: Stock disponible
       out_of_stock_text: >
@@ -2450,12 +2510,16 @@ fr:
           bulk_coop_allocation: 'Achats groupés - Allocation'
           bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
           bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
-      shared:
-        configuration_menu:
-          stripe_connect: Stripe Connect
+      users:
+        email_confirmation:
+          confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:
         autocomplete:
           producer_name: Producteur
+      general_settings:
+        edit:
+          enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
+          footer_tos_url: "Conditions d'utilisation URL"
     checkout:
       payment:
         stripe:
