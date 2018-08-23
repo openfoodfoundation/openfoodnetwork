@@ -403,7 +403,7 @@ GEM
     foundation-rails (5.5.0.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0, < 3.4)
-    fuubar (2.2.0)
+    fuubar (2.3.2)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.1.8)
@@ -604,7 +604,7 @@ GEM
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
       rspec-mocks (~> 3.7.0)
-    rspec-core (3.7.0)
+    rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -622,7 +622,7 @@ GEM
       rspec-support (~> 3.7.0)
     rspec-retry (0.5.6)
       rspec-core (> 3.3, < 3.8)
-    rspec-support (3.7.0)
+    rspec-support (3.7.1)
     rubocop (0.55.0)
       parallel (~> 1.10)
       parser (>= 2.5)
@@ -631,7 +631,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-ole (1.2.12.1)
-    ruby-progressbar (1.8.1)
+    ruby-progressbar (1.10.0)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.3.14)
@@ -743,7 +743,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   foundation-rails
   foundation_rails_helper!
-  fuubar (~> 2.2.0)
+  fuubar (~> 2.3.2)
   geocoder
   gmaps4rails
   guard
