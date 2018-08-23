@@ -15,12 +15,14 @@ feature "Cookies", js: true do
         expect_not_visible_cookies_banner
 
         visit root_path
+        sleep 1
         expect_not_visible_cookies_banner
       end
 
       scenario "banner contains cookies policy link that opens coookies policy page and closes banner" do
-        find("p.ng-binding > a", :text => "cookies policy").click
         sleep 1
+        find("p.ng-binding > a", :text => "cookies policy").click
+        sleep 2
         expect_visible_cookies_policy_page
         expect_not_visible_cookies_banner
 
