@@ -30,7 +30,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where the request succeeds" do
           before do
-            stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+              with(basic_auth: ["sk_test_12345", ""]).
               to_return(:status => 200, :body => JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
 
@@ -48,7 +49,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where the request fails" do
           before do
-            stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+              with(basic_auth: ["sk_test_12345", ""]).
               to_return(:status => 200, :body => JSON.generate(error: { message: "Bup-bow!"}) )
           end
 
@@ -84,7 +86,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where the request succeeds" do
           before do
-            stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+              with(basic_auth: ["sk_test_12345", ""]).
               to_return(:status => 200, :body => JSON.generate(id: 're_123', object: 'refund', status: 'succeeded') )
           end
 
@@ -102,7 +105,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         context "where the request fails" do
           before do
-            stub_request(:post, "https://sk_test_12345:@api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1a2b3c/refunds").
+              with(basic_auth: ["sk_test_12345", ""]).
               to_return(:status => 200, :body => JSON.generate(error: { message: "Bup-bow!"}) )
           end
 
