@@ -185,7 +185,7 @@ GEM
     angularjs-rails (1.5.5)
     arel (3.0.3)
     ast (2.4.0)
-    atomic (1.1.99)
+    atomic (1.1.101)
     awesome_nested_set (2.1.5)
       activerecord (>= 3.0.0)
     awesome_print (1.0.2)
