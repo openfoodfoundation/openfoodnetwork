@@ -9,15 +9,20 @@ feature "Cookies", js: true do
       end
 
       scenario "does not show after cookies are accepted" do
+        sleep 1
         click_button I18n.t('legal.cookies_banner.cookies_accept_button')
+        sleep 2
         expect_not_visible_cookies_banner
 
         visit root_path
+        sleep 1
         expect_not_visible_cookies_banner
       end
 
       scenario "banner contains cookies policy link that opens coookies policy page and closes banner" do
+        sleep 1
         find("p.ng-binding > a", :text => "cookies policy").click
+        sleep 2
         expect_visible_cookies_policy_page
         expect_not_visible_cookies_banner
 
