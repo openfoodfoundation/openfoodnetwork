@@ -80,7 +80,7 @@ describe 'Cart service', ->
     data = {variants: {}}
 
     it "sets update_running during the update, and clears it on success", ->
-      $httpBackend.expectPOST("/orders/populate", data).respond 200, {}
+      $httpBackend.expectPOST("/cart/populate", data).respond 200, {}
       expect(Cart.update_running).toBe(false)
       Cart.update()
       expect(Cart.update_running).toBe(true)
@@ -88,7 +88,7 @@ describe 'Cart service', ->
       expect(Cart.update_running).toBe(false)
 
     it "sets update_running during the update, and clears it on failure", ->
-      $httpBackend.expectPOST("/orders/populate", data).respond 404, {}
+      $httpBackend.expectPOST("/cart/populate", data).respond 404, {}
       expect(Cart.update_running).toBe(false)
       Cart.update()
       expect(Cart.update_running).toBe(true)
@@ -97,7 +97,7 @@ describe 'Cart service', ->
 
     it "marks the form as saved on success", ->
       spyOn(Cart, 'saved')
-      $httpBackend.expectPOST("/orders/populate", data).respond 200, {}
+      $httpBackend.expectPOST("/cart/populate", data).respond 200, {}
       Cart.update()
       $httpBackend.flush()
       expect(Cart.saved).toHaveBeenCalled()
@@ -106,7 +106,7 @@ describe 'Cart service', ->
       Cart.update_enqueued = true
       spyOn(Cart, 'saved')
       spyOn(Cart, 'popQueue')
-      $httpBackend.expectPOST("/orders/populate", data).respond 200, {}
+      $httpBackend.expectPOST("/cart/populate", data).respond 200, {}
       Cart.update()
       $httpBackend.flush()
       expect(Cart.popQueue).toHaveBeenCalled()
@@ -115,14 +115,14 @@ describe 'Cart service', ->
       Cart.update_enqueued = false
       spyOn(Cart, 'saved')
       spyOn(Cart, 'popQueue')
-      $httpBackend.expectPOST("/orders/populate", data).respond 200, {}
+      $httpBackend.expectPOST("/cart/populate", data).respond 200, {}
       Cart.update()
       $httpBackend.flush()
       expect(Cart.popQueue).not.toHaveBeenCalled()
 
     it "retries the update on failure", ->
       spyOn(Cart, 'scheduleRetry')
-      $httpBackend.expectPOST("/orders/populate", data).respond 404, {}
+      $httpBackend.expectPOST("/cart/populate", data).respond 404, {}
       Cart.update()
       $httpBackend.flush()
       expect(Cart.scheduleRetry).toHaveBeenCalled()

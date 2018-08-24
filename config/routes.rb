@@ -24,6 +24,14 @@ Openfoodnetwork::Application.routes.draw do
   get "/connect", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/connect/")
   get "/learn", to: redirect("https://openfoodnetwork.org/#{ENV['DEFAULT_COUNTRY_CODE'].andand.downcase}/learn/")
 
+  get "/cart", :to => "spree/orders#edit", :as => :cart
+  put "/cart", :to => "spree/orders#update", :as => :update_cart
+  put "/cart/empty", :to => 'spree/orders#empty', :as => :empty_cart
+
+  resource :cart, controller: "cart" do
+    post :populate
+  end
+
   resource :shop, controller: "shop" do
     get :products
     post :order_cycle
