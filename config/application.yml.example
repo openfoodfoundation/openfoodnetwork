@@ -30,6 +30,7 @@ SMTP_USERNAME: 'ofn'
 SMTP_PASSWORD: 'f00d'
 
 # Optional mail settings
+# MAIL_SECURE_CONNECTION: 'TLS' # 'None' (default), 'SSL' or 'TLS'
 # MAILS_FROM: hello@example.com
 # MAIL_BCC: manager@example.com
 
