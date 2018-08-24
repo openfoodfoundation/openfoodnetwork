@@ -18,7 +18,8 @@ class CookiesConsent
     cookies[COOKIE_NAME] = {
       value: COOKIE_NAME,
       expires: 1.year.from_now,
-      domain: domain
+      domain: domain,
+      httponly: true
     }
   end
 
