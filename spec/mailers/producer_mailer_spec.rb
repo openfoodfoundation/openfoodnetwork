@@ -3,10 +3,7 @@ require 'yaml'
 
 describe ProducerMailer do
   before do
-    Spree::MailMethod.create!(
-      environment: Rails.env,
-      preferred_mails_from: 'spree@example.com'
-    )
+    Spree::Config[:mails_from] = "spree@example.com"
   end
   let!(:zone) { create(:zone_with_member) }
   let!(:tax_rate) { create(:tax_rate, included_in_price: true, calculator: Spree::Calculator::DefaultTax.new, zone: zone, amount: 0.1) }

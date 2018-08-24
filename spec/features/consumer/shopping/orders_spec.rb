@@ -37,10 +37,7 @@ feature "Order Management", js: true do
 
     context "when the distributor allows changes to be made to orders" do
       before do
-        Spree::MailMethod.create!(
-          environment: Rails.env,
-          preferred_mails_from: 'spree@example.com'
-        )
+        Spree::Config[:mails_from] = "spree@example.com"
       end
       before do
         order.distributor.update_attributes(allow_order_changes: true)

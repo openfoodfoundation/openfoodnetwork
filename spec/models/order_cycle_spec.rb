@@ -525,10 +525,7 @@ describe OrderCycle do
     let!(:order5) { create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)  }
 
     before do
-      Spree::MailMethod.create!(
-        environment: Rails.env,
-        preferred_mails_from: 'spree@example.com'
-      )
+      Spree::Config[:mails_from] = "spree@example.com"
     end
     before { order5.cancel }
 

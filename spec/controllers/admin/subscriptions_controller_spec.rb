@@ -626,10 +626,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
             context "when at least one associate orders is 'canceled'" do
               before do
-                Spree::MailMethod.create!(
-                  environment: Rails.env,
-                  preferred_mails_from: 'spree@example.com'
-                )
+                Spree::Config[:mails_from] = "spree@example.com"
                 proxy_order.cancel
               end
 
