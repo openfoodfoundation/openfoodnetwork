@@ -106,8 +106,8 @@ describe "OrderCycles service", ->
       OrderCycles.pristineByID = { 23: { id: 23, name: "orderCycle321", orders_open_at: '123' } }
 
     it "returns a list of properties that have been altered, if they are in attrsToSave()", ->
-      spyOn(OrderCycles, "attrsToSave").and.returnValue(["orders_open_at"])
-      expect(OrderCycles.diff({ id: 23, name: "orderCycle123", orders_open_at: '321' })).toEqual ["orders_open_at"]
+      spyOn(OrderCycles, "attrsToSave").and.returnValue(["name", "orders_open_at"])
+      expect(OrderCycles.diff({ id: 23, name: "orderCycle123", orders_open_at: '321' })).toEqual ["name", "orders_open_at"]
 
 
   describe "resetAttribute", ->

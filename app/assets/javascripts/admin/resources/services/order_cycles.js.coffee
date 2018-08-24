@@ -66,7 +66,7 @@ angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCy
       changes
 
     attrsToSave: ->
-      ['orders_open_at','orders_close_at']
+      ['name', 'orders_open_at','orders_close_at']
 
     resetAttribute: (order_cycle, attribute) ->
       order_cycle[attribute] = @pristineByID[order_cycle.id][attribute]
