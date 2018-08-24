@@ -254,9 +254,9 @@ describe ProductImport::ProductImporter do
   describe "updating various fields" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "on_demand"]
-        csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0"]
-        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku"]
+        csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0", nil]
+        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1", "TOMS"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')

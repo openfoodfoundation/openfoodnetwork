@@ -14,6 +14,7 @@ module ProductImport
 
     def initialize(attrs)
       @validates_as = ''
+      remove_empty_skus attrs
       assign_units attrs
     end
 
@@ -56,6 +57,10 @@ module ProductImport
     end
 
     private
+
+    def remove_empty_skus(attrs)
+      attrs.delete('sku') if attrs.key?('sku') && attrs['sku'].blank?
+    end
 
     def assign_units(attrs)
       units = UnitConverter.new(attrs)
