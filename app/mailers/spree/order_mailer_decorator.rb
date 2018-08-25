@@ -6,8 +6,8 @@ Spree::OrderMailer.class_eval do
   def cancel_email(order, resend = false)
     @order = find_order(order)
     subject = (resend ? "[#{t(:resend).upcase}] " : '')
-    subject += "#{Spree::Config[:site_name]} #{t('order_mailer.cancel_email.subject')} ##{order.number}"
-    mail(to: order.email, from: from_address, subject: subject)
+    subject += "#{Spree::Config[:site_name]} #{t('order_mailer.cancel_email.subject')} ##{@order.number}"
+    mail(to: @order.email, from: from_address, subject: subject)
   end
 
   def confirm_email_for_customer(order, resend = false)
