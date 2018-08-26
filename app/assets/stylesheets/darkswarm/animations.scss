@@ -125,9 +125,9 @@
   transition: transform 0.2s ease-out;
 
   @media only screen and (min-width: 641px) {
-    -webkit-transform: translate(0, -10%);
-    -ms-transform: translate(0, -10%);
-    transform: translate(0, -10%);
+    -webkit-transform: translate(0, -5%);
+    -ms-transform: translate(0, -5%);
+    transform: translate(0, -5%);
   }
 }
 
