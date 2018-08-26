@@ -1,17 +1,19 @@
+@import '../variables';
+
 .reveal-modal.product-image-upload {
   width: 300px;
-  a.close-reveal-modal {
+
+  .close-reveal-modal {
+    color: $modal-close-button-color;
     font-size: 23px;
-    color: #de6060;
-    right: 0.45rem;
-    top: 0.35rem;
+    right: .45rem;
+    top: .35rem;
+
     :hover {
-      color: #bf4545;
+      color: $modal-close-button-hover-color;
     }
   }
-  div.image-preview {
-    //float: left;
-  }
+
   label {
     margin-top: 20px;
   }

@@ -1,25 +1,25 @@
+@import '../base/colors';
+
 // Styling for login modal to style tabs
 .reveal-modal.login-modal {
-  border-bottom-color: #efefef;
+  border-bottom-color: $modal-background-color;
 }
 
 .login-modal {
-  background: #efefef;
+  background: $modal-background-color;
 
   .tabs-content {
-    background: #fff;
+    background: $modal-content-background-color;
     padding-top: 10px;
   }
 
-  .alert-box {
-    a {
-      color: white;
-      text-decoration: underline;
+  .alert-box a {
+    color: $modal-alert-link-color;
+    text-decoration: underline;
 
-      &:hover {
-        color: rgba(255, 255, 255, 0.7);
-        text-decoration: underline;
-      }
+    &:hover {
+      color: $modal-alert-link-hover-color;
+      text-decoration: underline;
     }
   }
 }
