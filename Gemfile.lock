@@ -430,7 +430,8 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    haml (4.0.4)
+    haml (5.0.4)
+      temple (>= 0.8.0)
       tilt
     hashdiff (0.3.7)
     highline (1.6.15)
@@ -660,6 +661,7 @@ GEM
     stringex (1.3.3)
     stripe (3.3.1)
       faraday (~> 0.9)
+    temple (0.8.0)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
