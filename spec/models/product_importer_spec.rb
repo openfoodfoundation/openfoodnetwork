@@ -272,6 +272,8 @@ describe ProductImport::ProductImporter do
       expect(big_bag.product.name).to eq 'Potatoes'
       expect(big_bag.price).to eq 5.50
       expect(big_bag.on_hand).to eq 6
+
+      expect(big_bag.product.id).to eq small_bag.product.id
     end
   end
 
