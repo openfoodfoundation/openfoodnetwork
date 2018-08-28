@@ -48,14 +48,14 @@ feature "Product Import", js: true do
       import_data
 
       expect(page).to have_selector '.item-count', text: "2"
-      expect(page).to_not have_selector '.invalid-count'
+      expect(page).to have_no_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "2"
-      expect(page).to_not have_selector '.update-count'
+      expect(page).to have_no_selector '.update-count'
 
       save_data
 
       expect(page).to have_selector '.created-count', text: '2'
-      expect(page).to_not have_selector '.updated-count'
+      expect(page).to have_no_selector '.updated-count'
 
       carrots = Spree::Product.find_by_name('Carrots')
       potatoes = Spree::Product.find_by_name('Potatoes')
@@ -92,10 +92,10 @@ feature "Product Import", js: true do
 
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to have_selector '.invalid-count', text: "2"
-      expect(page).to_not have_selector '.create-count'
-      expect(page).to_not have_selector '.update-count'
+      expect(page).to have_no_selector '.create-count'
+      expect(page).to have_no_selector '.update-count'
 
-      expect(page).to_not have_selector 'input[type=submit][value="Save"]'
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
     end
 
     it "handles saving of named tax and shipping categories" do
@@ -115,12 +115,12 @@ feature "Product Import", js: true do
 
       expect(page).to have_selector '.item-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
-      expect(page).to_not have_selector '.update-count'
+      expect(page).to have_no_selector '.update-count'
 
       save_data
 
       expect(page).to have_selector '.created-count', text: '1'
-      expect(page).to_not have_selector '.updated-count'
+      expect(page).to have_no_selector '.updated-count'
 
       carrots = Spree::Product.find_by_name('Carrots')
       expect(carrots.tax_category).to eq tax_category
@@ -170,8 +170,8 @@ feature "Product Import", js: true do
 
       expect(page).to have_field "product_name", with: carrots.name
       expect(page).to have_field "product_name", with: potatoes.name
-      expect(page).to_not have_field "product_name", with: product.name
-      expect(page).to_not have_field "product_name", with: product2.name
+      expect(page).to have_no_field "product_name", with: product.name
+      expect(page).to have_no_field "product_name", with: product2.name
     end
 
     it "can reset product stock to zero for products not present in the CSV" do
@@ -218,16 +218,16 @@ feature "Product Import", js: true do
       import_data
 
       expect(page).to have_selector '.item-count', text: "3"
-      expect(page).to_not have_selector '.invalid-count'
-      expect(page).to_not have_selector '.create-count'
-      expect(page).to_not have_selector '.update-count'
+      expect(page).to have_no_selector '.invalid-count'
+      expect(page).to have_no_selector '.create-count'
+      expect(page).to have_no_selector '.update-count'
       expect(page).to have_selector '.inv-create-count', text: "2"
       expect(page).to have_selector '.inv-update-count', text: "1"
 
       save_data
 
-      expect(page).to_not have_selector '.created-count'
-      expect(page).to_not have_selector '.updated-count'
+      expect(page).to have_no_selector '.created-count'
+      expect(page).to have_no_selector '.updated-count'
       expect(page).to have_selector '.inv-created-count', text: '2'
       expect(page).to have_selector '.inv-updated-count', text: '1'
 
@@ -268,7 +268,7 @@ feature "Product Import", js: true do
       click_button 'Upload'
 
       expect(page).to have_content "Importer could not process file: invalid filetype"
-      expect(page).to_not have_selector 'input[type=submit][value="Save"]'
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(page).to have_content "Select a spreadsheet to upload"
       File.delete('/tmp/test.txt')
     end
@@ -288,9 +288,9 @@ feature "Product Import", js: true do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to_not have_selector '.create-count'
-      expect(page).to_not have_selector '.update-count'
-      expect(page).to_not have_selector 'input[type=submit][value="Save"]'
+      expect(page).to have_no_selector '.create-count'
+      expect(page).to have_no_selector '.update-count'
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       File.delete('/tmp/test.csv')
     end
   end
@@ -320,7 +320,7 @@ feature "Product Import", js: true do
       expect(page).to have_selector '.create-count', text: "1"
 
       expect(page.body).to have_content 'you do not have permission'
-      expect(page).to_not have_selector 'a.button.proceed', visible: true
+      expect(page).to have_no_selector 'a.button.proceed', visible: true
     end
   end
 

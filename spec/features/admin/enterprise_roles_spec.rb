@@ -128,7 +128,7 @@ feature %q{
         within 'table.managers' do
           within "tr#manager-#{user1.id}" do
             expect(page).to have_css 'i.owner'
-            expect(page).to_not have_css 'i.contact'
+            expect(page).to have_no_css 'i.contact'
           end
           within "tr#manager-#{user2.id}" do
             expect(page).to have_css 'i.contact'

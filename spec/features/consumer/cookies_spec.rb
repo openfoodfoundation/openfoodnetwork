@@ -5,7 +5,7 @@ feature "Cookies", js: true do
     describe "in the homepage" do
       before do
         Spree::Config[:cookies_consent_banner_toggle] = true
-        visit root_path       
+        visit root_path
       end
 
       scenario "does not show after cookies are accepted" do
@@ -37,7 +37,7 @@ feature "Cookies", js: true do
       end
 
       scenario "it is showing" do
-        visit "/shops"      
+        visit "/shops"
         expect_visible_cookies_banner
       end
     end
@@ -46,7 +46,7 @@ feature "Cookies", js: true do
       scenario "it is not showing" do
         Spree::Config[:cookies_consent_banner_toggle] = false
         visit root_path
-        expect(page).to_not have_content I18n.t('legal.cookies_banner.cookies_usage')
+        expect(page).to have_no_content I18n.t('legal.cookies_banner.cookies_usage')
       end
     end
   end
@@ -70,7 +70,7 @@ feature "Cookies", js: true do
       scenario "does not show Matomo cookies details" do
         Spree::Config[:cookies_policy_matomo_section] = false
         visit '/#/policies/cookies'
-        expect(page).to_not have_content matomo_description_text
+        expect(page).to have_no_content matomo_description_text
       end
     end
   end
@@ -88,7 +88,7 @@ feature "Cookies", js: true do
   end
 
   def expect_not_visible_cookies_banner
-    expect(page).to_not have_css("button", :text => accept_cookies_button_text, :visible => true)
+    expect(page).to have_no_css("button", :text => accept_cookies_button_text, :visible => true)
   end
 
   def accept_cookies_button_text

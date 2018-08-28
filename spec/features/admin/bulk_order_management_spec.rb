@@ -132,7 +132,7 @@ feature %q{
       end
 
       it "adds the class 'ng-dirty' to input elements when value is altered" do
-        expect(page).to_not have_css "input[name='quantity'].ng-dirty"
+        expect(page).to have_no_css "input[name='quantity'].ng-dirty"
         fill_in "quantity", :with => 2
         expect(page).to have_css "input[name='quantity'].ng-dirty"
       end

@@ -770,10 +770,10 @@ feature %q{
 
         # Shows spinner whilst loading
         expect(page).to have_css "img.spinner", visible: true
-        expect(page).to_not have_css "img.spinner", visible: true
+        expect(page).to have_no_css "img.spinner", visible: true
       end
 
-      expect(page).to_not have_selector "div.reveal-modal.product-image-upload"
+      expect(page).to have_no_selector "div.reveal-modal.product-image-upload"
 
       within "table#listing_products tr#p_#{product.id}" do
         # New thumbnail is shown in image column

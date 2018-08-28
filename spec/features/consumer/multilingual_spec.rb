@@ -79,7 +79,7 @@ feature 'Multilingual', js: true do
 
       it "hides the dropdown language menu" do
         visit root_path
-        expect(page).to_not have_css 'ul.right li.language-switcher.has-dropdown'
+        expect(page).to have_no_css 'ul.right li.language-switcher.has-dropdown'
       end
     end
 
