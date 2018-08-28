@@ -11,10 +11,13 @@ describe Admin::BulkLineItemsController, type: :controller do
     let!(:order1) { FactoryBot.create(:order, state: 'complete', completed_at: 1.day.ago, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
     let!(:order2) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
     let!(:order3) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
-    let!(:line_item1) { FactoryBot.create(:line_item, order: order1) }
-    let!(:line_item2) { FactoryBot.create(:line_item, order: order2) }
-    let!(:line_item3) { FactoryBot.create(:line_item, order: order2) }
-    let!(:line_item4) { FactoryBot.create(:line_item, order: order3) }
+    let(:shipment1) { FactoryBot.create(:shipment, order:order1) }
+    let(:shipment2) { FactoryBot.create(:shipment, order:order2) }
+    let(:shipment3) { FactoryBot.create(:shipment, order:order3) }
+    let!(:line_item1) { FactoryBot.create(:line_item, order: order1, target_shipment: shipment1) }
+    let!(:line_item2) { FactoryBot.create(:line_item, order: order2, target_shipment: shipment2) }
+    let!(:line_item3) { FactoryBot.create(:line_item, order: order2, target_shipment: shipment2) }
+    let!(:line_item4) { FactoryBot.create(:line_item, order: order3, target_shipment: shipment3) }
 
     context "as a normal user" do
       before { controller.stub spree_current_user: create_enterprise_user }
@@ -83,10 +86,12 @@ describe Admin::BulkLineItemsController, type: :controller do
       let(:coordinator) { create(:distributor_enterprise) }
       let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
       let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item1) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
-      let!(:line_item2) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
+      let(:shipment1) { FactoryBot.create(:shipment, order:order1) }
+      let(:shipment2) { FactoryBot.create(:shipment, order:order2) }
+      let!(:line_item1) { FactoryBot.create(:line_item, order: order1, target_shipment: shipment1, product: FactoryBot.create(:product, supplier: supplier)) }
+      let!(:line_item2) { FactoryBot.create(:line_item, order: order1, target_shipment: shipment1, product: FactoryBot.create(:product, supplier: supplier)) }
       let!(:order2) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor2, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item3) { FactoryBot.create(:line_item, order: order2, product: FactoryBot.create(:product, supplier: supplier)) }
+      let!(:line_item3) { FactoryBot.create(:line_item, order: order2, target_shipment: shipment2, product: FactoryBot.create(:product, supplier: supplier)) }
 
       context "producer enterprise" do
         before do
@@ -131,7 +136,12 @@ describe Admin::BulkLineItemsController, type: :controller do
     let(:coordinator) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
     let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
-    let!(:line_item1) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
+    let(:shipment1) { FactoryBot.create(:shipment, order:order1) }
+    let!(:line_item1) {
+      line_item1 = FactoryBot.create(:line_item, order: order1, target_shipment: shipment1, product: FactoryBot.create(:product, supplier: supplier))
+      # make sure target_shipment is available through db reloads of this line_item
+      line_item1.tap(&:save!)
+    }
     let(:line_item_params) { { quantity: 3, final_weight_volume: 3000, price: 3.00 } }
     let(:params) { { id: line_item1.id, order_id: order1.number, line_item: line_item_params } }
 
@@ -227,7 +237,8 @@ describe Admin::BulkLineItemsController, type: :controller do
     let(:coordinator) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
     let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
-    let!(:line_item1) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
+    let(:shipment1) { FactoryBot.create(:shipment, order:order1) }
+    let!(:line_item1) { FactoryBot.create(:line_item, order: order1, target_shipment: shipment1, product: FactoryBot.create(:product, supplier: supplier)) }
     let(:params) { { id: line_item1.id, order_id: order1.number } }
 
     before do
