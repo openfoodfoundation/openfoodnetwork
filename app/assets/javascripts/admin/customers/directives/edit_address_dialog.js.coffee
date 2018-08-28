@@ -5,15 +5,17 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
     template = null
     scope.errors = []
 
-    scope.$watch 'address.country_id', (newVal) ->
-      if newVal
-        scope.states = scope.filter_states(newVal)
+    scope.$watch 'address.country_id', (newCountryID) ->
+      if newCountryID
+        scope.states = scope.filterStates(newCountryID)
+        scope.clearState() unless scope.addressStateMatchesCountry()
 
     scope.updateAddress = ->
       scope.edit_address_form.$setPristine()
       if scope.edit_address_form.$valid
         Customers.update(scope.address, scope.customer, scope.addressType).$promise.then (data) ->
           scope.customer = data
+          scope.errors = []
           template.dialog('close')
           StatusMessage.display('success', t('admin.customers.index.update_address_success'))
       else
@@ -25,13 +27,19 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
       else
         scope.addressType = 'ship_address'
       scope.address = scope.customer[scope.addressType]
-      scope.states = scope.filter_states(scope.address?.country_id)
+      scope.states = scope.filterStates(scope.address?.country_id)
 
       template = $compile($templateCache.get('admin/edit_address_dialog.html'))(scope)
       template.dialog(DialogDefaults)
       template.dialog('open')
       scope.$apply()
 
-    scope.filter_states = (countryID) ->
+    scope.filterStates = (countryID) ->
       return [] unless countryID
       $filter('filter')(scope.availableCountries, {id: parseInt(countryID)}, true)[0].states
+
+    scope.clearState = ->
+      scope.address.state_id = ""
+
+    scope.addressStateMatchesCountry = ->
+      scope.states.some (state) -> state.id == scope.address.state_id
