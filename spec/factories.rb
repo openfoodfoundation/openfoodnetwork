@@ -455,7 +455,17 @@ FactoryBot.define do
   end
 
   factory :simple_product, parent: :base_product do
-    on_hand 5
+    transient do
+      on_demand { false }
+      on_hand { 5 }
+    end
+    after(:create) do |product, evaluator|
+      product.variants.first.tap do |variant|
+        variant.on_demand = evaluator.on_demand
+        variant.count_on_hand = evaluator.on_hand
+        variant.save
+      end
+    end
   end
 end
 
