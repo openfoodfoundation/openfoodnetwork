@@ -367,6 +367,75 @@ describe ProductImport::ProductImporter do
     end
   end
 
+  describe "when importer processes create and update across multiple stages" do
+    before do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "60", "5.50", "500", "g", "Magic Oats"]     # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "French Oats"]    # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "80", "9.50", "500", "g", "Organic Oats"]   # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "90", "7.50", "500", "g", "Scottish Oats"]  # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "30", "6.50", "500", "g", "Breakfast Oats"] # Add
+      end
+      File.write('/tmp/test-m.csv', csv_data)
+      @file = File.new('/tmp/test-m.csv')
+      @settings = {'import_into' => 'product_list'}
+    end
+    after { File.delete('/tmp/test-m.csv') }
+
+    it "processes the validation in stages" do
+      # Using settings of start: 1, end: 2 to simulate import over multiple stages
+      @importer = ProductImport::ProductImporter.new(@file, admin, start: 1, end: 3, settings: @settings)
+
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 3
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('create_product', entries)).to eq 3
+      expect(filter('update_product', entries)).to eq 0
+      expect(filter('create_inventory', entries)).to eq 0
+      expect(filter('update_inventory', entries)).to eq 0
+
+      @importer = ProductImport::ProductImporter.new(@file, admin, start: 4, end: 6, settings: @settings)
+
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 2
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('create_product', entries)).to eq 2
+      expect(filter('update_product', entries)).to eq 0
+      expect(filter('create_inventory', entries)).to eq 0
+      expect(filter('update_inventory', entries)).to eq 0
+    end
+
+    it "processes saving in stages" do
+      @importer = ProductImport::ProductImporter.new(@file, admin, start: 1, end: 3, settings: @settings)
+      @importer.save_entries
+
+      expect(@importer.products_created_count).to eq 3
+      expect(@importer.products_updated_count).to eq 0
+      expect(@importer.inventory_created_count).to eq 0
+      expect(@importer.inventory_updated_count).to eq 0
+      expect(@importer.updated_ids.count).to eq 3
+
+      @importer = ProductImport::ProductImporter.new(@file, admin, start: 4, end: 6, settings: @settings)
+      @importer.save_entries
+
+      expect(@importer.products_created_count).to eq 2
+      expect(@importer.products_updated_count).to eq 0
+      expect(@importer.inventory_created_count).to eq 0
+      expect(@importer.inventory_updated_count).to eq 0
+      expect(@importer.updated_ids.count).to eq 2
+
+      products = Spree::Product.find_all_by_name('Bag of Oats')
+
+      expect(products.count).to eq 1
+      expect(products.first.variants.count).to eq 5
+    end
+  end
+
   describe "importing items into inventory" do
     before do
       csv_data = CSV.generate do |csv|
