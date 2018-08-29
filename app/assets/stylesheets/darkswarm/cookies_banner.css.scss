@@ -4,20 +4,8 @@
   background: $dark-grey;
   bottom: 0;
   position: fixed;
-  top: 20vh !important;
+  top: 15% !important;
   z-index: 100000;
-
-  @media only screen and (min-width: 640px) {
-    top: 20vh !important;
-  }
-
-  @media only screen and (min-width: 800px) and (min-height: 400px) {
-    top: 40vh !important;
-  }
-
-  @media only screen and (min-width: 1024px) and (min-height: 500px) {
-    top: 60vh !important;
-  }
 
   button {
     background-color: $clr-turquoise;
@@ -26,5 +14,21 @@
   p {
     color: $white;
     font-size: .75rem;
+  }
+
+  @media only screen and (min-width: 800px) and (min-height: 560px) {
+    top: 40% !important;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) and (min-height: 660px) {
+    top: 60% !important;
+
+    p {
+      font-size: 1rem;
+    }
   }
 }
