@@ -56,19 +56,37 @@ describe SubscriptionMailer do
         SubscriptionMailer.placement_email(order, {}).deliver
       end
 
-      let(:customer) { create(:customer, enterprise: shop) }
+      context "when the customer has a user account" do
+        let(:customer) { create(:customer, enterprise: shop) }
 
-      it "provides link to make changes" do
-        expect(body).to match /<a #{order_link_href} #{order_link_style}>make changes<\/a>/
-        expect(body).to_not match /<a #{order_link_href} #{order_link_style}>view details of this order<\/a>/
+        it "provides link to make changes" do
+          expect(body).to match /<a #{order_link_href} #{order_link_style}>make changes<\/a>/
+          expect(body).to_not match /<a #{order_link_href} #{order_link_style}>view details of this order<\/a>/
+        end
+
+        context "when the distributor does not allow changes to the order" do
+          let(:shop) { create(:enterprise, allow_order_changes: false) }
+
+          it "provides link to view details" do
+            expect(body).to_not match /<a #{order_link_href} #{order_link_style}>make changes<\/a>/
+            expect(body).to match /<a #{order_link_href} #{order_link_style}>view details of this order<\/a>/
+          end
+        end
       end
 
-      context "when the distributor does not allow changes to the order" do
-        let(:shop) { create(:enterprise, allow_order_changes: false) }
+      context "when the customer has no user account" do
+        let(:customer) { create(:customer, enterprise: shop, user: nil) }
 
-        it "provides link to view details" do
-          expect(body).to_not match /<a #{order_link_href} #{order_link_style}>make changes<\/a>/
-          expect(body).to match /<a #{order_link_href} #{order_link_style}>view details of this order<\/a>/
+        it "does not provide link" do
+          expect(body).to_not match /#{order_link_href}/
+        end
+
+        context "when the distributor does not allow changes to the order" do
+          let(:shop) { create(:enterprise, allow_order_changes: false) }
+
+          it "does not provide link" do
+            expect(body).to_not match /#{order_link_href}/
+          end
         end
       end
     end
