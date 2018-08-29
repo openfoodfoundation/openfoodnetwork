@@ -93,7 +93,8 @@ describe SubscriptionMailer do
   end
 
   describe "order confirmation" do
-    let(:subscription) { create(:subscription, with_items: true) }
+    let(:customer) { create(:customer) }
+    let(:subscription) { create(:subscription, customer: customer, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription: subscription) }
     let!(:order) { proxy_order.initialise_order! }
 
@@ -106,7 +107,29 @@ describe SubscriptionMailer do
     it "sends the email" do
       body = SubscriptionMailer.deliveries.last.body.encoded
       expect(body).to include "This order was automatically placed for you"
-      expect(body).to include "href=\"#{spree.order_url(order)}\""
+    end
+
+    describe "linking to order page" do
+      let(:order_link_href) { "href=\"#{spree.order_url(order)}\"" }
+
+      let(:email) { SubscriptionMailer.deliveries.last }
+      let(:body) { email.body.encoded }
+
+      context "when the customer has a user account" do
+        let(:customer) { create(:customer) }
+
+        it "provides link to view details" do
+          expect(body).to match /#{order_link_href}/
+        end
+      end
+
+      context "when the customer has no user account" do
+        let(:customer) { create(:customer, user: nil) }
+
+        it "does not provide link" do
+          expect(body).to_not match /#{order_link_href}/
+        end
+      end
     end
   end
 
