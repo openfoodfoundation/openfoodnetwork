@@ -129,7 +129,8 @@ describe SubscriptionMailer do
   end
 
   describe "failed payment notification" do
-    let(:subscription) { create(:subscription, with_items: true) }
+    let(:customer) { create(:customer) }
+    let(:subscription) { create(:subscription, customer: customer, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription: subscription) }
     let!(:order) { proxy_order.initialise_order! }
 
@@ -149,6 +150,29 @@ describe SubscriptionMailer do
       details = I18n.t("email_so_failed_payment_details_html", distributor: subscription.shop.name)
       expect(body).to include strip_tags(details)
       expect(body).to include "This is a payment failure error"
+    end
+
+    describe "linking to order page" do
+      let(:order_link_href) { "href=\"#{spree.order_url(order)}\"" }
+
+      let(:email) { SubscriptionMailer.deliveries.last }
+      let(:body) { email.body.encoded }
+
+      context "when the customer has a user account" do
+        let(:customer) { create(:customer) }
+
+        it "provides link to view details" do
+          expect(body).to match /#{order_link_href}/
+        end
+      end
+
+      context "when the customer has no user account" do
+        let(:customer) { create(:customer, user: nil) }
+
+        it "does not provide link" do
+          expect(body).to_not match /#{order_link_href}/
+        end
+      end
     end
   end
 
