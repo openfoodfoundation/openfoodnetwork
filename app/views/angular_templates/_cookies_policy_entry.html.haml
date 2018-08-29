@@ -1,0 +1,13 @@
+%tr
+  %td
+    %p
+      %strong
+        = cookie_name
+      %span /
+      = t 'legal.cookies_policy.cookie_domain'
+      - if cookie_domain
+        = cookie_domain
+      - else
+        = "{{ instance_hostname }}"
+    %p
+      = cookie_desc

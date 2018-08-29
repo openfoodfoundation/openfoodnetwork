@@ -5,8 +5,15 @@
   border-bottom-color: $disabled-light;
 
   table {
-    display: block;
-    overflow-x: auto;
+    width: 100%;
+
+    tr:nth-of-type(even) {
+      background-color: $disabled-very-light;
+    }
+
+    p {
+      margin-bottom: .25rem;
+    }
   }
 
   &.fade {
