@@ -7,7 +7,7 @@ describe SubscriptionForm do
     let!(:product3) { create(:product, supplier: shop) }
     let!(:variant1) { create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: []) }
     let!(:variant2) { create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: []) }
-    let!(:variant3) { create(:variant, product: product2, unit_value: '1000', price: 2.50, option_values: [], count_on_hand: 1) }
+    let!(:variant3) { create(:variant, product: product2, unit_value: '1000', price: 2.50, option_values: [], on_hand: 1) }
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
     let!(:order_cycle1) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 9.days.ago, orders_close_at: 2.days.ago) }
     let!(:order_cycle2) { create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.days.ago, orders_close_at: 5.days.from_now) }
