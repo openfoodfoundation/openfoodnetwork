@@ -1,22 +1,19 @@
-Darkswarm.factory 'StripeElements', ($rootScope, Loading, RailsFlashLoader) ->
-  new class StripeElements
-    # TODO: add locale here for translations of error messages etc. from Stripe
+angular.module("admin.payments").factory 'AdminStripeElements', ($rootScope, StatusMessage) ->
+  new class AdminStripeElements
 
-    # These are both set from the StripeElements directive
+    # These are both set from the AdminStripeElements directive
     stripe: null
     card: null
 
     # New Stripe Elements method
-    requestToken: (secrets, submit, loading_message = t("processing_payment")) ->
+    requestToken: (secrets, submit) ->
       return unless @stripe? && @card?
 
-      Loading.message = loading_message
       cardData = @makeCardData(secrets)
 
       @stripe.createToken(@card, cardData).then (response) =>
         if(response.error)
-          Loading.clear()
-          RailsFlashLoader.loadFlash({error: t("error") + ": #{response.error.message}"})
+          StatusMessage.display 'error', response.error.message
         else
           secrets.token = response.token.id
           secrets.cc_type = @mapCC(response.token.card.brand)

@@ -2613,7 +2613,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       payments:
         source_forms:
           stripe:
-            no_payment_via_admin_backend: Creating Stripe-based payments from the admin backend is not possible at this time
+            error_saving_payment: Error saving payment
+            submitting_payment: Submitting payment...
       products:
         new:
           title: 'New Product'
