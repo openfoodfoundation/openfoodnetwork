@@ -15,7 +15,7 @@ module Spree::Preferences
 
     def get_preference(key)
       if !has_preference?(key) && has_attachment?(key)
-        send key
+        public_send key
       else
         super key
       end

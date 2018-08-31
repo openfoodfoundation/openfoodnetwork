@@ -20,7 +20,9 @@ module Spree
           let!(:current_api_user) do
             user = create(:user)
             user.spree_roles = []
-            enterprises.each { |e| user.enterprise_roles.create(enterprise: send(e)) }
+            enterprises.each do |enterprise|
+              user.enterprise_roles.create(enterprise: public_send(enterprise))
+            end
             user.save!
             user
           end

@@ -7,7 +7,7 @@ module Spree
       # Sort shipping methods by distributor name
       # ! Code copied from Spree::Admin::ResourceController with two added lines
       def collection
-        return parent.send(controller_name) if parent_data.present?
+        return parent.public_send(controller_name) if parent_data.present?
 
         collection = if model_class.respond_to?(:accessible_by) &&
                          !current_ability.has_block?(params[:action], model_class)

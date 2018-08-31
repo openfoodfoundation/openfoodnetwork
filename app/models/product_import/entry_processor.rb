@@ -204,7 +204,7 @@ module ProductImport
         when 'overwrite_all'
           object.assign_attributes(attribute => setting['value'])
         when 'overwrite_empty'
-          if object.send(attribute).blank? || ((attribute == 'on_hand' || attribute == 'count_on_hand') && entry.on_hand_nil)
+          if object.public_send(attribute).blank? || ((attribute == 'on_hand' || attribute == 'count_on_hand') && entry.on_hand_nil)
             object.assign_attributes(attribute => setting['value'])
           end
         end

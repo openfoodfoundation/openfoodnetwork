@@ -53,7 +53,7 @@ module Admin
       @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]), spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
 
       begin
-        @importer.send("#{method}_entries")
+        @importer.public_send("#{method}_entries")
       rescue StandardError => e
         render json: e.message, response: 500
         return false
