@@ -245,7 +245,7 @@ GEM
       addressable
     css_splitter (0.4.5)
       sprockets (>= 2.0.0)
-    daemons (1.2.2)
+    daemons (1.2.6)
     dalli (2.7.2)
     database_cleaner (0.7.1)
     db2fog (0.8.0)
