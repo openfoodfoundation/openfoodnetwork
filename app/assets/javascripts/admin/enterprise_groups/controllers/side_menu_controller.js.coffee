@@ -8,8 +8,8 @@ angular.module("admin.enterprise_groups")
       { name: 'users', label: t('users'), icon_class: "icon-user" }
       { name: 'about', label: t('about'), icon_class: "icon-pencil" }
       { name: 'images', label: t('images'), icon_class: "icon-picture" }
-      { name: 'contact', label: t('admin_entreprise_groups_contact'), icon_class: "icon-phone" }
-      { name: 'web', label: t('admin_entreprise_groups_web'), icon_class: "icon-globe" }
+      { name: 'contact', label: t('admin_enterprise_groups_contact'), icon_class: "icon-phone" }
+      { name: 'web', label: t('admin_enterprise_groups_web'), icon_class: "icon-globe" }
     ]
 
     $scope.select(0)
