@@ -201,11 +201,12 @@ feature "Product Import", js: true do
       expect(Spree::Product.find_by_name('Beans').on_hand).to eq 0
     end
 
-    it "can save a new product and variant of that product at the same time" do
+    it "can save a new product and variant of that product at the same time, add variant to existing product" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag"]
+        csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -215,9 +216,9 @@ feature "Product Import", js: true do
 
       import_data
 
-      expect(page).to have_selector '.item-count', text: "2"
+      expect(page).to have_selector '.item-count', text: "3"
       expect(page).to_not have_selector '.invalid-count'
-      expect(page).to have_selector '.create-count', text: "2"
+      expect(page).to have_selector '.create-count', text: "3"
       expect(page).to_not have_selector '.update-count'
       expect(page).to_not have_selector '.update-count'
       expect(page).to_not have_selector '.inv-create-count'
