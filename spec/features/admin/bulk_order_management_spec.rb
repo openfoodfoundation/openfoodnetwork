@@ -21,8 +21,8 @@ feature %q{
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o3) { create(:order_with_distributor, state: 'address', completed_at: nil ) }
-      let!(:li1) { create(:line_item, order: o1 ) }
-      let!(:li2) { create(:line_item, order: o2 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2) }
       let!(:li3) { create(:line_item, order: o3 ) }
 
       before :each do
@@ -39,8 +39,8 @@ feature %q{
     context "displaying individual columns" do
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, bill_address: create(:address) ) }
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, bill_address: nil ) }
-      let!(:li1) { create(:line_item, order: o1 ) }
-      let!(:li2) { create(:line_item, order: o2, product: create(:product_with_option_types) ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2, product: create(:product_with_option_types) ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -86,8 +86,8 @@ feature %q{
     describe "sorting of line items" do
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now) }
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now) }
-      let!(:li1) { create(:line_item, order: o1) }
-      let!(:li2) { create(:line_item, order: o2) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2) }
 
       before do
         visit spree.admin_bulk_order_management_path
@@ -125,7 +125,7 @@ feature %q{
 
     context "tracking changes" do
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:li1) { create(:line_item, order: o1, :quantity => 5 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1, :quantity => 5 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -140,7 +140,7 @@ feature %q{
 
     context "submitting data to the server" do
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:li1) { create(:line_item, order: o1, :quantity => 5 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1, :quantity => 5 ) }
 
       before :each do
         li1.variant.update_attributes(on_hand: 1, on_demand: false)
@@ -182,7 +182,7 @@ feature %q{
     let!(:p1) { create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] ) }
     let!(:v1) { p1.variants.first }
     let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-    let!(:li1) { create(:line_item, order: o1, variant: v1, :quantity => 5, :final_weight_volume => 1000, price: 10.00 ) }
+    let!(:li1) { create(:line_item_with_shipment, order: o1, variant: v1, :quantity => 5, :final_weight_volume => 1000, price: 10.00 ) }
 
     before { v1.update_attribute(:on_hand, 100)}
 
@@ -264,7 +264,7 @@ feature %q{
         let!(:s1) { create(:supplier_enterprise) }
         let!(:s2) { create(:supplier_enterprise) }
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, order_cycle: create(:simple_order_cycle) ) }
-        let!(:li1) { create(:line_item, order: o1, product: create(:product, supplier: s1) ) }
+        let!(:li1) { create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1) ) }
         let!(:li2) { create(:line_item, order: o1, product: create(:product, supplier: s2) ) }
 
         before :each do
@@ -302,7 +302,7 @@ feature %q{
         let!(:d2) { create(:distributor_enterprise) }
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d1, order_cycle: create(:simple_order_cycle) ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d2, order_cycle: create(:simple_order_cycle) ) }
-        let!(:li1) { create(:line_item, order: o1 ) }
+        let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item, order: o2 ) }
 
         before :each do
@@ -341,7 +341,7 @@ feature %q{
         let!(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, order_cycle: oc1 ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, order_cycle: oc2 ) }
-        let!(:li1) { create(:line_item, order: o1 ) }
+        let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item, order: o2 ) }
 
         before do
@@ -381,7 +381,7 @@ feature %q{
         let!(:p2) { create(:product, supplier: s2) }
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d1, order_cycle: oc1 ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d2, order_cycle: oc2 ) }
-        let!(:li1) { create(:line_item, order: o1, product: p1 ) }
+        let!(:li1) { create(:line_item_with_shipment, order: o1, product: p1 ) }
         let!(:li2) { create(:line_item, order: o2, product: p2 ) }
 
         before :each do
@@ -430,7 +430,7 @@ feature %q{
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:li1) { create(:line_item, order: o1 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
       let!(:li2) { create(:line_item, order: o2 ) }
       let!(:li3) { create(:line_item, order: o3 ) }
 
@@ -458,7 +458,7 @@ feature %q{
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.today - 7.days) }
       let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day) }
       let!(:o4) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day + 1.second) }
-      let!(:li1) { create(:line_item, order: o1, :quantity => 1 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1, :quantity => 1 ) }
       let!(:li2) { create(:line_item, order: o2, :quantity => 2 ) }
       let!(:li3) { create(:line_item, order: o3, :quantity => 3 ) }
       let!(:li4) { create(:line_item, order: o4, :quantity => 4 ) }
@@ -528,7 +528,7 @@ feature %q{
     context "bulk action controls" do
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:li1) { create(:line_item, order: o1 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
       let!(:li2) { create(:line_item, order: o2 ) }
 
       before :each do
@@ -595,7 +595,7 @@ feature %q{
       context "using edit buttons" do
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-        let!(:li1) { create(:line_item, order: o1 ) }
+        let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item, order: o2 ) }
 
         before :each do
@@ -629,7 +629,7 @@ feature %q{
       context "using delete buttons" do
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-        let!(:li1) { create(:line_item, order: o1 ) }
+        let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item, order: o2 ) }
 
         before :each do
@@ -650,7 +650,7 @@ feature %q{
     context "clicking the link on variant name" do
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:li1) { create(:line_item, order: o1 ) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
       let!(:li2) { create(:line_item, order: o2 ) }
       let!(:p3) { create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] ) }
       let!(:v3) { p3.variants.first }
@@ -716,8 +716,8 @@ feature %q{
     let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d1 ) }
     let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d2 ) }
-    let!(:line_item_distributed) { create(:line_item, order: o1, product: create(:product, supplier: s1) ) }
-    let!(:line_item_not_distributed) { create(:line_item, order: o2, product: create(:product, supplier: s1) ) }
+    let!(:line_item_distributed) { create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1) ) }
+    let!(:line_item_not_distributed) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s1) ) }
 
     before(:each) do
       @enterprise_user = create_enterprise_user

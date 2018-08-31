@@ -13,7 +13,7 @@ module Spree
       sign_in_as_admin!
 
       let(:order) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now) }
-      let(:line_item) { FactoryBot.create(:line_item, order: order, final_weight_volume: 500) }
+      let(:line_item) { FactoryBot.create(:line_item_with_shipment, order: order,final_weight_volume: 500) }
 
       context "as a line item is updated" do
         before { allow(controller).to receive(:order) { order } }

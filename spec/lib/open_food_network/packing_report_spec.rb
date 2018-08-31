@@ -8,7 +8,7 @@ module OpenFoodNetwork
       let(:d1) { create(:distributor_enterprise) }
       let(:oc1) { create(:simple_order_cycle) }
       let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
-      let(:li1) { build(:line_item) }
+      let(:li1) { build(:line_item_with_shipment) }
 
       before { o1.line_items << li1 }
 
@@ -24,7 +24,7 @@ module OpenFoodNetwork
 
         it "does not show cancelled orders" do
           o2 = create(:order, state: "canceled", completed_at: 1.day.ago)
-          o2.line_items << build(:line_item)
+          o2.line_items << build(:line_item_with_shipment)
           subject.table_items.should == [li1]
         end
       end
@@ -41,7 +41,7 @@ module OpenFoodNetwork
 
         context "that has granted P-OC to the distributor" do
           let(:o2) { create(:order, distributor: d1, completed_at: 1.day.ago, bill_address: create(:address), ship_address: create(:address)) }
-          let(:li2) { build(:line_item, product: create(:simple_product, supplier: s1)) }
+          let(:li2) { build(:line_item_with_shipment, product: create(:simple_product, supplier: s1)) }
 
           before do
             o2.line_items << li2
@@ -80,7 +80,7 @@ module OpenFoodNetwork
           d2 = create(:distributor_enterprise)
           d2.enterprise_roles.create!(user: create(:user))
           o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
-          o2.line_items << build(:line_item)
+          o2.line_items << build(:line_item_with_shipment)
           subject.table_items.should == [li1]
         end
 
