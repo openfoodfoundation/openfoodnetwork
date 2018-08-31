@@ -115,7 +115,13 @@ module ProductImport
 
       return unless entry.validates_as? 'existing_variant'
 
-      save_variant entry
+      begin
+        save_variant entry
+      rescue ActiveRecord::StaleObjectError
+        entry.product_object.reload
+        save_variant entry
+      end
+
       @variants_updated += 1
     end
 
