@@ -131,7 +131,7 @@ module ProductImport
         return
       end
 
-      products.map(&:variants).flatten.each do |existing_variant|
+      products.flat_map(&:variants).each do |existing_variant|
         unit_scale = existing_variant.product.variant_unit_scale
         unscaled_units = entry.unscaled_units || 0
         entry.unit_value = unscaled_units * unit_scale
@@ -182,7 +182,7 @@ module ProductImport
         return
       end
 
-      products.map(&:variants).flatten.each do |existing_variant|
+      products.flat_map(&:variants).each do |existing_variant|
         if entry_matches_existing_variant?(entry, existing_variant) && existing_variant.deleted_at.nil?
           return mark_as_existing_variant(entry, existing_variant)
         end
