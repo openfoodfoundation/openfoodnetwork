@@ -26,7 +26,7 @@
           %a{href: t("#{menu_name}_url") }
             %span.nav-primary
               %i{class: ContentConfig["#{menu_name}_icon_name"]}
-                = t "#{menu_name}_title"
+              = t "#{menu_name}_title"
     - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
       %li.language-switcher.li-menu
         %a
