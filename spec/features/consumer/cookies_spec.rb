@@ -2,6 +2,14 @@ require 'spec_helper'
 
 feature "Cookies", js: true do
   describe "banner" do
+    
+    # keeps banner toggle config unchanged
+    around do |example|
+      original_banner_toggle = Spree::Config[:cookies_consent_banner_toggle]
+      example.run
+      Spree::Config[:cookies_consent_banner_toggle] = original_banner_toggle
+    end
+
     describe "in the homepage" do
       before do
         Spree::Config[:cookies_consent_banner_toggle] = true
@@ -52,6 +60,14 @@ feature "Cookies", js: true do
   end
 
   describe "policy page" do
+
+    # keeps config unchanged
+    around do |example|
+      original_config_value = Spree::Config[:cookies_policy_matomo_section]
+      example.run
+      Spree::Config[:cookies_policy_matomo_section] = original_config_value
+    end
+
     scenario "showing session_id cookies description with correct instance domain" do
       visit '/#/policies/cookies'
       expect(page).to have_content('_session_id')
