@@ -220,7 +220,6 @@ feature "Product Import", js: true do
       expect(page).to_not have_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "3"
       expect(page).to_not have_selector '.update-count'
-      expect(page).to_not have_selector '.update-count'
       expect(page).to_not have_selector '.inv-create-count'
       expect(page).to_not have_selector '.inv-update-count'
 
