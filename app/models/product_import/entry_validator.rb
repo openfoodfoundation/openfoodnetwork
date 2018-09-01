@@ -17,6 +17,7 @@ module ProductImport
     def self.non_updatable_fields
       {
         category: :primary_taxon_id,
+        description: :description,
         unit_type: :variant_unit_scale,
         variant_unit_name: :variant_unit_name,
         tax_category: :tax_category_id,
