@@ -178,7 +178,7 @@ module ProductImport
       return if category.blank?
 
       if index.key? category
-        entry.send("#{type}_category_id=", index[category])
+        entry.public_send("#{type}_category_id=", index[category])
       else
         mark_as_invalid(entry, attribute: "#{type}_category", error: I18n.t('admin.product_import.model.not_found'))
       end
@@ -239,11 +239,11 @@ module ProductImport
     end
 
     def attributes_match?(attribute, existing_product, entry)
-      existing_product.send(attribute) == entry.send(attribute)
+      existing_product.public_send(attribute) == entry.public_send(attribute)
     end
 
     def attributes_blank?(attribute, existing_product, entry)
-      existing_product.send(attribute).blank? && entry.send(attribute).blank?
+      existing_product.public_send(attribute).blank? && entry.public_send(attribute).blank?
     end
 
     def permission_by_name?(supplier_name)
