@@ -5,6 +5,71 @@ describe Spree::OrdersController, type: :controller do
   let(:order) { create(:order) }
   let(:order_cycle) { create(:simple_order_cycle) }
 
+  describe "viewing an order" do
+    let(:customer) { create(:customer) }
+    let(:order) { create(:order_with_credit_payment, customer: customer, distributor: customer.enterprise) }
+
+    before do
+      allow(controller).to receive(:spree_current_user) { current_user }
+    end
+
+    context "after checking out as an anonymous guest" do
+      let(:customer) { create(:customer, user: nil) }
+      let(:current_user) { nil }
+
+      it "loads page" do
+        spree_get :show, id: order.number, token: order.token
+        expect(response).to be_success
+      end
+
+      it "stores order token in session as 'access_token'" do
+        spree_get :show, id: order.number, token: order.token
+        expect(session[:access_token]).to eq(order.token)
+      end
+    end
+
+    context "when returning to order page after checking out as an anonymous guest" do
+      let(:customer) { create(:customer, user: nil) }
+      let(:current_user) { nil }
+
+      before do
+        session[:access_token] = order.token
+      end
+
+      it "loads page" do
+        spree_get :show, id: order.number
+        expect(response).to be_success
+      end
+    end
+
+    context "when logged in as the customer" do
+      let(:current_user) { order.user }
+
+      it "loads page" do
+        spree_get :show, id: order.number
+        expect(response).to be_success
+      end
+    end
+
+    context "when logged in as another customer" do
+      let(:current_user) { create(:user) }
+
+      it "redirects to unauthorized" do
+        spree_get :show, id: order.number
+        expect(response.status).to eq(401)
+      end
+    end
+
+    context "when neither checked out as an anonymous guest nor logged in" do
+      let(:current_user) { nil }
+
+      it "redirects to unauthorized" do
+        spree_get :show, id: order.number
+        expect(response.status).to eq(401)
+      end
+    end
+  end
+
   describe "viewing cart" do
     it "redirects home when no distributor is selected" do
       spree_get :edit
