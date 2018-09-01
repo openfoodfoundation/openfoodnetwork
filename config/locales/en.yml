@@ -2699,6 +2699,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     inventory: Inventory
     zipcode: Postcode
     orders:
+      edit:
+        login_to_view_order: "Please log in to view your order."
       bought:
         item: "Already ordered in this order cycle"
     shipment_states:

@@ -54,9 +54,13 @@ module AuthenticationWorkflow
     user.spree_roles << user_role
 
     visit spree.login_path
-    fill_in 'email', :with => 'someone@ofn.org'
-    fill_in 'password', :with => 'passw0rd'
-    click_button 'Login'
+    fill_in_and_submit_login_form user
+  end
+
+  def fill_in_and_submit_login_form(user)
+    fill_in "email", with: user.email
+    fill_in "password", with: user.password
+    click_button "Login"
   end
 end
 

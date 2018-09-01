@@ -69,9 +69,14 @@ feature "Order Management", js: true do
     context "when not logged in" do
       let(:user) { create(:user) }
 
-      it "does not allow the user to see order details" do
+      it "allows the user to see order details after login" do
+        # Cannot load the page without signing in
         visit spree.order_path(order)
         expect(page).to_not be_confirmed_order_page
+
+        # Can load the page after signing in
+        fill_in_and_submit_login_form user
+        expect(page).to be_confirmed_order_page
       end
     end
   end

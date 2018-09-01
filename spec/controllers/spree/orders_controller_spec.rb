@@ -63,9 +63,14 @@ describe Spree::OrdersController, type: :controller do
     context "when neither checked out as an anonymous guest nor logged in" do
       let(:current_user) { nil }
 
+      before do
+        request.env["PATH_INFO"] = spree.order_path(order)
+      end
+
       it "redirects to unauthorized" do
         spree_get :show, id: order.number
-        expect(response.status).to eq(401)
+        expect(response).to redirect_to(root_path(anchor: "login?after_login=#{spree.order_path(order)}"))
+        expect(flash[:error]).to eq("Please log in to view your order.")
       end
     end
   end
