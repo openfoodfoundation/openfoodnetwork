@@ -82,8 +82,8 @@ describe Spree::OrdersController, type: :controller do
     describe "generating stock levels" do
       let!(:order) { create(:order) }
       let!(:li) { create(:line_item, order: order, variant: v, quantity: 2, max_quantity: 3) }
-      let!(:v) { create(:variant, count_on_hand: 4) }
-      let!(:v2) { create(:variant, count_on_hand: 2) }
+      let!(:v) { create(:variant, on_hand: 4) }
+      let!(:v2) { create(:variant, on_hand: 2) }
 
       before do
         order.reload
@@ -107,7 +107,7 @@ describe Spree::OrdersController, type: :controller do
       end
 
       describe "encoding Infinity" do
-        let!(:v) { create(:variant, on_demand: true, count_on_hand: 0) }
+        let!(:v) { create(:variant, on_demand: true, on_hand: 0) }
 
         it "encodes Infinity as a large, finite integer" do
           controller.stock_levels(order, [v.id]).should ==

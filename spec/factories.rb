@@ -459,7 +459,17 @@ FactoryBot.define do
   end
 
   factory :simple_product, parent: :base_product do
-    on_hand 5
+    transient do
+      on_demand { false }
+      on_hand { 5 }
+    end
+    after(:create) do |product, evaluator|
+      product.variants.first.tap do |variant|
+        variant.on_demand = evaluator.on_demand
+        variant.count_on_hand = evaluator.on_hand
+        variant.save
+      end
+    end
   end
 end
 
@@ -487,8 +497,19 @@ FactoryBot.modify do
   end
 
   factory :variant do
+    transient do
+      on_demand { false }
+      on_hand { 5 }
+    end
+
     unit_value 1
     unit_description ''
+
+    after(:create) do |variant, evaluator|
+      variant.on_demand = evaluator.on_demand
+      variant.count_on_hand = evaluator.on_hand
+      variant.save
+    end
   end
 
   factory :shipping_method do

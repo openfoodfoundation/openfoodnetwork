@@ -64,9 +64,9 @@ describe SubscriptionPlacementJob do
     let(:shop) { order_cycle.coordinator }
     let(:order) { create(:order, order_cycle: order_cycle, distributor: shop) }
     let(:ex) { create(:exchange, :order_cycle => order_cycle, :sender => shop, :receiver => shop, :incoming => false) }
-    let(:variant1) { create(:variant, count_on_hand: 5) }
-    let(:variant2) { create(:variant, count_on_hand: 5) }
-    let(:variant3) { create(:variant, count_on_hand: 5) }
+    let(:variant1) { create(:variant, on_hand: 5) }
+    let(:variant2) { create(:variant, on_hand: 5) }
+    let(:variant3) { create(:variant, on_hand: 5) }
     let!(:line_item1) { create(:line_item, order: order, variant: variant1, quantity: 3) }
     let!(:line_item2) { create(:line_item, order: order, variant: variant2, quantity: 3) }
     let!(:line_item3) { create(:line_item, order: order, variant: variant3, quantity: 3) }
