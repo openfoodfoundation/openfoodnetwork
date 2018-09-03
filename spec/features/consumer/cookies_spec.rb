@@ -76,7 +76,7 @@ feature "Cookies", js: true do
   end
 
   def matomo_description_text
-    I18n.t('legal.cookies_policy.statistics_cookies_matomo_desc')
+    I18n.t('legal.cookies_policy.cookie_matomo_basics_desc')
   end
 
   def expect_visible_cookies_policy_page
