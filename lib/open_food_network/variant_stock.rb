@@ -27,6 +27,8 @@ module OpenFoodNetwork
     #
     # @return [Float|Integer]
     def on_hand
+      warn_deprecation(__method__, '#total_on_hand')
+
       if on_demand
         Float::INFINITY
       else
@@ -38,6 +40,7 @@ module OpenFoodNetwork
     #
     # @return [Float|Integer]
     def count_on_hand
+      warn_deprecation(__method__, '#total_on_hand')
       total_on_hand
     end
 
@@ -47,6 +50,8 @@ module OpenFoodNetwork
     # @raise [StandardError] when the track_inventory_levels config
     # key is not set.
     def on_hand=(new_level)
+      warn_deprecation(__method__, '#total_on_hand')
+
       error = 'Cannot set on_hand value when Spree::Config[:track_inventory_levels] is false'
       raise error unless Spree::Config.track_inventory_levels
 
@@ -67,6 +72,8 @@ module OpenFoodNetwork
     #
     # @raise [StandardError] when the variant has no stock item yet
     def count_on_hand=(new_level)
+      warn_deprecation(__method__, '#total_on_hand')
+
       raise_error_if_no_stock_item_available
       overwrite_stock_levels(new_level)
     end
@@ -77,7 +84,7 @@ module OpenFoodNetwork
     # track_inventory_levels only. It was initially introduced in
     # https://github.com/openfoodfoundation/spree/commit/20b5ad9835dca7f41a40ad16c7b45f987eea6dcc
     def on_demand
-      warn_deprecation(__method__)
+      warn_deprecation(__method__, 'Spree::Config[:track_inventory_levels]')
       stock_items.first.backorderable?
     end
 
@@ -88,6 +95,8 @@ module OpenFoodNetwork
     #
     # @raise [StandardError] when the variant has no stock item yet
     def on_demand=(new_value)
+      warn_deprecation(__method__, 'Spree::Config[:track_inventory_levels]')
+
       raise_error_if_no_stock_item_available
 
       # There should be only one at the default stock location.
@@ -124,6 +133,13 @@ module OpenFoodNetwork
       # There shouldn't be any other stock items, because we should
       # have only one stock location.
       stock_items.first.__send__(:count_on_hand=, new_level)
+    end
+
+    def warn_deprecation(method_name, new_method_name)
+      ActiveSupport::Deprecation.warn(
+        "`##{method_name}` is deprecated and will be removed. " \
+        "Please use `#{new_method_name}` instead."
+      )
     end
   end
 end
