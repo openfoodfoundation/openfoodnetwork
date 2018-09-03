@@ -394,7 +394,7 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
-    foreigner (1.6.1)
+    foreigner (1.7.4)
       activerecord (>= 3.0.0)
     formatador (0.2.5)
     foundation-icons-sass-rails (3.0.0)
