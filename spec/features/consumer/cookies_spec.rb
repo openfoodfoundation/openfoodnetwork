@@ -5,29 +5,36 @@ feature "Cookies", js: true do
     describe "in the homepage" do
       before do
         Spree::Config[:cookies_consent_banner_toggle] = true
-        visit root_path
+        visit_root_path_and_wait
       end
 
       scenario "does not show after cookies are accepted" do
-        sleep 1
-        click_button I18n.t('legal.cookies_banner.cookies_accept_button')
-        sleep 2
+        accept_cookies_and_wait
         expect_not_visible_cookies_banner
 
-        visit root_path
-        sleep 1
+        visit_root_path_and_wait
         expect_not_visible_cookies_banner
       end
 
       scenario "banner contains cookies policy link that opens coookies policy page and closes banner" do
-        sleep 1
-        find("p.ng-binding > a", :text => "cookies policy").click
-        sleep 2
+        click_banner_cookies_policy_link_and_wait
         expect_visible_cookies_policy_page
         expect_not_visible_cookies_banner
 
-        find("a.close-reveal-modal").click
+        close_cookies_policy_page_and_wait
         expect_visible_cookies_banner
+      end
+
+      scenario "does not show after cookies are accepted, and policy page is opened through the footer, and closed again (bug #2599)" do
+        accept_cookies_and_wait
+        expect_not_visible_cookies_banner
+        
+        click_footer_cookies_policy_link_and_wait
+        expect_visible_cookies_policy_page
+        expect_not_visible_cookies_banner
+
+        close_cookies_policy_page_and_wait
+        expect_not_visible_cookies_banner
       end
     end
 
@@ -93,5 +100,30 @@ feature "Cookies", js: true do
 
   def accept_cookies_button_text
     I18n.t('legal.cookies_banner.cookies_accept_button')
+  end
+
+  def visit_root_path_and_wait
+    visit root_path
+    sleep 1
+  end
+
+  def accept_cookies_and_wait
+    click_button accept_cookies_button_text
+    sleep 2
+  end
+
+  def click_banner_cookies_policy_link_and_wait
+    find("p.ng-binding > a", :text => "cookies policy").click
+    sleep 2
+  end
+
+  def click_footer_cookies_policy_link_and_wait
+    find("div > a", :text => "cookies policy").click
+    sleep 2
+  end
+
+  def close_cookies_policy_page_and_wait
+    find("a.close-reveal-modal").click
+    sleep 2
   end
 end

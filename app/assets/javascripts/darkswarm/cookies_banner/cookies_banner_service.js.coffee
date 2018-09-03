@@ -2,10 +2,10 @@ Darkswarm.factory "CookiesBannerService", (Navigation, $modal, $location, Redire
 
   new class CookiesBannerService
     modalMessage: null
-    isActive: false
+    isEnabled: false
 
     open: (path, template = 'darkswarm/cookies_banner/cookies_banner.html') =>
-      return unless @isActive
+      return unless @isEnabled
       @modalInstance = $modal.open
         templateUrl: template
         windowClass: "cookies-banner full"
@@ -13,8 +13,11 @@ Darkswarm.factory "CookiesBannerService", (Navigation, $modal, $location, Redire
         keyboard: false
 
     close: =>
-      return unless @isActive
+      return unless @isEnabled
       @modalInstance.close()
 
-    setActive: =>
-      @isActive = true
+    enable: =>
+      @isEnabled = true
+
+    disable: =>
+      @isEnabled = false
