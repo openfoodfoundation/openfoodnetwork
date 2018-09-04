@@ -129,6 +129,21 @@ describe OpenFoodNetwork::VariantStock do
   end
 
   describe '#on_demand=' do
+    context 'when the variant has multiple stock items' do
+      let(:variant) { create(:variant) }
+
+      before do
+        # Spree creates a stock_item for each variant when creating a stock
+        # location by means of #propagate_variant
+        create(:stock_location, name: 'location')
+        create(:stock_location, name: 'another location')
+      end
+
+      it 'raises' do
+        expect { variant.on_demand = true }.to raise_error(StandardError)
+      end
+    end
+
     context 'when the variant has a stock item' do
       let(:variant) { create(:variant, on_demand: true) }
 
