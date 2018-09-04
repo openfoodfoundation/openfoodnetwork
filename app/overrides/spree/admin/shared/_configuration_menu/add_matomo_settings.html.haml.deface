@@ -1,0 +1,4 @@
+// insert_bottom "[data-hook='admin_configurations_sidebar_menu']"
+
+%li
+  = link_to t('admin.matomo_settings.edit.title'), main_app.edit_admin_matomo_settings_path

@@ -1,3 +1,10 @@
+# This is the main class for product import. It handles the initial processing of the CSV file,
+# and begins the processing of the spreadsheet entries by the other product import classes.
+# As spreadsheets can contain any number of entries (1000+), the import is split into smaller chunks
+# of 100 items, and processed sequentially over a number of requests to avoid server timeouts.
+# The various bits of collated information such as file upload status, per-item errors or user feedback
+# on the saving process are made available to the controller through this object.
+
 require 'roo'
 
 module ProductImport
@@ -63,12 +70,11 @@ module ProductImport
     end
 
     def suppliers_index
-      index = @spreadsheet_data.suppliers_index
-      index.sort_by{ |_k, v| v.to_i }.reverse.to_h
+      @spreadsheet_data.suppliers_index
     end
 
     def supplier_products
-      @processor.supplier_products
+      @processor.andand.supplier_products
     end
 
     def total_supplier_products

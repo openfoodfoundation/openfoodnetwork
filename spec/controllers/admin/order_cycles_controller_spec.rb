@@ -220,6 +220,7 @@ module Admin
         let(:params) do
           { format: :json, order_cycle_set: { collection_attributes: { '0' => {
             id: oc.id,
+            name: "Updated Order Cycle",
             orders_open_at: Date.current - 21.days,
             orders_close_at: Date.current + 21.days,
           } } } }
@@ -230,6 +231,7 @@ module Admin
         it "updates order cycle properties" do
           spree_put :bulk_update, params
           oc.reload
+          expect(oc.name).to eq "Updated Order Cycle"
           expect(oc.orders_open_at.to_date).to eq Date.current - 21.days
           expect(oc.orders_close_at.to_date).to eq Date.current + 21.days
         end
@@ -262,11 +264,13 @@ module Admin
         it "doesn't update order cycle properties" do
           spree_put :bulk_update, format: :json, order_cycle_set: { collection_attributes: { '0' => {
             id: oc.id,
+            name: "Updated Order Cycle",
             orders_open_at: Date.current - 21.days,
             orders_close_at: Date.current + 21.days,
           } } }
 
           oc.reload
+          expect(oc.name).to_not eq "Updated Order Cycle"
           expect(oc.orders_open_at.to_date).to_not eq Date.current - 21.days
           expect(oc.orders_close_at.to_date).to_not eq Date.current + 21.days
         end

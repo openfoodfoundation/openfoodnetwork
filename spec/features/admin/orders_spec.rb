@@ -37,7 +37,7 @@ feature %q{
     create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
     create(:simple_order_cycle, name: 'Three', orders_close_at: 3.weeks.from_now)
 
-    login_to_admin_section
+    quick_login_as_admin
     visit 'admin/orders'
 
     open_select2('#s2id_q_order_cycle_id_in')
@@ -49,7 +49,7 @@ feature %q{
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
 
-    login_to_admin_section
+    quick_login_as_admin
 
     visit '/admin/orders'
     click_link 'New Order'
@@ -85,7 +85,7 @@ feature %q{
   end
 
   scenario "can add a product to an existing order", retry: 3 do
-    login_to_admin_section
+    quick_login_as_admin
     visit '/admin/orders'
 
     click_edit
@@ -106,7 +106,7 @@ feature %q{
 
     @order.state = 'cart'; @order.completed_at = nil; @order.save
 
-    login_to_admin_section
+    quick_login_as_admin
     visit '/admin/orders'
     uncheck 'Only show complete orders'
     click_button 'Filter Results'
@@ -124,7 +124,7 @@ feature %q{
   scenario "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
-    login_to_admin_section
+    quick_login_as_admin
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
 
@@ -134,7 +134,7 @@ feature %q{
   scenario "can't change distributor or order cycle once order has been finalized" do
     @order.update_attributes order_cycle_id: nil
 
-    login_to_admin_section
+    quick_login_as_admin
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
 
@@ -173,7 +173,7 @@ feature %q{
   end
 
   scenario "capture payment from the orders index page" do
-    login_to_admin_section
+    quick_login_as_admin
 
     visit spree.admin_orders_path
     expect(page).to have_current_path spree.admin_orders_path
@@ -207,7 +207,7 @@ feature %q{
       @enterprise_user.enterprise_roles.build(enterprise: coordinator1).save
       @enterprise_user.enterprise_roles.build(enterprise: distributor1).save
 
-      login_to_admin_as @enterprise_user
+      quick_login_as @enterprise_user
     end
 
     feature "viewing the edit page" do

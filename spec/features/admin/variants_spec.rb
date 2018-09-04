@@ -40,7 +40,7 @@ feature %q{
     page.find('table.index .icon-edit').click
 
     # Then I should not see a traditional option value field for the unit-related option value
-    expect(page).to_not have_selector "div[data-hook='presentation'] input"
+    expect(page).to have_no_selector "div[data-hook='presentation'] input"
 
     # And I should see unit value and description fields for the unit-related option value
     page.should have_field "unit_value_human", with: "1"

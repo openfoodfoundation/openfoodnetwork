@@ -1,3 +1,7 @@
+# This class handles a number of custom validation processes that take place during product import,
+# as a spreadsheet entry is checked to see if it is a valid product, variant, or inventory item.
+# It also handles error messages and user feedback for the validation process.
+
 module ProductImport
   class EntryValidator
     def initialize(current_user, import_time, spreadsheet_data, editable_enterprises, inventory_permissions, reset_counts, import_settings)
@@ -17,7 +21,7 @@ module ProductImport
 
         next if entry.supplier_id.blank?
 
-        if import_into_inventory?(entry)
+        if import_into_inventory?
           producer_validation(entry)
           inventory_validation(entry)
         else
@@ -45,24 +49,37 @@ module ProductImport
     private
 
     def supplier_validation(entry)
-      supplier_name = entry.supplier
+      return if name_presence_error entry
+      return if enterprise_not_found_error entry
+      return if permissions_error entry
+      return if primary_producer_error entry
 
-      if supplier_name.blank?
-        mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_required))
-        return
-      end
+      entry.supplier_id = @spreadsheet_data.suppliers_index[entry.supplier][:id]
+    end
 
-      unless @spreadsheet_data.suppliers_index[supplier_name]
-        mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_not_found_in_database, name: supplier_name))
-        return
-      end
+    def name_presence_error(entry)
+      return if entry.supplier.present?
+      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_required))
+      true
+    end
 
-      unless permission_by_name?(supplier_name)
-        mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_no_permission_for_enterprise, name: supplier_name))
-        return
-      end
+    def enterprise_not_found_error(entry)
+      return if @spreadsheet_data.suppliers_index[entry.supplier][:id]
+      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_not_found_in_database, name: entry.supplier))
+      true
+    end
 
-      entry.supplier_id = @spreadsheet_data.suppliers_index[supplier_name]
+    def permissions_error(entry)
+      return if permission_by_name?(entry.supplier)
+      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_no_permission_for_enterprise, name: entry.supplier))
+      true
+    end
+
+    def primary_producer_error(entry)
+      return if import_into_inventory?
+      return if @spreadsheet_data.suppliers_index[entry.supplier][:is_primary_producer]
+      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_not_primary_producer, name: entry.supplier))
+      true
     end
 
     def unit_fields_validation(entry)
@@ -72,7 +89,7 @@ module ProductImport
         mark_as_invalid(entry, attribute: 'units', error: I18n.t('admin.product_import.model.blank'))
       end
 
-      return if import_into_inventory?(entry)
+      return if import_into_inventory?
 
       # unit_type must be valid type
       if entry.unit_type && entry.unit_type.present?
@@ -220,8 +237,8 @@ module ProductImport
       entry.product_validations = options[:product_validations] if options[:product_validations]
     end
 
-    def import_into_inventory?(entry)
-      entry.supplier_id && @import_settings[:settings]['import_into'] == 'inventories'
+    def import_into_inventory?
+      @import_settings[:settings]['import_into'] == 'inventories'
     end
 
     def validate_inventory_item(entry, variant_override)

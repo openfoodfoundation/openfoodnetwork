@@ -19,7 +19,7 @@ feature 'Tag Rules', js: true do
       click_link "Tag Rules"
 
       # Creating a new tag
-      expect(page).to_not have_selector '.customer_tag'
+      expect(page).to have_no_selector '.customer_tag'
       expect(page).to have_content 'No tags apply to this enterprise yet'
       click_button '+ Add A New Tag'
       find(:css, "tags-input .tags input").set "volunteer\n"
@@ -241,9 +241,9 @@ feature 'Tag Rules', js: true do
 
       expect do
         within "#tr_1" do first("a.delete-tag-rule").click end
-        expect(page).to_not have_selector "#tr_1"
+        expect(page).to have_no_selector "#tr_1"
         within "#tr_0" do first("a.delete-tag-rule").click end
-        expect(page).to_not have_selector "#tr_0"
+        expect(page).to have_no_selector "#tr_0"
       end.to change{TagRule.count}.by(-2)
     end
   end

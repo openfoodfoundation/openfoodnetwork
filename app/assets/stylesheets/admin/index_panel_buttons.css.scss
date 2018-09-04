@@ -5,6 +5,7 @@ tbody.panel-ctrl {
     > td {
       a.update {
         cursor: pointer;
+        margin-top: 10px;
         margin-bottom: 10px;
         font-size: 1.3rem;
         background-color: $warning-red;

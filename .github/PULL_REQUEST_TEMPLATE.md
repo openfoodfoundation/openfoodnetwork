@@ -2,36 +2,46 @@
 
 Closes #[the issue number this PR is related to]
 
-[Explain why is this change needed and the solution you propose. Provide
-context for others to understand it]
+<!-- Explain why this change is needed and the solution you propose.
+Provide context for others to understand it. -->
+
+
 
 #### What should we test?
+<!-- List which features should be tested and how. -->
 
-[List which features should be tested and how]
 
-[Should we test on mobile?]
 
 #### Release notes
+<!-- Write a line or two to be included in the release notes.
+Everything is worth mentioning, because you did it for a reason. -->
 
-[In case this should be present in the release notes, please write them or
-remove this section otherwise]
 
-[To streamline the release process, please designate your PR with ONE of the following 
-categories, based on the specification from keepachangelog.com (and delete the others):]
+
+<!-- Please assign one category to your PR and delete the others. 
+The categories are based on https://keepachangelog.com/en/1.0.0/. -->
 
 Changelog Category: Added | Changed | Deprecated | Removed | Fixed | Security
 
 #### How is this related to the Spree upgrade?
+<!-- Any known conflicts with the Spree Upgrade?
+Explain them or remove this section. -->
 
-[Any known conflicts with the Spree Upgrade? explain them or remove this section
-otherwise]
+
 
 #### Discourse thread
+<!-- Is there a discussion about this in Discourse?
+Add the link or remove this section. -->
 
-[Is there a discussion about this in Discourse? add the link if so or remove
-this section otherwise]
+
 
 #### Dependencies
+<!-- Does this PR depend on another one?
+Add the link or remove this section. -->
 
-[Does this PR depend on another one? add the link of so or remove this section
-otherwise]
+
+
+#### Documentation updates
+<!-- Are their any wiki pages that need updating after merging this PR?
+List them here or remove this section. -->
+

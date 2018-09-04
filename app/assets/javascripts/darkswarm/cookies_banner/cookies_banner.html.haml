@@ -1,0 +1,15 @@
+.row
+  .large-9.columns
+    %p
+      {{ 'legal.cookies_banner.cookies_usage' | t}}
+    %p
+      {{ 'legal.cookies_banner.cookies_desc' | t}}
+    %p
+      {{ 'legal.cookies_banner.cookies_policy_link_desc' | t}}
+      -#
+      %a{ 'cookies-policy-modal'=> true}
+        {{ 'legal.cookies_banner.cookies_policy_link' | t}}
+
+  .large-3.columns
+    %button{ng: { controller:"CookiesBannerCtrl", click: "acceptCookies()" }}
+      {{ 'legal.cookies_banner.cookies_accept_button' | t}}

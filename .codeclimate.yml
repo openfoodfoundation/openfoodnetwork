@@ -5,6 +5,11 @@ plugins:
     channel: "rubocop-0-55"
   scss-lint:
     enabled: true
+    checks:
+      ImportantRule:
+        enabled: false
+      VendorPrefix:
+        enabled: false
   duplication:
     enabled: true
     exclude_patterns:

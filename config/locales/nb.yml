@@ -19,7 +19,7 @@ nb:
             email:
               taken: "Det finnes allerede en konto for denne eposten. Vennligst logg inn eller tilbakestill passordet ditt."
         spree/order:
-          no_card: Det er ingen gyldige kredittkort tilgjengelig
+          no_card: Det er ingen gyldige kredittkort tilgjengelig for å trekke
         order_cycle:
           attributes:
             orders_close_at:
@@ -41,11 +41,10 @@ nb:
             payment_method:
               not_available_to_shop: "er ikke tilgjengelig for %{shop}"
               invalid_type: "må være en Kontant eller Stripe metode"
+              charges_not_allowed: "^Kredittkortavgifter er ikke tillatt av denne kunden"
+              no_default_card: "^Ingen standardkort tilgjengelig for denne kunden"
             shipping_method:
               not_available_to_shop: "er ikke tilgjengelig for %{shop}"
-            credit_card:
-              not_available: "er ikke tilgjengelig"
-              blank: "er påkrevd"
   devise:
     confirmations:
       send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
@@ -160,6 +159,7 @@ nb:
   distributors: Distributører
   distribution: Distribusjon
   bulk_order_management: Bulk ordrehåndtering
+  enterprises: Bedrifter
   enterprise_groups: Grupper
   reports: Rapporter
   variant_overrides: Varelager
@@ -310,6 +310,42 @@ nb:
         included_tax_tip: "Total avgift inkludert i eksemplet på månedlig regning, gitt innstillingene og omsetningen som er satt."
         total_monthly_bill_incl_tax: "Total Månedlig Regning (Inkl. Avgift)"
         total_monthly_bill_incl_tax_tip: "Eksempel på total månedlig regning inkludert avgift, gitt innstillingene og omsetningen som er satt."
+    cache_settings:
+      show:
+        title: Mellomlagring
+        distributor: Distributør
+        order_cycle: Bestillingsrunde
+        status: Status
+        diff: Forskjell
+        error: Feil
+    invoice_settings:
+      edit:
+        title: Fakturainnstillinger
+        invoice_style2?: Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)
+        enable_receipt_printing?: 'Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? '
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Innstillinger"
+        stripe_connect_enabled: Sette butikker i stand til å godta betaling ved hjelp av Stripe Connect?
+        no_api_key_msg: Ingen Stripe-konto eksisterer for denne bedriften.
+        configuration_explanation_html: For detaljerte instruksjoner om konfigurering av Stripe Connect-integrasjonen, vennligst <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'> se denne veiledningen </a>.
+        status: Status
+        ok: Ok
+        instance_secret_key: Instans Secret Key
+        account_id: Konto-ID
+        business_name: Bedriftsnavn
+        charges_enabled: Avgifter Aktivert
+        charges_enabled_warning: "Advarsel: Avgifter er ikke aktivert for kontoen din"
+        auth_fail_error: API-nøkkelen du oppga er ugyldig
+        empty_api_key_error_html: Ingen Stripe API-nøkkel er gitt. For å angi din API-nøkkelen, følg <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank"> disse instruksjonene </a>
+    matomo_settings:
+      edit:
+        title: "Matomo Innstillinger"
+        matomo_url: "Matomo URL"
+        matomo_site_id: "Matomo Site ID"
+        info_html: "Matomo er en web- og mobilanalyse. Du kan enten hoste Matomo selv eller bruke en skytjeneste. Se <a href='http://matomo.org' target='_blank'> matomo.org </a> for mer informasjon."
+        config_instructions_html: "Her kan du konfigurere OFN-Matomo integrasjonen. URL til Matomo nedenfor skal peke på Matomo-instansen der brukersporingsinformasjonen skal sendes til; Hvis den er tom, blir Matomo-brukersporing deaktivert. Site-ID feltet er ikke obligatorisk, men nyttig hvis du sporer mer enn ett nettsted på en enkelt Matomo-instans; den kan bli funnet på Matomo-konsollen."
     customers:
       index:
         add_customer: "Legge til kunde"
@@ -332,16 +368,9 @@ nb:
         update_address: 'Oppdater Adresse'
         confirm_delete: 'Sikker på å slette?'
         search_by_email: "Søk på epost/kode..."
+        guest_label: 'Gjesteutsjekk'
       destroy:
         has_associated_orders: 'Sletting mislyktes: kunden har tilknyttede ordrer med sin butikk'
-    cache_settings:
-      show:
-        title: Mellomlagring
-        distributor: Distributør
-        order_cycle: Bestillingsrunde
-        status: Status
-        diff: Forskjell
-        error: Feil
     contents:
       edit:
         title: Innhold
@@ -414,20 +443,29 @@ nb:
       index:
         select_file: Velg et regneark for å laste opp
         spreadsheet: Regneark
-        import_into: "Importer inn i:"
+        choose_import_type: Velg importtype
+        import_into: Importtype
         product_list: Produktliste
         inventories: Varelagre
         import: Import
         upload: Last opp
+        csv_templates: CSV-maler
+        product_list_template: Last ned mal for produktliste
+        inventory_template: Last ned Inventory mal
+        category_values: Tilgjengelige kategoriverdier
+        product_categories: Produktkategorier
+        tax_categories: Avgiftskategorier
+        shipping_categories: Fraktkategorier
       import:
         review: Anmeldelse
-        proceed: Fortsett
+        import: Import
         save: Lagre
         results: Resultater
         save_imported: Lagre importerte produkter
         no_valid_entries: Ingen gyldige oppføringer funnet
         none_to_save: Det er ingen oppføringer som kan lagres
-        some_invalid_entries: Importert fil inneholder noen ugyldige oppføringer
+        some_invalid_entries: Importert fil inneholder ugyldige oppføringer
+        fix_before_import: Vennligst rett disse feilene og prøv å importere filen igjen
         save_valid?: Lagre gyldige oppføringer for nå og forkast de andre?
         no_errors: Ingen feil oppdaget!
         save_all_imported?: Lagre alle importerte produkter?
@@ -436,7 +474,8 @@ nb:
         not_found: bedriften kunne ikke bli funnet i databasen
         no_name: Ingen navn
         blank_supplier: noen produkter har tomt leverandørnavn
-        reset_absent?: Tilbakestill fraværende produkter?
+        reset_absent?: Tilbakestill fraværende produkter
+        reset_absent_tip: Sett lager til null for alle gjeldende produkter som ikke er til stede i filen
         overwrite_all: Overskrive alt
         overwrite_empty: Overskriv hvis tomt
         default_stock: Sett lagernivå
@@ -454,7 +493,7 @@ nb:
         inventory_to_reset: Eksisterende vareobjekter vil få lager satt til null
         line: Linje
         item_line: Artikkellinje
-      save:
+      save_results:
         final_results: Importer endelige resultater
         products_created: Produkter opprettet
         products_updated: Produkter oppdatert
@@ -465,8 +504,9 @@ nb:
         all_saved: "Alle elementer lagret vellykket"
         some_saved: "elementer lagret vellykket"
         save_errors: Lagre feil
-        view_products: Se produkter
-        view_inventory: Se beholdning
+        import_again: Last opp en annen fil
+        view_products: Gå til produktside
+        view_inventory: Gå til varelager
     variant_overrides:
       loading_flash:
         loading_inventory: LASTER VARELAGER
@@ -684,7 +724,7 @@ nb:
           email_confirmed: "Epost bekreftet"
           email_not_confirmed: "Epost ikke bekreftet"
       actions:
-        edit_profile: Endre Profil
+        edit_profile: Innstillinger
         properties: Egenskaper
         payment_methods: Betalingsmetoder
         payment_methods_tip: Denne bedriften har ingen betalingsmetoder
@@ -724,13 +764,14 @@ nb:
         no_enterprises_found: Ingen bedrifter funnet.
         search_placeholder: Søk på navn
         manage: Administrer
+        manage_link: Innstillinger
       new_form:
         owner: Eier
         owner_tip: Primærbrukeren ansvarlig for denne bedriften.
         i_am_producer: Jeg er en Produsent
         contact_name: Kontaktnavn
       edit:
-        editing: 'Endrer:'
+        editing: 'innstillinger:'
         back_link: Tilbake til bedriftsliste
       new:
         title: Ny Bedrift
@@ -816,6 +857,10 @@ nb:
         schedule_present: Denne bestillingsrunden er knyttet til en tidsplan og kan ikke slettes. Vennligst fjern koblingen eller slett tidsplanen først.
       bulk_update:
         no_data: Hm, noe gikk galt. Ingen data for bestillingsrunde funnet.
+      date_warning:
+        msg: Denne bestillingsrunden er knyttet til %{n} åpne abonnementsordrer. Endring av denne dato vil ikke påvirke noen ordre som allerede er utført, men bør unngås hvis det er mulig. Er du sikker på at du vil fortsette?
+        cancel: Avbryt
+        proceed: Fortsett
     producer_properties:
       index:
         title: Produsentegenskaper
@@ -827,11 +872,6 @@ nb:
     shared:
       user_guide_link:
         user_guide: Brukermanual
-    invoice_settings:
-      edit:
-        title: Fakturainnstillinger
-        invoice_style2?: Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)
-        enable_receipt_printing?: 'Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? '
     overview:
       enterprises_header:
         ofn_with_tip: Bedrifter er Produsenter og / eller Hubs og er den grunnleggende organisasjonsenheten innen Open Food Network.
@@ -925,12 +965,18 @@ nb:
         address: 2. Adresse
         products: 3. Legg til produkter
         review: 4. Se gjennom og lagre
+      subscription_line_items:
+        this_is_an_estimate: |
+            De viste prisene er bare et estimat og beregnet på det tidspunktet abonnementet endres.
+            Hvis du endrer priser eller avgifter, vil ordrer bli oppdatert, men abonnementet vil fortsatt vise de gamle verdiene.
       details:
         details: Detaljer
         invalid_error: Oops! Vennligst fyll inn alle obligatoriske felter...
         allowed_payment_method_types_tip: Bare Kontant og Stripe betalingsmetoder kan brukes for øyeblikket
         credit_card: Kredittkort
-        no_cards_available: Ingen kort tilgjengelig
+        charges_not_allowed: Korttrekk er ikke tillatt av denne kunden
+        no_default_card: Kunden har ingen kort tilgjengelig for å trekke
+        card_ok: Kunden har et kort tilgjengelig for å trekke
       loading_flash:
         loading: LASTER ABONNEMENT
       review:
@@ -960,22 +1006,6 @@ nb:
     schedules:
       destroy:
         associated_subscriptions_error: Denne tidsplanen kan ikke slettes fordi den har tilknyttede abonnementer
-    stripe_connect_settings:
-      edit:
-        title: "Stripe Connect"
-        settings: "Innstillinger"
-        stripe_connect_enabled: Sette butikker i stand til å godta betaling ved hjelp av Stripe Connect?
-        no_api_key_msg: Ingen Stripe-konto eksisterer for denne bedriften.
-        configuration_explanation_html: For detaljerte instruksjoner om konfigurering av Stripe Connect-integrasjonen, vennligst <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'> se denne veiledningen </a>.
-        status: Status
-        ok: Ok
-        instance_secret_key: Instans Secret Key
-        account_id: Konto-ID
-        business_name: Bedriftsnavn
-        charges_enabled: Avgifter Aktivert
-        charges_enabled_warning: "Advarsel: Avgifter er ikke aktivert for kontoen din"
-        auth_fail_error: API-nøkkelen du oppga er ugyldig
-        empty_api_key_error_html: Ingen Stripe API-nøkkel er gitt. For å angi din API-nøkkelen, følg <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank"> disse instruksjonene </a>
     controllers:
       enterprises:
         stripe_connect_cancelled: "Tilkobling til Stripe har blitt avbrutt"
@@ -1235,6 +1265,7 @@ nb:
   email_confirmation_click_link: "Trykk på linken under for å bekrefte din epost og for å fortsette oppsettet av din profil."
   email_confirmation_link_label: "Bekreft denne epostadressen »"
   email_confirmation_help_html: "Etter du har bekreftet epostadressen din får du tilgang til din administrasjonskonto for denne bedriften. Se linken %{link} for å finne ut mer om %{sitename}s funksjoner og for å begynne å bruke din profil eller nettbutikk."
+  email_confirmation_notice_unexpected: "Du har mottatt denne meldingen fordi du registrerte deg på %{sitename}, eller ble invitert til å registrere deg av noen du sikkert kjenner. Hvis du ikke forstår hvorfor du mottar denne e-posten, skriv til %{contact}."
   email_social: "Her finner du oss:"
   email_contact: "Send oss en epost:"
   email_signoff: "Mvh,"
@@ -1557,6 +1588,17 @@ nb:
   reset_password: "Tilbakestill passord"
   who_is_managing_enterprise: "Hvem er ansvarlig for å administrere %{enterprise}?"
   update_and_recalculate_fees: "Oppdater og regn avgifter på nytt"
+  registration:
+    steps:
+      type:
+        headline: "Siste skritt for å legge til %{enterprise}!"
+        question: "Er du en produsent?"
+        yes_producer: "Ja, jeg er produsent"
+        no_producer: "Nei, jeg er ikke produsent"
+        producer_field_error: "Vennligst velg en. Er du produsent?"
+        yes_producer_help: "Produsenter lager deilige ting å spise og/eller drikke. Du er en produsent hvis du vokser den, hever den, brygger den, baker den, gjærer den, melker den eller støper den."
+        no_producer_help: "Hvis du ikke er produsent, er du sannsynligvis noen som selger og distribuerer mat. Du kan være en hub, kooperativ, kjøpegruppe, forhandler, grossist eller annet."
+        create_profile: "Opprett profil"
   enterprise:
     registration:
       modal:
@@ -1595,13 +1637,6 @@ nb:
             phone_field_placeholder: 'f.eks. (03) 1234 5678'
           type:
             title: 'Type'
-            headline: "Siste skritt for å legge til %{enterprise}!"
-            question: "Er du en produsent?"
-            yes_producer: "Ja, jeg er produsent"
-            no_producer: "Nei, jeg er ikke produsent"
-            producer_field_error: "Vennligst velg en. Er du produsent?"
-            yes_producer_help: "Produsenter lager deilige ting å spise og/eller drikke. Du er en produsent hvis du vokser den, hever den, brygger den, baker den, gjærer den, melker den eller støper den."
-            no_producer_help: "Hvis du ikke er produsent, er du sannsynligvis noen som selger og distribuerer mat. Du kan være en hub, kooperativ, kjøpegruppe, forhandler, grossist eller annet."
           about:
             title: 'Om'
           images:
@@ -1689,7 +1724,6 @@ nb:
   registration_type_error: "Vennligst velg en. Er du produsent?"
   registration_type_producer_help: "Produsenter lager deilige ting å spise og/eller drikke. Du er en produsent hvis du dyrker det, driver med det, brygger det, baker det, fermenterer det, melker det eller former det."
   registration_type_no_producer_help: "Hvis du ikke er en produsent, er du sannsynligvis noen som selger og distribuerer mat. Du kan være en hub, samvirke, kjøpegruppe, forhandler, grossist eller annet."
-  create_profile: "Opprett profil"
   registration_images_headline: "Takk!"
   registration_images_description: "La oss laste opp noen fine bilder så profilen din ser flott ut! :)"
   registration_detail_headline: "La oss komme i gang"
@@ -1748,7 +1782,6 @@ nb:
   you_have_no_orders_yet: "Du har ingen bestilinger enda"
   running_balance: "Løpende balanse"
   outstanding_balance: "Utestående balanse"
-  admin_entreprise_relationships: "Bedriftsrelasjoner"
   admin_entreprise_relationships_everything: "Alt"
   admin_entreprise_relationships_permits: "tillater"
   admin_entreprise_relationships_seach_placeholder: "Søk"
@@ -1872,8 +1905,6 @@ nb:
   edit_profile_details_etc: "Endre din profilbeskrivelse, bilder, osv."
   order_cycle: "Bestillingsrunde"
   order_cycles: "Bestillingsrunder"
-  enterprises: "Bedrifter"
-  enterprise_relationships: "Bedriftsrelasjoner"
   remove_tax: "Fjern avgift"
   enterprise_terms_of_service: "Tjenestevilkår for Bedrifter"
   enterprises_require_tos: "Bedrifter må godta Tjenestevilkår"
@@ -2137,7 +2168,8 @@ nb:
   amount: "Beløp"
   state_names:
     ready: Klar
-    pending: I påvente av
+    pending: Venter
+    shipped: Levert
   js:
     saving: 'Lagrer...'
     changes_saved: 'Endringene er lagret.'
@@ -2155,10 +2187,14 @@ nb:
     choose: Velge
     resolve_errors: Vennligst løse følgende feil
     more_items: "+ %{count} Flere"
+    default_card_updated: Standardkort oppdatert
     admin:
       enterprise_limit_reached: "Du har nådd standardgrensen for bedrifter per konto. Skriv til %{contact_email} hvis du trenger å øke den."
       modals:
         got_it: Jeg forstår
+        close: "Lukk"
+        invite: "Inviter"
+        invite_title: "Inviter en uregistrert bruker"
         tag_rule_help:
           title: Regler for Merkelapper
           overview: Oversikt
@@ -2271,6 +2307,8 @@ nb:
           resolve: Løse
       new_tag_rule_dialog:
         select_rule_type: "Velg en regeltype:"
+      resend_user_email_confirmation:
+        resend: "Send på nytt"
     out_of_stock:
       reduced_stock_available: Redusert lager tilgjengelig
       out_of_stock_text: >
@@ -2332,6 +2370,8 @@ nb:
     email: Epost
     account_updated: "Konto oppdatert!"
     my_account: "Min konto"
+    date: "Dato"
+    time: "Tid"
     admin:
       orders:
         invoice:
@@ -2386,12 +2426,13 @@ nb:
           products_head:
             name: Navn
             unit: Enhet
-            display_as: Vis Som
+            display_as: Vis som
             category: Kategori
             tax_category: Avgiftskategori
-            inherits_properties?: Arver Egenskaper?
-            available_on: Tilgjengelig På
+            inherits_properties?: Arver egenskaper?
+            available_on: Tilgjengelig på
             av_on: "Tilgj. På"
+            import_date: "Importdato"
           products_variant:
             variant_has_n_overrides: "Denne varianten har %{n} overstyring(er)"
             new_variant: "Ny variant"
@@ -2409,9 +2450,6 @@ nb:
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Pakkseddel'
           bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
-      shared:
-        configuration_menu:
-          stripe_connect: Stripe Connect
       variants:
         autocomplete:
           producer_name: Produsent
@@ -2519,5 +2557,8 @@ nb:
         total: Total
         paid?: Betalt?
         view: Vis
+      saved_cards:
+        default?: Standard?
+        delete?: Slett?
     localized_number:
       invalid_format: har et ugyldig format. Vennligst skriv inn et nummer.

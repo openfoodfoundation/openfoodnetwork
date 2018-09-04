@@ -91,3 +91,5 @@
                     \:
                 %td.total.align-center
                   %span#order_form_total {{ subscription.estimatedTotal() | currency }}
+          %p.notice
+            = t "this_is_an_estimate", scope: 'admin.subscriptions.subscription_line_items'

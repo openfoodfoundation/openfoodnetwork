@@ -1,4 +1,17 @@
 -# = render "spree/admin/payments/source_forms/gateway", payment_method: payment_method
+.stripe
+  %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
+  - if Stripe.publishable_key
+    :javascript
+      angular.module('admin.payments').value("stripeObject", Stripe("#{Stripe.publishable_key}"))
 
-%strong
-  = t('.no_payment_via_admin_backend')
+  .row
+    .three.columns
+      = label_tag :cardholder_name, t(:cardholder_name)
+    .six.columns
+      = text_field_tag :cardholder_name, nil, {size: 40, "ng-model" => 'form_data.name'}
+  .row
+    .three.columns
+      = label_tag :card_details, t(:card_details)
+    .six.columns
+      %stripe-elements

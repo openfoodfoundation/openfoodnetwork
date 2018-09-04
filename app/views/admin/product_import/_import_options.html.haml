@@ -1,15 +1,15 @@
 %h5= t('admin.product_import.import.options_and_defaults')
 %br
 
-- @importer.suppliers_index.each do |name, supplier_id|
-  - if name and supplier_id and @importer.permission_by_id?(supplier_id)
+- @importer.suppliers_index.each do |name, attrs|
+  - if name and attrs[:id] and @importer.permission_by_id?(attrs[:id])
     %div.panel-section.import-settings
       %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active}'}}
         %div.header-icon.success
           %i.fa.fa-check-circle
         %div.header-description
           = name
-  - elsif name and supplier_id
+  - elsif name and attrs[:id]
     %div.panel-section.import-settings
       %div.panel-header
         %div.header-icon.error
