@@ -354,6 +354,46 @@ en:
         total_monthly_bill_incl_tax: "Total Monthly Bill (Incl. Tax)"
         total_monthly_bill_incl_tax_tip: "The example total monthly bill with tax included, given the settings and the turnover provided."
 
+    cache_settings:
+      show:
+        title: Caching
+        distributor: Distributor
+        order_cycle: Order Cycle
+        status: Status
+        diff: Diff
+        error: Error
+
+    invoice_settings:
+      edit:
+        title: Invoice Settings
+        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
+        enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
+
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "Settings"
+        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
+        no_api_key_msg: No Stripe account exists for this enterprise.
+        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
+        status: Status
+        ok: Ok
+        instance_secret_key: Instance Secret Key
+        account_id: Account ID
+        business_name: Business Name
+        charges_enabled: Charges Enabled
+        charges_enabled_warning: "Warning: Charges are not enabled for your account"
+        auth_fail_error: The API key you provided is invalid
+        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
+
+    matomo_settings:
+      edit:
+        title: "Matomo Settings"
+        matomo_url: "Matomo URL"
+        matomo_site_id: "Matomo Site ID"
+        info_html: "Matomo is a Web and Mobile Analytics. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
+        config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+
     customers:
       index:
         add_customer: "Add Customer"
@@ -380,15 +420,6 @@ en:
       destroy:
         has_associated_orders: 'Delete failed: customer has associated orders with his shop'
 
-    cache_settings:
-      show:
-        title: Caching
-        distributor: Distributor
-        order_cycle: Order Cycle
-        status: Status
-        diff: Diff
-        error: Error
-
     contents:
       edit:
         title: Content
@@ -397,6 +428,7 @@ en:
         producer_signup_page: Producer signup page
         hub_signup_page: Hub signup page
         group_signup_page: Group signup page
+        main_links: Main Menu Links
         footer_and_external_links: Footer and External Links
         your_content: Your content
 
@@ -481,7 +513,7 @@ en:
         shipping_categories: Shipping Categories
       import:
         review: Review
-        proceed: Proceed
+        import: Import
         save: Save
         results: Results
         save_imported: Save imported products
@@ -748,7 +780,7 @@ en:
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
       actions:
-        edit_profile: Edit Profile
+        edit_profile: Settings
         properties: Properties
         payment_methods: Payment Methods
         payment_methods_tip: This enterprise has no payment methods
@@ -788,13 +820,14 @@ en:
         no_enterprises_found: No enterprises found.
         search_placeholder: Search By Name
         manage: Manage
+        manage_link: Settings
       new_form:
         owner: Owner
         owner_tip: The primary user responsible for this enterprise.
         i_am_producer: I am a Producer
         contact_name: Contact Name
       edit:
-        editing: 'Editing:'
+        editing: 'Settings:'
         back_link: Back to enterprises list
       new:
         title: New Enterprise
@@ -898,12 +931,6 @@ en:
     shared:
       user_guide_link:
         user_guide: User Guide
-
-    invoice_settings:
-      edit:
-        title: Invoice Settings
-        invoice_style2?: Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)
-        enable_receipt_printing?: Show options for printing receipts using thermal printers in order dropdown?
     overview:
       enterprises_header:
         ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
@@ -999,6 +1026,10 @@ en:
         address: 2. Address
         products: 3. Add Products
         review: 4. Review & Save
+      subscription_line_items:
+        this_is_an_estimate: |
+          The displayed prices are only an estimate and calculated at the time the subscription is changed.
+          If you change prices or fees, orders will be updated, but the subscription will still display the old values.
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
@@ -1038,23 +1069,6 @@ en:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
 
-    stripe_connect_settings:
-      edit:
-        title: "Stripe Connect"
-        settings: "Settings"
-        stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
-        no_api_key_msg: No Stripe account exists for this enterprise.
-        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
-        status: Status
-        ok: Ok
-        instance_secret_key: Instance Secret Key
-        account_id: Account ID
-        business_name: Business Name
-        charges_enabled: Charges Enabled
-        charges_enabled_warning: "Warning: Charges are not enabled for your account"
-        auth_fail_error: The API key you provided is invalid
-        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
-
     # Admin controllers
     controllers:
       enterprises:
@@ -1086,6 +1100,33 @@ en:
     register_call:
       selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
+    footer:
+      footer_global_headline: "OFN Global"
+      footer_global_home: "Home"
+      footer_global_news: "News"
+      footer_global_about: "About"
+      footer_global_contact: "Contact"
+      footer_sites_headline: "OFN Sites"
+      footer_sites_developer: "Developer"
+      footer_sites_community: "Community"
+      footer_sites_userguide: "User Guide"
+      footer_secure: "Secure and trusted."
+      footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
+      footer_contact_headline: "Keep in touch"
+      footer_contact_email: "Email us"
+      footer_nav_headline: "Navigate"
+      footer_join_headline: "Join us"
+      footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
+      footer_join_cta: "Tell me more!"
+      footer_legal_call: "Read our"
+      footer_legal_tos: "Terms and conditions"
+      footer_legal_visit: "Find us on"
+      footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+      footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
+      footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
+      footer_data_privacy_policy: "privacy policy"
+      footer_data_cookies_policy: "cookies policy"
+      footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
   shop:
     messages:
       login: "login"
@@ -1128,6 +1169,21 @@ en:
   ticket_column_unit_price: "Unit Price"
   ticket_column_total_price: "Total Price"
 
+  menu_1_title: "Shops"
+  menu_1_url: "/shops"
+  menu_2_title: "Map"
+  menu_2_url: "/map"
+  menu_3_title: "Producers"
+  menu_3_url: "/producers"
+  menu_4_title: "Groups"
+  menu_4_url: "/groups"
+  menu_5_title: "About"
+  menu_5_url: "http://www.openfoodnetwork.org/"
+  menu_6_title: "Connect"
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_7_title: "Learn"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME
   logo_mobile_svg: "Mobile logo (SVG)" #FIXME
@@ -1143,7 +1199,6 @@ en:
   footer_email: "Email"
   footer_links_md: "Links"
   footer_about_url: "About URL"
-  footer_tos_url: "Terms of Service URL"
 
   name: Name
   first_name: First Name
@@ -1225,34 +1280,47 @@ en:
   ie_warning_ie: Upgrade Internet Explorer
   ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
 
-  footer_global_headline: "OFN Global"
-  footer_global_home: "Home"
-  footer_global_news: "News"
-  footer_global_about: "About"
-  footer_global_contact: "Contact"
-
-  footer_sites_headline: "OFN Sites"
-  footer_sites_developer: "Developer"
-  footer_sites_community: "Community"
-  footer_sites_userguide: "User Guide"
-
-  footer_secure: "Secure and trusted."
-  footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
-
-  footer_contact_headline: "Keep in touch"
-  footer_contact_email: "Email us"
-
-  footer_nav_headline: "Navigate"
-  footer_join_headline: "Join us"
-  footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
-  footer_join_cta: "Tell me more!"
-
-  footer_legal_call: "Read our"
-  footer_legal_tos: "Terms and conditions"
-  footer_legal_visit: "Find us on"
-  footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
-
-  footer_skylight_dashboard_html: Performance data is available on %{dashboard}.
+  legal:
+    cookies_policy:
+      header: "How We Use Cookies"
+      desc_part_1: "Cookies are very small text files that are stored on your computer when you visit some websites."
+      desc_part_2: "In OFN we are fully respectful of your privacy. We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We might in the future propose you to share some of your data to build new commons services that could be useful for the ecosystem (like logistics services for short food systems) but we are not yet there, and we won’t do it without your authorization :-)"
+      desc_part_3: "We use cookies mainly to remember who you are if you 'log in' to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website. Here is the list of cookies we use!"
+      essential_cookies: "Essential Cookies"
+      essential_cookies_desc: "The following cookies are strictly necessary for the operation of our website."
+      essential_cookies_note: "Most cookies only contain a unique identifier, but no other data, so your email address and password for instance are never contained in them and never exposed."
+      cookie_domain: "Set By:"
+      cookie_session_desc: "Used to allow the website to remember users between page visits, for example, remember items in your cart."
+      cookie_consent_desc: "Used to maintain status of user consent to store cookies"
+      cookie_remember_me_desc: "Used if the user has requested the website to remember him. This cookie is automatically deleted after 12 days. If as a user you want that cookie to be deleted, you only need to logout. If you don’t want that cookie to be installed on your computer you shouldn’t check the “remember me” checkbox when logging in."
+      cookie_openstreemap_desc: "Used by our friendly open source mapping provider (OpenStreetMap) to ensure that it does not receive too many requests during a given time period, to prevent abuse of their services."
+      cookie_stripe_desc: "Data collected by our payment processor Stripe for fraud detection https://stripe.com/cookies-policy/legal. Not all shops use Stripe as a payment method but it is a good practice to prevent fraud to apply it to all pages. Stripe probably build a picture of which of our pages usually interact with their API and then flag anything unusual. So setting the Stripe cookie has a broader function than simply the provision of a payment method to a user. Removing it could affect the security of the service itself. You can learn more about Stripe and read its privacy policy at https://stripe.com/privacy."
+      statistics_cookies: "Statistics Cookies"
+      statistics_cookies_desc: "The following are not strictly necessary, but help to provide you with the best user experience by allowing us to analyse user behaviour, identify which features you use most, or don’t use, understand user experience issues, etc."
+      statistics_cookies_analytics_desc_html: "To collect and analyse platform usage data, we use Google Analytics, as it was the default service connected with Spree (the e-commerce open source software that we built on) but our vision is to switch to <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik, open source analytics tool that is GDPR compliant and protects your privacy) as soon as we can."
+      statistics_cookies_matomo_desc_html: "To collect and analyse platform usage data, we use <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik), an open source analytics tool that is GDPR compliant and protects your privacy."
+      cookie_analytics_utma_desc: "Used to distinguish users and sessions. The cookie is created when the javascript library executes and no existing __utma cookies exists. The cookie is updated every time data is sent to Google Analytics."
+      cookie_analytics_utmt_desc: "Used to throttle request rate."
+      cookie_analytics_utmb_desc: "Used to determine new sessions/visits. The cookie is created when the javascript library executes and no existing __utmb cookies exists. The cookie is updated every time data is sent to Google Analytics."
+      cookie_analytics_utmc_desc: "Not used in ga.js. Set for interoperability with urchin.js. Historically, this cookie operated in conjunction with the __utmb cookie to determine whether the user was in a new session/visit."
+      cookie_analytics_utmz_desc: "Stores the traffic source or campaign that explains how the user reached your site. The cookie is created when the javascript library executes and is updated every time data is sent to Google Analytics."
+      cookie_matomo_basics_desc: "Matomo first party cookies to collect statistics."
+      cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording cookie."
+      cookie_matomo_ignore_desc: "Cookie used to exclude user from being tracked."
+      disabling_cookies_header: "Warning on disabling cookies"
+      disabling_cookies_desc: "As a user you can always allow, block or delete Open Food Network’s or any other website cookies whenever you want to through your browser’s setting control. Each browser has a different operative. Here are the links:"
+      disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
+      disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
+      disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
+      disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Open Food Network, the website won’t work, you will not be able to add anything to your cart neither to checkout for instance."
+    cookies_banner:
+      cookies_usage: "This site uses cookies in order to make your navigation frictionless and secure, and to help us understand how you use it in order to improve the features we offer."
+      cookies_definition: "Cookies are very small text files that are stored on your computer when you visit some websites."
+      cookies_desc: "We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We use cookies mainly to remember who you are if you ‘log in’ to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website."
+      cookies_policy_link_desc: "If you want to learn more, check our"
+      cookies_policy_link: "cookies policy"
+      cookies_accept_button: "Accept Cookies"
 
   home_shop: Shop Now
 
@@ -1391,6 +1459,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
   email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
   email_so_contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
+  email_so_contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at} by contacting <strong>%{distributor}</strong> via %{email}."
   email_so_confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed"
   email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
   email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
@@ -1685,6 +1754,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   error_number: "must be number"
   error_email: "must be email address"
   error_not_found_in_database: "%{name} not found in database"
+  error_not_primary_producer: "%{name} is not enabled as a producer"
   error_no_permission_for_enterprise: "\"%{name}\": you do not have permission to manage products for this enterprise"
   item_handling_fees: "Item Handling Fees (included in item totals)"
   january: "January"
@@ -2048,15 +2118,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   edit_profile_details_etc: "Change your profile description, images, etc."
   order_cycle: "Order Cycle"
   order_cycles: "Order Cycles"
-  enterprises: "Enterprises"
   enterprise_relationships: "Enterprise permissions"
   remove_tax: "Remove tax"
-  enterprise_terms_of_service: "Enterprise Terms of Service"
-  enterprises_require_tos: "Enterprises must accept Terms of Service"
+
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_link_text: "Terms of Service."
   enterprise_tos_agree: "I agree to the above Terms of Service"
+
   tax_settings: "Tax Settings"
   products_require_tax_category: "products require tax category"
   admin_shared_address_1: "Address"
@@ -2559,7 +2628,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       payments:
         source_forms:
           stripe:
-            no_payment_via_admin_backend: Creating Stripe-based payments from the admin backend is not possible at this time
+            error_saving_payment: Error saving payment
+            submitting_payment: Submitting payment...
       products:
         new:
           title: 'New Product'
@@ -2600,15 +2670,21 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
-      shared:
-        configuration_menu:
-          stripe_connect: Stripe Connect
       users:
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
         autocomplete:
           producer_name: Producer
+      general_settings:
+        edit:
+          legal_settings: "Legal Settings"
+          cookies_consent_banner_toggle: "Display cookies consent banner"
+          privacy_policy_url: "Privacy Policy URL"
+          enterprises_require_tos: "Enterprises must accept Terms of Service"
+          cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
+          cookies_policy_ga_section: "Display Google Analytics section on cookies policy page"
+          footer_tos_url: "Terms of Service URL"
     checkout:
       payment:
         stripe:

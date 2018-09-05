@@ -15,17 +15,17 @@ feature 'Enterprises Index' do
       within("tr.enterprise-#{s.id}") do
         expect(page).to have_content s.name
         expect(page).to have_select "enterprise_set_collection_attributes_1_sells"
-        expect(page).to have_content "Edit Profile"
+        expect(page).to have_content "Settings"
         expect(page).to have_content "Delete"
-        expect(page).to_not have_content "Payment Methods"
-        expect(page).to_not have_content "Shipping Methods"
+        expect(page).to have_no_content "Payment Methods"
+        expect(page).to have_no_content "Shipping Methods"
         expect(page).to have_content "Enterprise Fees"
       end
 
       within("tr.enterprise-#{d.id}") do
         expect(page).to have_content d.name
         expect(page).to have_select "enterprise_set_collection_attributes_0_sells"
-        expect(page).to have_content "Edit Profile"
+        expect(page).to have_content "Settings"
         expect(page).to have_content "Delete"
         expect(page).to have_content "Payment Methods"
         expect(page).to have_content "Shipping Methods"
@@ -45,8 +45,8 @@ feature 'Enterprises Index' do
 
       context "without violating rules" do
         before do
-          login_to_admin_section
-          click_link 'Enterprises'
+          quick_login_as_admin
+          visit admin_enterprises_path
         end
 
         it "updates the enterprises" do
@@ -72,8 +72,8 @@ feature 'Enterprises Index' do
           d_manager.enterprise_roles.build(enterprise: second_distributor).save
           expect(d.owner).to_not eq d_manager
 
-          login_to_admin_section
-          click_link 'Enterprises'
+          quick_login_as_admin
+          visit admin_enterprises_path
         end
 
         it "does not update the enterprises and displays errors" do
@@ -106,12 +106,12 @@ feature 'Enterprises Index' do
       enterprise_manager.enterprise_roles.build(enterprise: supplier1).save
       enterprise_manager.enterprise_roles.build(enterprise: distributor1).save
 
-      login_to_admin_as enterprise_manager
+      quick_login_as enterprise_manager
     end
 
     context "listing enterprises", js: true do
       it "displays enterprises I have permission to manage" do
-        click_link "Enterprises"
+        visit admin_enterprises_path
 
         within("tbody#e_#{distributor1.id}") do
           expect(page).to have_content distributor1.name
@@ -131,27 +131,27 @@ feature 'Enterprises Index' do
           expect(page).to have_selector "td.package", text: 'Profile'
         end
 
-        expect(page).to_not have_content "supplier2.name"
-        expect(page).to_not have_content "distributor2.name"
+        expect(page).to have_no_content "supplier2.name"
+        expect(page).to have_no_content "distributor2.name"
 
         expect(find("#content-header")).to have_link "New Enterprise"
       end
 
 
       it "does not give me an option to change or update the package and producer properties of enterprises I manage" do
-        click_link "Enterprises"
+        visit admin_enterprises_path
 
         within("tbody#e_#{distributor1.id}") do
           find("td.producer").click
           expect(page).to have_selector "a.selector.producer.disabled"
           find("a.selector.producer.disabled").click
           expect(page).to have_selector "a.selector.non-producer.selected.disabled"
-          expect(page).to_not have_selector "a.update"
+          expect(page).to have_no_selector "a.update"
           find("td.package").click
           expect(page).to have_selector "a.selector.hub-profile.disabled"
           find("a.selector.hub-profile.disabled").click
           expect(page).to have_selector "a.selector.hub.selected.disabled"
-          expect(page).to_not have_selector "a.update"
+          expect(page).to have_no_selector "a.update"
         end
       end
     end
@@ -162,24 +162,24 @@ feature 'Enterprises Index' do
     let!(:owned_distributor) { create(:distributor_enterprise, name: 'Owned Distributor', owner: user) }
 
     before do
-      login_to_admin_as user
+      quick_login_as user
     end
 
     context "listing enterprises", js: true do
       it "allows me to change or update the package and producer properties of enterprises I manage" do
-        click_link "Enterprises"
+        visit admin_enterprises_path
 
         within("tbody#e_#{owned_distributor.id}") do
           # Open the producer panel
           find("td.producer").click
 
-          expect(page).to_not have_selector "a.selector.producer.selected"
+          expect(page).to have_no_selector "a.selector.producer.selected"
           expect(page).to have_selector "a.selector.non-producer.selected"
 
           # Change to a producer
           find("a.selector.producer").click
 
-          expect(page).to_not have_selector "a.selector.non-producer.selected"
+          expect(page).to have_no_selector "a.selector.non-producer.selected"
           expect(page).to have_selector "a.selector.producer.selected"
           expect(page).to have_selector "a.update", text: "SAVE"
 
@@ -191,16 +191,16 @@ feature 'Enterprises Index' do
           # Open the package panel
           find("td.package").click
 
-          expect(page).to_not have_selector "a.selector.producer-profile.selected"
-          expect(page).to_not have_selector "a.selector.producer-shop.selected"
+          expect(page).to have_no_selector "a.selector.producer-profile.selected"
+          expect(page).to have_no_selector "a.selector.producer-shop.selected"
           expect(page).to have_selector "a.selector.producer-hub.selected"
 
           # Change to a producer-shop
           find("a.selector.producer-shop").click
 
-          expect(page).to_not have_selector "a.selector.producer-profile.selected"
+          expect(page).to have_no_selector "a.selector.producer-profile.selected"
           expect(page).to have_selector "a.selector.producer-shop.selected"
-          expect(page).to_not have_selector "a.selector.producer-hub.selected"
+          expect(page).to have_no_selector "a.selector.producer-hub.selected"
           expect(page).to have_selector "a.update", text: "SAVE"
 
           # Save selection

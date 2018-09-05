@@ -42,7 +42,7 @@
               %tr
                 %td{:align => "center"}
                   %p
-                    %a{:href => "#{ URI.join(spree.root_url, ContentConfig.footer_tos_url).to_s }", :target => "_blank"}
+                    %a{:href => "#{ URI.join(spree.root_url, Spree::Config.footer_tos_url).to_s }", :target => "_blank"}
                       = t :terms_of_service
                     |
                     %a{:href => "#{ spree.root_url }"}

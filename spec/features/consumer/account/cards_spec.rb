@@ -67,7 +67,7 @@ feature "Credit Cards", js: true do
       end
 
       expect(page).to have_content I18n.t(:card_has_been_removed, number: "x-#{default_card.last_digits}")
-      expect(page).to_not have_selector ".card#card#{default_card.id}"
+      expect(page).to have_no_selector ".card#card#{default_card.id}"
 
       # Allows authorisation of card use by shops
       within "tr#customer#{customer.id}" do

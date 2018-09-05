@@ -17,6 +17,13 @@ feature 'Subscriptions' do
       let!(:subscription2) { create(:subscription, shop: shop2, with_items: true, with_proxy_orders: true) }
       let!(:subscription_unmanaged) { create(:subscription, shop: shop_unmanaged, with_items: true, with_proxy_orders: true) }
 
+      before do
+        subscription.update_attributes(shipping_fee_estimate: 3.5)
+        subscription.subscription_line_items.each do |sli|
+          sli.update_attributes(price_estimate: 5)
+        end
+      end
+
       it "passes the smoke test" do
         visit spree.admin_path
         click_link 'Orders'
@@ -57,8 +64,20 @@ feature 'Subscriptions' do
         expect(page).to have_content subscription.customer.email
         first("div#columns-dropdown", :text => "COLUMNS").click
         first("div#columns-dropdown div.menu div.menu_item", text: "Customer").click
-        expect(page).to_not have_selector "th.customer"
-        expect(page).to_not have_content subscription.customer.email
+        expect(page).to have_no_selector "th.customer"
+        expect(page).to have_no_content subscription.customer.email
+
+        # Viewing Products
+        within "tr#so_#{subscription.id}" do
+          expect(page).to have_selector "td.items.panel-toggle", text: 3
+          page.find("td.items.panel-toggle").trigger('click')
+        end
+
+        within "#subscription-line-items" do
+          expect(page).to have_selector "span#order_subtotal", text: "$15.00" # 3 x $5 items
+          expect(page).to have_selector "span#order_fees", text: "$3.50" # $3.5 shipping
+          expect(page).to have_selector "span#order_form_total", text: "$18.50" # 3 x $5 items + $3.5 shipping
+        end
 
         # Viewing Orders
         within "tr#so_#{subscription.id}" do
@@ -68,10 +87,11 @@ feature 'Subscriptions' do
 
         within ".subscription-orders" do
           expect(page).to have_selector "tr.proxy_order", count: 1
+          expect(page).to have_content "$18.50" # 3 x $5 items + $3.5 shipping
 
           proxy_order = subscription.proxy_orders.first
           within "tr#po_#{proxy_order.id}" do
-            expect(page).to_not have_content 'CANCELLED'
+            expect(page).to have_no_content 'CANCELLED'
             accept_alert 'Are you sure?' do
               find("a.cancel-order").trigger('click')
             end

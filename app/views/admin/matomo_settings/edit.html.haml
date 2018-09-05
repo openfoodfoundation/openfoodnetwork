@@ -1,0 +1,23 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t('.title')
+
+= form_tag main_app.admin_matomo_settings_path, :method => :put do
+
+  .div
+    %legend= t('.info_html')
+    = tag(:br)
+    = t('.config_instructions_html')
+
+  .field
+    = label_tag(:matomo_url, t('.matomo_url')) + tag(:br)
+    = preference_field_tag("preferences[#{:matomo_url}]", Spree::Config[:matomo_url], type: Spree::Config.preference_type(:matomo_url))
+
+  .field
+    = label_tag(:matomo_site_id, t('.matomo_site_id')) + tag(:br)
+    = preference_field_tag("preferences[#{:matomo_site_id}]", Spree::Config[:matomo_site_id], type: Spree::Config.preference_type(:matomo_site_id))
+
+
+  .form-buttons{"data-hook" => "buttons"}
+    = button t(:update), 'icon-refresh'

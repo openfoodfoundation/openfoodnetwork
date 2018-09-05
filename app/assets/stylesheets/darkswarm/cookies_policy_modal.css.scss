@@ -1,0 +1,24 @@
+@import 'branding';
+
+.cookies-policy-modal {
+  background: $disabled-light;
+  border-bottom-color: $disabled-light;
+
+  table {
+    width: 100%;
+
+    tr:nth-of-type(even) {
+      background-color: $disabled-very-light;
+    }
+
+    p {
+      margin-bottom: .25rem;
+    }
+  }
+
+  &.fade {
+    -ms-transform: translate(0, 0) !important;
+    -webkit-transform: translate(0, 0) !important;
+    transform: translate(0, 0) !important;
+  }
+}

@@ -1,21 +1,28 @@
-<!--- If what you want to file is not a bug, please use the [Feature
-template](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Feature-template)
-instead -->
+<!-- Provide a general summary of the issue in the Title above.
 
-<!--- Provide a general summary of the issue in the Title above -->
+If your issue is not a bug, please use the Feature template instead:
+https://github.com/openfoodfoundation/openfoodnetwork/wiki/Feature-template
 
+-->
 ## Description
-<!--- Provide a more detailed introduction to the issue itself, and why you consider it to be a bug -->
+<!-- Provide a more detailed introduction to the issue itself, and why you consider it to be a bug -->
+
+
 
 ## Expected Behavior
-<!--- Tell us what should happen -->
+<!-- Tell us what should happen -->
+
+
 
 ## Actual Behavior
-<!--- Tell us what happens instead -->
+<!-- Tell us what happens instead -->
+
+
 
 ## Steps to Reproduce
-<!--- Provide an unambiguous set of steps to reproduce this bug -->
-<!--- Include code to reproduce, if relevant -->
+<!-- Provide an unambiguous set of steps to reproduce this bug -->
+<!-- Include code to reproduce if relevant -->
+
 1.
 2.
 3.
@@ -25,18 +32,35 @@ instead -->
 <!-- Provide a screenshot or brief animated gif reproducing the bug. Linux users can use
 [Peek](https://github.com/phw/peek#ubuntu) while Mac users can use [Recordit](http://recordit.co/) -->
 
+
+
 ## Context
-<!--- How has this bug affected you? What were you trying to accomplish? -->
+<!-- How has this bug affected you? What were you trying to accomplish? -->
+
+
 
 ## Severity
-<!--- Use the [Bug severity
-guideline](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Bug-severity) to assign one to this bug -->
+<!-- Assign a label and explain the impact.
+
+bug-s1: a critical feature is broken: checkout, payments, signup, login
+bug-s2: a non-critical feature is broken, no workaround
+bug-s3: a feature is broken but there is a workaround
+bug-s4: it's annoying, but you can use it
+bug-s5: we can live with it, only a few users impacted
+
+https://github.com/openfoodfoundation/openfoodnetwork/wiki/Bug-severity
+-->
+
+
 
 ## Your Environment
-<!--- Include as many relevant details about the environment you experienced the bug in -->
+<!-- Include relevant details about the environment you experienced the bug in -->
+
 * Version used:
 * Browser name and version:
 * Operating System and version (desktop or mobile):
 
 ## Possible Fix
-<!--- Not obligatory, but suggest a fix or reason for the bug -->
+<!-- Not obligatory, but suggest a fix or reason for the bug -->
+
+

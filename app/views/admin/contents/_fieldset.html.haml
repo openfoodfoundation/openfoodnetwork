@@ -2,7 +2,11 @@
   %legend{align: "center"}= name
   - preferences.each do |key|
     - type = ContentConfig.preference_type(key)
+    - if name == t('admin.contents.edit.main_links') && type == :boolean
+      - text = t("#{key}_title") + " - " + t("#{key}_url")
+    - else
+      - text = t(key)
     .field
-      = label_tag(key, t(key) + ': ') + tag(:br) if type != :boolean
+      = label_tag(key, text + ': ') + tag(:br) if type != :boolean
       = preference_field_tag(key, ContentConfig[key], :type => type)
-      = label_tag(key, t(key)) + tag(:br) if type == :boolean
+      = label_tag(key, text) + tag(:br) if type == :boolean

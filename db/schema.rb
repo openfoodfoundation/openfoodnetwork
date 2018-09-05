@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180510083800) do
+ActiveRecord::Schema.define(:version => 20180812214434) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -52,12 +52,6 @@ ActiveRecord::Schema.define(:version => 20180510083800) do
   end
 
   add_index "billable_periods", ["account_invoice_id"], :name => "index_billable_periods_on_account_invoice_id"
-
-  create_table "carts", :force => true do |t|
-    t.integer "user_id"
-  end
-
-  add_index "carts", ["user_id"], :name => "index_carts_on_user_id"
 
   create_table "column_preferences", :force => true do |t|
     t.integer  "user_id",     :null => false
@@ -623,7 +617,6 @@ ActiveRecord::Schema.define(:version => 20180510083800) do
     t.integer  "order_cycle_id"
     t.string   "currency"
     t.string   "last_ip_address"
-    t.integer  "cart_id"
     t.integer  "customer_id"
     t.integer  "created_by_id"
   end
@@ -1281,8 +1274,6 @@ ActiveRecord::Schema.define(:version => 20180510083800) do
   add_foreign_key "billable_periods", "enterprises", name: "bill_items_enterprise_id_fk"
   add_foreign_key "billable_periods", "spree_users", name: "bill_items_owner_id_fk", column: "owner_id"
 
-  add_foreign_key "carts", "spree_users", name: "carts_user_id_fk", column: "user_id"
-
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
 
@@ -1363,7 +1354,6 @@ ActiveRecord::Schema.define(:version => 20180510083800) do
   add_foreign_key "spree_option_values_variants", "spree_option_values", name: "spree_option_values_variants_option_value_id_fk", column: "option_value_id"
   add_foreign_key "spree_option_values_variants", "spree_variants", name: "spree_option_values_variants_variant_id_fk", column: "variant_id"
 
-  add_foreign_key "spree_orders", "carts", name: "spree_orders_cart_id_fk"
   add_foreign_key "spree_orders", "customers", name: "spree_orders_customer_id_fk"
   add_foreign_key "spree_orders", "enterprises", name: "spree_orders_distributor_id_fk", column: "distributor_id"
   add_foreign_key "spree_orders", "order_cycles", name: "spree_orders_order_cycle_id_fk"

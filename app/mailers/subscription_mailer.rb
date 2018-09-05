@@ -1,5 +1,6 @@
 class SubscriptionMailer < Spree::BaseMailer
   helper CheckoutHelper
+  helper ShopMailHelper
 
   def confirmation_email(order)
     @type = 'confirmation'

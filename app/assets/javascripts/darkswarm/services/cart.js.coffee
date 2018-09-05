@@ -41,7 +41,7 @@ Darkswarm.factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $roo
     update: =>
       @update_running = true
 
-      $http.post('/orders/populate', @data()).success (data, status)=>
+      $http.post('/cart/populate', @data()).success (data, status)=>
         @saved()
         @update_running = false
 

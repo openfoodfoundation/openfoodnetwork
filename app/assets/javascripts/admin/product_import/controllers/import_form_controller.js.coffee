@@ -1,20 +1,22 @@
-angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $http, $filter, ProductImportService, $timeout) ->
+angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $http, $filter, ProductImportService, ams_data, $timeout) ->
 
   $scope.entries = {}
   $scope.update_counts = {}
   $scope.reset_counts = {}
-  $scope.importSettings = null
+  $scope.supplier_product_counts = ams_data.supplier_product_counts
 
   $scope.updates = {}
   $scope.updated_total = 0
   $scope.updated_ids = []
   $scope.update_errors = []
 
+  $scope.step = 'settings'
   $scope.chunks = 0
   $scope.completed = 0
-  $scope.percentage = "0%"
-  $scope.started = false
-  $scope.finished = false
+  $scope.percentage = {
+    import: "0%",
+    save: "0%"
+  }
 
   $scope.countResettable = () ->
     angular.forEach $scope.supplier_product_counts, (value, key) ->
@@ -25,7 +27,6 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
   $scope.resetProgress = () ->
     $scope.chunks = 0
     $scope.completed = 0
-    $scope.percentage = "0%"
     $scope.started = false
     $scope.finished = false
 
@@ -33,22 +34,23 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
 
   $scope.confirmSettings = () ->
     $scope.step = 'import'
+    $scope.start()
 
   $scope.viewResults = () ->
     $scope.countResettable()
     $scope.step = 'results'
-    $scope.resetProgress()
 
   $scope.acceptResults = () ->
+    $scope.resetProgress()
     $scope.step = 'save'
+    $scope.start()
 
   $scope.finalResults = () ->
     $scope.step = 'complete'
 
   $scope.start = () ->
     $scope.started = true
-    $scope.percentage = "1%"
-    total = $scope.item_count
+    total = ams_data.item_count
     size = 100
     $scope.chunks = Math.ceil(total / size)
 
@@ -64,15 +66,14 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
       i++
 
   $scope.processImport = (start, end) ->
-    $scope.getSettings() if $scope.importSettings == null
     $http(
-      url: $scope.import_url
+      url: ams_data.import_url
       method: 'POST'
       data:
         'start': start
         'end': end
-        'filepath': $scope.filepath
-        'settings': $scope.importSettings
+        'filepath': ams_data.filepath
+        'settings': ams_data.importSettings
     ).success((data, status) ->
       angular.merge($scope.entries, angular.fromJson(data['entries']))
       $scope.sortUpdates(data['reset_counts'])
@@ -83,12 +84,6 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
       console.error(data)
     )
 
-  $scope.getSettings = () ->
-    $scope.importSettings = {
-      reset_all_absent: document.getElementsByName('settings[reset_all_absent]')[0].value,
-      import_into: document.getElementsByName('settings[import_into]')[0].value
-    }
-
   $scope.sortUpdates = (data) ->
     angular.forEach data, (value, key) ->
       if (key in $scope.update_counts)
@@ -97,15 +92,14 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
         $scope.update_counts[key] = value['updates_count']
 
   $scope.processSave = (start, end) ->
-    $scope.getSettings() if $scope.importSettings == null
     $http(
-      url: $scope.save_url
+      url: ams_data.save_url
       method: 'POST'
       data:
         'start': start
         'end': end
-        'filepath': $scope.filepath
-        'settings': $scope.importSettings
+        'filepath': ams_data.filepath
+        'settings': ams_data.importSettings
     ).success((data, status) ->
       $scope.sortResults(data['results'])
 
@@ -131,7 +125,7 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
       $scope.updated_total += value
 
   $scope.resetAbsent = () ->
-    return unless $scope.importSettings['reset_all_absent']
+    return unless ams_data.importSettings['reset_all_absent']
     enterprises_to_reset = []
 
     angular.forEach $scope.reset_counts, (count, enterprise_id) ->
@@ -139,11 +133,11 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
 
     if enterprises_to_reset.length && $scope.updated_ids.length
       $http(
-        url: $scope.reset_url
+        url: ams_data.reset_url
         method: 'POST'
         data:
-          'filepath': $scope.filepath
-          'settings': $scope.importSettings
+          'filepath': ams_data.filepath
+          'settings': ams_data.importSettings
           'reset_absent': true,
           'updated_ids': $scope.updated_ids,
           'enterprises_to_reset': enterprises_to_reset
@@ -155,8 +149,10 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
 
   $scope.updateProgress = () ->
     $scope.completed++
-    $scope.percentage = String(Math.round(($scope.completed / $scope.chunks) * 100)) + '%'
+    $scope.percentage[$scope.step] = String(Math.round(($scope.completed / $scope.chunks) * 100)) + '%'
 
     if $scope.completed == $scope.chunks
-      $scope.finished = true
+      $timeout($scope.viewResults, 1000) if $scope.step == 'import'
+      $timeout($scope.finalResults, 1000) if $scope.step == 'save'
+
       $scope.resetAbsent() if $scope.step == 'save'

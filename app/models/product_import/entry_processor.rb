@@ -1,3 +1,7 @@
+# This class handles the saving of new product, variant, and inventory records created during
+# product import. It also collates data regarding this process for user feedback, as the import
+# is processed in small stages sequentially over a number of requests.
+
 module ProductImport
   class EntryProcessor
     attr_reader :inventory_created, :inventory_updated, :products_created, :variants_created, :variants_updated, :products_reset_count, :supplier_products, :total_supplier_products
@@ -34,7 +38,8 @@ module ProductImport
     end
 
     def count_existing_items
-      @spreadsheet_data.suppliers_index.each do |_supplier_name, supplier_id|
+      @spreadsheet_data.suppliers_index.each do |_supplier_name, attrs|
+        supplier_id = attrs[:id]
         next unless supplier_id && permission_by_id?(supplier_id)
 
         products_count =

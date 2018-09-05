@@ -33,9 +33,10 @@ feature %q{
 
   describe "Customers report" do
     before do
-      login_to_admin_section
-      click_link "Reports"
+      quick_login_as_admin
+      visit spree.admin_reports_path
     end
+
     scenario "customers report" do
       click_link "Mailing List"
       expect(page).to have_select('report_type', selected: 'Mailing List')
@@ -64,8 +65,8 @@ feature %q{
 
   describe "Order cycle management report" do
     before do
-      login_to_admin_section
-      click_link "Reports"
+      quick_login_as_admin
+      visit spree.admin_reports_path
     end
 
     scenario "payment method report" do
@@ -91,8 +92,8 @@ feature %q{
 
   describe "Packing reports" do
     before do
-      login_to_admin_section
-      click_link "Reports"
+      quick_login_as_admin
+      visit spree.admin_reports_path
     end
 
     let(:bill_address1) { create(:address, lastname: "Aman") }
@@ -150,8 +151,8 @@ feature %q{
 
 
   scenario "orders and distributors report" do
-    login_to_admin_section
-    click_link 'Reports'
+    quick_login_as_admin
+    visit spree.admin_reports_path
     click_link 'Orders And Distributors'
     click_button 'Search'
 
@@ -159,8 +160,8 @@ feature %q{
   end
 
   scenario "bulk co-op report" do
-    login_to_admin_section
-    click_link 'Reports'
+    quick_login_as_admin
+    visit spree.admin_reports_path
     click_link 'Bulk Co-Op'
     click_button 'Search'
 
@@ -168,8 +169,8 @@ feature %q{
   end
 
   scenario "payments reports" do
-    login_to_admin_section
-    click_link 'Reports'
+    quick_login_as_admin
+    visit spree.admin_reports_path
     click_link 'Payment Reports'
     click_button 'Search'
 
@@ -204,8 +205,8 @@ feature %q{
 
       order1.finalize!
 
-      login_to_admin_as user1
-      click_link "Reports"
+      quick_login_as user1
+      visit spree.admin_reports_path
       click_link "Sales Tax"
       select("Tax types", from: "report_type")
     end
@@ -239,8 +240,8 @@ feature %q{
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do
-      login_to_admin_section
-      click_link 'Reports'
+      quick_login_as_admin
+      visit spree.admin_reports_path
       click_link 'Orders & Fulfillment Reports'
 
       expect(page).to have_content 'Supplier'
@@ -266,7 +267,7 @@ feature %q{
 
       it "is precise to time of day, not just date" do
         # When I generate a customer report with a timeframe that includes one order but not the other
-        login_to_admin_section
+        quick_login_as_admin
         visit spree.orders_and_fulfillment_admin_reports_path
 
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
@@ -284,7 +285,7 @@ feature %q{
       oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor], orders_open_at: Time.zone.now, orders_close_at: nil)
       o = create(:order, order_cycle: oc, distributor: distributor)
 
-      login_to_admin_section
+      quick_login_as_admin
       visit spree.orders_and_fulfillment_admin_reports_path
 
       expect(page).to have_content "My Order Cycle"
@@ -316,8 +317,8 @@ feature %q{
     end
 
     it "shows products and inventory report" do
-      login_to_admin_section
-      click_link 'Reports'
+      quick_login_as_admin
+      visit spree.admin_reports_path
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
@@ -331,8 +332,8 @@ feature %q{
     end
 
     it "shows the LettuceShare report" do
-      login_to_admin_section
-      click_link 'Reports'
+      quick_login_as_admin
+      visit spree.admin_reports_path
       click_link 'LettuceShare'
       click_button "Search"
 
@@ -349,8 +350,8 @@ feature %q{
     before do
       enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
 
-      login_to_admin_section
-      click_link 'Reports'
+      quick_login_as_admin
+      visit spree.admin_reports_path
 
       click_link 'Users & Enterprises'
     end
@@ -420,8 +421,8 @@ feature %q{
       order1.update_attribute :email, 'customer@email.com'
       Timecop.travel(Time.zone.local(2015, 4, 25, 14, 0, 0)) { order1.finalize! }
 
-      login_to_admin_section
-      click_link 'Reports'
+      quick_login_as_admin
+      visit spree.admin_reports_path
 
       click_link 'Xero Invoices'
     end

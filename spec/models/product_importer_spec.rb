@@ -8,9 +8,10 @@ describe ProductImport::ProductImporter do
   let!(:user) { create_enterprise_user }
   let!(:user2) { create_enterprise_user }
   let!(:user3) { create_enterprise_user }
-  let!(:enterprise) { create(:enterprise, owner: user, name: "User Enterprise") }
-  let!(:enterprise2) { create(:distributor_enterprise, owner: user2, name: "Another Enterprise") }
-  let!(:enterprise3) { create(:distributor_enterprise, owner: user3, name: "And Another Enterprise") }
+  let!(:enterprise) { create(:enterprise, is_primary_producer: true, owner: user, name: "User Enterprise") }
+  let!(:enterprise2) { create(:distributor_enterprise, is_primary_producer: true, owner: user2, name: "Another Enterprise") }
+  let!(:enterprise3) { create(:distributor_enterprise, is_primary_producer: true, owner: user3, name: "And Another Enterprise") }
+  let!(:enterprise4) { create(:enterprise, is_primary_producer: false, owner: user, name: "Non-Producer") }
   let!(:relationship) { create(:enterprise_relationship, parent: enterprise, child: enterprise2, permissions_list: [:create_variant_overrides]) }
 
   let!(:category) { create(:taxon, name: 'Vegetables') }
@@ -163,6 +164,29 @@ describe ProductImport::ProductImporter do
     end
   end
 
+  describe "when enterprises are not valid" do
+    before do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["Product 1", "Non-existent Enterprise", "Vegetables", "5", "5.50", "500", "g"]
+        csv << ["Product 2", "Non-Producer", "Vegetables", "5", "5.50", "500", "g"]
+      end
+      File.write('/tmp/test-m.csv', csv_data)
+      file = File.new('/tmp/test-m.csv')
+      settings = {'import_into' => 'product_list'}
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
+    end
+    after { File.delete('/tmp/test-m.csv') }
+
+    it "adds enterprise errors" do
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(entries['2']['errors']['supplier']).to include "not found in database"
+      expect(entries['3']['errors']['supplier']).to include "not enabled as a producer"
+    end
+  end
+
   describe "adding new variants to existing products and updating exiting products" do
     before do
       csv_data = CSV.generate do |csv|
@@ -254,9 +278,9 @@ describe ProductImport::ProductImporter do
   describe "updating various fields" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "on_demand"]
-        csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0"]
-        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1"]
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku"]
+        csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0", nil]
+        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1", "TOMS"]
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')

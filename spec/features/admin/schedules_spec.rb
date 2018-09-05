@@ -16,10 +16,11 @@ feature 'Schedules', js: true do
     let!(:oc5) { create(:simple_order_cycle, coordinator: managed_enterprise2, name: 'oc5') }
     let!(:weekly_schedule) { create(:schedule, name: 'Weekly', order_cycles: [oc1, oc2, oc3, oc4]) }
 
-    before { login_to_admin_as user }
+    before { quick_login_as user }
 
     describe "Adding a new Schedule" do
       it "immediately shows the schedule in the order cycle list once created" do
+        visit spree.admin_path
         click_link 'Order Cycles'
         expect(page).to have_selector ".order-cycle-#{oc1.id}"
         find('a', text: 'NEW SCHEDULE').click
@@ -65,7 +66,7 @@ feature 'Schedules', js: true do
       let!(:fortnightly_schedule) { create(:schedule, name: 'Fortnightly', order_cycles: [oc1, oc3]) }
 
       it "immediately shows updated schedule lists for order cycles" do
-        click_link 'Order Cycles'
+        visit admin_order_cycles_path
 
         within ".order-cycle-#{oc1.id} td.schedules" do
           find('a', text: "Weekly").click
@@ -100,7 +101,7 @@ feature 'Schedules', js: true do
 
     describe "deleting a schedule" do
       it "immediately removes deleted schedules from order cycles" do
-        click_link 'Order Cycles'
+        visit admin_order_cycles_path
 
         within ".order-cycle-#{oc1.id} td.schedules" do
           find('a', text: "Weekly").click

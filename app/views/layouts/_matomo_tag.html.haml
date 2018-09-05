@@ -1,0 +1,15 @@
+- if Spree::Config.matomo_url.present?
+  :javascript
+    var _paq = _paq || [];
+    _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+    _paq.push(["setCookieDomain", "*.#{Spree::Config.site_url}"]);
+    _paq.push(["setDomains", ["*.#{Spree::Config.site_url}"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="#{Spree::Config.matomo_url}";
+      _paq.push(['setTrackerUrl', u+'piwik.php']);
+      _paq.push(['setSiteId', '#{Spree::Config.matomo_site_id}']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();

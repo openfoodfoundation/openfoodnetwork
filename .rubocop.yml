@@ -63,6 +63,10 @@ Rails/DynamicFindBy:
 Rails/FindBy:
   Enabled: false
 
+# Same as above, #update! is not available until Rails 4
+Rails/ActiveRecordAliases:
+  Enabled: false
+
 # This should be the programmer's discretion, perhaps we should review all of
 # the uses of it an make specific exceptions though.
 Rails/SkipsModelValidations:

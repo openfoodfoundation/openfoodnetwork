@@ -42,7 +42,7 @@ def create_mail_method
     preferred_mail_auth_type: 'login',
     preferred_smtp_username: ENV.fetch('SMTP_USERNAME'),
     preferred_smtp_password: ENV.fetch('SMTP_PASSWORD'),
-    preferred_secure_connection_type: 'None',
+    preferred_secure_connection_type: ENV.fetch('MAIL_SECURE_CONNECTION', 'None'),
     preferred_mails_from: ENV.fetch('MAILS_FROM', "no-reply@#{ENV.fetch('MAIL_DOMAIN')}"),
     preferred_mail_bcc: ENV.fetch('MAIL_BCC', ''),
     preferred_intercept_email: ''

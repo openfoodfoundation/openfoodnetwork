@@ -10,7 +10,6 @@ end
 Spree::Order.class_eval do
   belongs_to :order_cycle
   belongs_to :distributor, class_name: 'Enterprise'
-  belongs_to :cart
   belongs_to :customer
   has_one :proxy_order
   has_one :subscription, through: :proxy_order

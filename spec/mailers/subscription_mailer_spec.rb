@@ -4,7 +4,9 @@ describe SubscriptionMailer do
   include ActionView::Helpers::SanitizeHelper
 
   describe "order placement" do
-    let(:subscription) { create(:subscription, with_items: true) }
+    let(:shop) { create(:enterprise) }
+    let(:customer) { create(:customer, enterprise: shop) }
+    let(:subscription) { create(:subscription, shop: shop, customer: customer, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription: subscription) }
     let!(:order) { proxy_order.initialise_order! }
 
@@ -22,7 +24,6 @@ describe SubscriptionMailer do
         body = SubscriptionMailer.deliveries.last.body.encoded
         expect(body).to include "This order was automatically created for you."
         expect(body).to include "Unfortunately, not all products that you requested were available."
-        expect(body).to include "href=\"#{spree.order_url(order)}\""
       end
     end
 
@@ -37,13 +38,61 @@ describe SubscriptionMailer do
         body = SubscriptionMailer.deliveries.last.body.encoded
         expect(body).to include "This order was automatically created for you."
         expect(body).to_not include "Unfortunately, not all products that you requested were available."
-        expect(body).to include "href=\"#{spree.order_url(order)}\""
+      end
+    end
+
+    describe "linking to order page" do
+      let(:order_link_href) { "href=\"#{spree.order_url(order)}\"" }
+      let(:order_link_style) { "style='[^']+'" }
+
+      let(:shop) { create(:enterprise, allow_order_changes: true) }
+
+      let(:email) { SubscriptionMailer.deliveries.last }
+      let(:body) { email.body.encoded }
+
+      before do
+        SubscriptionMailer.placement_email(order, {}).deliver
+      end
+
+      context "when the customer has a user account" do
+        let(:customer) { create(:customer, enterprise: shop) }
+
+        it "provides link to make changes" do
+          expect(body).to match /<a #{order_link_href} #{order_link_style}>make changes<\/a>/
+          expect(body).to_not match /<a #{order_link_href} #{order_link_style}>view details of this order<\/a>/
+        end
+
+        context "when the distributor does not allow changes to the order" do
+          let(:shop) { create(:enterprise, allow_order_changes: false) }
+
+          it "provides link to view details" do
+            expect(body).to_not match /<a #{order_link_href} #{order_link_style}>make changes<\/a>/
+            expect(body).to match /<a #{order_link_href} #{order_link_style}>view details of this order<\/a>/
+          end
+        end
+      end
+
+      context "when the customer has no user account" do
+        let(:customer) { create(:customer, enterprise: shop, user: nil) }
+
+        it "does not provide link" do
+          expect(body).to_not match /#{order_link_href}/
+        end
+
+        context "when the distributor does not allow changes to the order" do
+          let(:shop) { create(:enterprise, allow_order_changes: false) }
+
+          it "does not provide link" do
+            expect(body).to_not match /#{order_link_href}/
+          end
+        end
       end
     end
   end
 
   describe "order confirmation" do
-    let(:subscription) { create(:subscription, with_items: true) }
+    let(:customer) { create(:customer) }
+    let(:subscription) { create(:subscription, customer: customer, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription: subscription) }
     let!(:order) { proxy_order.initialise_order! }
 
@@ -56,7 +105,29 @@ describe SubscriptionMailer do
     it "sends the email" do
       body = SubscriptionMailer.deliveries.last.body.encoded
       expect(body).to include "This order was automatically placed for you"
-      expect(body).to include "href=\"#{spree.order_url(order)}\""
+    end
+
+    describe "linking to order page" do
+      let(:order_link_href) { "href=\"#{spree.order_url(order)}\"" }
+
+      let(:email) { SubscriptionMailer.deliveries.last }
+      let(:body) { email.body.encoded }
+
+      context "when the customer has a user account" do
+        let(:customer) { create(:customer) }
+
+        it "provides link to view details" do
+          expect(body).to match /#{order_link_href}/
+        end
+      end
+
+      context "when the customer has no user account" do
+        let(:customer) { create(:customer, user: nil) }
+
+        it "does not provide link" do
+          expect(body).to_not match /#{order_link_href}/
+        end
+      end
     end
   end
 
@@ -79,7 +150,8 @@ describe SubscriptionMailer do
   end
 
   describe "failed payment notification" do
-    let(:subscription) { create(:subscription, with_items: true) }
+    let(:customer) { create(:customer) }
+    let(:subscription) { create(:subscription, customer: customer, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription: subscription) }
     let!(:order) { proxy_order.initialise_order! }
 
@@ -99,6 +171,29 @@ describe SubscriptionMailer do
       details = I18n.t("email_so_failed_payment_details_html", distributor: subscription.shop.name)
       expect(body).to include strip_tags(details)
       expect(body).to include "This is a payment failure error"
+    end
+
+    describe "linking to order page" do
+      let(:order_link_href) { "href=\"#{spree.order_url(order)}\"" }
+
+      let(:email) { SubscriptionMailer.deliveries.last }
+      let(:body) { email.body.encoded }
+
+      context "when the customer has a user account" do
+        let(:customer) { create(:customer) }
+
+        it "provides link to view details" do
+          expect(body).to match /#{order_link_href}/
+        end
+      end
+
+      context "when the customer has no user account" do
+        let(:customer) { create(:customer, user: nil) }
+
+        it "does not provide link" do
+          expect(body).to_not match /#{order_link_href}/
+        end
+      end
     end
   end
 
