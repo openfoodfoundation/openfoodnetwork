@@ -1,4 +1,4 @@
-en_GB:
+en_CA:
   language_name: "English"
   activerecord:
     attributes:
@@ -112,10 +112,10 @@ en_GB:
   home: "OFN"
   title: Open Food Network
   welcome_to: 'Welcome to '
-  site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
-  search_by_name: Search by name, town, county or postcode...
-  producers_join: UK producers are now welcome to join Open Food Network UK.
-  charges_sales_tax: Charges VAT?
+  site_meta_description: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can…"
+  search_by_name: Search by name or suburb...
+  producers_join: Australian producers are now welcome to join the Open Food Network.
+  charges_sales_tax: Charges GST?
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -127,14 +127,14 @@ en_GB:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "Please enter your company number."
+  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
   invoice: "Invoice"
   percentage_of_sales: "%{percentage} of sales"
   capped_at_cap: "capped at %{cap}"
   per_month: "per month"
-  free: "pay what you can"
+  free: "free"
   free_trial: "free trial"
-  plus_tax: "plus VAT"
+  plus_tax: "plus GST"
   min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
   say_no: "No"
   say_yes: "Yes"
@@ -205,9 +205,9 @@ en_GB:
     ends_at: Ends At
     ends_on: Ends On
     name: Name
-    on_hand: In Stock
-    on_demand: Unlimited
-    on_demand?: Unlimited?
+    on_hand: On Hand
+    on_demand: On Demand
+    on_demand?: On Demand?
     order_cycle: Order Cycle
     payment: Payment
     payment_method: Payment Method
@@ -222,7 +222,7 @@ en_GB:
     shipping_method: Shipping Method
     shop: Shop
     sku: SKU
-    status_state: County
+    status_state: State
     tags: Tags
     variant: Variant
     weight: Weight
@@ -269,7 +269,7 @@ en_GB:
         manually_run_task: "Manually Run Task "
         update_user_invoice_explained: "Use this button to immediately update invoices for the month to date for each enterprise user in the system. This task can be set up to run automatically every night."
         finalise_user_invoices: "Finalise User Invoices"
-        finalise_user_invoice_explained: "Use this button to finalise all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month."
+        finalise_user_invoice_explained: "Use this button to finalize all invoices in the system for the previous calendar month. This task can be set up to run automatically once a month."
         update_user_invoices: "Update User Invoices"
       errors:
         accounts_distributor: must be set if you wish to create invoices for enterprise users.
@@ -280,7 +280,7 @@ en_GB:
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
     number_localization:
-      number_localization_settings: "Number Localisation Settings"
+      number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
     business_model_configuration:
       edit:
@@ -294,7 +294,7 @@ en_GB:
         fixed_monthly_charge_tip: "A fixed monthly charge for all enterprises who are set up as a shop and have exceeded the minimum billable turnover (if set)."
         percentage_of_turnover: "Percentage of turnover"
         percentage_of_turnover_tip: "When greater than zero, this rate (0.0 - 1.0) will be applied to the total turnover of each shop and added to any fixed charges (to the left) to calculate the monthly bill."
-        monthly_cap_excl_tax: "monthly cap (excl. VAT)"
+        monthly_cap_excl_tax: "monthly cap (excl. GST)"
         monthly_cap_excl_tax_tip: "When greater than zero, this value will be used as a cap on the amount that shops will be charged each month."
         tax_rate: "Tax Rate"
         tax_rate_tip: "Tax rate that applies to the the monthly bill that enterprises are charged for using the system."
@@ -361,9 +361,9 @@ en_GB:
         update_address_error: 'Sorry! Please input all of the required fields!'
         edit_bill_address: 'Edit Billing Address'
         edit_ship_address: 'Edit Shipping Address'
-        required_fileds: 'Required fields are denoted with an asterisk'
+        required_fileds: 'Required fields are denoted with an asterisk '
         select_country: 'Select Country'
-        select_state: 'Select County'
+        select_state: 'Select State'
         edit: 'Edit'
         update_address: 'Update Address'
         confirm_delete: 'Sure to delete?'
@@ -379,7 +379,6 @@ en_GB:
         producer_signup_page: Producer signup page
         hub_signup_page: Hub signup page
         group_signup_page: Group signup page
-        main_links: Main Menu Links
         footer_and_external_links: Footer and External Links
         your_content: Your content
     enterprise_fees:
@@ -507,6 +506,7 @@ en_GB:
         save_errors: Save errors
         import_again: Upload Another File
         view_products: Go To Products Page
+        view_inventory: Go To Inventory Page
     variant_overrides:
       loading_flash:
         loading_inventory: LOADING INVENTORY
@@ -576,22 +576,22 @@ en_GB:
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         business_details:
-          abn: Company Number
+          abn: ABN
           abn_placeholder: eg. 99 123 456 789
-          acn: Charity Number
+          acn: ACN
           acn_placeholder: eg. 123 456 789
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
         contact:
           name: Name
-          name_placeholder: eg. Amanda Plum
+          name_placeholder: eg. Gustav Plum
           email_address: Public Email Address
-          email_address_placeholder: eg. hello@food.co.uk
+          email_address_placeholder: eg. inquiries@fresh-food.com
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
           website: Website
-          website_placeholder: eg. www.truffles.co.uk
+          website_placeholder: eg. www.truffles.com
         enterprise_fees:
           name: Name
           fee_type: Fee Type
@@ -1028,7 +1028,7 @@ en_GB:
         checkout: "Checkout now"
         already_ordered_products: "Already ordered in this order cycle"
     register_call:
-      selling_on_ofn: "Interested in selling through the Open Food Network?"
+      selling_on_ofn: "Interested in getting on the Open Food Network?"
       register: "Register here"
     footer:
       footer_global_headline: "OFN Global"
@@ -1069,7 +1069,7 @@ en_GB:
   card_could_not_be_saved: card could not be saved
   spree_gateway_error_flash_for_checkout: "There was a problem with your payment information: %{error}"
   invoice_billing_address: "Billing address:"
-  invoice_column_tax: "VAT"
+  invoice_column_tax: "GST"
   invoice_column_price: "Price"
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
@@ -1078,13 +1078,13 @@ en_GB:
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
-  invoice_tax_total: "VAT Total:"
+  invoice_tax_total: "GST Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
-  abn: "Company Number:"
-  acn: "Charity Number:"
+  abn: "ABN:"
+  acn: "ACN:"
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
@@ -1092,19 +1092,6 @@ en_GB:
   ticket_column_item: "Item"
   ticket_column_unit_price: "Unit Price"
   ticket_column_total_price: "Total Price"
-  menu_1_title: "Shops"
-  menu_1_url: "/shops"
-  menu_2_title: "Map"
-  menu_3_title: "Producers"
-  menu_3_url: "/producers"
-  menu_4_title: "Groups"
-  menu_4_url: "/groups"
-  menu_5_title: "About"
-  menu_5_url: "http://www.openfoodnetwork.org/"
-  menu_6_title: "Connect"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
-  menu_7_title: "Learn"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -1130,14 +1117,14 @@ en_GB:
   address_placeholder: eg. 123 High Street
   address2: Address (contd.)
   city: City
-  city_placeholder: eg. Newcastle
+  city_placeholder: eg. Northcote
   postcode: Postcode
   postcode_placeholder: eg. 3070
-  state: County
+  state: State
   country: Country
   unauthorized: Unauthorized
   terms_of_service: "Terms of service"
-  on_demand: Unlimited
+  on_demand: On demand
   none: None
   not_allowed: Not allowed
   no_shipping: no shipping methods
@@ -1165,7 +1152,7 @@ en_GB:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Community Forum"
+  label_notices: "Notices"
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
@@ -1237,17 +1224,17 @@ en_GB:
       cookies_policy_link: "cookies policy"
       cookies_accept_button: "Accept Cookies"
   home_shop: Shop Now
-  brandstory_headline: "Re-imagining Local Food"
-  brandstory_intro: "A learning community & tools to support local food systems to thrive"
+  brandstory_headline: "Food, unincorporated."
+  brandstory_intro: "Sometimes the best way to fix the system is to start a new one…"
   brandstory_part1: "We begin from the ground up. With farmers and growers ready to tell their stories proudly and truly. With distributors ready to connect people with products fairly and honestly. With buyers who believe that better weekly shopping decisions can seriously change the world."
   brandstory_part2: "Then we need a way to make it real. A way to empower everyone who grows, sells and buys food. A way to tell all the stories, to handle all the logistics. A way to turn transaction into transformation every day."
   brandstory_part3: "So we build an online marketplace that levels the playing field. It’s transparent, so it creates real relationships. It’s open source, so it’s owned by everyone. It scales to regions and nations, so people start versions across the world."
   brandstory_part4: "It works everywhere. It changes everything."
   brandstory_part5_strong: "We call it Open Food Network."
   brandstory_part6: "We all love food. Now we can love our food system too."
-  learn_body: "Explore models, stories and resources to support you to develop your fair food business or organisation. Find training, events and other opportunities to learn from peers."
+  learn_body: "Explore models, stories and resources to support you to develop your fair food business or organisation.  Find training, events and other opportunities to learn from peers."
   learn_cta: "Get Inspired"
-  connect_body: "Search our full directories of producers, hubs and groups to find fair food traders near you. List your business or organisation on the OFN so buyers can find you. Join the community to get advice and solve problems together."
+  connect_body: "Search our full directories of producers, hubs and groups to find fair food traders near you.  List your business or organisation on the OFN so buyers can find you.  Join the community to get advice and solve problems together."
   connect_cta: "Go Exploring"
   system_headline: "Shopping - here's how it works."
   system_step1: "1. Search"
@@ -1285,7 +1272,7 @@ en_GB:
   checkout_cart_total: Cart total
   checkout_shipping_price: Shipping
   checkout_total_price: Total
-  checkout_back_to_cart: "Back to cart"
+  checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
   order_paid: PAID
   order_not_paid: NOT PAID
@@ -1297,12 +1284,12 @@ en_GB:
   order_delivery_time: Delivery time
   order_special_instructions: "Your notes:"
   order_pickup_time: Ready for collection
-  order_pickup_instructions: Collection instructions
+  order_pickup_instructions: Collection Instructions
   order_produce: Produce
   order_total_price: Total
   order_includes_tax: (includes tax)
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
-  order_hub_info: Hub info
+  order_hub_info: Hub Info
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
@@ -1385,7 +1372,7 @@ en_GB:
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
   producer_mail_greeting: "Dear"
-  producer_mail_text_before: "We now have all the consumer orders for the next food delivery."
+  producer_mail_text_before: "We now have all the consumer orders for the next food drop."
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
@@ -1505,14 +1492,14 @@ en_GB:
   producers_title: Producers
   producers_headline: Find local producers
   producers_signup_title: Sign up as a producer
-  producers_signup_headline: Food producers. Meet OFN.
-  producers_signup_motivation: Sell your food and tell your stories. Save time and money on every overhead. We support innovation without the risk. We're levelling the playing field.
-  producers_signup_send: Register
-  producers_signup_enterprise: Why the Open Food Network?
+  producers_signup_headline: Food producers, empowered.
+  producers_signup_motivation: Sell your food and tell your stories to diverse new markets. Save time and money on every overhead. We support innovation without the risk. We've levelled the playing field.
+  producers_signup_send: Join now
+  producers_signup_enterprise: Enterprise Accounts
   producers_signup_studies: Stories from our producers.
   producers_signup_cta_headline: Join now!
-  producers_signup_cta_action: Register
-  producers_signup_detail: Got a question?
+  producers_signup_cta_action: Join now
+  producers_signup_detail: Here's the detail.
   products_item: Item
   products_description: Description
   products_variant: Variant
@@ -1520,19 +1507,19 @@ en_GB:
   products_available: Available?
   products_producer: "Producer"
   products_price: "Price"
-  register_title: Find out more
+  register_title: Register
   sell_title: "Register"
   sell_headline: "Get on the Open Food Network!"
   sell_motivation: "Showcase your beautiful food."
   sell_producers: "Producers"
   sell_hubs: "Hubs"
   sell_groups: "Groups"
-  sell_producers_detail: "Set up a profile for your business on the OFN in just minutes. At any time you can upgrade your profile to an online store and sell your products direct to customers."
+  sell_producers_detail: "Set up a profile for your business on the OFN in just minutes.  At any time you can upgrade your profile to an online store and sell your products direct to customers."
   sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
-  sell_listing_price: "Sell through OFN UK. Pay what you think is fair.\n\nOur goal is to support the distribution of as much local food as possible. As such OFN UK asks users to 'Pay What You Feel' toward the running costs and maintenance. All we ask is that you do pay something. "
-  sell_embed: "We collectively budget for new feature development from the international OFN community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in France, South Africa, Australia, India or Brazil might want it too! Use the Community Forum to suggest features you'd like to see."
+  sell_listing_price: "Listing on the OFN is free.  Opening and running a shop on OFN is free.  Setting up a group directory on OFN for your organisation or regional network is free."
+  sell_embed: "We can also embed an OFN shop in your own customised website or build a customised local food network website for your region."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
   shops_headline: Shopping, transformed.
@@ -1548,7 +1535,7 @@ en_GB:
   shops_signup_detail: Here's the detail.
   orders: Orders
   orders_fees: Fees...
-  orders_edit_title: Shopping cart
+  orders_edit_title: Shopping Cart
   orders_edit_headline: Your shopping cart
   orders_edit_time: Order ready for
   orders_edit_continue: Continue shopping
@@ -1591,7 +1578,7 @@ en_GB:
   products_distributor_info: When you select a distributor for your order, their address and pickup times will be displayed here.
   products_distribution_adjustment_label: "Product distribution by %{distributor} for %{product}"
   shop_trial_expires_in: "Your shopfront trial expires in"
-  shop_trial_expired_notice: "OFN UK is a non-profit social enterprise making software affordable through open source collaboration. Thanks for being part of it!"
+  shop_trial_expired_notice: "Good news! We have decided to extend shopfront trials until further notice."
   password: Password
   remember_me: Remember Me
   are_you_sure: "Are you sure?"
@@ -1641,10 +1628,10 @@ en_GB:
   confirm_password: "Confirm password"
   action_signup: "Sign up now"
   welcome_to_ofn: "Welcome to the Open Food Network!"
-  signup_or_login: "Start By signing up (or logging in)"
+  signup_or_login: "Start By Signing Up (or logging in)"
   have_an_account: "Already have an account?"
   action_login: "Log in now."
-  forgot_password: "Forgot password?"
+  forgot_password: "Forgot Password?"
   password_reset_sent: "An email with instructions on resetting your password has been sent!"
   reset_password: "Reset password"
   who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
@@ -1657,9 +1644,9 @@ en_GB:
         yes_producer: "Yes, I'm a producer"
         no_producer: "No, I'm not a producer"
         producer_field_error: "Please choose one. Are you are producer?"
-        yes_producer_help: "Producers make tasty things to eat and/or drink. You're a producer if you grow, rear, brew, bake, ferment ... etc."
+        yes_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
         no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
-        create_profile: "Create profile"
+        create_profile: "Create Profile"
   enterprise:
     registration:
       modal:
@@ -1667,35 +1654,35 @@ en_GB:
           details:
             title: 'Details'
             headline: "Let's Get Started"
-            enterprise: "Great! First we need to know a little bit about your enterprise:"
-            producer: "Great! First we need to know a little bit about your farm:"
+            enterprise: "Woot! First we need to know a little bit about your enterprise:"
+            producer: "Woot! First we need to know a little bit about your farm:"
             enterprise_name_field: "Enterprise Name:"
             producer_name_field: "Farm Name:"
-            producer_name_field_placeholder: "e.g. Charlie's Chilli Farm"
-            producer_name_field_error: "Sorry, this name has already been taken. Please try another."
+            producer_name_field_placeholder: "e.g. Charlie's Awesome Farm"
+            producer_name_field_error: "Please choose a unique name for your enterprise"
             address1_field: "Address line 1:"
-            address1_field_placeholder: "e.g. 123 Apple Drive"
+            address1_field_placeholder: "e.g. 123 Cranberry Drive"
             address1_field_error: "Please enter an address"
             address2_field: "Address line 2:"
-            suburb_field: "Town:"
-            suburb_field_placeholder: "eg. Taunton"
-            suburb_field_error: "Please enter a postal town"
+            suburb_field: "Suburb:"
+            suburb_field_placeholder: "e.g. Northcote"
+            suburb_field_error: "Please enter a suburb"
             postcode_field: "Postcode:"
-            postcode_field_placeholder: "eg. TA1 TAA"
+            postcode_field_placeholder: "e.g. 3070"
             postcode_field_error: "Postcode required"
-            state_field: "County:"
-            state_field_error: "County Required"
+            state_field: "State:"
+            state_field_error: "State required"
             country_field: "Country:"
             country_field_error: "Please select a country"
           contact:
             title: 'Contact'
             contact_field: 'Primary Contact'
             contact_field_placeholder: 'Contact Name'
-            contact_field_required: "Please enter a primary contact."
-            email_field: 'Email Address'
-            email_field_placeholder: 'eg. charlie@thefarm.co.uk'
+            contact_field_required: "You need to enter a primary contact."
+            email_field: 'Email address'
+            email_field_placeholder: 'eg. charlie@thefarm.com'
             phone_field: 'Phone number'
-            phone_field_placeholder: 'eg. 07123123123'
+            phone_field_placeholder: 'eg. (03) 1234 5678'
           type:
             title: 'Type'
           about:
@@ -1704,33 +1691,33 @@ en_GB:
             title: 'Images'
           social:
             title: 'Social'
-  enterprise_contact: "Primary contact"
+  enterprise_contact: "Primary Contact"
   enterprise_contact_placeholder: "Contact Name"
   enterprise_contact_required: "You need to enter a primary contact."
   enterprise_email_address: "Email address"
-  enterprise_email_placeholder: "eg. charlie@thefarm.co.uk"
+  enterprise_email_placeholder: "eg. charlie@thefarm.com"
   enterprise_phone: "Phone number"
-  enterprise_phone_placeholder: "eg. 07123123123"
+  enterprise_phone_placeholder: "eg. (03) 1234 5678"
   back: "Back"
   continue: "Continue"
   limit_reached_headline: "Oh no!"
   limit_reached_message: "You have reached the limit!"
   limit_reached_text: "You have reached the limit for the number of enterprises you are allowed to own on the"
   limit_reached_action: "Return to the homepage"
-  select_promo_image: "Step 3. Select promo image"
+  select_promo_image: "Step 3. Select Promo Image"
   promo_image_tip: "Tip: Shown as a banner, preferred size is 1200×260px"
   promo_image_label: "Choose a promo image"
   action_or: "OR"
   promo_image_drag: "Drag and drop your promo here"
-  review_promo_image: "Step 4. Review your promo banner"
+  review_promo_image: "Step 4. Review Your Promo Banner"
   review_promo_image_tip: "Tip: for best results, your promo image should fill the available space"
   promo_image_placeholder: "Your logo will appear here for review once uploaded"
   uploading: "Uploading..."
-  select_logo: "Step 1. Select logo image"
+  select_logo: "Step 1. Select Logo Image"
   logo_tip: "Tip: Square images will work best, preferably at least 300×300px"
   logo_label: "Choose a logo image"
   logo_drag: "Drag and drop your logo here"
-  review_logo: "Step 2. Review your logo"
+  review_logo: "Step 2. Review Your Logo"
   review_logo_tip: "Tip: for best results, your logo should fill the available space"
   logo_placeholder: "Your logo will appear here for review once uploaded"
   enterprise_about_headline: "Nice one!"
@@ -1743,9 +1730,9 @@ en_GB:
   enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
   enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
   enterprise_limit: Enterprise Limit
-  enterprise_abn: "Company Number"
+  enterprise_abn: "ABN"
   enterprise_abn_placeholder: "eg. 99 123 456 789"
-  enterprise_acn: "Charity Number"
+  enterprise_acn: "ACN"
   enterprise_acn_placeholder: "eg. 123 456 789"
   enterprise_tax_required: "You need to make a selection."
   enterprise_final_step: "Final step!"
@@ -1784,29 +1771,29 @@ en_GB:
   registration_type_producer: "Yes, I'm a producer"
   registration_type_no_producer: "No, I'm not a producer"
   registration_type_error: "Please choose one. Are you are producer?"
-  registration_type_producer_help: "Producers make things to eat and/or drink. You're a producer if you might grow it, raise it, brew it, bake it or ferment it."
+  registration_type_producer_help: "Producers make yummy things to eat and/or drink. You're a producer if you grow it, raise it, brew it, bake it, ferment it, milk it or mould it."
   registration_type_no_producer_help: "If you’re not a producer, you’re probably someone who sells and distributes food. You might be a hub, coop, buying group, retailer, wholesaler or other."
   registration_images_headline: "Thanks!"
-  registration_images_description: "Let's upload some pictures so your profile looks great! :)"
-  registration_detail_headline: "Let's get started"
-  registration_detail_enterprise: "First we need to know a little bit about your enterprise:"
-  registration_detail_producer: "First we need to know a little bit about your farm:"
-  registration_detail_name_enterprise: "Enterprise name:"
-  registration_detail_name_producer: "Farm name:"
-  registration_detail_name_placeholder: "e.g. Charlie's Farm"
+  registration_images_description: "Let's upload some pretty pictures so your profile looks great! :)"
+  registration_detail_headline: "Let's Get Started"
+  registration_detail_enterprise: "Woot! First we need to know a little bit about your enterprise:"
+  registration_detail_producer: "Woot! First we need to know a little bit about your farm:"
+  registration_detail_name_enterprise: "Enterprise Name:"
+  registration_detail_name_producer: "Farm Name:"
+  registration_detail_name_placeholder: "e.g. Charlie's Awesome Farm"
   registration_detail_name_error: "Please choose a unique name for your enterprise"
   registration_detail_address1: "Address line 1:"
-  registration_detail_address1_placeholder: "e.g. 123 Apple Drive"
+  registration_detail_address1_placeholder: "e.g. 123 Cranberry Drive"
   registration_detail_address1_error: "Please enter an address"
   registration_detail_address2: "Address line 2:"
-  registration_detail_suburb: "Town:"
-  registration_detail_suburb_placeholder: "e.g. Taunton"
-  registration_detail_suburb_error: "Please enter a town"
+  registration_detail_suburb: "Suburb:"
+  registration_detail_suburb_placeholder: "e.g. Northcote"
+  registration_detail_suburb_error: "Please enter a suburb"
   registration_detail_postcode: "Postcode:"
-  registration_detail_postcode_placeholder: "e.g. TA1 1AA"
+  registration_detail_postcode_placeholder: "e.g. 3070"
   registration_detail_postcode_error: "Postcode required"
-  registration_detail_state: "County:"
-  registration_detail_state_error: "County required"
+  registration_detail_state: "State:"
+  registration_detail_state_error: "State required"
   registration_detail_country: "Country:"
   registration_detail_country_error: "Please select a country"
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
@@ -1852,7 +1839,7 @@ en_GB:
   admin_entreprise_groups: "Enterprise Groups"
   admin_entreprise_groups_name: "Name"
   admin_entreprise_groups_owner: "Owner"
-  admin_entreprise_groups_on_front_page: "On front page?"
+  admin_entreprise_groups_on_front_page: "On front page ?"
   admin_entreprise_groups_entreprise: "Enterprises"
   admin_entreprise_groups_data_powertip: "The primary user responsible for this group."
   admin_entreprise_groups_data_powertip_logo: "This is the logo for the group"
@@ -1861,14 +1848,14 @@ en_GB:
   admin_entreprise_groups_contact_phone_placeholder: "eg. 98 7654 3210"
   admin_entreprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_entreprise_groups_contact_city: "Suburb"
-  admin_entreprise_groups_contact_city_placeholder: "eg. Camden"
+  admin_entreprise_groups_contact_city_placeholder: "eg. Northcote"
   admin_entreprise_groups_contact_zipcode: "Postcode"
-  admin_entreprise_groups_contact_zipcode_placeholder: "eg. NW1 0AA"
-  admin_entreprise_groups_contact_state_id: "County"
+  admin_entreprise_groups_contact_zipcode_placeholder: "eg. 3070"
+  admin_entreprise_groups_contact_state_id: "State"
   admin_entreprise_groups_contact_country_id: "Country"
   admin_entreprise_groups_web: "Web Resources"
-  admin_entreprise_groups_web_twitter: "eg. @openfoodnetuk"
-  admin_entreprise_groups_web_website_placeholder: "eg. www.truffles.co.uk"
+  admin_entreprise_groups_web_twitter: "eg. @the_prof"
+  admin_entreprise_groups_web_website_placeholder: "eg. www.truffles.com"
   admin_order_cycles: "Admin Order Cycles"
   open: "Open"
   close: "Close"
@@ -1915,7 +1902,7 @@ en_GB:
   producer: "Producer"
   product: "Product"
   price: "Price"
-  on_hand: "In stock"
+  on_hand: "On hand"
   save_changes: "Save Changes"
   order_saved: "Order Saved"
   no_products: No Products
@@ -1945,7 +1932,7 @@ en_GB:
   change_package: "Change Package"
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
-  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Newcastle, NE1 1AA'"
+  spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
   spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
@@ -1968,6 +1955,7 @@ en_GB:
   edit_profile_details_etc: "Change your profile description, images, etc."
   order_cycle: "Order Cycle"
   order_cycles: "Order Cycles"
+  enterprise_relationships: "Enterprise permissions"
   remove_tax: "Remove tax"
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
@@ -1980,7 +1968,7 @@ en_GB:
   admin_share_city: "City"
   admin_share_zipcode: "Postcode"
   admin_share_country: "Country"
-  admin_share_state: "County"
+  admin_share_state: "State"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "None Available"
   hub_sidebar_manage: "Manage"
@@ -1993,18 +1981,18 @@ en_GB:
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
-  report_producers: "Producers:"
-  report_type: "Report Type:"
-  report_hubs: "Hubs:"
-  report_payment: "Payment Methods:"
-  report_distributor: "Distributor:"
+  report_producers: "Producers: "
+  report_type: "Report Type: "
+  report_hubs: "Hubs: "
+  report_payment: "Payment Methods: "
+  report_distributor: "Distributor: "
   report_payment_by: 'Payments By Type'
   report_itemised_payment: 'Itemised Payment Totals'
   report_payment_totals: 'Payment Totals'
   report_all: 'all'
-  report_order_cycle: "Order Cycle:"
-  report_entreprises: "Enterprises:"
-  report_users: "Users:"
+  report_order_cycle: "Order Cycle: "
+  report_entreprises: "Enterprises: "
+  report_users: "Users: "
   report_tax_rates: Tax rates
   report_tax_types: Tax types
   report_header_order_cycle: Order Cycle
@@ -2118,7 +2106,7 @@ en_GB:
   report_header_outstanding_balance_price: "Outstanding Balance (%{currency})"
   report_header_eft_price: "EFT (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
-  report_header_sku: Product Code
+  report_header_sku: SKU
   report_header_amount: Amount
   report_header_balance: Balance
   report_header_total_cost: "Total Cost"
@@ -2131,8 +2119,8 @@ en_GB:
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
-  report_header_gst_on_income: VAT on Income
-  report_header_gst_free_income: VAT Free Income
+  report_header_gst_on_income: GST on Income
+  report_header_gst_free_income: GST Free Income
   report_header_total_untaxable_produce: Total untaxable produce (no tax)
   report_header_total_taxable_produce: Total taxable produce (tax inclusive)
   report_header_total_untaxable_fees: Total untaxable fees (no tax)
@@ -2143,12 +2131,12 @@ en_GB:
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
   initial_invoice_number: "Initial invoice number:"
   invoice_date: "Invoice date:"
-  due_date: "Invoice date:"
+  due_date: "Due date:"
   account_code: "Account code:"
   equals: "Equals"
   contains: "contains"
   discount: "Discount"
-  filter_products: " Filter Products"
+  filter_products: "Filter Products"
   delete_product_variant: "The last variant cannot be deleted!"
   progress: "progress"
   saving: "Saving.."
@@ -2158,7 +2146,7 @@ en_GB:
   one_product_unsaved: "Changes to one product remain unsaved."
   products_unsaved: "Changes to %{n} products remain unsaved."
   is_already_manager: "is already a manager!"
-  no_change_to_save: "No change to save"
+  no_change_to_save: " No change to save"
   user_invited: "%{email} has been invited to manage this enterprise"
   add_manager: "Add an existing user"
   users: "Users"
@@ -2279,7 +2267,7 @@ en_GB:
         saving: SAVING
         enterprise_package:
           hub_profile: Hub Profile
-          hub_profile_cost: "COST: Pay What You Can"
+          hub_profile_cost: "COST: ALWAYS FREE"
           hub_profile_text1: >
               People can find and contact you on the Open Food Network. Your enterprise
               will be visible on the map, and will be searchable in listings.
@@ -2305,7 +2293,7 @@ en_GB:
               Click on an option to see more detailed information about each package,
               and hit the red SAVE button when you are done!
           profile_only: Profile Only
-          profile_only_cost: "COST: Pay What You Can"
+          profile_only_cost: "COST: ALWAYS FREE"
           profile_only_text1: >
               A profile makes you visible and contactable to others and is a way to
               share your story.
@@ -2336,7 +2324,7 @@ en_GB:
               so no matter your situation, we want to provide the tools you need to
               run your organisation or local food business.
           get_listing: Get a listing
-          always_free: Pay What You Can
+          always_free: ALWAYS FREE
           sell_produce_others: Sell produce from others
           sell_own_produce: Sell your own produce
           sell_both: Sell produce from self and others
@@ -2473,6 +2461,10 @@ en_GB:
           account_id: Account ID
           business_name: Business Name
           charges_enabled: Charges Enabled
+      payments:
+        source_forms:
+          stripe:
+            no_payment_via_admin_backend: Creating Stripe-based payments from the admin backend is not possible at this time
       products:
         new:
           title: 'New Product'
@@ -2513,12 +2505,20 @@ en_GB:
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+      users:
+        email_confirmation:
+          confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
         autocomplete:
           producer_name: Producer
       general_settings:
         edit:
+          legal_settings: "Legal Settings"
+          cookies_consent_banner_toggle: "Display cookies consent banner"
+          privacy_policy_url: "Privacy Policy URL"
           enterprises_require_tos: "Enterprises must accept Terms of Service"
+          cookies_policy_matomo_section: "Display Matomo section on cookies policy page"
+          cookies_policy_ga_section: "Display Google Analytics section on cookies policy page"
           footer_tos_url: "Terms of Service URL"
     checkout:
       payment:

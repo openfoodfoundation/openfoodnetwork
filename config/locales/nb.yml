@@ -379,6 +379,7 @@ nb:
         producer_signup_page: Produsent registreringsside
         hub_signup_page: Hub-registreringsside
         group_signup_page: Grupperegistreringsside
+        main_links: 'Lenker Hovedmeny '
         footer_and_external_links: Footer og eksterne lenker
         your_content: Ditt innhold
     enterprise_fees:
@@ -1030,6 +1031,33 @@ nb:
     register_call:
       selling_on_ofn: "Interessert i å bli med i Open Food Network?"
       register: "Registrer her"
+    footer:
+      footer_global_headline: "OFN Globalt"
+      footer_global_home: "Hjem"
+      footer_global_news: "Nyheter"
+      footer_global_about: "Om"
+      footer_global_contact: "Kontakt"
+      footer_sites_headline: "OFN nettsteder"
+      footer_sites_developer: "Utvikler"
+      footer_sites_community: "Forum"
+      footer_sites_userguide: "Brukermanual"
+      footer_secure: "Sikker og klarert."
+      footer_secure_text: "Open Food Network bruker SSL-kryptering (2048 bit RSA) overalt for å holde handlingen og betalingen din privat. Våre servere lagrer ikke kortopplysninger og betalinger behandles av PCI-kompatible tjenester."
+      footer_contact_headline: "Hold kontakten"
+      footer_contact_email: "Send oss epost"
+      footer_nav_headline: "Naviger"
+      footer_join_headline: "Bli med"
+      footer_join_body: "Opprette en profil, butikk eller gruppe på Open Food Network."
+      footer_join_cta: "Fortell meg mer!"
+      footer_legal_call: "Les våre"
+      footer_legal_tos: "Vilkår og betingelser"
+      footer_legal_visit: "Finn oss på"
+      footer_legal_text_html: "Open Food Network er en plattform med fri og åpen kildekode. Vårt innhold er lisensiert med %{content_license} og vår kode med %{code_license}."
+      footer_data_text_with_privacy_policy_html: "Vi tar godt vare på dine data. Se vår %{privacy_policy} og %{cookies_policy}"
+      footer_data_text_without_privacy_policy_html: "Vi tar godt vare på dine data. Se vår %{cookies_policy}"
+      footer_data_privacy_policy: "personvernpolicy"
+      footer_data_cookies_policy: "policy informasjonskapsler"
+      footer_skylight_dashboard_html: Ytelsesdata er tilgjengelig på %{dashboard}.
   shop:
     messages:
       login: "innlogging"
@@ -1065,6 +1093,20 @@ nb:
   ticket_column_item: "Vare"
   ticket_column_unit_price: "Enhetspris"
   ticket_column_total_price: "Totalpris"
+  menu_1_title: "Butikker"
+  menu_1_url: "/shops"
+  menu_2_title: "Kart"
+  menu_2_url: "/map"
+  menu_3_title: "Produsenter"
+  menu_3_url: "/producers"
+  menu_4_title: "Grupper"
+  menu_4_url: "/groups"
+  menu_5_title: "Om"
+  menu_5_url: "https://openfoodnetwork.org/ofn-local/open-food-network-scandinavia/"
+  menu_6_title: "Koble til"
+  menu_6_url: " "
+  menu_7_title: "Lære"
+  menu_7_url: " "
   logo: "Logo (640x130)"
   logo_mobile: "Mobil logo (75x26)"
   logo_mobile_svg: "Mobil logo (SVG)"
@@ -1080,7 +1122,6 @@ nb:
   footer_email: "Epost"
   footer_links_md: "Linker"
   footer_about_url: "Om URL"
-  footer_tos_url: "Vilkår URL"
   name: Navn
   first_name: Fornavn
   last_name: Etternavn
@@ -1154,28 +1195,45 @@ nb:
   ie_warning_firefox: Last ned Firefox
   ie_warning_ie: Oppgrader Internet Explorer
   ie_warning_other: "Kan ikke oppgradere nettleseren din? Prøv Open Food Network på smart-telefonen din :-)"
-  footer_global_headline: "OFN Globalt"
-  footer_global_home: "Hjem"
-  footer_global_news: "Nyheter"
-  footer_global_about: "Om"
-  footer_global_contact: "Kontakt"
-  footer_sites_headline: "OFN nettsteder"
-  footer_sites_developer: "Utvikler"
-  footer_sites_community: "Forum"
-  footer_sites_userguide: "Brukerhåndbok"
-  footer_secure: "Sikker og klarert."
-  footer_secure_text: "Open Food Network bruker SSL-kryptering (2048 bit RSA) overalt for å holde handlingen og betalingen din privat. Våre servere lagrer ikke kortopplysninger og betalinger behandles av PCI-kompatible tjenester."
-  footer_contact_headline: "Hold kontakten"
-  footer_contact_email: "Send oss en epost"
-  footer_nav_headline: "Naviger"
-  footer_join_headline: "Bli med"
-  footer_join_body: "Opprette en profil, butikk eller gruppe på Open Food Network."
-  footer_join_cta: "Fortell meg mer!"
-  footer_legal_call: "Les våre"
-  footer_legal_tos: "Vilkår og betingelser"
-  footer_legal_visit: "Finn oss på"
-  footer_legal_text_html: "Open Food Network er en plattform med fri og åpen kildekode. Vårt innhold er lisensiert med %{content_license} og vår kode med %{code_license}."
-  footer_skylight_dashboard_html: Ytelsesdata er tilgjengelig på %{dashboard}.
+  legal:
+    cookies_policy:
+      header: "Hvordan vi bruker informasjonskapsler"
+      desc_part_1: "Informasjonskapsler er svært små tekstfiler som er lagret på datamaskinen din når du besøker noen nettsteder."
+      desc_part_2: "I OFN respekterer vi fullt ut ditt privatliv. Vi bruker bare informasjonskapsler som er nødvendige for å levere deg tjenesten til å selge/kjøpe mat på nettet. Vi selger ikke noen av dataene dine. Vi kan i fremtiden foreslå at du deler noen av dataene dine for å bygge nye commons-tjenester som kan være nyttige for økosystemet (som logistikk-tjenester for kortmatssystemer), men vi er ikke der ennå, og vi vil ikke gjøre det uten din godkjenning :-)"
+      desc_part_3: "Vi bruker informasjonskapsler hovedsakelig for å huske hvem du er hvis du logger inn på tjenesten, eller for å kunne huske elementene du legger inn i handlekurven din selv om du ikke er logget inn. Hvis du fortsetter å navigere på nettstedet uten å klikke på \"Godta cookies\", antar vi at du gir oss samtykke til å lagre informasjonskapslene som er avgjørende for nettstedet. Her er listen over informasjonskapsler vi bruker!"
+      essential_cookies: "Viktige informasjonskapsler"
+      essential_cookies_desc: "Følgende informasjonskapsler er strengt nødvendige for driften av nettstedet vårt."
+      essential_cookies_note: "De fleste informasjonskapsler inneholder bare en unik identifikator, men ingen andre data, slik at epostadressen og passordet ditt for eksempel aldri er inneholdt i dem og aldri blir eksponert."
+      cookie_domain: "Satt av:"
+      cookie_session_desc: "Brukes til å tillate nettstedet å huske brukere mellom sidebesøk, for eksempel, husk elementer i handlekurven din."
+      cookie_consent_desc: "Brukes til å opprettholde status for brukerens samtykke til å lagre informasjonskapsler"
+      cookie_remember_me_desc: "Brukes hvis brukeren har bedt nettsiden om å huske ham. Denne informasjonskapsel slettes automatisk etter 12 dager. Hvis du som bruker ønsker at cookien skal slettes, trenger du bare å logge ut. Hvis du ikke vil at cookien skal installeres på datamaskinen, bør du ikke merke avkrysningsruten «husk meg» når du logger inn."
+      cookie_openstreemap_desc: "Brukes av vår vennlige open source kartleverandør (OpenStreetMap) for å sikre at den ikke mottar for mange forespørsler i en gitt tidsperiode for å forhindre misbruk av sine tjenester."
+      cookie_stripe_desc: "Data samlet inn av betalingsprosessoren vår Stripe for svindeloppdagelse https://stripe.com/cookies-policy/legal. Ikke alle butikker bruker Stripe som betalingsmetode, men det er en god praksis å forhindre at svindel gjelder for alle sider. Stripe bygger sannsynligvis et bilde av hvilke av våre sider som til vanlig samhandler med API-en og deretter flagge alt uvanlig. Så å sette Stripe-cookien har en bredere funksjon enn bare å levere en betalingsmetode til en bruker. Fjerning av det kan påvirke sikkerheten til selve tjenesten. Du kan lære mer om Stripe og lese retningslinjene for personvern på https://stripe.com/privacy."
+      statistics_cookies: "Statistikkkapsler"
+      statistics_cookies_desc: "Følgende er ikke strengt nødvendige, men hjelper deg med å gi deg den beste brukeropplevelsen ved å tillate oss å analysere brukeradferd, identifisere hvilke funksjoner du bruker mest, eller ikke bruker, forstå brukeropplevelsesproblemer osv."
+      statistics_cookies_analytics_desc_html: "For å samle og analysere plattformbruksdata bruker vi Google Analytics, da det var standardtjenesten som var koblet til Spree (ehandel open source programvare som vi bygde på), men visjonen vår er å bytte til <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, open source analyseverktøy som er GDPR-kompatibelt og beskytter ditt privatliv) så snart vi kan."
+      statistics_cookies_matomo_desc_html: "For å samle og analysere plattformbruksdata bruker vi <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), et åpen kildekodeanalyseverktøy som er kompatibelt med GDPR og beskytter personvernet ditt."
+      cookie_analytics_utma_desc: "Brukes til å skille mellom brukere og økter. Kapselen er opprettet når javascriptbiblioteket utføres, og ingen eksisterende __utma-informasjonskapsler eksisterer. Cookien oppdateres hver gang data sendes til Google Analytics."
+      cookie_analytics_utmt_desc: "Brukes til pådragsforespørselsrate."
+      cookie_analytics_utmb_desc: "Brukes til å bestemme nye økter/besøk. Kapselen blir opprettet når javascriptbiblioteket kjøres, og ingen eksisterende __utmb-cookies eksisterer. Cookien oppdateres hver gang data sendes til Google Analytics."
+      cookie_analytics_utmc_desc: "Ikke brukt i ga.js. Satt for interoperabilitet med urchin.js. Historisk kjørte denne informasjonskapselen sammen med __utmb-cookien for å avgjøre om brukeren var i en ny økt/besøk."
+      cookie_analytics_utmz_desc: "Lagrer trafikkilden eller kampanjen som forklarer hvordan brukeren nådde nettstedet ditt. Kapselen blir opprettet når javascriptbiblioteket utføres og oppdateres hver gang data sendes til Google Analytics."
+      cookie_matomo_basics_desc: "Matomo førstehånds kapsler for å samle statistikk."
+      cookie_matomo_heatmap_desc: "Matomo Heatmap & Session opptakskapsel."
+      cookie_matomo_ignore_desc: "Kapsel brukes til å utelukke at bruker blir sporet."
+      disabling_cookies_header: "Advarsel om deaktivering av informasjonskapsler"
+      disabling_cookies_desc: "Som bruker kan du alltid tillate, blokkere eller slette Open Food Network eller andre nettsiders kapsler når du vil gjennom nettleserens innstillingskontroll. Hver nettleser har sin egne måte å operere på. Her er linkene:"
+      disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
+      disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
+      disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
+      disabling_cookies_note: "Men vær oppmerksom på at hvis du sletter eller endrer de essensielle informasjonskapslene som brukes av Open Food Network, vil nettstedet ikke fungere, du vil ikke kunne legge til noe i handlekurven din eller for eksempel for å sjekke ut."
+    cookies_banner:
+      cookies_usage: "Dette nettstedet bruker informasjonskapsler for å gjøre navigasjonen friksjonsfri og sikker, og for å hjelpe oss å forstå hvordan du bruker den for å forbedre funksjonene vi tilbyr."
+      cookies_definition: "Informasjonskapsler er svært små tekstfiler som er lagret på datamaskinen din når du besøker noen nettsteder."
+      cookies_desc: "Vi bruker bare informasjonskapsler som er nødvendige for å levere deg tjenesten til å selge/kjøpe mat på nettet. Vi selger ikke noen av dataene dine. Vi bruker informasjonskapsler hovedsakelig for å huske hvem du er hvis du logger inn på tjenesten, eller for å kunne huske elementene du legger inn i handlekurven din selv om du ikke er logget inn. Hvis du fortsetter å navigere på nettstedet uten å klikke på \"Godta cookies\", antar vi at du gir oss samtykke til å lagre informasjonskapslene som er avgjørende for nettstedet."
+      cookies_policy_link: "policy informasjonskapsler"
   home_shop: Handle nå
   brandstory_headline: "Food, unincorporated."
   brandstory_intro: "Noen ganger er det best å fikse systemet ved å starte et nytt..."
@@ -1675,6 +1733,7 @@ nb:
   enterprise_about_headline: "Bra!"
   enterprise_about_message: "Nå la oss finne ut detaljene om"
   enterprise_success: "Suksess! %{enterprise} lagt til Open Food Network"
+  enterprise_registration_exit_message: "Hvis du avslutter denne veiviseren på et hvilket som helst tidspunkt, kan du fortsette å opprette profilen din ved å gå til administrasjonsgrensesnittet."
   enterprise_description: "Kort beskrivelse"
   enterprise_description_placeholder: "En kort setning som beskriver virksomheten din"
   enterprise_long_desc: "Lang beskrivelse"
@@ -1782,6 +1841,7 @@ nb:
   you_have_no_orders_yet: "Du har ingen bestilinger enda"
   running_balance: "Løpende balanse"
   outstanding_balance: "Utestående balanse"
+  admin_entreprise_relationships: "Bedriftsrettigheter"
   admin_entreprise_relationships_everything: "Alt"
   admin_entreprise_relationships_permits: "tillater"
   admin_entreprise_relationships_seach_placeholder: "Søk"
@@ -1905,9 +1965,8 @@ nb:
   edit_profile_details_etc: "Endre din profilbeskrivelse, bilder, osv."
   order_cycle: "Bestillingsrunde"
   order_cycles: "Bestillingsrunder"
+  enterprise_relationships: "Bedriftsrettigheter"
   remove_tax: "Fjern avgift"
-  enterprise_terms_of_service: "Tjenestevilkår for Bedrifter"
-  enterprises_require_tos: "Bedrifter må godta Tjenestevilkår"
   enterprise_tos_link: "Lenke til Tjenestevilkår for Bedrifter"
   enterprise_tos_message: "Vi ønsker å jobbe med bedrifter som deler våre mål og verdier. Derfor ber vi nye bedrifter om å godta vår"
   enterprise_tos_link_text: "Tjenestevilkår."
@@ -2309,6 +2368,9 @@ nb:
         select_rule_type: "Velg en regeltype:"
       resend_user_email_confirmation:
         resend: "Send på nytt"
+        sending: "Send på nytt ..."
+        done: "Sending på nytt ferdig ✓"
+        failed: "Sending på nytt mislyktes ✗"
     out_of_stock:
       reduced_stock_available: Redusert lager tilgjengelig
       out_of_stock_text: >
@@ -2408,10 +2470,6 @@ nb:
           account_id: Konto-ID
           business_name: Bedriftsnavn
           charges_enabled: Avgifter Aktivert
-      payments:
-        source_forms:
-          stripe:
-            no_payment_via_admin_backend: Å skape Stripe-baserte betalinger fra admin-backend er ikke mulig for øyeblikket
       products:
         new:
           title: 'Nytt produkt'
@@ -2445,14 +2503,23 @@ nb:
         display_as:
           display_as: Vis som
       reports:
+        table:
+          select_and_search: "Velg filtre og klikk på SØK for å få tilgang til dataene dine."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totaler etter Leverandør'
           bulk_coop_allocation: 'Bulk Co-op - Allokering'
           bulk_coop_packing_sheets: 'Bulk Co-op - Pakkseddel'
           bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
+      users:
+        email_confirmation:
+          confirmation_pending: "Epostbekreftelse venter. Vi har sendt en bekreftelses-epost til %{address}."
       variants:
         autocomplete:
           producer_name: Produsent
+      general_settings:
+        edit:
+          enterprises_require_tos: "Bedrifter må godta Tjenestevilkår"
+          footer_tos_url: "Vilkår URL"
     checkout:
       payment:
         stripe:
@@ -2560,5 +2627,9 @@ nb:
       saved_cards:
         default?: Standard?
         delete?: Slett?
+      cards:
+        authorised_shops: Autoriserte Butikker
+        authorised_shops_popover: Dette er listen over butikker som har lov til å belaste ditt standard kredittkort for eventuelle abonnementer (dvs. gjentatte ordre) du måtte ha. Kortinformasjonen din vil bli holdt sikker og vil ikke bli delt med butikkeiere. Du vil alltid bli varslet når du blir belastet.
+        saved_cards_popover: Dette er listen over kort du har valgt å lagre for senere bruk. Din standard vil bli valgt automatisk når du gjør en bestilling, og kan belastes av butikker du har gitt lov til å gjøre det (se høyre).
     localized_number:
       invalid_format: har et ugyldig format. Vennligst skriv inn et nummer.
