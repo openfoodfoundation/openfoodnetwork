@@ -98,7 +98,6 @@ module OpenFoodNetwork
       warn_deprecation(__method__, 'Spree::Config[:track_inventory_levels]')
 
       raise_error_if_no_stock_item_available
-      raise_error_if_multiple_stock_items
 
       # There should be only one at the default stock location.
       #
@@ -124,11 +123,6 @@ module OpenFoodNetwork
     def raise_error_if_no_stock_item_available
       message = 'You need to save the variant to create a stock item before you can set stock levels.'
       raise message if stock_items.empty?
-    end
-
-    def raise_error_if_multiple_stock_items
-      message = 'A variant cannot have more than a stock item.'
-      raise message if stock_items.size > 1
     end
 
     # Backwards compatible setting of stock levels in Spree 2.0.
