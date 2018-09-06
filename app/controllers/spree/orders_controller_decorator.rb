@@ -1,4 +1,5 @@
 require 'spree/core/controller_helpers/order_decorator'
+require 'spree/core/controller_helpers/auth_decorator'
 
 Spree::OrdersController.class_eval do
   before_filter :update_distribution, only: :update
@@ -133,7 +134,7 @@ Spree::OrdersController.class_eval do
     return if session[:access_token] || params[:token] || spree_current_user
 
     flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
-    redirect_to root_path(anchor: "login?after_login=#{request.env['PATH_INFO']}")
+    require_login_then_redirect_to request.env['PATH_INFO']
   end
 
   def order_to_update
