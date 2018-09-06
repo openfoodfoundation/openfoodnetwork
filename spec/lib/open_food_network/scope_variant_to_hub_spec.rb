@@ -3,7 +3,7 @@ require 'open_food_network/scope_variant_to_hub'
 module OpenFoodNetwork
   describe ScopeVariantToHub do
     let(:hub) { create(:distributor_enterprise) }
-    let(:v)   { create(:variant, price: 11.11, count_on_hand: 1, on_demand: true, sku: "VARIANTSKU") }
+    let(:v)   { create(:variant, price: 11.11, on_hand: 1, on_demand: true, sku: "VARIANTSKU") }
     let(:vo)  { create(:variant_override, hub: hub, variant: v, price: 22.22, count_on_hand: 2, on_demand: false, sku: "VOSKU") }
     let(:vo_price_only) { create(:variant_override, hub: hub, variant: v, price: 22.22, count_on_hand: nil) }
     let(:scoper) { ScopeVariantToHub.new(hub) }

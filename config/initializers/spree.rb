@@ -20,21 +20,13 @@ Spree.config do |config|
   # Auto-capture payments. Without this option, payments must be manually captured in the paypal interface.
   config.auto_capture = true
   #config.override_actionmailer_config = false
+
+  config.package_factory = Stock::Package
+  config.order_updater_decorator = OrderUpdater
 end
 
 # TODO Work out why this is necessary
 # Seems like classes within OFN module become 'uninitialized' when server reloads
 # unless the empty module is explicity 'registered' here. Something to do with autoloading?
 module OpenFoodNetwork
-end
-
-# Forcing spree to always allow SSL connections
-# Since we are using config.force_ssl = true
-# Without this we get a redirect loop: see https://groups.google.com/forum/#!topic/spree-user/NwpqGxJ4klk
-SslRequirement.module_eval do
-  protected
-
-  def ssl_allowed?
-    true
-  end
 end

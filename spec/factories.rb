@@ -356,6 +356,10 @@ FactoryBot.define do
     end
   end
 
+  factory :line_item_with_shipment, parent: :line_item do
+    target_shipment { create(:shipment, order: order) }
+  end
+
   factory :zone_with_member, :parent => :zone do
     default_tax true
 
@@ -453,6 +457,20 @@ FactoryBot.define do
       Spree::Image.create(attachment: image, viewable_id: product.master.id, viewable_type: 'Spree::Variant')
     end
   end
+
+  factory :simple_product, parent: :base_product do
+    transient do
+      on_demand { false }
+      on_hand { 5 }
+    end
+    after(:create) do |product, evaluator|
+      product.variants.first.tap do |variant|
+        variant.on_demand = evaluator.on_demand
+        variant.count_on_hand = evaluator.on_hand
+        variant.save
+      end
+    end
+  end
 end
 
 
@@ -460,7 +478,8 @@ FactoryBot.modify do
   factory :product do
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
   end
-  factory :simple_product do
+
+  factory :base_product do
     # Fix product factory name sequence with Kernel.rand so it is not interpreted as a Spree::Product method
     # Pull request: https://github.com/spree/spree/pull/1964
     # When this fix has been merged into a version of Spree that we're using, this line can be removed.
@@ -468,7 +487,6 @@ FactoryBot.modify do
 
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
-    on_hand 3
 
     unit_value 1
     unit_description ''
@@ -479,8 +497,19 @@ FactoryBot.modify do
   end
 
   factory :variant do
+    transient do
+      on_demand { false }
+      on_hand { 5 }
+    end
+
     unit_value 1
     unit_description ''
+
+    after(:create) do |variant, evaluator|
+      variant.on_demand = evaluator.on_demand
+      variant.count_on_hand = evaluator.on_hand
+      variant.save
+    end
   end
 
   factory :shipping_method do
