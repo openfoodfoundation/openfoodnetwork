@@ -88,6 +88,11 @@ en:
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
+
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "COPY OF %{order_cycle}"
+
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
