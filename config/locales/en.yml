@@ -2565,7 +2565,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         This will set stock level to zero on all products for this
         enterprise that are not present in the uploaded file.
     order_cycles:
+      create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
+      update_failure: "Failed to update order cycle"
       no_distributors: There are no distributors in this order cycle. This order cycle will not be visible to customers until you add one. Would you like to continue saving this order cycle?'
     enterprises:
       producer: "Producer"
