@@ -634,7 +634,7 @@ describe Spree::Order do
   end
 
   describe "when a guest order is placed with a registered email" do
-    let(:order) { create(:order_with_totals_and_distribution, user: nil) }
+    let(:order) { create(:order_with_totals_and_distribution, user: user) }
     let(:payment_method) { create(:payment_method, distributors: [order.distributor]) }
     let(:shipping_method) { create(:shipping_method, distributors: [order.distributor]) }
     let(:user) { create(:user, email: 'registered@email.com') }
@@ -642,7 +642,6 @@ describe Spree::Order do
     before do
       order.bill_address = create(:address)
       order.ship_address = create(:address)
-      order.shipping_method = shipping_method
       order.email = user.email
       order.user = nil
       order.state = 'cart'
