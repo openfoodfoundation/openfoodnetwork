@@ -95,6 +95,14 @@ en:
       subject: "%{enterprise} is now on %{sitename}"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
+      order_summary_canceled: "Order Summary [CANCELED]"
+      subject: "Cancellation of Order"
+      subtotal: "Subtotal: %{subtotal}"
+      total: "Order Total: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
