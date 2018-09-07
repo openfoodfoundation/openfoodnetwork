@@ -821,6 +821,9 @@ en:
         search_placeholder: Search By Name
         manage: Manage
         manage_link: Settings
+        producer?: "Producer?"
+        package: "Package"
+        status: "Status"
       new_form:
         owner: Owner
         owner_tip: The primary user responsible for this enterprise.
