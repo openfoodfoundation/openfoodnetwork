@@ -869,6 +869,7 @@ en:
         add: Add coordinator fee
       filters:
         search_by_order_cycle_name: "Search by Order Cycle name..."
+        involving: "Involving"
       form:
         incoming: Incoming
         supplier: Supplier
@@ -883,7 +884,6 @@ en:
         delivery_details: Pickup / Delivery details
         debug_info: Debug information
       index:
-        involving: Involving
         schedule: Schedule
         schedules: Schedules
         adding_a_new_schedule: Adding A New Schedule
