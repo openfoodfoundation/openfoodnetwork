@@ -757,6 +757,7 @@ DEPENDENCIES
   jwt (~> 1.5)
   knapsack
   letter_opener (>= 1.4.1)
+  libv8 (!= 6.7.288.46.1)
   listen (= 3.0.8)
   mini_racer
   momentjs-rails
