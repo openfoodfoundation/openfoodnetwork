@@ -867,6 +867,8 @@ en:
         save_reload: Save and Reload Page
       coordinator_fees:
         add: Add coordinator fee
+      filters:
+        search_by_order_cycle_name: "Search by Order Cycle name..."
       form:
         incoming: Incoming
         supplier: Supplier
