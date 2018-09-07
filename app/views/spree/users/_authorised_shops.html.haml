@@ -1,7 +1,7 @@
 %table
   %tr
-    %th= t(:shop_title)
-    %th= t(:allow_charges?)
+    %th= t(".shop_name")
+    %th= t(".allow_charges?")
   %tr.customer{ id: "customer{{ customer.id }}", ng: { repeat: "customer in customers" } }
     %td.shop{ ng: { bind: 'shopsByID[customer.enterprise_id].name' } }
     %td.allow_charges
