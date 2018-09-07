@@ -106,6 +106,15 @@ en:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been shipped"
+      shipment_summary: "Shipment Summary"
+      subject: "Shipment Notification"
+      thanks: "Thank you for your business."
+      track_information: "Tracking Information: %{tracking}"
+      track_link: "Tracking Link: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: A summary of recently placed subscription orders
