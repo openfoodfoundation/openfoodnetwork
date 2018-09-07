@@ -124,16 +124,15 @@ module ProductImport
     end
 
     def inventory_validation(entry)
-      # Checks a potential inventory item corresponds to a valid variant
-      match = Spree::Product.where(supplier_id: entry.producer_id, name: entry.name, deleted_at: nil).first
+      products = Spree::Product.where(supplier_id: entry.producer_id, name: entry.name, deleted_at: nil)
 
-      if match.nil?
+      if products.empty?
         mark_as_invalid(entry, attribute: 'name', error: I18n.t('admin.product_import.model.no_product'))
         return
       end
 
-      match.variants.each do |existing_variant|
-        unit_scale = match.variant_unit_scale
+      products.flat_map(&:variants).each do |existing_variant|
+        unit_scale = existing_variant.product.variant_unit_scale
         unscaled_units = entry.unscaled_units || 0
         entry.unit_value = unscaled_units * unit_scale
 
@@ -176,24 +175,20 @@ module ProductImport
     end
 
     def product_validation(entry)
-      # Find product with matching supplier and name
-      match = Spree::Product.where(supplier_id: entry.supplier_id, name: entry.name, deleted_at: nil).first
+      products = Spree::Product.where(supplier_id: entry.supplier_id, name: entry.name, deleted_at: nil)
 
-      # If no matching product was found, create a new product
-      if match.nil?
+      if products.empty?
         mark_as_new_product(entry)
         return
       end
 
-      # Otherwise, if a variant exists with matching display_name and unit_value, update it
-      match.variants.each do |existing_variant|
+      products.flat_map(&:variants).each do |existing_variant|
         if entry_matches_existing_variant?(entry, existing_variant) && existing_variant.deleted_at.nil?
           return mark_as_existing_variant(entry, existing_variant)
         end
       end
 
-      # Otherwise, a variant with sufficiently matching attributes doesn't exist; create a new one
-      mark_as_new_variant(entry, match.id)
+      mark_as_new_variant(entry, products.first.id)
     end
 
     def mark_as_new_product(entry)

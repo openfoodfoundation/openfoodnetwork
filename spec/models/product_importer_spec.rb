@@ -16,6 +16,7 @@ describe ProductImport::ProductImporter do
 
   let!(:category) { create(:taxon, name: 'Vegetables') }
   let!(:category2) { create(:taxon, name: 'Cake') }
+  let!(:category3) { create(:taxon, name: 'Cereal') }
   let!(:tax_category) { create(:tax_category) }
   let!(:tax_category2) { create(:tax_category) }
   let!(:shipping_category) { create(:shipping_category) }
@@ -28,6 +29,13 @@ describe ProductImport::ProductImporter do
   let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce', unit_value: '500') }
   let!(:product6) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Beetroot', unit_value: '500', on_demand: true, variant_unit_scale: 1, variant_unit: 'weight') }
   let!(:product7) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Tomato', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight') }
+
+  let!(:product8) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Oats', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category3.id) }
+  let!(:product9) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Oats', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category3.id) }
+  let!(:variant2) { create(:variant, product_id: product8.id, price: '4.50', on_hand: '100', unit_value: '500', display_name: 'Porridge Oats') }
+  let!(:variant3) { create(:variant, product_id: product8.id, price: '5.50', on_hand: '100', unit_value: '500', display_name: 'Rolled Oats') }
+  let!(:variant4) { create(:variant, product_id: product9.id, price: '6.50', on_hand: '100', unit_value: '500', display_name: 'Flaked Oats') }
+
   let!(:variant_override) { create(:variant_override, variant_id: product4.variants.first.id, hub: enterprise2, count_on_hand: 42) }
   let!(:variant_override2) { create(:variant_override, variant_id: product5.variants.first.id, hub: enterprise, count_on_hand: 96) }
 
@@ -196,7 +204,7 @@ describe ProductImport::ProductImporter do
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
-      settings = {enterprise2.id.to_s => {'import_into' => 'product_list'}}
+      settings = {'import_into' => 'product_list'}
       @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
@@ -242,7 +250,7 @@ describe ProductImport::ProductImporter do
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
-      settings = {enterprise.id.to_s => {'import_into' => 'product_list'}}
+      settings = {'import_into' => 'product_list'}
       @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
@@ -272,6 +280,8 @@ describe ProductImport::ProductImporter do
       expect(big_bag.product.name).to eq 'Potatoes'
       expect(big_bag.price).to eq 5.50
       expect(big_bag.on_hand).to eq 6
+
+      expect(big_bag.product.id).to eq small_bag.product.id
     end
   end
 
@@ -284,7 +294,7 @@ describe ProductImport::ProductImporter do
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')
-      settings = {enterprise3.id.to_s => {'import_into' => 'product_list'}}
+      settings = {'import_into' => 'product_list'}
       @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
     end
     after { File.delete('/tmp/test-m.csv') }
@@ -314,6 +324,115 @@ describe ProductImport::ProductImporter do
       tomato = Spree::Product.find_by_name('Tomato').variants.first
       expect(tomato.price).to eq 5.50
       expect(tomato.on_demand).to eq true
+    end
+  end
+
+  describe "when more than one product of the same name already exists with multiple variants each" do
+    before do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["Oats", "User Enterprise", "Cereal", "50", "3.50", "500", "g", "Rolled Oats"]   # Update
+        csv << ["Oats", "User Enterprise", "Cereal", "80", "3.75", "500", "g", "Flaked Oats"]   # Update
+        csv << ["Oats", "User Enterprise", "Cereal", "60", "5.50", "500", "g", "Magic Oats"]    # Add
+        csv << ["Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "French Oats"]   # Add
+        csv << ["Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "Scottish Oats"] # Add
+      end
+      File.write('/tmp/test-m.csv', csv_data)
+      file = File.new('/tmp/test-m.csv')
+      settings = {'import_into' => 'product_list'}
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
+    end
+    after { File.delete('/tmp/test-m.csv') }
+
+    it "validates entries" do
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 5
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('create_product', entries)).to eq 3
+      expect(filter('update_product', entries)).to eq 2
+      expect(filter('create_inventory', entries)).to eq 0
+      expect(filter('update_inventory', entries)).to eq 0
+    end
+
+    it "saves and updates" do
+      @importer.save_entries
+
+      expect(@importer.products_created_count).to eq 3
+      expect(@importer.products_updated_count).to eq 2
+      expect(@importer.inventory_created_count).to eq 0
+      expect(@importer.inventory_updated_count).to eq 0
+      expect(@importer.updated_ids.count).to eq 5
+    end
+  end
+
+  describe "when importer processes create and update across multiple stages" do
+    before do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "60", "5.50", "500", "g", "Magic Oats"]     # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "French Oats"]    # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "80", "9.50", "500", "g", "Organic Oats"]   # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "90", "7.50", "500", "g", "Scottish Oats"]  # Add
+        csv << ["Bag of Oats", "User Enterprise", "Cereal", "30", "6.50", "500", "g", "Breakfast Oats"] # Add
+      end
+      File.write('/tmp/test-m.csv', csv_data)
+      @file = File.new('/tmp/test-m.csv')
+      @settings = {'import_into' => 'product_list'}
+    end
+    after { File.delete('/tmp/test-m.csv') }
+
+    it "processes the validation in stages" do
+      # Using settings of start: 1, end: 2 to simulate import over multiple stages
+      @importer = ProductImport::ProductImporter.new(@file, admin, start: 1, end: 3, settings: @settings)
+
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 3
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('create_product', entries)).to eq 3
+      expect(filter('update_product', entries)).to eq 0
+      expect(filter('create_inventory', entries)).to eq 0
+      expect(filter('update_inventory', entries)).to eq 0
+
+      @importer = ProductImport::ProductImporter.new(@file, admin, start: 4, end: 6, settings: @settings)
+
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 2
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('create_product', entries)).to eq 2
+      expect(filter('update_product', entries)).to eq 0
+      expect(filter('create_inventory', entries)).to eq 0
+      expect(filter('update_inventory', entries)).to eq 0
+    end
+
+    it "processes saving in stages" do
+      @importer = ProductImport::ProductImporter.new(@file, admin, start: 1, end: 3, settings: @settings)
+      @importer.save_entries
+
+      expect(@importer.products_created_count).to eq 3
+      expect(@importer.products_updated_count).to eq 0
+      expect(@importer.inventory_created_count).to eq 0
+      expect(@importer.inventory_updated_count).to eq 0
+      expect(@importer.updated_ids.count).to eq 3
+
+      @importer = ProductImport::ProductImporter.new(@file, admin, start: 4, end: 6, settings: @settings)
+      @importer.save_entries
+
+      expect(@importer.products_created_count).to eq 2
+      expect(@importer.products_updated_count).to eq 0
+      expect(@importer.inventory_created_count).to eq 0
+      expect(@importer.inventory_updated_count).to eq 0
+      expect(@importer.updated_ids.count).to eq 2
+
+      products = Spree::Product.find_all_by_name('Bag of Oats')
+
+      expect(products.count).to eq 1
+      expect(products.first.variants.count).to eq 5
     end
   end
 
@@ -482,7 +601,7 @@ describe ProductImport::ProductImporter do
       @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, updated_ids: updated_ids, enterprises_to_reset: [enterprise.id], settings: settings)
       @importer.reset_absent(updated_ids)
 
-      expect(@importer.products_reset_count).to eq 2
+      expect(@importer.products_reset_count).to eq 7
 
       expect(Spree::Product.find_by_name('Carrots').on_hand).to eq 5    # Present in file, added
       expect(Spree::Product.find_by_name('Beans').on_hand).to eq 6      # Present in file, updated
