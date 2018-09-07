@@ -91,6 +91,8 @@ it:
     end_date: "Data di fine"
     clear_filters: Cancella filtri
     clear: Pulisci
+    cancel: Annulla
+    back: Indietro
     columns: Colonne
     actions: Azioni
     viewing: "Vista: %{current_view_name}"
@@ -103,6 +105,12 @@ it:
     accounts_and_billing_settings:
       edit:
         admin_settings: "Impostazioni"
+    cache_settings:
+      show:
+        error: Eorrore
+    stripe_connect_settings:
+      edit:
+        settings: "Impostazioni"
     customers:
       index:
         add_customer: "Aggiungi cliente"
@@ -122,11 +130,19 @@ it:
         select_country: 'Seleziona il paese'
         select_state: 'Selezione la provincia'
         edit: 'Modifica'
-    cache_settings:
-      show:
-        error: Eorrore
     products:
+      index:
+        unit: Unità
+        display_as: Visualizza come
+        category: Categoria
+        tax_category: Categoria di imposta
+        inherits_properties?: Eredita proprietà?
+        available_on: Disponibile il
+        av_on: "Disp. il"
       Search: Cerca
+    product_import:
+      model:
+        blank: non può essere lasciato vuoto
     variant_overrides:
       index:
         title: Inventario
@@ -182,17 +198,43 @@ it:
             cancel: Annulla
         users:
           contact: "Contatto"
+      actions:
+        edit_profile: Impostazioni
+      enterprise_user_index:
+        manage_link: Impostazioni
+    order_cycles:
+      date_warning:
+        cancel: Annulla
     subscriptions:
       review:
         address: Indirizzo
         products: Prodotti
-    stripe_connect_settings:
-      edit:
-        settings: "Impostazioni"
   shared:
     register_call:
       selling_on_ofn: "Interessato ad entrare in Open Food Network?"
       register: "Registrati qui"
+    footer:
+      footer_global_headline: "OFN Globale"
+      footer_global_home: "Home"
+      footer_global_news: "News"
+      footer_global_about: "About"
+      footer_global_contact: "Contatto"
+      footer_sites_headline: "Siti OFN"
+      footer_sites_developer: "Sviluppatore"
+      footer_sites_community: "Community"
+      footer_sites_userguide: "Guida utente"
+      footer_secure: "Sicuro e affidabile."
+      footer_secure_text: "Open Food Network usa la codifica SSL (2048 bit RSA) ovunque per mantenere private le tue informazioni sulla spesa e i pagamenti. I nostri server non memorizzano i dettagli della tua carta di credito e i pagamenti sono processati da servizi PCI-conformi."
+      footer_contact_headline: "Tieniti in contatto"
+      footer_contact_email: "Scrivici"
+      footer_nav_headline: "Naviga"
+      footer_join_headline: "Unisciti a noi"
+      footer_join_body: "Crea una lista, un negozio o un gruppo su Open Food Network."
+      footer_join_cta: "Dimmi di più!"
+      footer_legal_call: "Leggi i nostri"
+      footer_legal_tos: "Termini e condizioni"
+      footer_legal_visit: "Trovaci su"
+      footer_legal_text_html: "Open Food Network è un software gratuito e open source. Il nostro contenuto è distribuito con licenza %{content_license} e il nostro codice con licenza %{code_license}."
   shop:
     messages:
       login: "fai il login"
@@ -205,6 +247,13 @@ it:
   invoice_column_price: "Prezzo"
   invoice_column_item: "Articolo"
   invoice_column_qty: "Qtà."
+  menu_1_title: "Negozi"
+  menu_2_title: "Mappa"
+  menu_3_title: "Produttori"
+  menu_4_title: "Gruppi"
+  menu_5_title: "About"
+  menu_6_title: "Connetti"
+  menu_7_title: "Impara"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -220,7 +269,6 @@ it:
   footer_email: "Email"
   footer_links_md: "Collegamenti"
   footer_about_url: "URL About"
-  footer_tos_url: "URL Termini di Servizio"
   name: Nome
   first_name: Nome
   last_name: Cognome
@@ -268,27 +316,6 @@ it:
   ie_warning_firefox: Scarica Firefox
   ie_warning_ie: Aggiorna Internet Explorer
   ie_warning_other: "Non puoi aggiornare il browser? Prova Open Food Network sul tuo smartphone :-)"
-  footer_global_headline: "OFN Globale"
-  footer_global_home: "Home"
-  footer_global_news: "News"
-  footer_global_about: "About"
-  footer_global_contact: "Contatta"
-  footer_sites_headline: "Siti OFN"
-  footer_sites_developer: "Sviluppatore"
-  footer_sites_community: "Community"
-  footer_sites_userguide: "Guida utente"
-  footer_secure: "Sicuro e affidabile."
-  footer_secure_text: "Open Food Network usa la codifica SSL (2048 bit RSA) ovunque per mantenere private le tue informazioni sulla spesa e i pagamenti. I nostri server non memorizzano i dettagli della tua carta di credito e i pagamenti sono processati da servizi PCI-conformi."
-  footer_contact_headline: "Tieniti in contatto"
-  footer_contact_email: "Scrivici"
-  footer_nav_headline: "Naviga"
-  footer_join_headline: "Unisciti a noi"
-  footer_join_body: "Crea una lista, un negozio o un gruppo su Open Food Network."
-  footer_join_cta: "Dimmi di più!"
-  footer_legal_call: "Leggi i nostri"
-  footer_legal_tos: "Termini e condizioni"
-  footer_legal_visit: "Trovaci su"
-  footer_legal_text_html: "Open Food Network è un software gratuito e open source. Il nostro contenuto è distribuito con licenza %{content_license} e il nostro codice con licenza %{code_license}."
   home_shop: Compra ora
   brandstory_headline: "Cibo, libero."
   brandstory_intro: "A volte il modo migliore di correggere il sistema è crearne uno nuovo..."
@@ -640,6 +667,17 @@ it:
   password_reset_sent: "Ti abbiamo mandato una email con le istruzioni per resettare la password."
   reset_password: "Resetta la password"
   who_is_managing_enterprise: "Chi è responsabile per la gestione di %{enterprise}?"
+  registration:
+    steps:
+      type:
+        headline: "Ultimo passo per aggiungere %{enterprise}!"
+        question: "Sei un produttore?"
+        yes_producer: "Sì, sono un produttore"
+        no_producer: "No, non sono un produttore"
+        producer_field_error: "Per favore scegline uno. Sei un produttore?"
+        yes_producer_help: "I produttori fanno cose buone da mangiare e/o bere. Sei un produttore se le coltivi, le allevi, le infondi, le cucini, le fai fermentare, le mungi o le modelli."
+        no_producer_help: "Se non sei un produttore, probabilmente sei qualcuno che vende e distribuisce cibo. potresti essere un hub, una cooperativa, un gruppo d'acquisto, un rivenditore al dettaglio o all'ingrosso, o altro."
+        create_profile: "Crea profilo"
   enterprise_contact: "Contatto principale"
   enterprise_contact_required: "Devi inserire un contatto principale"
   enterprise_email_address: "Indirizzo email"
@@ -716,7 +754,6 @@ it:
   registration_type_error: "Per favore scegline uno. Sei un produttore?"
   registration_type_producer_help: "I produttori fanno cose buone da mangiare e/o bere. Sei un produttore se le coltivi, le allevi, le infondi, le cucini, le fai fermentare, le mungi o le modelli."
   registration_type_no_producer_help: "Se non sei un produttore, probabilmente sei qualcuno che vende e distribuisce cibo. potresti essere un hub, una cooperativa, un gruppo d'acquisto, un rivenditore al dettaglio o all'ingrosso, o altro."
-  create_profile: "Crea profilo"
   registration_images_headline: "Grazie!"
   registration_images_description: "Carichiamo qualche immagine per rendere più bello il tuo profilo! :)"
   registration_detail_headline: "Cominciamo"
@@ -770,7 +807,6 @@ it:
   you_have_no_orders_yet: "Non hai ordini al momento"
   running_balance: "Bilancio corrente"
   outstanding_balance: "Insoluto"
-  admin_entreprise_relationships: "Relazioni dell'azienda"
   admin_entreprise_relationships_everything: "Tutto"
   admin_entreprise_relationships_permits: "permessi"
   admin_entreprise_relationships_seach_placeholder: "Cerca"
@@ -836,12 +872,7 @@ it:
   spree_admin_enterprises_fees: "Contributi dell'azienda"
   spree_admin_enterprises_none_create_a_new_enterprise: "CREA NUOVA AZIENDA"
   spree_admin_enterprises_none_text: "Non hai nessua azienda al momento"
-  spree_admin_enterprises_producers_name: "Nome"
-  spree_admin_enterprises_producers_total_products: "Totale prodotti"
-  spree_admin_enterprises_producers_active_products: "Prodotti attivi"
-  spree_admin_enterprises_producers_order_cycles: "Prodotti in OC"
   spree_admin_enterprises_tabs_hubs: "HUBS"
-  spree_admin_enterprises_tabs_producers: "PRODUTTORI"
   spree_admin_enterprises_producers_manage_products: "GESTISCI PRODOTTI"
   spree_admin_enterprises_any_active_products_text: "Non hai prodotti attivi."
   spree_admin_enterprises_create_new_product: "CREA UN NUOVO PRODOTTO"
@@ -942,7 +973,24 @@ it:
       panels:
         enterprise_status:
           description: Descrizione
+      resend_user_email_confirmation:
+        resend: "Invia nuovamente"
   spree:
+    admin:
+      products:
+        index:
+          products_head:
+            name: Nome
+            unit: Unità
+            display_as: Visualizza come
+            category: Categoria
+            tax_category: Categoria di imposta
+            inherits_properties?: Eredita proprietà?
+            available_on: Disponibile il
+            av_on: "Disp. il"
+      general_settings:
+        edit:
+          footer_tos_url: "URL Termini di Servizio"
     order_state:
       address: indirizzo
       adjustments: aggiustamenti

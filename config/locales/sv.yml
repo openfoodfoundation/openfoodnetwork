@@ -69,6 +69,7 @@ sv:
   distributors: Distributörer
   distribution: Distribution
   bulk_order_management: Hantera flera beställningar
+  enterprises: Företag
   enterprise_groups: Grupper
   reports: Rapporter
   variant_overrides: Lager
@@ -123,6 +124,8 @@ sv:
     form_invalid: "Formuläret saknar data eller har innehåller ogiltiga fält"
     clear_filters: Rensa filterinställningar
     clear: Rensa
+    cancel: Avbryt
+    back: Backa
     columns: Kolumner
     actions: Handlingar
     viewing: "Tittar på: %{current_view_name}"
@@ -186,6 +189,19 @@ sv:
         included_tax_tip: "All skatt är inkluderad i exemplets månadsfaktura enligt de inställningar och den omsättning som var angiven."
         total_monthly_bill_incl_tax: "Totalt månadsfaktura (inkl moms)"
         total_monthly_bill_incl_tax_tip: "Exemplets totala månadsfaktura med skatt inkluderad enligt de inställningar och den omsättning som var angiven."
+    cache_settings:
+      show:
+        title: Inkomst
+        distributor: Distributör
+        order_cycle: Beställningsomgång
+        status: Status
+        diff: Differens
+        error: Fel
+    invoice_settings:
+      edit:
+        title: Fakturainställningar
+        invoice_style2?: Använd den alternativa faktureringsmodellen som inkluderar totala skattefördelning per beräkning och skatt per artikel (ännu inte passande för länder som visar priser exklusive skatt)
+        enable_receipt_printing?: 'Visa alternativ för att skriva ut recept genom att använda termiska skrivare i ordermenyn? '
     customers:
       index:
         add_customer: "Lägg till kund"
@@ -210,14 +226,6 @@ sv:
         search_by_email: "Sök via e-post/kod..."
       destroy:
         has_associated_orders: 'Radering misslyckades: kunden har associerade order med sin butik'
-    cache_settings:
-      show:
-        title: Inkomst
-        distributor: Distributör
-        order_cycle: Beställningsomgång
-        status: Status
-        diff: Differens
-        error: Fel
     contents:
       edit:
         title: Innehåll
@@ -247,12 +255,28 @@ sv:
         manages: hanterar
     products:
       unit_name_placeholder: 't.ex. klasar'
+      index:
+        unit: Enhet
+        display_as: Visa som
+        category: Kategori
+        tax_category: Skattekategori
+        inherits_properties?: Ärva egenskaper?
+        available_on: 'Tillgänglig '
+        av_on: "Md. På"
       Search: Sök
       properties:
         property_name: Egendomens Namn
         inherited_property: Ärvd Egendom
       variants:
         to_order_tip: "Varor som framställs för en order har inget eget varunummer, ex formbröd som värms vid en order."
+    product_import:
+      file_not_found: Filen hittades inte eller kunde inte öppnas
+      no_data: Ingen data hittades i kalkylbladet
+      model:
+        no_file: "Fel: ingen fil laddades upp"
+        could_not_process: "kunde inte hantera filen: ogiltig filtyp"
+        blank: kan inte vara blank
+        none_saved: sparade inte några produkter
     variant_overrides:
       loading_flash:
         loading_inventory: LADDNING AV INVENTARIELISTA
@@ -442,7 +466,7 @@ sv:
           managers: Chefer
           managers_tip: Andra användare med tillstånd att leda detta företag.
       actions:
-        edit_profile: Redigera profilen
+        edit_profile: Inställningar
         properties: Egenskaper
         payment_methods: Betalningssätt
         payment_methods_tip: Detta företag har inga betalningssätt
@@ -482,13 +506,13 @@ sv:
         no_enterprises_found: Inget företag kunde hittas.
         search_placeholder: Sök på namn
         manage: Administrera
+        manage_link: Inställningar
       new_form:
         owner: Ägare
         owner_tip: Den primära användaren är ansvarig för detta företag.
         i_am_producer: Jag är en Tillverkare
         contact_name: Kontaktperson
       edit:
-        editing: 'Redigera:'
         back_link: Åter till företagslistan
       new:
         title: Nya företag
@@ -497,7 +521,6 @@ sv:
         welcome_title: Välkommen till OFN!
         welcome_text: Du har korrekt slutfört en
         next_step: Nästa steg
-        choose_starting_point: 'Välj din startpunkt:'
     order_cycles:
       edit:
         advanced_settings: Avancerade inställningar
@@ -530,7 +553,7 @@ sv:
         name: Namn
         orders_open: Order öppna till
         coordinator: Koordinator
-        order_closes: Order stänger
+        orders_close: Order stänger
       row:
         suppliers: leverantörer
         distributors: distributörer
@@ -542,17 +565,14 @@ sv:
         customer_instructions_placeholder: Hämtnings eller leverans meddelanden
         products: Produkter
         fees: Avgifter
+      date_warning:
+        cancel: Avbryt
     producer_properties:
       index:
         title: Producentegenskaper
     shared:
       user_guide_link:
         user_guide: Användarinstruktion
-    invoice_settings:
-      edit:
-        title: Fakturainställningar
-        invoice_style2?: Använd den alternativa faktureringsmodellen som inkluderar totala skattefördelning per beräkning och skatt per artikel (ännu inte passande för länder som visar priser exklusive skatt)
-        enable_receipt_printing?: 'Visa alternativ för att skriva ut recept genom att använda termiska skrivare i ordermenyn? '
     overview:
       enterprises_header:
         ofn_with_tip: Företag är Producenter och/eller Hubbar och är den grundläggande organisationsenheten inom Open Food Network.
@@ -638,6 +658,28 @@ sv:
     register_call:
       selling_on_ofn: "Intresserad av att gå med i Open Food Network?"
       register: "Registrera dig här"
+    footer:
+      footer_global_headline: "OFN Globalt"
+      footer_global_home: "Hem"
+      footer_global_news: "Nyheter"
+      footer_global_about: "Om oss"
+      footer_global_contact: "Kontakt"
+      footer_sites_headline: "OFN webbsidor"
+      footer_sites_developer: "Utvecklare"
+      footer_sites_community: "Gemenskap"
+      footer_sites_userguide: "Användarinstruktion"
+      footer_secure: "Säkert och anförtrott."
+      footer_secure_text: "Open Food Network använder SSL-kryptering (2048 bitars RSA) överallt för att hålla din beställnings- och betalningsinformation privat. Våra servrar lagrar inte dina kreditkortsdetaljer och betalningar processeras av PCI-beskedliga tjänster."
+      footer_contact_headline: "Håll kontakten"
+      footer_contact_email: "Mejla oss"
+      footer_nav_headline: "Navigera"
+      footer_join_headline: "Gå med oss"
+      footer_join_body: "Skapa en lista, butik eller gruppförteckning på Open Food Network."
+      footer_join_cta: "Berätta mer!"
+      footer_legal_call: "Läs vår"
+      footer_legal_tos: "Användarvillkor"
+      footer_legal_visit: "Hitta oss på"
+      footer_legal_text_html: "Open Food Network är en avgiftsfri plattform för öppen källkod. Vårt innehåll har licens med  %{content_license} och vår kod med %{code_license}."
   shop:
     messages:
       login: "Logga in"
@@ -670,6 +712,13 @@ sv:
   ticket_column_item: "Vara"
   ticket_column_unit_price: "Styckpris"
   ticket_column_total_price: "Summa"
+  menu_1_title: "Butiker"
+  menu_2_title: "Karta"
+  menu_3_title: "Producenter "
+  menu_4_title: "Grupper"
+  menu_5_title: "Om oss"
+  menu_6_title: "Anslut"
+  menu_7_title: "Lär mer"
   logo: "Logotyp (640x130)"
   logo_mobile: "Mobil logotyp (75x26)"
   logo_mobile_svg: "Mobil logotyp (SVG)"
@@ -685,7 +734,6 @@ sv:
   footer_email: "epost"
   footer_links_md: "Webblänkar "
   footer_about_url: "Om oss URL"
-  footer_tos_url: "Användarvillkor URL"
   name: Namn
   first_name: 'Förnamn '
   last_name: 'Efternamn '
@@ -741,27 +789,6 @@ sv:
   ie_warning_firefox: Hämta Firefox
   ie_warning_ie: Uppdatera din Internet Explorer webbläsare
   ie_warning_other: "Kan du inte uppdatera din webbläsare? Pröva Open Food Network på din smartphone :-)"
-  footer_global_headline: "OFN Globalt"
-  footer_global_home: "Hem"
-  footer_global_news: "Nyheter"
-  footer_global_about: "Om oss"
-  footer_global_contact: "Kontakt"
-  footer_sites_headline: "OFN webbsidor"
-  footer_sites_developer: "Utvecklare"
-  footer_sites_community: "Gemenskap"
-  footer_sites_userguide: "Användarguide"
-  footer_secure: "Säkert och anförtrott."
-  footer_secure_text: "Open Food Network använder SSL-kryptering (2048 bitars RSA) överallt för att hålla din beställnings- och betalningsinformation privat. Våra servrar lagrar inte dina kreditkortsdetaljer och betalningar processeras av PCI-beskedliga tjänster."
-  footer_contact_headline: "Håll kontakten"
-  footer_contact_email: "Mejla oss"
-  footer_nav_headline: "Navigera"
-  footer_join_headline: "Gå med oss"
-  footer_join_body: "Skapa en lista, butik eller gruppförteckning på Open Food Network."
-  footer_join_cta: "Berätta mer!"
-  footer_legal_call: "Läs vår"
-  footer_legal_tos: "Användarvillkor"
-  footer_legal_visit: "Hitta oss på"
-  footer_legal_text_html: "Open Food Network är en avgiftsfri plattform för öppen källkod. Vårt innehåll har licens med  %{content_license} och vår kod med %{code_license}."
   home_shop: Handla nu
   brandstory_headline: "Mat, icke-inkorporerad."
   brandstory_intro: "Ibland är det bästa sättet att fixa till systemet att starta ett nytt..."
@@ -1142,6 +1169,17 @@ sv:
   password_reset_sent: "Ett e-postmeddelande med instruktioner hur lösenordet återställs har översänts!"
   reset_password: "Återställ lösenordet"
   who_is_managing_enterprise: "Vem är ansvarig hos  %{enterprise}?"
+  registration:
+    steps:
+      type:
+        headline: "Sista steget för att lägga till %{enterprise}!"
+        question: "Är du en producent?"
+        yes_producer: "Ja, jag är en procucdent"
+        no_producer: "Nej, jag är inte en producent"
+        producer_field_error: "Var vänlig välj en. Är du en producent?"
+        yes_producer_help: "Producenter gör smakfulla rätter att äta och/eller dricka. Du är en producent om du odlar det, föder upp det, brygger det, bakar det  behandlar det, förädlar det eller formar det."
+        no_producer_help: "Om du inte ät en producent är du antagligen någon som säljer och distribuerar mat. Du borde bli ett matställe, kooperation, inköpsgrupp, detaljhandlare,grossist eller annat. "
+        create_profile: "Skapa en profil"
   enterprise_contact: "Kontaktperson"
   enterprise_contact_required: "Du måste ange en kontaktperson."
   enterprise_email_address: "E-postadress"
@@ -1219,7 +1257,6 @@ sv:
   registration_type_error: "Var vänlig välj en. Är du en producent?"
   registration_type_producer_help: "Producenter gör smakfulla rätter att äta och/eller dricka. Du är en producent om du odlar det, föder upp det, brygger det, bakar det  behandlar det, förädlar det eller formar det."
   registration_type_no_producer_help: "Om du inte ät en producent är du antagligen någon som säljer och distribuerar mat. Du borde bli ett matställe, kooperation, inköpsgrupp, detaljhandlare,grossist eller annat. "
-  create_profile: "Skapa en profil"
   registration_images_headline: "Tack!"
   registration_images_description: "Låt oss ladda några säljande bilder så att din profil ser lockande ut! :)"
   registration_detail_headline: "Låt oss börja"
@@ -1278,7 +1315,6 @@ sv:
   you_have_no_orders_yet: "Du har inga order ännu"
   running_balance: "Saldo"
   outstanding_balance: "Utestående behållning"
-  admin_entreprise_relationships: "Företagssamband"
   admin_entreprise_relationships_everything: "Allting"
   admin_entreprise_relationships_permits: "tillåtelse"
   admin_entreprise_relationships_seach_placeholder: "Sök"
@@ -1352,12 +1388,7 @@ sv:
   spree_admin_enterprises_fees: "Företagsavgifter"
   spree_admin_enterprises_none_create_a_new_enterprise: "SKAPA ETT NYTT FÖRETAG"
   spree_admin_enterprises_none_text: "Du har inget företag ännu"
-  spree_admin_enterprises_producers_name: "Namn"
-  spree_admin_enterprises_producers_total_products: "Summa produkter"
-  spree_admin_enterprises_producers_active_products: "Aktiva produkter"
-  spree_admin_enterprises_producers_order_cycles: "Produkter i beställningsrunda"
   spree_admin_enterprises_tabs_hubs: "MATSTÄLLEN"
-  spree_admin_enterprises_tabs_producers: "PRODUCENTER"
   spree_admin_enterprises_producers_manage_products: "HANTERA PRODUKTER"
   spree_admin_enterprises_any_active_products_text: "Du har inga aktiva produkter."
   spree_admin_enterprises_create_new_product: "SKAPA EN NY PRODUKT"
@@ -1396,10 +1427,7 @@ sv:
   edit_profile_details_etc: "Ändra beskrivningen av din profil, bilder, etc"
   order_cycle: "Ordercykel"
   order_cycles: "Beställningsomgångar"
-  enterprises: "Företag"
   remove_tax: "Tag bort skatt"
-  enterprise_terms_of_service: "Företagets servicevillkor"
-  enterprises_require_tos: "Företag måste acceptera servicevillkoren"
   enterprise_tos_link: "Länk till företagets servicevillkor"
   enterprise_tos_message: "Vi vill arbeta med personer som delar våra mål och värderingar. Därför ber vi nya företag att samtycka med vår"
   enterprise_tos_link_text: "Servicevillkor"
@@ -1616,7 +1644,6 @@ sv:
   content_configuration_pricing_table: "(TODO: Pristabell)"
   content_configuration_case_studies: "(TODO: Case studies)"
   content_configuration_detail: "(TODO: Detalj)"
-  enterprise_name_error: "är redan registrerad. Om det här är ditt företag och du vill göra anspråk på den, vänligen kontakta nuvarande administratör för den här profilen på %{email}."
   enterprise_owner_error: "^ %{email} har inte rätt att äga några fler företag (gränsen är %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^ Den rollen existerar redan."
   inventory_item_visibility_error: Måste vara 'true' eller 'false'
@@ -1778,6 +1805,8 @@ sv:
           resolve: Besluta
       new_tag_rule_dialog:
         select_rule_type: "Välj en regeltyp:"
+      resend_user_email_confirmation:
+        resend: "Återsänd"
     out_of_stock:
       reduced_stock_available: Minska tillgängligt lager
       out_of_stock_text: >
@@ -1862,6 +1891,15 @@ sv:
             title: LADDAR PRODUKTER
             no_products: "Inga produkter ännu. Varför lägger du inte till några?"
             no_results: "Ledsen, inga resultat stämmer överens"
+          products_head:
+            name: Namn
+            unit: Enhet
+            display_as: Visa som
+            category: Kategori
+            tax_category: Skattekategori
+            inherits_properties?: Ärva egenskaper?
+            available_on: 'Tillgänglig '
+            av_on: "Md. På"
       reports:
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totaler per leverantör'
@@ -1871,6 +1909,10 @@ sv:
       variants:
         autocomplete:
           producer_name: Producent
+      general_settings:
+        edit:
+          enterprises_require_tos: "Företag måste acceptera servicevillkoren"
+          footer_tos_url: "Användarvillkor URL"
     date_picker:
       format: '%Y-%m-%d'
       js_format: 'åå-mm-dd'
