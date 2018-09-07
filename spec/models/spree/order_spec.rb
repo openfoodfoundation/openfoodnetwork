@@ -185,7 +185,6 @@ describe Spree::Order do
     let(:shipping_method) { create(:shipping_method) }
 
     before do
-      order.create_shipment!
       order.reload
       order.state = 'complete'
       order.shipment.update!(order)
@@ -214,7 +213,6 @@ describe Spree::Order do
     let(:shipping_method) { create(:shipping_method) }
 
     before do
-      order.create_shipment!
       order.payment_state = 'paid'
       order.state = 'complete'
       order.shipment.update!(order)
@@ -233,7 +231,6 @@ describe Spree::Order do
       before do
         Spree::Config.shipment_inc_vat = true
         Spree::Config.shipping_tax_rate = 0.25
-        order.create_shipment!
       end
 
       it "returns the shipping tax" do
@@ -267,7 +264,6 @@ describe Spree::Order do
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.25
-      order.create_shipment!
       order.reload
     end
 
@@ -301,7 +297,6 @@ describe Spree::Order do
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = tax_rate15.amount
-      order.create_shipment!
       Spree::TaxRate.adjust(order)
       order.reload.update_distribution_charge!
     end
