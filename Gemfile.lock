@@ -22,7 +22,7 @@ GIT
 
 GIT
   remote: https://github.com/openfoodfoundation/spree.git
-  revision: 94b1f395bbf2cffbb1e33cdab5809511150da814
+  revision: 43950c3689a77a7f493cc6d805a0edccfe75ebc2
   branch: 2-0-4-stable
   specs:
     spree (2.0.4)
