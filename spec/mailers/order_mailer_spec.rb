@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Spree::OrderMailer do
-  let!(:mail_method) { create(:mail_method, preferred_mails_from: 'spree@example.com') }
-
   describe "order confimation" do
     after do
       ActionMailer::Base.deliveries.clear

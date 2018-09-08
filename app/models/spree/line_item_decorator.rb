@@ -111,34 +111,6 @@ Spree::LineItem.class_eval do
   end
 
   # MONKEYPATCH of Spree method
-  # Enables scoping of variant to hub/shop, stock drawn down from inventory
-  def update_inventory
-    return true unless order.completed?
-
-    scoper.scope(variant) # this line added
-
-    if new_record?
-      Spree::InventoryUnit.increase(order, variant, quantity)
-    elsif old_quantity = self.changed_attributes['quantity']
-      if old_quantity < quantity
-        Spree::InventoryUnit.increase(order, variant, (quantity - old_quantity))
-      elsif old_quantity > quantity
-        Spree::InventoryUnit.decrease(order, variant, (old_quantity - quantity))
-      end
-    end
-  end
-
-  # MONKEYPATCH of Spree method
-  # Enables scoping of variant to hub/shop, stock replaced to inventory
-  def remove_inventory
-    return true unless order.completed?
-
-    scoper.scope(variant) # this line added
-
-    Spree::InventoryUnit.decrease(order, variant, quantity)
-  end
-
-  # MONKEYPATCH of Spree method
   # Enables scoping of variant to hub/shop, so we check stock against relevant overrides if they exist
   # Also skips stock check if requested quantity is zero
   def sufficient_stock?

@@ -39,10 +39,10 @@ describe Spree::Admin::OrdersController, type: :controller do
       let!(:order1) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
       let!(:order2) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
       let!(:order3) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item1) { FactoryBot.create(:line_item, order: order1) }
-      let!(:line_item2) { FactoryBot.create(:line_item, order: order2) }
-      let!(:line_item3) { FactoryBot.create(:line_item, order: order2) }
-      let!(:line_item4) { FactoryBot.create(:line_item, order: order3) }
+      let!(:line_item1) { FactoryBot.create(:line_item_with_shipment, order: order1) }
+      let!(:line_item2) { FactoryBot.create(:line_item_with_shipment, order: order2) }
+      let!(:line_item3) { FactoryBot.create(:line_item_with_shipment, order: order2) }
+      let!(:line_item4) { FactoryBot.create(:line_item_with_shipment, order: order3) }
       let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :units_product, :units_variant] }
     end
 
@@ -96,10 +96,10 @@ describe Spree::Admin::OrdersController, type: :controller do
       let(:coordinator) { create(:distributor_enterprise) }
       let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
       let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item1) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
-      let!(:line_item2) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
+      let!(:line_item1) { FactoryBot.create(:line_item_with_shipment, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
+      let!(:line_item2) { FactoryBot.create(:line_item_with_shipment, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
       let!(:order2) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor2, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item3) { FactoryBot.create(:line_item, order: order2, product: FactoryBot.create(:product, supplier: supplier)) }
+      let!(:line_item3) { FactoryBot.create(:line_item_with_shipment, order: order2, product: FactoryBot.create(:product, supplier: supplier)) }
 
       context "producer enterprise" do
 

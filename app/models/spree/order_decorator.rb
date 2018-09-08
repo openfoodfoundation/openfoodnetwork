@@ -19,31 +19,16 @@ Spree::Order.class_eval do
   validate :disallow_guest_order
   attr_accessible :order_cycle_id, :distributor_id, :customer_id
 
-  before_validation :shipping_address_from_distributor
   before_validation :associate_customer, unless: :customer_id?
   before_validation :ensure_customer, unless: :customer_is_valid?
 
   before_save :update_shipping_fees!, if: :complete?
   before_save :update_payment_fees!, if: :complete?
 
-  checkout_flow do
-    go_to_state :address
-    go_to_state :delivery
-    go_to_state :payment, :if => lambda { |order|
-      # Fix for #2191
-      if order.shipping_method.andand.delivery?
-        if order.ship_address.andand.valid?
-          order.create_shipment!
-          order.update_totals
-        end
-      end
-      order.payment_required?
-    }
-    # NOTE: :confirm step was removed because we were not actually using it
-    # go_to_state :confirm, :if => lambda { |order| order.confirmation_required? }
-    go_to_state :complete
-    remove_transition :from => :delivery, :to => :confirm
-  end
+  # Orders are confirmed with their payment, we don't use the confirm step.
+  # Here we remove that step from Spree's checkout state machine.
+  # See: https://guides.spreecommerce.org/developer/checkout.html#modifying-the-checkout-flow
+  remove_checkout_step :confirm
 
   # -- Scopes
   scope :managed_by, lambda { |user|
@@ -348,19 +333,19 @@ Spree::Order.class_eval do
     payments.select {|p| p.state == "checkout"} # Original definition
   end
 
-  private
-
-  def shipping_address_from_distributor
-    if distributor
-      # This method is confusing to conform to the vagaries of the multi-step checkout
-      # We copy over the shipping address when we have no shipping method selected
-      # We can refactor this when we drop the multi-step checkout option
-      #
-      if shipping_method.andand.require_ship_address == false
-        self.ship_address = address_from_distributor
-      end
+  # Although Spree 2 supports multi shipments per order, in OFN we keep the rule one shipment per order
+  #   Thus, this method sets the given shipping_method on the first and only shipment in the order
+  def shipping_method=(shipping_method = nil)
+    if shipments.empty?
+      shipment = Spree::Shipment.new
+      shipment.order = self
+      shipment.save
+      shipments << shipment
     end
+    shipments.first.add_shipping_method(shipping_method, true)
   end
+
+  private
 
   def address_from_distributor
     address = distributor.address.clone

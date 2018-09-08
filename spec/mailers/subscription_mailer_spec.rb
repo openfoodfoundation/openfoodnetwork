@@ -3,8 +3,6 @@ require 'spec_helper'
 describe SubscriptionMailer do
   include ActionView::Helpers::SanitizeHelper
 
-  let!(:mail_method) { create(:mail_method, preferred_mails_from: 'spree@example.com') }
-
   describe "order placement" do
     let(:shop) { create(:enterprise) }
     let(:customer) { create(:customer, enterprise: shop) }
