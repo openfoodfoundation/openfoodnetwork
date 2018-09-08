@@ -4,7 +4,7 @@
     %br
     100 x 100 pixels
   .omega.eight.columns
-    = image_tag '', class: 'image-field-group__preview-image', 'ng-src' => '{{ Enterprise.logo.medium }}', 'ng-if' => 'Enterprise.logo'
+    %img{ class: 'image-field-group__preview-image', ng: { src: '{{ Enterprise.logo.medium }}', if: 'Enterprise.logo' } }
     = f.file_field :logo
     %a.button.red{ href: '', ng: {click: 'removeLogo()', if: 'Enterprise.logo'} }
       = t('admin.enterprises.remove_logo.remove')
@@ -20,7 +20,7 @@
     = t('.promo_image_note3')
 
   .omega.eight.columns
-    = image_tag '', class: 'image-field-group__preview-image', 'ng-src' => '{{ Enterprise.promo_image.large }}', 'ng-if' => 'Enterprise.promo_image'
+    %img{ class: 'image-field-group__preview-image', ng: { src: '{{ Enterprise.promo_image.large }}', if: 'Enterprise.promo_image' } }
     = f.file_field :promo_image
     %a.button.red{ href: '', ng: {click: 'removePromoImage()', if: 'Enterprise.promo_image'} }
       = t('admin.enterprises.remove_promo_image.remove')
