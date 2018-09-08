@@ -181,8 +181,7 @@ describe Spree::Order do
   end
 
   describe "an unpaid order with a shipment" do
-    let(:order)           { create(:order_with_totals, shipping_method: shipping_method) }
-    let(:shipping_method) { create(:shipping_method) }
+    let(:order) { create(:order_with_totals, shipments: [create(:shipment)]) }
 
     before do
       order.reload
@@ -209,8 +208,7 @@ describe Spree::Order do
   end
 
   describe "a paid order with a shipment" do
-    let(:order)           { create(:order, shipping_method: shipping_method) }
-    let(:shipping_method) { create(:shipping_method) }
+    let(:order) { create(:order_with_line_items) }
 
     before do
       order.payment_state = 'paid'
@@ -224,8 +222,8 @@ describe Spree::Order do
   end
 
   describe "getting the shipping tax" do
-    let(:order)           { create(:order, shipping_method: shipping_method) }
-    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 50.0)) }
+    let(:shipment) { create(:shipment_with_flat_rate) }
+    let(:order)    { create(:order, shipments: [shipment]) }
 
     context "with a taxed shipment" do
       before do
@@ -256,10 +254,10 @@ describe Spree::Order do
   end
 
   describe "getting the total tax" do
-    let(:order)           { create(:order, shipping_method: shipping_method) }
-    let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 50.0)) }
-    let(:enterprise_fee)  { create(:enterprise_fee) }
-    let!(:adjustment)     { create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2) }
+    let(:shipment)       { create(:shipment_with_flat_rate) }
+    let(:order)          { create(:order, shipments: [shipment]) }
+    let(:enterprise_fee) { create(:enterprise_fee) }
+    let!(:adjustment)    { create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2) }
 
     before do
       Spree::Config.shipment_inc_vat = true
@@ -287,14 +285,16 @@ describe Spree::Order do
 
     let(:variant)         { create(:variant, product: create(:product, tax_category: tax_category10)) }
     let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 46.0)) }
+    let(:shipment)        { create(:shipment) }
     let(:enterprise_fee)  { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category20, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 48.0)) }
     let(:additional_adjustment) { create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0)) }
 
     let(:order_cycle)     { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
-    let!(:order)          { create(:order, shipping_method: shipping_method, bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator, adjustments: [additional_adjustment]) }
+    let!(:order)          { create(:order, shipments: [shipment], bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator, adjustments: [additional_adjustment]) }
     let!(:line_item)      { create(:line_item, order: order, variant: variant, price: 44.0) }
 
     before do
+      shipment.add_shipping_method(shipping_method, true)
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = tax_rate15.amount
       Spree::TaxRate.adjust(order)
@@ -386,7 +386,7 @@ describe Spree::Order do
 
   describe "emptying the order" do
     it "removes shipping method" do
-      subject.shipping_method = create(:shipping_method)
+      subject.shipments = [create(:shipment)]
       subject.save!
       subject.empty!
       subject.shipping_method.should == nil
@@ -655,8 +655,7 @@ describe Spree::Order do
   end
 
   describe "a completed order with shipping and transaction fees" do
-    let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
-    let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+    let(:order) { create(:completed_order_with_fees, shipping_fee: shipping_fee, payment_fee: payment_fee) }
     let(:shipping_fee) { 3 }
     let(:payment_fee) { 5 }
     let(:item_num) { order.line_items.length }

@@ -91,10 +91,9 @@ describe LineItemsController, type: :controller do
     end
 
     context "where shipping and payment fees apply" do
-      let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
       let(:shipping_fee) { 3 }
       let(:payment_fee) { 5 }
-      let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:order) { create(:completed_order_with_fees, shipping_fee: shipping_fee, payment_fee: payment_fee) }
 
       before do
         Spree::Config.shipment_inc_vat = true
