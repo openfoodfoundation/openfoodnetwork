@@ -280,6 +280,16 @@ FactoryBot.define do
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
+  factory :shipping_method_with_flat_rate, parent: :shipping_method do
+    calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
+  end
+
+  factory :shipment_with_flat_rate, parent: :shipment do
+    after(:create) do |shipment|
+      shipment.add_shipping_method(create(:shipping_method_with_flat_rate), true)
+    end
+  end
+
   factory :order_with_totals_and_distribution, :parent => :order do #possibly called :order_with_line_items in newer Spree
     distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }

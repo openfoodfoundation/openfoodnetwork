@@ -59,10 +59,10 @@ module Spree
       end
 
       describe "Shipment adjustments" do
-        let!(:order)          { create(:order, distributor: hub, shipping_method: shipping_method) }
+        let!(:shipment)       { create(:shipment_with_flat_rate) }
+        let!(:order)          { create(:order, distributor: hub, shipments: [shipment]) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
         let!(:line_item)      { create(:line_item, order: order) }
-        let(:shipping_method) { create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
         let(:adjustment)      { order.adjustments(:reload).shipping.first }
 
         it "has a shipping charge of $50" do
