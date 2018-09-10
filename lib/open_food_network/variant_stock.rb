@@ -60,11 +60,11 @@ module OpenFoodNetwork
 
     # Sets the stock level. As opposed to #on_hand= it does not check
     # `track_inventory_levels`'s value as it was previously an ActiveModel
-    # setter of te database column of the `spree_variants` table. That is why
+    # setter of the database column of the `spree_variants` table. That is why
     # #on_hand= is more widely used in Spree's codebase using #count_on_hand=
     # underneath.
     #
-    # So, if #count_on_hand= is used, `track_inventory_levels` won't be tacken
+    # So, if #count_on_hand= is used, `track_inventory_levels` won't be taken
     # into account thus dismissing instance's configuration.
     #
     # It does ensure there's a stock item for the variant however. See
