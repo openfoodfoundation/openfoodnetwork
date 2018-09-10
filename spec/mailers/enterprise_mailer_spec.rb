@@ -6,7 +6,6 @@ describe EnterpriseMailer do
 
   before do
     ActionMailer::Base.deliveries = []
-    Spree::MailMethod.create!(environment: 'test')
   end
 
   describe "#welcome" do
