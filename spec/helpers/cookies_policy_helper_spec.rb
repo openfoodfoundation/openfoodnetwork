@@ -12,9 +12,18 @@ describe CookiesPolicyHelper, type: :helper do
   end
 
   describe "matomo optout iframe src" do
-    scenario "includes matomo URL" do  
-      Spree::Config.matomo_url = "http://matomo.org/"
-      expect(helper.matomo_iframe_src).to include Spree::Config.matomo_url
+    describe "when matomo url is set" do
+      before do
+        Spree::Config.matomo_url = "http://matomo.org/"
+      end
+
+      scenario "includes the matomo URL" do
+        expect(helper.matomo_iframe_src).to include Spree::Config.matomo_url
+      end
+
+      scenario "is not equal to the matomo URL" do
+        expect(helper.matomo_iframe_src).to_not eq Spree::Config.matomo_url
+      end
     end
 
     scenario "is not nil, when matomo url is nil" do
