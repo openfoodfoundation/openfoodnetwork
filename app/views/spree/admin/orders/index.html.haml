@@ -49,14 +49,7 @@
 - unless @orders.empty?
   %table#listing_orders.index.responsive{"data-hook" => "", width: "100%", "ng-app" => "ofn.admin"}
     %colgroup
-      %col{style: "width: 16%;"}
-      %col{style: "width: 10%;"}
-      %col{style: "width: 13%;"}
-      %col{style: "width: 13%;"}
-      %col{style: "width: 13%;"}
-      %col{style: "width: 17%;"}
-      %col{style: "width: 10%;"}
-      %col{style: "width: 8%;"}
+      %col{style: "width: 10%"}
     %thead
       %tr{"data-hook" => "admin_orders_index_headers"}
         - if @show_only_completed
