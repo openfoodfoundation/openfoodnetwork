@@ -63,6 +63,8 @@
       %col{style: "width: 10%"}
     %thead
       %tr{"data-hook" => "admin_orders_index_headers"}
+        %th
+          = t(:products_distributor)
         - if @show_only_completed
           %th= sort_link @search, :completed_at, t(:completed_at, :scope => 'activerecord.attributes.spree/order')
         - else
