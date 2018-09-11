@@ -1,3 +1,5 @@
+require "spec_helper"
+
 describe SubscriptionValidator do
   let(:shop) { instance_double(Enterprise, name: "Shop") }
 
