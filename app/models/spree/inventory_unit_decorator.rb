@@ -1,3 +1,5 @@
+require 'open_food_network/scope_variant_to_hub'
+
 module Spree
   InventoryUnit.class_eval do
     def self.assign_opening_inventory(order)

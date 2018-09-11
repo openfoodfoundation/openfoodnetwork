@@ -1,3 +1,5 @@
+require 'open_food_network/scope_variant_to_hub'
+
 class OrderCycle < ActiveRecord::Base
   belongs_to :coordinator, :class_name => 'Enterprise'
 
