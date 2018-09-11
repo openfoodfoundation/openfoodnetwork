@@ -93,6 +93,9 @@
           %td.align-center= order.display_total.to_html
           %td.actions.align-center{"data-hook" => "admin_orders_index_row_actions"}
             = link_to_edit_url edit_admin_order_path(order), :title => "admin_edit_#{dom_id(order)}", :no_text => true
+            - if order.ready_to_ship?
+              - # copied from backend/app/views/spree/admin/payments/_list.html.erb
+              = link_to_with_icon "icon-road", t('admin.orders.index.ship'), fire_admin_order_url(order, :e => 'ship'), :method => :put, :no_text => true, :data => {:action => 'ship', :confirm => t(:are_you_sure)}
 - else
   .no-objects-found
     = t(:no_orders_found)
