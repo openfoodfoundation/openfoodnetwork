@@ -47,7 +47,7 @@
         %div{"data-hook" => "admin_orders_index_search_buttons"}
           = button t(:filter_results), 'icon-search'
 - unless @orders.empty?
-  %table#listing_orders.index.responsive{"data-hook" => "", width: "100%"}
+  %table#listing_orders.index.responsive{"data-hook" => "", width: "100%", "ng-app" => "ofn.admin"}
     %colgroup
       %col{style: "width: 16%;"}
       %col{style: "width: 10%;"}
