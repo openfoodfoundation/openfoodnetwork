@@ -3,6 +3,7 @@
 - content_for :page_actions do
   %li
     = button_link_to t(:new_order), new_admin_order_url, :icon => 'icon-plus', :id => 'admin_new_order'
+= render partial: 'spree/admin/shared/order_sub_menu'
 - content_for :table_filter_title do
   = t(:search)
 - content_for :table_filter do
@@ -56,6 +57,7 @@
       .actions.filter-actions
         %div{"data-hook" => "admin_orders_index_search_buttons"}
           = button t(:filter_results), 'icon-search'
+
 - unless @orders.empty?
   %table#listing_orders.index.responsive{"data-hook" => "", width: "100%", "ng-app" => "ofn.admin"}
     %colgroup
@@ -104,4 +106,5 @@
 - else
   .no-objects-found
     = t(:no_orders_found)
+
 = paginate @orders
