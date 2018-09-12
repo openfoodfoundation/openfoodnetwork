@@ -59,7 +59,7 @@ describe VariantOverride do
 
   describe "looking up count on hand" do
     it "returns the numeric stock level when present" do
-      VariantOverride.create!(variant: variant, hub: hub, on_hand: 12)
+      VariantOverride.create!(variant: variant, hub: hub, count_on_hand: 12)
       VariantOverride.count_on_hand_for(hub, variant).should == 12
     end
 
