@@ -463,4 +463,81 @@ describe SubscriptionValidator do
       end
     end
   end
+
+  describe "variant eligibility for subscription" do
+    let!(:shop) { create(:distributor_enterprise) }
+    let!(:producer) { create(:supplier_enterprise) }
+    let!(:product) { create(:product, supplier: producer) }
+    let!(:variant) { product.variants.first }
+
+    let!(:order_cycle) { current_order_cycle }
+    let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
+    let!(:subscription) { create(:subscription, shop: shop, schedule: schedule) }
+    let!(:subscription_line_item) do
+      create(:subscription_line_item, subscription: subscription, variant: variant)
+    end
+
+    let(:current_order_cycle) do
+      create(:simple_order_cycle, coordinator: shop, orders_open_at: 1.week.ago,
+                                  orders_close_at: 1.week.from_now)
+    end
+
+    let(:future_order_cycle) do
+      create(:simple_order_cycle, coordinator: shop, orders_open_at: 1.week.from_now,
+                                  orders_close_at: 2.weeks.from_now)
+    end
+
+    let(:past_order_cycle) do
+      create(:simple_order_cycle, coordinator: shop, orders_open_at: 2.weeks.ago,
+                                  orders_close_at: 1.week.ago)
+    end
+
+    let(:validator) { SubscriptionValidator.new(subscription) }
+
+    context "if it is not in an exchange" do
+      it "is not eligible" do
+        expect(validator.__send__(:available_variant_ids)).to_not include(variant.id)
+      end
+    end
+
+    context "if it is only in an incoming exchange" do
+      let!(:incoming_exchange) do
+        create(:exchange, order_cycle: order_cycle, sender: producer, receiver: shop,
+                          incoming: true, variants: [variant])
+      end
+
+      it "is not eligible" do
+        expect(validator.__send__(:available_variant_ids)).to_not include(variant.id)
+      end
+    end
+
+    context "if is an outgoing exchange where the shop is the receiver" do
+      let!(:outgoing_exchange) do
+        create(:exchange, order_cycle: order_cycle, sender: shop, receiver: shop,
+                          incoming: false, variants: [variant])
+      end
+
+      context "if the order cycle is currently open" do
+        it "is eligible" do
+          expect(validator.__send__(:available_variant_ids)).to include(variant.id)
+        end
+      end
+
+      context "if the order cycle opens in the future" do
+        let!(:order_cycle) { future_order_cycle }
+
+        it "is eligible" do
+          expect(validator.__send__(:available_variant_ids)).to include(variant.id)
+        end
+      end
+
+      context "if the order cycle closed in the past" do
+        let!(:order_cycle) { past_order_cycle }
+
+        it "is not eligible" do
+          expect(validator.__send__(:available_variant_ids)).to_not include(variant.id)
+        end
+      end
+    end
+  end
 end
