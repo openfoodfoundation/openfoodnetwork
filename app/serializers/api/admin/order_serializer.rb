@@ -1,5 +1,5 @@
 class Api::Admin::OrderSerializer < ActiveModel::Serializer
-  attributes :id, :number, :full_name, :email, :phone, :completed_at
+  attributes :id, :number, :full_name, :email, :phone, :completed_at, :payment_total
 
   has_one :distributor, serializer: Api::Admin::IdSerializer
   has_one :order_cycle, serializer: Api::Admin::IdSerializer

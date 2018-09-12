@@ -1,11 +1,18 @@
 - content_for :page_title do
   = t(:listing_orders)
+
 - content_for :page_actions do
   %li
     = button_link_to t(:new_order), new_admin_order_url, :icon => 'icon-plus', :id => 'admin_new_order'
+
 = render partial: 'spree/admin/shared/order_sub_menu'
+
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.orders'"
+
 - content_for :table_filter_title do
   = t(:search)
+
 - content_for :table_filter do
   %div{"data-hook" => "admin_orders_index_search"}
     = search_form_for [:admin, @search] do |f|
@@ -59,7 +66,7 @@
           = button t(:filter_results), 'icon-search'
 
 - unless @orders.empty?
-  %table#listing_orders.index.responsive{"data-hook" => "", width: "100%", "ng-app" => "ofn.admin"}
+  %table#listing_orders.index.responsive{"data-hook" => "", width: "100%", "ng-controller" => "ordersCtrl"}
     %colgroup
       %col{style: "width: 10%"}
     %thead
