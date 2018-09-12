@@ -123,9 +123,12 @@
   -moz-transition: -moz-transform 0.2s ease-out;
   -o-transition: -o-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
-  -webkit-transform: translate(0, -25%);
-  -ms-transform: translate(0, -25%);
-  transform: translate(0, -25%);
+
+  @media only screen and (min-width: 641px) {
+    -webkit-transform: translate(0, -5%);
+    -ms-transform: translate(0, -5%);
+    transform: translate(0, -5%);
+  }
 }
 
 .reveal-modal.in {

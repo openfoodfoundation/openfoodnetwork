@@ -9,7 +9,9 @@
 @import 'foundation';
 @import 'foundation-icons';
 
+@import 'base/*';
 @import '*';
+@import 'pages/*';
 
 ofn-modal {
   display: block;
