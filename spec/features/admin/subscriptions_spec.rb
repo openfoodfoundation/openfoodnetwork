@@ -156,12 +156,14 @@ feature 'Subscriptions' do
       let!(:payment_method) { create(:stripe_payment_method, name: 'Credit Card', distributors: [shop], preferred_enterprise_id: shop.id) }
       let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
 
-      it "passes the smoke test" do
+      before do
         visit admin_subscriptions_path
-        click_link 'New Subscription'
-        select2_select shop.name, from: 'new_subscription_shop_id'
-        click_button 'Continue'
+        click_link "New Subscription"
+        select2_select shop.name, from: "new_subscription_shop_id"
+        click_button "Continue"
+      end
 
+      it "passes the smoke test" do
         select2_select customer.email, from: 'customer_id'
         select2_select schedule.name, from: 'schedule_id'
         select2_select payment_method.name, from: 'payment_method_id'
