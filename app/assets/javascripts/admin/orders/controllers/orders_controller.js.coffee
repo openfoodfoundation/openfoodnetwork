@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, $compile, $attrs, Orders) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, $compile, $attrs, Orders) ->
   $scope.$compile = $compile
   $scope.shops = shops
   $scope.orderCycles = orderCycles
@@ -6,9 +6,15 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $compile, $attr
   $scope.distributor_id = parseInt($attrs.ofnDistributorId)
   $scope.order_cycle_id = parseInt($attrs.ofnOrderCycleId)
 
+  $scope.RequestMonitor = RequestMonitor
   $scope.orders = Orders.all
+  $scope.per_page = 15
+  $scope.page = 1
 
-  Orders.index(per_page: 15)
+  Orders.index(
+    per_page: $scope.per_page,
+    page: $scope.page
+  )
 
   $scope.validOrderCycle = (oc) ->
     $scope.orderCycleHasDistributor oc, parseInt($scope.distributor_id)

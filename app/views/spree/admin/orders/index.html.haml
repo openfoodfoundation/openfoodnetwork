@@ -8,7 +8,7 @@
 = render partial: 'spree/admin/shared/order_sub_menu'
 
 - content_for :app_wrapper_attrs do
-  = "ng-app='admin.orders'"
+  = "ng-app='admin.orders' ng-controller='ordersCtrl'"
 
 - content_for :table_filter_title do
   = t(:search)
@@ -65,53 +65,60 @@
         %div{"data-hook" => "admin_orders_index_search_buttons"}
           = button t(:filter_results), 'icon-search'
 
-- unless @orders.empty?
-  %table#listing_orders.index.responsive{"data-hook" => "", width: "100%", "ng-controller" => "ordersCtrl"}
-    %colgroup
-      %col{style: "width: 10%"}
-    %thead
-      %tr{"data-hook" => "admin_orders_index_headers"}
-        %th
-          = t(:products_distributor)
-        - if @show_only_completed
-          %th= sort_link @search, :completed_at, t(:completed_at, :scope => 'activerecord.attributes.spree/order')
-        - else
-          %th= sort_link @search, :created_at,   t(:created_at, :scope => 'activerecord.attributes.spree/order')
-        %th= sort_link @search, :number,         t(:number, :scope => 'activerecord.attributes.spree/order')
-        %th= sort_link @search, :state,          t(:state, :scope => 'activerecord.attributes.spree/order')
-        %th= sort_link @search, :payment_state,  t(:payment_state, :scope => 'activerecord.attributes.spree/order')
-        %th= sort_link @search, :shipment_state, t(:shipment_state, :scope => 'activerecord.attributes.spree/order')
-        %th= sort_link @search, :email,          t(:email, :scope => 'activerecord.attributes.spree/order')
-        %th= sort_link @search, :total,          t(:total, :scope => 'activerecord.attributes.spree/order')
-        %th.actions{"data-hook" => "admin_orders_index_header_actions"}
-    %tbody
-      - @orders.each do |order|
-        %tr{class: "state-#{order.state.downcase} #{cycle('odd', 'even')}", "data-hook" => "admin_orders_index_rows"}
-          %td.align-center
-            = order.distributor.andand.name
-          %td.align-center= l (@show_only_completed ? order.completed_at : order.created_at).to_date
-          %td
-            = link_to order.number, admin_order_path(order)
-            - if order.special_instructions.present?
-              %br
-              %span{class: "icon-warning-sign", "ofn-with-tip" => order.special_instructions}
-                notes
-          %td.align-center
-            %span{class: "state #{order.state.downcase}"}= t("order_state.#{order.state.downcase}")
-          %td.align-center
-            %span{class: "state #{order.payment_state}"}= link_to t("payment_states.#{order.payment_state}"), admin_order_payments_path(order) if order.payment_state
-          %td.align-center
-            %span{class: "state #{order.shipment_state}"}= link_to t("shipment_states.#{order.shipment_state}"), admin_order_shipments_path(order) if order.shipment_state
-          %td= mail_to order.email
-          %td.align-center= order.display_total.to_html
-          %td.actions{"data-hook" => "admin_orders_index_row_actions"}
-            = link_to_edit_url edit_admin_order_path(order), :title => "admin_edit_#{dom_id(order)}", :no_text => true
-            - if order.ready_to_ship?
-              - # copied from backend/app/views/spree/admin/payments/_list.html.erb
-              = link_to_with_icon "icon-road", t('admin.orders.index.ship'), fire_admin_order_url(order, :e => 'ship'), :method => :put, :no_text => true, :data => {:action => 'ship', :confirm => t(:are_you_sure)}
-            = render partial: 'spree/admin/orders/capture', locals: {order: order}
-- else
-  .no-objects-found
-    = t(:no_orders_found)
+%table#listing_orders.index.responsive{"data-hook" => "", width: "100%", 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
+  %colgroup
+    %col{style: "width: 10%"}
+  %thead
+    %tr{"data-hook" => "admin_orders_index_headers"}
+      %th
+        = t(:products_distributor)
+      - if @show_only_completed
+        %th= sort_link @search, :completed_at, t(:completed_at, :scope => 'activerecord.attributes.spree/order')
+      - else
+        %th= sort_link @search, :created_at,   t(:created_at, :scope => 'activerecord.attributes.spree/order')
+      %th= sort_link @search, :number,         t(:number, :scope => 'activerecord.attributes.spree/order')
+      %th= sort_link @search, :state,          t(:state, :scope => 'activerecord.attributes.spree/order')
+      %th= sort_link @search, :payment_state,  t(:payment_state, :scope => 'activerecord.attributes.spree/order')
+      %th= sort_link @search, :shipment_state, t(:shipment_state, :scope => 'activerecord.attributes.spree/order')
+      %th= sort_link @search, :email,          t(:email, :scope => 'activerecord.attributes.spree/order')
+      %th= sort_link @search, :total,          t(:total, :scope => 'activerecord.attributes.spree/order')
+      %th.actions{"data-hook" => "admin_orders_index_header_actions"}
+  %tbody
+    %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'", "data-hook" => "admin_orders_index_rows"}
+      %td.align-center
+        {{::order.distributor_name}}
+      %td.align-center
+        = @show_only_completed ? '{{::order.completed_at}}' : '{{::order.created_at}}'
+      %td
+        %a{'ng-href' => '{{::order.show_path}}'}
+          {{order.number}}
+        %div{'ng-if' => 'order.special_instructions'}
+          %br
+          %span.icon-warning-sign{'ofn-with-tip' => "{{::order.special_instructions}}"}
+            = t(:note)
+      %td.align-center
+        %span.state{'ng-class' => 'order.state'}
+          {{'order_state.' + order.state | t}}
+      %td.align-center
+        %span.state{'ng-class' => 'order.payment_state', 'ng-if' => 'order.payment_state'}
+          %a{'ng-href' => '{{::order.payments_path}}' }
+            {{'payment_states.' + order.payment_state | t}}
+      %td.align-center
+        %span.state{'ng-class' => 'order.shipment_state', 'ng-if' => 'order.shipment_state'}
+          %a{'ng-href' => '{{::order.shipments_path}}' }
+            {{'shipment_states.' + order.shipment_state | t}}
+      %td
+        = mail_to "{{::order.email}}"
+      %td.align-center
+        %span{'ng-bind-html' => '::order.display_total'}
+      %td.actions{"data-hook" => "admin_orders_index_row_actions"}
+        %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{::order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t(:edit)}
+        %div{'ng-if' => 'order.ready_to_ship'}
+          %a.icon-road.icon_link.with-tip.no-text{'ng-href' => '{{::order.ship_path}}', 'data-action' => 'ship', 'data-confirm' => t(:are_you_sure), 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t(:ship)}
+        %div{'ng-if' => 'order.pending_payments'}
+          %a.icon-capture.icon_link.no-text{'ng-href' => '{{::order.capture_path}}', 'data-action' => 'capture', 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t(:capture)}
+
+.no-objects-found{'ng-show' => "!RequestMonitor.loading && orders.length == 0"}
+  = t(:no_orders_found)
 
 = paginate @orders

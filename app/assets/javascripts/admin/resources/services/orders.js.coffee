@@ -1,12 +1,14 @@
-angular.module("admin.resources").factory 'Orders', ($q, OrderResource) ->
+angular.module("admin.resources").factory 'Orders', ($q, OrderResource, RequestMonitor) ->
   new class Orders
     byID: {}
     pristineByID: {}
 
     index: (params={}, callback=null) ->
-    	OrderResource.index params, (data) =>
+      request = OrderResource.index params, (data) =>
         @load(data)
         (callback || angular.noop)(data)
+      RequestMonitor.load(request.$promise)
+      request
 
     load: (orders) ->
       for order in orders
