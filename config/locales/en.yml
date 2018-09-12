@@ -431,6 +431,7 @@ en:
         main_links: Main Menu Links
         footer_and_external_links: Footer and External Links
         your_content: Your content
+        user_guide: User Guide
 
     enterprise_fees:
       index:
@@ -1199,6 +1200,8 @@ en:
   footer_email: "Email"
   footer_links_md: "Links"
   footer_about_url: "About URL"
+
+  user_guide_link: "User Guide Link"
 
   name: Name
   first_name: First Name
