@@ -21,21 +21,23 @@ module OpenFoodNetwork
       enqueue_job(job) unless pending_job?(job)
     end
 
-    private
+    class << self
+      private
 
-    def self.refresh_job(distributor, order_cycle)
-      RefreshProductsCacheJob.new(distributor.id, order_cycle.id)
-    end
+      def refresh_job(distributor, order_cycle)
+        RefreshProductsCacheJob.new(distributor.id, order_cycle.id)
+      end
 
-    def self.pending_job?(job)
-      Delayed::Job.
-        where(locked_at: nil).
-        where(handler: job.to_yaml).
-        exists?
-    end
+      def pending_job?(job)
+        Delayed::Job.
+          where(locked_at: nil).
+          where(handler: job.to_yaml).
+          exists?
+      end
 
-    def self.enqueue_job(job)
-      Delayed::Job.enqueue job, priority: 10
+      def enqueue_job(job)
+        Delayed::Job.enqueue job, priority: 10
+      end
     end
   end
 end
