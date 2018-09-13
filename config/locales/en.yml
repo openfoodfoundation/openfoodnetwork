@@ -897,6 +897,8 @@ en:
       filters:
         search_by_order_cycle_name: "Search by Order Cycle name..."
         involving: "Involving"
+        any_enterprise: "Any Enterprise"
+        any_schedule: "Any Schedule"
       form:
         incoming: Incoming
         supplier: Supplier
