@@ -87,8 +87,10 @@ group :assets do
   gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer'
+  gem 'mini_racer'
+  # We found that the following version of libv8 breaks the compilation of mini_racer.
+  # Nothing else depends on libv8.
+  gem 'libv8', '!= 6.7.288.46.1'
 
   gem 'uglifier', '>= 1.0.3'
 
