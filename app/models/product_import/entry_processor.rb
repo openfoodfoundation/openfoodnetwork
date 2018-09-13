@@ -198,12 +198,14 @@ module ProductImport
     end
 
     def assign_defaults(object, entry)
+      settings = Settings.new(@import_settings)
+
       # Assigns a default value for a specified field e.g. category='Vegetables', setting this value
       # either for all entries (overwrite_all), or only for those entries where the field was blank
       # in the spreadsheet (overwrite_empty), depending on selected import settings
-      return unless @import_settings.key?(:settings) && @import_settings[:settings][entry.supplier_id.to_s] && @import_settings[:settings][entry.supplier_id.to_s]['defaults']
+      return unless settings.defaults(entry)
 
-      @import_settings[:settings][entry.supplier_id.to_s]['defaults'].each do |attribute, setting|
+      settings.defaults(entry).each do |attribute, setting|
         next unless setting['active']
 
         case setting['mode']
