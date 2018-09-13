@@ -14,57 +14,8 @@
   = t(:search)
 
 - content_for :table_filter do
-  %div{"data-hook" => "admin_orders_index_search"}
-    = search_form_for [:admin, @search] do |f|
-      .field-block.alpha.four.columns
-        .date-range-filter.field
-          = label_tag nil, t(:date_range)
-          .date-range-fields
-            = f.text_field :created_at_gt, :class => 'datepicker datepicker-from', :value => params[:q][:created_at_gt], :placeholder => t(:start)
-            %span.range-divider
-              %i.icon-arrow-right
-            = f.text_field :created_at_lt, :class => 'datepicker datepicker-to', :value => params[:q][:created_at_lt], :placeholder => t(:stop)
-        .field
-          = label_tag nil, t(:status)
-          = f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [t("order_state.#{s.name}"), s.value]}, {:include_blank => true}, :class => 'select2'
-      .four.columns
-        .field
-          = label_tag nil, t(:order_number)
-          = f.text_field :number_cont
-        .field
-          = label_tag nil, t(:email)
-          = f.email_field :email_cont
-      .four.columns
-        .field
-          = label_tag nil, t(:first_name_begins_with)
-          = f.text_field :bill_address_firstname_start, :size => 25
-        .field
-          = label_tag nil, t(:last_name_begins_with)
-          = f.text_field :bill_address_lastname_start, :size => 25
-      .omega.four.columns
-        .field.checkbox
-          %label
-            = f.check_box :completed_at_not_null, {:checked => @show_only_completed}, '1', ''
-            = t(:show_only_complete_orders)
-        .field.checkbox
-          %label
-            = f.check_box :inventory_units_shipment_id_null, { }, '1', '0'
-            = t(:show_only_unfulfilled_orders)
-      .field-block.alpha.eight.columns
-        = label_tag nil, t(:distributors)
-        = select_tag("q[distributor_id_in]",
-          options_for_select(Enterprise.is_distributor.managed_by(spree_current_user).map {|e| [e.name, e.id]}, params[:distributor_ids]),
-          {class: "select2 fullwidth", multiple: true})
-      .field-block.omega.eight.columns
-        = label_tag nil, t(:order_cycles)
-        = select_tag("q[order_cycle_id_in]",
-          options_for_select(OrderCycle.managed_by(spree_current_user).where('order_cycles.orders_close_at is not null').order('order_cycles.orders_close_at DESC').map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
-          {class: "select2 fullwidth", multiple: true})
-      .clearfix
-      .actions.filter-actions
-        %div{"data-hook" => "admin_orders_index_search_buttons"}
-          = button t(:filter_results), 'icon-search'
-
+  = render partial: 'filters'
+    
 %table#listing_orders.index.responsive{"data-hook" => "", width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
     %col{style: "width: 10%"}

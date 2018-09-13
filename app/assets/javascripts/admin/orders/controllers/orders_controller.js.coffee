@@ -7,16 +7,31 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
   $scope.order_cycle_id = parseInt($attrs.ofnOrderCycleId)
 
   $scope.RequestMonitor = RequestMonitor
-  $scope.orders = Orders.all
   $scope.pagination = Orders.pagination
+  $scope.orders = Orders.all
 
   $scope.initialise = ->
+    $scope.q = {
+      completed_at_not_null: true
+    }
     $scope.fetchResults()
 
-  $scope.fetchResults = ->
+  $scope.fetchResults = (page=1) ->
     Orders.index({
+      'q[created_at_lt]': $scope['q']['created_at_lt'],
+      'q[created_at_gt]': $scope['q']['created_at_gt'],
+      'q[state_eq]': $scope['q']['state_eq'],
+      'q[number_cont]': $scope['q']['number_cont'],
+      'q[email_cont]': $scope['q']['email_cont'],
+      'q[bill_address_firstname_start]': $scope['q']['bill_address_firstname_start'],
+      'q[bill_address_lastname_start]': $scope['q']['bill_address_lastname_start'],
+      'q[completed_at_not_null]': $scope['q']['completed_at_not_null'],
+      'q[inventory_units_shipment_id_null]': $scope['q']['inventory_units_shipment_id_null'],
+      'q[distributor_id_in]': $scope['q']['distributor_id_in'],
+      'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
+      'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
       per_page: $scope.per_page || 15,
-      page: $scope.page || 1
+      page: page
     })
 
   $scope.validOrderCycle = (oc) ->
@@ -34,8 +49,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
 
   $scope.changePage = (newPage) ->
     $scope.page = newPage
-    Orders.resetData()
-    $scope.fetchResults()
+    $scope.fetchResults(newPage)
 
   for oc in $scope.orderCycles
     oc.name_and_status = "#{oc.name} (#{oc.status})"

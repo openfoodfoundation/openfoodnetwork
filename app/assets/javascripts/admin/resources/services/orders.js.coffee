@@ -1,5 +1,6 @@
 angular.module("admin.resources").factory 'Orders', ($q, OrderResource, RequestMonitor) ->
   new class Orders
+    all: []
     byID: {}
     pristineByID: {}
     pagination: {}
@@ -13,9 +14,16 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource, RequestM
 
     load: (data) ->
       angular.extend(@pagination, data.pagination)
+      @clearData()
       for order in data.orders
+        @all.push order
         @byID[order.id] = order
         @pristineByID[order.id] = angular.copy(order)
+
+    clearData: ->
+      @all.length = 0
+      @byID = {}
+      @pristineByID = {}
 
     save: (order) ->
       deferred = $q.defer()
