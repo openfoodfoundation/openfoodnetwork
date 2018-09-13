@@ -17,31 +17,25 @@
 module OpenFoodNetwork
   class ProductsCacheRefreshment
     def self.refresh(distributor, order_cycle)
-      unless pending_job? distributor, order_cycle
-        enqueue_job distributor, order_cycle
-      end
+      job = refresh_job(distributor, order_cycle)
+      enqueue_job(job) unless pending_job?(job)
     end
-
 
     private
 
-    def self.pending_job?(distributor, order_cycle)
-      # To inspect each job, we need to deserialize the payload.
-      # This is slow, and if it's a problem in practice, we could pre-filter in SQL
-      # for handlers matching the class name, distributor id and order cycle id.
-
-      Delayed::Job.
-        where(locked_at: nil).
-        map(&:payload_object).
-        select { |j|
-          j.class == RefreshProductsCacheJob &&
-          j.distributor_id == distributor.id &&
-          j.order_cycle_id == order_cycle.id
-        }.any?
+    def self.refresh_job(distributor, order_cycle)
+      RefreshProductsCacheJob.new(distributor.id, order_cycle.id)
     end
 
-    def self.enqueue_job(distributor, order_cycle)
-      Delayed::Job.enqueue RefreshProductsCacheJob.new(distributor.id, order_cycle.id), priority: 10
+    def self.pending_job?(job)
+      Delayed::Job.
+        where(locked_at: nil).
+        where(handler: job.to_yaml).
+        exists?
+    end
+
+    def self.enqueue_job(job)
+      Delayed::Job.enqueue job, priority: 10
     end
   end
 end
