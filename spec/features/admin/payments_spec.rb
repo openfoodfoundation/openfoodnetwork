@@ -27,7 +27,6 @@ feature '
     end
 
     scenario "visiting the payment form" do
-      pending "fix usage of the PaymentMethodSerializer"
       quick_login_as_admin
 
       visit spree.new_admin_order_payment_path order
