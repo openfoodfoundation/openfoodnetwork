@@ -69,6 +69,12 @@
       = render_cookie_entry( "_pk_hsr, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_heatmap_desc" ) )
       = render_cookie_entry( "piwik_ignore, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_ignore_desc" ) )
 
+  - if Spree::Config.cookies_policy_matomo_section && Spree::Config.matomo_url.present?
+    %p
+      = t 'legal.cookies_policy.statistics_cookies_matomo_optout'
+    %p
+      %iframe{ src: matomo_iframe_src }
+
 %h2
   = t 'legal.cookies_policy.disabling_cookies_header'
 %p

@@ -16,6 +16,11 @@
     }
   }
 
+  iframe {
+    border: 0;
+    width: 100%;
+  }
+
   &.fade {
     -ms-transform: translate(0, 0) !important;
     -webkit-transform: translate(0, 0) !important;
