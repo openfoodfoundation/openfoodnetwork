@@ -24,10 +24,16 @@ module Admin
     private
 
     def preference_sections
-      Dir["app/models/preference_sections/*.rb"].map do |filename|
-        basename = 'PreferenceSections::' + File.basename(filename, '.rb').camelize
-        basename.constantize.new
-      end
+      [
+        PreferenceSections::HeaderSection.new,
+        PreferenceSections::HomePageSection.new,
+        PreferenceSections::ProducerSignupPageSection.new,
+        PreferenceSections::HubSignupPageSection.new,
+        PreferenceSections::GroupSignupPageSection.new,
+        PreferenceSections::MainLinksSection.new,
+        PreferenceSections::FooterAndExternalLinksSection.new,
+        PreferenceSections::UserGuideSection.new
+      ]
     end
   end
 end
