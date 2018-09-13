@@ -336,6 +336,18 @@ Spree::Order.class_eval do
     payments.select {|p| p.state == "checkout"} # Original definition
   end
 
+  # Although Spree 2 supports multi shipments per order, in OFN we keep the rule one shipment per order
+  #   Thus, this method sets the given shipping_method on the first and only shipment in the order
+  def shipping_method=(shipping_method = nil)
+    if shipments.empty?
+      shipment = Spree::Shipment.new
+      shipment.order = self
+      shipment.save
+      shipments << shipment
+    end
+    shipments.first.add_shipping_method(shipping_method, true)
+  end
+
   private
 
   def address_from_distributor
