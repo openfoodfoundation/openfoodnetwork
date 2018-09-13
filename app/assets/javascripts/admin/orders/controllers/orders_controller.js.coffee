@@ -8,13 +8,16 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
 
   $scope.RequestMonitor = RequestMonitor
   $scope.orders = Orders.all
-  $scope.per_page = 15
-  $scope.page = 1
+  $scope.pagination = Orders.pagination
 
-  Orders.index(
-    per_page: $scope.per_page,
-    page: $scope.page
-  )
+  $scope.initialise = ->
+    $scope.fetchResults()
+
+  $scope.fetchResults = ->
+    Orders.index({
+      per_page: $scope.per_page || 15,
+      page: $scope.page || 1
+    })
 
   $scope.validOrderCycle = (oc) ->
     $scope.orderCycleHasDistributor oc, parseInt($scope.distributor_id)
@@ -28,6 +31,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
 
   $scope.distributionChosen = ->
     $scope.distributor_id && $scope.order_cycle_id
+
+  $scope.changePage = (newPage) ->
+    $scope.page = newPage
+    Orders.resetData()
+    $scope.fetchResults()
 
   for oc in $scope.orderCycles
     oc.name_and_status = "#{oc.name} (#{oc.status})"

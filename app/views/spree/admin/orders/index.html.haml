@@ -65,7 +65,7 @@
         %div{"data-hook" => "admin_orders_index_search_buttons"}
           = button t(:filter_results), 'icon-search'
 
-%table#listing_orders.index.responsive{"data-hook" => "", width: "100%", 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
+%table#listing_orders.index.responsive{"data-hook" => "", width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
     %col{style: "width: 10%"}
   %thead
@@ -118,7 +118,8 @@
         %div{'ng-if' => 'order.pending_payments'}
           %a.icon-capture.icon_link.no-text{'ng-href' => '{{::order.capture_path}}', 'data-action' => 'capture', 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t(:capture)}
 
+%div{'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
+  = render partial: 'angular_pagination'
+
 .no-objects-found{'ng-show' => "!RequestMonitor.loading && orders.length == 0"}
   = t(:no_orders_found)
-
-= paginate @orders

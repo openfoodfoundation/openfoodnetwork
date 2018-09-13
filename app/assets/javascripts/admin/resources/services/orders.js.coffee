@@ -2,6 +2,7 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource, RequestM
   new class Orders
     byID: {}
     pristineByID: {}
+    pagination: {}
 
     index: (params={}, callback=null) ->
       request = OrderResource.index params, (data) =>
@@ -10,8 +11,9 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource, RequestM
       RequestMonitor.load(request.$promise)
       request
 
-    load: (orders) ->
-      for order in orders
+    load: (data) ->
+      angular.extend(@pagination, data.pagination)
+      for order in data.orders
         @byID[order.id] = order
         @pristineByID[order.id] = angular.copy(order)
 

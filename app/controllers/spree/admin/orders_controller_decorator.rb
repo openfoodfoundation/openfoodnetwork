@@ -61,7 +61,14 @@ Spree::Admin::OrdersController.class_eval do
     respond_with(@orders) do |format|
       format.html
       format.json do
-        render_as_json @orders
+        render json: {
+          orders: ActiveModel::ArraySerializer.new(@orders, each_serializer: Api::Admin::OrderSerializer),
+          pagination: {
+            results: @orders.total_count,
+            pages: @orders.num_pages,
+            page: params[:page].to_i
+          }
+        }
       end
     end
   end
