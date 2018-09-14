@@ -1,3 +1,4 @@
+require 'open_food_network/scope_variant_to_hub'
 require 'open_food_network/variant_and_line_item_naming'
 
 Spree::LineItem.class_eval do
