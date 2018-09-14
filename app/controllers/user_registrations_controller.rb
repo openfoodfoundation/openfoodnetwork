@@ -19,14 +19,22 @@ class UserRegistrationsController < Spree::UserRegistrationsController
         end
       end
     else
-      clean_up_passwords(resource)
-      respond_to do |format|
-        format.html do
-          render :new
-        end
-        format.js do
-          render json: @user.errors, status: :unauthorized
-        end
+      render_error(@user.errors)
+    end
+  rescue StandardError
+    render_error(message: I18n.t('devise.user_registrations.spree_user.unknown_error'))
+  end
+
+  private
+
+  def render_error(errors = {})
+    clean_up_passwords(resource)
+    respond_to do |format|
+      format.html do
+        render :new
+      end
+      format.js do
+        render json: errors, status: :unauthorized
       end
     end
   end
