@@ -4,6 +4,8 @@ describe "enterpriseCtrl", ->
   enterprise = null
   PaymentMethods = null
   ShippingMethods = null
+  Enterprises = null
+  StatusMessage = null
 
   beforeEach ->
     module('admin.enterprises')
@@ -18,9 +20,11 @@ describe "enterpriseCtrl", ->
       shippingMethods: "shipping methods"
     receivesNotifications = 99
 
-    inject ($rootScope, $controller) ->
+    inject ($rootScope, $controller, _Enterprises_, _StatusMessage_) ->
       scope = $rootScope
-      ctrl = $controller 'enterpriseCtrl', {$scope: scope, enterprise: enterprise, EnterprisePaymentMethods: PaymentMethods, EnterpriseShippingMethods: ShippingMethods, receivesNotifications: receivesNotifications}
+      Enterprises = _Enterprises_
+      StatusMessage = _StatusMessage_
+      ctrl = $controller "enterpriseCtrl", {$scope: scope, enterprise: enterprise, EnterprisePaymentMethods: PaymentMethods, EnterpriseShippingMethods: ShippingMethods, Enterprises: Enterprises, StatusMessage: StatusMessage, receivesNotifications: receivesNotifications}
 
   describe "initialisation", ->
     it "stores enterprise", ->
@@ -31,6 +35,72 @@ describe "enterpriseCtrl", ->
 
     it "stores shipping methods", ->
       expect(scope.ShippingMethods).toBe ShippingMethods.shippingMethods
+
+  describe "removing logo", ->
+    deferred = null
+
+    beforeEach inject ($q) ->
+      spyOn(scope, "$emit")
+      deferred = $q.defer()
+      spyOn(window, "confirm").and.returnValue(true)
+      spyOn(Enterprises, "removeLogo").and.returnValue(deferred.promise)
+      spyOn(StatusMessage, "display").and.callThrough()
+      scope.removeLogo()
+
+    describe "when successful", ->
+      beforeEach inject ($rootScope) ->
+        deferred.resolve()
+        $rootScope.$digest()
+
+      it "emits an 'enterprise:updated' event", ->
+        expect(scope.$emit).toHaveBeenCalledWith("enterprise:updated", scope.Enterprise)
+
+      it "notifies user of success", ->
+        expect(StatusMessage.display).toHaveBeenCalledWith("success", "Logo removed successfully")
+
+    describe "when unsuccessful", ->
+      beforeEach inject ($rootScope) ->
+        deferred.reject({ data: { error: "Logo does not exist" } })
+        $rootScope.$digest()
+
+      it "does not emit an 'enterprise:updated' event", ->
+        expect(scope.$emit).not.toHaveBeenCalled()
+
+      it "notifies user of failure", ->
+        expect(StatusMessage.display).toHaveBeenCalledWith("failure", "Logo does not exist")
+
+  describe "removing promo image", ->
+    deferred = null
+
+    beforeEach inject ($q) ->
+      spyOn(scope, "$emit")
+      deferred = $q.defer()
+      spyOn(window, "confirm").and.returnValue(true)
+      spyOn(Enterprises, "removePromoImage").and.returnValue(deferred.promise)
+      spyOn(StatusMessage, "display").and.callThrough()
+      scope.removePromoImage()
+
+    describe "when successful", ->
+      beforeEach inject ($rootScope) ->
+        deferred.resolve()
+        $rootScope.$digest()
+
+      it "emits an 'enterprise:updated' event", ->
+        expect(scope.$emit).toHaveBeenCalledWith("enterprise:updated", scope.Enterprise)
+
+      it "notifies user of success", ->
+        expect(StatusMessage.display).toHaveBeenCalledWith("success", "Promo image removed successfully")
+
+    describe "when unsuccessful", ->
+      beforeEach inject ($rootScope) ->
+        deferred.reject({ data: { error: "Promo image does not exist" } })
+        $rootScope.$digest()
+
+      it "does not emit an 'enterprise:updated' event", ->
+        expect(scope.$emit).not.toHaveBeenCalled()
+
+      it "notifies user of failure", ->
+        expect(StatusMessage.display).toHaveBeenCalledWith("failure", "Promo image does not exist")
 
   describe "adding managers", ->
     u1 = u2 = u3 = null

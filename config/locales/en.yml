@@ -853,6 +853,14 @@ en:
       new:
         title: New Enterprise
         back_link: Back to enterprises list
+      remove_logo:
+        remove: "Remove Image"
+        removed_successfully: "Logo removed successfully"
+        immediate_removal_warning: "The logo will be removed immediately after you confirm."
+      remove_promo_image:
+        remove: "Remove Image"
+        removed_successfully: "Promo image removed successfully"
+        immediate_removal_warning: "The promo image will be removed immediately after you confirm."
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -1100,6 +1108,14 @@ en:
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
+
+# API
+#
+  api:
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "Logo does not exist"
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "Promo image does not exist"
 
 # Frontend views
 #
