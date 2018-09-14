@@ -179,6 +179,7 @@ en:
   free_trial: "free trial"
   plus_tax: "plus GST"
   min_bill_turnover_desc: "once turnover exceeds %{mbt_amount}"
+  more: "More"
   say_no: "No"
   say_yes: "Yes"
   then: then
