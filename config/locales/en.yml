@@ -95,9 +95,26 @@ en:
       subject: "%{enterprise} is now on %{sitename}"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been CANCELED.  Please retain this cancellation information for your records."
+      order_summary_canceled: "Order Summary [CANCELED]"
+      subject: "Cancellation of Order"
+      subtotal: "Subtotal: %{subtotal}"
+      total: "Order Total: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Dear Customer,"
+      instructions: "Your order has been shipped"
+      shipment_summary: "Shipment Summary"
+      subject: "Shipment Notification"
+      thanks: "Thank you for your business."
+      track_information: "Tracking Information: %{tracking}"
+      track_link: "Tracking Link: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: A summary of recently placed subscription orders
