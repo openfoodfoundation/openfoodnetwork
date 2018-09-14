@@ -2,7 +2,7 @@
   .filter.four.columns.alpha
     %label{ :for => 'query' }=t('admin.quick_search')
     %br
-    %input.fullwidth{ :type => "text", :id => 'query', ng: { model: 'query' }, placeholder: "Search by Order Cycle name..." }
+    %input.fullwidth{ :type => "text", :id => 'query', ng: { model: 'query' }, placeholder: t(".search_by_order_cycle_name") }
   .filter_select.four.columns
     %label{ :for => 'involving_filter' }=t('.involving')
     %br
