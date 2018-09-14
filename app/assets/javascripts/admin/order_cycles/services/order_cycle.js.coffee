@@ -156,7 +156,7 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
         if response.data.errors?
           StatusMessage.display('failure', response.data.errors[0])
         else
-          StatusMessage.display('failure', 'Failed to create order cycle')
+          StatusMessage.display('failure', t('js.order_cycles.create_failure'))
 
     update: (destination, form) ->
       return unless @confirmNoDistributors()
@@ -171,7 +171,7 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, S
         if response.data.errors?
           StatusMessage.display('failure', response.data.errors[0])
         else
-          StatusMessage.display('failure', 'Failed to create order cycle')
+          StatusMessage.display('failure', t('js.order_cycles.update_failure'))
 
 
     confirmNoDistributors: ->
