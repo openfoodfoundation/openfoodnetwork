@@ -386,7 +386,7 @@ Spree::Order.class_eval do
     return if adjustment.finalized?
     state = adjustment.state
     adjustment.state = 'open'
-    adjustment.update!(self)
+    adjustment.update!
     adjustment.state = state
   end
 
