@@ -12,6 +12,10 @@ class Api::CurrentOrderSerializer < ActiveModel::Serializer
     object.payments.first.andand.payment_method_id
   end
 
+  def shipping_method_id
+    object.shipping_method.andand.id
+  end
+
   def display_total
     object.display_total.money.to_f
   end
