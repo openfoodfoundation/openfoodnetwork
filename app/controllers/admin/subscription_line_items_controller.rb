@@ -14,7 +14,8 @@ module Admin
     def build
       @subscription_line_item.assign_attributes(params[:subscription_line_item])
       @subscription_line_item.price_estimate = price_estimate
-      render json: @subscription_line_item, serializer: Api::Admin::SubscriptionLineItemSerializer
+      render json: @subscription_line_item, serializer: Api::Admin::SubscriptionLineItemSerializer,
+             shop: @shop, schedule: @schedule
     end
 
     private

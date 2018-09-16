@@ -1088,6 +1088,7 @@ en:
         this_is_an_estimate: |
           The displayed prices are only an estimate and calculated at the time the subscription is changed.
           If you change prices or fees, orders will be updated, but the subscription will still display the old values.
+        not_in_open_and_upcoming_order_cycles_warning: "There are no open or upcoming order cycles for this product."
       details:
         details: Details
         invalid_error: Oops! Please fill in all of the required fields...
@@ -1102,6 +1103,7 @@ en:
         details: Details
         address: Address
         products: Products
+        no_open_or_upcoming_order_cycle: "No Upcoming OC"
       product_already_in_order: This product has already been added to the order. Please edit the quantity directly.
       orders:
         number: Number

@@ -465,9 +465,13 @@ feature 'Subscriptions' do
         # Add products
         expect(page).to have_content "NAME OR SKU"
         add_variant_to_subscription shop_variant, 3
+        expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: 1
         add_variant_to_subscription permitted_supplier_variant, 4
+        expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: 2
         add_variant_to_subscription incoming_exchange_variant, 5
+        expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: 3
         add_variant_to_subscription outgoing_exchange_variant, 6
+        expect(page).to have_content variant_not_in_open_or_upcoming_order_cycle_warning, count: 3
         click_button "Next"
 
         # Submit form
@@ -508,5 +512,10 @@ feature 'Subscriptions' do
     fill_in "add_quantity", with: quantity
     click_link "Add"
     expect(page).to have_selector("#subscription-line-items .item", count: row_count + 1)
+  end
+
+  def variant_not_in_open_or_upcoming_order_cycle_warning
+    I18n.t("not_in_open_and_upcoming_order_cycles_warning",
+           scope: "admin.subscriptions.subscription_line_items")
   end
 end

@@ -1,7 +1,8 @@
 module Api
   module Admin
     class SubscriptionLineItemSerializer < ActiveModel::Serializer
-      attributes :id, :variant_id, :quantity, :description, :price_estimate
+      attributes :id, :variant_id, :quantity, :description, :price_estimate,
+                 :in_open_and_upcoming_order_cycles
 
       def description
         "#{object.variant.product.name} - #{object.variant.full_name}"
@@ -9,6 +10,22 @@ module Api
 
       def price_estimate
         object.price_estimate.andand.to_f || "?"
+      end
+
+      def in_open_and_upcoming_order_cycles
+        OpenFoodNetwork::SubscriptionService
+          .in_open_and_upcoming_order_cycles?(option_or_assigned_shop, option_or_assigned_schedule,
+                                              object.variant)
+      end
+
+      private
+
+      def option_or_assigned_shop
+        @options[:shop] || object.subscription.andand.shop
+      end
+
+      def option_or_assigned_schedule
+        @options[:schedule] || object.subscription.andand.schedule
       end
     end
   end

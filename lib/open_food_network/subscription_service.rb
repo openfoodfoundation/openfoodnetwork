@@ -24,5 +24,13 @@ module OpenFoodNetwork
 
       Spree::Variant.joins(:product).where(is_master: false).where(*variant_conditions)
     end
+
+    def self.in_open_and_upcoming_order_cycles?(distributor, schedule, variant)
+      scope = ExchangeVariant.joins(exchange: { order_cycle: :schedules })
+        .where(variant_id: variant, exchanges: { incoming: false, receiver_id: distributor })
+        .merge(OrderCycle.not_closed)
+      scope = scope.where(schedules: { id: schedule })
+      scope.any?
+    end
   end
 end
