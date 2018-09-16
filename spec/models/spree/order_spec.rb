@@ -222,7 +222,8 @@ describe Spree::Order do
   end
 
   describe "getting the shipping tax" do
-    let(:shipment) { create(:shipment_with_flat_rate) }
+    let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
     let(:order)    { create(:order, shipments: [shipment]) }
 
     context "with a taxed shipment" do
@@ -254,7 +255,8 @@ describe Spree::Order do
   end
 
   describe "getting the total tax" do
-    let(:shipment)       { create(:shipment_with_flat_rate) }
+    let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
     let(:order)          { create(:order, shipments: [shipment]) }
     let(:enterprise_fee) { create(:enterprise_fee) }
     let!(:adjustment)    { create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2) }

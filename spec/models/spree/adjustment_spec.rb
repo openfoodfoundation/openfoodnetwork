@@ -59,7 +59,8 @@ module Spree
       end
 
       describe "Shipment adjustments" do
-        let!(:shipment)       { create(:shipment_with_flat_rate) }
+        let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
+        let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
         let!(:order)          { create(:order, distributor: hub, shipments: [shipment]) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
         let!(:line_item)      { create(:line_item, order: order) }
