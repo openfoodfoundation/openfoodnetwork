@@ -335,6 +335,23 @@ FactoryBot.define do
     end
   end
 
+  factory :shipping_method_with, parent: :shipping_method do
+    trait :delivery do
+      require_ship_address { true }
+    end
+  end
+
+  factory :shipment_with, parent: :shipment do
+    trait :shipping_method do
+      transient do
+        shipping_method { create :shipping_method }
+      end
+      after(:create) do |shipment, evaluator|
+        shipment.add_shipping_method(evaluator.shipping_method, true)
+      end
+    end
+  end
+
   factory :shipping_method_with_flat_rate, parent: :shipping_method do
     calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
   end
