@@ -5,9 +5,9 @@ describe "checking out an order with a paypal express payment method", type: :re
 
   let!(:address) { create(:address) }
   let!(:shop) { create(:enterprise) }
-  let!(:shipping_method) { create(:shipping_method, distributor_ids: [shop.id]) }
-  let!(:order) { create(:order, distributor: shop, ship_address: address.dup, bill_address: address.dup) }
-  let!(:shipment) { create(:shipment, order: order, shipping_method: shipping_method) }
+  let!(:shipping_method) { create(:shipping_method_with, :distributor, distributor: shop) }
+  let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+  let!(:order) { create(:order, distributor: shop, shipments: [shipment], ship_address: address.dup, bill_address: address.dup) }
   let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
   let!(:payment_method) { Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [create(:distributor_enterprise).id], environment: Rails.env) }
   let(:params) { { token: 'lalalala', PayerID: 'payer1', payment_method_id: payment_method.id } }
