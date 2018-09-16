@@ -344,6 +344,12 @@ FactoryBot.define do
       calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
     end
 
+    trait :expensive_name do
+      name { "Shipping" }
+      description { "Expensive" }
+      calculator { Spree::Calculator::FlatRate.new(preferred_amount: 100.55) }
+    end
+
     trait :shipping_fee do
       transient do
         shipping_fee 3

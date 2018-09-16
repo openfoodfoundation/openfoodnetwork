@@ -182,12 +182,13 @@ feature %q{
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:user1) { create_enterprise_user enterprises: [distributor1] }
     let(:user2) { create_enterprise_user enterprises: [distributor2] }
-    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let(:shipping_method) { create(:shipping_method_with, :expensive_name) }
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
     let(:enterprise_fee) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 120.0)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee], distributors: [distributor1], variants: [product1.master]) }
 
     let!(:zone) { create(:zone_with_member) }
-    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: create(:address)) }
+    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipments: [shipment], bill_address: create(:address)) }
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
 
@@ -395,7 +396,9 @@ feature %q{
     let(:distributor2) { create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true) }
     let(:user1) { create_enterprise_user enterprises: [distributor1] }
     let(:user2) { create_enterprise_user enterprises: [distributor2] }
-    let(:shipping_method) { create(:shipping_method, name: "Shipping", description: "Expensive", calculator: Spree::Calculator::FlatRate.new(preferred_amount: 100.55)) }
+    let(:shipping_method) { create(:shipping_method_with, :expensive_name) }
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+
     let(:enterprise_fee1) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 10)) }
     let(:enterprise_fee2) { create(:enterprise_fee, enterprise: user1.enterprises.first, tax_category: product2.tax_category, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 20)) }
     let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor1, coordinator_fees: [enterprise_fee1, enterprise_fee2], distributors: [distributor1], variants: [product1.master]) }
@@ -403,7 +406,7 @@ feature %q{
     let!(:zone) { create(:zone_with_member) }
     let(:country) { Spree::Country.find Spree::Config.default_country_id }
     let(:bill_address) { create(:address, firstname: 'Customer', lastname: 'Name', address1: 'customer l1', address2: '', city: 'customer city', zipcode: 1234, country: country) }
-    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipping_method: shipping_method, bill_address: bill_address) }
+    let(:order1) { create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first, shipments: [shipment], bill_address: bill_address) }
     let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1') }
     let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2') }
 
