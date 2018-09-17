@@ -1,14 +1,14 @@
 @import 'darkswarm/branding';
 
 .cookies-policy-modal {
-  background: $disabled-light;
-  border-bottom-color: $disabled-light;
+  background: $cookies-policy-modal-background-color;
+  border-bottom-color: $cookies-policy-modal-border-bottom-color;
 
   table {
     width: 100%;
 
     tr:nth-of-type(even) {
-      background-color: $disabled-very-light;
+      background-color: $cookies-policy-modal-table-tr-even-background-color;
     }
 
     p {
