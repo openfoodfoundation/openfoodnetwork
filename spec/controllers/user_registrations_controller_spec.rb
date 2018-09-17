@@ -31,6 +31,7 @@ describe UserRegistrationsController, type: :controller do
 
     it "returns error when emailing fails" do
       allow(Spree::UserMailer).to receive(:confirmation_instructions).and_raise("Some error")
+      expect(OpenFoodNetwork::ErrorLogger).to receive(:notify)
 
       xhr :post, :create, spree_user: user_params, use_route: :spree
 

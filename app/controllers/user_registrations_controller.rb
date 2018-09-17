@@ -1,3 +1,5 @@
+require 'open_food_network/error_logger'
+
 class UserRegistrationsController < Spree::UserRegistrationsController
   before_filter :set_checkout_redirect, only: :create
 
@@ -21,7 +23,8 @@ class UserRegistrationsController < Spree::UserRegistrationsController
     else
       render_error(@user.errors)
     end
-  rescue StandardError
+  rescue StandardError => error
+    OpenFoodNetwork::ErrorLogger.notify(error)
     render_error(message: I18n.t('devise.user_registrations.spree_user.unknown_error'))
   end
 
