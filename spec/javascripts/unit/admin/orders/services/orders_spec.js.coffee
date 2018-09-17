@@ -18,17 +18,17 @@ describe "Orders service", ->
     result = response = null
 
     beforeEach ->
-      response = [{ id: 5, name: 'Order 1'}]
+      response = { orders: [{ id: 5, name: 'Order 1'}], pagination: {page: 1, pages: 1, results: 1} }
       $httpBackend.expectGET('/admin/orders.json').respond 200, response
       result = Orders.index()
       $httpBackend.flush()
 
     it "stores returned data in @byID, with ids as keys", ->
       # OrderResource returns instances of Resource rather than raw objects
-      expect(Orders.byID).toDeepEqual { 5: response[0] }
+      expect(Orders.byID).toDeepEqual { 5: response.orders[0] }
 
     it "stores returned data in @pristineByID, with ids as keys", ->
-      expect(Orders.pristineByID).toDeepEqual { 5: response[0] }
+      expect(Orders.pristineByID).toDeepEqual { 5: response.orders[0] }
 
     it "returns an array of orders", ->
       expect(result).toDeepEqual response

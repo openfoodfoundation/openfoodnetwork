@@ -37,7 +37,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $injector, Requ
     })
 
   $scope.$watch 'sortOptions', (sort) ->
-    if sort.predicate != ""
+    if sort && sort.predicate != ""
       $scope.sorting = sort.predicate + ' desc' if sort.reverse
       $scope.sorting = sort.predicate + ' asc' if !sort.reverse
       $scope.fetchResults()

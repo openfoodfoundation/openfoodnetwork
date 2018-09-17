@@ -107,17 +107,16 @@ Spree::Admin::OrdersController.class_eval do
   private
 
   def orders
-    @search = if json_request?
-                OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(params[:q])
-              else
-                Spree::Order.accessible_by(current_ability, :index).ransack(params[:q])
-              end
+    if json_request?
+      @search = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(params[:q])
+    else
+      @search = Spree::Order.accessible_by(current_ability, :index).ransack(params[:q])
 
-    # Replaced this search to filter orders to only show those distributed by current user (or all for admin user)
-    @search.result.includes([:user, :shipments, :payments]).
-      distributed_by_user(spree_current_user).
-      page(params[:page]).
-      per(params[:per_page] || Spree::Config[:orders_per_page])
+      # Replaced this search to filter orders to only show those distributed by current user (or all for admin user)
+      @search.result.includes([:user, :shipments, :payments]).distributed_by_user(spree_current_user)
+    end
+
+    @search.result.page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
   end
 
   def require_distributor_abn
