@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, $compile, $attrs, Orders) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, $injector, RequestMonitor, $compile, $attrs, Orders, SortOptions) ->
   $scope.$compile = $compile
   $scope.shops = shops
   $scope.orderCycles = orderCycles
@@ -9,6 +9,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
   $scope.RequestMonitor = RequestMonitor
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
+  $scope.sortOptions = SortOptions
 
   $scope.initialise = ->
     $scope.q = {
@@ -30,9 +31,17 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       'q[distributor_id_in]': $scope['q']['distributor_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
+      'q[s]': $scope.sorting || 'id desc',
       per_page: $scope.per_page || 15,
       page: page
     })
+
+  $scope.$watch 'sortOptions', (sort) ->
+    if sort.predicate != ""
+      $scope.sorting = sort.predicate + ' desc' if sort.reverse
+      $scope.sorting = sort.predicate + ' asc' if !sort.reverse
+      $scope.fetchResults()
+  , true
 
   $scope.validOrderCycle = (oc) ->
     $scope.orderCycleHasDistributor oc, parseInt($scope.distributor_id)
