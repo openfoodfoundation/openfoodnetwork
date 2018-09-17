@@ -101,6 +101,14 @@
         %div{'ng-if' => 'order.pending_payments'}
           %a.icon-capture.icon_link.no-text{'ng-href' => '{{::order.capture_path}}', 'data-action' => 'capture', 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t(:capture)}
 
+.orders-loading{'ng-show' => 'RequestMonitor.loading'}
+  .row
+    .small-12.columns.fullwidth.text-center
+      %img.spinner{ src: "/assets/spinning-circles.svg" }
+  .row
+    .small-12.columns.fullwidth.text-center
+      %span= t(:loading)
+
 %div{'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   = render partial: 'angular_pagination'
 
