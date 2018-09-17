@@ -86,4 +86,35 @@ describe Spree::OrderUpdater do
       end
     end
   end
+
+  context 'when the set payment_state does not match the last payment_state' do
+    before { order.payment_state = 'previous_to_paid' }
+
+    context 'and the order is being updated' do
+      before { allow(order).to receive(:persisted?) { true } }
+
+      it 'creates a new state_change for the order' do
+        expect { updater.update_payment_state }
+          .to change { order.state_changes.size }.by(1)
+      end
+    end
+
+    context 'and the order is being created' do
+      before { allow(order).to receive(:persisted?) { false } }
+
+      it 'creates a new state_change for the order' do
+        expect { updater.update_payment_state }
+          .not_to change { order.state_changes.size }
+      end
+    end
+  end
+
+  context 'when the set payment_state matches the last payment_state' do
+    before { order.payment_state = 'paid' }
+
+    it 'does not create any state_change' do
+      expect { updater.update_payment_state }
+        .not_to change { order.state_changes.size }
+    end
+  end
 end
