@@ -153,7 +153,7 @@ Spree::Order.class_eval do
   def update_shipping_fees!
     shipments.each do |shipment|
       next if shipment.shipped?
-      update_adjustment! shipment.adjustment
+      update_adjustment! shipment.adjustment if shipment.adjustment
       shipment.save # updates included tax
     end
   end
@@ -164,7 +164,7 @@ Spree::Order.class_eval do
   def update_payment_fees!
     payments.each do |payment|
       next if payment.completed?
-      update_adjustment! payment.adjustment
+      update_adjustment! payment.adjustment if payment.adjustment
       payment.save
     end
   end
@@ -386,7 +386,7 @@ Spree::Order.class_eval do
     return if adjustment.finalized?
     state = adjustment.state
     adjustment.state = 'open'
-    adjustment.update!(self)
+    adjustment.update!
     adjustment.state = state
   end
 
