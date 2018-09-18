@@ -1,4 +1,4 @@
-describe "ordersCtrl", ->
+describe "orderCtrl", ->
   ctrl = null
   scope = {}
   attrs = {}
@@ -7,25 +7,13 @@ describe "ordersCtrl", ->
     {id: 10, name: 'Ten', status: 'open', distributors: [{id: 1, name: 'One'}]}
     {id: 20, name: 'Twenty', status: 'closed', distributors: [{id: 2, name: 'Two', status: 'closed'}]}
   ]
-  SortOptions = {
-    predicate: "",
-    reverse: false
-  }
 
   beforeEach ->
     scope = {}
-    shops = []
-    orderCycles = [
-      {id: 10, name: 'Ten', status: 'open', distributors: [{id: 1, name: 'One'}]}
-      {id: 20, name: 'Twenty', status: 'closed', distributors: [{id: 2, name: 'Two', status: 'closed'}]}
-    ]
 
-    module 'admin.orders', ($provide)->
-      $provide.provider('shops', shops)
-      $provide.provider('orderCycles', orderCycles)
-    inject (_$injector_, $controller) ->
-      $injector = _$injector_
-      ctrl = $controller 'ordersCtrl', {$scope: scope, $attrs: attrs, $injector: $injector, SortOptions: SortOptions}
+    module 'admin.orders'
+    inject ($controller) ->
+      ctrl = $controller 'orderCtrl', {$scope: scope, $attrs: attrs, shops: shops, orderCycles: orderCycles}
 
   it "initialises name_and_status", ->
     expect(scope.orderCycles[0].name_and_status).toEqual "Ten (open)"
