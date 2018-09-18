@@ -10,7 +10,7 @@ angular.module("admin.resources").factory 'Orders', ($q, OrderResource, RequestM
         @load(data)
         (callback || angular.noop)(data)
       RequestMonitor.load(request.$promise)
-      request
+      @all
 
     load: (data) ->
       angular.extend(@pagination, data.pagination)

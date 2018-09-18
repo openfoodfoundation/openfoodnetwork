@@ -31,7 +31,7 @@ describe "Orders service", ->
       expect(Orders.pristineByID).toDeepEqual { 5: response.orders[0] }
 
     it "returns an array of orders", ->
-      expect(result).toDeepEqual response
+      expect(result).toDeepEqual response.orders
 
 
   describe "#save", ->
