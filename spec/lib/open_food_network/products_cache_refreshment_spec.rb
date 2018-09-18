@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'open_food_network/products_cache_refreshment'
 
 module OpenFoodNetwork
