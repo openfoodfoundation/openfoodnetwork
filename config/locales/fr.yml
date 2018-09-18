@@ -64,6 +64,9 @@ fr:
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "Copie de %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -71,9 +74,26 @@ fr:
       subject: "%{enterprise} est maintenant sur %{sitename}"
     invite_manager:
       subject: "%{enterprise} vous a invité comme manager"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Cher Acheteur,"
+      instructions: "Votre commande a été ANNULEE. Veuillez en prendre note et conserver pour preuve si besoin cette confirmation."
+      order_summary_canceled: "Résumé de la commande [ANNULEE]"
+      subject: "Annulation de Commande"
+      subtotal: "Sous-total : %{subtotal}"
+      total: "Total Commande : %{total}"
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Cher Acheteur,"
+      instructions: "Votre commande a été expédiée"
+      shipment_summary: "Résumé de l'envoi"
+      subject: "Notification d'expédition"
+      thanks: "Merci pour votre commande."
+      track_information: "Informations de suivi : %{tracking}"
+      track_link: "Lien de suivi : %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Un résumé des dernières commandes récurrentes passées
@@ -136,6 +156,7 @@ fr:
   free_trial: "Utilisation contre contribution libre"
   plus_tax: "plus TVA"
   min_bill_turnover_desc: "Quand le chiffre d'affaire dépasse %{mbt_amount}"
+  more: "Plus"
   say_no: "Non"
   say_yes: "Oui"
   then: puis
@@ -382,6 +403,7 @@ fr:
         main_links: Liens du menu principal
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
+        user_guide: Guide utilisateur
     enterprise_fees:
       index:
         title: Marges et Commissions
@@ -767,6 +789,9 @@ fr:
         search_placeholder: Recherche par nom
         manage: Gérer
         manage_link: Paramètres
+        producer?: "Producteur ?"
+        package: "Pack"
+        status: "Statut"
       new_form:
         owner: Manager principal
         owner_tip: Le manager principal est l'individu qui porte la responsabilité principale de l'entreprise dans le contexte de l'utilisation d'Open Food France.
@@ -778,6 +803,14 @@ fr:
       new:
         title: Nouvelle entreprise
         back_link: Revenir à la liste des entreprises
+      remove_logo:
+        remove: "Supprimer l'image"
+        removed_successfully: "Logo supprimé avec succès"
+        immediate_removal_warning: "Le logo sera supprimé juste après votre confirmation."
+      remove_promo_image:
+        remove: "Supprimer l'image"
+        removed_successfully: "Bannière supprimée avec succès"
+        immediate_removal_warning: "La bannière sera supprimée juste après votre confirmation."
       welcome:
         welcome_title: Bienvenue sur Open Food France !
         welcome_text: 'Vous avez créé avec succès '
@@ -810,6 +843,9 @@ fr:
         save_reload: Sauvegarder et rafraichir la page
       coordinator_fees:
         add: Ajouter commission coordinateur
+      filters:
+        search_by_order_cycle_name: "Recherche par nom de Cycle de Vente..."
+        involving: "Concernant"
       form:
         incoming: Produits entrants (pouvant être mis en vente par les hubs)
         supplier: Fournisseur
@@ -823,7 +859,6 @@ fr:
         delivery_details: Précisions retrait / livraison
         debug_info: Informations de débogage
       index:
-        involving: Concernant
         schedule: Rythme d'abonnement
         schedules: Rythmes d'abonnement
         adding_a_new_schedule: Ajouter un nouveau rythme d'abonnement
@@ -1357,6 +1392,7 @@ fr:
   email_so_edit_true_html: "Vous pouvez <a href='%{order_url}'>effectuer des modifications</a> jusqu'à la fermeture de la période de commande le %{orders_close_at}."
   email_so_edit_false_html: "Vous pouvez <a href='%{order_url}'>consulter les détails de cette commande</a> à tout moment."
   email_so_contact_distributor_html: "Pour toute question contactez <strong>%{distributor}</strong> via %{email}."
+  email_so_contact_distributor_to_change_order_html: "Cette commande a été automatiquement créée en votre nom. Vous pouvez effectuer des modifications sur cette commande jusqu'à fermeture de la période de commande le %{orders_close_at} en contactant <strong>%{distributor}</strong> à %{email}."
   email_so_confirmation_intro_html: "Votre commande auprès de <strong>%{distributor}</strong> est maintenant confirmée"
   email_so_confirmation_explainer_html: "Cette commande a été automatiquement passée pour vous dans le cadre de votre abonnement, et a maintenant été confirmée."
   email_so_confirmation_details_html: "Voici les détails concernant cette commande auprès de <strong>%{distributor}</strong>:"
@@ -1845,31 +1881,31 @@ fr:
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
-  admin_entreprise_relationships: "Permissions Inter-entreprises"
-  admin_entreprise_relationships_everything: "Tout"
-  admin_entreprise_relationships_permits: "autorise"
-  admin_entreprise_relationships_seach_placeholder: "Chercher"
-  admin_entreprise_relationships_button_create: "Créer"
-  admin_entreprise_groups: "Groupes d'entreprises"
-  admin_entreprise_groups_name: "Nom"
-  admin_entreprise_groups_owner: "Manager principal"
-  admin_entreprise_groups_on_front_page: "Sur la page d'accueil?"
-  admin_entreprise_groups_entreprise: "Entreprises"
-  admin_entreprise_groups_data_powertip: "Le manager principal en charge de ce groupe."
-  admin_entreprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
-  admin_entreprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
-  admin_entreprise_groups_contact: "Contact"
-  admin_entreprise_groups_contact_phone_placeholder: "ex: 06 13 24 35 46"
-  admin_entreprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
-  admin_entreprise_groups_contact_city: "Ville"
-  admin_entreprise_groups_contact_city_placeholder: "ex: Bordeaux"
-  admin_entreprise_groups_contact_zipcode: "Code postal"
-  admin_entreprise_groups_contact_zipcode_placeholder: "ex: 14120"
-  admin_entreprise_groups_contact_state_id: "Département"
-  admin_entreprise_groups_contact_country_id: "Pays"
-  admin_entreprise_groups_web: "Liens web"
-  admin_entreprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
-  admin_entreprise_groups_web_website_placeholder: "ex: www.monepicerieenligne.fr"
+  admin_enterprise_relationships: "Permissions Inter-entreprises"
+  admin_enterprise_relationships_everything: "Tout"
+  admin_enterprise_relationships_permits: "autorise"
+  admin_enterprise_relationships_seach_placeholder: "Rechercher"
+  admin_enterprise_relationships_button_create: "Créer"
+  admin_enterprise_groups: "Groupes d'entreprises"
+  admin_enterprise_groups_name: "Produit/Variante"
+  admin_enterprise_groups_owner: "Manager principal"
+  admin_enterprise_groups_on_front_page: "Sur la page d'accueil?"
+  admin_enterprise_groups_enterprise: "Entreprises"
+  admin_enterprise_groups_data_powertip: "Le manager principal en charge de ce groupe."
+  admin_enterprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
+  admin_enterprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
+  admin_enterprise_groups_contact: "Contact"
+  admin_enterprise_groups_contact_phone_placeholder: "ex: 06 13 24 35 46"
+  admin_enterprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
+  admin_enterprise_groups_contact_city: "Ville"
+  admin_enterprise_groups_contact_city_placeholder: "ex: Nantes"
+  admin_enterprise_groups_contact_zipcode: "Code postal"
+  admin_enterprise_groups_contact_zipcode_placeholder: "ex: 44000"
+  admin_enterprise_groups_contact_state_id: "Département"
+  admin_enterprise_groups_contact_country_id: "Pays"
+  admin_enterprise_groups_web: "Liens web"
+  admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
+  admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
   close: "Ferme"
@@ -2005,7 +2041,7 @@ fr:
   report_payment_totals: 'Total des paiements'
   report_all: 'tous'
   report_order_cycle: "Cycle de vente:"
-  report_entreprises: "Entreprises:"
+  report_enterprises: "Entreprises:"
   report_users: "Managers:"
   report_tax_rates: TVA par taux
   report_tax_types: TVA par type de produit/service
