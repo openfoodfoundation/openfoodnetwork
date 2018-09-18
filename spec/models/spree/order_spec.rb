@@ -858,4 +858,46 @@ describe Spree::Order do
       end
     end
   end
+
+  describe '#restart_checkout!' do
+    let(:order) { build(:order) }
+
+    context 'when the order is complete' do
+      before { order.completed_at = Time.zone.now }
+
+      it 'raises' do
+        expect { order.restart_checkout! }
+          .to raise_error(StateMachine::InvalidTransition)
+      end
+    end
+
+    context 'when the is not complete' do
+      before { order.completed_at = nil }
+
+      it 'transitions to :cart state' do
+        order.restart_checkout!
+        expect(order.state).to eq('cart')
+      end
+    end
+  end
+
+  describe '#charge_shipping_and_payment_fees!' do
+    let(:order) do
+      build(:order, shipping_method: build(:shipping_method))
+    end
+
+    context 'after transitioning to payment' do
+      before do
+        order.state = 'delivery' # payment's previous state
+
+        allow(order).to receive(:payment_required?) { true }
+        allow(order).to receive(:charge_shipping_and_payment_fees!)
+      end
+
+      it 'calls charge_shipping_and_payment_fees!' do
+        order.next
+        expect(order).to have_received(:charge_shipping_and_payment_fees!)
+      end
+    end
+  end
 end
