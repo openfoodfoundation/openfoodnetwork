@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180812214434) do
+ActiveRecord::Schema.define(:version => 20180919102548) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -527,15 +527,14 @@ ActiveRecord::Schema.define(:version => 20180812214434) do
   create_table "spree_line_items", :force => true do |t|
     t.integer  "order_id"
     t.integer  "variant_id"
-    t.integer  "quantity",                                            :null => false
-    t.decimal  "price",                :precision => 8,  :scale => 2, :null => false
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.integer  "quantity",                                           :null => false
+    t.decimal  "price",               :precision => 8,  :scale => 2, :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.integer  "max_quantity"
     t.string   "currency"
-    t.decimal  "distribution_fee",     :precision => 10, :scale => 2
-    t.string   "shipping_method_name"
-    t.decimal  "final_weight_volume",  :precision => 10, :scale => 2
+    t.decimal  "distribution_fee",    :precision => 10, :scale => 2
+    t.decimal  "final_weight_volume", :precision => 10, :scale => 2
   end
 
   add_index "spree_line_items", ["order_id"], :name => "index_line_items_on_order_id"
