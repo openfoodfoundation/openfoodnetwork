@@ -64,6 +64,9 @@ nb:
     user_passwords:
       spree_user:
         updated_not_active: "Ditt passord har blitt tilbakestilt, men epostadressen din er ikke bekreftet enda."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "KOPI AV %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
@@ -71,9 +74,26 @@ nb:
       subject: "%{enterprise} er nå på %{sitename}"
     invite_manager:
       subject: "%{enterprise} har invitert deg til å være en administrator"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Kjære Kunde,"
+      instructions: "Din bestilling har blitt KANSELLERT. Vennligst behold denne kanselleringsinformasjonen som referanse."
+      order_summary_canceled: "Bestillingssammendrag [KANSELLERT]"
+      subject: "Kansellering av bestilling"
+      subtotal: "Subtotal: %{subtotal}"
+      total: "Ordre Totalt: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Bestillingsrunderapport for %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Kjære Kunde,"
+      instructions: "Din bestilling har blitt sendt"
+      shipment_summary: "Leveringssammendrag"
+      subject: "Leveringsvarsling"
+      thanks: "Takk for handelen."
+      track_information: "Sporingsinformasjon: %{tracking}"
+      track_link: "Sporingslink: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Et sammendrag av nylig bestilte abonnementsbestillinger
@@ -136,6 +156,7 @@ nb:
   free_trial: "gratis prøveperiode"
   plus_tax: "pluss MVA"
   min_bill_turnover_desc: "når omsettning overstiger %{mbt_amount}"
+  more: "Mer"
   say_no: "Nei"
   say_yes: "Ja"
   then: vil
@@ -382,6 +403,7 @@ nb:
         main_links: 'Lenker Hovedmeny '
         footer_and_external_links: Footer og eksterne lenker
         your_content: Ditt innhold
+        user_guide: Brukermanual
     enterprise_fees:
       index:
         title: Bedriftsavgifter
@@ -766,6 +788,9 @@ nb:
         search_placeholder: Søk på navn
         manage: Administrer
         manage_link: Innstillinger
+        producer?: "Produsent?"
+        package: "Pakke"
+        status: "Status"
       new_form:
         owner: Eier
         owner_tip: Primærbrukeren ansvarlig for denne bedriften.
@@ -777,6 +802,14 @@ nb:
       new:
         title: Ny Bedrift
         back_link: Tilbake til bedriftsliste
+      remove_logo:
+        remove: "Fjern Bilde"
+        removed_successfully: "Logo fjernet vellykket"
+        immediate_removal_warning: "Logoen vil bli fjernet umiddelbart etter at du har bekreftet."
+      remove_promo_image:
+        remove: "Fjern Bilde"
+        removed_successfully: "Promobilde fjernet vellykket"
+        immediate_removal_warning: "Promo-bildet vil bli fjernet umiddelbart etter at du har bekreftet."
       welcome:
         welcome_title: Velkommen til Open Food Network!
         welcome_text: Du har opprettet en
@@ -809,6 +842,11 @@ nb:
         save_reload: Lagre og last siden på nytt
       coordinator_fees:
         add: Legg til koordinatoravgift
+      filters:
+        search_by_order_cycle_name: "Søk etter navn på bestillingsrunde..."
+        involving: "Involverer"
+        any_enterprise: "Enhver Bedrift"
+        any_schedule: "Enhver Tidsplan"
       form:
         incoming: Innkommende
         supplier: Leverandør
@@ -822,7 +860,6 @@ nb:
         delivery_details: Hente-/Leveringsdetaljer
         debug_info: Debuginformasjon
       index:
-        involving: Involverer
         schedule: Tidsplan
         schedules: Tidsplaner
         adding_a_new_schedule: Legge til en ny tidsplan
@@ -1845,34 +1882,34 @@ nb:
   you_have_no_orders_yet: "Du har ingen bestilinger enda"
   running_balance: "Løpende balanse"
   outstanding_balance: "Utestående balanse"
-  admin_entreprise_relationships: "Bedriftsrettigheter"
-  admin_entreprise_relationships_everything: "Alt"
-  admin_entreprise_relationships_permits: "tillater"
-  admin_entreprise_relationships_seach_placeholder: "Søk"
-  admin_entreprise_relationships_button_create: "Opprett"
-  admin_entreprise_groups: "Bedriftsgrupper"
-  admin_entreprise_groups_name: "Navn"
-  admin_entreprise_groups_owner: "Eier"
-  admin_entreprise_groups_on_front_page: "På forsiden?"
-  admin_entreprise_groups_entreprise: "Bedrifter"
-  admin_entreprise_groups_data_powertip: "Hovedbrukeren ansvarlig for denne gruppen."
-  admin_entreprise_groups_data_powertip_logo: "Dette er logoen for gruppen"
-  admin_entreprise_groups_data_powertip_promo_image: "Dette bildet vises på toppen av Gruppens profil"
-  admin_entreprise_groups_contact: "Kontakt"
-  admin_entreprise_groups_contact_phone_placeholder: "eks: 987 123 654"
-  admin_entreprise_groups_contact_address1_placeholder: "eks: Gårdsvei 12"
-  admin_entreprise_groups_contact_city: "Område"
-  admin_entreprise_groups_contact_city_placeholder: "f.eks. Nesodden"
-  admin_entreprise_groups_contact_zipcode: "Postnummer"
-  admin_entreprise_groups_contact_zipcode_placeholder: "f.eks. 1450"
-  admin_entreprise_groups_contact_state_id: "Fylke"
-  admin_entreprise_groups_contact_country_id: "Land"
-  admin_entreprise_groups_web: "Nettressurser"
-  admin_entreprise_groups_web_twitter: "f.eks. @alt_lokalt"
-  admin_entreprise_groups_web_website_placeholder: "f.eks. www.truffles.com"
+  admin_enterprise_relationships: "Bedriftsrettigheter"
+  admin_enterprise_relationships_everything: "Alt"
+  admin_enterprise_relationships_permits: "tillater"
+  admin_enterprise_relationships_seach_placeholder: "Søk"
+  admin_enterprise_relationships_button_create: "Opprett"
+  admin_enterprise_groups: "Bedriftsgrupper"
+  admin_enterprise_groups_name: "Navn"
+  admin_enterprise_groups_owner: "Eier"
+  admin_enterprise_groups_on_front_page: "På forsiden?"
+  admin_enterprise_groups_enterprise: "Bedrifter"
+  admin_enterprise_groups_data_powertip: "Hovedbrukeren ansvarlig for denne gruppen."
+  admin_enterprise_groups_data_powertip_logo: "Dette er logoen for gruppen"
+  admin_enterprise_groups_data_powertip_promo_image: "Dette bildet vises på toppen av Gruppens profil"
+  admin_enterprise_groups_contact: "Kontakt"
+  admin_enterprise_groups_contact_phone_placeholder: "f.eks. 987 123 654"
+  admin_enterprise_groups_contact_address1_placeholder: "f.eks. 123 High Street"
+  admin_enterprise_groups_contact_city: "Område"
+  admin_enterprise_groups_contact_city_placeholder: "f.eks. Northcote"
+  admin_enterprise_groups_contact_zipcode: "Postnummer"
+  admin_enterprise_groups_contact_zipcode_placeholder: "f.eks. 3070"
+  admin_enterprise_groups_contact_state_id: "Tilstand"
+  admin_enterprise_groups_contact_country_id: "Land"
+  admin_enterprise_groups_web: "Nettressurser"
+  admin_enterprise_groups_web_twitter: "f.eks. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "f.eks. www.truffles.com"
   admin_order_cycles: "Administrasjon Bestillingsrunder"
   open: "Åpne"
-  close: "Steng"
+  close: "Lukk"
   create: "Opprett"
   search: "Søk"
   supplier: "Leverandør"
@@ -2005,7 +2042,7 @@ nb:
   report_payment_totals: 'Betalingstotaler'
   report_all: 'alle'
   report_order_cycle: "Bestillingsrunde:"
-  report_entreprises: "Bedrifter:"
+  report_enterprises: "Bedrifter:"
   report_users: "Brukere:"
   report_tax_rates: Avgiftsrater
   report_tax_types: Avgiftstyper
