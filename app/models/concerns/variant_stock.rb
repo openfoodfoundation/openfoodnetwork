@@ -83,7 +83,7 @@ module VariantStock
   # track_inventory_levels only. It was initially introduced in
   # https://github.com/openfoodfoundation/spree/commit/20b5ad9835dca7f41a40ad16c7b45f987eea6dcc
   def on_demand
-    warn_deprecation(__method__, 'Spree::Config[:track_inventory_levels]')
+    warn_deprecation(__method__, 'StockItem#backorderable?')
     stock_items.first.backorderable?
   end
 
@@ -94,7 +94,7 @@ module VariantStock
   #
   # @raise [StandardError] when the variant has no stock item yet
   def on_demand=(new_value)
-    warn_deprecation(__method__, 'Spree::Config[:track_inventory_levels]')
+    warn_deprecation(__method__, 'StockItem#backorderable=')
 
     raise_error_if_no_stock_item_available
 
