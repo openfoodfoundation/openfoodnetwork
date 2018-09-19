@@ -31,7 +31,7 @@ de_DE:
           attributes:
             subscription_line_items:
               at_least_one_product: "^ Bitte fügen Sie mindestens ein Produkt hinzu"
-              not_available: "^ %{name} ist im ausgewählten Plan nicht verfügbar"
+              not_available: "^ %{name} ist im ausgewählten Zeitplan nicht verfügbar"
             ends_at:
               after_begins_at: "Muss nach \"beginnt um\" sein "
             customer:
@@ -64,6 +64,9 @@ de_DE:
     user_passwords:
       spree_user:
         updated_not_active: "Ihr Passwort wurde zurückgesetzt, aber ihre E-Mail muss noch bestätigt werden."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "Kopie von %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Bitte bestätigen Sie die E-Mail-Adresse für %{enterprise}"
@@ -71,9 +74,26 @@ de_DE:
       subject: "%{enterprise} ist jetzt auf %{sitename}"
     invite_manager:
       subject: "%{enterprise} hat Sie eingeladen, ein Manager zu sein"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Sehr geehrter Kunde,"
+      instructions: "Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierungsinformationen für Ihre Unterlagen auf."
+      order_summary_canceled: "Bestellübersicht [ABGESAGT]"
+      subject: "Stornierung der Bestellung"
+      subtotal: "Zwischensumme: %{subtotal}"
+      total: "Bestellsumme: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Bestellungszyklusreport für %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Sehr geehrter Kunde,"
+      instructions: "Ihre Bestellung wurde versandt"
+      shipment_summary: "Sendungszusammenfassung"
+      subject: "Versandbenachrichtigung"
+      thanks: "Danke für Ihr Geschäft."
+      track_information: "Tracking-Informationen: %{tracking}"
+      track_link: "Tracking-Link: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Eine Zusammenfassung der kürzlich aufgegebenen Abonnementbestellungen
@@ -136,6 +156,7 @@ de_DE:
   free_trial: "kostenloser Versuch"
   plus_tax: "zuzüglich Umsatzsteuer"
   min_bill_turnover_desc: "sobald der Umsatz %{mbt_amount} übersteigt"
+  more: "Mehr"
   say_no: "Nein"
   say_yes: "Ja"
   then: dann
@@ -217,13 +238,13 @@ de_DE:
     image: Bild
     product: Produkt
     quantity: Menge
-    schedule: Plan
+    schedule: Zeitplan
     shipping: Versand
     shipping_method: Lieferart
     shop: Laden
     sku: Artikelnummer
     status_state: Status
-    tags: Markierwort
+    tags: '"tags"'
     variant: Variante
     weight: Gewicht
     volume: Volumen
@@ -249,7 +270,7 @@ de_DE:
     viewing: "Zeigt: %{current_view_name}"
     description: Beschreibung
     whats_this: Was ist das?
-    tag_has_rules: "Vorhandene Regeln für dieses Tag: %{num}"
+    tag_has_rules: "Vorhandene Regeln für dieses \"tag\": %{num}"
     has_one_rule: "hat eine Regel"
     has_n_rules: "hat %{num} Regel(n)"
     unsaved_confirm_leave: "Es gibt ungespeicherte Änderungen auf dieser Seite. Möchten Sie ohne Speichern fortfahren?"
@@ -377,10 +398,12 @@ de_DE:
         header: Header
         home_page: Homepage
         producer_signup_page: Hersteller-Anmeldeseite
-        hub_signup_page: Hub-Anmeldeseite
+        hub_signup_page: Hubregistrierseite
         group_signup_page: Gruppen-Anmeldeseite
+        main_links: Hauptmenü-Links
         footer_and_external_links: Fußzeile und externe Links
         your_content: Ihr Inhalt
+        user_guide: Benutzerhandbuch
     enterprise_fees:
       index:
         title: Unternehmensgebühren
@@ -523,13 +546,13 @@ de_DE:
         new_products_alert_message: Es sind %{new_product_count} neue Produkte verfügbar, die in den Katalog aufgenommen werden können
         currently_empty: Ihr Katalog ist momentan leer.
         no_matching_products: Es wurden keine passenden Produkte im Katalog gefunden.
-        no_hidden_products: In diesem Katalog wurden keine Produkte verborgen
-        no_matching_hidden_products: Keine verborgenen Produkte entsprechen Ihren Suchkriterien
+        no_hidden_products: In diesem Katalog wurden keine Produkte ausgeblendet
+        no_matching_hidden_products: Keine ausgeblendeten Produkte entsprechen Ihren Suchkriterien
         no_new_products: Es sind keine neuen Produkte verfügbar, die zu diesem Katalog hinzugefügt werden können
         no_matching_new_products: Keine neuen Produkte entsprechen Ihren Suchkriterien
         inventory_powertip: Dies ist Ihr Produktkatalog. Um Produkte zu Ihrem Katalog hinzuzufügen, wählen Sie "Neue Produkte" aus dem Dropdown-Menü.
-        hidden_powertip: Diese Produkte wurden in Ihrem Katalog versteckt und können nicht in Ihrem Laden hinzugefügt werden. Sie können auf "Hinzufügen" klicken, um ein Produkt zu Ihrem Katalog hinzuzufügen.
-        new_powertip: Diese Produkte können Ihrem Katalog hinzugefügt werden. Klicken Sie auf "Hinzufügen", um ein Produkt zu Ihrem Katalog hinzuzufügen, oder auf "Ausblenden", um es aus der Ansicht auszublenden. Sie können Ihre Meinung später immer ändern!
+        hidden_powertip: Diese Produkte wurden in Ihrem Katalog ausgeblendet und können nicht zu Ihrem Laden hinzugefügt werden. Sie können auf "Hinzufügen" klicken, um ein Produkt zu Ihrem Katalog hinzuzufügen.
+        new_powertip: Diese Produkte können Ihrem Katalog hinzugefügt werden. Klicken Sie auf "Hinzufügen", um ein Produkt zu Ihrem Katalog hinzuzufügen, oder auf "Verbergen", um es aus der Ansicht auszublenden. Sie können Ihre Meinung später immer ändern!
       controls:
         back_to_my_inventory: Zurück zu meinem Katalog
     orders:
@@ -702,11 +725,11 @@ de_DE:
             by_default: Standardmäßig
             no_rules_yet: Es gelten noch keine Standardregeln
             add_new_button: '+ Fügen Sie eine neue Standardregel hinzu'
-          no_tags_yet: Für dieses Unternehmen sind noch keine Tags vorhanden
-          no_rules_yet: Für dieses Tag gelten noch keine Regeln
-          for_customers_tagged: 'Für Kunden mit dem Tag:'
+          no_tags_yet: Für dieses Unternehmen sind noch keine "tags" vorhanden
+          no_rules_yet: Für dieses "tag" gelten noch keine Regeln
+          for_customers_tagged: 'Für Kunden mit dem "tag":'
           add_new_rule: '+ Neue Regel hinzufügen'
-          add_new_tag: '+ Neuen Tag hinzufügen'
+          add_new_tag: '+ Neues "tag" hinzufügen'
         users:
           email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{email} gesendet."
           resend: Erneut senden
@@ -767,6 +790,9 @@ de_DE:
         search_placeholder: Suche nach Name
         manage: Verwalten
         manage_link: Einstellungen
+        producer?: "Erzeuger?"
+        package: "Paket"
+        status: "Status"
       new_form:
         owner: Inhaber
         owner_tip: Der Hauptnutzer, der für dieses Unternehmen verantwortlich ist.
@@ -778,6 +804,14 @@ de_DE:
       new:
         title: Neues Unternehmen
         back_link: Zurück zur Unternehmensliste
+      remove_logo:
+        remove: "Entferne Bild"
+        removed_successfully: "Das Logo wurde erfolgreich entfernt"
+        immediate_removal_warning: "Das Logo wird sofort nach der Bestätigung entfernt."
+      remove_promo_image:
+        remove: "Entferne Bild"
+        removed_successfully: "Promo-Bild wurde erfolgreich entfernt"
+        immediate_removal_warning: "Das Werbebild wird sofort nach der Bestätigung entfernt."
       welcome:
         welcome_title: Willkommen im Open Food Network!
         welcome_text: 'Erfolgreich erstellt:'
@@ -810,6 +844,11 @@ de_DE:
         save_reload: Speichern und neu laden
       coordinator_fees:
         add: Koordinatorgebühr hinzufügen
+      filters:
+        search_by_order_cycle_name: "Suche nach Bestellung Cycle name ..."
+        involving: "Involviert"
+        any_enterprise: "Jede Firma"
+        any_schedule: "Jeder Zeitplan"
       form:
         incoming: Eingehend
         supplier: Anbieter
@@ -818,22 +857,21 @@ de_DE:
         outgoing: Ausgehend
         distributor: Verteiler
         products: Produkte
-        tags: Stichworte
-        add_a_tag: Füge einen Tag hinzu
+        tags: '"tags"'
+        add_a_tag: '"tag" hinzufügen'
         delivery_details: Abhol- / Lieferinformationen
         debug_info: Debug-Informationen
       index:
-        involving: Involviert
         schedule: Zeitplan
-        schedules: Termine
+        schedules: Zeitpläne
         adding_a_new_schedule: Hinzufügen eines neuen Zeitplans
         updating_a_schedule: Einen Zeitplan aktualisieren
-        new_schedule: Neue Terminplanung
+        new_schedule: Neuer Zeitplan
         create_schedule: Zeitplan erstellen
         update_schedule: Zeitplan aktualisieren
         delete_schedule: Zeitplan löschen
         created_schedule: Zeitplan erstellt
-        updated_schedule: Aktualisierter Zeitplan
+        updated_schedule: Zeitplan aktualisiert
         deleted_schedule: Zeitplan gelöscht
         schedule_name_placeholder: Zeitplanname
         name_required_error: Bitte geben Sie einen Namen für diesen Zeitplan ein
@@ -856,7 +894,7 @@ de_DE:
         fees: Gebühren
       destroy_errors:
         orders_present: Dieser Bestellzyklus wurde von einem Kunden ausgewählt und kann nicht gelöscht werden. Um weitere Verwendung zu verhindern, können Sie ihn stattdessen schließen.
-        schedule_present: Dieser Bestellzyklus ist mit einem Zeitplan verknüpft und kann nicht gelöscht werden. Bitte heben Sie die Verknüpfung auf oder löschen Sie den Zeitplan zuerst.
+        schedule_present: Dieser Bestellzyklus ist mit einem Zeitplan verknüpft und kann nicht gelöscht werden. Bitte heben Sie zuerst die Verknüpfung auf oder löschen Sie den Zeitplan.
       bulk_update:
         no_data: Hm, etwas ist schief gelaufen. Keine Bestellzyklusdaten gefunden.
       date_warning:
@@ -889,7 +927,7 @@ de_DE:
       email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{email} gesendet."
       not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden"
     reports:
-      hidden: VERSTECKT
+      hidden: Ausgeblendet
       unitsize: EINHEITSGRÖSSE
       total: SUMME
       total_items: GESAMTANZAHL
@@ -1007,7 +1045,7 @@ de_DE:
         no_matching_subscriptions: Keine passenden Abonnements gefunden
     schedules:
       destroy:
-        associated_subscriptions_error: Dieser Zeitplan kann nicht gelöscht werden, da ihm Subskriptionen zugeordnet sind
+        associated_subscriptions_error: Dieser Zeitplan kann nicht gelöscht werden, da ihm Abonnements zugeordnet sind.
     controllers:
       enterprises:
         stripe_connect_cancelled: "Die Verbindung zu Stripe wurde abgebrochen"
@@ -1015,6 +1053,11 @@ de_DE:
         stripe_connect_fail: Die Verbindung Ihres Stripe-Kontos ist fehlgeschlagen
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
+  api:
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "Logo existiert nicht"
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "Promo-Bild existiert nicht"
   checkout:
     already_ordered:
       cart: "Warenkorb"
@@ -1095,12 +1138,19 @@ de_DE:
   ticket_column_unit_price: "Stückpreis"
   ticket_column_total_price: "Gesamtpreis"
   menu_1_title: "Läden"
+  menu_1_url: "/ Geschäfte"
   menu_2_title: "Karte"
+  menu_2_url: "/Karte"
   menu_3_title: "Erzeuger"
+  menu_3_url: "/ Produzenten"
   menu_4_title: "Gruppen"
+  menu_4_url: "/ Gruppen"
   menu_5_title: "Über Uns"
+  menu_5_url: "http://www.openfoodnetwork.org/"
   menu_6_title: "Verbinde"
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "Lerne"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
   logo_mobile: "Handylogo (75x26)"
   logo_mobile_svg: "Handylogo (SVG)"
@@ -1116,6 +1166,7 @@ de_DE:
   footer_email: "E-Mail:"
   footer_links_md: "Links"
   footer_about_url: "Über URL"
+  user_guide_link: "Benutzeranleitung Link"
   name: Name
   first_name: Vorname
   last_name: Nachname
@@ -1190,8 +1241,47 @@ de_DE:
   ie_warning_ie: Internet Explorer aktualisieren
   ie_warning_other: "Können Sie Ihren Browser nicht aktualisieren? Versuchen Sie Open Food Network auf Ihrem Smartphone :-)"
   legal:
+    cookies_policy:
+      header: "Wie wir Cookies verwenden"
+      desc_part_1: "Cookies sind sehr kleine Textdateien, die beim Besuch einiger Websites auf Ihrem Computer gespeichert werden."
+      desc_part_2: "In OFN respektieren wir Ihre Privatsphäre. Wir verwenden nur die Cookies, die notwendig sind, um Ihnen den Service des Online-Kaufs / -Verkaufs von Lebensmitteln zu bieten. Wir verkaufen keine Ihrer Daten. Wir könnten Ihnen in Zukunft vorschlagen, einige Ihrer Daten zu teilen, um neue Commons-Dienste zu entwickeln, die für das Ökosystem nützlich sein könnten (wie Logistikdienstleistungen für kurze Nahrungsmittelsysteme), aber wir sind noch nicht dort, und wir werden es nicht ohne Ihr tun Genehmigung :-)"
+      desc_part_3: "Wir verwenden Cookies hauptsächlich, um sich daran zu erinnern, wer Sie sind, wenn Sie sich bei dem Dienst anmelden oder sich die Artikel merken können, die Sie in Ihren Warenkorb legen, auch wenn Sie nicht eingeloggt sind \"Cookies akzeptieren\" nehmen wir an, dass Sie uns die Speicherung von Cookies erlauben, die für das Funktionieren der Website notwendig sind. Hier ist die Liste der von uns verwendeten Cookies!"
+      essential_cookies: "Essentielle Kekse"
+      essential_cookies_desc: "Die folgenden Cookies sind für den Betrieb unserer Website unbedingt erforderlich."
+      essential_cookies_note: "Die meisten Cookies enthalten nur einen eindeutigen Bezeichner, aber keine anderen Daten. Ihre E-Mail-Adresse und Ihr Kennwort sind zum Beispiel niemals darin enthalten und werden nie veröffentlicht."
+      cookie_domain: "Festlegen von:"
+      cookie_session_desc: "Wird verwendet, damit die Website sich zwischen den Seitenbesuchen an die Benutzer erinnern kann, z. B. an Artikel in Ihrem Einkaufswagen."
+      cookie_consent_desc: "Wird verwendet, um den Status der Benutzerzustimmung zum Speichern von Cookies beizubehalten"
+      cookie_remember_me_desc: "Wird verwendet, wenn der Benutzer die Website aufgefordert hat, sich an ihn zu erinnern. Dieser Cookie wird nach 12 Tagen automatisch gelöscht. Wenn Sie als Benutzer möchten, dass dieser Cookie gelöscht wird, müssen Sie sich nur abmelden. Wenn Sie nicht möchten, dass der Cookie auf Ihrem Computer installiert wird, sollten Sie das Kontrollkästchen \"An mich erinnern\" nicht aktivieren, wenn Sie sich anmelden."
+      cookie_openstreemap_desc: "Wird von unserem freundlichen Open-Source-Mapping-Anbieter (OpenStreetMap) verwendet, um sicherzustellen, dass während eines bestimmten Zeitraums nicht zu viele Anfragen eingehen, um den Missbrauch ihrer Dienste zu verhindern."
+      cookie_stripe_desc: "Daten gesammelt von unserem Zahlungsabwickler Stripe für die Betrugserkennung https://stripe.com/cookies-policy/legal. Nicht alle Geschäfte verwenden Stripe als Zahlungsmethode, aber es ist eine gute Vorgehensweise, sie auf alle Seiten anzuwenden. Stripe erstellt wahrscheinlich ein Bild davon, welche unserer Seiten normalerweise mit ihrer API interagieren und merkt, wenn etwas Ungewöhnliches passiert. Das Festlegen des Stripe-Cookies hat also eine breitere Funktion als die Bereitstellung einer Zahlungsmethode für einen Benutzer. Das Entfernen könnte die Sicherheit des Dienstes selbst beeinträchtigen. Sie können mehr über Stripe erfahren und dessen Datenschutzrichtlinie unter https://stripe.com/privacy lesen."
+      statistics_cookies: "Statistik-Cookies"
+      statistics_cookies_desc: "Die folgenden Punkte sind nicht unbedingt erforderlich, helfen Ihnen jedoch, die beste Benutzererfahrung zu bieten, indem wir das Benutzerverhalten analysieren, die am häufigsten verwendeten Funktionen identifizieren oder nicht verwenden, Probleme mit der Benutzerfreundlichkeit verstehen usw."
+      statistics_cookies_analytics_desc_html: "Zur Erfassung und Analyse von Daten zur Nutzung der Plattform verwenden wir Google Analytics, da es sich um den Standarddienst handelt, der mit Spree (der E-Commerce-Open-Source-Software, auf der wir aufgebaut haben) verbunden ist. Unsere Vision ist jedoch der Wechsel zu <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, ein Open-Source-Analysetool, das der DSGVO entspricht und Ihre Privatsphäre schützt), sobald wir können."
+      statistics_cookies_matomo_desc_html: "Um Daten zur Nutzung der Plattform zu erfassen und zu analysieren, verwenden wir <a href='https://matomo.org/ 'target='_blank'> Matomo </a> (ex Piwik), ein Open-Source-Analysetool, das der DSGVO-Richtlinie entspricht schützt Ihre Privatsphäre."
+      statistics_cookies_matomo_optout: "Möchten Sie Matomo Analytics deaktivieren? Wir sammeln keine persönlichen Daten und Matomo hilft uns, unseren Service zu verbessern, aber wir respektieren Ihre Wahl :-)"
+      cookie_analytics_utma_desc: "Wird zur Unterscheidung von Benutzern und Sitzungen verwendet. Der Cookie wird erstellt, wenn die JavaScript-Bibliothek ausgeführt wird und keine vorhandenen __utma-Cookies vorhanden sind. Der Cookie wird jedes Mal aktualisiert, wenn Daten an Google Analytics gesendet werden."
+      cookie_analytics_utmt_desc: "Wird zum Drosseln der Anforderungsrate verwendet."
+      cookie_analytics_utmb_desc: "Wird verwendet, um neue Sitzungen / Besuche zu bestimmen. Der Cookie wird erstellt, wenn die JavaScript-Bibliothek ausgeführt wird und keine vorhandenen __utmb-Cookies vorhanden sind. Der Cookie wird jedes Mal aktualisiert, wenn Daten an Google Analytics gesendet werden."
+      cookie_analytics_utmc_desc: "Wird nicht in ga.js verwendet Stellen Sie die Interoperabilität mit urchin.js ein. In der Vergangenheit wurde dieser Cookie in Verbindung mit dem __utmb-Cookie verwendet, um festzustellen, ob sich der Benutzer in einer neuen Sitzung / einem neuen Besuch befand."
+      cookie_analytics_utmz_desc: "Speichert die Zugriffsquelle oder Kampagne, die erläutert, wie der Nutzer Ihre Website erreicht hat. Der Cookie wird erstellt, wenn die JavaScript-Bibliothek ausgeführt wird, und wird jedes Mal aktualisiert, wenn Daten an Google Analytics gesendet werden."
+      cookie_matomo_basics_desc: "Matomo First Party Cookies zum Sammeln von Statistiken."
+      cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Aufnahme-Cookie."
+      cookie_matomo_ignore_desc: "Cookie verwendet, um Benutzer von der Verfolgung auszuschließen."
+      disabling_cookies_header: "Warnung zum Deaktivieren von Cookies"
+      disabling_cookies_desc: "Als Nutzer können Sie Cookies von Open Food Network oder einer anderen Website immer zulassen, blockieren oder löschen, wann immer Sie die Einstellungskontrolle Ihres Browsers nutzen möchten. Jeder Browser hat einen anderen Benutzer. Hier sind die Links:"
+      disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
+      disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
+      disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
+      disabling_cookies_note: "Beachten Sie jedoch, dass die Website nicht funktioniert, wenn Sie die essentiellen Cookies löschen oder ändern, die von Open Food Network verwendet werden. Sie können also nichts zum Warenkorb hinzufügen, auch nicht zur Kasse gehen."
     cookies_banner:
+      cookies_usage: "Diese Website verwendet Cookies, um Ihre Navigation reibungslos und sicher zu gestalten und um zu verstehen, wie Sie sie verwenden, um die von uns angebotenen Funktionen zu verbessern."
+      cookies_definition: "Cookies sind sehr kleine Textdateien, die beim Besuch einiger Websites auf Ihrem Computer gespeichert werden."
+      cookies_desc: "Wir verwenden nur die Cookies, die notwendig sind, um Ihnen den Service des Online-Kaufs / -Verkaufs von Lebensmitteln zu bieten. Wir verkaufen keine Ihrer Daten. Wir verwenden Cookies hauptsächlich, um sich daran zu erinnern, wer Sie sind, wenn Sie sich bei dem Dienst anmelden oder sich die Artikel merken können, die Sie in Ihren Warenkorb legen, auch wenn Sie nicht eingeloggt sind \"Cookies akzeptieren\" nehmen wir an, dass Sie uns die Speicherung von Cookies erlauben, die für das Funktionieren der Website notwendig sind."
+      cookies_policy_link_desc: "Wenn Sie mehr erfahren möchten, besuchen Sie unsere"
       cookies_policy_link: "Hinweise zu Cookies"
+      cookies_accept_button: "Cookies akzeptieren"
   home_shop: Jetzt einkaufen
   brandstory_headline: "Essen, ohne eigene Rechtspersönlichkeit."
   brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, ein neues zu starten ..."
@@ -1203,15 +1293,15 @@ de_DE:
   brandstory_part6: "Wir alle lieben das Essen. Jetzt können wir unser Nahrungssystem auch lieben."
   learn_body: "Erkunden Sie Modelle, Geschichten und Ressourcen, um Sie bei der Entwicklung Ihres Fair-Food-Geschäfts oder Ihrer Organisation zu unterstützen. Finden Sie Schulungen, Veranstaltungen und andere Möglichkeiten, um von Gleichgesinnten zu lernen."
   learn_cta: "Lass dich inspirieren"
-  connect_body: "Durchsuchen Sie unsere vollständigen Verzeichnisse von Herstellern, Hubs und Gruppen, um Fair-Food-Händler in Ihrer Nähe zu finden. Listen Sie Ihr Unternehmen oder Ihre Organisation auf dem OFN auf, damit Käufer Sie finden können. Treten Sie der Community bei, um Rat zu bekommen und Probleme gemeinsam zu lösen."
+  connect_body: "Durchsuchen Sie unsere vollständigen Verzeichnisse von Erzeugern, Hubs und Gruppen, um Fair-Food-Händler in Ihrer Nähe zu finden. Listen Sie Ihr Unternehmen oder Ihre Organisation auf dem OFN auf, damit Käufer Sie finden können. Treten Sie der Community bei, um Rat zu bekommen und Probleme gemeinsam zu lösen."
   connect_cta: "Erkunden"
   system_headline: "Einkaufen - so funktioniert es."
   system_step1: "1. Suche"
   system_step1_text: "Durchsuchen Sie unsere verschiedenen, unabhängigen Geschäfte nach saisonalem, lokalem Essen. Suche nach Gegend und Lebensmittelkategorie, oder ob Sie Lieferung oder Abholung bevorzugen."
   system_step2: "2. Laden"
-  system_step2_text: "Transformieren Sie Ihre Transaktionen mit erschwinglichen lokalen Lebensmitteln von verschiedenen Herstellern und Hubs. Kenne die Geschichten hinter deinem Essen und den Menschen, die es schaffen!"
+  system_step2_text: "Transformieren Sie Ihre Transaktionen mit erschwinglichen lokalen Lebensmitteln von verschiedenen Erzeugern und Hubs. Erfahren Sie die Geschichten hinter Ihrem Essen und den Menschen, die es erzeugen."
   system_step3: "3. Abholung / Lieferung"
-  system_step3_text: "Erhalten Sie eine Lieferung oder besuchen Sie Ihren Hersteller oder Hub für eine persönlichere Verbindung mit Ihrem Essen. Lebensmitteleinkauf so vielfältig wie die Natur es beabsichtigt hat."
+  system_step3_text: "Erhalten Sie eine Lieferung oder besuchen Sie Ihren Hersteller oder Ihr Hub für eine persönlichere Verbindung mit Ihrem Essen. Lebensmitteleinkauf so vielfältig wie die Natur es beabsichtigt hat."
   cta_headline: "Einkaufen, das die Welt verbessert."
   cta_label: "Ich bin bereit"
   stats_headline: "Wir schaffen ein neues Ernährungssystem."
@@ -1222,7 +1312,7 @@ de_DE:
   checkout_title: Kasse
   checkout_now: Zur Kasse
   checkout_order_ready: Bestellung bereit für
-  checkout_hide: Verstecke
+  checkout_hide: Ausblenden
   checkout_expand: Erweitern
   checkout_headline: "Ok, jetzt zur Kasse?"
   checkout_as_guest: "Als Gast zur Kasse"
@@ -1312,6 +1402,7 @@ de_DE:
   email_so_edit_true_html: "Sie können <a href='%{order_url}'> Änderungen vornehmen </a>, bis Bestellungen auf %{orders_close_at} schließen."
   email_so_edit_false_html: "Sie können <a href='%{order_url}'> jederzeit Details zu dieser Bestellung anzeigen </a>."
   email_so_contact_distributor_html: "Wenn Sie Fragen haben, können Sie sich mit <strong> %{distributor} </ strong> über %{email} in Verbindung setzen."
+  email_so_contact_distributor_to_change_order_html: "Diese Bestellung wurde automatisch für Sie erstellt. Sie können Änderungen vornehmen, bis Bestellungen auf %{orders_close_at} geschlossen werden, indem Sie <strong> %{distributor} </ strong> über %{email} kontaktieren."
   email_so_confirmation_intro_html: "Ihre Bestellung mit <strong> %{distributor} </ strong> ist jetzt bestätigt"
   email_so_confirmation_explainer_html: "Diese Bestellung wurde automatisch für Sie aufgegeben und ist nun abgeschlossen."
   email_so_confirmation_details_html: "Hier finden Sie alles, was Sie über Ihre Bestellung wissen müssen: <strong> %{distributor} </ strong>:"
@@ -1422,7 +1513,7 @@ de_DE:
   groups_signup_motivation2: Deshalb sind wir jeden Tag aufgestanden. Wir sind eine globale Non-Profit-Organisation, die auf Open-Source-Code basiert. Wir spielen fair. Sie können uns immer vertrauen.
   groups_signup_motivation3: Wir wissen, dass Sie große Ideen haben und wir helfen wollen. Wir teilen unser Wissen, Netzwerke und Ressourcen. Wir wissen, dass Isolation keine Veränderung verursacht, also werden wir mit Ihnen zusammenarbeiten.
   groups_signup_motivation4: Wir treffen dich, wo du bist.
-  groups_signup_motivation5: Sie könnten eine Allianz von Food-Hubs, Produzenten oder Distributoren, einer Industrieorganisation oder einer lokalen Regierung sein.
+  groups_signup_motivation5: Sie könnten eine Allianz von Hubs, Produzenten oder Vertailern sein, eine Industrieorganisation oder eine Lokalbehörde.
   groups_signup_motivation6: Was auch immer Ihre Rolle in Ihrer lokalen Nahrungsmittelbewegung ist, wir sind bereit zu helfen. Wie auch immer Sie sich fragen, wie Open Food Network in Ihrem Teil der Welt aussehen würde oder wird, lassen Sie uns das Gespräch beginnen.
   groups_signup_motivation7: Wir machen Nahrungsmittelbewegungen sinnvoller.
   groups_signup_motivation8: Sie müssen Ihre Netzwerke aktivieren und aktivieren, wir bieten eine Plattform für Konversation und Aktion. Sie brauchen echtes Engagement. Wir helfen, alle Akteure, alle Beteiligten, alle Sektoren zu erreichen.
@@ -1433,8 +1524,8 @@ de_DE:
   groups_signup_contact_text: "Kontaktieren Sie uns, um herauszufinden, was OFN für Sie tun kann:"
   groups_signup_detail: "Hier ist das Detail."
   login_invalid: "Ungültige E-Mail-Adresse oder ungültiges Passwort"
-  modal_hubs: "Essen Hubs"
-  modal_hubs_abstract: Unsere Food-Hubs sind der Kontaktpunkt zwischen Ihnen und den Menschen, die Ihr Essen zubereiten!
+  modal_hubs: "Lebensmittel-Hubs"
+  modal_hubs_abstract: Unsere Hubs sind der Kontaktpunkt zwischen Ihnen und den Menschen, die Ihre Lebensmittel herstellen!
   modal_hubs_content1: Sie können nach einem geeigneten Hub nach Standort oder Namen suchen. Einige Hubs haben mehrere Punkte, an denen Sie Ihre Einkäufe abholen können, und einige bieten auch Lieferoptionen. Jeder Food-Hub ist eine Verkaufsstelle mit eigenständigem Geschäftsbetrieb und Logistik - so sind Unterschiede zwischen den Hubs zu erwarten.
   modal_hubs_content2: Sie können nicht bei mehr als einem Hub gleichzeitig einkaufen.
   modal_groups: "Gruppen / Regionen"
@@ -1481,7 +1572,7 @@ de_DE:
   sell_headline: "Steigen Sie in das Open Food Netzwerk ein!"
   sell_motivation: "Stellen Sie Ihr schönes Essen vor."
   sell_producers: "Produzenten"
-  sell_hubs: "Naben"
+  sell_hubs: "Hubs"
   sell_groups: "Gruppen"
   sell_producers_detail: "Richten Sie in wenigen Minuten ein Profil für Ihr Unternehmen auf dem OFN ein. Sie können Ihr Profil jederzeit auf einen Online-Shop aktualisieren und Ihre Produkte direkt an Kunden verkaufen."
   sell_hubs_detail: "Richten Sie im OFN ein Profil für Ihr Lebensmittelunternehmen oder Ihre Organisation ein. Sie können Ihr Profil jederzeit auf einen Multi-Producer-Shop upgraden."
@@ -1493,8 +1584,8 @@ de_DE:
   shops_title: Läden
   shops_headline: Einkaufen, verwandelt.
   shops_text: Nahrung wächst in Zyklen, Bauern ernten in Zyklen und wir bestellen Nahrung in Zyklen. Wenn Sie feststellen, dass ein Bestellzyklus geschlossen ist, schauen Sie bald wieder vorbei.
-  shops_signup_title: Melde dich als Hub an
-  shops_signup_headline: Food-Hubs, unbegrenzt.
+  shops_signup_title: Als Hub registrieren
+  shops_signup_headline: Lebensmittel-Hubs, unbegrenzt.
   shops_signup_motivation: Was auch immer Ihr Modell ist, wir unterstützen Sie. Wie auch immer Sie sich ändern, wir sind bei Ihnen. Wir sind gemeinnützig, unabhängig und Open-Source. Wir sind die Software-Partner, von denen Sie schon immer geträumt haben.
   shops_signup_action: Jetzt beitreten
   shops_signup_pricing: Unternehmenskonten
@@ -1514,7 +1605,7 @@ de_DE:
   orders_form_admin: Admin & Handhabung
   orders_form_total: Total
   orders_oc_expired_headline: Bestellungen wurden für diesen Bestellzyklus geschlossen
-  orders_oc_expired_text: "Entschuldigung, Bestellungen für diesen Bestellzyklus haben %{time} geschlossen! Bitte kontaktieren Sie direkt Ihren Hub, um zu sehen, ob sie verspätete Bestellungen annehmen können."
+  orders_oc_expired_text: "Entschuldigung, Bestellungen für diesen Bestellzyklus wurden vor %{time} geschlossen! Bitte kontaktieren Sie Ihr Hub direkt, um zu sehen, ob sie verspätete Bestellungen annehmen können."
   orders_oc_expired_text_others_html: "Entschuldigung, Bestellungen für diesen Bestellzyklus haben %{time} geschlossen! Wenden Sie sich direkt an Ihren Hub, um zu sehen, ob er verspätete Bestellungen annehmen kann <strong> %{link} </ strong>."
   orders_oc_expired_text_link: "oder sehen Sie die anderen Bestellzyklen an diesem Hub"
   orders_oc_expired_email: "Email:"
@@ -1573,6 +1664,7 @@ de_DE:
   error_number: "muss nummer sein"
   error_email: "muss eine E-Mail-Adresse sein"
   error_not_found_in_database: "%{name} nicht in Datenbank gefunden"
+  error_not_primary_producer: "%{name} ist nicht als Producer aktiviert"
   error_no_permission_for_enterprise: "\"%{name}\": Sie sind nicht berechtigt, Produkte für dieses Unternehmen zu verwalten"
   item_handling_fees: "Artikel Bearbeitungsgebühren (in den Gesamtsummen enthalten)"
   january: "Januar"
@@ -1799,31 +1891,31 @@ de_DE:
   you_have_no_orders_yet: "Du hast noch keine Bestellungen"
   running_balance: "Laufendes Gleichgewicht"
   outstanding_balance: "Offener Betrag"
-  admin_entreprise_relationships: "Unternehmensberechtigungen"
-  admin_entreprise_relationships_everything: "Alles"
-  admin_entreprise_relationships_permits: "Genehmigungen"
-  admin_entreprise_relationships_seach_placeholder: "Suche"
-  admin_entreprise_relationships_button_create: "Neu"
-  admin_entreprise_groups: "Unternehmensgruppen"
-  admin_entreprise_groups_name: "Name"
-  admin_entreprise_groups_owner: "Inhaber"
-  admin_entreprise_groups_on_front_page: "Auf der ersten Seite?"
-  admin_entreprise_groups_entreprise: "Unternehmen"
-  admin_entreprise_groups_data_powertip: "Der primäre Benutzer, der für diese Gruppe verantwortlich ist."
-  admin_entreprise_groups_data_powertip_logo: "Dies ist das Logo für die Gruppe"
-  admin_entreprise_groups_data_powertip_promo_image: "Dieses Bild wird oben im Gruppenprofil angezeigt"
-  admin_entreprise_groups_contact: "Kontakt"
-  admin_entreprise_groups_contact_phone_placeholder: "z.B. 98 7654 3210"
-  admin_entreprise_groups_contact_address1_placeholder: "z.B. Gartenweg 12"
-  admin_entreprise_groups_contact_city: "Vorort"
-  admin_entreprise_groups_contact_city_placeholder: "z.B. Northcote"
-  admin_entreprise_groups_contact_zipcode: "Postleitzahl"
-  admin_entreprise_groups_contact_zipcode_placeholder: "z.B. 3070"
-  admin_entreprise_groups_contact_state_id: "Bundesland"
-  admin_entreprise_groups_contact_country_id: "Land"
-  admin_entreprise_groups_web: "Webressourcen"
-  admin_entreprise_groups_web_twitter: "z.B. @the_prof"
-  admin_entreprise_groups_web_website_placeholder: "z.B. www.truffles.com"
+  admin_enterprise_relationships: "Unternehmensberechtigungen"
+  admin_enterprise_relationships_everything: "Alles"
+  admin_enterprise_relationships_permits: "Genehmigungen"
+  admin_enterprise_relationships_seach_placeholder: "Suche"
+  admin_enterprise_relationships_button_create: "Neu"
+  admin_enterprise_groups: "Unternehmensgruppen"
+  admin_enterprise_groups_name: "Name"
+  admin_enterprise_groups_owner: "Inhaber"
+  admin_enterprise_groups_on_front_page: "Auf der ersten Seite?"
+  admin_enterprise_groups_enterprise: "Unternehmen"
+  admin_enterprise_groups_data_powertip: "Der primäre Benutzer, der für diese Gruppe verantwortlich ist."
+  admin_enterprise_groups_data_powertip_logo: "Dies ist das Logo für die Gruppe"
+  admin_enterprise_groups_data_powertip_promo_image: "Dieses Bild wird oben im Gruppenprofil angezeigt"
+  admin_enterprise_groups_contact: "Kontakt"
+  admin_enterprise_groups_contact_phone_placeholder: "z.B. 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "z.B. Gartenstrasse 123"
+  admin_enterprise_groups_contact_city: "Vorort"
+  admin_enterprise_groups_contact_city_placeholder: "z.B. Nordwestheim"
+  admin_enterprise_groups_contact_zipcode: "Postleitzahl"
+  admin_enterprise_groups_contact_zipcode_placeholder: "z.B. 30701"
+  admin_enterprise_groups_contact_state_id: "Status"
+  admin_enterprise_groups_contact_country_id: "Land"
+  admin_enterprise_groups_web: "Webressourcen"
+  admin_enterprise_groups_web_twitter: "z.B. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "z.B. www.truffles.com"
   admin_order_cycles: "Admin-Bestellzyklen"
   open: "Öffnen"
   close: "Abschließen"
@@ -1893,10 +1985,10 @@ de_DE:
   spree_admin_unit_value: Einheitswert
   spree_admin_unit_description: Einheit Beschreibung
   spree_admin_variant_unit: Varianteneinheit
-  spree_admin_variant_unit_scale: Variationseinheitsskala
+  spree_admin_variant_unit_scale: Einheitsmaß der Variante
   spree_admin_supplier: Anbieter
   spree_admin_product_category: Produktkategorie
-  spree_admin_variant_unit_name: Name der Varianteinheit
+  spree_admin_variant_unit_name: Einheit der Variante
   change_package: "Paket ändern"
   spree_admin_single_enterprise_hint: "Tipp: Um es Ihnen zu ermöglichen, Sie zu finden, aktivieren Sie Ihre Sichtbarkeit unter"
   spree_admin_eg_pickup_from_school: "z.B. \"Abholung von der Grundschule\""
@@ -1959,7 +2051,7 @@ de_DE:
   report_payment_totals: 'Zahlungssummen'
   report_all: 'alle'
   report_order_cycle: "Bestellzyklus:"
-  report_entreprises: "Unternehmen:"
+  report_enterprises: "Unternehmen:"
   report_users: "Benutzer:"
   report_tax_rates: Steuersätze
   report_tax_types: Steuerarten
@@ -2002,7 +2094,7 @@ de_DE:
   report_header_order_number: Bestellnummer
   report_header_date: Datum
   report_header_confirmation_date: Bestätigungsdatum
-  report_header_tags: Stichworte
+  report_header_tags: '"tags"'
   report_header_items: Artikel
   report_header_items_total: "Artikel insgesamt %{currency_symbol}"
   report_header_taxable_items_total: "Steuerpflichtige Posten insgesamt (%{currency_symbol})"
@@ -2132,7 +2224,7 @@ de_DE:
   payment_methods: "Zahlungsarten"
   payment_method_fee: "Transaktionsgebühr"
   inventory_settings: "Katalogeinstellungen"
-  tag_rules: "Tag-Regeln"
+  tag_rules: "\"tag\"-Regeln"
   shop_preferences: "Ladeneinstellungen"
   enterprise_fee_whole_order: Ganze Bestellung
   enterprise_fee_by: "%{type} Gebühr von %{role} %{enterprise_name}"
@@ -2213,22 +2305,21 @@ de_DE:
         invite: "Einladen"
         invite_title: "Laden Sie einen nicht registrierten Benutzer ein"
         tag_rule_help:
-          title: Tag-Regeln
+          title: '"tag"-Regeln'
           overview: Überblick
           overview_text: >
-              Mit Tag-Regeln können Sie beschreiben, welche Elemente für welche Kunden
-              sichtbar sind oder nicht. Artikel können Versandarten, Zahlungsarten,
-              Produkte und Bestellzyklen sein.
+              Mit "tag"-Regeln können Sie beschreiben, welche Elemente für welche
+              Kunden sichtbar sind. Elemente können Versandarten, Zahlungsarten, Produkte
+              und Bestellzyklen sein.
           by_default_rules: "\"Standardmäßig ...\" Regeln"
           by_default_rules_text: >
-              Mit Standardregeln können Sie Elemente ausblenden, sodass sie standardmäßig
+              Mit Standardregeln können Sie Elemente verbergen, sodass sie standardmäßig
               nicht sichtbar sind. Dieses Verhalten kann dann durch nicht standardmäßige
-              Regeln für Kunden mit bestimmten Tags überschrieben werden.
-          customer_tagged_rules: "'Kunden getagged ...' Regeln"
+              Regeln für Kunden mit bestimmten "tags" überschrieben werden.
+          customer_tagged_rules: "'Kunden mit \"tag\" ...' Regeln"
           customer_tagged_rules_text: >
-              Durch das Erstellen von Regeln für ein bestimmtes Kundentag können Sie
-              das Standardverhalten (ob Elemente anzeigen oder ausblenden) für Kunden
-              mit dem angegebenen Tag überschreiben.
+              Durch das Erstellen von Regeln für ein bestimmtes "tag" können Sie die
+              Standardregeln für bestimmte Kunden überschreiben.
       panels:
         save: SPEICHERN
         saved: GERETTET
@@ -2342,7 +2433,7 @@ de_DE:
       only_n_remainging: "Jetzt hat nur noch %{num} übrig."
     variant_overrides:
       inventory_products: "Katalogprodukte"
-      hidden_products: "Versteckte Produkte"
+      hidden_products: "Ausgeblendete Produkte"
       new_products: "Neue Produkte"
       reset_stock_levels: Zurücksetzen der Bestandswerte auf Standardwerte
       changes_to: Änderungen an
@@ -2355,10 +2446,10 @@ de_DE:
       changing_on_hand_stock: Änderung der Lagerbestände ...
       stock_reset: Aktien werden auf Standardwerte zurückgesetzt.
     tag_rules:
-      show_hide_variants: 'Produktvarianten im Laden anzeigen oder verbergen'
-      show_hide_shipping: 'Lieferarten in der Kasse anzeigen oder verbergen'
-      show_hide_payment: 'Zahlungsarten an der Kasse anzeigen oder verbergen'
-      show_hide_order_cycles: 'Bestellzyklen in meinem Laden anzeigen order verbergen'
+      show_hide_variants: 'Produktvarianten im Laden anzeigen?'
+      show_hide_shipping: 'Lieferarten an der Kasse anzeigen?'
+      show_hide_payment: 'Zahlungsarten an der Kasse anzeigen?'
+      show_hide_order_cycles: 'Bestellzyklen in meinem Laden anzeigen?'
       visible: SICHTBAR
       not_visible: UNSICHTBAR
     services:
@@ -2376,7 +2467,9 @@ de_DE:
           Dadurch wird der Lagerbestand für alle Produkte auf Null gesetzt
           Unternehmen, die in der hochgeladenen Datei nicht vorhanden sind.
     order_cycles:
+      create_failure: "Fehler beim Erstellen des Bestellzyklus"
       update_success: 'Ihr Bestellzyklus wurde aktualisiert.'
+      update_failure: "Fehler beim Aktualisieren des Bestellzyklus"
       no_distributors: In diesem Bestellzyklus gibt es keine Distributoren. Dieser Bestellzyklus ist für Kunden erst sichtbar, wenn Sie einen hinzufügen. Möchten Sie diesen Bestellzyklus weiterhin speichern?
     enterprises:
       producer: "Erzeuger"
@@ -2397,6 +2490,10 @@ de_DE:
     my_account: "Mein Konto"
     date: "Datum"
     time: "Zeit"
+    layouts:
+      admin:
+        header:
+          store: Geschäft
     admin:
       orders:
         invoice:
@@ -2455,7 +2552,7 @@ de_DE:
             av_on: "Verfüg. am"
             import_date: "Importdatum"
           products_variant:
-            variant_has_n_overrides: "Diese Variante hat %{n} override (s)"
+            variant_has_n_overrides: "Diese Variante hat %{n} Überschreibungen"
             new_variant: "Neue Variante"
           product_name: Produktname
         primary_taxon_form:
