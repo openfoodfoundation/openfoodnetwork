@@ -110,7 +110,7 @@
       %span= t(:loading)
 
 %div{'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
-  = render partial: 'angular_pagination'
+  = render partial: 'admin/shared/angular_pagination'
 
 .no-objects-found{'ng-show' => "!RequestMonitor.loading && orders.length == 0"}
   = t(:no_orders_found)
