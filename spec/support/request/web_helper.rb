@@ -105,6 +105,16 @@ module WebHelper
     targetted_select2(value, options)
   end
 
+  # Support having different texts to search for and to click in the select2
+  # field.
+  #
+  # This overrides the method in Spree.
+  def targetted_select2_search(value, options)
+    page.execute_script %Q{$('#{options[:from]}').select2('open')}
+    page.execute_script "$('#{options[:dropdown_css]} input.select2-input').val('#{value}').trigger('keyup-change');"
+    select_select2_result(options[:select_text] || value)
+  end
+
   def multi_select2_select(value, options)
     find("#s2id_#{options[:from]}").find('ul li.select2-search-field').click
     select_select2_result(value)
