@@ -42,14 +42,6 @@ Spree::ShippingMethod.class_eval do
     ]
   end
 
-  def within_zone?(order)
-    if order.ship_address
-      zone && zone.include?(order.ship_address)
-    else
-      true # Shipping methods are available before we've selected an address
-    end
-  end
-
   def has_distributor?(distributor)
     self.distributors.include?(distributor)
   end

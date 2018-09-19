@@ -32,7 +32,6 @@ describe UserPasswordsController, type: :controller do
   end
 
   it "renders Darkswarm" do
-    Spree::MailMethod.create!(environment: 'test')
     clear_jobs
 
     user.send_reset_password_instructions

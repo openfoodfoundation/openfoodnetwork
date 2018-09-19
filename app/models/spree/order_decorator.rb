@@ -2,12 +2,15 @@ require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/distribution_change_validator'
 require 'open_food_network/feature_toggle'
 require 'open_food_network/tag_rule_applicator'
+require 'concerns/order_shipping_method'
 
 ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name, start, finish, id, payload|
   payload[:order].reload.update_distribution_charge!
 end
 
 Spree::Order.class_eval do
+  include OrderShippingMethod
+
   belongs_to :order_cycle
   belongs_to :distributor, class_name: 'Enterprise'
   belongs_to :customer
@@ -150,7 +153,7 @@ Spree::Order.class_eval do
   def update_shipping_fees!
     shipments.each do |shipment|
       next if shipment.shipped?
-      update_adjustment! shipment.adjustment
+      update_adjustment! shipment.adjustment if shipment.adjustment
       shipment.save # updates included tax
     end
   end
@@ -161,7 +164,7 @@ Spree::Order.class_eval do
   def update_payment_fees!
     payments.each do |payment|
       next if payment.completed?
-      update_adjustment! payment.adjustment
+      update_adjustment! payment.adjustment if payment.adjustment
       payment.save
     end
   end
@@ -383,7 +386,7 @@ Spree::Order.class_eval do
     return if adjustment.finalized?
     state = adjustment.state
     adjustment.state = 'open'
-    adjustment.update!(self)
+    adjustment.update!
     adjustment.state = state
   end
 

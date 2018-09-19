@@ -335,20 +335,52 @@ FactoryBot.define do
     end
   end
 
+  factory :shipping_method_with_flat_rate, parent: :shipping_method do
+    calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
+  end
+
+  factory :shipment_with_flat_rate, parent: :shipment do
+    after(:create) do |shipment|
+      shipment.add_shipping_method(create(:shipping_method_with_flat_rate), true)
+    end
+  end
+
+  factory :distributor_enterprise_with_tax, parent: :distributor_enterprise do
+    charges_sales_tax { true }
+    allow_order_changes { true }
+  end
+
+  factory :shipping_method_with_shipping_fee, parent: :shipping_method do
+    transient do
+      shipping_fee 3
+    end
+
+    calculator { build(:calculator_per_item, preferred_amount: shipping_fee) }
+    require_ship_address { false }
+    distributors { [create(:distributor_enterprise_with_tax)] }
+  end
+
+  factory :shipment_with_shipping_fee, parent: :shipment do
+    transient do
+      shipping_fee 3
+    end
+
+    after(:create) do |shipment, evaluator|
+      shipping_method = create(:shipping_method_with_shipping_fee, shipping_fee: evaluator.shipping_fee)
+      shipment.add_shipping_method(shipping_method, true)
+    end
+  end
+
   factory :completed_order_with_fees, parent: :order_with_totals_and_distribution do
     transient do
       shipping_fee 3
       payment_fee 5
     end
 
-    shipping_method do
-      shipping_calculator = build(:calculator_per_item, preferred_amount: shipping_fee)
-      create(:shipping_method, calculator: shipping_calculator, require_ship_address: false, distributors: [distributor])
-    end
+    shipments { [ create(:shipment_with_shipping_fee, shipping_fee: shipping_fee) ] }
 
     after(:create) do |order, evaluator|
       create(:line_item, order: order)
-      order.create_shipment!
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')

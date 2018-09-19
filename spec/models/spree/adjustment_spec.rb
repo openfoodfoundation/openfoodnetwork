@@ -59,14 +59,13 @@ module Spree
       end
 
       describe "Shipment adjustments" do
-        let!(:order)          { create(:order, distributor: hub, shipping_method: shipping_method) }
+        let!(:shipment)       { create(:shipment_with_flat_rate) }
+        let!(:order)          { create(:order, distributor: hub, shipments: [shipment]) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
         let!(:line_item)      { create(:line_item, order: order) }
-        let(:shipping_method) { create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 50.0)) }
         let(:adjustment)      { order.adjustments(:reload).shipping.first }
 
         it "has a shipping charge of $50" do
-          order.create_shipment!
           adjustment.amount.should == 50
         end
 
@@ -74,7 +73,6 @@ module Spree
           it "records 0% tax on shipment adjustments" do
             Config.shipment_inc_vat = false
             Config.shipping_tax_rate = 0
-            order.create_shipment!
 
             adjustment.included_tax.should == 0
           end
@@ -82,7 +80,6 @@ module Spree
           it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
             Config.shipment_inc_vat = false
             Config.shipping_tax_rate = 0.25
-            order.create_shipment!
 
             adjustment.included_tax.should == 0
           end
@@ -92,7 +89,6 @@ module Spree
           before do
             Config.shipment_inc_vat = true
             Config.shipping_tax_rate = 0.25
-            order.create_shipment!
           end
 
           it "takes the shipment adjustment tax included from the system setting" do
@@ -106,14 +102,12 @@ module Spree
           it "records 0% tax on shipments when shipping_tax_rate is not set" do
             Config.shipment_inc_vat = true
             Config.shipping_tax_rate = nil
-            order.create_shipment!
 
             adjustment.included_tax.should == 0
           end
 
           it "records 0% tax on shipments when the distributor does not charge sales tax" do
             order.distributor.update_attributes! charges_sales_tax: false
-            order.reload.create_shipment!
 
             adjustment.included_tax.should == 0
           end

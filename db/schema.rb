@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180906094641) do
+ActiveRecord::Schema.define(:version => 20180910155506) do
 
   create_table "account_invoices", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -876,7 +876,7 @@ ActiveRecord::Schema.define(:version => 20180906094641) do
   end
 
   add_index "spree_shipments", ["number"], :name => "index_shipments_on_number"
-  add_index "spree_shipments", ["order_id"], :name => "index_spree_shipments_on_order_id"
+  add_index "spree_shipments", ["order_id"], :name => "index_spree_shipments_on_order_id", :unique => true
 
   create_table "spree_shipping_categories", :force => true do |t|
     t.string   "name"

@@ -94,8 +94,7 @@ describe Spree::OrdersController, type: :controller do
 
   describe "removing items from a completed order" do
     context "with shipping and transaction fees" do
-      let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true, allow_order_changes: true) }
-      let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:order) { create(:completed_order_with_fees, shipping_fee: shipping_fee, payment_fee: payment_fee) }
       let(:line_item1) { order.line_items.first }
       let(:line_item2) { order.line_items.second }
       let(:shipping_fee) { 3 }
@@ -300,10 +299,7 @@ describe Spree::OrdersController, type: :controller do
         let(:order) { create(:completed_order_with_totals, user: user) }
 
         before do
-          Spree::MailMethod.create!(
-            environment: Rails.env,
-            preferred_mails_from: 'spree@example.com'
-          )
+          Spree::Config[:mails_from] = "spree@example.com"
         end
 
         it "responds with success" do
