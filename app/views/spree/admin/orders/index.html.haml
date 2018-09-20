@@ -16,11 +16,11 @@
 - content_for :table_filter do
   = render partial: 'filters'
     
-%table#listing_orders.index.responsive{"data-hook" => "", width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
+%table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
     %col{style: "width: 10%"}
   %thead
-    %tr{"data-hook" => "admin_orders_index_headers"}
+    %tr
       %th
         = t(:products_distributor)
       - if @show_only_completed
@@ -65,9 +65,9 @@
           = t(:total, scope: 'activerecord.attributes.spree/order')
           %span{'ng-show' => "sorting == 'total asc'"}= "&#x25B2;".html_safe
           %span{'ng-show' => "sorting == 'total desc'"}= "&#x25BC;".html_safe
-      %th.actions{"data-hook" => "admin_orders_index_header_actions"}
+      %th.actions
   %tbody
-    %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'", "data-hook" => "admin_orders_index_rows"}
+    %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'"}
       %td.align-center
         {{::order.distributor_name}}
       %td.align-center
@@ -94,7 +94,7 @@
         = mail_to "{{::order.email}}"
       %td.align-center
         %span{'ng-bind-html' => '::order.display_total'}
-      %td.actions{"data-hook" => "admin_orders_index_row_actions"}
+      %td.actions
         %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{::order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t(:edit)}
         %div{'ng-if' => 'order.ready_to_ship'}
           %a.icon-road.icon_link.with-tip.no-text{'ng-href' => '{{::order.ship_path}}', 'data-action' => 'ship', 'data-confirm' => t(:are_you_sure), 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t(:ship)}
