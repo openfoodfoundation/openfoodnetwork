@@ -39,11 +39,7 @@ feature %q{
     # Filling in details
     fill_in 'enterprise_name', :with => 'Eaterprises'
 
-    # This call intermittently fails to complete, leaving the select2 box open obscuring the
-    # fields below it (which breaks the remainder of our specs). Calling it twice seems to
-    # solve the problem.
-    select2_search admin.email, from: 'Owner'
-    select2_search admin.email, from: 'Owner'
+    select2_select admin.email, from: 'enterprise_owner_id'
 
     fill_in 'enterprise_contact_name', :with => 'Kirsten or Ren'
     fill_in 'enterprise_phone', :with => '0413 897 321'
@@ -54,7 +50,7 @@ feature %q{
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
     # default country (Australia in this test) should be selected by default
-    select2_search 'Victoria', :from => 'State'
+    select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
 
     click_button 'Create'
     flash_message.should == 'Enterprise "Eaterprises" has been successfully created!'
@@ -62,7 +58,7 @@ feature %q{
 
   scenario "editing an existing enterprise", js: true do
     # Make the page long enough to avoid the save bar overlaying the form
-    page.driver.resize(1280, 1000)
+    page.driver.resize(1280, 2000)
 
     @enterprise = create(:enterprise)
     e2 = create(:enterprise)
@@ -94,7 +90,7 @@ feature %q{
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
     within(".side_menu") { click_link "Users" }
-    select2_search user.email, from: 'Owner'
+    select2_select user.email, from: 'enterprise_owner_id'
     expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
 
     click_link "About"
@@ -129,7 +125,7 @@ feature %q{
     page.should have_selector "#payment_methods"
     page.should have_selector "#shipping_methods"
 
-    select2_search eg1.name, from: 'Groups'
+    multi_select2_select eg1.name, from: 'enterprise_group_ids'
 
     click_link "Payment Methods"
     page.should_not have_checked_field "enterprise_payment_method_ids_#{payment_method.id}"
@@ -157,8 +153,8 @@ feature %q{
     fill_in 'enterprise_address_attributes_address1', :with => '35 Ballantyne St'
     fill_in 'enterprise_address_attributes_city', :with => 'Thornbury'
     fill_in 'enterprise_address_attributes_zipcode', :with => '3072'
-    select2_search 'Australia', :from => 'Country'
-    select2_search 'Victoria', :from => 'State'
+    # default country (Australia in this test) should be selected by default
+    select2_select 'Victoria', :from => 'enterprise_address_attributes_state_id'
 
     click_link "Shop Preferences"
     # TODO: Same as above
