@@ -13,4 +13,4 @@ module AuthorizeOnLoadResource
   end
 end
 
-Spree::Admin::ResourceController.send(:prepend, AuthorizeOnLoadResource)
+Spree::Admin::ResourceController.prepend(AuthorizeOnLoadResource)

@@ -24,6 +24,11 @@ module OpenFoodNetwork
       end
     end
 
+    def rules
+      return @rules unless @rules.nil?
+      @rules = rule_class.prioritised.for(enterprise)
+    end
+
     private
 
     def reject?(element)
@@ -36,11 +41,6 @@ module OpenFoodNetwork
       end
 
       false
-    end
-
-    def rules
-      return @rules unless @rules.nil?
-      @rules = rule_class.prioritised.for(enterprise)
     end
 
     def customer_rules

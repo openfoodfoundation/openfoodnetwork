@@ -42,7 +42,7 @@ module Discourse
         if BOOLS.include? k
           val = ["true", "false"].include?(val) ? val == "true" : nil
         end
-        sso.send("#{k}=", val)
+        sso.public_send("#{k}=", val)
       end
 
       decoded_hash.each do |k,v|
@@ -87,9 +87,9 @@ module Discourse
     def unsigned_payload
       payload = {}
       ACCESSORS.each do |k|
-       next if (val = send k) == nil
+        next if (val = public_send k) == nil
 
-       payload[k] = val
+        payload[k] = val
       end
 
       if @custom_fields

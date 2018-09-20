@@ -168,7 +168,7 @@ module ProductImport
       return if category.blank?
 
       if index.key? category
-        entry.send("#{type}_category_id=", index[category])
+        entry.public_send("#{type}_category_id=", index[category])
       else
         mark_as_invalid(entry, attribute: "#{type}_category", error: I18n.t('admin.product_import.model.not_found'))
       end

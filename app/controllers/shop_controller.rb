@@ -44,7 +44,7 @@ class ShopController < BaseController
   private
 
   def filtered_json(products_json)
-    if applicator.send(:rules).any?
+    if applicator.rules.any?
       filter(products_json)
     else
       products_json

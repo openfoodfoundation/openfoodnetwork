@@ -9,7 +9,7 @@ module Admin
     def update
       params.each do |name, value|
         if ContentConfig.has_preference?(name) || ContentConfig.has_attachment?(name)
-          ContentConfig.send("#{name}=", value)
+          ContentConfig.public_send("#{name}=", value)
         end
       end
 
