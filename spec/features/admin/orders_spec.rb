@@ -128,7 +128,7 @@ feature %q{
     visit '/admin/orders'
     page.find('td.actions a.icon-edit').click
 
-    expect(page).not_to have_select2_option product.name, from: ".variant_autocomplete", dropdown_css: ".select2-search"
+    expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
 
   scenario "can't change distributor or order cycle once order has been finalized" do
