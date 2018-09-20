@@ -364,6 +364,7 @@ en_US:
         group_signup_page: Group signup page
         footer_and_external_links: Footer and External Links
         your_content: Your content
+        user_guide: User Guide
     enterprise_fees:
       index:
         title: Enterprise Fees
@@ -670,6 +671,9 @@ en_US:
         search_placeholder: Search By Name
         manage: Manage
         manage_link: Settings
+        producer?: "Producer?"
+        package: "Package"
+        status: "Status"
       new_form:
         owner: Owner
         owner_tip: The primary user responsible for this enterprise.
@@ -711,6 +715,8 @@ en_US:
         save_reload: Save and Reload Page
       coordinator_fees:
         add: Add coordinator fee
+      filters:
+        involving: "Involving"
       form:
         incoming: Incoming
         supplier: Supplier
@@ -724,7 +730,6 @@ en_US:
         delivery_details: Pickup / Delivery details
         debug_info: Debug information
       index:
-        involving: Involving
         schedule: Schedule
         schedules: Schedules
         adding_a_new_schedule: Adding A New Schedule
@@ -1673,30 +1678,30 @@ en_US:
   you_have_no_orders_yet: "You have no orders yet"
   running_balance: "Running balance"
   outstanding_balance: "Outstanding balance"
-  admin_entreprise_relationships_everything: "Everything"
-  admin_entreprise_relationships_permits: "permits"
-  admin_entreprise_relationships_seach_placeholder: "Search"
-  admin_entreprise_relationships_button_create: "Create"
-  admin_entreprise_groups: "Enterprise Groups"
-  admin_entreprise_groups_name: "Name"
-  admin_entreprise_groups_owner: "Owner"
-  admin_entreprise_groups_on_front_page: "On front page?"
-  admin_entreprise_groups_entreprise: "Enterprises"
-  admin_entreprise_groups_data_powertip: "The primary user responsible for this group."
-  admin_entreprise_groups_data_powertip_logo: "This is the logo for the group"
-  admin_entreprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
-  admin_entreprise_groups_contact: "Contact"
-  admin_entreprise_groups_contact_phone_placeholder: "eg. (123)435-7891"
-  admin_entreprise_groups_contact_address1_placeholder: "eg. 123 High Street"
-  admin_entreprise_groups_contact_city: "City"
-  admin_entreprise_groups_contact_city_placeholder: "City or Town"
-  admin_entreprise_groups_contact_zipcode: "Zip Code"
-  admin_entreprise_groups_contact_zipcode_placeholder: "eg. 24098"
-  admin_entreprise_groups_contact_state_id: "State"
-  admin_entreprise_groups_contact_country_id: "Country"
-  admin_entreprise_groups_web: "Web Resources"
-  admin_entreprise_groups_web_twitter: "eg. @openfoodnetuk"
-  admin_entreprise_groups_web_website_placeholder: "eg. www.truffles.com"
+  admin_enterprise_relationships_everything: "Everything"
+  admin_enterprise_relationships_permits: "permits"
+  admin_enterprise_relationships_seach_placeholder: "Search"
+  admin_enterprise_relationships_button_create: "Create"
+  admin_enterprise_groups: "Enterprise Groups"
+  admin_enterprise_groups_name: "Name"
+  admin_enterprise_groups_owner: "Owner"
+  admin_enterprise_groups_on_front_page: "On front page?"
+  admin_enterprise_groups_enterprise: "Enterprises"
+  admin_enterprise_groups_data_powertip: "The primary user responsible for this group."
+  admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
+  admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
+  admin_enterprise_groups_contact: "Contact"
+  admin_enterprise_groups_contact_phone_placeholder: "eg. (123)435-7891"
+  admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
+  admin_enterprise_groups_contact_city: "City"
+  admin_enterprise_groups_contact_city_placeholder: "City or Town"
+  admin_enterprise_groups_contact_zipcode: "Zipcode"
+  admin_enterprise_groups_contact_zipcode_placeholder: "eg. 24098"
+  admin_enterprise_groups_contact_state_id: "State"
+  admin_enterprise_groups_contact_country_id: "Country"
+  admin_enterprise_groups_web: "Web Resources"
+  admin_enterprise_groups_web_twitter: "eg. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.com"
   admin_order_cycles: "Admin Order Cycles"
   open: "Open"
   close: "Close"
@@ -1831,7 +1836,7 @@ en_US:
   report_payment_totals: 'Payment Totals'
   report_all: 'all'
   report_order_cycle: "Order Cycle:"
-  report_entreprises: "Enterprises:"
+  report_enterprises: "Enterprises:"
   report_users: "Users:"
   report_tax_rates: Tax rates
   report_tax_types: Tax types

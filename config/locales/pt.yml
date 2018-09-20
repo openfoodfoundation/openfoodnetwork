@@ -132,6 +132,7 @@ pt:
   free_trial: "experimentar sem pagar"
   plus_tax: "mais IVA"
   min_bill_turnover_desc: "assim que o volume de negócios exceder %{mbt_amount}"
+  more: "Mais"
   say_no: "Não"
   say_yes: "Sim"
   then: então
@@ -369,6 +370,7 @@ pt:
         group_signup_page: Página de registo de Grupo
         footer_and_external_links: Rodapé e Ligações Externas
         your_content: O seu conteúdo
+        user_guide: Manual do Utilizador
     enterprise_fees:
       index:
         title: Taxas de Organização
@@ -738,6 +740,9 @@ pt:
         search_placeholder: Procurar por nome
         manage: Gerir
         manage_link: Definições
+        producer?: "Produtor/a?"
+        package: "Embalagem"
+        status: "Estado"
       new_form:
         owner: Proprietário
         owner_tip: O utilizador principal responsável por esta organização.
@@ -780,6 +785,8 @@ pt:
         save_reload: Guardar e recarregar página
       coordinator_fees:
         add: Adicionar taxa de coordenador
+      filters:
+        involving: "Envolvendo"
       form:
         incoming: Entrada
         supplier: Fornecedor
@@ -793,7 +800,6 @@ pt:
         delivery_details: Detalhes de entrega/levantamento
         debug_info: Informação de depuração
       index:
-        involving: Envolvendo
         schedule: Horário
         schedules: Horários
         adding_a_new_schedule: Adicionar um novo Horário
@@ -1753,30 +1759,30 @@ pt:
   you_have_no_orders_yet: "Ainda não tem encomendas"
   running_balance: "Saldo corrente"
   outstanding_balance: "Saldo pendente"
-  admin_entreprise_relationships_everything: "Tudo"
-  admin_entreprise_relationships_permits: "permite"
-  admin_entreprise_relationships_seach_placeholder: "Procurar"
-  admin_entreprise_relationships_button_create: "Criar"
-  admin_entreprise_groups: "Grupos da Organização"
-  admin_entreprise_groups_name: "Nome"
-  admin_entreprise_groups_owner: "Proprietário"
-  admin_entreprise_groups_on_front_page: "Na página inicial?"
-  admin_entreprise_groups_entreprise: "Organizações"
-  admin_entreprise_groups_data_powertip: "O utilizador responsável por este grupo."
-  admin_entreprise_groups_data_powertip_logo: "Esse é o logo do grupo"
-  admin_entreprise_groups_data_powertip_promo_image: "Esta imagem aparecerá no topo do perfil do Grupo"
-  admin_entreprise_groups_contact: "Contacto"
-  admin_entreprise_groups_contact_phone_placeholder: "ex: 987654321"
-  admin_entreprise_groups_contact_address1_placeholder: "ex: Rua Alta, 123"
-  admin_entreprise_groups_contact_city: "Localidade"
-  admin_entreprise_groups_contact_city_placeholder: "ex. Famalicão"
-  admin_entreprise_groups_contact_zipcode: "Código Postal "
-  admin_entreprise_groups_contact_zipcode_placeholder: "ex: 4000-125"
-  admin_entreprise_groups_contact_state_id: "Região"
-  admin_entreprise_groups_contact_country_id: "País"
-  admin_entreprise_groups_web: "Recursos Web"
-  admin_entreprise_groups_web_twitter: "ex. @nome_perfil"
-  admin_entreprise_groups_web_website_placeholder: "ex. www.cogumelos.pt"
+  admin_enterprise_relationships_everything: "Tudo"
+  admin_enterprise_relationships_permits: "permite"
+  admin_enterprise_relationships_seach_placeholder: "Procurar"
+  admin_enterprise_relationships_button_create: "Criar"
+  admin_enterprise_groups: "Grupos da Organização"
+  admin_enterprise_groups_name: "Nome"
+  admin_enterprise_groups_owner: "Proprietário"
+  admin_enterprise_groups_on_front_page: "Na página inicial?"
+  admin_enterprise_groups_enterprise: "Organizações"
+  admin_enterprise_groups_data_powertip: "O utilizador responsável por este grupo."
+  admin_enterprise_groups_data_powertip_logo: "Esse é o logo do grupo"
+  admin_enterprise_groups_data_powertip_promo_image: "Esta imagem aparecerá no topo do perfil do Grupo"
+  admin_enterprise_groups_contact: "Contacto"
+  admin_enterprise_groups_contact_phone_placeholder: "ex: 987654321"
+  admin_enterprise_groups_contact_address1_placeholder: "ex: Rua Alta, 123"
+  admin_enterprise_groups_contact_city: "Localidade"
+  admin_enterprise_groups_contact_city_placeholder: "ex. Famalicão"
+  admin_enterprise_groups_contact_zipcode: "Código postal"
+  admin_enterprise_groups_contact_zipcode_placeholder: "ex: 4000-125"
+  admin_enterprise_groups_contact_state_id: "Região"
+  admin_enterprise_groups_contact_country_id: "País"
+  admin_enterprise_groups_web: "Recursos Web"
+  admin_enterprise_groups_web_twitter: "ex:  @o_prof"
+  admin_enterprise_groups_web_website_placeholder: "ex: www.cogumelos.pt"
   admin_order_cycles: "Ciclos de Encomendas do Administrador"
   open: "Aberto"
   close: "Fechado"
@@ -1911,7 +1917,7 @@ pt:
   report_payment_totals: 'Totais dos Pagamanetos'
   report_all: 'todos'
   report_order_cycle: "Ciclo de Encomendas:"
-  report_entreprises: "Organizações:"
+  report_enterprises: "Organizações:"
   report_users: "Utilizadores:"
   report_tax_rates: Taxas de imposto
   report_tax_types: Tipos de imposto

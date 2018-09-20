@@ -382,6 +382,7 @@ fr_CA:
         group_signup_page: Page d'inscription Groupe
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
+        user_guide: Guide utilisateur
     enterprise_fees:
       index:
         title: Marges et Commissions
@@ -767,6 +768,9 @@ fr_CA:
         search_placeholder: Recherche par nom
         manage: Gérer
         manage_link: Paramètres
+        producer?: "Producteur ?"
+        package: "Pack"
+        status: "Statut"
       new_form:
         owner: Gérant
         owner_tip: L'utilisateur principal est l'individu qui porte la responsabilité principale de l'entreprise dans le contexte de l'utilisation d'Open Food Network.
@@ -810,6 +814,8 @@ fr_CA:
         save_reload: Sauvegarder et rafraichir la page
       coordinator_fees:
         add: Ajouter commission coordinateur
+      filters:
+        involving: "Concernant"
       form:
         incoming: Produits entrants (pouvant être mis en vente par les hubs)
         supplier: Fournisseur
@@ -823,7 +829,6 @@ fr_CA:
         delivery_details: Précisions retrait / livraison
         debug_info: Informations de débogage
       index:
-        involving: Concernant
         schedule: Rythme d'abonnement
         schedules: Rythmes d'abonnement
         adding_a_new_schedule: Ajouter un nouveau rythme d'abonnement
@@ -1832,31 +1837,31 @@ fr_CA:
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
-  admin_entreprise_relationships: "Permissions Inter-entreprises"
-  admin_entreprise_relationships_everything: "Tout"
-  admin_entreprise_relationships_permits: "autorise"
-  admin_entreprise_relationships_seach_placeholder: "Chercher"
-  admin_entreprise_relationships_button_create: "Créer"
-  admin_entreprise_groups: "Groupes d'entreprises"
-  admin_entreprise_groups_name: "Nom"
-  admin_entreprise_groups_owner: "Gérant"
-  admin_entreprise_groups_on_front_page: "Sur la page d'accueil?"
-  admin_entreprise_groups_entreprise: "Entreprises"
-  admin_entreprise_groups_data_powertip: "L'utilisateur principal en charge de ce groupe."
-  admin_entreprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
-  admin_entreprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
-  admin_entreprise_groups_contact: "Contact"
-  admin_entreprise_groups_contact_phone_placeholder: "ex: 98 7654 3210"
-  admin_entreprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
-  admin_entreprise_groups_contact_city: "Ville"
-  admin_entreprise_groups_contact_city_placeholder: "ex: Bordeaux"
-  admin_entreprise_groups_contact_zipcode: "Code postal"
-  admin_entreprise_groups_contact_zipcode_placeholder: "ex: 14120"
-  admin_entreprise_groups_contact_state_id: "Département"
-  admin_entreprise_groups_contact_country_id: "Pays"
-  admin_entreprise_groups_web: "Liens web"
-  admin_entreprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
-  admin_entreprise_groups_web_website_placeholder: "ex: www.monepicerieenligne.fr"
+  admin_enterprise_relationships: "Permissions Inter-entreprises"
+  admin_enterprise_relationships_everything: "Tout"
+  admin_enterprise_relationships_permits: "autorise"
+  admin_enterprise_relationships_seach_placeholder: "Chercher"
+  admin_enterprise_relationships_button_create: "Créer"
+  admin_enterprise_groups: "Groupes d'entreprises"
+  admin_enterprise_groups_name: "Nom"
+  admin_enterprise_groups_owner: "Gérant"
+  admin_enterprise_groups_on_front_page: "Sur la page d'accueil?"
+  admin_enterprise_groups_enterprise: "Entreprises"
+  admin_enterprise_groups_data_powertip: "L'utilisateur principal en charge de ce groupe."
+  admin_enterprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
+  admin_enterprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
+  admin_enterprise_groups_contact: "Contact"
+  admin_enterprise_groups_contact_phone_placeholder: "ex: 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
+  admin_enterprise_groups_contact_city: "Ville"
+  admin_enterprise_groups_contact_city_placeholder: "ex: Bordeaux"
+  admin_enterprise_groups_contact_zipcode: "Code postal"
+  admin_enterprise_groups_contact_zipcode_placeholder: "ex: 44000"
+  admin_enterprise_groups_contact_state_id: "Département"
+  admin_enterprise_groups_contact_country_id: "Pays"
+  admin_enterprise_groups_web: "Liens web"
+  admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
+  admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
   close: "Ferme"
@@ -1992,7 +1997,7 @@ fr_CA:
   report_payment_totals: 'Total des paiements'
   report_all: 'tous'
   report_order_cycle: "Cycle de vente:"
-  report_entreprises: "Entreprises:"
+  report_enterprises: "Entreprises:"
   report_users: "Utilisateurs"
   report_tax_rates: Taux de taxes
   report_tax_types: Taux de taxes par type de produit/service

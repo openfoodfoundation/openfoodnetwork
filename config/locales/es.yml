@@ -64,6 +64,9 @@ es:
     user_passwords:
       spree_user:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "COPIA DE %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirma la dirección de correo electrónico de %{enterprise}"
@@ -71,9 +74,25 @@ es:
       subject: "%{enterprise} está ahora en %{sitename}"
     invite_manager:
       subject: "%{enterprise} te ha invitado a ser administrador"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Estimada consumidora,"
+      instructions: "Tu pedido ha sido CANCELADO. Guarda esta información de cancelación para tus registros."
+      order_summary_canceled: "Resumen del pedido [CANCELADO]"
+      subject: "Cancelación del pedido"
+      subtotal: "Subtotal: %{subtotal}"
+      total: "Total del pedido: %{total}"
   producer_mailer:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Estimada consumidora,"
+      instructions: "Tu pedido ha sido enviado"
+      shipment_summary: "Resumen de envío"
+      subject: "Notificación de envío"
+      track_information: "Información de seguimiento: %{tracking}"
+      track_link: "Enlace de seguimiento: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Un resumen los pedidos de suscripción recientes
@@ -136,6 +155,7 @@ es:
   free_trial: "Prueba gratuita"
   plus_tax: "más Impuestos"
   min_bill_turnover_desc: "Una vez que el volumen de negocio supere %{mbt_amount}"
+  more: "Más"
   say_no: "No"
   say_yes: "Si"
   then: Entonces
@@ -382,6 +402,7 @@ es:
         main_links: Enlaces al menú principal
         footer_and_external_links: Pie de página y enlaces externos
         your_content: Tu contenido
+        user_guide: Manual de Usuario
     enterprise_fees:
       index:
         title: Comisiones de la Organización
@@ -472,7 +493,31 @@ es:
         save_all_imported?: Guardar todos los productos importados?
         options_and_defaults: Opciones de importación y valores predeterminados
         no_permission: no tienes permiso para administrar esta organización
+        not_found: no se pudo encontrar la organización en la base de datos
+        blank_supplier: algunos productos tienen un nombre de proveedor en blanco
+        reset_absent?: Restablecer productos ausentes
+        default_stock: Establecer nivel de existencias
+        default_tax_cat: Establecer categoría de impuestos
+        default_shipping_cat: Establecer categoría de envío
+        entries_with_errors: Los artículos contienen errores y no se importarán
+        products_to_create: Los productos se crearán
+        products_to_update: Los productos se actualizarán
+        inventory_to_create: Se crearán Artículos de inventario
+        inventory_to_update: Los artículos de inventario se actualizarán
         line: Línea
+        item_line: Línea del artículo
+      save_results:
+        final_results: Importar resultados finales
+        products_created: Productos creados
+        products_updated: Productos actualizados
+        inventory_created: Artículos de inventario creados
+        inventory_updated: Artículos de inventario actualizados
+        all_saved: "Todos los artículos guardados con éxito"
+        some_saved: "Artículos guardados con éxito"
+        save_errors: Guardar errores
+        import_again: Subir otro archivo
+        view_products: Ir a la página de productos
+        view_inventory: Ir a la página de inventario
     variant_overrides:
       loading_flash:
         loading_inventory: CARGANDO INVENTARIO
@@ -733,20 +778,33 @@ es:
         search_placeholder: Buscar por Nombre
         manage: Gestionar
         manage_link: Configuración
+        producer?: "¿Productora?"
+        package: "Perfil"
+        status: "Estado"
       new_form:
         owner: Propietaria
         owner_tip: La principal usaría responsable para esta organización.
         i_am_producer: Soy una Productora
         contact_name: Nombre de Contacto
       edit:
+        editing: 'Configuración:'
         back_link: Volver a la lista de organizaciones
       new:
         title: Nueva Organización
         back_link: Volver a la lista de organizaciones
+      remove_logo:
+        remove: "Eliminar la imagen"
+        removed_successfully: "Logotipo eliminado con éxito"
+        immediate_removal_warning: "El logotipo se eliminará inmediatamente después de confirmar."
+      remove_promo_image:
+        remove: "Eliminar la imagen"
+        removed_successfully: "Imagen promocional eliminada con éxito"
+        immediate_removal_warning: "La imagen promocional se eliminará inmediatamente después de confirmar."
       welcome:
         welcome_title: Bienvenida a Open Food Network!
         welcome_text: Has creado correctamente un
         next_step: Siguiente paso
+        choose_starting_point: 'Selecciona tu perfil:'
       invite_manager:
         user_already_exists: "El usuario ya existe"
         error: "Algo salió mal"
@@ -774,6 +832,9 @@ es:
         save_reload: Guardar y recargar la página
       coordinator_fees:
         add: Añadir comisión para el coordinador
+      filters:
+        search_by_order_cycle_name: "Buscar por nombre del Ciclo de Pedido..."
+        involving: "Involucrando"
       form:
         incoming: Entrante
         supplier: Proveedora
@@ -787,7 +848,6 @@ es:
         delivery_details: Detalles de Recogida / Entrega
         debug_info: Información de Debug
       index:
-        involving: Involucrando
         schedule: Horario
         schedules: Horarios
         adding_a_new_schedule: Agregar un nuevo horario
@@ -824,7 +884,9 @@ es:
       bulk_update:
         no_data: Hm, algo salió mal. No se encontraron datos de ciclo de pedido.
       date_warning:
+        msg: Este ciclo de pedido está vinculado a %{n}pedidos de suscripción abiertos. Cambiar esta fecha ahora no afectará ningun pedido que ya se haya realizado pero se debe evitar si es posible. ¿Estás seguro que deseas continuar?
         cancel: Cancelar
+        proceed: Proceder
     producer_properties:
       index:
         title: Propiedades de la Productora
@@ -929,11 +991,16 @@ es:
         address: 2. Dirección
         products: 3. Agregue productos
         review: 4. Revisar y guardar
+      subscription_line_items:
+        this_is_an_estimate: |
+            Los precios mostrados son solo una estimación y se calculan en el momento en que se cambia la suscripción.
+            Si cambias precios o tarifas, los pedidos se actualizarán pero la suscripción seguirá mostrando los valores anteriores.
       details:
         details: Detalles
         invalid_error: Ups! Por favor complete todos los campos requeridos ...
         allowed_payment_method_types_tip: Solo se pueden usar métodos de pago en efectivo y Stripe en este momento
         credit_card: Tarjeta de crédito
+        charges_not_allowed: Los cargos no están permitidos para esta consumidora
       loading_flash:
         loading: CARGANDO SUSCRIPCIONES
       review:
@@ -970,6 +1037,11 @@ es:
         stripe_connect_fail: Lo sentimos, la conexión de tu cuenta Stripe ha fallado
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
+  api:
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "El logotipo no existe"
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "La imagen promocional no existe"
   checkout:
     already_ordered:
       cart: "carrito"
@@ -1009,6 +1081,11 @@ es:
       footer_legal_tos: "Terminos y condiciones"
       footer_legal_visit: "Encuéntrenos en"
       footer_legal_text_html: "Open Food Network es una plataforma libre y de código abierto. Nuestro contenido tiene una licencia %{content_license} y nuestro código %{code_license}."
+      footer_data_text_with_privacy_policy_html: "Cuidamos bien tus datos. Consulta nuestra %{privacy_policy} y %{cookies_policy}"
+      footer_data_text_without_privacy_policy_html: "Cuidamos bien tus datos. Consulta nuestra %{cookies_policy}"
+      footer_data_privacy_policy: "política de privacidad"
+      footer_data_cookies_policy: "política de cookies"
+      footer_skylight_dashboard_html: Los datos de rendimiento están disponibles en %{dashboard}.
   shop:
     messages:
       login: "login"
@@ -1017,6 +1094,7 @@ es:
       require_customer_login: "Esta tienda es solo para consumidores registrados."
       require_login_html: "Haz %{login} si ya tienes una cuenta. De lo contrario realiza un %{register}y contacta con la organización para que acepten tu solicitud."
       require_customer_html: "%{contact} %{enterprise} para convertirte en miembro."
+  card_could_not_be_updated: La tarjeta no se pudo actualizar
   card_could_not_be_saved: la tarjeta no se pudo guardar
   spree_gateway_error_flash_for_checkout: "Hubo un problema con tu información de pago: %{error}"
   invoice_billing_address: "Dirección de facturación:"
@@ -1044,9 +1122,13 @@ es:
   ticket_column_unit_price: "Precio por unidad"
   ticket_column_total_price: "Precio total"
   menu_1_title: "Tiendas"
+  menu_1_url: "/tiendas"
   menu_2_title: "Mapa"
+  menu_2_url: "/mapa"
   menu_3_title: "Productoras"
+  menu_3_url: "/productoras"
   menu_4_title: "Redes"
+  menu_4_url: "/redes"
   menu_5_title: "Acerca de"
   menu_5_url: "http://katuma.org/"
   menu_6_title: "Conectar"
@@ -1066,6 +1148,7 @@ es:
   footer_email: "Correo electrónico"
   footer_links_md: "Enlaces"
   footer_about_url: "URL acerca de"
+  user_guide_link: "Enlace de la Guía de usuario"
   name: Nombre
   first_name: Nombre
   last_name: Apellido
@@ -1139,6 +1222,33 @@ es:
   ie_warning_firefox: Descargar Firefox
   ie_warning_ie: Actualizar Internet Explorer
   ie_warning_other: "¿No puede actualizar su navegador? Pruebe Open Food Network en su teléfono :-)"
+  legal:
+    cookies_policy:
+      header: "Cómo utilizamos las cookies"
+      desc_part_1: "Las cookies son archivos de texto muy pequeños que se almacenan en tu computadora cuando visitas algunos sitios web."
+      desc_part_2: "En OFN somos respetuosos con tu privacidad. Utilizamos solo las cookies que son necesarias para ofrecerte el servicio de compraventa de alimentos en línea. No vendemos ninguno de tus datos. Es posible que en el futuro te propongamos que compartas alguno de tus datos para crear nuevos servicios comunes que podrían ser útiles para el ecosistema (como los servicios logísticos para sistemas alimentarios cortos), pero aún no hemos llegado a ese punto y no lo haremos sin tu autorización :-)"
+      desc_part_3: "Usamos cookies principalmente para recordar quién eres si 'inicias sesión' o para poder recordar los artículos que colocas en tu carrito, incluso si no has iniciado sesión. Si continúas navegando en el sitio web sin hacer clic en \"Aceptar cookies\" suponemos que nos das tu consentimiento para almacenar las cookies que son esenciales para el funcionamiento del sitio web. ¡Aquí está la lista de cookies que usamos!"
+      essential_cookies: "Cookies esenciales"
+      essential_cookies_desc: "Las siguientes cookies son estrictamente necesarias para el funcionamiento de nuestro sitio web."
+      essential_cookies_note: "La mayoría de las cookies solo contienen un identificador único, pero no otros datos, por lo que su dirección de correo electrónico y contraseña, por ejemplo, nunca se incluyen ni se exponen."
+      cookie_domain: "Establecido por:"
+      cookie_session_desc: "Se usa para permitir que el sitio web recuerde a los usuarios entre las visitas a la página, por ejemplo, recordar los artículos en tu carrito."
+      cookie_consent_desc: "Se usa para mantener el estado del consentimiento del usuario para almacenar cookies"
+      cookie_remember_me_desc: "Se usa si el usuario ha solicitado que el sitio web lo recuerde. Esta cookie se elimina automáticamente después de 12 días. Si como usuario deseas que se elimine esa cookie, solo necesitas desconectarte. Si no deseas que la cookie se instale en tu computadora no debes marcar la casilla \"recordarme\" al iniciar sesión."
+      cookie_openstreemap_desc: "Utilizado por nuestro amigo proveedor de mapeo de código abierto (OpenStreetMap) para garantizar que no recibas demasiadas solicitudes durante un período de tiempo determinado, para evitar el abuso de sus servicios."
+      cookie_stripe_desc: "Datos recopilados por nuestro procesador de pagos Stripe para detectar fraudes https://stripe.com/cookies-policy/legal. No todas las tiendas usan Stripe como método de pago pero es una buena práctica evitar fraude aplicarlo a todas las páginas. Stripe probablemente crea una imagen de cuáles de nuestras páginas generalmente interactúan con su API y luego marca cualquier cosa inusual. Por lo tanto configurar la cookie Stripe tiene una función más amplia que la simple provisión de un método de pago a un usuario. Eliminarla podría afectar la seguridad del servicio en sí. Puede obtener más información acerca de Stripe y leer su política de privacidad en https://stripe.com/privacy."
+      statistics_cookies_desc: "Las siguientes no son estrictamente necesarias, pero ayudan a proporcionarle una mejor experiencia de usuario al permitirnos analizar el comportamiento del usuario, identificar qué funciones usa más o no, comprender los problemas de la experiencia del usuario, etc."
+      statistics_cookies_analytics_desc_html: "Para recopilar y analizar los datos de uso de la plataforma utilizamos Google Analytics, ya que era el servicio predeterminado conectado con Spree (el software de código abierto de comercio electrónico en el que creamos) pero nuestra visión es cambiar a <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad) tan pronto como podamos."
+      statistics_cookies_matomo_desc_html: "Para recopilar y analizar los datos de uso de la plataforma, utilizamos <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), una herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad"
+      statistics_cookies_matomo_optout: "¿Deseas excluirte de Matomo Analytics? No recopilamos ningún dato personal y Matomo nos ayuda a mejorar nuestro servicio, pero respetamos tu elección :-)"
+      cookie_analytics_utma_desc: "Se usa para distinguir usuarios y sesiones. La cookie se crea cuando la biblioteca javascript se ejecuta y no existe ninguna cookie __utma existente. La cookie se actualiza cada vez que se envían datos a Google Analytics."
+      cookie_analytics_utmt_desc: "Se usa para acelerar la tasa de solicitud."
+      disabling_cookies_header: "Advertencia sobre la desactivación de cookies"
+    cookies_banner:
+      cookies_definition: "Las cookies son archivos de texto muy pequeños que se almacenan en tu ordenador cuando visitas algunos sitios web."
+      cookies_policy_link_desc: "Si desea obtener más información, consulte nuestro"
+      cookies_policy_link: "política de cookies"
+      cookies_accept_button: "Aceptar cookies"
   home_shop: Comprar ahora
   brandstory_headline: "Consume con valores."
   brandstory_intro: "A veces la mejor forma de arreglar el sistema es empezar uno nuevo…"
@@ -1228,6 +1338,7 @@ es:
   email_confirmation_click_link: "Por favor haga clic en el enlace de abajo para confirmar el correo electrónico y continuar configurando su perfil."
   email_confirmation_link_label: "Confirmar este correo electrónico »"
   email_confirmation_help_html: "Después de confirmar el correo electrónico puedes acceder a tu cuenta de administración para esta organización. Visita %{link} para encontrar más información sobre las características de %{sitename} y empieza a usar tu perfil o tienda online."
+  email_confirmation_notice_unexpected: "Recibes este mensaje porque te has registrado en %{sitename} o has sido invitado a inscribirte por alguien que probablemente conozcas. Si no entiendes por qué estás recibiendo este correo electrónico, escribe a %{contact}."
   email_social: "Conecte con nosotros:"
   email_contact: "Envíenos un correo electrónico:"
   email_signoff: "Saludos,"
@@ -1258,6 +1369,7 @@ es:
   email_so_edit_true_html: "Puede <a href='%{order_url}'> realizar cambios </a> hasta que los pedidos se cierren en %{orders_close_at}."
   email_so_edit_false_html: "Puede <a href='%{order_url}'> ver detalles de este pedido </a> en cualquier momento."
   email_so_contact_distributor_html: "Si tiene alguna pregunta, puede contactar <strong> %{distributor} </strong> a través de %{email}."
+  email_so_contact_distributor_to_change_order_html: "Has creado este pedido automáticamente. Puedes realizar cambios hasta que los pedidos se cierren en %{orders_close_at} contactando <strong> %{distributor} </ strong> a través de %{email}."
   email_so_confirmation_intro_html: "Tu pedido con <strong> %{distributor} </strong> ahora está confirmado"
   email_so_confirmation_explainer_html: "Este pedido fue colocado automáticamente para usted, y ahora ha sido finalizado."
   email_so_confirmation_details_html: "Aquí encontrará todo lo que necesita saber sobre su pedido en <strong> %{distributor} </strong>:"
@@ -1519,6 +1631,7 @@ es:
   error_number: "debe ser un número"
   error_email: "debe ser una dirección de correo electrónico"
   error_not_found_in_database: "%{name} no se encuentra en la base de datos"
+  error_not_primary_producer: "%{name} no está habilitado como productora"
   error_no_permission_for_enterprise: "\"%{name}\": no tiene permiso para administrar productos para esta organización"
   item_handling_fees: "Tarifa de manejo de artículo (incluída en el total de artículos)"
   january: "Enero"
@@ -1637,6 +1750,7 @@ es:
   enterprise_about_headline: "¡Seguimos!"
   enterprise_about_message: "Ahora vamos a profundizar en los detalles acerca de"
   enterprise_success: "¡Felicidades! %{enterprise} se agregó a Open Food Network "
+  enterprise_registration_exit_message: "Si sales de este asistente en cualquier etapa puedes continuar creando tu perfil yendo a la interfaz de administración."
   enterprise_description: "Descripción corta"
   enterprise_description_placeholder: "Una frase corta que describa tu organización"
   enterprise_long_desc: "Descripción larga"
@@ -1744,30 +1858,31 @@ es:
   you_have_no_orders_yet: "No tienes pedidos todavía"
   running_balance: "Saldo actual"
   outstanding_balance: "Saldo extraordinario"
-  admin_entreprise_relationships_everything: "Marcar todos"
-  admin_entreprise_relationships_permits: "Permite"
-  admin_entreprise_relationships_seach_placeholder: "Buscar"
-  admin_entreprise_relationships_button_create: "Crear"
-  admin_entreprise_groups: "Redes de organizaciones"
-  admin_entreprise_groups_name: "Nombre"
-  admin_entreprise_groups_owner: "Propietaria"
-  admin_entreprise_groups_on_front_page: "¿En la página principal?"
-  admin_entreprise_groups_entreprise: "Organizaciones"
-  admin_entreprise_groups_data_powertip: "El principal usuario responsable de este grupo."
-  admin_entreprise_groups_data_powertip_logo: "Este es el logo del grupo"
-  admin_entreprise_groups_data_powertip_promo_image: "Esta imagen se mostrará en la cabecera del perfil del Grupo"
-  admin_entreprise_groups_contact: "Conacto"
-  admin_entreprise_groups_contact_phone_placeholder: "ej. 98 7654 3210"
-  admin_entreprise_groups_contact_address1_placeholder: "ej. C/Torrent de l'Olla"
-  admin_entreprise_groups_contact_city: "Barrio"
-  admin_entreprise_groups_contact_city_placeholder: "ej. Barcelona"
-  admin_entreprise_groups_contact_zipcode: "Código Postal"
-  admin_entreprise_groups_contact_zipcode_placeholder: "ej. 08025"
-  admin_entreprise_groups_contact_state_id: "Región"
-  admin_entreprise_groups_contact_country_id: "País"
-  admin_entreprise_groups_web: "Recursos Web"
-  admin_entreprise_groups_web_twitter: "ej. the_prof"
-  admin_entreprise_groups_web_website_placeholder: "ej. www.truffles.com"
+  admin_enterprise_relationships: "Permisos de la organización"
+  admin_enterprise_relationships_everything: "Marcar todos"
+  admin_enterprise_relationships_permits: "Permite"
+  admin_enterprise_relationships_seach_placeholder: "Buscar"
+  admin_enterprise_relationships_button_create: "Crear"
+  admin_enterprise_groups: "Redes de organizaciones"
+  admin_enterprise_groups_name: "Nombre"
+  admin_enterprise_groups_owner: "Propietaria"
+  admin_enterprise_groups_on_front_page: "¿En la página principal?"
+  admin_enterprise_groups_enterprise: "Organizaciones"
+  admin_enterprise_groups_data_powertip: "El principal usuario responsable de este grupo."
+  admin_enterprise_groups_data_powertip_logo: "Este es el logo del grupo"
+  admin_enterprise_groups_data_powertip_promo_image: "Esta imagen se mostrará en la cabecera del perfil del Grupo"
+  admin_enterprise_groups_contact: "Contacto"
+  admin_enterprise_groups_contact_phone_placeholder: "ej. 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "ej. Carrer Torrent de l'Olla"
+  admin_enterprise_groups_contact_city: "Barrio"
+  admin_enterprise_groups_contact_city_placeholder: "ej. Barcelona"
+  admin_enterprise_groups_contact_zipcode: "Código Postal"
+  admin_enterprise_groups_contact_zipcode_placeholder: "ej. 08025"
+  admin_enterprise_groups_contact_state_id: "Provincia"
+  admin_enterprise_groups_contact_country_id: "País"
+  admin_enterprise_groups_web: "Recursos Web"
+  admin_enterprise_groups_web_twitter: "ej: the_prof"
+  admin_enterprise_groups_web_website_placeholder: "ej. www.truffles.com"
   admin_order_cycles: "Ciclos de Pedidos del Admin"
   open: "Abierta"
   close: "Cerrar"
@@ -1867,6 +1982,7 @@ es:
   edit_profile_details_etc: "Cambia tu descripción, imágenes, etc."
   order_cycle: "Ciclo de Pedido"
   order_cycles: "Ciclos de Pedidos"
+  enterprise_relationships: "Permisos de la organización"
   remove_tax: "Eliminar impuesto"
   enterprise_tos_link: "Enlace a los Términos del Servicio de la Organización"
   enterprise_tos_message: "Queremos trabajar con personas que compartan nuestros objetivos y valores. Por ello, pedimos a las nuevas organizaciones que acepten"
@@ -1902,7 +2018,7 @@ es:
   report_payment_totals: 'Pagos Totales'
   report_all: 'Todo'
   report_order_cycle: "Ciclo de Pedido:"
-  report_entreprises: "Organizaciones:"
+  report_enterprises: "Organizaciones:"
   report_users: "Usuarias:"
   report_tax_rates: Porcentajes de los Impuestos
   report_tax_types: Tipos de Impuestos
@@ -2121,6 +2237,7 @@ es:
   order_cycles_no_permission_to_coordinate_error: "Ninguna de tus organizaciones tiene permiso para coordinar un ciclo de pedido"
   order_cycles_no_permission_to_create_error: "No tienes permiso para crear un ciclo de pedido coordinado por esta empresa."
   back_to_orders_list: "Volver a la lista de pedidos"
+  no_orders_found: "No se encontraron pedidos"
   order_information: "información del pedido"
   date_completed: "Fecha de finalización"
   amount: "Cantidad"
@@ -2270,6 +2387,9 @@ es:
         select_rule_type: "Selecciona un tipo de regla:"
       resend_user_email_confirmation:
         resend: "Reenviar"
+        sending: "Reenviar..."
+        done: "Reenvio hecho ✓"
+        failed: "Reenvio fallido ✗"
     out_of_stock:
       reduced_stock_available: Stock reducido disponible
       out_of_stock_text: >
@@ -2313,7 +2433,9 @@ es:
           Esto establecerá el nivel de stock a cero en todos los productos para este
           organización no está presente en el archivo subido.
     order_cycles:
+      create_failure: "Error al crear el ciclo de pedido"
       update_success: 'Se ha actualizado su ciclo de pedido.'
+      update_failure: "Error al actualizar el ciclo de pedido"
       no_distributors: No hay distribuidores en este ciclo de pedido. Este ciclo de pedido no será visible para las consumidoras hasta que agregues uno. ¿Deseas continuar guardando este ciclo de pedido? '
     enterprises:
       producer: "Productora"
@@ -2335,6 +2457,9 @@ es:
     date: "Fecha"
     time: "Hora"
     admin:
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"
       orders:
         invoice:
           issued_on: Emitido el
@@ -2370,6 +2495,10 @@ es:
           account_id: Account ID
           business_name: Nombre de la Organización
           charges_enabled: Cargos habilitados
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: Error al guardar el pago
       products:
         new:
           title: 'Nuevo producto'
@@ -2390,6 +2519,7 @@ es:
             inherits_properties?: ¿Hereda propiedades?
             available_on: Disponible en
             av_on: "Av. En"
+            import_date: "Fecha de importación"
           products_variant:
             variant_has_n_overrides: "Esta variante tiene %{n} override(s)"
             new_variant: "Nueva variante"
@@ -2402,16 +2532,24 @@ es:
         display_as:
           display_as: Mostrar como
       reports:
+        table:
+          select_and_search: "Selecciona filtros y haz clic en BUSCAR para acceder a tus datos."
         bulk_coop:
           bulk_coop_supplier_report: 'Bulk Co-op - Totales por Proveedor'
           bulk_coop_allocation: 'Bulk Co-op - Asignación'
           bulk_coop_packing_sheets: 'Bulk Co-op - Hojas de Empaquetado'
           bulk_coop_customer_payments: 'Bulk Co-op - Pagos de las Consumidoras'
+      users:
+        email_confirmation:
+          confirmation_pending: "La confirmación por correo electrónico está pendiente. Hemos enviado un correo electrónico de confirmación a %{address}."
       variants:
         autocomplete:
           producer_name: Productora
       general_settings:
         edit:
+          legal_settings: "Configuraciones legales"
+          cookies_consent_banner_toggle: "Mostrar el banner de consentimiento de cookies"
+          privacy_policy_url: "Vínculo con la Política de privacidad"
           enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
           footer_tos_url: "URL de términos y servicios"
     checkout:
@@ -2518,5 +2656,9 @@ es:
         total: Total
         paid?: ¿Pagado?
         view: Ver
+      saved_cards:
+        delete?: ¿Borrar?
+      cards:
+        authorised_shops: Tiendas autorizadas
     localized_number:
       invalid_format: tiene un formato invalido. Por favor introduzca un numero.
