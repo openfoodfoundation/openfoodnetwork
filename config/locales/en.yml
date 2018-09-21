@@ -103,6 +103,9 @@ en:
     date_time_string_validator:
       not_string_error: "must be a string"
       invalid_format_error: "must be valid"
+    integer_array_validator:
+      not_array_error: "must be an array"
+      invalid_element_error: "must contain only valid integers"
 
   enterprise_mailer:
     confirmation_instructions:
