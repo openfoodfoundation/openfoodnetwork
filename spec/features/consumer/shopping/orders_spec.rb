@@ -16,7 +16,7 @@ feature "Order Management", js: true do
 
     before do
       shipping_method.calculator.update_attributes(preferred_amount: 5.0)
-      order.update_attributes(shipping_method_id: shipping_method.id)
+      order.shipments = [create(:shipment_with, :shipping_method, shipping_method: shipping_method)]
       order.reload.save
       quick_login_as user
     end
