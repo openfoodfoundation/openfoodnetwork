@@ -4,7 +4,7 @@
 
 module ProductImport
   class EntryProcessor
-    attr_reader :inventory_created, :inventory_updated, :products_created, :variants_created, :variants_updated, :products_reset_count, :supplier_products, :total_supplier_products
+    attr_reader :inventory_created, :inventory_updated, :products_created, :variants_created, :variants_updated, :products_reset_count, :supplier_products, :total_supplier_products, :import_settings
 
     def initialize(importer, validator, import_settings, spreadsheet_data, editable_enterprises, import_time, updated_ids)
       @importer = importer
@@ -60,45 +60,22 @@ module ProductImport
     end
 
     def reset_absent_items
-      # For selected enterprises; set stock to zero for all products/inventory
-      # that were not listed in the newly uploaded spreadsheet
-      return unless data_for_stock_reset?
-      suppliers_to_reset_products = []
-      suppliers_to_reset_inventories = []
-
-      settings = @import_settings[:settings]
-
-      @import_settings[:enterprises_to_reset].each do |enterprise_id|
-        suppliers_to_reset_products.push Integer(enterprise_id) if settings['reset_all_absent'] && permission_by_id?(enterprise_id) && !importing_into_inventory?
-        suppliers_to_reset_inventories.push Integer(enterprise_id) if settings['reset_all_absent'] && permission_by_id?(enterprise_id) && importing_into_inventory?
-      end
-
-      unless suppliers_to_reset_inventories.empty?
-        @products_reset_count += VariantOverride.
-          where('variant_overrides.hub_id IN (?)
-          AND variant_overrides.id NOT IN (?)', suppliers_to_reset_inventories, @import_settings[:updated_ids]).
-          update_all(count_on_hand: 0)
-      end
-
-      return if suppliers_to_reset_products.empty?
-
-      @products_reset_count += Spree::Variant.joins(:product).
-        where('spree_products.supplier_id IN (?)
-        AND spree_variants.id NOT IN (?)
-        AND spree_variants.is_master = false
-        AND spree_variants.deleted_at IS NULL', suppliers_to_reset_products, @import_settings[:updated_ids]).
-        update_all(count_on_hand: 0)
+      ResetAbsent.new(self).call
     end
 
     def total_saved_count
       @products_created + @variants_created + @variants_updated + @inventory_created + @inventory_updated
     end
 
-    private
-
-    def data_for_stock_reset?
-      @import_settings[:settings] && @import_settings[:updated_ids] && @import_settings[:enterprises_to_reset]
+    def permission_by_id?(supplier_id)
+      @editable_enterprises.value?(Integer(supplier_id))
     end
+
+    def importing_into_inventory?
+      import_settings[:settings] && import_settings[:settings]['import_into'] == 'inventories'
+    end
+
+    private
 
     def save_to_inventory(entry)
       save_new_inventory_item entry if entry.validates_as? 'new_inventory_item'
@@ -126,7 +103,7 @@ module ProductImport
     end
 
     def import_into_inventory?(entry)
-      entry.supplier_id && @import_settings[:settings]['import_into'] == 'inventories'
+      entry.supplier_id && import_settings[:settings]['import_into'] == 'inventories'
     end
 
     def save_new_inventory_item(entry)
@@ -198,7 +175,7 @@ module ProductImport
     end
 
     def assign_defaults(object, entry)
-      settings = Settings.new(@import_settings)
+      settings = Settings.new(import_settings)
 
       # Assigns a default value for a specified field e.g. category='Vegetables', setting this value
       # either for all entries (overwrite_all), or only for those entries where the field was blank
@@ -240,14 +217,6 @@ module ProductImport
       variant.on_demand = entry.on_demand if entry.on_demand
       variant.import_date = @import_time
       variant.save
-    end
-
-    def permission_by_id?(supplier_id)
-      @editable_enterprises.value?(Integer(supplier_id))
-    end
-
-    def importing_into_inventory?
-      @import_settings[:settings] && @import_settings[:settings]['import_into'] == 'inventories'
     end
   end
 end
