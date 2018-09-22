@@ -1,4 +1,5 @@
 sv:
+  language_name: "English"
   activerecord:
     attributes:
       spree/order:
@@ -236,6 +237,7 @@ sv:
         group_signup_page: Registreringssida för grupper
         footer_and_external_links: Sidfot och externa länkar
         your_content: Ditt innehåll
+        user_guide: Användarinstruktion
     enterprise_fees:
       index:
         title: Företagsavgifter
@@ -507,6 +509,9 @@ sv:
         search_placeholder: Sök på namn
         manage: Administrera
         manage_link: Inställningar
+        producer?: "Producent?"
+        package: "Paket"
+        status: "Status"
       new_form:
         owner: Ägare
         owner_tip: Den primära användaren är ansvarig för detta företag.
@@ -1315,30 +1320,30 @@ sv:
   you_have_no_orders_yet: "Du har inga order ännu"
   running_balance: "Saldo"
   outstanding_balance: "Utestående behållning"
-  admin_entreprise_relationships_everything: "Allting"
-  admin_entreprise_relationships_permits: "tillåtelse"
-  admin_entreprise_relationships_seach_placeholder: "Sök"
-  admin_entreprise_relationships_button_create: "Skapa"
-  admin_entreprise_groups: "Företagsgrpper"
-  admin_entreprise_groups_name: "Namn"
-  admin_entreprise_groups_owner: "Ägare"
-  admin_entreprise_groups_on_front_page: "På första sidan?"
-  admin_entreprise_groups_entreprise: "Företag"
-  admin_entreprise_groups_data_powertip: "Huvudansvarig för denna grupp."
-  admin_entreprise_groups_data_powertip_logo: "Detta är logotypen för gruppen"
-  admin_entreprise_groups_data_powertip_promo_image: "Denna bild visas överst på gruppens profil"
-  admin_entreprise_groups_contact: "Kontakt"
-  admin_entreprise_groups_contact_phone_placeholder: "t.ex. 98 7654 3210"
-  admin_entreprise_groups_contact_address1_placeholder: "t.ex. 123 Höga gatan"
-  admin_entreprise_groups_contact_city: "Förort"
-  admin_entreprise_groups_contact_city_placeholder: "ex Norrberga"
-  admin_entreprise_groups_contact_zipcode: "Postnummer"
-  admin_entreprise_groups_contact_zipcode_placeholder: "t.ex. 3070"
-  admin_entreprise_groups_contact_state_id: "Region"
-  admin_entreprise_groups_contact_country_id: "Land"
-  admin_entreprise_groups_web: "Webb resurser"
-  admin_entreprise_groups_web_twitter: "ex @the_prof"
-  admin_entreprise_groups_web_website_placeholder: "ex www.truffles.com"
+  admin_enterprise_relationships_everything: "Allting"
+  admin_enterprise_relationships_permits: "tillåtelse"
+  admin_enterprise_relationships_seach_placeholder: "Sök"
+  admin_enterprise_relationships_button_create: "Skapa"
+  admin_enterprise_groups: "Företagsgrpper"
+  admin_enterprise_groups_name: "Namn"
+  admin_enterprise_groups_owner: "Ägare"
+  admin_enterprise_groups_on_front_page: "På första sidan?"
+  admin_enterprise_groups_enterprise: "Företag"
+  admin_enterprise_groups_data_powertip: "Huvudansvarig för denna grupp."
+  admin_enterprise_groups_data_powertip_logo: "Detta är logotypen för gruppen"
+  admin_enterprise_groups_data_powertip_promo_image: "Denna bild visas överst på gruppens profil"
+  admin_enterprise_groups_contact: "Kontakt"
+  admin_enterprise_groups_contact_phone_placeholder: "ex 123 456 789"
+  admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
+  admin_enterprise_groups_contact_city: "Stadsdel"
+  admin_enterprise_groups_contact_city_placeholder: "eg. Northcote"
+  admin_enterprise_groups_contact_zipcode: "Postkod"
+  admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
+  admin_enterprise_groups_contact_state_id: "Region"
+  admin_enterprise_groups_contact_country_id: "Land"
+  admin_enterprise_groups_web: "Webb resurser"
+  admin_enterprise_groups_web_twitter: "t.ex. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "ex www.shop.com"
   admin_order_cycles: "Administratörens order cykel"
   open: "Öppen"
   close: "Stängd"
@@ -1462,7 +1467,7 @@ sv:
   report_payment_totals: 'Betalningstotaler'
   report_all: 'alla'
   report_order_cycle: "Beställningsrundor"
-  report_entreprises: "Företag:"
+  report_enterprises: "Företag:"
   report_users: "Användare:"
   report_tax_rates: Skattesatser
   report_tax_types: Typer av skatt
