@@ -13,9 +13,9 @@ module ProductImport
       @enterprises_to_reset = settings.enterprises_to_reset
     end
 
+    # For selected enterprises; set stock to zero for all products/inventory
+    # that were not listed in the newly uploaded spreadsheet
     def call
-      # For selected enterprises; set stock to zero for all products/inventory
-      # that were not listed in the newly uploaded spreadsheet
       return unless data_for_stock_reset?
 
       @suppliers_to_reset_products = []
