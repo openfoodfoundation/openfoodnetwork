@@ -48,4 +48,58 @@ describe ProductImport::Settings do
       end
     end
   end
+
+  describe '#settings' do
+    context 'when settings are specified' do
+      let(:import_settings) { { settings: { foo: 'bar' } } }
+
+      it 'returns them' do
+        expect(settings.settings).to eq(foo: 'bar')
+      end
+    end
+
+    context 'when settings are not specified' do
+      let(:import_settings) { {} }
+
+      it 'returns nil' do
+        expect(settings.settings).to be_nil
+      end
+    end
+  end
+
+  describe '#updated_ids' do
+    context 'when updated_ids are specified' do
+      let(:import_settings) { { updated_ids: [2] } }
+
+      it 'returns them' do
+        expect(settings.updated_ids).to eq([2])
+      end
+    end
+
+    context 'when updated_ids are not specified' do
+      let(:import_settings) { {} }
+
+      it 'returns nil' do
+        expect(settings.updated_ids).to be_nil
+      end
+    end
+  end
+
+  describe '#enterprises_to_reset' do
+    context 'when enterprises_to_reset are specified' do
+      let(:import_settings) { { enterprises_to_reset: [2] } }
+
+      it 'returns them' do
+        expect(settings.enterprises_to_reset).to eq([2])
+      end
+    end
+
+    context 'when enterprises_to_reset are not specified' do
+      let(:import_settings) { {} }
+
+      it 'returns nil' do
+        expect(settings.enterprises_to_reset).to be_nil
+      end
+    end
+  end
 end
