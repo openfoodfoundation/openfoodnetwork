@@ -11,25 +11,23 @@ module ProductImport
       @settings = settings.settings
       @updated_ids = settings.updated_ids
       @enterprises_to_reset = settings.enterprises_to_reset
+
+      @suppliers_to_reset_products = []
+      @suppliers_to_reset_inventories = []
     end
 
     # For selected enterprises; set stock to zero for all products/inventory
     # that were not listed in the newly uploaded spreadsheet
     def call
-      return unless data_for_stock_reset?
-
-      @suppliers_to_reset_products = []
-      @suppliers_to_reset_inventories = []
+      return unless data_for_stock_reset? && reset_all_absent?
 
       enterprises_to_reset.each do |enterprise_id|
-        next unless reset_all_absent? && permission_by_id?(enterprise_id)
-
-        if !importing_into_inventory?
-          @suppliers_to_reset_products << enterprise_id.to_i
-        end
+        next unless permission_by_id?(enterprise_id)
 
         if importing_into_inventory?
           @suppliers_to_reset_inventories << enterprise_id.to_i
+        else
+          @suppliers_to_reset_products << enterprise_id.to_i
         end
       end
 

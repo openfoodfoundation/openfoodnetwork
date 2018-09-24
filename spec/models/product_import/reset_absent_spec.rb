@@ -133,6 +133,11 @@ describe ProductImport::ResetAbsent do
         )
       end
 
+      before do
+        allow(entry_processor)
+          .to receive(:permission_by_id?).with('1') { true }
+      end
+
       it 'does not reset anything' do
         reset_absent.call
 
@@ -146,7 +151,7 @@ describe ProductImport::ResetAbsent do
       end
     end
 
-    context 'the enterprise has no permission' do
+    context 'when the enterprise has no permission' do
       let(:settings) do
         instance_double(
           ProductImport::Settings,
