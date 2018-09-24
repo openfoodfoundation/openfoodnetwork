@@ -22,7 +22,7 @@ describe ProductImport::EntryProcessor do
   end
 
   describe '#reset_absent_items' do
-    let(:reset_absent) { double(ProductImport::ResetAbsent, call: true) }
+    let(:reset_absent) { instance_double(ProductImport::ResetAbsent, call: true) }
 
     before do
       allow(ProductImport::ResetAbsent)
@@ -35,6 +35,23 @@ describe ProductImport::EntryProcessor do
 
       expect(ProductImport::ResetAbsent)
         .to have_received(:new).with(entry_processor)
+    end
+  end
+
+  describe '#products_reset_count' do
+    let(:reset_absent) { instance_double(ProductImport::ResetAbsent) }
+
+    before do
+      allow(ProductImport::ResetAbsent)
+        .to receive(:new)
+        .and_return(reset_absent)
+
+      allow(reset_absent).to receive(:products_reset_count)
+    end
+
+    it 'delegates to ResetAbsent' do
+      entry_processor.products_reset_count
+      expect(reset_absent).to have_received(:products_reset_count)
     end
   end
 end

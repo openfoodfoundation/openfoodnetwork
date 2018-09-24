@@ -2,6 +2,13 @@ require 'delegate'
 
 module ProductImport
   class ResetAbsent < SimpleDelegator
+    attr_reader :products_reset_count
+
+    def initialize(decorated)
+      super
+      @products_reset_count = 0
+    end
+
     def call
       # For selected enterprises; set stock to zero for all products/inventory
       # that were not listed in the newly uploaded spreadsheet
@@ -26,20 +33,29 @@ module ProductImport
       end
 
       unless suppliers_to_reset_inventories.empty?
-        @products_reset_count += VariantOverride.
-          where('variant_overrides.hub_id IN (?)
-          AND variant_overrides.id NOT IN (?)', suppliers_to_reset_inventories, import_settings[:updated_ids]).
-        update_all(count_on_hand: 0)
+        relation = VariantOverride
+          .where(
+            'variant_overrides.hub_id IN (?) ' \
+            'AND variant_overrides.id NOT IN (?)',
+            suppliers_to_reset_inventories,
+            import_settings[:updated_ids]
+          )
+        @products_reset_count += relation.update_all(count_on_hand: 0)
       end
 
       return if suppliers_to_reset_products.empty?
 
-      @products_reset_count += Spree::Variant.joins(:product).
-        where('spree_products.supplier_id IN (?)
-        AND spree_variants.id NOT IN (?)
-        AND spree_variants.is_master = false
-        AND spree_variants.deleted_at IS NULL', suppliers_to_reset_products, import_settings[:updated_ids]).
-      update_all(count_on_hand: 0)
+      relation = Spree::Variant
+        .joins(:product)
+        .where(
+          'spree_products.supplier_id IN (?) ' \
+          'AND spree_variants.id NOT IN (?) ' \
+          'AND spree_variants.is_master = false ' \
+          'AND spree_variants.deleted_at IS NULL',
+          suppliers_to_reset_products,
+          import_settings[:updated_ids]
+        )
+      @products_reset_count += relation.update_all(count_on_hand: 0)
     end
 
     private
