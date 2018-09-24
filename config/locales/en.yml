@@ -613,16 +613,6 @@ en:
       controls:
         back_to_my_inventory: Back to my inventory
     orders:
-      index:
-        capture: "Capture"
-        ship: "Ship"
-        edit: "Edit"
-        note: "Note"
-        first: "First"
-        last: "Last"
-        previous: "Previous"
-        next: "Next"
-        loading: "Loading"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -2655,6 +2645,19 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"
       orders:
+        index:
+          listing_orders: "Listing Orders"
+          new_order: "New Order"
+          capture: "Capture"
+          ship: "Ship"
+          edit: "Edit"
+          note: "Note"
+          first: "First"
+          last: "Last"
+          previous: "Previous"
+          next: "Next"
+          loading: "Loading"
+          no_orders_found: "No Orders Found"
         invoice:
           issued_on: Issued on
           tax_invoice: TAX INVOICE

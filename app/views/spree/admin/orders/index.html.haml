@@ -1,9 +1,9 @@
 - content_for :page_title do
-  = t(:listing_orders)
+  = t('.listing_orders')
 
 - content_for :page_actions do
   %li
-    = button_link_to t(:new_order), new_admin_order_url, :icon => 'icon-plus', :id => 'admin_new_order'
+    = button_link_to t('.new_order'), new_admin_order_url, icon: 'icon-plus', id: 'admin_new_order'
 
 = render partial: 'spree/admin/shared/order_sub_menu'
 
@@ -48,7 +48,7 @@
         %div{'ng-if' => 'order.special_instructions'}
           %br
           %span.icon-warning-sign{'ofn-with-tip' => "{{::order.special_instructions}}"}
-            = t(:note)
+            = t('.note')
       %td.align-center
         %span.state{'ng-class' => 'order.state'}
           {{'order_state.' + order.state | t}}
@@ -65,11 +65,11 @@
       %td.align-center
         %span{'ng-bind-html' => '::order.display_total'}
       %td.actions
-        %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{::order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t(:edit)}
+        %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{::order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
         %div{'ng-if' => 'order.ready_to_ship'}
-          %a.icon-road.icon_link.with-tip.no-text{'ng-href' => '{{::order.ship_path}}', 'data-action' => 'ship', 'data-confirm' => t(:are_you_sure), 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t(:ship)}
+          %a.icon-road.icon_link.with-tip.no-text{'ng-href' => '{{::order.ship_path}}', 'data-action' => 'ship', 'data-confirm' => t(:are_you_sure), 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t('.ship')}
         %div{'ng-if' => 'order.capture_path'}
-          %a.icon-capture.icon_link.no-text{'ng-href' => '{{::order.capture_path}}', 'data-action' => 'capture', 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t(:capture)}
+          %a.icon-capture.icon_link.no-text{'ng-href' => '{{::order.capture_path}}', 'data-action' => 'capture', 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
 
 .orders-loading{'ng-show' => 'RequestMonitor.loading'}
   .row
@@ -77,10 +77,10 @@
       %img.spinner{ src: "/assets/spinning-circles.svg" }
   .row
     .small-12.columns.fullwidth.text-center
-      %span= t(:loading)
+      %span= t('.loading')
 
 %div{'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   = render partial: 'admin/shared/angular_pagination'
 
 .no-objects-found{'ng-show' => "!RequestMonitor.loading && orders.length == 0"}
-  = t(:no_orders_found)
+  = t('.no_orders_found')
