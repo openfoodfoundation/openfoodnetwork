@@ -65,6 +65,9 @@ fr_CA:
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a été mis à jour, mais votre email n'a pas encore été confirmé."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "Copie de %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -72,9 +75,26 @@ fr_CA:
       subject: "%{enterprise} est maintenant sur %{sitename}"
     invite_manager:
       subject: "%{enterprise} vous a invité comme manager"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Cher Acheteur,"
+      instructions: "Votre commande a été ANNULEE. Veuillez en prendre note et conserver pour preuve si besoin cette confirmation."
+      order_summary_canceled: "Résumé de la commande [ANNULEE]"
+      subject: "Annulation de Commande"
+      subtotal: "Sous-total : %{subtotal}"
+      total: "Total Commande : %{total}"
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Cher Acheteur,"
+      instructions: "Votre commande a été expédiée"
+      shipment_summary: "Résumé de l'envoi"
+      subject: "Notification d'expédition"
+      thanks: "Merci pour votre commande."
+      track_information: "Informations de suivi :%{tracking}"
+      track_link: "Lien de suivi :%{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Un résumé des dernières commandes récemment passées
@@ -137,6 +157,7 @@ fr_CA:
   free_trial: "essai gratuit"
   plus_tax: "plus taxe"
   min_bill_turnover_desc: "Quand le chiffre d'affaire dépasse %{mbt_amount}"
+  more: "Plus"
   say_no: "Non"
   say_yes: "Oui"
   then: puis
@@ -380,6 +401,7 @@ fr_CA:
         producer_signup_page: Page d'inscription Producteur
         hub_signup_page: Page d'inscription Hub
         group_signup_page: Page d'inscription Groupe
+        main_links: Liens du menu principal
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
         user_guide: Guide utilisateur
@@ -782,6 +804,14 @@ fr_CA:
       new:
         title: Nouvelle entreprise
         back_link: Revenir à la liste des entreprises
+      remove_logo:
+        remove: "Supprimer l'image"
+        removed_successfully: "Logo supprimé avec succès"
+        immediate_removal_warning: "Le logo sera supprimé juste après votre confirmation."
+      remove_promo_image:
+        remove: "Supprimer l'image"
+        removed_successfully: "Bannière supprimée avec succès"
+        immediate_removal_warning: "La bannière sera supprimée juste après votre confirmation."
       welcome:
         welcome_title: Bienvenue sur Open Food Network !
         welcome_text: 'Vous avez créé avec succès '
@@ -815,7 +845,10 @@ fr_CA:
       coordinator_fees:
         add: Ajouter commission coordinateur
       filters:
+        search_by_order_cycle_name: "Recherche par nom de Cycle de Vente..."
         involving: "Concernant"
+        any_enterprise: "Toutes les entreprises"
+        any_schedule: "Tous"
       form:
         incoming: Produits entrants (pouvant être mis en vente par les hubs)
         supplier: Fournisseur
@@ -1019,6 +1052,11 @@ fr_CA:
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
+  api:
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "Aucun logo trouvé "
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "Aucune bannière trouvée "
   checkout:
     already_ordered:
       cart: "panier"
@@ -1099,10 +1137,15 @@ fr_CA:
   ticket_column_unit_price: "Prix unitaire"
   ticket_column_total_price: "Prix total"
   menu_1_title: "Boutiques"
+  menu_1_url: "/shops"
   menu_2_title: "Carte"
+  menu_2_url: "/map"
   menu_3_title: "Producteurs"
+  menu_3_url: "/producers"
   menu_4_title: "Groupes"
+  menu_4_url: "/groups"
   menu_5_title: "A propos"
+  menu_5_url: "http://www.openfoodnetwork.org"
   menu_6_title: "Se connecter"
   menu_7_title: "Apprendre"
   logo: "Logo (640x130)"
@@ -1120,6 +1163,7 @@ fr_CA:
   footer_email: "Email"
   footer_links_md: "Liens"
   footer_about_url: "A propos URL"
+  user_guide_link: "Lien vers le guide utilisateur"
   name: Nom
   first_name: Prénom
   last_name: Nom de famille
@@ -1202,12 +1246,17 @@ fr_CA:
       essential_cookies: "Cookies essentiels"
       essential_cookies_desc: "Les cookies suivants sont nécessaires au fonctionnement du site openfoodfrance.org."
       essential_cookies_note: "Les cookies contiennent un identifiant unique, mais pas d'autres données. Vos emails et mots de passe par exemple ne sont jamais exposés dans les cookies!"
+      cookie_domain: "Déposé par!"
       cookie_session_desc: "Utilisé pour garder en mémoire l'utilisateur d'une page à l'autre lors de la navigation sur le site, ou pour se souvenir des produits dans le panier."
       cookie_consent_desc: "Utilisé pour se souvenir du consentement de l'utilisation à l'utilisation de cookies."
       cookie_remember_me_desc: "Utilisé si l'utilisateur a cliqué sur \"se souvenir de moi\" (pour ne pas avoir à se reconnecter à chaque fois). Ce cookie est automatiquement supprimé après 12 jours. Si l'utilisateur souhaite supprimer ce cookie, il n'a qu'à se déconnecter. Si l'utilisateur ne souhaite pas que ce cookie soit installé sur son terminal, il suffit de ne pas cocher la case \"se souvenir de moi\" au moment de la connexion."
       cookie_openstreemap_desc: "Utilisé par le logiciel de cartographie open source  pour assurer qu'il ne reçoit pas trop de requêtes sur un laps de temps déterminé, et éviter ainsi les risques d'abus de leurs services."
       cookie_stripe_desc: "Utilisé par le terminal de payement en ligne Stripe (proposé aux utilisateurs d'Open Food France) https://stripe.com/fr/cookies-policy/legal. Même si toutes les boutiques n'utilisent pas Stripe, c'est une bonne pratique en matière de sécurité d'appliquer ce cookie sur toutes les pages vues. Stripe construit probablement une image des pages qui ont un quelconque lien avec l'API connectant Open Food France à leur système de paiement pour détecter les comportements anormaux pouvant suggérer un risque de fraude. Donc ce cookie a un rôle qui va au-delà de la simple fourniture d'un système de paiement. Le supprimer pourrait affecter la sécurité du service. Pour en savoir plus sur la politique de confidentialité de Stripe: https://stripe.com/fr/privacy."
       statistics_cookies: "Cookies d'analyse de navigation"
+      statistics_cookies_desc: "Ces cookies ne sont pas obligatoires, mais nous permettent de mieux comprendre votre usage de la plateforme, les endroits où vous bloquez, les fonctionnalités qui semblent vous manquer, ou que vous n'utilisez jamais, afin de fournir le service le plus adapté possible aux besoins des utilisateurs."
+      statistics_cookies_analytics_desc_html: "Pour analyser les données concernant votre usage de la plateforme, nous utilisons Google Analytics, pas vraiment par choix, mais simplement parce que c'était l'outil d'analyse connecté par défaut via Spree, le logiciel e-commerce open source sur lequel nous avons construit. Mais nous espérons pouvoir rapidement migrer vers <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex anciennement Piwik), outil d'analyse open source compatible RGPD et engagé sur le respect de la vie privée des utilisateurs."
+      statistics_cookies_matomo_desc_html: "Pour analyser les données concernant votre usage de la plateforme, nous utilisons <a href='https://matomo.org/' target='_blank'>Matomo</a> (anciennement Piwik), outil d'analyse open source compatible RGPD et engagé sur le respect de la vie privée des utilisateurs."
+      statistics_cookies_matomo_optout: "Vous ne voulez pas que vos données soient analysées par Matomo ? Nous ne collectons aucune donnée personnelle, et Matomo nous aide à améliorer le service que nous vous offrons, mais nous respectons votre choix :-)"
       cookie_analytics_utma_desc: "Utilisé pour distinguer les utilisateurs et les sessions. Ce cookie est installé quand la librairie Javascript s'exécute et qu'aucun cookie __utma n'existe déjà. Le cookie est mis à jour à chaque fois que des données sont envoyées à Google Analytics."
       cookie_analytics_utmt_desc: "Utilisé pour limiter le taux de requêtes."
       cookie_analytics_utmb_desc: "Utilisé pour distinguer les nouvelles sessions/visites. Ce cookie est installé quand la librairie Javascript s'exécute et qu'aucun cookie __utmb n'existe déjà. Le cookie est mis à jour à chaque fois que des données sont envoyées à Google Analytics. "
@@ -1350,6 +1399,7 @@ fr_CA:
   email_so_edit_true_html: "Vous pouvez <a href='%{order_url}'>effectuer des modifications</a> jusqu'à la fermeture de la période de commande le %{orders_close_at}."
   email_so_edit_false_html: "Vous pouvez <a href='%{order_url}'>consulter les détails de cette commande</a> à tout moment."
   email_so_contact_distributor_html: "Pour toute question contactez <strong>%{distributor}</strong> via %{email}."
+  email_so_contact_distributor_to_change_order_html: "Cette commande a été automatiquement créée en votre nom. Vous pouvez effectuer des modifications sur cette commande jusqu'à fermeture de la période de commande le%{orders_close_at} en contactant<strong>%{distributor}</strong> à%{email} ."
   email_so_confirmation_intro_html: "Votre commande auprès de <strong>%{distributor}</strong> est maintenant confirmée"
   email_so_confirmation_explainer_html: "Cette commande a été automatiquement passée pour vous dans le cadre de votre abonnement, et a maintenant été confirmée."
   email_so_confirmation_details_html: "Voici les détails concernant cette commande auprès de <strong>%{distributor}</strong>:"
@@ -1611,6 +1661,7 @@ fr_CA:
   error_number: "saisir un nombre"
   error_email: "saisir une adresse email"
   error_not_found_in_database: "%{name} n'a pas été trouvé dans la base de donnée"
+  error_not_primary_producer: "%{name}n'est pas enregistré comme \"producteur\""
   error_no_permission_for_enterprise: "\"%{name}\" : vous n'avez pas les droits requis pour gérer les produits de cette entreprise"
   item_handling_fees: "Frais logistiques (inclus dans le prix affiché)"
   january: "Janvier"
