@@ -6,7 +6,7 @@ class PendingPayments
   end
 
   def payment_object
-    @order.payments.select{ |p| p if p.state == 'checkout' }.first
+    @order.payments.select{ |payment| payment if payment.state == 'checkout' }.first
   end
 
   def can_be_captured?

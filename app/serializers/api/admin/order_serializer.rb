@@ -17,32 +17,32 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
 
   def show_path
     return '' unless object.id
-    Spree::Core::Engine.routes_url_helpers.admin_order_path(object)
+    spree_routes_helper.admin_order_path(object)
   end
 
   def edit_path
     return '' unless object.id
-    Spree::Core::Engine.routes_url_helpers.edit_admin_order_path(object)
+    spree_routes_helper.edit_admin_order_path(object)
   end
 
   def payments_path
     return '' unless object.payment_state
-    Spree::Core::Engine.routes_url_helpers.admin_order_payments_path(object)
+    spree_routes_helper.admin_order_payments_path(object)
   end
 
   def shipments_path
     return '' unless object.shipment_state
-    Spree::Core::Engine.routes_url_helpers.admin_order_shipments_path(object)
+    spree_routes_helper.admin_order_shipments_path(object)
   end
 
   def ship_path
-    Spree::Core::Engine.routes_url_helpers.fire_admin_order_path(object, e: 'ship')
+    spree_routes_helper.fire_admin_order_path(object, e: 'ship')
   end
 
   def capture_path
     payment_due = PendingPayments.new(object)
     return '' unless object.payment_required? && payment_due.payment_object
-    Spree::Core::Engine.routes_url_helpers.fire_admin_order_payment_path(object, payment_due.payment_object.id, e: 'capture')
+    spree_routes_helper.fire_admin_order_payment_path(object, payment_due.payment_object.id, e: 'capture')
   end
 
   def ready_to_ship
@@ -67,5 +67,11 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
 
   def completed_at
     object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: '%B %d, %Y')
+  end
+
+  private
+
+  def spree_routes_helper
+    Spree::Core::Engine.routes_url_helpers
   end
 end
