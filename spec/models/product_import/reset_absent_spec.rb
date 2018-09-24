@@ -75,13 +75,13 @@ describe ProductImport::ResetAbsent do
           ProductImport::Settings,
           settings: { 'reset_all_absent' => true },
           updated_ids: [0],
-          enterprises_to_reset: [enterprise.id]
+          enterprises_to_reset: [enterprise.id.to_s]
         )
       end
 
       before do
         allow(entry_processor)
-          .to receive(:permission_by_id?).with(enterprise.id) { true }
+          .to receive(:permission_by_id?).with(enterprise.id.to_s) { true }
       end
 
       context 'and not importing into inventory' do
@@ -109,7 +109,7 @@ describe ProductImport::ResetAbsent do
           variant_override
 
           allow(entry_processor)
-            .to receive(:permission_by_id?).with(enterprise.id) { true }
+            .to receive(:permission_by_id?).with(enterprise.id.to_s) { true }
         end
 
         before do
@@ -129,7 +129,7 @@ describe ProductImport::ResetAbsent do
           ProductImport::Settings,
           settings: { 'reset_all_absent' => false },
           updated_ids: [0],
-          enterprises_to_reset: [1]
+          enterprises_to_reset: ['1']
         )
       end
 
@@ -152,13 +152,13 @@ describe ProductImport::ResetAbsent do
           ProductImport::Settings,
           settings: { 'reset_all_absent' => true },
           updated_ids: [0],
-          enterprises_to_reset: [1]
+          enterprises_to_reset: ['1']
         )
       end
 
       before do
         allow(entry_processor)
-          .to receive(:permission_by_id?).with(1) { false }
+          .to receive(:permission_by_id?).with('1') { false }
       end
 
       it 'does not reset anything' do
@@ -181,7 +181,7 @@ describe ProductImport::ResetAbsent do
 
     before do
       allow(entry_processor)
-        .to receive(:permission_by_id?).with(enterprise_id) { true }
+        .to receive(:permission_by_id?).with(enterprise_id.to_s) { true }
 
       allow(entry_processor)
         .to receive(:importing_into_inventory?) { false }
@@ -192,7 +192,7 @@ describe ProductImport::ResetAbsent do
         ProductImport::Settings,
         settings: { 'reset_all_absent' => true },
         updated_ids: [0],
-        enterprises_to_reset: [enterprise_id]
+        enterprises_to_reset: [enterprise_id.to_s]
       )
     end
 

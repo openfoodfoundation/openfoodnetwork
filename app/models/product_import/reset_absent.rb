@@ -25,11 +25,11 @@ module ProductImport
         next unless reset_all_absent? && permission_by_id?(enterprise_id)
 
         if !importing_into_inventory?
-          @suppliers_to_reset_products.push(Integer(enterprise_id))
+          @suppliers_to_reset_products << enterprise_id.to_i
         end
 
         if importing_into_inventory?
-          @suppliers_to_reset_inventories.push(Integer(enterprise_id))
+          @suppliers_to_reset_inventories << enterprise_id.to_i
         end
       end
 
