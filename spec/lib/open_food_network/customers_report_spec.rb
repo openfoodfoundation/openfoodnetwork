@@ -45,7 +45,7 @@ module OpenFoodNetwork
           a = create(:address)
           d = create(:distributor_enterprise)
           o = create(:order, distributor: d, bill_address: a)
-          o.shipping_method = create(:shipping_method)
+          o.shipments << create(:shipment)
 
           subject.stub(:orders).and_return [o]
           subject.table.should == [[

@@ -12,7 +12,8 @@ describe OrderShippingMethod do
 
     context 'when order has single shipment' do
       it 'returns the shipments shipping_method' do
-        shipment = create(:shipment_with_flat_rate)
+        shipping_method = create(:shipping_method_with, :flat_rate)
+        shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method)
         order.shipments = [shipment]
 
         expect(order.shipping_method).to eq shipment.shipping_method

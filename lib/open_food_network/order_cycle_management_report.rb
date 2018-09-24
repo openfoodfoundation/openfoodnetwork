@@ -107,7 +107,7 @@ module OpenFoodNetwork
 
     def filter_to_shipping_method(orders)
       if params[:shipping_method_in].present?
-        orders.joins(:shipping_method).where(shipping_method_id: params[:shipping_method_in])
+        orders.joins(shipments: :shipping_methods).where(shipping_method_id: params[:shipping_method_in])
       else
         orders
       end

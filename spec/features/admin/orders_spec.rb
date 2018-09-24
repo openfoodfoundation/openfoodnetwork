@@ -149,7 +149,8 @@ feature %q{
     # Given a customer with an order, which includes their shipping and billing address
     @order.ship_address = create(:address, lastname: 'Ship')
     @order.bill_address = create(:address, lastname: 'Bill')
-    @order.shipping_method = create(:shipping_method, require_ship_address: true)
+    shipping_method = create(:shipping_method_with, :delivery)
+    @order.shipments << create(:shipment_with, :shipping_method, shipping_method: shipping_method)
     @order.save!
 
     # When I create a new order

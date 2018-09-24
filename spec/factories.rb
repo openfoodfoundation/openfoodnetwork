@@ -335,13 +335,58 @@ FactoryBot.define do
     end
   end
 
-  factory :shipping_method_with_flat_rate, parent: :shipping_method do
-    calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
+  factory :shipping_method_with, parent: :shipping_method do
+    trait :delivery do
+      require_ship_address { true }
+    end
+
+    trait :flat_rate do
+      calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
+    end
+
+    trait :expensive_name do
+      name { "Shipping" }
+      description { "Expensive" }
+      calculator { Spree::Calculator::FlatRate.new(preferred_amount: 100.55) }
+    end
+
+    trait :distributor do
+      transient do
+        distributor { create :enterprise }
+      end
+      distributors { [distributor] }
+    end
+
+    trait :shipping_fee do
+      transient do
+        shipping_fee 3
+      end
+
+      calculator { build(:calculator_per_item, preferred_amount: shipping_fee) }
+      require_ship_address { false }
+      distributors { [create(:distributor_enterprise_with_tax)] }
+    end
   end
 
-  factory :shipment_with_flat_rate, parent: :shipment do
-    after(:create) do |shipment|
-      shipment.add_shipping_method(create(:shipping_method_with_flat_rate), true)
+  factory :shipment_with, parent: :shipment do
+    trait :shipping_method do
+      transient do
+        shipping_method { create :shipping_method }
+      end
+      after(:create) do |shipment, evaluator|
+        shipment.add_shipping_method(evaluator.shipping_method, true)
+      end
+    end
+
+    trait :shipping_fee do
+      transient do
+        shipping_fee 3
+      end
+
+      after(:create) do |shipment, evaluator|
+        shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
+        shipment.add_shipping_method(shipping_method, true)
+      end
     end
   end
 
@@ -350,34 +395,13 @@ FactoryBot.define do
     allow_order_changes { true }
   end
 
-  factory :shipping_method_with_shipping_fee, parent: :shipping_method do
-    transient do
-      shipping_fee 3
-    end
-
-    calculator { build(:calculator_per_item, preferred_amount: shipping_fee) }
-    require_ship_address { false }
-    distributors { [create(:distributor_enterprise_with_tax)] }
-  end
-
-  factory :shipment_with_shipping_fee, parent: :shipment do
-    transient do
-      shipping_fee 3
-    end
-
-    after(:create) do |shipment, evaluator|
-      shipping_method = create(:shipping_method_with_shipping_fee, shipping_fee: evaluator.shipping_fee)
-      shipment.add_shipping_method(shipping_method, true)
-    end
-  end
-
   factory :completed_order_with_fees, parent: :order_with_totals_and_distribution do
     transient do
       shipping_fee 3
       payment_fee 5
     end
 
-    shipments { [ create(:shipment_with_shipping_fee, shipping_fee: shipping_fee) ] }
+    shipments { [ create(:shipment_with, :shipping_fee, shipping_fee: shipping_fee) ] }
 
     after(:create) do |order, evaluator|
       create(:line_item, order: order)

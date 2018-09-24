@@ -8,12 +8,12 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
       let!(:user) { create(:user) }
       let(:address) { create(:address) }
       let!(:distributor) { create(:distributor_enterprise) }
-      let!(:shipping_method) { create(:shipping_method) }
+      let!(:shipment) { create(:shipment) }
       let!(:order) {
         create(
             :order_with_totals_and_distribution,
             state: 'cart',
-            shipping_method: shipping_method,
+            shipments: [shipment],
             distributor: distributor,
             user: nil,
             email: nil,
@@ -45,7 +45,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
           order.reload
 
-          expect(response).to redirect_to spree.edit_admin_order_shipment_path(order, order.shipment)
+          expect(response).to redirect_to spree.admin_order_customer_path(order)
         end
       end
 
@@ -55,7 +55,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
           order.reload
 
-          expect(response).to redirect_to spree.edit_admin_order_shipment_path(order, order.shipment)
+          expect(response).to redirect_to spree.admin_order_customer_path(order)
         end
       end
     end
