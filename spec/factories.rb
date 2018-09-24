@@ -616,3 +616,15 @@ FactoryBot.modify do
     end
   end
 end
+
+FactoryBot.modify do
+  factory :stock_location, class: Spree::StockLocation do
+    # keeps the test stock_location unique
+    initialize_with { Spree::StockLocation.find_or_create_by_name(name)}
+  end
+
+  factory :shipment, class: Spree::Shipment do
+    # keeps test shipments unique per order
+    initialize_with { Spree::Shipment.find_or_create_by_order_id(order.id)}
+  end
+end
