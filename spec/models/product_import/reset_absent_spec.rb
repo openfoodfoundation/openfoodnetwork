@@ -99,6 +99,55 @@ describe ProductImport::ResetAbsent do
         end
       end
     end
+
+    context 'when reset_all_absent is not set' do
+      let(:import_settings) do
+        {
+          settings: { 'reset_all_absent' => false },
+          updated_ids: [0],
+          enterprises_to_reset: [1]
+        }
+      end
+
+      it 'does not reset anything' do
+        reset_absent.call
+
+        suppliers_to_reset_products = reset_absent
+          .instance_variable_get('@suppliers_to_reset_products')
+        suppliers_to_reset_inventories = reset_absent
+          .instance_variable_get('@suppliers_to_reset_inventories')
+
+        expect(suppliers_to_reset_products).to eq([])
+        expect(suppliers_to_reset_inventories).to eq([])
+      end
+    end
+
+    context 'the enterprise has no permission' do
+      let(:import_settings) do
+        {
+          settings: { 'reset_all_absent' => true },
+          updated_ids: [0],
+          enterprises_to_reset: [1]
+        }
+      end
+
+      before do
+        allow(entry_processor)
+          .to receive(:permission_by_id?).with(1) { false }
+      end
+
+      it 'does not reset anything' do
+        reset_absent.call
+
+        suppliers_to_reset_products = reset_absent
+          .instance_variable_get('@suppliers_to_reset_products')
+        suppliers_to_reset_inventories = reset_absent
+          .instance_variable_get('@suppliers_to_reset_inventories')
+
+        expect(suppliers_to_reset_products).to eq([])
+        expect(suppliers_to_reset_inventories).to eq([])
+      end
+    end
   end
 
   describe '#products_reset_count' do

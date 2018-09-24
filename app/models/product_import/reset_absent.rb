@@ -19,35 +19,33 @@ module ProductImport
       # that were not listed in the newly uploaded spreadsheet
       return unless data_for_stock_reset?
 
-      suppliers_to_reset_products = []
-      suppliers_to_reset_inventories = []
+      @suppliers_to_reset_products = []
+      @suppliers_to_reset_inventories = []
 
       enterprises_to_reset.each do |enterprise_id|
-        if reset_all_absent? &&
-           permission_by_id?(enterprise_id) &&
-           !importing_into_inventory?
-          suppliers_to_reset_products.push(Integer(enterprise_id))
+        next unless reset_all_absent? && permission_by_id?(enterprise_id)
+
+        if !importing_into_inventory?
+          @suppliers_to_reset_products.push(Integer(enterprise_id))
         end
 
-        if reset_all_absent? &&
-           permission_by_id?(enterprise_id) &&
-           importing_into_inventory?
-          suppliers_to_reset_inventories.push(Integer(enterprise_id))
+        if importing_into_inventory?
+          @suppliers_to_reset_inventories.push(Integer(enterprise_id))
         end
       end
 
-      unless suppliers_to_reset_inventories.empty?
+      unless @suppliers_to_reset_inventories.empty?
         relation = VariantOverride
           .where(
             'variant_overrides.hub_id IN (?) ' \
             'AND variant_overrides.id NOT IN (?)',
-            suppliers_to_reset_inventories,
+            @suppliers_to_reset_inventories,
             updated_ids
           )
         @products_reset_count += relation.update_all(count_on_hand: 0)
       end
 
-      return if suppliers_to_reset_products.empty?
+      return if @suppliers_to_reset_products.empty?
 
       relation = Spree::Variant
         .joins(:product)
@@ -56,7 +54,7 @@ module ProductImport
           'AND spree_variants.id NOT IN (?) ' \
           'AND spree_variants.is_master = false ' \
           'AND spree_variants.deleted_at IS NULL',
-          suppliers_to_reset_products,
+          @suppliers_to_reset_products,
           updated_ids
         )
       @products_reset_count += relation.update_all(count_on_hand: 0)
