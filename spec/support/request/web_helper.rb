@@ -168,15 +168,6 @@ module WebHelper
     select_select2_result(value)
   end
 
-  # Deprecated: Use have_select2 instead (spec/support/matchers/select2_matchers.rb)
-  def have_select2_option(value, options)
-    container = options[:dropdown_css] || ".select2-with-searchbox"
-    page.execute_script %Q{$('#{options[:from]}').select2('open')}
-    page.execute_script "$('#{container} input.select2-input').val('#{value}').trigger('keyup-change');"
-    sleep 1
-    have_selector "div.select2-result-label", text: value
-  end
-
   def open_select2(selector)
     page.execute_script "jQuery('#{selector}').select2('open');"
   end
