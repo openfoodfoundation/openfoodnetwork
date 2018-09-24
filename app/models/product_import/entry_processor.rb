@@ -65,7 +65,10 @@ module ProductImport
     end
 
     def reset_absent
-      @reset_absent ||= ResetAbsent.new(self)
+      @reset_absent ||= ResetAbsent.new(
+        self,
+        Settings.new(import_settings)
+      )
     end
 
     def total_saved_count

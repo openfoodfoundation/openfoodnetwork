@@ -4,11 +4,10 @@ module ProductImport
   class ResetAbsent < SimpleDelegator
     attr_reader :products_reset_count
 
-    def initialize(decorated)
-      super
+    def initialize(decorated, settings)
+      super(decorated)
       @products_reset_count = 0
 
-      settings = ProductImport::Settings.new(import_settings)
       @settings = settings.settings
       @updated_ids = settings.updated_ids
       @enterprises_to_reset = settings.enterprises_to_reset

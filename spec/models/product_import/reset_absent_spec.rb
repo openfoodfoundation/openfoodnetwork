@@ -7,6 +7,7 @@ describe ProductImport::ResetAbsent do
   let(:editable_enterprises) { double(:editable_enterprises) }
   let(:import_time) { double(:import_time) }
   let(:updated_ids) { double(:updated_ids) }
+  let(:import_settings) { double(:import_settings) }
 
   let(:entry_processor) do
     ProductImport::EntryProcessor.new(
@@ -20,11 +21,18 @@ describe ProductImport::ResetAbsent do
     )
   end
 
-  let(:reset_absent) { described_class.new(entry_processor) }
+  let(:reset_absent) { described_class.new(entry_processor, settings) }
 
   describe '#call' do
     context 'when there are no settings' do
-      let(:import_settings) { { updated_ids: [], enterprises_to_reset: [] } }
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
+          settings: nil,
+          updated_ids: [],
+          enterprises_to_reset: []
+        )
+      end
 
       it 'returns nil' do
         expect(reset_absent.call).to be_nil
@@ -32,7 +40,14 @@ describe ProductImport::ResetAbsent do
     end
 
     context 'when there are no updated_ids' do
-      let(:import_settings) { { settings: [], enterprises_to_reset: [] } }
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
+          settings: [],
+          updated_ids: nil,
+          enterprises_to_reset: []
+        )
+      end
 
       it 'returns nil' do
         expect(reset_absent.call).to be_nil
@@ -40,7 +55,14 @@ describe ProductImport::ResetAbsent do
     end
 
     context 'when there are no enterprises_to_reset' do
-      let(:import_settings) { { settings: [], updated_ids: [] } }
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
+          settings: [],
+          updated_ids: [],
+          enterprises_to_reset: nil
+        )
+      end
 
       it 'returns nil' do
         expect(reset_absent.call).to be_nil
@@ -48,12 +70,13 @@ describe ProductImport::ResetAbsent do
     end
 
     context 'when there are settings, updated_ids and enterprises_to_reset' do
-      let(:import_settings) do
-        {
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
           settings: { 'reset_all_absent' => true },
           updated_ids: [0],
           enterprises_to_reset: [enterprise.id]
-        }
+        )
       end
 
       before do
@@ -101,12 +124,13 @@ describe ProductImport::ResetAbsent do
     end
 
     context 'when reset_all_absent is not set' do
-      let(:import_settings) do
-        {
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
           settings: { 'reset_all_absent' => false },
           updated_ids: [0],
           enterprises_to_reset: [1]
-        }
+        )
       end
 
       it 'does not reset anything' do
@@ -123,12 +147,13 @@ describe ProductImport::ResetAbsent do
     end
 
     context 'the enterprise has no permission' do
-      let(:import_settings) do
-        {
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
           settings: { 'reset_all_absent' => true },
           updated_ids: [0],
           enterprises_to_reset: [1]
-        }
+        )
       end
 
       before do
@@ -157,14 +182,18 @@ describe ProductImport::ResetAbsent do
     before do
       allow(entry_processor)
         .to receive(:permission_by_id?).with(enterprise_id) { true }
+
+      allow(entry_processor)
+        .to receive(:importing_into_inventory?) { false }
     end
 
-    let(:import_settings) do
-      {
+    let(:settings) do
+      instance_double(
+        ProductImport::Settings,
         settings: { 'reset_all_absent' => true },
         updated_ids: [0],
         enterprises_to_reset: [enterprise_id]
-      }
+      )
     end
 
     it 'returns the number of reset products or variants' do
