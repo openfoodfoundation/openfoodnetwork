@@ -85,6 +85,10 @@ module ProductImport
       end
     end
 
+    def strategy
+      @strategy ||= strategy_factory.new
+    end
+
     def total_saved_count
       @products_created + @variants_created + @variants_updated + @inventory_created + @inventory_updated
     end

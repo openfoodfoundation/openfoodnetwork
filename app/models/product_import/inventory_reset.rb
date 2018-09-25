@@ -1,17 +1,23 @@
 module ProductImport
   class InventoryReset
-    def initialize(updated_ids, supplier_ids)
-      @updated_ids = updated_ids
-      @supplier_ids = supplier_ids
+    attr_reader :supplier_ids
+
+    def initialize
+      @supplier_ids = []
     end
 
-    def reset
+    def <<(values)
+      @supplier_ids << values
+    end
+
+    def reset(updated_ids, _supplier_ids)
+      @updated_ids = updated_ids
       relation.update_all(count_on_hand: 0)
     end
 
     private
 
-    attr_reader :updated_ids, :supplier_ids
+    attr_reader :updated_ids
 
     def relation
       VariantOverride.where(
