@@ -96,6 +96,14 @@ describe ProductImport::ResetAbsent do
         it 'returns the number of products reset' do
           expect(reset_absent.call).to eq(2)
         end
+
+        it 'resets the products of the specified suppliers' do
+          suppliers_to_reset_products = reset_absent
+            .instance_variable_get('@suppliers_to_reset_products')
+
+          reset_absent.call
+          expect(suppliers_to_reset_products).to eq([enterprise.id])
+        end
       end
 
       context 'and importing into inventory' do
@@ -119,6 +127,14 @@ describe ProductImport::ResetAbsent do
 
         it 'returns nil' do
           expect(reset_absent.call).to be_nil
+        end
+
+        it 'resets the inventories of the specified suppliers' do
+          suppliers_to_reset_inventories = reset_absent
+            .instance_variable_get('@suppliers_to_reset_inventories')
+
+          reset_absent.call
+          expect(suppliers_to_reset_inventories).to eq([enterprise.id])
         end
       end
     end
