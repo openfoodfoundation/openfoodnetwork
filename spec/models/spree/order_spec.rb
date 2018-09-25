@@ -818,13 +818,22 @@ describe Spree::Order do
     end
   end
 
-  describe "finding pending_payments" do
-    let!(:order) { create(:order ) }
-    let!(:payment) { create(:payment, order: order, state: 'checkout') }
+  describe "payments" do
+    let(:payment_method) { create(:payment_method) }
+    let(:shipping_method) { create(:shipping_method) }
+    let(:order) { create(:order_with_totals) }
 
     context "when the order is not a subscription" do
-      it "returns the payments on the order" do
-        expect(order.reload.pending_payments).to eq [payment]
+      it "it requires a payment" do
+        expect(order.payment_required?).to be true
+      end
+
+      it "advances to payment state" do
+        advance_to_delivery_state(order)
+
+        order.next!
+
+        expect(order.state).to eq "payment"
       end
     end
 
@@ -835,8 +844,8 @@ describe Spree::Order do
       context "and order_cycle has no order_close_at set" do
         before { order.order_cycle.update_attributes(orders_close_at: nil) }
 
-        it "returns the payments on the order" do
-          expect(order.reload.pending_payments).to eq [payment]
+        it "requires a payment" do
+          expect(order.payment_required?).to be true
         end
       end
 
@@ -844,7 +853,7 @@ describe Spree::Order do
         before { order.order_cycle.update_attributes(orders_close_at: 5.minutes.ago) }
 
         it "returns the payments on the order" do
-          expect(order.reload.pending_payments).to eq [payment]
+          expect(order.payment_required?).to be true
         end
       end
 
@@ -852,9 +861,27 @@ describe Spree::Order do
         before { order.order_cycle.update_attributes(orders_close_at: 5.minutes.from_now) }
 
         it "returns an empty array" do
-          expect(order.reload.pending_payments).to eq []
+          expect(order.payment_required?).to be false
+        end
+
+        it "skips the payment state" do
+          advance_to_delivery_state(order)
+
+          order.next!
+
+          expect(order.state).to eq "complete"
         end
       end
+    end
+
+    def advance_to_delivery_state(order)
+      # advance to address state
+      order.shipping_method = shipping_method
+      order.next!
+
+      # advance to delivery state
+      create(:payment, order: order, payment_method: payment_method)
+      order.next!
     end
   end
 

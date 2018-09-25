@@ -1,3 +1,4 @@
+require 'extensions/order_subscriptions_extensions'
 require 'open_food_network/enterprise_fee_calculator'
 require 'open_food_network/distribution_change_validator'
 require 'open_food_network/feature_toggle'
@@ -8,6 +9,8 @@ ActiveSupport::Notifications.subscribe('spree.order.contents_changed') do |name,
 end
 
 Spree::Order.class_eval do
+  prepend OrderSubscriptionsExtensions
+
   belongs_to :order_cycle
   belongs_to :distributor, class_name: 'Enterprise'
   belongs_to :customer
@@ -345,13 +348,6 @@ Spree::Order.class_eval do
   rescue Spree::Core::GatewayError => e # This section changed
     result = !!Spree::Config[:allow_checkout_on_gateway_error]
     errors.add(:base, e.message) and return result
-  end
-
-  # Override or Spree method. Used to prevent payments on subscriptions from being processed in the normal way.
-  # ie. they are 'hidden' from processing logic until after the order cycle has closed.
-  def pending_payments
-    return [] if subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
-    payments.select {|p| p.state == "checkout"} # Original definition
   end
 
   private

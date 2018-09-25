@@ -127,6 +127,7 @@ describe SubscriptionConfirmJob do
       before do
         allow(order).to receive(:payment_total) { 0 }
         allow(order).to receive(:total) { 10 }
+        allow(order).to receive(:payment_required?) { true }
         allow(order).to receive(:pending_payments) { [payment] }
       end
 
