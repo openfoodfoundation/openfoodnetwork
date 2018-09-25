@@ -334,14 +334,21 @@ Spree::Order.class_eval do
     errors.add(:base, e.message) and return result
   end
 
-  # Override or Spree method. Used to prevent payments on subscriptions from being processed in the normal way.
-  # ie. they are 'hidden' from processing logic until after the order cycle has closed.
-  def pending_payments
-    return [] if subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
-    payments.select {|p| p.state == "checkout"} # Original definition
+  # Override Spree method to allow unpaid orders to be completed.
+  # Subscriptions place orders at the beginning of an order cycle. They need to
+  # be completed to draw from stock levels and trigger emails.
+  # Spree doesn't allow this. Other options would be to introduce an additional
+  # order state or implement a special proxy payment method.
+  # https://github.com/openfoodfoundation/openfoodnetwork/pull/3012#issuecomment-438146484
+  def payment_required?
+    total.to_f > 0.0 && !skip_payment_for_subscription?
   end
 
   private
+
+  def skip_payment_for_subscription?
+    subscription.present? && order_cycle.orders_close_at.andand > Time.zone.now
+  end
 
   def address_from_distributor
     address = distributor.address.clone
