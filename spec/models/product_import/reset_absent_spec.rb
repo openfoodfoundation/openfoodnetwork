@@ -46,7 +46,7 @@ module ProductImport
 
           allow(strategy).to receive(:<<).with(enterprise.id)
           allow(strategy).to receive(:supplier_ids) { [enterprise.id] }
-          allow(strategy).to receive(:reset).with([0], [enterprise.id]) { 2 }
+          allow(strategy).to receive(:reset).with([0]) { 2 }
         end
 
         it 'returns the number of products reset' do
@@ -54,7 +54,7 @@ module ProductImport
         end
 
         it 'resets the products of the specified suppliers' do
-          expect(strategy).to receive(:reset).with([0], [enterprise.id]) { 2 }
+          expect(strategy).to receive(:reset).with([0]) { 2 }
           reset_absent.call
         end
       end
@@ -105,7 +105,7 @@ module ProductImport
 
         allow(strategy).to receive(:<<).with(enterprise.id)
         allow(strategy).to receive(:supplier_ids) { [enterprise.id] }
-        allow(strategy).to receive(:reset).with([0], [enterprise.id]) { 1 }
+        allow(strategy).to receive(:reset).with([0]) { 1 }
       end
 
       it 'returns the number of reset variant overrides' do
