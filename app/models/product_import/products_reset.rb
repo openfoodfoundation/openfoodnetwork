@@ -2,16 +2,16 @@ module ProductImport
   class ProductsReset
     attr_reader :supplier_ids
 
-    def initialize
+    def initialize(updated_ids)
       @supplier_ids = []
+      @updated_ids = updated_ids
     end
 
     def <<(values)
       @supplier_ids << values
     end
 
-    def reset(updated_ids)
-      @updated_ids = updated_ids
+    def reset
       relation.update_all(count_on_hand: 0)
     end
 

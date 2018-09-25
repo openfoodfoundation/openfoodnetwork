@@ -81,7 +81,7 @@ module ProductImport
     end
 
     def strategy
-      @strategy ||= strategy_factory.new
+      @strategy ||= strategy_factory.new(settings.updated_ids)
     end
 
     def total_saved_count

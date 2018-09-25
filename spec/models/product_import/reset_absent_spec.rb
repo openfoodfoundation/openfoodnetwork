@@ -13,8 +13,7 @@ module ProductImport
         let(:settings) do
           instance_double(
             Settings,
-            enterprises_to_reset: [],
-            updated_ids: []
+            enterprises_to_reset: []
           )
         end
 
@@ -27,13 +26,12 @@ module ProductImport
         end
       end
 
-      context 'when there are updated_ids and enterprises_to_reset' do
+      context 'when there are enterprises_to_reset' do
         let(:enterprise) { instance_double(Enterprise, id: 1) }
 
         let(:settings) do
           instance_double(
             Settings,
-            updated_ids: [0],
             enterprises_to_reset: [enterprise.id.to_s]
           )
         end
@@ -46,7 +44,7 @@ module ProductImport
 
           allow(strategy).to receive(:<<).with(enterprise.id)
           allow(strategy).to receive(:supplier_ids) { [enterprise.id] }
-          allow(strategy).to receive(:reset).with([0]) { 2 }
+          allow(strategy).to receive(:reset) { 2 }
         end
 
         it 'returns the number of products reset' do
@@ -54,7 +52,7 @@ module ProductImport
         end
 
         it 'resets the products of the specified suppliers' do
-          expect(strategy).to receive(:reset).with([0]) { 2 }
+          expect(strategy).to receive(:reset) { 2 }
           reset_absent.call
         end
       end
@@ -65,7 +63,6 @@ module ProductImport
         let(:settings) do
           instance_double(
             Settings,
-            updated_ids: [0],
             enterprises_to_reset: [enterprise.id.to_s]
           )
         end
@@ -92,7 +89,6 @@ module ProductImport
       let(:settings) do
         instance_double(
           Settings,
-          updated_ids: [0],
           enterprises_to_reset: [enterprise.id.to_s]
         )
       end
@@ -105,7 +101,7 @@ module ProductImport
 
         allow(strategy).to receive(:<<).with(enterprise.id)
         allow(strategy).to receive(:supplier_ids) { [enterprise.id] }
-        allow(strategy).to receive(:reset).with([0]) { 1 }
+        allow(strategy).to receive(:reset) { 1 }
       end
 
       it 'returns the number of reset variant overrides' do

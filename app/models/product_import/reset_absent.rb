@@ -27,7 +27,7 @@ module ProductImport
     attr_reader :settings, :strategy, :entry_processor
 
     def reset_stock
-      @products_reset_count += strategy.reset(settings.updated_ids)
+      @products_reset_count += strategy.reset
     end
   end
 end
