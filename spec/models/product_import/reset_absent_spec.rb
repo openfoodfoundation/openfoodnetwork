@@ -24,16 +24,6 @@ describe ProductImport::ResetAbsent do
   let(:reset_absent) { described_class.new(entry_processor, settings) }
 
   describe '#call' do
-    context 'when there is no data' do
-      let(:settings) do
-        instance_double(ProductImport::Settings, data_for_stock_reset?: false)
-      end
-
-      it 'returns nil' do
-        expect(reset_absent.call).to be_nil
-      end
-    end
-
     context 'when there are no enterprises_to_reset' do
       let(:settings) do
         instance_double(
@@ -115,35 +105,6 @@ describe ProductImport::ResetAbsent do
           reset_absent.call
           expect(suppliers_to_reset_inventories).to eq([enterprise.id])
         end
-      end
-    end
-
-    context 'when reset_all_absent is not set' do
-      let(:settings) do
-        instance_double(
-          ProductImport::Settings,
-          reset_all_absent?: false,
-          data_for_stock_reset?: true,
-          updated_ids: [0],
-          enterprises_to_reset: ['1']
-        )
-      end
-
-      before do
-        allow(entry_processor)
-          .to receive(:permission_by_id?).with('1') { true }
-      end
-
-      it 'does not reset anything' do
-        reset_absent.call
-
-        suppliers_to_reset_products = reset_absent
-          .instance_variable_get('@suppliers_to_reset_products')
-        suppliers_to_reset_inventories = reset_absent
-          .instance_variable_get('@suppliers_to_reset_inventories')
-
-        expect(suppliers_to_reset_products).to eq([])
-        expect(suppliers_to_reset_inventories).to eq([])
       end
     end
 

@@ -64,6 +64,8 @@ module ProductImport
     end
 
     def reset_absent_items
+      return unless settings.data_for_stock_reset? && settings.reset_all_absent?
+
       reset_absent.call
     end
 

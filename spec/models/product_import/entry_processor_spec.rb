@@ -25,18 +25,57 @@ describe ProductImport::EntryProcessor do
     let(:reset_absent) do
       instance_double(ProductImport::ResetAbsent, call: true)
     end
-    let(:settings) { instance_double(ProductImport::Settings) }
 
     before do
       allow(ProductImport::ResetAbsent).to receive(:new) { reset_absent }
       allow(ProductImport::Settings).to receive(:new) { settings }
     end
 
-    it 'delegates to ResetAbsent' do
-      entry_processor.reset_absent_items
+    context 'when there is no data' do
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
+          data_for_stock_reset?: false,
+          reset_all_absent?: true
+        )
+      end
 
-      expect(ProductImport::ResetAbsent)
-        .to have_received(:new).with(entry_processor, settings)
+      it 'does not call ResetAbsent' do
+        entry_processor.reset_absent_items
+        expect(reset_absent).not_to have_received(:call)
+      end
+    end
+
+    context 'when reset_all_absent is not set' do
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
+          data_for_stock_reset?: true,
+          reset_all_absent?: false
+        )
+      end
+
+      it 'does not call ResetAbsent' do
+        entry_processor.reset_absent_items
+        expect(reset_absent).not_to have_received(:call)
+      end
+    end
+
+    context 'when there is data and reset_all_absent is set' do
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
+          data_for_stock_reset?: true,
+          reset_all_absent?: true
+        )
+      end
+
+      it 'delegates to ResetAbsent' do
+        entry_processor.reset_absent_items
+
+        expect(ProductImport::ResetAbsent)
+          .to have_received(:new).with(entry_processor, settings)
+      end
     end
   end
 

@@ -17,8 +17,6 @@ module ProductImport
     # For selected enterprises; set stock to zero for all products/inventory
     # that were not listed in the newly uploaded spreadsheet
     def call
-      return unless settings.data_for_stock_reset? && settings.reset_all_absent?
-
       settings.enterprises_to_reset.each do |enterprise_id|
         next unless permission_by_id?(enterprise_id)
 
