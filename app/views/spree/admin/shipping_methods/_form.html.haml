@@ -23,6 +23,20 @@
 
   .row
     .alpha.three.columns
+      -# The 'Category' label here is just a logical descriptor for the data we are trying to collect for 'requires_ship_address'
+      -# and does not relate to shipping categories in any way.
+      = f.label :require_ship_address, t(:category)
+    .two.columns
+      = f.radio_button :require_ship_address, true
+      &nbsp;
+      = f.label :delivery, t(:delivery)
+    .omega.six.columns
+      = f.radio_button :require_ship_address, false
+      &nbsp;
+      = f.label :pick_up, t(:pick_up)
+
+  .row
+    .alpha.three.columns
       = f.label :tags, t(:tags)
     .omega.eight.columns
       = f.hidden_field :tag_list, "ng-value" => "shippingMethod.tag_list"
@@ -43,7 +57,7 @@
             = category.name
             %br/
         = error_message_on :shipping_method, :shipping_category_id
-        
+
   .alpha.six.columns
     %fieldset.no-border-bottom
       %legend{align: "center"}= Spree.t(:zones)
