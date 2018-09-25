@@ -69,11 +69,7 @@ module ProductImport
     end
 
     def reset_absent
-      @reset_absent ||= ResetAbsent.new(
-        self,
-        Settings.new(import_settings),
-        strategy_factory
-      )
+      @reset_absent ||= ResetAbsent.new(self, settings, strategy)
     end
 
     def strategy_factory

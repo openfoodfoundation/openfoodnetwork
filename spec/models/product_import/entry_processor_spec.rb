@@ -67,31 +67,65 @@ describe ProductImport::EntryProcessor do
           ProductImport::Settings,
           data_for_stock_reset?: true,
           reset_all_absent?: true,
-          importing_into_inventory?: true
+          updated_ids: [1]
         )
       end
+      context 'when importing into inventory' do
+        let(:strategy) { instance_double(ProductImport::InventoryReset) }
 
-      it 'delegates to ResetAbsent' do
-        entry_processor.reset_absent_items
+        before do
+          allow(settings).to receive(:importing_into_inventory?) { true }
 
-        expect(ProductImport::ResetAbsent)
-          .to have_received(:new)
-          .with(entry_processor, settings, ProductImport::InventoryReset)
+          allow(ProductImport::InventoryReset)
+            .to receive(:new).with([1]) { strategy }
+        end
+
+        it 'delegates to ResetAbsent passing the appropriate strategy' do
+          entry_processor.reset_absent_items
+
+          expect(ProductImport::ResetAbsent)
+            .to have_received(:new)
+            .with(entry_processor, settings, strategy)
+        end
+      end
+
+      context 'when not importing into inventory' do
+        let(:strategy) { instance_double(ProductImport::ProductsReset) }
+
+        before do
+          allow(settings).to receive(:importing_into_inventory?) { false }
+
+          allow(ProductImport::ProductsReset)
+            .to receive(:new).with([1]) { strategy }
+        end
+
+        it 'delegates to ResetAbsent passing the appropriate strategy' do
+          entry_processor.reset_absent_items
+
+          expect(ProductImport::ResetAbsent)
+            .to have_received(:new)
+            .with(entry_processor, settings, strategy)
+        end
       end
     end
   end
 
   describe '#products_reset_count' do
     let(:reset_absent) { instance_double(ProductImport::ResetAbsent) }
+    let(:settings) do
+      instance_double(
+        ProductImport::Settings,
+        importing_into_inventory?: false,
+        updated_ids: [1]
+      )
+    end
 
     before do
+      allow(ProductImport::Settings).to receive(:new) { settings }
       allow(ProductImport::ResetAbsent)
-        .to receive(:new)
-        .and_return(reset_absent)
+        .to receive(:new).and_return(reset_absent)
 
       allow(reset_absent).to receive(:products_reset_count)
-
-      allow(import_settings).to receive(:[]).with(:settings)
     end
 
     it 'delegates to ResetAbsent' do
