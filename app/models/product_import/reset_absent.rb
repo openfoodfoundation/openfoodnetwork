@@ -27,33 +27,40 @@ module ProductImport
         end
       end
 
-      if @suppliers_to_reset_inventories.present?
-        relation = VariantOverride
-          .where(
-            'variant_overrides.hub_id IN (?) ' \
-            'AND variant_overrides.id NOT IN (?)',
-            @suppliers_to_reset_inventories,
-            settings.updated_ids
-          )
-        @products_reset_count += relation.update_all(count_on_hand: 0)
-        nil
-      elsif @suppliers_to_reset_products.present?
-        relation = Spree::Variant
-          .joins(:product)
-          .where(
-            'spree_products.supplier_id IN (?) ' \
-            'AND spree_variants.id NOT IN (?) ' \
-            'AND spree_variants.is_master = false ' \
-            'AND spree_variants.deleted_at IS NULL',
-            @suppliers_to_reset_products,
-            settings.updated_ids
-          )
-        @products_reset_count += relation.update_all(count_on_hand: 0)
-      end
+      reset_stock if suppliers_to_reset?
     end
 
     private
 
     attr_reader :settings
+
+    def reset_stock
+      @products_reset_count += strategy.reset
+    end
+
+    def strategy
+      strategy_factory.new(settings.updated_ids, supplier_ids)
+    end
+
+    def strategy_factory
+      if @suppliers_to_reset_inventories.present?
+        ProductImport::InventoryReset
+      elsif @suppliers_to_reset_products.present?
+        ProductImport::ProductsReset
+      end
+    end
+
+    def supplier_ids
+      if @suppliers_to_reset_inventories.present?
+        @suppliers_to_reset_inventories
+      elsif @suppliers_to_reset_products.present?
+        @suppliers_to_reset_products
+      end
+    end
+
+    def suppliers_to_reset?
+      @suppliers_to_reset_inventories.present? ||
+        @suppliers_to_reset_products.present?
+    end
   end
 end

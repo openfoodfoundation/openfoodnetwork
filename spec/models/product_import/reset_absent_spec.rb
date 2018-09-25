@@ -94,8 +94,8 @@ describe ProductImport::ResetAbsent do
             .to receive(:importing_into_inventory?) { true }
         end
 
-        it 'returns nil' do
-          expect(reset_absent.call).to be_nil
+        it 'returns the number of products reset' do
+          expect(reset_absent.call).to eq(1)
         end
 
         it 'resets the inventories of the specified suppliers' do
@@ -139,30 +139,63 @@ describe ProductImport::ResetAbsent do
   end
 
   describe '#products_reset_count' do
-    let(:variant) { create(:variant) }
-    let(:enterprise_id) { variant.product.supplier_id }
+    context 'and importing into inventory' do
+      let(:variant) { create(:variant) }
+      let(:enterprise) { variant.product.supplier }
+      let(:variant_override) do
+        create(:variant_override, variant: variant, hub: enterprise)
+      end
 
-    before do
-      allow(entry_processor)
-        .to receive(:permission_by_id?).with(enterprise_id.to_s) { true }
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
+          updated_ids: [0],
+          enterprises_to_reset: [enterprise.id.to_s]
+        )
+      end
 
-      allow(entry_processor)
-        .to receive(:importing_into_inventory?) { false }
+      before do
+        variant_override
+
+        allow(entry_processor)
+          .to receive(:permission_by_id?).with(enterprise.id.to_s) { true }
+      end
+
+      before do
+        allow(entry_processor)
+          .to receive(:importing_into_inventory?) { true }
+      end
+
+      it 'returns the number of reset variant overrides' do
+        reset_absent.call
+        expect(reset_absent.products_reset_count).to eq(1)
+      end
     end
 
-    let(:settings) do
-      instance_double(
-        ProductImport::Settings,
-        reset_all_absent?: true,
-        data_for_stock_reset?: true,
-        updated_ids: [0],
-        enterprises_to_reset: [enterprise_id.to_s]
-      )
-    end
+    context 'and not importing into inventory' do
+      let(:variant) { create(:variant) }
+      let(:enterprise_id) { variant.product.supplier_id }
 
-    it 'returns the number of reset products or variants' do
-      reset_absent.call
-      expect(reset_absent.products_reset_count).to eq(2)
+      before do
+        allow(entry_processor)
+          .to receive(:permission_by_id?).with(enterprise_id.to_s) { true }
+
+        allow(entry_processor)
+          .to receive(:importing_into_inventory?) { false }
+      end
+
+      let(:settings) do
+        instance_double(
+          ProductImport::Settings,
+          updated_ids: [0],
+          enterprises_to_reset: [enterprise_id.to_s]
+        )
+      end
+
+      it 'returns the number of reset products or variants' do
+        reset_absent.call
+        expect(reset_absent.products_reset_count).to eq(2)
+      end
     end
   end
 end
