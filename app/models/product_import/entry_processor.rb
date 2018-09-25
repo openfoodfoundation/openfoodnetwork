@@ -5,7 +5,6 @@
 module ProductImport
   class EntryProcessor
     delegate :products_reset_count, to: :reset_absent
-    delegate :importing_into_inventory?, to: :settings
 
     attr_reader :inventory_created, :inventory_updated, :products_created, :variants_created, :variants_updated, :supplier_products, :total_supplier_products, :import_settings
 
@@ -47,7 +46,7 @@ module ProductImport
         next unless supplier_id && permission_by_id?(supplier_id)
 
         products_count =
-          if importing_into_inventory?
+          if settings.importing_into_inventory?
             VariantOverride.where('variant_overrides.hub_id IN (?)', supplier_id).count
           else
             Spree::Variant.
@@ -78,7 +77,7 @@ module ProductImport
     end
 
     def strategy_factory
-      if importing_into_inventory?
+      if settings.importing_into_inventory?
         InventoryReset
       else
         ProductsReset
