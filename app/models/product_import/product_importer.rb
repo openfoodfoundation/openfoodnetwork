@@ -57,6 +57,13 @@ module ProductImport
       @sheet ? @sheet.last_row - 1 : 0
     end
 
+    def product_field_errors?
+      @entries.each do |entry|
+        return true if entry.errors.messages.values.include? [I18n.t('admin.product_import.model.not_updatable')]
+      end
+      false
+    end
+
     def reset_counts
       # Return indexed data about existing product count, reset count, and updates count per supplier
       @reset_counts.each do |supplier_id, values|

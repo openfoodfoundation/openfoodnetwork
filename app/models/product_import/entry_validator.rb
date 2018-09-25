@@ -14,6 +14,17 @@ module ProductImport
       @import_settings = import_settings
     end
 
+    def self.non_updatable_fields
+      {
+        category: :primary_taxon_id,
+        description: :description,
+        unit_type: :variant_unit_scale,
+        variant_unit_name: :variant_unit_name,
+        tax_category: :tax_category_id,
+        shipping_category: :shipping_category_id
+      }
+    end
+
     def validate_all(entries)
       entries.each do |entry|
         supplier_validation(entry)
@@ -182,6 +193,8 @@ module ProductImport
         return
       end
 
+      products.each { |product| product_field_errors(entry, product) }
+
       products.flat_map(&:variants).each do |existing_variant|
         if entry_matches_existing_variant?(entry, existing_variant) && existing_variant.deleted_at.nil?
           return mark_as_existing_variant(entry, existing_variant)
@@ -213,6 +226,21 @@ module ProductImport
       else
         mark_as_invalid(entry, product_validations: existing_variant.errors)
       end
+    end
+
+    def product_field_errors(entry, existing_product)
+      EntryValidator.non_updatable_fields.each do |display_name, attribute|
+        next if attributes_match?(attribute, existing_product, entry) || attributes_blank?(attribute, existing_product, entry)
+        mark_as_invalid(entry, attribute: display_name, error: I18n.t('admin.product_import.model.not_updatable'))
+      end
+    end
+
+    def attributes_match?(attribute, existing_product, entry)
+      existing_product.public_send(attribute) == entry.public_send(attribute)
+    end
+
+    def attributes_blank?(attribute, existing_product, entry)
+      existing_product.public_send(attribute).blank? && entry.public_send(attribute).blank?
     end
 
     def permission_by_name?(supplier_name)

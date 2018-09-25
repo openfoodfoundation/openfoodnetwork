@@ -16,22 +16,23 @@ describe ProductImport::ProductImporter do
 
   let!(:category) { create(:taxon, name: 'Vegetables') }
   let!(:category2) { create(:taxon, name: 'Cake') }
-  let!(:category3) { create(:taxon, name: 'Cereal') }
+  let!(:category3) { create(:taxon, name: 'Meat') }
+  let!(:category4) { create(:taxon, name: 'Cereal') }
   let!(:tax_category) { create(:tax_category) }
   let!(:tax_category2) { create(:tax_category) }
   let!(:shipping_category) { create(:shipping_category) }
 
-  let!(:product) { create(:simple_product, supplier: enterprise2, name: 'Hypothetical Cake') }
+  let!(:product) { create(:simple_product, supplier: enterprise2, name: 'Hypothetical Cake', description: nil, primary_taxon_id: category2.id) }
   let!(:variant) { create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500', display_name: 'Preexisting Banana') }
-  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans', unit_value: '500') }
-  let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts', unit_value: '500') }
-  let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage', unit_value: '500') }
-  let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce', unit_value: '500') }
-  let!(:product6) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Beetroot', unit_value: '500', on_demand: true, variant_unit_scale: 1, variant_unit: 'weight') }
-  let!(:product7) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Tomato', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight') }
+  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans', unit_value: '500', primary_taxon_id: category.id, description: nil) }
+  let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts', unit_value: '500', primary_taxon_id: category.id) }
+  let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage', unit_value: '500', primary_taxon_id: category.id) }
+  let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce', unit_value: '500', primary_taxon_id: category.id) }
+  let!(:product6) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Beetroot', unit_value: '500', on_demand: true, variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category.id, description: nil) }
+  let!(:product7) { create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Tomato', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category.id, description: nil) }
 
-  let!(:product8) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Oats', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category3.id) }
-  let!(:product9) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Oats', unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category3.id) }
+  let!(:product8) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Oats', description: "", unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category4.id) }
+  let!(:product9) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Oats', description: "", unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category4.id) }
   let!(:variant2) { create(:variant, product_id: product8.id, price: '4.50', on_hand: '100', unit_value: '500', display_name: 'Porridge Oats') }
   let!(:variant3) { create(:variant, product_id: product8.id, price: '5.50', on_hand: '100', unit_value: '500', display_name: 'Rolled Oats') }
   let!(:variant4) { create(:variant, product_id: product9.id, price: '6.50', on_hand: '100', unit_value: '500', display_name: 'Flaked Oats') }
@@ -327,15 +328,42 @@ describe ProductImport::ProductImporter do
     end
   end
 
+  describe "updating non-updatable fields on existing products" do
+    before do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["Beetroot", "And Another Enterprise", "Meat", "5", "3.50", "500", "g"]
+        csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "Kg"]
+      end
+      File.write('/tmp/test-m.csv', csv_data)
+      file = File.new('/tmp/test-m.csv')
+      settings = {'import_into' => 'product_list'}
+      @importer = ProductImport::ProductImporter.new(file, admin, start: 1, end: 100, settings: settings)
+    end
+    after { File.delete('/tmp/test-m.csv') }
+
+    it "does not allow updating" do
+      @importer.validate_entries
+      entries = JSON.parse(@importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 0
+      expect(filter('invalid', entries)).to eq 2
+
+      @importer.all_entries.each do |entry|
+        expect(entry.errors.messages.values).to include [I18n.t('admin.product_import.model.not_updatable')]
+      end
+    end
+  end
+
   describe "when more than one product of the same name already exists with multiple variants each" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
-        csv << ["Oats", "User Enterprise", "Cereal", "50", "3.50", "500", "g", "Rolled Oats"]   # Update
-        csv << ["Oats", "User Enterprise", "Cereal", "80", "3.75", "500", "g", "Flaked Oats"]   # Update
-        csv << ["Oats", "User Enterprise", "Cereal", "60", "5.50", "500", "g", "Magic Oats"]    # Add
-        csv << ["Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "French Oats"]   # Add
-        csv << ["Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "Scottish Oats"] # Add
+        csv << ["name", "supplier", "category", "description", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["Oats", "User Enterprise", "Cereal", "", "50", "3.50", "500", "g", "Rolled Oats"]   # Update
+        csv << ["Oats", "User Enterprise", "Cereal", "", "80", "3.75", "500", "g", "Flaked Oats"]   # Update
+        csv << ["Oats", "User Enterprise", "Cereal", "", "60", "5.50", "500", "g", "Magic Oats"]    # Add
+        csv << ["Oats", "User Enterprise", "Cereal", "", "70", "8.50", "500", "g", "French Oats"]   # Add
+        csv << ["Oats", "User Enterprise", "Cereal", "", "70", "8.50", "500", "g", "Scottish Oats"] # Add
       end
       File.write('/tmp/test-m.csv', csv_data)
       file = File.new('/tmp/test-m.csv')

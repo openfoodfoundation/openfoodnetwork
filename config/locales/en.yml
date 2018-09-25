@@ -514,6 +514,7 @@ en:
         conditional_blank: can't be blank if unit_type is blank
         no_product: did not match any products in the database
         not_found: not found in database
+        not_updatable: cannot be updated on existing products via product import
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
@@ -572,6 +573,11 @@ en:
         inventory_to_reset: Existing inventory items will have their stock reset to zero
         line: Line
         item_line: Item line
+      import_review:
+        not_updatable_tip: "The following fields cannot be updated via bulk import for existing products:"
+        fields_ignored: These fields will be ignored when the imported products are saved.
+      entries_table:
+        not_updatable: This field is not updatable via bulk import on existing products
       save_results:
         final_results: Import final results
         products_created: Products created
