@@ -5,6 +5,7 @@
 module ProductImport
   class EntryProcessor
     delegate :products_reset_count, to: :reset_absent
+    delegate :importing_into_inventory?, to: :settings
 
     attr_reader :inventory_created, :inventory_updated, :products_created, :variants_created, :variants_updated, :supplier_products, :total_supplier_products, :import_settings
 
@@ -24,6 +25,8 @@ module ProductImport
       @variants_updated = 0
       @supplier_products = {}
       @total_supplier_products = 0
+
+      @settings = Settings.new(import_settings)
     end
 
     def save_all(entries)
@@ -79,11 +82,9 @@ module ProductImport
       @editable_enterprises.value?(Integer(supplier_id))
     end
 
-    def importing_into_inventory?
-      import_settings[:settings] && import_settings[:settings]['import_into'] == 'inventories'
-    end
-
     private
+
+    attr_reader :settings
 
     def save_to_inventory(entry)
       save_new_inventory_item entry if entry.validates_as? 'new_inventory_item'
@@ -183,8 +184,6 @@ module ProductImport
     end
 
     def assign_defaults(object, entry)
-      settings = Settings.new(import_settings)
-
       # Assigns a default value for a specified field e.g. category='Vegetables', setting this value
       # either for all entries (overwrite_all), or only for those entries where the field was blank
       # in the spreadsheet (overwrite_empty), depending on selected import settings

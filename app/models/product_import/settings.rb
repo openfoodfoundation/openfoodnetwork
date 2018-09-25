@@ -21,5 +21,17 @@ module ProductImport
     def enterprises_to_reset
       @import_settings[:enterprises_to_reset]
     end
+
+    def importing_into_inventory?
+      settings && settings['import_into'] == 'inventories'
+    end
+
+    def reset_all_absent?
+      settings['reset_all_absent']
+    end
+
+    def data_for_stock_reset?
+      !!(settings && updated_ids && enterprises_to_reset)
+    end
   end
 end

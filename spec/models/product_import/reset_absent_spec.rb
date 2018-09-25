@@ -24,29 +24,9 @@ describe ProductImport::ResetAbsent do
   let(:reset_absent) { described_class.new(entry_processor, settings) }
 
   describe '#call' do
-    context 'when there are no settings' do
+    context 'when there is no data' do
       let(:settings) do
-        instance_double(
-          ProductImport::Settings,
-          settings: nil,
-          updated_ids: [],
-          enterprises_to_reset: []
-        )
-      end
-
-      it 'returns nil' do
-        expect(reset_absent.call).to be_nil
-      end
-    end
-
-    context 'when there are no updated_ids' do
-      let(:settings) do
-        instance_double(
-          ProductImport::Settings,
-          settings: [],
-          updated_ids: nil,
-          enterprises_to_reset: []
-        )
+        instance_double(ProductImport::Settings, data_for_stock_reset?: false)
       end
 
       it 'returns nil' do
@@ -58,9 +38,7 @@ describe ProductImport::ResetAbsent do
       let(:settings) do
         instance_double(
           ProductImport::Settings,
-          settings: [],
-          updated_ids: [],
-          enterprises_to_reset: nil
+          enterprises_to_reset: []
         )
       end
 
@@ -69,11 +47,12 @@ describe ProductImport::ResetAbsent do
       end
     end
 
-    context 'when there are settings, updated_ids and enterprises_to_reset' do
+    context 'when there are updated_ids and enterprises_to_reset' do
       let(:settings) do
         instance_double(
           ProductImport::Settings,
-          settings: { 'reset_all_absent' => true },
+          reset_all_absent?: true,
+          data_for_stock_reset?: true,
           updated_ids: [0],
           enterprises_to_reset: [enterprise.id.to_s]
         )
@@ -143,7 +122,8 @@ describe ProductImport::ResetAbsent do
       let(:settings) do
         instance_double(
           ProductImport::Settings,
-          settings: { 'reset_all_absent' => false },
+          reset_all_absent?: false,
+          data_for_stock_reset?: true,
           updated_ids: [0],
           enterprises_to_reset: ['1']
         )
@@ -171,7 +151,8 @@ describe ProductImport::ResetAbsent do
       let(:settings) do
         instance_double(
           ProductImport::Settings,
-          settings: { 'reset_all_absent' => true },
+          reset_all_absent?: true,
+          data_for_stock_reset?: true,
           updated_ids: [0],
           enterprises_to_reset: ['1']
         )
@@ -211,7 +192,8 @@ describe ProductImport::ResetAbsent do
     let(:settings) do
       instance_double(
         ProductImport::Settings,
-        settings: { 'reset_all_absent' => true },
+        reset_all_absent?: true,
+        data_for_stock_reset?: true,
         updated_ids: [0],
         enterprises_to_reset: [enterprise_id.to_s]
       )

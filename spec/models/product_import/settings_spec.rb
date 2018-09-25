@@ -102,4 +102,129 @@ describe ProductImport::Settings do
       end
     end
   end
+
+  describe '#importing_into_inventory?' do
+    context 'when :settings is specified' do
+      context 'and import_into is not specified' do
+        let(:import_settings) { { settings: {} } }
+
+        it 'returns false' do
+          expect(settings.importing_into_inventory?).to eq(false)
+        end
+      end
+
+      context 'and import_into is equal to inventories' do
+        let(:import_settings) do
+          { settings: { 'import_into' => 'inventories' } }
+        end
+
+        it 'returns true' do
+          expect(settings.importing_into_inventory?).to eq(true)
+        end
+      end
+
+      context 'and import_into is not equal to inventories' do
+        let(:import_settings) do
+          { settings: { 'import_into' => 'other' } }
+        end
+
+        it 'returns false' do
+          expect(settings.importing_into_inventory?).to eq(false)
+        end
+      end
+    end
+
+    context 'when :settings is not specified' do
+      let(:import_settings) { {} }
+
+      it 'returns falsy' do
+        expect(settings.importing_into_inventory?).to be_falsy
+      end
+    end
+  end
+
+  describe '#reset_all_absent?' do
+    context 'when :settings is not specified' do
+      let(:import_settings) { {} }
+
+      it 'raises' do
+        expect { settings.reset_all_absent? }.to raise_error(NoMethodError)
+      end
+    end
+
+    context 'when reset_all_absent is not set' do
+      let(:import_settings) do
+        { settings: {} }
+      end
+
+      it 'returns nil' do
+        expect(settings.reset_all_absent?).to be_nil
+      end
+    end
+
+    context 'when reset_all_absent is set' do
+      let(:import_settings) do
+        { settings: { 'reset_all_absent' => true } }
+      end
+
+      it 'returns true' do
+        expect(settings.reset_all_absent?).to eq(true)
+      end
+    end
+  end
+
+  describe '#data_for_stock_reset?' do
+    context 'when there are no settings' do
+      let(:import_settings) do
+        {
+          updated_ids: [],
+          enterprises_to_reset: []
+        }
+      end
+
+      it 'returns false' do
+        expect(settings.data_for_stock_reset?).to eq(false)
+      end
+    end
+
+    context 'when there are no updated_ids' do
+      let(:import_settings) do
+        {
+          settings: [],
+          enterprises_to_reset: []
+        }
+      end
+
+      it 'returns false' do
+        expect(settings.data_for_stock_reset?).to eq(false)
+      end
+    end
+
+    context 'when there are no enterprises_to_reset' do
+      let(:import_settings) do
+        {
+          settings: [],
+          updated_ids: []
+        }
+      end
+
+      it 'returns false' do
+        expect(settings.data_for_stock_reset?).to eq(false)
+      end
+    end
+
+    context 'when there are settings, updated_ids and enterprises_to_reset' do
+      let(:import_settings) do
+        {
+          settings: { 'something' => true },
+          updated_ids: [0],
+          enterprises_to_reset: [0]
+        }
+      end
+
+      it 'returns true' do
+        expect(settings.data_for_stock_reset?).to eq(true)
+      end
+    end
+  end
 end

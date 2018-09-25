@@ -56,4 +56,19 @@ describe ProductImport::EntryProcessor do
       expect(reset_absent).to have_received(:products_reset_count)
     end
   end
+
+  describe '#importing_into_inventory?' do
+    let(:settings) do
+      instance_double(ProductImport::Settings, importing_into_inventory?: true)
+    end
+
+    before do
+      allow(ProductImport::Settings).to receive(:new) { settings }
+    end
+
+    it 'delegates to Settings' do
+      entry_processor.importing_into_inventory?
+      expect(settings).to have_received(:importing_into_inventory?)
+    end
+  end
 end
