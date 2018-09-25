@@ -27,7 +27,7 @@ module ProductImport
         end
       end
 
-      unless @suppliers_to_reset_inventories.empty?
+      if @suppliers_to_reset_inventories.present?
         relation = VariantOverride
           .where(
             'variant_overrides.hub_id IN (?) ' \
@@ -36,21 +36,20 @@ module ProductImport
             settings.updated_ids
           )
         @products_reset_count += relation.update_all(count_on_hand: 0)
+        nil
+      elsif @suppliers_to_reset_products.present?
+        relation = Spree::Variant
+          .joins(:product)
+          .where(
+            'spree_products.supplier_id IN (?) ' \
+            'AND spree_variants.id NOT IN (?) ' \
+            'AND spree_variants.is_master = false ' \
+            'AND spree_variants.deleted_at IS NULL',
+            @suppliers_to_reset_products,
+            settings.updated_ids
+          )
+        @products_reset_count += relation.update_all(count_on_hand: 0)
       end
-
-      return if @suppliers_to_reset_products.empty?
-
-      relation = Spree::Variant
-        .joins(:product)
-        .where(
-          'spree_products.supplier_id IN (?) ' \
-          'AND spree_variants.id NOT IN (?) ' \
-          'AND spree_variants.is_master = false ' \
-          'AND spree_variants.deleted_at IS NULL',
-          @suppliers_to_reset_products,
-          settings.updated_ids
-        )
-      @products_reset_count += relation.update_all(count_on_hand: 0)
     end
 
     private
