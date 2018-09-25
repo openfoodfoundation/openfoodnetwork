@@ -66,7 +66,8 @@ describe ProductImport::EntryProcessor do
         instance_double(
           ProductImport::Settings,
           data_for_stock_reset?: true,
-          reset_all_absent?: true
+          reset_all_absent?: true,
+          importing_into_inventory?: true
         )
       end
 
@@ -74,7 +75,8 @@ describe ProductImport::EntryProcessor do
         entry_processor.reset_absent_items
 
         expect(ProductImport::ResetAbsent)
-          .to have_received(:new).with(entry_processor, settings)
+          .to have_received(:new)
+          .with(entry_processor, settings, ProductImport::InventoryReset)
       end
     end
   end
@@ -88,6 +90,8 @@ describe ProductImport::EntryProcessor do
         .and_return(reset_absent)
 
       allow(reset_absent).to receive(:products_reset_count)
+
+      allow(import_settings).to receive(:[]).with(:settings)
     end
 
     it 'delegates to ResetAbsent' do

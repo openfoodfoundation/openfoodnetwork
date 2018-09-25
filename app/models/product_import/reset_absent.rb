@@ -4,11 +4,12 @@ module ProductImport
   class ResetAbsent < SimpleDelegator
     attr_reader :products_reset_count
 
-    def initialize(decorated, settings)
+    def initialize(decorated, settings, strategy_factory)
       super(decorated)
       @products_reset_count = 0
 
       @settings = settings
+      @strategy_factory = strategy_factory
 
       @suppliers_to_reset_products = []
       @suppliers_to_reset_inventories = []
@@ -32,7 +33,7 @@ module ProductImport
 
     private
 
-    attr_reader :settings
+    attr_reader :settings, :strategy_factory
 
     def reset_stock
       @products_reset_count += strategy.reset
@@ -40,14 +41,6 @@ module ProductImport
 
     def strategy
       strategy_factory.new(settings.updated_ids, supplier_ids)
-    end
-
-    def strategy_factory
-      if @suppliers_to_reset_inventories.present?
-        ProductImport::InventoryReset
-      elsif @suppliers_to_reset_products.present?
-        ProductImport::ProductsReset
-      end
     end
 
     def supplier_ids

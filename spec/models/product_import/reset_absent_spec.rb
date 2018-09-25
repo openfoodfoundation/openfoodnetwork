@@ -21,7 +21,9 @@ describe ProductImport::ResetAbsent do
     )
   end
 
-  let(:reset_absent) { described_class.new(entry_processor, settings) }
+  let(:reset_absent) do
+    described_class.new(entry_processor, settings, strategy_factory)
+  end
 
   describe '#call' do
     context 'when there are no enterprises_to_reset' do
@@ -31,6 +33,8 @@ describe ProductImport::ResetAbsent do
           enterprises_to_reset: []
         )
       end
+
+      let(:strategy_factory) { double(:strategy_factory) }
 
       it 'returns nil' do
         expect(reset_absent.call).to be_nil
@@ -57,6 +61,8 @@ describe ProductImport::ResetAbsent do
         let(:variant) { create(:variant) }
         let(:enterprise) { variant.product.supplier }
 
+        let(:strategy_factory) { ProductImport::ProductsReset }
+
         before do
           allow(entry_processor)
             .to receive(:importing_into_inventory?) { false }
@@ -81,6 +87,8 @@ describe ProductImport::ResetAbsent do
         let(:variant_override) do
           create(:variant_override, variant: variant, hub: enterprise)
         end
+
+        let(:strategy_factory) { ProductImport::InventoryReset }
 
         before do
           variant_override
@@ -119,6 +127,8 @@ describe ProductImport::ResetAbsent do
         )
       end
 
+      let(:strategy_factory) { double(:strategy_factory) }
+
       before do
         allow(entry_processor)
           .to receive(:permission_by_id?).with('1') { false }
@@ -153,6 +163,8 @@ describe ProductImport::ResetAbsent do
           enterprises_to_reset: [enterprise.id.to_s]
         )
       end
+
+      let(:strategy_factory) { ProductImport::InventoryReset }
 
       before do
         variant_override
@@ -191,6 +203,8 @@ describe ProductImport::ResetAbsent do
           enterprises_to_reset: [enterprise_id.to_s]
         )
       end
+
+      let(:strategy_factory) { ProductImport::ProductsReset }
 
       it 'returns the number of reset products or variants' do
         reset_absent.call

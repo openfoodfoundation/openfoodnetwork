@@ -72,8 +72,17 @@ module ProductImport
     def reset_absent
       @reset_absent ||= ResetAbsent.new(
         self,
-        Settings.new(import_settings)
+        Settings.new(import_settings),
+        strategy_factory
       )
+    end
+
+    def strategy_factory
+      if importing_into_inventory?
+        InventoryReset
+      else
+        ProductsReset
+      end
     end
 
     def total_saved_count
