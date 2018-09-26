@@ -22,13 +22,21 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update
+    shipping_method_id = object_params[:shipping_method_id]
+    object_params.delete(:shipping_method_id)
+
     return update_failed unless @order.update_attributes(object_params)
 
     check_order_for_phantom_fees
     fire_event('spree.checkout.update')
+
     while @order.state != "complete"
       if @order.state == "payment"
         return if redirect_to_paypal_express_form_if_needed
+      end
+
+      if @order.state == "delivery"
+        @order.select_shipping_method(shipping_method_id)
       end
 
       next if advance_order_state(@order)
