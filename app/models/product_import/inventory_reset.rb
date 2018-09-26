@@ -2,9 +2,9 @@ module ProductImport
   class InventoryReset
     attr_reader :supplier_ids
 
-    def initialize(updated_ids)
+    def initialize(excluded_items_ids)
       @supplier_ids = []
-      @updated_ids = updated_ids
+      @excluded_items_ids = excluded_items_ids
     end
 
     def <<(values)
@@ -17,15 +17,13 @@ module ProductImport
 
     private
 
-    attr_reader :updated_ids
+    attr_reader :excluded_items_ids
 
     def relation
-      VariantOverride.where(
-        'variant_overrides.hub_id IN (?) ' \
-        'AND variant_overrides.id NOT IN (?)',
-        supplier_ids,
-        updated_ids
-      )
+      relation = VariantOverride.where(hub_id: supplier_ids)
+      return relation if excluded_items_ids.blank?
+
+      relation.where('id NOT IN (?)', excluded_items_ids)
     end
   end
 end

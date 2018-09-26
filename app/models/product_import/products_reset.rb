@@ -2,9 +2,9 @@ module ProductImport
   class ProductsReset
     attr_reader :supplier_ids
 
-    def initialize(updated_ids)
+    def initialize(excluded_items_ids)
       @supplier_ids = []
-      @updated_ids = updated_ids
+      @excluded_items_ids = excluded_items_ids
     end
 
     def <<(values)
@@ -17,19 +17,19 @@ module ProductImport
 
     private
 
-    attr_reader :updated_ids
+    attr_reader :excluded_items_ids
 
     def relation
-      Spree::Variant
+      relation = Spree::Variant
         .joins(:product)
         .where(
-          'spree_products.supplier_id IN (?) ' \
-          'AND spree_variants.id NOT IN (?) ' \
-          'AND spree_variants.is_master = false ' \
-          'AND spree_variants.deleted_at IS NULL',
-          supplier_ids,
-          updated_ids
+          spree_products: { supplier_id: supplier_ids },
+          spree_variants: { is_master: false, deleted_at: nil }
         )
+
+      return relation if excluded_items_ids.blank?
+
+      relation.where('spree_variants.id NOT IN (?)', excluded_items_ids)
     end
   end
 end
