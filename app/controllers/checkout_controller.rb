@@ -22,45 +22,41 @@ class CheckoutController < Spree::CheckoutController
   end
 
   def update
-    if @order.update_attributes(object_params)
-      check_order_for_phantom_fees
-      fire_event('spree.checkout.update')
-      while @order.state != "complete"
-        if @order.state == "payment"
-          return if redirect_to_paypal_express_form_if_needed
-        end
+    return update_failed unless @order.update_attributes(object_params)
 
-        next if advance_order_state(@order)
-
-        if @order.errors.present?
-          flash[:error] = @order.errors.full_messages.to_sentence
-        else
-          flash[:error] = t(:payment_processing_failed)
-        end
-        update_failed
-        return
+    check_order_for_phantom_fees
+    fire_event('spree.checkout.update')
+    while @order.state != "complete"
+      if @order.state == "payment"
+        return if redirect_to_paypal_express_form_if_needed
       end
-      if @order.state == "complete" ||  @order.completed?
-        set_default_bill_address
-        set_default_ship_address
 
-        ResetOrderService.new(self, current_order).call
-        session[:access_token] = current_order.token
+      next if advance_order_state(@order)
 
-        flash[:notice] = t(:order_processed_successfully)
-        respond_to do |format|
-          format.html do
-            respond_with(@order, :location => order_path(@order))
-          end
-          format.json do
-            render json: {path: order_path(@order)}, status: 200
-          end
-        end
+      if @order.errors.present?
+        flash[:error] = @order.errors.full_messages.to_sentence
       else
-        update_failed
+        flash[:error] = t(:payment_processing_failed)
       end
-    else
       update_failed
+      return
+    end
+    return update_failed unless @order.state == "complete" ||  @order.completed?
+
+    set_default_bill_address
+    set_default_ship_address
+
+    ResetOrderService.new(self, current_order).call
+    session[:access_token] = current_order.token
+
+    flash[:notice] = t(:order_processed_successfully)
+    respond_to do |format|
+      format.html do
+        respond_with(@order, :location => order_path(@order))
+      end
+      format.json do
+        render json: {path: order_path(@order)}, status: 200
+      end
     end
   end
 
