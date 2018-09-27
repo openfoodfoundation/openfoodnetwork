@@ -265,7 +265,7 @@ feature %q{
         let!(:s2) { create(:supplier_enterprise) }
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, order_cycle: create(:simple_order_cycle) ) }
         let!(:li1) { create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1) ) }
-        let!(:li2) { create(:line_item, order: o1, product: create(:product, supplier: s2) ) }
+        let!(:li2) { create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s2) ) }
 
         before :each do
           visit '/admin/orders/bulk_management'
@@ -303,7 +303,7 @@ feature %q{
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d1, order_cycle: create(:simple_order_cycle) ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d2, order_cycle: create(:simple_order_cycle) ) }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-        let!(:li2) { create(:line_item, order: o2 ) }
+        let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
         before :each do
           visit '/admin/orders/bulk_management'
@@ -342,7 +342,7 @@ feature %q{
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, order_cycle: oc1 ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, order_cycle: oc2 ) }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-        let!(:li2) { create(:line_item, order: o2 ) }
+        let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
         before do
           visit '/admin/orders/bulk_management'
@@ -382,7 +382,7 @@ feature %q{
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d1, order_cycle: oc1 ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now, distributor: d2, order_cycle: oc2 ) }
         let!(:li1) { create(:line_item_with_shipment, order: o1, product: p1 ) }
-        let!(:li2) { create(:line_item, order: o2, product: p2 ) }
+        let!(:li2) { create(:line_item_with_shipment, order: o2, product: p2 ) }
 
         before :each do
           visit '/admin/orders/bulk_management'
@@ -431,8 +431,8 @@ feature %q{
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-      let!(:li2) { create(:line_item, order: o2 ) }
-      let!(:li3) { create(:line_item, order: o3 ) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
+      let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -459,9 +459,9 @@ feature %q{
       let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day) }
       let!(:o4) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now.end_of_day + 1.second) }
       let!(:li1) { create(:line_item_with_shipment, order: o1, :quantity => 1 ) }
-      let!(:li2) { create(:line_item, order: o2, :quantity => 2 ) }
-      let!(:li3) { create(:line_item, order: o3, :quantity => 3 ) }
-      let!(:li4) { create(:line_item, order: o4, :quantity => 4 ) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2, :quantity => 2 ) }
+      let!(:li3) { create(:line_item_with_shipment, order: o3, :quantity => 3 ) }
+      let!(:li4) { create(:line_item_with_shipment, order: o4, :quantity => 4 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -529,7 +529,7 @@ feature %q{
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-      let!(:li2) { create(:line_item, order: o2 ) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
@@ -596,7 +596,7 @@ feature %q{
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-        let!(:li2) { create(:line_item, order: o2 ) }
+        let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
         before :each do
           visit '/admin/orders/bulk_management'
@@ -630,7 +630,7 @@ feature %q{
         let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
         let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-        let!(:li2) { create(:line_item, order: o2 ) }
+        let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
         before :each do
           visit '/admin/orders/bulk_management'
@@ -651,12 +651,12 @@ feature %q{
       let!(:o1) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o2) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-      let!(:li2) { create(:line_item, order: o2 ) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
       let!(:p3) { create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000, variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] ) }
       let!(:v3) { p3.variants.first }
       let!(:o3) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
-      let!(:li3) { create(:line_item, order: o3, variant: v3, quantity: 3, max_quantity: 6 ) }
-      let!(:li4) { create(:line_item, order: o2, variant: v3, quantity: 1, max_quantity: 3 ) }
+      let!(:li3) { create(:line_item_with_shipment, order: o3, variant: v3, quantity: 3, max_quantity: 6 ) }
+      let!(:li4) { create(:line_item_with_shipment, order: o2, variant: v3, quantity: 1, max_quantity: 3 ) }
 
       before :each do
         visit '/admin/orders/bulk_management'
