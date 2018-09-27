@@ -5,7 +5,7 @@ Darkswarm.factory "CookiesPolicyModalService", (Navigation, $modal, $location, C
     modalMessage: null
 
     constructor: ->
-      if $location.path() is @defaultPath || location.pathname is @defaultPath
+      if @isEnabled()
         @open ''
 
     open: (path = false, template = 'angular-templates/cookies_policy.html') =>
@@ -13,18 +13,16 @@ Darkswarm.factory "CookiesPolicyModalService", (Navigation, $modal, $location, C
         templateUrl: template
         windowClass: "cookies-policy-modal medium"
 
-      @closeCookiesBanner()
-      @onCloseReOpenCookiesBanner()
+      CookiesBannerService.close()
+      @onCloseOpenCookiesBanner()
 
       selectedPath = path || @defaultPath
       Navigation.navigate selectedPath
 
-    closeCookiesBanner: =>
-      setTimeout ->
-        CookiesBannerService.close()
-      , 200
-
-    onCloseReOpenCookiesBanner: =>
+    onCloseOpenCookiesBanner: =>
       @modalInstance.result.then(
         -> CookiesBannerService.open(),
         -> CookiesBannerService.open() )
+
+    isEnabled: =>
+      $location.path() is @defaultPath || location.pathname is @defaultPath
