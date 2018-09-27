@@ -280,7 +280,7 @@ FactoryBot.define do
     after(:create) { |c| c.set_preference(:per_kg, 0.5); c.save! }
   end
 
-  factory :order_with_totals_and_distribution, :parent => :order do #possibly called :order_with_line_items in newer Spree
+  factory :order_with_totals_and_distribution, parent: :order do
     distributor { create(:distributor_enterprise) }
     order_cycle { create(:simple_order_cycle) }
 
