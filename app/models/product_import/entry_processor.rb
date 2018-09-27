@@ -6,12 +6,14 @@ module ProductImport
   class EntryProcessor
     delegate :products_reset_count, to: :reset_absent
 
-    attr_reader :inventory_created, :inventory_updated, :products_created, :variants_created, :variants_updated, :supplier_products, :total_supplier_products, :import_settings
+    attr_reader :inventory_created, :inventory_updated, :products_created,
+                :variants_created, :variants_updated, :supplier_products,
+                :total_supplier_products
 
     def initialize(importer, validator, import_settings, spreadsheet_data, editable_enterprises, import_time, updated_ids)
       @importer = importer
       @validator = validator
-      @import_settings = import_settings
+      @settings = Settings.new(import_settings)
       @spreadsheet_data = spreadsheet_data
       @editable_enterprises = editable_enterprises
       @import_time = import_time
@@ -24,8 +26,6 @@ module ProductImport
       @variants_updated = 0
       @supplier_products = {}
       @total_supplier_products = 0
-
-      @settings = Settings.new(import_settings)
     end
 
     def save_all(entries)
@@ -122,7 +122,7 @@ module ProductImport
     end
 
     def import_into_inventory?(entry)
-      entry.supplier_id && import_settings[:settings]['import_into'] == 'inventories'
+      entry.supplier_id && settings.importing_into_inventory?
     end
 
     def save_new_inventory_item(entry)
