@@ -385,6 +385,7 @@ FactoryBot.define do
 
       after(:create) do |shipment, evaluator|
         shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
+        shipment.shipping_rates.destroy_all # remove existing shipping_rates from shipment
         shipment.add_shipping_method(shipping_method, true)
       end
     end
@@ -408,6 +409,9 @@ FactoryBot.define do
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
+
+      # skip the rebuilding of order.shipments from line_items and stock locations (this is enforced in checkout step :address to :delivery)
+      order.stub(:create_proposed_shipments)
       while !order.completed? do break unless order.next! end
     end
   end
@@ -610,5 +614,17 @@ FactoryBot.modify do
     after(:create) do |user|
       user.spree_roles << Spree::Role.find_or_create_by_name!('admin')
     end
+  end
+end
+
+FactoryBot.modify do
+  factory :stock_location, class: Spree::StockLocation do
+    # keeps the test stock_location unique
+    initialize_with { Spree::StockLocation.find_or_create_by_name(name)}
+  end
+
+  factory :shipment, class: Spree::Shipment do
+    # keeps test shipments unique per order
+    initialize_with { Spree::Shipment.find_or_create_by_order_id(order.id)}
   end
 end

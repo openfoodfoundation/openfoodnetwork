@@ -708,7 +708,7 @@ describe Spree::Order do
 
       it "updates shipping fees" do
         # Change the shipping method
-        order.shipment.update_attributes(shipping_method_id: shipping_method.id)
+        order.shipments = [create(:shipment_with, :shipping_method, shipping_method: shipping_method)]
         order.save
 
         # Check if fees got updated
