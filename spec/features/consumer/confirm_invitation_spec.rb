@@ -8,6 +8,7 @@ feature "Confirm invitation as manager" do
     let(:user) { Spree::User.create(email: email, unconfirmed_email: email, password: "secret") }
 
     before do
+      create(:mail_method)
       user.reset_password_token = Devise.friendly_token
       user.reset_password_sent_at = Time.now.utc
       user.save!
