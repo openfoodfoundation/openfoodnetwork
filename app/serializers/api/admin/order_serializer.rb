@@ -40,9 +40,9 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
   end
 
   def capture_path
-    payment_due = PendingPayments.new(object)
-    return '' unless object.payment_required? && payment_due.payment_object
-    spree_routes_helper.fire_admin_order_payment_path(object, payment_due.payment_object.id, e: 'capture')
+    pending_payment = object.pending_payments.first
+    return '' unless object.payment_required? && pending_payment
+    spree_routes_helper.fire_admin_order_payment_path(object, pending_payment.id, e: 'capture')
   end
 
   def ready_to_ship
