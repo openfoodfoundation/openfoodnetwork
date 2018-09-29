@@ -117,49 +117,30 @@ describe OrderUpdater do
 
   context '#before_save_hook' do
     let(:distributor) { build(:distributor_enterprise) }
-    let(:order) { build(:order, distributor: distributor) }
-    let(:shipment) { build(:shipment) }
-    let(:shipping_rate) do
-      Spree::ShippingRate.new(
-        shipping_method: shipping_method,
-        selected: true
-      )
-    end
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
 
     before do
-      shipment.shipping_rates << shipping_rate
-      order.shipments << shipment
+        order.distributor = distributor
+        order.shipments = [shipment]
     end
 
-    context 'when any of the shipping methods doesn\'t require a delivery address' do
-      let(:shipping_method) { build(:base_shipping_method, require_ship_address: false) }
+    context 'when shipping method is pickup' do
+      let(:shipping_method) { create(:shipping_method_with, :pickup) }
+      let(:address) { build(:address, firstname: 'joe') }
+      before { distributor.address = address }
 
-      let(:delivery_shipment) { build(:shipment) }
-      let(:delivery_shipping_rate) do
-        Spree::ShippingRate.new(
-          shipping_method: build(:base_shipping_method, require_ship_address: true),
-          selected: true
-        )
-      end
-
-      before do
-        delivery_shipment.shipping_rates << delivery_shipping_rate
-        order.shipments << delivery_shipment
-      end
-
-      it "populates the shipping address" do
+      it "populates the shipping address from distributor" do
         order_updater.before_save_hook
         expect(order.ship_address.firstname).to eq(distributor.address.firstname)
       end
     end
 
-    context 'when any of the shipping methods requires a delivery address' do
-      let(:shipping_method) { build(:base_shipping_method, require_ship_address: true) }
+    context 'when shipping_method is delivery' do
+      let(:shipping_method) { create(:shipping_method_with, :delivery) }
       let(:address) { build(:address, firstname: 'will') }
-
       before { order.ship_address = address }
 
-      it "does not populate the shipping address" do
+      it "does not populate the shipping address from distributor" do
         order_updater.before_save_hook
         expect(order.ship_address.firstname).to eq("will")
       end

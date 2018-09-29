@@ -340,6 +340,10 @@ FactoryBot.define do
       require_ship_address { true }
     end
 
+    trait :pickup do
+      require_ship_address { false }
+    end
+
     trait :flat_rate do
       calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
     end
@@ -371,9 +375,10 @@ FactoryBot.define do
   factory :shipment_with, parent: :shipment do
     trait :shipping_method do
       transient do
-        shipping_method { create :shipping_method }
+        shipping_method { create(:shipping_method) }
       end
       after(:create) do |shipment, evaluator|
+        shipment.shipping_rates.destroy_all # remove existing shipping_rates from shipment
         shipment.add_shipping_method(evaluator.shipping_method, true)
       end
     end
