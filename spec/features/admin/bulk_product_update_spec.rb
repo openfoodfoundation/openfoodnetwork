@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature %q{
+xfeature %q{
   As an Administrator
   I want to be able to manage products in bulk
 } , js: true do
