@@ -627,7 +627,7 @@ GEM
       builder (>= 2.1.2)
       i18n (>= 0.4.1)
       nokogiri (>= 1.4.2)
-    representative_view (1.2.2)
+    representative_view (1.2.3)
       actionpack (> 2.3.0, < 4.0.0)
       representative (~> 1.0.2)
     roadie (3.0.1)
