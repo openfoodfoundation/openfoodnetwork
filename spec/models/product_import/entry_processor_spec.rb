@@ -116,26 +116,36 @@ describe ProductImport::EntryProcessor do
   end
 
   describe '#products_reset_count' do
-    let(:reset_absent) { instance_double(ProductImport::ResetAbsent) }
     let(:settings) do
       instance_double(
         ProductImport::Settings,
+        data_for_stock_reset?: true,
+        reset_all_absent?: true,
         importing_into_inventory?: false,
         updated_ids: [1]
       )
     end
 
-    before do
-      allow(ProductImport::Settings).to receive(:new) { settings }
-      allow(ProductImport::ResetAbsent)
-        .to receive(:new).and_return(reset_absent)
+    context 'when reset_absent_items was executed' do
+      let(:reset_absent) do
+        instance_double(ProductImport::ResetAbsent, call: 2)
+      end
 
-      allow(reset_absent).to receive(:products_reset_count)
+      before do
+        allow(ProductImport::Settings).to receive(:new) { settings }
+        allow(ProductImport::ResetAbsent).to receive(:new) { reset_absent }
+      end
+
+      it 'returns the number of items affected by the last reset' do
+        entry_processor.reset_absent_items
+        expect(entry_processor.products_reset_count).to eq(2)
+      end
     end
 
-    it 'delegates to ResetAbsent' do
-      entry_processor.products_reset_count
-      expect(reset_absent).to have_received(:products_reset_count)
+    context 'when ResetAbsent was not called' do
+      it 'returns 0' do
+        expect(entry_processor.products_reset_count).to eq(0)
+      end
     end
   end
 end

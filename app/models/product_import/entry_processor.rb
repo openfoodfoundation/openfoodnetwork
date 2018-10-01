@@ -4,11 +4,9 @@
 
 module ProductImport
   class EntryProcessor
-    delegate :products_reset_count, to: :reset_absent
-
     attr_reader :inventory_created, :inventory_updated, :products_created,
                 :variants_created, :variants_updated, :supplier_products,
-                :total_supplier_products
+                :total_supplier_products, :products_reset_count
 
     def initialize(importer, validator, import_settings, spreadsheet_data, editable_enterprises, import_time, updated_ids)
       @importer = importer
@@ -24,6 +22,7 @@ module ProductImport
       @products_created = 0
       @variants_created = 0
       @variants_updated = 0
+      @products_reset_count = 0
       @supplier_products = {}
       @total_supplier_products = 0
     end
@@ -65,7 +64,7 @@ module ProductImport
     def reset_absent_items
       return unless settings.data_for_stock_reset? && settings.reset_all_absent?
 
-      reset_absent.call
+      @products_reset_count = reset_absent.call
     end
 
     def reset_absent

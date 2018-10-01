@@ -21,8 +21,8 @@ module ProductImport
           instance_double(InventoryResetStrategy, supplier_ids: [])
         end
 
-        it 'returns nil' do
-          expect(reset_absent.call).to be_nil
+        it 'returns 0' do
+          expect(reset_absent.call).to eq(0)
         end
       end
 
@@ -81,34 +81,10 @@ module ProductImport
           expect(reset_stock_strategy).not_to receive(:reset)
           reset_absent.call
         end
-      end
-    end
 
-    describe '#products_reset_count' do
-      let(:enterprise) { instance_double(Enterprise, id: 1) }
-
-      let(:settings) do
-        instance_double(
-          Settings,
-          enterprises_to_reset: [enterprise.id.to_s]
-        )
-      end
-
-      let(:reset_stock_strategy) { instance_double(InventoryResetStrategy) }
-
-      before do
-        allow(entry_processor)
-          .to receive(:permission_by_id?).with(enterprise.id.to_s) { true }
-
-        allow(reset_stock_strategy).to receive(:<<).with(enterprise.id)
-        allow(reset_stock_strategy)
-          .to receive(:supplier_ids) { [enterprise.id] }
-        allow(reset_stock_strategy).to receive(:reset) { 1 }
-      end
-
-      it 'returns the number of reset variant overrides' do
-        reset_absent.call
-        expect(reset_absent.products_reset_count).to eq(1)
+        it 'returns 0' do
+          expect(reset_absent.call).to eq(0)
+        end
       end
     end
   end

@@ -12,7 +12,11 @@ module ProductImport
     end
 
     def reset
-      relation.update_all(count_on_hand: 0)
+      if supplier_ids.present?
+        relation.update_all(count_on_hand: 0)
+      else
+        0
+      end
     end
 
     private
