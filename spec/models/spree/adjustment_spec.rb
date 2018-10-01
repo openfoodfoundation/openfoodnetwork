@@ -61,10 +61,12 @@ module Spree
       describe "Shipment adjustments" do
         let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
         let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
-        let!(:order)          { create(:order, distributor: hub, shipments: [shipment]) }
+        let!(:order)          { create(:order, distributor: hub) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
         let!(:line_item)      { create(:line_item, order: order) }
         let(:adjustment)      { order.adjustments(:reload).shipping.first }
+
+        before { order.shipments = [shipment] }
 
         it "has a shipping charge of $50" do
           adjustment.amount.should == 50
