@@ -69,10 +69,10 @@ module ProductImport
     end
 
     def reset_absent
-      @reset_absent ||= ResetAbsent.new(self, settings, strategy)
+      @reset_absent ||= ResetAbsent.new(self, settings, reset_stock_strategy)
     end
 
-    def strategy_factory
+    def reset_stock_strategy_factory
       if settings.importing_into_inventory?
         InventoryReset
       else
@@ -80,8 +80,9 @@ module ProductImport
       end
     end
 
-    def strategy
-      @strategy ||= strategy_factory.new(settings.updated_ids)
+    def reset_stock_strategy
+      @reset_stock_strategy ||= reset_stock_strategy_factory
+        .new(settings.updated_ids)
     end
 
     def total_saved_count

@@ -5,7 +5,7 @@ module ProductImport
     let(:entry_processor) { instance_double(EntryProcessor) }
 
     let(:reset_absent) do
-      described_class.new(entry_processor, settings, strategy)
+      described_class.new(entry_processor, settings, reset_stock_strategy)
     end
 
     describe '#call' do
@@ -17,7 +17,7 @@ module ProductImport
           )
         end
 
-        let(:strategy) do
+        let(:reset_stock_strategy) do
           instance_double(InventoryReset, supplier_ids: [])
         end
 
@@ -36,15 +36,16 @@ module ProductImport
           )
         end
 
-        let(:strategy) { instance_double(ProductsReset) }
+        let(:reset_stock_strategy) { instance_double(ProductsReset) }
 
         before do
           allow(entry_processor)
             .to receive(:permission_by_id?).with(enterprise.id.to_s) { true }
 
-          allow(strategy).to receive(:<<).with(enterprise.id)
-          allow(strategy).to receive(:supplier_ids) { [enterprise.id] }
-          allow(strategy).to receive(:reset) { 2 }
+          allow(reset_stock_strategy).to receive(:<<).with(enterprise.id)
+          allow(reset_stock_strategy)
+            .to receive(:supplier_ids) { [enterprise.id] }
+          allow(reset_stock_strategy).to receive(:reset) { 2 }
         end
 
         it 'returns the number of products reset' do
@@ -52,7 +53,7 @@ module ProductImport
         end
 
         it 'resets the products of the specified suppliers' do
-          expect(strategy).to receive(:reset) { 2 }
+          expect(reset_stock_strategy).to receive(:reset) { 2 }
           reset_absent.call
         end
       end
@@ -67,17 +68,17 @@ module ProductImport
           )
         end
 
-        let(:strategy) { instance_double(InventoryReset) }
+        let(:reset_stock_strategy) { instance_double(InventoryReset) }
 
         before do
           allow(entry_processor)
             .to receive(:permission_by_id?).with(enterprise.id.to_s) { false }
 
-          allow(strategy).to receive(:supplier_ids) { [] }
+          allow(reset_stock_strategy).to receive(:supplier_ids) { [] }
         end
 
         it 'does not reset stock' do
-          expect(strategy).not_to receive(:reset)
+          expect(reset_stock_strategy).not_to receive(:reset)
           reset_absent.call
         end
       end
@@ -93,15 +94,16 @@ module ProductImport
         )
       end
 
-      let(:strategy) { instance_double(InventoryReset) }
+      let(:reset_stock_strategy) { instance_double(InventoryReset) }
 
       before do
         allow(entry_processor)
           .to receive(:permission_by_id?).with(enterprise.id.to_s) { true }
 
-        allow(strategy).to receive(:<<).with(enterprise.id)
-        allow(strategy).to receive(:supplier_ids) { [enterprise.id] }
-        allow(strategy).to receive(:reset) { 1 }
+        allow(reset_stock_strategy).to receive(:<<).with(enterprise.id)
+        allow(reset_stock_strategy)
+          .to receive(:supplier_ids) { [enterprise.id] }
+        allow(reset_stock_strategy).to receive(:reset) { 1 }
       end
 
       it 'returns the number of reset variant overrides' do

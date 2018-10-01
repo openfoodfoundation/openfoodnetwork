@@ -2,10 +2,10 @@ module ProductImport
   class ResetAbsent
     attr_reader :products_reset_count
 
-    def initialize(entry_processor, settings, strategy)
+    def initialize(entry_processor, settings, reset_stock_strategy)
       @entry_processor = entry_processor
       @settings = settings
-      @strategy = strategy
+      @reset_stock_strategy = reset_stock_strategy
 
       @products_reset_count = 0
     end
@@ -16,18 +16,18 @@ module ProductImport
       settings.enterprises_to_reset.each do |enterprise_id|
         next unless entry_processor.permission_by_id?(enterprise_id)
 
-        strategy << enterprise_id.to_i
+        reset_stock_strategy << enterprise_id.to_i
       end
 
-      reset_stock if strategy.supplier_ids.present?
+      reset_stock if reset_stock_strategy.supplier_ids.present?
     end
 
     private
 
-    attr_reader :settings, :strategy, :entry_processor
+    attr_reader :settings, :reset_stock_strategy, :entry_processor
 
     def reset_stock
-      @products_reset_count = strategy.reset
+      @products_reset_count = reset_stock_strategy.reset
     end
   end
 end

@@ -70,41 +70,46 @@ describe ProductImport::EntryProcessor do
           updated_ids: [1]
         )
       end
+
       context 'when importing into inventory' do
-        let(:strategy) { instance_double(ProductImport::InventoryReset) }
+        let(:reset_stock_strategy) do
+          instance_double(ProductImport::InventoryReset)
+        end
 
         before do
           allow(settings).to receive(:importing_into_inventory?) { true }
 
           allow(ProductImport::InventoryReset)
-            .to receive(:new).with([1]) { strategy }
+            .to receive(:new).with([1]) { reset_stock_strategy }
         end
 
-        it 'delegates to ResetAbsent passing the appropriate strategy' do
+        it 'delegates to ResetAbsent passing the appropriate reset_stock_strategy' do
           entry_processor.reset_absent_items
 
           expect(ProductImport::ResetAbsent)
             .to have_received(:new)
-            .with(entry_processor, settings, strategy)
+            .with(entry_processor, settings, reset_stock_strategy)
         end
       end
 
       context 'when not importing into inventory' do
-        let(:strategy) { instance_double(ProductImport::ProductsReset) }
+        let(:reset_stock_strategy) do
+          instance_double(ProductImport::ProductsReset)
+        end
 
         before do
           allow(settings).to receive(:importing_into_inventory?) { false }
 
           allow(ProductImport::ProductsReset)
-            .to receive(:new).with([1]) { strategy }
+            .to receive(:new).with([1]) { reset_stock_strategy }
         end
 
-        it 'delegates to ResetAbsent passing the appropriate strategy' do
+        it 'delegates to ResetAbsent passing the appropriate reset_stock_strategy' do
           entry_processor.reset_absent_items
 
           expect(ProductImport::ResetAbsent)
             .to have_received(:new)
-            .with(entry_processor, settings, strategy)
+            .with(entry_processor, settings, reset_stock_strategy)
         end
       end
     end
