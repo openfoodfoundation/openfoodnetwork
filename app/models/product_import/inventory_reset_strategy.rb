@@ -1,17 +1,12 @@
 module ProductImport
   class InventoryResetStrategy
-    attr_reader :supplier_ids
-
     def initialize(excluded_items_ids)
-      @supplier_ids = []
       @excluded_items_ids = excluded_items_ids
     end
 
-    def <<(values)
-      @supplier_ids << values
-    end
+    def reset(supplier_ids)
+      @supplier_ids = supplier_ids
 
-    def reset
       if supplier_ids.present?
         relation.update_all(count_on_hand: 0)
       else
@@ -21,7 +16,7 @@ module ProductImport
 
     private
 
-    attr_reader :excluded_items_ids
+    attr_reader :excluded_items_ids, :supplier_ids
 
     def relation
       relation = VariantOverride.where(hub_id: supplier_ids)

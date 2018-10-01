@@ -11,24 +11,20 @@ module ProductImport
     #
     # @return [Integer] number of items affected by the reset
     def call
-      settings.enterprises_to_reset.each do |enterprise_id|
-        next unless entry_processor.permission_by_id?(enterprise_id)
-
-        reset_stock_strategy << enterprise_id.to_i
-      end
-
-      reset_stock
+      reset_stock_strategy.reset(authorized_enterprises)
     end
 
     private
 
     attr_reader :settings, :reset_stock_strategy, :entry_processor
 
-    def reset_stock
-      if reset_stock_strategy.supplier_ids.present?
-        reset_stock_strategy.reset
-      else
-        0
+    # Returns the enterprises that have permissions to be reset
+    #
+    # @return [Array<Integer>] array of Enterprise ids
+    def authorized_enterprises
+      settings.enterprises_to_reset.map do |enterprise_id|
+        next unless entry_processor.permission_by_id?(enterprise_id)
+        enterprise_id.to_i
       end
     end
   end
