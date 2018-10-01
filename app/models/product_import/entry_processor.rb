@@ -74,9 +74,9 @@ module ProductImport
 
     def reset_stock_strategy_factory
       if settings.importing_into_inventory?
-        InventoryReset
+        InventoryResetStrategy
       else
-        ProductsReset
+        ProductsResetStrategy
       end
     end
 

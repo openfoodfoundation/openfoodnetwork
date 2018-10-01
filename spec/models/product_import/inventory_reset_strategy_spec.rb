@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ProductImport::InventoryReset do
+describe ProductImport::InventoryResetStrategy do
   let(:inventory_reset) { described_class.new(excluded_items_ids) }
 
   describe '#<<' do

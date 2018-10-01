@@ -18,7 +18,7 @@ module ProductImport
         end
 
         let(:reset_stock_strategy) do
-          instance_double(InventoryReset, supplier_ids: [])
+          instance_double(InventoryResetStrategy, supplier_ids: [])
         end
 
         it 'returns nil' do
@@ -36,7 +36,7 @@ module ProductImport
           )
         end
 
-        let(:reset_stock_strategy) { instance_double(ProductsReset) }
+        let(:reset_stock_strategy) { instance_double(ProductsResetStrategy) }
 
         before do
           allow(entry_processor)
@@ -68,7 +68,7 @@ module ProductImport
           )
         end
 
-        let(:reset_stock_strategy) { instance_double(InventoryReset) }
+        let(:reset_stock_strategy) { instance_double(InventoryResetStrategy) }
 
         before do
           allow(entry_processor)
@@ -94,7 +94,7 @@ module ProductImport
         )
       end
 
-      let(:reset_stock_strategy) { instance_double(InventoryReset) }
+      let(:reset_stock_strategy) { instance_double(InventoryResetStrategy) }
 
       before do
         allow(entry_processor)

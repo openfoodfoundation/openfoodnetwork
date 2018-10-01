@@ -1,5 +1,5 @@
 module ProductImport
-  class ProductsReset
+  class InventoryResetStrategy
     attr_reader :supplier_ids
 
     def initialize(excluded_items_ids)
@@ -20,16 +20,10 @@ module ProductImport
     attr_reader :excluded_items_ids
 
     def relation
-      relation = Spree::Variant
-        .joins(:product)
-        .where(
-          spree_products: { supplier_id: supplier_ids },
-          spree_variants: { is_master: false, deleted_at: nil }
-        )
-
+      relation = VariantOverride.where(hub_id: supplier_ids)
       return relation if excluded_items_ids.blank?
 
-      relation.where('spree_variants.id NOT IN (?)', excluded_items_ids)
+      relation.where('id NOT IN (?)', excluded_items_ids)
     end
   end
 end

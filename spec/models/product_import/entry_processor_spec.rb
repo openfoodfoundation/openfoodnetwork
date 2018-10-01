@@ -73,13 +73,13 @@ describe ProductImport::EntryProcessor do
 
       context 'when importing into inventory' do
         let(:reset_stock_strategy) do
-          instance_double(ProductImport::InventoryReset)
+          instance_double(ProductImport::InventoryResetStrategy)
         end
 
         before do
           allow(settings).to receive(:importing_into_inventory?) { true }
 
-          allow(ProductImport::InventoryReset)
+          allow(ProductImport::InventoryResetStrategy)
             .to receive(:new).with([1]) { reset_stock_strategy }
         end
 
@@ -94,13 +94,13 @@ describe ProductImport::EntryProcessor do
 
       context 'when not importing into inventory' do
         let(:reset_stock_strategy) do
-          instance_double(ProductImport::ProductsReset)
+          instance_double(ProductImport::ProductsResetStrategy)
         end
 
         before do
           allow(settings).to receive(:importing_into_inventory?) { false }
 
-          allow(ProductImport::ProductsReset)
+          allow(ProductImport::ProductsResetStrategy)
             .to receive(:new).with([1]) { reset_stock_strategy }
         end
 
