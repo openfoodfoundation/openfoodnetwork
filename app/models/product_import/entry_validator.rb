@@ -27,10 +27,10 @@ module ProductImport
 
     def validate_all(entries)
       entries.each do |entry|
-        supplier_validation(entry)
+        enterprise_validation(entry)
         unit_fields_validation(entry)
 
-        next if entry.supplier_id.blank?
+        next if entry.enterprise_id.blank?
 
         if import_into_inventory?
           producer_validation(entry)
@@ -59,37 +59,37 @@ module ProductImport
 
     private
 
-    def supplier_validation(entry)
+    def enterprise_validation(entry)
       return if name_presence_error entry
       return if enterprise_not_found_error entry
       return if permissions_error entry
       return if primary_producer_error entry
 
-      entry.supplier_id = @spreadsheet_data.suppliers_index[entry.supplier][:id]
+      entry.enterprise_id = @spreadsheet_data.enterprises_index[entry.enterprise][:id]
     end
 
     def name_presence_error(entry)
-      return if entry.supplier.present?
-      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_required))
+      return if entry.enterprise.present?
+      mark_as_invalid(entry, attribute: "enterprise", error: I18n.t(:error_required))
       true
     end
 
     def enterprise_not_found_error(entry)
-      return if @spreadsheet_data.suppliers_index[entry.supplier][:id]
-      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_not_found_in_database, name: entry.supplier))
+      return if @spreadsheet_data.enterprises_index[entry.enterprise][:id]
+      mark_as_invalid(entry, attribute: "enterprise", error: I18n.t(:error_not_found_in_database, name: entry.enterprise))
       true
     end
 
     def permissions_error(entry)
-      return if permission_by_name?(entry.supplier)
-      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_no_permission_for_enterprise, name: entry.supplier))
+      return if permission_by_name?(entry.enterprise)
+      mark_as_invalid(entry, attribute: "enterprise", error: I18n.t(:error_no_permission_for_enterprise, name: entry.enterprise))
       true
     end
 
     def primary_producer_error(entry)
       return if import_into_inventory?
-      return if @spreadsheet_data.suppliers_index[entry.supplier][:is_primary_producer]
-      mark_as_invalid(entry, attribute: "supplier", error: I18n.t(:error_not_primary_producer, name: entry.supplier))
+      return if @spreadsheet_data.enterprises_index[entry.enterprise][:is_primary_producer]
+      mark_as_invalid(entry, attribute: "enterprise", error: I18n.t(:error_not_primary_producer, name: entry.enterprise))
       true
     end
 
@@ -126,7 +126,7 @@ module ProductImport
         return
       end
 
-      unless inventory_permission?(entry.supplier_id, @spreadsheet_data.producers_index[producer_name])
+      unless inventory_permission?(entry.enterprise_id, @spreadsheet_data.producers_index[producer_name])
         mark_as_invalid(entry, attribute: "producer", error: "\"#{producer_name}\": #{I18n.t('admin.product_import.model.inventory_no_permission')}")
         return
       end
@@ -186,7 +186,7 @@ module ProductImport
     end
 
     def product_validation(entry)
-      products = Spree::Product.where(supplier_id: entry.supplier_id, name: entry.name, deleted_at: nil)
+      products = Spree::Product.where(supplier_id: entry.enterprise_id, name: entry.name, deleted_at: nil)
 
       if products.empty?
         mark_as_new_product(entry)
@@ -222,7 +222,7 @@ module ProductImport
       if existing_variant.valid?
         entry.product_object = existing_variant
         entry.validates_as = 'existing_variant' unless entry.errors?
-        updates_count_per_supplier(entry.supplier_id) unless entry.errors?
+        updates_count_per_enterprise(entry.enterprise_id) unless entry.errors?
       else
         mark_as_invalid(entry, product_validations: existing_variant.errors)
       end
@@ -243,16 +243,16 @@ module ProductImport
       existing_product.public_send(attribute).blank? && entry.public_send(attribute).blank?
     end
 
-    def permission_by_name?(supplier_name)
-      @editable_enterprises.key?(supplier_name)
+    def permission_by_name?(enterprise_name)
+      @editable_enterprises.key?(enterprise_name)
     end
 
-    def permission_by_id?(supplier_id)
-      @editable_enterprises.value?(Integer(supplier_id))
+    def permission_by_id?(enterprise_id)
+      @editable_enterprises.value?(Integer(enterprise_id))
     end
 
-    def inventory_permission?(supplier_id, producer_id)
-      @current_user.admin? || ( @inventory_permissions[supplier_id] && @inventory_permissions[supplier_id].include?(producer_id) )
+    def inventory_permission?(enterprise_id, producer_id)
+      @current_user.admin? || ( @inventory_permissions[enterprise_id] && @inventory_permissions[enterprise_id].include?(producer_id) )
     end
 
     def mark_as_invalid(entry, options = {})
@@ -273,9 +273,9 @@ module ProductImport
     end
 
     def create_inventory_item(entry, existing_variant)
-      existing_variant_override = VariantOverride.where(variant_id: existing_variant.id, hub_id: entry.supplier_id).first
+      existing_variant_override = VariantOverride.where(variant_id: existing_variant.id, hub_id: entry.enterprise_id).first
 
-      variant_override = existing_variant_override || VariantOverride.new(variant_id: existing_variant.id, hub_id: entry.supplier_id)
+      variant_override = existing_variant_override || VariantOverride.new(variant_id: existing_variant.id, hub_id: entry.enterprise_id)
       variant_override.assign_attributes(count_on_hand: entry.on_hand, import_date: @import_time)
       check_on_hand_nil(entry, variant_override)
       variant_override.assign_attributes(entry.attributes.slice('price', 'on_demand'))
@@ -287,18 +287,18 @@ module ProductImport
       if variant_override.id
         entry.validates_as = 'existing_inventory_item'
         entry.product_object = variant_override
-        updates_count_per_supplier(entry.supplier_id) unless entry.errors?
+        updates_count_per_enterprise(entry.enterprise_id) unless entry.errors?
       else
         entry.validates_as = 'new_inventory_item'
         entry.product_object = variant_override
       end
     end
 
-    def updates_count_per_supplier(supplier_id)
-      if @reset_counts[supplier_id] && @reset_counts[supplier_id][:updates_count]
-        @reset_counts[supplier_id][:updates_count] += 1
+    def updates_count_per_enterprise(enterprise_id)
+      if @reset_counts[enterprise_id] && @reset_counts[enterprise_id][:updates_count]
+        @reset_counts[enterprise_id][:updates_count] += 1
       else
-        @reset_counts[supplier_id] = { updates_count: 1 }
+        @reset_counts[enterprise_id] = { updates_count: 1 }
       end
     end
 

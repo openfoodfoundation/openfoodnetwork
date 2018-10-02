@@ -65,27 +65,27 @@ module ProductImport
     end
 
     def reset_counts
-      # Return indexed data about existing product count, reset count, and updates count per supplier
-      @reset_counts.each do |supplier_id, values|
+      # Return indexed data about existing product count, reset count, and updates count per enterprise
+      @reset_counts.each do |enterprise_id, values|
         values[:updates_count] = 0 if values[:updates_count].blank?
 
         if values[:updates_count] && values[:existing_products]
-          @reset_counts[supplier_id][:reset_count] = values[:existing_products] - values[:updates_count]
+          @reset_counts[enterprise_id][:reset_count] = values[:existing_products] - values[:updates_count]
         end
       end
       @reset_counts
     end
 
-    def suppliers_index
-      @spreadsheet_data.suppliers_index
+    def enterprises_index
+      @spreadsheet_data.enterprises_index
     end
 
-    def supplier_products
-      @processor.andand.supplier_products
+    def enterprise_products
+      @processor.andand.enterprise_products
     end
 
-    def total_supplier_products
-      @processor.total_supplier_products
+    def total_enterprise_products
+      @processor.total_enterprise_products
     end
 
     def all_entries
@@ -165,8 +165,8 @@ module ProductImport
       @processor.reset_absent_items
     end
 
-    def permission_by_id?(supplier_id)
-      @editable_enterprises.value?(Integer(supplier_id))
+    def permission_by_id?(enterprise_id)
+      @editable_enterprises.value?(Integer(enterprise_id))
     end
 
     private
