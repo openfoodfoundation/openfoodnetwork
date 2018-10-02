@@ -470,7 +470,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    haml (4.0.4)
+    haml (4.0.7)
       tilt
     hashdiff (0.3.7)
     highline (1.6.15)
