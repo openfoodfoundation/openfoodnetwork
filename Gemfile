@@ -129,6 +129,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'simplecov', require: false
   # See spec/spec_helper.rb for instructions
   #gem 'perftools.rb'
 end

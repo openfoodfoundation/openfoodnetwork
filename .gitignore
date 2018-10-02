@@ -40,3 +40,4 @@ libpeerconnection.log
 /config/application.yml
 node_modules
 vendor/bundle/
+coverage
