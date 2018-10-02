@@ -7,7 +7,6 @@
 # config.setting_name = 'new value'
 
 require 'spree/product_filters'
-require 'spree/core/calculated_adjustments_decorator'
 
 require "#{Rails.root}/app/models/spree/payment_method_decorator"
 require "#{Rails.root}/app/models/spree/gateway_decorator"
