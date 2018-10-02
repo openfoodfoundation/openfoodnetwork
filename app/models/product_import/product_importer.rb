@@ -180,7 +180,7 @@ module ProductImport
         build_entries
       end
 
-      @spreadsheet_data = SpreadsheetData.new(@entries)
+      @spreadsheet_data = SpreadsheetData.new(@entries, @import_settings)
       @validator = EntryValidator.new(@current_user, @import_time, @spreadsheet_data, @editable_enterprises, @inventory_permissions, @reset_counts, @import_settings)
       @processor = EntryProcessor.new(self, @validator, @import_settings, @spreadsheet_data, @editable_enterprises, @import_time, @updated_ids)
 

@@ -27,6 +27,7 @@ module ProductImport
 
     def validate_all(entries)
       entries.each do |entry|
+        assign_enterprise_field(entry)
         enterprise_validation(entry)
         unit_fields_validation(entry)
 
@@ -42,6 +43,14 @@ module ProductImport
           product_validation(entry)
         end
       end
+    end
+
+    def assign_enterprise_field(entry)
+      entry.enterprise = entry.public_send(enterprise_field)
+    end
+
+    def enterprise_field
+      import_into_inventory? ? :distributor : :producer
     end
 
     def mark_as_new_variant(entry, product_id)
@@ -66,30 +75,31 @@ module ProductImport
       return if primary_producer_error entry
 
       entry.enterprise_id = @spreadsheet_data.enterprises_index[entry.enterprise][:id]
+      entry.public_send "#{enterprise_field}_id=", @spreadsheet_data.enterprises_index[entry.enterprise][:id]
     end
 
     def name_presence_error(entry)
       return if entry.enterprise.present?
-      mark_as_invalid(entry, attribute: "enterprise", error: I18n.t(:error_required))
+      mark_as_invalid(entry, attribute: enterprise_field, error: I18n.t(:error_required))
       true
     end
 
     def enterprise_not_found_error(entry)
       return if @spreadsheet_data.enterprises_index[entry.enterprise][:id]
-      mark_as_invalid(entry, attribute: "enterprise", error: I18n.t(:error_not_found_in_database, name: entry.enterprise))
+      mark_as_invalid(entry, attribute: enterprise_field, error: I18n.t(:error_not_found_in_database, name: entry.enterprise))
       true
     end
 
     def permissions_error(entry)
       return if permission_by_name?(entry.enterprise)
-      mark_as_invalid(entry, attribute: "enterprise", error: I18n.t(:error_no_permission_for_enterprise, name: entry.enterprise))
+      mark_as_invalid(entry, attribute: enterprise_field, error: I18n.t(:error_no_permission_for_enterprise, name: entry.enterprise))
       true
     end
 
     def primary_producer_error(entry)
       return if import_into_inventory?
       return if @spreadsheet_data.enterprises_index[entry.enterprise][:is_primary_producer]
-      mark_as_invalid(entry, attribute: "enterprise", error: I18n.t(:error_not_primary_producer, name: entry.enterprise))
+      mark_as_invalid(entry, attribute: enterprise_field, error: I18n.t(:error_not_primary_producer, name: entry.enterprise))
       true
     end
 
@@ -207,7 +217,7 @@ module ProductImport
     def mark_as_new_product(entry)
       new_product = Spree::Product.new
       new_product.assign_attributes(entry.attributes.except('id'))
-      new_product.supplier_id = entry.enterprise_id
+      new_product.supplier_id = entry.producer_id
 
       if new_product.valid?
         entry.validates_as = 'new_product' unless entry.errors?
@@ -262,7 +272,7 @@ module ProductImport
     end
 
     def import_into_inventory?
-      @import_settings[:settings]['import_into'] == 'inventories'
+      @import_settings[:settings] && @import_settings[:settings]['import_into'] == 'inventories'
     end
 
     def validate_inventory_item(entry, variant_override)

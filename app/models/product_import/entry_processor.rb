@@ -166,7 +166,7 @@ module ProductImport
 
       product = Spree::Product.new
       product.assign_attributes(entry.attributes.except('id'))
-      product.supplier_id = entry.enterprise_id
+      product.supplier_id = entry.producer_id
       assign_defaults(product, entry)
 
       if product.save
