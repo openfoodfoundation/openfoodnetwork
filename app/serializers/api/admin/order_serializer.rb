@@ -2,7 +2,7 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
   attributes :id, :number, :full_name, :email, :phone, :completed_at, :display_total
   attributes :show_path, :edit_path, :state, :payment_state, :shipment_state
   attributes :payments_path, :shipments_path, :ship_path, :ready_to_ship, :created_at
-  attributes :distributor_name, :special_instructions, :capture_path
+  attributes :distributor_name, :special_instructions, :payment_capture_path
 
   has_one :distributor, serializer: Api::Admin::IdSerializer
   has_one :order_cycle, serializer: Api::Admin::IdSerializer
@@ -39,7 +39,7 @@ class Api::Admin::OrderSerializer < ActiveModel::Serializer
     spree_routes_helper.fire_admin_order_path(object, e: 'ship')
   end
 
-  def capture_path
+  def payment_capture_path
     pending_payment = object.pending_payments.first
     return '' unless object.payment_required? && pending_payment
     spree_routes_helper.fire_admin_order_payment_path(object, pending_payment.id, e: 'capture')

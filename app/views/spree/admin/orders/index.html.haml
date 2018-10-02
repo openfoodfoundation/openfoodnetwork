@@ -68,8 +68,8 @@
         %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{::order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
         %div{'ng-if' => 'order.ready_to_ship'}
           %a.icon-road.icon_link.with-tip.no-text{'ng-href' => '{{::order.ship_path}}', 'data-action' => 'ship', 'data-confirm' => t(:are_you_sure), 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t('.ship')}
-        %div{'ng-if' => 'order.capture_path'}
-          %a.icon-capture.icon_link.no-text{'ng-href' => '{{::order.capture_path}}', 'data-action' => 'capture', 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
+        %div{'ng-if' => 'order.payment_capture_path'}
+          %a.icon-capture.icon_link.no-text{'ng-href' => '{{::order.payment_capture_path}}', 'data-action' => 'capture', 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
 
 .orders-loading{'ng-show' => 'RequestMonitor.loading'}
   .row
