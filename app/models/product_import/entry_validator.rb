@@ -207,6 +207,7 @@ module ProductImport
     def mark_as_new_product(entry)
       new_product = Spree::Product.new
       new_product.assign_attributes(entry.attributes.except('id'))
+      new_product.supplier_id = entry.enterprise_id
 
       if new_product.valid?
         entry.validates_as = 'new_product' unless entry.errors?
