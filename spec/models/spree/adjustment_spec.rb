@@ -61,40 +61,43 @@ module Spree
       describe "Shipment adjustments" do
         let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
         let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
-        let!(:order)          { create(:order, distributor: hub) }
+        let(:order)           { create(:order, distributor: hub) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
-        let!(:line_item)      { create(:line_item, order: order) }
+        let(:line_item)       { create(:line_item, order: order) }
         let(:adjustment)      { order.adjustments(:reload).shipping.first }
 
-        before { order.shipments = [shipment] }
+        describe "the shipping charge" do
+          it "is the adjustment amount" do
+            order.shipments = [shipment]
 
-        it "has a shipping charge of $50" do
-          adjustment.amount.should == 50
+            adjustment.amount.should == 50
+          end
         end
 
         describe "when tax on shipping is disabled" do
+          before { Config.shipment_inc_vat = false }
           it "records 0% tax on shipment adjustments" do
-            Config.shipment_inc_vat = false
             Config.shipping_tax_rate = 0
+            order.shipments = [shipment]
 
             adjustment.included_tax.should == 0
           end
 
           it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
-            Config.shipment_inc_vat = false
             Config.shipping_tax_rate = 0.25
+            order.shipments = [shipment]
 
             adjustment.included_tax.should == 0
           end
         end
 
         describe "when tax on shipping is enabled" do
-          before do
-            Config.shipment_inc_vat = true
-            Config.shipping_tax_rate = 0.25
-          end
+        before { Config.shipment_inc_vat = true }
 
           it "takes the shipment adjustment tax included from the system setting" do
+            Config.shipping_tax_rate = 0.25
+            order.shipments = [shipment]
+
             # Finding the tax included in an amount that's already inclusive of tax:
             # total - ( total / (1 + rate) )
             # 50    - ( 50    / (1 + 0.25) )
@@ -103,14 +106,15 @@ module Spree
           end
 
           it "records 0% tax on shipments when shipping_tax_rate is not set" do
-            Config.shipment_inc_vat = true
             Config.shipping_tax_rate = nil
+            order.shipments = [shipment]
 
             adjustment.included_tax.should == 0
           end
 
           it "records 0% tax on shipments when the distributor does not charge sales tax" do
             order.distributor.update_attributes! charges_sales_tax: false
+            order.shipments = [shipment]
 
             adjustment.included_tax.should == 0
           end
