@@ -20,6 +20,12 @@ module OpenFoodNetwork
 
     def create_enterprise_fee_adjustment(label, target, calculable)
       adjustment = enterprise_fee.create_adjustment(label, target, calculable, true)
+
+      # This is necessary when source is a line_item
+      #   probably because the association order.adjustments contains "inverse_of :source"
+      #   which overrides the value (the line item) set in calculated_adjustment.create_adjustment
+      adjustment.source = calculable
+      adjustment
     end
 
     def line_item_adjustment_label
