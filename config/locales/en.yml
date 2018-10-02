@@ -1357,7 +1357,6 @@ en:
   ie_warning_firefox: Download Firefox
   ie_warning_ie: Upgrade Internet Explorer
   ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
-
   legal:
     cookies_policy:
       header: "How We Use Cookies"
@@ -2685,6 +2684,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     reports:
       enterprise_fee_summary:
         date_end_before_start_error: "must be after start"
+        fee_calculated_on_transfer_through_all: "All"
+        fee_placements:
+          supplier: "Incoming"
+          distributor: "Outgoing"
+          coordinator: "Coordinator"
 
   spree:
     # TODO: remove `email` key once we get to Spree 2.0
