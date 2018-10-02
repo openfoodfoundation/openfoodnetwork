@@ -25,9 +25,8 @@ module Spree
     # LineItems or Orders, so we mock out a line item here to fit the interface
     # that our calculator (usually DefaultTax) expects.
     def compute_tax(amount)
-      product = OpenStruct.new tax_category: tax_category
       line_item = LineItem.new quantity: 1
-      line_item.define_singleton_method(:product) { product }
+      line_item.tax_category = tax_category
       line_item.define_singleton_method(:price) { amount }
 
       # Tax on adjustments (represented by the included_tax field) is always inclusive of
