@@ -13,7 +13,7 @@
     }
 
     &.disabled {
-      background-color: #ccc;
+      background-color: $disabled_button;
       cursor: default;
     }
   }
