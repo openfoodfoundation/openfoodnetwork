@@ -45,7 +45,7 @@ describe ProductImport::ProductImporter do
   describe "importing products from a spreadsheet" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "on_demand"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name", "on_demand"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", "", ""]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "2", "kg", "", ""]
         csv << ["Pea Soup", "User Enterprise", "Vegetables", "8", "5.50", "750", "ml", "", "0"]
@@ -135,7 +135,7 @@ describe ProductImport::ProductImporter do
   describe "when uploading a spreadsheet with some invalid entries" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Good Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
         csv << ["Bad Potatoes", "", "Vegetables", "6", "6.50", "1", ""]
       end
@@ -176,7 +176,7 @@ describe ProductImport::ProductImporter do
   describe "when enterprises are not valid" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Product 1", "Non-existent Enterprise", "Vegetables", "5", "5.50", "500", "g"]
         csv << ["Product 2", "Non-Producer", "Vegetables", "5", "5.50", "500", "g"]
       end
@@ -191,15 +191,15 @@ describe ProductImport::ProductImporter do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
-      expect(entries['2']['errors']['supplier']).to include "not found in database"
-      expect(entries['3']['errors']['supplier']).to include "not enabled as a producer"
+      expect(entries['2']['errors']['enterprise']).to include "not found in database"
+      expect(entries['3']['errors']['enterprise']).to include "not enabled as a producer"
     end
   end
 
   describe "adding new variants to existing products and updating exiting products" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type", "display_name"]
         csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "5", "5.50", "500", "g", "Preexisting Banana"]
         csv << ["Hypothetical Cake", "Another Enterprise", "Cake", "6", "3.50", "500", "g", "Emergent Coffee"]
       end
@@ -245,7 +245,7 @@ describe ProductImport::ProductImporter do
   describe "adding new product and sub-variant at the same time" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type", "display_name"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag"]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag"]
       end
@@ -289,7 +289,7 @@ describe ProductImport::ProductImporter do
   describe "updating various fields" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type", "on_demand", "sku"]
         csv << ["Beetroot", "And Another Enterprise", "Vegetables", "5", "3.50", "500", "g", "0", nil]
         csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "g", "1", "TOMS"]
       end
@@ -331,7 +331,7 @@ describe ProductImport::ProductImporter do
   describe "updating non-updatable fields on existing products" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Beetroot", "And Another Enterprise", "Meat", "5", "3.50", "500", "g"]
         csv << ["Tomato", "And Another Enterprise", "Vegetables", "6", "5.50", "500", "Kg"]
       end
@@ -358,7 +358,7 @@ describe ProductImport::ProductImporter do
   describe "when more than one product of the same name already exists with multiple variants each" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "description", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["name", "enterprise", "category", "description", "on_hand", "price", "units", "unit_type", "display_name"]
         csv << ["Oats", "User Enterprise", "Cereal", "", "50", "3.50", "500", "g", "Rolled Oats"]   # Update
         csv << ["Oats", "User Enterprise", "Cereal", "", "80", "3.75", "500", "g", "Flaked Oats"]   # Update
         csv << ["Oats", "User Enterprise", "Cereal", "", "60", "5.50", "500", "g", "Magic Oats"]    # Add
@@ -398,7 +398,7 @@ describe ProductImport::ProductImporter do
   describe "when importer processes create and update across multiple stages" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type", "display_name"]
         csv << ["Bag of Oats", "User Enterprise", "Cereal", "60", "5.50", "500", "g", "Magic Oats"]     # Add
         csv << ["Bag of Oats", "User Enterprise", "Cereal", "70", "8.50", "500", "g", "French Oats"]    # Add
         csv << ["Bag of Oats", "User Enterprise", "Cereal", "80", "9.50", "500", "g", "Organic Oats"]   # Add
@@ -467,7 +467,7 @@ describe ProductImport::ProductImporter do
   describe "importing items into inventory" do
     before do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "producer", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "enterprise", "producer", "on_hand", "price", "units", "unit_type"]
         csv << ["Beans", "Another Enterprise", "User Enterprise", "5", "3.20", "500", "g"]
         csv << ["Sprouts", "Another Enterprise", "User Enterprise", "6", "6.50", "500", "g"]
         csv << ["Cabbage", "Another Enterprise", "User Enterprise", "2001", "1.50", "500", "g"]
@@ -517,7 +517,7 @@ describe ProductImport::ProductImporter do
 
     it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
         csv << ["Your Potatoes", "Another Enterprise", "Vegetables", "6", "6.50", "1", "kg"]
       end
@@ -545,7 +545,7 @@ describe ProductImport::ProductImporter do
 
     it "allows creating inventories for producers that a user's hub has permission for" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "supplier", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "producer", "enterprise", "on_hand", "price", "units", "unit_type"]
         csv << ["Beans", "User Enterprise", "Another Enterprise", "777", "3.20", "500", "g"]
       end
       File.write('/tmp/test-m.csv', csv_data)
@@ -572,7 +572,7 @@ describe ProductImport::ProductImporter do
 
     it "does not allow creating inventories for producers that a user's hubs don't have permission for" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "enterprise", "on_hand", "price", "units", "unit_type"]
         csv << ["Beans", "User Enterprise", "5", "3.20", "500", "g"]
         csv << ["Sprouts", "User Enterprise", "6", "6.50", "500", "g"]
       end
@@ -601,7 +601,7 @@ describe ProductImport::ProductImporter do
 
     it "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
         csv << ["Beans", "User Enterprise", "Vegetables", "6", "6.50", "500", "g"]
       end
@@ -640,7 +640,7 @@ describe ProductImport::ProductImporter do
 
     it "can reset all inventory items for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "producer", "on_hand", "price", "units", "unit_type"]
+        csv << ["name", "enterprise", "producer", "on_hand", "price", "units", "unit_type"]
         csv << ["Beans", "Another Enterprise", "User Enterprise", "6", "3.20", "500", "g"]
         csv << ["Sprouts", "Another Enterprise", "User Enterprise", "7", "6.50", "500", "g"]
       end
@@ -681,7 +681,7 @@ describe ProductImport::ProductImporter do
 
     it "can overwrite fields with selected defaults when importing to product list" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category_id", "available_on"]
+        csv << ["name", "enterprise", "category", "on_hand", "price", "units", "unit_type", "tax_category_id", "available_on"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.id, ""]
         csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg", "", ""]
       end
