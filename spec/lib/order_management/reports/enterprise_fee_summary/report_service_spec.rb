@@ -77,7 +77,13 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   end
 
   let!(:customer) { create(:customer, name: "Sample Customer") }
+  let!(:another_customer) { create(:customer, name: "Another Customer") }
+
   let!(:customer_order) { prepare_completed_order(customer) }
+  let!(:second_customer_order) { prepare_completed_order(customer) }
+
+  let!(:another_customer) { create(:customer, name: "Another Customer") }
+  let!(:other_customer_order) { prepare_completed_order(another_customer) }
 
   it "groups and sorts entries correctly" do
     parameters = OrderManagement::Reports::EnterpriseFeeSummary::Parameters.new
@@ -85,7 +91,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
     totals = service.enterprise_fee_type_totals
 
-    expect(totals.list.length).to eq(6)
+    expect(totals.list.length).to eq(12)
 
     # Data is sorted by the following, in order:
     # * fee_type
@@ -98,18 +104,30 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     # * total_amount
 
     expected_result = [
-      ["Admin", "Sample Coordinator", "Included Coordinator Fee 1", "Sample Customer",
+      ["Admin", "Sample Coordinator", "Included Coordinator Fee 1", "Another Customer",
        "Coordinator", "All", "Sample Coordinator Tax", "512.00"],
-      ["Admin", "Sample Distributor", "Included Distributor Fee 1", "Sample Customer",
+      ["Admin", "Sample Coordinator", "Included Coordinator Fee 1", "Sample Customer",
+       "Coordinator", "All", "Sample Coordinator Tax", "1024.00"],
+      ["Admin", "Sample Distributor", "Included Distributor Fee 1", "Another Customer",
        "Outgoing", "Sample Coordinator", "Sample Distributor Tax", "4.00"],
-      ["Sales", "Sample Coordinator", "Included Coordinator Fee 2", "Sample Customer",
+      ["Admin", "Sample Distributor", "Included Distributor Fee 1", "Sample Customer",
+       "Outgoing", "Sample Coordinator", "Sample Distributor Tax", "8.00"],
+      ["Sales", "Sample Coordinator", "Included Coordinator Fee 2", "Another Customer",
        "Coordinator", "All", "Sample Product Tax", "1024.00"],
-      ["Sales", "Sample Distributor", "Included Distributor Fee 2", "Sample Customer",
+      ["Sales", "Sample Coordinator", "Included Coordinator Fee 2", "Sample Customer",
+       "Coordinator", "All", "Sample Product Tax", "2048.00"],
+      ["Sales", "Sample Distributor", "Included Distributor Fee 2", "Another Customer",
        "Outgoing", "Sample Coordinator", "Sample Product Tax", "8.00"],
-      ["Sales", "Sample Producer", "Included Producer Fee 1", "Sample Customer",
+      ["Sales", "Sample Distributor", "Included Distributor Fee 2", "Sample Customer",
+       "Outgoing", "Sample Coordinator", "Sample Product Tax", "16.00"],
+      ["Sales", "Sample Producer", "Included Producer Fee 1", "Another Customer",
        "Incoming", "Sample Producer", "Sample Producer Tax", "64.00"],
+      ["Sales", "Sample Producer", "Included Producer Fee 1", "Sample Customer",
+       "Incoming", "Sample Producer", "Sample Producer Tax", "128.00"],
+      ["Sales", "Sample Producer", "Included Producer Fee 2", "Another Customer",
+       "Incoming", "Sample Producer", "Sample Product Tax", "128.00"],
       ["Sales", "Sample Producer", "Included Producer Fee 2", "Sample Customer",
-       "Incoming", "Sample Producer", "Sample Product Tax", "128.00"]
+       "Incoming", "Sample Producer", "Sample Product Tax", "256.00"]
     ]
 
     expected_result.each_with_index do |expected_attributes, row_index|
