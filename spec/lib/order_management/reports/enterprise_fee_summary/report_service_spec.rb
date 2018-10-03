@@ -87,7 +87,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
   it "groups and sorts entries correctly" do
     parameters = OrderManagement::Reports::EnterpriseFeeSummary::Parameters.new
-    service = described_class.new(parameters)
+    service = described_class.new(parameters, nil)
 
     totals = service.enterprise_fee_type_totals
 

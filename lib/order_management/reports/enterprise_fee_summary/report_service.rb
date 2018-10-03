@@ -7,10 +7,11 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       class ReportService
-        attr_accessor :parameters
+        attr_accessor :parameters, :renderer_klass
 
-        def initialize(parameters)
+        def initialize(parameters, renderer_klass)
           @parameters = parameters
+          @renderer_klass = renderer_klass
         end
 
         def enterprise_fees_by_customer
@@ -19,6 +20,11 @@ module OrderManagement
 
         def enterprise_fee_type_totals
           ReportData::EnterpriseFeeTypeTotals.new(list: enterprise_fee_type_total_list.sort)
+        end
+
+        def render
+          renderer = renderer_klass.new(self)
+          renderer.render
         end
 
         private
