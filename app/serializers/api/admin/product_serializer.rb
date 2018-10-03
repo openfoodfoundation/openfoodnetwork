@@ -1,5 +1,5 @@
 class Api::Admin::ProductSerializer < ActiveModel::Serializer
-  attributes :id, :name, :sku, :variant_unit, :variant_unit_scale, :variant_unit_name, :on_demand, :inherits_properties
+  attributes :id, :name, :sku, :variant_unit, :variant_unit_scale, :variant_unit_name, :inherits_properties
 
   attributes :on_hand, :price, :available_on, :permalink_live, :tax_category_id, :import_date, :image_url, :thumb_url
 

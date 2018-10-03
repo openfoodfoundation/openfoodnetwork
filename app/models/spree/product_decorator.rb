@@ -128,6 +128,14 @@ Spree::Product.class_eval do
 
   # -- Methods
 
+  def on_hand
+    if has_variants?
+      variants.map(&:on_hand).reduce(:+)
+    else
+      master.on_hand
+    end
+  end
+
   # Called by Spree::Product::duplicate before saving.
   def duplicate_extra(parent)
     # Spree sets the SKU to "COPY OF #{parent sku}".
