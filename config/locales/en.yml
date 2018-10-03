@@ -2687,6 +2687,17 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           supplier: "Incoming"
           distributor: "Outgoing"
           coordinator: "Coordinator"
+        formats:
+          csv:
+            header:
+              fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
+              customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
+              tax_category_name: "Tax Category"
+              total_amount: "$$ SUM"
 
   spree:
     # TODO: remove `email` key once we get to Spree 2.0
