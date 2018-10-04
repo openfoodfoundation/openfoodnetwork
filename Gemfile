@@ -46,7 +46,6 @@ gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'
 gem 'truncate_html'
-gem 'representative_view'
 gem 'rabl'
 
 # AMS is pinned to 0.8.4 because 0.9.x is a complete re-write, as is 0.10.x
