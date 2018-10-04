@@ -3,11 +3,19 @@ class Spree::ProductSet < ModelSet
     super(Spree::Product, [], attributes, proc { |attrs| attrs[:product_id].blank? })
   end
 
-  # A separate method of updating products was required due to an issue with the way Rails' assign_attributes and updates_attributes behave when delegated attributes of a nested
-  # object are updated via the parent object (ie. price of variants). Updating such attributes by themselves did not work using:
-  # product.update_attributes( { variants_attributes: [ { id: y, price: xx.x } ] } )
-  # and so an explicit call to update attributes on each individual variant was required. ie:
-  # variant.update_attributes( { price: xx.x } )
+  # A separate method of updating products was required due to an issue with
+  # the way Rails' assign_attributes and updates_attributes behave when
+  # delegated attributes of a nested object are updated via the parent object
+  # (ie. price of variants). Updating such attributes by themselves did not
+  # work using:
+  #
+  #   product.update_attributes(variants_attributes: [{ id: y, price: xx.x }])
+  #
+  # and so an explicit call to update attributes on each individual variant was
+  # required. ie:
+  #
+  #   variant.update_attributes( { price: xx.x } )
+  #
   def update_attributes(attributes)
     attributes[:taxon_ids] = attributes[:taxon_ids].split(',')  if attributes[:taxon_ids].present?
     e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
