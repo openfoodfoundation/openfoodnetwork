@@ -54,8 +54,8 @@ feature %q{
 
       it "displays a column for order date" do
         expect(page).to have_selector "th.date", text: "ORDER DATE", :visible => true
-        expect(page).to have_selector "td.date", text: o1.completed_at.strftime("%F %T"), :visible => true
-        expect(page).to have_selector "td.date", text: o2.completed_at.strftime("%F %T"), :visible => true
+        expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y'), :visible => true
+        expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y'), :visible => true
       end
 
       it "displays a column for producer" do

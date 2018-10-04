@@ -91,3 +91,15 @@ th.actions {
 table.index td.actions {
   text-align: left;
 }
+
+.orders-loading {
+  margin-top: 1em;
+
+  img {
+    width: 85px;
+  }
+
+  span {
+    font-size: 1.2em;
+  }
+}

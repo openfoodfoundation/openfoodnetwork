@@ -109,7 +109,7 @@ feature %q{
     quick_login_as_admin
     visit '/admin/orders'
     uncheck 'Only show complete orders'
-    click_button 'Filter Results'
+    page.find('a.icon-search').click
 
     click_edit
 
