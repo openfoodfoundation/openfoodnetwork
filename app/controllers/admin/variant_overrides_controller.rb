@@ -60,7 +60,9 @@ module Admin
     end
 
     def inventory_import_dates
-      import_dates = VariantOverride.distinct_import_dates.for_hubs(editable_enterprises.collect(&:id))
+      import_dates = VariantOverride.
+        distinct_import_dates.
+        for_hubs(editable_enterprises.collect(&:id))
 
       options = [{ id: '0', name: 'All' }]
       import_dates.collect(&:import_date).map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
