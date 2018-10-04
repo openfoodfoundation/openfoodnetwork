@@ -17,14 +17,20 @@ class Spree::ProductSet < ModelSet
   #   variant.update_attributes( { price: xx.x } )
   #
   def update_attributes(attributes)
-    attributes[:taxon_ids] = attributes[:taxon_ids].split(',')  if attributes[:taxon_ids].present?
-    e = @collection.detect { |e| e.id.to_s == attributes[:id].to_s && !e.id.nil? }
-    if e.nil?
+    if attributes[:taxon_ids].present?
+      attributes[:taxon_ids] = attributes[:taxon_ids].split(',')
+    end
+
+    found_model = @collection.find do |model|
+      model.id.to_s == attributes[:id].to_s && model.persisted?
+    end
+
+    if found_model.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
     else
-      ( attributes.except(:id, :variants_attributes, :master_attributes).present? ? e.update_attributes(attributes.except(:id, :variants_attributes, :master_attributes)) : true) and
-      (attributes[:variants_attributes] ? update_variants_attributes(e, attributes[:variants_attributes]) : true ) and
-      (attributes[:master_attributes] ? update_variant(e, attributes[:master_attributes]) : true )
+      ( attributes.except(:id, :variants_attributes, :master_attributes).present? ? found_model.update_attributes(attributes.except(:id, :variants_attributes, :master_attributes)) : true) and
+      (attributes[:variants_attributes] ? update_variants_attributes(found_model, attributes[:variants_attributes]) : true ) and
+      (attributes[:master_attributes] ? update_variant(found_model, attributes[:master_attributes]) : true )
     end
   end
 
