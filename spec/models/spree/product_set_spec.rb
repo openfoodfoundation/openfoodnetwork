@@ -59,6 +59,36 @@ describe Spree::ProductSet do
             'variant_unit_scale' => 1
           )
         end
+
+        context 'when :master_attributes is passed' do
+          let(:master_attributes) { { sku: '123' } }
+
+          before do
+            collection_hash[0][:master_attributes] = master_attributes
+          end
+
+          context 'and the variant does exist' do
+            let!(:variant) { create(:variant, product: product) }
+
+            before { master_attributes[:id] = variant.id }
+
+            it 'updates the attributes of the master variant' do
+              product_set.save
+              expect(variant.reload.sku).to eq('123')
+            end
+          end
+
+          context 'and the variant does not exist' do
+            let(:master_attributes) do
+              attributes_for(:variant).merge(sku: '123')
+            end
+
+            it 'creates it with the specified attributes' do
+              product_set.save
+              expect(Spree::Variant.last.sku).to eq('123')
+            end
+          end
+        end
       end
     end
   end
