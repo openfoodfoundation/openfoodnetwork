@@ -28,9 +28,35 @@ class Spree::ProductSet < ModelSet
     if found_model.nil?
       @klass.new(attributes).save unless @reject_if.andand.call(attributes)
     else
-      ( attributes.except(:id, :variants_attributes, :master_attributes).present? ? found_model.update_attributes(attributes.except(:id, :variants_attributes, :master_attributes)) : true) and
-      (attributes[:variants_attributes] ? update_variants_attributes(found_model, attributes[:variants_attributes]) : true ) and
-      (attributes[:master_attributes] ? update_variant(found_model, attributes[:master_attributes]) : true )
+      update_product_only_attributes(found_model, attributes) &&
+        update_product_variants(found_model, attributes) &&
+        update_product_master(found_model, attributes)
+    end
+  end
+
+  def update_product_only_attributes(product, attributes)
+    if attributes.except(:id, :variants_attributes, :master_attributes).present?
+      product.update_attributes(
+        attributes.except(:id, :variants_attributes, :master_attributes)
+      )
+    else
+      true
+    end
+  end
+
+  def update_product_variants(product, attributes)
+    if attributes[:variants_attributes]
+      update_variants_attributes(product, attributes[:variants_attributes])
+    else
+      true
+    end
+  end
+
+  def update_product_master(product, attributes)
+    if attributes[:master_attributes]
+      update_variant(product, attributes[:master_attributes])
+    else
+      true
     end
   end
 
@@ -41,16 +67,20 @@ class Spree::ProductSet < ModelSet
   end
 
   def update_variant(product, variant_attributes)
-    e = product.variants_including_master.detect { |e| e.id.to_s == variant_attributes[:id].to_s && !e.id.nil? }
-    if e.present?
-      e.update_attributes(variant_attributes.except(:id))
+    found_variant = product.variants_including_master.find do |variant|
+      variant.id.to_s == variant_attributes[:id].to_s && variant.persisted?
+    end
+
+    if found_variant.present?
+      found_variant.update_attributes(variant_attributes.except(:id))
     else
-      product.variants.create variant_attributes
+      product.variants.create(variant_attributes)
     end
   end
 
   def collection_attributes=(attributes)
-    @collection = Spree::Product.where( :id => attributes.each_value.map{ |p| p[:id] } )
+    @collection = Spree::Product
+      .where(id: attributes.each_value.map { |product| product[:id] })
     @collection_hash = attributes
   end
 
