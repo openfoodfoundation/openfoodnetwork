@@ -259,11 +259,12 @@ describe Spree::Order do
     let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
     let(:order)          { create(:order, shipments: [shipment]) }
     let(:enterprise_fee) { create(:enterprise_fee) }
-    let!(:adjustment)    { create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2) }
 
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.25
+
+      create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2)
       order.reload
     end
 
@@ -287,20 +288,20 @@ describe Spree::Order do
 
     let(:variant)         { create(:variant, product: create(:product, tax_category: tax_category10)) }
     let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 46.0)) }
-    let(:shipment)        { create(:shipment) }
+    let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
     let(:enterprise_fee)  { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category20, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 48.0)) }
     let(:additional_adjustment) { create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0)) }
 
     let(:order_cycle)     { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
-    let!(:order)          { create(:order, shipments: [shipment], bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator, adjustments: [additional_adjustment]) }
-    let!(:line_item)      { create(:line_item, order: order, variant: variant, price: 44.0) }
+    let(:line_item)       { create(:line_item, variant: variant, price: 44.0) }
+    let(:order)           { create(:order, line_items: [line_item], shipments: [shipment], bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator, adjustments: [additional_adjustment]) }
 
     before do
-      shipment.add_shipping_method(shipping_method, true)
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = tax_rate15.amount
-      Spree::TaxRate.adjust(order)
-      order.reload.update_distribution_charge!
+
+      order.create_tax_charge!
+      order.update_distribution_charge!
     end
 
     it "returns a hash with all 3 taxes" do
