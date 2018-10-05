@@ -25,6 +25,9 @@
   %thead
     %tr
       %th
+        = t('.select_all')
+        %input{type: 'checkbox', 'ng-click' => 'toggleAll()'}
+      %th
         = t(:products_distributor)
         %th
           %a{'ng-click' => "sortOptions.toggle('completed_at')"}
@@ -39,6 +42,8 @@
       %th.actions
   %tbody
     %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'"}
+      %td.align-center
+        %input{type: 'checkbox', 'ng-model' => 'selected[order.id]'}
       %td.align-center
         {{order.distributor_name}}
       %td.align-center

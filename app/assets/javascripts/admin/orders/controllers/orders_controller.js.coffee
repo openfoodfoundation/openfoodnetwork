@@ -8,6 +8,8 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
     {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
   ]
+  $scope.selected = {}
+  $scope.select_all = false
 
   $scope.initialise = ->
     $scope.per_page = 15
@@ -35,6 +37,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       per_page: $scope.per_page,
       page: page
     })
+
+  $scope.toggleAll = ->
+    $scope.select_all = !$scope.select_all
+    $scope.orders.forEach (order) ->
+      $scope.selected[order.id] = $scope.select_all
 
   $scope.$watch 'sortOptions', (sort) ->
     if sort && sort.predicate != ""
