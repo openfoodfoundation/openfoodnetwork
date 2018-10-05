@@ -177,10 +177,7 @@ Spree::Product.class_eval do
 
   # Get the most recent import_date of a product's variants
   def import_date
-    variants.map do |variant|
-      next if variant.import_date.blank?
-      variant.import_date
-    end.sort.last
+    variants.map(&:import_date).compact.max
   end
 
   # Build a product distribution for each distributor
