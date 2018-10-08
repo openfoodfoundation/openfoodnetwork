@@ -772,8 +772,8 @@ en:
         social:
           twitter_placeholder: eg. @the_prof
           instagram_placeholder: eg. @the_prof
-          facebook_placeholder: "eg. www.facebook.com/PageNameHere"
-          linkedin_placeholder: "eg. www.linkedin.com/in/YourNameHere"
+          facebook_placeholder: eg. www.facebook.com/PageNameHere
+          linkedin_placeholder: eg. www.linkedin.com/in/YourNameHere
         stripe_connect:
           connect_with_stripe: "Connect with Stripe"
           stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
