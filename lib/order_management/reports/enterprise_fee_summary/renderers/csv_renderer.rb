@@ -15,6 +15,11 @@ module OrderManagement
             end
           end
 
+          def filename
+            timestamp = Time.zone.now.strftime("%Y%m%d")
+            "enterprise_fee_summary_#{timestamp}.csv"
+          end
+
           private
 
           def render_header(csv)
