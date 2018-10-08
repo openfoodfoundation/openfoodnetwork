@@ -112,9 +112,9 @@ feature %q{
       Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
       Timecop.travel(Time.zone.local(2013, 4, 25, 15, 0, 0)) { order2.finalize! }
 
-      create(:line_item, variant: variant_1, quantity: 1, order: order1)
-      create(:line_item, variant: variant_2, quantity: 3, order: order1)
-      create(:line_item, variant: product_2.master, quantity: 3, order: order2)
+      create(:line_item_with_shipment, variant: variant_1, quantity: 1, order: order1)
+      create(:line_item_with_shipment, variant: variant_2, quantity: 3, order: order1)
+      create(:line_item_with_shipment, variant: product_2.master, quantity: 3, order: order2)
 
     end
 
