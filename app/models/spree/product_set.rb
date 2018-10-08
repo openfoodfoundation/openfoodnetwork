@@ -36,18 +36,17 @@ class Spree::ProductSet < ModelSet
 
   def update_product_only_attributes(product, attributes)
     variant_related_attrs = [:id, :variants_attributes, :master_attributes]
+    product_related_attrs = attributes.except(*variant_related_attrs)
 
-    if attributes.except(*variant_related_attrs).present?
-      product.assign_attributes(attributes.except(*variant_related_attrs))
+    return true if product_related_attrs.blank?
 
-      product.variants.each do |variant|
-        validate_presence_of_unit_value(product, variant)
-      end
+    product.assign_attributes(product_related_attrs)
 
-      product.save if errors.empty?
-    else
-      true
+    product.variants.each do |variant|
+      validate_presence_of_unit_value(product, variant)
     end
+
+    product.save if errors.empty?
   end
 
   def validate_presence_of_unit_value(product, variant)
@@ -58,19 +57,13 @@ class Spree::ProductSet < ModelSet
   end
 
   def update_product_variants(product, attributes)
-    if attributes[:variants_attributes]
-      update_variants_attributes(product, attributes[:variants_attributes])
-    else
-      true
-    end
+    return true unless attributes[:variants_attributes]
+    update_variants_attributes(product, attributes[:variants_attributes])
   end
 
   def update_product_master(product, attributes)
-    if attributes[:master_attributes]
-      update_variant(product, attributes[:master_attributes])
-    else
-      true
-    end
+    return true unless attributes[:master_attributes]
+    update_variant(product, attributes[:master_attributes])
   end
 
   def update_variants_attributes(product, variants_attributes)
