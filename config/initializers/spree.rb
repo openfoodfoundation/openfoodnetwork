@@ -22,6 +22,9 @@ Spree.config do |config|
   #config.override_actionmailer_config = false
 end
 
+# Don't log users out when setting a new password
+Spree::Auth::Config[:signout_after_password_change] = false
+
 # TODO Work out why this is necessary
 # Seems like classes within OFN module become 'uninitialized' when server reloads
 # unless the empty module is explicity 'registered' here. Something to do with autoloading?
