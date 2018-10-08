@@ -1,22 +1,75 @@
 require 'spec_helper'
 
 describe Spree::Admin::ProductsController, type: :controller do
-  describe "updating a product we do not have access to" do
-    let(:s_managed) { create(:enterprise) }
-    let(:s_unmanaged) { create(:enterprise) }
-    let(:p) { create(:simple_product, supplier: s_unmanaged, name: 'Peas') }
+  describe 'bulk_update' do
+    context "updating a product we do not have access to" do
+      let(:s_managed) { create(:enterprise) }
+      let(:s_unmanaged) { create(:enterprise) }
+      let(:product) do
+        create(:simple_product, supplier: s_unmanaged, name: 'Peas')
+      end
 
-    before do
-      login_as_enterprise_user [s_managed]
-      spree_post :bulk_update, {"products" => [{"id" => p.id, "name" => "Pine nuts"}]}
+      before do
+        login_as_enterprise_user [s_managed]
+        spree_post :bulk_update, {
+          "products" => [{"id" => product.id, "name" => "Pine nuts"}]
+        }
+      end
+
+      it "denies access" do
+        response.should redirect_to spree.unauthorized_url
+      end
+
+      it "does not update any product" do
+        product.reload.name.should_not == "Pine nuts"
+      end
     end
 
-    it "denies access" do
-      response.should redirect_to spree.unauthorized_url
-    end
+    context "when changing a product's variant_unit" do
+      let(:producer) { create(:enterprise) }
+      let!(:product) do
+        create(
+          :simple_product,
+          supplier: producer,
+          variant_unit: 'items',
+          variant_unit_scale: nil,
+          variant_unit_name: 'bunches',
+          unit_value: nil,
+          unit_description: 'some description'
+        )
+      end
 
-    it "does not update any product" do
-      p.reload.name.should_not == "Pine nuts"
+      before { login_as_enterprise_user([producer]) }
+
+      it 'fails' do
+        spree_post :bulk_update, {
+          "products" => [
+            {
+              "id" => product.id,
+              "variant_unit" => "weight",
+              "variant_unit_scale" => 1
+            }
+          ]
+        }
+
+        expect(response).to have_http_status(400)
+      end
+
+      it 'does not redirect to bulk_products' do
+        spree_post :bulk_update, {
+          "products" => [
+            {
+              "id" => product.id,
+              "variant_unit" => "weight",
+              "variant_unit_scale" => 1
+            }
+          ]
+        }
+
+        expect(response).not_to redirect_to(
+          '/api/products/bulk_products?page=1;per_page=500;'
+        )
+      end
     end
   end
 

@@ -32,35 +32,50 @@ describe Spree::ProductSet do
       end
 
       context 'when the product does exist' do
-        let!(:product) do
-          create(
-            :simple_product,
-            variant_unit: 'items',
-            variant_unit_scale: nil,
-            variant_unit_name: 'bunches'
-          )
-        end
+        context 'when a different varian_unit is passed' do
+          let!(:product) do
+            create(
+              :simple_product,
+              variant_unit: 'items',
+              variant_unit_scale: nil,
+              variant_unit_name: 'bunches',
+              unit_value: nil,
+              unit_description: 'some description'
+            )
+          end
 
-        let(:collection_hash) do
-          {
-            0 => {
-              id: product.id,
-              variant_unit: 'weight',
-              variant_unit_scale: 1
+          let(:collection_hash) do
+            {
+              0 => {
+                id: product.id,
+                variant_unit: 'weight',
+                variant_unit_scale: 1
+              }
             }
-          }
-        end
+          end
 
-        it 'updates all the specified product attributes' do
-          product_set.save
+          it 'does not update the product' do
+            product_set.save
 
-          expect(product.reload.attributes).to include(
-            'variant_unit' => 'weight',
-            'variant_unit_scale' => 1
-          )
+            expect(product.reload.attributes).to include(
+              'variant_unit' => 'items'
+            )
+          end
+
+          it 'adds an error' do
+            product_set.save
+            expect(product_set.errors.get(:base))
+              .to include("Unit value can't be blank")
+          end
+
+          it 'returns false' do
+            expect(product_set.save).to eq(false)
+          end
         end
 
         context 'when :master_attributes is passed' do
+          let!(:product) { create(:simple_product) }
+          let(:collection_hash) { { 0 => { id: product.id } } }
           let(:master_attributes) { { sku: '123' } }
 
           before do

@@ -35,13 +35,26 @@ class Spree::ProductSet < ModelSet
   end
 
   def update_product_only_attributes(product, attributes)
-    if attributes.except(:id, :variants_attributes, :master_attributes).present?
-      product.update_attributes(
-        attributes.except(:id, :variants_attributes, :master_attributes)
-      )
+    variant_related_attrs = [:id, :variants_attributes, :master_attributes]
+
+    if attributes.except(*variant_related_attrs).present?
+      product.assign_attributes(attributes.except(*variant_related_attrs))
+
+      product.variants.each do |variant|
+        validate_presence_of_unit_value(product, variant)
+      end
+
+      product.save if errors.empty?
     else
       true
     end
+  end
+
+  def validate_presence_of_unit_value(product, variant)
+    return unless %w(weight volume).include?(product.variant_unit)
+    return if variant.unit_value.present?
+
+    product.errors.add(:unit_value, "can't be blank")
   end
 
   def update_product_variants(product, attributes)
