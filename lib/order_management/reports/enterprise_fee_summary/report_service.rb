@@ -7,6 +7,8 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       class ReportService
+        delegate :render, :filename, to: :renderer
+
         attr_accessor :parameters, :renderer_klass
 
         def initialize(parameters, renderer_klass)
@@ -22,12 +24,11 @@ module OrderManagement
           ReportData::EnterpriseFeeTypeTotals.new(list: enterprise_fee_type_total_list.sort)
         end
 
-        def render
-          renderer = renderer_klass.new(self)
-          renderer.render
-        end
-
         private
+
+        def renderer
+          @renderer ||= renderer_klass.new(self)
+        end
 
         def enterprise_fee_type_total_list
           enterprise_fees_by_customer.map do |total_data|
