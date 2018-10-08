@@ -63,6 +63,13 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Renderers::CsvRenderer 
     expect(csv[1][i18n_translate("header.total_amount")]).to eq("2.00")
   end
 
+  it "generates filename correctly" do
+    Timecop.freeze(Time.zone.local(2018, 10, 9, 7, 30, 0)) do
+      filename = service.filename
+      expect(filename).to eq("enterprise_fee_summary_20181009.csv")
+    end
+  end
+
   def i18n_translate(key)
     I18n.t(key, scope: i18n_scope)
   end
