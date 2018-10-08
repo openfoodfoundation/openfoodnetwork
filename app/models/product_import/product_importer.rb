@@ -65,12 +65,14 @@ module ProductImport
     end
 
     def reset_counts
-      # Return indexed data about existing product count, reset count, and updates count per enterprise
+      # Return indexed data about existing product count, reset count, and
+      # updates count per enterprise
       @reset_counts.each do |enterprise_id, values|
         values[:updates_count] = 0 if values[:updates_count].blank?
 
         if values[:updates_count] && values[:existing_products]
-          @reset_counts[enterprise_id][:reset_count] = values[:existing_products] - values[:updates_count]
+          @reset_counts[enterprise_id][:reset_count] =
+            values[:existing_products] - values[:updates_count]
         end
       end
       @reset_counts

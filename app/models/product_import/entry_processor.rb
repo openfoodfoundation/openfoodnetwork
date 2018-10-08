@@ -46,7 +46,10 @@ module ProductImport
 
         products_count =
           if settings.importing_into_inventory?
-            VariantOverride.where('variant_overrides.hub_id IN (?)', enterprise_id).count
+            VariantOverride.where(
+              'variant_overrides.hub_id IN (?)',
+              enterprise_id
+            ).count
           else
             Spree::Variant.
               not_deleted.
@@ -158,7 +161,9 @@ module ProductImport
       # If we've already added a new product with these attributes
       # from this spreadsheet, mark this entry as a new variant with
       # the new product id, as this is a now variant of that product...
-      if @already_created[entry.enterprise_id] && @already_created[entry.enterprise_id][entry.name]
+      if @already_created[entry.enterprise_id] &&
+         @already_created[entry.enterprise_id][entry.name]
+
         product_id = @already_created[entry.enterprise_id][entry.name]
         @validator.mark_as_new_variant(entry, product_id)
         return
@@ -207,7 +212,10 @@ module ProductImport
         when 'overwrite_all'
           object.assign_attributes(attribute => setting['value'])
         when 'overwrite_empty'
-          if object.public_send(attribute).blank? || ((attribute == 'on_hand' || attribute == 'count_on_hand') && entry.on_hand_nil)
+          if object.public_send(attribute).blank? ||
+             ((attribute == 'on_hand' || attribute == 'count_on_hand') &&
+             entry.on_hand_nil)
+
             object.assign_attributes(attribute => setting['value'])
           end
         end
@@ -216,7 +224,10 @@ module ProductImport
 
     def display_in_inventory(variant_override, is_new = false)
       unless is_new
-        existing_item = InventoryItem.where(variant_id: variant_override.variant_id, enterprise_id: variant_override.hub_id).first
+        existing_item = InventoryItem.where(
+          variant_id: variant_override.variant_id,
+          enterprise_id: variant_override.hub_id
+        ).first
 
         if existing_item
           existing_item.assign_attributes(visible: true)
@@ -225,7 +236,11 @@ module ProductImport
         end
       end
 
-      InventoryItem.new(variant_id: variant_override.variant_id, enterprise_id: variant_override.hub_id, visible: true).save
+      InventoryItem.new(
+        variant_id: variant_override.variant_id,
+        enterprise_id: variant_override.hub_id,
+        visible: true
+      ).save
     end
 
     def ensure_variant_updated(product, entry)
