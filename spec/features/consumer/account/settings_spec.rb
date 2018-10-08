@@ -18,7 +18,12 @@ feature "Account Settings", js: true do
       expect(page).to have_content I18n.t('spree.users.form.account_settings')
       fill_in 'user_email', with: 'new@email.com'
 
-      click_button I18n.t(:update)
+      expect do
+        click_button I18n.t(:update)
+      end.to send_confirmation_instructions
+
+      sent_mail = ActionMailer::Base.deliveries.last
+      expect(sent_mail.to).to eq ['new@email.com']
 
       expect(find(".alert-box.success").text.strip).to eq "#{I18n.t(:account_updated)} ×"
       user.reload
