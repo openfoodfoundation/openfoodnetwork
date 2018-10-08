@@ -139,7 +139,8 @@ module ProductImport
         @inventory_created += 1
         @updated_ids.push new_item.id
       else
-        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", new_item.errors.full_messages)
+        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} \
+          #{entry.line_number}:", new_item.errors.full_messages)
       end
     end
 
@@ -153,7 +154,8 @@ module ProductImport
         @inventory_updated += 1
         @updated_ids.push existing_item.id
       else
-        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", existing_item.errors.full_messages)
+        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} \
+          #{entry.line_number}:", existing_item.errors.full_messages)
       end
     end
 
@@ -177,7 +179,8 @@ module ProductImport
         @products_created += 1
         @updated_ids.push product.variants.first.id
       else
-        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", product.errors.full_messages)
+        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} \
+          #{entry.line_number}:", product.errors.full_messages)
       end
 
       @already_created[entry.supplier_id] = { entry.name => product.id }
@@ -192,7 +195,8 @@ module ProductImport
         @updated_ids.push variant.id
         true
       else
-        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} #{line_number}:", variant.errors.full_messages)
+        @importer.errors.add("#{I18n.t('admin.product_import.model.line')} \
+          #{entry.line_number}:", variant.errors.full_messages)
         false
       end
     end
