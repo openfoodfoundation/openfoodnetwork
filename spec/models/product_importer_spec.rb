@@ -54,7 +54,7 @@ describe ProductImport::ProductImporter do
       expect(@importer.item_count).to eq(5)
     end
 
-    it "validates entries and returns the results as json" do
+    xit "validates entries and returns the results as json" do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
@@ -64,7 +64,7 @@ describe ProductImport::ProductImporter do
       expect(filter('update_product', entries)).to eq 0
     end
 
-    it "saves the results and returns info on updated products" do
+    xit "saves the results and returns info on updated products" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 5
@@ -137,7 +137,7 @@ describe ProductImport::ProductImporter do
     end
     after { File.delete('/tmp/test-m.csv') }
 
-    it "validates entries" do
+    xit "validates entries" do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
@@ -147,7 +147,7 @@ describe ProductImport::ProductImporter do
       expect(filter('update_product', entries)).to eq 0
     end
 
-    it "allows saving of the valid entries" do
+    xit "allows saving of the valid entries" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 1
@@ -211,7 +211,7 @@ describe ProductImport::ProductImporter do
       expect(filter('update_product', entries)).to eq 1
     end
 
-    it "saves and updates" do
+    xit "saves and updates" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 1
@@ -247,7 +247,7 @@ describe ProductImport::ProductImporter do
     end
     after { File.delete('/tmp/test-m.csv') }
 
-    it "validates entries" do
+    xit "validates entries" do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
@@ -256,7 +256,7 @@ describe ProductImport::ProductImporter do
       expect(filter('create_product', entries)).to eq 2
     end
 
-    it "saves and updates" do
+    xit "saves and updates" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 2
@@ -299,7 +299,7 @@ describe ProductImport::ProductImporter do
       expect(filter('update_product', entries)).to eq 2
     end
 
-    it "saves and updates" do
+    xit "saves and updates" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 0
@@ -368,7 +368,7 @@ describe ProductImport::ProductImporter do
   describe "handling enterprise permissions" do
     after { File.delete('/tmp/test-m.csv') }
 
-    it "only allows product import into enterprises the user is permitted to manage" do
+    xit "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
@@ -452,7 +452,7 @@ describe ProductImport::ProductImporter do
   describe "applying settings and defaults on import" do
     after { File.delete('/tmp/test-m.csv') }
 
-    it "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
+    xit "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
@@ -532,7 +532,7 @@ describe ProductImport::ProductImporter do
       expect(lettuce.count_on_hand).to eq 96   # In different enterprise; unchanged
     end
 
-    it "can overwrite fields with selected defaults when importing to product list" do
+    xit "can overwrite fields with selected defaults when importing to product list" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category_id", "available_on"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.id, ""]
