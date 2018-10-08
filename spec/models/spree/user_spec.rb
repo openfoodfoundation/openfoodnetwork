@@ -75,8 +75,11 @@ describe Spree.user_class do
       create(:mail_method)
 
       expect do
-        create(:user, confirmation_sent_at: nil, confirmed_at: nil)
+        create(:user, email: 'new_user@example.com', confirmation_sent_at: nil, confirmed_at: nil)
       end.to send_confirmation_instructions
+
+      sent_mail = ActionMailer::Base.deliveries.last
+      expect(sent_mail.to).to eq ['new_user@example.com']
     end
 
     context "with the the same email as existing customers" do
