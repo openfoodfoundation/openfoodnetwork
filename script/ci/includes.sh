@@ -1,10 +1,3 @@
-function load_environment {
-    source /var/lib/jenkins/.rvm/environments/ruby-2.1.5
-    if [ ! -f config/application.yml ]; then
-        ln -s application.yml.example config/application.yml
-    fi
-}
-
 function require_env_vars {
     for var in "$@"; do
       eval value=\$$var
@@ -64,12 +57,6 @@ function get_ofn_commit {
     else
         echo $OFN_COMMIT
     fi
-}
-
-function checkout_ofn_commit {
-    OFN_COMMIT=`buildkite-agent meta-data get "openfoodnetwork:git:commit"`
-    echo "Checking out stored commit $OFN_COMMIT"
-    git checkout -qf "$OFN_COMMIT"
 }
 
 function drop_and_recreate_database {
