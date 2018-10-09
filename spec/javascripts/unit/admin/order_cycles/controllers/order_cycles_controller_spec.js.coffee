@@ -72,3 +72,13 @@ describe "OrderCyclesCtrl", ->
 
       it "the RequestMonitor will not longer have a state of loading", ->
         expect(scope.RequestMonitor.loading).toBe false
+
+  describe "filtering order cycles", ->
+    it "filters by and resets filter variables", ->
+      scope.query = "test"
+      scope.scheduleFilter = 1
+      scope.involvingFilter = 1
+      scope.resetSelectFilters()
+      expect(scope.query).toBe ""
+      expect(scope.scheduleFilter).toBe 0
+      expect(scope.involvingFilter).toBe 0
