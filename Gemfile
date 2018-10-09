@@ -142,7 +142,6 @@ group :development do
   gem 'guard-livereload'
   gem 'guard-rails'
   gem 'guard-rspec', '~> 4.7.3'
-  gem 'parallel_tests'
   gem 'rubocop', '>= 0.49.1'
 
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602
