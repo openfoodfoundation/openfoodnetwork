@@ -55,6 +55,7 @@ de_DE:
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte öffnen Sie den Link, um Ihr Konto zu aktivieren."
+        unknown_error: "Beim Erstellen Ihres Kontos ist ein Fehler aufgetreten. Überprüfen Sie Ihre E-Mail-Adresse und versuchen Sie es erneut."
     failure:
       invalid: |
           Ungültige E-Mail-Adresse oder Passwort.
@@ -78,7 +79,7 @@ de_DE:
     cancel_email:
       dear_customer: "Sehr geehrter Kunde,"
       instructions: "Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierungsinformationen für Ihre Unterlagen auf."
-      order_summary_canceled: "Bestellübersicht [ABGESAGT]"
+      order_summary_canceled: "Bestellübersicht [STORNIERT]"
       subject: "Stornierung der Bestellung"
       subtotal: "Zwischensumme: %{subtotal}"
       total: "Bestellsumme: %{total}"
@@ -89,9 +90,9 @@ de_DE:
     shipped_email:
       dear_customer: "Sehr geehrter Kunde,"
       instructions: "Ihre Bestellung wurde versandt"
-      shipment_summary: "Sendungszusammenfassung"
+      shipment_summary: "Übersicht"
       subject: "Versandbenachrichtigung"
-      thanks: "Danke für Ihr Geschäft."
+      thanks: "Danke für Ihren Einkauf."
       track_information: "Tracking-Informationen: %{tracking}"
       track_link: "Tracking-Link: %{url}"
   subscription_mailer:
@@ -244,7 +245,7 @@ de_DE:
     shop: Laden
     sku: Artikelnummer
     status_state: Status
-    tags: '"tags"'
+    tags: Stichwörter
     variant: Variante
     weight: Gewicht
     volume: Volumen
@@ -270,7 +271,7 @@ de_DE:
     viewing: "Zeigt: %{current_view_name}"
     description: Beschreibung
     whats_this: Was ist das?
-    tag_has_rules: "Vorhandene Regeln für dieses \"tag\": %{num}"
+    tag_has_rules: "Vorhandene Regeln für dieses Stichwort: %{num}"
     has_one_rule: "hat eine Regel"
     has_n_rules: "hat %{num} Regel(n)"
     unsaved_confirm_leave: "Es gibt ungespeicherte Änderungen auf dieser Seite. Möchten Sie ohne Speichern fortfahren?"
@@ -458,6 +459,7 @@ de_DE:
         conditional_blank: Kann nicht leer sein, wenn Einheitart leer ist
         no_product: hat keine Produkte in der Datenbank gefunden
         not_found: nicht in der Datenbank gefunden
+        not_updatable: kann über den Produktimport nicht auf bestehende Produkte aktualisiert werden
         blank: kann nicht leer sein
         products_no_permission: Sie sind nicht berechtigt, Produkte für dieses Unternehmen zu verwalten
         inventory_no_permission: Sie sind nicht berechtigt, Bestand für diesen Produzenten zu erstellen
@@ -469,7 +471,7 @@ de_DE:
         choose_import_type: Wählen Sie die Importart
         import_into: Importart
         product_list: Produktliste
-        inventories: Bestände
+        inventories: Kataloge
         import: Importieren
         upload: Hochladen
         csv_templates: CSV Vorlage
@@ -516,6 +518,8 @@ de_DE:
         inventory_to_reset: Bestehende Katalogeinträge werden auf null Bestand zurückgesetzt
         line: Zeile
         item_line: Artikelzeile
+      import_review:
+        not_updatable_tip: "Die folgenden Felder können nicht über den Bulk-Import für bestehende Produkte aktualisiert werden:"
       save_results:
         final_results: Endgültige Ergebnisse importieren
         products_created: Produkte erstellt
@@ -556,9 +560,6 @@ de_DE:
       controls:
         back_to_my_inventory: Zurück zu meinem Katalog
     orders:
-      index:
-        capture: "Erfassung"
-        ship: "Liefern"
       invoice_email_sent: 'Rechnungs-E-Mail wurde gesendet'
       order_email_resent: 'Bestellungs-E-Mail wurde erneut gesendet'
       bulk_management:
@@ -725,11 +726,11 @@ de_DE:
             by_default: Standardmäßig
             no_rules_yet: Es gelten noch keine Standardregeln
             add_new_button: '+ Fügen Sie eine neue Standardregel hinzu'
-          no_tags_yet: Für dieses Unternehmen sind noch keine "tags" vorhanden
-          no_rules_yet: Für dieses "tag" gelten noch keine Regeln
-          for_customers_tagged: 'Für Kunden mit dem "tag":'
+          no_tags_yet: Für dieses Unternehmen sind noch keine Stichwörter vorhanden
+          no_rules_yet: Für dieses Stichwort gelten noch keine Regeln
+          for_customers_tagged: 'Für Kunden mit dem Stichwort:'
           add_new_rule: '+ Neue Regel hinzufügen'
-          add_new_tag: '+ Neues "tag" hinzufügen'
+          add_new_tag: '+ Neues Stichwort hinzufügen'
         users:
           email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine Bestätigungs-E-Mail an %{email} gesendet."
           resend: Erneut senden
@@ -805,12 +806,12 @@ de_DE:
         title: Neues Unternehmen
         back_link: Zurück zur Unternehmensliste
       remove_logo:
-        remove: "Entferne Bild"
+        remove: "Bild entfernen"
         removed_successfully: "Das Logo wurde erfolgreich entfernt"
         immediate_removal_warning: "Das Logo wird sofort nach der Bestätigung entfernt."
       remove_promo_image:
-        remove: "Entferne Bild"
-        removed_successfully: "Promo-Bild wurde erfolgreich entfernt"
+        remove: "Bild entfernen"
+        removed_successfully: "Werbebild wurde erfolgreich entfernt"
         immediate_removal_warning: "Das Werbebild wird sofort nach der Bestätigung entfernt."
       welcome:
         welcome_title: Willkommen im Open Food Network!
@@ -845,10 +846,10 @@ de_DE:
       coordinator_fees:
         add: Koordinatorgebühr hinzufügen
       filters:
-        search_by_order_cycle_name: "Suche nach Bestellung Cycle name ..."
-        involving: "Involviert"
-        any_enterprise: "Jede Firma"
-        any_schedule: "Jeder Zeitplan"
+        search_by_order_cycle_name: "Suche nach Bestellzyklus ..."
+        involving: "Betrifft"
+        any_enterprise: "Alle Unternehmen"
+        any_schedule: "Alle Zeitpläne"
       form:
         incoming: Eingehend
         supplier: Anbieter
@@ -857,8 +858,8 @@ de_DE:
         outgoing: Ausgehend
         distributor: Verteiler
         products: Produkte
-        tags: '"tags"'
-        add_a_tag: '"tag" hinzufügen'
+        tags: Stichwörter
+        add_a_tag: Stichwort hinzufügen
         delivery_details: Abhol- / Lieferinformationen
         debug_info: Debug-Informationen
       index:
@@ -1057,7 +1058,7 @@ de_DE:
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo existiert nicht"
     enterprise_promo_image:
-      destroy_attachment_does_not_exist: "Promo-Bild existiert nicht"
+      destroy_attachment_does_not_exist: "Webebild existiert nicht"
   checkout:
     already_ordered:
       cart: "Warenkorb"
@@ -1109,12 +1110,12 @@ de_DE:
       contact: "Kontakt"
       require_customer_login: "Dieser Laden ist nur für Kunden."
       require_login_html: "Bitte %{login}, wenn Sie bereits ein Konto haben. Andernfalls, %{register}, um Kunde zu werden."
-      require_customer_html: "Bitte %{contact} %{enterprise}, um Kunde zu werden."
+      require_customer_html: "Bitte kontaktieren Sie %{enterprise}, um Kunde zu werden."
   card_could_not_be_updated: Die Karte konnte nicht aktualisiert werden
   card_could_not_be_saved: Karte konnte nicht gespeichert werden
   spree_gateway_error_flash_for_checkout: "Bei den Zahlungsinformationen ist ein Problem aufgetreten: %{error}"
   invoice_billing_address: "Rechnungsadresse:"
-  invoice_column_tax: "GST"
+  invoice_column_tax: "Umsatzsteuer"
   invoice_column_price: "Preis"
   invoice_column_item: "Artikel"
   invoice_column_qty: "Menge"
@@ -1123,13 +1124,13 @@ de_DE:
   invoice_column_price_with_taxes: "Gesamtpreis (inkl. Steuern)"
   invoice_column_price_without_taxes: "Gesamtpreis (zzgl. Steuern)"
   invoice_column_tax_rate: "Steuersatz"
-  invoice_tax_total: "Gesamtkosten:"
+  invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "Steuerrechnung"
   tax_total: "Steuersumme (%{rate}):"
   total_excl_tax: "Summe (ohne Steuern):"
   total_incl_tax: "Gesamt (Inkl. Steuern):"
-  abn: "ABN:"
-  acn: "ACN:"
+  abn: "USt-IdNr."
+  acn: "St.-Nr."
   invoice_issued_on: "Rechnung ausgestellt am:"
   order_number: "Rechnungsnummer:"
   date_of_transaction: "Datum der Transaktion:"
@@ -1138,18 +1139,18 @@ de_DE:
   ticket_column_unit_price: "Stückpreis"
   ticket_column_total_price: "Gesamtpreis"
   menu_1_title: "Läden"
-  menu_1_url: "/ Geschäfte"
+  menu_1_url: "/ läden"
   menu_2_title: "Karte"
-  menu_2_url: "/Karte"
+  menu_2_url: "/karte"
   menu_3_title: "Erzeuger"
-  menu_3_url: "/ Produzenten"
+  menu_3_url: "/ erzeuger"
   menu_4_title: "Gruppen"
-  menu_4_url: "/ Gruppen"
+  menu_4_url: "/ gruppen"
   menu_5_title: "Über Uns"
   menu_5_url: "http://www.openfoodnetwork.org/"
-  menu_6_title: "Verbinde"
+  menu_6_title: "Verbinden"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
-  menu_7_title: "Lerne"
+  menu_7_title: "Mehr Erfahren"
   menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "Logo (640x130)"
   logo_mobile: "Handylogo (75x26)"
@@ -1166,7 +1167,7 @@ de_DE:
   footer_email: "E-Mail:"
   footer_links_md: "Links"
   footer_about_url: "Über URL"
-  user_guide_link: "Benutzeranleitung Link"
+  user_guide_link: "Benutzerhandbuch-Link"
   name: Name
   first_name: Vorname
   last_name: Nachname
@@ -1243,13 +1244,13 @@ de_DE:
   legal:
     cookies_policy:
       header: "Wie wir Cookies verwenden"
-      desc_part_1: "Cookies sind sehr kleine Textdateien, die beim Besuch einiger Websites auf Ihrem Computer gespeichert werden."
+      desc_part_1: "Cookies sind sehr kleine Textdateien, die beim Besuch mancher Websiten auf Ihrem Computer gespeichert werden."
       desc_part_2: "In OFN respektieren wir Ihre Privatsphäre. Wir verwenden nur die Cookies, die notwendig sind, um Ihnen den Service des Online-Kaufs / -Verkaufs von Lebensmitteln zu bieten. Wir verkaufen keine Ihrer Daten. Wir könnten Ihnen in Zukunft vorschlagen, einige Ihrer Daten zu teilen, um neue Commons-Dienste zu entwickeln, die für das Ökosystem nützlich sein könnten (wie Logistikdienstleistungen für kurze Nahrungsmittelsysteme), aber wir sind noch nicht dort, und wir werden es nicht ohne Ihr tun Genehmigung :-)"
       desc_part_3: "Wir verwenden Cookies hauptsächlich, um sich daran zu erinnern, wer Sie sind, wenn Sie sich bei dem Dienst anmelden oder sich die Artikel merken können, die Sie in Ihren Warenkorb legen, auch wenn Sie nicht eingeloggt sind \"Cookies akzeptieren\" nehmen wir an, dass Sie uns die Speicherung von Cookies erlauben, die für das Funktionieren der Website notwendig sind. Hier ist die Liste der von uns verwendeten Cookies!"
       essential_cookies: "Essentielle Kekse"
       essential_cookies_desc: "Die folgenden Cookies sind für den Betrieb unserer Website unbedingt erforderlich."
       essential_cookies_note: "Die meisten Cookies enthalten nur einen eindeutigen Bezeichner, aber keine anderen Daten. Ihre E-Mail-Adresse und Ihr Kennwort sind zum Beispiel niemals darin enthalten und werden nie veröffentlicht."
-      cookie_domain: "Festlegen von:"
+      cookie_domain: "Einstellen nach:"
       cookie_session_desc: "Wird verwendet, damit die Website sich zwischen den Seitenbesuchen an die Benutzer erinnern kann, z. B. an Artikel in Ihrem Einkaufswagen."
       cookie_consent_desc: "Wird verwendet, um den Status der Benutzerzustimmung zum Speichern von Cookies beizubehalten"
       cookie_remember_me_desc: "Wird verwendet, wenn der Benutzer die Website aufgefordert hat, sich an ihn zu erinnern. Dieser Cookie wird nach 12 Tagen automatisch gelöscht. Wenn Sie als Benutzer möchten, dass dieser Cookie gelöscht wird, müssen Sie sich nur abmelden. Wenn Sie nicht möchten, dass der Cookie auf Ihrem Computer installiert wird, sollten Sie das Kontrollkästchen \"An mich erinnern\" nicht aktivieren, wenn Sie sich anmelden."
@@ -1283,7 +1284,6 @@ de_DE:
       cookies_policy_link: "Hinweise zu Cookies"
       cookies_accept_button: "Cookies akzeptieren"
   home_shop: Jetzt einkaufen
-  brandstory_headline: "Essen, ohne eigene Rechtspersönlichkeit."
   brandstory_intro: "Manchmal ist der beste Weg, das System zu reparieren, ein neues zu starten ..."
   brandstory_part1: "Wir beginnen von Grund auf. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen mit Produkten fair und ehrlich zu verbinden. Mit Käufern, die glauben, dass bessere wöchentliche Einkaufsentscheidungen die Welt ernsthaft verändern können."
   brandstory_part2: "Dann brauchen wir einen Weg, um es real zu machen. Ein Weg, jeden zu stärken, der Lebensmittel anbaut, verkauft und kauft. Ein Weg, um alle Geschichten zu erzählen, um die gesamte Logistik zu bewältigen. Eine Möglichkeit, Transaktionen jeden Tag in Transformation umzuwandeln."
@@ -1308,24 +1308,24 @@ de_DE:
   stats_producers: "Nahrungsmittelproduzenten"
   stats_shops: "Lebensmittelgeschäfte"
   stats_shoppers: "Lebensmittelkäufer"
-  stats_orders: "Essen Bestellungen"
+  stats_orders: "Nahrungsmittelbestellungen"
   checkout_title: Kasse
   checkout_now: Zur Kasse
-  checkout_order_ready: Bestellung bereit für
+  checkout_order_ready: Bestellung bereit am
   checkout_hide: Ausblenden
   checkout_expand: Erweitern
   checkout_headline: "Ok, jetzt zur Kasse?"
   checkout_as_guest: "Als Gast zur Kasse"
-  checkout_details: "Deine Details"
+  checkout_details: "Ihre Details"
   checkout_billing: "Rechnungsinfo"
   checkout_default_bill_address: "Als Standard-Rechnungsadresse speichern"
   checkout_shipping: Versandinformation
   checkout_default_ship_address: "Als Standardversandadresse speichern"
-  checkout_method_free: Frei
+  checkout_method_free: ??
   checkout_address_same: Lieferadresse wie Rechnungsadresse?
-  checkout_ready_for: "Bereit für:"
-  checkout_instructions: "Irgendwelche Kommentare oder spezielle Anweisungen?"
-  checkout_payment: Bezahlung
+  checkout_ready_for: "Bereit am:"
+  checkout_instructions: "Kommentare oder spezielle Anweisungen?"
+  checkout_payment: Zahlung
   checkout_send: Jetzt bestellen
   checkout_your_order: Ihre Bestellung
   checkout_cart_total: Warenkorb insgesamt
@@ -1336,23 +1336,23 @@ de_DE:
   order_paid: BEZAHLT
   order_not_paid: NICHT BEZAHLT
   order_total: Gesamtbestellung
-  order_payment: "Bezahlen über:"
+  order_payment: "Bezahlen per:"
   order_billing_address: Rechnungsadresse
   order_delivery_on: Lieferung am
   order_delivery_address: Lieferadresse
   order_delivery_time: Lieferzeit
-  order_special_instructions: "Deine Noten:"
+  order_special_instructions: "Deine Notizen:"
   order_pickup_time: abholbereit
-  order_pickup_instructions: Sammlung Anweisungen
-  order_produce: Produzieren
+  order_pickup_instructions: Abholinformationen
+  order_produce: Produkte
   order_total_price: Total
   order_includes_tax: (inkl. Steuern)
-  order_payment_paypal_successful: Ihre Zahlung via PayPal wurde erfolgreich abgewickelt.
+  order_payment_paypal_successful: Ihre Zahlung mit PayPal wurde erfolgreich abgewickelt.
   order_hub_info: Hub-Info
   order_back_to_store: Zurück zum Laden
   order_back_to_cart: Zurück zum Warenkorb
   bom_tip: "Verwenden Sie diese Seite, um Produktmengen über mehrere Bestellungen hinweg zu ändern. Produkte können bei Bedarf auch komplett aus Bestellungen entfernt werden."
-  unsaved_changes_warning: "Nicht gespeicherte Änderungen sind vorhanden und gehen verloren, wenn Sie fortfahren."
+  unsaved_changes_warning: "Sie haben nicht gespeicherte Änderungen, die beim Fortfahren verloren gehen."
   unsaved_changes_error: "Felder mit roten Rahmen enthalten Fehler."
   products: "Produkte"
   products_in: "in %{oc}"
@@ -1374,9 +1374,9 @@ de_DE:
   email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich unter %{sitename} angemeldet haben oder von einer Person eingeladen wurden, die Sie wahrscheinlich kennen. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
   email_social: "Verbinde dich mit uns:"
   email_contact: "Schreiben Sie uns eine E-Mail:"
-  email_signoff: "Prost,"
+  email_signoff: "Danke"
   email_signature: "%{sitename} Team"
-  email_confirm_customer_greeting: "Hallo %[name],"
+  email_confirm_customer_greeting: "Hallo %{name},"
   email_confirm_customer_intro_html: "Vielen Dank für ihren Einkauf bei <strong> %{distributor} </strong>!"
   email_confirm_customer_number_html: "Bestellbestätigung <strong> # %{number} </ strong>"
   email_confirm_customer_details_html: "Hier sind Ihre Bestelldetails von <strong> %{distributor} </ strong>:"
@@ -1393,7 +1393,7 @@ de_DE:
   email_payment_paid: BEZAHLT
   email_payment_not_paid: NICHT BEZAHLT
   email_payment_summary: Zahlungsübersicht
-  email_payment_method: "Bezahlen über:"
+  email_payment_method: "Bezahlen per:"
   email_so_placement_intro_html: "Sie haben eine neue Bestellung mit <strong> %{distributor} </ strong>"
   email_so_placement_details_html: "Hier sind die Details Ihrer Bestellung für <strong> %{distributor} </ strong>:"
   email_so_placement_changes: "Leider waren nicht alle von Ihnen angeforderten Produkte verfügbar. Die von Ihnen angeforderten Originalmengen sind unten durchgestrichen."
@@ -1446,11 +1446,11 @@ de_DE:
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Folgen"
   shopping_groups_part_of: "ist ein Teil von:"
-  shopping_producers_of_hub: "%{hub} Produzenten:"
-  enterprises_next_closing: "Nächster Auftrag schließt"
+  shopping_producers_of_hub: "Erzeuger bei%{hub}"
+  enterprises_next_closing: "Nächster Bestellschluß"
   enterprises_ready_for: "Fertig am"
-  enterprises_choose: "Wählen Sie, wann Sie Ihre Bestellung wünschen:"
-  maps_open: "Öffnen"
+  enterprises_choose: "Wählen Sie, wann Sie Ihre Bestellung wollen:"
+  maps_open: "Offen"
   maps_closed: "Geschlossen"
   hubs_buy: "Suche nach:"
   hubs_shopping_here: "Hier einkaufen"
@@ -1790,9 +1790,9 @@ de_DE:
   enterprise_long_desc_placeholder: "Dies ist Ihre Chance, die Geschichte Ihres Unternehmens zu erzählen - was macht Sie anders und wundervoll? Wir empfehlen, Ihre Beschreibung auf unter 600 Zeichen oder 150 Wörter zu beschränken."
   enterprise_long_desc_length: "%{num} Zeichen / bis zu 600 empfohlen"
   enterprise_limit: Unternehmensgrenze
-  enterprise_abn: "ABN"
+  enterprise_abn: "USt-IdNr."
   enterprise_abn_placeholder: "z.B. 99 123 456 789"
-  enterprise_acn: "ACN"
+  enterprise_acn: "St.-Nr."
   enterprise_acn_placeholder: "z.B. 123 456 789"
   enterprise_tax_required: "Sie müssen eine Auswahl treffen."
   enterprise_final_step: "Letzter Schritt!"
@@ -2077,30 +2077,30 @@ de_DE:
   report_header_shipping: Lieferung
   report_header_shipping_method: Lieferart
   report_header_shipping_instructions: Versand-Anweisungen
-  report_header_ship_street: Schiffsstraße
-  report_header_ship_street_2: Schiffsstraße 2
-  report_header_ship_city: Schiffsstadt
-  report_header_ship_postcode: Postleitzahl senden
-  report_header_ship_state: Schiffsstaat
-  report_header_billing_street: Rechnungsstraße
-  report_header_billing_street_2: Rechnungsstraße 2
-  report_header_billing_street_3: Rechnungsstraße 3
-  report_header_billing_street_4: Rechnungsstraße 4
-  report_header_billing_city: Abrechnungsstadt
-  report_header_billing_postcode: Rechnungs Postleitzahl
-  report_header_billing_state: Abrechnungs Zustand
+  report_header_ship_street: Liefer-Straße
+  report_header_ship_street_2: Liefer-Straße 2
+  report_header_ship_city: Liefer-Stadt
+  report_header_ship_postcode: Liefer-Postleitzahl
+  report_header_ship_state: Liefer-Bundesland
+  report_header_billing_street: Rechnung-Straße
+  report_header_billing_street_2: Rechnung-Straße 2
+  report_header_billing_street_3: Rechnung-Straße 3
+  report_header_billing_street_4: Rechnung-Straße 4
+  report_header_billing_city: Rechnung-Stadt
+  report_header_billing_postcode: Rechnung-Postleitzahl
+  report_header_billing_state: Rechnung-Bundesland
   report_header_incoming_transport: Eingehender Transport
-  report_header_special_instructions: spezielle Anweisungen
+  report_header_special_instructions: Besondere Anweisungen
   report_header_order_number: Bestellnummer
   report_header_date: Datum
   report_header_confirmation_date: Bestätigungsdatum
-  report_header_tags: '"tags"'
-  report_header_items: Artikel
-  report_header_items_total: "Artikel insgesamt %{currency_symbol}"
+  report_header_tags: Stichwörter
+  report_header_items: Produkte
+  report_header_items_total: "Produkte insgesamt %{currency_symbol}"
   report_header_taxable_items_total: "Steuerpflichtige Posten insgesamt (%{currency_symbol})"
   report_header_sales_tax: "Umsatzsteuer (%{currency_symbol})"
   report_header_delivery_charge: "Liefergebühr (%{currency_symbol})"
-  report_header_tax_on_delivery: "Versandkosten (%{currency_symbol})"
+  report_header_tax_on_delivery: "Steuer auf Versandkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
   report_header_total_tax: "Gesamtsteuer (%{currency_symbol})"
   report_header_enterprise: Unternehmen
@@ -2119,9 +2119,9 @@ de_DE:
   report_header_taxons: Taxonen
   report_header_supplier: Anbieter
   report_header_producer: Erzeuger
-  report_header_producer_suburb: Produzent Vorort
+  report_header_producer_suburb: Erzeuger Vorort
   report_header_unit: Einheit
-  report_header_group_buy_unit_quantity: Gruppe Kaufeinheitsmenge
+  report_header_group_buy_unit_quantity: Gruppen-Kaufeinheitsmenge
   report_header_cost: Kosten
   report_header_shipping_cost: Versandkosten
   report_header_curr_cost_per_unit: Curr. Kosten pro Einheit
@@ -2132,25 +2132,25 @@ de_DE:
   report_header_price: Preis
   report_header_unit_size: Einheitsgröße
   report_header_distributor: Verteiler
-  report_header_distributor_address: Händleradresse
-  report_header_distributor_city: Händlerstadt
-  report_header_distributor_postcode: Postleitzahl des Vertriebspartners
+  report_header_distributor_address: Verteileradresse
+  report_header_distributor_city: Verteilerstadt
+  report_header_distributor_postcode: Verteilerpostleitzahl
   report_header_delivery_address: Lieferadresse
   report_header_delivery_postcode: Liefer-Postleitzahl
   report_header_bulk_unit_size: Bulk-Einheitsgröße
   report_header_weight: Gewicht
   report_header_sum_total: Gesamtsumme
   report_header_date_of_order: Datum der Bestellung
-  report_header_amount_owing: Geschuldeten Betrag
+  report_header_amount_owing: Offener Betrag
   report_header_amount_paid: Bezahlter Betrag
   report_header_units_required: Benötigte Einheiten
   report_header_remainder: Rest
-  report_header_order_date: Auftragsdatum
-  report_header_order_id: Auftragsnummer
+  report_header_order_date: Bestelldatum
+  report_header_order_id: Bestellnummer
   report_header_item_name: Artikelname
-  report_header_temp_controlled_items: Temp Kontrollierte Artikel?
+  report_header_temp_controlled_items: Temperaturkontrollierte Artikel?
   report_header_customer_name: Kundenname
-  report_header_customer_email: Kunden-eMail
+  report_header_customer_email: Kunden-E-Mail
   report_header_customer_phone: Kundentelefon
   report_header_customer_city: Kundenstadt
   report_header_payment_state: Zahlungsstatus
@@ -2158,17 +2158,17 @@ de_DE:
   report_header_item_price: "Artikel (%{currency})"
   report_header_item_fees_price: "Artikel + Gebühren (%{currency})"
   report_header_admin_handling_fees: "Verwaltung und Handhabung (%{currency})"
-  report_header_ship_price: "Schiff (%{currency})"
-  report_header_pay_fee_price: "Gebühren (%{currency})"
+  report_header_ship_price: "Liefer (%{currency})"
+  report_header_pay_fee_price: "Gebühren bezahlen (%{currency})"
   report_header_total_price: "Gesamt (%{currency})"
-  report_header_product_total_price: "Produkt gesamt (%{currency})"
+  report_header_product_total_price: "Produkte gesamt (%{currency})"
   report_header_shipping_total_price: "Versand Gesamt (%{currency})"
-  report_header_outstanding_balance_price: "Guthaben (%{currency})"
+  report_header_outstanding_balance_price: "Saldo (%{currency})"
   report_header_eft_price: "EFT (%{currency})"
   report_header_paypal_price: "PayPal (%{currency})"
   report_header_sku: Artikelnummer
-  report_header_amount: Menge
-  report_header_balance: Gesamt
+  report_header_amount: Betrag
+  report_header_balance: Saldo
   report_header_total_cost: "Gesamtkosten"
   report_header_total_ordered: Insgesamt bestellt
   report_header_total_max: Gesamt max
@@ -2176,11 +2176,11 @@ de_DE:
   report_header_sum_max_total: "Summe Max. Summe"
   report_header_total_excl_vat: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_vat: "Summe inkl. Steuern (%{currency_symbol})"
-  report_header_temp_controlled: TempControlled?
-  report_header_is_producer: Hersteller?
+  report_header_temp_controlled: Temperaturkontrolliert?
+  report_header_is_producer: Erzeuger?
   report_header_not_confirmed: Nicht bestätigt
-  report_header_gst_on_income: GST auf Einkommen
-  report_header_gst_free_income: GST Freies Einkommen
+  report_header_gst_on_income: Umsatzsteuer auf Einkommen
+  report_header_gst_free_income: Unbesteuertes Einkommen
   report_header_total_untaxable_produce: Total unversteuerbares Produkt (keine Steuer)
   report_header_total_taxable_produce: Gesamtsteuerpflichtiges Produkt (inklusive Steuern)
   report_header_total_untaxable_fees: Summe nicht steuerpflichtiger Gebühren (keine Steuern)
@@ -2224,7 +2224,7 @@ de_DE:
   payment_methods: "Zahlungsarten"
   payment_method_fee: "Transaktionsgebühr"
   inventory_settings: "Katalogeinstellungen"
-  tag_rules: "\"tag\"-Regeln"
+  tag_rules: "Stichwort-Regeln"
   shop_preferences: "Ladeneinstellungen"
   enterprise_fee_whole_order: Ganze Bestellung
   enterprise_fee_by: "%{type} Gebühr von %{role} %{enterprise_name}"
@@ -2305,21 +2305,21 @@ de_DE:
         invite: "Einladen"
         invite_title: "Laden Sie einen nicht registrierten Benutzer ein"
         tag_rule_help:
-          title: '"tag"-Regeln'
+          title: Stichwort-Regeln
           overview: Überblick
           overview_text: >
-              Mit "tag"-Regeln können Sie beschreiben, welche Elemente für welche
+              Mit StichwortßRegeln können Sie beschreiben, welche Elemente für welche
               Kunden sichtbar sind. Elemente können Versandarten, Zahlungsarten, Produkte
               und Bestellzyklen sein.
           by_default_rules: "\"Standardmäßig ...\" Regeln"
           by_default_rules_text: >
               Mit Standardregeln können Sie Elemente verbergen, sodass sie standardmäßig
               nicht sichtbar sind. Dieses Verhalten kann dann durch nicht standardmäßige
-              Regeln für Kunden mit bestimmten "tags" überschrieben werden.
-          customer_tagged_rules: "'Kunden mit \"tag\" ...' Regeln"
+              Regeln für Kunden mit bestimmten Stichwörtern überschrieben werden.
+          customer_tagged_rules: "'Kunden mit Stichwort ...' Regeln"
           customer_tagged_rules_text: >
-              Durch das Erstellen von Regeln für ein bestimmtes "tag" können Sie die
-              Standardregeln für bestimmte Kunden überschreiben.
+              Durch das Erstellen von Regeln für ein bestimmtes Stichwort können Sie
+              die Standardregeln für bestimmte Kunden überschreiben.
       panels:
         save: SPEICHERN
         saved: GERETTET
@@ -2495,7 +2495,15 @@ de_DE:
         header:
           store: Geschäft
     admin:
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "Vererben Eigenschaften von %{supplier}? (außer oben aufgehoben)"
       orders:
+        index:
+          capture: "Erfassung"
+          ship: "Liefern"
+          edit: "Bearbeiten"
+          next: "Weiter"
         invoice:
           issued_on: Ausgegeben am
           tax_invoice: Steuerrechnung
@@ -2530,6 +2538,11 @@ de_DE:
           account_id: Konto-ID
           business_name: Geschäftsname
           charges_enabled: Gebühren aktiviert
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: Fehler beim Speichern der Zahlung
+            submitting_payment: Zahlung wird gesendet ...
       products:
         new:
           title: 'Neues Produkt'
@@ -2578,7 +2591,12 @@ de_DE:
           producer_name: Produzent
       general_settings:
         edit:
+          legal_settings: "Rechtliche Einstellungen"
+          cookies_consent_banner_toggle: "Zeigen Sie das Zustimmungsbanner für Cookies"
+          privacy_policy_url: "Datenschutz URL"
           enterprises_require_tos: "Unternehmen müssen die AGB akzeptieren"
+          cookies_policy_matomo_section: "Zeigen Sie den Matomo-Abschnitt auf der Cookie-Richtlinienseite an"
+          cookies_policy_ga_section: "Google Analytics-Abschnitt auf der Cookie-Richtlinienseite anzeigen"
           footer_tos_url: "AGB URL"
     checkout:
       payment:
@@ -2593,6 +2611,8 @@ de_DE:
       js_format: 'JJ-MM-TT'
     inventory: Katalog
     orders:
+      edit:
+        login_to_view_order: "Bitte loggen Sie sich ein, um Ihre Bestellung anzuzeigen."
       bought:
         item: "Bereits in dieser Reihenfolge bestellt"
     order_mailer:
@@ -2689,5 +2709,8 @@ de_DE:
         authorised_shops: Bevollmächtigte Läden
         authorised_shops_popover: Dies ist die Liste der Shops, die Ihre Standardkreditkarte für eventuell vorhandene Abonnements (dh wiederkehrende Bestellungen) belasten dürfen. Ihre Kartendetails werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Sie belastet werden.
         saved_cards_popover: Dies ist die Liste der Karten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Geschäften belastet werden, die Sie dazu berechtigt haben (siehe rechts).
+      authorised_shops:
+        shop_name: "Laden Name"
+        allow_charges?: "Gebühren erlauben?"
     localized_number:
       invalid_format: hat ein ungültiges Format. Bitte gebe eine Nummer ein.
