@@ -2698,6 +2698,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
               fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
               tax_category_name: "Tax Category"
               total_amount: "$$ SUM"
+        invalid_filter_parameters: "The filters you selected for this report are invalid."
 
   spree:
     # TODO: remove `email` key once we get to Spree 2.0
