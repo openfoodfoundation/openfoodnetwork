@@ -4,7 +4,7 @@ module Spree
   describe Adjustment do
     it "has metadata" do
       adjustment = create(:adjustment, metadata: create(:adjustment_metadata))
-      adjustment.metadata.should be
+      expect(adjustment.metadata).to be
     end
 
     describe "querying included tax" do
@@ -13,23 +13,23 @@ module Spree
 
       describe "finding adjustments with and without tax included" do
         it "finds adjustments with tax" do
-          Adjustment.with_tax.should     include adjustment_with_tax
-          Adjustment.with_tax.should_not include adjustment_without_tax
+          expect(Adjustment.with_tax).to     include adjustment_with_tax
+          expect(Adjustment.with_tax).not_to include adjustment_without_tax
         end
 
         it "finds adjustments without tax" do
-          Adjustment.without_tax.should     include adjustment_without_tax
-          Adjustment.without_tax.should_not include adjustment_with_tax
+          expect(Adjustment.without_tax).to     include adjustment_without_tax
+          expect(Adjustment.without_tax).not_to include adjustment_with_tax
         end
       end
 
       describe "checking if an adjustment includes tax" do
         it "returns true when it has > 0 tax" do
-          adjustment_with_tax.should have_tax
+          expect(adjustment_with_tax).to have_tax
         end
 
         it "returns false when it has 0 tax" do
-          adjustment_without_tax.should_not have_tax
+          expect(adjustment_without_tax).not_to have_tax
         end
       end
     end
@@ -48,8 +48,8 @@ module Spree
         end
 
         it "has 100% tax included" do
-          adjustment.amount.should be > 0
-          adjustment.included_tax.should == adjustment.amount
+          expect(adjustment.amount).to be > 0
+          expect(adjustment.included_tax).to eq(adjustment.amount)
         end
 
         it "does not crash when order data has been updated previously" do
@@ -70,7 +70,7 @@ module Spree
           it "is the adjustment amount" do
             order.shipments = [shipment]
 
-            adjustment.amount.should == 50
+            expect(adjustment.amount).to eq(50)
           end
         end
 
@@ -80,14 +80,14 @@ module Spree
             Config.shipping_tax_rate = 0
             order.shipments = [shipment]
 
-            adjustment.included_tax.should == 0
+            expect(adjustment.included_tax).to eq(0)
           end
 
           it "records 0% tax on shipments when a rate is set but shipment_inc_vat is false" do
             Config.shipping_tax_rate = 0.25
             order.shipments = [shipment]
 
-            adjustment.included_tax.should == 0
+            expect(adjustment.included_tax).to eq(0)
           end
         end
 
@@ -102,21 +102,21 @@ module Spree
             # total - ( total / (1 + rate) )
             # 50    - ( 50    / (1 + 0.25) )
             # = 10
-            adjustment.included_tax.should == 10.00
+            expect(adjustment.included_tax).to eq(10.00)
           end
 
           it "records 0% tax on shipments when shipping_tax_rate is not set" do
             Config.shipping_tax_rate = nil
             order.shipments = [shipment]
 
-            adjustment.included_tax.should == 0
+            expect(adjustment.included_tax).to eq(0)
           end
 
           it "records 0% tax on shipments when the distributor does not charge sales tax" do
             order.distributor.update_attributes! charges_sales_tax: false
             order.shipments = [shipment]
 
-            adjustment.included_tax.should == 0
+            expect(adjustment.included_tax).to eq(0)
           end
         end
       end
@@ -146,7 +146,7 @@ module Spree
                 # The fee is $50, tax is 10%, and the fee is inclusive of tax
                 # Therefore, the included tax should be 0.1/1.1 * 50 = $4.55
 
-                adjustment.included_tax.should == 4.55
+                expect(adjustment.included_tax).to eq(4.55)
               end
             end
 
@@ -158,8 +158,8 @@ module Spree
               end
 
               it "records the tax on TaxRate adjustment on the order" do
-                adjustment.included_tax.should == 0
-                order.adjustments.tax.first.amount.should == 5.0
+                expect(adjustment.included_tax).to eq(0)
+                expect(order.adjustments.tax.first.amount).to eq(5.0)
               end
             end
 
@@ -171,7 +171,7 @@ module Spree
               end
 
               it "records no tax as charged" do
-                adjustment.included_tax.should == 0
+                expect(adjustment.included_tax).to eq(0)
               end
             end
           end
@@ -181,7 +181,7 @@ module Spree
 
             describe "when the tax rate includes the tax in the price" do
               it "records the tax on the enterprise fee adjustments" do
-                adjustment.included_tax.should == 4.55
+                expect(adjustment.included_tax).to eq(4.55)
               end
             end
 
@@ -193,8 +193,8 @@ module Spree
               end
 
               it "records the tax on TaxRate adjustment on the order" do
-                adjustment.included_tax.should == 0
-                order.adjustments.tax.first.amount.should == 5.0
+                expect(adjustment.included_tax).to eq(0)
+                expect(order.adjustments.tax.first.amount).to eq(5.0)
               end
             end
           end
@@ -219,8 +219,8 @@ module Spree
                 # EnterpriseFee tax category is nil and inheritance only applies to per item fees
                 # so tax on the enterprise_fee adjustment will be 0
                 # Tax on line item is: 0.2/1.2 x $10 = $1.67
-                adjustment.included_tax.should == 0.0
-                line_item.adjustments.first.included_tax.should == 1.67
+                expect(adjustment.included_tax).to eq(0.0)
+                expect(line_item.adjustments.first.included_tax).to eq(1.67)
               end
             end
 
@@ -235,8 +235,8 @@ module Spree
                 # EnterpriseFee tax category is nil and inheritance only applies to per item fees
                 # so total tax on the order is only that which applies to the line_item itself
                 # ie. $10 x 0.2 = $2.0
-                adjustment.included_tax.should == 0
-                order.adjustments.tax.first.amount.should == 2.0
+                expect(adjustment.included_tax).to eq(0)
+                expect(order.adjustments.tax.first.amount).to eq(2.0)
               end
             end
           end
@@ -249,8 +249,8 @@ module Spree
                 # Applying product tax rate of 0.2 to enterprise fee of $50
                 # gives tax on fee of 0.2/1.2 x $50 = $8.33
                 # Tax on line item is: 0.2/1.2 x $10 = $1.67
-                adjustment.included_tax.should == 8.33
-                line_item.adjustments.first.included_tax.should == 1.67
+                expect(adjustment.included_tax).to eq(8.33)
+                expect(line_item.adjustments.first.included_tax).to eq(1.67)
               end
             end
 
@@ -265,8 +265,8 @@ module Spree
                 # EnterpriseFee inherits tax_category from product so total tax on
                 # the order is that which applies to the line item itself, plus the
                 # same rate applied to the fee of $50. ie. ($10 + $50) x 0.2 = $12.0
-                adjustment.included_tax.should == 0
-                order.adjustments.tax.first.amount.should == 12.0
+                expect(adjustment.included_tax).to eq(0)
+                expect(order.adjustments.tax.first.amount).to eq(12.0)
               end
             end
           end
@@ -278,7 +278,7 @@ module Spree
 
         it "sets it, rounding to two decimal places" do
           adjustment.set_included_tax! 0.25
-          adjustment.included_tax.should == 10.00
+          expect(adjustment.included_tax).to eq(10.00)
         end
       end
 
@@ -289,11 +289,11 @@ module Spree
         let!(:other_tax_rate)         { create(:tax_rate, calculator: Spree::Calculator::DefaultTax.new, amount: 0.3) }
 
         it "returns [] if there is no included tax" do
-          adjustment_without_tax.find_closest_tax_rates_from_included_tax.should == []
+          expect(adjustment_without_tax.find_closest_tax_rates_from_included_tax).to eq([])
         end
 
         it "returns the most accurate tax rate" do
-          adjustment_with_tax.find_closest_tax_rates_from_included_tax.should == [tax_rate]
+          expect(adjustment_with_tax.find_closest_tax_rates_from_included_tax).to eq([tax_rate])
         end
       end
     end
