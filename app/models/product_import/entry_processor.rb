@@ -46,10 +46,7 @@ module ProductImport
 
         products_count =
           if settings.importing_into_inventory?
-            VariantOverride.where(
-              'variant_overrides.hub_id IN (?)',
-              enterprise_id
-            ).count
+            VariantOverride.for_hubs([enterprise_id]).count
           else
             Spree::Variant.
               not_deleted.
