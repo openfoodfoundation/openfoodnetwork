@@ -92,7 +92,7 @@ module Spree
         end
 
         describe "when tax on shipping is enabled" do
-        before { Config.shipment_inc_vat = true }
+          before { Config.shipment_inc_vat = true }
 
           it "takes the shipment adjustment tax included from the system setting" do
             Config.shipping_tax_rate = 0.25
@@ -188,7 +188,7 @@ module Spree
             describe "when the tax rate does not include the tax in the price" do
               before do
                 fee_tax_rate.update_attribute :included_in_price, false
-                order.reload.create_tax_charge!  # Updating line_item or order has the same effect
+                order.reload.create_tax_charge! # Updating line_item or order has the same effect
                 order.update_distribution_charge!
               end
 
@@ -257,7 +257,7 @@ module Spree
             describe "when the tax rate does not include the tax in the price" do
               before do
                 product_tax_rate.update_attribute :included_in_price, false
-                order.reload.create_tax_charge!  # Updating line_item or order has the same effect
+                order.reload.create_tax_charge! # Updating line_item or order has the same effect
                 order.update_distribution_charge!
               end
 
