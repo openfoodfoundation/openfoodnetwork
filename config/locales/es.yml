@@ -55,6 +55,7 @@ es:
     user_registrations:
       spree_user:
         signed_up_but_unconfirmed: "Se ha enviado un mensaje con un enlace de confirmación a tu dirección de correo electrónico. Abre el enlace para activar tu cuenta."
+        unknown_error: "Algo salió mal al crear tu cuenta. Comprueba tu dirección de correo electrónico y vuelve a intentarlo."
     failure:
       invalid: |
           Correo o contraseña inválidos.
@@ -91,6 +92,7 @@ es:
       instructions: "Tu pedido ha sido enviado"
       shipment_summary: "Resumen de envío"
       subject: "Notificación de envío"
+      thanks: "Gracias por hacer negocios."
       track_information: "Información de seguimiento: %{tracking}"
       track_link: "Enlace de seguimiento: %{url}"
   subscription_mailer:
@@ -457,6 +459,7 @@ es:
         conditional_blank: no puede estar en blanco si unit_type está en blanco
         no_product: no coincide con ningún producto en la base de datos
         not_found: no encontrado en la base de datos
+        not_updatable: No se puede actualizar sobre productos existentes a través de la importación de productos
         blank: no puede estar vacío
         products_no_permission: no tienes permiso para administrar productos para esta organización
         inventory_no_permission: no tienes permiso para crear inventario para esta productora
@@ -494,24 +497,40 @@ es:
         options_and_defaults: Opciones de importación y valores predeterminados
         no_permission: no tienes permiso para administrar esta organización
         not_found: no se pudo encontrar la organización en la base de datos
+        no_name: Sin nombre
         blank_supplier: algunos productos tienen un nombre de proveedor en blanco
         reset_absent?: Restablecer productos ausentes
+        reset_absent_tip: Establezca el stock en cero para todos los productos existentes que no estén presentes en el archivo.
+        overwrite_all: Sobrescribir todo
+        overwrite_empty: Sobrescribir si está vacío
         default_stock: Establecer nivel de existencias
         default_tax_cat: Establecer categoría de impuestos
         default_shipping_cat: Establecer categoría de envío
+        default_available_date: Establecer fecha disponible
+        validation_overview: Resumen de validación de importación
+        entries_found: Entradas encontradas en el archivo importado
         entries_with_errors: Los artículos contienen errores y no se importarán
         products_to_create: Los productos se crearán
         products_to_update: Los productos se actualizarán
         inventory_to_create: Se crearán Artículos de inventario
         inventory_to_update: Los artículos de inventario se actualizarán
+        products_to_reset: Los productos existentes tendrán su stock restablecido a cero
+        inventory_to_reset: Los artículos de inventario existentes tendrán su stock restablecido a cero
         line: Línea
         item_line: Línea del artículo
+      import_review:
+        not_updatable_tip: "Los siguientes campos no se pueden actualizar mediante la importación masiva de productos existentes:"
+        fields_ignored: Estos campos se ignorarán cuando se guarden los productos importados.
+      entries_table:
+        not_updatable: Este campo no es actualizable mediante importación masiva en productos existentes
       save_results:
         final_results: Importar resultados finales
         products_created: Productos creados
         products_updated: Productos actualizados
         inventory_created: Artículos de inventario creados
         inventory_updated: Artículos de inventario actualizados
+        products_reset: Los productos tenían nivel de stock restablecido a cero
+        inventory_reset: Los artículos de inventario tenían el nivel de stock restablecido a cero
         all_saved: "Todos los artículos guardados con éxito"
         some_saved: "Artículos guardados con éxito"
         save_errors: Guardar errores
@@ -544,9 +563,6 @@ es:
       controls:
         back_to_my_inventory: Volver a mi inventario
     orders:
-      index:
-        capture: "Captura"
-        ship: "Envío"
       invoice_email_sent: 'Se ha enviado correo electrónico con la factura.'
       order_email_resent: 'El correo electrónico del pedido se ha reenviado'
       bulk_management:
@@ -835,6 +851,8 @@ es:
       filters:
         search_by_order_cycle_name: "Buscar por nombre del Ciclo de Pedido..."
         involving: "Involucrando"
+        any_enterprise: "Cualquier organización"
+        any_schedule: "Cualquier horario"
       form:
         incoming: Entrante
         supplier: Proveedora
@@ -1001,6 +1019,8 @@ es:
         allowed_payment_method_types_tip: Solo se pueden usar métodos de pago en efectivo y Stripe en este momento
         credit_card: Tarjeta de crédito
         charges_not_allowed: Los cargos no están permitidos para esta consumidora
+        no_default_card: La consumidora no tiene tarjetas disponibles para cargar
+        card_ok: La consumidora tiene una tarjeta disponible para cargar
       loading_flash:
         loading: CARGANDO SUSCRIPCIONES
       review:
@@ -1237,15 +1257,26 @@ es:
       cookie_remember_me_desc: "Se usa si el usuario ha solicitado que el sitio web lo recuerde. Esta cookie se elimina automáticamente después de 12 días. Si como usuario deseas que se elimine esa cookie, solo necesitas desconectarte. Si no deseas que la cookie se instale en tu computadora no debes marcar la casilla \"recordarme\" al iniciar sesión."
       cookie_openstreemap_desc: "Utilizado por nuestro amigo proveedor de mapeo de código abierto (OpenStreetMap) para garantizar que no recibas demasiadas solicitudes durante un período de tiempo determinado, para evitar el abuso de sus servicios."
       cookie_stripe_desc: "Datos recopilados por nuestro procesador de pagos Stripe para detectar fraudes https://stripe.com/cookies-policy/legal. No todas las tiendas usan Stripe como método de pago pero es una buena práctica evitar fraude aplicarlo a todas las páginas. Stripe probablemente crea una imagen de cuáles de nuestras páginas generalmente interactúan con su API y luego marca cualquier cosa inusual. Por lo tanto configurar la cookie Stripe tiene una función más amplia que la simple provisión de un método de pago a un usuario. Eliminarla podría afectar la seguridad del servicio en sí. Puede obtener más información acerca de Stripe y leer su política de privacidad en https://stripe.com/privacy."
+      statistics_cookies: "Cookies de estadísticas"
       statistics_cookies_desc: "Las siguientes no son estrictamente necesarias, pero ayudan a proporcionarle una mejor experiencia de usuario al permitirnos analizar el comportamiento del usuario, identificar qué funciones usa más o no, comprender los problemas de la experiencia del usuario, etc."
       statistics_cookies_analytics_desc_html: "Para recopilar y analizar los datos de uso de la plataforma utilizamos Google Analytics, ya que era el servicio predeterminado conectado con Spree (el software de código abierto de comercio electrónico en el que creamos) pero nuestra visión es cambiar a <a href = 'https: / /matomo.org/ 'target =' _ blank '> Matomo </a> (ex Piwik, herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad) tan pronto como podamos."
       statistics_cookies_matomo_desc_html: "Para recopilar y analizar los datos de uso de la plataforma, utilizamos <a href='https://matomo.org/' target='_blank'> Matomo </a> (ex Piwik), una herramienta analítica de código abierto que cumple con GDPR y protege tu privacidad"
       statistics_cookies_matomo_optout: "¿Deseas excluirte de Matomo Analytics? No recopilamos ningún dato personal y Matomo nos ayuda a mejorar nuestro servicio, pero respetamos tu elección :-)"
       cookie_analytics_utma_desc: "Se usa para distinguir usuarios y sesiones. La cookie se crea cuando la biblioteca javascript se ejecuta y no existe ninguna cookie __utma existente. La cookie se actualiza cada vez que se envían datos a Google Analytics."
       cookie_analytics_utmt_desc: "Se usa para acelerar la tasa de solicitud."
+      cookie_analytics_utmb_desc: "Se utiliza para determinar nuevas sesiones / visitas. La cookie se crea cuando la librería javascript se ejecuta y no existe ninguna cookie __utmb existente. La cookie se actualiza cada vez que los datos se envían a Google Analytics."
+      cookie_analytics_utmc_desc: "No utilizado en ga.js. Establecer para la interoperabilidad con urchin.js. Históricamente, esta cookie funcionó junto con la cookie __utmb para determinar si el usuario estaba en una nueva sesión / visita."
+      cookie_analytics_utmz_desc: "Almacena la fuente de tráfico o la campaña que explica cómo el usuario llegó a su sitio. La cookie se crea cuando se ejecuta la librería javascript y se actualiza cada vez que se envían datos a Google Analytics."
+      cookie_matomo_basics_desc: "Matomo cookies de origen para recopilar estadísticas."
+      cookie_matomo_heatmap_desc: "Matomo Heatmap y sesión de grabación de cookies."
+      cookie_matomo_ignore_desc: "Cookie utilizada para excluir al usuario de ser rastreado."
       disabling_cookies_header: "Advertencia sobre la desactivación de cookies"
+      disabling_cookies_desc: "Como usuario, siempre puede permitir, bloquear o eliminar las cookies de Open Food Network o cualquier otra página web cuando lo desee a través del control de configuración de su navegador. Cada navegador tiene una operativa diferente. Aquí están los enlaces:"
+      disabling_cookies_note: "Pero tenga en cuenta que si elimina o modifica las cookies esenciales utilizadas por Open Food Network, el sitio web no funcionará, no podrá agregar nada a su carrito ni realizar pedidos, por ejemplo."
     cookies_banner:
+      cookies_usage: "Este sitio utiliza cookies para que su navegación sea fluida y segura, y para ayudarnos a comprender cómo lo usa para mejorar las funciones que ofrecemos."
       cookies_definition: "Las cookies son archivos de texto muy pequeños que se almacenan en tu ordenador cuando visitas algunos sitios web."
+      cookies_desc: "Utilizamos solo las cookies que son necesarias para ofrecerle el servicio de venta / compra de alimentos en línea. No vendemos ninguno de sus datos. Utilizamos cookies principalmente para recordar quién es usted si 'inicia sesión' en el servicio, o para poder recordar los artículos que puso en su carrito, incluso si no ha iniciado sesión. Si continúa navegando en el sitio web sin hacer clic en \"Aceptar cookies\", asumimos que nos da su consentimiento para almacenar las cookies que son esenciales para el funcionamiento del sitio web."
       cookies_policy_link_desc: "Si desea obtener más información, consulte nuestro"
       cookies_policy_link: "política de cookies"
       cookies_accept_button: "Aceptar cookies"
@@ -2203,6 +2234,7 @@ es:
   content_configuration_pricing_table: "(TODO: tabla de precios)"
   content_configuration_case_studies: "(TODO: Casos de Estudio)"
   content_configuration_detail: "(TODO: Detalle)"
+  enterprise_name_error: "ya está en uso. Si esta es su organización y le gustaría reclamar la propiedad, o si desea negociar con esta organización, comuníquese con el gestor actual de este perfil al %{email}."
   enterprise_owner_error: "^ %{email} no está autorizado a tener más organizaciones (el límite es %{enterprise_limit})."
   enterprise_role_uniqueness_error: "^Este rol ya está presente."
   inventory_item_visibility_error: Debe ser verdadero o falso
@@ -2262,6 +2294,7 @@ es:
     choose: Escoger
     resolve_errors: Resuelve los siguientes errores
     more_items: "+ %{count} Más"
+    default_card_updated: Tarjeta predeterminada actualizada
     admin:
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
@@ -2456,11 +2489,28 @@ es:
     my_account: "Mi cuenta"
     date: "Fecha"
     time: "Hora"
+    layouts:
+      admin:
+        header:
+          store: Almacenar
     admin:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"
       orders:
+        index:
+          listing_orders: "Pedidos de listado"
+          new_order: "Nuevo pedido"
+          capture: "Captura"
+          ship: "Envío"
+          edit: "Editar"
+          note: "Nota"
+          first: "primero"
+          last: "Último"
+          previous: "Anterior"
+          next: "Siguiente"
+          loading: "Cargando"
+          no_orders_found: "No se encontraron pedidos"
         invoice:
           issued_on: Emitido el
           tax_invoice: FACTURA DE IMPUESTOS
@@ -2499,6 +2549,7 @@ es:
         source_forms:
           stripe:
             error_saving_payment: Error al guardar el pago
+            submitting_payment: Enviando pago...
       products:
         new:
           title: 'Nuevo producto'
@@ -2551,6 +2602,8 @@ es:
           cookies_consent_banner_toggle: "Mostrar el banner de consentimiento de cookies"
           privacy_policy_url: "Vínculo con la Política de privacidad"
           enterprises_require_tos: "Las organizaciones deben aceptar los Términos del Servicio"
+          cookies_policy_matomo_section: "Mostrar la sección de Matomo en la página de política de cookies"
+          cookies_policy_ga_section: "Mostrar la sección de Google Analytics en la página de la política de cookies"
           footer_tos_url: "URL de términos y servicios"
     checkout:
       payment:
@@ -2565,6 +2618,8 @@ es:
       js_format: 'yy-mm-dd'
     inventory: Inventario
     orders:
+      edit:
+        login_to_view_order: "Por favor inicie sesión para ver su pedido."
       bought:
         item: "Pedido en este ciclo de pedido"
     order_mailer:
