@@ -29,7 +29,7 @@ module ProductImport
 
     def save_all(entries)
       entries.each do |entry|
-        if import_into_inventory?(entry)
+        if settings.importing_into_inventory?
           save_to_inventory(entry)
         else
           save_to_product_list(entry)
@@ -122,10 +122,6 @@ module ProductImport
       end
 
       @variants_updated += 1
-    end
-
-    def import_into_inventory?(entry)
-      entry.enterprise_id && settings.importing_into_inventory?
     end
 
     def save_new_inventory_item(entry)
