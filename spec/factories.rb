@@ -374,7 +374,7 @@ FactoryBot.define do
         shipping_method { create :shipping_method }
       end
       after(:create) do |shipment, evaluator|
-        shipment.shipping_rates.destroy_all # remove existing shipping_rates from shipment
+        shipment.shipping_rates.destroy_all
         shipment.add_shipping_method(evaluator.shipping_method, true)
       end
     end
@@ -386,7 +386,7 @@ FactoryBot.define do
 
       after(:create) do |shipment, evaluator|
         shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
-        shipment.shipping_rates.destroy_all # remove existing shipping_rates from shipment
+        shipment.shipping_rates.destroy_all
         shipment.add_shipping_method(shipping_method, true)
       end
     end
