@@ -9,20 +9,20 @@ module OrderManagement
                         :fee_calculated_on_transfer_through_name, :tax_category_name, :total_amount
 
           def <=>(other)
-            self.class.sortable_data(self) <=> self.class.sortable_data(other)
+            sortable_data <=> other.sortable_data
           end
 
-          def self.sortable_data(instance)
+          def sortable_data
             [
-              instance.fee_type,
-              instance.enterprise_name,
-              instance.fee_name,
-              instance.customer_name,
-              instance.fee_placement,
-              instance.fee_calculated_on_transfer_through_name,
-              instance.tax_category_name,
-              instance.total_amount
-            ]
+              fee_type,
+              enterprise_name,
+              fee_name,
+              customer_name,
+              fee_placement,
+              fee_calculated_on_transfer_through_name,
+              tax_category_name,
+              total_amount
+            ].map { |attribute| attribute || "" }
           end
         end
       end
