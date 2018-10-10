@@ -7,6 +7,7 @@ module OrderManagement
         DATE_END_BEFORE_START_ERROR = I18n.t("date_end_before_start_error", scope: @i18n_scope)
 
         extend ActiveModel::Naming
+        extend ActiveModel::Translation
         include ActiveModel::Validations
 
         attr_accessor :start_at, :end_at, :distributor_ids, :producer_ids, :order_cycle_ids,
@@ -32,6 +33,9 @@ module OrderManagement
             public_send("#{key}=", value)
           end
         end
+
+        # The parameters are never persisted.
+        def to_key; end
 
         protected
 
