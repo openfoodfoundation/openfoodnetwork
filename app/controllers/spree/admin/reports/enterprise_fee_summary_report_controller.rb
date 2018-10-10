@@ -7,11 +7,13 @@ module Spree
   module Admin
     module Reports
       class EnterpriseFeeSummaryReportController < BaseController
+        before_filter :load_report_parameters, only: [:index]
+
         def index
           return render_report_form if params[:report].blank?
-          return respond_to_invalid_parameters unless report_parameters.valid?
+          return respond_to_invalid_parameters unless @report_parameters.valid?
 
-          service = report_klass::ReportService.new(report_parameters, report_renderer_klass)
+          service = report_klass::ReportService.new(@report_parameters, report_renderer_klass)
           send_data service.render, filename: service.filename
         end
 
@@ -34,8 +36,8 @@ module Spree
           OrderManagement::Reports::EnterpriseFeeSummary
         end
 
-        def report_parameters
-          @report_parameters ||= report_klass::Parameters.new(params[:report])
+        def load_report_parameters
+          @report_parameters = report_klass::Parameters.new(params[:report] || {})
         end
 
         def report_renderer_klass

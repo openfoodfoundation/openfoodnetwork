@@ -1,0 +1,50 @@
+= form_for @report_parameters, as: :report, url: spree.enterprise_fee_summary_admin_reports_path, method: :get do |f|
+  .row.date-range-filter
+    .sixteen.columns.alpha
+      = label_tag nil, t(".date_range")
+      %br
+
+      = f.label :start_at, class: "inline"
+      = f.text_field :start_at, class: "datetimepicker datepicker-from"
+
+      %span.range-divider
+        %i.icon-arrow-right
+
+      = f.text_field :end_at, class: "datetimepicker datepicker-to"
+      = f.label :end_at, class: "inline"
+
+  .row
+    .sixteen.columns.alpha
+      = f.label :distributor_ids
+      = f.collection_select(:distributor_ids, [], :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+
+  .row
+    .sixteen.columns.alpha
+      = f.label :producer_ids
+      = f.collection_select(:producer_ids, [], :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+
+  .row
+    .sixteen.columns.alpha
+      = f.label :order_cycle_ids
+      = f.collection_select(:order_cycle_ids, [], :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+
+  .row
+    .eight.columns.alpha
+      = f.label :enterprise_fee_ids
+      = f.collection_select(:enterprise_fee_ids, [], :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+    .eight.columns.omega
+      = f.label :shipping_method_ids
+      = f.collection_select(:shipping_method_ids, [], :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+
+  .row
+    .eight.columns.alpha &nbsp;
+    .eight.columns.omega
+      = f.label :payment_method_ids
+      = f.collection_select(:payment_method_ids, [], :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+
+  .row
+    .sixteen.columns.alpha
+      = check_box_tag :report_format, "csv", false, id: "report_format_csv"
+      = label_tag :report_format_csv, t(".report_format_csv")
+
+  = button t(".generate_report")
