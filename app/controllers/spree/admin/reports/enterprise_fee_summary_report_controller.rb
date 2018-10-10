@@ -1,5 +1,6 @@
 require "open_food_network/reports"
 require "order_management/reports/enterprise_fee_summary/parameters"
+require "order_management/reports/enterprise_fee_summary/report_authorizer"
 require "order_management/reports/enterprise_fee_summary/report_service"
 require "order_management/reports/enterprise_fee_summary/renderers/csv_renderer"
 
@@ -8,6 +9,7 @@ module Spree
     module Reports
       class EnterpriseFeeSummaryReportController < BaseController
         before_filter :load_report_parameters, only: [:index]
+        before_filter :load_report_authorizer, only: [:index]
 
         def index
           return render_report_form if params[:report].blank?
@@ -38,6 +40,10 @@ module Spree
 
         def load_report_parameters
           @report_parameters = report_klass::Parameters.new(params[:report] || {})
+        end
+
+        def load_report_authorizer
+          @report_authorizer = report_klass::ReportAuthorizer.new(spree_current_user)
         end
 
         def report_renderer_klass
