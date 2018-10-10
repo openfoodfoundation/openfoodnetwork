@@ -53,6 +53,16 @@ en:
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
   activemodel:
+    attributes:
+      order_management/reports/enterprise_fee_summary/parameters:
+        start_at: "Start"
+        end_at: "End"
+        distributor_ids: "Hubs"
+        producer_ids: "Producers"
+        order_cycle_ids: "Order Cycles"
+        enterprise_fee_ids: "Fees Names"
+        shipping_method_ids: "Shipping Methods"
+        payment_method_ids: "Payment Methods"
     errors:
       models:
         subscription_validator:
@@ -2809,6 +2819,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_allocation: 'Bulk Co-op - Allocation'
           bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
           bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
+        enterprise_fee_summary_report:
+          filters:
+            date_range: "Date Range"
+            report_format_csv: "Download as CSV"
+            generate_report: "Generate Report"
       users:
         index:
           listing_users: "Listing Users"
