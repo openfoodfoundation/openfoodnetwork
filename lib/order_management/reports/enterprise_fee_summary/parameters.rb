@@ -15,6 +15,8 @@ module OrderManagement
         attr_accessor :start_at, :end_at, :distributor_ids, :producer_ids, :order_cycle_ids,
                       :enterprise_fee_ids, :shipping_method_ids, :payment_method_ids
 
+        before_validation :cleanup_arrays
+
         validates :start_at, :end_at, date_time_string: true
         validates :distributor_ids, :producer_ids, integer_array: true
         validates :order_cycle_ids, integer_array: true
@@ -40,6 +42,20 @@ module OrderManagement
           return if start_at.blank? || end_at.blank?
 
           errors.add(:end_at, DATE_END_BEFORE_START_ERROR) unless start_at < end_at
+        end
+
+        # Remove the blank strings that Rails multiple selects add by default to
+        # make sure that blank lists are still submitted to the server as arrays
+        # instead of nil.
+        #
+        # https://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-select
+        def cleanup_arrays
+          distributor_ids.reject!(&:blank?)
+          producer_ids.reject!(&:blank?)
+          order_cycle_ids.reject!(&:blank?)
+          enterprise_fee_ids.reject!(&:blank?)
+          shipping_method_ids.reject!(&:blank?)
+          payment_method_ids.reject!(&:blank?)
         end
       end
     end
