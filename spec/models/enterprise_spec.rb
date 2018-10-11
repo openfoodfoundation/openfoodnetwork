@@ -147,6 +147,14 @@ describe Enterprise do
       it "sets the enterprise contact to the owner by default" do
         enterprise.contact.should eq enterprise.owner
       end
+
+      context "prevent an wrong instagram link pattern" do
+        let!(:e) { create(:enterprise, instagram: 'www.instagram.com/my_user') }
+
+        it "expects the instagram attribute to be in the correct pattern" do
+          expect(e.instagram).to eq('@my_user')
+        end
+      end
     end
 
     describe "preferred_shopfront_taxon_order" do
