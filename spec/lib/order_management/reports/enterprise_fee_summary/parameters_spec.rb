@@ -21,6 +21,24 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::Parameters do
       it { expect(subject).to validate_integer_array(:shipping_method_ids) }
       it { expect(subject).to validate_integer_array(:payment_method_ids) }
 
+      it "allows integer arrays to include blank string and cleans it up" do
+        subject.distributor_ids = ["", "1"]
+        subject.producer_ids = ["", "1"]
+        subject.order_cycle_ids = ["", "1"]
+        subject.enterprise_fee_ids = ["", "1"]
+        subject.shipping_method_ids = ["", "1"]
+        subject.payment_method_ids = ["", "1"]
+
+        expect(subject).to be_valid
+
+        expect(subject.distributor_ids).to eq(["1"])
+        expect(subject.producer_ids).to eq(["1"])
+        expect(subject.order_cycle_ids).to eq(["1"])
+        expect(subject.enterprise_fee_ids).to eq(["1"])
+        expect(subject.shipping_method_ids).to eq(["1"])
+        expect(subject.payment_method_ids).to eq(["1"])
+      end
+
       describe "requiring start_at to be before end_at" do
         let(:now) { Time.zone.now }
 

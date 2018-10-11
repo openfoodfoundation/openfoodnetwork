@@ -5,6 +5,7 @@ module OpenFoodNetwork
         extend ActiveModel::Naming
         extend ActiveModel::Translation
         include ActiveModel::Validations
+        include ActiveModel::Validations::Callbacks
 
         def initialize(attributes = {})
           attributes.each do |key, value|
