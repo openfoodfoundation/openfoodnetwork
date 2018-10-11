@@ -1,7 +1,9 @@
+require "open_food_network/reports/parameters/base"
+
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
-      class Parameters
+      class Parameters < OpenFoodNetwork::Reports::Parameters::Base
         @i18n_scope = "order_management.reports.enterprise_fee_summary"
 
         DATE_END_BEFORE_START_ERROR = I18n.t("date_end_before_start_error", scope: @i18n_scope)
@@ -29,13 +31,8 @@ module OrderManagement
           self.shipping_method_ids = []
           self.payment_method_ids = []
 
-          attributes.each do |key, value|
-            public_send("#{key}=", value)
-          end
+          super(attributes)
         end
-
-        # The parameters are never persisted.
-        def to_key; end
 
         protected
 
