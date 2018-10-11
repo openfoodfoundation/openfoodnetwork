@@ -429,7 +429,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def check_instagram_pattern
-    return if self.instagram.blank?
+    return if self.instagram.blank? || self.instagram.exclude?('instagram.com')
     self.instagram = "@#{self.instagram.split('/').last}"
   end
 end
