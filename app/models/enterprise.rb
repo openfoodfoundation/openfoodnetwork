@@ -80,6 +80,8 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
+  before_save :check_instagram_pattern
+
   after_touch :touch_distributors
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
@@ -424,5 +426,10 @@ class Enterprise < ActiveRecord::Base
     Enterprise.distributing_products(self.supplied_products).
       where('enterprises.id != ?', self.id).
       each(&:touch)
+  end
+
+  def check_instagram_pattern
+    return if self.instagram.blank? || self.instagram.exclude?('www.instagram.com')
+    self.instagram = "@#{self.instagram.split('/').last}"
   end
 end
