@@ -33,7 +33,6 @@ feature "Account Settings", js: true do
     end
 
     it "allows the user to change their password" do
-      allow(Spree::Auth::Config).to receive(:[]).with(:signout_after_password_change).and_return(false)
       initial_password = user.encrypted_password
 
       fill_in 'user_password', with: 'NewPassword'

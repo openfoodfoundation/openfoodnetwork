@@ -120,6 +120,7 @@ RSpec.configure do |config|
       spree_config.allow_backorders = false
     end
 
+    Spree::Auth::Config[:signout_after_password_change] = false
     Spree::Api::Config[:requires_authentication] = true
   end
 
