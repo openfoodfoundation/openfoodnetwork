@@ -1,0 +1,19 @@
+- if @report.present?
+  %table#enterprise_fee_summary_report.report__table
+    %thead
+      %tr
+        - @report.renderer.header.each do |heading|
+          %th= heading
+
+    %tbody
+      - @report.renderer.data_rows.each do |row|
+        %tr
+          - row.each do |cell_value|
+            %td= cell_value
+
+      - if @report.renderer.data_rows.empty?
+        %tr
+          %td{colspan: @report.renderer.header.length}= t(:none)
+- else
+  %p.report__message
+    = t(".select_and_search")
