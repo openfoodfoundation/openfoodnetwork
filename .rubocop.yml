@@ -188,7 +188,7 @@ Metrics/CyclomaticComplexity:
   Max: 6
 
 Metrics/LineLength:
-  Max: 80
+  Max: 100
 
 Metrics/MethodLength:
   Max: 10
