@@ -24,11 +24,11 @@ module OrderManagement
           ReportData::EnterpriseFeeTypeTotals.new(list: enterprise_fee_type_total_list.sort)
         end
 
-        private
-
         def renderer
           @renderer ||= renderer_klass.new(self)
         end
+
+        private
 
         def enterprise_fee_type_total_list
           enterprise_fees_by_customer.map do |total_data|
