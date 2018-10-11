@@ -655,7 +655,8 @@ describe Spree::Order do
   end
 
   describe "a completed order with shipping and transaction fees" do
-    let(:order) { create(:completed_order_with_fees, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+    let(:distributor) { create(:distributor_enterprise_with_tax) }
+    let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
     let(:shipping_fee) { 3 }
     let(:payment_fee) { 5 }
     let(:item_num) { order.line_items.length }
