@@ -2700,6 +2700,16 @@ See the %{link} to find out more about %{sitename}'s features and to start using
               fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
               tax_category_name: "Tax Category"
               total_amount: "$$ SUM"
+          html:
+            header:
+              fee_type: "Fee Type"
+              enterprise_name: "Enterprise Owner"
+              fee_name: "Fee Name"
+              customer_name: "Customer"
+              fee_placement: "Fee Placement"
+              fee_calculated_on_transfer_through_name: "Fee Calc on Transfer Through"
+              tax_category_name: "Tax Category"
+              total_amount: "$$ SUM"
         invalid_filter_parameters: "The filters you selected for this report are invalid."
 
   spree:
@@ -2824,6 +2834,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             date_range: "Date Range"
             report_format_csv: "Download as CSV"
             generate_report: "Generate Report"
+          report:
+            none: "None"
+            select_and_search: "Select filters and click on GENERATE REPORT to access your data."
       users:
         index:
           listing_users: "Listing Users"

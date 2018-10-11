@@ -1,10 +1,13 @@
 require "open_food_network/reports/renderers/base"
+require "open_food_network/reports/renderers/independent_file"
 
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       module Renderers
         class CsvRenderer < OpenFoodNetwork::Reports::Renderers::Base
+          include OpenFoodNetwork::Reports::Renderers::IndependentFile
+
           def render
             CSV.generate do |csv|
               render_header(csv)

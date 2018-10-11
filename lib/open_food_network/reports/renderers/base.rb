@@ -7,6 +7,10 @@ module OpenFoodNetwork
         def initialize(report_data)
           @report_data = report_data
         end
+
+        def independent_file?
+          false
+        end
       end
     end
   end

@@ -3,6 +3,7 @@ require "order_management/reports/enterprise_fee_summary/parameters"
 require "order_management/reports/enterprise_fee_summary/report_authorizer"
 require "order_management/reports/enterprise_fee_summary/report_service"
 require "order_management/reports/enterprise_fee_summary/renderers/csv_renderer"
+require "order_management/reports/enterprise_fee_summary/renderers/html_renderer"
 
 module Spree
   module Admin
@@ -15,8 +16,8 @@ module Spree
           return render_report_form if params[:report].blank?
           return respond_to_invalid_parameters unless @report_parameters.valid?
 
-          service = report_klass::ReportService.new(@report_parameters, report_renderer_klass)
-          send_data service.render, filename: service.filename
+          @report = report_klass::ReportService.new(@report_parameters, report_renderer_klass)
+          render_report
         end
 
         private
@@ -46,10 +47,21 @@ module Spree
           @report_authorizer = report_klass::ReportAuthorizer.new(spree_current_user)
         end
 
+        def render_report
+          return render_html_report unless @report.renderer.independent_file?
+          send_data(@report.render, filename: @report.filename)
+        end
+
+        def render_html_report
+          render action: :index
+        end
+
         def report_renderer_klass
           case params[:report_format]
           when "csv"
             report_klass::Renderers::CsvRenderer
+          when nil, "", "html"
+            report_klass::Renderers::HtmlRenderer
           else
             raise OpenFoodNetwork::Reports::UnsupportedReportFormatException
           end
