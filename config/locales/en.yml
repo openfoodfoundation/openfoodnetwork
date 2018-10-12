@@ -2687,10 +2687,13 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         fee_calculated_on_transfer_through_all: "All"
         fee_type:
           payment_method: "Payment Transaction"
+          shipping_method: "Shipment"
         fee_placements:
           supplier: "Incoming"
           distributor: "Outgoing"
           coordinator: "Coordinator"
+        tax_category_name:
+          shipping_instance_rate: "Platform Rate"
         formats:
           csv:
             header:
