@@ -13,11 +13,12 @@ module OrderManagement
         protected
 
         def setup_default_scope
-          find_adjustments_for_enterprise_fees
+          find_adjustments_for_enterprise_fees_and_payment_methods
 
           include_adjustment_metadata
-          include_enterprise_fee_details
           include_order_details
+          include_payment_fee_details
+          include_enterprise_fee_details
           include_line_item_details
           include_incoming_exchange_details
           include_outgoing_exchange_details
@@ -26,8 +27,8 @@ module OrderManagement
           select_attributes
         end
 
-        def find_adjustments_for_enterprise_fees
-          find_adjustments.for_orders.for_enterprise_fees
+        def find_adjustments_for_enterprise_fees_and_payment_methods
+          find_adjustments.for_orders.for_enterprise_fees_and_payment_methods
         end
 
         def find_adjustments
@@ -42,9 +43,9 @@ module OrderManagement
           end
         end
 
-        def for_enterprise_fees
+        def for_enterprise_fees_and_payment_methods
           chain_to_scope do
-            where(originator_type: "EnterpriseFee")
+            where(originator_type: ["EnterpriseFee", "Spree::PaymentMethod"])
           end
         end
 
@@ -53,6 +54,50 @@ module OrderManagement
             <<-JOIN_STRING.strip_heredoc
               LEFT OUTER JOIN adjustment_metadata
                 ON (adjustment_metadata.adjustment_id = spree_adjustments.id)
+            JOIN_STRING
+          )
+        end
+
+        # Includes:
+        # * Order
+        # * Customer
+        def include_order_details
+          join_scope(
+            <<-JOIN_STRING.strip_heredoc
+              LEFT OUTER JOIN spree_orders
+                ON (
+                  spree_adjustments.adjustable_type = 'Spree::Order'
+                    AND spree_orders.id = spree_adjustments.adjustable_id
+                )
+            JOIN_STRING
+          )
+
+          join_scope("LEFT OUTER JOIN customers ON (customers.id = spree_orders.customer_id)")
+        end
+
+        # If for payment fee
+        #
+        # Includes:
+        # * Payment method
+        # * Hub
+        def include_payment_fee_details
+          join_scope(
+            <<-JOIN_STRING.strip_heredoc
+              LEFT OUTER JOIN spree_payment_methods
+                ON (
+                  spree_adjustments.originator_type = 'Spree::PaymentMethod'
+                    AND spree_payment_methods.id = spree_adjustments.originator_id
+                )
+            JOIN_STRING
+          )
+
+          join_scope(
+            <<-JOIN_STRING.strip_heredoc
+              LEFT OUTER JOIN enterprises AS payment_hubs
+                ON (
+                  spree_payment_methods.id IS NOT NULL
+                    AND payment_hubs.id = spree_orders.distributor_id
+                )
             JOIN_STRING
           )
         end
@@ -85,23 +130,6 @@ module OrderManagement
                 ON (spree_tax_categories.id = enterprise_fees.tax_category_id)
             JOIN_STRING
           )
-        end
-
-        # Includes:
-        # * Order
-        # * Customer
-        def include_order_details
-          join_scope(
-            <<-JOIN_STRING.strip_heredoc
-              LEFT OUTER JOIN spree_orders
-                ON (
-                  spree_adjustments.adjustable_type = 'Spree::Order'
-                    AND spree_orders.id = spree_adjustments.adjustable_id
-                )
-            JOIN_STRING
-          )
-
-          join_scope("LEFT OUTER JOIN customers ON (customers.id = spree_orders.customer_id)")
         end
 
         # If for line item - Use data only if spree_line_items.id is present
@@ -225,6 +253,7 @@ module OrderManagement
         def group_data
           chain_to_scope do
             group("enterprise_fees.id", "enterprises.id", "customers.id",
+                  "spree_payment_methods.id", "payment_hubs.id",
                   "adjustment_metadata.enterprise_role", "spree_tax_categories.id",
                   "product_tax_categories.id", "incoming_exchange_enterprises.id",
                   "outgoing_exchange_enterprises.id")
@@ -235,11 +264,12 @@ module OrderManagement
           chain_to_scope do
             select(
               <<-JOIN_STRING.strip_heredoc
-                SUM(spree_adjustments.amount) AS total_amount, enterprises.name AS enterprise_name,
-                  enterprise_fees.fee_type AS fee_type, customers.name AS customer_name,
-                  customers.email AS customer_email, enterprise_fees.fee_type AS fee_type,
-                  enterprise_fees.name AS fee_name, spree_tax_categories.name AS tax_category_name,
-                  product_tax_categories.name AS product_tax_category_name,
+                SUM(spree_adjustments.amount) AS total_amount, spree_payment_methods.name AS
+                  payment_method_name, payment_hubs.name AS payment_hub_name, enterprises.name AS
+                  enterprise_name, enterprise_fees.fee_type AS fee_type, customers.name AS
+                  customer_name, customers.email AS customer_email, enterprise_fees.fee_type AS
+                  fee_type, enterprise_fees.name AS fee_name, spree_tax_categories.name AS
+                  tax_category_name, product_tax_categories.name AS product_tax_category_name,
                   adjustment_metadata.enterprise_role AS placement_enterprise_role,
                   incoming_exchange_enterprises.name AS incoming_exchange_enterprise_name,
                   outgoing_exchange_enterprises.name AS outgoing_exchange_enterprise_name
