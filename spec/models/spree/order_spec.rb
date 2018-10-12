@@ -711,7 +711,16 @@ describe Spree::Order do
       let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 0)) }
 
       it "updates shipping fees" do
+        # This is necessary to bypass memoised order's @shipment
+        #   Making the order object not cache the shipment as a @instance_variable but instead always use the shipments.first reference.
+        #   See https://github.com/openfoodfoundation/spree/blob/2-0-4-stable/core/app/models/spree/order.rb#L304
+        class Spree::Order
+          def shipment
+            shipments.first
+          end
+        end
         # Change the shipping method
+        #   Ideally, this should be done by updating shipment.shipping_method
         order.shipments = [create(:shipment_with, :shipping_method, shipping_method: shipping_method)]
         order.save
 
