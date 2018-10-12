@@ -5,7 +5,9 @@ require "order_management/reports/enterprise_fee_summary/parameters"
 
 describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   let!(:shipping_method) { create(:shipping_method) }
-  let!(:payment_method) { create(:payment_method) }
+  let!(:payment_method) do
+    create(:payment_method, name: "Sample Payment Method", calculator: per_item_calculator(2.0))
+  end
 
   let!(:distributor) do
     create(:distributor_enterprise, name: "Sample Distributor").tap do |enterprise|
@@ -91,7 +93,7 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
 
     totals = service.enterprise_fee_type_totals
 
-    expect(totals.list.length).to eq(12)
+    expect(totals.list.length).to eq(14)
 
     # Data is sorted by the following, in order:
     # * fee_type
@@ -112,8 +114,12 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
        "Outgoing", "Sample Coordinator", "Sample Distributor Tax", "4.00"],
       ["Admin", "Sample Distributor", "Included Distributor Fee 1", "Sample Customer",
        "Outgoing", "Sample Coordinator", "Sample Distributor Tax", "8.00"],
-      ["Sales", "Sample Coordinator", "Included Coordinator Fee 2", "Another Customer",
-       "Coordinator", "All", "Sample Product Tax", "1024.00"],
+      ["Payment Transaction", "Sample Distributor", "Sample Payment Method",
+       "Another Customer", nil, nil, nil, "2.00"],
+      ["Payment Transaction", "Sample Distributor", "Sample Payment Method",
+       "Sample Customer", nil, nil, nil, "4.00"],
+      ["Sales", "Sample Coordinator", "Included Coordinator Fee 2",
+       "Another Customer", "Coordinator", "All", "Sample Product Tax", "1024.00"],
       ["Sales", "Sample Coordinator", "Included Coordinator Fee 2", "Sample Customer",
        "Coordinator", "All", "Sample Product Tax", "2048.00"],
       ["Sales", "Sample Distributor", "Included Distributor Fee 2", "Another Customer",
