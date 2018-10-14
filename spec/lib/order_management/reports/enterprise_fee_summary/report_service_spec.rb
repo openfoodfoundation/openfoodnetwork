@@ -82,13 +82,11 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
   end
 
   let!(:customer) { create(:customer, name: "Sample Customer") }
-  let!(:another_customer) { create(:customer, name: "Another Customer") }
-
-  let!(:customer_order) { prepare_completed_order(customer) }
-  let!(:second_customer_order) { prepare_completed_order(customer) }
+  let!(:customer_order) { prepare_completed_order(customer: customer) }
+  let!(:second_customer_order) { prepare_completed_order(customer: customer) }
 
   let!(:another_customer) { create(:customer, name: "Another Customer") }
-  let!(:other_customer_order) { prepare_completed_order(another_customer) }
+  let!(:other_customer_order) { prepare_completed_order(customer: another_customer) }
 
   it "groups and sorts entries correctly" do
     parameters = OrderManagement::Reports::EnterpriseFeeSummary::Parameters.new
@@ -162,20 +160,29 @@ describe OrderManagement::Reports::EnterpriseFeeSummary::ReportService do
     create(:tax_category, name: name)
   end
 
-  def prepare_completed_order(customer)
-    order = create(:order, customer: customer, distributor: distributor, order_cycle: order_cycle,
-                           shipping_method: shipping_method)
-    create(:line_item, order: order, variant: variant)
-
-    complete_order(order)
-
-    order.reload
+  def default_order_options
+    { customer: customer, distributor: distributor, order_cycle: order_cycle,
+      shipping_method: shipping_method }
   end
 
-  def complete_order(order)
+  def prepare_completed_order(options = {})
+    target = default_order_options.merge(options)
+
+    create(:order, customer: target[:customer], distributor: target[:distributor],
+                   order_cycle: target[:order_cycle],
+                   shipping_method: target[:shipping_method]).tap do |order|
+      create(:line_item, order: order, variant: options[:variant] || variant)
+
+      complete_order(order, options)
+
+      order.reload
+    end
+  end
+
+  def complete_order(order, options)
     order.create_shipment!
     create(:payment, state: "checkout", order: order, amount: order.total,
-                     payment_method: payment_method)
+                     payment_method: options[:payment_method] || payment_method)
     order.update_distribution_charge!
     while !order.completed? do break unless order.next! end
   end
