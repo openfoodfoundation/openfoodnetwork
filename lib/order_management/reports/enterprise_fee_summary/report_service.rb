@@ -17,7 +17,7 @@ module OrderManagement
         end
 
         def enterprise_fees_by_customer
-          Scope.new.all
+          Scope.new.apply_filters(parameters).result
         end
 
         def enterprise_fee_type_totals
