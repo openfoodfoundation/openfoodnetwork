@@ -2,11 +2,22 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       class Scope
+        attr_accessor :parameters
+
         def initialize
           setup_default_scope
         end
 
-        def all
+        def apply_filters(params)
+          filter_by_date(params)
+          filter_by_distribution(params)
+          filter_by_fee(params)
+
+          self
+        end
+
+        def result
+          group_data.select_attributes
           @scope.all
         end
 
@@ -275,6 +286,30 @@ module OrderManagement
           )
         end
 
+        def filter_by_date(params)
+          filter_scope("spree_orders.completed_at >= ?", params.start_at) \
+            if params.start_at.present?
+          filter_scope("spree_orders.completed_at <= ?", params.end_at) if params.end_at.present?
+        end
+
+        def filter_by_distribution(params)
+          filter_scope(spree_orders: { distributor_id: params.distributor_ids }) \
+            if params.distributor_ids.present?
+          filter_scope(spree_products: { supplier_id: params.producer_ids }) \
+            if params.producer_ids.present?
+          filter_scope(spree_orders: { order_cycle_id: params.order_cycle_ids }) \
+            if params.order_cycle_ids.present?
+        end
+
+        def filter_by_fee(params)
+          filter_scope(enterprise_fees: { id: params.enterprise_fee_ids }) \
+            if params.enterprise_fee_ids.present?
+          filter_scope(spree_shipping_methods: { id: params.shipping_method_ids }) \
+            if params.shipping_method_ids.present?
+          filter_scope(spree_payment_methods: { id: params.payment_method_ids }) \
+            if params.payment_method_ids.present?
+        end
+
         def group_data
           chain_to_scope do
             group("enterprise_fees.id", "enterprises.id", "customers.id", "hubs.id",
@@ -312,6 +347,12 @@ module OrderManagement
         def join_scope(join_string)
           chain_to_scope do
             joins(join_string)
+          end
+        end
+
+        def filter_scope(*args)
+          chain_to_scope do
+            where(*args)
           end
         end
       end
