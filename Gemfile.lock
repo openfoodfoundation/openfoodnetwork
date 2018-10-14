@@ -228,6 +228,8 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     colorize (0.8.1)
+    combine_pdf (1.0.15)
+      ruby-rc4 (>= 0.1.5)
     compass (1.0.3)
       chunky_png (~> 1.2)
       compass-core (~> 1.0.2)
@@ -673,6 +675,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-ole (1.2.12.1)
     ruby-progressbar (1.10.0)
+    ruby-rc4 (0.1.5)
     rubyzip (1.2.2)
     safe_yaml (1.0.4)
     sass (3.3.14)
@@ -771,6 +774,7 @@ DEPENDENCIES
   byebug (~> 9.0.0)
   capybara (>= 2.15.4)
   coffee-rails (~> 3.2.1)
+  combine_pdf
   compass-rails
   custom_error_message!
   daemons
