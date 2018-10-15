@@ -143,6 +143,7 @@ module Openfoodnetwork
     config.assets.initialize_on_precompile = true
     config.assets.precompile += ['iehack.js']
     config.assets.precompile += ['admin/all.css', 'admin/*.js', 'admin/**/*.js']
+    config.assets.precompile += ['web/all.css', 'web/all.js']
     config.assets.precompile += ['darkswarm/all.css', 'darkswarm/all.js']
     config.assets.precompile += ['mail/all.css']
     config.assets.precompile += ['shared/*']

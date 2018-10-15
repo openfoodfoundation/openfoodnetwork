@@ -133,6 +133,11 @@ GIT
       activemodel (>= 3.0)
       railties (>= 3.0)
 
+PATH
+  remote: engines/web
+  specs:
+    web (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -764,6 +769,7 @@ DEPENDENCIES
   capybara (>= 2.15.4)
   coffee-rails (~> 3.2.1)
   compass-rails
+  web!
   custom_error_message!
   daemons
   dalli

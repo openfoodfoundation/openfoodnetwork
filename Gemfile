@@ -10,6 +10,8 @@ gem 'i18n-js', '~> 3.0.0'
 # Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
 gem 'nokogiri', '>= 1.6.7.1'
 
+gem 'web', path: './engines/web'
+
 gem 'pg'
 gem 'spree', github: 'openfoodfoundation/spree', branch: 'step-6a', ref: '69db1c090f3711088d84b524f1b94d25e6d21616'
 gem 'spree_i18n', github: 'spree/spree_i18n', branch: '1-3-stable'
