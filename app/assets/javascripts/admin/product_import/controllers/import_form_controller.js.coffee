@@ -51,7 +51,7 @@ angular.module("admin.productImport").controller "ImportFormCtrl", ($scope, $htt
   $scope.start = () ->
     $scope.started = true
     total = ams_data.item_count
-    size = 100
+    size = 50
     $scope.chunks = Math.ceil(total / size)
 
     i = 0

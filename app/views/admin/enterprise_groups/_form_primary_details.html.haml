@@ -11,12 +11,12 @@
     = f.text_field :description
 
   = f.field_container :on_front_page do
-    = f.label :on_front_page, t(:admin_entreprise_groups_on_front_page)
+    = f.label :on_front_page, t(:admin_enterprise_groups_on_front_page)
     %br/
     = f.check_box :on_front_page
 
   = f.field_container :enterprise_ids do
-    = f.label :enterprise_ids, t(:admin_entreprise_groups_entreprise)
+    = f.label :enterprise_ids, t(:admin_enterprise_groups_enterprise)
     %br/
     = f.collection_select :enterprise_ids, @enterprises, :id, :name, {}, {class: "select2 fullwidth", multiple: true}
 

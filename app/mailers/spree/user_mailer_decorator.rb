@@ -13,8 +13,14 @@ Spree::UserMailer.class_eval do
     @contact = ContentConfig.footer_email
 
     subject = t('spree.user_mailer.confirmation_instructions.subject')
-    mail(to: user.email,
+    mail(to: confirmation_email_address,
          from: from_address,
          subject: subject)
+  end
+
+  private
+
+  def confirmation_email_address
+    @user.pending_reconfirmation? ? @user.unconfirmed_email : @user.email
   end
 end

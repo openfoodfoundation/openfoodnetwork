@@ -12,7 +12,7 @@ module OpenFoodNetwork
       args.each do |arg|
         type = types[arg.class]
         next unless type
-        send("#{type}=", arg)
+        public_send("#{type}=", arg)
       end
     end
 
@@ -22,16 +22,6 @@ module OpenFoodNetwork
 
     def ship_address
       customer_preferred_ship_address || user_preferred_ship_address || fallback_ship_address
-    end
-
-    private
-
-    def types
-      {
-        String      => "email",
-        Customer    => "customer",
-        Spree::User => "user"
-      }
     end
 
     def email=(arg)
@@ -44,6 +34,16 @@ module OpenFoodNetwork
 
     def user=(arg)
       @user ||= arg
+    end
+
+    private
+
+    def types
+      {
+        String      => "email",
+        Customer    => "customer",
+        Spree::User => "user"
+      }
     end
 
     def customer_preferred_bill_address

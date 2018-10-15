@@ -9,5 +9,9 @@ module Api
     include ActionController::UrlFor
     include Rails.application.routes.url_helpers
     use_renderers :json
+
+    def respond_with_conflict(json_hash)
+      render json: json_hash, status: :conflict
+    end
   end
 end

@@ -1,15 +1,22 @@
 @import "variables";
 
-div.panel-section {
+$pi-red: $warning-red;
+$pi-green: lighten($spree-green, 10%);
+$pi-orange: $bright-orange;
+$pi-blue: lighten($spree-blue, 10%);
+$pi-light-yellow: #faffaf;
 
-  .neutral {
-    color: #bfbfbf;
+// scss-lint:disable NestingDepth
+
+div.panel-section {
+  .error {
+    color: $pi-red;
   }
   .warning {
-    color: $warning-red;
+    color: $bright-orange;
   }
   .success {
-    color: #86d83a;
+    color: $pi-green;
   }
   .info {
     color: #68b7c0;
@@ -85,21 +92,29 @@ div.panel-section {
       td, th {
         white-space: nowrap;
       }
-      tr.error {
-        color: #c84C4c;
+
+      tr {
+        &.error {
+          color: #c84C4c;
+        }
+
+        &:hover td.invalid {
+          background-color: darken(#f05c51, 5%);
+        }
+
+        i {
+          display: block;
+          margin-bottom: -0.2em;
+          font-size: 1.4em !important;
+        }
       }
-      tr:hover td.invalid {
-        background-color: #ed5135;
-      }
-      tr i {
-        display: block;
-        margin-bottom: -0.2em;
-        font-size: 1.4em !important;
-      }
-      td.invalid {
-        background-color: #f05c51;
-        box-shadow: inset 0px 0px 1px red;
-        color: white;
+
+      td {
+        &.invalid {
+          background-color: #f05c51;
+          box-shadow: inset 0px 0px 1px red;
+          color: white;
+        }
       }
     }
 
@@ -123,52 +138,6 @@ br.panels.clearfix {
   clear: both;
 }
 
-table.import-settings {
-  background-color: transparent !important;
-  width: auto;
-
-  tbody tr:hover td {
-    background-color: #f3f3f3;
-  }
-  td {
-    border: 0;
-    border-bottom: 1px solid #eee;
-    text-align: left;
-
-    input {
-      width: 15em;
-    }
-    input[type="checkbox"] {
-      width: auto;
-    }
-
-  }
-  td.description {
-    font-weight: bold;
-    padding-right: 2.5em;
-  }
-  tr:first-child td {
-    border-top: 0;
-  }
-  tr:last-child td {
-    border-bottom: 0;
-  }
-  div.select2-container {
-    width: 13.5em;
-  }
-  div.select2-container.select2-container-disabled {
-    a.select2-choice, span.select2-arrow {
-      background-color: #d5d5d5;
-    }
-  }
-  input[disabled], input:disabled {
-    background-color: #d5d5d5;
-    opacity: 1;
-    border-color: transparent;
-    color: white !important;
-  }
-}
-
 .panel-section.import-settings {
 
   .header-description {
@@ -177,7 +146,7 @@ table.import-settings {
 
   span.header-error {
     font-size: 0.85em;
-    color: $warning-red;
+    color: $pi-red;
   }
 
   .select2-search {
@@ -208,10 +177,10 @@ table.import-settings {
     }
 
     i.fa-check-circle {
-      color: #86d83a;
+      color: $pi-green;
     }
     i.fa-info-circle {
-      color: #68b7c0;
+      color: $pi-blue;
     }
   }
 
@@ -233,6 +202,10 @@ form.product-import, div.post-save-results, div.import-wrapper {
 }
 
 div.import-wrapper {
+
+  .alert-box {
+    margin: 0 0 1.75em;
+  }
 
   .ng-hide:not(.ng-hide-animate) {
     // We have to use !important here to override angular's display properties
@@ -281,7 +254,7 @@ div.progress-bar {
 
   span.progress-track{
     display: block;
-    background: #b7ea53;
+    background: lighten($pi-green, 10%);
     height: 100%;
     border-radius: 0.3em;
     box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
@@ -312,7 +285,7 @@ div.progress-bar {
 
   span.category {
     display: inline-block;
-    background-color: lighten($spree-blue, 10%);
+    background-color: $pi-blue;
     color: white;
     padding: 0.3em 0.6em;
     margin: 0 0.4em 0.5em 0;

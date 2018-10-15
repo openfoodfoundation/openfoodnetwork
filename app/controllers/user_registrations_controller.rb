@@ -1,4 +1,8 @@
+require 'open_food_network/error_logger'
+
 class UserRegistrationsController < Spree::UserRegistrationsController
+  I18N_SCOPE = 'devise.user_registrations.spree_user'.freeze
+
   before_filter :set_checkout_redirect, only: :create
 
   # POST /resource/sign_up
@@ -19,14 +23,23 @@ class UserRegistrationsController < Spree::UserRegistrationsController
         end
       end
     else
-      clean_up_passwords(resource)
-      respond_to do |format|
-        format.html do
-          render :new
-        end
-        format.js do
-          render json: @user.errors, status: :unauthorized
-        end
+      render_error(@user.errors)
+    end
+  rescue StandardError => error
+    OpenFoodNetwork::ErrorLogger.notify(error)
+    render_error(message: I18n.t('unknown_error', scope: I18N_SCOPE))
+  end
+
+  private
+
+  def render_error(errors = {})
+    clean_up_passwords(resource)
+    respond_to do |format|
+      format.html do
+        render :new
+      end
+      format.js do
+        render json: errors, status: :unauthorized
       end
     end
   end

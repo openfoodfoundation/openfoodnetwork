@@ -25,13 +25,14 @@ module Admin
 
       context "signing up a new user" do
         before do
+          create(:mail_method)
           controller.stub spree_current_user: admin
         end
 
         it "creates a new user, sends an invitation email, and returns the user id" do
           expect do
             spree_post :create, {email: 'un.registered@email.com', enterprise_id: enterprise.id}
-          end.to enqueue_job Delayed::PerformableMethod
+          end.to send_confirmation_instructions
 
           new_user = Spree::User.find_by_email('un.registered@email.com')
 
@@ -45,6 +46,7 @@ module Admin
     describe "with enterprise permissions" do
       context "as user with proper enterprise permissions" do
         before do
+          create(:mail_method)
           controller.stub spree_current_user: enterprise_owner
         end
 

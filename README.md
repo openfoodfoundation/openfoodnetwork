@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/openfoodfoundation/openfoodnetwork.svg?branch=master)](https://travis-ci.org/openfoodfoundation/openfoodnetwork)
+[![Build Status](https://semaphoreci.com/api/v1/openfoodfoundation/openfoodnetwork-2/branches/master/badge.svg)](https://semaphoreci.com/openfoodfoundation/openfoodnetwork-2)
 [![Code Climate](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork.png)](https://codeclimate.com/github/openfoodfoundation/openfoodnetwork)
 [![View performance data on Skylight](https://badges.skylight.io/status/EiXQ6sSKij8y.svg)](https://oss.skylight.io/app/applications/EiXQ6sSKij8y)
 

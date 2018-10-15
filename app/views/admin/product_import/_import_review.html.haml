@@ -3,6 +3,12 @@
 
 %div{ng: {controller: 'ImportFeedbackCtrl'}}
 
+  - if @importer.product_field_errors?
+    .alert-box.warning
+      = t('.not_updatable_tip')
+      %em= @non_updatable_fields.keys.join(', ') + "."
+      = t('.fields_ignored')
+
   %div.panel-section{ng: {controller: 'DropdownPanelsCtrl'}}
     %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count((entries | entriesFilterValid:"all"))}'}}
       %div.header-caret
@@ -21,7 +27,7 @@
     %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count((entries | entriesFilterValid:"invalid"))}'}}
       %div.header-caret
         %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count((entries | entriesFilterValid:"invalid")) == 0'}}
-      %div.header-icon.warning
+      %div.header-icon.error
         %i.fa.fa-warning
       %div.header-count
         %strong.invalid-count

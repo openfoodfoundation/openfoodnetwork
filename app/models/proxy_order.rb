@@ -19,7 +19,7 @@ class ProxyOrder < ActiveRecord::Base
   def state
     # NOTE: the order is important here
     %w(canceled paused pending cart).each do |state|
-      return state if send("#{state}?")
+      return state if __send__("#{state}?")
     end
     order.state
   end
@@ -32,7 +32,7 @@ class ProxyOrder < ActiveRecord::Base
     return false unless order_cycle.orders_close_at.andand > Time.zone.now
     transaction do
       update_column(:canceled_at, Time.zone.now)
-      order.send('cancel') if order
+      order.cancel if order
       true
     end
   end
@@ -41,7 +41,7 @@ class ProxyOrder < ActiveRecord::Base
     return false unless order_cycle.orders_close_at.andand > Time.zone.now
     transaction do
       update_column(:canceled_at, nil)
-      order.send('resume') if order
+      order.resume if order
       true
     end
   end

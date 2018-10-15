@@ -1,6 +1,0 @@
-/ insert_bottom "[data-hook='admin_orders_index_rows'] td:nth-child(3)"
-
-- if order.special_instructions.present?
-  %br
-  %span{class: "icon-warning-sign", "ofn-with-tip" => order.special_instructions}
-    notes

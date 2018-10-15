@@ -4,18 +4,18 @@
 module OpenFoodNetwork
   module Paperclippable
     def self.included(base)
-      base.send :extend, ActiveModel::Naming
-      base.send :extend, ActiveModel::Callbacks
-      base.send :include, ActiveModel::Validations
-      base.send :include, Paperclip::Glue
+      base.extend(ActiveModel::Naming)
+      base.extend(ActiveModel::Callbacks)
+      base.include(ActiveModel::Validations)
+      base.include(Paperclip::Glue)
 
       # Paperclip required callbacks
-      base.send :define_model_callbacks, :save, only: [:after]
-      base.send :define_model_callbacks, :commit, only: [:after]
-      base.send :define_model_callbacks, :destroy, only: [:before, :after]
+      base.define_model_callbacks(:save, only: [:after])
+      base.define_model_callbacks(:commit, only: [:after])
+      base.define_model_callbacks(:destroy, only: [:before, :after])
 
       # Initialise an ID
-      base.send :attr_accessor, :id
+      base.__send__(:attr_accessor, :id)
       base.instance_variable_set :@id, 1
     end
 

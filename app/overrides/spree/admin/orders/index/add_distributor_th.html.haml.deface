@@ -1,4 +1,0 @@
-/ insert_top "[data-hook='admin_orders_index_headers']" 
-
-%th
-  = t(:products_distributor)

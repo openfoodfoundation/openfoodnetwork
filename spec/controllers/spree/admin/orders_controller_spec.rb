@@ -66,26 +66,27 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       it "retrieves a list of orders with appropriate attributes, including line items with appropriate attributes" do
-        keys = json_response.first.keys.map{ |key| key.to_sym }
+        keys = json_response['orders'].first.keys.map{ |key| key.to_sym }
         order_attributes.all?{ |attr| keys.include? attr }.should == true
       end
 
-      it "sorts orders in ascending id order" do
-        ids = json_response.map{ |order| order['id'] }
-        ids[0].should < ids[1]
-        ids[1].should < ids[2]
+      it "sorts orders in descending id order" do
+        ids = json_response['orders'].map{ |order| order['id'] }
+        ids[0].should > ids[1]
+        ids[1].should > ids[2]
       end
 
       it "formats completed_at to 'yyyy-mm-dd hh:mm'" do
-        json_response.map{ |order| order['completed_at'] }.all?{ |a| a.match("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$") }.should == true
+        pp json_response
+        json_response['orders'].map{ |order| order['completed_at'] }.all?{ |a| a == order1.completed_at.strftime('%B %d, %Y') }.should == true
       end
 
       it "returns distributor object with id key" do
-        json_response.map{ |order| order['distributor'] }.all?{ |d| d.has_key?('id') }.should == true
+        json_response['orders'].map{ |order| order['distributor'] }.all?{ |d| d.has_key?('id') }.should == true
       end
 
       it "retrieves the order number" do
-        json_response.map{ |order| order['number'] }.all?{ |number| number.match("^R\\d{5,10}$") }.should == true
+        json_response['orders'].map{ |order| order['number'] }.all?{ |number| number.match("^R\\d{5,10}$") }.should == true
       end
     end
 
@@ -120,7 +121,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
 
         it "retrieves a list of orders" do
-          keys = json_response.first.keys.map{ |key| key.to_sym }
+          keys = json_response['orders'].first.keys.map{ |key| key.to_sym }
           order_attributes.all?{ |attr| keys.include? attr }.should == true
         end
       end
@@ -132,7 +133,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
 
         it "retrieves a list of orders" do
-          keys = json_response.first.keys.map{ |key| key.to_sym }
+          keys = json_response['orders'].first.keys.map{ |key| key.to_sym }
           order_attributes.all?{ |attr| keys.include? attr }.should == true
         end
       end

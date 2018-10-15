@@ -4,18 +4,16 @@ inherit_from:
 AllCops:
   TargetRubyVersion: 2.1
   TargetRailsVersion: 3.2
-  Include:
-    - '**/Rakefile'
-    - '**/config.ru'
   Exclude:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
     - 'vendor/**/*'
     - 'node_modules/**/*'
-    - !ruby/regexp /old_and_unused\.rb$/
     # The parser gem fails to parse this file with out current Ruby version.
     - 'spec/factories.rb'
+    # Excluding: inadequate Naming/FileName rule rejects GemFile name with camelcase
+    - 'engines/web/Gemfile'
 
 # OFN SETTINGS
 # Cop settings that have been agreed upon by the OFN community
@@ -32,6 +30,9 @@ Style/StringLiterals:
 Style/HashSyntax:
   Enabled: true
   EnforcedStyle: ruby19_no_mixed_keys
+
+Style/Send:
+  Enabled: true
 
 Layout/MultilineMethodCallIndentation:
   Enabled: true
@@ -174,28 +175,28 @@ Lint/AssignmentInCondition:
   StyleGuide: http://relaxed.ruby.style/#lintassignmentincondition
 
 Metrics/AbcSize:
-  Enabled: false
+  Max: 15
 
 Metrics/BlockNesting:
-  Enabled: false
+  Max: 3
 
 Metrics/ClassLength:
-  Enabled: false
+  Max: 100
 
 Metrics/ModuleLength:
-  Enabled: false
+  Max: 100
 
 Metrics/CyclomaticComplexity:
-  Enabled: false
+  Max: 6
 
 Metrics/LineLength:
-  Enabled: false
+  Max: 100
 
 Metrics/MethodLength:
-  Enabled: false
+  Max: 10
 
 Metrics/ParameterLists:
-  Enabled: false
+  Max: 5
 
 Metrics/PerceivedComplexity:
-  Enabled: false
+  Max: 7

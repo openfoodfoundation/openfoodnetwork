@@ -1,10 +1,12 @@
 require 'spree/core/controller_helpers/order_decorator'
+require 'spree/core/controller_helpers/auth_decorator'
 
 Spree::OrdersController.class_eval do
   before_filter :update_distribution, only: :update
   before_filter :filter_order_params, only: :update
   before_filter :enable_embedded_shopfront
 
+  prepend_before_filter :require_order_authentication, only: :show
   prepend_before_filter :require_order_cycle, only: :edit
   prepend_before_filter :require_distributor_chosen, only: :edit
   before_filter :check_hub_ready_for_checkout, only: :edit
@@ -127,6 +129,13 @@ Spree::OrdersController.class_eval do
 
 
   private
+
+  def require_order_authentication
+    return if session[:access_token] || params[:token] || spree_current_user
+
+    flash[:error] = I18n.t("spree.orders.edit.login_to_view_order")
+    require_login_then_redirect_to request.env['PATH_INFO']
+  end
 
   def order_to_update
     return @order_to_update if defined? @order_to_update

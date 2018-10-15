@@ -77,7 +77,7 @@ class EnterprisesController < BaseController
 
   def reset_user_and_customer(order)
     order.associate_user!(spree_current_user) if order.user.blank? || order.email.blank?
-    order.send(:associate_customer) if order.customer.nil? # Only associates existing customers
+    order.__send__(:associate_customer) if order.customer.nil? # Only associates existing customers
   end
 
   def reset_order_cycle(order, distributor)
