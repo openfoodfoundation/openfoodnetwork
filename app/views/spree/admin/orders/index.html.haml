@@ -24,11 +24,10 @@
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
-    %col{style: "width: 10%"}
+    %col{style: "width: 3%"}
   %thead
     %tr
       %th
-        = t('.select_all')
         %input{type: 'checkbox', 'ng-click' => 'toggleAll()'}
       %th
         = t(:products_distributor)
