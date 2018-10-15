@@ -1,3 +1,5 @@
+require 'open_food_network/scope_variant_to_hub'
+
 Spree::Admin::LineItemsController.class_eval do
   prepend_before_filter :load_order, except: :index
   around_filter :apply_enterprise_fees_with_lock, only: :update

@@ -1,5 +1,5 @@
 <%= admin_inject_json "admin.payments", "currentOrderNumber", @order.number %>
-<%= admin_inject_json_ams_array "admin.payments", "paymentMethods", @payment_methods, Api::PaymentMethodSerializer %>
+<%= admin_inject_json_ams_array "admin.payments", "paymentMethods", @payment_methods, Api::PaymentMethodSerializer, current_order: @order %>
 
 <div data-hook="admin_payment_form_fields" class="row">
   <div class="alpha three columns">

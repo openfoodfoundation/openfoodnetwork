@@ -88,14 +88,16 @@ Openfoodnetwork::Application.routes.draw do
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
   get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
 
-  get "/angular-templates/:id", to: "angular_templates#show", constraints: { name: %r{[\/\w\.]+} }
-
   namespace :api do
     resources :enterprises do
       post :update_image, on: :member
       get :managed, on: :collection
       get :accessible, on: :collection
+
+      resource :logo, only: [:destroy]
+      resource :promo_image, only: [:destroy]
     end
+
     resources :order_cycles do
       get :managed, on: :collection
       get :accessible, on: :collection
@@ -105,16 +107,15 @@ Openfoodnetwork::Application.routes.draw do
       get :job_queue
     end
 
-    scope '/cookies' do
-      resource :consent, only: [:show, :create, :destroy], :controller => "cookies_consent"
-    end
-
     resources :customers, only: [:index, :update]
 
     post '/product_images/:product_id', to: 'product_images#update_product_image'
   end
 
   get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
+
+  # Mount Web engine routes
+  mount Web::Engine, :at => '/'
 
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'

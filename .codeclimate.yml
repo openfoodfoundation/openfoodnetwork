@@ -2,7 +2,7 @@ version: "2"
 plugins:
   rubocop:
     enabled: true
-    channel: "rubocop-0-55"
+    channel: "rubocop-0-57"
   scss-lint:
     enabled: true
     checks:
@@ -19,23 +19,23 @@ checks:
   argument-count:
     enabled: false
   complex-logic:
-    enabled: true
+    enabled: false
   file-lines:
-    enabled: true
+    enabled: false
   method-complexity:
-    enabled: true
+    enabled: false
   method-count:
     enabled: false
   method-lines:
     enabled: false
   nested-control-flow:
-    enabled: true
+    enabled: false
   return-statements:
-    enabled: true
+    enabled: false
   similar-code:
-    enabled: true
+    enabled: false
   identical-code:
-    enabled: true
+    enabled: false
 exclude_patterns:
 - "spec/**/*"
 - "vendor/**/*"

@@ -65,6 +65,9 @@ fr_CA:
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a été mis à jour, mais votre email n'a pas encore été confirmé."
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "Copie de %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -72,9 +75,26 @@ fr_CA:
       subject: "%{enterprise} est maintenant sur %{sitename}"
     invite_manager:
       subject: "%{enterprise} vous a invité comme manager"
+  order_mailer:
+    cancel_email:
+      dear_customer: "Cher Acheteur,"
+      instructions: "Votre commande a été ANNULEE. Veuillez en prendre note et conserver pour preuve si besoin cette confirmation."
+      order_summary_canceled: "Résumé de la commande [ANNULEE]"
+      subject: "Annulation de Commande"
+      subtotal: "Sous-total : %{subtotal}"
+      total: "Total Commande : %{total}"
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "Cher Acheteur,"
+      instructions: "Votre commande a été expédiée"
+      shipment_summary: "Résumé de l'envoi"
+      subject: "Notification d'expédition"
+      thanks: "Merci pour votre commande."
+      track_information: "Informations de suivi :%{tracking}"
+      track_link: "Lien de suivi :%{url}"
   subscription_mailer:
     placement_summary_email:
       subject: Un résumé des dernières commandes récemment passées
@@ -137,6 +157,7 @@ fr_CA:
   free_trial: "essai gratuit"
   plus_tax: "plus taxe"
   min_bill_turnover_desc: "Quand le chiffre d'affaire dépasse %{mbt_amount}"
+  more: "Plus"
   say_no: "Non"
   say_yes: "Oui"
   then: puis
@@ -380,8 +401,10 @@ fr_CA:
         producer_signup_page: Page d'inscription Producteur
         hub_signup_page: Page d'inscription Hub
         group_signup_page: Page d'inscription Groupe
+        main_links: Liens du menu principal
         footer_and_external_links: Pied de page et Liens Externes
         your_content: Votre contenu
+        user_guide: Guide utilisateur
     enterprise_fees:
       index:
         title: Marges et Commissions
@@ -455,6 +478,7 @@ fr_CA:
         inventory_template: Télécharger le modèle pour import dans catalogue boutique
         category_values: Valeurs disponibles pour les catégories
         product_categories: Catégorie Produit
+        tax_categories: Taxe applicable
         shipping_categories: Condition de transport
       import:
         review: Vérifier
@@ -766,6 +790,9 @@ fr_CA:
         search_placeholder: Recherche par nom
         manage: Gérer
         manage_link: Paramètres
+        producer?: "Producteur ?"
+        package: "Pack"
+        status: "Statut"
       new_form:
         owner: Gérant
         owner_tip: L'utilisateur principal est l'individu qui porte la responsabilité principale de l'entreprise dans le contexte de l'utilisation d'Open Food Network.
@@ -777,6 +804,14 @@ fr_CA:
       new:
         title: Nouvelle entreprise
         back_link: Revenir à la liste des entreprises
+      remove_logo:
+        remove: "Supprimer l'image"
+        removed_successfully: "Logo supprimé avec succès"
+        immediate_removal_warning: "Le logo sera supprimé juste après votre confirmation."
+      remove_promo_image:
+        remove: "Supprimer l'image"
+        removed_successfully: "Bannière supprimée avec succès"
+        immediate_removal_warning: "La bannière sera supprimée juste après votre confirmation."
       welcome:
         welcome_title: Bienvenue sur Open Food Network !
         welcome_text: 'Vous avez créé avec succès '
@@ -809,6 +844,11 @@ fr_CA:
         save_reload: Sauvegarder et rafraichir la page
       coordinator_fees:
         add: Ajouter commission coordinateur
+      filters:
+        search_by_order_cycle_name: "Recherche par nom de Cycle de Vente..."
+        involving: "Concernant"
+        any_enterprise: "Toutes les entreprises"
+        any_schedule: "Tous"
       form:
         incoming: Produits entrants (pouvant être mis en vente par les hubs)
         supplier: Fournisseur
@@ -822,7 +862,6 @@ fr_CA:
         delivery_details: Précisions retrait / livraison
         debug_info: Informations de débogage
       index:
-        involving: Concernant
         schedule: Rythme d'abonnement
         schedules: Rythmes d'abonnement
         adding_a_new_schedule: Ajouter un nouveau rythme d'abonnement
@@ -1013,6 +1052,11 @@ fr_CA:
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
+  api:
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "Aucun logo trouvé "
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "Aucune bannière trouvée "
   checkout:
     already_ordered:
       cart: "panier"
@@ -1092,6 +1136,18 @@ fr_CA:
   ticket_column_item: "Produit"
   ticket_column_unit_price: "Prix unitaire"
   ticket_column_total_price: "Prix total"
+  menu_1_title: "Boutiques"
+  menu_1_url: "/shops"
+  menu_2_title: "Carte"
+  menu_2_url: "/map"
+  menu_3_title: "Producteurs"
+  menu_3_url: "/producers"
+  menu_4_title: "Groupes"
+  menu_4_url: "/groups"
+  menu_5_title: "A propos"
+  menu_5_url: "http://www.openfoodnetwork.org"
+  menu_6_title: "Se connecter"
+  menu_7_title: "Apprendre"
   logo: "Logo (640x130)"
   logo_mobile: "Logo smartphone (75x26)"
   logo_mobile_svg: "Logo  smartphone (SVG)"
@@ -1107,6 +1163,7 @@ fr_CA:
   footer_email: "Email"
   footer_links_md: "Liens"
   footer_about_url: "A propos URL"
+  user_guide_link: "Lien vers le guide utilisateur"
   name: Nom
   first_name: Prénom
   last_name: Nom de famille
@@ -1189,18 +1246,17 @@ fr_CA:
       essential_cookies: "Cookies essentiels"
       essential_cookies_desc: "Les cookies suivants sont nécessaires au fonctionnement du site openfoodfrance.org."
       essential_cookies_note: "Les cookies contiennent un identifiant unique, mais pas d'autres données. Vos emails et mots de passe par exemple ne sont jamais exposés dans les cookies!"
-      cookie_name: "Nom du cookie"
-      cookie_domain: "Déposé par"
-      cookie_desc: "Description"
+      cookie_domain: "Déposé par!"
       cookie_session_desc: "Utilisé pour garder en mémoire l'utilisateur d'une page à l'autre lors de la navigation sur le site, ou pour se souvenir des produits dans le panier."
       cookie_consent_desc: "Utilisé pour se souvenir du consentement de l'utilisation à l'utilisation de cookies."
       cookie_remember_me_desc: "Utilisé si l'utilisateur a cliqué sur \"se souvenir de moi\" (pour ne pas avoir à se reconnecter à chaque fois). Ce cookie est automatiquement supprimé après 12 jours. Si l'utilisateur souhaite supprimer ce cookie, il n'a qu'à se déconnecter. Si l'utilisateur ne souhaite pas que ce cookie soit installé sur son terminal, il suffit de ne pas cocher la case \"se souvenir de moi\" au moment de la connexion."
       cookie_openstreemap_desc: "Utilisé par le logiciel de cartographie open source  pour assurer qu'il ne reçoit pas trop de requêtes sur un laps de temps déterminé, et éviter ainsi les risques d'abus de leurs services."
       cookie_stripe_desc: "Utilisé par le terminal de payement en ligne Stripe (proposé aux utilisateurs d'Open Food France) https://stripe.com/fr/cookies-policy/legal. Même si toutes les boutiques n'utilisent pas Stripe, c'est une bonne pratique en matière de sécurité d'appliquer ce cookie sur toutes les pages vues. Stripe construit probablement une image des pages qui ont un quelconque lien avec l'API connectant Open Food France à leur système de paiement pour détecter les comportements anormaux pouvant suggérer un risque de fraude. Donc ce cookie a un rôle qui va au-delà de la simple fourniture d'un système de paiement. Le supprimer pourrait affecter la sécurité du service. Pour en savoir plus sur la politique de confidentialité de Stripe: https://stripe.com/fr/privacy."
       statistics_cookies: "Cookies d'analyse de navigation"
-      statistics_cookies_desc: "Ces cookies ne sont pas obligatoires, mais nous permettent de mieux comprendre votre usage de la plateforme, les endroits où vous bloquez, les fonctionnalités qui semble vous manquer, ou que vous n'utilisez jamais, afin de fournir le service le plus adapté possible aux besoins des utilisateurs."
-      statistics_cookies_analytics_desc: "Nous utilisons Google Analytics, pas vraiment par choix, mais simplement parce que c'était l'outil d'analyse connecté par défaut via Spree, le logiciel e-commerce open source sur lequel nous avons construit. Mais nous espérons pouvoir rapidement migrer vers Matomo (anciennement Piwik), outil d'analyse open source engagé sur le respect de la vie privée des utilisateurs."
-      statistics_cookies_matomo_desc: "Nous utilisons Matomo (anciennement Piwik), outil d'analyse open source engagé sur le respect de la vie privée des utilisateurs."
+      statistics_cookies_desc: "Ces cookies ne sont pas obligatoires, mais nous permettent de mieux comprendre votre usage de la plateforme, les endroits où vous bloquez, les fonctionnalités qui semblent vous manquer, ou que vous n'utilisez jamais, afin de fournir le service le plus adapté possible aux besoins des utilisateurs."
+      statistics_cookies_analytics_desc_html: "Pour analyser les données concernant votre usage de la plateforme, nous utilisons Google Analytics, pas vraiment par choix, mais simplement parce que c'était l'outil d'analyse connecté par défaut via Spree, le logiciel e-commerce open source sur lequel nous avons construit. Mais nous espérons pouvoir rapidement migrer vers <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex anciennement Piwik), outil d'analyse open source compatible RGPD et engagé sur le respect de la vie privée des utilisateurs."
+      statistics_cookies_matomo_desc_html: "Pour analyser les données concernant votre usage de la plateforme, nous utilisons <a href='https://matomo.org/' target='_blank'>Matomo</a> (anciennement Piwik), outil d'analyse open source compatible RGPD et engagé sur le respect de la vie privée des utilisateurs."
+      statistics_cookies_matomo_optout: "Vous ne voulez pas que vos données soient analysées par Matomo ? Nous ne collectons aucune donnée personnelle, et Matomo nous aide à améliorer le service que nous vous offrons, mais nous respectons votre choix :-)"
       cookie_analytics_utma_desc: "Utilisé pour distinguer les utilisateurs et les sessions. Ce cookie est installé quand la librairie Javascript s'exécute et qu'aucun cookie __utma n'existe déjà. Le cookie est mis à jour à chaque fois que des données sont envoyées à Google Analytics."
       cookie_analytics_utmt_desc: "Utilisé pour limiter le taux de requêtes."
       cookie_analytics_utmb_desc: "Utilisé pour distinguer les nouvelles sessions/visites. Ce cookie est installé quand la librairie Javascript s'exécute et qu'aucun cookie __utmb n'existe déjà. Le cookie est mis à jour à chaque fois que des données sont envoyées à Google Analytics. "
@@ -1210,12 +1266,19 @@ fr_CA:
       cookie_matomo_heatmap_desc: "Utilisé par Matomo pour enregistrer les sessions et \"cartes thermiques\" (représentations graphiques des données)"
       cookie_matomo_ignore_desc: "Cookie utilisé pour se souvenir qu'un utilisateur a souhaité explicitement que sa navigation ne soit pas analysée par Matomo, et exclure cet utilisateur du suivi du site."
       disabling_cookies_header: "Mises en garde sur la désactivation des cookies"
+      disabling_cookies_desc: "En tant qu'utilisateur, vous pouvez toujours autoriser, bloquer ou supprimer tous les cookies utilisés par Open Food Network Canada ou tout autre site web via les paramètres de votre navigateur. Chaque navigateur a un chemin spécifique pour effectuer cette désactivation:"
+      disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
+      disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
+      disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
       disabling_cookies_note: "Mais gardez bien en tête que si vous supprimez ou modifiez un des cookies essentiels utilisés par Open Food France, le site ne fonctionnera pas correctement, vous ne pourrez pas ajouter des produits à votre panier ni finaliser votre commande par exemple."
     cookies_banner:
       cookies_usage: "Ce site utilise des cookies pour rendre votre navigation fluide et sécurisée, et nous aider à comprendre l'usage que vous faites de la plateforme afin d'améliorer les fonctionnalités offertes."
       cookies_definition: "Les cookies sont de tout petits fichiers texte qui sont stockés sur votre ordinateur quand vous naviguez sur certains sites web."
       cookies_desc: "Nous n'utilisons que les cookies nécessaires pour vous offrir un service de vente/achat de produits alimentaires en ligne performant. Nous ne vendons aucune de vos données. Nous utilisons ces cookies principalement pour vous permettre de rester connecté(e) après votre première connexion, ou encore pour mémoriser les produits dans votre panier lorsque vous n'êtes pas connecté(e). Si vous naviguez sur le site sans cliquer sur \"Accepter les cookies\", cela vaut consentement à l'utilisation des cookies nécessaires au bon fonctionnement du site."
+      cookies_policy_link_desc: "Si vous voulez en savoir plus, consultez notre"
       cookies_policy_link: "politique de cookies"
+      cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
   brandstory_headline: "Des aliments porteurs de sens."
   brandstory_intro: "Parfois, le meilleur moyen de réparer le système, c'est d'en inventer un autre..."
@@ -1336,6 +1399,7 @@ fr_CA:
   email_so_edit_true_html: "Vous pouvez <a href='%{order_url}'>effectuer des modifications</a> jusqu'à la fermeture de la période de commande le %{orders_close_at}."
   email_so_edit_false_html: "Vous pouvez <a href='%{order_url}'>consulter les détails de cette commande</a> à tout moment."
   email_so_contact_distributor_html: "Pour toute question contactez <strong>%{distributor}</strong> via %{email}."
+  email_so_contact_distributor_to_change_order_html: "Cette commande a été automatiquement créée en votre nom. Vous pouvez effectuer des modifications sur cette commande jusqu'à fermeture de la période de commande le%{orders_close_at} en contactant<strong>%{distributor}</strong> à%{email} ."
   email_so_confirmation_intro_html: "Votre commande auprès de <strong>%{distributor}</strong> est maintenant confirmée"
   email_so_confirmation_explainer_html: "Cette commande a été automatiquement passée pour vous dans le cadre de votre abonnement, et a maintenant été confirmée."
   email_so_confirmation_details_html: "Voici les détails concernant cette commande auprès de <strong>%{distributor}</strong>:"
@@ -1597,6 +1661,7 @@ fr_CA:
   error_number: "saisir un nombre"
   error_email: "saisir une adresse email"
   error_not_found_in_database: "%{name} n'a pas été trouvé dans la base de donnée"
+  error_not_primary_producer: "%{name}n'est pas enregistré comme \"producteur\""
   error_no_permission_for_enterprise: "\"%{name}\" : vous n'avez pas les droits requis pour gérer les produits de cette entreprise"
   item_handling_fees: "Frais logistiques (inclus dans le prix affiché)"
   january: "Janvier"
@@ -1823,31 +1888,31 @@ fr_CA:
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   running_balance: "Solde courant"
   outstanding_balance: "Solde restant"
-  admin_entreprise_relationships: "Permissions Inter-entreprises"
-  admin_entreprise_relationships_everything: "Tout"
-  admin_entreprise_relationships_permits: "autorise"
-  admin_entreprise_relationships_seach_placeholder: "Chercher"
-  admin_entreprise_relationships_button_create: "Créer"
-  admin_entreprise_groups: "Groupes d'entreprises"
-  admin_entreprise_groups_name: "Nom"
-  admin_entreprise_groups_owner: "Gérant"
-  admin_entreprise_groups_on_front_page: "Sur la page d'accueil?"
-  admin_entreprise_groups_entreprise: "Entreprises"
-  admin_entreprise_groups_data_powertip: "L'utilisateur principal en charge de ce groupe."
-  admin_entreprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
-  admin_entreprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
-  admin_entreprise_groups_contact: "Contact"
-  admin_entreprise_groups_contact_phone_placeholder: "ex: 98 7654 3210"
-  admin_entreprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
-  admin_entreprise_groups_contact_city: "Ville"
-  admin_entreprise_groups_contact_city_placeholder: "ex: Bordeaux"
-  admin_entreprise_groups_contact_zipcode: "Code postal"
-  admin_entreprise_groups_contact_zipcode_placeholder: "ex: 14120"
-  admin_entreprise_groups_contact_state_id: "Département"
-  admin_entreprise_groups_contact_country_id: "Pays"
-  admin_entreprise_groups_web: "Liens web"
-  admin_entreprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
-  admin_entreprise_groups_web_website_placeholder: "ex: www.monepicerieenligne.fr"
+  admin_enterprise_relationships: "Permissions Inter-entreprises"
+  admin_enterprise_relationships_everything: "Tout"
+  admin_enterprise_relationships_permits: "autorise"
+  admin_enterprise_relationships_seach_placeholder: "Chercher"
+  admin_enterprise_relationships_button_create: "Créer"
+  admin_enterprise_groups: "Groupes d'entreprises"
+  admin_enterprise_groups_name: "Nom"
+  admin_enterprise_groups_owner: "Gérant"
+  admin_enterprise_groups_on_front_page: "Sur la page d'accueil?"
+  admin_enterprise_groups_enterprise: "Entreprises"
+  admin_enterprise_groups_data_powertip: "L'utilisateur principal en charge de ce groupe."
+  admin_enterprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
+  admin_enterprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
+  admin_enterprise_groups_contact: "Contact"
+  admin_enterprise_groups_contact_phone_placeholder: "ex: 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
+  admin_enterprise_groups_contact_city: "Ville"
+  admin_enterprise_groups_contact_city_placeholder: "ex: Bordeaux"
+  admin_enterprise_groups_contact_zipcode: "Code postal"
+  admin_enterprise_groups_contact_zipcode_placeholder: "ex: 44000"
+  admin_enterprise_groups_contact_state_id: "Département"
+  admin_enterprise_groups_contact_country_id: "Pays"
+  admin_enterprise_groups_web: "Liens web"
+  admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
+  admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
   close: "Ferme"
@@ -1983,7 +2048,7 @@ fr_CA:
   report_payment_totals: 'Total des paiements'
   report_all: 'tous'
   report_order_cycle: "Cycle de vente:"
-  report_entreprises: "Entreprises:"
+  report_enterprises: "Entreprises:"
   report_users: "Utilisateurs"
   report_tax_rates: Taux de taxes
   report_tax_types: Taux de taxes par type de produit/service
@@ -2464,10 +2529,6 @@ fr_CA:
           account_id: Identifiant Compte
           business_name: Nom de l'entreprise
           charges_enabled: Frais activés
-      payments:
-        source_forms:
-          stripe:
-            no_payment_via_admin_backend: La création de paiements via Stripe depuis le back office d'administration n'est pas possible pour le moment
       products:
         new:
           title: 'Nouveau Produit'
@@ -2516,6 +2577,9 @@ fr_CA:
           producer_name: Producteur
       general_settings:
         edit:
+          legal_settings: "Configuration légales"
+          cookies_consent_banner_toggle: "Afficher la bannière de consentement à l'utilisation des cookies"
+          privacy_policy_url: "URL de la politique de confidentialité"
           enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
           cookies_policy_matomo_section: "Afficher la section Matomo sur la politique de cookies"
           cookies_policy_ga_section: "Afficher la section Google Analytics sur la politique de cookies"

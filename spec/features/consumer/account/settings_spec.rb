@@ -7,6 +7,7 @@ feature "Account Settings", js: true do
     let(:user) { create(:user, email: 'old@email.com') }
 
     before do
+      create(:mail_method)
       quick_login_as user
     end
 

@@ -10,7 +10,7 @@ Spree::Admin::PaymentsController.class_eval do
 
     # Because we have a transition method also called void, we do this to avoid conflicts.
     event = "void_transaction" if event == "void"
-    if @payment.send("#{event}!")
+    if @payment.public_send("#{event}!")
       flash[:success] = t(:payment_updated)
     else
       flash[:error] = t(:cannot_perform_operation)

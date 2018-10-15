@@ -72,10 +72,11 @@ describe Spree.user_class do
 
   context "#create" do
     it "should send a confirmation email" do
+      create(:mail_method)
+
       expect do
-        create(:user, confirmed_at: nil)
-      end.to enqueue_job Delayed::PerformableMethod
-      expect(Delayed::Job.last.payload_object.method_name).to eq(:send_on_create_confirmation_instructions_without_delay)
+        create(:user, confirmation_sent_at: nil, confirmed_at: nil)
+      end.to send_confirmation_instructions
     end
 
     context "with the the same email as existing customers" do
@@ -96,6 +97,8 @@ describe Spree.user_class do
 
   context "confirming email" do
     it "should send a welcome email" do
+      create(:mail_method)
+
       expect do
         create(:user, confirmed_at: nil).confirm!
       end.to enqueue_job ConfirmSignupJob

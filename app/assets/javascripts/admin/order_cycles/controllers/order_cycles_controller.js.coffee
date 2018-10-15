@@ -3,8 +3,12 @@ angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, C
   $scope.columns = Columns.columns
   $scope.saveAll = -> OrderCycles.saveChanges($scope.order_cycles_form)
   $scope.ordersCloseAtLimit = -31 # days
-  $scope.involvingFilter = 0
-  $scope.scheduleFilter = 0
+
+  $scope.resetSelectFilters = ->
+    $scope.scheduleFilter = 0
+    $scope.involvingFilter = 0
+    $scope.query = ''
+  $scope.resetSelectFilters()
 
   compileData = ->
     for schedule in $scope.schedules

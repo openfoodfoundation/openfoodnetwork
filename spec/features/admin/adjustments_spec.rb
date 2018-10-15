@@ -3,7 +3,7 @@ require "spec_helper"
 feature %q{
     As an administrator
     I want to manage adjustments on orders
-} do
+}, js: true do
   include AuthenticationWorkflow
   include WebHelper
 
@@ -30,7 +30,7 @@ feature %q{
     click_link 'New Adjustment'
     fill_in 'adjustment_amount', with: 110
     fill_in 'adjustment_label', with: 'Late fee'
-    select 'GST', from: 'tax_rate_id'
+    select2_select 'GST', from: 'tax_rate_id'
     click_button 'Continue'
 
     # Then I should see the adjustment, with the correct tax
@@ -51,11 +51,11 @@ feature %q{
     page.find('tr', text: 'Shipping').find('a.icon-edit').click
 
     # Then I should see the uneditable included tax and our tax rate as the default
-    page.should have_field :adjustment_included_tax, with: '10.00', disabled: true
-    page.should have_select :tax_rate_id, selected: 'GST'
+    expect(page).to have_field :adjustment_included_tax, with: '10.00', disabled: true
+    expect(page).to have_select2 :tax_rate_id, selected: 'GST'
 
     # When I edit the adjustment, removing the tax
-    select 'Remove tax', from: :tax_rate_id
+    select2_select 'Remove tax', from: :tax_rate_id
     click_button 'Continue'
 
     # Then the adjustment tax should be cleared
@@ -75,11 +75,11 @@ feature %q{
     page.find('tr', text: 'Shipping').find('a.icon-edit').click
 
     # Then I should see the uneditable included tax and 'Remove tax' as the default tax rate
-    page.should have_field :adjustment_included_tax, with: '0.00', disabled: true
-    page.should have_select :tax_rate_id, selected: []
+    expect(page).to have_field :adjustment_included_tax, with: '0.00', disabled: true
+    expect(page).to have_select2 :tax_rate_id, selected: []
 
     # When I edit the adjustment, setting a tax rate
-    select 'GST', from: :tax_rate_id
+    select2_select 'GST', from: :tax_rate_id
     click_button 'Continue'
 
     # Then the adjustment tax should be recalculated

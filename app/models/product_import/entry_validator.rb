@@ -14,6 +14,17 @@ module ProductImport
       @import_settings = import_settings
     end
 
+    def self.non_updatable_fields
+      {
+        category: :primary_taxon_id,
+        description: :description,
+        unit_type: :variant_unit_scale,
+        variant_unit_name: :variant_unit_name,
+        tax_category: :tax_category_id,
+        shipping_category: :shipping_category_id
+      }
+    end
+
     def validate_all(entries)
       entries.each do |entry|
         supplier_validation(entry)
@@ -124,16 +135,15 @@ module ProductImport
     end
 
     def inventory_validation(entry)
-      # Checks a potential inventory item corresponds to a valid variant
-      match = Spree::Product.where(supplier_id: entry.producer_id, name: entry.name, deleted_at: nil).first
+      products = Spree::Product.where(supplier_id: entry.producer_id, name: entry.name, deleted_at: nil)
 
-      if match.nil?
+      if products.empty?
         mark_as_invalid(entry, attribute: 'name', error: I18n.t('admin.product_import.model.no_product'))
         return
       end
 
-      match.variants.each do |existing_variant|
-        unit_scale = match.variant_unit_scale
+      products.flat_map(&:variants).each do |existing_variant|
+        unit_scale = existing_variant.product.variant_unit_scale
         unscaled_units = entry.unscaled_units || 0
         entry.unit_value = unscaled_units * unit_scale
 
@@ -169,31 +179,29 @@ module ProductImport
       return if category.blank?
 
       if index.key? category
-        entry.send("#{type}_category_id=", index[category])
+        entry.public_send("#{type}_category_id=", index[category])
       else
         mark_as_invalid(entry, attribute: "#{type}_category", error: I18n.t('admin.product_import.model.not_found'))
       end
     end
 
     def product_validation(entry)
-      # Find product with matching supplier and name
-      match = Spree::Product.where(supplier_id: entry.supplier_id, name: entry.name, deleted_at: nil).first
+      products = Spree::Product.where(supplier_id: entry.supplier_id, name: entry.name, deleted_at: nil)
 
-      # If no matching product was found, create a new product
-      if match.nil?
+      if products.empty?
         mark_as_new_product(entry)
         return
       end
 
-      # Otherwise, if a variant exists with matching display_name and unit_value, update it
-      match.variants.each do |existing_variant|
+      products.each { |product| product_field_errors(entry, product) }
+
+      products.flat_map(&:variants).each do |existing_variant|
         if entry_matches_existing_variant?(entry, existing_variant) && existing_variant.deleted_at.nil?
           return mark_as_existing_variant(entry, existing_variant)
         end
       end
 
-      # Otherwise, a variant with sufficiently matching attributes doesn't exist; create a new one
-      mark_as_new_variant(entry, match.id)
+      mark_as_new_variant(entry, products.first.id)
     end
 
     def mark_as_new_product(entry)
@@ -218,6 +226,21 @@ module ProductImport
       else
         mark_as_invalid(entry, product_validations: existing_variant.errors)
       end
+    end
+
+    def product_field_errors(entry, existing_product)
+      EntryValidator.non_updatable_fields.each do |display_name, attribute|
+        next if attributes_match?(attribute, existing_product, entry) || attributes_blank?(attribute, existing_product, entry)
+        mark_as_invalid(entry, attribute: display_name, error: I18n.t('admin.product_import.model.not_updatable'))
+      end
+    end
+
+    def attributes_match?(attribute, existing_product, entry)
+      existing_product.public_send(attribute) == entry.public_send(attribute)
+    end
+
+    def attributes_blank?(attribute, existing_product, entry)
+      existing_product.public_send(attribute).blank? && entry.public_send(attribute).blank?
     end
 
     def permission_by_name?(supplier_name)
