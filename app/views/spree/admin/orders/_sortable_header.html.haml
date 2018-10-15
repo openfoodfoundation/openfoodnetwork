@@ -1,0 +1,4 @@
+%a{'ng-click' => "sortOptions.toggle('#{column_name}')"}
+  = t(column_name.to_s, scope: 'activerecord.attributes.spree/order')
+  %span{'ng-show' => "sorting == '#{column_name} asc'"}= "&#x25B2;".html_safe
+  %span{'ng-show' => "sorting == '#{column_name} desc'"}= "&#x25BC;".html_safe

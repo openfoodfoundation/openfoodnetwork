@@ -20,7 +20,7 @@ class ColumnPreference < ActiveRecord::Base
 
   def self.for(user, action_name)
     stored_preferences = where(user_id: user.id, action_name: action_name)
-    default_preferences = send("#{action_name}_columns")
+    default_preferences = __send__("#{action_name}_columns")
     filter(default_preferences, user, action_name)
     default_preferences.each_with_object([]) do |(column_name, default_attributes), preferences|
       stored_preference = stored_preferences.find_by_column_name(column_name)
@@ -37,7 +37,7 @@ class ColumnPreference < ActiveRecord::Base
   private
 
   def self.valid_columns_for(action_name)
-    send("#{action_name}_columns").keys.map(&:to_s)
+    __send__("#{action_name}_columns").keys.map(&:to_s)
   end
 
   def self.known_actions

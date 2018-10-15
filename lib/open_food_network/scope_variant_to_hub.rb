@@ -6,7 +6,7 @@ module OpenFoodNetwork
     end
 
     def scope(variant)
-      variant.send :extend, OpenFoodNetwork::ScopeVariantToHub::ScopeVariantToHub
+      variant.extend(OpenFoodNetwork::ScopeVariantToHub::ScopeVariantToHub)
       variant.instance_variable_set :@hub, @hub
       variant.instance_variable_set :@variant_override, @variant_overrides[variant]
     end

@@ -118,10 +118,15 @@ GIT
       activemodel (>= 3.0)
       railties (>= 3.0)
 
+PATH
+  remote: engines/web
+  specs:
+    web (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.3.2)
+    CFPropertyList (2.3.6)
     actionmailer (3.2.22.5)
       actionpack (= 3.2.22.5)
       mail (~> 2.5.4)
@@ -232,15 +237,13 @@ GEM
       safe_yaml (~> 1.0.0)
     css_parser (1.3.5)
       addressable
-    css_splitter (0.4.5)
-      sprockets (>= 2.0.0)
     daemons (1.2.6)
     dalli (2.7.2)
     database_cleaner (0.7.1)
-    db2fog (0.8.0)
-      activerecord (~> 3.0)
+    db2fog (0.9.0)
+      activerecord (>= 3.2.0, < 5.0)
       fog (~> 1.0)
-      rails (~> 3.0)
+      rails (>= 3.2.0, < 5.0)
     debugger-linecache (1.2.0)
     deface (1.0.0)
       colorize (>= 0.5.8)
@@ -260,13 +263,15 @@ GEM
       devise (>= 2.1.0)
     diff-lcs (1.3)
     diffy (3.1.0)
+    docile (1.3.1)
+    dry-inflector (0.1.2)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
     erubis (2.7.0)
     eventmachine (1.2.7)
-    excon (0.45.4)
-    execjs (2.6.0)
+    excon (0.62.0)
+    execjs (2.7.0)
     factory_bot (4.10.0)
       activesupport (>= 3.0.0)
     factory_bot_rails (4.10.0)
@@ -281,19 +286,26 @@ GEM
       rails (>= 3, < 5)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
-    fog (1.36.0)
+    fog (1.41.0)
       fog-aliyun (>= 0.1.0)
       fog-atmos
       fog-aws (>= 0.6.0)
       fog-brightbox (~> 0.4)
-      fog-core (~> 1.32)
+      fog-cloudatcost (~> 0.1.0)
+      fog-core (~> 1.45)
+      fog-digitalocean (>= 0.3.0)
+      fog-dnsimple (~> 1.0)
       fog-dynect (~> 0.0.2)
       fog-ecloud (~> 0.1)
       fog-google (<= 0.1.0)
+      fog-internet-archive
+      fog-joyent
       fog-json
       fog-local
+      fog-openstack
       fog-powerdns (>= 0.1.1)
       fog-profitbricks
+      fog-rackspace
       fog-radosgw (>= 0.0.2)
       fog-riakcs
       fog-sakuracloud (>= 0.0.4)
@@ -303,32 +315,47 @@ GEM
       fog-terremark
       fog-vmfusion
       fog-voxel
+      fog-vsphere (>= 0.4.0)
       fog-xenserver
       fog-xml (~> 0.1.1)
       ipaddress (~> 0.5)
-      nokogiri (~> 1.5, >= 1.5.11)
-    fog-aliyun (0.1.0)
-      fog-core (~> 1.27)
-      fog-json (~> 1.0)
+      json (>= 1.8, < 2.0)
+    fog-aliyun (0.3.2)
+      fog-core
+      fog-json
       ipaddress (~> 0.8)
       xml-simple (~> 1.1)
     fog-atmos (0.1.0)
       fog-core
       fog-xml
-    fog-aws (0.7.6)
-      fog-core (~> 1.27)
+    fog-aws (2.0.1)
+      fog-core (~> 1.38)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
       ipaddress (~> 0.8)
-    fog-brightbox (0.9.0)
-      fog-core (~> 1.22)
+    fog-brightbox (0.16.1)
+      dry-inflector
+      fog-core
       fog-json
-      inflecto (~> 0.0.2)
-    fog-core (1.35.0)
+      mime-types
+    fog-cloudatcost (0.1.2)
+      fog-core (~> 1.36)
+      fog-json (~> 1.0)
+      fog-xml (~> 0.1)
+      ipaddress (~> 0.8)
+    fog-core (1.45.0)
       builder
-      excon (~> 0.45)
+      excon (~> 0.58)
       formatador (~> 0.2)
-    fog-dynect (0.0.2)
+    fog-digitalocean (0.4.0)
+      fog-core
+      fog-json
+      fog-xml
+      ipaddress (>= 0.5)
+    fog-dnsimple (1.0.0)
+      fog-core (~> 1.38)
+      fog-json (~> 1.0)
+    fog-dynect (0.0.3)
       fog-core
       fog-json
       fog-xml
@@ -339,20 +366,35 @@ GEM
       fog-core
       fog-json
       fog-xml
-    fog-json (1.0.2)
-      fog-core (~> 1.0)
-      multi_json (~> 1.10)
-    fog-local (0.2.1)
-      fog-core (~> 1.27)
-    fog-powerdns (0.1.1)
-      fog-core (~> 1.27)
-      fog-json (~> 1.0)
-      fog-xml (~> 0.1)
-    fog-profitbricks (0.0.5)
+    fog-internet-archive (0.0.1)
       fog-core
+      fog-json
       fog-xml
-      nokogiri
-    fog-radosgw (0.0.4)
+    fog-joyent (0.0.1)
+      fog-core (~> 1.42)
+      fog-json (>= 1.0)
+    fog-json (1.2.0)
+      fog-core
+      multi_json (~> 1.10)
+    fog-local (0.6.0)
+      fog-core (>= 1.27, < 3.0)
+    fog-openstack (0.1.25)
+      fog-core (~> 1.40)
+      fog-json (>= 1.0)
+      ipaddress (>= 0.8)
+    fog-powerdns (0.2.0)
+      fog-core
+      fog-json
+      fog-xml
+    fog-profitbricks (4.1.1)
+      fog-core (~> 1.42)
+      fog-json (~> 1.0)
+    fog-rackspace (0.1.6)
+      fog-core (>= 1.35)
+      fog-json (>= 1.0)
+      fog-xml (>= 0.1)
+      ipaddress (>= 0.8)
+    fog-radosgw (0.0.5)
       fog-core (>= 1.21.0)
       fog-json
       fog-xml (>= 0.0.1)
@@ -360,13 +402,13 @@ GEM
       fog-core
       fog-json
       fog-xml
-    fog-sakuracloud (1.4.0)
+    fog-sakuracloud (1.7.5)
       fog-core
       fog-json
     fog-serverlove (0.1.2)
       fog-core
       fog-json
-    fog-softlayer (1.0.2)
+    fog-softlayer (1.1.4)
       fog-core
       fog-json
     fog-storm_on_demand (0.1.1)
@@ -381,12 +423,15 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-xenserver (0.2.2)
+    fog-vsphere (2.3.0)
+      fog-core
+      rbvmomi (~> 1.9)
+    fog-xenserver (0.3.0)
       fog-core
       fog-xml
-    fog-xml (0.1.2)
+    fog-xml (0.1.3)
       fog-core
-      nokogiri (~> 1.5, >= 1.5.11)
+      nokogiri (>= 1.5.11, < 2.0.0)
     foreigner (1.7.4)
       activerecord (>= 3.0.0)
     formatador (0.2.5)
@@ -436,8 +481,8 @@ GEM
       i18n (>= 0.6.6, < 2)
     immigrant (0.3.6)
       activerecord (>= 3.0)
-    inflecto (0.0.2)
-    ipaddress (0.8.0)
+    ipaddress (0.8.3)
+    jaro_winkler (1.5.1)
     journey (1.0.4)
     jquery-migrate-rails (1.2.1)
     jquery-rails (3.0.0)
@@ -449,7 +494,7 @@ GEM
     json_spec (1.1.5)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
-    jwt (1.5.4)
+    jwt (1.5.6)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -460,7 +505,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.6.0)
       launchy (~> 2.2)
-    libv8 (3.16.14.19)
+    libv8 (6.7.288.46.0)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -472,6 +517,8 @@ GEM
     mime-types (1.25.1)
     mini_mime (1.0.1)
     mini_portile2 (2.1.0)
+    mini_racer (0.1.15)
+      libv8 (~> 6.3)
     momentjs-rails (2.5.1)
       railties (>= 3.1)
     money (5.1.1)
@@ -491,9 +538,9 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    oj (2.1.2)
+    oj (3.6.10)
     orm_adapter (0.5.0)
-    paper_trail (3.0.8)
+    paper_trail (3.0.9)
       activerecord (>= 3.0, < 5.0)
       activesupport (>= 3.0, < 5.0)
     paperclip (3.4.2)
@@ -502,13 +549,11 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.0)
       mime-types
-    parallel (1.11.2)
-    parallel_tests (2.14.1)
-      parallel
+    parallel (1.12.1)
     paranoia (1.3.4)
       activerecord (~> 3.1)
-    parser (2.4.0.0)
-      ast (~> 2.2)
+    parser (2.5.1.2)
+      ast (~> 2.4.0)
     paypal-sdk-core (0.2.10)
       multi_json (~> 1.0)
       xml-simple
@@ -522,7 +567,7 @@ GEM
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.5)
-    powerpack (0.1.1)
+    powerpack (0.1.2)
     pry (0.11.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -558,8 +603,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rainbow (2.2.2)
-      rake
+    rainbow (3.0.0)
     raindrops (0.13.0)
     rake (12.3.1)
     ransack (0.7.2)
@@ -569,18 +613,14 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    rbvmomi (1.13.0)
+      builder (~> 3.0)
+      json (>= 1.8)
+      nokogiri (~> 1.5)
+      trollop (~> 2.1)
     rdoc (3.12.2)
       json (~> 1.4)
     redcarpet (3.2.3)
-    ref (2.0.0)
-    representative (1.0.5)
-      activesupport (>= 2.2.2)
-      builder (>= 2.1.2)
-      i18n (>= 0.4.1)
-      nokogiri (>= 1.4.2)
-    representative_view (1.2.2)
-      actionpack (> 2.3.0, < 4.0.0)
-      representative (~> 1.0.2)
     roadie (3.0.1)
       css_parser (~> 1.3.4)
       nokogiri (~> 1.6.0)
@@ -614,19 +654,20 @@ GEM
       rspec-expectations (~> 3.7.0)
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
-    rspec-retry (0.5.6)
-      rspec-core (> 3.3, < 3.8)
+    rspec-retry (0.6.1)
+      rspec-core (> 3.3)
     rspec-support (3.7.1)
-    rubocop (0.55.0)
+    rubocop (0.57.2)
+      jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.3.3.1, < 3.0)
+      parser (>= 2.5)
       powerpack (~> 0.1)
-      rainbow (>= 1.99.1, < 3.0)
+      rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-ole (1.2.12.1)
     ruby-progressbar (1.10.0)
-    rubyzip (1.2.1)
+    rubyzip (1.2.2)
     safe_yaml (1.0.4)
     sass (3.3.14)
     sass-rails (3.2.6)
@@ -639,6 +680,11 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
+    simplecov (0.16.1)
+      docile (~> 1.1)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
     skylight (1.6.1)
       activesupport (>= 3.0.0)
     spinjs-rails (1.3)
@@ -654,24 +700,21 @@ GEM
     stringex (1.5.1)
     stripe (3.3.2)
       faraday (~> 0.9)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (0.20.0)
     tilt (1.4.1)
     timecop (0.9.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    trollop (2.9.9)
     truncate_html (0.9.2)
     turbo-sprockets-rails3 (0.3.6)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
     tzinfo (0.3.54)
-    uglifier (2.7.1)
-      execjs (>= 0.3.0)
-      json (>= 1.8.0)
-    unicode-display_width (1.3.0)
+    uglifier (4.1.19)
+      execjs (>= 0.3.0, < 3)
+    unicode-display_width (1.3.2)
     unicorn (4.9.0)
       kgio (~> 2.6)
       rack
@@ -722,7 +765,6 @@ DEPENDENCIES
   capybara (>= 2.15.4)
   coffee-rails (~> 3.2.1)
   compass-rails
-  css_splitter
   custom_error_message!
   daemons
   dalli
@@ -756,7 +798,9 @@ DEPENDENCIES
   jwt (~> 1.5)
   knapsack
   letter_opener (>= 1.4.1)
+  libv8 (!= 6.7.288.46.1)
   listen (= 3.0.8)
+  mini_racer
   momentjs-rails
   nokogiri (>= 1.6.7.1)
   oauth2 (~> 1.2.0)
@@ -764,7 +808,6 @@ DEPENDENCIES
   oj
   paper_trail (~> 3.0.8)
   paperclip (~> 3.4.1)
-  parallel_tests
   pg
   poltergeist (>= 1.16.0)
   pry-byebug (>= 3.4.3)
@@ -774,7 +817,6 @@ DEPENDENCIES
   rails (~> 3.2.22)
   rails-i18n (~> 3.0.0)
   redcarpet
-  representative_view
   roadie-rails (~> 1.0.3)
   roo (~> 2.7.0)
   roo-xls (~> 1.1.0)
@@ -785,6 +827,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   shoulda-matchers
   simple_form!
+  simplecov
   skylight (< 2.0)
   spinjs-rails
   spree!
@@ -792,13 +835,13 @@ DEPENDENCIES
   spree_i18n!
   spree_paypal_express!
   stripe (~> 3.3.2)
-  therubyracer
   timecop
   truncate_html
   turbo-sprockets-rails3
   uglifier (>= 1.0.3)
   unicorn
   unicorn-rails
+  web!
   webmock
   whenever
   wicked_pdf

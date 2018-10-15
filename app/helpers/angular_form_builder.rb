@@ -7,10 +7,6 @@ class AngularFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def ng_text_field(method, options = {})
-    # @object_name --> "enterprise_fee_set"
-    # @fields_for_record_name --> :collection
-    # @object.send(@fields_for_record_name).first.class.to_s.underscore --> enterprise_fee
-
     value = "{{ #{angular_model(method)} }}"
     options.reverse_merge!({'id' => angular_id(method)})
 
@@ -46,6 +42,6 @@ class AngularFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def angular_model(method)
-    "#{@object.send(@fields_for_record_name).first.class.to_s.underscore}.#{method}"
+    "#{@object.public_send(@fields_for_record_name).first.class.to_s.underscore}.#{method}"
   end
 end

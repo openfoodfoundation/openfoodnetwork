@@ -4,12 +4,14 @@
 
 module ProductImport
   class EntryProcessor
-    attr_reader :inventory_created, :inventory_updated, :products_created, :variants_created, :variants_updated, :products_reset_count, :supplier_products, :total_supplier_products
+    attr_reader :inventory_created, :inventory_updated, :products_created,
+                :variants_created, :variants_updated, :supplier_products,
+                :total_supplier_products, :products_reset_count
 
     def initialize(importer, validator, import_settings, spreadsheet_data, editable_enterprises, import_time, updated_ids)
       @importer = importer
       @validator = validator
-      @import_settings = import_settings
+      @settings = Settings.new(import_settings)
       @spreadsheet_data = spreadsheet_data
       @editable_enterprises = editable_enterprises
       @import_time = import_time
@@ -43,7 +45,7 @@ module ProductImport
         next unless supplier_id && permission_by_id?(supplier_id)
 
         products_count =
-          if importing_into_inventory?
+          if settings.importing_into_inventory?
             VariantOverride.where('variant_overrides.hub_id IN (?)', supplier_id).count
           else
             Spree::Variant.
@@ -60,45 +62,39 @@ module ProductImport
     end
 
     def reset_absent_items
-      # For selected enterprises; set stock to zero for all products/inventory
-      # that were not listed in the newly uploaded spreadsheet
-      return unless data_for_stock_reset?
-      suppliers_to_reset_products = []
-      suppliers_to_reset_inventories = []
+      return unless settings.data_for_stock_reset? && settings.reset_all_absent?
 
-      settings = @import_settings[:settings]
+      @products_reset_count = reset_absent.call
+    end
 
-      @import_settings[:enterprises_to_reset].each do |enterprise_id|
-        suppliers_to_reset_products.push Integer(enterprise_id) if settings['reset_all_absent'] && permission_by_id?(enterprise_id) && !importing_into_inventory?
-        suppliers_to_reset_inventories.push Integer(enterprise_id) if settings['reset_all_absent'] && permission_by_id?(enterprise_id) && importing_into_inventory?
+    def reset_absent
+      @reset_absent ||= ResetAbsent.new(self, settings, reset_stock_strategy)
+    end
+
+    def reset_stock_strategy_factory
+      if settings.importing_into_inventory?
+        InventoryResetStrategy
+      else
+        ProductsResetStrategy
       end
+    end
 
-      unless suppliers_to_reset_inventories.empty?
-        @products_reset_count += VariantOverride.
-          where('variant_overrides.hub_id IN (?)
-          AND variant_overrides.id NOT IN (?)', suppliers_to_reset_inventories, @import_settings[:updated_ids]).
-          update_all(count_on_hand: 0)
-      end
-
-      return if suppliers_to_reset_products.empty?
-
-      @products_reset_count += Spree::Variant.joins(:product).
-        where('spree_products.supplier_id IN (?)
-        AND spree_variants.id NOT IN (?)
-        AND spree_variants.is_master = false
-        AND spree_variants.deleted_at IS NULL', suppliers_to_reset_products, @import_settings[:updated_ids]).
-        update_all(count_on_hand: 0)
+    def reset_stock_strategy
+      @reset_stock_strategy ||= reset_stock_strategy_factory
+        .new(settings.updated_ids)
     end
 
     def total_saved_count
       @products_created + @variants_created + @variants_updated + @inventory_created + @inventory_updated
     end
 
+    def permission_by_id?(supplier_id)
+      @editable_enterprises.value?(Integer(supplier_id))
+    end
+
     private
 
-    def data_for_stock_reset?
-      @import_settings[:settings] && @import_settings[:updated_ids] && @import_settings[:enterprises_to_reset]
-    end
+    attr_reader :settings
 
     def save_to_inventory(entry)
       save_new_inventory_item entry if entry.validates_as? 'new_inventory_item'
@@ -115,12 +111,18 @@ module ProductImport
 
       return unless entry.validates_as? 'existing_variant'
 
-      save_variant entry
+      begin
+        save_variant entry
+      rescue ActiveRecord::StaleObjectError
+        entry.product_object.reload
+        save_variant entry
+      end
+
       @variants_updated += 1
     end
 
     def import_into_inventory?(entry)
-      entry.supplier_id && @import_settings[:settings]['import_into'] == 'inventories'
+      entry.supplier_id && settings.importing_into_inventory?
     end
 
     def save_new_inventory_item(entry)
@@ -195,16 +197,16 @@ module ProductImport
       # Assigns a default value for a specified field e.g. category='Vegetables', setting this value
       # either for all entries (overwrite_all), or only for those entries where the field was blank
       # in the spreadsheet (overwrite_empty), depending on selected import settings
-      return unless @import_settings.key?(:settings) && @import_settings[:settings][entry.supplier_id.to_s] && @import_settings[:settings][entry.supplier_id.to_s]['defaults']
+      return unless settings.defaults(entry)
 
-      @import_settings[:settings][entry.supplier_id.to_s]['defaults'].each do |attribute, setting|
+      settings.defaults(entry).each do |attribute, setting|
         next unless setting['active']
 
         case setting['mode']
         when 'overwrite_all'
           object.assign_attributes(attribute => setting['value'])
         when 'overwrite_empty'
-          if object.send(attribute).blank? || ((attribute == 'on_hand' || attribute == 'count_on_hand') && entry.on_hand_nil)
+          if object.public_send(attribute).blank? || ((attribute == 'on_hand' || attribute == 'count_on_hand') && entry.on_hand_nil)
             object.assign_attributes(attribute => setting['value'])
           end
         end
@@ -232,14 +234,6 @@ module ProductImport
       variant.on_demand = entry.on_demand if entry.on_demand
       variant.import_date = @import_time
       variant.save
-    end
-
-    def permission_by_id?(supplier_id)
-      @editable_enterprises.value?(Integer(supplier_id))
-    end
-
-    def importing_into_inventory?
-      @import_settings[:settings] && @import_settings[:settings]['import_into'] == 'inventories'
     end
   end
 end

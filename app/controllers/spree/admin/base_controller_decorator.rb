@@ -28,7 +28,11 @@ Spree::Admin::BaseController.class_eval do
       record = self.class.to_s.sub("Controller", "").underscore.split('/').last.singularize.to_sym
     end
     authorize! :admin, record
-    authorize! action, record
+    authorize! resource_authorize_action, record
+  end
+
+  def resource_authorize_action
+    action
   end
 
   # This is in Spree::Core::ControllerHelpers::Auth

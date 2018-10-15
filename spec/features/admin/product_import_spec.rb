@@ -20,7 +20,7 @@ feature "Product Import", js: true do
 
   let!(:product) { create(:simple_product, supplier: enterprise2, name: 'Hypothetical Cake') }
   let!(:variant) { create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500', display_name: 'Preexisting Banana') }
-  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans', unit_value: '500') }
+  let!(:product2) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans', unit_value: '500', description: '', primary_taxon_id: category.id) }
   let!(:product3) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts', unit_value: '500') }
   let!(:product4) { create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage', unit_value: '500') }
   let!(:product5) { create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce', unit_value: '500') }
@@ -199,6 +199,43 @@ feature "Product Import", js: true do
       expect(Spree::Product.find_by_name('Carrots').on_hand).to eq 500
       expect(Spree::Product.find_by_name('Cabbage').on_hand).to eq 0
       expect(Spree::Product.find_by_name('Beans').on_hand).to eq 0
+    end
+
+    xit "can save a new product and variant of that product at the same time, add variant to existing product" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "display_name"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag"]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2", "kg", "Big Bag"]
+        csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      import_data
+
+      expect(page).to have_selector '.item-count', text: "3"
+      expect(page).to_not have_selector '.invalid-count'
+      expect(page).to have_selector '.create-count', text: "3"
+      expect(page).to_not have_selector '.update-count'
+      expect(page).to_not have_selector '.inv-create-count'
+      expect(page).to_not have_selector '.inv-update-count'
+
+      save_data
+
+      small_bag = Spree::Variant.find_by_display_name('Small Bag')
+      expect(small_bag.product.name).to eq 'Potatoes'
+      expect(small_bag.price).to eq 3.50
+      expect(small_bag.on_hand).to eq 5
+
+      big_bag = Spree::Variant.find_by_display_name('Big Bag')
+      expect(big_bag.product.name).to eq 'Potatoes'
+      expect(big_bag.price).to eq 5.50
+      expect(big_bag.on_hand).to eq 6
+
+      expect(big_bag.product.id).to eq small_bag.product.id
     end
 
     xit "can import items into inventory" do

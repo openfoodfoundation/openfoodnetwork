@@ -137,6 +137,7 @@ feature %q{
       end
 
       it "can invite unregistered users to be managers" do
+        create(:mail_method)
         find('a.button.help-modal').click
         expect(page).to have_css '#invite-manager-modal'
 

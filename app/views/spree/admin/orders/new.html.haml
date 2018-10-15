@@ -14,7 +14,7 @@
 %div{"data-hook" => "admin_order_new_header"}
   = render 'spree/shared/error_messages', :target => @order
 
-%div{"ng-app" => "admin.orders", "ng-controller" => "ordersCtrl"}
+%div{"ng-app" => "admin.orders", "ng-controller" => "orderCtrl"}
   %div{"ng-show" => "distributionChosen()"}
     = render 'add_product'
 

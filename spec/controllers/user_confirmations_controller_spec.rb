@@ -57,6 +57,8 @@ describe UserConfirmationsController, type: :controller do
   end
 
   context "requesting confirmation instructions to be resent" do
+    before { create(:mail_method) }
+
     it "redirects the user to login" do
       spree_post :create, { spree_user: { email: unconfirmed_user.email } }
       expect(response).to redirect_to login_path
@@ -66,8 +68,7 @@ describe UserConfirmationsController, type: :controller do
     it "sends the confirmation email" do
       expect do
         spree_post :create, { spree_user: { email: unconfirmed_user.email } }
-      end.to enqueue_job Delayed::PerformableMethod
-      expect(Delayed::Job.last.payload_object.method_name).to eq(:send_confirmation_instructions_without_delay)
+      end.to send_confirmation_instructions
     end
   end
 end
