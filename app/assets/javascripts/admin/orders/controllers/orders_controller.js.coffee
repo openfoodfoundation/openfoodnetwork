@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions, $http, $window) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions, $http, $window, $filter) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
@@ -8,7 +8,8 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
     {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
   ]
-  $scope.selected = {}
+  $scope.selected_orders = {}
+  $scope.selected = false
   $scope.select_all = false
 
   $scope.initialise = ->
@@ -41,7 +42,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
   $scope.toggleAll = ->
     $scope.select_all = !$scope.select_all
     $scope.orders.forEach (order) ->
-      $scope.selected[order.id] = $scope.select_all
+      $scope.selected_orders[order.id] = $scope.select_all
 
   $scope.$watch 'sortOptions', (sort) ->
     if sort && sort.predicate != ""
@@ -50,13 +51,23 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       $scope.fetchResults()
   , true
 
+  $scope.$watchCollection 'selected_orders', (selected_orders) ->
+    if selected_orders
+      orders_selected = false
+      angular.forEach selected_orders, (checked, order_id) ->
+        if checked
+          orders_selected = true
+          return
+
+      $scope.selected = orders_selected
+
   $scope.changePage = (newPage) ->
     $scope.page = newPage
     $scope.fetchResults(newPage)
 
   $scope.bulkInvoice = ->
     params = ''
-    angular.forEach $scope.selected, (selected, order_id) ->
+    angular.forEach $scope.selected_orders, (selected, order_id) ->
       params += 'order_ids[]='+order_id+'&' if selected
 
     $window.open('/admin/orders/bulk_invoice?'+params)

@@ -108,5 +108,9 @@ table.index td.actions {
 
   button {
     float: right;
+
+    &:disabled {
+      background-color: $disabled-button;
+    }
   }
 }
