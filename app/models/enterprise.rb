@@ -80,7 +80,7 @@ class Enterprise < ActiveRecord::Base
   before_validation :set_unused_address_fields
   after_validation :geocode_address
 
-  before_save :check_instagram_pattern
+  validates :instagram, format: /\A@[a-zA-Z0-9._]{1,30}\z/, :allow_blank => true
 
   after_touch :touch_distributors
   after_create :set_default_contact
@@ -332,6 +332,10 @@ class Enterprise < ActiveRecord::Base
     abn.present?
   end
 
+  def instagram=(value)
+    write_attribute(:instagram, value.try(:gsub, %r{\Ahttps?://(?:www.)?instagram.com/([a-zA-Z0-9._]{1,30})/?\z}, '@\1'))
+  end
+
   protected
 
   def devise_mailer
@@ -426,10 +430,5 @@ class Enterprise < ActiveRecord::Base
     Enterprise.distributing_products(self.supplied_products).
       where('enterprises.id != ?', self.id).
       each(&:touch)
-  end
-
-  def check_instagram_pattern
-    return if self.instagram.blank? || self.instagram.exclude?('instagram.com')
-    self.instagram = "@#{self.instagram.split('/').last}"
   end
 end

@@ -149,10 +149,10 @@ describe Enterprise do
       end
 
       context "prevent an wrong instagram link pattern" do
-        let!(:e) { create(:enterprise, instagram: 'www.instagram.com/my_user') }
+        let(:e) { build(:enterprise, instagram: 'instagram.com/my_user') }
 
-        it "expects the instagram attribute to be in the correct pattern" do
-          expect(e.instagram).to eq('@my_user')
+        it "expects the instagram attribute to not be valid" do
+          expect(e).to_not be_valid
         end
       end
     end
