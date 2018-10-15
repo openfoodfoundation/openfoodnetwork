@@ -20,6 +20,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
     $scope.fetchResults()
 
   $scope.fetchResults = (page=1) ->
+    $scope.resetSelected()
     Orders.index({
       'q[completed_at_lt]': $scope['q']['completed_at_lt'],
       'q[completed_at_gt]': $scope['q']['completed_at_gt'],
@@ -39,8 +40,12 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       page: page
     })
 
+  $scope.resetSelected = ->
+    $scope.selected_orders = {}
+    $scope.selected = false
+    $scope.select_all = false
+
   $scope.toggleAll = ->
-    $scope.select_all = !$scope.select_all
     $scope.orders.forEach (order) ->
       $scope.selected_orders[order.id] = $scope.select_all
 
