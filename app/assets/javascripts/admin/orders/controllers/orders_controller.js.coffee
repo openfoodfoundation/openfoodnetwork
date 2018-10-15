@@ -1,4 +1,4 @@
-angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions) ->
+angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor, Orders, SortOptions, $http, $window) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
@@ -53,3 +53,11 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
   $scope.changePage = (newPage) ->
     $scope.page = newPage
     $scope.fetchResults(newPage)
+
+  $scope.bulkInvoice = ->
+    params = ''
+    angular.forEach $scope.selected, (selected, order_id) ->
+      params += 'order_ids[]='+order_id+'&' if selected
+
+    $window.open('/admin/orders/bulk_invoice?'+params)
+    true

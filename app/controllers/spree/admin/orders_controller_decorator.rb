@@ -1,4 +1,5 @@
 require 'open_food_network/spree_api_key_loader'
+require 'combine_pdf'
 
 Spree::Admin::OrdersController.class_eval do
   include OpenFoodNetwork::SpreeApiKeyLoader
@@ -37,11 +38,31 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   def invoice
-    pdf = render_to_string pdf: "invoice-#{@order.number}.pdf", template: invoice_template, formats: [:html], encoding: "UTF-8"
+    pdf = render_to_string pdf: "invoice-#{@order.number}.pdf",
+                           template: invoice_template,
+                           formats: [:html], encoding: "UTF-8"
+
     Spree::OrderMailer.invoice_email(@order.id, pdf).deliver
     flash[:success] = t('admin.orders.invoice_email_sent')
 
     respond_with(@order) { |format| format.html { redirect_to edit_admin_order_path(@order) } }
+  end
+
+  def bulk_invoice
+    orders = params[:order_ids]
+
+    combined_pdf = CombinePDF.new
+
+    orders.each do |order_id|
+      @order = Spree::Order.find(order_id)
+      pdf_data = render_to_string pdf: "invoice-#{@order.number}.pdf", template: invoice_template,
+                                  formats: [:html], encoding: "UTF-8"
+
+      combined_pdf << CombinePDF.parse(pdf_data)
+    end
+
+    send_data combined_pdf.to_pdf, filename: "invoices.pdf",
+                                   type: "application/pdf", disposition: :inline
   end
 
   def print

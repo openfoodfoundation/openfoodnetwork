@@ -16,8 +16,11 @@
 - content_for :table_filter do
   = render partial: 'filters'
 
-.row
+.row.index-controls{'ng-show' => '!RequestMonitor.loading && orders.length > 0'}
   = render partial: 'per_page_controls'
+
+  %button{'ng-click' => 'bulkInvoice()'}
+    = t('.print_invoices')
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
