@@ -30,8 +30,11 @@ class ModelSet
 
   def errors
     errors = ActiveModel::Errors.new self
-    full_messages = @collection.map { |ef| ef.errors.full_messages }.flatten
-    full_messages.each { |fm| errors.add(:base, fm) }
+    full_messages = @collection
+      .map { |model| model.errors.full_messages }
+      .flatten
+
+    full_messages.each { |message| errors.add(:base, message) }
     errors
   end
 
