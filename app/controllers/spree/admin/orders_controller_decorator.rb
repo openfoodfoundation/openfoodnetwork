@@ -65,8 +65,9 @@ Spree::Admin::OrdersController.class_eval do
           orders: ActiveModel::ArraySerializer.new(@orders, each_serializer: Api::Admin::OrderSerializer),
           pagination: {
             results: @orders.total_count,
-            pages: @orders.num_pages,
-            page: params[:page].to_i
+            pages: @orders.num_pages.to_i,
+            page: params[:page].to_i,
+            per_page: params[:per_page].to_i
           }
         }
       end

@@ -3,8 +3,14 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
   $scope.pagination = Orders.pagination
   $scope.orders = Orders.all
   $scope.sortOptions = SortOptions
+  $scope.per_page_options = [
+    {id: 15, name: t('js.admin.orders.index.per_page', results: 15)},
+    {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
+    {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
+  ]
 
   $scope.initialise = ->
+    $scope.per_page = 15
     $scope.q = {
       completed_at_not_null: true
     }
@@ -25,7 +31,7 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, RequestMonitor,
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
       'q[order_cycle_id_in]': $scope['q']['order_cycle_id_in'],
       'q[s]': $scope.sorting || 'id desc',
-      per_page: $scope.per_page || 15,
+      per_page: $scope.per_page,
       page: page
     })
 
