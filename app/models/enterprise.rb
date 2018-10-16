@@ -333,8 +333,7 @@ class Enterprise < ActiveRecord::Base
   end
 
   def instagram=(value)
-    regex = %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._]{1,30})/?\z}
-    write_attribute(:instagram, value.try(:gsub, regex, '@\1'))
+    write_attribute(:instagram, value.try(:gsub, instagram_regex, '@\1'))
   end
 
   protected
@@ -344,6 +343,10 @@ class Enterprise < ActiveRecord::Base
   end
 
   private
+
+  def instagram_regex
+    %r{\A(?:https?://)?(?:www\.)?instagram\.com/([a-zA-Z0-9._]{1,30})/?\z}
+  end
 
   def name_is_unique
     dups = Enterprise.where(name: name)
