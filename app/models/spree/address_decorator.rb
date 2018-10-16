@@ -9,23 +9,19 @@ Spree::Address.class_eval do
   delegate :name, to: :state, prefix: true, allow_nil: true
 
   def geocode_address
-    geocode_address = [address1, address2, zipcode, city, country.andand.name, state.andand.name]
-    render_address(geocode_address)
+    render_address([address1, address2, zipcode, city, country.andand.name, state.andand.name])
   end
 
   def full_address
-    full_address = [address1, address2, city, zipcode, state.andand.name]
-    render_address(full_address)
+    render_address([address1, address2, city, zipcode, state.andand.name])
   end
 
   def address_part1
-    address_part1 = [address1, address2]
-    render_address(address_part1)
+    render_address([address1, address2])
   end
 
   def address_part2
-    address_part2 = [city, zipcode, state.andand.name]
-    render_address(address_part2)
+    render_address([city, zipcode, state.andand.name])
   end
 
   private
