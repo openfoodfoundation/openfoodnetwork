@@ -149,10 +149,66 @@ describe Enterprise do
       end
 
       context "prevent an wrong instagram link pattern" do
-        let(:e) { build(:enterprise, instagram: 'instagram.com/my_user') }
-
-        it "expects the instagram attribute to not be valid" do
+        it "expects to be invalid the instagram attribute @my-user" do
+          e = build(:enterprise, instagram: '@my-user')
           expect(e).to_not be_valid
+        end
+
+        it "expects to be invalid the instagram attribute https://facebook.com/user" do
+          e = build(:enterprise, instagram: 'https://facebook.com/user')
+          expect(e).to_not be_valid
+        end
+
+        it "expects to be invalid the instagram attribute tagram.com/user" do
+          e = build(:enterprise, instagram: 'tagram.com/user')
+          expect(e).to_not be_valid
+        end
+
+        it "expects to be invalid the instagram attribute https://instagram.com/user/preferences" do
+          e = build(:enterprise, instagram: 'https://instagram.com/user/preferences')
+          expect(e).to_not be_valid
+        end
+      end
+
+      context "accepted pattern" do
+        it "expects to be valid empty instagram attribute" do
+          e = build(:enterprise)
+          expect(e).to be_valid
+        end
+
+        it "expects be valid the instagram attribute @user" do
+          e = build(:enterprise, instagram: '@user')
+          expect(e).to be_valid
+        end
+
+        it "expects be valid the instagram attribute @my_www5.example" do
+          e = build(:enterprise, instagram: '@my_www5.example')
+          expect(e).to be_valid
+        end
+
+        it "expects be valid the instagram attribute http://instagram.com/user" do
+          e = build(:enterprise, instagram: 'http://instagram.com/user')
+          expect(e).to be_valid
+        end
+
+        it "expects be valid the instagram attribute https://instagram.com/user/" do
+          e = build(:enterprise, instagram: 'https://instagram.com/user/')
+          expect(e).to be_valid
+        end
+
+        it "expects be valid the instagram attribute https://www.instagram.com/user" do
+          e = build(:enterprise, instagram: 'https://www.instagram.com/user')
+          expect(e).to be_valid
+        end
+
+        it "expects be valid the instagram attribute instagram.com/user" do
+          e = build(:enterprise, instagram: 'instagram.com/user')
+          expect(e).to be_valid
+        end
+
+        it "renders the expected pattern" do
+          e = build(:enterprise, instagram: 'instagram.com/user')
+          expect(e.instagram).to eq('@user')
         end
       end
     end
