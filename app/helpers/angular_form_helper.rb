@@ -11,7 +11,7 @@ module AngularFormHelper
 
   def ng_options_from_collection_for_select(collection, value_method, text_method, angular_field)
     options = collection.map do |element|
-      [element.send(text_method), element.send(value_method)]
+      [element.public_send(text_method), element.public_send(value_method)]
     end
 
     ng_options_for_select(options, angular_field)

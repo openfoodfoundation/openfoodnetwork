@@ -6,7 +6,7 @@ module Stripe
 
     def handle
       return :unknown unless known_event?
-      send(event_mappings[@event.type])
+      __send__(event_mappings[@event.type])
     end
 
     private

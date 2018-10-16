@@ -7,7 +7,7 @@
         %th= heading
     %tr{ng: {repeat: "(line_number, entry) in (entries | entriesFilterValid:'#{entries}')"}}
       %td
-        %i{ng: {class: "{'fa fa-warning warning': (count(entry.errors) > 0), 'fa fa-check-circle success': (count(entry.errors) == 0)}"}}
+        %i{ng: {class: "{'fa fa-warning error': (count(entry.errors) > 0), 'fa fa-check-circle success': (count(entry.errors) == 0)}"}}
       %td
         {{line_number}}
       %td{ng: {repeat: "(attribute, value) in entry.attributes", class: "{'invalid': attribute_invalid(attribute, line_number)}"}}

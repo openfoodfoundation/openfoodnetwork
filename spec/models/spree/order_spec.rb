@@ -259,11 +259,12 @@ describe Spree::Order do
     let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
     let(:order)          { create(:order, shipments: [shipment]) }
     let(:enterprise_fee) { create(:enterprise_fee) }
-    let!(:adjustment)    { create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2) }
 
     before do
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = 0.25
+
+      create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 123, included_tax: 2)
       order.reload
     end
 
@@ -287,20 +288,20 @@ describe Spree::Order do
 
     let(:variant)         { create(:variant, product: create(:product, tax_category: tax_category10)) }
     let(:shipping_method) { create(:shipping_method, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 46.0)) }
-    let(:shipment)        { create(:shipment) }
+    let(:shipment)        { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
     let(:enterprise_fee)  { create(:enterprise_fee, enterprise: coordinator, tax_category: tax_category20, calculator: Spree::Calculator::FlatRate.new(preferred_amount: 48.0)) }
     let(:additional_adjustment) { create(:adjustment, amount: 50.0, included_tax: tax_rate25.compute_tax(50.0)) }
 
     let(:order_cycle)     { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
-    let!(:order)          { create(:order, shipments: [shipment], bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator, adjustments: [additional_adjustment]) }
-    let!(:line_item)      { create(:line_item, order: order, variant: variant, price: 44.0) }
+    let(:line_item)       { create(:line_item, variant: variant, price: 44.0) }
+    let(:order)           { create(:order, line_items: [line_item], shipments: [shipment], bill_address: create(:address), order_cycle: order_cycle, distributor: coordinator, adjustments: [additional_adjustment]) }
 
     before do
-      shipment.add_shipping_method(shipping_method, true)
       Spree::Config.shipment_inc_vat = true
       Spree::Config.shipping_tax_rate = tax_rate15.amount
-      Spree::TaxRate.adjust(order)
-      order.reload.update_distribution_charge!
+
+      order.create_tax_charge!
+      order.update_distribution_charge!
     end
 
     it "returns a hash with all 3 taxes" do
@@ -812,6 +813,48 @@ describe Spree::Order do
         it "returns an empty array" do
           expect(order.reload.pending_payments).to eq []
         end
+      end
+    end
+  end
+
+  describe '#restart_checkout!' do
+    let(:order) { build(:order) }
+
+    context 'when the order is complete' do
+      before { order.completed_at = Time.zone.now }
+
+      it 'raises' do
+        expect { order.restart_checkout! }
+          .to raise_error(StateMachine::InvalidTransition)
+      end
+    end
+
+    context 'when the is not complete' do
+      before { order.completed_at = nil }
+
+      it 'transitions to :cart state' do
+        order.restart_checkout!
+        expect(order.state).to eq('cart')
+      end
+    end
+  end
+
+  describe '#charge_shipping_and_payment_fees!' do
+    let(:order) do
+      build(:order, shipping_method: build(:shipping_method))
+    end
+
+    context 'after transitioning to payment' do
+      before do
+        order.state = 'delivery' # payment's previous state
+
+        allow(order).to receive(:payment_required?) { true }
+        allow(order).to receive(:charge_shipping_and_payment_fees!)
+      end
+
+      it 'calls charge_shipping_and_payment_fees!' do
+        order.next
+        expect(order).to have_received(:charge_shipping_and_payment_fees!)
       end
     end
   end

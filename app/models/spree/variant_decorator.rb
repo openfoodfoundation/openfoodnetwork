@@ -20,11 +20,13 @@ Spree::Variant.class_eval do
   attr_accessible :unit_value, :unit_description, :images_attributes, :display_as, :display_name, :import_date
   accepts_nested_attributes_for :images
 
-  validates_presence_of :unit_value,
-    if: -> v { %w(weight volume).include? v.product.andand.variant_unit }
+  validates :unit_value, presence: true, if: -> (variant) {
+    %w(weight volume).include?(variant.product.andand.variant_unit)
+  }
 
-  validates_presence_of :unit_description,
-    if: -> v { v.product.andand.variant_unit.present? && v.unit_value.nil? }
+  validates :unit_description, presence: true, if: -> (variant) {
+    variant.product.andand.variant_unit.present? && variant.unit_value.nil?
+  }
 
   before_validation :update_weight_from_unit_value, if: -> v { v.product.present? }
   after_save :update_units

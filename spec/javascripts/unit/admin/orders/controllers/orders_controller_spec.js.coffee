@@ -1,40 +1,37 @@
 describe "ordersCtrl", ->
   ctrl = null
-  scope = {}
-  attrs = {}
-  shops = []
-  orderCycles = [
-    {id: 10, name: 'Ten', status: 'open', distributors: [{id: 1, name: 'One'}]}
-    {id: 20, name: 'Twenty', status: 'closed', distributors: [{id: 2, name: 'Two', status: 'closed'}]}
+  Orders = null
+  $scope = null
+  orders = [
+    { id: 8, order_cycle: { id: 4 }, distributor: { id: 5 }, number: "R123456" }
+    { id: 9, order_cycle: { id: 5 }, distributor: { id: 7 }, number: "R213776" }
   ]
+  form = {
+    q: {
+      created_at_lt: ''
+      created_at_gt: ''
+      completed_at_not_null: true
+    }
+  }
 
   beforeEach ->
-    scope = {}
+    module 'admin.orders'
+    inject ($controller, $rootScope, RequestMonitor, SortOptions) ->
+      $scope = $rootScope.$new()
+      Orders =
+        index: jasmine.createSpy('index').and.returnValue(orders)
+        all: orders
+      ctrl = $controller 'ordersCtrl', { $scope: $scope, RequestMonitor: RequestMonitor, SortOptions: SortOptions, Orders: Orders }
+      $scope.q = form.q
 
-    module('admin.orders')
-    inject ($controller) ->
-      ctrl = $controller 'ordersCtrl', {$scope: scope, $attrs: attrs, shops: shops, orderCycles: orderCycles}
+  describe "initialising the controller", ->
+    it "fetches orders", ->
+      $scope.initialise()
+      expect(Orders.index).toHaveBeenCalled()
+      expect($scope.orders).toEqual orders
 
-  it "initialises name_and_status", ->
-    expect(scope.orderCycles[0].name_and_status).toEqual "Ten (open)"
-    expect(scope.orderCycles[1].name_and_status).toEqual "Twenty (closed)"
-
-  describe "finding valid order cycles for a distributor", ->
-    order_cycle = {id: 10, distributors: [{id: 1, name: 'One'}]}
-
-    it "returns true when the order cycle includes the distributor", ->
-      scope.distributor_id = '1'
-      expect(scope.validOrderCycle(order_cycle, 1, [order_cycle])).toBe true
-
-    it "returns false otherwise", ->
-      scope.distributor_id = '2'
-      expect(scope.validOrderCycle(order_cycle, 1, [order_cycle])).toBe false
-
-  describe "checking if a distributor has order cycles", ->
-    it "returns true when it does", ->
-      distributor = {id: 1}
-      expect(scope.distributorHasOrderCycles(distributor)).toBe true
-
-    it "returns false otherwise", ->
-      distributor = {id: 3}
-      expect(scope.distributorHasOrderCycles(distributor)).toBe false
+  describe "using pagination", ->
+    it "changes the page", ->
+      $scope.changePage(2)
+      expect($scope.page).toEqual 2
+      expect(Orders.index).toHaveBeenCalled()

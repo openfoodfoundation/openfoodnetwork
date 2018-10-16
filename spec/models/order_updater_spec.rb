@@ -4,146 +4,143 @@ describe OrderUpdater do
   let(:order) { build(:order) }
   let(:order_updater) { described_class.new(Spree::OrderUpdater.new(order)) }
 
-  context "#updating_payment_state" do
-    it "is failed if no valid payments" do
-      allow(order).to receive_message_chain(:payments, :valid, :empty?) { true }
+  it "is failed if no valid payments" do
+    order.stub_chain(:payments, :valid, :empty?).and_return(true)
 
-      order_updater.update_payment_state
-      expect(order.payment_state).to eq('failed')
+    order_updater.update_payment_state
+    order.payment_state.should == 'failed'
+  end
+
+  context "payment total is greater than order total" do
+    it "is credit_owed" do
+      order.payment_total = 2
+      order.total = 1
+
+      expect {
+        order_updater.update_payment_state
+      }.to change { order.payment_state }.to 'credit_owed'
+    end
+  end
+
+  context "order total is greater than payment total" do
+    it "is credit_owed" do
+      order.payment_total = 1
+      order.total = 2
+
+      expect {
+        order_updater.update_payment_state
+      }.to change { order.payment_state }.to 'balance_due'
+    end
+  end
+
+  context "order total equals payment total" do
+    it "is paid" do
+      order.payment_total = 30
+      order.total = 30
+
+      expect {
+        order_updater.update_payment_state
+      }.to change { order.payment_state }.to 'paid'
+    end
+  end
+
+  context "order is canceled" do
+    before do
+      order.state = 'canceled'
     end
 
-    context "payment total is greater than order total" do
-      before do
-        order.payment_total = 2
-        order.total = 1
+    context "and is still unpaid" do
+      it "is void" do
+        order.payment_total = 0
+        order.total = 30
+        expect {
+          order_updater.update_payment_state
+        }.to change { order.payment_state }.to 'void'
       end
+    end
 
+    context "and is paid" do
       it "is credit_owed" do
+        order.payment_total = 30
+        order.total = 30
+        order.stub_chain(:payments, :valid, :empty?).and_return(false)
+        order.stub_chain(:payments, :completed, :empty?).and_return(false)
         expect {
           order_updater.update_payment_state
         }.to change { order.payment_state }.to 'credit_owed'
       end
     end
 
-    context "order total is greater than payment total" do
-      before do
-        order.payment_total = 1
-        order.total = 2
-      end
-
-      it "is credit_owed" do
-        expect {
-          order_updater.update_payment_state
-        }.to change { order.payment_state }.to 'balance_due'
-      end
-    end
-
-    context "order total equals payment total" do
-      before do
-        order.payment_total = 30
+    context "and payment is refunded" do
+      it "is void" do
+        order.payment_total = 0
         order.total = 30
-      end
-
-      it "is paid" do
+        order.stub_chain(:payments, :valid, :empty?).and_return(false)
+        order.stub_chain(:payments, :completed, :empty?).and_return(false)
         expect {
           order_updater.update_payment_state
-        }.to change { order.payment_state }.to 'paid'
+        }.to change { order.payment_state }.to 'void'
+      end
+    end
+  end
+
+  context 'when the set payment_state does not match the last payment_state' do
+    before { order.payment_state = 'previous_to_paid' }
+
+    context 'and the order is being updated' do
+      before { allow(order).to receive(:persisted?) { true } }
+
+      it 'creates a new state_change for the order' do
+        expect { order_updater.update_payment_state }
+          .to change { order.state_changes.size }.by(1)
       end
     end
 
-    context "order is canceled" do
-      before { order.state = 'canceled' }
+    context 'and the order is being created' do
+      before { allow(order).to receive(:persisted?) { false } }
 
-      context "and is still unpaid" do
-        before do
-          order.payment_total = 0
-          order.total = 30
-        end
-
-        it "is void" do
-          expect {
-            order_updater.update_payment_state
-          }.to change { order.payment_state }.to 'void'
-        end
+      it 'creates a new state_change for the order' do
+        expect { order_updater.update_payment_state }
+          .not_to change { order.state_changes.size }
       end
+    end
+  end
 
-      context "and is paid" do
-        before do
-          order.payment_total = 30
-          order.total = 30
-          order.stub_chain(:payments, :valid, :empty?).and_return(false)
-          order.stub_chain(:payments, :completed, :empty?).and_return(false)
-        end
+  context 'when the set payment_state matches the last payment_state' do
+    before { order.payment_state = 'paid' }
 
-        it "is credit_owed" do
-          expect {
-            order_updater.update_payment_state
-          }.to change { order.payment_state }.to 'credit_owed'
-        end
-      end
-
-      context "and payment is refunded" do
-        before do
-          order.payment_total = 0
-          order.total = 30
-          order.stub_chain(:payments, :valid, :empty?).and_return(false)
-          order.stub_chain(:payments, :completed, :empty?).and_return(false)
-        end
-
-        it "is void" do
-          expect {
-            order_updater.update_payment_state
-          }.to change { order.payment_state }.to 'void'
-        end
-      end
+    it 'does not create any state_change' do
+      expect { order_updater.update_payment_state }
+        .not_to change { order.state_changes.size }
     end
   end
 
   context '#before_save_hook' do
     let(:distributor) { build(:distributor_enterprise) }
-    let(:order) { build(:order, distributor: distributor) }
-    let(:shipment) { build(:shipment) }
-    let(:shipping_rate) do
-      Spree::ShippingRate.new(
-        shipping_method: shipping_method,
-        selected: true
-      )
-    end
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
 
     before do
-      shipment.shipping_rates << shipping_rate
-      order.shipments << shipment
+        order.distributor = distributor
+        order.shipments = [shipment]
     end
 
-    context 'when any of the shipping methods doesn\'t require a delivery address' do
-      let(:shipping_method) { build(:base_shipping_method, require_ship_address: false) }
+    context 'when shipping method is pickup' do
+      let(:shipping_method) { create(:shipping_method_with, :pickup) }
+      let(:address) { build(:address, firstname: 'joe') }
+      before { distributor.address = address }
 
-      let(:delivery_shipment) { build(:shipment) }
-      let(:delivery_shipping_rate) do
-        Spree::ShippingRate.new(
-          shipping_method: build(:base_shipping_method, require_ship_address: true),
-          selected: true
-        )
-      end
-
-      before do
-        delivery_shipment.shipping_rates << delivery_shipping_rate
-        order.shipments << delivery_shipment
-      end
-
-      it "populates the shipping address" do
+      it "populates the shipping address from distributor" do
         order_updater.before_save_hook
         expect(order.ship_address.firstname).to eq(distributor.address.firstname)
       end
     end
 
-    context 'when any of the shipping methods requires a delivery address' do
-      let(:shipping_method) { build(:base_shipping_method, require_ship_address: true) }
+    context 'when shipping_method is delivery' do
+      let(:shipping_method) { create(:shipping_method_with, :delivery) }
       let(:address) { build(:address, firstname: 'will') }
-
       before { order.ship_address = address }
 
-      it "does not populate the shipping address" do
+      it "does not populate the shipping address from distributor" do
         order_updater.before_save_hook
         expect(order.ship_address.firstname).to eq("will")
       end

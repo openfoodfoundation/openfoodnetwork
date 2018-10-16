@@ -1,3 +1,5 @@
+require 'open_food_network/scope_variant_to_hub'
+
 # Builds orders based on a set of attributes
 # There are some idiosyncracies in the order creation process,
 # and it is nice to have them dealt with in one place.

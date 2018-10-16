@@ -17,7 +17,7 @@ module Stripe
         attrs = source_attrs_from(response)
         @payment.source.update_attributes!(attrs)
       else
-        @payment.send(:gateway_error, response.message)
+        @payment.__send__(:gateway_error, response.message)
       end
     end
 

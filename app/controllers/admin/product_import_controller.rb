@@ -14,6 +14,7 @@ module Admin
       @filepath = save_uploaded_file(params[:file])
       @importer = ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user, params[:settings])
       @original_filename = params[:file].try(:original_filename)
+      @non_updatable_fields = ProductImport::EntryValidator.non_updatable_fields
 
       check_file_errors @importer
       check_spreadsheet_has_data @importer
@@ -53,7 +54,7 @@ module Admin
       @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]), spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
 
       begin
-        @importer.send("#{method}_entries")
+        @importer.public_send("#{method}_entries")
       rescue StandardError => e
         render json: e.message, response: 500
         return false

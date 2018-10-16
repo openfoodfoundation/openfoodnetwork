@@ -1,3 +1,5 @@
+require 'open_food_network/scope_variant_to_hub'
+
 # Used to return a set of variants which match the criteria provided
 # A query string is required, which will be match to the name and/or SKU of a product
 # Further restrictions on the schedule, order_cycle or distributor through which the

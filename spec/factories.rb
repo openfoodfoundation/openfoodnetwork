@@ -340,6 +340,10 @@ FactoryBot.define do
       require_ship_address { true }
     end
 
+    trait :pickup do
+      require_ship_address { false }
+    end
+
     trait :flat_rate do
       calculator { Spree::Calculator::FlatRate.new(preferred_amount: 50.0) }
     end
@@ -371,7 +375,7 @@ FactoryBot.define do
   factory :shipment_with, parent: :shipment do
     trait :shipping_method do
       transient do
-        shipping_method { create :shipping_method }
+        shipping_method { create(:shipping_method) }
       end
       after(:create) do |shipment, evaluator|
         shipment.shipping_rates.destroy_all
@@ -602,6 +606,16 @@ FactoryBot.modify do
   factory :user do
     confirmation_sent_at '1970-01-01 00:00:00'
     confirmed_at '1970-01-01 00:00:01'
+
+    before(:create) do |user, evaluator|
+      if evaluator.confirmation_sent_at
+        if evaluator.confirmed_at
+          user.skip_confirmation!
+        else
+          user.skip_confirmation_notification!
+        end
+      end
+    end
 
     after(:create) do |user|
       user.spree_roles.clear # Remove admin role

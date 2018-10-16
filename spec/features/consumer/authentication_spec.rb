@@ -75,6 +75,7 @@ feature "Authentication", js: true, retry: 3 do
           end
 
           scenario "Signing up successfully" do
+            create(:mail_method)
             fill_in "Email", with: "test@foo.com"
             fill_in "Choose a password", with: "test12345"
             fill_in "Confirm password", with: "test12345"
@@ -82,9 +83,7 @@ feature "Authentication", js: true, retry: 3 do
             expect do
               click_signup_button
               expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-            end.to enqueue_job Delayed::PerformableMethod
-
-            expect(Delayed::Job.last.payload_object.method_name).to eq(:send_on_create_confirmation_instructions_without_delay)
+            end.to send_confirmation_instructions
           end
         end
 

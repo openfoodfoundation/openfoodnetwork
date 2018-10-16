@@ -176,7 +176,6 @@ feature %q{
       page.should have_selector 'td', text: 'Two', count: 1
     end
 
-
     pending "shows me only payment methods for the enterprise I select" do
       pm1
       pm2

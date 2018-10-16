@@ -1,5 +1,6 @@
 require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_permissions'
+require 'open_food_network/scope_variant_to_hub'
 
 module Admin
   class SubscriptionLineItemsController < ResourceController

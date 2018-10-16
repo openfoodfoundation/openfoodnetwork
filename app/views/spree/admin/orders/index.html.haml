@@ -1,0 +1,89 @@
+- content_for :page_title do
+  = t('.listing_orders')
+
+- content_for :page_actions do
+  %li
+    = button_link_to t('.new_order'), new_admin_order_url, icon: 'icon-plus', id: 'admin_new_order'
+
+= render partial: 'spree/admin/shared/order_sub_menu'
+
+- content_for :app_wrapper_attrs do
+  = "ng-app='admin.orders' ng-controller='ordersCtrl'"
+
+- content_for :table_filter_title do
+  = t(:search)
+
+- content_for :table_filter do
+  = render partial: 'filters'
+
+.row
+  = render partial: 'per_page_controls'
+
+%table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
+  %colgroup
+    %col{style: "width: 10%"}
+  %thead
+    %tr
+      %th
+        = t(:products_distributor)
+      - if @show_only_completed
+        %th
+          %a{'ng-click' => "sortOptions.toggle('completed_at')"}
+            = t(:completed_at, scope: 'activerecord.attributes.spree/order')
+            %span{'ng-show' => "sorting == 'completed_at asc'"}= "&#x25B2;".html_safe
+            %span{'ng-show' => "sorting == 'completed_at desc' || sorting === undefined"}= "&#x25BC;".html_safe
+      - else
+        %th
+          = render partial: 'sortable_header', locals: {column_name: 'created_at'}
+      - ['number', 'state', 'payment_state', 'shipment_state', 'email', 'total'].each do |column_name|
+        %th
+          = render partial: 'sortable_header', locals: {column_name: column_name}
+      %th.actions
+  %tbody
+    %tr{ng: {repeat: 'order in orders track by $index', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "'state-{{order.state}}'"}
+      %td.align-center
+        {{order.distributor_name}}
+      %td.align-center
+        = @show_only_completed ? '{{order.completed_at}}' : '{{order.created_at}}'
+      %td
+        %a{'ng-href' => '{{order.show_path}}'}
+          {{order.number}}
+        %div{'ng-if' => 'order.special_instructions'}
+          %br
+          %span.icon-warning-sign{'ofn-with-tip' => "{{order.special_instructions}}"}
+            = t('.note')
+      %td.align-center
+        %span.state{'ng-class' => 'order.state'}
+          {{'order_state.' + order.state | t}}
+      %td.align-center
+        %span.state{'ng-class' => 'order.payment_state', 'ng-if' => 'order.payment_state'}
+          %a{'ng-href' => '{{order.payments_path}}' }
+            {{'payment_states.' + order.payment_state | t}}
+      %td.align-center
+        %span.state{'ng-class' => 'order.shipment_state', 'ng-if' => 'order.shipment_state'}
+          %a{'ng-href' => '{{order.shipments_path}}' }
+            {{'shipment_states.' + order.shipment_state | t}}
+      %td
+        = mail_to "{{order.email}}"
+      %td.align-center
+        %span{'ng-bind-html' => 'order.display_total'}
+      %td.actions
+        %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
+        %div{'ng-if' => 'order.ready_to_ship'}
+          %a.icon-road.icon_link.with-tip.no-text{'ng-href' => '{{order.ship_path}}', 'data-action' => 'ship', 'data-confirm' => t(:are_you_sure), 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t('.ship')}
+        %div{'ng-if' => 'order.payment_capture_path'}
+          %a.icon-capture.icon_link.no-text{'ng-href' => '{{order.payment_capture_path}}', 'data-action' => 'capture', 'data-method' => 'put', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
+
+.orders-loading{'ng-show' => 'RequestMonitor.loading'}
+  .row
+    .small-12.columns.fullwidth.text-center
+      %img.spinner{ src: "/assets/spinning-circles.svg" }
+  .row
+    .small-12.columns.fullwidth.text-center
+      %span= t('.loading')
+
+%div{'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
+  = render partial: 'admin/shared/angular_pagination'
+
+.no-objects-found{'ng-show' => "!RequestMonitor.loading && orders.length == 0"}
+  = t('.no_orders_found')
