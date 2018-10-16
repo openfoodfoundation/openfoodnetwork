@@ -35,7 +35,6 @@ Spree::Address.class_eval do
   end
 
   def render_address(parts)
-    filtered_address = parts.select{ |field| !field.nil? && field != '' }
-    filtered_address.compact.join(', ')
+    parts.select(&:present?).join(', ')
   end
 end
