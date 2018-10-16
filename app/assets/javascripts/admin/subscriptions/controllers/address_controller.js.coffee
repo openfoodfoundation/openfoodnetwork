@@ -4,11 +4,17 @@ angular.module("admin.subscriptions").controller "AddressController", ($scope, S
   $scope.billStates = CountryStates.statesFor(availableCountries, $scope.subscription.bill_address.country_id)
   $scope.shipStates = CountryStates.statesFor(availableCountries, $scope.subscription.ship_address.country_id)
 
-  $scope.$watch 'subscription.bill_address.country_id', (newValue, oldValue) ->
-    $scope.billStates = CountryStates.statesFor(availableCountries, newValue) if newValue?
+  $scope.$watch 'subscription.bill_address.country_id', (newCountryID) ->
+    return unless newCountryID
+    $scope.billStates = CountryStates.statesFor(availableCountries, newCountryID)
+    unless CountryStates.addressStateMatchesCountryStates($scope.billStates, $scope.subscription.bill_address.state_id)
+      $scope.subscription.bill_address.state_id = ""
 
-  $scope.$watch 'subscription.ship_address.country_id', (newValue, oldValue) ->
-    $scope.shipStates = CountryStates.statesFor(availableCountries, newValue) if newValue?
+  $scope.$watch 'subscription.ship_address.country_id', (newCountryID) ->
+    return unless newCountryID
+    $scope.shipStates = CountryStates.statesFor(availableCountries, newCountryID)
+    unless CountryStates.addressStateMatchesCountryStates($scope.shipStates, $scope.subscription.ship_address.state_id)
+      $scope.subscription.ship_address.state_id = ""
 
   $scope.registerNextCallback 'address', ->
     $scope.subscription_form.$submitted = true

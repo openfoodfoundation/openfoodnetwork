@@ -8,7 +8,8 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
     scope.$watch 'address.country_id', (newCountryID) ->
       return unless newCountryID
       scope.states = CountryStates.statesFor(scope.availableCountries, newCountryID)
-      scope.clearState() unless CountryStates.addressStateMatchesCountryStates(scope.states, scope.address.state_id)
+      unless CountryStates.addressStateMatchesCountryStates(scope.states, scope.address.state_id)
+        scope.address.state_id = ""
 
     scope.updateAddress = ->
       scope.edit_address_form.$setPristine()
@@ -33,6 +34,3 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
       template.dialog(DialogDefaults)
       template.dialog('open')
       scope.$apply()
-
-    scope.clearState = ->
-      scope.address.state_id = ""
