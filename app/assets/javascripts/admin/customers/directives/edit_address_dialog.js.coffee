@@ -1,4 +1,4 @@
-angular.module("admin.customers").directive 'editAddressDialog', ($compile, $templateCache, $filter, DialogDefaults, Customers, StatusMessage) ->
+angular.module("admin.customers").directive 'editAddressDialog', ($compile, $templateCache, DialogDefaults, Customers, StatusMessage, CountryStates) ->
   restrict: 'A'
   scope: true
   link: (scope, element, attr) ->
@@ -6,9 +6,9 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
     scope.errors = []
 
     scope.$watch 'address.country_id', (newCountryID) ->
-      if newCountryID
-        scope.states = scope.filterStates(newCountryID)
-        scope.clearState() unless scope.addressStateMatchesCountry()
+      return unless newCountryID
+      scope.states = CountryStates.statesFor(scope.availableCountries, newCountryID)
+      scope.clearState() unless CountryStates.addressStateMatchesCountryStates(scope.states, scope.address.state_id)
 
     scope.updateAddress = ->
       scope.edit_address_form.$setPristine()
@@ -27,19 +27,12 @@ angular.module("admin.customers").directive 'editAddressDialog', ($compile, $tem
       else
         scope.addressType = 'ship_address'
       scope.address = scope.customer[scope.addressType]
-      scope.states = scope.filterStates(scope.address?.country_id)
+      scope.states = CountryStates.statesFor(scope.availableCountries, scope.address?.country_id)
 
       template = $compile($templateCache.get('admin/edit_address_dialog.html'))(scope)
       template.dialog(DialogDefaults)
       template.dialog('open')
       scope.$apply()
 
-    scope.filterStates = (countryID) ->
-      return [] unless countryID
-      $filter('filter')(scope.availableCountries, {id: parseInt(countryID)}, true)[0].states
-
     scope.clearState = ->
       scope.address.state_id = ""
-
-    scope.addressStateMatchesCountry = ->
-      scope.states.some (state) -> state.id == scope.address.state_id

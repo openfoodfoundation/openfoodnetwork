@@ -3,6 +3,9 @@ angular.module("ofn.admin").factory "CountryStates", ($filter) ->
 
     statesFor: (countries, country_id) ->
       return [] unless country_id
-      country = $filter('filter')(countries, {id: country_id}, true)[0]
+      country = $filter('filter')(countries, {id: parseInt(country_id)}, true)[0]
       return [] unless country
       country.states
+
+    addressStateMatchesCountryStates: (countryStates, stateId) ->
+      countryStates.some (state) -> state.id == stateId
