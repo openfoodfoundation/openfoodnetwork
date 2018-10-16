@@ -71,7 +71,7 @@ module ProductImport
 
       units.converted_attributes.each do |attr, value|
         if respond_to?("#{attr}=")
-          send("#{attr}=", value) unless non_product_attributes.include?(attr)
+          public_send("#{attr}=", value) unless non_product_attributes.include?(attr)
         end
       end
     end

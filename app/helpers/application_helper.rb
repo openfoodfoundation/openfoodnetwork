@@ -15,7 +15,7 @@ module ApplicationHelper
   # spree.foo_path in any view rendered from non-spree-namespaced controllers.
   def method_missing(method, *args, &block)
     if (method.to_s.end_with?('_path') || method.to_s.end_with?('_url')) && spree.respond_to?(method)
-      spree.send(method, *args)
+      spree.public_send(method, *args)
     else
       super
     end

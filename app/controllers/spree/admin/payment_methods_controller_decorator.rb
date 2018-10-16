@@ -10,7 +10,7 @@ module Spree
       # Only show payment methods that user has access to and sort by distributor name
       # ! Redundant code copied from Spree::Admin::ResourceController with modifications marked
       def collection
-        return parent.send(controller_name) if parent_data.present?
+        return parent.public_send(controller_name) if parent_data.present?
         collection = if model_class.respond_to?(:accessible_by) &&
                          !current_ability.has_block?(params[:action], model_class)
 

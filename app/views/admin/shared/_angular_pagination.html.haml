@@ -1,0 +1,17 @@
+.pagination
+  %button{'ng-click' => 'changePage(1)', 'ng-class' => "{'disabled': pagination.page == 1}", 'ng-disabled' => "pagination.page == 1"}
+    = "&laquo;".html_safe
+    = t(:first)
+  %button{'ng-click' => 'changePage((pagination.page)-1)', 'ng-class' => "{'disabled': pagination.page == 1}", 'ng-disabled' => "pagination.page == 1"}
+    = t(:previous)
+  %span{'ng-show' => 'pagination.page > 3'}
+    = "&hellip;".html_safe
+  %button{'ng-repeat' => 'i in [].constructor(pagination.pages) track by $index', 'ng-show' =>'($index+1 > pagination.page-3 || (pagination.page > pagination.pages-2 && $index+1 > pagination.pages-5)) && ($index+1 < pagination.page+3 || (pagination.page < 3 && $index+1 < 6))', 'ng-class' => "{'active': pagination.page == $index+1}", 'ng-click' => 'changePage($index+1)', 'ng-disabled' => "pagination.page == $index+1"}
+    {{$index+1}}
+  %span{'ng-show' => 'pagination.page < pagination.pages-2'}
+    = "&hellip;".html_safe
+  %button{'ng-click' => 'changePage((pagination.page)+1)', 'ng-class' => "{'disabled': pagination.page == pagination.pages}", 'ng-disabled' => "pagination.page == pagination.pages"}
+    = t(:next)
+  %button{'ng-click' => 'changePage(pagination.pages)', 'ng-class' => "{'disabled': pagination.page == pagination.pages}", 'ng-disabled' => "pagination.page == pagination.pages"}
+    = t(:last)
+    = "&raquo;".html_safe

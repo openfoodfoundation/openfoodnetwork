@@ -10,6 +10,6 @@ module Spree
         @preferences_general << :bugherd_api_key
       end
     end
-    GeneralSettingsController.send(:prepend, GeneralSettingsEditPreferences)
+    GeneralSettingsController.prepend(GeneralSettingsEditPreferences)
   end
 end

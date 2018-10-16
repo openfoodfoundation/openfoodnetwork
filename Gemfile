@@ -10,6 +10,8 @@ gem 'i18n-js', '~> 3.0.0'
 # Patched version. See http://rubysec.com/advisories/CVE-2015-5312/.
 gem 'nokogiri', '>= 1.6.7.1'
 
+gem 'web', path: './engines/web'
+
 gem 'pg'
 
 # OFN-maintained and patched version of Spree v2.0.4. See
@@ -50,7 +52,6 @@ gem 'aws-sdk'
 gem 'db2fog'
 gem 'andand'
 gem 'truncate_html'
-gem 'representative_view'
 gem 'rabl'
 
 # AMS is pinned to 0.8.4 because 0.9.x is a complete re-write, as is 0.10.x
@@ -91,8 +92,10 @@ group :assets do
   gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer'
+  gem 'mini_racer'
+  # We found that the following version of libv8 breaks the compilation of mini_racer.
+  # Nothing else depends on libv8.
+  gem 'libv8', '!= 6.7.288.46.1'
 
   gem 'uglifier', '>= 1.0.3'
 
@@ -107,7 +110,6 @@ gem 'foundation_rails_helper', github: 'willrjmarshall/foundation_rails_helper',
 
 gem 'jquery-rails', '3.0.0'
 gem 'jquery-migrate-rails'
-gem 'css_splitter'
 
 gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', ref: '60da2ae4c44cbb4c8d602f59fb5fff8d0f21db3c'
 
@@ -132,6 +134,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'simplecov', require: false
   # See spec/spec_helper.rb for instructions
   #gem 'perftools.rb'
 end
@@ -145,7 +148,6 @@ group :development do
   gem 'guard-livereload'
   gem 'guard-rails'
   gem 'guard-rspec', '~> 4.7.3'
-  gem 'parallel_tests'
   gem 'rubocop', '>= 0.49.1'
 
   # 1.0.9 fixed openssl issues on macOS https://github.com/eventmachine/eventmachine/issues/602

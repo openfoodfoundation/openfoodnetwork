@@ -5,7 +5,7 @@
       .alpha.three.columns
         = af.label :phone
       .omega.eight.columns
-        = af.text_field :phone, { placeholder: t(:admin_entreprise_groups_contact_phone_placeholder)}
+        = af.text_field :phone, { placeholder: t(:admin_enterprise_groups_contact_phone_placeholder)}
     .row
       .alpha.three.columns
         = f.label :email
@@ -15,7 +15,7 @@
       .three.columns.alpha
         = af.label :address1
       .eight.columns.omega
-        = af.text_field :address1, { placeholder: t(:admin_entreprise_groups_contact_address1_placeholder)}
+        = af.text_field :address1, { placeholder: t(:admin_enterprise_groups_contact_address1_placeholder)}
     .row
       .alpha.three.columns
         = af.label :address2
@@ -23,17 +23,17 @@
         = af.text_field :address2
     .row
       .three.columns.alpha
-        = af.label :city, t(:admin_entreprise_groups_contact_city)
+        = af.label :city, t(:admin_enterprise_groups_contact_city)
         \/
-        = af.label :zipcode, t(:admin_entreprise_groups_contact_zipcode)
+        = af.label :zipcode, t(:admin_enterprise_groups_contact_zipcode)
       .four.columns
-        = af.text_field :city, { placeholder: t(:admin_entreprise_groups_contact_city_placeholder)}
+        = af.text_field :city, { placeholder: t(:admin_enterprise_groups_contact_city_placeholder)}
       .four.columns.omega
-        = af.text_field :zipcode, { placeholder: t(:admin_entreprise_groups_contact_zipcode_placeholder)}
+        = af.text_field :zipcode, { placeholder: t(:admin_enterprise_groups_contact_zipcode_placeholder)}
     .row
       .three.columns.alpha
-        = af.label :state_id, t(:admin_entreprise_groups_contact_state_id)
-        = af.label :country_id, t(:admin_entreprise_groups_contact_country_id)
+        = af.label :state_id, t(:admin_enterprise_groups_contact_state_id)
+        = af.label :country_id, t(:admin_enterprise_groups_contact_country_id)
       .four.columns
         = af.collection_select :state_id, af.object.country.states, :id, :name, {}, :class => "select2 fullwidth"
       .four.columns.omega

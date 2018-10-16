@@ -5,61 +5,133 @@ describe Spree::OrdersController, type: :controller do
   let(:order) { create(:order) }
   let(:order_cycle) { create(:simple_order_cycle) }
 
-  it "redirects home when no distributor is selected" do
-    spree_get :edit
-    expect(response).to redirect_to root_path
-  end
-
-  it "redirects to shop when order is empty" do
-    allow(controller).to receive(:current_distributor).and_return(distributor)
-    allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
-    allow(controller).to receive(:current_order).and_return order
-    allow(order).to receive_message_chain(:line_items, :empty?).and_return true
-    allow(order).to receive(:insufficient_stock_lines).and_return []
-    session[:access_token] = order.token
-    spree_get :edit
-    expect(response).to redirect_to shop_path
-  end
-
-  it "redirects to the shop when no order cycle is selected" do
-    allow(controller).to receive(:current_distributor).and_return(distributor)
-    spree_get :edit
-    expect(response).to redirect_to shop_path
-  end
-
-  it "redirects home with message if hub is not ready for checkout" do
-    allow(VariantOverride).to receive(:indexed).and_return({})
-
-    order = subject.current_order(true)
-    allow(distributor).to receive(:ready_for_checkout?) { false }
-    allow(order).to receive_messages(distributor: distributor, order_cycle: order_cycle)
-
-    expect(order).to receive(:empty!)
-    expect(order).to receive(:set_distribution!).with(nil, nil)
-
-    spree_get :edit
-
-    expect(response).to redirect_to root_url
-    expect(flash[:info]).to eq("The hub you have selected is temporarily closed for orders. Please try again later.")
-  end
-
-  describe "when an item has insufficient stock" do
-    let(:order) { subject.current_order(true) }
-    let(:oc) { create(:simple_order_cycle, distributors: [d], variants: [variant]) }
-    let(:d) { create(:distributor_enterprise, shipping_methods: [create(:shipping_method)], payment_methods: [create(:payment_method)]) }
-    let(:variant) { create(:variant, on_demand: false, on_hand: 5) }
-    let(:line_item) { order.line_items.last }
+  describe "viewing an order" do
+    let(:customer) { create(:customer) }
+    let(:order) { create(:order_with_credit_payment, customer: customer, distributor: customer.enterprise) }
 
     before do
-      order.set_distribution! d, oc
-      order.add_variant variant, 5
-      variant.update_attributes! on_hand: 3
+      allow(controller).to receive(:spree_current_user) { current_user }
     end
 
-    it "displays a flash message when we view the cart" do
+    context "after checking out as an anonymous guest" do
+      let(:customer) { create(:customer, user: nil) }
+      let(:current_user) { nil }
+
+      it "loads page" do
+        spree_get :show, id: order.number, token: order.token
+        expect(response).to be_success
+      end
+
+      it "stores order token in session as 'access_token'" do
+        spree_get :show, id: order.number, token: order.token
+        expect(session[:access_token]).to eq(order.token)
+      end
+    end
+
+    context "when returning to order page after checking out as an anonymous guest" do
+      let(:customer) { create(:customer, user: nil) }
+      let(:current_user) { nil }
+
+      before do
+        session[:access_token] = order.token
+      end
+
+      it "loads page" do
+        spree_get :show, id: order.number
+        expect(response).to be_success
+      end
+    end
+
+    context "when logged in as the customer" do
+      let(:current_user) { order.user }
+
+      it "loads page" do
+        spree_get :show, id: order.number
+        expect(response).to be_success
+      end
+    end
+
+    context "when logged in as another customer" do
+      let(:current_user) { create(:user) }
+
+      it "redirects to unauthorized" do
+        spree_get :show, id: order.number
+        expect(response.status).to eq(401)
+      end
+    end
+
+    context "when neither checked out as an anonymous guest nor logged in" do
+      let(:current_user) { nil }
+
+      before do
+        request.env["PATH_INFO"] = spree.order_path(order)
+      end
+
+      it "redirects to unauthorized" do
+        spree_get :show, id: order.number
+        expect(response).to redirect_to(root_path(anchor: "login?after_login=#{spree.order_path(order)}"))
+        expect(flash[:error]).to eq("Please log in to view your order.")
+      end
+    end
+  end
+
+  describe "viewing cart" do
+    it "redirects home when no distributor is selected" do
       spree_get :edit
-      expect(response.status).to eq 200
-      expect(flash[:error]).to eq("An item in your cart has become unavailable.")
+      expect(response).to redirect_to root_path
+    end
+
+    it "redirects to shop when order is empty" do
+      allow(controller).to receive(:current_distributor).and_return(distributor)
+      allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
+      allow(controller).to receive(:current_order).and_return order
+      allow(order).to receive_message_chain(:line_items, :empty?).and_return true
+      allow(order).to receive(:insufficient_stock_lines).and_return []
+      session[:access_token] = order.token
+      spree_get :edit
+      expect(response).to redirect_to shop_path
+    end
+
+    it "redirects to the shop when no order cycle is selected" do
+      allow(controller).to receive(:current_distributor).and_return(distributor)
+      spree_get :edit
+      expect(response).to redirect_to shop_path
+    end
+
+    it "redirects home with message if hub is not ready for checkout" do
+      allow(VariantOverride).to receive(:indexed).and_return({})
+
+      order = subject.current_order(true)
+      allow(distributor).to receive(:ready_for_checkout?) { false }
+      allow(order).to receive_messages(distributor: distributor, order_cycle: order_cycle)
+
+      expect(order).to receive(:empty!)
+      expect(order).to receive(:set_distribution!).with(nil, nil)
+
+      spree_get :edit
+
+      expect(response).to redirect_to root_url
+      expect(flash[:info]).to eq("The hub you have selected is temporarily closed for orders. Please try again later.")
+    end
+
+    describe "when an item has insufficient stock" do
+      let(:order) { subject.current_order(true) }
+      let(:oc) { create(:simple_order_cycle, distributors: [d], variants: [variant]) }
+      let(:d) { create(:distributor_enterprise, shipping_methods: [create(:shipping_method)], payment_methods: [create(:payment_method)]) }
+      let(:variant) { create(:variant, on_demand: false, on_hand: 5) }
+      let(:line_item) { order.line_items.last }
+
+      before do
+        order.set_distribution! d, oc
+        order.add_variant variant, 5
+        variant.update_attributes! on_hand: 3
+      end
+
+      it "displays a flash message when we view the cart" do
+        spree_get :edit
+        expect(response.status).to eq 200
+        expect(flash[:error]).to eq("An item in your cart has become unavailable.")
+      end
     end
   end
 

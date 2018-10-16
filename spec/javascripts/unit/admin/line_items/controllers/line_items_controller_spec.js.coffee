@@ -37,7 +37,7 @@ describe "LineItemsCtrl", ->
     order = { id: 9, order_cycle: { id: 4 }, distributor: { id: 5 }, number: "R123456" }
     lineItem = { id: 7, quantity: 3, order: { id: 9 }, supplier: { id: 1 } }
 
-    httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_gteq%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond [order]
+    httpBackend.expectGET("/admin/orders.json?q%5Bcompleted_at_gteq%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bstate_not_eq%5D=canceled").respond {orders: [order], pagination: {page: 1, pages: 1, results: 1}}
     httpBackend.expectGET("/admin/bulk_line_items.json?q%5Border%5D%5Bcompleted_at_gteq%5D=SomeDate&q%5Border%5D%5Bcompleted_at_lt%5D=SomeDate&q%5Border%5D%5Bcompleted_at_not_null%5D=true&q%5Border%5D%5Bstate_not_eq%5D=canceled").respond [lineItem]
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
     httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
@@ -68,7 +68,7 @@ describe "LineItemsCtrl", ->
 
     describe "initialisation", ->
       it "gets suppliers", ->
-        expect(scope.suppliers).toDeepEqual [supplier ]
+        expect(scope.suppliers).toDeepEqual [ supplier ]
 
       it "gets distributors", ->
         expect(scope.distributors).toDeepEqual [ distributor ]

@@ -1,7 +1,7 @@
 / insert_after 'table.index.sortable'
 
 =f.check_box :inherits_properties
-=f.label :inherits_properties, "Inherit properties from #{@product.supplier.name}? (unless overridden above)"
+=f.label :inherits_properties, t(".inherits_properties_checkbox_hint", supplier: @product.supplier.name)
 %br
 %br
 

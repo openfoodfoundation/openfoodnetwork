@@ -714,4 +714,45 @@ module Spree
       end
     end
   end
+
+  describe "product import" do
+    describe "finding the most recent import date of the variants" do
+      let!(:product) { create(:product) }
+
+      let(:reference_time) { Time.zone.now.beginning_of_day }
+
+      before do
+        product.reload
+      end
+
+      context "when the variants do not have an import date" do
+        let!(:variant_a) { create(:variant, product: product, import_date: nil) }
+        let!(:variant_b) { create(:variant, product: product, import_date: nil) }
+
+        it "returns nil" do
+          expect(product.import_date).to be_nil
+        end
+      end
+
+      context "when some variants have import date and some do not" do
+        let!(:variant_a) { create(:variant, product: product, import_date: nil) }
+        let!(:variant_b) { create(:variant, product: product, import_date: reference_time - 1.hour) }
+        let!(:variant_c) { create(:variant, product: product, import_date: reference_time - 2.hour) }
+
+        it "returns the most recent import date" do
+          expect(product.import_date).to eq(variant_b.import_date)
+        end
+      end
+
+      context "when all variants have import date" do
+        let!(:variant_a) { create(:variant, product: product, import_date: reference_time - 2.hour) }
+        let!(:variant_b) { create(:variant, product: product, import_date: reference_time - 1.hour) }
+        let!(:variant_c) { create(:variant, product: product, import_date: reference_time - 3.hour) }
+
+        it "returns the most recent import date" do
+          expect(product.import_date).to eq(variant_b.import_date)
+        end
+      end
+    end
+  end
 end

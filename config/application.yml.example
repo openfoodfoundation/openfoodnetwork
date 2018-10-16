@@ -4,6 +4,9 @@
 # Minimum 30 but usually 128 characters. To obtain run 'rake secret', or faster, 'openssl rand -hex 128'
 SECRET_TOKEN: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+# Time zone must match the operating system time zone in order to pass all tests.
+# This string is the key for the MAPPING hash constant in ActiveSupport::TimeZone.
+# Documentation including the hash: https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html
 TIMEZONE: Melbourne
 # Default country for dropdowns etc. See for codes: http://en.wikipedia.org/wiki/ISO_3166-1
 DEFAULT_COUNTRY_CODE: AU

@@ -61,7 +61,15 @@ Spree::Admin::OrdersController.class_eval do
     respond_with(@orders) do |format|
       format.html
       format.json do
-        render_as_json @orders
+        render json: {
+          orders: ActiveModel::ArraySerializer.new(@orders, each_serializer: Api::Admin::OrderSerializer),
+          pagination: {
+            results: @orders.total_count,
+            pages: @orders.num_pages.to_i,
+            page: params[:page].to_i,
+            per_page: params[:per_page].to_i
+          }
+        }
       end
     end
   end
@@ -102,16 +110,14 @@ Spree::Admin::OrdersController.class_eval do
   def orders
     if json_request?
       @search = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(params[:q])
-      @search.result.reorder('id ASC')
     else
       @search = Spree::Order.accessible_by(current_ability, :index).ransack(params[:q])
 
       # Replaced this search to filter orders to only show those distributed by current user (or all for admin user)
-      @search.result.includes([:user, :shipments, :payments]).
-        distributed_by_user(spree_current_user).
-        page(params[:page]).
-        per(params[:per_page] || Spree::Config[:orders_per_page])
+      @search.result.includes([:user, :shipments, :payments]).distributed_by_user(spree_current_user)
     end
+
+    @search.result.page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
   end
 
   def require_distributor_abn

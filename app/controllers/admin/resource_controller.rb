@@ -15,18 +15,18 @@ module Admin
 
     def edit_object_url(object, options = {})
       if parent_data.present?
-        main_app.send "edit_admin_#{model_name}_#{object_name}_url", parent, object, options
+        main_app.public_send "edit_admin_#{model_name}_#{object_name}_url", parent, object, options
       else
-        main_app.send "edit_admin_#{object_name}_url", object, options
+        main_app.public_send "edit_admin_#{object_name}_url", object, options
       end
     end
 
     def object_url(object = nil, options = {})
       target = object ? object : @object
       if parent_data.present?
-        main_app.send "admin_#{model_name}_#{object_name}_url", parent, target, options
+        main_app.public_send "admin_#{model_name}_#{object_name}_url", parent, target, options
       else
-        main_app.send "admin_#{object_name}_url", target, options
+        main_app.public_send "admin_#{object_name}_url", target, options
       end
     end
 

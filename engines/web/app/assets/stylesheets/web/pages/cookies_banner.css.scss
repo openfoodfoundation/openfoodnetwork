@@ -1,0 +1,34 @@
+@import 'darkswarm/branding';
+
+.cookies-banner {
+  background: $dark-grey;
+  bottom: 0;
+  position: fixed;
+  top: 15% !important;
+  z-index: 100000;
+
+  button {
+    background-color: $clr-turquoise;
+  }
+
+  p {
+    color: $white;
+    font-size: .75rem;
+  }
+
+  @media only screen and (min-width: 800px) and (min-height: 560px) {
+    top: 40% !important;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) and (min-height: 660px) {
+    top: 60% !important;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}

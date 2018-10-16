@@ -1,5 +1,5 @@
 = content_for :page_title do
-  = t 'admin_entreprise_groups'
+  = t 'admin_enterprise_groups'
 
 - if admin_user?
   = content_for :page_actions do
@@ -9,14 +9,14 @@
   %thead
     %tr
       %th
-        = t 'admin_entreprise_groups_name'
+        = t 'admin_enterprise_groups_name'
       - if spree_current_user.admin?
         %th
-          = t 'admin_entreprise_groups_owner'
+          = t 'admin_enterprise_groups_owner'
       %th
-        = t 'admin_entreprise_groups_on_front_page'
+        = t 'admin_enterprise_groups_on_front_page'
       %th
-        = t 'admin_entreprise_groups_entreprise'
+        = t 'admin_enterprise_groups_enterprise'
       %th.actions
 
   %tbody

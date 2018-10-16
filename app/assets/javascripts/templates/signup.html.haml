@@ -4,6 +4,9 @@
       .large-12.columns
         .alert-box.success{ng: {show: 'messages != null'}}
           {{ messages }}
+      .large-12.columns
+        .alert-box.alert{ng: {show: 'errors.message != null'}}
+          {{ errors.message }}
     .row
       .large-12.columns
         %label{for: "email"} {{'signup_email' | t}}

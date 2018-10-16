@@ -87,3 +87,19 @@ div#group_buy_calculation {
 th.actions {
   white-space: nowrap;
 }
+
+table.index td.actions {
+  text-align: left;
+}
+
+.orders-loading {
+  margin-top: 1em;
+
+  img {
+    width: 85px;
+  }
+
+  span {
+    font-size: 1.2em;
+  }
+}

@@ -4,7 +4,10 @@ feature "Managing users" do
   include AuthenticationWorkflow
 
   context "as super-admin" do
-    before { quick_login_as_admin }
+    before do
+      create(:mail_method)
+      quick_login_as_admin
+    end
 
     describe "creating a user" do
       it "shows no confirmation message to start with" do
@@ -31,12 +34,11 @@ feature "Managing users" do
       it "displays success" do
         visit spree.edit_admin_user_path user
 
-        # The `a` element doesn't have an href, so we can't use click_link.
-        find("a", text: "Resend").click
-        expect(page).to have_text "Resend done"
-
-        # And it's successful. (testing it here for reduced test time)
-        expect(Delayed::Job.last.payload_object.method_name).to eq :send_confirmation_instructions_without_delay
+        expect do
+          # The `a` element doesn't have an href, so we can't use click_link.
+          find("a", text: "Resend").click
+          expect(page).to have_text "Resend done"
+        end.to send_confirmation_instructions
       end
     end
   end

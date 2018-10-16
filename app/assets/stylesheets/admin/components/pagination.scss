@@ -1,0 +1,20 @@
+@import "admin/variables";
+
+.pagination {
+  text-align: center;
+  margin: 2em 0 1em;
+
+  button {
+    margin: 0 0.35em;
+
+    &.active {
+      background-color: darken($spree-blue, 15%);
+      cursor: default;
+    }
+
+    &.disabled {
+      background-color: $disabled_button;
+      cursor: default;
+    }
+  }
+}

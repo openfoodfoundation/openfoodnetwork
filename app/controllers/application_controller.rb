@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_cache_headers # Issue #1213, prevent cart emptying via cache when using back button
 
   include EnterprisesHelper
-  helper CssSplitter::ApplicationHelper
 
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
