@@ -116,15 +116,15 @@ module Spree
       end
 
       describe "EnterpriseFee adjustments" do
-        let!(:zone)                { create(:zone_with_member) }
-        let(:fee_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
-        let(:fee_tax_category)         { create(:tax_category, tax_rates: [fee_tax_rate]) }
+        let(:zone)             { create(:zone_with_member) }
+        let(:fee_tax_rate)     { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.1) }
+        let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
 
         let(:coordinator) { create(:distributor_enterprise, charges_sales_tax: true) }
         let(:variant)     { create(:variant, product: create(:product, tax_category: nil)) }
         let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee], distributors: [coordinator], variants: [variant]) }
-        let!(:order)      { create(:order, order_cycle: order_cycle, distributor: coordinator) }
-        let!(:line_item)  { create(:line_item, order: order, variant: variant) }
+        let(:line_item)   { create(:line_item, variant: variant) }
+        let(:order)       { create(:order, line_items: [line_item], order_cycle: order_cycle, distributor: coordinator) }
         let(:adjustment)  { order.adjustments(:reload).enterprise_fee.first }
 
         context "when enterprise fees have a fixed tax_category" do
@@ -170,7 +170,6 @@ module Spree
             end
           end
 
-
           context "when enterprise fees are taxed per-item" do
             let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
 
@@ -195,14 +194,15 @@ module Spree
           end
         end
 
-        context "when enterprise fees inherit their tax_category product they are applied to" do
+        context "when enterprise fees inherit their tax_category from the product they are applied to" do
           let(:product_tax_rate)             { create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone, amount: 0.2) }
           let(:product_tax_category)         { create(:tax_category, tax_rates: [product_tax_rate]) }
 
           before do
             variant.product.update_attribute(:tax_category_id, product_tax_category.id)
-            order.reload.create_tax_charge! # Updating line_item or order has the same effect
-            order.reload.update_distribution_charge!
+
+            order.create_tax_charge! # Updating line_item or order has the same effect
+            order.update_distribution_charge!
           end
 
           context "when enterprise fees are taxed per-order" do
@@ -234,7 +234,6 @@ module Spree
               end
             end
           end
-
 
           context "when enterprise fees are taxed per-item" do
             let(:enterprise_fee) { create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true, calculator: Calculator::PerItem.new(preferred_amount: 50.0)) }
