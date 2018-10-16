@@ -1,5 +1,5 @@
 Spree::Address.class_eval do
-  has_one :enterprise
+  has_one :enterprise, dependent: :restrict
   belongs_to :country, class_name: "Spree::Country"
 
   after_save :touch_enterprise

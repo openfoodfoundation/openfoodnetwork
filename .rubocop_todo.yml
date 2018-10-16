@@ -1440,7 +1440,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/customer.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/order_cycle.rb'
-    - 'app/models/spree/address_decorator.rb'
     - 'app/models/spree/adjustment_decorator.rb'
     - 'app/models/spree/order_decorator.rb'
     - 'app/models/spree/payment_method_decorator.rb'
