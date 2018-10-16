@@ -542,7 +542,6 @@ module Spree
       end
     end
 
-
     describe "variant units" do
       context "when the product already has a variant unit set (and all required option types exist)" do
         let!(:p) { create(:simple_product,
@@ -711,6 +710,26 @@ module Spree
         e.variants << v
         p.delete
         e.variants(true).should be_empty
+      end
+    end
+
+    describe '#on_hand' do
+      let(:product) { create(:product) }
+
+      context 'when the product has variants' do
+        before { create(:variant, product: product) }
+
+        it 'returns the sum of the on_hand of its variants' do
+          expect(product.on_hand).to eq(Float::INFINITY)
+        end
+      end
+
+      context 'when the product has no variants' do
+        before { product.variants.destroy_all }
+
+        it 'returns the on_hand of the master' do
+          expect(product.on_hand).to eq(product.master.on_hand)
+        end
       end
     end
   end
