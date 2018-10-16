@@ -54,19 +54,4 @@ describe Spree::Address do
       expect { Spree::Address.new.country = "A country" }.to raise_error ActiveRecord::AssociationTypeMismatch
     end
   end
-
-  describe "notifying bugsnag when saved with missing data" do
-    it "notifies on create" do
-      Bugsnag.should_receive(:notify)
-      a = Spree::Address.new zipcode: nil
-      a.save validate: false
-    end
-
-    it "notifies on update" do
-      Bugsnag.should_receive(:notify)
-      a = create(:address)
-      a.zipcode = nil
-      a.save validate: false
-    end
-  end
 end
