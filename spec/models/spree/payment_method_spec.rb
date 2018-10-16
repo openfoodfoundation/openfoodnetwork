@@ -39,5 +39,24 @@ module Spree
       order.add_variant(product.master)
       expect(transaction.compute_amount(order)).to eq 2.0
     end
+
+    describe "scope" do
+      describe "filtering to specified distributors" do
+        let!(:distributor_a) { create(:distributor_enterprise) }
+        let!(:distributor_b) { create(:distributor_enterprise) }
+        let!(:distributor_c) { create(:distributor_enterprise) }
+
+        let!(:payment_method_a) { create(:payment_method, distributors: [distributor_a, distributor_b]) }
+        let!(:payment_method_b) { create(:payment_method, distributors: [distributor_b]) }
+        let!(:payment_method_c) { create(:payment_method, distributors: [distributor_c]) }
+
+        it "includes only unique records under specified distributors" do
+          result = described_class.for_distributors([distributor_a, distributor_b])
+          expect(result.length).to eq(2)
+          expect(result).to include(payment_method_a)
+          expect(result).to include(payment_method_b)
+        end
+      end
+    end
   end
 end
