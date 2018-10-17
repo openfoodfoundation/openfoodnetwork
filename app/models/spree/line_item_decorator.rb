@@ -117,7 +117,7 @@ Spree::LineItem.class_eval do
   def sufficient_stock?
     return true if quantity == 0 # This line added
     scoper.scope(variant) # This line added
-    return true if Spree::Config[:allow_backorders]
+    return true if variant.on_demand
     if new_record? || !order.completed?
       variant.on_hand >= quantity
     else
