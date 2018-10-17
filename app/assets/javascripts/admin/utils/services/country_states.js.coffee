@@ -1,4 +1,4 @@
-angular.module("ofn.admin").factory "CountryStates", ($filter) ->
+angular.module("admin.utils").factory "CountryStates", ($filter) ->
   new class CountryStates
 
     statesFor: (countries, country_id) ->

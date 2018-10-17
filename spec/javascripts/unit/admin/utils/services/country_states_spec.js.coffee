@@ -10,7 +10,7 @@ describe "CountryStates service", ->
   ]
 
   beforeEach ->
-    module('ofn.admin')
+    module('admin.utils')
     inject (CountryStates) ->
       countryStates = CountryStates
 
