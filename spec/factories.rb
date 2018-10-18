@@ -382,18 +382,6 @@ FactoryBot.define do
         shipment.add_shipping_method(evaluator.shipping_method, true)
       end
     end
-
-    trait :shipping_fee do
-      transient do
-        shipping_fee 3
-      end
-
-      after(:create) do |shipment, evaluator|
-        shipping_method = create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
-        shipment.shipping_rates.destroy_all
-        shipment.add_shipping_method(shipping_method, true)
-      end
-    end
   end
 
   factory :distributor_enterprise_with_tax, parent: :distributor_enterprise do
@@ -407,16 +395,16 @@ FactoryBot.define do
       payment_fee 5
     end
 
-    shipments { [ create(:shipment_with, :shipping_fee, shipping_fee: shipping_fee) ] }
+    ship_address { create(:address) }
 
     after(:create) do |order, evaluator|
+      create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee)
+
       create(:line_item, order: order)
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
       create(:payment, order: order, amount: order.total, payment_method: payment_method, state: 'checkout')
 
-      # skip the rebuilding of order.shipments from line_items and stock locations (this is enforced in checkout step :address to :delivery)
-      order.stub(:create_proposed_shipments)
       while !order.completed? do break unless order.next! end
     end
   end

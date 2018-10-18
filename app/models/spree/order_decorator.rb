@@ -17,6 +17,14 @@ Spree::Order.class_eval do
   has_one :proxy_order
   has_one :subscription, through: :proxy_order
 
+  # This removes "inverse_of: source" which breaks shipment adjustment calculations
+  #   This change is done in Spree 2.1 (see https://github.com/spree/spree/commit/3fa44165c7825f79a2fa4eb79b99dc29944c5d55)
+  #   When OFN gets to Spree 2.1, this can be removed
+  has_many :adjustments,
+    as: :adjustable,
+    dependent: :destroy,
+    order: "#{Spree::Adjustment.table_name}.created_at ASC"
+
   validates :customer, presence: true, if: :require_customer?
   validate :products_available_from_new_distribution, :if => lambda { distributor_id_changed? || order_cycle_id_changed? }
   validate :disallow_guest_order

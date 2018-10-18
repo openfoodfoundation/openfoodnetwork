@@ -655,7 +655,8 @@ describe Spree::Order do
   end
 
   describe "a completed order with shipping and transaction fees" do
-    let(:order) { create(:completed_order_with_fees, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+    let(:distributor) { create(:distributor_enterprise_with_tax) }
+    let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
     let(:shipping_fee) { 3 }
     let(:payment_fee) { 5 }
     let(:item_num) { order.line_items.length }
@@ -760,7 +761,7 @@ describe Spree::Order do
       it "returns previous items" do
         prev_order.add_variant(product.master, 1, 3)
         prev_order2.reload # to get the right response from line_items
-        expect(order.finalised_line_items.length).to eq 3
+        expect(order.finalised_line_items.length).to eq 11
         expect(order.finalised_line_items).to match_array(prev_order.line_items + prev_order2.line_items)
       end
     end
