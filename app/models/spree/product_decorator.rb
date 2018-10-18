@@ -1,8 +1,11 @@
 require 'open_food_network/permalink_generator'
 require 'open_food_network/property_merge'
+require 'concerns/product_on_demand'
 
 Spree::Product.class_eval do
   include PermalinkGenerator
+  include ProductOnDemand
+
   # We have an after_destroy callback on Spree::ProductOptionType. However, if we
   # don't specify dependent => destroy on this association, it is not called. See:
   # https://github.com/rails/rails/issues/7618
