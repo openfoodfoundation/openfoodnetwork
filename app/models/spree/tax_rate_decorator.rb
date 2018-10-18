@@ -8,18 +8,17 @@ module Spree
       alias_method_chain :match, :sales_tax_registration
     end
 
-
     def adjust_with_included_tax(order)
       adjust_without_included_tax(order)
 
       order.adjustments(:reload)
       order.line_items(:reload)
-      (order.adjustments.tax + order.price_adjustments).each do |a|
-        a.set_absolute_included_tax! a.amount
+      # TaxRate adjustments (order.adjustments.tax) and price adjustments (tax included on line items) consist of 100% tax
+      (order.adjustments.tax + order.price_adjustments).each do |adjustment|
+        adjustment.set_absolute_included_tax! adjustment.amount
       end
     end
     alias_method_chain :adjust, :included_tax
-
 
     # Manually apply a TaxRate to a particular amount. TaxRates normally compute against
     # LineItems or Orders, so we mock out a line item here to fit the interface
@@ -39,7 +38,6 @@ module Spree
         calculator.compute line_item
       end
     end
-
 
     private
 
