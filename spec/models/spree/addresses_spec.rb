@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Spree::Address do
+  let(:address) { build(:address) }
+  let(:enterprise_address) { build(:address, enterprise: build(:enterprise)) }
+
   describe "associations" do
     it { is_expected.to have_one(:enterprise) }
   end
@@ -9,9 +12,19 @@ describe Spree::Address do
     it { is_expected.to delegate(:name).to(:state).with_prefix }
   end
 
-  describe "geocode address" do
-    let(:address) { FactoryBot.build(:address) }
+  describe "destroy" do
+    it "can be deleted" do
+      expect { address.destroy }.to_not raise_error
+    end
 
+    it "cannot be deleted with associated enterprise" do
+      expect do
+        enterprise_address.destroy
+      end.to raise_error ActiveRecord::DeleteRestrictionError
+    end
+  end
+
+  describe "geocode address" do
     it "should include address1, address2, zipcode, city, state and country" do
       expect(address.geocode_address).to include(address.address1)
       expect(address.geocode_address).to include(address.address2)
