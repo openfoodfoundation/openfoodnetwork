@@ -64,7 +64,9 @@ describe Spree::Address do
 
   describe "setters" do
     it "lets us set a country" do
-      expect { Spree::Address.new.country = "A country" }.to raise_error ActiveRecord::AssociationTypeMismatch
+      expect do
+        Spree::Address.new.country = "A country"
+      end.to raise_error ActiveRecord::AssociationTypeMismatch
     end
   end
 end
