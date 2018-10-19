@@ -5,7 +5,7 @@ class Api::Admin::ProductSerializer < ActiveModel::Serializer
 
   has_one :supplier, key: :producer_id, embed: :id
   has_one :primary_taxon, key: :category_id, embed: :id
-  has_many :variants, key: :variants, serializer: Api::Admin::VariantSerializer # embed: ids
+  has_many :variants, key: :variants, serializer: Api::Admin::VariantSerializer
   has_one :master, serializer: Api::Admin::VariantSerializer
 
   def image_url
