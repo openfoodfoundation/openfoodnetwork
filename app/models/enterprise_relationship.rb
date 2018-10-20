@@ -6,7 +6,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   validates_presence_of :parent_id, :child_id
   validates_uniqueness_of :child_id, scope: :parent_id, message: I18n.t('validation_msg_relationship_already_established')
 
-  after_save :apply_variant_override_permissions
+  after_save :update_permissions_of_child_variant_overrides
 
   scope :with_enterprises,
     joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
@@ -25,7 +25,6 @@ class EnterpriseRelationship < ActiveRecord::Base
   }
 
   scope :by_name, with_enterprises.order('child_enterprises.name, parent_enterprises.name')
-
 
   # Load an array of the relatives of each enterprise (ie. any enterprise related to it in
   # either direction). This array is split into distributors and producers, and has the format:
@@ -76,14 +75,24 @@ class EnterpriseRelationship < ActiveRecord::Base
 
   private
 
-  def apply_variant_override_permissions
-    variant_overrides = VariantOverride.unscoped.for_hubs(child)
-      .joins(variant: :product).where("spree_products.supplier_id IN (?)", parent)
-
+  def update_permissions_of_child_variant_overrides
     if has_permission?(:create_variant_overrides)
-      variant_overrides.update_all(permission_revoked_at: nil)
+      allow_all_child_variant_overrides
     else
-      variant_overrides.update_all(permission_revoked_at: Time.now)
+      revoke_all_child_variant_overrides
     end
+  end
+
+  def allow_all_child_variant_overrides
+    child_variant_overrides.update_all(permission_revoked_at: nil)
+  end
+
+  def revoke_all_child_variant_overrides
+    child_variant_overrides.update_all(permission_revoked_at: Time.now)
+  end
+
+  def child_variant_overrides
+    VariantOverride.unscoped.for_hubs(child)
+      .joins(variant: :product).where("spree_products.supplier_id IN (?)", parent)
   end
 end
