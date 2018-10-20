@@ -7,6 +7,7 @@ class EnterpriseRelationship < ActiveRecord::Base
   validates_uniqueness_of :child_id, scope: :parent_id, message: I18n.t('validation_msg_relationship_already_established')
 
   after_save :update_permissions_of_child_variant_overrides
+  before_destroy :revoke_all_child_variant_overrides
 
   scope :with_enterprises,
     joins('LEFT JOIN enterprises AS parent_enterprises ON parent_enterprises.id = enterprise_relationships.parent_id').
