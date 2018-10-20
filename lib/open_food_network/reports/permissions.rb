@@ -1,6 +1,6 @@
 module OpenFoodNetwork
   module Reports
-    class ReportAuthorizer
+    class Permissions
       attr_accessor :user
 
       def initialize(user)
