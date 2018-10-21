@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'open_food_network/permissions'
 
-describe ProductImport::ProductImporter do
+xdescribe ProductImport::ProductImporter do
   include AuthenticationWorkflow
 
   let!(:admin) { create(:admin_user) }
@@ -63,7 +63,7 @@ describe ProductImport::ProductImporter do
       expect(@importer.item_count).to eq(5)
     end
 
-    xit "validates entries and returns the results as json" do
+    it "validates entries and returns the results as json" do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
@@ -73,7 +73,7 @@ describe ProductImport::ProductImporter do
       expect(filter('update_product', entries)).to eq 0
     end
 
-    xit "saves the results and returns info on updated products" do
+    it "saves the results and returns info on updated products" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 5
@@ -146,7 +146,7 @@ describe ProductImport::ProductImporter do
     end
     after { File.delete('/tmp/test-m.csv') }
 
-    xit "validates entries" do
+    it "validates entries" do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
@@ -156,7 +156,7 @@ describe ProductImport::ProductImporter do
       expect(filter('update_product', entries)).to eq 0
     end
 
-    xit "allows saving of the valid entries" do
+    it "allows saving of the valid entries" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 1
@@ -220,7 +220,7 @@ describe ProductImport::ProductImporter do
       expect(filter('update_product', entries)).to eq 1
     end
 
-    xit "saves and updates" do
+    it "saves and updates" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 1
@@ -256,7 +256,7 @@ describe ProductImport::ProductImporter do
     end
     after { File.delete('/tmp/test-m.csv') }
 
-    xit "validates entries" do
+    it "validates entries" do
       @importer.validate_entries
       entries = JSON.parse(@importer.entries_json)
 
@@ -265,7 +265,7 @@ describe ProductImport::ProductImporter do
       expect(filter('create_product', entries)).to eq 2
     end
 
-    xit "saves and updates" do
+    it "saves and updates" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 2
@@ -310,7 +310,7 @@ describe ProductImport::ProductImporter do
       expect(filter('update_product', entries)).to eq 2
     end
 
-    xit "saves and updates" do
+    it "saves and updates" do
       @importer.save_entries
 
       expect(@importer.products_created_count).to eq 0
@@ -515,7 +515,7 @@ describe ProductImport::ProductImporter do
   describe "handling enterprise permissions" do
     after { File.delete('/tmp/test-m.csv') }
 
-    xit "only allows product import into enterprises the user is permitted to manage" do
+    it "only allows product import into enterprises the user is permitted to manage" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["My Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
@@ -599,7 +599,7 @@ describe ProductImport::ProductImporter do
   describe "applying settings and defaults on import" do
     after { File.delete('/tmp/test-m.csv') }
 
-    xit "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
+    it "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g"]
@@ -679,7 +679,7 @@ describe ProductImport::ProductImporter do
       expect(lettuce.count_on_hand).to eq 96   # In different enterprise; unchanged
     end
 
-    xit "can overwrite fields with selected defaults when importing to product list" do
+    it "can overwrite fields with selected defaults when importing to product list" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "supplier", "category", "on_hand", "price", "units", "unit_type", "tax_category_id", "available_on"]
         csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g", tax_category.id, ""]
