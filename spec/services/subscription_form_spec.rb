@@ -1,4 +1,4 @@
-describe SubscriptionForm do
+xdescribe SubscriptionForm do
   describe "creating a new subscription" do
     let!(:shop) { create(:distributor_enterprise) }
     let!(:customer) { create(:customer, enterprise: shop) }
