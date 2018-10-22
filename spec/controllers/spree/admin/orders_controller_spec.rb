@@ -70,14 +70,13 @@ describe Spree::Admin::OrdersController, type: :controller do
         order_attributes.all?{ |attr| keys.include? attr }.should == true
       end
 
-      it "sorts orders in descending id order" do
+      it "sorts orders in ascending id order" do
         ids = json_response['orders'].map{ |order| order['id'] }
-        ids[0].should > ids[1]
-        ids[1].should > ids[2]
+        expect(ids[0]).to be < ids[1]
+        expect(ids[1]).to be < ids[2]
       end
 
       it "formats completed_at to 'yyyy-mm-dd hh:mm'" do
-        pp json_response
         json_response['orders'].map{ |order| order['completed_at'] }.all?{ |a| a == order1.completed_at.strftime('%B %d, %Y') }.should == true
       end
 

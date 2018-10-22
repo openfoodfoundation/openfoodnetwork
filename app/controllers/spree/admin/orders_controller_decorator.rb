@@ -20,50 +20,17 @@ Spree::Admin::OrdersController.class_eval do
 
   before_filter :require_distributor_abn, only: :invoice
 
-
   respond_to :html, :json
 
-  # Mostly the original Spree method, tweaked to allow us to ransack with completed_at in a sane way
   def index
-    params[:q] ||= {}
-    params[:q][:completed_at_not_null] ||= '1' if Spree::Config[:show_only_complete_orders_by_default]
-    @show_only_completed = params[:q][:completed_at_not_null].present?
-    params[:q][:s] ||= @show_only_completed ? 'completed_at desc' : 'created_at desc'
+    @results = SearchOrders.new(params, spree_current_user) if json_request?
 
-    # As date params are deleted if @show_only_completed, store
-    # the original date so we can restore them into the params
-    # after the search
-    created_at_gt = params[:q][:created_at_gt]
-    created_at_lt = params[:q][:created_at_lt]
-
-    params[:q].delete(:inventory_units_shipment_id_null) if params[:q][:inventory_units_shipment_id_null] == "0"
-
-    if !params[:q][:created_at_gt].blank?
-      params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue ""
-    end
-
-    if !params[:q][:created_at_lt].blank?
-      params[:q][:created_at_lt] = Time.zone.parse(params[:q][:created_at_lt]).end_of_day rescue ""
-    end
-
-    # Changed this to stop completed_at being overriden when present
-    if @show_only_completed
-      params[:q][:completed_at_gt] = params[:q].delete(:created_at_gt) unless params[:q][:completed_at_gt]
-      params[:q][:completed_at_lt] = params[:q].delete(:created_at_lt) unless params[:q][:completed_at_gt]
-    end
-
-    @orders = orders
-
-    # Restore dates
-    params[:q][:created_at_gt] = created_at_gt
-    params[:q][:created_at_lt] = created_at_lt
-
-    respond_with(@orders) do |format|
+    respond_to do |format|
       format.html
       format.json do
         render json: {
-          orders: ActiveModel::ArraySerializer.new(@orders, each_serializer: Api::Admin::OrderSerializer),
-          pagination: pagination_data
+          orders: serialized_orders,
+          pagination: @results.pagination_data
         }
       end
     end
@@ -102,42 +69,6 @@ Spree::Admin::OrdersController.class_eval do
 
   private
 
-  def orders
-    if json_request?
-      @search = OpenFoodNetwork::Permissions.new(spree_current_user).editable_orders.ransack(params[:q])
-    else
-      @search = Spree::Order.accessible_by(current_ability, :index).ransack(params[:q])
-
-      # Replaced this search to filter orders to only show those distributed by current user (or all for admin user)
-      @search.result.includes([:user, :shipments, :payments]).distributed_by_user(spree_current_user)
-    end
-
-    search_results
-  end
-
-  def search_results
-    if using_pagination?
-      @search.result.page(params[:page]).per(params[:per_page] || Spree::Config[:orders_per_page])
-    else
-      @search.result
-    end
-  end
-
-  def using_pagination?
-    params[:per_page]
-  end
-
-  def pagination_data
-    if using_pagination?
-      {
-        results: @orders.total_count,
-        pages: @orders.num_pages,
-        page: params[:page].to_i,
-        per_page: params[:per_page].to_i
-      }
-    end
-  end
-
   def require_distributor_abn
     unless @order.distributor.abn.present?
       flash[:error] = t(:must_have_valid_business_number, enterprise_name: @order.distributor.name)
@@ -166,4 +97,7 @@ Spree::Admin::OrdersController.class_eval do
     end
   end
 
+  def serialized_orders
+    ActiveModel::ArraySerializer.new(@results.orders, each_serializer: Api::Admin::OrderSerializer)
+  end
 end
