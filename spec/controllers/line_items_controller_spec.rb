@@ -7,7 +7,7 @@ describe LineItemsController, type: :controller do
 
   context "listing bought items" do
     let!(:completed_order) do
-      order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle)
+      order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
       while !order.completed? do break unless order.next! end
       order
     end
@@ -95,7 +95,8 @@ describe LineItemsController, type: :controller do
     context "on a completed order with shipping and payment fees" do
       let(:shipping_fee) { 3 }
       let(:payment_fee) { 5 }
-      let(:order) { create(:completed_order_with_fees, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:distributor_with_taxes) { create(:distributor_enterprise_with_tax) }
+      let(:order) { create(:completed_order_with_fees, distributor: distributor_with_taxes, shipping_fee: shipping_fee, payment_fee: payment_fee) }
 
       before do
         Spree::Config.shipment_inc_vat = true
@@ -118,7 +119,7 @@ describe LineItemsController, type: :controller do
 
         # Check the fees again
         order.reload
-        order.shipments.last.reload
+        order.shipment.reload
         expect(order.adjustment_total).to eq initial_fees - shipping_fee - payment_fee
         expect(order.shipments.last.adjustment.amount).to eq shipping_fee
         expect(order.payments.first.adjustment.amount).to eq payment_fee
@@ -134,7 +135,7 @@ describe LineItemsController, type: :controller do
       let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
       let!(:exchange) { create(:exchange, incoming: true, sender: variant.product.supplier, receiver: order_cycle.coordinator, variants: [variant], enterprise_fees: [enterprise_fee]) }
       let!(:order) do
-        order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle)
+        order = create(:completed_order_with_totals, user: user, distributor: distributor, order_cycle: order_cycle, line_items_count: 1)
         order.reload.line_items.first.update_attributes(variant_id: variant.id)
         while !order.completed? do break unless order.next! end
         order.update_distribution_charge!
