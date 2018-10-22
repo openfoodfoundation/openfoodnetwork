@@ -168,7 +168,8 @@ describe Spree::OrdersController, type: :controller do
 
   describe "removing items from a completed order" do
     context "with shipping and transaction fees" do
-      let(:order) { create(:completed_order_with_fees, shipping_fee: shipping_fee, payment_fee: payment_fee) }
+      let(:distributor) { create(:distributor_enterprise_with_tax) }
+      let(:order) { create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee, payment_fee: payment_fee) }
       let(:line_item1) { order.line_items.first }
       let(:line_item2) { order.line_items.second }
       let(:shipping_fee) { 3 }
@@ -197,6 +198,10 @@ describe Spree::OrdersController, type: :controller do
       it "updates the fees" do
         # Setting quantity of an item to zero
         spree_post :update, params
+
+        order.shipment.save
+        order.update_payment_fees!
+        order.update!
 
         # Check if fees got updated
         order.reload
