@@ -30,111 +30,24 @@ describe Spree::Admin::OrdersController, type: :controller do
   end
 
   describe "#index" do
-    render_views
-
-    let(:order_attributes) { [:id, :full_name, :email, :phone, :completed_at, :distributor, :order_cycle, :number] }
-
-    def self.make_simple_data!
-      let!(:dist1) { FactoryBot.create(:distributor_enterprise) }
-      let!(:order1) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
-      let!(:order2) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
-      let!(:order3) { FactoryBot.create(:order, state: 'complete', completed_at: Time.zone.now, distributor: dist1, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item1) { FactoryBot.create(:line_item, order: order1) }
-      let!(:line_item2) { FactoryBot.create(:line_item, order: order2) }
-      let!(:line_item3) { FactoryBot.create(:line_item, order: order2) }
-      let!(:line_item4) { FactoryBot.create(:line_item, order: order3) }
-      let(:line_item_attributes) { [:id, :quantity, :max_quantity, :supplier, :units_product, :units_variant] }
-    end
-
-    context "as a normal user" do
+    context "as a regular user" do
       before { controller.stub spree_current_user: create_enterprise_user }
 
-      make_simple_data!
-
       it "should deny me access to the index action" do
-        spree_get :index, :format => :json
+        spree_get :index
         expect(response).to redirect_to spree.unauthorized_path
       end
     end
 
-    context "as an administrator" do
-      make_simple_data!
+    context "as an enterprise user" do
+      let!(:order) { create(:order_with_distributor) }
 
       before do
-        controller.stub spree_current_user: quick_login_as_admin
-        spree_get :index, :format => :json
+        controller.stub spree_current_user: order.distributor.owner
       end
 
-      it "retrieves a list of orders with appropriate attributes, including line items with appropriate attributes" do
-        keys = json_response['orders'].first.keys.map{ |key| key.to_sym }
-        order_attributes.all?{ |attr| keys.include? attr }.should == true
-      end
-
-      it "sorts orders in ascending id order" do
-        ids = json_response['orders'].map{ |order| order['id'] }
-        expect(ids[0]).to be < ids[1]
-        expect(ids[1]).to be < ids[2]
-      end
-
-      it "formats completed_at to 'yyyy-mm-dd hh:mm'" do
-        json_response['orders'].map{ |order| order['completed_at'] }.all?{ |a| a == order1.completed_at.strftime('%B %d, %Y') }.should == true
-      end
-
-      it "returns distributor object with id key" do
-        json_response['orders'].map{ |order| order['distributor'] }.all?{ |d| d.has_key?('id') }.should == true
-      end
-
-      it "retrieves the order number" do
-        json_response['orders'].map{ |order| order['number'] }.all?{ |number| number.match("^R\\d{5,10}$") }.should == true
-      end
-    end
-
-    context "as an enterprise user" do
-      let(:supplier) { create(:supplier_enterprise) }
-      let(:distributor1) { create(:distributor_enterprise) }
-      let(:distributor2) { create(:distributor_enterprise) }
-      let(:coordinator) { create(:distributor_enterprise) }
-      let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
-      let!(:order1) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item1) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
-      let!(:line_item2) { FactoryBot.create(:line_item, order: order1, product: FactoryBot.create(:product, supplier: supplier)) }
-      let!(:order2) { FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now, distributor: distributor2, billing_address: FactoryBot.create(:address) ) }
-      let!(:line_item3) { FactoryBot.create(:line_item, order: order2, product: FactoryBot.create(:product, supplier: supplier)) }
-
-      context "producer enterprise" do
-
-        before do
-          controller.stub spree_current_user: supplier.owner
-          spree_get :index, :format => :json
-        end
-
-        it "does not display line items for which my enterprise is a supplier" do
-          expect(response).to redirect_to spree.unauthorized_path
-        end
-      end
-
-      context "coordinator enterprise" do
-        before do
-          controller.stub spree_current_user: coordinator.owner
-          spree_get :index, :format => :json
-        end
-
-        it "retrieves a list of orders" do
-          keys = json_response['orders'].first.keys.map{ |key| key.to_sym }
-          order_attributes.all?{ |attr| keys.include? attr }.should == true
-        end
-      end
-
-      context "hub enterprise" do
-        before do
-          controller.stub spree_current_user: distributor1.owner
-          spree_get :index, :format => :json
-        end
-
-        it "retrieves a list of orders" do
-          keys = json_response['orders'].first.keys.map{ |key| key.to_sym }
-          order_attributes.all?{ |attr| keys.include? attr }.should == true
-        end
+      it "should allow access" do
+        expect(response.status).to eq 200
       end
     end
   end

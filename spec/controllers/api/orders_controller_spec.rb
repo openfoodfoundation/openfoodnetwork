@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'spree/api/testing_support/helpers'
 
 module Api
   describe OrdersController, type: :controller do
@@ -7,42 +8,120 @@ module Api
 
     describe '#index' do
       let!(:distributor) { create(:distributor_enterprise) }
-      let!(:order1) { create(:order, distributor: distributor) }
-      let!(:order2) { create(:order, distributor: distributor) }
-      let!(:order3) { create(:order, distributor: distributor) }
-
-      let(:enterprise_user) { distributor.owner }
-      let(:regular_user) { create(:user) }
+      let!(:distributor2) { create(:distributor_enterprise) }
+      let!(:supplier) { create(:supplier_enterprise) }
+      let!(:coordinator) { create(:distributor_enterprise) }
+      let!(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
+      let!(:order1) do
+        create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
+                       distributor: distributor, billing_address: create(:address) )
+      end
+      let!(:order2) do
+        create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
+                       distributor: distributor2, billing_address: create(:address) )
+      end
+      let!(:order3) do
+        create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
+                       distributor: distributor, billing_address: create(:address) )
+      end
+      let!(:line_item1) do
+        create(:line_item, order: order1,
+                           product: create(:product, supplier: supplier))
+      end
+      let!(:line_item2) do
+        create(:line_item, order: order2,
+                           product: create(:product, supplier: supplier))
+      end
+      let!(:line_item3) do
+        create(:line_item, order: order2,
+                           product: create(:product, supplier: supplier))
+      end
+      let!(:line_item4) do
+        create(:line_item, order: order3,
+                           product: create(:product, supplier: supplier))
+      end
+      let!(:regular_user) { create(:user) }
+      let!(:admin_user) { create(:admin_user) }
 
       context 'as a regular user' do
         before do
           allow(controller).to receive(:spree_current_user) { regular_user }
+          get :index
         end
 
         it "returns unauthorized" do
-          get :index
           assert_unauthorized!
         end
       end
 
-      context 'as an enterprise user' do
+      context 'as an admin user' do
         before do
-          allow(controller).to receive(:spree_current_user) { enterprise_user }
+          allow(controller).to receive(:spree_current_user) { admin_user }
+          get :index
         end
 
-        it "returns serialized orders" do
-          get :index
+        it "retrieves a list of orders with appropriate attributes,
+            including line items with appropriate attributes" do
 
-          expect(response.status).to eq 200
-          expect(json_response['orders'].count).to eq 3
-          expect(json_response['orders'].first.keys).to include 'id', 'number', 'email', 'distributor'
-          expect(json_response['pagination']).to be_nil
+          returns_orders(json_response)
+        end
+
+        it "formats completed_at to 'yyyy-mm-dd hh:mm'" do
+          completed_dates = json_response['orders'].map{ |order| order['completed_at'] }
+          correct_formats = completed_dates.all?{ |a| a == order1.completed_at.strftime('%B %d, %Y') }
+
+          expect(correct_formats).to be_truthy
+        end
+
+        it "returns distributor object with id key" do
+          distributors = json_response['orders'].map{ |order| order['distributor'] }
+          expect(distributors.all?{ |d| d.key?('id') }).to be_truthy
+        end
+
+        it "returns the order number" do
+          order_numbers = json_response['orders'].map{ |order| order['number'] }
+          expect(order_numbers.all?{ |number| number.match("^R\\d{5,10}$") }).to be_truthy
+        end
+      end
+
+      context 'as an enterprise user' do
+        context 'producer enterprise' do
+          before do
+            allow(controller).to receive(:spree_current_user) { supplier.owner }
+            get :index
+          end
+
+          it "does not display line items for which my enterprise is a supplier" do
+            assert_unauthorized!
+          end
+        end
+
+        context 'coordinator enterprise' do
+          before do
+            allow(controller).to receive(:spree_current_user) { coordinator.owner }
+            get :index
+          end
+
+          it "retrieves a list of orders" do
+            returns_orders(json_response)
+          end
+        end
+
+        context 'hub enterprise' do
+          before do
+            allow(controller).to receive(:spree_current_user) { distributor.owner }
+            get :index
+          end
+
+          it "retrieves a list of orders" do
+            returns_orders(json_response)
+          end
         end
       end
 
       context 'with pagination' do
         before do
-          allow(controller).to receive(:spree_current_user) { enterprise_user }
+          allow(controller).to receive(:spree_current_user) { distributor.owner }
         end
 
         it 'returns pagination data when query params contain :per_page]' do
@@ -53,9 +132,25 @@ module Api
       end
     end
 
+    private
+
+    def returns_orders(response)
+      keys = response['orders'].first.keys.map(&:to_sym)
+      expect(order_attributes.all?{ |attr| keys.include? attr }).to be_truthy
+    end
+
+    def order_attributes
+      [
+        :id, :number, :full_name, :email, :phone, :completed_at, :display_total,
+        :show_path, :edit_path, :state, :payment_state, :shipment_state,
+        :payments_path, :shipments_path, :ship_path, :ready_to_ship, :created_at,
+        :distributor_name, :special_instructions, :payment_capture_path
+      ]
+    end
+
     def pagination_data
       {
-        'results' => 3,
+        'results' => 2,
         'pages' => 1,
         'page' => 1,
         'per_page' => 15
