@@ -32,7 +32,7 @@ class SearchOrders
   def paginated_results
     @search.result
       .page(params[:page])
-      .per(params[:per_page] || Spree::Config[:orders_per_page])
+      .per(params[:per_page])
   end
 
   def using_pagination?
