@@ -49,13 +49,13 @@ Spree::Admin::OrdersController.class_eval do
   end
 
   def bulk_invoice
-    orders = params[:order_ids]
+    orders = Spree::Order.where(id: params[:order_ids])
 
     combined_pdf = CombinePDF.new
 
-    orders.each do |order_id|
-      @order = Spree::Order.find(order_id)
-      pdf_data = render_to_string pdf: "invoice-#{@order.number}.pdf", template: invoice_template,
+    orders.each do |order|
+      @order = order
+      pdf_data = render_to_string pdf: "invoice-#{order.number}.pdf", template: invoice_template,
                                   formats: [:html], encoding: "UTF-8"
 
       combined_pdf << CombinePDF.parse(pdf_data)
