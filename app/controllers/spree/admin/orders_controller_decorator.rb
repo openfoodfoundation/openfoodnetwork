@@ -23,17 +23,7 @@ Spree::Admin::OrdersController.class_eval do
   respond_to :html, :json
 
   def index
-    @results = SearchOrders.new(params, spree_current_user) if json_request?
-
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: {
-          orders: serialized_orders,
-          pagination: @results.pagination_data
-        }
-      end
-    end
+    # Moved to api. Overriding the action so we only render the page template.
   end
 
   # Overwrite to use confirm_email_for_customer instead of confirm_email.
@@ -95,9 +85,5 @@ Spree::Admin::OrdersController.class_eval do
     unless @order.distribution_set?
       render 'set_distribution', locals: { order: @order }
     end
-  end
-
-  def serialized_orders
-    ActiveModel::ArraySerializer.new(@results.orders, each_serializer: Api::Admin::OrderSerializer)
   end
 end
