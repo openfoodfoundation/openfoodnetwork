@@ -3,6 +3,7 @@ require 'spec_helper'
 feature 'Multilingual', js: true do
   include AuthenticationWorkflow
   include WebHelper
+  include ShopWorkflow
 
   it 'has two locales available' do
     expect(Rails.application.config.i18n[:default_locale]).to eq 'en'
@@ -16,28 +17,58 @@ feature 'Multilingual', js: true do
     expect(get_i18n_translation('label_shops')).to eq 'Shops'
   end
 
-  it 'can switch language by params' do
-    visit root_path
-    expect(get_i18n_locale).to eq 'en'
-    expect(get_i18n_translation('label_shops')).to eq 'Shops'
-    expect(page.driver.browser.cookies['locale']).to be_nil
-    expect(page).to have_content 'Interested in getting on the Open Food Network?'
-    expect(page).to have_content 'SHOPS'
+  context 'can switch language by params' do
+    scenario 'in root path' do
+      visit root_path
+      expect(get_i18n_locale).to eq 'en'
+      expect(get_i18n_translation('label_shops')).to eq 'Shops'
+      expect(page.driver.browser.cookies['locale']).to be_nil
+      expect(page).to have_content 'Interested in getting on the Open Food Network?'
+      expect(page).to have_content 'SHOPS'
 
-    visit root_path(locale: 'es')
-    expect(get_i18n_locale).to eq 'es'
-    expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
-    expect(page.driver.browser.cookies['locale'].value).to eq 'es'
-    expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
-    expect(page).to have_content 'TIENDAS'
+      visit root_path(locale: 'es')
+      expect(get_i18n_locale).to eq 'es'
+      expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
+      expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+      expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
+      expect(page).to have_content 'TIENDAS'
 
-    # it is not in the list of available of available_locales
-    visit root_path(locale: 'it')
-    expect(get_i18n_locale).to eq 'es'
-    expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
-    expect(page.driver.browser.cookies['locale'].value).to eq 'es'
-    expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
-    expect(page).to have_content 'TIENDAS'
+      # it is not in the list of available of available_locales
+      visit root_path(locale: 'it')
+      expect(get_i18n_locale).to eq 'es'
+      expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
+      expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+      expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
+      expect(page).to have_content 'TIENDAS'
+    end
+
+    context 'with a product in the cart' do
+      let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+      let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first]) }
+      let(:product) { create(:simple_product) }
+      let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
+
+      before do
+        set_order order
+        add_product_to_cart order, product, quantity: 1
+      end
+
+      scenario "in the cart page" do
+        visit spree.cart_path(locale: 'es')
+
+        expect(page).to have_content 'TIENDAS'
+        expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+        expect(page).to have_content 'Precio'
+      end
+
+      scenario "in the checkout page" do
+        visit checkout_path(locale: 'es')
+
+        expect(page).to have_content 'TIENDAS'
+        expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+        expect(page).to have_content 'Total del carrito'
+      end
+    end
   end
 
   context 'with user' do
