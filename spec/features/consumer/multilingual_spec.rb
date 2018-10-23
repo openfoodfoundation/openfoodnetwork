@@ -29,17 +29,15 @@ feature 'Multilingual', js: true do
       visit root_path(locale: 'es')
       expect(get_i18n_locale).to eq 'es'
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
-      expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+      expect_menu_and_cookie_in_es
       expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
-      expect(page).to have_content 'TIENDAS'
 
       # it is not in the list of available of available_locales
       visit root_path(locale: 'it')
       expect(get_i18n_locale).to eq 'es'
       expect(get_i18n_translation('label_shops')).to eq 'Tiendas'
-      expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+      expect_menu_and_cookie_in_es
       expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
-      expect(page).to have_content 'TIENDAS'
     end
 
     context 'with a product in the cart' do
@@ -56,16 +54,14 @@ feature 'Multilingual', js: true do
       scenario "in the cart page" do
         visit spree.cart_path(locale: 'es')
 
-        expect(page).to have_content 'TIENDAS'
-        expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+        expect_menu_and_cookie_in_es
         expect(page).to have_content 'Precio'
       end
 
       scenario "in the checkout page" do
         visit checkout_path(locale: 'es')
 
-        expect(page).to have_content 'TIENDAS'
-        expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+        expect_menu_and_cookie_in_es
         expect(page).to have_content 'Total del carrito'
       end
     end
@@ -77,12 +73,12 @@ feature 'Multilingual', js: true do
     it 'updates user locale from cookie if it is empty' do
       visit root_path(locale: 'es')
 
-      expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+      expect_menu_and_cookie_in_es
       expect(user.locale).to be_nil
       quick_login_as user
       visit root_path
 
-      expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+      expect_menu_and_cookie_in_es
     end
 
     it 'updates user locale and stays in cookie after logout' do
@@ -94,9 +90,8 @@ feature 'Multilingual', js: true do
 
       logout
 
-      expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+      expect_menu_and_cookie_in_es
       expect(page).to have_content '¿Estás interesada en entrar en Open Food Network?'
-      expect(page).to have_content 'TIENDAS'
     end
   end
 
@@ -134,9 +129,13 @@ feature 'Multilingual', js: true do
           find('li a[href="?locale=es"]').click
         end
 
-        expect(page.driver.browser.cookies['locale'].value).to eq 'es'
-        expect(page).to have_content 'TIENDAS'
+        expect_menu_and_cookie_in_es
       end
     end
   end
+end
+
+def expect_menu_and_cookie_in_es
+  expect(page.driver.browser.cookies['locale'].value).to eq 'es'
+  expect(page).to have_content 'TIENDAS'
 end
