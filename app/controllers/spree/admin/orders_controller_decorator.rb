@@ -36,8 +36,6 @@ Spree::Admin::OrdersController.class_eval do
     created_at_gt = params[:q][:created_at_gt]
     created_at_lt = params[:q][:created_at_lt]
 
-    params[:q].delete(:inventory_units_shipment_id_null) if params[:q][:inventory_units_shipment_id_null] == "0"
-
     if !params[:q][:created_at_gt].blank?
       params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue ""
     end
