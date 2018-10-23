@@ -4,7 +4,7 @@ def travel_to(time)
   around { |example| Timecop.travel(start_of_july + time) { example.run } }
 end
 
-describe UpdateAccountInvoices do
+xdescribe UpdateAccountInvoices do
   let(:year) { Time.zone.now.year }
 
   before do
