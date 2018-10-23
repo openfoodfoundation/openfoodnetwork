@@ -61,8 +61,7 @@
             {{'payment_states.' + order.payment_state | t}}
       %td.align-center
         %span.state{'ng-class' => 'order.shipment_state', 'ng-if' => 'order.shipment_state'}
-          %a{'ng-href' => '{{order.shipments_path}}' }
-            {{'shipment_states.' + order.shipment_state | t}}
+          {{'shipment_states.' + order.shipment_state | t}}
       %td
         = mail_to "{{order.email}}"
       %td.align-center
