@@ -3,8 +3,6 @@ class VariantOverride < ActiveRecord::Base
 
   acts_as_taggable
 
-  attr_accessor :import_date
-
   belongs_to :hub, class_name: 'Enterprise'
   belongs_to :variant, class_name: 'Spree::Variant'
 
@@ -19,6 +17,12 @@ class VariantOverride < ActiveRecord::Base
 
   scope :for_hubs, lambda { |hubs|
     where(hub_id: hubs)
+  }
+
+  scope :distinct_import_dates, lambda {
+    select('DISTINCT variant_overrides.import_date').
+      where('variant_overrides.import_date IS NOT NULL').
+      order('import_date DESC')
   }
 
   localize_number :price
