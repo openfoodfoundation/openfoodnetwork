@@ -17,7 +17,9 @@ module OpenFoodNetwork
     private
 
     def line_items_for(object)
-      if object.respond_to? :line_items
+      if object.respond_to? :order
+        object.order.line_items
+      elsif object.respond_to? :line_items
         object.line_items
       elsif object.respond_to?(:variant) && object.respond_to?(:quantity)
         [object]
